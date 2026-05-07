@@ -5,33 +5,27 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 
 import Home from "@/pages/home";
-import StatsPage from "@/pages/stats";
-import DashboardPage from "@/pages/dashboard";
-import BusinessPage from "@/pages/business";
-import RecordsPage from "@/pages/records";
-import MatchesPage from "@/pages/matches";
-import NewsPage from "@/pages/news";
+import OnFieldPage from "@/pages/on-field";
+import { ProductPage, RevenuePage, GrowthPage, StrategyPage, ReportsPage, BlogsPage, AIAnalystPage } from "@/pages/section-pages";
 import MatchDetailPage from "@/pages/match-detail";
 
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
+  defaultOptions: { queries: { refetchOnWindowFocus: false } },
 });
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/matches" component={MatchesPage} />
+      <Route path="/on-field" component={OnFieldPage} />
       <Route path="/match/:id" component={MatchDetailPage} />
-      <Route path="/news" component={NewsPage} />
-      <Route path="/stats" component={StatsPage} />
-      <Route path="/dashboard" component={DashboardPage} />
-      <Route path="/business" component={BusinessPage} />
-      <Route path="/records" component={RecordsPage} />
+      <Route path="/product" component={ProductPage} />
+      <Route path="/revenue" component={RevenuePage} />
+      <Route path="/growth" component={GrowthPage} />
+      <Route path="/strategy" component={StrategyPage} />
+      <Route path="/reports" component={ReportsPage} />
+      <Route path="/blogs" component={BlogsPage} />
+      <Route path="/ai-analyst" component={AIAnalystPage} />
       <Route component={NotFound} />
     </Switch>
   );

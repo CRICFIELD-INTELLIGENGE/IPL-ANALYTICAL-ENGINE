@@ -1,337 +1,389 @@
 import { Layout } from "@/components/layout";
+import { GlassCard } from "@/components/glass-card";
+import { useLiveIplMatches, useLiveNews, getMatchScoreLine } from "@/lib/live";
 import { Link } from "wouter";
-import { useGetIplOverview, useGetBatsmen, useGetBowlers, useGetChampionshipHistory } from "@workspace/api-client-react";
-import { ChevronRight, TrendingUp, Award, Flame, BarChart3, Newspaper, RefreshCw, MapPin } from "lucide-react";
-import { useLiveIplMatches, useLiveNews, getMatchScoreLine, getMatchStateColor, timeAgo, startTime } from "@/lib/live";
+import { motion } from "framer-motion";
+import {
+  Play, ArrowRight, Trophy, Target, Zap, TrendingUp, Star,
+  ChevronLeft, ChevronRight, MapPin, Sparkles, Quote,
+} from "lucide-react";
+import {
+  ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip,
+} from "recharts";
+import { useRef } from "react";
 
-export default function Home() {
-  const { data: overview } = useGetIplOverview();
-  const { data: batsmen = [] } = useGetBatsmen();
-  const { data: bowlers = [] } = useGetBowlers();
-  const { data: history = [] } = useGetChampionshipHistory();
-  const { data: liveData, isLoading: loadingLive, dataUpdatedAt } = useLiveIplMatches();
-  const { data: newsData, isLoading: loadingNews } = useLiveNews("general");
+const STATS_ROW = [
+  { label: "Matches", value: "74", sub: "Completed", icon: Target },
+  { label: "Runs", value: "18,542", sub: "This Season", icon: Zap },
+  { label: "High Score", value: "277/3", sub: "Sunrisers", icon: TrendingUp },
+  { label: "Sixes", value: "1,234", sub: "This Season", icon: Star },
+  { label: "Wickets", value: "1,089", sub: "This Season", icon: Trophy },
+];
 
-  const matches = liveData?.matches?.slice(0, 6) ?? [];
-  const liveOnly = matches.filter((m) => /progress|innings break/i.test(m.matchInfo.state));
-  const upcoming = matches.filter((m) => /preview|upcoming/i.test(m.matchInfo.state));
-  const completed = matches.filter((m) => /complete|stumps/i.test(m.matchInfo.state));
-  const ordered = [...liveOnly, ...upcoming, ...completed].slice(0, 6);
+const AWARDS = [
+  { tag: "Orange Cap", player: "Virat Kohli", team: "RCB", value: "672", unit: "Runs", color: "from-orange-500 to-amber-500", chip: "bg-orange-500/20 text-orange-300 border-orange-500/40" },
+  { tag: "Purple Cap", player: "Noor Ahmad", team: "CSK", value: "21", unit: "Wickets", color: "from-purple-500 to-fuchsia-500", chip: "bg-purple-500/20 text-purple-300 border-purple-500/40" },
+  { tag: "Most Sixes", player: "Nicholas Pooran", team: "LSG", value: "35", unit: "Sixes", color: "from-blue-500 to-cyan-500", chip: "bg-blue-500/20 text-blue-300 border-blue-500/40" },
+  { tag: "Best Economy", player: "Trent Boult", team: "MI", value: "6.45", unit: "Economy", color: "from-emerald-500 to-teal-500", chip: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40" },
+];
 
-  const news = newsData?.items?.slice(0, 8) ?? [];
-  const heroNews = news[0];
-  const sideNews = news.slice(1, 6);
-  const gridNews = news.slice(6, 8);
+const INSIGHTS = [
+  { tag: "Business", title: "Why CSK Builds Better Teams", date: "May 18, 2025", read: "8 min read", grad: "from-rose-500/30 via-fuchsia-500/20 to-transparent" },
+  { tag: "Product", title: "IPL is not Cricket, It's a Product", date: "May 15, 2025", read: "6 min read", grad: "from-purple-500/30 via-indigo-500/20 to-transparent" },
+  { tag: "Analytics", title: "The Undervalued XI of IPL 2025", date: "May 12, 2025", read: "7 min read", grad: "from-blue-500/30 via-cyan-500/20 to-transparent" },
+  { tag: "Growth", title: "The Second Screen Economy of IPL", date: "May 10, 2025", read: "6 min read", grad: "from-emerald-500/30 via-teal-500/20 to-transparent" },
+  { tag: "Strategy", title: "The Auction Math Nobody Talks About", date: "May 6, 2025", read: "5 min read", grad: "from-amber-500/30 via-orange-500/20 to-transparent" },
+];
 
-  const topBatsmen = batsmen.slice(0, 5);
-  const topBowlers = bowlers.slice(0, 5);
-  const recentChampions = history.slice(-5).reverse();
+const VENUES = [
+  { name: "Chepauk", type: "Spin Friendly", value: 76, dir: "spin" },
+  { name: "Eden Gardens", type: "Spin Friendly", value: 68, dir: "spin" },
+  { name: "Wankhede", type: "Pace Friendly", value: 64, dir: "pace" },
+  { name: "M. Chinnaswamy", type: "Pace Friendly", value: 58, dir: "pace" },
+  { name: "Narendra Modi", type: "Balanced", value: 51, dir: "balanced" },
+];
+
+const FOOTER_STATS = [
+  { v: "2008", l: "IPL Started" },
+  { v: "12", l: "Teams" },
+  { v: "2.5B+", l: "Digital Views" },
+  { v: "₹1,11,500 Cr+", l: "Economic Impact" },
+  { v: "500M+", l: "Fans Worldwide" },
+];
+
+const WIN_PROB_DATA = Array.from({ length: 21 }, (_, i) => {
+  const ov = i;
+  const csk = Math.min(95, 35 + ov * 1.4 + Math.sin(ov / 2) * 5);
+  return { ov, MI: 100 - csk, CSK: csk };
+});
+
+export default function HomePage() {
+  const { data: matches } = useLiveIplMatches();
+  const { data: news } = useLiveNews("ipl");
+
+  const liveOrNext = matches?.matches.find((m) => /progress|innings/i.test(m.matchInfo.state))
+    ?? matches?.matches.find((m) => /preview|upcoming/i.test(m.matchInfo.state))
+    ?? matches?.matches[0];
+
+  const insightScroller = useRef<HTMLDivElement>(null);
+  const scroll = (dir: 1 | -1) => insightScroller.current?.scrollBy({ left: dir * 360, behavior: "smooth" });
 
   return (
     <Layout>
-      {/* Live matches strip */}
-      <section className="mb-8">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <Flame className="w-4 h-4 text-primary" />
-            <h2 className="text-sm font-bold uppercase tracking-wider">Live & Upcoming</h2>
-            {dataUpdatedAt > 0 && (
-              <span className="text-[10px] text-muted-foreground flex items-center gap-1">
-                <RefreshCw className="w-2.5 h-2.5" /> Updated {timeAgo(new Date(dataUpdatedAt).toISOString())} • via Cricbuzz
+      {/* HERO + LIVE MATCH PANEL */}
+      <div className="grid gap-4 lg:gap-5 lg:[grid-template-columns:minmax(0,1.55fr)_minmax(0,1fr)]">
+        {/* Hero */}
+        <GlassCard className="relative overflow-hidden min-h-[440px]">
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(800px 500px at 100% 0%, hsl(270 95% 35% / 0.55), transparent 60%), radial-gradient(600px 400px at 110% 100%, hsl(220 100% 40% / 0.5), transparent 60%), radial-gradient(400px 300px at 80% 50%, hsl(320 100% 45% / 0.35), transparent 60%)",
+              }}
+            />
+            {/* Abstract neon orbs */}
+            <div className="absolute right-[8%] top-[18%] w-40 h-40 rounded-full opacity-70 blur-2xl"
+                 style={{ background: "radial-gradient(circle, hsl(270 100% 70%) 0%, transparent 70%)" }} />
+            <div className="absolute right-[28%] bottom-[14%] w-56 h-56 rounded-full opacity-60 blur-3xl"
+                 style={{ background: "radial-gradient(circle, hsl(220 100% 65%) 0%, transparent 70%)" }} />
+            <div className="absolute right-[45%] top-[10%] w-24 h-24 rounded-full opacity-60 blur-xl"
+                 style={{ background: "radial-gradient(circle, hsl(320 100% 65%) 0%, transparent 70%)" }} />
+            {/* Cricket-ball motif on the right */}
+            <div className="hidden md:block absolute right-[10%] top-1/2 -translate-y-1/2 w-44 h-44 rounded-full"
+                 style={{
+                   background: "radial-gradient(circle at 35% 30%, hsl(0 90% 60%) 0%, hsl(0 90% 35%) 40%, hsl(0 90% 18%) 80%)",
+                   boxShadow: "0 30px 90px -10px hsl(0 90% 30% / 0.6), inset -8px -10px 20px hsl(0 0% 0% / 0.6)",
+                 }}>
+              <div className="absolute inset-x-0 top-1/2 h-[2px] bg-white/40" />
+              <div className="absolute inset-x-0 top-[calc(50%-6px)] h-[1px] bg-white/20" />
+              <div className="absolute inset-x-0 top-[calc(50%+6px)] h-[1px] bg-white/20" />
+            </div>
+            <div className="absolute inset-0 scanline opacity-30" />
+          </div>
+          <div className="relative z-10 p-6 sm:p-8 max-w-[60%] flex flex-col justify-center min-h-[440px]">
+            <motion.h1
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="font-display text-3xl sm:text-4xl lg:text-[40px] font-bold leading-[1.08] tracking-tight"
+            >
+              IPL is not just cricket.{" "}
+              <span className="block mt-1">
+                It's a <span className="gradient-text text-glow-purple">Product.</span>
               </span>
-            )}
-          </div>
-          <Link href="/matches" className="text-xs text-primary font-semibold hover:underline flex items-center gap-1">
-            See All Matches <ChevronRight className="w-3 h-3" />
-          </Link>
-        </div>
-        {loadingLive ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {[0, 1, 2].map((i) => (
-              <div key={i} className="bg-card border border-border rounded-md p-4 h-44 animate-pulse" />
-            ))}
-          </div>
-        ) : ordered.length === 0 ? (
-          <div className="bg-card border border-border rounded-md p-6 text-center text-muted-foreground text-sm">
-            No live matches right now. Check the <Link href="/matches" className="text-primary font-semibold">schedule</Link>.
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {ordered.map((m) => <LiveMatchCard key={m.matchInfo.matchId} match={m} />)}
-          </div>
-        )}
-      </section>
-
-      {/* Hero news + sidebar */}
-      <section className="mb-8 grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2">
-          {loadingNews ? (
-            <div className="bg-card border border-border rounded-md min-h-[420px] animate-pulse" />
-          ) : heroNews ? (
-            <a href={heroNews.link} target="_blank" rel="noopener noreferrer" className="block group relative rounded-md overflow-hidden bg-card border border-border min-h-[420px]">
-              {heroNews.image && (
-                <img src={heroNews.image} alt="" className="absolute inset-0 w-full h-full object-cover" loading="eager" />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-              <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
-                <span className="bg-accent text-accent-foreground text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded w-fit mb-3">
-                  Top Story
+              <span className="block">
+                A <span className="text-accent text-glow-blue">Business.</span>
+              </span>
+              <span className="block">
+                A <span className="gradient-text text-glow-pink">Billion Dollar</span> Ecosystem.
+              </span>
+            </motion.h1>
+            <p className="mt-5 text-sm text-muted-foreground max-w-md">
+              Data-driven insights across Sports, Product, Business, Fans and the IPL Economy.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Link
+                href="/product"
+                className="neon-btn rounded-xl px-5 py-2.5 text-sm font-semibold flex items-center gap-2"
+              >
+                Explore Insights <ArrowRight className="w-4 h-4" />
+              </Link>
+              <button className="flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10">
+                <span className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
+                  <Play className="w-3.5 h-3.5 fill-white" />
                 </span>
-                <h1 className="text-2xl md:text-4xl font-extrabold leading-tight mb-3 group-hover:underline">
-                  {heroNews.title}
-                </h1>
-                <p className="text-sm md:text-base text-gray-200 mb-3 max-w-2xl line-clamp-2">{heroNews.description}</p>
-                <div className="flex items-center gap-3 text-xs text-gray-300">
-                  <span>ESPN Cricinfo</span>
-                  <span>•</span>
-                  <span>{timeAgo(heroNews.pubDate)}</span>
+                Watch Trailer <span className="text-muted-foreground text-xs">1:15 min</span>
+              </button>
+            </div>
+          </div>
+        </GlassCard>
+
+        {/* Live match panel */}
+        <GlassCard className="p-5 flex flex-col" delay={0.05}>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <span className="ticker-dot" />
+              <span className="text-xs font-mono uppercase tracking-wider text-destructive">{liveOrNext && /progress|innings/i.test(liveOrNext.matchInfo.state) ? "Live Match" : "Featured Match"}</span>
+            </div>
+            <div className="text-xs text-muted-foreground">{liveOrNext?.matchInfo.seriesName ?? "IPL 2026"} · {liveOrNext?.matchInfo.matchDesc ?? ""}</div>
+          </div>
+
+          {liveOrNext ? <FeaturedMatch match={liveOrNext} /> : <FeaturedMatchFallback />}
+
+          <div className="mt-5">
+            <div className="text-xs font-semibold text-muted-foreground mb-2">Win Probability</div>
+            <div className="h-[140px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={WIN_PROB_DATA} margin={{ top: 4, right: 4, left: -22, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="hsl(220 100% 65%)" stopOpacity={0.6} />
+                      <stop offset="100%" stopColor="hsl(220 100% 65%)" stopOpacity={0.05} />
+                    </linearGradient>
+                    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="hsl(38 100% 60%)" stopOpacity={0.6} />
+                      <stop offset="100%" stopColor="hsl(38 100% 60%)" stopOpacity={0.05} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="ov" tick={{ fontSize: 10, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 10, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} domain={[0, 100]} />
+                  <Tooltip contentStyle={{ background: "hsl(240 30% 9%)", border: "1px solid hsl(250 40% 25%)", borderRadius: 8, fontSize: 12 }} />
+                  <Area type="monotone" dataKey="MI" stroke="hsl(220 100% 65%)" strokeWidth={2} fill="url(#g1)" />
+                  <Area type="monotone" dataKey="CSK" stroke="hsl(38 100% 60%)" strokeWidth={2} fill="url(#g2)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="flex items-center justify-around text-xs mt-1">
+              <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[hsl(220_100%_65%)]" /> MI <span className="text-accent font-mono">38%</span></div>
+              <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[hsl(38_100%_60%)]" /> CSK <span className="text-accent font-mono">62%</span></div>
+            </div>
+          </div>
+
+          <Link href={liveOrNext ? `/match/${liveOrNext.matchInfo.matchId}` : "/on-field"} className="mt-4 flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10">
+            View Full Match Center <ArrowRight className="w-4 h-4" />
+          </Link>
+        </GlassCard>
+      </div>
+
+      {/* STATS ROW + AWARDS */}
+      <div className="grid gap-4 lg:gap-5 mt-4 lg:mt-5 lg:[grid-template-columns:minmax(0,1fr)_minmax(0,2.6fr)]">
+        <GlassCard className="p-4">
+          <div className="grid grid-cols-5 lg:grid-cols-1 gap-3">
+            {STATS_ROW.map((s, i) => (
+              <div key={s.label} className="flex items-start gap-3 px-2 lg:py-1">
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br ${i % 2 ? "from-primary/30 to-accent/20" : "from-accent/30 to-primary/20"} border border-white/10`}>
+                  <s.icon className="w-4 h-4" />
+                </div>
+                <div className="leading-tight">
+                  <div className="text-[11px] uppercase tracking-wider text-muted-foreground">{s.label}</div>
+                  <div className="font-display font-bold text-lg">{s.value}</div>
+                  <div className="text-[10px] text-muted-foreground">{s.sub}</div>
                 </div>
               </div>
-            </a>
-          ) : null}
-        </div>
-
-        <aside className="bg-card border border-border rounded-md flex flex-col">
-          <div className="px-4 py-3 border-b border-border bg-muted/40 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Newspaper className="w-4 h-4 text-primary" />
-              <h3 className="font-bold uppercase text-sm tracking-wider">Latest News</h3>
-            </div>
-            <Link href="/news" className="text-[11px] text-primary font-semibold hover:underline">View all</Link>
+            ))}
           </div>
-          <ol className="divide-y divide-border flex-1">
-            {(loadingNews ? Array(5).fill(null) : sideNews).map((n, i) =>
-              n ? (
-                <li key={i}>
-                  <a href={n.link} target="_blank" rel="noopener noreferrer" className="px-4 py-3 flex gap-3 hover:bg-muted/40 transition-colors group">
-                    <span className="text-2xl font-black text-primary leading-none w-6 shrink-0">{i + 1}</span>
-                    <div className="min-w-0">
-                      <h4 className="text-sm font-semibold leading-snug group-hover:text-primary transition-colors line-clamp-3">{n.title}</h4>
-                      <p className="text-[11px] text-muted-foreground mt-1">{timeAgo(n.pubDate)}</p>
-                    </div>
-                  </a>
-                </li>
-              ) : (
-                <li key={i} className="px-4 py-3 h-16 animate-pulse" />
-              )
-            )}
-          </ol>
-        </aside>
-      </section>
+        </GlassCard>
 
-      {/* Stats overview */}
-      <section className="mb-8 grid grid-cols-2 md:grid-cols-4 gap-3">
-        {[
-          { label: "Total Matches", value: overview?.totalMatches?.toLocaleString() ?? "1,169", change: "All seasons" },
-          { label: "Total Runs", value: overview?.totalRuns?.toLocaleString() ?? "362,847", change: "2008–2025" },
-          { label: "Total Wickets", value: overview?.totalWickets?.toLocaleString() ?? "12,094", change: "All-time" },
-          { label: "Avg 1st Inns", value: overview?.avgFirstInningsScore?.toFixed(0) ?? "168", change: "Per innings" },
-        ].map((s, i) => (
-          <div key={i} className="bg-card border-l-4 border-primary border-y border-r border-border rounded-md p-4">
-            <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">{s.label}</p>
-            <p className="text-2xl md:text-3xl font-black mt-1 tracking-tight">{s.value}</p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">{s.change}</p>
-          </div>
-        ))}
-      </section>
-
-      {/* News grid + sidebar */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <div className="lg:col-span-2">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold">Featured Stories</h2>
-            <Link href="/news" className="text-xs text-primary font-semibold hover:underline flex items-center gap-1">
-              View All <ChevronRight className="w-3 h-3" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {(loadingNews ? Array(2).fill(null) : gridNews).map((n, i) =>
-              n ? (
-                <a key={i} href={n.link} target="_blank" rel="noopener noreferrer" className="block bg-card border border-border rounded-md overflow-hidden hover:shadow-md transition-shadow group">
-                  <div className="h-44 relative bg-muted">
-                    {n.image && <img src={n.image} alt="" className="w-full h-full object-cover" loading="lazy" />}
-                    <span className="absolute top-3 left-3 bg-white text-foreground text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
-                      News
-                    </span>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-bold text-base leading-snug group-hover:text-primary transition-colors mb-2 line-clamp-2">{n.title}</h3>
-                    <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{n.description}</p>
-                    <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
-                      <span>ESPN Cricinfo</span>
-                      <span>•</span>
-                      <span>{timeAgo(n.pubDate)}</span>
-                    </div>
-                  </div>
-                </a>
-              ) : (
-                <div key={i} className="bg-card border border-border rounded-md h-72 animate-pulse" />
-              )
-            )}
-          </div>
-        </div>
-
-        <aside className="space-y-6">
-          <StatTable title="Top Run-Getters" icon={<TrendingUp className="w-4 h-4 text-primary" />} link="/stats">
-            <thead>
-              <tr className="text-[10px] uppercase tracking-wider text-muted-foreground border-b border-border">
-                <th className="text-left py-2 px-3 font-semibold">Player</th>
-                <th className="text-right py-2 px-3 font-semibold">M</th>
-                <th className="text-right py-2 px-3 font-semibold">Runs</th>
-                <th className="text-right py-2 px-3 font-semibold">Avg</th>
-              </tr>
-            </thead>
-            <tbody>
-              {topBatsmen.map((b: any, i) => (
-                <tr key={i} className="border-b border-border/50 last:border-0 hover:bg-muted/30">
-                  <td className="py-2 px-3 font-semibold">
-                    <div>{b.name}</div>
-                    <div className="text-[10px] text-muted-foreground font-normal">{b.team}</div>
-                  </td>
-                  <td className="py-2 px-3 text-right tabular-nums">{b.matches}</td>
-                  <td className="py-2 px-3 text-right tabular-nums font-bold text-primary">{b.runs?.toLocaleString()}</td>
-                  <td className="py-2 px-3 text-right tabular-nums">{b.average?.toFixed(1)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </StatTable>
-
-          <StatTable title="Top Wicket-Takers" icon={<Flame className="w-4 h-4 text-primary" />} link="/stats">
-            <thead>
-              <tr className="text-[10px] uppercase tracking-wider text-muted-foreground border-b border-border">
-                <th className="text-left py-2 px-3 font-semibold">Player</th>
-                <th className="text-right py-2 px-3 font-semibold">M</th>
-                <th className="text-right py-2 px-3 font-semibold">Wkts</th>
-                <th className="text-right py-2 px-3 font-semibold">Econ</th>
-              </tr>
-            </thead>
-            <tbody>
-              {topBowlers.map((b: any, i) => (
-                <tr key={i} className="border-b border-border/50 last:border-0 hover:bg-muted/30">
-                  <td className="py-2 px-3 font-semibold">
-                    <div>{b.name}</div>
-                    <div className="text-[10px] text-muted-foreground font-normal">{b.team}</div>
-                  </td>
-                  <td className="py-2 px-3 text-right tabular-nums">{b.matches}</td>
-                  <td className="py-2 px-3 text-right tabular-nums font-bold text-primary">{b.wickets}</td>
-                  <td className="py-2 px-3 text-right tabular-nums">{b.economy?.toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </StatTable>
-
-          <div className="bg-card border border-border rounded-md">
-            <div className="px-4 py-3 border-b border-border bg-muted/40 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-primary" />
-                <h3 className="font-bold uppercase text-sm tracking-wider">Recent Champions</h3>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {AWARDS.map((a, i) => (
+            <GlassCard key={a.tag} className="p-4" delay={i * 0.05}>
+              <div className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] uppercase tracking-wider font-semibold border ${a.chip}`}>
+                <Trophy className="w-3 h-3" /> {a.tag}
               </div>
-              <Link href="/business" className="text-[11px] text-primary font-semibold hover:underline">All</Link>
-            </div>
-            <ul className="divide-y divide-border">
-              {recentChampions.map((c: any, i) => (
-                <li key={i} className="px-4 py-3 flex items-center justify-between hover:bg-muted/30">
-                  <div>
-                    <div className="font-bold text-sm">{c.champion}</div>
-                    <div className="text-[11px] text-muted-foreground">beat {c.runnerUp}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-bold text-primary">{c.season}</div>
-                    <div className="text-[10px] text-muted-foreground">{c.venue?.split(",")[0]}</div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </aside>
-      </section>
+              <div className="mt-3 flex items-center gap-3">
+                <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${a.color} flex items-center justify-center text-sm font-bold text-white shadow-[0_0_20px_-4px_currentColor]`}>
+                  {a.player.split(" ").map((p) => p[0]).join("").slice(0, 2)}
+                </div>
+                <div className="leading-tight">
+                  <div className="font-semibold text-sm">{a.player}</div>
+                  <div className="text-[11px] text-muted-foreground">{a.team}</div>
+                </div>
+              </div>
+              <div className="mt-3 flex items-end justify-between">
+                <div className="font-display font-bold text-2xl gradient-text">{a.value}</div>
+                <div className="text-[11px] text-muted-foreground">{a.unit}</div>
+              </div>
+            </GlassCard>
+          ))}
+        </div>
+      </div>
 
-      {/* Section CTAs */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <Link href="/dashboard" className="bg-card border border-border rounded-md p-5 hover:border-primary hover:shadow-md transition group">
-          <BarChart3 className="w-6 h-6 text-primary mb-3" />
-          <h3 className="font-bold text-base mb-1 group-hover:text-primary">Analytics Dashboard</h3>
-          <p className="text-xs text-muted-foreground">Season trends, toss impact, phase-wise scoring, venue analytics, and more.</p>
-        </Link>
-        <Link href="/business" className="bg-card border border-border rounded-md p-5 hover:border-primary hover:shadow-md transition group">
-          <TrendingUp className="w-6 h-6 text-primary mb-3" />
-          <h3 className="font-bold text-base mb-1 group-hover:text-primary">Business & Revenue</h3>
-          <p className="text-xs text-muted-foreground">Franchise valuations, sponsorship deals, and the IPL commercial ecosystem.</p>
-        </Link>
-        <Link href="/records" className="bg-card border border-border rounded-md p-5 hover:border-primary hover:shadow-md transition group">
-          <Award className="w-6 h-6 text-primary mb-3" />
-          <h3 className="font-bold text-base mb-1 group-hover:text-primary">Records Book</h3>
-          <p className="text-xs text-muted-foreground">All-time bests, boundary kings, fastest hundreds, and historic milestones.</p>
-        </Link>
-      </section>
+      {/* INSIGHTS CAROUSEL + VENUE HEATMAP */}
+      <div className="grid gap-4 lg:gap-5 mt-4 lg:mt-5 lg:[grid-template-columns:minmax(0,1.7fr)_minmax(0,1fr)]">
+        <div>
+          <div className="flex items-center justify-between mb-3 px-1">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-accent" />
+              <h2 className="font-display font-semibold tracking-wider text-sm uppercase">Insights That Matter</h2>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <button aria-label="Scroll insights left" onClick={() => scroll(-1)} className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center"><ChevronLeft className="w-4 h-4" /></button>
+              <button aria-label="Scroll insights right" onClick={() => scroll(1)} className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center"><ChevronRight className="w-4 h-4" /></button>
+            </div>
+          </div>
+          <div ref={insightScroller} className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2 -mx-1 px-1 scroll-smooth">
+            {INSIGHTS.map((p, i) => (
+              <Link key={i} href="/blogs" className="snap-start shrink-0 w-[230px] sm:w-[260px]">
+                <GlassCard className="overflow-hidden h-full" delay={i * 0.04}>
+                  <div className={`h-32 relative bg-gradient-to-br ${p.grad} flex items-end p-3`}>
+                    <div className="absolute inset-0 scanline opacity-40" />
+                    <span className="relative text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md bg-black/40 border border-white/10">{p.tag}</span>
+                  </div>
+                  <div className="p-3">
+                    <div className="font-semibold text-sm leading-snug">{p.title}</div>
+                    <div className="text-[11px] text-muted-foreground mt-1.5 flex items-center gap-2">
+                      <span>{p.date}</span><span>·</span><span>{p.read}</span>
+                    </div>
+                  </div>
+                </GlassCard>
+              </Link>
+            ))}
+            {news?.items.slice(0, 4).map((n, i) => (
+              <a key={`n-${i}`} href={n.link} target="_blank" rel="noreferrer" className="snap-start shrink-0 w-[230px] sm:w-[260px]">
+                <GlassCard className="overflow-hidden h-full" delay={(INSIGHTS.length + i) * 0.04}>
+                  <div className="h-32 relative bg-gradient-to-br from-slate-700/40 to-slate-900/40">
+                    {n.image && <img src={n.image} alt="" className="absolute inset-0 w-full h-full object-cover opacity-80" />}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                    <span className="absolute bottom-2 left-2 text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md bg-black/60 border border-white/10">News</span>
+                  </div>
+                  <div className="p-3">
+                    <div className="font-semibold text-sm leading-snug line-clamp-2">{n.title}</div>
+                    <div className="text-[11px] text-muted-foreground mt-1.5">via ESPN Cricinfo</div>
+                  </div>
+                </GlassCard>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <GlassCard className="p-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-accent" />
+              <h2 className="font-display font-semibold tracking-wider text-sm uppercase">Venue Heatmap</h2>
+            </div>
+            <span className="text-[11px] text-muted-foreground">Spin vs Pace Dominance</span>
+          </div>
+
+          {/* Stylized abstract heatmap */}
+          <div className="relative h-32 rounded-xl overflow-hidden bg-gradient-to-br from-[hsl(240_35%_10%)] to-[hsl(260_40%_8%)] border border-white/5 mb-3">
+            {[
+              { l: "20%", t: "25%", c: "hsl(38 100% 60%)" },
+              { l: "55%", t: "20%", c: "hsl(220 100% 65%)" },
+              { l: "70%", t: "55%", c: "hsl(270 95% 65%)" },
+              { l: "35%", t: "70%", c: "hsl(320 100% 65%)" },
+              { l: "82%", t: "78%", c: "hsl(180 100% 55%)" },
+            ].map((p, i) => (
+              <span key={i} className="absolute w-3 h-3 rounded-full" style={{ left: p.l, top: p.t, background: p.c, boxShadow: `0 0 18px ${p.c}, 0 0 6px ${p.c}` }} />
+            ))}
+            <div className="absolute inset-0 scanline opacity-30 pointer-events-none" />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            {VENUES.map((v) => (
+              <div key={v.name} className="flex items-center gap-3">
+                <div className="w-28 leading-tight">
+                  <div className="text-xs font-semibold">{v.name}</div>
+                  <div className="text-[10px] text-muted-foreground">{v.type}</div>
+                </div>
+                <div className="flex-1 h-1.5 rounded-full bg-white/5 overflow-hidden">
+                  <div
+                    className={`h-full rounded-full ${v.dir === "spin" ? "bg-gradient-to-r from-accent to-primary" : v.dir === "pace" ? "bg-gradient-to-r from-pink-500 to-amber-400" : "bg-gradient-to-r from-emerald-500 to-cyan-500"}`}
+                    style={{ width: `${v.value}%` }}
+                  />
+                </div>
+                <div className="w-9 text-right text-xs font-mono">{v.value}%</div>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-muted-foreground mt-3">
+            <span>Most Spin</span><span>Most Pace</span>
+          </div>
+        </GlassCard>
+      </div>
+
+      {/* FOOTER STATS STRIP */}
+      <GlassCard className="p-4 mt-4 lg:mt-5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 items-center">
+          {FOOTER_STATS.map((s) => (
+            <div key={s.l} className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/40 to-accent/30 border border-white/10 flex items-center justify-center text-xs">★</div>
+              <div className="leading-tight">
+                <div className="font-display font-bold">{s.v}</div>
+                <div className="text-[10px] text-muted-foreground uppercase tracking-wider">{s.l}</div>
+              </div>
+            </div>
+          ))}
+          <div className="hidden lg:flex items-center gap-2 text-xs text-muted-foreground italic">
+            <Quote className="w-4 h-4 text-accent shrink-0" />
+            <span>"IPL is where Sports, Entertainment and <span className="text-white not-italic font-semibold">Business</span> hit a six together."</span>
+          </div>
+        </div>
+      </GlassCard>
     </Layout>
   );
 }
 
-function StatTable({ title, icon, link, children }: { title: string; icon: React.ReactNode; link: string; children: React.ReactNode }) {
+function FeaturedMatch({ match }: { match: NonNullable<ReturnType<typeof useLiveIplMatches>["data"]>["matches"][number] }) {
+  const score = getMatchScoreLine(match);
+  const t1 = match.matchInfo.team1;
+  const t2 = match.matchInfo.team2;
   return (
-    <div className="bg-card border border-border rounded-md overflow-hidden">
-      <div className="px-4 py-3 border-b border-border bg-muted/40 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          {icon}
-          <h3 className="font-bold uppercase text-sm tracking-wider">{title}</h3>
-        </div>
-        <Link href={link} className="text-[11px] text-primary font-semibold hover:underline">More</Link>
+    <div className="flex items-center justify-between gap-3 px-2 py-3 rounded-xl bg-white/5 border border-white/10">
+      <TeamCell short={t1.teamSName} name={t1.teamName} score={score.team1} color="hsl(38 100% 60%)" />
+      <div className="flex flex-col items-center gap-1.5">
+        <span className="text-[10px] uppercase tracking-widest text-muted-foreground">vs</span>
+        <span className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-destructive/20 text-destructive border border-destructive/40">
+          {match.matchInfo.state.toUpperCase()}
+        </span>
       </div>
-      <table className="w-full text-sm">{children}</table>
+      <TeamCell short={t2.teamSName} name={t2.teamName} score={score.team2} color="hsl(220 100% 65%)" align="right" />
     </div>
   );
 }
 
-export function LiveMatchCard({ match }: { match: import("@/lib/live").LiveMatch }) {
-  const info = match.matchInfo;
-  const score = getMatchScoreLine(match);
-  const state = getMatchStateColor(info.state);
-  const isLive = state.label === "LIVE";
-  const isUpcoming = state.label === "UPCOMING";
-
+function TeamCell({ short, name, score, color, align = "left" }: { short: string; name: string; score: string; color: string; align?: "left" | "right" }) {
   return (
-    <Link href={`/match/${info.matchId}`} className="block bg-card border border-border rounded-md p-4 hover:shadow-md hover:border-primary/40 transition-all">
-      <div className="flex items-center justify-between mb-3">
-        <span className={`${state.bg} text-white text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded inline-flex items-center gap-1`}>
-          {isLive && <span className="inline-block w-1.5 h-1.5 bg-white rounded-full animate-pulse" />}
-          {state.label}
-        </span>
-        <span className="text-[11px] text-muted-foreground font-medium truncate ml-2">
-          {info.seriesName.replace("Indian Premier League", "IPL")} • {info.matchDesc}
-        </span>
+    <div className={`flex-1 flex items-center gap-2 ${align === "right" ? "flex-row-reverse text-right" : ""}`}>
+      <div className="w-10 h-10 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0" style={{ background: color, boxShadow: `0 0 18px -4px ${color}` }}>{short}</div>
+      <div className="leading-tight min-w-0">
+        <div className="text-[11px] text-muted-foreground truncate">{name}</div>
+        <div className="font-display font-bold text-sm">{score}</div>
       </div>
-      <div className="space-y-2">
-        <TeamRow short={info.team1.teamSName} name={info.team1.teamName} score={score.team1} highlight={info.currBatTeamId === info.team1.teamId} hide={isUpcoming} />
-        <TeamRow short={info.team2.teamSName} name={info.team2.teamName} score={score.team2} highlight={info.currBatTeamId === info.team2.teamId} hide={isUpcoming} />
-      </div>
-      <div className="mt-3 pt-3 border-t border-border">
-        <p className={`text-xs font-semibold ${isLive ? "text-red-600" : isUpcoming ? "text-blue-600" : "text-foreground"}`}>
-          {isUpcoming ? `Starts ${startTime(info.startDate)}` : info.status}
-        </p>
-        {info.venueInfo && (
-          <p className="text-[10px] text-muted-foreground mt-0.5 flex items-center gap-1">
-            <MapPin className="w-2.5 h-2.5" />
-            {info.venueInfo.ground}, {info.venueInfo.city}
-          </p>
-        )}
-      </div>
-    </Link>
+    </div>
   );
 }
 
-function TeamRow({ short, name, score, highlight, hide }: { short: string; name: string; score: string; highlight?: boolean; hide?: boolean }) {
+function FeaturedMatchFallback() {
   return (
-    <div className={`flex items-center justify-between ${highlight ? "font-bold" : ""}`}>
-      <div className="flex items-center gap-2 min-w-0">
-        <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 ${highlight ? "bg-primary text-primary-foreground" : "bg-muted"}`}>{short}</div>
-        <span className="text-sm truncate">{name}</span>
+    <div className="flex items-center justify-between gap-3 px-2 py-3 rounded-xl bg-white/5 border border-white/10">
+      <TeamCell short="MI" name="Mumbai Indians" score="186/6 (20)" color="hsl(220 100% 65%)" />
+      <div className="flex flex-col items-center gap-1.5">
+        <span className="text-[10px] uppercase tracking-widest text-muted-foreground">vs</span>
+        <span className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-destructive/20 text-destructive border border-destructive/40">LIVE</span>
       </div>
-      {!hide && (
-        <div className="text-right ml-2 shrink-0">
-          <div className="font-bold text-sm tabular-nums">{score}</div>
-        </div>
-      )}
+      <TeamCell short="CSK" name="Chennai Super Kings" score="189/7 (19.4)" color="hsl(38 100% 60%)" align="right" />
     </div>
   );
 }
