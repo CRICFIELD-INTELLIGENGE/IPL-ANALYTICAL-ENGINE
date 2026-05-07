@@ -3,20 +3,34 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: IPL Analytics Engine API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: overview
+    description: Season and match overview stats
+  - name: batting
+    description: Batting analytics
+  - name: bowling
+    description: Bowling analytics
+  - name: teams
+    description: Team performance analytics
+  - name: venues
+    description: Venue intelligence
+  - name: business
+    description: Business and revenue analytics
+  - name: records
+    description: Records and milestones
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +38,296 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /ipl/overview:
+    get:
+      operationId: getIplOverview
+      tags: [overview]
+      summary: Get overall IPL summary stats
+      responses:
+        "200":
+          description: IPL overview statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IplOverview"
+
+  /ipl/seasons:
+    get:
+      operationId: getSeasons
+      tags: [overview]
+      summary: Get season-by-season breakdown
+      responses:
+        "200":
+          description: List of IPL seasons with stats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SeasonStat"
+
+  /ipl/toss-analysis:
+    get:
+      operationId: getTossAnalysis
+      tags: [overview]
+      summary: Toss decision win probability analysis
+      responses:
+        "200":
+          description: Toss vs win analysis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TossAnalysis"
+
+  /ipl/phase-analysis:
+    get:
+      operationId: getPhaseAnalysis
+      tags: [overview]
+      summary: Powerplay, middle overs, death overs breakdown
+      responses:
+        "200":
+          description: Phase-wise analysis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhaseAnalysis"
+
+  /ipl/batsmen:
+    get:
+      operationId: getBatsmen
+      tags: [batting]
+      summary: Top batsmen with career stats
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: season
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of top batsmen
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BatsmanStat"
+
+  /ipl/batsmen/impact:
+    get:
+      operationId: getImpactBatsmen
+      tags: [batting]
+      summary: Impact player ratings with clutch index
+      responses:
+        "200":
+          description: Impact batsmen leaderboard
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ImpactPlayer"
+
+  /ipl/batsmen/boundaries:
+    get:
+      operationId: getBoundaryKings
+      tags: [batting]
+      summary: Boundary kings - top 4s and 6s hitters
+      responses:
+        "200":
+          description: Boundary stats per player
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BoundaryKing"
+
+  /ipl/bowlers:
+    get:
+      operationId: getBowlers
+      tags: [bowling]
+      summary: Top bowlers with career wickets and economy
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: season
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of top bowlers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BowlerStat"
+
+  /ipl/bowlers/death-specialists:
+    get:
+      operationId: getDeathSpecialists
+      tags: [bowling]
+      summary: Best death-over bowlers (overs 16-20)
+      responses:
+        "200":
+          description: Death over specialists
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BowlerStat"
+
+  /ipl/teams:
+    get:
+      operationId: getTeams
+      tags: [teams]
+      summary: All team performance stats
+      responses:
+        "200":
+          description: Team performance overview
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TeamStat"
+
+  /ipl/teams/head-to-head:
+    get:
+      operationId: getHeadToHead
+      tags: [teams]
+      summary: Team head-to-head records
+      parameters:
+        - name: team1
+          in: query
+          schema:
+            type: string
+        - name: team2
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Head-to-head record
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HeadToHead"
+
+  /ipl/teams/championship:
+    get:
+      operationId: getChampionshipHistory
+      tags: [teams]
+      summary: IPL championship winners history
+      responses:
+        "200":
+          description: Championship history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ChampionshipEntry"
+
+  /ipl/venues:
+    get:
+      operationId: getVenues
+      tags: [venues]
+      summary: Venue scoring rates and win analysis
+      responses:
+        "200":
+          description: Venue statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VenueStat"
+
+  /ipl/business/franchise-valuation:
+    get:
+      operationId: getFranchiseValuation
+      tags: [business]
+      summary: Franchise valuation growth 2010-2024
+      responses:
+        "200":
+          description: Franchise valuations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FranchiseValuation"
+
+  /ipl/business/revenue:
+    get:
+      operationId: getRevenueBreakdown
+      tags: [business]
+      summary: IPL revenue streams breakdown
+      responses:
+        "200":
+          description: Revenue breakdown data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RevenueBreakdown"
+
+  /ipl/records:
+    get:
+      operationId: getRecords
+      tags: [records]
+      summary: IPL all-time records and milestones
+      responses:
+        "200":
+          description: Records and milestones
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IplRecords"
+
+  /ipl/run-distribution:
+    get:
+      operationId: getRunDistribution
+      tags: [overview]
+      summary: Run distribution across all seasons
+      responses:
+        "200":
+          description: Run scoring distribution data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RunDistributionBucket"
+
+  /ipl/dismissals:
+    get:
+      operationId: getDismissalTypes
+      tags: [bowling]
+      summary: Dismissal type breakdown
+      responses:
+        "200":
+          description: Dismissal types distribution
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DismissalType"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +335,545 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    IplOverview:
+      type: object
+      properties:
+        totalMatches:
+          type: integer
+        totalSeasons:
+          type: integer
+        totalRuns:
+          type: integer
+        totalWickets:
+          type: integer
+        totalBalls:
+          type: integer
+        totalBoundaries:
+          type: integer
+        avgFirstInningsScore:
+          type: number
+        avgSecondInningsScore:
+          type: number
+        battingFirstWinPct:
+          type: number
+        chasingWinPct:
+          type: number
+        dotBallPct:
+          type: number
+        boundaryPct:
+          type: number
+        dateRange:
+          type: string
+        totalTeams:
+          type: integer
+        totalVenues:
+          type: integer
+        totalBatsmen:
+          type: integer
+        totalBowlers:
+          type: integer
+      required:
+        - totalMatches
+        - totalSeasons
+        - totalRuns
+        - totalWickets
+        - totalBalls
+        - totalBoundaries
+        - avgFirstInningsScore
+        - avgSecondInningsScore
+        - battingFirstWinPct
+        - chasingWinPct
+        - dotBallPct
+        - boundaryPct
+        - dateRange
+        - totalTeams
+        - totalVenues
+        - totalBatsmen
+        - totalBowlers
+
+    SeasonStat:
+      type: object
+      properties:
+        season:
+          type: string
+        matches:
+          type: integer
+        totalRuns:
+          type: integer
+        avgScore:
+          type: number
+        highestTeamScore:
+          type: integer
+        champion:
+          type: string
+        sixes:
+          type: integer
+        fours:
+          type: integer
+      required:
+        - season
+        - matches
+        - totalRuns
+        - avgScore
+        - highestTeamScore
+        - champion
+        - sixes
+        - fours
+
+    TossAnalysis:
+      type: object
+      properties:
+        batFirstWinPct:
+          type: number
+        fieldFirstWinPct:
+          type: number
+        tossBatDecisionPct:
+          type: number
+        tossFieldDecisionPct:
+          type: number
+        tossWinMatchWinPct:
+          type: number
+        venueBreakdown:
+          type: array
+          items:
+            $ref: "#/components/schemas/VenueToss"
+      required:
+        - batFirstWinPct
+        - fieldFirstWinPct
+        - tossBatDecisionPct
+        - tossFieldDecisionPct
+        - tossWinMatchWinPct
+        - venueBreakdown
+
+    VenueToss:
+      type: object
+      properties:
+        venue:
+          type: string
+        batFirstWinPct:
+          type: number
+        fieldFirstWinPct:
+          type: number
+        matches:
+          type: integer
+      required: [venue, batFirstWinPct, fieldFirstWinPct, matches]
+
+    PhaseAnalysis:
+      type: object
+      properties:
+        powerplay:
+          $ref: "#/components/schemas/PhaseStats"
+        middleOvers:
+          $ref: "#/components/schemas/PhaseStats"
+        deathOvers:
+          $ref: "#/components/schemas/PhaseStats"
+      required: [powerplay, middleOvers, deathOvers]
+
+    PhaseStats:
+      type: object
+      properties:
+        avgRunRate:
+          type: number
+        avgWicketsPerMatch:
+          type: number
+        boundaryPct:
+          type: number
+        dotBallPct:
+          type: number
+        label:
+          type: string
+      required: [avgRunRate, avgWicketsPerMatch, boundaryPct, dotBallPct, label]
+
+    BatsmanStat:
+      type: object
+      properties:
+        name:
+          type: string
+        team:
+          type: string
+        matches:
+          type: integer
+        innings:
+          type: integer
+        runs:
+          type: integer
+        strikeRate:
+          type: number
+        average:
+          type: number
+        fours:
+          type: integer
+        sixes:
+          type: integer
+        fifties:
+          type: integer
+        hundreds:
+          type: integer
+        highScore:
+          type: integer
+        dotBallPct:
+          type: number
+        boundaryPct:
+          type: number
+      required:
+        - name
+        - team
+        - matches
+        - innings
+        - runs
+        - strikeRate
+        - average
+        - fours
+        - sixes
+        - fifties
+        - hundreds
+        - highScore
+        - dotBallPct
+        - boundaryPct
+
+    ImpactPlayer:
+      type: object
+      properties:
+        name:
+          type: string
+        team:
+          type: string
+        impactScore:
+          type: number
+        clutchIndex:
+          type: number
+        deathOverSR:
+          type: number
+        powerplaySR:
+          type: number
+        winContribution:
+          type: number
+        role:
+          type: string
+      required:
+        - name
+        - team
+        - impactScore
+        - clutchIndex
+        - deathOverSR
+        - powerplaySR
+        - winContribution
+        - role
+
+    BoundaryKing:
+      type: object
+      properties:
+        name:
+          type: string
+        team:
+          type: string
+        fours:
+          type: integer
+        sixes:
+          type: integer
+        totalBoundaries:
+          type: integer
+        boundaryRuns:
+          type: integer
+        boundaryPct:
+          type: number
+      required:
+        - name
+        - team
+        - fours
+        - sixes
+        - totalBoundaries
+        - boundaryRuns
+        - boundaryPct
+
+    BowlerStat:
+      type: object
+      properties:
+        name:
+          type: string
+        team:
+          type: string
+        matches:
+          type: integer
+        wickets:
+          type: integer
+        economy:
+          type: number
+        average:
+          type: number
+        strikeRate:
+          type: number
+        dotBallPct:
+          type: number
+        powerplayWickets:
+          type: integer
+        deathWickets:
+          type: integer
+        bestFigures:
+          type: string
+      required:
+        - name
+        - team
+        - matches
+        - wickets
+        - economy
+        - average
+        - strikeRate
+        - dotBallPct
+        - powerplayWickets
+        - deathWickets
+        - bestFigures
+
+    TeamStat:
+      type: object
+      properties:
+        name:
+          type: string
+        shortName:
+          type: string
+        matches:
+          type: integer
+        wins:
+          type: integer
+        losses:
+          type: integer
+        winPct:
+          type: number
+        titles:
+          type: integer
+        avgScore:
+          type: number
+        avgEconomy:
+          type: number
+        nrr:
+          type: number
+        color:
+          type: string
+      required:
+        - name
+        - shortName
+        - matches
+        - wins
+        - losses
+        - winPct
+        - titles
+        - avgScore
+        - avgEconomy
+        - nrr
+        - color
+
+    HeadToHead:
+      type: object
+      properties:
+        team1:
+          type: string
+        team2:
+          type: string
+        team1Wins:
+          type: integer
+        team2Wins:
+          type: integer
+        totalMatches:
+          type: integer
+        noResult:
+          type: integer
+      required: [team1, team2, team1Wins, team2Wins, totalMatches, noResult]
+
+    ChampionshipEntry:
+      type: object
+      properties:
+        season:
+          type: string
+        champion:
+          type: string
+        runnerUp:
+          type: string
+        finalScore:
+          type: string
+        mvp:
+          type: string
+        venue:
+          type: string
+      required: [season, champion, runnerUp, finalScore, mvp, venue]
+
+    VenueStat:
+      type: object
+      properties:
+        name:
+          type: string
+        city:
+          type: string
+        matches:
+          type: integer
+        avgFirstInnings:
+          type: number
+        avgSecondInnings:
+          type: number
+        battingFirstWinPct:
+          type: number
+        chasingWinPct:
+          type: number
+        avgBoundaries:
+          type: number
+        pitchType:
+          type: string
+      required:
+        - name
+        - city
+        - matches
+        - avgFirstInnings
+        - avgSecondInnings
+        - battingFirstWinPct
+        - chasingWinPct
+        - avgBoundaries
+        - pitchType
+
+    FranchiseValuation:
+      type: object
+      properties:
+        team:
+          type: string
+        shortName:
+          type: string
+        color:
+          type: string
+        valuations:
+          type: array
+          items:
+            type: object
+            properties:
+              year:
+                type: integer
+              valuationCrore:
+                type: number
+            required: [year, valuationCrore]
+        cagr:
+          type: number
+        titles:
+          type: integer
+        socialFollowers:
+          type: string
+      required: [team, shortName, color, valuations, cagr, titles, socialFollowers]
+
+    RevenueBreakdown:
+      type: object
+      properties:
+        totalRevenue2024Crore:
+          type: number
+        mediaRightsPct:
+          type: number
+        sponsorshipPct:
+          type: number
+        ticketingPct:
+          type: number
+        merchandisePct:
+          type: number
+        digitalPct:
+          type: number
+        revenueByYear:
+          type: array
+          items:
+            type: object
+            properties:
+              year:
+                type: integer
+              totalCrore:
+                type: number
+              mediaRights:
+                type: number
+              sponsorship:
+                type: number
+            required: [year, totalCrore, mediaRights, sponsorship]
+        topSponsors:
+          type: array
+          items:
+            type: object
+            properties:
+              brand:
+                type: string
+              category:
+                type: string
+              dealValueCrore:
+                type: number
+            required: [brand, category, dealValueCrore]
+      required:
+        - totalRevenue2024Crore
+        - mediaRightsPct
+        - sponsorshipPct
+        - ticketingPct
+        - merchandisePct
+        - digitalPct
+        - revenueByYear
+        - topSponsors
+
+    IplRecords:
+      type: object
+      properties:
+        highestTeamScore:
+          $ref: "#/components/schemas/RecordEntry"
+        lowestTeamScore:
+          $ref: "#/components/schemas/RecordEntry"
+        highestIndividualScore:
+          $ref: "#/components/schemas/RecordEntry"
+        bestBowlingFigures:
+          $ref: "#/components/schemas/RecordEntry"
+        mostRunsCareer:
+          $ref: "#/components/schemas/RecordEntry"
+        mostWicketsCareer:
+          $ref: "#/components/schemas/RecordEntry"
+        fastestFifty:
+          $ref: "#/components/schemas/RecordEntry"
+        fastestHundred:
+          $ref: "#/components/schemas/RecordEntry"
+        mostSixesSeason:
+          $ref: "#/components/schemas/RecordEntry"
+        mostFoursSeason:
+          $ref: "#/components/schemas/RecordEntry"
+      required:
+        - highestTeamScore
+        - lowestTeamScore
+        - highestIndividualScore
+        - bestBowlingFigures
+        - mostRunsCareer
+        - mostWicketsCareer
+        - fastestFifty
+        - fastestHundred
+        - mostSixesSeason
+        - mostFoursSeason
+
+    RecordEntry:
+      type: object
+      properties:
+        value:
+          type: string
+        holder:
+          type: string
+        match:
+          type: string
+        season:
+          type: string
+      required: [value, holder, match, season]
+
+    RunDistributionBucket:
+      type: object
+      properties:
+        range:
+          type: string
+        count:
+          type: integer
+        pct:
+          type: number
+      required: [range, count, pct]
+
+    DismissalType:
+      type: object
+      properties:
+        type:
+          type: string
+        count:
+          type: integer
+        pct:
+          type: number
+      required: [type, count, pct]
