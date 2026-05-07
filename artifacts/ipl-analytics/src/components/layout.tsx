@@ -1,40 +1,40 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Sun, Moon, LayoutDashboard, TrendingUp, DollarSign, Award, Home } from "lucide-react";
+import { Search, Bell, User } from "lucide-react";
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const [isDark, setIsDark] = useState(true);
   const [location] = useLocation();
 
   useEffect(() => {
-    // Default to dark mode
-    document.documentElement.classList.add("dark");
+    document.documentElement.classList.remove("dark");
   }, []);
 
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDark);
-  }, [isDark]);
-
   const navItems = [
-    { href: "/", label: "Home", icon: Home },
-    { href: "/stats", label: "On-Field Stats", icon: TrendingUp },
-    { href: "/dashboard", label: "Analytics", icon: LayoutDashboard },
-    { href: "/business", label: "Business", icon: DollarSign },
-    { href: "/records", label: "Records", icon: Award },
+    { href: "/", label: "Home" },
+    { href: "/stats", label: "Stats" },
+    { href: "/dashboard", label: "Analytics" },
+    { href: "/business", label: "Business" },
+    { href: "/records", label: "Records" },
+  ];
+
+  const subNavItems = [
+    "Live Scores", "Schedule", "Series", "Teams", "Players", "Rankings", "News", "Videos", "Photos", "Stats Corner"
   ];
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-8">
+      {/* Top red brand bar */}
+      <header className="sticky top-0 z-50 w-full bg-primary text-primary-foreground shadow-sm">
+        <div className="max-w-[1400px] mx-auto px-4 h-14 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded bg-primary flex items-center justify-center font-bold text-primary-foreground">
+              <div className="w-9 h-9 rounded bg-white text-primary flex items-center justify-center font-black text-sm tracking-tight">
                 IPL
               </div>
-              <span className="font-bold text-lg tracking-tight hidden sm:inline-block">
-                Analytics Engine
-              </span>
+              <div className="leading-tight">
+                <div className="font-bold text-lg tracking-tight">CricStats</div>
+                <div className="text-[10px] uppercase tracking-widest opacity-80 -mt-0.5">Analytics Engine</div>
+              </div>
             </Link>
 
             <nav className="hidden md:flex items-center gap-1">
@@ -42,32 +42,69 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`px-3 py-2 rounded text-sm font-semibold transition-colors ${
                     location === item.href
-                      ? "bg-secondary text-secondary-foreground"
-                      : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
+                      ? "bg-white/15"
+                      : "hover:bg-white/10"
                   }`}
                 >
-                  <item.icon className="w-4 h-4" />
                   {item.label}
                 </Link>
               ))}
             </nav>
           </div>
 
-          <button
-            onClick={() => setIsDark((d) => !d)}
-            className="flex items-center justify-center w-9 h-9 rounded-md transition-colors hover:bg-secondary"
-            aria-label="Toggle dark mode"
-          >
-            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <button className="hidden md:flex items-center gap-2 bg-white/10 hover:bg-white/20 rounded-full px-3 py-1.5 text-sm transition">
+              <Search className="w-4 h-4" />
+              <span className="hidden lg:inline opacity-80">Search players, teams...</span>
+            </button>
+            <button className="w-9 h-9 rounded-full hover:bg-white/10 flex items-center justify-center transition">
+              <Bell className="w-4 h-4" />
+            </button>
+            <button className="w-9 h-9 rounded-full hover:bg-white/10 flex items-center justify-center transition">
+              <User className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </header>
 
-      <main className="max-w-[1400px] mx-auto px-4 py-8">
+      {/* Sub-navigation strip */}
+      <div className="border-b border-border bg-card sticky top-14 z-40">
+        <div className="max-w-[1400px] mx-auto px-4 h-10 flex items-center gap-6 overflow-x-auto">
+          {subNavItems.map((item, i) => (
+            <a
+              key={item}
+              href="#"
+              className={`text-xs font-semibold uppercase tracking-wider whitespace-nowrap py-2.5 border-b-2 transition-colors ${
+                i === 0
+                  ? "text-primary border-primary"
+                  : "text-muted-foreground border-transparent hover:text-foreground"
+              }`}
+            >
+              {item}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <main className="max-w-[1400px] mx-auto px-4 py-6">
         {children}
       </main>
+
+      <footer className="mt-12 border-t border-border bg-card">
+        <div className="max-w-[1400px] mx-auto px-4 py-8 text-xs text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>© 2026 CricStats Analytics Engine — IPL data 2008–2025</div>
+            <div className="flex gap-4">
+              <a href="#" className="hover:text-foreground">About</a>
+              <a href="#" className="hover:text-foreground">Privacy</a>
+              <a href="#" className="hover:text-foreground">Terms</a>
+              <a href="#" className="hover:text-foreground">Contact</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
