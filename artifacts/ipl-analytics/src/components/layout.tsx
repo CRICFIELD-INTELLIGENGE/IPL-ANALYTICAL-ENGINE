@@ -11,14 +11,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { href: "/", label: "Home" },
+    { href: "/matches", label: "Matches" },
+    { href: "/news", label: "News" },
     { href: "/stats", label: "Stats" },
     { href: "/dashboard", label: "Analytics" },
     { href: "/business", label: "Business" },
     { href: "/records", label: "Records" },
   ];
 
-  const subNavItems = [
-    "Live Scores", "Schedule", "Series", "Teams", "Players", "Rankings", "News", "Videos", "Photos", "Stats Corner"
+  const subNavItems: { label: string; href: string }[] = [
+    { label: "Live Scores", href: "/matches" },
+    { label: "Schedule", href: "/matches" },
+    { label: "News", href: "/news" },
+    { label: "Stats Corner", href: "/stats" },
+    { label: "Analytics", href: "/dashboard" },
+    { label: "Business", href: "/business" },
+    { label: "Records", href: "/records" },
   ];
 
   return (
@@ -72,19 +80,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* Sub-navigation strip */}
       <div className="border-b border-border bg-card sticky top-14 z-40">
         <div className="max-w-[1400px] mx-auto px-4 h-10 flex items-center gap-6 overflow-x-auto">
-          {subNavItems.map((item, i) => (
-            <a
-              key={item}
-              href="#"
-              className={`text-xs font-semibold uppercase tracking-wider whitespace-nowrap py-2.5 border-b-2 transition-colors ${
-                i === 0
-                  ? "text-primary border-primary"
-                  : "text-muted-foreground border-transparent hover:text-foreground"
-              }`}
-            >
-              {item}
-            </a>
-          ))}
+          {subNavItems.map((item) => {
+            const active = location === item.href;
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`text-xs font-semibold uppercase tracking-wider whitespace-nowrap py-2.5 border-b-2 transition-colors ${
+                  active ? "text-primary border-primary" : "text-muted-foreground border-transparent hover:text-foreground"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
       </div>
 

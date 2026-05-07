@@ -9,6 +9,9 @@ import StatsPage from "@/pages/stats";
 import DashboardPage from "@/pages/dashboard";
 import BusinessPage from "@/pages/business";
 import RecordsPage from "@/pages/records";
+import MatchesPage from "@/pages/matches";
+import NewsPage from "@/pages/news";
+import MatchDetailPage from "@/pages/match-detail";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,6 +25,9 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/matches" component={MatchesPage} />
+      <Route path="/match/:id" component={MatchDetailPage} />
+      <Route path="/news" component={NewsPage} />
       <Route path="/stats" component={StatsPage} />
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/business" component={BusinessPage} />
