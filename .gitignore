@@ -47,3 +47,6 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Cricsheet raw data (downloaded at build/dev time, not committed)
+lib/cricket-data/raw/

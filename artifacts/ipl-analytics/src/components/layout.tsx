@@ -4,14 +4,17 @@ import { motion } from "framer-motion";
 import {
   Home, Activity, Boxes, Banknote, TrendingUp, Layers,
   FolderDown, Newspaper, Sparkles, Search, Bell, Menu, X,
+  Database, Cpu,
 } from "lucide-react";
 import { AIAnalystPanel } from "./ai-analyst-panel";
 import { TrendingPanel } from "./trending-panel";
 import { LiveTickerBar } from "./live-ticker-bar";
 
 const NAV = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/on-field", label: "On-Field Intelligence", icon: Activity },
+  { href: "/", label: "Stats Portal", icon: Database },
+  { href: "/intelligence", label: "Sports Intelligence", icon: Cpu },
+  { href: "/home", label: "Newsroom", icon: Home },
+  { href: "/on-field", label: "On-Field Live", icon: Activity },
   { href: "/product", label: "Product Signals", icon: Boxes },
   { href: "/revenue", label: "Revenue Engine", icon: Banknote },
   { href: "/growth", label: "Growth Radar", icon: TrendingUp },
