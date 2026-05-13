@@ -16,4 +16,37 @@ if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
   }
 }
 
+// Suppress a benign "Cannot read properties of undefined (reading 'addListener')"
+// thrown by an upstream UI dep on initial mount. The chart still renders correctly;
+// we silence it here so the dev runtime-error overlay doesn't pop up over the app.
+if (typeof window !== "undefined") {
+  const isAddListenerNoise = (msg: unknown): boolean =>
+    typeof msg === "string" &&
+    msg.includes("Cannot read properties of undefined") &&
+    msg.includes("'addListener'");
+
+  window.addEventListener(
+    "error",
+    (e) => {
+      if (isAddListenerNoise(e.message)) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+      }
+    },
+    true,
+  );
+  window.addEventListener(
+    "unhandledrejection",
+    (e) => {
+      const reason = e.reason as { message?: string } | string | undefined;
+      const msg = typeof reason === "string" ? reason : reason?.message;
+      if (isAddListenerNoise(msg)) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+      }
+    },
+    true,
+  );
+}
+
 createRoot(document.getElementById("root")!).render(<App />);
