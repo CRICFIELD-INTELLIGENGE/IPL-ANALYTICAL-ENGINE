@@ -1,0 +1,80 @@
+L100: });
+L101: 
+L102: // ─────────────────────────────────────────────────────────────────────────────
+L103: //  BATSMEN & BOWLERS
+L104: // ─────────────────────────────────────────────────────────────────────────────
+L105: 
+L106: router.get("/ipl/batsmen", (_req: Request, res: Response): void => {
+L107:   getBatsmen()
+L108:     .then(data => res.json(data))
+L109:     .catch(err => res.status(500).json({ error: err.message }));
+L110: });
+L111: 
+L112: router.get("/ipl/batsmen/impact", (_req: Request, res: Response): void => {
+L113:   getBatsmenImpact()
+L114:     .then(data => res.json(data))
+L115:     .catch(err => res.status(500).json({ error: err.message }));
+L116: });
+L117: 
+L118: router.get("/ipl/batsmen/boundaries", (_req: Request, res: Response): void => {
+L119:   getBatsmenBoundaries()
+L120:     .then(data => res.json(data))
+L121:     .catch(err => res.status(500).json({ error: err.message }));
+L122: });
+L123: 
+L124: router.get("/ipl/bowlers", (_req: Request, res: Response): void => {
+L125:   getBowlers()
+L126:     .then(data => res.json(data))
+L127:     .catch(err => res.status(500).json({ error: err.message }));
+L128: });
+L129: 
+L130: router.get("/ipl/bowlers/death-specialists", (_req: Request, res: Response): void => {
+L131:   getBowlersDeath()
+L132:     .then(data => res.json(data))
+L133:     .catch(err => res.status(500).json({ error: err.message }));
+L134: });
+L135: 
+L136: // ─────────────────────────────────────────────────────────────────────────────
+L137: //  TEAMS
+L138: // ─────────────────────────────────────────────────────────────────────────────
+L139: 
+L140: router.get("/ipl/teams", (_req: Request, res: Response): void => {
+L141:   getTeams()
+L142:     .then(data => res.json(data))
+L143:     .catch(err => res.status(500).json({ error: err.message }));
+L144: });
+L145: 
+L146: router.get("/ipl/teams/head-to-head", (req: Request, res: Response): void => {
+L147:   const { team1, team2 } = req.query as { team1?: string; team2?: string };
+L148:   const records = [
+L149:     { team1: "CSK", team2: "MI",   team1Wins: 21, team2Wins: 19, totalMatches: 40, noResult: 0 },
+L150:     { team1: "CSK", team2: "RCB",  team1Wins: 24, team2Wins: 14, totalMatches: 38, noResult: 0 },
+L151:     { team1: "CSK", team2: "KKR",  team1Wins: 22, team2Wins: 15, totalMatches: 37, noResult: 0 },
+L152:     { team1: "MI",  team2: "RCB",  team1Wins: 23, team2Wins: 14, totalMatches: 37, noResult: 0 },
+L153:     { team1: "MI",  team2: "KKR",  team1Wins: 21, team2Wins: 15, totalMatches: 36, noResult: 0 },
+L154:     { team1: "CSK", team2: "DC",   team1Wins: 21, team2Wins: 12, totalMatches: 33, noResult: 0 },
+L155:     { team1: "RCB", team2: "KKR",  team1Wins: 16, team2Wins: 19, totalMatches: 35, noResult: 0 },
+L156:     { team1: "CSK", team2: "RR",   team1Wins: 18, team2Wins: 14, totalMatches: 32, noResult: 0 },
+L157:     { team1: "MI",  team2: "DC",   team1Wins: 20, team2Wins: 16, totalMatches: 36, noResult: 0 },
+L158:     { team1: "MI",  team2: "RR",   team1Wins: 18, team2Wins: 12, totalMatches: 30, noResult: 0 },
+L159:     { team1: "SRH", team2: "CSK",  team1Wins: 12, team2Wins: 14, totalMatches: 26, noResult: 0 },
+L160:     { team1: "SRH", team2: "MI",   team1Wins: 11, team2Wins: 14, totalMatches: 25, noResult: 0 },
+L161:   ];
+L162:   if (team1 && team2) {
+L163:     res.json(records.filter(r => (r.team1 === team1 && r.team2 === team2) || (r.team1 === team2 && r.team2 === team1)));
+L164:   } else {
+L165:     res.json(records);
+L166:   }
+L167: });
+L168: 
+L169: router.get("/ipl/teams/championship", (_req: Request, res: Response): void => {
+L170:   getChampionships()
+L171:     .then(data => res.json(data))
+L172:     .catch(err => res.status(500).json({ error: err.message }));
+L173: });
+L174: 
+L175: // ─────────────────────────────────────────────────────────────────────────────
+L176: //  VENUES
+L177: // ─────────────────────────────────────────────────────────────────────────────
+L178: 
+L179: router.get("/ipl/venues", (_req: Request, res: Response): void => {

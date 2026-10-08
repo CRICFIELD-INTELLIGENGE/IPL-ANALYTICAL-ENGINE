@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { getAccurateMatchDetailsFrontend } from "./onlineDb";
 
 const API_BASE = `${import.meta.env.BASE_URL}api`.replace(/\/+$/, "");
 
@@ -32,6 +33,10 @@ export interface LiveMatchScore {
 export interface LiveMatch {
   matchInfo: LiveMatchInfo;
   matchScore?: LiveMatchScore;
+  scorecard?: {
+    batting: { name: string; status: string; runs: number; balls: number; fours: number; sixes: number; sr: number }[];
+    bowling: { name: string; overs: number; maidens: number; runs: number; wickets: number; eco: number }[];
+  }[];
 }
 export interface LiveMatchesResponse {
   count: number;
@@ -83,6 +88,57 @@ export function useLiveNews(category: "general" | "ipl" = "general") {
     queryFn: () => fetchJson<NewsResponse>(`/live/news?category=${category}`),
     refetchInterval: 5 * 60_000,
     staleTime: 60_000,
+  });
+}
+
+export function useLiveOrangeCap() {
+  return useQuery({
+    queryKey: ["live", "orange-cap"],
+    queryFn: () => fetchJson<any[]>("/live/orange-cap"),
+    refetchInterval: 60_000,
+  });
+}
+
+export function useLiveMatchDetails(matchId: string | number | null, team1: string, team2: string) {
+  return useQuery({
+    queryKey: ["live", "match-details", matchId],
+    queryFn: () => getAccurateMatchDetailsFrontend(String(matchId), team1, team2),
+    enabled: !!matchId,
+    staleTime: 60_000,
+  });
+}
+
+export function useLivePurpleCap() {
+  return useQuery({
+    queryKey: ["live", "purple-cap"],
+    queryFn: () => fetchJson<any[]>("/live/purple-cap"),
+    refetchInterval: 60_000,
+  });
+}
+
+export function useLiveTrending() {
+  return useQuery({
+    queryKey: ["live", "trending"],
+    queryFn: () => fetchJson<any[]>("/live/trending"),
+    refetchInterval: 30_000,
+  });
+}
+
+export function useLiveWinProbability(matchId?: number) {
+  return useQuery({
+    queryKey: ["live", "win-probability", matchId],
+    queryFn: () => fetchJson<any>(`/live/win-probability/${matchId}`),
+    enabled: !!matchId,
+    refetchInterval: 15_000,
+  });
+}
+
+export function useLiveVenueInsights(venueId?: number) {
+  return useQuery({
+    queryKey: ["live", "venue-insights", venueId],
+    queryFn: () => fetchJson<any>(`/live/venue-insights/${venueId}`),
+    enabled: !!venueId,
+    refetchInterval: 60_000,
   });
 }
 
@@ -138,4 +194,112 @@ export function startTime(ms: number): string {
     minute: "2-digit",
     hour12: true,
   });
+}
+
+export function useLiveAuctionState() {
+  return useQuery({
+    queryKey: ["live", "auction", "state"],
+    queryFn: () => fetchJson<any>("/auction/state"),
+    refetchInterval: 1000, 
+  });
+}
+
+export function useAuctionBid() {
+  return async (teamId: number, increment?: number) => {
+    const res = await fetch(`${API_BASE}/auction/bid`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ teamId, increment }),
+    });
+    return res.json();
+  };
+}
+
+export function useAuctionStart() {
+  return async () => {
+    const res = await fetch(`${API_BASE}/auction/start`, {
+      method: "POST",
+    });
+    return res.json();
+  };
+}
+
+export function useAuctionSelectTeam() {
+  return async (teamId: number) => {
+    const res = await fetch(`${API_BASE}/auction/select-team`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ teamId }),
+    });
+    return res.json();
+  };
+}
+
+export function useAuctionPause() {
+  return async () => {
+    const res = await fetch(`${API_BASE}/auction/pause`, {
+      method: "POST",
+    });
+    return res.json();
+  };
+}
+
+export function useAuctionResume() {
+  return async () => {
+    const res = await fetch(`${API_BASE}/auction/resume`, {
+      method: "POST",
+    });
+    return res.json();
+  };
+}
+
+export function useAuctionReset() {
+  return async () => {
+    const res = await fetch(`${API_BASE}/auction/reset`, {
+      method: "POST",
+    });
+    return res.json();
+  };
+}
+
+export function useAuctionCreateRoom() {
+  return async () => {
+    const res = await fetch(`${API_BASE}/auction/create-room`, {
+      method: "POST",
+    });
+    return res.json();
+  };
+}
+
+export function useAuctionJoinRoom() {
+  return async (code: string, teamId?: number) => {
+    const res = await fetch(`${API_BASE}/auction/join-room`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code, teamId }),
+    });
+    return res.json();
+  };
+}
+
+export function useAuctionSetSpeed() {
+  return async (speed: number) => {
+    const res = await fetch(`${API_BASE}/auction/set-speed`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ speed }),
+    });
+    return res.json();
+  };
+}
+
+export function useAuctionChat() {
+  return async (user: string, team: string, msg: string) => {
+    const res = await fetch(`${API_BASE}/auction/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user, team, msg }),
+    });
+    return res.json();
+  };
 }

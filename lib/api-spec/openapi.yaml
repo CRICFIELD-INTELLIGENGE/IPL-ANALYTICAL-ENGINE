@@ -597,6 +597,10 @@ components:
           type: string
         matches:
           type: integer
+        innings:
+          type: integer
+        balls:
+          type: integer
         wickets:
           type: integer
         economy:
@@ -613,10 +617,18 @@ components:
           type: integer
         bestFigures:
           type: string
+        boundaryPct:
+          type: number
+        ballsPerBoundary:
+          type: number
+        trueEconomy:
+          type: number
       required:
         - name
         - team
         - matches
+        - innings
+        - balls
         - wickets
         - economy
         - average
@@ -625,6 +637,9 @@ components:
         - powerplayWickets
         - deathWickets
         - bestFigures
+        - boundaryPct
+        - ballsPerBoundary
+        - trueEconomy
 
     TeamStat:
       type: object

@@ -50,3 +50,10 @@ Thumbs.db
 
 # Cricsheet raw data (downloaded at build/dev time, not committed)
 lib/cricket-data/raw/
+
+# Generated cricket image-ingestion outputs
+artifacts/image-ingestion/data/*.csv
+artifacts/image-ingestion/data/*.json
+artifacts/image-ingestion/logs/*.log
+artifacts/image-ingestion/assets/**/*.webp
+!artifacts/image-ingestion/**/.gitkeep

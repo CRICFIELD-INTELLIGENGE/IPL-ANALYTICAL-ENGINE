@@ -1,389 +1,640 @@
-import { Layout } from "@/components/layout";
-import { GlassCard } from "@/components/glass-card";
-import { useLiveIplMatches, useLiveNews, getMatchScoreLine } from "@/lib/live";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "wouter";
-import { motion } from "framer-motion";
+import { Layout } from "@/components/layout";
+import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from "framer-motion";
+import { Brain, Sparkles, ArrowRight, ArrowUpRight, MapPin, Flame, TrendingUp, ChevronLeft, ChevronRight, Activity, Trophy, Shield, ExternalLink, Play } from "lucide-react";
+import { SmartFilters } from "@/components/smart-filters";
+import { useTeamTheme } from "@/lib/team-context";
 import {
-  Play, ArrowRight, Trophy, Target, Zap, TrendingUp, Star,
-  ChevronLeft, ChevronRight, MapPin, Sparkles, Quote,
-} from "lucide-react";
+  useLiveIplMatches, useLiveOrangeCap, useLiveTrending,
+  getMatchScoreLine, getMatchStateColor, startTime
+} from "@/lib/live";
 import {
-  ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip,
-} from "recharts";
-import { useRef } from "react";
+  useOverview, useSeasons, useTeams, useVenues, usePlayerImages,
+  teamColor, teamShort, resolvePlayerImage
+} from "@/lib/aggregates";
+import { TeamLogo } from "@/components/team-logo";
+import { AdVessel } from "@/components/ad-vessel";
 
-const STATS_ROW = [
-  { label: "Matches", value: "74", sub: "Completed", icon: Target },
-  { label: "Runs", value: "18,542", sub: "This Season", icon: Zap },
-  { label: "High Score", value: "277/3", sub: "Sunrisers", icon: TrendingUp },
-  { label: "Sixes", value: "1,234", sub: "This Season", icon: Star },
-  { label: "Wickets", value: "1,089", sub: "This Season", icon: Trophy },
-];
+const SEASON_DATA: Record<string, { stats: { label: string; value: string; sub: string }[]; caps: { label: string; player: string; team: string; value: string; unit: string; color: string; img: string }[] }> = {
+  "2026": {
+    stats: [
+      { label: "Matches", value: "74", sub: "Completed" },
+      { label: "Runs", value: "18,542", sub: "This Season" },
+      { label: "High Score", value: "277/3", sub: "Sunrisers" },
+      { label: "Sixes", value: "1,234", sub: "This Season" },
+      { label: "Wickets", value: "1,089", sub: "This Season" },
+    ],
+    caps: [
+      { label: "Orange Cap", player: "Virat Kohli", team: "RCB", value: "890", unit: "Runs", color: "#F9CD05", img: "/virat kohli.jpg" },
+      { label: "Purple Cap", player: "Bhuvneshwar Kumar", team: "SRH", value: "32", unit: "Wickets", color: "#8B5CF6", img: "/bhuvaneswar kumar.jpg" },
+      { label: "Most Sixes", player: "Abhishek Sharma", team: "SRH", value: "45", unit: "Sixes", color: "#F97316", img: "/abhisek sharma.jpg" },
+      { label: "Best Economy", player: "Jasprit Bumrah", team: "MI", value: "6.45", unit: "Economy", color: "#3B82F6", img: "/bumrah.jpg" },
+    ],
+  },
+  "2025": {
+    stats: [
+      { label: "Matches", value: "70", sub: "Completed" },
+      { label: "Runs", value: "17,890", sub: "This Season" },
+      { label: "High Score", value: "265/4", sub: "CSK" },
+      { label: "Sixes", value: "1,189", sub: "This Season" },
+      { label: "Wickets", value: "1,040", sub: "This Season" },
+    ],
+    caps: [
+      { label: "Orange Cap", player: "Virat Kohli", team: "RCB", value: "741", unit: "Runs", color: "#F9CD05", img: "/virat kohli.jpg" },
+      { label: "Purple Cap", player: "Bhuvneshwar Kumar", team: "SRH", value: "28", unit: "Wickets", color: "#8B5CF6", img: "/bhuvaneswar kumar.jpg" },
+      { label: "Most Sixes", player: "Abhishek Sharma", team: "SRH", value: "38", unit: "Sixes", color: "#F97316", img: "/abhisek sharma.jpg" },
+      { label: "Best Economy", player: "Jasprit Bumrah", team: "MI", value: "6.82", unit: "Economy", color: "#3B82F6", img: "/bumrah.jpg" },
+    ],
+  },
+  "2024": {
+    stats: [
+      { label: "Matches", value: "68", sub: "Completed" },
+      { label: "Runs", value: "16,980", sub: "This Season" },
+      { label: "High Score", value: "257/6", sub: "MI" },
+      { label: "Sixes", value: "1,102", sub: "This Season" },
+      { label: "Wickets", value: "980", sub: "This Season" },
+    ],
+    caps: [
+      { label: "Orange Cap", player: "Virat Kohli", team: "RCB", value: "661", unit: "Runs", color: "#F9CD05", img: "/virat kohli.jpg" },
+      { label: "Purple Cap", player: "Mayank Yadav", team: "LSG", value: "24", unit: "Wickets", color: "#8B5CF6", img: "/mayank yadav.jpg" },
+      { label: "Most Sixes", player: "Abhishek Sharma", team: "SRH", value: "31", unit: "Sixes", color: "#F97316", img: "/abhisek sharma.jpg" },
+      { label: "Best Economy", player: "Jasprit Bumrah", team: "MI", value: "6.97", unit: "Economy", color: "#3B82F6", img: "/bumrah.jpg" },
+    ],
+  },
+};
 
-const AWARDS = [
-  { tag: "Orange Cap", player: "Virat Kohli", team: "RCB", value: "672", unit: "Runs", color: "from-orange-500 to-amber-500", chip: "bg-orange-500/20 text-orange-300 border-orange-500/40" },
-  { tag: "Purple Cap", player: "Noor Ahmad", team: "CSK", value: "21", unit: "Wickets", color: "from-purple-500 to-fuchsia-500", chip: "bg-purple-500/20 text-purple-300 border-purple-500/40" },
-  { tag: "Most Sixes", player: "Nicholas Pooran", team: "LSG", value: "35", unit: "Sixes", color: "from-blue-500 to-cyan-500", chip: "bg-blue-500/20 text-blue-300 border-blue-500/40" },
-  { tag: "Best Economy", player: "Trent Boult", team: "MI", value: "6.45", unit: "Economy", color: "from-emerald-500 to-teal-500", chip: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40" },
-];
+const TEAMS = ["All Teams", "MI", "CSK", "RCB", "KKR", "SRH", "DC", "GT", "LSG", "PBKS", "RR"];
 
-const INSIGHTS = [
-  { tag: "Business", title: "Why CSK Builds Better Teams", date: "May 18, 2025", read: "8 min read", grad: "from-rose-500/30 via-fuchsia-500/20 to-transparent" },
-  { tag: "Product", title: "IPL is not Cricket, It's a Product", date: "May 15, 2025", read: "6 min read", grad: "from-purple-500/30 via-indigo-500/20 to-transparent" },
-  { tag: "Analytics", title: "The Undervalued XI of IPL 2025", date: "May 12, 2025", read: "7 min read", grad: "from-blue-500/30 via-cyan-500/20 to-transparent" },
-  { tag: "Growth", title: "The Second Screen Economy of IPL", date: "May 10, 2025", read: "6 min read", grad: "from-emerald-500/30 via-teal-500/20 to-transparent" },
-  { tag: "Strategy", title: "The Auction Math Nobody Talks About", date: "May 6, 2025", read: "5 min read", grad: "from-amber-500/30 via-orange-500/20 to-transparent" },
+const TRENDING = [
+  { title: "Dhoni finishes in style again", mentions: "12.4K+" },
+  { title: "RCB breaks chase record", mentions: "9.8K+" },
+  { title: "Youngsters lighting up IPL 2026", mentions: "8.1K+" },
+  { title: "Impact Player rule debate", mentions: "5.3K+" },
 ];
 
 const VENUES = [
-  { name: "Chepauk", type: "Spin Friendly", value: 76, dir: "spin" },
-  { name: "Eden Gardens", type: "Spin Friendly", value: 68, dir: "spin" },
-  { name: "Wankhede", type: "Pace Friendly", value: 64, dir: "pace" },
-  { name: "M. Chinnaswamy", type: "Pace Friendly", value: 58, dir: "pace" },
-  { name: "Narendra Modi", type: "Balanced", value: 51, dir: "balanced" },
+  { name: "Chepauk", pct: 76, color: "bg-yellow-400" },
+  { name: "Eden Gardens", pct: 68, color: "bg-yellow-400" },
+  { name: "Wankhede", pct: 64, color: "bg-blue-400" },
+  { name: "Chinnaswamy", pct: 58, color: "bg-blue-400" },
+  { name: "Narendra Modi", pct: 51, color: "bg-green-400" },
 ];
 
-const FOOTER_STATS = [
-  { v: "2008", l: "IPL Started" },
-  { v: "12", l: "Teams" },
-  { v: "2.5B+", l: "Digital Views" },
-  { v: "₹1,11,500 Cr+", l: "Economic Impact" },
-  { v: "500M+", l: "Fans Worldwide" },
+const INSIGHTS = [
+  { img: "/csk insight.jpg", tag: "Business", title: "Why CSK Builds Better Teams", color: "#F9CD05", date: "May 18, 2025", read: "8 min" },
+  { img: "/mayank yadav.jpg", tag: "Product", title: "IPL is not Cricket, It's a Product", color: "#8B5CF6", date: "May 15, 2025", read: "6 min" },
+  { img: "/ipl media.jpg", tag: "Analytics", title: "The Undervalued XI of IPL 2025", color: "#3B82F6", date: "May 12, 2025", read: "7 min" },
 ];
-
-const WIN_PROB_DATA = Array.from({ length: 21 }, (_, i) => {
-  const ov = i;
-  const csk = Math.min(95, 35 + ov * 1.4 + Math.sin(ov / 2) * 5);
-  return { ov, MI: 100 - csk, CSK: csk };
-});
 
 export default function HomePage() {
-  const { data: matches } = useLiveIplMatches();
-  const { data: news } = useLiveNews("ipl");
+  const { scrollYProgress } = useScroll();
+  const { selectedTeam } = useTeamTheme();
+  const [capIdx, setCapIdx] = useState(0);
+  const [selYear, setSelYear] = useState("2026");
 
-  const liveOrNext = matches?.matches.find((m) => /progress|innings/i.test(m.matchInfo.state))
-    ?? matches?.matches.find((m) => /preview|upcoming/i.test(m.matchInfo.state))
-    ?? matches?.matches[0];
+  // Live Data Hooks
+  const liveMatches = useLiveIplMatches();
+  const liveOrangeCap = useLiveOrangeCap();
+  const liveTrending = useLiveTrending();
+  const venuesData = useVenues();
+  const playerImages = usePlayerImages();
 
-  const insightScroller = useRef<HTMLDivElement>(null);
-  const scroll = (dir: 1 | -1) => insightScroller.current?.scrollBy({ left: dir * 360, behavior: "smooth" });
+  const seasonData = SEASON_DATA[selYear];
+  // Sync live orange cap if available and season is 2026
+  const CAPS = (selYear === "2026" && liveOrangeCap.data && liveOrangeCap.data.length > 0)
+    ? liveOrangeCap.data.map((c: any) => ({
+      label: c.type || "Orange Cap",
+      player: c.player,
+      team: c.team,
+      value: String(c.runs || c.wickets || c.value),
+      unit: c.runs ? "Runs" : c.wickets ? "Wickets" : "Value",
+      color: c.runs ? "#F9CD05" : "#8B5CF6",
+      img: playerImages.data ? resolvePlayerImage(c.player, playerImages.data) : (c.image || "/virat kohli.jpg")
+    }))
+    : seasonData.caps.map(c => ({
+      ...c,
+      img: playerImages.data ? resolvePlayerImage(c.player, playerImages.data) : c.img
+    }));
+
+  const STATS = seasonData.stats;
+  const cap = CAPS[Math.min(capIdx, CAPS.length - 1)] || CAPS[0];
+
+  // Live Match for Hero/Next Match Card
+  const activeMatch = liveMatches.data?.matches?.find(m => /progress|innings/i.test(m.matchInfo.state))
+    || liveMatches.data?.matches?.[0];
+
+  const TRENDS = liveTrending.data && liveTrending.data.length > 0
+    ? liveTrending.data.slice(0, 4)
+    : TRENDING;
+
+  const headerProgress = useTransform(scrollYProgress, [0, 0.08], [0, 1]);
+
+  // Diagonal scale: whole canvas compresses proportionally at final scroll
+  const masterScale = useTransform(scrollYProgress, [0.6, 1, 1], [1, 0.93, 0.93]);
+
+  const heroH = useTransform(scrollYProgress, [0, 0.35, 1], ["100%", "36%", "36%"]);
+  const heroW = useTransform(scrollYProgress, [0, 0.18, 0.4, 1], ["100%", "100%", "calc(100% - 540px)", "calc(100% - 540px)"]);
+  // Col2 and Col3 expand from 0 to their final widths — hero (flex-1) naturally yields space
+  const col2W = useTransform(scrollYProgress, [0.18, 0.4, 1], ["0px", "240px", "240px"]);
+  const col3W = useTransform(scrollYProgress, [0.18, 0.4, 1], ["0px", "300px", "300px"]);
+  const titleSz = useTransform(scrollYProgress, [0, 0.3, 1], ["72px", "24px", "24px"]);
+  const padTop = useTransform(scrollYProgress, [0, 0.3, 1], ["10%", "5%", "5%"]);
+  const padLeft = useTransform(scrollYProgress, [0, 0.3, 1], ["6%", "5%", "5%"]);
+  const subtitleOp = useTransform(scrollYProgress, [0, 0.22, 0.8, 1], [1, 0, 0, 0]);
+  const ctaOp = useTransform(scrollYProgress, [0, 0.25, 0.8, 1], [1, 0, 0, 0]);
+  const titleOp = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0]);
+  const bannerOp = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 1]);
+
+  // Dynamic Caption logic
+  const [scrollCaption, setScrollCaption] = useState("IPL IS NOT JUST ABOUT CRICKET.");
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    if (v < 0.08) setScrollCaption("IPL IS NOT JUST ABOUT CRICKET.");
+    else if (v < 0.16) setScrollCaption("IT'S A PRODUCT.");
+    else if (v < 0.24) setScrollCaption("A BUSINESS.");
+    else if (v < 0.32) setScrollCaption("IPL - A FESTIVAL.");
+    else if (v < 0.4) setScrollCaption("AN EMOTION.");
+    else if (v < 0.48) setScrollCaption("A CELEBRATION.");
+    else setScrollCaption("A BILLION DOLLAR ECOSYSTEM.");
+  });
+
+  const r1Op = useTransform(scrollYProgress, [0.2, 0.42, 1], [0, 1, 1]);
+  const r1X = useTransform(scrollYProgress, [0.2, 0.42, 1], [20, 0, 0]);
+  const r2Op = useTransform(scrollYProgress, [0.35, 0.58, 1], [0, 1, 1]);
+  const r2Y = useTransform(scrollYProgress, [0.35, 0.58, 1], [60, 0, 0]);
+  const r3Op = useTransform(scrollYProgress, [0.56, 0.8, 1], [0, 1, 1]);
+  const r3Y = useTransform(scrollYProgress, [0.56, 0.8, 1], [80, 0, 0]);
 
   return (
-    <Layout>
-      {/* HERO + LIVE MATCH PANEL */}
-      <div className="grid gap-4 lg:gap-5 lg:[grid-template-columns:minmax(0,1.55fr)_minmax(0,1fr)]">
-        {/* Hero */}
-        <GlassCard className="relative overflow-hidden min-h-[440px]">
-          <div className="absolute inset-0 z-0 pointer-events-none">
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(800px 500px at 100% 0%, hsl(270 95% 35% / 0.55), transparent 60%), radial-gradient(600px 400px at 110% 100%, hsl(220 100% 40% / 0.5), transparent 60%), radial-gradient(400px 300px at 80% 50%, hsl(320 100% 45% / 0.35), transparent 60%)",
-              }}
-            />
-            {/* Abstract neon orbs */}
-            <div className="absolute right-[8%] top-[18%] w-40 h-40 rounded-full opacity-70 blur-2xl"
-                 style={{ background: "radial-gradient(circle, hsl(270 100% 70%) 0%, transparent 70%)" }} />
-            <div className="absolute right-[28%] bottom-[14%] w-56 h-56 rounded-full opacity-60 blur-3xl"
-                 style={{ background: "radial-gradient(circle, hsl(220 100% 65%) 0%, transparent 70%)" }} />
-            <div className="absolute right-[45%] top-[10%] w-24 h-24 rounded-full opacity-60 blur-xl"
-                 style={{ background: "radial-gradient(circle, hsl(320 100% 65%) 0%, transparent 70%)" }} />
-            {/* Cricket-ball motif on the right */}
-            <div className="hidden md:block absolute right-[10%] top-1/2 -translate-y-1/2 w-44 h-44 rounded-full"
-                 style={{
-                   background: "radial-gradient(circle at 35% 30%, hsl(0 90% 60%) 0%, hsl(0 90% 35%) 40%, hsl(0 90% 18%) 80%)",
-                   boxShadow: "0 30px 90px -10px hsl(0 90% 30% / 0.6), inset -8px -10px 20px hsl(0 0% 0% / 0.6)",
-                 }}>
-              <div className="absolute inset-x-0 top-1/2 h-[2px] bg-white/40" />
-              <div className="absolute inset-x-0 top-[calc(50%-6px)] h-[1px] bg-white/20" />
-              <div className="absolute inset-x-0 top-[calc(50%+6px)] h-[1px] bg-white/20" />
+    <Layout hideHeaderProgress={headerProgress} hideRightPanel>
+      {/* Top Telemetry / Broadcast Strip — Place directly above Hero Banner */}
+      <div className="w-full max-w-7xl mx-auto px-4 pt-3 pb-2">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-2.5 rounded-xl border border-cyan-500/30 bg-slate-900/80 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.12)]">
+          {/* Left: Stream / Match Telemetry */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-500/15 border border-red-500/30 text-red-400 font-mono text-xs font-semibold uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              Official Broadcast
             </div>
-            <div className="absolute inset-0 scanline opacity-30" />
+            <div className="text-xs text-slate-300">
+              <span className="text-white font-medium">Grand Final: GT vs RCB</span>
+              <span className="hidden sm:inline text-slate-500 mx-2">|</span>
+              <span className="hidden sm:inline text-slate-400">4K Ultra HD · Multi-Cam Telemetry</span>
+            </div>
           </div>
-          <div className="relative z-10 p-6 sm:p-8 max-w-[60%] flex flex-col justify-center min-h-[440px]">
-            <motion.h1
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="font-display text-3xl sm:text-4xl lg:text-[40px] font-bold leading-[1.08] tracking-tight"
+
+          {/* Right: Watch Action Button */}
+          <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+            <a
+              href="https://www.hotstar.com/in/sports/cricket/tournaments/indian-premier-league/1271507153"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-4 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold text-xs tracking-wide shadow-lg shadow-cyan-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
-              IPL is not just cricket.{" "}
-              <span className="block mt-1">
-                It's a <span className="gradient-text text-glow-purple">Product.</span>
-              </span>
-              <span className="block">
-                A <span className="text-accent text-glow-blue">Business.</span>
-              </span>
-              <span className="block">
-                A <span className="gradient-text text-glow-pink">Billion Dollar</span> Ecosystem.
-              </span>
-            </motion.h1>
-            <p className="mt-5 text-sm text-muted-foreground max-w-md">
-              Data-driven insights across Sports, Product, Business, Fans and the IPL Economy.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <Link
-                href="/product"
-                className="neon-btn rounded-xl px-5 py-2.5 text-sm font-semibold flex items-center gap-2"
-              >
-                Explore Insights <ArrowRight className="w-4 h-4" />
-              </Link>
-              <button className="flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10">
-                <span className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
-                  <Play className="w-3.5 h-3.5 fill-white" />
-                </span>
-                Watch Trailer <span className="text-muted-foreground text-xs">1:15 min</span>
-              </button>
-            </div>
+              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <span>Watch Live on Hotstar</span>
+            </a>
           </div>
-        </GlassCard>
-
-        {/* Live match panel */}
-        <GlassCard className="p-5 flex flex-col" delay={0.05}>
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <span className="ticker-dot" />
-              <span className="text-xs font-mono uppercase tracking-wider text-destructive">{liveOrNext && /progress|innings/i.test(liveOrNext.matchInfo.state) ? "Live Match" : "Featured Match"}</span>
-            </div>
-            <div className="text-xs text-muted-foreground">{liveOrNext?.matchInfo.seriesName ?? "IPL 2026"} · {liveOrNext?.matchInfo.matchDesc ?? ""}</div>
-          </div>
-
-          {liveOrNext ? <FeaturedMatch match={liveOrNext} /> : <FeaturedMatchFallback />}
-
-          <div className="mt-5">
-            <div className="text-xs font-semibold text-muted-foreground mb-2">Win Probability</div>
-            <div className="h-[140px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={WIN_PROB_DATA} margin={{ top: 4, right: 4, left: -22, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="hsl(220 100% 65%)" stopOpacity={0.6} />
-                      <stop offset="100%" stopColor="hsl(220 100% 65%)" stopOpacity={0.05} />
-                    </linearGradient>
-                    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="hsl(38 100% 60%)" stopOpacity={0.6} />
-                      <stop offset="100%" stopColor="hsl(38 100% 60%)" stopOpacity={0.05} />
-                    </linearGradient>
-                  </defs>
-                  <XAxis dataKey="ov" tick={{ fontSize: 10, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 10, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} domain={[0, 100]} />
-                  <Tooltip contentStyle={{ background: "hsl(240 30% 9%)", border: "1px solid hsl(250 40% 25%)", borderRadius: 8, fontSize: 12 }} />
-                  <Area type="monotone" dataKey="MI" stroke="hsl(220 100% 65%)" strokeWidth={2} fill="url(#g1)" />
-                  <Area type="monotone" dataKey="CSK" stroke="hsl(38 100% 60%)" strokeWidth={2} fill="url(#g2)" />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="flex items-center justify-around text-xs mt-1">
-              <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[hsl(220_100%_65%)]" /> MI <span className="text-accent font-mono">38%</span></div>
-              <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[hsl(38_100%_60%)]" /> CSK <span className="text-accent font-mono">62%</span></div>
-            </div>
-          </div>
-
-          <Link href={liveOrNext ? `/match/${liveOrNext.matchInfo.matchId}` : "/on-field"} className="mt-4 flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10">
-            View Full Match Center <ArrowRight className="w-4 h-4" />
-          </Link>
-        </GlassCard>
-      </div>
-
-      {/* STATS ROW + AWARDS */}
-      <div className="grid gap-4 lg:gap-5 mt-4 lg:mt-5 lg:[grid-template-columns:minmax(0,1fr)_minmax(0,2.6fr)]">
-        <GlassCard className="p-4">
-          <div className="grid grid-cols-5 lg:grid-cols-1 gap-3">
-            {STATS_ROW.map((s, i) => (
-              <div key={s.label} className="flex items-start gap-3 px-2 lg:py-1">
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br ${i % 2 ? "from-primary/30 to-accent/20" : "from-accent/30 to-primary/20"} border border-white/10`}>
-                  <s.icon className="w-4 h-4" />
-                </div>
-                <div className="leading-tight">
-                  <div className="text-[11px] uppercase tracking-wider text-muted-foreground">{s.label}</div>
-                  <div className="font-display font-bold text-lg">{s.value}</div>
-                  <div className="text-[10px] text-muted-foreground">{s.sub}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </GlassCard>
-
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          {AWARDS.map((a, i) => (
-            <GlassCard key={a.tag} className="p-4" delay={i * 0.05}>
-              <div className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] uppercase tracking-wider font-semibold border ${a.chip}`}>
-                <Trophy className="w-3 h-3" /> {a.tag}
-              </div>
-              <div className="mt-3 flex items-center gap-3">
-                <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${a.color} flex items-center justify-center text-sm font-bold text-white shadow-[0_0_20px_-4px_currentColor]`}>
-                  {a.player.split(" ").map((p) => p[0]).join("").slice(0, 2)}
-                </div>
-                <div className="leading-tight">
-                  <div className="font-semibold text-sm">{a.player}</div>
-                  <div className="text-[11px] text-muted-foreground">{a.team}</div>
-                </div>
-              </div>
-              <div className="mt-3 flex items-end justify-between">
-                <div className="font-display font-bold text-2xl gradient-text">{a.value}</div>
-                <div className="text-[11px] text-muted-foreground">{a.unit}</div>
-              </div>
-            </GlassCard>
-          ))}
         </div>
       </div>
 
-      {/* INSIGHTS CAROUSEL + VENUE HEATMAP */}
-      <div className="grid gap-4 lg:gap-5 mt-4 lg:mt-5 lg:[grid-template-columns:minmax(0,1.7fr)_minmax(0,1fr)]">
-        <div>
-          <div className="flex items-center justify-between mb-3 px-1">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-accent" />
-              <h2 className="font-display font-semibold tracking-wider text-sm uppercase">Insights That Matter</h2>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <button aria-label="Scroll insights left" onClick={() => scroll(-1)} className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center"><ChevronLeft className="w-4 h-4" /></button>
-              <button aria-label="Scroll insights right" onClick={() => scroll(1)} className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center"><ChevronRight className="w-4 h-4" /></button>
-            </div>
-          </div>
-          <div ref={insightScroller} className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2 -mx-1 px-1 scroll-smooth">
-            {INSIGHTS.map((p, i) => (
-              <Link key={i} href="/blogs" className="snap-start shrink-0 w-[230px] sm:w-[260px]">
-                <GlassCard className="overflow-hidden h-full" delay={i * 0.04}>
-                  <div className={`h-32 relative bg-gradient-to-br ${p.grad} flex items-end p-3`}>
-                    <div className="absolute inset-0 scanline opacity-40" />
-                    <span className="relative text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md bg-black/40 border border-white/10">{p.tag}</span>
+      <div style={{ height: "320vh" }}>
+        <motion.div
+          style={{ scale: masterScale, transformOrigin: "center top" }}
+          className="sticky top-0 w-full h-screen flex flex-col gap-2.5 overflow-hidden bg-[#050816] p-2.5 pb-0"
+        >
+
+          {/* ROW 1 */}
+          <motion.div style={{ height: heroH }} className="flex gap-2.5 shrink-0 min-h-0">
+            {/* HERO */}
+            <motion.div style={{ width: heroW }} className="relative bg-[#050816] rounded-[24px] border border-white/10 overflow-hidden shrink-0 group flex">
+              {/* IMAGE SIDE (RIGHT) */}
+              <div className="absolute inset-0 flex justify-end">
+                <motion.div 
+                  style={{ opacity: bannerOp }}
+                  className="w-[60%] h-full relative"
+                >
+                  <motion.img 
+                    src="/TITLE BANNER.png" 
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-[12s]" 
+                    alt="IPL" 
+                  />
+                  {/* Seamless blending gradients */}
+                  <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-[#050816] to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/80 via-transparent to-transparent" />
+                </motion.div>
+              </div>
+
+              {/* TEXT CONTENT (LEFT) */}
+              <motion.div style={{ paddingTop: padTop, paddingLeft: padLeft, opacity: titleOp }} className="relative z-10 h-full flex flex-col w-[45%]">
+                <motion.h1 style={{ fontSize: titleSz }} className="font-black leading-[1.05] text-white uppercase tracking-tight mb-4 origin-left">
+                  {scrollCaption === "IPL IS NOT JUST ABOUT CRICKET." ? (
+                    <><span className="animate-ipl-glow">IPL</span><span className="opacity-15"> IS NOT JUST ABOUT</span> <br /><span className="text-[#F9CD05]">CRICKET.</span></>
+                  ) : scrollCaption === "IT'S A PRODUCT." ? (
+                    <><span className="opacity-15">IT'S A </span><span className="text-[#06B6D4]">PRODUCT.</span></>
+                  ) : scrollCaption === "A BUSINESS." ? (
+                    <><span className="opacity-15">A </span><span className="text-[#10B981]">BUSINESS.</span></>
+                  ) : scrollCaption === "IPL - A FESTIVAL." ? (
+                    <><span className="opacity-15">A </span><span className="text-[#FF0000]">FESTIVAL.</span></>
+                  ) : scrollCaption === "AN EMOTION." ? (
+                    <><span className="opacity-15">AN </span><span className="text-[#6366F1]">EMOTION.</span></>
+                  ) : scrollCaption === "A CELEBRATION." ? (
+                    <><span className="opacity-15">A </span><span className="text-[#0077FF]">CELEBRATION.</span></>
+                  ) : (
+                    <><span className="opacity-15">A </span><span className="text-[#D946EF]">BILLION DOLLAR ECOSYSTEM.</span></>
+                  )}
+                </motion.h1>
+                <motion.p className="text-white/50 text-[13px] max-w-[420px] mb-7">Data-driven insights across sports, business, fans and the IPL economy.</motion.p>
+                <motion.div style={{ opacity: ctaOp }} className="flex flex-col gap-3.5">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Link href={selectedTeam ? `/dugout/${selectedTeam}` : "/dugout"}>
+                      <button className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-black text-[12px] uppercase tracking-wider px-5 py-3 rounded-xl shadow-lg shadow-amber-500/20 transition-all hover:scale-105 cursor-pointer">
+                        <Shield className="w-4 h-4 text-black fill-black/20" />
+                        {selectedTeam ? `My ${selectedTeam} Dugout` : "Enter Fan Dugout"}
+                      </button>
+                    </Link>
+                    <Link href="/intelligence">
+                      <button className="flex items-center gap-2 bg-primary text-white font-black text-[12px] uppercase tracking-widest px-5 py-3 rounded-xl hover:bg-primary/90 shadow-lg shadow-primary/30 transition-all hover:scale-105 cursor-pointer">Explore Insights <ArrowRight className="w-4 h-4" /></button>
+                    </Link>
+                    <Link href="/feed">
+                      <button className="flex items-center gap-2 bg-white/5 border border-white/10 text-white font-black text-[12px] uppercase tracking-widest px-4 py-3 rounded-xl hover:bg-white/10 transition-all hover:scale-105 cursor-pointer">Feed <Activity className="w-4 h-4" /></button>
+                    </Link>
+                    <Link href="/arena">
+                      <button className="flex items-center gap-1.5 bg-amber-400/10 border border-amber-400/30 text-amber-300 hover:text-white hover:bg-amber-400/20 font-black text-[12px] uppercase tracking-wider px-4 py-3 rounded-xl transition-all hover:scale-105 cursor-pointer">
+                        <Trophy className="w-3.5 h-3.5 text-amber-400" />
+                        Beyond XI
+                      </button>
+                    </Link>
                   </div>
-                  <div className="p-3">
-                    <div className="font-semibold text-sm leading-snug">{p.title}</div>
-                    <div className="text-[11px] text-muted-foreground mt-1.5 flex items-center gap-2">
-                      <span>{p.date}</span><span>·</span><span>{p.read}</span>
+                </motion.div>
+
+              </motion.div>
+            </motion.div>
+
+            {/* UPCOMING MATCH — no fake scores */}
+            {/* LIVE / UPCOMING MATCH */}
+            {(() => {
+              const seasonConcluded = !activeMatch && !liveMatches.isLoading;
+              return (
+            <Link href={activeMatch ? `/match/${activeMatch.matchInfo.matchId}` : seasonConcluded ? "/teams/royal-challengers-bengaluru" : "#"} className="flex-1 min-w-0">
+              <motion.div style={{ opacity: r1Op, x: r1X }} className="h-full bg-[#0B1020] rounded-[24px] border border-white/10 flex flex-col overflow-hidden shadow-2xl hover:border-primary/40 transition-all cursor-pointer group/match">
+                <div className="p-3 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${activeMatch && /progress/i.test(activeMatch.matchInfo.state) ? 'bg-red-500 animate-pulse' : seasonConcluded ? 'bg-[#F9CD05]' : 'bg-amber-400'}`} />
+                    <span className="text-[10px] font-black text-white uppercase tracking-widest group-hover/match:text-primary transition-colors">
+                      {activeMatch && /progress/i.test(activeMatch.matchInfo.state) ? 'Live Match' : seasonConcluded ? 'Season Complete' : 'Next Match'}
+                    </span>
+                  </div>
+                  <span className="text-[9px] text-white/40 font-bold uppercase">
+                    {activeMatch?.matchInfo.seriesName || 'IPL 2026'} · {seasonConcluded ? 'Final' : (activeMatch?.matchInfo.matchDesc || 'Match')}
+                  </span>
+                </div>
+                <div className="flex-1 p-4 flex flex-col gap-4 justify-center">
+                  {activeMatch ? (
+                    <>
+                      <div className="flex items-center gap-3">
+                        <div className="flex-1 flex flex-col items-center gap-1.5">
+                          <TeamLogo team={activeMatch.matchInfo.team1.teamSName} />
+                          <span className="text-[12px] font-black text-white uppercase tracking-tighter">{activeMatch.matchInfo.team1.teamSName}</span>
+                          {/progress/i.test(activeMatch.matchInfo.state) && (
+                            <span className="text-[12px] font-black text-primary">{getMatchScoreLine(activeMatch).team1}</span>
+                          )}
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                          <span className="text-[11px] font-black text-white/20">VS</span>
+                          <div className={`px-3 py-1 rounded-full ${/progress/i.test(activeMatch.matchInfo.state) ? 'bg-red-500/20 border-red-500/30' : 'bg-amber-400/20 border-amber-400/30'}`}>
+                            <span className={`text-[8px] font-black uppercase ${/progress/i.test(activeMatch.matchInfo.state) ? 'text-red-500' : 'text-amber-400'}`}>
+                              {/progress/i.test(activeMatch.matchInfo.state) ? 'Live' : 'Upcoming'}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex-1 flex flex-col items-center gap-1.5">
+                          <TeamLogo team={activeMatch.matchInfo.team2.teamSName} />
+                          <span className="text-[12px] font-black text-white uppercase tracking-tighter">{activeMatch.matchInfo.team2.teamSName}</span>
+                          {/progress/i.test(activeMatch.matchInfo.state) && (
+                            <span className="text-[12px] font-black text-primary">{getMatchScoreLine(activeMatch).team2}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="bg-white/[0.03] rounded-xl p-3 border border-white/5 text-center group-hover/match:bg-primary/5 transition-colors">
+                        {/progress|innings/i.test(activeMatch.matchInfo.state) ? (
+                          <div className="space-y-2">
+                            <p className="text-[14px] font-black text-white leading-tight">{activeMatch.matchInfo.status}</p>
+                            {activeMatch.scorecard && (
+                              <div className="flex justify-center gap-4 mt-2">
+                                {activeMatch.scorecard[activeMatch.matchInfo.currBatTeamId === activeMatch.matchInfo.team1.teamId ? 0 : 1]?.batting.slice(0, 2).map((b, i) => (
+                                  <div key={i} className="flex flex-col items-center">
+                                    <span className="text-[9px] font-black text-primary uppercase tracking-tighter">{b.name.split(' ').pop()}</span>
+                                    <span className="text-[11px] font-black text-white">{b.runs}({b.balls})</span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <>
+                            <p className="text-[9px] font-black text-white/40 uppercase tracking-widest mb-1">Starts In</p>
+                            <p className="text-[20px] font-black text-amber-400 tracking-tight">{startTime(activeMatch.matchInfo.startDate)}</p>
+                          </>
+                        )}
+                        <p className="text-[9px] text-white/30 font-bold mt-1">{activeMatch.matchInfo.venueInfo?.ground || 'Stadium'} · {activeMatch.matchInfo.venueInfo?.city || 'India'}</p>
+                      </div>
+                    </>
+                  ) : seasonConcluded ? (
+                    <>
+                      <div className="flex items-center gap-3">
+                        <div className="flex-1 flex flex-col items-center gap-1.5">
+                          <TeamLogo team="RCB" />
+                          <span className="text-[12px] font-black text-white uppercase tracking-tighter">RCB</span>
+                          <span className="text-[10px] font-black text-[#F9CD05]">Won</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                          <Trophy className="w-4 h-4 text-[#F9CD05]" />
+                          <div className="px-3 py-1 rounded-full bg-[#F9CD05]/20 border border-[#F9CD05]/30">
+                            <span className="text-[8px] font-black uppercase text-[#F9CD05]">Champions</span>
+                          </div>
+                        </div>
+                        <div className="flex-1 flex flex-col items-center gap-1.5">
+                          <TeamLogo team="GT" />
+                          <span className="text-[12px] font-black text-white uppercase tracking-tighter">GT</span>
+                          <span className="text-[10px] font-black text-white/30">Runner-up</span>
+                        </div>
+                      </div>
+                      <div className="bg-white/[0.03] rounded-xl p-3 border border-white/5 text-center group-hover/match:bg-primary/5 transition-colors">
+                        <p className="text-[14px] font-black text-white leading-tight">Royal Challengers Bengaluru win IPL 2026</p>
+                        <p className="text-[9px] text-white/30 font-bold mt-1">Narendra Modi Stadium · Ahmedabad</p>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center text-white/30 text-[10px]">Loading live match data...</div>
+                  )}
+                </div>
+              </motion.div>
+            </Link>
+              );
+            })()}
+
+            {/* AI ANALYST */}
+            <motion.div style={{ opacity: r1Op, x: r1X }} className="flex-1 bg-[#0B1020] rounded-[24px] border border-white/10 flex flex-col overflow-hidden shadow-2xl min-w-0 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-purple-900/10 pointer-events-none" />
+              <div className="p-2.5 border-b border-white/5 flex items-center justify-between bg-white/[0.02] relative z-10">
+                <div className="flex items-center gap-1.5"><Brain className="w-3.5 h-3.5 text-primary" /><span className="text-[10px] font-black text-white uppercase tracking-widest">AI Analyst</span></div>
+                <div className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" /><span className="text-[8px] font-bold text-green-400">Online</span></div>
+              </div>
+              <div className="flex-1 p-2 flex flex-col gap-1 relative z-10 overflow-hidden min-h-0">
+                <div className="p-2 rounded-lg bg-white/5 border border-white/10 shrink-0"><p className="text-[9px] text-white font-bold">🔥 Hi! What would you like to analyze today?</p></div>
+                {["Why CSK wins more while chasing?", "Show me top death over batsmen", "Which venue is best for spinners?", "Compare MI vs CSK in playoffs"].map((q, i) => (
+                  <button key={i} className="text-left px-2 py-1.5 rounded-lg bg-white/[0.03] border border-white/5 hover:bg-primary/10 transition-all text-[9px] text-white/60 hover:text-white shrink-0 leading-tight">{q}</button>
+                ))}
+                <div className="mt-auto flex gap-1.5 shrink-0">
+                  <input placeholder="Ask anything about IPL..." className="flex-1 bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-[9px] text-white placeholder:text-white/30 outline-none" />
+                  <button className="w-7 h-7 shrink-0 rounded-lg bg-primary flex items-center justify-center"><ArrowRight className="w-3.5 h-3.5 text-white" /></button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* ROWS 2+3: Two-column — LEFT stacked, RIGHT = tall venue heatmap */}
+          <div className="flex gap-2.5 flex-1 min-h-0">
+
+            {/* LEFT COLUMN: Row2 + Row3 stacked */}
+            <div className="flex-1 flex flex-col gap-2.5 min-h-0">
+
+              {/* ROW 2: Stats+Filter | Cap Slider | Trending */}
+              <motion.div style={{ opacity: r2Op, y: r2Y }} className="flex gap-2.5 shrink-0">
+                <Link href="/stats" className="flex-1 min-w-0">
+                  <div className="bg-[#0B1020] rounded-[20px] border border-white/10 p-4 flex flex-col gap-4 h-full shadow-xl relative z-40 hover:border-primary/40 transition-all cursor-pointer group/slice">
+                    <SmartFilters onApply={(f) => {
+                      if (f.season) setSelYear(f.season);
+                    }} />
+                    {/* Stats row */}
+                    <div className="flex items-center gap-5 pt-1 border-t border-white/5">
+                      {STATS.map((s, i) => (
+                        <div key={i} className="flex flex-col shrink-0">
+                          <span className="text-[8px] text-white/40 font-bold uppercase tracking-widest">{s.label}</span>
+                          <span className="text-[20px] font-black text-white leading-none tracking-tighter group-hover/slice:text-primary transition-colors">{s.value}</span>
+                          <span className="text-[8px] text-white/30 font-bold uppercase">{s.sub}</span>
+                        </div>
+                      ))}
+                      <div className="ml-auto">
+                        <ArrowUpRight className="w-3.5 h-3.5 text-white/10 group-hover/slice:text-primary transition-colors" />
+                      </div>
                     </div>
                   </div>
-                </GlassCard>
-              </Link>
-            ))}
-            {news?.items.slice(0, 4).map((n, i) => (
-              <a key={`n-${i}`} href={n.link} target="_blank" rel="noreferrer" className="snap-start shrink-0 w-[230px] sm:w-[260px]">
-                <GlassCard className="overflow-hidden h-full" delay={(INSIGHTS.length + i) * 0.04}>
-                  <div className="h-32 relative bg-gradient-to-br from-slate-700/40 to-slate-900/40">
-                    {n.image && <img src={n.image} alt="" className="absolute inset-0 w-full h-full object-cover opacity-80" />}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                    <span className="absolute bottom-2 left-2 text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md bg-black/60 border border-white/10">News</span>
+                </Link>
+
+                {/* CAP SLIDER — year-reactive */}
+                <Link href="/stats" className="shrink-0">
+                  <div className="relative w-[190px] h-full bg-[#0B1020] rounded-[20px] border border-white/10 overflow-hidden shadow-2xl group/cap cursor-pointer hover:border-primary/40 transition-all">
+                    <AnimatePresence mode="wait">
+                      <motion.div key={`${selYear}-${capIdx}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }} className="absolute inset-0">
+                        <img src={cap.img} alt={cap.player} className="w-full h-full object-cover object-top" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/30 to-transparent" />
+                      </motion.div>
+                    </AnimatePresence>
+                    <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
+                      <span className="text-[8px] font-black uppercase tracking-widest" style={{ color: cap.color }}>● {cap.label}</span>
+                      <div className="font-black text-white text-[13px] leading-tight group-hover/cap:text-primary transition-colors">{cap.player}</div>
+                      <div className="text-[9px] text-white/40 font-bold uppercase mb-0.5">{cap.team} · {selYear}</div>
+                      <span className="text-[26px] font-black leading-none tracking-tighter" style={{ color: cap.color }}>{cap.value}</span>
+                      <span className="text-[9px] text-white/40 font-bold uppercase ml-1">{cap.unit}</span>
+                    </div>
+                    {/* Navigation buttons — stopPropagation to allow link clicks elsewhere */}
+                    <button 
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); setCapIdx((capIdx - 1 + CAPS.length) % CAPS.length); }} 
+                      className="absolute left-1.5 top-1/2 -translate-y-1/2 z-20 w-6 h-6 rounded-full bg-black/60 flex items-center justify-center hover:bg-black/90"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5 text-white" />
+                    </button>
+                    <button 
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); setCapIdx((capIdx + 1) % CAPS.length); }} 
+                      className="absolute right-1.5 top-1/2 -translate-y-1/2 z-20 w-6 h-6 rounded-full bg-black/60 flex items-center justify-center hover:bg-black/90"
+                    >
+                      <ChevronRight className="w-3.5 h-3.5 text-white" />
+                    </button>
+                    <div className="absolute bottom-2 right-3 flex gap-1 z-20">
+                      {CAPS.map((_, i) => <div key={i} onClick={(e) => { e.preventDefault(); e.stopPropagation(); setCapIdx(i); }} className={`w-1.5 h-1.5 rounded-full cursor-pointer transition-all ${i === capIdx ? 'bg-white scale-125' : 'bg-white/30'}`} />)}
+                    </div>
                   </div>
-                  <div className="p-3">
-                    <div className="font-semibold text-sm leading-snug line-clamp-2">{n.title}</div>
-                    <div className="text-[11px] text-muted-foreground mt-1.5">via ESPN Cricinfo</div>
+                </Link>
+
+                {/* TRENDING */}
+                <div className="w-[220px] shrink-0 bg-[#0B1020] rounded-[20px] border border-white/10 flex flex-col overflow-hidden shadow-2xl p-3">
+                  <div className="flex items-center justify-between mb-2 shrink-0">
+                    <div className="flex items-center gap-1.5"><TrendingUp className="w-3.5 h-3.5 text-orange-400" /><span className="text-[10px] font-black text-white uppercase tracking-widest">Trending</span></div>
+                    <button className="text-[9px] font-bold text-primary">View All</button>
                   </div>
-                </GlassCard>
-              </a>
-            ))}
-          </div>
-        </div>
-
-        <GlassCard className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-accent" />
-              <h2 className="font-display font-semibold tracking-wider text-sm uppercase">Venue Heatmap</h2>
-            </div>
-            <span className="text-[11px] text-muted-foreground">Spin vs Pace Dominance</span>
-          </div>
-
-          {/* Stylized abstract heatmap */}
-          <div className="relative h-32 rounded-xl overflow-hidden bg-gradient-to-br from-[hsl(240_35%_10%)] to-[hsl(260_40%_8%)] border border-white/5 mb-3">
-            {[
-              { l: "20%", t: "25%", c: "hsl(38 100% 60%)" },
-              { l: "55%", t: "20%", c: "hsl(220 100% 65%)" },
-              { l: "70%", t: "55%", c: "hsl(270 95% 65%)" },
-              { l: "35%", t: "70%", c: "hsl(320 100% 65%)" },
-              { l: "82%", t: "78%", c: "hsl(180 100% 55%)" },
-            ].map((p, i) => (
-              <span key={i} className="absolute w-3 h-3 rounded-full" style={{ left: p.l, top: p.t, background: p.c, boxShadow: `0 0 18px ${p.c}, 0 0 6px ${p.c}` }} />
-            ))}
-            <div className="absolute inset-0 scanline opacity-30 pointer-events-none" />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            {VENUES.map((v) => (
-              <div key={v.name} className="flex items-center gap-3">
-                <div className="w-28 leading-tight">
-                  <div className="text-xs font-semibold">{v.name}</div>
-                  <div className="text-[10px] text-muted-foreground">{v.type}</div>
+                  <div className="flex flex-col gap-1.5 flex-1 overflow-hidden">
+                    {TRENDS.map((t, i) => (
+                      <div key={i} className="flex items-start gap-2 shrink-0">
+                        <Flame className="w-3 h-3 text-orange-400 mt-0.5 shrink-0" />
+                        <div><p className="text-[10px] font-black text-white leading-tight">{t.title || t} 🔥</p><p className="text-[8px] text-white/40 font-bold">{t.mentions || 'Trending'} mentions</p></div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex-1 h-1.5 rounded-full bg-white/5 overflow-hidden">
-                  <div
-                    className={`h-full rounded-full ${v.dir === "spin" ? "bg-gradient-to-r from-accent to-primary" : v.dir === "pace" ? "bg-gradient-to-r from-pink-500 to-amber-400" : "bg-gradient-to-r from-emerald-500 to-cyan-500"}`}
-                    style={{ width: `${v.value}%` }}
-                  />
+              </motion.div>
+
+              {/* ROW 3: 3 Insight Cards */}
+              <motion.div style={{ opacity: r3Op, y: r3Y }} className="flex-1 flex flex-col gap-2 min-h-0">
+                <div className="flex items-center justify-between gap-2 shrink-0">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <span className="text-[11px] font-black text-white uppercase tracking-widest">Insights That Matter</span>
+                  </div>
+                  <Link href="/shop" className="text-[9px] font-black text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1 hover:underline">
+                    <span>🃏 Shop Intelligence Cards →</span>
+                  </Link>
                 </div>
-                <div className="w-9 text-right text-xs font-mono">{v.value}%</div>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 flex-1 min-h-0">
+                  {/* Card 1: CSK */}
+                  <Link href="/intelligence" className="h-full">
+                    <div className="bg-[#0B1020] rounded-[18px] border border-white/10 overflow-hidden flex flex-col group hover:border-primary/30 transition-all cursor-pointer min-w-0 shadow-xl h-full">
+                      <div className="relative shrink-0 overflow-hidden" style={{ height: "70%" }}>
+                        <img
+                          src={INSIGHTS[0].img}
+                          alt={INSIGHTS[0].title}
+                          className="w-full h-full object-cover object-center group-hover:scale-110 transition-all duration-1000"
+                          style={{ opacity: 0.95 }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1020] via-transparent to-transparent" />
+                        <div
+                          className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest text-black"
+                          style={{ backgroundColor: INSIGHTS[0].color }}
+                        >{INSIGHTS[0].tag}</div>
+                      </div>
+                      <div className="flex-1 p-3 flex flex-col justify-center border-t border-white/5 bg-white/[0.01]">
+                        <p className="font-black text-[10px] leading-tight text-white/90 uppercase group-hover:text-primary transition-colors line-clamp-2 mb-1 tracking-tight">{INSIGHTS[0].title}</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-[8px] text-white/30 font-bold">{INSIGHTS[0].date}</p>
+                          <p className="text-[8px] text-primary font-black uppercase tracking-widest">{INSIGHTS[0].read} READ</p>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+
+                  {/* Card 2: Product */}
+                  <Link href="/intelligence" className="h-full">
+                    <div className="bg-[#0B1020] rounded-[18px] border border-white/10 overflow-hidden flex flex-col group hover:border-primary/30 transition-all cursor-pointer min-w-0 shadow-xl h-full">
+                      <div className="relative shrink-0 overflow-hidden" style={{ height: "70%" }}>
+                        <img
+                          src={INSIGHTS[1].img}
+                          alt={INSIGHTS[1].title}
+                          className="w-full h-full object-cover object-center group-hover:scale-110 transition-all duration-1000"
+                          style={{ opacity: 0.95 }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1020] via-transparent to-transparent" />
+                        <div
+                          className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest text-black"
+                          style={{ backgroundColor: INSIGHTS[1].color }}
+                        >{INSIGHTS[1].tag}</div>
+                      </div>
+                      <div className="flex-1 p-3 flex flex-col justify-center border-t border-white/5 bg-white/[0.01]">
+                        <p className="font-black text-[10px] leading-tight text-white/90 uppercase group-hover:text-primary transition-colors line-clamp-2 mb-1 tracking-tight">{INSIGHTS[1].title}</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-[8px] text-white/30 font-bold">{INSIGHTS[1].date}</p>
+                          <p className="text-[8px] text-primary font-black uppercase tracking-widest">{INSIGHTS[1].read} READ</p>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+
+                  {/* Card 3: In-Feed Native Display Unit (Between editorial cards) */}
+                  <div className="h-full">
+                    <AdVessel slot="3847561029" format="in-feed" label="SPONSORED" className="h-full" />
+                  </div>
+
+                  {/* Card 4: Analytics Undervalued XI */}
+                  <Link href="/intelligence" className="h-full">
+                    <div className="bg-[#0B1020] rounded-[18px] border border-white/10 overflow-hidden flex flex-col group hover:border-primary/30 transition-all cursor-pointer min-w-0 shadow-xl h-full">
+                      <div className="relative shrink-0 overflow-hidden" style={{ height: "70%" }}>
+                        <img
+                          src={INSIGHTS[2].img}
+                          alt={INSIGHTS[2].title}
+                          className="w-full h-full object-cover object-center group-hover:scale-110 transition-all duration-1000"
+                          style={{ opacity: 0.95 }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1020] via-transparent to-transparent" />
+                        <div
+                          className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest text-black"
+                          style={{ backgroundColor: INSIGHTS[2].color }}
+                        >{INSIGHTS[2].tag}</div>
+                      </div>
+                      <div className="flex-1 p-3 flex flex-col justify-center border-t border-white/5 bg-white/[0.01]">
+                        <p className="font-black text-[10px] leading-tight text-white/90 uppercase group-hover:text-primary transition-colors line-clamp-2 mb-1 tracking-tight">{INSIGHTS[2].title}</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-[8px] text-white/30 font-bold">{INSIGHTS[2].date}</p>
+                          <p className="text-[8px] text-primary font-black uppercase tracking-widest">{INSIGHTS[2].read} READ</p>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              </motion.div>
+
+            </div>{/* end LEFT COLUMN */}
+
+            {/* RIGHT COLUMN: Venue Heatmap — tall, spans both rows */}
+            <motion.div style={{ opacity: r2Op, y: r2Y }} className="w-[300px] shrink-0 bg-[#0B1020] rounded-[20px] border border-white/10 flex flex-col overflow-hidden shadow-2xl">
+              <div className="p-3 border-b border-white/5 bg-white/[0.02]">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <MapPin className="w-3.5 h-3.5 text-secondary" />
+                  <span className="text-[10px] font-black text-white uppercase tracking-widest">Venue Heatmap</span>
+                </div>
+                <span className="text-[9px] text-white/30 font-bold">Spin vs Pace Dominance · IPL Grounds</span>
               </div>
-            ))}
-          </div>
-          <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-muted-foreground mt-3">
-            <span>Most Spin</span><span>Most Pace</span>
-          </div>
-        </GlassCard>
+              {/* Venue heatmap image — filled to fit grid perfectly */}
+              <div className="relative mx-1 mt-1 rounded-xl overflow-hidden bg-black/40 flex-1 flex items-center justify-center border border-white/5 shadow-inner">
+                <img
+                  src="/venue.png"
+                  alt="Venue Heatmap"
+                  className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-700"
+                  style={{
+                    filter: 'contrast(1.1) brightness(0.9) saturate(1.2)',
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1020] via-transparent to-transparent pointer-events-none" />
+                <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/40 backdrop-blur-sm border border-white/10 text-[8px] font-bold text-white/60 uppercase tracking-widest">Global Density</div>
+              </div>
+              {/* Venue bars */}
+              <div className="flex-1 px-3 py-2 flex flex-col justify-around overflow-hidden">
+                {(() => {
+                  const uniqueVenues = new Map();
+                  (venuesData.data || VENUES).forEach((v: any) => {
+                    const name = v.name || v.venue;
+                    if (!uniqueVenues.has(name)) uniqueVenues.set(name, v);
+                  });
+                  return Array.from(uniqueVenues.values()).slice(0, 5);
+                })().map((v: any, i: number) => {
+                  const pct = v.pct || Math.round((v.matches / 100) * 100) || 50;
+                  const color = v.color || (pct > 70 ? "bg-yellow-400" : pct > 50 ? "bg-blue-400" : "bg-green-400");
+                  const name = v.name || v.venue || "Stadium";
+                  return (
+                    <div key={i}>
+                      <div className="flex justify-between mb-0.5">
+                        <span className="text-[9px] font-black text-white truncate max-w-[180px]">{name}</span>
+                        <span className="text-[9px] font-bold text-white/50">{pct}%</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                        <motion.div className={`h-full rounded-full ${color}`} initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 1.2, delay: i * 0.12 }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="px-3 pb-2 flex justify-between border-t border-white/5 pt-1.5">
+                <span className="text-[8px] text-white/30 font-bold">← Most Spin</span>
+                <span className="text-[8px] text-white/30 font-bold">Most Pace →</span>
+              </div>
+            </motion.div>
+
+          </div>{/* end ROWS 2+3 wrapper */}
+
+        </motion.div>
       </div>
-
-      {/* FOOTER STATS STRIP */}
-      <GlassCard className="p-4 mt-4 lg:mt-5">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 items-center">
-          {FOOTER_STATS.map((s) => (
-            <div key={s.l} className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/40 to-accent/30 border border-white/10 flex items-center justify-center text-xs">★</div>
-              <div className="leading-tight">
-                <div className="font-display font-bold">{s.v}</div>
-                <div className="text-[10px] text-muted-foreground uppercase tracking-wider">{s.l}</div>
-              </div>
-            </div>
-          ))}
-          <div className="hidden lg:flex items-center gap-2 text-xs text-muted-foreground italic">
-            <Quote className="w-4 h-4 text-accent shrink-0" />
-            <span>"IPL is where Sports, Entertainment and <span className="text-white not-italic font-semibold">Business</span> hit a six together."</span>
-          </div>
-        </div>
-      </GlassCard>
     </Layout>
   );
 }
 
-function FeaturedMatch({ match }: { match: NonNullable<ReturnType<typeof useLiveIplMatches>["data"]>["matches"][number] }) {
-  const score = getMatchScoreLine(match);
-  const t1 = match.matchInfo.team1;
-  const t2 = match.matchInfo.team2;
-  return (
-    <div className="flex items-center justify-between gap-3 px-2 py-3 rounded-xl bg-white/5 border border-white/10">
-      <TeamCell short={t1.teamSName} name={t1.teamName} score={score.team1} color="hsl(38 100% 60%)" />
-      <div className="flex flex-col items-center gap-1.5">
-        <span className="text-[10px] uppercase tracking-widest text-muted-foreground">vs</span>
-        <span className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-destructive/20 text-destructive border border-destructive/40">
-          {match.matchInfo.state.toUpperCase()}
-        </span>
-      </div>
-      <TeamCell short={t2.teamSName} name={t2.teamName} score={score.team2} color="hsl(220 100% 65%)" align="right" />
-    </div>
-  );
-}
-
-function TeamCell({ short, name, score, color, align = "left" }: { short: string; name: string; score: string; color: string; align?: "left" | "right" }) {
-  return (
-    <div className={`flex-1 flex items-center gap-2 ${align === "right" ? "flex-row-reverse text-right" : ""}`}>
-      <div className="w-10 h-10 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0" style={{ background: color, boxShadow: `0 0 18px -4px ${color}` }}>{short}</div>
-      <div className="leading-tight min-w-0">
-        <div className="text-[11px] text-muted-foreground truncate">{name}</div>
-        <div className="font-display font-bold text-sm">{score}</div>
-      </div>
-    </div>
-  );
-}
-
-function FeaturedMatchFallback() {
-  return (
-    <div className="flex items-center justify-between gap-3 px-2 py-3 rounded-xl bg-white/5 border border-white/10">
-      <TeamCell short="MI" name="Mumbai Indians" score="186/6 (20)" color="hsl(220 100% 65%)" />
-      <div className="flex flex-col items-center gap-1.5">
-        <span className="text-[10px] uppercase tracking-widest text-muted-foreground">vs</span>
-        <span className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-destructive/20 text-destructive border border-destructive/40">LIVE</span>
-      </div>
-      <TeamCell short="CSK" name="Chennai Super Kings" score="189/7 (19.4)" color="hsl(38 100% 60%)" align="right" />
-    </div>
-  );
-}

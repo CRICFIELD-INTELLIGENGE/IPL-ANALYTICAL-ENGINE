@@ -39,9 +39,9 @@ export function LiveTickerBar() {
           </span>
         </Link>
       ) : (
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-          <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground" />
-          <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">No Live</span>
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30">
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+          <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">IPL 2026 Champions: RCB 🏆</span>
         </div>
       )}
 

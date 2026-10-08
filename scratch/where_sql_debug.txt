@@ -1,0 +1,55 @@
+L1370:       const lo = parseInt(match[1]) - 1;
+L1371:       const hi = parseInt(match[2]) - 1;
+L1372:       conditions.push(sql`d.over_num >= ${lo}`);
+L1373:       conditions.push(sql`d.over_num <= ${hi}`);
+L1374:     }
+L1375:   }
+L1376: 
+L1377:   if (filters.bowlerType && filters.bowlerType !== "All Bowlers") {
+L1378:     const isSpin = filters.bowlerType.toLowerCase().includes("spin");
+L1379:     if (isSpin) {
+L1380:       conditions.push(sql`(LOWER(p_bowl.bowling_style) LIKE '%spin%' OR LOWER(p_bowl.bowling_style) LIKE '%orthodox%' OR LOWER(p_bowl.bowling_style) LIKE '%legbreak%' OR LOWER(p_bowl.bowling_style) LIKE '%offbreak%')`);
+L1381:     } else {
+L1382:       conditions.push(sql`NOT (LOWER(p_bowl.bowling_style) LIKE '%spin%' OR LOWER(p_bowl.bowling_style) LIKE '%orthodox%' OR LOWER(p_bowl.bowling_style) LIKE '%legbreak%' OR LOWER(p_bowl.bowling_style) LIKE '%offbreak%')`);
+L1383:     }
+L1384:   }
+L1385: 
+L1386:   if (filters.deliveryType && filters.deliveryType !== "Delivery Type" && filters.deliveryType !== "Delivery" && filters.deliveryType !== "All Deliveries") {
+L1387:     conditions.push(sql`LOWER(d.delivery_type) LIKE LOWER(${`%${filters.deliveryType}%`})`);
+L1388:   }
+L1389: 
+L1390:   if ((filters as QueryFilters).pressure && (filters as QueryFilters).pressure !== "Standard" && (filters as QueryFilters).pressure !== "Pressure" && (filters as QueryFilters).pressure !== "All") {
+L1391:     const pr = (filters as QueryFilters).pressure!.toLowerCase();
+L1392:     if (pr.includes("clutch")) {
+L1393:       conditions.push(sql`d.pressure_state = 'Clutch'`);
+L1394:     } else if (pr.includes("playoff")) {
+L1395:       conditions.push(sql`d.pressure_state = 'Playoff'`);
+L1396:     } else if (pr.includes("high")) {
+L1397:       conditions.push(sql`d.pressure_state = 'High'`);
+L1398:     }
+L1399:   }
+L1400: 
+L1401:   if ((filters as QueryFilters).fieldingPosition && (filters as QueryFilters).fieldingPosition !== "Scoring Area" && (filters as QueryFilters).fieldingPosition !== "All Positions" && (filters as QueryFilters).fieldingPosition !== "All Areas") {
+L1402:     conditions.push(sql`LOWER(d.scoring_area) LIKE LOWER(${`%${(filters as QueryFilters).fieldingPosition}%`})`);
+L1403:   }
+L1404: 
+L1405:   const representation = normalizeRepresentation((filters as QueryFilters).representation);
+L1406:   if (representation && representation !== "overall") {
+L1407:     const playerId = isBowler ? sql`p_bowl.player_id` : sql`p_bat.player_id`;
+L1408:     const teamId = isBowler ? sql`bl.team_id` : sql`bt.team_id`;
+L1409:     if (representation === "current-squad-career") {
+L1410:       conditions.push(sql`EXISTS (SELECT 1 FROM current_squad cs WHERE cs.player_id = ${playerId})`);
+L1411:     } else if (representation === "current-squad-for-franchise") {
+L1412:       conditions.push(sql`EXISTS (SELECT 1 FROM current_squad cs WHERE cs.player_id = ${playerId} AND cs.team_id = ${teamId})`);
+L1413:     } else if (representation === "franchise-legacy") {
+L1414:       conditions.push(sql`EXISTS (SELECT 1 FROM player_team_history pth WHERE pth.player_id = ${playerId} AND pth.team_id = ${teamId})`);
+L1415:     }
+L1416:   }
+L1417: 
+L1418:   if (filters.innings && filters.innings !== "All Innings" && filters.innings !== "Innings") {
+L1419:     if (filters.innings.toLowerCase().includes("1st")) {
+L1420:       conditions.push(sql`i.innings_number = 1`);
+L1421:     } else if (filters.innings.toLowerCase().includes("2nd")) {
+L1422:       conditions.push(sql`i.innings_number = 2`);
+L1423:     }
+L1424:   }

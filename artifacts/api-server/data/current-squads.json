@@ -1,0 +1,747 @@
+[
+  {
+    "season": "2026",
+    "playerName": "DJ Hooda",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2025",
+    "playerName": "DJ Hooda",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2026",
+    "playerName": "DP Conway",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2025",
+    "playerName": "DP Conway",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2026",
+    "playerName": "KL Nagarkoti",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2025",
+    "playerName": "KL Nagarkoti",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2025",
+    "playerName": "M Pathirana",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2026",
+    "playerName": "MS Dhoni",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2026",
+    "playerName": "R Ravindra",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2025",
+    "playerName": "R Ravindra",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2025",
+    "playerName": "RA Tripathi",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2026",
+    "playerName": "Ravindra Jadeja",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2026",
+    "playerName": "Ruturaj Gaikwad",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2026",
+    "playerName": "Vansh Bedi",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2025",
+    "playerName": "Vansh Bedi",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2026",
+    "playerName": "V Shankar",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2025",
+    "playerName": "V Shankar",
+    "currentTeam": "CSK"
+  },
+  {
+    "season": "2026",
+    "playerName": "A Nortje",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2026",
+    "playerName": "Axar Patel",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2025",
+    "playerName": "DG Nalkande",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2026",
+    "playerName": "David Warner",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2026",
+    "playerName": "J Fraser-McGurk",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2025",
+    "playerName": "J Fraser-McGurk",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2026",
+    "playerName": "Khaleel Ahmed",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2026",
+    "playerName": "Kuldeep Yadav",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2026",
+    "playerName": "Lalit Yadav",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2025",
+    "playerName": "Milind Kumar",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2026",
+    "playerName": "Mitchell Marsh",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2025",
+    "playerName": "Mustafizur Rahman",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2026",
+    "playerName": "Rishabh Pant",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2025",
+    "playerName": "Sediqullah Atal",
+    "currentTeam": "DC"
+  },
+  {
+    "season": "2026",
+    "playerName": "MD Shanaka",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2025",
+    "playerName": "MD Shanaka",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2026",
+    "playerName": "DA Miller",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2025",
+    "playerName": "G Coetzee",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2026",
+    "playerName": "Kane Williamson",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2025",
+    "playerName": "K Khejroliya",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2025",
+    "playerName": "Kusal Mendis",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2026",
+    "playerName": "MK Lomror",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2025",
+    "playerName": "MK Lomror",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2026",
+    "playerName": "Mohammed Shami",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2026",
+    "playerName": "Rashid Khan",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2026",
+    "playerName": "Ravindra Jadeja",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2026",
+    "playerName": "Sai Sudharsan",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2026",
+    "playerName": "Shubman Gill",
+    "currentTeam": "GT"
+  },
+  {
+    "season": "2026",
+    "playerName": "Andre Russell",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2025",
+    "playerName": "A Nortje",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2025",
+    "playerName": "C Sakariya",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Harshit Rana",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Q de Kock",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2025",
+    "playerName": "Q de Kock",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Rahmanullah Gurbaz",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2025",
+    "playerName": "Rahmanullah Gurbaz",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Rinku Singh",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Shreyas Iyer",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2026",
+    "playerName": "SH Johnson",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2025",
+    "playerName": "SH Johnson",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Sunil Narine",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Varun Chakravarthy",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2025",
+    "playerName": "VR Iyer",
+    "currentTeam": "KKR"
+  },
+  {
+    "season": "2025",
+    "playerName": "Akash Deep",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2026",
+    "playerName": "Amit Mishra",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2026",
+    "playerName": "Ayush Badoni",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2026",
+    "playerName": "DA Miller",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2025",
+    "playerName": "DA Miller",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2026",
+    "playerName": "KL Rahul",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2026",
+    "playerName": "Krunal Pandya",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2026",
+    "playerName": "Marcus Stoinis",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2026",
+    "playerName": "Nicholas Pooran",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2026",
+    "playerName": "RS Hangargekar",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2025",
+    "playerName": "RS Hangargekar",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2026",
+    "playerName": "R Bishnoi",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2025",
+    "playerName": "R Bishnoi",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2025",
+    "playerName": "S Joseph",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2025",
+    "playerName": "William Orourke",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2025",
+    "playerName": "Yuvraj Chaudhary",
+    "currentTeam": "LSG"
+  },
+  {
+    "season": "2026",
+    "playerName": "Arshin Kulkarni",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2025",
+    "playerName": "DJ Jacobs",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2025",
+    "playerName": "Charith Asalanka",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2026",
+    "playerName": "Hardik Pandya",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2026",
+    "playerName": "Ishan Kishan",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2026",
+    "playerName": "Jasprit Bumrah",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2026",
+    "playerName": "JM Bairstow",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2025",
+    "playerName": "JM Bairstow",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2025",
+    "playerName": "K Sharma",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2026",
+    "playerName": "Mujeeb Rahman",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2025",
+    "playerName": "Mujeeb Rahman",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2026",
+    "playerName": "Naman Dhir",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2025",
+    "playerName": "PVSN Raju",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2025",
+    "playerName": "RJ Gleeson",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2026",
+    "playerName": "Rohit Sharma",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2026",
+    "playerName": "Suryakumar Yadav",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2025",
+    "playerName": "V Puthur",
+    "currentTeam": "MI"
+  },
+  {
+    "season": "2026",
+    "playerName": "Arshdeep Singh",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2026",
+    "playerName": "Harpreet Brar",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2026",
+    "playerName": "Harshal Patel",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2026",
+    "playerName": "Jitesh Sharma",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2026",
+    "playerName": "JP Inglis",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2025",
+    "playerName": "JP Inglis",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2025",
+    "playerName": "KR Sen",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2025",
+    "playerName": "KA Jamieson",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2026",
+    "playerName": "LS Livingstone",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2026",
+    "playerName": "Prabhsimran Singh",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2025",
+    "playerName": "P Dubey",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2026",
+    "playerName": "Sam Curran",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2026",
+    "playerName": "Shikhar Dhawan",
+    "currentTeam": "PBKS"
+  },
+  {
+    "season": "2026",
+    "playerName": "Glenn Maxwell",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2026",
+    "playerName": "LS Livingstone",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2025",
+    "playerName": "LS Livingstone",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2025",
+    "playerName": "L Ngidi",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2026",
+    "playerName": "MS Bhandage",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2025",
+    "playerName": "MS Bhandage",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2025",
+    "playerName": "Mayank Agarawal",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2026",
+    "playerName": "Mohammed Siraj",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2025",
+    "playerName": "Mohit Rathee",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2026",
+    "playerName": "RA Tripathi",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2026",
+    "playerName": "Rajat Patidar",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2025",
+    "playerName": "TL Seifert",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2026",
+    "playerName": "Virat Kohli",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2026",
+    "playerName": "Yash Dayal",
+    "currentTeam": "RCB"
+  },
+  {
+    "season": "2025",
+    "playerName": "Akash Madhwal",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2025",
+    "playerName": "Ankit Sharma",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2025",
+    "playerName": "Fazalhaq Farooqi",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Jos Buttler",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2025",
+    "playerName": "Kumar Kartikeya Singh",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2025",
+    "playerName": "KS Rathore",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2026",
+    "playerName": "M Theekshana",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2025",
+    "playerName": "M Theekshana",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Riyan Parag",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Sandeep Sharma",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Sanju Samson",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Shimron Hetmyer",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Wanindu Hasaranga",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2025",
+    "playerName": "Wanindu Hasaranga",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2026",
+    "playerName": "Yashasvi Jaiswal",
+    "currentTeam": "RR"
+  },
+  {
+    "season": "2026",
+    "playerName": "A Manohar",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2025",
+    "playerName": "A Manohar",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2026",
+    "playerName": "Abhishek Sharma",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2026",
+    "playerName": "Atharva Taide",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2025",
+    "playerName": "Atharva Taide",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2026",
+    "playerName": "Bhuvneshwar Kumar",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2026",
+    "playerName": "Heinrich Klaasen",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2026",
+    "playerName": "Pat Cummins",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2025",
+    "playerName": "RD Chahar",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2025",
+    "playerName": "Simarjeet Singh",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2026",
+    "playerName": "T Natarajan",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2026",
+    "playerName": "Travis Head",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2026",
+    "playerName": "PWA Mulder",
+    "currentTeam": "SRH"
+  },
+  {
+    "season": "2025",
+    "playerName": "PWA Mulder",
+    "currentTeam": "SRH"
+  }
+]

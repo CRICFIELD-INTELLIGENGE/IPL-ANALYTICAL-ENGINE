@@ -10,6 +10,8 @@ export interface BowlerStat {
   name: string;
   team: string;
   matches: number;
+  innings: number;
+  balls: number;
   wickets: number;
   economy: number;
   average: number;
@@ -18,4 +20,7 @@ export interface BowlerStat {
   powerplayWickets: number;
   deathWickets: number;
   bestFigures: string;
+  boundaryPct: number;
+  ballsPerBoundary: number;
+  trueEconomy: number;
 }

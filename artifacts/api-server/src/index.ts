@@ -1,13 +1,15 @@
 import app from "./app";
 import { logger } from "./lib/logger";
+import { warmDecisionCaches } from "./services/decision/player-profiles";
+import { getHistoryOverview } from "./services/decision/history";
+import { warmPressureGenome } from "./services/decision/pressure-genome";
+import { warmInsightFeed } from "./services/decision/insight-feed";
+import { warmMatchModel } from "./services/decision/match-model";
+import { warmPlayerPool } from "./services/decision/player-pool";
+import { warmSquadDna } from "./services/decision/squad-dna";
+import { warmAuctionWarRoom } from "./services/decision/auction-war-room";
 
-const rawPort = process.env["PORT"];
-
-if (!rawPort) {
-  throw new Error(
-    "PORT environment variable is required but was not provided.",
-  );
-}
+const rawPort = process.env["PORT"] ?? "5000";
 
 const port = Number(rawPort);
 
@@ -22,4 +24,21 @@ app.listen(port, (err) => {
   }
 
   logger.info({ port }, "Server listening");
+
+  setImmediate(() => {
+    const t0 = Date.now();
+    try {
+      warmDecisionCaches();
+      getHistoryOverview();
+      warmPressureGenome();
+      warmInsightFeed();
+      warmMatchModel();
+      warmPlayerPool();
+      warmSquadDna();
+      warmAuctionWarRoom();
+      logger.info({ ms: Date.now() - t0 }, "Decision Intelligence caches warmed");
+    } catch (err) {
+      logger.error({ err }, "Decision Intelligence cache warm-up failed");
+    }
+  });
 });

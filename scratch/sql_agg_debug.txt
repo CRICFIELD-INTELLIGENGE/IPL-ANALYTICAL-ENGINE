@@ -1,0 +1,130 @@
+L1420:       conditions.push(sql`i.innings_number = 1`);
+L1421:     } else if (filters.innings.toLowerCase().includes("2nd")) {
+L1422:       conditions.push(sql`i.innings_number = 2`);
+L1423:     }
+L1424:   }
+L1425: 
+L1426:   if ((filters as QueryFilters).matchContext && (filters as QueryFilters).matchContext !== "All Matches" && (filters as QueryFilters).matchContext !== "All") {
+L1427:     const ctx = (filters as QueryFilters).matchContext!.toLowerCase();
+L1428:     if (ctx.includes("playoff")) {
+L1429:       conditions.push(sql`m.match_type IN ('Qualifier', 'Eliminator', 'Final')`);
+L1430:     } else if (ctx.includes("league")) {
+L1431:       conditions.push(sql`m.match_type = 'League'`);
+L1432:     }
+L1433:   }
+L1434: 
+L1435:   if ((filters as QueryFilters).batter) {
+L1436:     conditions.push(sql`LOWER(p_bat.name) LIKE LOWER(${`%${(filters as QueryFilters).batter}%`})`);
+L1437:   }
+L1438: 
+L1439:   if ((filters as QueryFilters).bowler) {
+L1440:     conditions.push(sql`LOWER(p_bowl.name) LIKE LOWER(${`%${(filters as QueryFilters).bowler}%`})`);
+L1441:   }
+L1442: 
+L1443:   return sql.join(conditions, sql` AND `);
+L1444: }
+L1445: 
+L1446: async function aggregateQueryStatsSql(filters: QueryFilters) {
+L1447:   const batterWhere = buildWhereClauseSql(filters, false);
+L1448: 
+L1449:   const batterQuery = sql`
+L1450:     WITH match_scores AS (
+L1451:       SELECT
+L1452:         d.batter_id,
+L1453:         d.match_id,
+L1454:         sum(d.batter_runs) as match_runs
+L1455:       FROM deliveries d
+L1456:       JOIN matches m ON d.match_id = m.match_id
+L1457:       JOIN innings i ON d.innings_id = i.innings_id
+L1458:       JOIN teams bt ON i.batting_team_id = bt.team_id
+L1459:       JOIN teams bl ON i.bowling_team_id = bl.team_id
+L1460:       LEFT JOIN venues v ON m.venue_id = v.venue_id
+L1461:       LEFT JOIN players p_bat ON d.batter_id = p_bat.player_id
+L1462:       LEFT JOIN players p_bowl ON d.bowler_id = p_bowl.player_id
+L1463:       WHERE ${batterWhere}
+L1464:       GROUP BY d.batter_id, d.match_id
+L1465:     ),
+L1466:     overall_stats AS (
+L1467:       SELECT
+L1468:         d.batter_id,
+L1469:         p_bat.name as player,
+L1470:         p_bat.country as country,
+L1471:         count(distinct d.match_id) as matches,
+L1472:         count(distinct d.innings_id) as innings,
+L1473:         sum(d.batter_runs) as runs,
+L1474:         count(case when d.is_wide = false then 1 end) as balls,
+L1475:         count(case when d.batter_runs = 4 then 1 end) as fours,
+L1476:         count(case when d.batter_runs = 6 then 1 end) as sixes,
+L1477:         count(case when dis.dismissal_id IS NOT NULL AND dis.player_out_id = d.batter_id then 1 end) as dismissals,
+L1478:         sum(case when d.over_num < 6 then d.batter_runs else 0 end) as pp_runs,
+L1479:         count(case when d.over_num < 6 and d.is_wide = false then 1 end) as pp_balls,
+L1480:         sum(case when d.over_num >= 6 and d.over_num < 15 then d.batter_runs else 0 end) as mid_runs,
+L1481:         count(case when d.over_num >= 6 and d.over_num < 15 and d.is_wide = false then 1 end) as mid_balls,
+L1482:         sum(case when d.over_num >= 15 then d.batter_runs else 0 end) as death_runs,
+L1483:         count(case when d.over_num >= 15 and d.is_wide = false then 1 end) as death_balls
+L1484:       FROM deliveries d
+L1485:       JOIN players p_bat ON d.batter_id = p_bat.player_id
+L1486:       JOIN matches m ON d.match_id = m.match_id
+L1487:       JOIN innings i ON d.innings_id = i.innings_id
+L1488:       JOIN teams bt ON i.batting_team_id = bt.team_id
+L1489:       JOIN teams bl ON i.bowling_team_id = bl.team_id
+L1490:       LEFT JOIN venues v ON m.venue_id = v.venue_id
+L1491:       LEFT JOIN dismissals dis ON d.delivery_id = dis.delivery_id
+L1492:       LEFT JOIN players p_bowl ON d.bowler_id = p_bowl.player_id
+L1493:       WHERE ${batterWhere}
+L1494:       GROUP BY d.batter_id, p_bat.name, p_bat.country
+L1495:     )
+L1496:     SELECT
+L1497:       o.*,
+L1498:       m.highest,
+L1499:       m.fifties,
+L1500:       m.hundreds
+L1501:     FROM overall_stats o
+L1502:     LEFT JOIN (
+L1503:       SELECT
+L1504:         batter_id,
+L1505:         max(match_runs) as highest,
+L1506:         count(case when match_runs >= 50 and match_runs < 100 then 1 end) as fifties,
+L1507:         count(case when match_runs >= 100 then 1 end) as hundreds
+L1508:       FROM match_scores
+L1509:       GROUP BY batter_id
+L1510:     ) m ON o.batter_id = m.batter_id
+L1511:   `;
+L1512: 
+L1513:   const batterDelivQuery = sql`
+L1514:     SELECT
+L1515:       d.batter_id,
+L1516:       d.delivery_type as type,
+L1517:       sum(d.batter_runs) as runs,
+L1518:       count(case when d.is_wide = false then 1 end) as balls,
+L1519:       count(case when dis.dismissal_id IS NOT NULL AND dis.player_out_id = d.batter_id then 1 end) as dismissals
+L1520:     FROM deliveries d
+L1521:     JOIN matches m ON d.match_id = m.match_id
+L1522:     JOIN innings i ON d.innings_id = i.innings_id
+L1523:     JOIN teams bt ON i.batting_team_id = bt.team_id
+L1524:     JOIN teams bl ON i.bowling_team_id = bl.team_id
+L1525:     LEFT JOIN venues v ON m.venue_id = v.venue_id
+L1526:     LEFT JOIN dismissals dis ON d.delivery_id = dis.delivery_id
+L1527:     LEFT JOIN players p_bat ON d.batter_id = p_bat.player_id
+L1528:     LEFT JOIN players p_bowl ON d.bowler_id = p_bowl.player_id
+L1529:     WHERE ${batterWhere}
+L1530:     GROUP BY d.batter_id, d.delivery_type
+L1531:   `;
+L1532: 
+L1533:   const batterZoneQuery = sql`
+L1534:     SELECT
+L1535:       d.batter_id,
+L1536:       d.scoring_area as zone,
+L1537:       sum(d.batter_runs) as runs,
+L1538:       count(case when d.is_wide = false then 1 end) as balls,
+L1539:       count(case when d.batter_runs = 4 or d.batter_runs = 6 then 1 end) as boundaries
+L1540:     FROM deliveries d
+L1541:     JOIN matches m ON d.match_id = m.match_id
+L1542:     JOIN innings i ON d.innings_id = i.innings_id
+L1543:     JOIN teams bt ON i.batting_team_id = bt.team_id
+L1544:     JOIN teams bl ON i.bowling_team_id = bl.team_id
+L1545:     LEFT JOIN venues v ON m.venue_id = v.venue_id
+L1546:     LEFT JOIN players p_bat ON d.batter_id = p_bat.player_id
+L1547:     LEFT JOIN players p_bowl ON d.bowler_id = p_bowl.player_id
+L1548:     WHERE ${batterWhere}
+L1549:     GROUP BY d.batter_id, d.scoring_area

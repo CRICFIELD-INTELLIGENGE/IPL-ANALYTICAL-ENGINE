@@ -169,6 +169,8 @@ export const GetBowlersResponseItem = zod.object({
   name: zod.string(),
   team: zod.string(),
   matches: zod.number(),
+  innings: zod.number(),
+  balls: zod.number(),
   wickets: zod.number(),
   economy: zod.number(),
   average: zod.number(),
@@ -177,6 +179,9 @@ export const GetBowlersResponseItem = zod.object({
   powerplayWickets: zod.number(),
   deathWickets: zod.number(),
   bestFigures: zod.string(),
+  boundaryPct: zod.number(),
+  ballsPerBoundary: zod.number(),
+  trueEconomy: zod.number(),
 });
 export const GetBowlersResponse = zod.array(GetBowlersResponseItem);
 
@@ -187,6 +192,8 @@ export const GetDeathSpecialistsResponseItem = zod.object({
   name: zod.string(),
   team: zod.string(),
   matches: zod.number(),
+  innings: zod.number(),
+  balls: zod.number(),
   wickets: zod.number(),
   economy: zod.number(),
   average: zod.number(),
@@ -195,6 +202,9 @@ export const GetDeathSpecialistsResponseItem = zod.object({
   powerplayWickets: zod.number(),
   deathWickets: zod.number(),
   bestFigures: zod.string(),
+  boundaryPct: zod.number(),
+  ballsPerBoundary: zod.number(),
+  trueEconomy: zod.number(),
 });
 export const GetDeathSpecialistsResponse = zod.array(
   GetDeathSpecialistsResponseItem,

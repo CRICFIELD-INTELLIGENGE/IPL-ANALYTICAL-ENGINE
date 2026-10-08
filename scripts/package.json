@@ -5,8 +5,20 @@
   "type": "module",
   "scripts": {
     "hello": "tsx ./src/hello.ts",
+    "db:migrate": "tsx ./src/migrate.ts",
     "aggregate-ipl": "tsx ./src/aggregate-ipl.ts",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "aggregate-kaggle-bowlers": "tsx ./src/aggregate-kaggle-bowlers.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "migrate-players": "tsx ./src/migrate_players.ts",
+    "migrate-matches": "tsx ./src/migrate_matches.ts",
+    "migrate-deliveries": "tsx ./src/migrate_deliveries.ts",
+    "compute-analytics": "tsx ./src/compute_analytics.ts",
+    "update-ipl-data": "tsx ./src/update-ipl-data.ts",
+    "update-ipl-data-v3": "tsx ./src/update-ipl-data-v3.ts"
+  },
+  "dependencies": {
+    "@workspace/db": "workspace:*",
+    "drizzle-orm": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",

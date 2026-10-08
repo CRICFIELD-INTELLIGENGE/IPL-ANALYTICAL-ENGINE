@@ -1,0 +1,65 @@
+L450:     if (fDel.includes("short ball") || fDel.includes("short")) return seed === 2;
+L451:     if (fDel.includes("bouncer"))                         return seed >= 1 && seed <= 3;
+L452:     if (fDel.includes("slower ball") || fDel.includes("slower")) return seed === 0;
+L453:     if (fDel.includes("out-swing") || fDel.includes("outswing")) return seed % 3 === 1;
+L454:     if (fDel.includes("in-swing")  || fDel.includes("inswing"))  return seed % 3 === 0;
+L455:     if (fDel.includes("off-cutter") || fDel.includes("off cutter")) return seed % 3 === 2;
+L456:     if (fDel.includes("leg-cutter") || fDel.includes("leg cutter")) return seed % 3 === 2;
+L457:     if (fDel.includes("knuckle"))  return seed === 1;
+L458:     if (fDel.includes("full length")) return seed === 4;
+L459:     if (fDel.includes("good length") || fDel.includes("hard length")) return seed === 3;
+L460:   } else {
+L461:     if (fDel.includes("off-break")  || fDel.includes("off break"))  return seed % 2 === 0;
+L462:     if (fDel.includes("leg-break")  || fDel.includes("leg break"))  return seed % 2 === 1;
+L463:     if (fDel.includes("googly"))    return seed === 4;
+L464:     if (fDel.includes("top-spinner") || fDel.includes("topspinner")) return seed === 2;
+L465:     if (fDel.includes("doosra"))    return seed === 3;
+L466:     if (fDel.includes("arm ball")  || fDel.includes("arm-ball"))    return seed === 3;
+L467:     if (fDel.includes("flipper"))   return seed === 1;
+L468:     if (fDel.includes("slider"))    return seed === 0;
+L469:     if (fDel.includes("carom"))     return seed === 5;
+L470:   }
+L471:   return true;
+L472: }
+L473: 
+L474: function passesPressureFilter(overNum: number, inningIndex: number, wicketsFallen: number, pressure?: string): boolean {
+L475:   if (!pressure || pressure === "Standard" || pressure === "Pressure" || pressure === "All") return true;
+L476:   const fPr = pressure.toLowerCase();
+L477:   const isHighPressure = (inningIndex === 1 && overNum >= 15) || wicketsFallen >= 4;
+L478:   const isClutch = overNum >= 18;
+L479:   const isPlayoffPressure = wicketsFallen >= 3 && overNum >= 10;
+L480:   if (fPr.includes("clutch") || fPr.includes("moment")) return isClutch;
+L481:   if (fPr.includes("playoff")) return isPlayoffPressure;
+L482:   if (fPr.includes("high")) return isHighPressure;
+L483:   return true;
+L484: }
+L485: 
+L486: // ─────────────────────────────────────────────────────────────────────────────
+L487: //  MAIN QUERY AGGREGATOR
+L488: // ─────────────────────────────────────────────────────────────────────────────
+L489: 
+L490: export async function aggregateQueryStats(filters: QueryFilters) {
+L491:   const resolvedFilters = { ...filters };
+L492:   if (filters.batter && hasDb()) {
+L493:     resolvedFilters.batter = await resolvePlayerDbName(filters.batter);
+L494:   }
+L495:   if (filters.bowler && hasDb()) {
+L496:     resolvedFilters.bowler = await resolvePlayerDbName(filters.bowler);
+L497:   }
+L498: 
+L499:   // The SQL-backed players table has no populated batting_style column, so
+L500:   // the "vs LHB"/"vs RHB" filter can only be honored via the JSON path,
+L501:   // which resolves handedness per-ball from the player-bio dataset.
+L502:   const needsHandednessFilter = !!filters.battingHand && filters.battingHand !== "All Batters" && filters.battingHand !== "All";
+L503: 
+L504:   if (hasDb() && !needsHandednessFilter) {
+L505:     try {
+L506:       return await aggregateQueryStatsSql(resolvedFilters);
+L507:     } catch (err) {
+L508:       console.warn("SQL Query Stats failed, falling back to JSON:", err);
+L509:     }
+L510:   }
+L511:   return await aggregateQueryStatsJson(resolvedFilters);
+L512: }
+L513: 
+L514: async function aggregateQueryStatsJson(filters: QueryFilters) {

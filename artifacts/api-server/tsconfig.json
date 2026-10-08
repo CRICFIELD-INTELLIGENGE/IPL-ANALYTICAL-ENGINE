@@ -3,7 +3,9 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "types": ["node"]
+    "types": ["node"],
+    "lib": ["es2022", "dom"],
+    "resolveJsonModule": true
   },
   "include": ["src"],
   "references": [

@@ -1,23 +1,27 @@
 import { Layout } from "@/components/layout";
+import { MyContentTab } from "@/components/my-content";
+import { useContentHub } from "@/lib/aggregates";
 import { GlassCard } from "@/components/glass-card";
 import {
-  Boxes, Banknote, TrendingUp, Layers, FolderDown, Newspaper,
-  Download, ArrowUpRight, ArrowDownRight, Eye, Smartphone, Users, Tv,
-  Trophy, Target, BarChart3, PieChart, Sparkles, Activity as ActivityIcon,
+  Boxes, Banknote, TrendingUp, Layers,
+  ArrowUpRight, ArrowDownRight, Eye, Smartphone, Users, Tv,
+  Target, BarChart3, PieChart, Activity as ActivityIcon,
+  FileText,
 } from "lucide-react";
 import {
   ResponsiveContainer, AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid,
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, LineChart, Line,
 } from "recharts";
 
-/* --------------------------------- Product Signals -------------------------------- */
+/* ─────────────────────────────── Product Signals ─────────────────────────────── */
 const ENGAGEMENT = Array.from({ length: 12 }, (_, i) => ({
   m: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"][i],
   app: 30 + Math.sin(i / 1.6) * 18 + i * 4,
   hotstar: 50 + Math.cos(i / 2) * 22 + i * 5,
 }));
 const FUNNEL = [
-  { stage: "Aware", v: 500 }, { stage: "Watch", v: 280 }, { stage: "Engage", v: 145 }, { stage: "Pay", v: 62 }, { stage: "Loyal", v: 28 },
+  { stage: "Aware", v: 500 }, { stage: "Watch", v: 280 }, { stage: "Engage", v: 145 },
+  { stage: "Pay", v: 62 }, { stage: "Loyal", v: 28 },
 ];
 
 export function ProductPage() {
@@ -93,7 +97,7 @@ function SignalGrid() {
   );
 }
 
-/* --------------------------------- Revenue Engine ------------------------------- */
+/* ─────────────────────────────── Revenue Engine ─────────────────────────────── */
 const REV = [
   { y: "2008", media: 8, sponsor: 4, ticket: 1.2, merch: 0.4 },
   { y: "2014", media: 16, sponsor: 8, ticket: 2.6, merch: 1.0 },
@@ -101,6 +105,7 @@ const REV = [
   { y: "2022", media: 48, sponsor: 25, ticket: 5.4, merch: 3.0 },
   { y: "2026", media: 72, sponsor: 38, ticket: 7.8, merch: 4.6 },
 ];
+
 export function RevenuePage() {
   return (
     <Layout>
@@ -138,11 +143,12 @@ export function RevenuePage() {
   );
 }
 
-/* --------------------------------- Growth Radar --------------------------------- */
+/* ─────────────────────────────── Growth Radar ───────────────────────────────── */
 const RADAR = [
   { axis: "Reach", a: 95 }, { axis: "Engagement", a: 82 }, { axis: "Spend", a: 76 },
   { axis: "Retention", a: 68 }, { axis: "Virality", a: 88 }, { axis: "NPS", a: 72 },
 ];
+
 export function GrowthPage() {
   return (
     <Layout>
@@ -166,7 +172,10 @@ export function GrowthPage() {
           <SectionTitle icon={ActivityIcon} title="Cohort Retention" subtitle="% returning by season since acquisition" />
           <div className="h-[320px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={Array.from({ length: 7 }, (_, i) => ({ s: `S${i + 1}`, c2024: 100 - i * 11, c2025: 100 - i * 8, c2026: 100 - i * 5 }))} margin={{ top: 10, right: 8, left: -22, bottom: 0 }}>
+              <LineChart
+                data={Array.from({ length: 7 }, (_, i) => ({ s: `S${i + 1}`, c2024: 100 - i * 11, c2025: 100 - i * 8, c2026: 100 - i * 5 }))}
+                margin={{ top: 10, right: 8, left: -22, bottom: 0 }}
+              >
                 <CartesianGrid stroke="hsl(250 30% 18%)" strokeDasharray="3 3" />
                 <XAxis dataKey="s" tick={{ fontSize: 11, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
@@ -183,13 +192,14 @@ export function GrowthPage() {
   );
 }
 
-/* --------------------------------- Strategy Layer ------------------------------- */
+/* ─────────────────────────────── Strategy Layer ─────────────────────────────── */
 const PLAYBOOKS = [
   { title: "The Anchor + Power-Hitter Top 3", angle: "On-Field", desc: "Why teams pairing one anchor with two boundary hitters in the top 3 win 14% more powerplays.", color: "from-purple-500/30 to-fuchsia-500/20" },
   { title: "Buying Local: The Auction Heuristic", angle: "Strategy", desc: "Franchises with ≥5 home-state players see a +9% home win rate and +18% jersey sales.", color: "from-blue-500/30 to-cyan-500/20" },
   { title: "Death-Bowling Specialists Are Underpriced", angle: "Auction", desc: "Spec death bowlers averaged ₹4.2 Cr but delivered the lowest economy in 17–20 overs.", color: "from-emerald-500/30 to-teal-500/20" },
   { title: "Why CSK Pays for Continuity", angle: "Culture", desc: "Lowest squad turnover (12%) correlates with the highest playoff appearance rate (88%).", color: "from-amber-500/30 to-orange-500/20" },
 ];
+
 export function StrategyPage() {
   return (
     <Layout>
@@ -200,38 +210,8 @@ export function StrategyPage() {
             <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md bg-black/40 border border-white/10">{p.angle}</span>
             <h3 className="font-display font-bold text-lg mt-3">{p.title}</h3>
             <p className="text-sm text-muted-foreground mt-2 leading-snug">{p.desc}</p>
-            <button className="mt-4 text-xs font-semibold text-accent flex items-center gap-1.5 hover:gap-2 transition-all">Read playbook <ArrowUpRight className="w-3.5 h-3.5" /></button>
-          </GlassCard>
-        ))}
-      </div>
-    </Layout>
-  );
-}
-
-/* --------------------------------- Reports Vault -------------------------------- */
-const REPORTS = [
-  { title: "IPL 2026 Mid-Season Intelligence Report", pages: 84, size: "12.4 MB", tag: "Comprehensive", date: "May 4, 2026" },
-  { title: "Auction Economics 2008–2026", pages: 56, size: "8.1 MB", tag: "Business", date: "Apr 29, 2026" },
-  { title: "Fan Behavior in the Streaming Era", pages: 42, size: "6.8 MB", tag: "Product", date: "Apr 18, 2026" },
-  { title: "The CSK Operating Model", pages: 38, size: "5.6 MB", tag: "Strategy", date: "Apr 10, 2026" },
-  { title: "India's Cricket Economy Outlook", pages: 64, size: "9.9 MB", tag: "Macro", date: "Mar 28, 2026" },
-];
-export function ReportsPage() {
-  return (
-    <Layout>
-      <PageHeader Icon={FolderDown} title="Reports Vault" subtitle="Deep-dive PDFs · downloadable" />
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {REPORTS.map((r, i) => (
-          <GlassCard key={r.title} className="p-4 flex flex-col" delay={i * 0.04}>
-            <div className="h-32 rounded-xl bg-gradient-to-br from-primary/30 to-accent/20 border border-white/10 flex items-center justify-center relative overflow-hidden">
-              <FolderDown className="w-10 h-10 text-white/80 relative" />
-              <div className="absolute inset-0 scanline opacity-30" />
-            </div>
-            <span className="mt-3 text-[10px] uppercase tracking-wider font-semibold text-accent">{r.tag}</span>
-            <div className="font-semibold text-sm mt-1 leading-snug">{r.title}</div>
-            <div className="text-[11px] text-muted-foreground mt-1">{r.date} · {r.pages} pp · {r.size}</div>
-            <button onClick={() => alert(`Download stub: ${r.title}`)} className="mt-3 neon-btn rounded-lg py-2 text-xs font-semibold flex items-center justify-center gap-1.5">
-              <Download className="w-3.5 h-3.5" /> Download PDF
+            <button className="mt-4 text-xs font-semibold text-accent flex items-center gap-1.5 hover:gap-2 transition-all">
+              Read playbook <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
           </GlassCard>
         ))}
@@ -240,74 +220,46 @@ export function ReportsPage() {
   );
 }
 
-/* --------------------------------- Blogs ---------------------------------------- */
-const BLOGS = [
-  { tag: "Business", title: "Why CSK Builds Better Teams", excerpt: "Continuity, culture and the math of low squad turnover.", date: "May 18, 2025", read: "8 min", grad: "from-rose-500/30 to-fuchsia-500/20" },
-  { tag: "Product", title: "IPL is not Cricket. It's a Product.", excerpt: "Inside the playbook that turned a league into the world's most-watched annual product launch.", date: "May 15, 2025", read: "6 min", grad: "from-purple-500/30 to-indigo-500/20" },
-  { tag: "Analytics", title: "The Undervalued XI of IPL 2025", excerpt: "Eleven players who delivered 2.4x ROI vs their auction price.", date: "May 12, 2025", read: "7 min", grad: "from-blue-500/30 to-cyan-500/20" },
-  { tag: "Growth", title: "The Second Screen Economy of IPL", excerpt: "How fantasy, betting and chat apps stitch a parallel economy.", date: "May 10, 2025", read: "6 min", grad: "from-emerald-500/30 to-teal-500/20" },
-  { tag: "Strategy", title: "The Auction Math Nobody Talks About", excerpt: "A latent-value model for IPL auctions.", date: "May 6, 2025", read: "5 min", grad: "from-amber-500/30 to-orange-500/20" },
-  { tag: "Macro", title: "Cricket as India's Soft Power", excerpt: "From colonial inheritance to a billion-dollar export.", date: "Apr 28, 2025", read: "9 min", grad: "from-pink-500/30 to-purple-500/20" },
-];
-export function BlogsPage() {
+/* ─────────────────────────────── Insights ───────────────────────────────────── */
+/**
+ * /insights — the author's own published work.
+ * Shows whatever is actually registered in the content hub.
+ */
+export function InsightsPage() {
+  const hub = useContentHub();
+  const byPlatform = hub.data?.socialByPlatform ?? { LinkedIn: [], X: [], Medium: [], Substack: [] };
+  const total = Object.values(byPlatform).flat().length;
+
   return (
     <Layout>
-      <PageHeader Icon={Newspaper} title="Blogs" subtitle="Insight-driven essays across product, business, and strategy" />
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {BLOGS.map((b, i) => (
-          <GlassCard key={b.title} className="overflow-hidden" delay={i * 0.04}>
-            <div className={`h-36 relative bg-gradient-to-br ${b.grad} flex items-end p-3`}>
-              <div className="absolute inset-0 scanline opacity-40" />
-              <span className="relative text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md bg-black/40 border border-white/10">{b.tag}</span>
-            </div>
-            <div className="p-4">
-              <div className="font-display font-semibold leading-snug">{b.title}</div>
-              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">{b.excerpt}</p>
-              <div className="text-[11px] text-muted-foreground mt-3 flex items-center gap-2">
-                <span>{b.date}</span><span>·</span><span>{b.read} read</span>
-              </div>
-            </div>
-          </GlassCard>
-        ))}
-      </div>
+      <PageHeader
+        Icon={FileText}
+        title="Insights"
+        subtitle={total === 0 ? "Your published work — nothing linked yet" : `${total} published ${total === 1 ? "piece" : "pieces"}`}
+      />
+      {hub.isLoading ? (
+        <div className="py-20 text-center text-white/30 font-mono text-sm">Loading your content…</div>
+      ) : (
+        <MyContentTab byPlatform={byPlatform} />
+      )}
     </Layout>
   );
 }
 
-/* --------------------------------- AI Analyst (full page) ----------------------- */
-import { AIAnalystPanel } from "@/components/ai-analyst-panel";
-export function AIAnalystPage() {
-  const queries = [
-    "Best XI under ₹40 Cr in IPL 2026",
-    "Show me death-over economy leaderboard",
-    "Which franchise has best ROI on auction spend?",
-    "Compare Wankhede vs Eden run distribution",
-    "Top young players (under 23) in IPL 2026",
-    "Predict playoff qualification probabilities",
-  ];
-  return (
-    <Layout hideRightPanel>
-      <PageHeader Icon={Sparkles} title="AI Analyst" subtitle="Ask anything. Get insights. Tap the data warehouse." />
-      <div className="grid lg:grid-cols-[1fr_1fr] gap-4">
-        <AIAnalystPanel />
-        <GlassCard className="p-5">
-          <SectionTitle icon={Trophy} title="Suggested Analytics Queries" subtitle="Hand-picked starters" />
-          <div className="grid grid-cols-1 gap-2 mt-3">
-            {queries.map((q) => (
-              <div key={q} className="text-sm px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-primary/40 transition-colors">{q}</div>
-            ))}
-          </div>
-        </GlassCard>
-      </div>
-    </Layout>
-  );
-}
+export function ReportsPage() { return <InsightsPage />; }
+export function BlogsPage() { return <InsightsPage />; }
 
-/* --------------------------------- Shared --------------------------------------- */
+/* ─────────────────────────────── AI Analyst ─────────────────────────────────── */
+/** Full IPL Decision Intelligence OS — delegated to its own dedicated page file. */
+export { default as AIAnalystPage } from "@/pages/ai-analyst";
+
+/* ─────────────────────────────── Shared Primitives ─────────────────────────── */
 function PageHeader({ Icon, title, subtitle }: { Icon: typeof Boxes; title: string; subtitle: string }) {
   return (
     <div className="flex items-center gap-3 mb-5">
-      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/40 to-accent/30 border border-white/10 flex items-center justify-center"><Icon className="w-5 h-5" /></div>
+      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/40 to-accent/30 border border-white/10 flex items-center justify-center">
+        <Icon className="w-5 h-5" />
+      </div>
       <div>
         <h1 className="font-display font-bold text-2xl">{title}</h1>
         <p className="text-xs text-muted-foreground">{subtitle}</p>
@@ -334,7 +286,8 @@ function KPI({ label, value, delta, up }: { label: string; value: string; delta:
       <div className="text-[11px] uppercase tracking-wider text-muted-foreground">{label}</div>
       <div className="font-display font-bold text-2xl mt-1">{value}</div>
       <div className={`text-xs mt-1 flex items-center gap-1 ${up ? "text-emerald-400" : "text-pink-400"}`}>
-        {up ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />} {delta} <span className="text-muted-foreground">vs prev season</span>
+        {up ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />}
+        {delta} <span className="text-muted-foreground">vs prev season</span>
       </div>
     </GlassCard>
   );
@@ -344,10 +297,19 @@ function Legend({ items }: { items: { c: string; l: string }[] }) {
   return (
     <div className="flex flex-wrap items-center gap-3 mt-2 text-[11px] text-muted-foreground">
       {items.map((i) => (
-        <span key={i.l} className="inline-flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm" style={{ background: i.c }} />{i.l}</span>
+        <span key={i.l} className="inline-flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-sm" style={{ background: i.c }} />
+          {i.l}
+        </span>
       ))}
     </div>
   );
 }
 
-const tooltipStyle = { background: "hsl(240 30% 9%)", border: "1px solid hsl(250 40% 25%)", borderRadius: 8, fontSize: 12, color: "hsl(220 30% 95%)" } as const;
+const tooltipStyle = {
+  background: "hsl(240 30% 9%)",
+  border: "1px solid hsl(250 40% 25%)",
+  borderRadius: 8,
+  fontSize: 12,
+  color: "hsl(220 30% 95%)",
+} as const;

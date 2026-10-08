@@ -1,0 +1,100 @@
+L650:             let bs = batterStats.get(d.batter);
+L651:             if (!bs) {
+L652:               bs = {
+L653:                 runs: 0, balls: 0, fours: 0, sixes: 0,
+L654:                 innings: new Set(), notOuts: new Set(), matchScores: new Map(),
+L655:                 ppRuns: 0, ppBalls: 0, middleRuns: 0, middleBalls: 0,
+L656:                 deathRuns: 0, deathBalls: 0,
+L657:                 dismissals: [],
+L658:                 deliveryStats: new Map(),
+L659:                 scoringZones: new Map(),
+L660:               };
+L661:               batterStats.set(d.batter, bs);
+L662:             }
+L663:             const br = d.runs?.batter || 0;
+L664:             bs.runs += br;
+L665:             if (legalBall) bs.balls++;
+L666:             if (br === 4) bs.fours++;
+L667:             if (br === 6) bs.sixes++;
+L668:             bs.innings.add(matchId);
+L669:             bs.matchScores.set(matchId, (bs.matchScores.get(matchId) || 0) + br);
+L670: 
+L671:             if (phase === "powerplay") { bs.ppRuns += br; if (legalBall) bs.ppBalls++; }
+L672:             else if (phase === "middle") { bs.middleRuns += br; if (legalBall) bs.middleBalls++; }
+L673:             else { bs.deathRuns += br; if (legalBall) bs.deathBalls++; }
+L674: 
+L675:             // Delivery breakdown
+L676:             const ds = bs.deliveryStats.get(delivType) || { runs: 0, balls: 0, dismissals: 0 };
+L677:             ds.runs += br; if (legalBall) ds.balls++;
+L678:             bs.deliveryStats.set(delivType, ds);
+L679: 
+L680:             // Scoring zone
+L681:             const zs = bs.scoringZones.get(zone) || { runs: 0, balls: 0, boundaries: 0 };
+L682:             zs.runs += br; if (legalBall) zs.balls++;
+L683:             if (br === 4 || br === 6) zs.boundaries++;
+L684:             bs.scoringZones.set(zone, zs);
+L685:           }
+L686: 
+L687: // ── Accumulate bowler stats ──────────────────────────────────────
+L688:           const bowlerCondition = !selectedTeam || blShort === selectedTeam;
+L689:           if (bowlerCondition) {
+L690:             let ws = bowlerStats.get(d.bowler);
+L691:             if (!ws) {
+L692:               ws = {
+L693:                 runs: 0, balls: 0, wickets: 0, dots: 0, innings: new Set(),
+L694:                 ppRuns: 0, ppBalls: 0, ppWickets: 0,
+L695:                 middleRuns: 0, middleBalls: 0, middleWickets: 0,
+L696:                 deathRuns: 0, deathBalls: 0, deathWickets: 0,
+L697:                 boundaries: 0,
+L698:                 bowlerType: bType,
+L699:                 handSplits: { LHB: newHandSplit(), RHB: newHandSplit(), Unknown: newHandSplit() },
+L700:                 deliveryStats: new Map(),
+L701:               };
+L702:               bowlerStats.set(d.bowler, ws);
+L703:             }
+L704:             const conceded = (d.runs?.batter || 0) + (ext.wides ?? 0) + (ext.noballs ?? 0);
+L705:             ws.runs += conceded;
+L706:             if (legalBall) ws.balls++;
+L707:             const batterRuns = d.runs?.batter || 0;
+L708:             if (legalBall && (batterRuns === 4 || batterRuns === 6)) ws.boundaries++;
+L709:             if (legalBall && (d.runs?.total || 0) === 0) ws.dots++;
+L710:             ws.innings.add(matchId);
+L711: 
+L712:             const battingHand = getBattingHand(d.batter);
+L713:             ws.handSplits[battingHand].runs += batterRuns;
+L714:             if (legalBall) ws.handSplits[battingHand].balls++;
+L715: 
+L716:             if (phase === "powerplay") { ws.ppRuns += conceded; if (legalBall) ws.ppBalls++; }
+L717:             else if (phase === "middle") { ws.middleRuns += conceded; if (legalBall) ws.middleBalls++; }
+L718:             else { ws.deathRuns += conceded; if (legalBall) ws.deathBalls++; }
+L719: 
+L720:             // Delivery breakdown for bowler
+L721:             const wds = ws.deliveryStats.get(delivType) || { runs: 0, balls: 0, wickets: 0 };
+L722:             wds.runs += conceded; if (legalBall) wds.balls++;
+L723:             ws.deliveryStats.set(delivType, wds);
+L724: 
+L725:             if (d.wickets) {
+L726:               d.wickets.forEach((wk: any) => {
+L727:                 wicketsFallenSoFar++;
+L728:                 const credited = !["run out","retired hurt","retired out","obstructing the field"].includes(wk.kind);
+L729:                 if (credited) {
+L730:                   ws!.wickets++;
+L731:                   ws!.handSplits[battingHand].wickets++;
+L732:                   if (phase === "powerplay") ws!.ppWickets++;
+L733:                   else if (phase === "middle") ws!.middleWickets++;
+L734:                   else ws!.deathWickets++;
+L735:                   const wd2 = ws!.deliveryStats.get(delivType) || { runs: 0, balls: 0, wickets: 0 };
+L736:                   wd2.wickets++;
+L737:                   ws!.deliveryStats.set(delivType, wd2);
+L738:                 }
+L739:               });
+L740:             }
+L741:           }
+L742: 
+L743:           // Track wickets for pressure filter next ball
+L744:           if (d.wickets) wicketsFallenSoFar += d.wickets.length;
+L745:         });
+L746:       });
+L747: 
+L748:       // Resolve notOuts — remove anyone who was dismissed
+L749:       inn.overs?.forEach((overObj: any) => {
