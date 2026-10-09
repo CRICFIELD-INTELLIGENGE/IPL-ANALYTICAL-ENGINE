@@ -5,6 +5,7 @@ import {
   BarChart2, Info, ChevronRight, Sparkles 
 } from "lucide-react";
 import { type VideoCatalogueItem, BROADCASTER_DISCLAIMER } from "@/lib/video-registry";
+import { paletteForCode, withAlpha } from "@/lib/team-palette";
 
 interface VideoCardProps {
   video: VideoCatalogueItem;
@@ -23,19 +24,6 @@ const CATEGORY_GRADIENTS: Record<string, string> = {
   "Historical IPL": "from-indigo-950/60 via-slate-900 to-slate-950 border-indigo-500/20 hover:border-indigo-400/50 hover:shadow-indigo-500/10"
 };
 
-const TEAM_ACCENTS: Record<string, { bg: string; text: string }> = {
-  RCB: { bg: "bg-red-500/20 border-red-500/40", text: "text-red-300" },
-  CSK: { bg: "bg-yellow-500/20 border-yellow-500/40", text: "text-yellow-300" },
-  MI: { bg: "bg-blue-500/20 border-blue-500/40", text: "text-blue-300" },
-  KKR: { bg: "bg-purple-500/20 border-purple-500/40", text: "text-purple-300" },
-  GT: { bg: "bg-teal-500/20 border-teal-500/40", text: "text-teal-300" },
-  RR: { bg: "bg-pink-500/20 border-pink-500/40", text: "text-pink-300" },
-  DC: { bg: "bg-cyan-500/20 border-cyan-500/40", text: "text-cyan-300" },
-  PBKS: { bg: "bg-rose-500/20 border-rose-500/40", text: "text-rose-300" },
-  SRH: { bg: "bg-orange-500/20 border-orange-500/40", text: "text-orange-300" },
-  LSG: { bg: "bg-sky-500/20 border-sky-500/40", text: "text-sky-300" }
-};
-
 export function VideoCard({
   video,
   className = "",
@@ -49,7 +37,6 @@ export function VideoCard({
     "from-slate-900 via-slate-900 to-slate-950 border-white/10 hover:border-cyan-400/40 hover:shadow-cyan-500/10";
 
   const primaryTeam = video.teams[0];
-  const teamTheme = primaryTeam ? TEAM_ACCENTS[primaryTeam] : null;
 
   return (
     <div
@@ -109,13 +96,12 @@ export function VideoCard({
         <div className="relative z-10 flex items-center justify-between gap-2">
           <div className="flex items-center gap-1.5 flex-wrap">
             {video.teams.map((t) => {
-              const acc = TEAM_ACCENTS[t];
+              const acc = paletteForCode(t)?.accent;
               return (
                 <span
                   key={t}
-                  className={`px-1.5 py-0.5 rounded text-[9px] font-mono font-bold border ${
-                    acc ? `${acc.bg} ${acc.text}` : "bg-white/10 border-white/10 text-white"
-                  }`}
+                  className={`px-1.5 py-0.5 rounded text-[9px] font-mono font-bold border ${acc ? "" : "bg-white/10 border-white/10 text-white"}`}
+                  style={acc ? { backgroundColor: withAlpha(acc, 0.14), borderColor: withAlpha(acc, 0.4), color: acc } : undefined}
                 >
                   {t}
                 </span>

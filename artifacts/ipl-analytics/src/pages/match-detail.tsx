@@ -4,7 +4,7 @@ import {
   useLiveAllMatches, useLiveWinProbability, useLiveVenueInsights, 
   getMatchScoreLine, getMatchStateColor, startTime, type LiveMatch 
 } from "@/lib/live";
-import { useMatches, useSeasons, teamShort, useTeams, TEAM_COLORS,
+import { useMatches, useSeasons, teamShort, useTeams, teamColor,
   useMatchScorecard, useMatchCommentary, venueSlug, normalizeVenueName, playerSlug,
   type MatchScorecard, type MatchCommentary } from "@/lib/aggregates";
 import { Link, useRoute } from "wouter";
@@ -607,13 +607,15 @@ function CommentaryView({ card, commentary, isLoading }: { card?: MatchScorecard
 }
 
 function GraphView({ match }: { match: any }) {
+  const c1 = teamColor(match?.matchInfo?.team1?.teamName ?? "");
+  const c2 = teamColor(match?.matchInfo?.team2?.teamName ?? "");
   return (
     <div className="bg-[#0B1020] rounded-[24px] border border-white/10 p-8 shadow-xl">
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3"><LineChart className="w-5 h-5 text-primary"/><span className="font-black uppercase tracking-widest text-sm">Worm Graph Analysis</span></div>
         <div className="flex gap-6">
-          <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-[hsl(220_100%_60%)] text-[hsl(220_100%_60%)]"/> <span className="text-[10px] font-black uppercase tracking-widest">{match?.matchInfo?.team1?.teamSName || 'T1'}</span></div>
-          <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] bg-[hsl(48_100%_55%)] text-[hsl(48_100%_55%)]"/> <span className="text-[10px] font-black uppercase tracking-widest">{match?.matchInfo?.team2?.teamSName || 'T2'}</span></div>
+          <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor]" style={{ backgroundColor: c1, color: c1 }}/> <span className="text-[10px] font-black uppercase tracking-widest">{match?.matchInfo?.team1?.teamSName || 'T1'}</span></div>
+          <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor]" style={{ backgroundColor: c2, color: c2 }}/> <span className="text-[10px] font-black uppercase tracking-widest">{match?.matchInfo?.team2?.teamSName || 'T2'}</span></div>
         </div>
       </div>
       <div className="h-72 relative border-l border-b border-white/10 ml-8 mb-4 flex items-end pt-4 pr-4">
@@ -624,8 +626,8 @@ function GraphView({ match }: { match: any }) {
            <span>0</span><span>5</span><span>10</span><span>15</span><span>20</span>
          </div>
          <svg className="w-full h-full drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]" viewBox="0 0 100 100" preserveAspectRatio="none">
-           <path d="M0,100 L10,95 L20,80 L30,65 L40,60 L50,45 L60,30 L70,25 L80,20 L90,10 L100,5" fill="none" stroke="hsl(220 100% 60%)" strokeWidth="2.5" />
-           <path d="M0,100 L10,98 L20,90 L30,88 L40,85 L50,82 L60,80 L70,75 L80,75 L90,72 L100,70" fill="none" stroke="hsl(48 100% 55%)" strokeWidth="2.5" />
+           <path d="M0,100 L10,95 L20,80 L30,65 L40,60 L50,45 L60,30 L70,25 L80,20 L90,10 L100,5" fill="none" stroke={c1} strokeWidth="2.5" />
+           <path d="M0,100 L10,98 L20,90 L30,88 L40,85 L50,82 L60,80 L70,75 L80,75 L90,72 L100,70" fill="none" stroke={c2} strokeWidth="2.5" />
          </svg>
       </div>
     </div>

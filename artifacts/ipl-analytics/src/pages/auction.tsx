@@ -20,6 +20,7 @@ import {
 } from "@/lib/live";
 import { displayPlayerName, usePlayerDisplayNames } from "@/lib/aggregates";
 import { useTeamTheme } from "@/lib/team-context";
+import { FALLBACK_ACCENT, paletteForCode, withAlpha } from "@/lib/team-palette";
 
 function formatMoney(amountInLakhs: number): { value: string; unit: string } {
   if (!amountInLakhs || isNaN(amountInLakhs)) return { value: "0.00", unit: "Cr" };
@@ -30,18 +31,15 @@ function formatMoney(amountInLakhs: number): { value: string; unit: string } {
 }
 
 // Team Theme Colors
-const TEAM_THEME: Record<string, { gradient: string; border: string; glow: string; text: string }> = {
-  RCB: { gradient: "from-red-600/30 via-[#0B1020] to-black", border: "border-red-500/40 hover:border-red-400", glow: "shadow-red-500/20", text: "text-red-400" },
-  CSK: { gradient: "from-amber-500/30 via-[#0B1020] to-black", border: "border-amber-400/40 hover:border-amber-300", glow: "shadow-amber-400/20", text: "text-amber-400" },
-  MI:  { gradient: "from-blue-600/30 via-[#0B1020] to-black", border: "border-blue-500/40 hover:border-blue-400", glow: "shadow-blue-500/20", text: "text-blue-400" },
-  KKR: { gradient: "from-purple-600/30 via-[#0B1020] to-black", border: "border-purple-500/40 hover:border-purple-400", glow: "shadow-purple-500/20", text: "text-purple-400" },
-  SRH: { gradient: "from-orange-600/30 via-[#0B1020] to-black", border: "border-orange-500/40 hover:border-orange-400", glow: "shadow-orange-500/20", text: "text-orange-400" },
-  DC:  { gradient: "from-sky-600/30 via-[#0B1020] to-black", border: "border-sky-500/40 hover:border-sky-400", glow: "shadow-sky-500/20", text: "text-sky-400" },
-  RR:  { gradient: "from-pink-600/30 via-[#0B1020] to-black", border: "border-pink-500/40 hover:border-pink-400", glow: "shadow-pink-500/20", text: "text-pink-400" },
-  PBKS:{ gradient: "from-rose-600/30 via-[#0B1020] to-black", border: "border-rose-500/40 hover:border-rose-400", glow: "shadow-rose-500/20", text: "text-rose-400" },
-  GT:  { gradient: "from-cyan-600/30 via-[#0B1020] to-black", border: "border-cyan-500/40 hover:border-cyan-400", glow: "shadow-cyan-500/20", text: "text-cyan-400" },
-  LSG: { gradient: "from-teal-600/30 via-[#0B1020] to-black", border: "border-teal-500/40 hover:border-teal-400", glow: "shadow-teal-500/20", text: "text-teal-400" },
-};
+/** Card colours for a franchise code, from the shared palette (lib/team-palette.ts). */
+function franchiseCardStyle(code: string): { background: string; borderColor: string; color: string } {
+  const accent = paletteForCode(code)?.accent ?? FALLBACK_ACCENT;
+  return {
+    background: `linear-gradient(to bottom, ${withAlpha(accent, 0.22)}, #0B1020 60%, #000000)`,
+    borderColor: withAlpha(accent, 0.45),
+    color: accent,
+  };
+}
 
 export default function AuctionPage() {
   const { data: state, isLoading } = useLiveAuctionState();
@@ -300,7 +298,7 @@ export default function AuctionPage() {
                  {/* 10 FRANCHISE CARDS GRID */}
                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
                     {state.teams.map((team: any) => {
-                       const theme = TEAM_THEME[team.name] || TEAM_THEME.RCB;
+                       const cardStyle = franchiseCardStyle(team.name);
                        const isSelected = selectedTeamId === team.id;
 
                        return (
@@ -309,7 +307,8 @@ export default function AuctionPage() {
                             whileHover={{ scale: 1.04, y: -4 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => setSelectedTeamId(team.id)}
-                            className={`group relative aspect-[4/5] rounded-[26px] bg-gradient-to-b ${theme.gradient} border-2 ${theme.border} p-4 flex flex-col items-center justify-between transition-all shadow-xl overflow-hidden cursor-pointer ${
+                            style={{ background: cardStyle.background, borderColor: isSelected ? undefined : cardStyle.borderColor }}
+                            className={`group relative aspect-[4/5] rounded-[26px] border-2 p-4 flex flex-col items-center justify-between transition-all shadow-xl overflow-hidden cursor-pointer ${
                               isSelected ? 'border-amber-400 ring-4 ring-amber-400/50 scale-105 shadow-[0_0_30px_rgba(245,158,11,0.4)]' : ''
                             }`}
                           >
@@ -332,7 +331,7 @@ export default function AuctionPage() {
                              <TeamLogo team={team.name} size="w-20 h-20" />
                              
                              <div className="text-center w-full z-10">
-                               <div className={`text-lg font-black uppercase tracking-widest ${theme.text} mb-1 group-hover:scale-105 transition-transform`}>{team.name}</div>
+                               <div className="text-lg font-black uppercase tracking-widest mb-1 group-hover:scale-105 transition-transform" style={{ color: cardStyle.color }}>{team.name}</div>
                                <div className="text-[10px] font-bold text-emerald-400 font-mono bg-black/40 py-1 px-2 rounded-lg border border-white/10">₹{team.purse.toFixed(1)} Cr Purse</div>
                              </div>
                           </motion.button>

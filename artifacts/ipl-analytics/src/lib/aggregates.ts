@@ -4,6 +4,7 @@
  */
 import { useQuery, type UseQueryResult } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { FALLBACK_ACCENT, TEAM_ACCENTS } from "@/lib/team-palette";
 
 export interface Overview {
   totalMatches: number;
@@ -1340,26 +1341,11 @@ export function resolvePlayerImage(
 }
 
 
-// Team color map for charts/badges
-export const TEAM_COLORS: Record<string, string> = {
-  "Mumbai Indians": "hsl(220 100% 60%)",
-  "Chennai Super Kings": "hsl(48 100% 55%)",
-  "Royal Challengers Bengaluru": "hsl(0 85% 55%)",
-  "Kolkata Knight Riders": "hsl(280 70% 55%)",
-  "Delhi Capitals": "hsl(220 80% 50%)",
-  "Punjab Kings": "hsl(0 75% 50%)",
-  "Rajasthan Royals": "hsl(330 80% 55%)",
-  "Sunrisers Hyderabad": "hsl(20 100% 55%)",
-  "Gujarat Titans": "hsl(200 60% 30%)",
-  "Lucknow Super Giants": "hsl(190 80% 45%)",
-  "Deccan Chargers": "hsl(280 60% 40%)",
-  "Pune Warriors": "hsl(180 60% 40%)",
-  "Rising Pune Supergiant": "hsl(280 90% 50%)",
-  "Gujarat Lions": "hsl(35 100% 55%)",
-  "Kochi Tuskers Kerala": "hsl(160 70% 40%)",
-};
+// Team colours for charts, badges and team identity. Sourced from the shared
+// franchise palette (lib/team-palette.ts), which the Dugout also uses.
+export const TEAM_COLORS: Record<string, string> = TEAM_ACCENTS;
 
-export const teamColor = (team: string): string => TEAM_COLORS[team] ?? "hsl(270 60% 60%)";
+export const teamColor = (team: string): string => TEAM_COLORS[team] ?? FALLBACK_ACCENT;
 
 export const teamShort = (team?: string): string => {
   if (!team) return "IND";

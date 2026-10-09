@@ -1,3 +1,4 @@
+import { FALLBACK_ACCENT, paletteForCode, withAlpha } from "@/lib/team-palette";
 import React from "react";
 import { Link } from "wouter";
 import { TeamLogo } from "@/components/team-logo";
@@ -11,96 +12,20 @@ import {
 import { MapPin, Trophy, Award, Play, Users, ChevronRight } from "lucide-react";
 
 export interface TeamTheme {
+  /** Franchise accent: header band, prices, winner highlight and the button. */
   primary: string;
-  accent: string;
+  /** Soft glow behind the card. */
   glow: string;
-  border: string;
-  badgeBg: string;
-  button: string;
 }
 
-export const TEAM_THEMES: Record<string, TeamTheme> = {
-  SRH: {
-    primary: "#f95700", // Sunrisers Orange
-    accent: "#ff8a00",
-    glow: "rgba(249, 87, 0, 0.35)",
-    border: "border-orange-500/40",
-    badgeBg: "bg-orange-500/20 text-orange-400",
-    button: "bg-gradient-to-r from-orange-500 to-amber-500 text-white",
-  },
-  CSK: {
-    primary: "#facc15", // Super Kings Canary Yellow
-    accent: "#f59e0b",
-    glow: "rgba(250, 204, 21, 0.35)",
-    border: "border-yellow-400/40",
-    badgeBg: "bg-yellow-400/20 text-yellow-300",
-    button: "bg-gradient-to-r from-yellow-400 to-amber-500 text-black",
-  },
-  RCB: {
-    primary: "#f43f5e", // Royal Challengers Crimson
-    accent: "#fb7185",
-    glow: "rgba(244, 63, 94, 0.4)",
-    border: "border-rose-500/40",
-    badgeBg: "bg-rose-500/20 text-rose-400",
-    button: "bg-gradient-to-r from-[#ff0055] via-[#ff2244] to-[#ff6600] text-white",
-  },
-  MI: {
-    primary: "#0ea5e9", // Mumbai Sky/Electric Blue
-    accent: "#38bdf8",
-    glow: "rgba(14, 165, 233, 0.35)",
-    border: "border-sky-500/40",
-    badgeBg: "bg-sky-500/20 text-sky-400",
-    button: "bg-gradient-to-r from-sky-500 to-blue-600 text-white",
-  },
-  KKR: {
-    primary: "#8b5cf6", // Knight Riders Royal Purple
-    accent: "#f59e0b",
-    glow: "rgba(139, 92, 246, 0.35)",
-    border: "border-purple-500/40",
-    badgeBg: "bg-purple-500/20 text-purple-300",
-    button: "bg-gradient-to-r from-purple-600 to-indigo-600 text-white",
-  },
-  RR: {
-    primary: "#ec4899", // Royals Pink
-    accent: "#2563eb",
-    glow: "rgba(236, 72, 153, 0.35)",
-    border: "border-pink-500/40",
-    badgeBg: "bg-pink-500/20 text-pink-400",
-    button: "bg-gradient-to-r from-pink-500 to-rose-600 text-white",
-  },
-  GT: {
-    primary: "#14b8a6", // Titans Teal
-    accent: "#0f766e",
-    glow: "rgba(20, 184, 166, 0.35)",
-    border: "border-teal-500/40",
-    badgeBg: "bg-teal-500/20 text-teal-300",
-    button: "bg-gradient-to-r from-teal-500 to-emerald-600 text-white",
-  },
-  LSG: {
-    primary: "#06b6d4", // Super Giants Cyan
-    accent: "#f97316",
-    glow: "rgba(6, 182, 212, 0.35)",
-    border: "border-cyan-500/40",
-    badgeBg: "bg-cyan-500/20 text-cyan-300",
-    button: "bg-gradient-to-r from-cyan-500 to-blue-600 text-white",
-  },
-  PBKS: {
-    primary: "#ef4444", // Kings Red & Silver
-    accent: "#cbd5e1",
-    glow: "rgba(239, 68, 68, 0.35)",
-    border: "border-red-500/40",
-    badgeBg: "bg-red-500/20 text-red-400",
-    button: "bg-gradient-to-r from-red-600 to-rose-600 text-white",
-  },
-  DC: {
-    primary: "#3b82f6", // Capitals Royal Blue & Red
-    accent: "#ef4444",
-    glow: "rgba(59, 130, 246, 0.35)",
-    border: "border-blue-500/40",
-    badgeBg: "bg-blue-500/20 text-blue-300",
-    button: "bg-gradient-to-r from-blue-600 to-cyan-600 text-white",
-  },
-};
+const THEME_CODES = ["RCB", "CSK", "MI", "KKR", "SRH", "RR", "DC", "PBKS", "GT", "LSG"] as const;
+
+export const TEAM_THEMES: Record<string, TeamTheme> = Object.fromEntries(
+  THEME_CODES.map((code) => {
+    const accent = paletteForCode(code)?.accent ?? FALLBACK_ACCENT;
+    return [code, { primary: accent, glow: withAlpha(accent, 0.35) }];
+  }),
+);
 
 /** Helper to generate standard URL slug for a team */
 const teamSlug = (team?: string | null): string =>
@@ -435,9 +360,8 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
             {/* Primary Action Button: MATCH CENTER > */}
             <Link
               href={`/match/${match.id}`}
-              className={`w-full py-2 px-3 rounded-xl text-[11px] font-mono font-black uppercase tracking-wider shadow-md transition-all duration-200 hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-1.5 ${
-                theme.button
-              }`}
+              style={{ backgroundColor: theme.primary, color: "#0B1020" }}
+              className={`w-full py-2 px-3 rounded-xl text-[11px] font-mono font-black uppercase tracking-wider shadow-md transition-all duration-200 hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-1.5`}
             >
               <Play className="w-3 h-3 fill-current shrink-0" />
               <span>MATCH CENTER</span>

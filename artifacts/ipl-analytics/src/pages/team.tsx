@@ -3,16 +3,15 @@ import { useRoute, Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { Layout } from "@/components/layout";
 import { GlassCard } from "@/components/glass-card";
-import { PlayerAvatar } from "@/components/player-avatar";
+import { TeamSquad } from "@/components/team-squad";
 import {
   ArrowLeft, ArrowRight, Users, Activity, Calendar, Trophy,
   TrendingUp, Shield, Target, Medal, BarChart2
 } from "lucide-react";
 import {
-  useTeams, useMatches, teamColor, teamShort, usePlayerImages,
-  useSquadsBySeason, usePlayerBios, usePointsTables,
-  type SquadPlayer, type PlayerBio,
+  useTeams, useMatches, teamColor, teamShort, usePointsTables,
 } from "@/lib/aggregates";
+import { resolveTeamCode, TEAM_CODE_TO_SLUG } from "@/lib/team-context";
 import { TeamLogo } from "@/components/team-logo";
 import { TeamAnalyticsDashboard } from "@/components/team-analytics-dashboard";
 import { TeamIntelPanel } from "@/components/decision/intel-panels";
@@ -27,10 +26,7 @@ export default function TeamProfilePage() {
 
   const teams = useTeams();
   const matches = useMatches();
-  const squadsBySeason = useSquadsBySeason();
   const pointsTables = usePointsTables();
-  const playerBios = usePlayerBios();
-  const playerImages = usePlayerImages();
 
   const [activeSubTab, setActiveSubTab] = useState<"overview" | "squad" | "history">("overview");
 
@@ -67,54 +63,6 @@ export default function TeamProfilePage() {
       .slice(0, 20); // Last 20 matches
   }, [matches.data, teamData]);
 
-  /**
-   * The franchise's squad for the most recent season it fielded a side.
-   *
-   * Sourced from squads-by-season.json rather than current-squads.json. The
-   * latter stores the franchise as a short code ("CSK") while this page holds
-   * the full name, so the comparison never matched and every team reported
-   * "Squad data not available" — and it carries only names, no fee, nationality
-   * or whether the player actually played.
-   */
-  const squadSeason = useMemo(() => {
-    if (!squadsBySeason.data || !teamData) return null;
-    const seasons = Object.keys(squadsBySeason.data)
-      .filter(s => (squadsBySeason.data![s]?.[teamData.team]?.length ?? 0) > 0)
-      .sort((a, b) => Number(b) - Number(a));
-    return seasons[0] ?? null;
-  }, [squadsBySeason.data, teamData]);
-
-  const teamSquad = useMemo(() => {
-    if (!squadsBySeason.data || !teamData || !squadSeason) return [];
-    return squadsBySeason.data[squadSeason]?.[teamData.team] ?? [];
-  }, [squadsBySeason.data, teamData, squadSeason]);
-
-  // Fees were quoted in US dollars before 2014 and in rupees after, and the two
-  // cannot be added without a historical rate — so the total is shown in
-  // whichever currency that season actually used.
-  const squadSpendLabel = useMemo(() => {
-    const lakh = teamSquad.reduce((sum, p) => sum + (p.priceLakh ?? 0), 0);
-    if (lakh > 0) return `₹${(lakh / 100).toFixed(2)} Cr`;
-    const usd = teamSquad.reduce((sum, p) => sum + (p.priceUsd ?? 0), 0);
-    return usd > 0 ? `$${(usd / 1_000_000).toFixed(2)}M` : "—";
-  }, [teamSquad]);
-
-  // Bios are keyed by slug, so index them by the names a squad row can carry.
-  const bioIndex = useMemo(() => {
-    const map = new Map<string, PlayerBio>();
-    for (const bio of Object.values(playerBios.data ?? {})) {
-      for (const key of [bio.playerName, bio.fullName]) {
-        const k = key?.trim().toLowerCase();
-        if (k && !map.has(k)) map.set(k, bio);
-      }
-    }
-    return map;
-  }, [playerBios.data]);
-
-  const bioFor = (p: SquadPlayer) =>
-    bioIndex.get((p.cricsheetName ?? "").toLowerCase()) ??
-    bioIndex.get(p.name.toLowerCase()) ??
-    null;
 
   /**
    * Season-by-season record, computed from every match the side played.
@@ -186,6 +134,9 @@ export default function TeamProfilePage() {
     );
   }
 
+  const teamCode = resolveTeamCode(slug) ?? (teamData ? resolveTeamCode(teamData.team) : null);
+  const dugoutSlug = (teamCode && TEAM_CODE_TO_SLUG[teamCode]) ? TEAM_CODE_TO_SLUG[teamCode] : slug;
+
   const pColor = teamColor(teamData.team);
   const pShort = teamShort(teamData.team);
 
@@ -196,14 +147,23 @@ export default function TeamProfilePage() {
         {/* HEADER NAVIGATION */}
         <div className="flex items-center justify-between shrink-0">
           <Link href="/stats">
-            <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/5 hover:border-primary/20 hover:bg-white/10 text-[11px] font-black uppercase tracking-widest text-white transition-all">
+            <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/5 hover:border-primary/20 hover:bg-white/10 text-[11px] font-black uppercase tracking-widest text-white transition-all cursor-pointer">
               <ArrowLeft className="w-4 h-4 text-primary" />
               Back to stats center
             </button>
           </Link>
 
           <div className="flex items-center gap-3">
-            <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Franchise Intelligence</span>
+            <Link href={`/dugout/${dugoutSlug}`}>
+              <button 
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all hover:scale-105 cursor-pointer shadow-md"
+                style={{ backgroundColor: `${pColor}15`, borderColor: `${pColor}40`, color: pColor }}
+              >
+                <Shield className="w-3.5 h-3.5" />
+                <span>My {pShort} Dugout</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+            </Link>
             <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ backgroundColor: pColor }} />
           </div>
         </div>
@@ -242,6 +202,20 @@ export default function TeamProfilePage() {
                   <p className="text-sm font-bold text-white/50 tracking-wide flex items-center justify-center md:justify-start gap-2 uppercase">
                     All-Time Win Rate: {teamData.winPct.toFixed(1)}%
                   </p>
+                </div>
+
+                {/* Direct Dugout Navigation Action */}
+                <div className="pt-1 flex items-center justify-center md:justify-start gap-3">
+                  <Link href={`/dugout/${dugoutSlug}`}>
+                    <button 
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all border shadow-lg hover:scale-105 cursor-pointer"
+                      style={{ backgroundColor: `${pColor}20`, borderColor: `${pColor}50`, color: pColor }}
+                    >
+                      <Shield className="w-3.5 h-3.5" />
+                      <span>Enter {pShort} Dugout Headquarters</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </Link>
                 </div>
               </div>
 
@@ -309,6 +283,13 @@ export default function TeamProfilePage() {
             <Calendar className="w-4 h-4" />
             Match History
           </button>
+          <Link href={`/dugout/${dugoutSlug}`}>
+            <button className="px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all text-white/50 hover:text-white hover:bg-white/10 cursor-pointer">
+              <Shield className="w-4 h-4" style={{ color: pColor }} />
+              Dugout HQ
+              <ArrowRight className="w-3 h-3 text-white/40" />
+            </button>
+          </Link>
         </div>
 
         {/* PROFILE CONTENT AREA */}
@@ -437,84 +418,7 @@ export default function TeamProfilePage() {
               </div>
             )}
 
-            {activeSubTab === "squad" && (
-              <GlassCard className="p-6">
-                <div className="flex items-start justify-between gap-4 flex-wrap mb-6">
-                  <h3 className="text-sm font-black uppercase tracking-widest text-white/80 flex items-center gap-2">
-                    <Users className="w-4 h-4" style={{ color: pColor }} />
-                    {squadSeason ? `${squadSeason} Squad` : "Squad"}
-                    <span className="text-white/30 font-bold normal-case tracking-normal">
-                      · {teamSquad.length} players
-                    </span>
-                  </h3>
-                  {squadSeason && (
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
-                        <div className="text-[9px] font-black text-white/30 uppercase tracking-widest">Known Spend</div>
-                        <div className="text-[15px] font-black" style={{ color: pColor }}>{squadSpendLabel}</div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-[9px] font-black text-white/30 uppercase tracking-widest">Overseas</div>
-                        <div className="text-[15px] font-black text-white/80">
-                          {teamSquad.filter(p => p.country && p.country !== "India").length}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {teamSquad.length > 0 ? (
-                    teamSquad.map(player => {
-                      const linkName = player.cricsheetName ?? player.name;
-                      return (
-                      <div
-                        key={linkName}
-                        onClick={() => {
-                          const pSlug = linkName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-                          setLocation(`/players/${pSlug}`);
-                        }}
-                        className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center text-center hover:border-white/20 hover:bg-white/[0.05] transition-all cursor-pointer group relative"
-                      >
-                        {/* Squad members who never took the field still belong
-                            to the roster, so they are marked rather than hidden. */}
-                        {!player.played && (
-                          <span className="absolute top-2 right-2 text-[7px] font-black uppercase tracking-widest text-white/25 border border-white/10 rounded px-1 py-0.5">
-                            Bench
-                          </span>
-                        )}
-                        {player.acquisition === "retained" && (
-                          <span className="absolute top-2 left-2 text-[7px] font-black uppercase tracking-widest text-emerald-300/70 border border-emerald-400/20 bg-emerald-400/5 rounded px-1 py-0.5">
-                            Ret
-                          </span>
-                        )}
-                        <div className="w-16 h-16 rounded-full bg-black/40 border-2 mb-3 overflow-hidden" style={{ borderColor: `${pColor}40` }}>
-                           <PlayerAvatar
-                              name={linkName}
-                              playerImages={playerImages.data}
-                              bio={bioFor(player)}
-                              imgClassName="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                            />
-                        </div>
-                        <span className="text-xs font-bold text-white line-clamp-1 w-full">{player.name}</span>
-                        <span className="text-[9px] font-bold text-white/35 uppercase tracking-wider line-clamp-1 w-full mt-0.5">
-                          {player.country || "—"}
-                        </span>
-                        <span className={`text-[11px] font-black tabular-nums mt-1 ${player.priceDisplay ? "" : "text-white/20"}`}
-                              style={player.priceDisplay ? { color: pColor } : undefined}>
-                          {player.priceDisplay ?? "—"}
-                        </span>
-                      </div>
-                      );
-                    })
-                  ) : (
-                    <div className="col-span-full text-center py-12">
-                      <span className="text-sm font-bold text-white/40">Squad data not available.</span>
-                    </div>
-                  )}
-                </div>
-              </GlassCard>
-            )}
+            {activeSubTab === "squad" && <TeamSquad franchise={teamData.team} accent={pColor} />}
 
             {activeSubTab === "history" && (
               <GlassCard className="p-6">

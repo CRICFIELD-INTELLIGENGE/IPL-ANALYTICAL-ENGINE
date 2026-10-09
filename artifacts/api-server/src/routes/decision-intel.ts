@@ -39,6 +39,7 @@ import { getPressureGenome } from "../services/decision/pressure-genome";
 import { scanPlayer } from "../services/decision/weakness-detector";
 import { summarizeMatch, teamShort } from "../services/decision/innings-snapshot";
 import { getBallColumns } from "../services/decision/ball-context";
+import { franchiseRecord, franchiseSquad } from "../services/decision/dugout-data";
 
 const router = Router();
 
@@ -365,6 +366,26 @@ router.get("/intel/match/:id", (req: Request, res: Response): void => {
     turningPoints: turning,
     replayable: Boolean(cv && m.winner !== null),
   });
+});
+
+/* ─── Franchise headquarters (My Dugout) ─────────────────────────────────── */
+
+router.get("/dugout/franchise", (req: Request, res: Response): void => {
+  if (!requireWarehouse(res)) return;
+  const parsed = z.object({ team: z.string().min(1).max(40), rival: z.string().min(1).max(40).optional() }).safeParse(req.query);
+  if (!parsed.success) return bad(res, parsed.error.issues);
+  const record = franchiseRecord(parsed.data.team, parsed.data.rival);
+  if (!record) { res.status(404).json({ error: "unknown_team" }); return; }
+  res.json(record);
+});
+
+router.get("/dugout/squad", (req: Request, res: Response): void => {
+  if (!requireWarehouse(res)) return;
+  const parsed = z.object({ team: z.string().min(1).max(40), season: z.string().regex(/^\d{4}$/) }).safeParse(req.query);
+  if (!parsed.success) return bad(res, parsed.error.issues);
+  const roster = franchiseSquad(parsed.data.team, parsed.data.season);
+  if (!roster) { res.status(404).json({ error: "squad_not_found", detail: "No squad on record for that franchise and season." }); return; }
+  res.json(roster);
 });
 
 export default router;

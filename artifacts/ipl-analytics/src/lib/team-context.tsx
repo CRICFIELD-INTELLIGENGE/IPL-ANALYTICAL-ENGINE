@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { PAGE_BG, FALLBACK_ACCENT, franchisePalette, mixHex, withAlpha } from "@/lib/team-palette";
 
 export type TeamCode = "RCB" | "CSK" | "MI" | "KKR" | "SRH" | "RR" | "DC" | "PBKS" | "GT" | "LSG";
 
@@ -19,20 +20,33 @@ export interface TeamTheme {
   archRival: TeamCode;
 }
 
+/**
+ * Colours come from the shared franchise palette (lib/team-palette.ts), so the
+ * Dugout matches the team page, stats and every other page that colours a team.
+ * The glow and surface tint are derived from the accent.
+ */
+function colours(name: string): Pick<TeamTheme, "accent" | "secondary" | "glow" | "surfaceTint"> {
+  const p = franchisePalette(name);
+  const accent = p?.accent ?? FALLBACK_ACCENT;
+  return {
+    accent,
+    secondary: p?.secondary ?? accent,
+    glow: withAlpha(accent, 0.25),
+    surfaceTint: withAlpha(mixHex(accent, PAGE_BG, 0.8), 0.55),
+  };
+}
+
 export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
   RCB: {
     id: "RCB",
     name: "Royal Challengers Bengaluru",
     shortName: "RCB",
     city: "Bengaluru",
-    accent: "#E65A59",
-    secondary: "#D9B47A",
-    glow: "rgba(230, 90, 89, 0.25)",
-    surfaceTint: "rgba(68, 30, 40, 0.45)",
+    ...colours("Royal Challengers Bengaluru"),
     bannerImg: "/rcb winner 2026.jpg",
     logoImg: "/rcb logo.png",
-    titles: 1,
-    titleYears: ["2026"],
+    titles: 2,
+    titleYears: ["2025", "2026"],
     motto: "Play Bold • Defending Champions",
     archRival: "CSK"
   },
@@ -41,10 +55,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     name: "Chennai Super Kings",
     shortName: "CSK",
     city: "Chennai",
-    accent: "#EBC75B",
-    secondary: "#86B4D8",
-    glow: "rgba(235, 199, 91, 0.25)",
-    surfaceTint: "rgba(66, 57, 26, 0.45)",
+    ...colours("Chennai Super Kings"),
     bannerImg: "/csk insight.jpg",
     logoImg: "/csk logo.png",
     titles: 5,
@@ -57,10 +68,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     name: "Mumbai Indians",
     shortName: "MI",
     city: "Mumbai",
-    accent: "#3B82F6",
-    secondary: "#D4AF37",
-    glow: "rgba(59, 130, 246, 0.25)",
-    surfaceTint: "rgba(15, 35, 70, 0.45)",
+    ...colours("Mumbai Indians"),
     bannerImg: "/wankhede stadium.webp",
     logoImg: "/mi logo.jpg",
     titles: 5,
@@ -73,10 +81,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     name: "Kolkata Knight Riders",
     shortName: "KKR",
     city: "Kolkata",
-    accent: "#A855F7",
-    secondary: "#F59E0B",
-    glow: "rgba(168, 85, 247, 0.25)",
-    surfaceTint: "rgba(45, 20, 60, 0.45)",
+    ...colours("Kolkata Knight Riders"),
     bannerImg: "/eden gardens stadium.webp",
     logoImg: "/kkr logo.png",
     titles: 3,
@@ -89,10 +94,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     name: "Sunrisers Hyderabad",
     shortName: "SRH",
     city: "Hyderabad",
-    accent: "#F97316",
-    secondary: "#EAB308",
-    glow: "rgba(249, 115, 22, 0.25)",
-    surfaceTint: "rgba(65, 30, 15, 0.45)",
+    ...colours("Sunrisers Hyderabad"),
     bannerImg: "/rajiv gandhi hyderabad stadium.webp",
     logoImg: "/srh logo.jpg",
     titles: 2,
@@ -105,10 +107,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     name: "Rajasthan Royals",
     shortName: "RR",
     city: "Jaipur",
-    accent: "#EC4899",
-    secondary: "#3B82F6",
-    glow: "rgba(236, 72, 153, 0.25)",
-    surfaceTint: "rgba(65, 20, 45, 0.45)",
+    ...colours("Rajasthan Royals"),
     bannerImg: "/sawai mansingh jaipur stadium.webp",
     logoImg: "/rr logo.png",
     titles: 1,
@@ -121,10 +120,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     name: "Delhi Capitals",
     shortName: "DC",
     city: "Delhi",
-    accent: "#38BDF8",
-    secondary: "#EF4444",
-    glow: "rgba(56, 189, 248, 0.25)",
-    surfaceTint: "rgba(20, 45, 65, 0.45)",
+    ...colours("Delhi Capitals"),
     bannerImg: "/arun jaitely stadium.webp",
     logoImg: "/dc logo.jpg",
     titles: 0,
@@ -137,10 +133,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     name: "Punjab Kings",
     shortName: "PBKS",
     city: "Mohali",
-    accent: "#F43F5E",
-    secondary: "#FBBF24",
-    glow: "rgba(244, 63, 94, 0.25)",
-    surfaceTint: "rgba(65, 20, 30, 0.45)",
+    ...colours("Punjab Kings"),
     bannerImg: "/mullanpur stadium.webp",
     logoImg: "/pbks logo.png",
     titles: 0,
@@ -153,10 +146,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     name: "Gujarat Titans",
     shortName: "GT",
     city: "Ahmedabad",
-    accent: "#06B6D4",
-    secondary: "#D97706",
-    glow: "rgba(6, 182, 212, 0.25)",
-    surfaceTint: "rgba(15, 45, 55, 0.45)",
+    ...colours("Gujarat Titans"),
     bannerImg: "/narendra modi stadium.webp",
     logoImg: "/gt logo.png",
     titles: 1,
@@ -169,10 +159,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     name: "Lucknow Super Giants",
     shortName: "LSG",
     city: "Lucknow",
-    accent: "#14B8A6",
-    secondary: "#F97316",
-    glow: "rgba(20, 184, 166, 0.25)",
-    surfaceTint: "rgba(15, 50, 45, 0.45)",
+    ...colours("Lucknow Super Giants"),
     bannerImg: "/lucknow stadium.webp",
     logoImg: "/lsg logo.jpg",
     titles: 0,
@@ -181,6 +168,70 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     archRival: "RCB"
   }
 };
+
+/** True for the ten current franchise codes (own keys only, so "toString" is not a code). */
+export const isTeamCode = (c: string): c is TeamCode => Object.prototype.hasOwnProperty.call(TEAM_REGISTRY, c);
+
+export const TEAM_CODE_TO_SLUG: Record<TeamCode, string> = {
+  SRH: "sunrisers-hyderabad",
+  CSK: "chennai-super-kings",
+  RCB: "royal-challengers-bengaluru",
+  MI: "mumbai-indians",
+  KKR: "kolkata-knight-riders",
+  RR: "rajasthan-royals",
+  DC: "delhi-capitals",
+  PBKS: "punjab-kings",
+  GT: "gujarat-titans",
+  LSG: "lucknow-super-giants",
+};
+
+export const TEAM_SLUG_MAP: Record<string, TeamCode> = {
+  // Uppercase codes
+  SRH: "SRH", CSK: "CSK", RCB: "RCB", MI: "MI", KKR: "KKR",
+  RR: "RR", DC: "DC", PBKS: "PBKS", GT: "GT", LSG: "LSG",
+  // Lowercase codes
+  srh: "SRH", csk: "CSK", rcb: "RCB", mi: "MI", kkr: "KKR",
+  rr: "RR", dc: "DC", pbks: "PBKS", gt: "GT", lsg: "LSG",
+  // URL slugs & team name variations
+  "sunrisers-hyderabad": "SRH",
+  "sunrisers hyderabad": "SRH",
+  "chennai-super-kings": "CSK",
+  "chennai super kings": "CSK",
+  "royal-challengers-bengaluru": "RCB",
+  "royal challengers bengaluru": "RCB",
+  "royal-challengers-bangalore": "RCB",
+  "royal challengers bangalore": "RCB",
+  "mumbai-indians": "MI",
+  "mumbai indians": "MI",
+  "kolkata-knight-riders": "KKR",
+  "kolkata knight riders": "KKR",
+  "rajasthan-royals": "RR",
+  "rajasthan royals": "RR",
+  "delhi-capitals": "DC",
+  "delhi capitals": "DC",
+  "delhi-daredevils": "DC",
+  "delhi daredevils": "DC",
+  "punjab-kings": "PBKS",
+  "punjab kings": "PBKS",
+  "kings-xi-punjab": "PBKS",
+  "kings xi punjab": "PBKS",
+  "gujarat-titans": "GT",
+  "gujarat titans": "GT",
+  "lucknow-super-giants": "LSG",
+  "lucknow super giants": "LSG",
+};
+
+export function resolveTeamCode(input?: string | null): TeamCode | null {
+  if (!input) return null;
+  const trimmed = input.trim();
+  const upper = trimmed.toUpperCase();
+  if (isTeamCode(upper)) return upper as TeamCode;
+  const normalized = trimmed.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  if (TEAM_SLUG_MAP[normalized]) return TEAM_SLUG_MAP[normalized];
+  const spaceNorm = trimmed.toLowerCase().replace(/[^a-z0-9]+/g, " ");
+  if (TEAM_SLUG_MAP[spaceNorm]) return TEAM_SLUG_MAP[spaceNorm];
+  return null;
+}
 
 export const NEUTRAL_THEME = {
   accent: "#8B5CF6",

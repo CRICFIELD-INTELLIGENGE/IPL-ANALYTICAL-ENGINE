@@ -2,19 +2,6 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Filter, Calendar, Users, Target, Zap, Activity, ArrowUpRight, Flame, Shield } from "lucide-react";
 import { useSquadsBySeason } from "../../lib/aggregates";
 
-const TEAM_COLORS: Record<string, string> = {
-  "CSK": "#FCCA06",
-  "MI": "#004BA0",
-  "RCB": "#EC1C24",
-  "KKR": "#3A225D",
-  "SRH": "#F26522",
-  "DC": "#00008B",
-  "PBKS": "#DD1F2D",
-  "RR": "#EA1A85",
-  "GT": "#1B2133",
-  "LSG": "#0057B8"
-};
-
 const TEAM_NAMES: Record<string, string> = {
   "CSK": "Chennai Super Kings",
   "MI": "Mumbai Indians",

@@ -1509,6 +1509,14 @@ export default function IntelligencePage() {
   const [tab, setTab] = useState<MainTab>("9 Dimensions");
   const [selectedDimId, setSelectedDimId] = useState<string | null>(null);
   const [selectedArticle, setSelectedArticle] = useState<ContentArticle | null>(null);
+
+  // Deep link from the team newsroom and the squad drawer: /intelligence?article=<day>.
+  useEffect(() => {
+    const day = Number(new URLSearchParams(window.location.search).get("article"));
+    if (!Number.isInteger(day) || day <= 0) return;
+    const hit = CONTENT_ENGINE_100.find((a) => a.day === day);
+    if (hit) setSelectedArticle(hit);
+  }, []);
   const [globalSearch, setGlobalSearch] = useState("");
 
   const searchInputRef = useRef<HTMLInputElement | null>(null);
