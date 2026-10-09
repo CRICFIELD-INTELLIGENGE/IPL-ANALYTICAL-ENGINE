@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { getPlayerImageCandidates, usePlayerImages, usePlayerBios, usePlayerDisplayNames, displayPlayerName } from "@/lib/aggregates";
+import { useEffect, useMemo, useState } from "react";
+import { getPlayerImageCandidates, usePlayerImages, usePlayerBios, usePlayerDisplayNames, displayPlayerName, playerSlug } from "@/lib/aggregates";
 
 interface PlayerAvatarProps {
   name: string;
   playerImages?: Record<string, string>;
-  bio?: { image?: string; fullName?: string } | null;
+  bio?: { image?: string; fullName?: string; playerName?: string } | null;
   className?: string;
   imgClassName?: string;
 }
@@ -38,12 +38,32 @@ export function PlayerAvatar({ name, playerImages: propImages, bio: propBio, cla
 
   const playerImages = propImages || fetchedImages.data;
   const displayName = useMemo(() => displayPlayerName(name, displayNames), [name, displayNames]);
-  const bio = propBio || fetchedBios.data?.[name] || fetchedBios.data?.[displayName] || null;
 
-  const candidates = useMemo(
-    () => getPlayerImageCandidates(name, playerImages, bio).filter(url => !url.includes("ui-avatars.com")),
-    [name, playerImages, bio],
-  );
+  const bio = useMemo(() => {
+    if (propBio) return propBio;
+    if (!fetchedBios.data) return null;
+    const bios = fetchedBios.data;
+    const nSlug = playerSlug(name);
+    const dSlug = playerSlug(displayName);
+    if (bios[nSlug]) return bios[nSlug];
+    if (bios[dSlug]) return bios[dSlug];
+    if (bios[name]) return bios[name];
+    if (bios[displayName]) return bios[displayName];
+
+    const nClean = name.toLowerCase().trim();
+    const dClean = displayName.toLowerCase().trim();
+    for (const b of Object.values(bios)) {
+      if (b.playerName?.toLowerCase().trim() === nClean || b.fullName?.toLowerCase().trim() === nClean) return b;
+      if (b.playerName?.toLowerCase().trim() === dClean || b.fullName?.toLowerCase().trim() === dClean) return b;
+    }
+    return null;
+  }, [propBio, fetchedBios.data, name, displayName]);
+
+  const candidates = useMemo(() => {
+    const setA = getPlayerImageCandidates(name, playerImages, bio);
+    const setB = displayName && displayName !== name ? getPlayerImageCandidates(displayName, playerImages, bio) : [];
+    return Array.from(new Set([...setA, ...setB])).filter(url => !url.includes("ui-avatars.com"));
+  }, [name, displayName, playerImages, bio]);
   const [index, setIndex] = useState(0);
   const [loaded, setLoaded] = useState(false);
 

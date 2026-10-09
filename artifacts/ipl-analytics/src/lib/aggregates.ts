@@ -1255,27 +1255,40 @@ function s3ImageCandidates(playerName: string, fullName?: string | null): string
 export function getPlayerImageCandidates(
   playerName: string,
   playerImages?: Record<string, string>,
-  bio?: { image?: string; fullName?: string } | null,
+  bio?: { image?: string; fullName?: string; playerName?: string } | null,
 ): string[] {
   const name = (playerName || "").trim();
   if (!name) return [playerInitialsAvatarUrl("IPL Player")];
-  const nameLower = name.toLowerCase();
   const candidates: string[] = [];
+
+  const addUrl = (url?: string | null) => {
+    if (!url) return;
+    const trimmed = url.trim();
+    if (!trimmed) return;
+    if (trimmed.startsWith("/") && !trimmed.startsWith("//")) {
+      const base = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
+      candidates.push(`${base}${trimmed}`);
+    } else {
+      candidates.push(trimmed);
+    }
+  };
 
   const checkDict = (n?: string | null) => {
     if (!n || !playerImages) return;
     const clean = n.trim();
-    if (playerImages[clean]) candidates.push(playerImages[clean]);
+    if (playerImages[clean]) addUrl(playerImages[clean]);
     else {
       const exact = Object.keys(playerImages).find(k => k.toLowerCase() === clean.toLowerCase());
-      if (exact) candidates.push(playerImages[exact]);
+      if (exact) addUrl(playerImages[exact]);
     }
   };
 
-  // 1. Curated dictionary & bio full name lookup
+  // 1. Curated dictionary & bio full name / player name lookup
   if (playerImages) {
     checkDict(name);
     if (bio?.fullName) checkDict(bio.fullName);
+    if (bio?.playerName) checkDict(bio.playerName);
+    if (COMMON_PLAYER_NAME_MAP[name]) checkDict(COMMON_PLAYER_NAME_MAP[name]);
 
     const parts = name.split(/\s+/);
     if (parts.length >= 2) {
@@ -1286,22 +1299,31 @@ export function getPlayerImageCandidates(
         return kp.length >= 2 && kp[0].charAt(0) === firstInitial && kp[kp.length - 1] === lastName;
       });
       for (const h of hits) {
-        if (playerImages[h]) candidates.push(playerImages[h]);
+        if (playerImages[h]) addUrl(playerImages[h]);
       }
     }
   }
 
   // 2. Small hand-picked marquee set
   const curated =
-    CURATED_LOCAL_IMAGES[curatedKey(name)] ?? CURATED_LOCAL_IMAGES[curatedKey(bio?.fullName)];
-  if (curated) candidates.push(curated);
+    CURATED_LOCAL_IMAGES[curatedKey(name)] ??
+    CURATED_LOCAL_IMAGES[curatedKey(bio?.fullName)] ??
+    CURATED_LOCAL_IMAGES[curatedKey(bio?.playerName)] ??
+    (COMMON_PLAYER_NAME_MAP[name] ? CURATED_LOCAL_IMAGES[curatedKey(COMMON_PLAYER_NAME_MAP[name])] : undefined);
+  if (curated) addUrl(curated);
 
   // 3. Real image already recorded in player-bio.json
   const bioImg = usableBioImage(bio?.image);
-  if (bioImg) candidates.push(bioImg);
+  if (bioImg) addUrl(bioImg);
 
   // 4. Programmatic CDN guesses
   candidates.push(...s3ImageCandidates(name, bio?.fullName));
+  if (bio?.playerName && bio.playerName !== name) {
+    candidates.push(...s3ImageCandidates(bio.playerName, bio?.fullName));
+  }
+  if (COMMON_PLAYER_NAME_MAP[name]) {
+    candidates.push(...s3ImageCandidates(COMMON_PLAYER_NAME_MAP[name]));
+  }
 
   // 5. Guaranteed-to-render placeholder — always last
   candidates.push(playerInitialsAvatarUrl(name));

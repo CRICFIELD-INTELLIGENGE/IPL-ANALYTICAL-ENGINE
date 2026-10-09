@@ -20,6 +20,8 @@ export interface VideoCatalogueItem {
   beyondXiCategory: string;
   suggestedDestination: string;
   keywords: string[];
+  source?: "gemini_catalogue" | "sitemap_discovery";
+  hotstarContentId?: string;
 }
 
 export const OFFICIAL_IPL_2026_HUB =

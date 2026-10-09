@@ -85,15 +85,24 @@ export function VideoCard({
 
         {/* Center Artwork: Stylized Play Button HUD */}
         <div className="relative z-10 flex items-center justify-center my-auto">
-          <a
-            href={video.destinationUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={`Watch "${video.title}" on JioHotstar`}
-            className="w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-500/80 to-blue-600/90 hover:from-cyan-400 hover:to-blue-500 border border-white/30 text-white flex items-center justify-center shadow-lg shadow-cyan-500/25 transition-transform duration-300 group-hover:scale-110 active:scale-95"
-          >
-            <Play className="w-5 h-5 fill-current ml-0.5 text-white" />
-          </a>
+          {video.isExactVideoUrl && video.officialVideoUrl ? (
+            <a
+              href={video.officialVideoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`Watch "${video.title}" on JioHotstar`}
+              className="w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-500/80 to-blue-600/90 hover:from-cyan-400 hover:to-blue-500 border border-white/30 text-white flex items-center justify-center shadow-lg shadow-cyan-500/25 transition-transform duration-300 group-hover:scale-110 active:scale-95"
+            >
+              <Play className="w-5 h-5 fill-current ml-0.5 text-white" />
+            </a>
+          ) : (
+            <div
+              title="Direct video link unavailable"
+              className="w-12 h-12 rounded-full bg-slate-800/60 border border-white/10 text-slate-500 flex items-center justify-center cursor-not-allowed"
+            >
+              <Play className="w-5 h-5 fill-current ml-0.5 text-slate-500" />
+            </div>
+          )}
         </div>
 
         {/* Bottom Metadata: Teams & Broadcaster badge */}
@@ -156,16 +165,37 @@ export function VideoCard({
 
         {/* Interactive Action Bar */}
         <div className="pt-2 border-t border-white/5 flex items-center justify-between gap-2">
-          {/* Primary Action Button */}
-          <a
-            href={video.destinationUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold text-xs transition-all shadow-md shadow-cyan-500/10 hover:shadow-cyan-500/25 active:scale-95"
-          >
-            <span>Watch on JioHotstar</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
+          {/* Primary Action Button: Exact watch vs Disabled state */}
+          {video.isExactVideoUrl && video.officialVideoUrl ? (
+            <a
+              href={video.officialVideoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold text-xs transition-all shadow-md shadow-cyan-500/10 hover:shadow-cyan-500/25 active:scale-95"
+            >
+              <span>Watch on JioHotstar</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          ) : (
+            <div className="flex-1 flex items-center gap-1.5">
+              <span
+                title="Direct video URL unavailable for this record"
+                className="px-2.5 py-1.5 rounded-lg bg-slate-800/60 border border-white/5 text-slate-500 font-medium text-xs flex items-center gap-1 cursor-not-allowed select-none"
+              >
+                Direct link unavailable
+              </span>
+              <a
+                href={video.destinationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Browse tournament catalog on JioHotstar"
+                className="flex-1 flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-cyan-300 hover:text-cyan-200 font-medium text-xs transition-colors"
+              >
+                <span>Browse Hub</span>
+                <ExternalLink className="w-2.5 h-2.5 text-cyan-400" />
+              </a>
+            </div>
+          )}
 
           {/* Secondary Stats Action */}
           {showExploreStats && (
@@ -199,7 +229,7 @@ export function VideoCard({
             <p>{BROADCASTER_DISCLAIMER}</p>
             {!video.isExactVideoUrl && (
               <p className="mt-1 text-amber-400">
-                • Opens the official JioHotstar IPL 2026 Tournament Hub catalog.
+                • Direct clip link unavailable. Browse Hub opens the official tournament directory.
               </p>
             )}
           </div>

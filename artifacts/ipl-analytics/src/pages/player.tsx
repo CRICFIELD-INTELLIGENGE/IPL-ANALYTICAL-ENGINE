@@ -10,7 +10,7 @@ import {
   ArrowLeft, Calendar, MapPin, Award, User, Globe, Target, Flame, Trophy,
   Activity, Zap, Shield, Sparkles, TrendingUp, Cpu, Heart, CheckCircle2,
   CalendarDays, Share2, AwardIcon, Crosshair, Search, SlidersHorizontal,
-  Filter, Layers, Compass, HelpCircle, UserCheck, Crown
+  Filter, Layers, Compass, HelpCircle, UserCheck, Crown, RotateCw, ShoppingBag, ArrowUpRight
 } from "lucide-react";
 import { GroundScoringWagonWheel, BowlingHeatmap, DeliveryTypeBreakdown, ShotZoneMap, DismissalZonesMap } from "@/components/visualizations/spatial-analytics";
 import { PlayerIntelPanel } from "@/components/decision/intel-panels";
@@ -100,7 +100,7 @@ export default function PlayerProfilePage() {
     staleTime: 1000 * 60 * 60,
   });
 
-  const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "matchups">("overview");
+  const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "matchups" | "card">("overview");
 
   // Exact-only comparison. The previous version also accepted "same first
   // initial + same surname", which merged distinct careers: Rahul Sharma's
@@ -623,144 +623,462 @@ export default function PlayerProfilePage() {
           </div>
         </div>
 
-        {/* HERO CINEMATIC HEADER */}
-        <div className="rounded-[16px] overflow-hidden" style={{ borderLeft: `4px solid ${pColor}` }}>
-          <GlassCard className="p-6 relative overflow-hidden">
-          {/* Decorative Team Color Glow */}
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full blur-[160px] opacity-15 pointer-events-none -mr-40 -mt-40" style={{ background: pColor }} />
-          
-          <div className="flex flex-col md:flex-row gap-6 items-center relative z-10">
-            {/* Player Headshot Photo */}
-            <div className="w-36 h-36 md:w-40 md:h-40 rounded-[28px] overflow-hidden bg-[#0A0D1A] border-2 border-white/10 shrink-0 shadow-2xl relative group">
-              <PlayerAvatar
-                name={bio.playerName}
-                playerImages={playerImages.data}
-                bio={bio}
-                imgClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-              <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-center px-2 py-1 bg-white/10 backdrop-blur-md rounded-lg border border-white/10">
-                <span className="text-[8px] font-black uppercase tracking-wider text-white">ID: #{bio.playerId}</span>
-              </div>
+        {/* HERO CINEMATIC HEADER WITH VOLUMETRIC STADIUM LIGHTING & WATERMARK */}
+        <div className="rounded-[28px] overflow-hidden relative shadow-2xl" style={{ borderLeft: `5px solid ${pColor}` }}>
+          <div className="bg-gradient-to-br from-[#0d1326] via-[#080c18] to-[#03050a] border border-white/10 p-6 sm:p-8 md:p-9 relative overflow-hidden">
+            {/* Volumetric Radial Floodlight & Team Color Halo */}
+            <div
+              className="absolute -top-32 -left-32 w-96 h-96 rounded-full blur-[140px] pointer-events-none opacity-25"
+              style={{ background: pColor || "#8B5CF6" }}
+            />
+            <div
+              className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[550px] h-[360px] rounded-full blur-[170px] pointer-events-none opacity-15"
+              style={{ background: pColor || "#38BDF8" }}
+            />
+            {/* Carbon / Stadium Grid Texture Overlay */}
+            <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-50" />
+
+            {/* Giant Faint Stencil Watermark Typography */}
+            <div className="absolute right-4 md:right-12 bottom-0 select-none pointer-events-none overflow-hidden flex items-end opacity-[0.035] leading-none z-0">
+              <span className="font-black text-[130px] sm:text-[180px] lg:text-[230px] tracking-tighter uppercase font-mono text-white">
+                {pShort || profileName.split(" ").slice(-1)[0]}
+              </span>
             </div>
 
-            {/* Profile Summary Column */}
-            <div className="flex-1 min-w-0 text-center md:text-left space-y-3">
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
-                <span 
-                  className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider border"
-                  style={{ backgroundColor: `${pColor}15`, borderColor: `${pColor}40`, color: pColor }}
-                >
-                  {primaryTeam} ({pShort})
-                </span>
-                <span className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-white/5 border border-white/5 text-white/60">
-                  {bio.role}
-                </span>
-                <span className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" />
-                  Elite Tier
-                </span>
+            {/* Main Hero Flex Grid */}
+            <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-stretch justify-between relative z-10">
+              
+              {/* 1. ATHLETE SHOWCASE STAGE (Replaces Passport ID Box) */}
+              <div className="relative shrink-0 flex flex-col items-center justify-center">
+                {/* Dynamic Player Aura / Halo */}
+                <div
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-56 md:h-56 rounded-full blur-[65px] opacity-40 pointer-events-none"
+                  style={{ background: pColor || "#8B5CF6" }}
+                />
+
+                {/* Showcase Framing Pedestal */}
+                <div className="relative w-48 h-56 sm:w-56 sm:h-64 md:w-60 md:h-72 rounded-3xl overflow-hidden border border-white/20 bg-gradient-to-b from-white/[0.08] via-black/40 to-black/90 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl group/hero">
+                  {/* Top Left Team Badge */}
+                  <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/70 backdrop-blur-md border border-white/15 shadow-md">
+                    <TeamLogo team={primaryTeam} size="w-4 h-4" />
+                    <span className="text-[9px] font-black uppercase tracking-wider text-white font-mono">{pShort}</span>
+                  </div>
+
+                  {/* Top Right Jersey / ID Tag */}
+                  <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
+                    <span className="text-[10px] font-mono font-black text-white/90">
+                      #{String(parseInt(String(bio.playerId).replace(/\D/g, ""), 10) || 18).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  {/* High-res Player Portrait */}
+                  <div className="w-full h-full relative overflow-hidden flex items-center justify-center">
+                    <PlayerAvatar
+                      name={bio.playerName}
+                      playerImages={playerImages.data}
+                      bio={bio}
+                      imgClassName="w-full h-full object-cover object-top filter contrast-[1.06] group-hover/hero:scale-105 transition-transform duration-700"
+                    />
+                    {/* Seamless Bottom Vignette */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080c18] via-[#080c18]/25 to-transparent pointer-events-none" />
+                  </div>
+
+                  {/* Lower Plate Holographic Telemetry Tag */}
+                  <div className="absolute bottom-2.5 inset-x-2.5 z-20 flex items-center justify-between px-2.5 py-1.5 bg-black/80 backdrop-blur-md rounded-xl border border-white/15 shadow-lg">
+                    <span className="text-[8px] font-black uppercase tracking-widest text-cyan-300 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                      {bio.role || "Elite Athlete"}
+                    </span>
+                    <span className="text-[8px] font-mono font-bold text-white/40">
+                      ID: #{bio.playerId}
+                    </span>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                {/* The readable name, so the profile header matches how the
-                    player is listed in the stats tables rather than showing a
-                    scorecard abbreviation like "SA Yadav". */}
-                <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">{profileName}</h1>
-                {profileName !== bio.playerName && (
-                  <span className="text-[11px] font-bold text-white/35 tracking-wide">{bio.playerName}</span>
-                )}
-                <p className="text-[12px] font-bold text-white/50 tracking-wide mt-1 uppercase">Full Name: {bio.fullName}</p>
+              {/* 2. CENTER PROFILE INTEL & NARRATIVE BLOCK */}
+              <div className="flex-1 min-w-0 flex flex-col justify-between text-center lg:text-left space-y-4">
+                <div>
+                  {/* Badge Row */}
+                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-3">
+                    <span
+                      className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider border shadow-sm flex items-center gap-1.5"
+                      style={{ backgroundColor: `${pColor}18`, borderColor: `${pColor}50`, color: pColor }}
+                    >
+                      <TeamLogo team={primaryTeam} size="w-3.5 h-3.5" />
+                      <span>{primaryTeam} ({pShort})</span>
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-white/5 border border-white/10 text-white/70">
+                      {bio.role}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-emerald-400" />
+                      Elite Tier
+                    </span>
+                    <button
+                      onClick={() => setActiveSubTab("card")}
+                      className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-primary/15 border border-primary/40 text-primary flex items-center gap-1.5 hover:bg-primary/25 transition-all shadow-sm cursor-pointer"
+                    >
+                      <Trophy className="w-3 h-3" />
+                      <span>3D Card Lab</span>
+                    </button>
+                  </div>
+
+                  {/* Player Name Headlines */}
+                  <div>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white uppercase leading-none drop-shadow-md">
+                      {profileName}
+                    </h1>
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-[11px] font-mono font-bold text-white/40 uppercase mt-2">
+                      <span>Full: {bio.fullName}</span>
+                      <span>·</span>
+                      <span>{bio.country || "India"}</span>
+                      {bio.iplDebut && (
+                        <>
+                          <span>·</span>
+                          <span className="text-cyan-400">IPL Debut: {bio.iplDebut}</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Player Bio Summary Paragraph */}
+                  <p className="text-xs text-white/70 leading-relaxed font-normal mt-3 max-w-2xl">
+                    {bio.bio}
+                  </p>
+                </div>
+
+                {/* Quick Physical Archetype Specs Strip */}
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-2 border-t border-white/5">
+                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/5 text-[9px] font-mono text-white/60">
+                    <span className="text-white/30 uppercase mr-1">BAT:</span>
+                    <span className="text-white font-bold">{bio.batStyle || "Right Hand"}</span>
+                  </div>
+                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/5 text-[9px] font-mono text-white/60">
+                    <span className="text-white/30 uppercase mr-1">BOWL:</span>
+                    <span className="text-white font-bold">{bio.bowlStyle || "Right Arm"}</span>
+                  </div>
+                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/5 text-[9px] font-mono text-white/60">
+                    <span className="text-white/30 uppercase mr-1">AGE:</span>
+                    <span className="text-white font-bold">{bio.age ? `${bio.age} YRS` : "—"}</span>
+                  </div>
+                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/5 text-[9px] font-mono text-white/60">
+                    <span className="text-white/30 uppercase mr-1">ORIGIN:</span>
+                    <span className="text-white font-bold">{bio.birthPlace || bio.country || "—"}</span>
+                  </div>
+                </div>
               </div>
 
-              {/* Bio summary paragraph */}
-              <p className="text-xs text-white/70 leading-relaxed max-w-2xl font-medium">
-                {bio.bio}
-              </p>
-            </div>
+              {/* 3. HIGH-TECH MODULAR TELEMETRY HUD TILES (Engineered Quant Precision) */}
+              <div className="w-full lg:w-[350px] xl:w-[380px] shrink-0">
+                <div className="grid grid-cols-2 gap-2.5">
+                  {batterStats && (
+                    <>
+                      {/* Metric 1: Total Runs */}
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
+                        <div>
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1">
+                              <Flame className="w-2.5 h-2.5 text-amber-400" />
+                              Runs
+                            </span>
+                            <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[7px] font-mono">
+                              {batterStats.runs >= 3000 ? "TOP 3%" : batterStats.runs >= 1500 ? "CORE XI" : "LEAGUE"}
+                            </span>
+                          </div>
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-white tracking-tight block">
+                            {fmt(batterStats.runs)}
+                          </span>
+                        </div>
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
+                            {batterStats.hundreds ? `${batterStats.hundreds}× 100s · ` : ""}{batterStats.fifties || 0}× 50s
+                          </span>
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-400"
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round((batterStats.runs / 4500) * 100)))}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
 
-            {/* High-fidelity Highlights Banner */}
-            <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-2.5 w-full md:w-[280px] shrink-0">
-              {batterStats && (
-                <>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center text-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Total Runs</span>
-                    <span className="text-xl font-black text-white mt-1">{fmt(batterStats.runs)}</span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center text-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Strike Rate</span>
-                    <span className="text-xl font-black text-primary mt-1">{batterStats.sr.toFixed(1)}</span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center text-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Average</span>
-                    <span className="text-xl font-black text-white/80 mt-1">{batterStats.avg.toFixed(2)}</span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center text-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">High Score</span>
-                    <span className="text-xl font-black text-amber-400 mt-1">{batterStats.highest}*</span>
-                  </div>
-                </>
-              )}
-              {!batterStats && bowlerStats && (
-                <>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center text-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Total Wickets</span>
-                    <span className="text-xl font-black text-white mt-1">{bowlerStats.wickets}</span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center text-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Economy Rate</span>
-                    <span className="text-xl font-black text-accent mt-1">{bowlerStats.econ.toFixed(2)}</span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center text-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Strike Rate</span>
-                    <span className="text-xl font-black text-white/80 mt-1">{bowlerStats.sr.toFixed(1)}</span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-center text-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Best Figures</span>
-                    <span className="text-xl font-black text-amber-400 mt-1">{bowlerStats.best}</span>
-                  </div>
-                </>
-              )}
+                      {/* Metric 2: Strike Rate */}
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
+                        <div>
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1">
+                              <Zap className="w-2.5 h-2.5 text-primary" />
+                              Strike Rate
+                            </span>
+                            <span className="px-1.5 py-0.2 rounded bg-primary/10 text-primary border border-primary/20 text-[7px] font-mono">
+                              {batterStats.sr >= 145 ? "ELITE" : batterStats.sr >= 132 ? "HIGH INTENT" : "ANCHOR"}
+                            </span>
+                          </div>
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-primary tracking-tight block">
+                            {batterStats.sr.toFixed(1)}
+                          </span>
+                        </div>
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
+                            {fmt(batterStats.fours || 0)} 4s · {fmt(batterStats.sixes || 0)} 6s
+                          </span>
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-primary to-cyan-400"
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round(((batterStats.sr - 90) / 75) * 100)))}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Metric 3: Average */}
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
+                        <div>
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1">
+                              <Target className="w-2.5 h-2.5 text-cyan-400" />
+                              Average
+                            </span>
+                            <span className="px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[7px] font-mono">
+                              {batterStats.avg >= 35 ? "ANCHOR+" : "SOLID"}
+                            </span>
+                          </div>
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-white/90 tracking-tight block">
+                            {batterStats.avg.toFixed(2)}
+                          </span>
+                        </div>
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
+                            {batterStats.innings || 0} Inngs · {fmt(batterStats.balls || 0)} Balls
+                          </span>
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-400"
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round((batterStats.avg / 45) * 100)))}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Metric 4: High Score */}
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
+                        <div>
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1">
+                              <Trophy className="w-2.5 h-2.5 text-amber-400" />
+                              High Score
+                            </span>
+                            <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 text-[7px] font-mono">
+                              {batterStats.highest >= 100 ? "CENTURION" : "MATCH-WINNER"}
+                            </span>
+                          </div>
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-amber-300 tracking-tight block">
+                            {batterStats.highest}*
+                          </span>
+                        </div>
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
+                            Peak Match Dominance
+                          </span>
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-400"
+                              style={{ width: `${Math.min(100, Math.max(20, Math.round((batterStats.highest / 130) * 100)))}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {!batterStats && bowlerStats && (
+                    <>
+                      {/* Metric 1: Total Wickets */}
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
+                        <div>
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1">
+                              <Flame className="w-2.5 h-2.5 text-emerald-400" />
+                              Wickets
+                            </span>
+                            <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[7px] font-mono">
+                              {bowlerStats.wickets >= 100 ? "CENTURY" : bowlerStats.wickets >= 50 ? "KEY STRIKER" : "SQUAD"}
+                            </span>
+                          </div>
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-white tracking-tight block">
+                            {bowlerStats.wickets}
+                          </span>
+                        </div>
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
+                            Lead Strike Asset
+                          </span>
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-400"
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round((bowlerStats.wickets / 140) * 100)))}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Metric 2: Economy */}
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
+                        <div>
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1">
+                              <Shield className="w-2.5 h-2.5 text-cyan-400" />
+                              Economy
+                            </span>
+                            <span className="px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[7px] font-mono">
+                              {bowlerStats.econ <= 7.5 ? "TOP 5%" : "CONTROLLED"}
+                            </span>
+                          </div>
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-cyan-300 tracking-tight block">
+                            {bowlerStats.econ.toFixed(2)}
+                          </span>
+                        </div>
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
+                            RPO Defense Rate
+                          </span>
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round(((12 - bowlerStats.econ) / 6) * 100)))}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Metric 3: Strike Rate */}
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
+                        <div>
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1">
+                              <Zap className="w-2.5 h-2.5 text-primary" />
+                              Bowl SR
+                            </span>
+                            <span className="px-1.5 py-0.2 rounded bg-primary/10 text-primary border border-primary/20 text-[7px] font-mono">
+                              {bowlerStats.sr <= 18 ? "LETHAL" : "REGULAR"}
+                            </span>
+                          </div>
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-primary tracking-tight block">
+                            {bowlerStats.sr.toFixed(1)}
+                          </span>
+                        </div>
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
+                            Balls / Dismissal
+                          </span>
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-primary to-cyan-400"
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round(((30 - bowlerStats.sr) / 18) * 100)))}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Metric 4: Best Figures */}
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
+                        <div>
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1">
+                              <Trophy className="w-2.5 h-2.5 text-amber-400" />
+                              Best Spell
+                            </span>
+                            <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 text-[7px] font-mono">
+                              BENCHMARK
+                            </span>
+                          </div>
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-amber-300 tracking-tight block">
+                            {bowlerStats.best}
+                          </span>
+                        </div>
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
+                            Peak Match Return
+                          </span>
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
+                            <div className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-400 w-3/4" />
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-        </GlassCard>
-      </div>
+        </div>
 
-        {/* SUB TAB BAR */}
-        <div className="flex gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/5 w-fit">
-          <button
-            onClick={() => setActiveSubTab("overview")}
-            className={`px-5 py-2 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-1.5 transition-all ${
-              activeSubTab === "overview"
-                ? "bg-gradient-to-r from-primary/40 to-blue-500/20 text-white shadow-[0_0_16px_-4px_hsl(var(--primary))]"
-                : "text-white/40 hover:text-white hover:bg-white/5"
-            }`}
-          >
-            <User className="w-3.5 h-3.5" />
-            Bio & Overview
-          </button>
-          <button
-            onClick={() => setActiveSubTab("metrics")}
-            className={`px-5 py-2 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-1.5 transition-all ${
-              activeSubTab === "metrics"
-                ? "bg-gradient-to-r from-primary/40 to-blue-500/20 text-white shadow-[0_0_16px_-4px_hsl(var(--primary))]"
-                : "text-white/40 hover:text-white hover:bg-white/5"
-            }`}
-          >
-            <Activity className="w-3.5 h-3.5" />
-            Vector Metrics
-          </button>
-          <button
-            onClick={() => setActiveSubTab("matchups")}
-            className={`px-5 py-2 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-1.5 transition-all ${
-              activeSubTab === "matchups"
-                ? "bg-gradient-to-r from-primary/40 to-blue-500/20 text-white shadow-[0_0_16px_-4px_hsl(var(--primary))]"
-                : "text-white/40 hover:text-white hover:bg-white/5"
-            }`}
-          >
-            <Crosshair className="w-3.5 h-3.5" />
-            Head To Head Matchups
-          </button>
+        {/* 4. BROADCAST COMMAND STRIP NAVIGATION (Elevated & High-Contrast) */}
+        <div className="bg-[#0B1020]/90 backdrop-blur-xl rounded-2xl border border-white/10 p-2 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl">
+          <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
+            <button
+              onClick={() => setActiveSubTab("overview")}
+              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
+                activeSubTab === "overview"
+                  ? "bg-primary text-white shadow-[0_0_20px_-3px_hsl(var(--primary))]"
+                  : "text-white/50 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>Bio &amp; Overview</span>
+            </button>
+            <button
+              onClick={() => setActiveSubTab("metrics")}
+              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
+                activeSubTab === "metrics"
+                  ? "bg-primary text-white shadow-[0_0_20px_-3px_hsl(var(--primary))]"
+                  : "text-white/50 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <Activity className="w-3.5 h-3.5" />
+              <span>Vector Metrics</span>
+            </button>
+            <button
+              onClick={() => setActiveSubTab("matchups")}
+              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
+                activeSubTab === "matchups"
+                  ? "bg-primary text-white shadow-[0_0_20px_-3px_hsl(var(--primary))]"
+                  : "text-white/50 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <Crosshair className="w-3.5 h-3.5" />
+              <span>Head To Head Matchups</span>
+            </button>
+            <button
+              onClick={() => setActiveSubTab("card")}
+              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
+                activeSubTab === "card"
+                  ? "bg-gradient-to-r from-primary to-cyan-500 text-white shadow-[0_0_20px_-3px_hsl(var(--primary))]"
+                  : "text-white/50 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
+              <span>Signature Collector Card</span>
+            </button>
+          </div>
+
+          <div className="hidden lg:flex items-center gap-3 text-[10px] font-mono text-white/40 pr-3">
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-white/60">Live Hawkeye Ball Sync</span>
+            </span>
+            <span className="text-white/20">|</span>
+            <span>2008–2024 IPL History</span>
+          </div>
         </div>
 
         {/* PROFILE CONTENT AREA */}
@@ -1627,9 +1945,359 @@ export default function PlayerProfilePage() {
 
               </div>
             )}
+
+            {activeSubTab === "card" && (
+              <PlayerCollectorCardView
+                bio={bio}
+                profileName={profileName}
+                primaryTeam={primaryTeam}
+                pColor={pColor}
+                pShort={pShort}
+                batterStats={batterStats}
+                bowlerStats={bowlerStats}
+                country={resolvedCountry}
+                iplDebut={resolvedIplDebut}
+                squadHistory={squadHistory}
+                playerImages={playerImages.data}
+                slug={slug}
+              />
+            )}
         </motion.div>
       </div>
     </Layout>
+  );
+}
+
+function PlayerCollectorCardView({
+  bio,
+  profileName,
+  primaryTeam,
+  pColor,
+  pShort,
+  batterStats,
+  bowlerStats,
+  country,
+  iplDebut,
+  squadHistory,
+  playerImages,
+  slug,
+}: {
+  bio: PlayerBio;
+  profileName: string;
+  primaryTeam: string;
+  pColor: string;
+  pShort: string;
+  batterStats: any;
+  bowlerStats: any;
+  country: string | null;
+  iplDebut: string | null;
+  squadHistory: any[];
+  playerImages?: Record<string, string>;
+  slug: string;
+}) {
+  const [cardFlipped, setCardFlipped] = useState(false);
+  const number = parseInt(String(bio.playerId).replace(/\D/g, ""), 10) || 18;
+  const matches = (batterStats?.innings || bowlerStats?.innings || squadHistory.length * 14) || 50;
+  const formatNum = (v: number) => new Intl.NumberFormat("en-IN").format(v);
+  const runs = batterStats?.runs != null ? formatNum(batterStats.runs) : "—";
+  const sr = batterStats?.sr != null ? batterStats.sr.toFixed(1) : "—";
+  const wkts = bowlerStats?.wickets != null ? bowlerStats.wickets : "—";
+
+  const tSlug = (team?: string | null): string =>
+    (team || "").toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+  return (
+    <div className="bg-[#0B1020] rounded-[32px] border border-white/10 p-6 md:p-8 flex flex-col gap-8 shadow-2xl relative overflow-hidden">
+      {/* Background foil ambient dynamically keyed to player franchise color */}
+      <div
+        className="absolute top-0 right-0 w-96 h-96 rounded-full blur-[140px] pointer-events-none opacity-20"
+        style={{ backgroundColor: pColor || "#8B5CF6" }}
+      />
+      <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+
+      {/* Header Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-6 relative z-10">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="px-2.5 py-0.5 rounded-full bg-primary/15 text-primary border border-primary/30 text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shadow-sm">
+              <Sparkles className="w-3 h-3 text-primary" />
+              Official Phygital Collectible Spec
+            </span>
+            <span className="text-[10px] font-mono text-white/40">350 GSM Velvet Matte</span>
+          </div>
+          <h2 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white flex items-center gap-2">
+            {profileName} · Signature Collector Card
+          </h2>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setCardFlipped(!cardFlipped)}
+            className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg transition-all cursor-pointer"
+          >
+            <RotateCw className="w-4 h-4 text-cyan-400" />
+            <span>Flip Card ({cardFlipped ? "Showing Back" : "Showing Front"})</span>
+          </button>
+
+          <Link
+            href="/shop"
+            className="px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-white font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-lg shadow-primary/20 transition-all"
+          >
+            <ShoppingBag className="w-4 h-4" />
+            <span>Card Lab</span>
+            <ArrowUpRight className="w-3.5 h-3.5 opacity-80" />
+          </Link>
+        </div>
+      </div>
+
+      {/* Main Grid: Card Showcase (Left) + Spec & Telemetry Panel (Right) */}
+      <div className="grid lg:grid-cols-[440px_1fr] gap-8 items-start relative z-10">
+        {/* 3D Flippable Velvet-Matte Card Container */}
+        <div className="flex flex-col items-center justify-center p-6 bg-black/40 rounded-3xl border border-white/10 shadow-2xl relative">
+          <div
+            className="relative w-full max-w-[380px] aspect-[1/1.55] cursor-pointer select-none group"
+            style={{ perspective: "1200px" }}
+            onClick={() => setCardFlipped(!cardFlipped)}
+            title="Click card to flip"
+          >
+            <motion.div
+              className="w-full h-full relative"
+              animate={{ rotateY: cardFlipped ? 180 : 0 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              {/* FRONT SIDE */}
+              <div
+                className="absolute inset-0 rounded-[28px] overflow-hidden border border-white/20 shadow-2xl p-5 flex flex-col justify-between"
+                style={{
+                  backfaceVisibility: "hidden",
+                  background: `linear-gradient(145deg, #0e1428 0%, #070a14 50%, #03050a 100%)`,
+                  boxShadow: `0 0 30px -5px ${pColor ? `${pColor}30` : 'rgba(139,92,246,0.25)'}`,
+                }}
+              >
+                {/* Holographic Prismatic Foil Sheen Overlay */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-40 mix-blend-overlay"
+                  style={{
+                    background: `radial-gradient(circle at 75% 20%, ${pColor || '#8B5CF6'}40 0%, transparent 60%), linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(255,255,255,0.05) 100%)`,
+                  }}
+                />
+
+                {/* Top Bar: Jersey # & Team Crest */}
+                <div className="flex items-start justify-between z-10">
+                  <div className="flex flex-col">
+                    <span className="text-5xl font-black text-white leading-none tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] font-mono">
+                      #{number}
+                    </span>
+                    <span
+                      className="text-[9px] font-black uppercase tracking-widest mt-1.5 px-2 py-0.5 rounded bg-white/10 border border-white/15 w-fit"
+                      style={{ color: pColor || "#38BDF8" }}
+                    >
+                      {pShort} · TITAN EDITION
+                    </span>
+                  </div>
+                  <div className="w-13 h-13 rounded-2xl bg-black/60 backdrop-blur-md border border-white/20 p-2 flex items-center justify-center shadow-xl">
+                    <TeamLogo team={primaryTeam} size="w-9 h-9" />
+                  </div>
+                </div>
+
+                {/* Player Photo Center */}
+                <div className="absolute inset-x-0 top-12 bottom-24 flex items-center justify-center overflow-hidden">
+                  <PlayerAvatar
+                    name={bio.playerName}
+                    playerImages={playerImages}
+                    bio={bio}
+                    imgClassName="w-full h-full object-cover object-top opacity-95 transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Subtle lower gradient fade into the bottom plate */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#070a14] via-transparent to-transparent pointer-events-none" />
+                </div>
+
+                {/* Signature Traits Pills */}
+                <div className="absolute right-4 top-24 flex flex-col items-end gap-1.5 z-10 text-[8px] font-black uppercase tracking-widest text-white/90">
+                  <span className="bg-black/75 px-2.5 py-0.5 rounded backdrop-blur-md border border-white/15 shadow">INTENT</span>
+                  <span className="bg-black/75 px-2.5 py-0.5 rounded backdrop-blur-md border border-white/15 shadow">POWER</span>
+                  <span className="bg-black/75 px-2.5 py-0.5 rounded backdrop-blur-md border border-white/15 shadow">CONSISTENCY</span>
+                  <span className="bg-black/75 px-2.5 py-0.5 rounded backdrop-blur-md border border-white/15 shadow">CLUTCH</span>
+                </div>
+
+                {/* Bottom Banner Identity Plaque */}
+                <div className="relative z-10 bg-gradient-to-r from-black/90 via-slate-900/90 to-black/90 p-4 rounded-2xl border border-white/15 backdrop-blur-xl shadow-2xl">
+                  <div className="text-[10px] font-mono uppercase tracking-[0.25em] text-cyan-400 font-bold">
+                    {bio.role} · {pShort}
+                  </div>
+                  <h3 className="text-2xl font-black text-white tracking-tight uppercase leading-none mt-1">
+                    {profileName}
+                  </h3>
+                  <div className="text-[10px] font-medium text-white/60 mt-1.5 uppercase tracking-wider flex items-center justify-between">
+                    <span>{bio.batStyle || bio.bowlStyle || "Official Licensed Card"}</span>
+                    <span className="text-[9px] font-mono text-cyan-300 flex items-center gap-1">
+                      FLIP CARD ↷
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* BACK SIDE */}
+              <div
+                className="absolute inset-0 rounded-[28px] overflow-hidden border border-white/20 shadow-2xl bg-gradient-to-b from-[#0e1428] via-[#090d1c] to-[#04060e] p-5 flex flex-col justify-between text-white"
+                style={{
+                  backfaceVisibility: "hidden",
+                  transform: "rotateY(180deg)",
+                  boxShadow: `0 0 30px -5px ${pColor ? `${pColor}30` : 'rgba(139,92,246,0.25)'}`,
+                }}
+              >
+                {/* Header */}
+                <div className="border-b border-white/10 pb-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-3xl font-black text-white font-mono leading-none">
+                        #{number}
+                      </span>
+                      <div>
+                        <div className="text-sm font-black uppercase text-white leading-none">
+                          {profileName}
+                        </div>
+                        <div className="text-[9px] font-mono text-cyan-300 uppercase mt-0.5">
+                          {bio.role}
+                        </div>
+                      </div>
+                    </div>
+                    <span className="text-[9px] font-black px-2.5 py-1 rounded-lg bg-white/10 border border-white/15 text-white">
+                      {country || "INDIA"}
+                    </span>
+                  </div>
+
+                  {/* Bio Quick Line */}
+                  <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-[8px] font-mono text-white/70 mt-2.5 bg-black/40 p-2.5 rounded-xl border border-white/10">
+                    <div><span className="text-white/40">BORN:</span> {bio.birthDate || "—"}</div>
+                    <div><span className="text-white/40">DEBUT:</span> {iplDebut || "2008"}</div>
+                    <div><span className="text-white/40">TEAM:</span> {pShort}</div>
+                    <div><span className="text-white/40">STYLE:</span> {bio.batStyle || bio.bowlStyle || "Core"}</div>
+                  </div>
+                </div>
+
+                {/* Technical Archetype */}
+                <div className="bg-white/[0.04] border border-white/10 p-3 rounded-xl text-[9px] leading-relaxed">
+                  <div className="font-black text-cyan-400 uppercase tracking-widest text-[8px] mb-1">
+                    TECHNICAL ARCHETYPE
+                  </div>
+                  <p className="text-white/80 line-clamp-3">{bio.bio}</p>
+                </div>
+
+                {/* Career Metrics Grid */}
+                <div className="bg-black/50 border border-white/10 rounded-xl p-3">
+                  <div className="text-[8px] font-black text-white/40 uppercase tracking-widest mb-1.5">
+                    TOURNAMENT CAREER METRICS
+                  </div>
+                  <div className="grid grid-cols-4 gap-1.5 text-center">
+                    <div className="bg-white/5 p-2 rounded-lg border border-white/5">
+                      <div className="text-xs font-black text-white font-mono">{matches}</div>
+                      <div className="text-[7px] text-white/40 uppercase tracking-wider">MATCHES</div>
+                    </div>
+                    <div className="bg-white/5 p-2 rounded-lg border border-white/5">
+                      <div className="text-xs font-black text-cyan-400 font-mono">{runs}</div>
+                      <div className="text-[7px] text-white/40 uppercase tracking-wider">RUNS</div>
+                    </div>
+                    <div className="bg-white/5 p-2 rounded-lg border border-white/5">
+                      <div className="text-xs font-black text-emerald-400 font-mono">{sr}</div>
+                      <div className="text-[7px] text-white/40 uppercase tracking-wider">STR RATE</div>
+                    </div>
+                    <div className="bg-white/5 p-2 rounded-lg border border-white/5">
+                      <div className="text-xs font-black text-primary font-mono">{wkts}</div>
+                      <div className="text-[7px] text-white/40 uppercase tracking-wider">WKTS</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* NFC Verification Footer */}
+                <div className="bg-black/40 p-2.5 rounded-xl border border-white/10 flex items-center justify-between text-[8px] font-mono text-white/50">
+                  <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> NTAG213 Certified
+                  </span>
+                  <span>/players/{slug}</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+          <span className="text-[10px] font-mono text-white/40 mt-3.5 flex items-center gap-1.5">
+            <RotateCw className="w-3 h-3 text-cyan-400" /> Tap anywhere on the card to flip
+          </span>
+        </div>
+
+        {/* Right Column: Physical & Phygital Merch Details */}
+        <div className="flex flex-col gap-6">
+          <div className="bg-gradient-to-br from-[#121729] to-[#0A0D18] rounded-2xl border border-white/10 p-6 flex flex-col gap-4 shadow-xl">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-black uppercase tracking-widest text-primary">
+                Collector Specification
+              </span>
+              <span className="text-xs font-mono font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-lg border border-emerald-500/20">
+                In Stock · Official Run
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-black/40 border border-white/5 p-3 rounded-xl">
+                <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Card Stock</span>
+                <span className="text-xs font-black text-white">350 GSM Velvet Matte</span>
+              </div>
+              <div className="bg-black/40 border border-white/5 p-3 rounded-xl">
+                <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Finish</span>
+                <span className="text-xs font-black text-cyan-300">Prismatic Foil Stamped</span>
+              </div>
+              <div className="bg-black/40 border border-white/5 p-3 rounded-xl">
+                <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Hardware</span>
+                <span className="text-xs font-black text-emerald-300">NFC Chip Embedded</span>
+              </div>
+              <div className="bg-black/40 border border-white/5 p-3 rounded-xl">
+                <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Digital Link</span>
+                <span className="text-xs font-black text-primary">Live Web Sync</span>
+              </div>
+            </div>
+
+            <p className="text-xs text-white/60 leading-relaxed font-medium">
+              Every card is precision printed on archival European board, hot-stamped with prismatic foil accents, and equipped with a programmable NTAG213 microchip that launches {profileName}&apos;s live telemetry dossier when tapped with any modern smartphone.
+            </p>
+
+            <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
+              <Link
+                href="/shop"
+                className="w-full sm:w-auto flex-1 py-3 px-6 rounded-xl bg-primary hover:bg-primary/90 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-primary/20 transition-all cursor-pointer"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span>Order Physical Card in Shop (₹299)</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/shop"
+                className="w-full sm:w-auto py-3 px-5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-white font-black text-xs uppercase tracking-wider text-center transition-all"
+              >
+                View 100-Card Deck
+              </Link>
+            </div>
+          </div>
+
+          {/* Franchise Heritage Strip */}
+          <div className="bg-black/40 rounded-2xl border border-white/5 p-5 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <TeamLogo team={primaryTeam} size="w-10 h-10" />
+              <div>
+                <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Franchise Heritage</span>
+                <span className="text-sm font-black text-white">{primaryTeam}</span>
+              </div>
+            </div>
+            <Link
+              href={`/teams/${tSlug(primaryTeam)}`}
+              className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline flex items-center gap-1"
+            >
+              <span>Explore Team Hub</span>
+              <ArrowUpRight className="w-3 h-3" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 const tooltipStyle = {
