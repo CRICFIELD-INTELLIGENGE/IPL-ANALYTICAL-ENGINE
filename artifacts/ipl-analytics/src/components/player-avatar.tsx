@@ -1,8 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
-import { getPlayerImageCandidates, usePlayerImages, usePlayerBios, usePlayerDisplayNames, displayPlayerName, playerSlug } from "@/lib/aggregates";
+import { 
+  getPlayerImageCandidates, usePlayerImages, usePlayerBios, 
+  usePlayerDisplayNames, displayPlayerName, playerSlug, usePlayerPhotoRegistry 
+} from "@/lib/aggregates";
+import { resolvePlayerPhotoFromRegistry, normalizePlayerSlug } from "@/lib/player-photo-registry";
 
 interface PlayerAvatarProps {
   name: string;
+  teamId?: string | null;
+  season?: number | string | null;
+  strictHistoricalJersey?: boolean;
   playerImages?: Record<string, string>;
   bio?: { image?: string; fullName?: string; playerName?: string } | null;
   className?: string;
@@ -25,16 +32,30 @@ function hueOf(name: string): number {
 }
 
 /**
- * Self-healing player headshot.
+ * Self-healing player headshot powered by the centralized Player Photo Registry.
  *
- * Sources are tried best-first (curated dict -> marquee crop -> real image
- * recorded in player-bio.json -> CDN name guess), advancing on each load
- * failure so a wrong guess never renders another player's face.
+ * Fallback Hierarchy:
+ * 1. Approved exact player + franchise + season photo
+ * 2. Approved player + franchise portrait
+ * 3. Approved generic player portrait
+ * 4. Initials silhouette fallback
+ *
+ * Never substitutes another player's face.
  */
-export function PlayerAvatar({ name, playerImages: propImages, bio: propBio, className, imgClassName = "w-full h-full object-cover" }: PlayerAvatarProps) {
+export function PlayerAvatar({ 
+  name, 
+  teamId, 
+  season, 
+  strictHistoricalJersey = false,
+  playerImages: propImages, 
+  bio: propBio, 
+  className, 
+  imgClassName = "w-full h-full object-cover" 
+}: PlayerAvatarProps) {
   const fetchedImages = usePlayerImages();
   const fetchedBios = usePlayerBios();
   const displayNames = usePlayerDisplayNames();
+  const photoRegistry = usePlayerPhotoRegistry();
 
   const playerImages = propImages || fetchedImages.data;
   const displayName = useMemo(() => displayPlayerName(name, displayNames), [name, displayNames]);
@@ -59,11 +80,35 @@ export function PlayerAvatar({ name, playerImages: propImages, bio: propBio, cla
     return null;
   }, [propBio, fetchedBios.data, name, displayName]);
 
+  // Registry resolution (Hierarchy Level 1, 2, 3)
+  const registryResolution = useMemo(() => {
+    const photos = photoRegistry.data?.photos;
+    if (!photos || photos.length === 0) return null;
+    return resolvePlayerPhotoFromRegistry(name, photos, {
+      franchise: teamId,
+      season,
+      strictHistoricalJersey,
+    });
+  }, [photoRegistry.data, name, teamId, season, strictHistoricalJersey]);
+
   const candidates = useMemo(() => {
+    const list: string[] = [];
+
+    // Prioritize approved registry photo if resolved
+    if (registryResolution?.url) {
+      list.push(registryResolution.url);
+    }
+
     const setA = getPlayerImageCandidates(name, playerImages, bio);
     const setB = displayName && displayName !== name ? getPlayerImageCandidates(displayName, playerImages, bio) : [];
-    return Array.from(new Set([...setA, ...setB])).filter(url => !url.includes("ui-avatars.com"));
-  }, [name, displayName, playerImages, bio]);
+    const legacyCandidates = Array.from(new Set([...setA, ...setB])).filter(url => !url.includes("ui-avatars.com"));
+
+    for (const c of legacyCandidates) {
+      if (!list.includes(c)) list.push(c);
+    }
+
+    return list;
+  }, [name, displayName, playerImages, bio, registryResolution]);
   const [index, setIndex] = useState(0);
   const [loaded, setLoaded] = useState(false);
 

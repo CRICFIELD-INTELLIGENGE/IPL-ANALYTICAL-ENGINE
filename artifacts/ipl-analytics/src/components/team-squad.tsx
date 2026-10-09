@@ -2,12 +2,13 @@
 // inspired by official IPL team websites (e.g. Sunrisers Hyderabad, CSK, RCB) and iplt20.com.
 // Shared by the team profile page and My Dugout.
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { 
   Users, X, Search, Shield, Zap, Target, Award, ExternalLink, 
-  ChevronRight, ArrowRight, Activity, DollarSign, Plane
+  ChevronRight, ChevronLeft, ChevronDown, ChevronUp, ArrowRight, 
+  Activity, DollarSign, Plane, LayoutGrid, Layers, List, Table
 } from "lucide-react";
 import { PlayerAvatar } from "@/components/player-avatar";
 import { articlesForPlayer } from "@/lib/team-articles";
@@ -142,6 +143,17 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
   const [searchQuery, setSearchQuery] = useState("");
   const [open, setOpen] = useState<RosterPlayer | null>(null);
 
+  type ViewMode = "shelf" | "grid" | "table";
+  const [viewMode, setViewMode] = useState<ViewMode>("shelf");
+  const [expanded, setExpanded] = useState(false);
+  const shelfRef = useRef<HTMLDivElement>(null);
+
+  const scrollShelf = (dir: "left" | "right") => {
+    if (shelfRef.current) {
+      shelfRef.current.scrollBy({ left: dir === "left" ? -440 : 440, behavior: "smooth" });
+    }
+  };
+
   // Bios lookup map keyed by normalized slugs and names
   const bios = playerBios.data ?? {};
   const bioFor = (p: RosterPlayer) => {
@@ -275,11 +287,11 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
         </div>
       </header>
 
-      {/* ─── FILTERS & SEARCH ROW ─── */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 relative z-10">
+      {/* ─── FILTERS, SEARCH & VIEW SWITCHER ROW ─── */}
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 relative z-10">
         
         {/* Role Filter Tabs */}
-        <div role="group" aria-label="Filter by role" className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
+        <div role="group" aria-label="Filter by role" className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full no-scrollbar">
           {ROLE_FILTERS.map((f) => {
             const isSelected = filter === f.id;
             const count = counts[f.id];
@@ -288,7 +300,7 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
                 key={f.id}
                 onClick={() => setFilter(f.id)}
                 aria-pressed={isSelected}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                   isSelected
                     ? "text-slate-950 font-black shadow-lg"
                     : "text-white/60 bg-white/[0.03] hover:bg-white/[0.08] hover:text-white border border-white/5"
@@ -306,170 +318,425 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
           })}
         </div>
 
-        {/* Search Input */}
-        <div className="relative min-w-[220px]">
-          <Search className="w-3.5 h-3.5 text-white/40 absolute left-3 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search player name..."
-            className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-[#091122] border border-white/10 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/30 shadow-inner"
-          />
+        {/* Search & View Mode Switcher */}
+        <div className="flex items-center gap-2 self-end lg:self-auto w-full lg:w-auto">
+          {/* Search Input */}
+          <div className="relative flex-1 lg:w-56">
+            <Search className="w-3.5 h-3.5 text-white/40 absolute left-3 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search player..."
+              className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-[#091122] border border-white/10 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/30 shadow-inner"
+            />
+          </div>
+
+          {/* View Mode Segmented Controls */}
+          <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.04] border border-white/10 shrink-0">
+            <button
+              onClick={() => setViewMode("shelf")}
+              title="Compact Carousel Shelf (Saves Space)"
+              className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                viewMode === "shelf" ? "text-slate-950 font-bold shadow-md" : "text-white/50 hover:text-white"
+              }`}
+              style={viewMode === "shelf" ? { backgroundColor: accent } : undefined}
+            >
+              <Layers className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setViewMode("grid")}
+              title="Trading Cards Grid"
+              className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                viewMode === "grid" ? "text-slate-950 font-bold shadow-md" : "text-white/50 hover:text-white"
+              }`}
+              style={viewMode === "grid" ? { backgroundColor: accent } : undefined}
+            >
+              <LayoutGrid className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setViewMode("table")}
+              title="Compact Scouting Roster Table"
+              className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                viewMode === "table" ? "text-slate-950 font-bold shadow-md" : "text-white/50 hover:text-white"
+              }`}
+              style={viewMode === "table" ? { backgroundColor: accent } : undefined}
+            >
+              <Table className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          {/* Carousel Left/Right Scroll Controls */}
+          {viewMode === "shelf" && shown.length > 0 && (
+            <div className="hidden sm:flex items-center gap-1 shrink-0">
+              <button
+                onClick={() => scrollShelf("left")}
+                aria-label="Scroll left"
+                className="w-7 h-7 rounded-xl bg-white/[0.05] hover:bg-white/10 border border-white/10 text-white/70 hover:text-white flex items-center justify-center transition-all cursor-pointer"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => scrollShelf("right")}
+                aria-label="Scroll right"
+                className="w-7 h-7 rounded-xl bg-white/[0.05] hover:bg-white/10 border border-white/10 text-white/70 hover:text-white flex items-center justify-center transition-all cursor-pointer"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* ─── SQUAD CARDS GRID (OFFICIAL STADIUM TICKET / CARD DESIGN) ─── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 relative z-10">
-        {shown.map((p) => {
-          const bio = bioFor(p);
-          const captainTag = getCaptaincyBadge(p.name, franchise, season);
-          const isOverseas = p.country && p.country !== "India";
-          const roleText = roleLabel(p.role, p.keeper);
-          const playerSlugUrl = slugOf(p.cricsheetName ?? p.name);
+      {/* ─── VIEW 1: COMPACT SHELF CAROUSEL (OFFICIAL HORIZONTAL ROSTER) ─── */}
+      {viewMode === "shelf" && (
+        <div className="relative z-10 group/shelf">
+          <div
+            ref={shelfRef}
+            className="flex gap-3.5 overflow-x-auto pb-4 pt-1 px-1 scroll-smooth snap-x no-scrollbar"
+          >
+            {shown.map((p) => {
+              const bio = bioFor(p);
+              const captainTag = getCaptaincyBadge(p.name, franchise, season);
+              const isOverseas = p.country && p.country !== "India";
+              const roleText = roleLabel(p.role, p.keeper);
+              const s = p.season;
+              const isBowler = p.role === "bowler";
 
-          // Key telemetry metric for card strip
-          const s = p.season;
-          const isBatter = p.role === "batter" || p.keeper;
-          const isBowler = p.role === "bowler";
+              return (
+                <div
+                  key={`${p.name}-${p.cricsheetName ?? ""}`}
+                  onClick={() => setOpen(p)}
+                  className="w-56 sm:w-60 shrink-0 snap-start rounded-2xl bg-gradient-to-b from-[#0B152A] to-[#070D1A] border border-white/10 hover:border-white/30 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xl cursor-pointer hover:-translate-y-1 group"
+                  style={{ boxShadow: "0 10px 25px -8px rgba(0,0,0,0.8)" }}
+                >
+                  <div className="h-1 w-full" style={{ backgroundColor: accent }} />
 
-          return (
-            <div
-              key={`${p.name}-${p.cricsheetName ?? ""}`}
-              onClick={() => setOpen(p)}
-              className="group relative rounded-2xl bg-gradient-to-b from-[#0B152A] to-[#070D1A] border border-white/10 hover:border-white/30 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xl cursor-pointer hover:-translate-y-1"
-              style={{
-                boxShadow: `0 10px 30px -10px rgba(0,0,0,0.7)`
-              }}
-            >
-              {/* Dynamic top franchise color accent line */}
-              <div className="h-1 w-full" style={{ backgroundColor: accent }} />
-
-              {/* Top Tag Badges Row */}
-              <div className="p-3 flex items-center justify-between gap-1 z-10">
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  {isOverseas ? (
-                    <span className="px-2 py-0.5 rounded text-[8px] font-mono font-black uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-1">
-                      <Plane className="w-2.5 h-2.5" />
-                      {p.country || "Overseas"}
-                    </span>
-                  ) : (
-                    <span className="px-2 py-0.5 rounded text-[8px] font-mono font-black uppercase tracking-wider bg-white/5 text-white/50 border border-white/10">
-                      IND
-                    </span>
-                  )}
-                  {captainTag && (
-                    <span className="px-2 py-0.5 rounded text-[8px] font-mono font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">
-                      👑 {captainTag}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex items-center gap-1">
-                  {p.acquisition === "retained" ? (
-                    <span className="text-[8px] font-mono font-black uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                      Retained
-                    </span>
-                  ) : p.priceDisplay ? (
-                    <span className="text-[8px] font-mono font-black px-1.5 py-0.5 rounded bg-white/10 text-white/80 border border-white/10">
-                      {p.priceDisplay}
-                    </span>
-                  ) : null}
-                </div>
-              </div>
-
-              {/* ── Large Portrait Cutout Vessel ── */}
-              <div className="relative h-48 sm:h-52 w-full flex items-end justify-center overflow-hidden px-4">
-                
-                {/* Radial Glow Atmosphere */}
-                <div 
-                  className="absolute inset-0 opacity-20 pointer-events-none transition-opacity duration-300 group-hover:opacity-35"
-                  style={{
-                    background: `radial-gradient(circle at 50% 60%, ${accent}, transparent 70%)`
-                  }}
-                />
-
-                {/* Subtle Background Watermark Typography */}
-                <div className="absolute top-2 font-black text-6xl text-white/[0.03] select-none pointer-events-none uppercase font-mono">
-                  {p.name.slice(0, 3)}
-                </div>
-
-                {/* Player Photo with fallback */}
-                <div className="relative z-10 w-36 h-44 sm:w-40 sm:h-48 group-hover:scale-105 transition-transform duration-300 flex items-end justify-center">
-                  <PlayerAvatar
-                    name={p.cricsheetName ?? p.name}
-                    playerImages={playerImages.data}
-                    bio={bio}
-                    imgClassName="w-full h-full object-contain object-bottom drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]"
-                  />
-                </div>
-              </div>
-
-              {/* ── Lower Info Vessel ── */}
-              <div className="p-4 bg-[#050A14] border-t border-white/5 space-y-2.5 z-10">
-                <div>
-                  <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight truncate">
-                    {p.name}
+                  {/* Top Badges */}
+                  <div className="p-2.5 flex items-center justify-between gap-1 z-10">
+                    <div className="flex items-center gap-1 flex-wrap">
+                      {isOverseas ? (
+                        <span className="px-1.5 py-0.5 rounded text-[8px] font-mono font-black uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-1">
+                          <Plane className="w-2.5 h-2.5" />
+                          {p.country || "Overseas"}
+                        </span>
+                      ) : (
+                        <span className="px-1.5 py-0.5 rounded text-[8px] font-mono font-black uppercase tracking-wider bg-white/5 text-white/50 border border-white/10">
+                          IND
+                        </span>
+                      )}
+                      {captainTag && (
+                        <span className="px-1.5 py-0.5 rounded text-[8px] font-mono font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                          👑 {captainTag}
+                        </span>
+                      )}
+                    </div>
+                    {p.acquisition === "retained" ? (
+                      <span className="text-[8px] font-mono font-black uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                        Retained
+                      </span>
+                    ) : p.priceDisplay ? (
+                      <span className="text-[8px] font-mono font-black px-1.5 py-0.5 rounded bg-white/10 text-white/80 border border-white/10">
+                        {p.priceDisplay}
+                      </span>
+                    ) : null}
                   </div>
-                  <div className="text-[10px] font-mono font-bold tracking-wider uppercase mt-0.5" style={{ color: accent }}>
-                    {roleText}
+
+                  {/* Portrait Vessel */}
+                  <div className="relative h-40 w-full flex items-end justify-center overflow-hidden px-3">
+                    <div 
+                      className="absolute inset-0 opacity-20 pointer-events-none transition-opacity duration-300 group-hover:opacity-35"
+                      style={{ background: `radial-gradient(circle at 50% 60%, ${accent}, transparent 70%)` }}
+                    />
+                    <div className="absolute top-1 font-black text-5xl text-white/[0.03] select-none pointer-events-none uppercase font-mono">
+                      {p.name.slice(0, 3)}
+                    </div>
+                    <div className="relative z-10 w-32 h-38 group-hover:scale-105 transition-transform duration-300 flex items-end justify-center">
+                      <PlayerAvatar
+                        name={p.cricsheetName ?? p.name}
+                        teamId={franchise}
+                        season={season}
+                        playerImages={playerImages.data}
+                        bio={bio}
+                        imgClassName="w-full h-full object-contain object-bottom drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Lower Info */}
+                  <div className="p-3 bg-[#050A14] border-t border-white/5 space-y-2 z-10">
+                    <div>
+                      <div className="text-xs font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight truncate">
+                        {p.name}
+                      </div>
+                      <div className="text-[9px] font-mono font-bold tracking-wider uppercase mt-0.5 truncate" style={{ color: accent }}>
+                        {roleText}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-1 py-1 px-1.5 rounded-xl bg-white/[0.02] border border-white/5 text-center font-mono">
+                      <div>
+                        <div className="text-[7px] text-white/40 uppercase">Matches</div>
+                        <div className="text-[11px] font-black text-white">{s?.matches ?? (p.played ? "14" : "Bench")}</div>
+                      </div>
+                      {isBowler ? (
+                        <>
+                          <div>
+                            <div className="text-[7px] text-white/40 uppercase">Wkts</div>
+                            <div className="text-[11px] font-black text-emerald-400">{s?.wickets ?? "—"}</div>
+                          </div>
+                          <div>
+                            <div className="text-[7px] text-white/40 uppercase">Econ</div>
+                            <div className="text-[11px] font-black text-cyan-400">{s?.economy ? s.economy.toFixed(2) : "—"}</div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div>
+                            <div className="text-[7px] text-white/40 uppercase">Runs</div>
+                            <div className="text-[11px] font-black text-amber-400">{s?.batRuns ?? "—"}</div>
+                          </div>
+                          <div>
+                            <div className="text-[7px] text-white/40 uppercase">SR</div>
+                            <div className="text-[11px] font-black text-cyan-400">{s?.strikeRate ? s.strikeRate.toFixed(1) : "—"}</div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-between text-[9px] font-mono text-white/40 group-hover:text-white transition-colors pt-0.5">
+                      <span>Inspect Dossier</span>
+                      <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" style={{ color: accent }} />
+                    </div>
                   </div>
                 </div>
-
-                {/* Stats Pill Strip */}
-                <div className="grid grid-cols-3 gap-1 py-1.5 px-2 rounded-xl bg-white/[0.02] border border-white/5 text-center font-mono">
-                  <div>
-                    <div className="text-[8px] text-white/40 uppercase">Matches</div>
-                    <div className="text-xs font-black text-white">{s?.matches ?? (p.played ? "14" : "Bench")}</div>
-                  </div>
-                  {isBowler ? (
-                    <>
-                      <div>
-                        <div className="text-[8px] text-white/40 uppercase">Wickets</div>
-                        <div className="text-xs font-black text-emerald-400">{s?.wickets ?? "—"}</div>
-                      </div>
-                      <div>
-                        <div className="text-[8px] text-white/40 uppercase">Econ</div>
-                        <div className="text-xs font-black text-cyan-400">{s?.economy ? s.economy.toFixed(2) : "—"}</div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div>
-                        <div className="text-[8px] text-white/40 uppercase">Runs</div>
-                        <div className="text-xs font-black text-amber-400">{s?.batRuns ?? "—"}</div>
-                      </div>
-                      <div>
-                        <div className="text-[8px] text-white/40 uppercase">SR</div>
-                        <div className="text-xs font-black text-cyan-400">{s?.strikeRate ? s.strikeRate.toFixed(1) : "—"}</div>
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                {/* Action button */}
-                <div className="flex items-center justify-between text-[10px] font-mono text-white/40 group-hover:text-white transition-colors pt-1">
-                  <span>Inspect Dossier</span>
-                  <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" style={{ color: accent }} />
-                </div>
-              </div>
-            </div>
-          );
-        })}
-
-        {shown.length === 0 && (
-          <div className="col-span-full text-center py-12 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
-            <Users className="w-8 h-8 text-white/20 mx-auto" />
-            <div className="text-sm font-bold text-white/60">No players match your search filter.</div>
-            <button
-              onClick={() => { setFilter("all"); setSearchQuery(""); }}
-              className="text-xs font-mono text-[#00D9FF] hover:underline"
-            >
-              Reset filters
-            </button>
+              );
+            })}
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* ─── VIEW 2: COMPACT COLLAPSIBLE GRID ─── */}
+      {viewMode === "grid" && (
+        <div className="space-y-4 relative z-10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+            {(expanded || filter !== "all" || searchQuery ? shown : shown.slice(0, 10)).map((p) => {
+              const bio = bioFor(p);
+              const captainTag = getCaptaincyBadge(p.name, franchise, season);
+              const isOverseas = p.country && p.country !== "India";
+              const roleText = roleLabel(p.role, p.keeper);
+              const s = p.season;
+              const isBowler = p.role === "bowler";
+
+              return (
+                <div
+                  key={`${p.name}-${p.cricsheetName ?? ""}`}
+                  onClick={() => setOpen(p)}
+                  className="rounded-2xl bg-gradient-to-b from-[#0B152A] to-[#070D1A] border border-white/10 hover:border-white/30 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xl cursor-pointer hover:-translate-y-1 group"
+                  style={{ boxShadow: "0 10px 25px -8px rgba(0,0,0,0.8)" }}
+                >
+                  <div className="h-1 w-full" style={{ backgroundColor: accent }} />
+
+                  {/* Top Badges */}
+                  <div className="p-2 flex items-center justify-between gap-1 z-10">
+                    <div className="flex items-center gap-1 flex-wrap">
+                      {isOverseas ? (
+                        <span className="px-1.5 py-0.5 rounded text-[8px] font-mono font-black uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                          {p.country?.slice(0, 3).toUpperCase() || "OS"}
+                        </span>
+                      ) : (
+                        <span className="px-1.5 py-0.5 rounded text-[8px] font-mono font-black uppercase tracking-wider bg-white/5 text-white/50 border border-white/10">
+                          IND
+                        </span>
+                      )}
+                      {captainTag && (
+                        <span className="px-1.5 py-0.5 rounded text-[8px] font-mono font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                          👑
+                        </span>
+                      )}
+                    </div>
+                    {p.priceDisplay ? (
+                      <span className="text-[8px] font-mono font-black px-1 py-0.5 rounded bg-white/10 text-white/80">
+                        {p.priceDisplay}
+                      </span>
+                    ) : null}
+                  </div>
+
+                  {/* Portrait Vessel */}
+                  <div className="relative h-32 sm:h-36 w-full flex items-end justify-center overflow-hidden px-2">
+                    <div 
+                      className="absolute inset-0 opacity-20 pointer-events-none transition-opacity duration-300 group-hover:opacity-35"
+                      style={{ background: `radial-gradient(circle at 50% 60%, ${accent}, transparent 70%)` }}
+                    />
+                    <div className="relative z-10 w-28 h-32 group-hover:scale-105 transition-transform duration-300 flex items-end justify-center">
+                      <PlayerAvatar
+                        name={p.cricsheetName ?? p.name}
+                        teamId={franchise}
+                        season={season}
+                        playerImages={playerImages.data}
+                        bio={bio}
+                        imgClassName="w-full h-full object-contain object-bottom drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Lower Info */}
+                  <div className="p-2.5 bg-[#050A14] border-t border-white/5 space-y-1.5 z-10">
+                    <div>
+                      <div className="text-xs font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight truncate">
+                        {p.name}
+                      </div>
+                      <div className="text-[8px] font-mono font-bold tracking-wider uppercase truncate mt-0.5" style={{ color: accent }}>
+                        {roleText}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-1 py-1 px-1 rounded-lg bg-white/[0.02] border border-white/5 text-center font-mono">
+                      <div>
+                        <div className="text-[7px] text-white/40 uppercase">M</div>
+                        <div className="text-[10px] font-black text-white">{s?.matches ?? (p.played ? "14" : "Bench")}</div>
+                      </div>
+                      {isBowler ? (
+                        <div>
+                          <div className="text-[7px] text-white/40 uppercase">W</div>
+                          <div className="text-[10px] font-black text-emerald-400">{s?.wickets ?? "—"}</div>
+                        </div>
+                      ) : (
+                        <div>
+                          <div className="text-[7px] text-white/40 uppercase">R</div>
+                          <div className="text-[10px] font-black text-amber-400">{s?.batRuns ?? "—"}</div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Expand / Collapse Roster Trigger */}
+          {filter === "all" && !searchQuery && shown.length > 10 && (
+            <div className="text-center pt-2">
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="px-5 py-2 rounded-xl border text-xs font-mono font-black uppercase tracking-wider transition-all flex items-center gap-2 mx-auto cursor-pointer hover:scale-105 shadow-lg"
+                style={{ backgroundColor: `${accent}15`, borderColor: `${accent}40`, color: accent }}
+              >
+                <span>{expanded ? "Collapse Roster" : `Show All ${shown.length} Players`}</span>
+                {expanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ─── VIEW 3: COMPACT SCOUTING ROSTER TABLE ─── */}
+      {viewMode === "table" && (
+        <div className="rounded-2xl border border-white/10 bg-[#070D1A] overflow-hidden max-h-[460px] overflow-y-auto relative z-10 shadow-2xl">
+          <table className="w-full text-left text-xs text-white/80 border-collapse">
+            <thead className="sticky top-0 bg-[#0B152A] border-b border-white/10 text-[10px] font-mono uppercase tracking-wider text-white/50 z-20">
+              <tr>
+                <th className="py-2.5 px-3">Player</th>
+                <th className="py-2.5 px-3">Role</th>
+                <th className="py-2.5 px-3">Acquisition</th>
+                <th className="py-2.5 px-3 text-center">Matches</th>
+                <th className="py-2.5 px-3 text-center">Runs / Wkts</th>
+                <th className="py-2.5 px-3 text-center">SR / Econ</th>
+                <th className="py-2.5 px-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/5 font-mono">
+              {shown.map((p) => {
+                const bio = bioFor(p);
+                const captainTag = getCaptaincyBadge(p.name, franchise, season);
+                const isOverseas = p.country && p.country !== "India";
+                const roleText = roleLabel(p.role, p.keeper);
+                const s = p.season;
+                const isBowler = p.role === "bowler";
+
+                return (
+                  <tr
+                    key={`${p.name}-${p.cricsheetName ?? ""}`}
+                    onClick={() => setOpen(p)}
+                    className="hover:bg-white/[0.04] transition-colors cursor-pointer group"
+                  >
+                    <td className="py-2 px-3 flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 border border-white/10 bg-[#0F1E38] flex items-end justify-center">
+                        <PlayerAvatar
+                          name={p.cricsheetName ?? p.name}
+                          teamId={franchise}
+                          season={season}
+                          playerImages={playerImages.data}
+                          bio={bio}
+                          imgClassName="w-full h-full object-contain object-bottom"
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-sans font-bold text-white text-xs truncate group-hover:text-primary transition-colors flex items-center gap-1.5">
+                          <span>{p.name}</span>
+                          {captainTag && <span className="text-[9px] text-amber-400">👑</span>}
+                        </div>
+                        <div className="text-[9px] text-white/40 flex items-center gap-1">
+                          {isOverseas ? <span className="text-cyan-400">✈ {p.country}</span> : <span>🇮🇳 IND</span>}
+                        </div>
+                      </div>
+                    </td>
+
+                    <td className="py-2 px-3">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ backgroundColor: `${accent}15`, color: accent }}>
+                        {roleText}
+                      </span>
+                    </td>
+
+                    <td className="py-2 px-3 text-[11px] text-white/70">
+                      {p.priceDisplay || (p.acquisition === "retained" ? "Retained" : "Auction")}
+                    </td>
+
+                    <td className="py-2 px-3 text-center font-bold text-white">
+                      {s?.matches ?? (p.played ? "14" : "Bench")}
+                    </td>
+
+                    <td className="py-2 px-3 text-center font-bold">
+                      {isBowler ? (
+                        <span className="text-emerald-400">{s?.wickets ?? "—"}</span>
+                      ) : (
+                        <span className="text-amber-400">{s?.batRuns ?? "—"}</span>
+                      )}
+                    </td>
+
+                    <td className="py-2 px-3 text-center text-cyan-400">
+                      {isBowler ? (
+                        <span>{s?.economy ? s.economy.toFixed(2) : "—"}</span>
+                      ) : (
+                        <span>{s?.strikeRate ? s.strikeRate.toFixed(1) : "—"}</span>
+                      )}
+                    </td>
+
+                    <td className="py-2 px-3 text-right">
+                      <button className="px-2 py-1 rounded-lg bg-white/5 hover:bg-white/15 text-[10px] font-bold text-white transition-all">
+                        Inspect →
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {shown.length === 0 && (
+        <div className="text-center py-12 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 relative z-10">
+          <Users className="w-8 h-8 text-white/20 mx-auto" />
+          <div className="text-sm font-bold text-white/60">No players match your search filter.</div>
+          <button
+            onClick={() => { setFilter("all"); setSearchQuery(""); }}
+            className="text-xs font-mono text-[#00D9FF] hover:underline cursor-pointer"
+          >
+            Reset filters
+          </button>
+        </div>
+      )}
 
       {/* ─── INTERACTIVE PLAYER PROFILE DRAWER ─── */}
       {open && (
@@ -498,6 +765,8 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
               >
                 <PlayerAvatar
                   name={open.cricsheetName ?? open.name}
+                  teamId={franchise}
+                  season={season}
                   playerImages={playerImages.data}
                   bio={activeBio}
                   imgClassName="w-full h-full object-contain object-bottom"

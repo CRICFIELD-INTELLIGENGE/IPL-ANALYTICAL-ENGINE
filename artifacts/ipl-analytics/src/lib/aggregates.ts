@@ -944,6 +944,9 @@ export const useRunDistribution = (): UseQueryResult<RunDistribution> =>
 export const usePlayerImages = (): UseQueryResult<Record<string, string>> =>
   useQuery({ queryKey: ["agg", "player-images"], queryFn: () => fetchJson<Record<string, string>>("player-images.json"), staleTime: STALE });
 
+export const usePlayerPhotoRegistry = (): UseQueryResult<{ totalApproved: number; totalPending: number; photos: any[] }> =>
+  useQuery({ queryKey: ["agg", "player-photo-registry"], queryFn: () => fetchJson<{ totalApproved: number; totalPending: number; photos: any[] }>("player-photo-registry.json"), staleTime: STALE });
+
 /**
  * Canonical venue name — collapses the many spellings one physical ground
  * appears under (city suffixes, renames, punctuation variants) onto a single
