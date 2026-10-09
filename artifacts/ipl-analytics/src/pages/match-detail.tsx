@@ -18,6 +18,15 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { TeamLogo } from "@/components/team-logo";
 import { MatchIntelPanel } from "@/components/decision/intel-panels";
 import { BroadcasterLink } from "@/components/broadcaster-link";
+import { MatchCinematicHero } from "@/components/match/match-cinematic-hero";
+import { MatchMediaStrip } from "@/components/match/match-media-strip";
+import { MatchMomentumPanel } from "@/components/match/match-momentum-panel";
+import { InningsScorecardView } from "@/components/match/innings-scorecard-view";
+import { MatchGraphConsole } from "@/components/match/match-graph-console";
+import { CinematicCommentaryView } from "@/components/match/cinematic-commentary-view";
+import { CinematicSquadsView } from "@/components/match/cinematic-squads-view";
+import { CinematicOversView } from "@/components/match/cinematic-overs-view";
+import { CinematicForecastView } from "@/components/match/cinematic-forecast-view";
 
 const teamSlug = (team?: string | null): string =>
   (team || "").toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -193,78 +202,19 @@ function MatchIntelligenceView({ match, activeTab }: { match: import("@/lib/live
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col gap-6"
           >
-            {/* HERO SCORE PANEL */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="relative h-[320px] rounded-[32px] border border-white/10 overflow-hidden bg-[#0B1020] shadow-2xl group"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
-              <div className="absolute inset-0 scanline opacity-20" />
-              <div className="absolute inset-0 grid-bg opacity-10" />
-              
-              <div className="relative h-full flex flex-col p-8">
-                <div className="flex items-center justify-between mb-auto">
-                  <div className="flex items-center gap-3">
-                    <div className={`px-3 py-1 rounded-full ${state.bg} bg-opacity-20 border border-${state.bg.replace('bg-', '')}/40 flex items-center gap-1.5`}>
-                      <div className={`w-1.5 h-1.5 rounded-full ${state.bg} ${state.label === 'LIVE' ? 'animate-pulse' : ''}`} />
-                      <span className={`text-[10px] font-black uppercase tracking-widest ${state.bg.replace('bg-', 'text-')}`}>{state.label}</span>
-                    </div>
-                    <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">{info.seriesName} • {info.matchDesc}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href={`/venues/${venueSlug(info.venueInfo?.ground || "")}`}
-                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 hover:bg-cyan-900/60 border border-cyan-800/40 hover:border-cyan-500/60 text-cyan-300 text-[10px] font-bold uppercase tracking-wider transition-all group/vlink"
-                      title={`Explore Venue Profile: ${info.venueInfo?.ground}`}
-                    >
-                      <MapPin className="w-3.5 h-3.5 text-cyan-400 group-hover/vlink:scale-110 transition-transform" />
-                      <span>{info.venueInfo?.ground}, {info.venueInfo?.city}</span>
-                      <ArrowUpRight className="w-3 h-3 text-cyan-400/70" />
-                    </Link>
-                  </div>
-                </div>
+            {/* CINEMATIC MATCH SHOWDOWN HERO */}
+            <MatchCinematicHero match={match} card={card.data} />
 
-                <div className="flex items-center justify-between px-6 md:px-12">
-                  <Link
-                    href={`/teams/${teamSlug(info.team1.teamName)}`}
-                    className="flex flex-col items-center gap-4 group/t1 cursor-pointer hover:scale-105 transition-transform"
-                    title={`View ${info.team1.teamName} Franchise Profile`}
-                  >
-                    <TeamLogo team={info.team1.teamSName} size="w-20 h-20 md:w-24 md:h-24" />
-                    <div className="text-center">
-                      <div className="text-[13px] md:text-[14px] font-black text-white/60 group-hover/t1:text-primary uppercase tracking-tight mb-1 transition-colors">{info.team1.teamName}</div>
-                      <div className="text-[34px] md:text-[42px] font-black leading-none tracking-tighter text-white tabular-nums">{score.team1}</div>
-                    </div>
-                  </Link>
+            {/* MATCH MEDIA STRIP (JIOHOTSTAR VERIFIED INTEGRATIONS) */}
+            <MatchMediaStrip
+              team1={info.team1.teamName}
+              team2={info.team2.teamName}
+              featuredPlayer1={card.data?.innings?.[0]?.batting?.[0]?.name}
+              featuredPlayer2={card.data?.playerOfMatch?.[0] || card.data?.innings?.[1]?.batting?.[0]?.name}
+            />
 
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="text-[14px] font-black text-white/20 uppercase tracking-[0.5em]">VS</div>
-                    <div className="h-16 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent" />
-                  </div>
-
-                  <Link
-                    href={`/teams/${teamSlug(info.team2.teamName)}`}
-                    className="flex flex-col items-center gap-4 group/t2 cursor-pointer hover:scale-105 transition-transform"
-                    title={`View ${info.team2.teamName} Franchise Profile`}
-                  >
-                    <TeamLogo team={info.team2.teamSName} size="w-20 h-20 md:w-24 md:h-24" />
-                    <div className="text-center">
-                      <div className="text-[13px] md:text-[14px] font-black text-white/60 group-hover/t2:text-accent uppercase tracking-tight mb-1 transition-colors">{info.team2.teamName}</div>
-                      <div className="text-[34px] md:text-[42px] font-black leading-none tracking-tighter text-white tabular-nums">{score.team2}</div>
-                    </div>
-                  </Link>
-                </div>
-
-                <div className="mt-auto pt-6 flex items-center justify-center">
-                  <div className="px-8 py-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
-                    <p className="text-[16px] font-black text-primary uppercase tracking-tight leading-tight text-center">
-                      {state.label === 'UPCOMING' ? `STARTS IN ${startTime(info.startDate)}` : info.status}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            {/* MATCH MOMENTUM TELEMETRY HUD */}
+            <MatchMomentumPanel card={card.data} matchId={info.matchId} />
 
             {/* OFFICIAL BROADCASTER HIGHLIGHT LINK (IF VERIFIED DESTINATION EXISTS) */}
             <BroadcasterLink
@@ -348,31 +298,31 @@ function MatchIntelligenceView({ match, activeTab }: { match: import("@/lib/live
 
         {activeTab === "commentary" && (
           <motion.div key="commentary" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-             <CommentaryView card={card.data} commentary={commentary.data} isLoading={commentary.isLoading} />
+             <CinematicCommentaryView card={card.data} commentary={commentary.data} isLoading={commentary.isLoading} />
           </motion.div>
         )}
 
         {activeTab === "graph" && (
           <motion.div key="graph" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-             <GraphView match={match} />
+             <MatchGraphConsole match={match} card={card.data} />
           </motion.div>
         )}
 
         {activeTab === "squads" && (
           <motion.div key="squads" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-             <SquadsView match={match} card={card.data} />
+             <CinematicSquadsView match={match} card={card.data} />
           </motion.div>
         )}
 
         {activeTab === "overs" && (
           <motion.div key="overs" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-             <OversView match={match} />
+             <CinematicOversView match={match} card={card.data} />
           </motion.div>
         )}
 
         {activeTab === "forecast" && (
           <motion.div key="forecast" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-             <ForecastView match={match} />
+             <CinematicForecastView match={match} card={card.data} />
           </motion.div>
         )}
 
@@ -435,190 +385,14 @@ function MatchIntelligenceView({ match, activeTab }: { match: import("@/lib/live
 }
 
 function FullScorecard({ match, card, isLoading }: { match: LiveMatch; card?: MatchScorecard; isLoading: boolean }) {
-  const [activeInnings, setActiveInnings] = useState(0);
-  const innings = card?.innings ?? [];
-  const current = innings[activeInnings];
-
-  if (isLoading) {
-    return <div className="p-12 text-center text-white/40 font-mono text-sm">Building scorecard from the ball-by-ball record…</div>;
-  }
-  if (!current) {
-    return (
-      <div className="p-12 text-center text-white/40 font-mono text-sm border border-white/10 rounded-[24px] bg-white/[0.02]">
-        No delivery record is held for this match, so no scorecard can be shown.
-      </div>
-    );
-  }
-
-  const ex = current.extras;
-  const extrasLine = [
-    ex.byes ? `b ${ex.byes}` : null,
-    ex.legbyes ? `lb ${ex.legbyes}` : null,
-    ex.wides ? `w ${ex.wides}` : null,
-    ex.noballs ? `nb ${ex.noballs}` : null,
-    ex.penalty ? `p ${ex.penalty}` : null,
-  ].filter(Boolean).join(", ");
-
   return (
     <div className="flex flex-col gap-6">
-      {/* Innings selector — labelled by the team that actually batted, in the
-          order they batted, rather than by team1/team2 slot. */}
-      <div className="flex items-center gap-3 flex-wrap">
-        {innings.map((inn, i) => (
-          <button
-            key={i}
-            onClick={() => setActiveInnings(i)}
-            className={`px-6 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${
-              activeInnings === i ? "bg-primary text-white" : "bg-white/5 text-white/40 hover:bg-white/10"
-            }`}
-          >
-            {inn.team} {inn.runs}/{inn.wickets}
-            {inn.superOver ? " · Super Over" : ""}
-          </button>
-        ))}
-      </div>
+      {/* CINEMATIC DUAL / STACKED INNINGS SCORECARD */}
+      <InningsScorecardView card={card} isLoading={isLoading} />
 
-      {/* Innings headline */}
-      <div className="bg-[#0B1020] rounded-[24px] border border-white/10 p-6 flex flex-wrap items-baseline justify-between gap-4">
-        <div>
-          <div className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-1">{current.team}</div>
-          <div className="text-[34px] font-black text-white leading-none tabular-nums">
-            {current.runs}<span className="text-[22px] text-white/40">/{current.wickets}</span>
-            <span className="text-[14px] text-white/40 font-bold ml-3">({current.overs} ov)</span>
-          </div>
-        </div>
-        <div className="flex gap-8 text-right">
-          <div>
-            <div className="text-[9px] font-black uppercase tracking-widest text-white/30">Run rate</div>
-            <div className="text-[20px] font-black text-primary tabular-nums">{current.runRate}</div>
-          </div>
-          <div>
-            <div className="text-[9px] font-black uppercase tracking-widest text-white/30">Extras</div>
-            <div className="text-[20px] font-black text-white/70 tabular-nums">{ex.total}</div>
-            {extrasLine && <div className="text-[9px] text-white/30 font-mono">{extrasLine}</div>}
-          </div>
-        </div>
-      </div>
-
-      {/* Batting */}
-      <div className="bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden overflow-x-auto">
-        <table className="w-full text-left min-w-[560px]">
-          <thead className="bg-white/[0.03] border-b border-white/5">
-            <tr>
-              <th className="px-6 py-4 text-[10px] font-black text-white/40 uppercase tracking-widest">Batter</th>
-              {["R", "B", "4s", "6s", "SR"].map(h => (
-                <th key={h} className="px-4 py-4 text-[10px] font-black text-white/40 uppercase tracking-widest text-center">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-white/5">
-            {current.batting.map((b, i) => (
-              <tr key={i} className="hover:bg-white/[0.03] transition-colors group/batter">
-                <td className="px-6 py-4">
-                  <Link
-                    href={`/players/${playerSlug(b.name)}`}
-                    className="text-[13px] font-black text-white hover:text-primary transition-colors inline-flex items-center gap-1.5"
-                    title={`Open ${b.name}'s Player Dossier`}
-                  >
-                    <span>{b.name}</span>
-                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover/batter:opacity-100 text-primary transition-opacity" />
-                  </Link>
-                  <div className={`text-[10px] font-bold ${b.notOut ? "text-emerald-400 font-black" : "text-white/30"}`}>{b.dismissal}</div>
-                </td>
-                <td className="px-4 py-4 text-center font-black text-white text-[15px] tabular-nums">
-                  {b.runs}{b.notOut ? <span className="text-emerald-400 ml-0.5">*</span> : ""}
-                </td>
-                <td className="px-4 py-4 text-center font-bold text-white/50 tabular-nums">{b.balls}</td>
-                <td className="px-4 py-4 text-center font-bold text-amber-300/80 tabular-nums">{b.fours}</td>
-                <td className="px-4 py-4 text-center font-bold text-amber-400 tabular-nums">{b.sixes}</td>
-                <td className={`px-4 py-4 text-center font-black tabular-nums ${b.sr >= 150 ? "text-emerald-400" : b.sr >= 130 ? "text-primary" : "text-white/70"}`}>
-                  {b.sr}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {current.didNotBat.length > 0 && (
-          <div className="px-6 py-4 border-t border-white/5 bg-white/[0.02] flex items-center gap-2 flex-wrap">
-            <span className="text-[9px] font-black uppercase tracking-widest text-white/30 mr-1">Did not bat:</span>
-            {current.didNotBat.map((p, idx) => (
-              <Link
-                key={idx}
-                href={`/players/${playerSlug(p)}`}
-                className="text-[12px] font-bold text-white/60 hover:text-primary transition-colors underline-offset-2 hover:underline"
-              >
-                {p}{idx < current.didNotBat.length - 1 ? "," : ""}
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Fall of wickets */}
-      {current.fallOfWickets.length > 0 && (
-        <div className="bg-[#0B1020] rounded-[24px] border border-white/10 p-5">
-          <div className="text-[9px] font-black uppercase tracking-widest text-white/30 mb-3">Fall of wickets</div>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            {current.fallOfWickets.map(f => (
-              <Link
-                key={f.wicket}
-                href={`/players/${playerSlug(f.name)}`}
-                className="text-[12px] text-white/60 hover:text-white transition-colors group/fow"
-              >
-                <span className="font-black text-white/80 tabular-nums">{f.score}</span>{" "}
-                <span className="text-white/40 group-hover/fow:underline">({f.name}, {f.over} ov)</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Bowling */}
-      <div className="bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden overflow-x-auto">
-        <table className="w-full text-left min-w-[560px]">
-          <thead className="bg-white/[0.03] border-b border-white/5">
-            <tr>
-              <th className="px-6 py-4 text-[10px] font-black text-white/40 uppercase tracking-widest">Bowler</th>
-              {["O", "M", "R", "W", "Econ", "Dots"].map(h => (
-                <th key={h} className="px-4 py-4 text-[10px] font-black text-white/40 uppercase tracking-widest text-center">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-white/5">
-            {current.bowling.map((b, i) => (
-              <tr key={i} className="hover:bg-white/[0.03] transition-colors group/bowler">
-                <td className="px-6 py-4">
-                  <Link
-                    href={`/players/${playerSlug(b.name)}`}
-                    className="text-[13px] font-black text-white hover:text-accent transition-colors inline-flex items-center gap-1.5"
-                    title={`Open ${b.name}'s Player Dossier`}
-                  >
-                    <span>{b.name}</span>
-                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover/bowler:opacity-100 text-accent transition-opacity" />
-                  </Link>
-                  {(b.wides > 0 || b.noballs > 0) && (
-                    <div className="text-[10px] font-bold text-white/30">
-                      {[b.wides ? `${b.wides} wd` : null, b.noballs ? `${b.noballs} nb` : null].filter(Boolean).join(" · ")}
-                    </div>
-                  )}
-                </td>
-                <td className="px-4 py-4 text-center font-black text-white tabular-nums">{b.overs}</td>
-                <td className="px-4 py-4 text-center font-bold text-white/40 tabular-nums">{b.maidens}</td>
-                <td className="px-4 py-4 text-center font-bold text-white/70 tabular-nums">{b.runs}</td>
-                <td className="px-4 py-4 text-center font-black text-accent text-[15px] tabular-nums">{b.wickets}</td>
-                <td className={`px-4 py-4 text-center font-black tabular-nums ${b.econ <= 7.0 ? "text-emerald-400" : b.econ <= 9.0 ? "text-white/80" : "text-red-400"}`}>
-                  {b.econ}
-                </td>
-                <td className="px-4 py-4 text-center font-bold text-white/30 tabular-nums">{b.dots}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Match facts, all from the match record */}
+      {/* MATCH FACTS & OFFICIALS */}
       {card && (
-        <div className="bg-[#0B1020] rounded-[24px] border border-white/10 p-6 grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="bg-[#090d16]/95 rounded-[28px] border border-white/10 p-6 grid grid-cols-1 md:grid-cols-3 gap-5 shadow-2xl">
           {card.toss && (
             <Fact label="Toss" value={`${card.toss.winner} chose to ${card.toss.decision}`} />
           )}
@@ -626,8 +400,8 @@ function FullScorecard({ match, card, isLoading }: { match: LiveMatch; card?: Ma
             <Fact label="Result" value={`${card.result.winner} won${card.result.by ? ` by ${card.result.by}` : ""}${card.result.method ? ` (${card.result.method})` : ""}`} />
           )}
           {card.playerOfMatch?.length > 0 && (
-            <div className="bg-amber-400/5 border border-amber-400/20 p-4 rounded-xl flex flex-col justify-between">
-              <div className="text-[9px] font-black uppercase tracking-widest text-amber-400 mb-1 flex items-center gap-1.5">
+            <div className="bg-amber-400/5 border border-amber-400/20 p-4 rounded-2xl flex flex-col justify-between">
+              <div className="text-[9px] font-black uppercase tracking-widest text-amber-400 mb-1 flex items-center gap-1.5 font-mono">
                 <Award className="w-3.5 h-3.5 text-amber-400" /> Player of the match
               </div>
               <div className="flex flex-wrap gap-2">
@@ -635,7 +409,7 @@ function FullScorecard({ match, card, isLoading }: { match: LiveMatch; card?: Ma
                   <Link
                     key={idx}
                     href={`/players/${playerSlug(p)}`}
-                    className="text-[14px] font-black text-amber-300 hover:text-white transition-colors flex items-center gap-1"
+                    className="text-[14px] font-black text-amber-300 hover:text-white transition-colors flex items-center gap-1 font-mono"
                   >
                     <span>{p}</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-amber-400" />
@@ -651,8 +425,8 @@ function FullScorecard({ match, card, isLoading }: { match: LiveMatch; card?: Ma
             <Fact label="Match referee" value={card.officials.matchReferees.join(", ")} />
           )}
           {card.venue && (
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
-              <div className="text-[9px] font-black uppercase tracking-widest text-white/30 mb-1 flex items-center gap-1">
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+              <div className="text-[9px] font-black uppercase tracking-widest text-white/30 mb-1 flex items-center gap-1 font-mono">
                 <MapPin className="w-3 h-3 text-cyan-400" /> Venue
               </div>
               <Link
