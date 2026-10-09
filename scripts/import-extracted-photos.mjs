@@ -78,20 +78,35 @@ for (const [slug, b] of Object.entries(bios)) {
 
   // If bio contains a valid direct CDN image, register as baseline approved generic/team portrait
   if (b.image && b.image.startsWith('http') && !b.image.includes('espncricinfo.com/cricketers/')) {
+    const playerRecord = playerDatabase.get(slug);
+    const playerAliases = Array.from(new Set([
+      slug,
+      b.playerName,
+      b.fullName,
+      b.playerName ? slugOf(b.playerName) : null,
+      b.fullName ? slugOf(b.fullName) : null,
+      ...(playerRecord?.aliases ? Array.from(playerRecord.aliases) : []),
+    ].filter(Boolean)));
+
     const existingIndex = registry.photos.findIndex(p => p.playerId === slug && p.imageUrl === b.image);
+    const photoData = {
+      playerId: slug,
+      aliases: playerAliases,
+      teamId: b.team ? (b.team.includes("Hyderabad") ? "SRH" : b.team.includes("Chennai") ? "CSK" : null) : null,
+      season: 2024,
+      imageUrl: b.image,
+      sourcePageUrl: `https://www.espncricinfo.com/player/${slug}`,
+      licenseStatus: "approved",
+      attribution: "ESPNcricinfo Player Profile Cutout",
+      matchConfidence: 0.95,
+      isCutout: true,
+      notes: "Baseline portrait from verified player bio database"
+    };
+
     if (existingIndex === -1) {
-      registry.photos.push({
-        playerId: slug,
-        teamId: b.team ? (b.team.includes("Hyderabad") ? "SRH" : b.team.includes("Chennai") ? "CSK" : null) : null,
-        season: 2024,
-        imageUrl: b.image,
-        sourcePageUrl: `https://www.espncricinfo.com/player/${slug}`,
-        licenseStatus: "approved",
-        attribution: "ESPNcricinfo Player Profile Cutout",
-        matchConfidence: 0.95,
-        isCutout: true,
-        notes: "Baseline portrait from verified player bio database"
-      });
+      registry.photos.push(photoData);
+    } else {
+      registry.photos[existingIndex] = photoData;
     }
   }
 }
@@ -293,8 +308,17 @@ async function run() {
       // Copy image to public/players directory if from external source
       const destRelativePath = `/${file}`; // For existing root images like /msd.jpg
       
+      const playerAliases = Array.from(new Set([
+        match.slug,
+        player?.name,
+        player?.cricsheetName,
+        meta.cleanedName,
+        ...(player?.aliases ? Array.from(player.aliases) : []),
+      ].filter(Boolean)));
+
       const photoRecord = {
         playerId: match.slug,
+        aliases: playerAliases,
         teamId: verifiedTeam,
         season: meta.season,
         imageUrl: destRelativePath,

@@ -90,6 +90,13 @@ export function normalizeFranchiseCode(team?: string | null): string | null {
   return fromName || null;
 }
 
+export function initialSurnameKey(name?: string | null): string | null {
+  if (!name) return null;
+  const parts = name.toLowerCase().replace(/[^a-z0-9]/g, " ").trim().split(/\s+/).filter(Boolean);
+  if (parts.length < 2) return null;
+  return `${parts[0][0]}|${parts[parts.length - 1]}`;
+}
+
 /**
  * Resolves a player photograph using the strict 4-level fallback hierarchy.
  */
@@ -99,14 +106,28 @@ export function resolvePlayerPhotoFromRegistry(
   options?: ResolvePhotoOptions
 ): ResolvedPhotoResult {
   const targetSlug = normalizePlayerSlug(playerNameOrSlug);
+  const targetKey = initialSurnameKey(playerNameOrSlug);
   const targetFranchise = normalizeFranchiseCode(options?.franchise);
   const targetSeason = options?.season ? Number(options.season) : null;
   const strictHistorical = options?.strictHistoricalJersey ?? false;
 
-  // Filter only approved candidates for this specific player
-  const playerCandidates = photos.filter(
-    (p) => p.playerId === targetSlug && p.licenseStatus === "approved"
-  );
+  // Filter approved candidates for this specific player (matching slug, aliases, or initial+surname)
+  const playerCandidates = photos.filter((p) => {
+    if (p.licenseStatus !== "approved") return false;
+    if (p.playerId === targetSlug) return true;
+    if ((p as any).aliases && ((p as any).aliases as string[]).some((a) => normalizePlayerSlug(a) === targetSlug)) return true;
+    if (targetKey) {
+      const pKey = initialSurnameKey(p.playerId);
+      if (pKey && pKey === targetKey) return true;
+      if ((p as any).aliases) {
+        for (const a of ((p as any).aliases as string[])) {
+          const aKey = initialSurnameKey(a);
+          if (aKey && aKey === targetKey) return true;
+        }
+      }
+    }
+    return false;
+  });
 
   if (playerCandidates.length === 0) {
     return {

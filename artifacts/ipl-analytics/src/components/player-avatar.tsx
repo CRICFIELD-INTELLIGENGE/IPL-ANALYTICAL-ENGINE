@@ -84,12 +84,22 @@ export function PlayerAvatar({
   const registryResolution = useMemo(() => {
     const photos = photoRegistry.data?.photos;
     if (!photos || photos.length === 0) return null;
-    return resolvePlayerPhotoFromRegistry(name, photos, {
+    const resA = resolvePlayerPhotoFromRegistry(name, photos, {
       franchise: teamId,
       season,
       strictHistoricalJersey,
     });
-  }, [photoRegistry.data, name, teamId, season, strictHistoricalJersey]);
+    if (resA?.url) return resA;
+    if (displayName && displayName !== name) {
+      const resB = resolvePlayerPhotoFromRegistry(displayName, photos, {
+        franchise: teamId,
+        season,
+        strictHistoricalJersey,
+      });
+      if (resB?.url) return resB;
+    }
+    return resA;
+  }, [photoRegistry.data, name, displayName, teamId, season, strictHistoricalJersey]);
 
   const candidates = useMemo(() => {
     const list: string[] = [];

@@ -3019,6 +3019,10 @@ export async function getPlayerImages() {
   return readDataJson("player-images.json");
 }
 
+export async function getPlayerPhotoRegistry() {
+  return readDataJson("player-photo-registry.json");
+}
+
 export async function getSeasonTops() {
   return readDataJson("season-tops.json");
 }

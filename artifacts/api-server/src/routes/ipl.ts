@@ -41,6 +41,7 @@ import {
   getPlayerSeasonStats,
   getPlayerTeamSeasonStats,
   getPlayerImages,
+  getPlayerPhotoRegistry,
   getSeasonTops,
 } from "../services/stats-aggregator";
 
@@ -344,6 +345,12 @@ router.get("/ipl/player-team-season-stats", (_req: Request, res: Response): void
 
 router.get("/ipl/player-images", (_req: Request, res: Response): void => {
   getPlayerImages()
+    .then(data => res.json(data))
+    .catch(err => res.status(500).json({ error: err.message }));
+});
+
+router.get("/ipl/player-photo-registry", (_req: Request, res: Response): void => {
+  getPlayerPhotoRegistry()
     .then(data => res.json(data))
     .catch(err => res.status(500).json({ error: err.message }));
 });

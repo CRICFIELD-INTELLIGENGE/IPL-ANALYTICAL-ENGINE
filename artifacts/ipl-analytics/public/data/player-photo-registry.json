@@ -1,11 +1,16 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2026-10-09T11:54:50.812Z",
+  "lastUpdated": "2026-10-09T12:22:59.004Z",
   "totalApproved": 274,
   "totalPending": 0,
   "photos": [
     {
       "playerId": "mohsin-khan",
+      "aliases": [
+        "mohsin-khan",
+        "Mohsin Khan",
+        "mohsin khan"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/359700/359759.png",
@@ -18,6 +23,13 @@
     },
     {
       "playerId": "rashid-khan",
+      "aliases": [
+        "rashid-khan",
+        "Rashid Khan",
+        "Rashid Khan Arman",
+        "rashid-khan-arman",
+        "rashid khan"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320500/320506.png",
@@ -30,6 +42,14 @@
     },
     {
       "playerId": "k-rabada",
+      "aliases": [
+        "k-rabada",
+        "K Rabada",
+        "Kagiso Rabada",
+        "kagiso-rabada",
+        "kagiso rabada",
+        "k rabada"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320300/320376.png",
@@ -42,6 +62,14 @@
     },
     {
       "playerId": "da-warner",
+      "aliases": [
+        "da-warner",
+        "DA Warner",
+        "David Andrew Warner",
+        "david-andrew-warner",
+        "da warner",
+        "david warner"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316589.png",
@@ -54,6 +82,14 @@
     },
     {
       "playerId": "mp-stoinis",
+      "aliases": [
+        "mp-stoinis",
+        "MP Stoinis",
+        "Marcus Peter Stoinis",
+        "marcus-peter-stoinis",
+        "marcus stoinis",
+        "mp stoinis"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321500/321596.png",
@@ -66,6 +102,14 @@
     },
     {
       "playerId": "r-tewatia",
+      "aliases": [
+        "r-tewatia",
+        "R Tewatia",
+        "Rahul Tewatia",
+        "rahul-tewatia",
+        "rahul tewatia",
+        "r tewatia"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322269.png",
@@ -78,6 +122,14 @@
     },
     {
       "playerId": "ra-tripathi",
+      "aliases": [
+        "ra-tripathi",
+        "RA Tripathi",
+        "Rahul Ajay Tripathi",
+        "rahul-ajay-tripathi",
+        "rahul tripathi",
+        "ra tripathi"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/356800/356821.1.png",
@@ -90,6 +142,14 @@
     },
     {
       "playerId": "rd-chahar",
+      "aliases": [
+        "rd-chahar",
+        "RD Chahar",
+        "Rahul Desraj Chahar",
+        "rahul-desraj-chahar",
+        "rahul chahar",
+        "rd chahar"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/331100/331166.png",
@@ -102,6 +162,14 @@
     },
     {
       "playerId": "mk-pandey",
+      "aliases": [
+        "mk-pandey",
+        "MK Pandey",
+        "Manish Krishnanand Pandey",
+        "manish-krishnanand-pandey",
+        "manish pandey",
+        "mk pandey"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323000/323052.png",
@@ -114,6 +182,14 @@
     },
     {
       "playerId": "ks-williamson",
+      "aliases": [
+        "ks-williamson",
+        "KS Williamson",
+        "Kane Stuart Williamson",
+        "kane-stuart-williamson",
+        "kane williamson",
+        "ks williamson"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316618.png",
@@ -126,6 +202,14 @@
     },
     {
       "playerId": "g-gambhir",
+      "aliases": [
+        "g-gambhir",
+        "G Gambhir",
+        "Gautam Gambhir",
+        "gautam-gambhir",
+        "gautam gambhir",
+        "g gambhir"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://documents.iplt20.com/playerheadshot/ipl/284/84.png",
@@ -138,6 +222,14 @@
     },
     {
       "playerId": "ma-wood",
+      "aliases": [
+        "ma-wood",
+        "MA Wood",
+        "Mark Andrew Wood",
+        "mark-andrew-wood",
+        "mark wood",
+        "ma wood"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316660.png",
@@ -150,6 +242,15 @@
     },
     {
       "playerId": "r-vinay-kumar",
+      "aliases": [
+        "r-vinay-kumar",
+        "R Vinay Kumar",
+        "Ranganath Vinay Kumar",
+        "ranganath-vinay-kumar",
+        "r vinay kumar",
+        "vinay kumar",
+        "ranganath vinay kumar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/359700/359762.png",
@@ -162,6 +263,14 @@
     },
     {
       "playerId": "se-marsh",
+      "aliases": [
+        "se-marsh",
+        "SE Marsh",
+        "Shaun Edward Marsh",
+        "shaun-edward-marsh",
+        "se marsh",
+        "shaun marsh"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://cricclubs.com/documentsRep/profilePics/6c5d3a99-b18a-47b6-ba2e-5dae071b3452.png",
@@ -174,6 +283,14 @@
     },
     {
       "playerId": "j-yadav",
+      "aliases": [
+        "j-yadav",
+        "J Yadav",
+        "Jayant Yadav",
+        "jayant-yadav",
+        "j yadav",
+        "jayant yadav"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322500/322553.png",
@@ -186,6 +303,15 @@
     },
     {
       "playerId": "ar-patel",
+      "aliases": [
+        "ar-patel",
+        "AR Patel",
+        "Axar Rajeshbhai Patel",
+        "axar-rajeshbhai-patel",
+        "akshar patel",
+        "ar patel",
+        "axar patel"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/331100/331164.png",
@@ -198,6 +324,14 @@
     },
     {
       "playerId": "pp-chawla",
+      "aliases": [
+        "pp-chawla",
+        "PP Chawla",
+        "Piyush Pramod Chawla",
+        "piyush-pramod-chawla",
+        "piyush chawla",
+        "pp chawla"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322272.png",
@@ -210,6 +344,14 @@
     },
     {
       "playerId": "hh-pandya",
+      "aliases": [
+        "hh-pandya",
+        "HH Pandya",
+        "Hardik Himanshu Pandya",
+        "hardik-himanshu-pandya",
+        "hardik pandya",
+        "hh pandya"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319900/319938.png",
@@ -222,6 +364,14 @@
     },
     {
       "playerId": "dl-chahar",
+      "aliases": [
+        "dl-chahar",
+        "DL Chahar",
+        "Deepak Lokandersingh Chahar",
+        "deepak-lokandersingh-chahar",
+        "deepak chahar",
+        "dl chahar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322700/322704.png",
@@ -234,6 +384,11 @@
     },
     {
       "playerId": "avesh-khan",
+      "aliases": [
+        "avesh-khan",
+        "Avesh Khan",
+        "avesh khan"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322244.png",
@@ -246,6 +401,14 @@
     },
     {
       "playerId": "jj-roy",
+      "aliases": [
+        "jj-roy",
+        "JJ Roy",
+        "Jason Jonathan Roy",
+        "jason-jonathan-roy",
+        "jason roy",
+        "jj roy"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319700/319791.png",
@@ -258,6 +421,14 @@
     },
     {
       "playerId": "k-gowtham",
+      "aliases": [
+        "k-gowtham",
+        "K Gowtham",
+        "Krishnappa Gowtham",
+        "krishnappa-gowtham",
+        "k gowtham",
+        "krishnappa gowtham"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/356800/356850.1.png",
@@ -270,6 +441,14 @@
     },
     {
       "playerId": "da-miller",
+      "aliases": [
+        "da-miller",
+        "DA Miller",
+        "David Andrew Miller",
+        "david-andrew-miller",
+        "da miller",
+        "david miller"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316655.png",
@@ -282,6 +461,14 @@
     },
     {
       "playerId": "tm-head",
+      "aliases": [
+        "tm-head",
+        "TM Head",
+        "Travis Michael Head",
+        "travis-michael-head",
+        "travis head",
+        "tm head"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321500/321584.png",
@@ -294,6 +481,11 @@
     },
     {
       "playerId": "swapnil-singh",
+      "aliases": [
+        "swapnil-singh",
+        "Swapnil Singh",
+        "swapnil singh"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/358000/358047.png",
@@ -306,6 +498,14 @@
     },
     {
       "playerId": "lh-ferguson",
+      "aliases": [
+        "lh-ferguson",
+        "LH Ferguson",
+        "Lachlan Hammond Ferguson",
+        "lachlan-hammond-ferguson",
+        "lockie ferguson",
+        "lh ferguson"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321200/321239.png",
@@ -318,6 +518,14 @@
     },
     {
       "playerId": "hv-patel",
+      "aliases": [
+        "hv-patel",
+        "HV Patel",
+        "Harshal Vikram Patel",
+        "harshal-vikram-patel",
+        "hv patel",
+        "harshal patel"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322276.png",
@@ -330,6 +538,14 @@
     },
     {
       "playerId": "s-gopal",
+      "aliases": [
+        "s-gopal",
+        "S Gopal",
+        "Shreyas Gopal",
+        "shreyas-gopal",
+        "shreyas gopal",
+        "s gopal"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322275.png",
@@ -342,6 +558,14 @@
     },
     {
       "playerId": "kv-sharma",
+      "aliases": [
+        "kv-sharma",
+        "KV Sharma",
+        "Karn Vinod Sharma",
+        "karn-vinod-sharma",
+        "kv sharma",
+        "karn sharma"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324200/324221.png",
@@ -354,6 +578,11 @@
     },
     {
       "playerId": "vishnu-vinod",
+      "aliases": [
+        "vishnu-vinod",
+        "Vishnu Vinod",
+        "vishnu vinod"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/359700/359774.png",
@@ -366,6 +595,14 @@
     },
     {
       "playerId": "v-kohli",
+      "aliases": [
+        "v-kohli",
+        "V Kohli",
+        "Virat Kohli",
+        "virat-kohli",
+        "virat kohli",
+        "v kohli"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316605.png",
@@ -378,6 +615,14 @@
     },
     {
       "playerId": "kh-pandya",
+      "aliases": [
+        "kh-pandya",
+        "KH Pandya",
+        "Krunal Himanshu Pandya",
+        "krunal-himanshu-pandya",
+        "krunal pandya",
+        "kh pandya"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322614.png",
@@ -390,6 +635,14 @@
     },
     {
       "playerId": "b-kumar",
+      "aliases": [
+        "b-kumar",
+        "B Kumar",
+        "Bhuvneshwar Kumar Singh",
+        "bhuvneshwar-kumar-singh",
+        "b kumar",
+        "bhuvneshwar kumar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316658.png",
@@ -402,6 +655,13 @@
     },
     {
       "playerId": "ishan-kishan",
+      "aliases": [
+        "ishan-kishan",
+        "Ishan Kishan",
+        "Ishan Pranav Kumar Pandey Kishan",
+        "ishan-pranav-kumar-pandey-kishan",
+        "ishan kishan"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/331100/331165.png",
@@ -414,6 +674,14 @@
     },
     {
       "playerId": "sp-narine",
+      "aliases": [
+        "sp-narine",
+        "SP Narine",
+        "Sunil Philip Narine",
+        "sunil-philip-narine",
+        "sunil narine",
+        "sp narine"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320100/320119.png",
@@ -426,6 +694,14 @@
     },
     {
       "playerId": "a-mishra",
+      "aliases": [
+        "a-mishra",
+        "A Mishra",
+        "Amit Mishra",
+        "amit-mishra",
+        "a mishra",
+        "amit mishra"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323000/323053.png",
@@ -438,6 +714,14 @@
     },
     {
       "playerId": "mohammed-shami",
+      "aliases": [
+        "mohammed-shami",
+        "Mohammed Shami",
+        "Mohammed Shami Ahmed",
+        "mohammed-shami-ahmed",
+        "mohammed shami",
+        "mohammad shami"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316691.png",
@@ -450,6 +734,14 @@
     },
     {
       "playerId": "aj-tye",
+      "aliases": [
+        "aj-tye",
+        "AJ Tye",
+        "Andrew James Tye",
+        "andrew-james-tye",
+        "aj tye",
+        "andrew tye"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://ipl-stats-sports-mechanic.s3.ap-south-1.amazonaws.com/ipl/playerimages/Andrew%20Tye.png",
@@ -462,6 +754,14 @@
     },
     {
       "playerId": "dj-bravo",
+      "aliases": [
+        "dj-bravo",
+        "DJ Bravo",
+        "Dwayne John Bravo",
+        "dwayne-john-bravo",
+        "dj bravo",
+        "dwayne bravo"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://ipl-stats-sports-mechanic.s3.ap-south-1.amazonaws.com/ipl/playerimages/Dwayne%20Bravo.png",
@@ -474,6 +774,15 @@
     },
     {
       "playerId": "as-roy",
+      "aliases": [
+        "as-roy",
+        "AS Roy",
+        "Anukul Sudhakar Roy",
+        "anukul-sudhakar-roy",
+        "anukul roy",
+        "as roy",
+        "jason roy"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/341000/341041.png",
@@ -486,6 +795,15 @@
     },
     {
       "playerId": "m-shahrukh-khan",
+      "aliases": [
+        "m-shahrukh-khan",
+        "M Shahrukh Khan",
+        "Masood Shahrukh Khan",
+        "masood-shahrukh-khan",
+        "m shahrukh khan",
+        "m. shahrukh khan",
+        "shahrukh khan"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/359700/359756.png",
@@ -498,6 +816,14 @@
     },
     {
       "playerId": "mr-marsh",
+      "aliases": [
+        "mr-marsh",
+        "MR Marsh",
+        "Mitchell Ross Marsh",
+        "mitchell-ross-marsh",
+        "mr marsh",
+        "mitchell marsh"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316612.png",
@@ -510,6 +836,14 @@
     },
     {
       "playerId": "r-shepherd",
+      "aliases": [
+        "r-shepherd",
+        "R Shepherd",
+        "Romario Shepherd",
+        "romario-shepherd",
+        "romario shepherd",
+        "r shepherd"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322000/322037.png",
@@ -522,6 +856,11 @@
     },
     {
       "playerId": "rahmanullah-gurbaz",
+      "aliases": [
+        "rahmanullah-gurbaz",
+        "Rahmanullah Gurbaz",
+        "rahmanullah gurbaz"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320500/320504.png",
@@ -534,6 +873,14 @@
     },
     {
       "playerId": "p-dubey",
+      "aliases": [
+        "p-dubey",
+        "P Dubey",
+        "Praveen Dubey",
+        "praveen-dubey",
+        "p dubey",
+        "praveen dubey"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/310700/310753.jpg",
@@ -546,6 +893,11 @@
     },
     {
       "playerId": "mukesh-kumar",
+      "aliases": [
+        "mukesh-kumar",
+        "Mukesh Kumar",
+        "mukesh kumar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/373900/373907.png",
@@ -558,6 +910,15 @@
     },
     {
       "playerId": "r-sai-kishore",
+      "aliases": [
+        "r-sai-kishore",
+        "R Sai Kishore",
+        "Ravisrinivasan Sai Kishore",
+        "ravisrinivasan-sai-kishore",
+        "r sai kishore",
+        "ravisrinivasan sai kishore",
+        "sai kishore"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/362500/362558.4.jpg",
@@ -570,6 +931,14 @@
     },
     {
       "playerId": "rk-bhui",
+      "aliases": [
+        "rk-bhui",
+        "RK Bhui",
+        "Ricky Kannakumar Bhui",
+        "ricky-kannakumar-bhui",
+        "ricky bhui",
+        "rk bhui"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/314800/314834.jpg",
@@ -582,6 +951,14 @@
     },
     {
       "playerId": "ak-markram",
+      "aliases": [
+        "ak-markram",
+        "AK Markram",
+        "Aiden Kyle Markram",
+        "aiden-kyle-markram",
+        "ak markram",
+        "aiden markram"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322000/322067.png",
@@ -594,6 +971,11 @@
     },
     {
       "playerId": "akash-deep",
+      "aliases": [
+        "akash-deep",
+        "Akash Deep",
+        "akash deep"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/340300/340311.png",
@@ -606,6 +988,15 @@
     },
     {
       "playerId": "ks-bharat",
+      "aliases": [
+        "ks-bharat",
+        "KS Bharat",
+        "Kona Srikar Bharat",
+        "kona-srikar-bharat",
+        "kona srikar bharat",
+        "ks bharat",
+        "k. s. bharat"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/354100/354136.png",
@@ -618,6 +1009,13 @@
     },
     {
       "playerId": "tilak-varma",
+      "aliases": [
+        "tilak-varma",
+        "Tilak Varma",
+        "Namboori Thakur Tilak Varma",
+        "namboori-thakur-tilak-varma",
+        "tilak varma"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/314700/314790.jpg",
@@ -630,6 +1028,14 @@
     },
     {
       "playerId": "rd-gaikwad",
+      "aliases": [
+        "rd-gaikwad",
+        "RD Gaikwad",
+        "Ruturaj Dashrat Gaikwad",
+        "ruturaj-dashrat-gaikwad",
+        "ruturaj gaikwad",
+        "rd gaikwad"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322236.png",
@@ -642,6 +1048,11 @@
     },
     {
       "playerId": "fazalhaq-farooqi",
+      "aliases": [
+        "fazalhaq-farooqi",
+        "Fazalhaq Farooqi",
+        "fazalhaq farooqi"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/345000/345077.png",
@@ -654,6 +1065,14 @@
     },
     {
       "playerId": "kr-sen",
+      "aliases": [
+        "kr-sen",
+        "KR Sen",
+        "Kuldeep Rampal Sen",
+        "kuldeep-rampal-sen",
+        "kuldeep sen",
+        "kr sen"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378100/378133.1.png",
@@ -666,6 +1085,14 @@
     },
     {
       "playerId": "m-jansen",
+      "aliases": [
+        "m-jansen",
+        "M Jansen",
+        "Marco Jansen",
+        "marco-jansen",
+        "marco jansen",
+        "m jansen"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/337100/337189.png",
@@ -678,6 +1105,11 @@
     },
     {
       "playerId": "anuj-rawat",
+      "aliases": [
+        "anuj-rawat",
+        "Anuj Rawat",
+        "anuj rawat"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/359700/359757.png",
@@ -690,6 +1122,14 @@
     },
     {
       "playerId": "m-theekshana",
+      "aliases": [
+        "m-theekshana",
+        "M Theekshana",
+        "Morawakage Maheesh Theekshana",
+        "morawakage-maheesh-theekshana",
+        "maheesh theekshana",
+        "m theekshana"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/347800/347825.png",
@@ -702,6 +1142,14 @@
     },
     {
       "playerId": "dj-willey",
+      "aliases": [
+        "dj-willey",
+        "DJ Willey",
+        "David Jonathan Willey",
+        "david-jonathan-willey",
+        "dj willey",
+        "david willey"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322900/322904.png",
@@ -714,6 +1162,14 @@
     },
     {
       "playerId": "pp-shaw",
+      "aliases": [
+        "pp-shaw",
+        "PP Shaw",
+        "Prithvi Pankaj Shaw",
+        "prithvi-pankaj-shaw",
+        "prithvi shaw",
+        "pp shaw"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322622.png",
@@ -726,6 +1182,11 @@
     },
     {
       "playerId": "umran-malik",
+      "aliases": [
+        "umran-malik",
+        "Umran Malik",
+        "umran malik"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/343200/343263.png",
@@ -738,6 +1199,11 @@
     },
     {
       "playerId": "mukesh-choudhary",
+      "aliases": [
+        "mukesh-choudhary",
+        "Mukesh Choudhary",
+        "mukesh choudhary"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/356800/356834.1.png",
@@ -750,6 +1216,14 @@
     },
     {
       "playerId": "j-little",
+      "aliases": [
+        "j-little",
+        "J Little",
+        "Joshua Brian Little",
+        "joshua-brian-little",
+        "josh little",
+        "j little"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/367800/367860.png",
@@ -762,6 +1236,14 @@
     },
     {
       "playerId": "m-pathirana",
+      "aliases": [
+        "m-pathirana",
+        "M Pathirana",
+        "Matheesha Pathirana",
+        "matheesha-pathirana",
+        "m pathirana",
+        "matheesha pathirana"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/355400/355402.png",
@@ -774,6 +1256,14 @@
     },
     {
       "playerId": "s-dube",
+      "aliases": [
+        "s-dube",
+        "S Dube",
+        "Shivam Dube",
+        "shivam-dube",
+        "shivam dube",
+        "s dube"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322700/322703.png",
@@ -786,6 +1276,14 @@
     },
     {
       "playerId": "pvd-chameera",
+      "aliases": [
+        "pvd-chameera",
+        "PVD Chameera",
+        "Pathira Vasan Dushmantha Chameera",
+        "pathira-vasan-dushmantha-chameera",
+        "dushmantha chameera",
+        "pvd chameera"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319800/319862.png",
@@ -798,6 +1296,14 @@
     },
     {
       "playerId": "ms-wade",
+      "aliases": [
+        "ms-wade",
+        "MS Wade",
+        "Matthew Scott Wade",
+        "matthew-scott-wade",
+        "matthew wade",
+        "ms wade"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316594.png",
@@ -810,6 +1316,11 @@
     },
     {
       "playerId": "shahbaz-ahmed",
+      "aliases": [
+        "shahbaz-ahmed",
+        "Shahbaz Ahmed",
+        "shahbaz ahmed"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/340300/340313.png",
@@ -822,6 +1333,12 @@
     },
     {
       "playerId": "ravi-bishnoi",
+      "aliases": [
+        "ravi-bishnoi",
+        "R Bishnoi",
+        "Ravi Bishnoi",
+        "r-bishnoi"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/337100/337188.png",
@@ -834,6 +1351,14 @@
     },
     {
       "playerId": "dj-mitchell",
+      "aliases": [
+        "dj-mitchell",
+        "DJ Mitchell",
+        "Daryl Joseph Mitchell",
+        "daryl-joseph-mitchell",
+        "daryl mitchell",
+        "dj mitchell"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321200/321212.png",
@@ -846,6 +1371,14 @@
     },
     {
       "playerId": "c-sakariya",
+      "aliases": [
+        "c-sakariya",
+        "C Sakariya",
+        "Chetan Sakariya",
+        "chetan-sakariya",
+        "chetan sakariya",
+        "c sakariya"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/339100/339148.png",
@@ -858,6 +1391,14 @@
     },
     {
       "playerId": "rr-rossouw",
+      "aliases": [
+        "rr-rossouw",
+        "RR Rossouw",
+        "Rilee Roscoe Rossouw",
+        "rilee-roscoe-rossouw",
+        "rr rossouw",
+        "rilee rossouw"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316651.png",
@@ -870,6 +1411,14 @@
     },
     {
       "playerId": "kr-mayers",
+      "aliases": [
+        "kr-mayers",
+        "KR Mayers",
+        "Kyle Rico Mayers",
+        "kyle-rico-mayers",
+        "kyle mayers",
+        "kr mayers"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322000/322024.png",
@@ -882,6 +1431,14 @@
     },
     {
       "playerId": "pn-mankad",
+      "aliases": [
+        "pn-mankad",
+        "PN Mankad",
+        "Prerak Nileshkumar Mankad",
+        "prerak-nileshkumar-mankad",
+        "prerak mankad",
+        "pn mankad"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378100/378128.1.png",
@@ -894,6 +1451,11 @@
     },
     {
       "playerId": "abhishek-sharma",
+      "aliases": [
+        "abhishek-sharma",
+        "Abhishek Sharma",
+        "abhishek sharma"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/358000/358037.png",
@@ -906,6 +1468,14 @@
     },
     {
       "playerId": "k-kartikeya",
+      "aliases": [
+        "k-kartikeya",
+        "K Kartikeya",
+        "Kumar Kartikeya Singh",
+        "kumar-kartikeya-singh",
+        "k kartikeya",
+        "kumar kartikeya"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/359700/359773.png",
@@ -918,6 +1488,13 @@
     },
     {
       "playerId": "cv-varun",
+      "aliases": [
+        "cv-varun",
+        "CV Varun",
+        "Varun Chakravarthy Vinod",
+        "varun-chakravarthy-vinod",
+        "cv varun"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/331100/331167.png",
@@ -930,6 +1507,11 @@
     },
     {
       "playerId": "kartik-tyagi",
+      "aliases": [
+        "kartik-tyagi",
+        "Kartik Tyagi",
+        "kartik tyagi"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/339100/339150.png",
@@ -942,6 +1524,14 @@
     },
     {
       "playerId": "ybk-jaiswal",
+      "aliases": [
+        "ybk-jaiswal",
+        "YBK Jaiswal",
+        "Yashasvi Bhupendra Kumar Jaiswal",
+        "yashasvi-bhupendra-kumar-jaiswal",
+        "yashasvi jaiswal",
+        "ybk jaiswal"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/340300/340309.png",
@@ -954,6 +1544,14 @@
     },
     {
       "playerId": "h-klaasen",
+      "aliases": [
+        "h-klaasen",
+        "H Klaasen",
+        "Heinrich Klaasen",
+        "heinrich-klaasen",
+        "h klaasen",
+        "heinrich klaasen"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322000/322073.png",
@@ -966,6 +1564,14 @@
     },
     {
       "playerId": "n-burger",
+      "aliases": [
+        "n-burger",
+        "N Burger",
+        "Nandre Burger",
+        "nandre-burger",
+        "nandre burger",
+        "n burger"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/297500/297549.1.jpg",
@@ -978,6 +1584,14 @@
     },
     {
       "playerId": "sh-johnson",
+      "aliases": [
+        "sh-johnson",
+        "SH Johnson",
+        "Spencer Johnson",
+        "spencer-johnson",
+        "spencer johnson",
+        "sh johnson"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/374500/374591.1.png",
@@ -990,6 +1604,11 @@
     },
     {
       "playerId": "sameer-rizvi",
+      "aliases": [
+        "sameer-rizvi",
+        "Sameer Rizvi",
+        "sameer rizvi"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378000/378091.1.png",
@@ -1002,6 +1621,14 @@
     },
     {
       "playerId": "a-raghuvanshi",
+      "aliases": [
+        "a-raghuvanshi",
+        "A Raghuvanshi",
+        "Angkrish Raghuvanshi",
+        "angkrish-raghuvanshi",
+        "angkrish raghuvanshi",
+        "a raghuvanshi"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/345000/345093.png",
@@ -1014,6 +1641,14 @@
     },
     {
       "playerId": "aa-kulkarni",
+      "aliases": [
+        "aa-kulkarni",
+        "AA Kulkarni",
+        "Arshin Kulkarni",
+        "arshin-kulkarni",
+        "arshin kulkarni",
+        "aa kulkarni"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378100/378126.4.jpg",
@@ -1026,6 +1661,14 @@
     },
     {
       "playerId": "sz-mulani",
+      "aliases": [
+        "sz-mulani",
+        "SZ Mulani",
+        "Shams Mulani",
+        "shams-mulani",
+        "shams mulani",
+        "sz mulani"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/357800/357845.1.png",
@@ -1038,6 +1681,13 @@
     },
     {
       "playerId": "rj-gleeson",
+      "aliases": [
+        "rj-gleeson",
+        "RJ Gleeson",
+        "Richard Gleeson",
+        "richard-gleeson",
+        "rj gleeson"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324200/324238.png",
@@ -1050,6 +1700,14 @@
     },
     {
       "playerId": "mj-suthar",
+      "aliases": [
+        "mj-suthar",
+        "MJ Suthar",
+        "Manav Suthar",
+        "manav-suthar",
+        "manav suthar",
+        "mj suthar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/286100/286141.1.jpg",
@@ -1062,6 +1720,14 @@
     },
     {
       "playerId": "v-kaverappa",
+      "aliases": [
+        "v-kaverappa",
+        "V Kaverappa",
+        "Vidhwath Kaverappa",
+        "vidhwath-kaverappa",
+        "vidwath kaverappa",
+        "v kaverappa"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378100/378123.1.png",
@@ -1074,6 +1740,14 @@
     },
     {
       "playerId": "kt-maphaka",
+      "aliases": [
+        "kt-maphaka",
+        "KT Maphaka",
+        "Kwena Maphaka",
+        "kwena-maphaka",
+        "kt maphaka",
+        "kwena maphaka"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/339500/339569.4.jpg",
@@ -1086,6 +1760,14 @@
     },
     {
       "playerId": "r-ravindra",
+      "aliases": [
+        "r-ravindra",
+        "R Ravindra",
+        "Rachin Ravindra",
+        "rachin-ravindra",
+        "rachin ravindra",
+        "r ravindra"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/329700/329746.png",
@@ -1098,6 +1780,11 @@
     },
     {
       "playerId": "arshad-khan",
+      "aliases": [
+        "arshad-khan",
+        "Arshad Khan",
+        "arshad khan"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378100/378129.1.png",
@@ -1110,6 +1797,11 @@
     },
     {
       "playerId": "sanvir-singh",
+      "aliases": [
+        "sanvir-singh",
+        "Sanvir Singh",
+        "sanvir singh"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/359700/359765.png",
@@ -1122,6 +1814,14 @@
     },
     {
       "playerId": "yudhvir-singh",
+      "aliases": [
+        "yudhvir-singh",
+        "Yudhvir Singh",
+        "Yudhvir Singh Charak",
+        "yudhvir-singh-charak",
+        "yudhvir singh charak",
+        "yudhvir singh"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/314700/314789.jpg",
@@ -1134,6 +1834,16 @@
     },
     {
       "playerId": "rp-singh",
+      "aliases": [
+        "rp-singh",
+        "RP Singh",
+        "Rudra Pratap Singh",
+        "rudra-pratap-singh",
+        "r p singh",
+        "rp singh",
+        "r. p. singh",
+        "pankaj singh"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160/lsci/db/PICTURES/CMS/389100/389167.5.png",
@@ -1146,6 +1856,12 @@
     },
     {
       "playerId": "naveen-ul-haq",
+      "aliases": [
+        "naveen-ul-haq",
+        "Naveen-ul-Haq",
+        "Naveen-ul-Haq Murid",
+        "naveen-ul-haq-murid"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320500/320502.png",
@@ -1158,6 +1874,14 @@
     },
     {
       "playerId": "nithish-kumar-reddy",
+      "aliases": [
+        "nithish-kumar-reddy",
+        "Nithish Kumar Reddy",
+        "Kaki Nitish Kumar Reddy",
+        "kaki-nitish-kumar-reddy",
+        "nitish kumar reddy",
+        "nithish kumar reddy"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/314800/314899.png",
@@ -1170,6 +1894,11 @@
     },
     {
       "playerId": "suyash-sharma",
+      "aliases": [
+        "suyash-sharma",
+        "Suyash Sharma",
+        "suyash sharma"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/358000/358041.png",
@@ -1182,6 +1911,14 @@
     },
     {
       "playerId": "n-wadhera",
+      "aliases": [
+        "n-wadhera",
+        "N Wadhera",
+        "Nehal Wadhera",
+        "nehal-wadhera",
+        "nehal wadhera",
+        "n wadhera"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/357800/357843.1.png",
@@ -1194,6 +1931,13 @@
     },
     {
       "playerId": "dhruv-jurel",
+      "aliases": [
+        "dhruv-jurel",
+        "Dhruv Jurel",
+        "Dhruv Chand Jurel",
+        "dhruv-chand-jurel",
+        "dhruv jurel"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/340300/340310.png",
@@ -1206,6 +1950,14 @@
     },
     {
       "playerId": "st-jayasuriya",
+      "aliases": [
+        "st-jayasuriya",
+        "ST Jayasuriya",
+        "Sanath Teran Jayasuriya",
+        "sanath-teran-jayasuriya",
+        "sanath jayasuriya",
+        "st jayasuriya"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_1280,q_80/lsci/db/PICTURES/CMS/319800/319886.png",
@@ -1218,6 +1970,14 @@
     },
     {
       "playerId": "sr-tendulkar",
+      "aliases": [
+        "sr-tendulkar",
+        "SR Tendulkar",
+        "Sachin Ramesh Tendulkar",
+        "sachin-ramesh-tendulkar",
+        "sachin tendulkar",
+        "sr tendulkar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/316400/316486.6.png",
@@ -1230,6 +1990,14 @@
     },
     {
       "playerId": "dp-conway",
+      "aliases": [
+        "dp-conway",
+        "DP Conway",
+        "Devon Philip Conway",
+        "devon-philip-conway",
+        "devon conway",
+        "dp conway"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321200/321214.png",
@@ -1242,6 +2010,14 @@
     },
     {
       "playerId": "c-green",
+      "aliases": [
+        "c-green",
+        "C Green",
+        "Cameron Donald Green",
+        "cameron-donald-green",
+        "cameron green",
+        "c green"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321500/321569.png",
@@ -1254,6 +2030,11 @@
     },
     {
       "playerId": "sandeep-sharma",
+      "aliases": [
+        "sandeep-sharma",
+        "Sandeep Sharma",
+        "sandeep sharma"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323000/323055.png",
@@ -1266,6 +2047,14 @@
     },
     {
       "playerId": "mek-hussey",
+      "aliases": [
+        "mek-hussey",
+        "MEK Hussey",
+        "Michael Edward Killeen Hussey",
+        "michael-edward-killeen-hussey",
+        "michael hussey",
+        "mek hussey"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/319700/319708.1.png",
@@ -1278,6 +2067,15 @@
     },
     {
       "playerId": "l-ngidi",
+      "aliases": [
+        "l-ngidi",
+        "L Ngidi",
+        "Lungisani True-man Ngidi",
+        "lungisani-true-man-ngidi",
+        "lungisani ngidi",
+        "l ngidi",
+        "lungi ngidi"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322000/322069.png",
@@ -1290,6 +2088,11 @@
     },
     {
       "playerId": "vijaykumar-vyshak",
+      "aliases": [
+        "vijaykumar-vyshak",
+        "Vijaykumar Vyshak",
+        "vijaykumar vyshak"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378000/378096.1.png",
@@ -1302,6 +2105,13 @@
     },
     {
       "playerId": "harshit-rana",
+      "aliases": [
+        "harshit-rana",
+        "Harshit Rana",
+        "Harshit Pradeep Rana",
+        "harshit-pradeep-rana",
+        "harshit rana"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/358000/358042.png",
@@ -1314,6 +2124,14 @@
     },
     {
       "playerId": "kd-karthik",
+      "aliases": [
+        "kd-karthik",
+        "KD Karthik",
+        "Krishnakumar Dinesh Karthik",
+        "krishnakumar-dinesh-karthik",
+        "dinesh karthik",
+        "kd karthik"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319900/319934.png",
@@ -1326,6 +2144,14 @@
     },
     {
       "playerId": "ma-starc",
+      "aliases": [
+        "ma-starc",
+        "MA Starc",
+        "Mitchell Aaron Starc",
+        "mitchell-aaron-starc",
+        "mitchell starc",
+        "ma starc"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316644.png",
@@ -1338,6 +2164,14 @@
     },
     {
       "playerId": "m-prasidh-krishna",
+      "aliases": [
+        "m-prasidh-krishna",
+        "M Prasidh Krishna",
+        "Muralikrishna Prasidh Krishna",
+        "muralikrishna-prasidh-krishna",
+        "m prasidh krishna",
+        "prasidh krishna"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322617.png",
@@ -1350,6 +2184,14 @@
     },
     {
       "playerId": "wp-saha",
+      "aliases": [
+        "wp-saha",
+        "WP Saha",
+        "Wriddhiman Prasanta Saha",
+        "wriddhiman-prasanta-saha",
+        "wp saha",
+        "wriddhiman saha"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323000/323033.png",
@@ -1362,6 +2204,14 @@
     },
     {
       "playerId": "a-zampa",
+      "aliases": [
+        "a-zampa",
+        "A Zampa",
+        "Adam Zampa",
+        "adam-zampa",
+        "adam zampa",
+        "a zampa"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321500/321549.png",
@@ -1374,6 +2224,14 @@
     },
     {
       "playerId": "rs-hangargekar",
+      "aliases": [
+        "rs-hangargekar",
+        "RS Hangargekar",
+        "Rajvardhan S Hangargekar",
+        "rajvardhan-s-hangargekar",
+        "rajvardhan hangargekar",
+        "rs hangargekar"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/339100/339157.png",
@@ -1386,6 +2244,15 @@
     },
     {
       "playerId": "rg-sharma",
+      "aliases": [
+        "rg-sharma",
+        "RG Sharma",
+        "Rohit Gurunath Sharma",
+        "rohit-gurunath-sharma",
+        "rohit sharma",
+        "rg sharma",
+        "jitesh sharma"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316584.png",
@@ -1398,6 +2265,11 @@
     },
     {
       "playerId": "anmolpreet-singh",
+      "aliases": [
+        "anmolpreet-singh",
+        "Anmolpreet Singh",
+        "anmolpreet singh"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/358000/358038.png",
@@ -1410,6 +2282,14 @@
     },
     {
       "playerId": "jp-behrendorff",
+      "aliases": [
+        "jp-behrendorff",
+        "JP Behrendorff",
+        "Jason Paul Behrendorff",
+        "jason-paul-behrendorff",
+        "jason behrendorff",
+        "jp behrendorff"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321500/321589.png",
@@ -1422,6 +2302,14 @@
     },
     {
       "playerId": "ad-russell",
+      "aliases": [
+        "ad-russell",
+        "AD Russell",
+        "Andre Dwayne Russell",
+        "andre-dwayne-russell",
+        "andre russell",
+        "ad russell"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316615.png",
@@ -1434,6 +2322,14 @@
     },
     {
       "playerId": "rv-uthappa",
+      "aliases": [
+        "rv-uthappa",
+        "RV Uthappa",
+        "Robin Venu Uthappa",
+        "robin-venu-uthappa",
+        "robin uthappa",
+        "rv uthappa"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://ipl-stats-sports-mechanic.s3.ap-south-1.amazonaws.com/ipl/playerimages/Robin%20Uthappa.png",
@@ -1446,6 +2342,14 @@
     },
     {
       "playerId": "pd-salt",
+      "aliases": [
+        "pd-salt",
+        "PD Salt",
+        "Philip Dean Salt",
+        "philip-dean-salt",
+        "phil salt",
+        "pd salt"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324200/324245.png",
@@ -1458,6 +2362,14 @@
     },
     {
       "playerId": "v-shankar",
+      "aliases": [
+        "v-shankar",
+        "V Shankar",
+        "Vijay Shankar",
+        "vijay-shankar",
+        "vijay shankar",
+        "v shankar"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322613.png",
@@ -1470,6 +2382,15 @@
     },
     {
       "playerId": "m-morkel",
+      "aliases": [
+        "m-morkel",
+        "M Morkel",
+        "Morne Morkel",
+        "morne-morkel",
+        "m morkel",
+        "morné morkel",
+        "morne morkel"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://scores.iplt20.com/ipl/images/default-player-statsImage.png",
@@ -1482,6 +2403,11 @@
     },
     {
       "playerId": "lalit-yadav",
+      "aliases": [
+        "lalit-yadav",
+        "Lalit Yadav",
+        "lalit yadav"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/339100/339152.png",
@@ -1494,6 +2420,14 @@
     },
     {
       "playerId": "dj-hooda",
+      "aliases": [
+        "dj-hooda",
+        "DJ Hooda",
+        "Deepak Jagbir Hooda",
+        "deepak-jagbir-hooda",
+        "dj hooda",
+        "deepak hooda"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/345000/345083.png",
@@ -1506,6 +2440,11 @@
     },
     {
       "playerId": "harpreet-brar",
+      "aliases": [
+        "harpreet-brar",
+        "Harpreet Brar",
+        "harpreet brar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/358000/358045.png",
@@ -1518,6 +2457,14 @@
     },
     {
       "playerId": "gd-phillips",
+      "aliases": [
+        "gd-phillips",
+        "GD Phillips",
+        "Glenn Dominic Phillips",
+        "glenn-dominic-phillips",
+        "gd phillips",
+        "glenn phillips"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321200/321223.png",
@@ -1530,6 +2477,14 @@
     },
     {
       "playerId": "rr-pant",
+      "aliases": [
+        "rr-pant",
+        "RR Pant",
+        "Rishabh Rajendra Pant",
+        "rishabh-rajendra-pant",
+        "rishabh pant",
+        "rr pant"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323000/323036.png",
@@ -1542,6 +2497,14 @@
     },
     {
       "playerId": "r-parag",
+      "aliases": [
+        "r-parag",
+        "R Parag",
+        "Riyan Parag",
+        "riyan-parag",
+        "riyan parag",
+        "r parag"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/370900/370935.png",
@@ -1554,6 +2517,14 @@
     },
     {
       "playerId": "ss-prabhudessai",
+      "aliases": [
+        "ss-prabhudessai",
+        "SS Prabhudessai",
+        "Suyash S Prabhudessai",
+        "suyash-s-prabhudessai",
+        "suyash prabhudessai",
+        "ss prabhudessai"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/359700/359758.png",
@@ -1566,6 +2537,14 @@
     },
     {
       "playerId": "n-thushara",
+      "aliases": [
+        "n-thushara",
+        "N Thushara",
+        "Nuwan Thushara",
+        "nuwan-thushara",
+        "nuwan thushara",
+        "n thushara"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/343400/343442.gif",
@@ -1578,6 +2557,13 @@
     },
     {
       "playerId": "lb-williams",
+      "aliases": [
+        "lb-williams",
+        "LB Williams",
+        "Lizaad Buyron Williams",
+        "lizaad-buyron-williams",
+        "lb williams"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/329700/329749.png",
@@ -1590,6 +2576,11 @@
     },
     {
       "playerId": "naman-dhir",
+      "aliases": [
+        "naman-dhir",
+        "Naman Dhir",
+        "naman dhir"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378100/378130.1.png",
@@ -1602,6 +2593,11 @@
     },
     {
       "playerId": "tanush-kotian",
+      "aliases": [
+        "tanush-kotian",
+        "Tanush Kotian",
+        "tanush kotian"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378100/378132.1.png",
@@ -1614,6 +2610,14 @@
     },
     {
       "playerId": "sd-hope",
+      "aliases": [
+        "sd-hope",
+        "SD Hope",
+        "Shai Diego Hope",
+        "shai-diego-hope",
+        "shai hope",
+        "sd hope"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320100/320122.png",
@@ -1626,6 +2630,13 @@
     },
     {
       "playerId": "l-wood",
+      "aliases": [
+        "l-wood",
+        "L Wood",
+        "Luke Wood",
+        "luke-wood",
+        "l wood"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324300/324367.png",
@@ -1638,6 +2649,14 @@
     },
     {
       "playerId": "g-coetzee",
+      "aliases": [
+        "g-coetzee",
+        "G Coetzee",
+        "Gerald Coetzee",
+        "gerald-coetzee",
+        "gerald coetzee",
+        "g coetzee"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/348500/348579.png",
@@ -1650,6 +2669,13 @@
     },
     {
       "playerId": "ka-maharaj",
+      "aliases": [
+        "ka-maharaj",
+        "KA Maharaj",
+        "Keshav Athmanand Maharaj",
+        "keshav-athmanand-maharaj",
+        "ka maharaj"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322000/322072.png",
@@ -1662,6 +2688,14 @@
     },
     {
       "playerId": "wg-jacks",
+      "aliases": [
+        "wg-jacks",
+        "WG Jacks",
+        "William George Jacks",
+        "william-george-jacks",
+        "will jacks",
+        "wg jacks"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324300/324373.png",
@@ -1674,6 +2708,14 @@
     },
     {
       "playerId": "j-fraser-mcgurk",
+      "aliases": [
+        "j-fraser-mcgurk",
+        "J Fraser-McGurk",
+        "Jake Fraser-McGurk",
+        "jake-fraser-mcgurk",
+        "j fraser-mcgurk",
+        "jake fraser-mcgurk"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/299800/299893.1.jpg",
@@ -1686,6 +2728,13 @@
     },
     {
       "playerId": "s-joseph",
+      "aliases": [
+        "s-joseph",
+        "S Joseph",
+        "Shamar Joseph",
+        "shamar-joseph",
+        "s joseph"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/373700/373784.1.png",
@@ -1698,6 +2747,14 @@
     },
     {
       "playerId": "d-ferreira",
+      "aliases": [
+        "d-ferreira",
+        "D Ferreira",
+        "Donovan Ferreira",
+        "donovan-ferreira",
+        "donovan ferreira",
+        "d ferreira"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/356800/356889.1.png",
@@ -1710,6 +2767,13 @@
     },
     {
       "playerId": "arjun-tendulkar",
+      "aliases": [
+        "arjun-tendulkar",
+        "Arjun Tendulkar",
+        "Arjun Sachin Tendulkar",
+        "arjun-sachin-tendulkar",
+        "arjun tendulkar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/359700/359770.png",
@@ -1722,6 +2786,14 @@
     },
     {
       "playerId": "sn-thakur",
+      "aliases": [
+        "sn-thakur",
+        "SN Thakur",
+        "Shardul Narendra Thakur",
+        "shardul-narendra-thakur",
+        "sn thakur",
+        "shardul thakur"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322696.png",
@@ -1734,6 +2806,14 @@
     },
     {
       "playerId": "r-powell",
+      "aliases": [
+        "r-powell",
+        "R Powell",
+        "Rovman Powell",
+        "rovman-powell",
+        "rovman powell",
+        "r powell"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322172.png",
@@ -1746,6 +2826,11 @@
     },
     {
       "playerId": "atharva-taide",
+      "aliases": [
+        "atharva-taide",
+        "Atharva Taide",
+        "atharva taide"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/358000/358044.png",
@@ -1758,6 +2843,13 @@
     },
     {
       "playerId": "noor-ahmad",
+      "aliases": [
+        "noor-ahmad",
+        "Noor Ahmad",
+        "Noor Ahmad Lakanwal",
+        "noor-ahmad-lakanwal",
+        "noor ahmad"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/372500/372590.1.png",
@@ -1770,6 +2862,14 @@
     },
     {
       "playerId": "rm-patidar",
+      "aliases": [
+        "rm-patidar",
+        "RM Patidar",
+        "Rajat Manohar Patidar",
+        "rajat-manohar-patidar",
+        "rajat patidar",
+        "rm patidar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378000/378081.1.png",
@@ -1782,6 +2882,11 @@
     },
     {
       "playerId": "simarjeet-singh",
+      "aliases": [
+        "simarjeet-singh",
+        "Simarjeet Singh",
+        "simarjeet singh"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/356800/356835.1.png",
@@ -1794,6 +2899,14 @@
     },
     {
       "playerId": "mm-ali",
+      "aliases": [
+        "mm-ali",
+        "MM Ali",
+        "Moeen Munir Ali",
+        "moeen-munir-ali",
+        "moeen ali",
+        "mm ali"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316557.png",
@@ -1806,6 +2919,11 @@
     },
     {
       "playerId": "mohammad-nabi",
+      "aliases": [
+        "mohammad-nabi",
+        "Mohammad Nabi",
+        "mohammad nabi"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316558.png",
@@ -1818,6 +2936,14 @@
     },
     {
       "playerId": "ph-solanki",
+      "aliases": [
+        "ph-solanki",
+        "PH Solanki",
+        "Prashant Hitesh Solanki",
+        "prashant-hitesh-solanki",
+        "prashant solanki",
+        "ph solanki"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/356800/356836.1.png",
@@ -1830,6 +2956,14 @@
     },
     {
       "playerId": "ma-agarwal",
+      "aliases": [
+        "ma-agarwal",
+        "MA Agarwal",
+        "Mayank Anurag Agarwal",
+        "mayank-anurag-agarwal",
+        "ma agarwal",
+        "mayank agarwal"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322626.png",
@@ -1842,6 +2976,14 @@
     },
     {
       "playerId": "kk-ahmed",
+      "aliases": [
+        "kk-ahmed",
+        "KK Ahmed",
+        "Khaleel Khursheed Ahmed",
+        "khaleel-khursheed-ahmed",
+        "khaleel ahmed",
+        "kk ahmed"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322268.png",
@@ -1854,6 +2996,14 @@
     },
     {
       "playerId": "sa-yadav",
+      "aliases": [
+        "sa-yadav",
+        "SA Yadav",
+        "Suryakumar Ashok Yadav",
+        "suryakumar-ashok-yadav",
+        "sa yadav",
+        "suryakumar yadav"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/331100/331163.png",
@@ -1866,6 +3016,14 @@
     },
     {
       "playerId": "so-hetmyer",
+      "aliases": [
+        "so-hetmyer",
+        "SO Hetmyer",
+        "Shimron Odilon Hetmyer",
+        "shimron-odilon-hetmyer",
+        "shimron hetmyer",
+        "so hetmyer"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320100/320116.png",
@@ -1878,6 +3036,14 @@
     },
     {
       "playerId": "sk-rasheed",
+      "aliases": [
+        "sk-rasheed",
+        "SK Rasheed",
+        "Shaik Rasheed",
+        "shaik-rasheed",
+        "shaik rasheed",
+        "sk rasheed"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/345000/345086.png",
@@ -1890,6 +3056,11 @@
     },
     {
       "playerId": "arshdeep-singh",
+      "aliases": [
+        "arshdeep-singh",
+        "Arshdeep Singh",
+        "arshdeep singh"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322178.png",
@@ -1902,6 +3073,14 @@
     },
     {
       "playerId": "cr-woakes",
+      "aliases": [
+        "cr-woakes",
+        "CR Woakes",
+        "Christopher Roger Woakes",
+        "christopher-roger-woakes",
+        "chris woakes",
+        "cr woakes"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316603.png",
@@ -1914,6 +3093,15 @@
     },
     {
       "playerId": "t-natarajan",
+      "aliases": [
+        "t-natarajan",
+        "T Natarajan",
+        "Thangarasu Natarajan",
+        "thangarasu-natarajan",
+        "t natarajan",
+        "thangarasu natarajan",
+        "t. natarajan"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322699.png",
@@ -1926,6 +3114,14 @@
     },
     {
       "playerId": "s-sandeep-warrier",
+      "aliases": [
+        "s-sandeep-warrier",
+        "S Sandeep Warrier",
+        "Sankarankutty Sandeep Warrier",
+        "sankarankutty-sandeep-warrier",
+        "s sandeep warrier",
+        "sandeep warrier"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/359700/359763.png",
@@ -1938,6 +3134,14 @@
     },
     {
       "playerId": "navdeep-saini",
+      "aliases": [
+        "navdeep-saini",
+        "N Saini",
+        "Navdeep Saini",
+        "n-saini",
+        "navdeep saini",
+        "na saini"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322700/322702.png",
@@ -1950,6 +3154,11 @@
     },
     {
       "playerId": "azmatullah-omarzai",
+      "aliases": [
+        "azmatullah-omarzai",
+        "Azmatullah Omarzai",
+        "azmatullah omarzai"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/375400/375447.png",
@@ -1962,6 +3171,11 @@
     },
     {
       "playerId": "kumar-kushagra",
+      "aliases": [
+        "kumar-kushagra",
+        "Kumar Kushagra",
+        "kumar kushagra"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378100/378131.1.png",
@@ -1974,6 +3188,11 @@
     },
     {
       "playerId": "shivam-singh",
+      "aliases": [
+        "shivam-singh",
+        "Shivam Singh",
+        "shivam singh"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/362300/362381.4.jpg",
@@ -1986,6 +3205,11 @@
     },
     {
       "playerId": "ashutosh-sharma",
+      "aliases": [
+        "ashutosh-sharma",
+        "Ashutosh Sharma",
+        "ashutosh sharma"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378100/378124.1.png",
@@ -1998,6 +3222,14 @@
     },
     {
       "playerId": "mp-yadav",
+      "aliases": [
+        "mp-yadav",
+        "MP Yadav",
+        "Mayank Yadav",
+        "mayank-yadav",
+        "mayank yadav",
+        "mp yadav"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/373900/373904.png",
@@ -2010,6 +3242,14 @@
     },
     {
       "playerId": "m-siddharth",
+      "aliases": [
+        "m-siddharth",
+        "M Siddharth",
+        "Manimaran Siddharth",
+        "manimaran-siddharth",
+        "m siddharth",
+        "manimaran siddharth"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/331000/331042.png",
@@ -2022,6 +3262,14 @@
     },
     {
       "playerId": "t-kohler-cadmore",
+      "aliases": [
+        "t-kohler-cadmore",
+        "T Kohler-Cadmore",
+        "Tom Kohler-Cadmore",
+        "tom-kohler-cadmore",
+        "tom kohler-cadmore",
+        "t kohler-cadmore"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/325900/325917.png",
@@ -2034,6 +3282,14 @@
     },
     {
       "playerId": "ms-bhandage",
+      "aliases": [
+        "ms-bhandage",
+        "MS Bhandage",
+        "Manoj Shivaramsa Bhandage",
+        "manoj-shivaramsa-bhandage",
+        "manoj bhandage",
+        "ms bhandage"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/359700/359766.png",
@@ -2046,6 +3302,14 @@
     },
     {
       "playerId": "ms-dhoni",
+      "aliases": [
+        "ms-dhoni",
+        "MS Dhoni",
+        "Mahendra Singh Dhoni",
+        "mahendra-singh-dhoni",
+        "ms dhoni",
+        "mahendra singh dhoni"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319900/319946.png",
@@ -2058,6 +3322,15 @@
     },
     {
       "playerId": "ut-yadav",
+      "aliases": [
+        "ut-yadav",
+        "UT Yadav",
+        "Umeshkumar Tilak Yadav",
+        "umeshkumar-tilak-yadav",
+        "ut yadav",
+        "umesh yadav",
+        "jayant yadav"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378100/378125.1.png",
@@ -2070,6 +3343,14 @@
     },
     {
       "playerId": "mk-lomror",
+      "aliases": [
+        "mk-lomror",
+        "MK Lomror",
+        "Mahipal Krishan Lomror",
+        "mahipal-krishan-lomror",
+        "mahipal lomror",
+        "mk lomror"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/315000/315015.jpg",
@@ -2082,6 +3363,14 @@
     },
     {
       "playerId": "se-rutherford",
+      "aliases": [
+        "se-rutherford",
+        "SE Rutherford",
+        "Sherfane Eviston Rutherford",
+        "sherfane-eviston-rutherford",
+        "sherfane rutherford",
+        "se rutherford"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322100/322173.png",
@@ -2094,6 +3383,14 @@
     },
     {
       "playerId": "tu-deshpande",
+      "aliases": [
+        "tu-deshpande",
+        "TU Deshpande",
+        "Tushar Uday Deshpande",
+        "tushar-uday-deshpande",
+        "tushar deshpande",
+        "tu deshpande"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/339100/339160.png",
@@ -2106,6 +3403,11 @@
     },
     {
       "playerId": "mustafizur-rahman",
+      "aliases": [
+        "mustafizur-rahman",
+        "Mustafizur Rahman",
+        "mustafizur rahman"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319700/319734.png",
@@ -2118,6 +3420,14 @@
     },
     {
       "playerId": "rjw-topley",
+      "aliases": [
+        "rjw-topley",
+        "RJW Topley",
+        "Reece James William Topley",
+        "reece-james-william-topley",
+        "reece topley",
+        "rjw topley"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322900/322910.png",
@@ -2130,6 +3440,14 @@
     },
     {
       "playerId": "nt-ellis",
+      "aliases": [
+        "nt-ellis",
+        "NT Ellis",
+        "Nathan Ellis",
+        "nathan-ellis",
+        "nt ellis",
+        "nathan ellis"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/329700/329711.png",
@@ -2142,6 +3460,14 @@
     },
     {
       "playerId": "r-ashwin",
+      "aliases": [
+        "r-ashwin",
+        "R Ashwin",
+        "Ravichandran Ashwin",
+        "ravichandran-ashwin",
+        "r ashwin",
+        "ravichandran ashwin"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316521.png",
@@ -2154,6 +3480,14 @@
     },
     {
       "playerId": "t-stubbs",
+      "aliases": [
+        "t-stubbs",
+        "T Stubbs",
+        "Tristan Stubbs",
+        "tristan-stubbs",
+        "t stubbs",
+        "tristan stubbs"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/348500/348577.png",
@@ -2166,6 +3500,14 @@
     },
     {
       "playerId": "sv-samson",
+      "aliases": [
+        "sv-samson",
+        "SV Samson",
+        "Sanju Viswanath Samson",
+        "sanju-viswanath-samson",
+        "sv samson",
+        "sanju samson"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322700/322701.png",
@@ -2178,6 +3520,13 @@
     },
     {
       "playerId": "akash-singh",
+      "aliases": [
+        "akash-singh",
+        "Akash Singh",
+        "Akash Maharaj Singh",
+        "akash-maharaj-singh",
+        "akash singh"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/315000/315007.jpg",
@@ -2190,6 +3539,14 @@
     },
     {
       "playerId": "jm-bairstow",
+      "aliases": [
+        "jm-bairstow",
+        "JM Bairstow",
+        "Jonathan Marc Bairstow",
+        "jonathan-marc-bairstow",
+        "jonny bairstow",
+        "jm bairstow"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319700/319794.png",
@@ -2202,6 +3559,14 @@
     },
     {
       "playerId": "ta-boult",
+      "aliases": [
+        "ta-boult",
+        "TA Boult",
+        "Trent Alexander Boult",
+        "trent-alexander-boult",
+        "trent boult",
+        "ta boult"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316619.png",
@@ -2214,6 +3579,11 @@
     },
     {
       "playerId": "ramandeep-singh",
+      "aliases": [
+        "ramandeep-singh",
+        "Ramandeep Singh",
+        "ramandeep singh"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/357800/357844.1.png",
@@ -2226,6 +3596,14 @@
     },
     {
       "playerId": "jc-buttler",
+      "aliases": [
+        "jc-buttler",
+        "JC Buttler",
+        "Joseph Charles Buttler",
+        "joseph-charles-buttler",
+        "jos buttler",
+        "jc buttler"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316642.png",
@@ -2238,6 +3616,14 @@
     },
     {
       "playerId": "jd-unadkat",
+      "aliases": [
+        "jd-unadkat",
+        "JD Unadkat",
+        "Jaydev Dipakbhai Unadkat",
+        "jaydev-dipakbhai-unadkat",
+        "jd unadkat",
+        "jaydev unadkat"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322698.png",
@@ -2250,6 +3636,14 @@
     },
     {
       "playerId": "mj-santner",
+      "aliases": [
+        "mj-santner",
+        "MJ Santner",
+        "Mitchell Josef Santner",
+        "mitchell-josef-santner",
+        "mitchell santner",
+        "mj santner"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319700/319792.png",
@@ -2262,6 +3656,15 @@
     },
     {
       "playerId": "ra-jadeja",
+      "aliases": [
+        "ra-jadeja",
+        "RA Jadeja",
+        "Ravindrasinh Anirudhsinh Jadeja",
+        "ravindrasinh-anirudhsinh-jadeja",
+        "r jadeja",
+        "ra jadeja",
+        "ravindra jadeja"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316600.png",
@@ -2274,6 +3677,14 @@
     },
     {
       "playerId": "ml-hayden",
+      "aliases": [
+        "ml-hayden",
+        "ML Hayden",
+        "Matthew Lawrence Hayden",
+        "matthew-lawrence-hayden",
+        "matthew hayden",
+        "ml hayden"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_1280,q_80/lsci/db/PICTURES/CMS/319700/319706.png",
@@ -2286,6 +3697,14 @@
     },
     {
       "playerId": "jj-bumrah",
+      "aliases": [
+        "jj-bumrah",
+        "JJ Bumrah",
+        "Jasprit Jasbirsingh Bumrah",
+        "jasprit-jasbirsingh-bumrah",
+        "jj bumrah",
+        "jasprit bumrah"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319900/319940.png",
@@ -2298,6 +3717,15 @@
     },
     {
       "playerId": "rasikh-salam",
+      "aliases": [
+        "rasikh-salam",
+        "Rasikh Salam",
+        "Rasikh Salam Dar",
+        "rasikh-salam-dar",
+        "rasikh salam",
+        "rasikh salam dar",
+        "rasikh dar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/341000/341040.png",
@@ -2310,6 +3738,15 @@
     },
     {
       "playerId": "rk-singh",
+      "aliases": [
+        "rk-singh",
+        "RK Singh",
+        "Rinku Khanchand Singh",
+        "rinku-khanchand-singh",
+        "rinku singh",
+        "rk singh",
+        "ravi singh"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/341000/341043.png",
@@ -2322,6 +3759,14 @@
     },
     {
       "playerId": "q-de-kock",
+      "aliases": [
+        "q-de-kock",
+        "Q de Kock",
+        "Quinton de Kock",
+        "quinton-de-kock",
+        "quinton de kock",
+        "q de kock"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316668.png",
@@ -2334,6 +3779,14 @@
     },
     {
       "playerId": "b-sai-sudharsan",
+      "aliases": [
+        "b-sai-sudharsan",
+        "B Sai Sudharsan",
+        "Bhardwaj Sai Sudharsan",
+        "bhardwaj-sai-sudharsan",
+        "b sai sudharsan",
+        "sai sudharsan"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/361800/361891.1.png",
@@ -2346,6 +3799,14 @@
     },
     {
       "playerId": "ja-richardson",
+      "aliases": [
+        "ja-richardson",
+        "JA Richardson",
+        "Jhye Avon Richardson",
+        "jhye-avon-richardson",
+        "jhye richardson",
+        "ja richardson"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321500/321591.png",
@@ -2358,6 +3819,14 @@
     },
     {
       "playerId": "d-padikkal",
+      "aliases": [
+        "d-padikkal",
+        "D Padikkal",
+        "Devdutt Padikkal",
+        "devdutt-padikkal",
+        "devdutt padikkal",
+        "d padikkal"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322200/322229.png",
@@ -2370,6 +3839,14 @@
     },
     {
       "playerId": "am-rahane",
+      "aliases": [
+        "am-rahane",
+        "AM Rahane",
+        "Ajinkya Madhukar Rahane",
+        "ajinkya-madhukar-rahane",
+        "am rahane",
+        "ajinkya rahane"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316620.png",
@@ -2382,6 +3859,13 @@
     },
     {
       "playerId": "abdul-samad",
+      "aliases": [
+        "abdul-samad",
+        "Abdul Samad",
+        "Abdul Samad Farooq",
+        "abdul-samad-farooq",
+        "abdul samad"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/339100/339145.png",
@@ -2394,6 +3878,14 @@
     },
     {
       "playerId": "ls-livingstone",
+      "aliases": [
+        "ls-livingstone",
+        "LS Livingstone",
+        "Liam Stephen Livingstone",
+        "liam-stephen-livingstone",
+        "liam livingstone",
+        "ls livingstone"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323100/323103.png",
@@ -2406,6 +3898,11 @@
     },
     {
       "playerId": "yash-dayal",
+      "aliases": [
+        "yash-dayal",
+        "Yash Dayal",
+        "yash dayal"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/357400/357416.2.jpg",
@@ -2418,6 +3915,14 @@
     },
     {
       "playerId": "ys-chahal",
+      "aliases": [
+        "ys-chahal",
+        "YS Chahal",
+        "Yuzvendra Singh Chahal",
+        "yuzvendra-singh-chahal",
+        "ys chahal",
+        "yuzvendra chahal"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319900/319955.png",
@@ -2430,6 +3935,14 @@
     },
     {
       "playerId": "mj-henry",
+      "aliases": [
+        "mj-henry",
+        "MJ Henry",
+        "Matthew James Henry",
+        "matthew-james-henry",
+        "matt henry",
+        "mj henry"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321200/321247.png",
@@ -2442,6 +3955,11 @@
     },
     {
       "playerId": "kuldeep-yadav",
+      "aliases": [
+        "kuldeep-yadav",
+        "Kuldeep Yadav",
+        "kuldeep yadav"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319900/319943.png",
@@ -2454,6 +3972,14 @@
     },
     {
       "playerId": "pp-ojha",
+      "aliases": [
+        "pp-ojha",
+        "PP Ojha",
+        "Pragyan Prayash Ojha",
+        "pragyan-prayash-ojha",
+        "pp ojha",
+        "pragyan ojha"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160/lsci/db/PICTURES/CMS/322600/322694.1.png",
@@ -2466,6 +3992,14 @@
     },
     {
       "playerId": "n-rana",
+      "aliases": [
+        "n-rana",
+        "N Rana",
+        "Nitish Rana",
+        "nitish-rana",
+        "n rana",
+        "nitish rana"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323000/323054.png",
@@ -2478,6 +4012,13 @@
     },
     {
       "playerId": "yash-thakur",
+      "aliases": [
+        "yash-thakur",
+        "Yash Thakur",
+        "Yash Ravisingh Thakur",
+        "yash-ravisingh-thakur",
+        "yash thakur"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/356700/356790.1.png",
@@ -2490,6 +4031,14 @@
     },
     {
       "playerId": "ch-gayle",
+      "aliases": [
+        "ch-gayle",
+        "CH Gayle",
+        "Christopher Henry Gayle",
+        "christopher-henry-gayle",
+        "ch gayle",
+        "chris gayle"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://ipl-stats-sports-mechanic.s3.ap-south-1.amazonaws.com/ipl/playerimages/Chris%20Gayle.png",
@@ -2502,6 +4051,14 @@
     },
     {
       "playerId": "n-pooran",
+      "aliases": [
+        "n-pooran",
+        "N Pooran",
+        "Nicholas Pooran",
+        "nicholas-pooran",
+        "nicholas pooran",
+        "n pooran"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320100/320109.png",
@@ -2514,6 +4071,13 @@
     },
     {
       "playerId": "mayank-dagar",
+      "aliases": [
+        "mayank-dagar",
+        "Mayank Dagar",
+        "Mayank J Dagar",
+        "mayank-j-dagar",
+        "mayank dagar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/356800/356822.1.png",
@@ -2526,6 +4090,14 @@
     },
     {
       "playerId": "f-du-plessis",
+      "aliases": [
+        "f-du-plessis",
+        "F du Plessis",
+        "Francois du Plessis",
+        "francois-du-plessis",
+        "f du plessis",
+        "faf du plessis"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316559.png",
@@ -2538,6 +4110,14 @@
     },
     {
       "playerId": "sm-curran",
+      "aliases": [
+        "sm-curran",
+        "SM Curran",
+        "Samuel Matthew Curran",
+        "samuel-matthew-curran",
+        "sam curran",
+        "sm curran"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323100/323113.png",
@@ -2550,6 +4130,15 @@
     },
     {
       "playerId": "pj-cummins",
+      "aliases": [
+        "pj-cummins",
+        "PJ Cummins",
+        "Patrick James Cummins",
+        "patrick-james-cummins",
+        "patrick cummins",
+        "pj cummins",
+        "pat cummins"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316692.png",
@@ -2562,6 +4151,13 @@
     },
     {
       "playerId": "sikandar-raza",
+      "aliases": [
+        "sikandar-raza",
+        "Sikandar Raza",
+        "Sikandar Raza Butt",
+        "sikandar-raza-butt",
+        "sikandar raza"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316632.png",
@@ -2574,6 +4170,14 @@
     },
     {
       "playerId": "dg-nalkande",
+      "aliases": [
+        "dg-nalkande",
+        "DG Nalkande",
+        "Darshan Girish Nalkande",
+        "darshan-girish-nalkande",
+        "darshan nalkande",
+        "dg nalkande"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/357400/357411.1.jpg",
@@ -2586,6 +4190,14 @@
     },
     {
       "playerId": "tk-curran",
+      "aliases": [
+        "tk-curran",
+        "TK Curran",
+        "Thomas Kevin Curran",
+        "thomas-kevin-curran",
+        "tk curran",
+        "tom curran"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323100/323112.png",
@@ -2598,6 +4210,13 @@
     },
     {
       "playerId": "shivam-mavi",
+      "aliases": [
+        "shivam-mavi",
+        "Shivam Mavi",
+        "Shivam Pankaj Mavi",
+        "shivam-pankaj-mavi",
+        "shivam mavi"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/341000/341042.png",
@@ -2610,6 +4229,15 @@
     },
     {
       "playerId": "vr-iyer",
+      "aliases": [
+        "vr-iyer",
+        "VR Iyer",
+        "Venkatesh Rajasekaran Iyer",
+        "venkatesh-rajasekaran-iyer",
+        "venkatesh iyer",
+        "vr iyer",
+        "shreyas iyer"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/337100/337187.png",
@@ -2622,6 +4250,14 @@
     },
     {
       "playerId": "r-dhawan",
+      "aliases": [
+        "r-dhawan",
+        "R Dhawan",
+        "Rishi Dhawan",
+        "rishi-dhawan",
+        "r dhawan",
+        "rishi dhawan"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322604.png",
@@ -2634,6 +4270,14 @@
     },
     {
       "playerId": "th-david",
+      "aliases": [
+        "th-david",
+        "TH David",
+        "Timothy Hays David",
+        "timothy-hays-david",
+        "th david",
+        "tim david"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/340300/340305.png",
@@ -2646,6 +4290,14 @@
     },
     {
       "playerId": "as-joseph",
+      "aliases": [
+        "as-joseph",
+        "AS Joseph",
+        "Alzarri Shaheim Joseph",
+        "alzarri-shaheim-joseph",
+        "as joseph",
+        "alzarri joseph"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321900/321943.png",
@@ -2658,6 +4310,14 @@
     },
     {
       "playerId": "d-brevis",
+      "aliases": [
+        "d-brevis",
+        "D Brevis",
+        "Dewald Brevis",
+        "dewald-brevis",
+        "dewald brevis",
+        "d brevis"
+      ],
       "teamId": "CSK",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/335100/335134.png",
@@ -2670,6 +4330,11 @@
     },
     {
       "playerId": "mohammed-siraj",
+      "aliases": [
+        "mohammed-siraj",
+        "Mohammed Siraj",
+        "mohammed siraj"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322611.png",
@@ -2682,6 +4347,14 @@
     },
     {
       "playerId": "s-dhawan",
+      "aliases": [
+        "s-dhawan",
+        "S Dhawan",
+        "Shikhar Dhawan",
+        "shikhar-dhawan",
+        "s dhawan",
+        "shikhar dhawan"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316500/316524.png",
@@ -2694,6 +4367,14 @@
     },
     {
       "playerId": "gj-maxwell",
+      "aliases": [
+        "gj-maxwell",
+        "GJ Maxwell",
+        "Glenn James Maxwell",
+        "glenn-james-maxwell",
+        "gj maxwell",
+        "glenn maxwell"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316657.png",
@@ -2706,6 +4387,14 @@
     },
     {
       "playerId": "yv-dhull",
+      "aliases": [
+        "yv-dhull",
+        "YV Dhull",
+        "Yash Vijay Dhull",
+        "yash-vijay-dhull",
+        "yash dhull",
+        "yv dhull"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/339100/339162.png",
@@ -2718,6 +4407,14 @@
     },
     {
       "playerId": "harpreet-singh",
+      "aliases": [
+        "harpreet-singh",
+        "Harpreet Singh",
+        "Harpreet Singh Bhatia",
+        "harpreet-singh-bhatia",
+        "harpreet singh",
+        "harpreet singh bhatia"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/314900/314906.jpg",
@@ -2730,6 +4427,14 @@
     },
     {
       "playerId": "aj-turner",
+      "aliases": [
+        "aj-turner",
+        "AJ Turner",
+        "Ashton James Turner",
+        "ashton-james-turner",
+        "ashton turner",
+        "aj turner"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/321500/321560.png",
@@ -2742,6 +4447,14 @@
     },
     {
       "playerId": "ss-iyer",
+      "aliases": [
+        "ss-iyer",
+        "SS Iyer",
+        "Shreyas Santosh Iyer",
+        "shreyas-santosh-iyer",
+        "shreyas iyer",
+        "ss iyer"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/323000/323035.png",
@@ -2754,6 +4467,14 @@
     },
     {
       "playerId": "ac-gilchrist",
+      "aliases": [
+        "ac-gilchrist",
+        "AC Gilchrist",
+        "Adam Craig Gilchrist",
+        "adam-craig-gilchrist",
+        "adam gilchrist",
+        "ac gilchrist"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_1280,q_80/lsci/db/PICTURES/CMS/319600/319684.png",
@@ -2766,6 +4487,11 @@
     },
     {
       "playerId": "mujeeb-ur-rahman",
+      "aliases": [
+        "mujeeb-ur-rahman",
+        "Mujeeb Ur Rahman",
+        "mujeeb ur rahman"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/320500/320501.png",
@@ -2778,6 +4504,11 @@
     },
     {
       "playerId": "washington-sundar",
+      "aliases": [
+        "washington-sundar",
+        "Washington Sundar",
+        "washington sundar"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322619.png",
@@ -2790,6 +4521,11 @@
     },
     {
       "playerId": "shashank-singh",
+      "aliases": [
+        "shashank-singh",
+        "Shashank Singh",
+        "shashank singh"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/314900/314914.jpg",
@@ -2802,6 +4538,14 @@
     },
     {
       "playerId": "a-nortje",
+      "aliases": [
+        "a-nortje",
+        "A Nortje",
+        "Anrich Arno Nortje",
+        "anrich-arno-nortje",
+        "a nortje",
+        "anrich nortje"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322000/322080.png",
@@ -2814,6 +4558,11 @@
     },
     {
       "playerId": "shubman-gill",
+      "aliases": [
+        "shubman-gill",
+        "Shubman Gill",
+        "shubman gill"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322600/322697.png",
@@ -2826,6 +4575,13 @@
     },
     {
       "playerId": "kl-rahul",
+      "aliases": [
+        "kl-rahul",
+        "KL Rahul",
+        "Kannaur Lokesh Rahul",
+        "kannaur-lokesh-rahul",
+        "kl rahul"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/319900/319942.png",
@@ -2838,6 +4594,14 @@
     },
     {
       "playerId": "sl-malinga",
+      "aliases": [
+        "sl-malinga",
+        "SL Malinga",
+        "Separamadu Lasith Malinga",
+        "separamadu-lasith-malinga",
+        "sl malinga",
+        "lasith malinga"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://ipl-stats-sports-mechanic.s3.ap-south-1.amazonaws.com/ipl/playerimages/Lasith%20Malinga.png",
@@ -2850,6 +4614,14 @@
     },
     {
       "playerId": "m-markande",
+      "aliases": [
+        "m-markande",
+        "M Markande",
+        "Mayank Markande",
+        "mayank-markande",
+        "mayank markande",
+        "m markande"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/355400/355403.png",
@@ -2862,6 +4634,15 @@
     },
     {
       "playerId": "mm-sharma",
+      "aliases": [
+        "mm-sharma",
+        "MM Sharma",
+        "Mohit Mahipal Sharma",
+        "mohit-mahipal-sharma",
+        "mm sharma",
+        "mohit sharma",
+        "rahul sharma"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316700/316702.png",
@@ -2874,6 +4655,11 @@
     },
     {
       "playerId": "sohail-tanvir",
+      "aliases": [
+        "sohail-tanvir",
+        "Sohail Tanvir",
+        "sohail tanvir"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160/lsci/db/PICTURES/CMS/320400/320472.1.png",
@@ -2886,6 +4672,14 @@
     },
     {
       "playerId": "i-sharma",
+      "aliases": [
+        "i-sharma",
+        "I Sharma",
+        "Ishant Sharma",
+        "ishant-sharma",
+        "ishant sharma",
+        "i sharma"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/316600/316602.png",
@@ -2898,6 +4692,11 @@
     },
     {
       "playerId": "akash-madhwal",
+      "aliases": [
+        "akash-madhwal",
+        "Akash Madhwal",
+        "akash madhwal"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/314900/314988.png",
@@ -2910,6 +4709,14 @@
     },
     {
       "playerId": "h-sharma",
+      "aliases": [
+        "h-sharma",
+        "H Sharma",
+        "Himanshu Sharma",
+        "himanshu-sharma",
+        "himanshu sharma",
+        "h sharma"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/357600/357624.4.jpg",
@@ -2922,6 +4729,14 @@
     },
     {
       "playerId": "hc-brook",
+      "aliases": [
+        "hc-brook",
+        "HC Brook",
+        "Harry Cherrington Brook",
+        "harry-cherrington-brook",
+        "harry brook",
+        "hc brook"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/324200/324246.png",
@@ -2934,6 +4749,14 @@
     },
     {
       "playerId": "jm-sharma",
+      "aliases": [
+        "jm-sharma",
+        "JM Sharma",
+        "Jitesh Mohan Sharma",
+        "jitesh-mohan-sharma",
+        "jitesh sharma",
+        "jm sharma"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/378100/378121.1.png",
@@ -2946,6 +4769,14 @@
     },
     {
       "playerId": "vg-arora",
+      "aliases": [
+        "vg-arora",
+        "VG Arora",
+        "Vaibhav Gopal Arora",
+        "vaibhav-gopal-arora",
+        "vaibhav arora",
+        "vg arora"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/357000/357019.1.png",
@@ -2958,6 +4789,10 @@
     },
     {
       "playerId": "aravelly-avanish",
+      "aliases": [
+        "aravelly-avanish",
+        "Aravelly Avanish"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/379000/379037.4.jpg",
@@ -2970,6 +4805,13 @@
     },
     {
       "playerId": "ajay-mandal",
+      "aliases": [
+        "ajay-mandal",
+        "AJ Mandal",
+        "Ajay Mandal",
+        "aj-mandal",
+        "ajay mandal"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/314900/314902.jpg",
@@ -2982,6 +4824,13 @@
     },
     {
       "playerId": "nishant-sindhu",
+      "aliases": [
+        "nishant-sindhu",
+        "N Sindhu",
+        "Nishant Sindhu",
+        "n-sindhu",
+        "nishant sindhu"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/345000/345097.png",
@@ -2994,6 +4843,13 @@
     },
     {
       "playerId": "vicky-ostwal",
+      "aliases": [
+        "vicky-ostwal",
+        "VK Ostwal",
+        "Vicky Ostwal",
+        "vk-ostwal",
+        "vicky ostwal"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/339100/339161.png",
@@ -3006,6 +4862,13 @@
     },
     {
       "playerId": "gus-atkinson",
+      "aliases": [
+        "gus-atkinson",
+        "AAP Atkinson",
+        "Gus Atkinson",
+        "aap-atkinson",
+        "gus atkinson"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/296200/296215.1.jpg",
@@ -3018,6 +4881,12 @@
     },
     {
       "playerId": "harvik-desai",
+      "aliases": [
+        "harvik-desai",
+        "HM Desai",
+        "Harvik Desai",
+        "hm-desai"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/271800/271897.jpg",
@@ -3030,6 +4899,13 @@
     },
     {
       "playerId": "dilshan-madushanka",
+      "aliases": [
+        "dilshan-madushanka",
+        "D Madushanka",
+        "Dilshan Madushanka",
+        "d-madushanka",
+        "dilshan madushanka"
+      ],
       "teamId": "SRH",
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/348600/348600.png",
@@ -3042,6 +4918,13 @@
     },
     {
       "playerId": "tanay-thyagarajan",
+      "aliases": [
+        "tanay-thyagarajan",
+        "T Thyagarajan",
+        "Tanay Thyagarajan",
+        "t-thyagarajan",
+        "tanay thyagarajan"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/314700/314792.jpg",
@@ -3054,6 +4937,13 @@
     },
     {
       "playerId": "jhathavedh-subramanyan",
+      "aliases": [
+        "jhathavedh-subramanyan",
+        "J Subramanyan",
+        "Jhathavedh Subramanyan",
+        "j-subramanyan",
+        "jhathavedh subramanyan"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/361800/361882.4.jpg",
@@ -3066,6 +4956,13 @@
     },
     {
       "playerId": "wanindu-hasaranga",
+      "aliases": [
+        "wanindu-hasaranga",
+        "PW Hasaranga",
+        "Wanindu Hasaranga",
+        "pw-hasaranga",
+        "wanindu hasaranga"
+      ],
       "teamId": null,
       "season": 2024,
       "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_640,q_50/lsci/db/PICTURES/CMS/322900/322946.png",
@@ -3078,6 +4975,12 @@
     },
     {
       "playerId": "a-mishra",
+      "aliases": [
+        "a-mishra",
+        "A Mishra",
+        "a mishra",
+        "amit mishra"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/a mishra.jpg",
@@ -3090,6 +4993,13 @@
     },
     {
       "playerId": "am-rahane",
+      "aliases": [
+        "am-rahane",
+        "AM Rahane",
+        "a rahane",
+        "am rahane",
+        "ajinkya rahane"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/a rahane.jpg",
@@ -3102,6 +5012,13 @@
     },
     {
       "playerId": "b-kumar",
+      "aliases": [
+        "b-kumar",
+        "B Kumar",
+        "bhuvaneswar kumar",
+        "b kumar",
+        "bhuvneshwar kumar"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/bhuvaneswar kumar.jpg",
@@ -3114,6 +5031,13 @@
     },
     {
       "playerId": "jj-bumrah",
+      "aliases": [
+        "jj-bumrah",
+        "JJ Bumrah",
+        "bumrah",
+        "jj bumrah",
+        "jasprit bumrah"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/bumrah.jpg",
@@ -3126,6 +5050,12 @@
     },
     {
       "playerId": "dj-bravo",
+      "aliases": [
+        "dj-bravo",
+        "DJ Bravo",
+        "dj bravo",
+        "dwayne bravo"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/dj bravo.jpg",
@@ -3138,6 +5068,11 @@
     },
     {
       "playerId": "kl-rahul",
+      "aliases": [
+        "kl-rahul",
+        "KL Rahul",
+        "kl rahul"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/kl rahul.jpg",
@@ -3150,6 +5085,11 @@
     },
     {
       "playerId": "lasith-malinga",
+      "aliases": [
+        "lasith-malinga",
+        "Lasith Malinga",
+        "lasith malinga"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/lasith malinga.jpg",
@@ -3162,6 +5102,14 @@
     },
     {
       "playerId": "pp-chawla",
+      "aliases": [
+        "pp-chawla",
+        "Piyush Chawla",
+        "PP Chawla",
+        "p chawla",
+        "piyush chawla",
+        "pp chawla"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/p chawla.jpg",
@@ -3174,6 +5122,12 @@
     },
     {
       "playerId": "r-ashwin",
+      "aliases": [
+        "r-ashwin",
+        "R Ashwin",
+        "r ashwin",
+        "ravichandran ashwin"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/r ashwin.jpg",
@@ -3186,6 +5140,11 @@
     },
     {
       "playerId": "rashid-khan",
+      "aliases": [
+        "rashid-khan",
+        "Rashid Khan",
+        "rashid khan"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/rashid khan.jpg",
@@ -3198,6 +5157,14 @@
     },
     {
       "playerId": "rg-sharma",
+      "aliases": [
+        "rg-sharma",
+        "Rohit Sharma",
+        "RG Sharma",
+        "rohit sharma",
+        "rg sharma",
+        "jitesh sharma"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/rohit sharma.jpg",
@@ -3210,6 +5177,14 @@
     },
     {
       "playerId": "sp-narine",
+      "aliases": [
+        "sp-narine",
+        "Sunil Narine",
+        "SP Narine",
+        "s narine",
+        "sunil narine",
+        "sp narine"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/s narine.jpg",
@@ -3222,6 +5197,12 @@
     },
     {
       "playerId": "sv-samson",
+      "aliases": [
+        "sv-samson",
+        "SV Samson",
+        "sanju samson",
+        "sv samson"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/sanju samson.jpg",
@@ -3234,6 +5215,12 @@
     },
     {
       "playerId": "s-dhawan",
+      "aliases": [
+        "s-dhawan",
+        "S Dhawan",
+        "shikhar dhawan",
+        "s dhawan"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/shikhar dhawan.jpg",
@@ -3246,6 +5233,13 @@
     },
     {
       "playerId": "sk-raina",
+      "aliases": [
+        "sk-raina",
+        "Suresh Raina",
+        "SK Raina",
+        "suresh raina",
+        "sk raina"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/suresh raina.jpg",
@@ -3258,6 +5252,13 @@
     },
     {
       "playerId": "v-kohli",
+      "aliases": [
+        "v-kohli",
+        "Virat Kohli",
+        "V Kohli",
+        "virat kohli",
+        "v kohli"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/virat kohli.jpg",
@@ -3270,6 +5271,13 @@
     },
     {
       "playerId": "v-kohli",
+      "aliases": [
+        "v-kohli",
+        "Virat Kohli",
+        "V Kohli",
+        "virat kohli",
+        "v kohli"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/virat-kohli.png",
@@ -3282,6 +5290,13 @@
     },
     {
       "playerId": "ys-chahal",
+      "aliases": [
+        "ys-chahal",
+        "YS Chahal",
+        "y chahal",
+        "ys chahal",
+        "yuzvendra chahal"
+      ],
       "teamId": null,
       "season": null,
       "imageUrl": "/y chahal.jpg",
