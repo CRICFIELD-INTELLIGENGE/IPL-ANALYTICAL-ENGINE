@@ -1,0 +1,217 @@
+{
+ "articleId": "cf-pbks-027",
+ "generatedAt": "2026-10-26T04:25:18.695Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "opp-most-opp": {
+   "value": "Royal Challengers Bengaluru",
+   "display": "Royal Challengers Bengaluru",
+   "label": "PBKS's most-played opponent",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 38,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "max over opponents",
+    "passed": true
+   }
+  },
+  "opp-most-n": {
+   "value": 38,
+   "display": "38",
+   "label": "Matches against RCB",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 38,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 3 matches",
+    "passed": true,
+    "detail": "n = 38"
+   }
+  },
+  "opp-most-pct": {
+   "value": 47.4,
+   "display": "47.4%",
+   "label": "PBKS win rate against RCB",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 38,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 3 matches",
+    "passed": true,
+    "detail": "n = 38"
+   }
+  },
+  "opp-best-opp": {
+   "value": "Lucknow Super Giants",
+   "display": "Lucknow Super Giants",
+   "label": "Opponent PBKS beat most often (min. six matches)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. six matches",
+   "sampleSize": {
+    "n": 8,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "max over opponents",
+    "passed": true
+   }
+  },
+  "opp-best-pct": {
+   "value": 62.5,
+   "display": "62.5%",
+   "label": "PBKS win rate against LSG",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. six matches",
+   "sampleSize": {
+    "n": 8,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 6 matches",
+    "passed": true,
+    "detail": "n = 8"
+   }
+  },
+  "opp-worst-opp": {
+   "value": "Sunrisers Hyderabad",
+   "display": "Sunrisers Hyderabad",
+   "label": "Opponent PBKS beat least often (min. six matches)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. six matches",
+   "sampleSize": {
+    "n": 26,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "min over opponents",
+    "passed": true
+   }
+  },
+  "opp-worst-pct": {
+   "value": 30.8,
+   "display": "30.8%",
+   "label": "PBKS win rate against SRH",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. six matches",
+   "sampleSize": {
+    "n": 26,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 6 matches",
+    "passed": true,
+    "detail": "n = 26"
+   }
+  },
+  "opp-spread": {
+   "value": 32,
+   "display": "32",
+   "label": "Gap between Punjab Kings' best and worst head-to-head win rates (min. six matches)",
+   "unit": "percentage points",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Current franchises",
+   "sampleSize": {
+    "n": 9,
+    "unit": "opponents"
+   },
+   "query": "head-to-head table",
+   "validation": {
+    "method": "max − min over opponents",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "opp-h2h": {
+   "label": "PBKS head-to-head record by opponent",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result; opponents under their current franchise names",
+   "sampleSize": {
+    "n": 250,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "rows": [
+    {
+     "opponent": "RCB",
+     "winPct": 47.4,
+     "matches": 38,
+     "won": 18
+    },
+    {
+     "opponent": "MI",
+     "winPct": 50,
+     "matches": 36,
+     "won": 18
+    },
+    {
+     "opponent": "DC",
+     "winPct": 50,
+     "matches": 36,
+     "won": 18
+    },
+    {
+     "opponent": "KKR",
+     "winPct": 38.2,
+     "matches": 34,
+     "won": 13
+    },
+    {
+     "opponent": "CSK",
+     "winPct": 51.5,
+     "matches": 33,
+     "won": 17
+    },
+    {
+     "opponent": "RR",
+     "winPct": 41.9,
+     "matches": 31,
+     "won": 13
+    },
+    {
+     "opponent": "SRH",
+     "winPct": 30.8,
+     "matches": 26,
+     "won": 8
+    },
+    {
+     "opponent": "GT",
+     "winPct": 50,
+     "matches": 8,
+     "won": 4
+    },
+    {
+     "opponent": "LSG",
+     "winPct": 62.5,
+     "matches": 8,
+     "won": 5
+    }
+   ]
+  }
+ }
+}

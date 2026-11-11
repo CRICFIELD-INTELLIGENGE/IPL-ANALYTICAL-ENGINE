@@ -1,0 +1,288 @@
+{
+  "totalUniquePlayers": 1214,
+  "matchedBios": 779,
+  "hasDirectImage": 254,
+  "hasBrokenOrHtmlLink": 29,
+  "playersWithAnyImage": 263,
+  "playersWithLocalCurated": 31,
+  "playersWithBioCdn": 254,
+  "playersMissingAllPhotos": 951,
+  "coveragePercent": "21.7",
+  "eraStats": {
+    "2008-2012 (Early Era)": {
+      "totalRosters": 948,
+      "coveredRosters": 167
+    },
+    "2013-2018 (Middle Era)": {
+      "totalRosters": 1136,
+      "coveredRosters": 399
+    },
+    "2019-2023 (Modern Era)": {
+      "totalRosters": 1122,
+      "coveredRosters": 654
+    },
+    "2024-2026 (Current Era)": {
+      "totalRosters": 776,
+      "coveredRosters": 511
+    }
+  },
+  "franchiseStats": {
+    "Chennai Super Kings": {
+      "total": 393,
+      "covered": 182,
+      "missing": 211
+    },
+    "Rising Pune Supergiant": {
+      "total": 48,
+      "covered": 21,
+      "missing": 27
+    },
+    "Royal Challengers Bengaluru": {
+      "total": 455,
+      "covered": 189,
+      "missing": 266
+    },
+    "Delhi Capitals": {
+      "total": 459,
+      "covered": 206,
+      "missing": 253
+    },
+    "Rajasthan Royals": {
+      "total": 409,
+      "covered": 143,
+      "missing": 266
+    },
+    "Mumbai Indians": {
+      "total": 464,
+      "covered": 205,
+      "missing": 259
+    },
+    "Gujarat Lions": {
+      "total": 50,
+      "covered": 12,
+      "missing": 38
+    },
+    "Kochi Tuskers Kerala": {
+      "total": 22,
+      "covered": 3,
+      "missing": 19
+    },
+    "Deccan Chargers": {
+      "total": 106,
+      "covered": 19,
+      "missing": 87
+    },
+    "Sunrisers Hyderabad": {
+      "total": 337,
+      "covered": 179,
+      "missing": 158
+    },
+    "Kolkata Knight Riders": {
+      "total": 442,
+      "covered": 203,
+      "missing": 239
+    },
+    "Punjab Kings": {
+      "total": 442,
+      "covered": 183,
+      "missing": 259
+    },
+    "Gujarat Titans": {
+      "total": 134,
+      "covered": 90,
+      "missing": 44
+    },
+    "Lucknow Super Giants": {
+      "total": 128,
+      "covered": 83,
+      "missing": 45
+    },
+    "Pune Warriors": {
+      "total": 74,
+      "covered": 13,
+      "missing": 61
+    },
+    "Pune Warriors India": {
+      "total": 19,
+      "covered": 0,
+      "missing": 19
+    }
+  },
+  "sampleMissingStarPlayers": [
+    {
+      "name": "Albie Morkel",
+      "country": "South Africa",
+      "seasonsCount": 9,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016",
+      "teams": "Chennai Super Kings, Royal Challengers Bengaluru, Delhi Capitals, Rising Pune Supergiant"
+    },
+    {
+      "name": "Jacob Oram",
+      "country": "New Zealand",
+      "seasonsCount": 4,
+      "seasons": "2008, 2009, 2011, 2013",
+      "teams": "Chennai Super Kings, Rajasthan Royals, Mumbai Indians"
+    },
+    {
+      "name": "Muttiah Muralitharan",
+      "country": "Sri Lanka",
+      "seasonsCount": 7,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013, 2014",
+      "teams": "Chennai Super Kings, Kochi Tuskers Kerala, Royal Challengers Bengaluru"
+    },
+    {
+      "name": "Parthiv Patel",
+      "country": "India",
+      "seasonsCount": 12,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019",
+      "teams": "Chennai Super Kings, Kochi Tuskers Kerala, Deccan Chargers, Sunrisers Hyderabad, Royal Challengers Bengaluru, Mumbai Indians"
+    },
+    {
+      "name": "Joginder Sharma",
+      "country": "India",
+      "seasonsCount": 4,
+      "seasons": "2008, 2009, 2010, 2011",
+      "teams": "Chennai Super Kings"
+    },
+    {
+      "name": "L Balaji",
+      "country": "India",
+      "seasonsCount": 7,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013, 2014",
+      "teams": "Chennai Super Kings, Kolkata Knight Riders, Punjab Kings"
+    },
+    {
+      "name": "MS Gony",
+      "country": null,
+      "seasonsCount": 7,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013, 2017",
+      "teams": "Chennai Super Kings, Deccan Chargers, Punjab Kings, Gujarat Lions"
+    },
+    {
+      "name": "S Anirudha",
+      "country": "India",
+      "seasonsCount": 6,
+      "seasons": "2008, 2010, 2011, 2012, 2013, 2014",
+      "teams": "Chennai Super Kings, Sunrisers Hyderabad"
+    },
+    {
+      "name": "S Badrinath",
+      "country": null,
+      "seasonsCount": 6,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013",
+      "teams": "Chennai Super Kings"
+    },
+    {
+      "name": "Andrew Symonds",
+      "country": "Australia",
+      "seasonsCount": 4,
+      "seasons": "2008, 2009, 2010, 2011",
+      "teams": "Deccan Chargers, Mumbai Indians"
+    },
+    {
+      "name": "Herschelle Gibbs",
+      "country": "South Africa",
+      "seasonsCount": 4,
+      "seasons": "2008, 2009, 2010, 2012",
+      "teams": "Deccan Chargers, Mumbai Indians"
+    },
+    {
+      "name": "VVS Laxman",
+      "country": "India",
+      "seasonsCount": 4,
+      "seasons": "2008, 2009, 2010, 2011",
+      "teams": "Deccan Chargers, Kochi Tuskers Kerala"
+    },
+    {
+      "name": "DB Ravi Teja",
+      "country": null,
+      "seasonsCount": 5,
+      "seasons": "2008, 2009, 2011, 2012, 2013",
+      "teams": "Deccan Chargers, Sunrisers Hyderabad"
+    },
+    {
+      "name": "Y Venugopal Rao",
+      "country": "India",
+      "seasonsCount": 6,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2014",
+      "teams": "Deccan Chargers, Delhi Capitals, Sunrisers Hyderabad"
+    },
+    {
+      "name": "Virender Sehwag",
+      "country": "India",
+      "seasonsCount": 8,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015",
+      "teams": "Delhi Capitals, Punjab Kings"
+    },
+    {
+      "name": "Manoj Tiwary",
+      "country": "India",
+      "seasonsCount": 10,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2017, 2018",
+      "teams": "Delhi Capitals, Kolkata Knight Riders, Rising Pune Supergiant, Punjab Kings"
+    },
+    {
+      "name": "Daniel Vettori",
+      "country": "New Zealand",
+      "seasonsCount": 5,
+      "seasons": "2008, 2009, 2010, 2011, 2012",
+      "teams": "Delhi Capitals, Royal Challengers Bengaluru"
+    },
+    {
+      "name": "Tillakaratne Dilshan",
+      "country": "Sri Lanka",
+      "seasonsCount": 6,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013",
+      "teams": "Delhi Capitals, Royal Challengers Bengaluru"
+    },
+    {
+      "name": "Pradeep Sangwan",
+      "country": "India",
+      "seasonsCount": 9,
+      "seasons": "2008, 2009, 2010, 2012, 2013, 2016, 2017, 2018, 2022",
+      "teams": "Delhi Capitals, Kolkata Knight Riders, Gujarat Lions, Mumbai Indians, Gujarat Titans"
+    },
+    {
+      "name": "R Bhatia",
+      "country": "India",
+      "seasonsCount": 10,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017",
+      "teams": "Delhi Capitals, Kolkata Knight Riders, Rajasthan Royals, Rising Pune Supergiant"
+    },
+    {
+      "name": "VY Mahesh",
+      "country": null,
+      "seasonsCount": 4,
+      "seasons": "2008, 2009, 2010, 2012",
+      "teams": "Delhi Capitals, Chennai Super Kings"
+    },
+    {
+      "name": "Sourav Ganguly",
+      "country": null,
+      "seasonsCount": 5,
+      "seasons": "2008, 2009, 2010, 2011, 2012",
+      "teams": "Kolkata Knight Riders, Pune Warriors"
+    },
+    {
+      "name": "Brendon McCullum",
+      "country": "New Zealand",
+      "seasonsCount": 11,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018",
+      "teams": "Kolkata Knight Riders, Kochi Tuskers Kerala, Chennai Super Kings, Gujarat Lions, Royal Challengers Bengaluru"
+    },
+    {
+      "name": "David Hussey",
+      "country": "Australia",
+      "seasonsCount": 7,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013, 2014",
+      "teams": "Kolkata Knight Riders, Punjab Kings, Chennai Super Kings"
+    },
+    {
+      "name": "Murali Kartik",
+      "country": "India",
+      "seasonsCount": 7,
+      "seasons": "2008, 2009, 2010, 2011, 2012, 2013, 2014",
+      "teams": "Kolkata Knight Riders, Pune Warriors, Royal Challengers Bengaluru, Punjab Kings"
+    }
+  ]
+}

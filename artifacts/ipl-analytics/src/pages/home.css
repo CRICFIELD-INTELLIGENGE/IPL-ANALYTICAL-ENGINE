@@ -1,0 +1,47 @@
+.cricfield-home {
+  --home-gold: #edcd86;
+  background: radial-gradient(ellipse at 85% 0%, #26302855, transparent 45%), #080d13;
+}
+.cricfield-home .home-scroll-canvas { background: #080d13; gap: 14px; padding: 14px; }
+.cricfield-home .home-main-hero {
+  background: #0c141c;
+  border-color: #edcd8633;
+  box-shadow: inset 0 0 90px #0005, 0 20px 80px #0003;
+}
+.cricfield-home .home-main-hero::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(120deg, #edcd860c, transparent 55%);
+  border-radius: inherit;
+}
+.home-eyebrow { display:flex; align-items:center; gap:9px; color:#edcd86; font-size:10px; font-weight:700; letter-spacing:.2em; margin-bottom:24px; white-space:nowrap; }
+.home-eyebrow span { width:20px; height:1px; background:#edcd86; }
+.cricfield-home .home-hero-copy h1 { letter-spacing: -.065em; line-height:.98; }
+.cricfield-home .home-hero-copy h1 .opacity-15 { opacity: .5; }
+.cricfield-home .home-hero-copy > p { font-size:15px; line-height:1.7; color:#acb9c3; max-width:360px; }
+.cricfield-home .home-hero-copy button { border-radius:8px; font-size:10px; letter-spacing:.07em; min-height:44px; box-shadow:none; }
+.cricfield-home .home-hero-copy a:first-child button { background:#edcd86; color:#10161c; }
+.cricfield-home .bg-\[\#0B1020\] { background:linear-gradient(145deg,#14202a,#0d151e); border-color:#ffffff12; box-shadow:0 10px 35px #0002; }
+.cricfield-home > div:first-child > div { border-color:#edcd8626; border-radius:8px; background:#101921; box-shadow:none; }
+.cricfield-home .home-scroll-canvas input { min-width:0; }
+.cricfield-home button:focus-visible, .cricfield-home a:focus-visible { outline:2px solid #edcd86; outline-offset:4px; }
+.cricfield-home > section { border-top:1px solid #edcd8620; }
+@media (max-width: 1100px) {
+  .cricfield-home .home-scroll-canvas > div:last-child > div:last-child { display:none; }
+  .cricfield-home .home-eyebrow { font-size:8px; letter-spacing:.1em; }
+}
+@media (max-width: 767px) {
+  .cricfield-home .home-scroll-canvas { padding:8px; gap:8px; overflow-y:auto; }
+  .cricfield-home .home-scroll-canvas > div:first-child { flex-wrap:wrap; overflow:auto; }
+  .cricfield-home .home-main-hero { width:100% !important; min-height:100%; border-radius:16px; }
+  .cricfield-home .home-hero-copy { width:85%; padding-left:7% !important; }
+  .cricfield-home .home-hero-copy h1 { font-size:clamp(24px,8vw,48px) !important; }
+  .cricfield-home .home-hero-copy > p { font-size:12px; max-width:260px; margin-bottom:14px; }
+  .cricfield-home .home-eyebrow { margin-bottom:16px; white-space:normal; }
+  .cricfield-home .home-scroll-canvas > div:last-child { overflow:auto; }
+  .cricfield-home .home-scroll-canvas > div:last-child > div:first-child { min-width:0; }
+  .cricfield-home .home-scroll-canvas > div:last-child > div:first-child > div:first-child { flex-wrap:wrap; }
+  .cricfield-home .home-scroll-canvas > div:last-child > div:first-child > div:first-child > div:first-child { flex-basis:100%; }
+  .cricfield-home .home-scroll-canvas .gap-5 { flex-wrap:wrap; gap:12px; }
+  .cricfield-home .w-\[220px\] { width:calc(100% - 200px); min-width:110px; }
+  .cricfield-home .home-main-hero img { opacity:.55; }
+}

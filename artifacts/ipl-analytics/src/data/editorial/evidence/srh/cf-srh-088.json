@@ -1,0 +1,202 @@
+{
+ "articleId": "cf-srh-088",
+ "generatedAt": "2026-10-26T04:22:48.668Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "pn-pairs": {
+   "value": 166,
+   "display": "166",
+   "label": "Distinct SRH batting pairs, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 166,
+    "unit": "pairs"
+   },
+   "query": "SELECT CASE WHEN b.name < n.name THEN b.name ELSE n.name END p1, CASE WHEN b.name < n.name THEN n.name ELSE b.name END p2, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players b ON b.player_id = d.batter_id JOIN players n ON n.player_id = d.non_striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY p1, p2",
+   "validation": {
+    "method": "sample-size floor ≥ 20 pairs",
+    "passed": true,
+    "detail": "n = 166"
+   }
+  },
+  "pn-top-pair": {
+   "value": "Abhishek Sharma and TM Head",
+   "display": "Abhishek Sharma and TM Head",
+   "label": "Most productive pair",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Runs together",
+   "sampleSize": {
+    "n": 910,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN b.name < n.name THEN b.name ELSE n.name END p1, CASE WHEN b.name < n.name THEN n.name ELSE b.name END p2, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players b ON b.player_id = d.batter_id JOIN players n ON n.player_id = d.non_striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY p1, p2",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "pn-top-r": {
+   "value": 1892,
+   "display": "1,892",
+   "label": "Runs added by that pair",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 910,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN b.name < n.name THEN b.name ELSE n.name END p1, CASE WHEN b.name < n.name THEN n.name ELSE b.name END p2, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players b ON b.player_id = d.batter_id JOIN players n ON n.player_id = d.non_striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY p1, p2",
+   "validation": {
+    "method": "plausibility range 50–5000 for runs",
+    "passed": true,
+    "detail": "value 1892"
+   }
+  },
+  "pn-share": {
+   "value": 34,
+   "display": "34%",
+   "label": "Share of partnership runs from the five most productive pairs",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 13194,
+    "unit": "runs"
+   },
+   "query": "SELECT CASE WHEN b.name < n.name THEN b.name ELSE n.name END p1, CASE WHEN b.name < n.name THEN n.name ELSE b.name END p2, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players b ON b.player_id = d.batter_id JOIN players n ON n.player_id = d.non_striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY p1, p2",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 13194"
+   }
+  },
+  "pn-hub": {
+   "value": "Abhishek Sharma",
+   "display": "Abhishek Sharma",
+   "label": "Batter involved in the most partnership runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Sum over all partners",
+   "sampleSize": {
+    "n": 166,
+    "unit": "pairs"
+   },
+   "query": "SELECT CASE WHEN b.name < n.name THEN b.name ELSE n.name END p1, CASE WHEN b.name < n.name THEN n.name ELSE b.name END p2, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players b ON b.player_id = d.batter_id JOIN players n ON n.player_id = d.non_striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY p1, p2",
+   "validation": {
+    "method": "max weighted degree",
+    "passed": true
+   }
+  },
+  "pn-hub-r": {
+   "value": 4208,
+   "display": "4,208",
+   "label": "Partnership runs involving that batter",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 166,
+    "unit": "pairs"
+   },
+   "query": "SELECT CASE WHEN b.name < n.name THEN b.name ELSE n.name END p1, CASE WHEN b.name < n.name THEN n.name ELSE b.name END p2, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players b ON b.player_id = d.batter_id JOIN players n ON n.player_id = d.non_striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY p1, p2",
+   "validation": {
+    "method": "sum",
+    "passed": true
+   }
+  },
+  "pn-mostp": {
+   "value": "H Klaasen",
+   "display": "H Klaasen",
+   "label": "Batter with the most distinct partners",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 166,
+    "unit": "pairs"
+   },
+   "query": "SELECT CASE WHEN b.name < n.name THEN b.name ELSE n.name END p1, CASE WHEN b.name < n.name THEN n.name ELSE b.name END p2, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players b ON b.player_id = d.batter_id JOIN players n ON n.player_id = d.non_striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY p1, p2",
+   "validation": {
+    "method": "max degree",
+    "passed": true
+   }
+  },
+  "pn-mostp-n": {
+   "value": 24,
+   "display": "24",
+   "label": "Distinct partners for that batter",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 166,
+    "unit": "pairs"
+   },
+   "query": "SELECT CASE WHEN b.name < n.name THEN b.name ELSE n.name END p1, CASE WHEN b.name < n.name THEN n.name ELSE b.name END p2, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players b ON b.player_id = d.batter_id JOIN players n ON n.player_id = d.non_striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY p1, p2",
+   "validation": {
+    "method": "plausibility range 1–40 for partners",
+    "passed": true,
+    "detail": "value 24"
+   }
+  }
+ },
+ "tables": {
+  "pn-top": {
+   "label": "SRH most productive batting pairs, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Runs scored (including extras) while the pair was together",
+   "sampleSize": {
+    "n": 166,
+    "unit": "pairs"
+   },
+   "query": "SELECT CASE WHEN b.name < n.name THEN b.name ELSE n.name END p1, CASE WHEN b.name < n.name THEN n.name ELSE b.name END p2, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players b ON b.player_id = d.batter_id JOIN players n ON n.player_id = d.non_striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY p1, p2",
+   "rows": [
+    {
+     "pair": "Abhishek Sharma & TM Head",
+     "runs": 1892,
+     "runRate": 12.47
+    },
+    {
+     "pair": "H Klaasen & Ishan Kishan",
+     "runs": 817,
+     "runRate": 11.56
+    },
+    {
+     "pair": "H Klaasen & Nithish Kumar Reddy",
+     "runs": 807,
+     "runRate": 9.63
+    },
+    {
+     "pair": "Abhishek Sharma & Ishan Kishan",
+     "runs": 494,
+     "runRate": 10.82
+    },
+    {
+     "pair": "Abhishek Sharma & RA Tripathi",
+     "runs": 472,
+     "runRate": 8.85
+    },
+    {
+     "pair": "AK Markram & H Klaasen",
+     "runs": 461,
+     "runRate": 9.71
+    },
+    {
+     "pair": "AK Markram & RA Tripathi",
+     "runs": 399,
+     "runRate": 8.64
+    },
+    {
+     "pair": "Abhishek Sharma & KS Williamson",
+     "runs": 384,
+     "runRate": 7.11
+    }
+   ]
+  }
+ }
+}

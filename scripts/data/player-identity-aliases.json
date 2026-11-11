@@ -1,0 +1,55 @@
+{
+  "$comment": "Reviewed aliases for player bios whose names are not written in the IPL Cricsheet files. Each entry ties a bio key (player-bio.json) to one Cricsheet registry id, with the evidence that justified it. Used by scripts/lib/player-identity.mjs. Add entries only after checking the identity audit (scripts/src/step3/identity-audit.ts); never on a surname or initials alone.",
+  "aliases": {
+    "wanindu-hasaranga": {
+      "cricsheetId": "a97c8ec2",
+      "evidence": "Cricsheet register names.csv lists 'Wanindu Hasaranga' (and 'W Hasaranga') for identifier a97c8ec2, whose register name is 'PWH de Silva'. a97c8ec2 is written 'PWH de Silva' in 37 IPL matches (Royal Challengers Bangalore 2021-2023, Rajasthan Royals 2025). The bio's fullName is 'Wanindu Hasaranga'.",
+      "reviewed": "2026-10-10"
+    },
+    "tanay-thyagarajan": {
+      "cricsheetId": "f1809c03",
+      "evidence": "TigZig cross-verification: BCCI ID 1798, Cricinfo ID 1159720. Cricsheet register name 'T Thyagarajan' / 'Tanay Thyagarajan' (f1809c03). 2 IPL matches and 16 SMAT matches in global database. Punjab Kings / Sunrisers Hyderabad squad.",
+      "reviewed": "2026-10-10"
+    },
+    "ajay-mandal": {
+      "cricsheetId": "31ee319e",
+      "evidence": "TigZig cross-verification: BCCI ID 1834, Cricinfo ID 1079848. Cricsheet register name 'A Mandal' / 'Ajay Mandal' (31ee319e). 27 SMAT matches in global database. Chennai Super Kings squad.",
+      "reviewed": "2026-10-10"
+    },
+    "jhathavedh-subramanyan": {
+      "cricsheetId": "eb19d010",
+      "evidence": "TigZig cross-verification: BCCI ID 20610, Cricinfo ID 1298492. Cricsheet register name 'J Subramanyan' / 'Jhathavedh Subramanyan' (eb19d010). Sunrisers Hyderabad squad.",
+      "reviewed": "2026-10-10"
+    },
+    "harvik-desai": {
+      "cricsheetId": "9c86350f",
+      "evidence": "TigZig cross-verification: BCCI ID 1787, Cricinfo ID 1079835. Cricsheet register name 'HM Desai' / 'Harvik Desai' (9c86350f). 21 SMAT matches in global database. Mumbai Indians squad.",
+      "reviewed": "2026-10-10"
+    },
+    "abid-mushtaq": {
+      "cricsheetId": "b10e8c85",
+      "evidence": "TigZig cross-verification: BCCI ID 20630, Cricinfo ID 1203061. Cricsheet register name 'Abid Mushtaq' / 'A Mushtaq' (b10e8c85). Distinct from Pakistani cricketer f9979b69. 14 SMAT matches in global database. Rajasthan Royals squad.",
+      "reviewed": "2026-10-10"
+    },
+    "gus-atkinson": {
+      "cricsheetId": "70d57519",
+      "evidence": "TigZig cross-verification: Cricinfo ID 1078720, Cricbuzz ID 14094. Cricsheet register name 'AAP Atkinson' / 'Gus Atkinson' (70d57519). 10 ILT20 matches in global database. Kolkata Knight Riders squad.",
+      "reviewed": "2026-10-10"
+    },
+    "pathum-nissanka": {
+      "cricsheetId": "8ee36b18",
+      "evidence": "Register variant 'Pathum Nissanka' of 8ee36b18 'P Nissanka' (Cricinfo 1028655), unique in the register; written 'P Nissanka' in 10 IPL matches for Delhi Capitals 2026. Bio: Delhi Capitals.",
+      "reviewed": "2026-10-14"
+    },
+    "ben-dwarshuis": {
+      "cricsheetId": "e1b9f3a9",
+      "evidence": "Register variant 'Ben Dwarshuis' of e1b9f3a9 'BJ Dwarshuis' (Cricinfo 679567), unique; IPL: Punjab Kings 2026 ×1. Bio: Punjab Kings.",
+      "reviewed": "2026-10-14"
+    },
+    "lhuan-dre-pretorius": {
+      "cricsheetId": "60aa2db3",
+      "evidence": "Register variant 'Lhuan-dre Pretorius' of 60aa2db3 'LG Pretorius' (Cricinfo 1385640), unique; IPL: Rajasthan Royals 2026 ×2. Bio: Rajasthan Royals.",
+      "reviewed": "2026-10-14"
+    }
+  }
+}

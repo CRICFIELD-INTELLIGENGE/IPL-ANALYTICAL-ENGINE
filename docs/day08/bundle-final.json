@@ -1,0 +1,85 @@
+{
+ "jsChunks": 122,
+ "totalJsKb": 4086.1,
+ "totalJsGzipKb": 923.1,
+ "initialJs": {
+  "files": [
+   {
+    "file": "index-CvR16EVO.js",
+    "kb": 326.7,
+    "gzipKb": 105.6
+   }
+  ],
+  "kb": 326.7,
+  "gzipKb": 105.6
+ },
+ "css": [
+  {
+   "file": "index-CCyVJSdN.css",
+   "kb": 426.1,
+   "gzipKb": 46.1
+  }
+ ],
+ "largest": [
+  {
+   "file": "layout-uLqBtARC.js",
+   "kb": 1006.1,
+   "gzipKb": 124.7
+  },
+  {
+   "file": "player-BIJ6cI-y.js",
+   "kb": 647,
+   "gzipKb": 159.2
+  },
+  {
+   "file": "generateCategoricalChart-BW_QnenI.js",
+   "kb": 351.3,
+   "gzipKb": 98.3
+  },
+  {
+   "file": "index-CvR16EVO.js",
+   "kb": 326.7,
+   "gzipKb": 105.6
+  },
+  {
+   "file": "content-engine-100-D2TIlFGE.js",
+   "kb": 315.6,
+   "gzipKb": 33.2
+  },
+  {
+   "file": "stats-Yku60Y14.js",
+   "kb": 143.3,
+   "gzipKb": 29.5
+  },
+  {
+   "file": "visualizations-Dmqw8JF4.js",
+   "kb": 122.7,
+   "gzipKb": 30.9
+  },
+  {
+   "file": "section-pages-Aqnan3At.js",
+   "kb": 87.2,
+   "gzipKb": 24.8
+  },
+  {
+   "file": "intelligence-BJu-aQzu.js",
+   "kb": 80.1,
+   "gzipKb": 21
+  },
+  {
+   "file": "match-detail-znuFLskG.js",
+   "kb": 75.4,
+   "gzipKb": 17.3
+  },
+  {
+   "file": "shop-Cxkdw2Xn.js",
+   "kb": 61.5,
+   "gzipKb": 17.1
+  },
+  {
+   "file": "fan-arena-vtQRNxzQ.js",
+   "kb": 44.9,
+   "gzipKb": 9.2
+  }
+ ]
+}

@@ -1,0 +1,132 @@
+{
+ "articleId": "cf-csk-026",
+ "generatedAt": "2026-10-26T04:17:17.628Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "to-tbig": {
+   "value": 12.5,
+   "display": "12.5",
+   "label": "CSK big overs conceded per 100 overs, 2022–2026",
+   "unit": "per 100 overs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs of fifteen runs or more",
+   "sampleSize": {
+    "n": 1339,
+    "unit": "overs"
+   },
+   "query": "WITH o AS (SELECT d.innings_id, d.over_num, SUM(d.total_runs) r FROM deliveries d GROUP BY d.innings_id, d.over_num), s AS (SELECT o.*, LAG(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) prev, LEAD(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) nxt FROM o) SELECT CASE WHEN i.bowling_team_id IN (9) THEN 'team' ELSE 'rest' END side, COUNT(*) overs, SUM(CASE WHEN s.r >= 15 THEN 1 ELSE 0 END) big, AVG(CASE WHEN s.r >= 15 THEN s.nxt END) afterBig, AVG(s.r) avgOver FROM s JOIN innings i ON i.innings_id = s.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND s.over_num BETWEEN 0 AND 18 GROUP BY side",
+   "validation": {
+    "method": "sample-size floor ≥ 300 overs",
+    "passed": true,
+    "detail": "n = 1339"
+   }
+  },
+  "to-lbig": {
+   "value": 14.5,
+   "display": "14.5",
+   "label": "Rest of IPL big overs conceded per 100 overs",
+   "unit": "per 100 overs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs of fifteen runs or more",
+   "sampleSize": {
+    "n": 12170,
+    "unit": "overs"
+   },
+   "query": "WITH o AS (SELECT d.innings_id, d.over_num, SUM(d.total_runs) r FROM deliveries d GROUP BY d.innings_id, d.over_num), s AS (SELECT o.*, LAG(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) prev, LEAD(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) nxt FROM o) SELECT CASE WHEN i.bowling_team_id IN (9) THEN 'team' ELSE 'rest' END side, COUNT(*) overs, SUM(CASE WHEN s.r >= 15 THEN 1 ELSE 0 END) big, AVG(CASE WHEN s.r >= 15 THEN s.nxt END) afterBig, AVG(s.r) avgOver FROM s JOIN innings i ON i.innings_id = s.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND s.over_num BETWEEN 0 AND 18 GROUP BY side",
+   "validation": {
+    "method": "sample-size floor ≥ 3000 overs",
+    "passed": true,
+    "detail": "n = 12170"
+   }
+  },
+  "to-tafter": {
+   "value": 10.05,
+   "display": "10.05",
+   "label": "CSK runs conceded in the over after a big over",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Over following an over of fifteen or more",
+   "sampleSize": {
+    "n": 168,
+    "unit": "big overs"
+   },
+   "query": "WITH o AS (SELECT d.innings_id, d.over_num, SUM(d.total_runs) r FROM deliveries d GROUP BY d.innings_id, d.over_num), s AS (SELECT o.*, LAG(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) prev, LEAD(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) nxt FROM o) SELECT CASE WHEN i.bowling_team_id IN (9) THEN 'team' ELSE 'rest' END side, COUNT(*) overs, SUM(CASE WHEN s.r >= 15 THEN 1 ELSE 0 END) big, AVG(CASE WHEN s.r >= 15 THEN s.nxt END) afterBig, AVG(s.r) avgOver FROM s JOIN innings i ON i.innings_id = s.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND s.over_num BETWEEN 0 AND 18 GROUP BY side",
+   "validation": {
+    "method": "sample-size floor ≥ 20 big overs",
+    "passed": true,
+    "detail": "n = 168"
+   }
+  },
+  "to-lafter": {
+   "value": 10.54,
+   "display": "10.54",
+   "label": "Rest of IPL runs conceded in the over after a big over",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 1769,
+    "unit": "big overs"
+   },
+   "query": "WITH o AS (SELECT d.innings_id, d.over_num, SUM(d.total_runs) r FROM deliveries d GROUP BY d.innings_id, d.over_num), s AS (SELECT o.*, LAG(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) prev, LEAD(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) nxt FROM o) SELECT CASE WHEN i.bowling_team_id IN (9) THEN 'team' ELSE 'rest' END side, COUNT(*) overs, SUM(CASE WHEN s.r >= 15 THEN 1 ELSE 0 END) big, AVG(CASE WHEN s.r >= 15 THEN s.nxt END) afterBig, AVG(s.r) avgOver FROM s JOIN innings i ON i.innings_id = s.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND s.over_num BETWEEN 0 AND 18 GROUP BY side",
+   "validation": {
+    "method": "sample-size floor ≥ 200 big overs",
+    "passed": true,
+    "detail": "n = 1769"
+   }
+  },
+  "to-lavg": {
+   "value": 9.19,
+   "display": "9.19",
+   "label": "Rest of IPL runs in an average over",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs one to nineteen",
+   "sampleSize": {
+    "n": 12170,
+    "unit": "overs"
+   },
+   "query": "WITH o AS (SELECT d.innings_id, d.over_num, SUM(d.total_runs) r FROM deliveries d GROUP BY d.innings_id, d.over_num), s AS (SELECT o.*, LAG(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) prev, LEAD(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) nxt FROM o) SELECT CASE WHEN i.bowling_team_id IN (9) THEN 'team' ELSE 'rest' END side, COUNT(*) overs, SUM(CASE WHEN s.r >= 15 THEN 1 ELSE 0 END) big, AVG(CASE WHEN s.r >= 15 THEN s.nxt END) afterBig, AVG(s.r) avgOver FROM s JOIN innings i ON i.innings_id = s.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND s.over_num BETWEEN 0 AND 18 GROUP BY side",
+   "validation": {
+    "method": "plausibility range 5–14 for runs per over",
+    "passed": true,
+    "detail": "value 9.193097781429746"
+   }
+  }
+ },
+ "tables": {
+  "to-cmp": {
+   "label": "Big overs conceded and what followed, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs one to nineteen of regulation innings; a big over = 15 runs or more",
+   "sampleSize": {
+    "n": 13509,
+    "unit": "overs"
+   },
+   "query": "WITH o AS (SELECT d.innings_id, d.over_num, SUM(d.total_runs) r FROM deliveries d GROUP BY d.innings_id, d.over_num), s AS (SELECT o.*, LAG(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) prev, LEAD(o.r) OVER (PARTITION BY o.innings_id ORDER BY o.over_num) nxt FROM o) SELECT CASE WHEN i.bowling_team_id IN (9) THEN 'team' ELSE 'rest' END side, COUNT(*) overs, SUM(CASE WHEN s.r >= 15 THEN 1 ELSE 0 END) big, AVG(CASE WHEN s.r >= 15 THEN s.nxt END) afterBig, AVG(s.r) avgOver FROM s JOIN innings i ON i.innings_id = s.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND s.over_num BETWEEN 0 AND 18 GROUP BY side",
+   "rows": [
+    {
+     "measure": "Big overs per 100 overs",
+     "team": 12.5,
+     "league": 14.5
+    },
+    {
+     "measure": "Runs in the over after a big over",
+     "team": 10.05,
+     "league": 10.54
+    },
+    {
+     "measure": "Runs in an average over",
+     "team": 8.82,
+     "league": 9.19
+    }
+   ]
+  }
+ }
+}

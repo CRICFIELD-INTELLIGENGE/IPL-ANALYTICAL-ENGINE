@@ -1,0 +1,348 @@
+{
+  "season": 2027,
+  "updatedAt": "2026-11-06",
+  "basis": "Latest user-supplied editorial CricField RR prediction and contract mapping, 2026-11-06. Core locks are planning commitments, not official franchise confirmations. Performance statistics remain independently sourced.",
+  "xi": [
+    "Yashasvi Jaiswal",
+    "Vaibhav Sooryavanshi",
+    "Dhruv Jurel",
+    "Riyan Parag",
+    "Shimron Hetmyer",
+    "Donovan Ferreira",
+    "Ravindra Jadeja",
+    "Sam Curran",
+    "Ravi Bishnoi",
+    "Jofra Archer",
+    "Brijesh Sharma"
+  ],
+  "players": [
+    {
+      "name": "Yashasvi Jaiswal",
+      "category": "Priority Retain",
+      "role": "BAT",
+      "overseas": false,
+      "reason": "Established Indian opener; preserve the attacking opening partnership and franchise continuity.",
+      "preferredPosition": 1,
+      "contractLakh": 1800,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Vaibhav Sooryavanshi",
+      "category": "Priority Retain",
+      "role": "BAT",
+      "overseas": false,
+      "reason": "Protect the young Indian opening partner and long-term top-order upside.",
+      "preferredPosition": 2,
+      "contractLakh": 110,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Dhruv Jurel",
+      "category": "Priority Retain",
+      "role": "WK",
+      "overseas": false,
+      "reason": "First-choice wicketkeeper at No. 3; provides Indian batting flexibility without consuming an overseas slot.",
+      "preferredPosition": 3,
+      "contractLakh": 1400,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Riyan Parag",
+      "category": "Priority Retain",
+      "role": "ALL",
+      "overseas": false,
+      "reason": "Captain and Indian middle-order core; supplementary spin adds tactical cover.",
+      "preferredPosition": 4,
+      "contractLakh": 1400,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Ravindra Jadeja",
+      "category": "Priority Retain",
+      "role": "ALL",
+      "overseas": false,
+      "reason": "Indian spin all-rounder: batting depth, left-arm control and fielding; central to the Jaipur combination.",
+      "preferredPosition": 7,
+      "contractLakh": 1400,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Ravi Bishnoi",
+      "category": "Priority Retain",
+      "role": "BOWL",
+      "overseas": false,
+      "reason": "First-choice wrist-spin wicket-taking option alongside Jadeja; adapt selection to the actual surface.",
+      "preferredPosition": 9,
+      "contractLakh": 720,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Jofra Archer",
+      "category": "Priority Retain",
+      "role": "BOWL",
+      "overseas": true,
+      "reason": "Lead overseas fast bowler; protect pace and wicket-taking quality, subject to availability.",
+      "preferredPosition": 10,
+      "contractLakh": 1250,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Sam Curran",
+      "category": "Strong Retain",
+      "role": "ALL",
+      "overseas": true,
+      "reason": "Left-arm seam and batting depth at No. 8; covers multiple phases while preserving flexibility in the top six.",
+      "preferredPosition": 8,
+      "contractLakh": 240,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Donovan Ferreira",
+      "category": "Strong Retain",
+      "role": "WK",
+      "overseas": true,
+      "reason": "Retain right-handed finishing power at No. 6 and supplementary off-spin; do not assume four dependable overs.",
+      "preferredPosition": 6,
+      "contractLakh": 100,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Shimron Hetmyer",
+      "category": "Strong Retain",
+      "role": "BAT",
+      "overseas": true,
+      "reason": "Priority specialist overseas finisher. Keep the established role and continuity; a lower volatile auction estimate alone does not justify release.",
+      "preferredPosition": 5,
+      "contractLakh": 1100,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Brijesh Sharma",
+      "category": "Strong Retain",
+      "role": "BOWL",
+      "overseas": false,
+      "reason": "Priority Indian pace asset at INR 30 L: low contractual commitment, death-over variation and development upside. Supplied auction ROI is a planning estimate, not a guaranteed resale value.",
+      "preferredPosition": 11,
+      "contractLakh": 30,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Sandeep Sharma",
+      "category": "Strong Retain",
+      "role": "BOWL",
+      "overseas": false,
+      "reason": "Priority Indian swing and death-overs specialist; protects experienced seam depth and the bowling Impact Player plan.",
+      "preferredPosition": null,
+      "contractLakh": 400,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Nandre Burger",
+      "category": "Retain",
+      "role": "BOWL",
+      "overseas": true,
+      "reason": "Overseas left-arm pace reserve for Archer or a seam-heavy combination; cannot be added as a fifth overseas player.",
+      "preferredPosition": null,
+      "contractLakh": 350,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Lhuan-dre Pretorius",
+      "category": "Retain",
+      "role": "WK",
+      "overseas": true,
+      "reason": "Overseas wicketkeeper/top-order reserve for the Indian openers; replacing an Indian opener requires freeing an overseas slot elsewhere.",
+      "preferredPosition": null,
+      "contractLakh": 30,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Shubham Dubey",
+      "category": "Release / Buyback Review",
+      "role": "BAT",
+      "overseas": false,
+      "reason": "Release / buyback review: compare Indian finishing alternatives and budget allocation before spending on this backup role.",
+      "preferredPosition": null,
+      "contractLakh": 80,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Ravi Singh",
+      "category": "Retention Dilemma",
+      "role": "WK",
+      "overseas": false,
+      "reason": "Retain Indian wicketkeeper and middle-order cover for Jurel; an additional keeper is an upgrade opportunity, not an automatic purchase.",
+      "preferredPosition": null,
+      "contractLakh": 95,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Sushant Mishra",
+      "category": "Release Candidate",
+      "role": "BOWL",
+      "overseas": false,
+      "reason": "Latest RR strategy release candidate: prioritize higher-impact role coverage and auction flexibility, subject to replacement and availability review.",
+      "preferredPosition": null,
+      "contractLakh": 90,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Aman Rao Perala",
+      "category": "Retention Dilemma",
+      "role": "BAT",
+      "overseas": false,
+      "reason": "Retain Indian top-order development cover; opportunity depends on the established opening pair.",
+      "preferredPosition": null,
+      "contractLakh": 30,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Yash Raj Punja",
+      "category": "Retain",
+      "role": "BOWL",
+      "overseas": false,
+      "reason": "Retain domestic spin development cover and assess matchups before selection.",
+      "preferredPosition": null,
+      "contractLakh": 30,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Tushar Deshpande",
+      "category": "Retention Dilemma",
+      "role": "BOWL",
+      "overseas": false,
+      "reason": "Dilemma at the supplied ₹6.5 Cr: release only if comparable Indian death-bowling depth can be secured at better value.",
+      "preferredPosition": null,
+      "contractLakh": 650,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Adam Milne",
+      "category": "Release Candidate",
+      "role": "BOWL",
+      "overseas": true,
+      "reason": "Latest RR strategy release candidate: prioritize higher-impact role coverage and auction flexibility, subject to replacement and availability review.",
+      "preferredPosition": null,
+      "contractLakh": 240,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Vignesh Puthur",
+      "category": "Release Candidate",
+      "role": "BOWL",
+      "overseas": false,
+      "reason": "Latest RR strategy release candidate: prioritize higher-impact role coverage and auction flexibility, subject to replacement and availability review.",
+      "preferredPosition": null,
+      "contractLakh": 30,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Kuldeep Sen",
+      "category": "Retention Dilemma",
+      "role": "BOWL",
+      "overseas": false,
+      "reason": "Retain domestic pace depth and high-pace variety at the supplied INR 75 L contract.",
+      "preferredPosition": null,
+      "contractLakh": 75,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Kwena Maphaka",
+      "category": "Release Candidate",
+      "role": "BOWL",
+      "overseas": true,
+      "reason": "Latest RR strategy release candidate: prioritize higher-impact role coverage and auction flexibility, subject to replacement and availability review.",
+      "preferredPosition": null,
+      "contractLakh": 150,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Yudhvir Singh",
+      "category": "Retention Dilemma",
+      "role": "BOWL",
+      "overseas": false,
+      "reason": "Retain low-cost Indian pace depth under the latest strategy; complements the main attack without using an overseas place.",
+      "preferredPosition": null,
+      "aliases": [
+        "Yudhvir Singh Charak"
+      ],
+      "contractLakh": 35,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Dasun Shanaka",
+      "aliases": [
+        "MD Shanaka"
+      ],
+      "category": "Retention Dilemma",
+      "role": "ALL",
+      "overseas": true,
+      "preferredPosition": null,
+      "reason": "Priority overseas backup for finishing and seam utility. INR 2 Cr is the user-supplied planning contract and requires contract confirmation.",
+      "contractLakh": 200,
+      "contractSource": "User-supplied latest RR mapping (2026-11-06)",
+      "rosterStatus": "current-roster"
+    },
+    {
+      "name": "Emanjot Singh Chahal",
+      "category": "Release Candidate",
+      "role": "BOWL",
+      "overseas": false,
+      "preferredPosition": null,
+      "contractLakh": null,
+      "contractSource": "No recorded contract: 2026 in-season replacement",
+      "rosterStatus": "current-roster",
+      "reason": "In-season 2026 replacement spinner with no recorded contract and too little evidence to justify a retention slot; release and reassess in the auction pool."
+    }
+  ],
+  "priorities": [
+    "Indian pace all-rounder",
+    "Indian middle-order finisher",
+    "Right-arm off-spinner",
+    "Flexible overseas batter / seam all-rounder",
+    "Optional Indian keeper upgrade; assess second overseas reserve for 17/8 composition"
+  ],
+  "coreLocks": [
+    "Yashasvi Jaiswal",
+    "Vaibhav Sooryavanshi",
+    "Dhruv Jurel",
+    "Riyan Parag",
+    "Ravindra Jadeja",
+    "Jofra Archer"
+  ],
+  "economics": {
+    "fairValueTolerance": 0.2,
+    "maximumPriceOnlyPenalty": 0.25,
+    "planningPurseLakh": null,
+    "planningPurseNote": "No verified 2027 auction purse. Do not substitute the total salary cap.",
+    "suppliedMarketEstimatesLakh": {
+      "Brijesh Sharma": 119,
+      "Shimron Hetmyer": 806
+    }
+  }
+}

@@ -1,0 +1,224 @@
+{
+ "articleId": "cf-pbks-086",
+ "generatedAt": "2026-10-26T04:25:53.984Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "mc-cut": {
+   "value": 8,
+   "display": "8",
+   "label": "Average wins of the fourth-placed side, 2022–2026",
+   "unit": "wins",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Points tables",
+   "sampleSize": {
+    "n": 5,
+    "unit": "seasons"
+   },
+   "query": "points-tables.json",
+   "validation": {
+    "method": "plausibility range 6–11 for wins",
+    "passed": true,
+    "detail": "value 8"
+   }
+  },
+  "mc-p": {
+   "value": 39,
+   "display": "39%",
+   "label": "Simulated probability that PBKS reach that many wins",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "20000 simulations",
+   "sampleSize": {
+    "n": 20000,
+    "unit": "simulations"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "plausibility range 0–100 for probability",
+    "passed": true,
+    "detail": "value 39.21"
+   }
+  },
+  "mc-med": {
+   "value": 7,
+   "display": "7",
+   "label": "Median simulated wins",
+   "unit": "wins",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "20000 simulations",
+   "sampleSize": {
+    "n": 20000,
+    "unit": "simulations"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "plausibility range 0–14 for wins",
+    "passed": true,
+    "detail": "value 7"
+   }
+  },
+  "mc-m": {
+   "value": 71,
+   "display": "71",
+   "label": "PBKS decided matches since 2022 used as inputs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 71,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 71"
+   }
+  }
+ },
+ "tables": {
+  "mc-dist": {
+   "label": "Simulated PBKS league-stage wins",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "20,000 simulated fourteen-match seasons",
+   "sampleSize": {
+    "n": 20000,
+    "unit": "simulations"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "rows": [
+    {
+     "wins": "0",
+     "probability": 0
+    },
+    {
+     "wins": "1",
+     "probability": 0.1
+    },
+    {
+     "wins": "2",
+     "probability": 0.5
+    },
+    {
+     "wins": "3",
+     "probability": 2.3
+    },
+    {
+     "wins": "4",
+     "probability": 5.7
+    },
+    {
+     "wins": "5",
+     "probability": 11.9
+    },
+    {
+     "wins": "6",
+     "probability": 18.4
+    },
+    {
+     "wins": "7",
+     "probability": 21.9
+    },
+    {
+     "wins": "8",
+     "probability": 19.1
+    },
+    {
+     "wins": "9",
+     "probability": 12
+    },
+    {
+     "wins": "10",
+     "probability": 5.5
+    },
+    {
+     "wins": "11",
+     "probability": 2.1
+    },
+    {
+     "wins": "12",
+     "probability": 0.5
+    },
+    {
+     "wins": "13",
+     "probability": 0.1
+    },
+    {
+     "wins": "14",
+     "probability": 0
+    }
+   ]
+  },
+  "mc-opp": {
+   "label": "PBKS head-to-head inputs, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Win probability = (wins + 2.5) ÷ (matches + 5)",
+   "sampleSize": {
+    "n": 71,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "rows": [
+    {
+     "opponent": "CSK",
+     "matches": 8,
+     "won": 7,
+     "modelPct": 73.1
+    },
+    {
+     "opponent": "MI",
+     "matches": 8,
+     "won": 5,
+     "modelPct": 57.7
+    },
+    {
+     "opponent": "RCB",
+     "matches": 10,
+     "won": 3,
+     "modelPct": 36.7
+    },
+    {
+     "opponent": "KKR",
+     "matches": 5,
+     "won": 3,
+     "modelPct": 55
+    },
+    {
+     "opponent": "SRH",
+     "matches": 8,
+     "won": 2,
+     "modelPct": 34.6
+    },
+    {
+     "opponent": "RR",
+     "matches": 8,
+     "won": 3,
+     "modelPct": 42.3
+    },
+    {
+     "opponent": "DC",
+     "matches": 8,
+     "won": 3,
+     "modelPct": 42.3
+    },
+    {
+     "opponent": "GT",
+     "matches": 8,
+     "won": 4,
+     "modelPct": 50
+    },
+    {
+     "opponent": "LSG",
+     "matches": 8,
+     "won": 5,
+     "modelPct": 57.7
+    }
+   ]
+  }
+ }
+}

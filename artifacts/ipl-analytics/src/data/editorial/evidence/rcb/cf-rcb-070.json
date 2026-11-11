@@ -1,0 +1,177 @@
+{
+ "articleId": "cf-rcb-070",
+ "generatedAt": "2026-10-26T04:20:35.778Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "lr-best": {
+   "value": "CH Gayle's 175 in 2013",
+   "display": "CH Gayle's 175 in 2013",
+   "label": "Royal Challengers Bengaluru's highest individual innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 2129,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "lr-bowl": {
+   "value": "A Kumble's 5 for 5 in 2009",
+   "display": "A Kumble's 5 for 5 in 2009",
+   "label": "Royal Challengers Bengaluru's best bowling figures",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 1681,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (2,15) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "max wickets, then fewest runs",
+    "passed": true
+   }
+  },
+  "lr-top-recent": {
+   "value": "one",
+   "display": "one",
+   "label": "Top-ten innings from 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 10,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "lr-all-recent": {
+   "value": 16,
+   "display": "16%",
+   "label": "Share of all RCB innings played in 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 2129,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "sample-size floor ≥ 100 innings",
+    "passed": true,
+    "detail": "n = 2129"
+   }
+  },
+  "lr-bowl-recent": {
+   "value": "one",
+   "display": "one",
+   "label": "Top-ten bowling spells from 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 10,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (2,15) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "lr-allb-recent": {
+   "value": 16,
+   "display": "16%",
+   "label": "Share of all RCB bowling spells in 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 1681,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (2,15) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "sample-size floor ≥ 100 spells",
+    "passed": true,
+    "detail": "n = 1681"
+   }
+  }
+ },
+ "tables": {
+  "lr-top": {
+   "label": "Royal Challengers Bengaluru's highest individual innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 2129,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) ORDER BY f.runs DESC, f.balls_faced",
+   "rows": [
+    {
+     "innings": "CH Gayle, 2013",
+     "runs": 175,
+     "balls": 66
+    },
+    {
+     "innings": "AB de Villiers, 2015",
+     "runs": 133,
+     "balls": 59
+    },
+    {
+     "innings": "AB de Villiers, 2016",
+     "runs": 129,
+     "balls": 52
+    },
+    {
+     "innings": "CH Gayle, 2012",
+     "runs": 128,
+     "balls": 62
+    },
+    {
+     "innings": "CH Gayle, 2015",
+     "runs": 117,
+     "balls": 57
+    },
+    {
+     "innings": "MK Pandey, 2009",
+     "runs": 114,
+     "balls": 73
+    },
+    {
+     "innings": "V Kohli, 2016",
+     "runs": 113,
+     "balls": 50
+    },
+    {
+     "innings": "V Kohli, 2024",
+     "runs": 113,
+     "balls": 72
+    },
+    {
+     "innings": "RM Patidar, 2022",
+     "runs": 112,
+     "balls": 54
+    },
+    {
+     "innings": "V Kohli, 2016",
+     "runs": 109,
+     "balls": 55
+    }
+   ]
+  }
+ }
+}

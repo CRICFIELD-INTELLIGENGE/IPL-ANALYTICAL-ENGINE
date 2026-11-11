@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-pbks-018",
+ "planId": "cf-pbks-018",
+ "franchise": "PBKS",
+ "aspect": "bowling-fielding",
+ "title": "Pace-Off Tactics: When Slower Balls Help or Hurt Punjab Kings",
+ "slug": "pbks-pace-off-tactics-when-slower-balls-help-or-hurt-pbks",
+ "dek": "When do slower balls help Punjab Kings, and when do they just give batters time to hit? Variation labels split the answer by phase.",
+ "excerpt": "League-wide since 2022, the slower ball has cost about the same as other deliveries at the death, and more in the powerplay. Here is how Punjab Kings' use of it compares.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "PBKS"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "At the death, IPL slower balls cost {{ev:po-lsd}} runs per ball against {{ev:po-lod}} for other labelled deliveries.",
+  "In the powerplay the figures are {{ev:po-lsp}} and {{ev:po-lop}}.",
+  "Slower balls make up {{ev:po-tshare}} of Punjab Kings' labelled deliveries, against {{ev:po-lshare}} league-wide."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Pace Off as a Weapon",
+   "body": [
+    "The slower ball is the T20 bowler's change-up: the same action, less speed, and a batter through the shot too early. Its value depends on surprise and on the batter's intention, which is why it may help in one phase and hurt in another.",
+    "Using commentary variation labels since 2022, and comparing only bowlers who use the slower ball, slower balls and cutters at the death cost the league {{ev:po-lsd}} runs per ball against {{ev:po-lod}} for the same bowlers' other labelled deliveries."
+   ],
+   "chartIds": [
+    "po-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Phase by Phase",
+   "body": [
+    "In the powerplay, with fielders up and batters looking to use the pace, slower balls cost {{ev:po-lsp}} runs per ball against {{ev:po-lop}} for other deliveries. The phase changes the answer: pace off has been dearer early and about the same at the death.",
+    "Punjab Kings bowl slower balls on {{ev:po-tshare}} of their labelled deliveries, against {{ev:po-lshare}} for the rest of the league."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Using the Change-Up Well",
+   "body": [
+    "A slower ball works best when the batter expects pace. That argues for using it sparingly enough to stay a surprise, and in the phase where the league data says it pays.",
+    "For PBKS the plan is a per-bowler split: who disguises the slower ball well enough to use it more often, and who should keep it as a rare variation."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Labels and Selection Effects",
+   "body": [
+    "Bowlers choose slower balls against certain batters and situations, and commentary may label a ball by its result. Both effects can make the variation look better or worse than it is.",
+    "{{hyp:batter}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Use the Change-Up Sparingly",
+   "body": [
+    "The league evidence says pace off does not consistently pay at the death, and in the powerplay it has been dearer. Punjab Kings should align their bowlers' variation use with those phases.",
+    "Measuring each bowler's slower-ball cost by phase each season would make that alignment precise."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "po-chart",
+   "type": "column",
+   "title": "Slower balls vs other deliveries by phase",
+   "subtitle": "Rest of IPL, 2022\u20132026, labelled balls",
+   "table": "po-phase",
+   "xKey": "phase",
+   "series": [
+    {
+     "key": "slowerBall",
+     "label": "Slower ball / cutter"
+    },
+    {
+     "key": "otherBall",
+     "label": "Other labelled ball"
+    }
+   ],
+   "xLabel": "Phase",
+   "unit": "runs per ball",
+   "takeaway": "The slower ball's value changes with the phase of the innings.",
+   "ariaLabel": "Grouped column chart of runs per ball for slower balls and other deliveries in each phase."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "batter",
+   "statement": "Hypothesis: slower balls are cheaper against set hitters than against new batters.",
+   "whyUnverified": "The batter's balls faced at the time of each delivery has not been joined to variation labels.",
+   "howToTest": "Split slower-ball cost by the batter's balls faced before the delivery."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Punjab Kings pace bowling.",
+   "wanted": "Punjab Kings seam bowler in delivery stride."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-pbks-012",
+  "cf-pbks-015",
+  "cf-pbks-019"
+ ],
+ "seo": {
+  "metaTitle": "Pace-off tactics: when slower balls help PBKS",
+  "metaDescription": "What slower balls cost by phase in the IPL since 2022, and how often Punjab Kings use them compared with the league."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Economy uses runs charged to the bowler (byes and leg-byes excluded) per legal ball times six. Bowler wickets exclude run outs. Generated from the CricField warehouse by scripts/editorial/engine. Slower balls include off- and leg-cutters, from commentary-derived variation labels. The comparison is restricted to bowlers with at least ten labelled slower balls, so other deliveries are the same bowlers' labelled stock balls. 2022\u20132026.",
+ "generator": "engine:v1"
+}

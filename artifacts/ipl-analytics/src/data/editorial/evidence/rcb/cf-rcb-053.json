@@ -1,0 +1,153 @@
+{
+ "articleId": "cf-rcb-053",
+ "generatedAt": "2026-10-26T04:20:33.548Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "hw-r1": {
+   "value": "V Kohli",
+   "display": "V Kohli",
+   "label": "Royal Challengers Bengaluru's leading run-scorer",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 44011,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "hw-r1s": {
+   "value": 21,
+   "display": "21%",
+   "label": "Share of Royal Challengers Bengaluru's runs scored by that player",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 44011,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 44011"
+   }
+  },
+  "hw-top3": {
+   "value": 39,
+   "display": "39%",
+   "label": "Share of Royal Challengers Bengaluru's runs scored by the top three run-scorers",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 44011,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 44011"
+   }
+  },
+  "hw-w1": {
+   "value": "YS Chahal",
+   "display": "YS Chahal",
+   "label": "Royal Challengers Bengaluru's leading wicket-taker",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-credited dismissals",
+   "sampleSize": {
+    "n": 1556,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (2,15) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "hw-w1s": {
+   "value": 9,
+   "display": "9%",
+   "label": "Share of Royal Challengers Bengaluru's bowler wickets taken by that player",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 1556,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (2,15) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 100 wickets",
+    "passed": true,
+    "detail": "n = 1556"
+   }
+  }
+ },
+ "tables": {
+  "hw-top": {
+   "label": "RCB leading run-scorers",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, all seasons",
+   "sampleSize": {
+    "n": 44011,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) GROUP BY pl.name ORDER BY runs DESC",
+   "rows": [
+    {
+     "player": "V Kohli",
+     "runs": 9336,
+     "share": 21.2
+    },
+    {
+     "player": "AB de Villiers",
+     "runs": 4491,
+     "share": 10.2
+    },
+    {
+     "player": "CH Gayle",
+     "runs": 3163,
+     "share": 7.2
+    },
+    {
+     "player": "F du Plessis",
+     "runs": 1636,
+     "share": 3.7
+    },
+    {
+     "player": "RM Patidar",
+     "runs": 1612,
+     "share": 3.7
+    },
+    {
+     "player": "D Padikkal",
+     "runs": 1595,
+     "share": 3.6
+    },
+    {
+     "player": "GJ Maxwell",
+     "runs": 1266,
+     "share": 2.9
+    },
+    {
+     "player": "JH Kallis",
+     "runs": 1132,
+     "share": 2.6
+    }
+   ]
+  }
+ }
+}

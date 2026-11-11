@@ -1,0 +1,696 @@
+import React, { useEffect, useMemo, useState } from "react";
+import { TeamLogo } from "@/components/team-logo";
+import { Layout } from "@/components/layout";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { Gavel, Radio, Search, ChevronDown, ExternalLink, Wallet, Users, History, Newspaper, Brain } from "lucide-react";
+import { Link } from "wouter";
+import { HUB_EVENTS } from "@/lib/ipl-2027";
+import { stamp, useIpl2027Desk } from "@/lib/ipl-2027-desk";
+import { teamColor, playerSlug } from "@/lib/aggregates";
+import { paletteForCode } from "@/lib/team-palette";
+import { isTeamCode } from "@/lib/team-context";
+import { usePulseAuction, pulseMoney, lotValue, PULSE_TABS, type PulseTab, type PulseLot, type PulseModel, type PulseTeam, type PulseStatus } from "@/lib/pulse-auction";
+
+const card = "bg-[#0B1020] rounded-[20px] border border-white/10";
+const label = "text-[10px] font-black uppercase tracking-[0.2em] text-white/50";
+const STATUS_LABEL: Record<PulseStatus, string> = {
+  registered: "Registered", shortlisted: "Shortlisted", pending: "Not yet presented", "on-block": "On the block",
+  sold: "Sold", unsold: "Unsold", withdrawn: "Withdrawn", recorded: "Recorded, no sale",
+};
+const STATUS_TONE: Partial<Record<PulseStatus, string>> = { sold: "text-emerald-400", unsold: "text-red-400", "on-block": "text-pink-400", withdrawn: "text-white/40", pending: "text-amber-300" };
+
+function roleBand(role: string) {
+  const r = role.toLowerCase();
+  return /keep|wk/.test(r) ? "Wicketkeeper" : /all/.test(r) ? "All-rounder" : /bowl/.test(r) ? "Bowler" : /bat/.test(r) ? "Batter" : "Not recorded";
+}
+const BASE_BANDS = ["Under ₹50 L", "₹50 L – ₹1 Cr", "₹1 – 2 Cr", "₹2 Cr +", "Not recorded"] as const;
+const baseBand = (l: number | null) => l == null ? BASE_BANDS[4] : l < 50 ? BASE_BANDS[0] : l < 100 ? BASE_BANDS[1] : l < 200 ? BASE_BANDS[2] : BASE_BANDS[3];
+
+// Event phase drives emphasis; dates come from the verified timeline in lib/ipl-2027.
+function auctionPhase() {
+  const today = new Date().toLocaleDateString("en-CA");
+  const ret = HUB_EVENTS.find(e => e.id === "retention")?.date, auc = HUB_EVENTS.find(e => e.id === "auction")?.date;
+  if (auc && today > auc) return { id: "after", name: "After auction", tab: "Results" as PulseTab };
+  if (auc && today === auc) return { id: "live", name: "Auction day", tab: "Live Auction" as PulseTab };
+  if (ret && today >= ret) return { id: "pre", name: "Pre-auction", tab: "Player Pool" as PulseTab };
+  return { id: "retain", name: "Before retentions", tab: "Overview" as PulseTab };
+}
+
+export default function PulsePage() {
+  const phase = useMemo(auctionPhase, []);
+  const [season, setSeason] = useState<number | null>(null);
+  const [tab, setTab] = useState<PulseTab>(phase.tab);
+  // 2027 only once the desk has lots; until then the verified 2026 auction is the working demo.
+  const probe = useIpl2027Desk();
+  const active = season ?? (probe.data?.lots.length ? 2027 : 2026);
+  const pulse = usePulseAuction(active);
+  const { model } = pulse;
+  const [wide, setWide] = useState(() => window.matchMedia("(min-width: 768px)").matches);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)"), on = () => setWide(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+
+  const { scrollYProgress } = useScroll();
+  const masterScale = useTransform(scrollYProgress, [0.6, 1], [1, 0.93]);
+  const heroH = useTransform(scrollYProgress, [0, 0.25, 1], ["100%", "38%", "38%"]);
+  const heroW = useTransform(scrollYProgress, [0, 0.15, 0.35, 1], wide ? ["100%", "100%", "calc(100% - 420px)", "calc(100% - 420px)"] : ["100%", "100%", "100%", "100%"]);
+  const col2W = useTransform(scrollYProgress, [0.15, 0.35, 1], wide ? ["0px", "400px", "400px"] : ["0px", "0px", "0px"]);
+  const titleSz = useTransform(scrollYProgress, [0, 0.25, 1], wide ? ["88px", "22px", "22px"] : ["48px", "20px", "20px"]);
+  const padTop = useTransform(scrollYProgress, [0, 0.25, 1], ["12%", "5%", "5%"]);
+  const padLeft = useTransform(scrollYProgress, [0, 0.25, 1], ["6%", "5%", "5%"]);
+  const titleOp = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0]);
+  const r1Op = useTransform(scrollYProgress, [0.08, 0.2], [0, 1]);
+  const r1X = useTransform(scrollYProgress, [0.08, 0.2], [30, 0]);
+  const r2Op = useTransform(scrollYProgress, [0.2, 0.38], [0, 1]);
+  const r2Y = useTransform(scrollYProgress, [0.2, 0.38], [30, 0]);
+  const r3Op = useTransform(scrollYProgress, [0.38, 0.55], [0, 1]);
+  const r3Y = useTransform(scrollYProgress, [0.38, 0.55], [30, 0]);
+
+  const [caption, setCaption] = useState(0);
+  useMotionValueEvent(scrollYProgress, "change", v => setCaption(v < 0.1 ? 0 : v < 0.2 ? 1 : v < 0.3 ? 2 : 3));
+  const captions = [["AUCTION", "PULSE.", "text-pink-500"], ["01", "RETENTIONS.", "text-emerald-400"], ["02", "AUCTION.", "text-[#F9CD05]"], ["03", "AFTERMATH.", "text-[#8B5CF6]"]];
+  const auction = HUB_EVENTS.find(e => e.id === "auction");
+  const venue = model.foundation?.venue ?? null;
+  const updated = active === 2027 ? pulse.desk.data?.updatedAt : model.foundation?.verifiedAt;
+
+  return (
+    <Layout hideHeaderProgress={scrollYProgress}>
+      <div style={{ height: "280vh" }}>
+        <motion.div style={{ scale: masterScale, transformOrigin: "center top" }} className="sticky top-0 w-full h-screen flex flex-col gap-2.5 overflow-hidden bg-[#050816] p-2.5 pb-0">
+          <motion.div className="flex gap-2.5 shrink-0" style={{ height: heroH }}>
+            <motion.div style={{ width: heroW }} className="relative bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden shrink-0 group">
+              <img src="/auction-art.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-700 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-[#050816]/75 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-black/40" />
+              <motion.div style={{ paddingTop: padTop, paddingLeft: padLeft, opacity: titleOp }} className="relative z-10 h-full flex flex-col pr-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <Gavel className="w-4 h-4 text-[var(--team-accent)]" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] franchise-eyebrow">CricField / IPL 2027</span>
+                </div>
+                <motion.h1 style={{ fontSize: titleSz }} className="font-black leading-[0.82] text-white uppercase tracking-tighter mb-4 scale-x-105 origin-left">
+                  {captions[caption][0]} <span className={captions[caption][2]}>{captions[caption][1]}</span>
+                </motion.h1>
+                <p className="text-white/50 text-[13px] max-w-[420px]">Every bid. Every player. Every franchise decision. Retentions, auction and final squads in one place.</p>
+              </motion.div>
+            </motion.div>
+
+            <motion.div style={{ width: col2W, opacity: r1Op, x: r1X }} className={`${card} rounded-[24px] flex flex-col overflow-hidden min-w-0`}>
+              <div className="p-3 border-b border-white/5 flex items-center justify-between">
+                <span className={label}>Event status</span>
+                <span className="text-[9px] font-black uppercase tracking-widest text-pink-300">{phase.name}</span>
+              </div>
+              <div className="flex-1 p-4 space-y-3 text-xs text-white/70 overflow-hidden">
+                <div className="text-white font-black text-lg">IPL {active} auction</div>
+                <div>{active === 2026 ? `${model.foundation?.eventDate} · ${venue}` : `${auction?.date ?? "Date TBA"} · ${auction?.status === "confirmed" ? "confirmed" : "reported, not yet confirmed"}`}</div>
+                <FeedStatus active={active} pulse={pulse} />
+                <div className="grid grid-cols-3 gap-2 pt-1">
+                  <Kpi k="Sold" v={model.sold} tone="text-emerald-400" />
+                  <Kpi k="Unsold" v={unsoldText(model)} tone="text-red-400" />
+                  <Kpi k="Spent" v={spendText(model)} />
+                </div>
+                {updated && <div className="text-[10px] text-white/40">{active === 2027 ? `Last updated ${stamp(updated)}` : `Records verified ${updated}`}</div>}
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <div className="flex gap-2.5 flex-1 min-h-0">
+            <motion.div style={{ opacity: r2Op, y: r2Y }} className={`${card} flex-1 p-4 flex flex-col min-h-0`}>
+              <div className="flex items-center gap-2 mb-3"><Wallet className="w-4 h-4 text-purple-400" /><span className={label}>Franchise purse board</span></div>
+              <div className="flex-1 min-h-0 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 content-start overflow-hidden">
+                {model.teams.map(t => <PurseBar key={t.code} t={t} />)}
+              </div>
+            </motion.div>
+            <motion.div style={{ opacity: r3Op, y: r3Y }} className={`${card} hidden md:flex w-[320px] p-4 flex-col gap-2 min-h-0`}>
+              <span className={label}>Biggest purchases</span>
+              <ol className="space-y-1.5 overflow-hidden">
+                {model.ranked.slice(0, 8).map((l, i) => (
+                  <li key={l.id} className="flex items-center gap-2 text-xs">
+                    <span className="w-4 text-white/30 font-mono">{i + 1}</span>
+                    <span className="flex-1 truncate font-bold text-white">{l.player}</span>
+                    <span className="font-black" style={{ color: teamHex(l.team ?? "") }}>{l.team}</span>
+                    <span className="w-20 text-right text-emerald-300">{pulseMoney(l.price, l.usd)}</span>
+                  </li>
+                ))}
+              </ol>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+
+      <div className="px-2.5 pb-6 mt-4 space-y-4">
+        <nav className="sticky top-0 z-30 -mx-2.5 px-2.5 py-2 bg-[#050816]/95 backdrop-blur border-b border-white/10 flex items-center gap-1 overflow-x-auto" aria-label="Pulse sections">
+          {PULSE_TABS.map((t, i) => (
+            <button key={t} onClick={() => setTab(t)} aria-current={tab === t}
+              className={`shrink-0 px-3 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider transition-colors ${tab === t ? `bg-gradient-to-r ${TAB_TONES[i]} text-white shadow-lg` : "text-white/60 hover:text-white hover:bg-white/5"}`}>{t}</button>
+          ))}
+          <select value={active} onChange={e => setSeason(Number(e.target.value))} aria-label="Auction season" className="ml-auto shrink-0 bg-white/5 border border-white/10 rounded-full px-2 py-1 text-[11px] text-white">
+            {[2027, ...pulse.seasons.filter(s => s !== 2027)].map(s => <option key={s} value={s} className="bg-[#0B1020]">IPL {s}{s === 2027 && !probe.data?.lots.length ? " · Upcoming" : ""}</option>)}
+          </select>
+        </nav>
+
+        {phase.id !== "after" && <UpcomingBanner viewing={active === 2027} lots={probe.data?.lots.length ?? 0} open={() => { setSeason(2027); setTab("Overview"); }} back={() => setSeason(2026)} />}
+
+        {pulse.loading ? <Empty>Loading auction records…</Empty> : pulse.error ? <Empty>Auction records are unavailable right now. Try again shortly.</Empty> : (
+          <>
+            {tab === "Overview" && <Overview model={model} pulse={pulse} phase={phase.name} go={setTab} />}
+            {tab === "Live Auction" && <LiveAuction key={active} model={model} pulse={pulse} active={active} />}
+            {tab === "Player Pool" && <PlayerPool model={model} />}
+            {tab === "Franchises" && <Franchises model={model} />}
+            {tab === "Retentions" && <Retentions model={model} pulse={pulse} />}
+            {tab === "Results" && <Results model={model} />}
+            {tab === "Live Blog" && <LiveBlog model={model} pulse={pulse} />}
+            {tab === "Archive" && <Archive pulse={pulse} active={active} pick={s => { setSeason(s); setTab("Results"); }} />}
+          </>
+        )}
+      </div>
+    </Layout>
+  );
+}
+
+type Pulse = ReturnType<typeof usePulseAuction>;
+
+function FeedStatus({ active, pulse }: { active: number; pulse: Pulse }) {
+  const [dot, text] = active !== 2027 ? ["bg-sky-400", "Archive · verified final results, no bid-by-bid data"]
+    : pulse.desk.isError ? ["bg-red-500", "Update source offline"]
+    : ["bg-amber-400", "Manual updates from official sources · not a live feed"];
+  return <div className="flex items-center gap-2 text-[11px]"><span className={`w-2 h-2 rounded-full ${dot}`} />{text}</div>;
+}
+
+function UpcomingBanner({ viewing, lots, open, back }: { viewing: boolean; lots: number; open: () => void; back: () => void }) {
+  const auction = HUB_EVENTS.find(e => e.id === "auction"), retention = HUB_EVENTS.find(e => e.id === "retention");
+  const today = new Date().toLocaleDateString("en-CA");
+  const days = auction?.date ? Math.ceil((Date.parse(auction.date) - Date.parse(today)) / 86_400_000) : null;
+  return (
+    <div className="rounded-[20px] border border-fuchsia-500/30 bg-gradient-to-r from-fuchsia-600/25 via-violet-600/20 to-cyan-500/20 p-4 flex flex-wrap items-center gap-x-6 gap-y-2">
+      <span className="px-2 py-0.5 rounded-full bg-fuchsia-500 text-white text-[9px] font-black uppercase tracking-widest">Upcoming</span>
+      <div>
+        <div className="text-white font-black text-lg leading-tight">IPL 2027 auction</div>
+        <div className="text-[11px] text-white/70">
+          {auction?.date ?? "Date TBA"}{auction?.status !== "confirmed" && " (reported, not yet confirmed)"} · retentions due {retention?.date ?? "TBA"}
+        </div>
+      </div>
+      {days != null && days > 0 && <div className="text-3xl font-black bg-gradient-to-r from-amber-300 to-pink-400 bg-clip-text text-transparent">{days} days</div>}
+      <div className="text-[11px] text-white/60 flex-1 min-w-[12rem]">{lots ? `${lots} lots recorded so far.` : "No lots yet. Results appear here once officially confirmed; until then IPL 2026 is shown as the reference auction."}</div>
+      {viewing
+        ? <button onClick={back} className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[11px] font-black uppercase text-white">View IPL 2026 results</button>
+        : <button onClick={open} className="px-3 py-1.5 rounded-full bg-gradient-to-r from-fuchsia-500 to-violet-500 text-[11px] font-black uppercase text-white">Open IPL 2027</button>}
+    </div>
+  );
+}
+
+function Kpi({ k, v, tone = "text-white" }: { k: string; v: React.ReactNode; tone?: string }) {
+  return <div className="rounded-xl bg-gradient-to-br from-white/[0.07] to-white/[0.02] border border-white/10 px-2 py-1.5"><div className="text-[8px] font-bold uppercase text-white/40">{k}</div><div className={`text-sm font-black ${tone}`}>{v}</div></div>;
+}
+// Team accent with a hex alpha suffix (palette accents are #RRGGBB); unknown teams get a neutral white tint.
+// Pulse keys teams by short code (CSK, MI…), which teamColor only knows by full name.
+const teamHex = (team: string | null | undefined) => paletteForCode(team ?? "")?.accent ?? teamColor(team ?? "");
+const tint = (team: string | null | undefined, alpha: string) => { const c = teamHex(team ?? ""); return /^#[0-9a-f]{6}$/i.test(c) ? c + alpha : `#ffffff${alpha}`; };
+const teamCard = (team: string | null | undefined): React.CSSProperties => ({ borderColor: tint(team, "55"), background: `linear-gradient(135deg, ${tint(team, "26")}, ${tint(team, "08")} 60%, transparent)` });
+const TAB_TONES =["from-pink-500 to-rose-500", "from-amber-500 to-orange-500", "from-cyan-500 to-sky-500", "from-violet-500 to-purple-500", "from-emerald-500 to-teal-500", "from-yellow-500 to-amber-500", "from-orange-500 to-red-500", "from-sky-500 to-indigo-500"];
+// Each section type gets its own accent so the page reads as colour-coded blocks on the dark base.
+const SECTION_TONES = new Map<typeof Gavel, { icon: string; bar: string; bg: string }>([
+  [Gavel, { icon: "text-amber-400", bar: "from-amber-400 to-orange-500", bg: "from-amber-500/[0.08]" }],
+  [Radio, { icon: "text-pink-400", bar: "from-pink-500 to-fuchsia-500", bg: "from-pink-500/[0.08]" }],
+  [Users, { icon: "text-emerald-400", bar: "from-emerald-400 to-teal-500", bg: "from-emerald-500/[0.08]" }],
+  [Search, { icon: "text-cyan-400", bar: "from-cyan-400 to-sky-500", bg: "from-cyan-500/[0.08]" }],
+  [Wallet, { icon: "text-violet-400", bar: "from-violet-500 to-purple-500", bg: "from-violet-500/[0.08]" }],
+  [Newspaper, { icon: "text-orange-400", bar: "from-orange-400 to-red-500", bg: "from-orange-500/[0.08]" }],
+  [History, { icon: "text-sky-400", bar: "from-sky-400 to-indigo-500", bg: "from-sky-500/[0.08]" }],
+]);
+const spendText = (m: { spent: number | null; spentUsd: number | null }) => m.spent == null && m.spentUsd == null ? "Not recorded" : pulseMoney(m.spent, m.spentUsd);
+const unsoldText =(m: PulseModel) => m.historical && !m.unsold ? "Not in archive" : m.unsold;
+const Empty = ({ children }: { children: React.ReactNode }) => <div className={`${card} p-6 text-sm text-white/60`}>{children}</div>;
+const Section = ({ icon: Icon, title, note, children }: { icon: typeof Gavel; title: string; note?: string; children: React.ReactNode }) => {
+  const tone = SECTION_TONES.get(Icon) ?? SECTION_TONES.get(Radio)!;
+  return (
+    <section className={`${card} relative overflow-hidden bg-gradient-to-br ${tone.bg} to-[#0B1020] p-4 space-y-3`}>
+      <div className={`absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r ${tone.bar}`} />
+      <div className="flex flex-wrap items-center gap-2"><Icon className={`w-4 h-4 ${tone.icon}`} /><h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80">{title}</h2>{note && <span className="ml-auto text-[10px] text-amber-200/80">{note}</span>}</div>
+      {children}
+    </section>
+  );
+};
+
+function PurseBar({ t }: { t: PulseTeam }) {
+  const pct = t.startingPurse && t.spent != null ? Math.min(100, (t.spent / t.startingPurse) * 100) : 0;
+  return (
+    <div className="text-[11px]">
+      <div className="flex justify-between"><span className="font-black" style={{ color: teamHex(t.code) }}>{t.code}</span>
+        <span className="text-white/60">{t.remaining == null ? "Purse unverified" : `${pulseMoney(t.remaining)} left`} · {t.purchases.length} bought</span></div>
+      <div className="h-1.5 bg-white/5 rounded-full overflow-hidden mt-1"><div className="h-full rounded-full" style={{ width: `${pct}%`, background: teamHex(t.code) }} /></div>
+    </div>
+  );
+}
+
+function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse; phase: string; go: (t: PulseTab) => void }) {
+  const steps: [string, string, string, PulseTab][] = [["01", "Retentions", "Confirmed squads", "Retentions"], ["02", "Auction", "Live transactions", "Live Auction"], ["03", "Aftermath", "Final squads", "Results"]];
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-3 sm:grid-cols-3">
+        {steps.map(([n, t, d, to], i) => (
+          <button key={n} onClick={() => go(to)} className={`rounded-[20px] border border-white/10 p-4 text-left hover:border-white/30 bg-gradient-to-br ${["from-emerald-600/30 via-teal-700/15", "from-amber-500/30 via-orange-600/15", "from-violet-600/30 via-fuchsia-700/15"][i]} to-[#0B1020]`}>
+            <div className={`text-2xl font-black ${["text-emerald-400", "text-amber-400", "text-violet-400"][i]}`}>{n}</div><div className="font-black text-white uppercase">{t}</div><div className="text-xs text-white/50">{d}</div>
+          </button>
+        ))}
+      </div>
+      <Section icon={Radio} title={`IPL ${model.season} at a glance`} note={`Phase: ${phase}`}>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <Kpi k="Players sold" v={model.sold} tone="text-emerald-400" /><Kpi k="Unsold" v={unsoldText(model)} tone="text-red-400" />
+          <Kpi k="Total spend" v={spendText(model)} /><Kpi k="Top buy" v={model.ranked[0] ? `${model.ranked[0].player} · ${pulseMoney(model.ranked[0].price, model.ranked[0].usd)}` : "—"} />
+        </div>
+        {model.season === 2027 && <ol className="space-y-1.5">
+          <li className="text-[9px] font-black uppercase tracking-widest text-white/40">IPL 2027 timeline</li>
+          {HUB_EVENTS.map(e => (
+            <li key={e.id} className="flex flex-wrap items-baseline gap-x-3 text-xs">
+              <span className="w-24 font-mono text-white/50">{e.date ?? "TBA"}</span><span className="font-bold text-white">{e.title}</span>
+              <span className={`text-[9px] font-black uppercase ${e.status === "confirmed" ? "text-emerald-400" : e.status === "reported" ? "text-amber-300" : "text-white/40"}`}>{e.status === "provisional" ? "to be announced" : e.status}</span>
+              {e.sourceUrl && <a href={e.sourceUrl} target="_blank" rel="noreferrer" className="text-primary inline-flex items-center gap-0.5">source <ExternalLink className="w-3 h-3" /></a>}
+            </li>
+          ))}
+        </ol>}
+      </Section>
+      <Franchises model={model} compact />
+      {pulse.desk.data && pulse.desk.data.announcements.length > 0 && <LiveBlog model={model} pulse={pulse} />}
+      <Newsroom />
+    </div>
+  );
+}
+
+function LiveAuction({ model, pulse, active }: { model: PulseModel; pulse: Pulse; active: number }) {
+  const [i, setI] = useState(0);
+  const historical = active !== 2027;
+  const lot = historical ? model.rows[Math.min(i, model.rows.length - 1)] : model.onBlock ?? [...model.rows].filter(r => r.recordedAt).sort((a, b) => b.recordedAt!.localeCompare(a.recordedAt!))[0];
+  const recent = historical ? model.purchases.slice(0, 10) : model.purchases.filter(p => p.recordedAt).sort((a, b) => b.recordedAt!.localeCompare(a.recordedAt!)).slice(0, 10);
+  const done = model.rows.filter(r => ["sold", "unsold", "withdrawn", "recorded"].includes(r.status)).length;
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+        <Section icon={Gavel} title={historical ? "Result snapshot" : model.onBlock ? "Current lot" : "Latest recorded lot"} note={!historical ? undefined : model.rows.some(r => r.lot != null) ? "Sorted by published lot number; this is a result snapshot, not a timestamped replay" : "Archive order, not the verified auction sequence"}>
+          <FeedStatus active={active} pulse={pulse} />
+          {lot ? <LotCard lot={lot} model={model} /> : <div className="text-sm text-white/60">No lots recorded yet. The tracker fills in as official results are entered.</div>}
+          {historical && model.rows.length > 1 && (
+            <div className="flex items-center gap-2 text-xs">
+              <button onClick={() => setI(Math.max(0, i - 1))} className="px-3 py-1 rounded-full bg-white/5 border border-white/10">Previous</button>
+              <input type="range" min={0} max={model.rows.length - 1} value={i} onChange={e => setI(Number(e.target.value))} className="flex-1 accent-pink-500" aria-label="Snapshot" />
+              <button onClick={() => setI(Math.min(model.rows.length - 1, i + 1))} className="px-3 py-1 rounded-full bg-white/5 border border-white/10">Next</button>
+              <span className="text-white/40 font-mono">{i + 1}/{model.rows.length}</span>
+            </div>
+          )}
+        </Section>
+        <Section icon={Radio} title="Auction progress">
+          <div className="grid grid-cols-2 gap-2">
+            <Kpi k="Completed lots" v={done} /><Kpi k="Remaining" v={model.rows.length - done} />
+            <Kpi k="Sold" v={model.sold} tone="text-emerald-400" /><Kpi k="Unsold" v={unsoldText(model)} tone="text-red-400" />
+            <Kpi k="Confirmed spend" v={spendText(model)} /><Kpi k="Pending" v={model.pending} tone="text-amber-300" />
+          </div>
+          <div className="text-[10px] text-white/40">Bid history and participating teams appear only when an official source provides them.</div>
+        </Section>
+      </div>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Section icon={Gavel} title={historical ? "Confirmed purchases" : "Recently sold"}><LotList lots={recent} model={model} empty="No confirmed purchases yet." /></Section>
+        <Section icon={Users} title="Up next">
+          {model.upcoming.length ? <LotList lots={model.upcoming.slice(0, 10)} model={model} empty="" /> : <div className="text-sm text-white/60">{historical ? "Lot order isn't in the archive." : "The lot order hasn't been published."}</div>}
+        </Section>
+      </div>
+    </div>
+  );
+}
+
+function LotCard({ lot, model }: { lot: PulseLot; model: PulseModel }) {
+  return (
+    <div className="rounded-2xl border p-4 space-y-3" style={teamCard(lot.status === "sold" ? lot.team : null)}>
+      <div className="text-[9px] font-black uppercase tracking-widest text-white/40">
+        {[lot.lot != null && `Lot #${String(lot.lot).padStart(3, "0")}`, roleBand(lot.role), lot.country, lot.country && (lot.country === "India" ? "Indian" : "Overseas"), lot.age != null && `Age ${lot.age}`, lot.capped != null && (lot.capped ? "Capped" : "Uncapped")].filter(Boolean).join(" · ")}
+        {lot.set && <span className="block normal-case tracking-normal text-cyan-300/80 mt-0.5">{lot.set}</span>}
+      </div>
+      <Link href={`/players/${playerSlug(lot.player)}`} className="block text-2xl sm:text-3xl font-black text-white hover:underline">{lot.player}</Link>
+      <div className="grid grid-cols-3 gap-2">
+        <Kpi k="Base price" v={pulseMoney(lot.base, lot.baseUsd)} />
+        <Kpi k={lot.status === "sold" ? "Final price" : "Current bid"} v={lot.status === "sold" ? pulseMoney(lot.price, lot.usd) : "Not provided"} tone="text-emerald-400" />
+        <Kpi k={lot.status === "sold" ? "Bought by" : "Status"} v={lot.status === "sold" ? lot.team : STATUS_LABEL[lot.status]} tone={STATUS_TONE[lot.status]} />
+      </div>
+      {lot.status === "sold" && <Insight lot={lot} model={model} />}
+    </div>
+  );
+}
+
+function LotList({ lots, model, empty }: { lots: PulseLot[]; model: PulseModel; empty: string }) {
+  const [open, setOpen] = useState<string | null>(null);
+  if (!lots.length) return <div className="text-sm text-white/60">{empty}</div>;
+  return (
+    <ul className="divide-y divide-white/5">
+      {lots.map(l => (
+        <li key={l.id} className="py-2 text-xs">
+          <div className="flex items-center gap-2">
+            {l.recordedAt && <span className="font-mono text-white/40 w-24 shrink-0">{stamp(l.recordedAt)}</span>}
+            <Link href={`/players/${playerSlug(l.player)}`} className="flex-1 truncate font-bold text-white hover:underline">{l.player}</Link>
+            <span className="text-white/40 hidden sm:inline">{roleBand(l.role)}</span>
+            {l.team && <span className="font-black" style={{ color: teamHex(l.team) }}>{l.team}</span>}
+            <span className={`w-20 text-right ${STATUS_TONE[l.status] ?? ""}`}>{l.status === "sold" ? pulseMoney(l.price, l.usd) : `${STATUS_LABEL[l.status]}${l.base != null ? ` · ${pulseMoney(l.base)}` : ""}`}</span>
+            {l.status === "sold" && <button onClick={() => setOpen(open === l.id ? null : l.id)} aria-expanded={open === l.id} aria-label={`Insight for ${l.player}`} className="text-white/40 hover:text-white"><Brain className="w-3.5 h-3.5" /></button>}
+          </div>
+          {open === l.id && <div className="mt-2"><Insight lot={l} model={model} /></div>}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// CricField intelligence: price context and comparables are computed from this season's verified sales;
+// the rest hands off to the existing engines with the player/team preselected.
+function Insight({ lot, model }: { lot: PulseLot; model: PulseModel }) {
+  const band = roleBand(lot.role);
+  const value = lotValue(lot), usd = lot.price == null;
+  const money = (v: number) => usd ? pulseMoney(null, v) : pulseMoney(v);
+  // Peers share the lot's currency so rupee and dollar seasons never mix.
+  const peers = model.purchases.filter(p => roleBand(p.role) === band && (usd ? p.price == null && p.usd != null : p.price != null)).map(lotValue).sort((a, b) => a! - b!) as number[];
+  const median = peers.length ? (peers.length % 2 ? peers[(peers.length - 1) / 2] : (peers[peers.length / 2 - 1] + peers[peers.length / 2]) / 2) : null;
+  const rank = value != null ? peers.filter(p => p > value).length + 1 : null;
+  const similar = value != null ? model.purchases.filter(p => p.id !== lot.id && roleBand(p.role) === band && (p.price == null) === usd && lotValue(p) != null && Math.abs(lotValue(p)! - value) <= value * 0.3).slice(0, 4) : [];
+  const stats = encodeURIComponent(lot.statsName ?? lot.player);
+  const links: [string, string][] = [
+    ["Signing fit · Squad DNA", `/ai-analyst/squad-dna?team=${lot.team}&season=${lot.season}`],
+    ["Price context · Auction War Room", `/ai-analyst/auction-war-room?team=${lot.team}&player=${encodeURIComponent(lot.player)}`],
+    ["Similar players · Player Pool Graph", `/ai-analyst/player-pool?player=${stats}`],
+    ["Pressure Genome", `/ai-analyst/pressure?player=${stats}`],
+    ["XI impact · Build Playing XI", "/arcade/build-your-xi"],
+    ["Franchise strategy · Opposition Map", `/ai-analyst/opposition-map?team=${lot.team}`],
+  ];
+  return (
+    <div className="rounded-xl border border-purple-500/20 bg-purple-500/[0.05] p-3 space-y-2 text-[11px] text-white/70">
+      <div className="font-black uppercase tracking-widest text-[9px] text-purple-300">CricField intelligence</div>
+      {median != null && rank != null && value != null && band !== "Not recorded" && (
+        <div>Price context: #{rank} of {peers.length} {band.toLowerCase()}s bought in {lot.season}; role median {money(median)} ({(value / median).toFixed(1)}× median).</div>
+      )}
+      {similar.length > 0 && band !== "Not recorded" && <div>Comparable buys: {similar.map(s => `${s.player} (${s.team}, ${pulseMoney(s.price, s.usd)})`).join(", ")}</div>}
+      <div className="flex flex-wrap gap-x-3 gap-y-1">{links.map(([t, h]) => <Link key={t} href={h} className="text-primary hover:underline">{t}</Link>)}</div>
+    </div>
+  );
+}
+
+function PlayerPool({ model }: { model: PulseModel }) {
+  const [q, setQ] = useState(""), [role, setRole] = useState(""), [country, setCountry] = useState(""), [base, setBase] = useState(""), [team, setTeam] = useState(""), [status, setStatus] = useState("");
+  const [open, setOpen] = useState<string | null>(null);
+  const countries = [...new Set(model.rows.map(r => r.country).filter((c): c is string => !!c))].sort();
+  const statuses = [...new Set(model.rows.map(r => r.status))];
+  const rows = model.rows.filter(r =>
+    (!q || r.player.toLowerCase().includes(q.toLowerCase())) && (!role || roleBand(r.role) === role) && (!country || r.country === country)
+    && (!base || baseBand(r.base) === base) && (!team || r.team === team) && (!status || r.status === status));
+  const sel = "bg-white/5 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-white";
+  const opt = (v: string, t = v) => <option key={v} value={v} className="bg-[#0B1020]">{t}</option>;
+  return (
+    <Section icon={Search} title={`Player pool · IPL ${model.season}`} note={!model.historical ? undefined : model.unsold ? "Sold and unsold players who went under the hammer; withdrawn and shortlisted-only players aren't listed." : "The archive records sold players only; unsold and withdrawn players aren't listed."}>
+      <div className="flex flex-wrap gap-2">
+        <label className="relative flex-1 min-w-[10rem]"><Search className="w-3.5 h-3.5 absolute left-2 top-2 text-white/40" />
+          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Player name" aria-label="Player name" className={`${sel} w-full pl-7`} /></label>
+        <select value={role} onChange={e => setRole(e.target.value)} aria-label="Role" className={sel}>{opt("", "All roles")}{["Batter", "Bowler", "All-rounder", "Wicketkeeper", "Not recorded"].map(v => opt(v))}</select>
+        <select value={country} onChange={e => setCountry(e.target.value)} aria-label="Country" className={sel}>{opt("", "All countries")}{countries.map(v => opt(v))}</select>
+        <select value={base} onChange={e => setBase(e.target.value)} aria-label="Base price" className={sel}>{opt("", "Any base price")}{BASE_BANDS.map(v => opt(v))}</select>
+        <select value={team} onChange={e => setTeam(e.target.value)} aria-label="Franchise" className={sel}>{opt("", "All franchises")}{model.teams.map(t => opt(t.code))}</select>
+        <select value={status} onChange={e => setStatus(e.target.value)} aria-label="Status" className={sel}>{opt("", "Any status")}{statuses.map(s => opt(s, STATUS_LABEL[s]))}</select>
+      </div>
+      <div className="text-[10px] text-white/40">{rows.length} of {model.rows.length} players</div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-xs min-w-[820px]">
+          <thead className="text-white/40 text-[9px] uppercase"><tr>
+            <th className="text-left py-1">Lot</th><th className="text-left">Player</th><th className="text-left">Role</th><th className="text-left">Auction set</th><th className="text-right">Base</th><th className="text-left pl-3">Status</th><th className="text-right">Final price</th><th className="text-left pl-3">Franchise</th><th className="text-right">Scout Lab</th>
+          </tr></thead>
+          <tbody>
+            {rows.slice(0, 300).map(r => (
+              <React.Fragment key={r.id}>
+                <tr className="border-t border-white/5">
+                  <td className="py-1.5 font-mono text-white/40">{r.lot ?? "—"}</td>
+                  <td><span className="font-bold text-white">{r.player}</span>{r.country && <span className="text-white/40"> · {r.country}</span>}</td>
+                  <td>{roleBand(r.role)}</td>
+                  <td className="text-white/50 max-w-[10rem] truncate" title={r.set ?? undefined}>{r.set?.replace(/^Set \d+: /, "") ?? (r.status === "unsold" ? "Not published" : "—")}</td>
+                  <td className="text-right">{pulseMoney(r.base, r.baseUsd)}</td>
+                  <td className={`pl-3 ${STATUS_TONE[r.status] ?? ""}`}>{STATUS_LABEL[r.status]}</td>
+                  <td className="text-right">{r.status === "sold" ? pulseMoney(r.price, r.usd) : "—"}</td>
+                  <td className="pl-3 font-black" style={{ color: teamHex(r.team ?? "") }}>{r.team ?? "—"}</td>
+                  <td className="text-right space-x-2 whitespace-nowrap">
+                    <Link href={`/players/${playerSlug(r.player)}`} className="text-primary">Profile</Link>
+                    {r.status === "sold" && <button onClick={() => setOpen(open === r.id ? null : r.id)} aria-expanded={open === r.id} className="text-purple-300">Insight</button>}
+                  </td>
+                </tr>
+                {open === r.id && <tr><td colSpan={9} className="pb-2"><Insight lot={r} model={model} /></td></tr>}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+        {rows.length > 300 && <div className="text-[10px] text-white/40 pt-2">Showing the first 300. Narrow the filters to see the rest.</div>}
+        <Sources model={model} />
+      </div>
+    </Section>
+  );
+}
+
+// Credits every distinct source behind the season's rows (sold list, unsold list, desk entries).
+function Sources({ model }: { model: PulseModel }) {
+  const urls = [...new Set(model.rows.map(r => r.sourceUrl).filter((u): u is string => !!u))];
+  if (!urls.length) return null;
+  return (
+    <div className="text-[10px] text-white/40 pt-2 flex flex-wrap gap-x-3">
+      <span>Sources:</span>
+      {urls.map(u => <a key={u} href={u} target="_blank" rel="noreferrer" className="text-primary inline-flex items-center gap-0.5">{new URL(u).hostname.replace(/^www\.|^en\./, "")} <ExternalLink className="w-3 h-3" /></a>)}
+    </div>
+  );
+}
+
+function Franchises({ model, compact = false }: { model: PulseModel; compact?: boolean }) {
+  const [open, setOpen] = useState<string | null>(null);
+  return (
+    <Section icon={Wallet} title="Franchise auction board" note={model.foundation ? "Purses from the official retention release" : undefined}>
+      <div className="overflow-x-auto">
+        <table className="w-full text-xs min-w-[560px]">
+          <thead className="text-white/40 text-[9px] uppercase"><tr>
+            <th className="text-left py-1 pl-3 min-w-[108px]">Team</th><th className="text-right">Start purse</th><th className="text-right">Spent</th><th className="text-right">Remaining</th><th className="text-right">Bought</th><th className="text-right">Squad</th><th className="text-right">Overseas</th><th className="text-right">Slots</th><th />
+          </tr></thead>
+          <tbody>
+            {model.teams.map(t => (
+              <React.Fragment key={t.code}>
+                <tr className="border-t border-white/5 cursor-pointer hover:brightness-125" onClick={() => setOpen(open === t.code ? null : t.code)}
+                  style={{ boxShadow: `inset 3px 0 0 ${teamHex(t.code)}`, background: `linear-gradient(90deg, ${tint(t.code, open === t.code ? "33" : "1a")}, transparent 70%)` }}>
+                  <td className="py-2 pl-3 pr-3 font-black whitespace-nowrap" style={{ color: teamHex(t.code) }}><div className="flex items-center gap-2"><TeamLogo team={t.code} size="w-7 h-7 shrink-0"/><span>{t.code}</span></div></td>
+                  <td className="text-right">{t.startingPurse == null ? "Unverified" : pulseMoney(t.startingPurse)}</td>
+                  <td className="text-right">{t.purchases.length ? spendText(t) : "—"}</td>
+                  <td className="text-right text-emerald-300">{t.remaining == null ? "Unverified" : pulseMoney(t.remaining)}</td>
+                  <td className="text-right">{t.purchases.length}</td><td className="text-right">{t.squad ?? "—"}</td>
+                  <td className="text-right">{t.overseas == null ? "—" : `${t.overseas}${model.foundation ? `/${model.foundation.maxOverseas}` : ""}`}</td>
+                  <td className="text-right">{t.slots ?? "—"}</td>
+                  <td className="text-right"><button aria-expanded={open === t.code} aria-label={`${t.code} details`}><ChevronDown className={`w-3.5 h-3.5 inline transition-transform ${open === t.code ? "rotate-180" : ""}`} /></button></td>
+                </tr>
+                {open === t.code && <tr><td colSpan={9} className="pb-3"><TeamDrawer t={t} model={model} /></td></tr>}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {compact && <div className="text-[10px] text-white/40">Open a franchise for its retained core, purchases and links to Dugout and Squad DNA.</div>}
+    </Section>
+  );
+}
+
+function TeamDrawer({ t, model }: { t: PulseTeam; model: PulseModel }) {
+  const needs = t.slots != null && t.slots > 0 ? `${t.slots} slot${t.slots === 1 ? "" : "s"} open` : t.slots === 0 ? "Squad full" : null;
+  return (
+    <div className="rounded-xl border p-3 grid gap-3 md:grid-cols-2 text-[11px]" style={teamCard(t.code)}>
+      <div>
+        <div className="font-black uppercase text-[9px] tracking-widest text-emerald-400 mb-1">Retained core ({t.retained ?? t.core.length})</div>
+        <div className="text-white/70">{t.core.length ? t.core.map(p => p.name).join(", ") : "No retention list recorded."}</div>
+        {needs && <div className="mt-2 text-amber-200/80">Recruitment: {needs}{t.overseas != null && model.foundation ? `, ${Math.max(0, model.foundation.maxOverseas - t.overseas)} overseas` : ""}.</div>}
+      </div>
+      <div>
+        <div className="font-black uppercase text-[9px] tracking-widest text-pink-300 mb-1">Bought at auction ({t.purchases.length})</div>
+        <ul className="space-y-0.5">{[...t.purchases].sort((a, b) => (b.price ?? 0) - (a.price ?? 0)).map(p => (
+          <li key={p.id} className="flex justify-between gap-2"><span className="text-white truncate">{p.player} <span className="text-white/40">{roleBand(p.role)}</span></span><span className="text-emerald-300 shrink-0">{pulseMoney(p.price, p.usd)}</span></li>
+        ))}</ul>
+      </div>
+      {isTeamCode(t.code) && <div className="md:col-span-2 flex flex-wrap gap-x-4 gap-y-1">
+        <Link href={`/dugout/${t.code}`} className="text-primary">{t.code} Dugout</Link>
+        <Link href={`/ai-analyst/squad-dna?team=${t.code}&season=${model.season}`} className="text-primary">Squad DNA</Link>
+        <Link href={`/ai-analyst/auction-war-room?team=${t.code}`} className="text-primary">Auction War Room</Link>
+        <Link href={`/ai-analyst/opposition-map?team=${t.code}`} className="text-primary">Tactics</Link>
+        <Link href={`/feed/squad?team=${t.code}`} className="text-primary">Retention Room</Link>
+      </div>}
+    </div>
+  );
+}
+
+function Retentions({ model, pulse }: { model: PulseModel; pulse: Pulse }) {
+  const desk = pulse.desk.data;
+  const released = (code: string) => model.historical ? [] : (desk?.retentions ?? []).filter(r => r.team === code && r.decision === "released").map(r => r.player);
+  return (
+    <Section icon={Users} title={`Retentions · IPL ${model.season}`} note={model.historical ? "Retained core from the official squad list" : "From the official announcement"}>
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {model.teams.map(t => (
+          <div key={t.code} className="rounded-xl border p-3 text-xs space-y-1" style={teamCard(t.code)}>
+            <div className="flex items-baseline justify-between">{isTeamCode(t.code) ? <Link href={`/dugout/${t.code}`} className="font-black" style={{ color: teamHex(t.code) }}>{t.code}</Link> : <span className="font-black" style={{ color: teamHex(t.code) }}>{t.code}</span>}
+              <span className="text-white/50">{t.retained == null ? "Not announced" : `${t.retained} retained`}{t.startingPurse != null ? ` · ${pulseMoney(t.startingPurse)} purse` : ""}</span></div>
+            <div><span className="text-[9px] font-black uppercase text-emerald-400">Retained </span><span className="text-white/70">{t.core.map(p => p.name).join(", ") || "Not announced"}</span></div>
+            {released(t.code).length > 0 && <div><span className="text-[9px] font-black uppercase text-red-400">Released </span><span className="text-white/70">{released(t.code).join(", ")}</span></div>}
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px]">
+        <Link href="/feed/squad" className="text-primary">Feed → Squad Building → Retention Room (your picks vs reality)</Link>
+        <Link href="/feed/ipl-2027/retentions" className="text-primary">Full IPL 2027 retention list</Link>
+        {model.foundation && <a href={model.foundation.sourceUrl} target="_blank" rel="noreferrer" className="text-primary inline-flex items-center gap-0.5">Official source <ExternalLink className="w-3 h-3" /></a>}
+      </div>
+    </Section>
+  );
+}
+
+function Results({ model }: { model: PulseModel }) {
+  const unsold = model.rows.filter(r => r.status === "unsold");
+  const max = Math.max(1, ...model.teams.map(t => t.spent ?? t.spentUsd ?? 0));
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Section icon={Gavel} title="Biggest purchases"><LotList lots={model.ranked.slice(0, 12)} model={model} empty="No confirmed purchases." /></Section>
+        <Section icon={Wallet} title="Spend by franchise">
+          {model.teams.map(t => (
+            <div key={t.code} className="flex items-center gap-2 text-xs">
+              <span className="w-12 font-black" style={{ color: teamHex(t.code) }}>{t.code}</span>
+              <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden"><div className="h-full rounded-full" style={{ width: `${((t.spent ?? t.spentUsd ?? 0) / max) * 100}%`, background: teamHex(t.code) }} /></div>
+              <span className="w-20 text-right">{t.purchases.length ? spendText(t) : "—"}</span>
+            </div>
+          ))}
+        </Section>
+      </div>
+      <Section icon={Users} title={`Unsold (${unsold.length})`}>
+        {unsold.length ? (
+          <div className="flex flex-wrap gap-1.5">
+            {[...unsold].sort((a, b) => (b.base ?? 0) - (a.base ?? 0)).map(u => (
+              <Link key={u.id} href={`/players/${playerSlug(u.player)}`} className={`rounded-full border px-2 py-0.5 text-[11px] hover:bg-white/10 ${u.capped ? "border-red-400/40 text-white" : "border-white/10 text-white/60"}`}>
+                {u.player} <span className="text-white/40">{u.country && u.country !== "India" ? "· OS " : ""}· {pulseMoney(u.base)}</span>
+              </Link>
+            ))}
+          </div>
+        ) : <div className="text-xs text-white/70">{model.historical ? "The archive doesn't record unsold players for this season." : "No unsold players recorded."}</div>}
+        {unsold.length > 0 && <div className="text-[10px] text-white/40">Red outline = capped player. OS = overseas. Price shown is base price.</div>}
+        <Sources model={model} />
+      </Section>
+      <Franchises model={model} />
+    </div>
+  );
+}
+
+function LiveBlog({ model, pulse }: { model: PulseModel; pulse: Pulse }) {
+  const desk = pulse.desk.data;
+  const entries = [
+    ...(desk?.announcements ?? []).map(a => ({
+      at: a.recordedAt,
+      team: a.team,
+      text: a.headline,
+      src: a.sourceUrl,
+      tag: a.verification,
+      publishedOn: (a as any).publishedOn,
+      eventDate: (a as any).eventDate,
+      context: (a as any).context,
+    })),
+    ...(model.historical ? [] : model.rows.filter(r => r.recordedAt && r.status !== "pending").map(r => ({
+      at: r.recordedAt!,
+      team: r.team ?? undefined,
+      src: r.sourceUrl ?? undefined,
+      tag: "Official Announcement" as const,
+      publishedOn: undefined,
+      eventDate: undefined,
+      context: undefined,
+      text: r.status === "sold" ? `${r.player} sold to ${r.team} for ${pulseMoney(r.price)}` : `${r.player}: ${STATUS_LABEL[r.status].toLowerCase()}`,
+    }))),
+  ].sort((a, b) => b.at.localeCompare(a.at));
+
+  const tagBadge = (tag: string) => {
+    switch (tag) {
+      case "Official Announcement":
+      case "confirmed":
+        return "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+      case "Credible Report":
+      case "reported":
+        return "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40";
+      case "Analyst Prediction":
+        return "bg-purple-500/20 text-purple-300 border border-purple-500/40";
+      case "Rumor":
+        return "bg-amber-500/20 text-amber-300 border border-amber-500/40";
+      default:
+        return "bg-white/10 text-white/70 border border-white/10";
+    }
+  };
+
+  return (
+    <Section icon={Newspaper} title="Auction Pulse Intelligence Feed" note="Verified, source-backed updates distinguishing official decisions from projections">
+      {entries.length ? (
+        <div className="space-y-3">
+          {entries.slice(0, 60).map((e, i) => (
+            <article key={i} className="p-4 rounded-2xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all space-y-2.5">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider ${tagBadge(e.tag)}`}>
+                    {e.tag}
+                  </span>
+                  {e.team && <span className="font-black text-xs px-2 py-0.5 rounded bg-white/5 border border-white/10" style={{ color: teamHex(e.team) }}>{e.team}</span>}
+                </div>
+                <div className="flex items-center gap-2 text-[10px] text-white/45 font-mono">
+                  {e.publishedOn && <span>Published: {e.publishedOn}</span>}
+                  {e.eventDate && <span>· Target Event: {e.eventDate}</span>}
+                  <span>· {stamp(e.at)}</span>
+                </div>
+              </div>
+              <h4 className="font-bold text-white text-sm leading-snug">{e.text}</h4>
+              {e.context && (
+                <div className="text-xs text-white/75 leading-relaxed bg-black/30 p-2.5 rounded-xl border border-white/5">
+                  <span className="text-white/40 font-bold uppercase text-[9px] tracking-wider block mb-0.5">Franchise Context & Analysis</span>
+                  {e.context}
+                </div>
+              )}
+              <div className="flex flex-wrap items-center justify-between pt-1 text-[11px] border-t border-white/5 gap-2">
+                <span className="text-[10px] text-white/40 italic">
+                  {e.tag === "Official Announcement" ? "✓ Verified official decision (BCCI / Franchise)" : e.tag === "Credible Report" ? "📰 Credible tier-1 sports journalist report" : e.tag === "Analyst Prediction" ? "🧠 CricField proprietary tactical projection (not official)" : "⚡ Market discussion / unverified negotiation"}
+                </span>
+                {e.src && (
+                  <a href={e.src} target="_blank" rel="noreferrer" className="text-primary hover:underline inline-flex items-center gap-1 font-bold text-xs">
+                    View Primary Source <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : <div className="text-sm text-white/60">No timestamped updates recorded yet.</div>}
+      <Newsroom />
+    </Section>
+  );
+}
+
+const Newsroom = () => (
+  <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px]">
+    <Link href="/feed/auction" className="text-primary">Feed · Auction analysis</Link>
+    <Link href="/dugout" className="text-primary">Editorial Dugout</Link>
+    <Link href="/arcade/auction-room" className="text-primary">Play the auction game (simulated, separate from results)</Link>
+  </div>
+);
+
+function Archive({ pulse, active, pick }: { pulse: Pulse; active: number; pick: (s: number) => void }) {
+  const rows = pulse.archive.data ?? [];
+  return (
+    <Section icon={History} title="Auction archive" note="Verified historical sale records">
+      <div className="grid gap-2 sm:grid-cols-3 lg:grid-cols-5">
+        {pulse.seasons.map(s => {
+          const sold = rows.filter(r => r.season === s && (r.soldLakh != null || r.soldUsd != null));
+          const inr = sold.every(r => r.soldLakh != null), v = (r: typeof sold[number]) => (inr ? r.soldLakh : r.soldUsd) ?? 0;
+          const total = sold.reduce((n, r) => n + v(r), 0);
+          const top = sold.reduce<typeof sold[number] | undefined>((a, r) => !a || v(r) > v(a) ? r : a, undefined);
+          return (
+            <button key={s} onClick={() => pick(s)} className={`rounded-xl border p-3 text-left text-xs ${s === active ? "border-pink-500" : "border-white/10 hover:border-white/30"} bg-white/[0.03]`}>
+              <div className="font-black text-white text-base">IPL {s}</div>
+              <div className="text-white/50">{sold.length} sales · {inr ? pulseMoney(total) : pulseMoney(null, total)}</div>
+              {top && <div className="text-white/70 truncate">Top: {top.player} {pulseMoney(top.soldLakh, top.soldUsd)}</div>}
+            </button>
+          );
+        })}
+      </div>
+    </Section>
+  );
+}

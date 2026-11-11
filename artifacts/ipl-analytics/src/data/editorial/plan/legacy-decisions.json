@@ -1,0 +1,25 @@
+{
+ "version": 1,
+ "note": "Reviewed decisions linking the 100 legacy Dugout articles to the 1,000-title plan. 'revise' = the v2 article for planId replaces the legacy text and keeps the legacy URL; 'reuse' = legacy text accepted as the plan article; 'keep-separate' = no plan slot, legacy stays as an archive piece. Franchises without entries are pending review in their own batch.",
+ "decisions": [
+  { "legacyId": "art-rcb-01", "planId": "cf-rcb-061", "decision": "revise", "reviewed": true, "note": "Identity essay overlaps 'The Founding Identity'; rewrite in the History batch keeps the legacy URL." },
+  { "legacyId": "art-rcb-02", "planId": "cf-rcb-006", "decision": "revise", "reviewed": true, "note": "Chase construction is the same question as 'Chasing Under Pressure'." },
+  { "legacyId": "art-rcb-03", "planId": "cf-rcb-013", "decision": "revise", "reviewed": true, "note": "Economy-rate critique is the core of 'Wickets Versus Economy'." },
+  { "legacyId": "art-rcb-04", "planId": "cf-rcb-085", "decision": "revise", "reviewed": true, "note": "High-pressure performance claim is tested statistically in 'Clutch or Coincidence?' (Batch 1); the 2024 run stays as a case study. cf-rcb-066 is related reading, not a duplicate." },
+  { "legacyId": "art-rcb-05", "planId": "cf-rcb-022", "decision": "revise", "reviewed": true, "note": "Semantic duplicate of 'Home-Ground Advantage: What Makes Chinnaswamy Different' (Batch 1). Legacy text contained unsourced physical claims (altitude, boundary metres); v2 replaces them with warehouse evidence." },
+  { "legacyId": "art-rcb-06", "planId": "cf-rcb-032", "decision": "revise", "reviewed": true, "note": "Star-power spending maps to 'Star Premium Versus Squad Depth'. Not the same question as cf-rcb-039 (ROI model, Batch 1), which links to it as related reading." },
+  { "legacyId": "art-rcb-07", "planId": "cf-rcb-020", "decision": "revise", "reviewed": true, "note": "Batting depth vs bowling insurance is the sixth-bowler question." },
+  { "legacyId": "art-rcb-08", "planId": null, "decision": "keep-separate", "reviewed": true, "note": "Batting-era retrospective has no direct plan slot (closest: cf-rcb-064 captaincy eras, cf-rcb-067 squad philosophy). Kept as an archive piece." },
+  { "legacyId": "art-rcb-09", "planId": "cf-rcb-010", "decision": "revise", "reviewed": true, "note": "Same subject as 'The 200-Run Question'." },
+  { "legacyId": "art-rcb-10", "planId": "cf-rcb-035", "decision": "revise", "reviewed": true, "note": "Value beyond famous names maps to 'The Uncapped Advantage'." },
+  { "legacyId": "art-csk-05", "planId": "cf-csk-022", "decision": "revise", "reviewed": true, "note": "Semantic duplicate of 'The Chepauk Code'; v2 replaces unsourced claims with warehouse evidence while preserving legacy URL." },
+  { "legacyId": "art-mi-05", "planId": "cf-mi-022", "decision": "revise", "reviewed": true, "note": "Semantic duplicate of 'The Wankhede Factor'; v2 replaces synthetic correlation with warehouse evidence while preserving legacy URL." },
+  { "legacyId": "art-kkr-05", "planId": "cf-kkr-022", "decision": "revise", "reviewed": true, "note": "Semantic duplicate of 'The Eden Gardens Paradox'; v2 replaces synthetic tables with warehouse evidence while preserving legacy URL." },
+  { "legacyId": "art-srh-05", "planId": "cf-srh-022", "decision": "revise", "reviewed": true, "note": "Semantic duplicate of 'The Hyderabad Equation'; v2 replaces unverified telemetry with warehouse evidence while preserving legacy URL." },
+  { "legacyId": "art-rr-05", "planId": "cf-rr-022", "decision": "revise", "reviewed": true, "note": "Semantic duplicate of 'The Jaipur Advantage'; v2 replaces unverified telemetry with warehouse evidence while preserving legacy URL." },
+  { "legacyId": "art-dc-05", "planId": "cf-dc-022", "decision": "revise", "reviewed": true, "note": "Semantic duplicate of 'The Kotla Equation'; v2 replaces unverified telemetry with warehouse evidence while preserving legacy URL." },
+  { "legacyId": "art-pbks-05", "planId": "cf-pbks-022", "decision": "revise", "reviewed": true, "note": "Semantic duplicate of 'The Home-Ground Puzzle'; v2 replaces unverified telemetry with warehouse evidence while preserving legacy URL." },
+  { "legacyId": "art-gt-05", "planId": "cf-gt-022", "decision": "revise", "reviewed": true, "note": "Semantic duplicate of 'The Ahmedabad Factor'; v2 replaces unverified telemetry with warehouse evidence while preserving legacy URL." },
+  { "legacyId": "art-lsg-05", "planId": "cf-lsg-022", "decision": "revise", "reviewed": true, "note": "Semantic duplicate of 'The Ekana Effect'; v2 replaces unverified telemetry with warehouse evidence while preserving legacy URL." }
+ ]
+}

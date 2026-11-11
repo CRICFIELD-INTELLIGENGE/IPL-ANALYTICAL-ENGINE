@@ -1,0 +1,184 @@
+{
+ "articleId": "cf-srh-017",
+ "generatedAt": "2026-10-26T04:21:52.810Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "ct-t": {
+   "value": 73.8,
+   "display": "73.8%",
+   "label": "Share of Sunrisers Hyderabad's bowler wickets that were catches",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 1155,
+    "unit": "wickets"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 GROUP BY year, side",
+   "validation": {
+    "method": "sample-size floor ≥ 100 wickets",
+    "passed": true,
+    "detail": "n = 1155"
+   }
+  },
+  "ct-l": {
+   "value": 72.1,
+   "display": "72.1%",
+   "label": "Share of the rest of the IPL's bowler wickets that were catches",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 12305,
+    "unit": "wickets"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 GROUP BY year, side",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 wickets",
+    "passed": true,
+    "detail": "n = 12305"
+   }
+  },
+  "ct-n": {
+   "value": 852,
+   "display": "852",
+   "label": "SRH catches recorded",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Caught and caught-and-bowled",
+   "sampleSize": {
+    "n": 852,
+    "unit": "catches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 GROUP BY year, side",
+   "validation": {
+    "method": "sample-size floor ≥ 50 catches",
+    "passed": true,
+    "detail": "n = 852"
+   }
+  },
+  "ct-x-best-v": {
+   "value": 86.7,
+   "display": "86.7",
+   "label": "SRH catch share of wickets in 2026",
+   "unit": "% of wickets",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "SRH, 2026",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 GROUP BY year, side",
+   "validation": {
+    "method": "taken from the season table",
+    "passed": true
+   }
+  },
+  "ct-x-worst-v": {
+   "value": 64.8,
+   "display": "64.8",
+   "label": "SRH catch share of wickets in 2017",
+   "unit": "% of wickets",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "SRH, 2017",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 GROUP BY year, side",
+   "validation": {
+    "method": "taken from the season table",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "ct-series": {
+   "label": "Catches as a share of bowler wickets: SRH vs IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Caught and caught-and-bowled as a share of bowler-credited wickets",
+   "sampleSize": {
+    "n": 1155,
+    "unit": "SRH wickets"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 GROUP BY year, side",
+   "rows": [
+    {
+     "season": "2013",
+     "team": 65,
+     "league": 69.5
+    },
+    {
+     "season": "2014",
+     "team": 75.4,
+     "league": 65.4
+    },
+    {
+     "season": "2015",
+     "team": 69.4,
+     "league": 72.6
+    },
+    {
+     "season": "2016",
+     "team": 78.4,
+     "league": 68.6
+    },
+    {
+     "season": "2017",
+     "team": 64.8,
+     "league": 68.3
+    },
+    {
+     "season": "2018",
+     "team": 70.2,
+     "league": 74.3
+    },
+    {
+     "season": "2019",
+     "team": 75.6,
+     "league": 76.1
+    },
+    {
+     "season": "2020",
+     "team": 65.6,
+     "league": 74.8
+    },
+    {
+     "season": "2021",
+     "team": 80.6,
+     "league": 72.1
+    },
+    {
+     "season": "2022",
+     "team": 66.7,
+     "league": 77.6
+    },
+    {
+     "season": "2023",
+     "team": 73.9,
+     "league": 73
+    },
+    {
+     "season": "2024",
+     "team": 81,
+     "league": 77.2
+    },
+    {
+     "season": "2025",
+     "team": 82.7,
+     "league": 74.2
+    },
+    {
+     "season": "2026",
+     "team": 86.7,
+     "league": 80.4
+    }
+   ]
+  }
+ }
+}

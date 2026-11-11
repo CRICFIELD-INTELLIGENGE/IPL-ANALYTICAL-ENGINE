@@ -1,0 +1,282 @@
+{
+ "articleId": "cf-mi-010",
+ "generatedAt": "2026-10-26T04:18:51.397Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "t200-lg-e1": {
+   "value": 8.3,
+   "display": "8.3%",
+   "label": "Share of IPL innings reaching 200, 2008–2023",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All regulation innings",
+   "sampleSize": {
+    "n": 2480,
+    "unit": "innings"
+   },
+   "query": "SELECT SUM(CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) < 2024 AND i.runs >= 200 THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) < 2024 THEN 1 ELSE 0 END) e1, SUM(CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2024 AND i.runs >= 200 THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2024 THEN 1 ELSE 0 END) e2, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2",
+   "validation": {
+    "method": "plausibility range 0–100 for share",
+    "passed": true,
+    "detail": "value 8.312958435207824"
+   }
+  },
+  "t200-lg-e2": {
+   "value": 36.3,
+   "display": "36.3%",
+   "label": "Share of IPL innings reaching 200, 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All regulation innings",
+   "sampleSize": {
+    "n": 2480,
+    "unit": "innings"
+   },
+   "query": "SELECT SUM(CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) < 2024 AND i.runs >= 200 THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) < 2024 THEN 1 ELSE 0 END) e1, SUM(CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2024 AND i.runs >= 200 THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2024 THEN 1 ELSE 0 END) e2, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2",
+   "validation": {
+    "method": "plausibility range 0–100 for share",
+    "passed": true,
+    "detail": "value 36.32183908045977"
+   }
+  },
+  "t200-all": {
+   "value": 36,
+   "display": "36",
+   "label": "MI totals of 200 or more",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, both innings",
+   "sampleSize": {
+    "n": 291,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) AND i.runs >= 200 THEN 1 ELSE 0 END) t200, SUM(CASE WHEN i.batting_team_id IN (4) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i.runs >= 200 THEN 1 ELSE 0 END) * 1.0 / COUNT(*) lshare FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "t200-rec": {
+   "value": 14,
+   "display": "14",
+   "label": "MI totals of 200 or more since 2024",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 44,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) AND i.runs >= 200 THEN 1 ELSE 0 END) t200, SUM(CASE WHEN i.batting_team_id IN (4) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i.runs >= 200 THEN 1 ELSE 0 END) * 1.0 / COUNT(*) lshare FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "t200-recshare": {
+   "value": 32,
+   "display": "32%",
+   "label": "Share of MI innings reaching 200 since 2024",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 44,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) AND i.runs >= 200 THEN 1 ELSE 0 END) t200, SUM(CASE WHEN i.batting_team_id IN (4) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i.runs >= 200 THEN 1 ELSE 0 END) * 1.0 / COUNT(*) lshare FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 44"
+   }
+  },
+  "t200-lgwin": {
+   "value": 75.9,
+   "display": "75.9%",
+   "label": "IPL win rate when posting 200 or more batting first",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings of 200+",
+   "sampleSize": {
+    "n": 216,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id = i.batting_team_id THEN 1 ELSE 0 END) won FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND i.runs >= 200 AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 50 matches",
+    "passed": true,
+    "detail": "n = 216"
+   }
+  },
+  "t200-twin": {
+   "value": 90,
+   "display": "90.0%",
+   "label": "MI win rate when posting 200 or more batting first",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings of 200+",
+   "sampleSize": {
+    "n": 20,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Wankhede%') THEN 'home' ELSE 'away' END loc, COUNT(*) n, SUM(CASE WHEN m.winner_id = i.batting_team_id THEN 1 ELSE 0 END) won FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND i.runs >= 200 AND i.batting_team_id IN (4) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 20"
+   }
+  },
+  "t200-twinn": {
+   "value": 20,
+   "display": "20",
+   "label": "MI first-innings totals of 200 or more",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 20,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Wankhede%') THEN 'home' ELSE 'away' END loc, COUNT(*) n, SUM(CASE WHEN m.winner_id = i.batting_team_id THEN 1 ELSE 0 END) won FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND i.runs >= 200 AND i.batting_team_id IN (4) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "t200-series": {
+   "label": "Share of innings reaching 200: MI vs IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 291,
+    "unit": "MI innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) AND i.runs >= 200 THEN 1 ELSE 0 END) t200, SUM(CASE WHEN i.batting_team_id IN (4) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i.runs >= 200 THEN 1 ELSE 0 END) * 1.0 / COUNT(*) lshare FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 GROUP BY year ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "team": 7.1,
+     "league": 9.5
+    },
+    {
+     "season": "2009",
+     "team": 0,
+     "league": 0.9
+    },
+    {
+     "season": "2010",
+     "team": 12.5,
+     "league": 7.5
+    },
+    {
+     "season": "2011",
+     "team": 0,
+     "league": 3.4
+    },
+    {
+     "season": "2012",
+     "team": 0,
+     "league": 3.4
+    },
+    {
+     "season": "2013",
+     "team": 5.3,
+     "league": 2.6
+    },
+    {
+     "season": "2014",
+     "team": 0,
+     "league": 7.5
+    },
+    {
+     "season": "2015",
+     "team": 12.5,
+     "league": 6
+    },
+    {
+     "season": "2016",
+     "team": 7.1,
+     "league": 5
+    },
+    {
+     "season": "2017",
+     "team": 11.8,
+     "league": 8.5
+    },
+    {
+     "season": "2018",
+     "team": 14.3,
+     "league": 12.5
+    },
+    {
+     "season": "2019",
+     "team": 0,
+     "league": 9.2
+    },
+    {
+     "season": "2020",
+     "team": 18.8,
+     "league": 10.8
+    },
+    {
+     "season": "2021",
+     "team": 14.3,
+     "league": 7.5
+    },
+    {
+     "season": "2022",
+     "team": 0,
+     "league": 12.2
+    },
+    {
+     "season": "2023",
+     "team": 37.5,
+     "league": 25.2
+    },
+    {
+     "season": "2024",
+     "team": 21.4,
+     "league": 28.9
+    },
+    {
+     "season": "2025",
+     "team": 37.5,
+     "league": 35.6
+    },
+    {
+     "season": "2026",
+     "team": 35.7,
+     "league": 44.2
+    }
+   ]
+  },
+  "t200-where": {
+   "label": "MI first-innings totals of 200+: home vs away",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 20,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Wankhede%') THEN 'home' ELSE 'away' END loc, COUNT(*) n, SUM(CASE WHEN m.winner_id = i.batting_team_id THEN 1 ELSE 0 END) won FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND i.runs >= 200 AND i.batting_team_id IN (4) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "rows": [
+    {
+     "where": "Home",
+     "totals": 6,
+     "winPct": 83.3
+    },
+    {
+     "where": "Away",
+     "totals": 14,
+     "winPct": 92.9
+    }
+   ]
+  }
+ }
+}

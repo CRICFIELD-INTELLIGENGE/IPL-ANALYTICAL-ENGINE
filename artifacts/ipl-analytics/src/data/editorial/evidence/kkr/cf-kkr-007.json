@@ -1,0 +1,145 @@
+{
+ "articleId": "cf-kkr-007",
+ "generatedAt": "2026-10-26T04:20:51.530Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "lr-cov": {
+   "value": 60,
+   "display": "60%",
+   "label": "Share of 2018–2026 deliveries with both batters' hands known",
+   "unit": "%",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "Crosswalk coverage",
+   "sampleSize": {
+    "n": 145178,
+    "unit": "deliveries"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END is_t, sb.name s, nb.name ns, d.total_runs r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN dm.player_out_id IS NOT NULL THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players sb ON sb.player_id = d.batter_id JOIN players nb ON nb.player_id = d.non_striker_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018",
+   "validation": {
+    "method": "plausibility range 50–100 for coverage",
+    "passed": true,
+    "detail": "value 60.000137761919845"
+   }
+  },
+  "lr-tmix": {
+   "value": 8.77,
+   "display": "8.77",
+   "label": "KKR run rate with a left–right pair at the crease",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "2018–2026, both batters' hands known",
+   "sampleSize": {
+    "n": 4412,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END is_t, sb.name s, nb.name ns, d.total_runs r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN dm.player_out_id IS NOT NULL THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players sb ON sb.player_id = d.batter_id JOIN players nb ON nb.player_id = d.non_striker_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018",
+   "validation": {
+    "method": "sample-size floor ≥ 500 balls",
+    "passed": true,
+    "detail": "n = 4412"
+   }
+  },
+  "lr-tsame": {
+   "value": 9.01,
+   "display": "9.01",
+   "label": "KKR run rate with a same-handed pair",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "2018–2026, both batters' hands known",
+   "sampleSize": {
+    "n": 3682,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END is_t, sb.name s, nb.name ns, d.total_runs r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN dm.player_out_id IS NOT NULL THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players sb ON sb.player_id = d.batter_id JOIN players nb ON nb.player_id = d.non_striker_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018",
+   "validation": {
+    "method": "sample-size floor ≥ 500 balls",
+    "passed": true,
+    "detail": "n = 3682"
+   }
+  },
+  "lr-lmix": {
+   "value": 8.85,
+   "display": "8.85",
+   "label": "Rest of IPL run rate with a left–right pair",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "2018–2026, both batters' hands known",
+   "sampleSize": {
+    "n": 38957,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END is_t, sb.name s, nb.name ns, d.total_runs r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN dm.player_out_id IS NOT NULL THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players sb ON sb.player_id = d.batter_id JOIN players nb ON nb.player_id = d.non_striker_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018",
+   "validation": {
+    "method": "sample-size floor ≥ 5000 balls",
+    "passed": true,
+    "detail": "n = 38957"
+   }
+  },
+  "lr-lsame": {
+   "value": 8.87,
+   "display": "8.87",
+   "label": "Rest of IPL run rate with a same-handed pair",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "2018–2026, both batters' hands known",
+   "sampleSize": {
+    "n": 36647,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END is_t, sb.name s, nb.name ns, d.total_runs r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN dm.player_out_id IS NOT NULL THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players sb ON sb.player_id = d.batter_id JOIN players nb ON nb.player_id = d.non_striker_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018",
+   "validation": {
+    "method": "sample-size floor ≥ 5000 balls",
+    "passed": true,
+    "detail": "n = 36647"
+   }
+  },
+  "lr-tshare": {
+   "value": 55,
+   "display": "55%",
+   "label": "Share of KKR balls faced with a left–right pair",
+   "unit": "%",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 8094,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END is_t, sb.name s, nb.name ns, d.total_runs r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN dm.player_out_id IS NOT NULL THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players sb ON sb.player_id = d.batter_id JOIN players nb ON nb.player_id = d.non_striker_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 balls",
+    "passed": true,
+    "detail": "n = 8094"
+   }
+  }
+ },
+ "tables": {
+  "lr-rr": {
+   "label": "Run rate by batting pair handedness, 2018–2026",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "Striker and non-striker handedness from player-bio.json via the squads crosswalk; balls with both hands known",
+   "sampleSize": {
+    "n": 87107,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END is_t, sb.name s, nb.name ns, d.total_runs r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN dm.player_out_id IS NOT NULL THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players sb ON sb.player_id = d.batter_id JOIN players nb ON nb.player_id = d.non_striker_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018",
+   "rows": [
+    {
+     "pair": "Left–right pair",
+     "team": 8.77,
+     "league": 8.85
+    },
+    {
+     "pair": "Same-handed pair",
+     "team": 9.01,
+     "league": 8.87
+    }
+   ]
+  }
+ }
+}

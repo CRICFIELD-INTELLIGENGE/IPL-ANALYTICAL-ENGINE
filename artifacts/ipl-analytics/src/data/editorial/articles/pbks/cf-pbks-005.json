@@ -1,0 +1,191 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-pbks-005",
+ "planId": "cf-pbks-005",
+ "franchise": "PBKS",
+ "aspect": "batting",
+ "title": "The Finisher\u2019s Clock: When Should Punjab Kings Send in Its Power Hitters?",
+ "slug": "pbks-the-finishers-clock-when-should-pbks-send-in-its-power-hitters",
+ "dek": "When should Punjab Kings send in their power hitters? The answer depends on how much a set batter is worth in the last five overs.",
+ "excerpt": "Across the IPL since 2022, batters already set by the death overs out-score those who arrive late. That trade-off decides when Punjab Kings' finishers should walk out.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "PBKS"
+ ],
+ "players": [
+  "Shashank Singh",
+  "SS Iyer",
+  "MP Stoinis",
+  "M Jansen"
+ ],
+ "seasons": [
+  "2022\u20132026",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "IPL batters already at the crease before the eleventh over struck at {{ev:fin-lset}} in the death overs since 2022; those arriving in the last five struck at {{ev:fin-lfresh}}.",
+  "Punjab Kings' death-overs run rate since 2024: {{ev:dbat-team-e2}}, against {{ev:dbat-league-e2}} for the league.",
+  "{{ev:finb-lead-name}} has faced the most death-overs balls for PBKS since 2024, striking at {{ev:finb-lead-sr}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "A Clock, Not a Batting Order",
+   "body": [
+    "Finishers are usually discussed as a position. In practice they are a timing decision: send the hitter in too early and he burns his innings against the middle-overs spinners, too late and he has three balls to change a match.",
+    "The league-wide evidence since 2022 shows what being set is worth. Batters who were already at the crease before the eleventh over struck at {{ev:fin-lset}} in the death overs; batters who arrived in the last five overs struck at {{ev:fin-lfresh}}."
+   ],
+   "chartIds": [
+    "fin-entry"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Punjab Kings' Last Five Overs",
+   "body": [
+    "Punjab Kings scored at {{ev:dbat-team-e2}} runs per over in the death since 2024, against a league figure of {{ev:dbat-league-e2}}. Earlier, between 2008 and 2023, the comparison was {{ev:dbat-team-e1}} against {{ev:dbat-league-e1}}.",
+    "Inside the squad the split is visible too: set PBKS batters struck at {{ev:fin-tset}} in the death, late arrivals at {{ev:fin-tfresh}}."
+   ],
+   "chartIds": [
+    "fin-trend"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Who Should Walk Out When",
+   "body": [
+    "Since 2024, {{ev:finb-lead-name}} has led PBKS in death-overs balls faced, with {{ev:finb-lead-balls}} at a strike rate of {{ev:finb-lead-sr}}.",
+    "The implication is a flexible order: when the platform is strong, the best hitter should walk out earlier than tradition says, so that he is set by the sixteenth over."
+   ],
+   "chartIds": [
+    "fin-players"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Selection Bias in the Numbers",
+   "body": [
+    "Batters who are set by the death overs are often the better batters, which inflates their strike rate. Late arrivals include lower-order bowlers who would struggle at any point.",
+    "{{hyp:quality}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Send the Hitter Early Enough to Be Set",
+   "body": [
+    "Punjab Kings should treat the finisher's entry as a clock. Because set batters out-score late arrivals in the death, the best hitter should be in by the twelfth or thirteenth over whenever wickets allow.",
+    "That changes how the batting order is written: as a set of triggers rather than fixed numbers."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "fin-entry",
+   "type": "column",
+   "title": "Death-overs strike rate by arrival time",
+   "subtitle": "Overs 16\u201320, 2022\u20132026",
+   "table": "fin-entry",
+   "xKey": "arrival",
+   "series": [
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    },
+    {
+     "key": "team",
+     "label": "PBKS"
+    }
+   ],
+   "xLabel": "When the batter arrived",
+   "unit": "runs per 100 balls",
+   "takeaway": "Batters already set before the death out-score late arrivals.",
+   "ariaLabel": "Column chart of death-overs strike rate grouped by the over in which the batter arrived."
+  },
+  {
+   "id": "fin-trend",
+   "type": "line",
+   "title": "Death-overs run rate by season",
+   "subtitle": "PBKS batting vs IPL, overs 16\u201320",
+   "table": "dbat-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "PBKS"
+    },
+    {
+     "key": "league",
+     "label": "IPL average"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per over",
+   "takeaway": "PBKS sit above the league's death-overs rate since 2024.",
+   "ariaLabel": "Line chart of PBKS death-overs run rate and the IPL average by season."
+  },
+  {
+   "id": "fin-players",
+   "type": "bar",
+   "title": "PBKS death-overs batters since 2024",
+   "subtitle": "Strike rate, minimum 40 balls",
+   "table": "finb-players",
+   "xKey": "player",
+   "series": [
+    {
+     "key": "strikeRate",
+     "label": "Strike rate"
+    }
+   ],
+   "unit": "runs per 100 balls",
+   "takeaway": "Death-overs strike rates separate genuine finishers from the rest.",
+   "ariaLabel": "Horizontal bar chart of death-overs strike rate for PBKS batters since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "quality",
+   "statement": "Hypothesis: the set-batter advantage in the death overs survives after controlling for batter quality.",
+   "whyUnverified": "Strike rates have not been adjusted for each batter's career level.",
+   "howToTest": "Compare the same batters' death-overs strike rates when set and when arriving late."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A Punjab Kings finisher at the death.",
+   "wanted": "Shashank Singh batting late in an innings."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-pbks-076",
+  "cf-pbks-028",
+  "cf-pbks-024"
+ ],
+ "seo": {
+  "metaTitle": "The Finisher's Clock: when should PBKS send hitters?",
+  "metaDescription": "Set batters against late arrivals in the death overs, and what it means for when Punjab Kings' power hitters should walk out."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Run rates use all runs per legal ball times six. Every figure is generated from the CricField warehouse by scripts/editorial/engine. Arrival = the over of a batter's first ball faced. Death overs = sixteen to twenty. Bands with fewer than forty PBKS balls are not shown for the team.",
+ "generator": "engine:v1"
+}

@@ -1,0 +1,3 @@
+import {ArrowLeft} from 'lucide-react';
+import {useRouteHistory} from '@/lib/route-history';
+export function ReturnNavigator({fallbackPath='/home'}:{fallbackPath?:string}){const {previousLabel,goBack}=useRouteHistory(fallbackPath);return <button onClick={goBack} className="mb-4 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-slate-950/70 px-4 py-2 text-xs font-semibold text-slate-300 backdrop-blur transition hover:border-primary/50 hover:text-white focus-visible:outline focus-visible:outline-primary"><ArrowLeft size={15} className="text-primary"/>Back to {previousLabel}</button>;}

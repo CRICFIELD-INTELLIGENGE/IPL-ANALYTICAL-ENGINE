@@ -1,0 +1,127 @@
+{
+ "articleId": "cf-dc-092",
+ "generatedAt": "2026-10-26T04:24:48.596Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "ai-train": {
+   "value": 427,
+   "display": "427",
+   "label": "Training pairs (seasons up to 2019)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batters with 100+ balls in consecutive seasons",
+   "sampleSize": {
+    "n": 427,
+    "unit": "pairs"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (8,11) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.batter_runs IN (4, 6) THEN 1 ELSE 0 END) bnd, SUM(CASE WHEN d.is_wide = 0 AND d.batter_runs = 0 THEN 1 ELSE 0 END) dots FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "sample-size floor ≥ 100 pairs",
+    "passed": true,
+    "detail": "n = 427"
+   }
+  },
+  "ai-test": {
+   "value": 256,
+   "display": "256",
+   "label": "Test pairs (seasons from 2020)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 256,
+    "unit": "pairs"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (8,11) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.batter_runs IN (4, 6) THEN 1 ELSE 0 END) bnd, SUM(CASE WHEN d.is_wide = 0 AND d.batter_runs = 0 THEN 1 ELSE 0 END) dots FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "sample-size floor ≥ 50 pairs",
+    "passed": true,
+    "detail": "n = 256"
+   }
+  },
+  "ai-model": {
+   "value": 9.8,
+   "display": "9.8",
+   "label": "Model's mean absolute error",
+   "unit": "index points",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Test pairs",
+   "sampleSize": {
+    "n": 256,
+    "unit": "pairs"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (8,11) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.batter_runs IN (4, 6) THEN 1 ELSE 0 END) bnd, SUM(CASE WHEN d.is_wide = 0 AND d.batter_runs = 0 THEN 1 ELSE 0 END) dots FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "plausibility range 0–60 for error",
+    "passed": true,
+    "detail": "value 9.790559253332061"
+   }
+  },
+  "ai-pers": {
+   "value": 12.4,
+   "display": "12.4",
+   "label": "Error when predicting the same as last season",
+   "unit": "index points",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Test pairs",
+   "sampleSize": {
+    "n": 256,
+    "unit": "pairs"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (8,11) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.batter_runs IN (4, 6) THEN 1 ELSE 0 END) bnd, SUM(CASE WHEN d.is_wide = 0 AND d.batter_runs = 0 THEN 1 ELSE 0 END) dots FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "plausibility range 0–60 for error",
+    "passed": true,
+    "detail": "value 12.35203941049212"
+   }
+  },
+  "ai-mean": {
+   "value": 10.3,
+   "display": "10.3",
+   "label": "Error when predicting the league average",
+   "unit": "index points",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Test pairs",
+   "sampleSize": {
+    "n": 256,
+    "unit": "pairs"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (8,11) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.batter_runs IN (4, 6) THEN 1 ELSE 0 END) bnd, SUM(CASE WHEN d.is_wide = 0 AND d.batter_runs = 0 THEN 1 ELSE 0 END) dots FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "plausibility range 0–60 for error",
+    "passed": true,
+    "detail": "value 10.314435067979439"
+   }
+  }
+ },
+ "tables": {
+  "ai-cmp": {
+   "label": "Predicting next-season relative strike rate, 2020–2025 test seasons",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Mean absolute error, index points (100 = season average); trained on 2008–2019",
+   "sampleSize": {
+    "n": 256,
+    "unit": "batter-season pairs"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (8,11) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.batter_runs IN (4, 6) THEN 1 ELSE 0 END) bnd, SUM(CASE WHEN d.is_wide = 0 AND d.batter_runs = 0 THEN 1 ELSE 0 END) dots FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "rows": [
+    {
+     "method": "League average",
+     "mae": 10.3
+    },
+    {
+     "method": "Same as last season",
+     "mae": 12.4
+    },
+    {
+     "method": "Four-feature model",
+     "mae": 9.8
+    }
+   ]
+  }
+ }
+}

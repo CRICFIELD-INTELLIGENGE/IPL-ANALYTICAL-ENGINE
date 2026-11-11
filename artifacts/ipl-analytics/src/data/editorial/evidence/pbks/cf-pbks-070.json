@@ -1,0 +1,177 @@
+{
+ "articleId": "cf-pbks-070",
+ "generatedAt": "2026-10-26T04:25:38.123Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "lr-best": {
+   "value": "KL Rahul's 132 in 2020",
+   "display": "KL Rahul's 132 in 2020",
+   "label": "Punjab Kings' highest individual innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 2168,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "lr-bowl": {
+   "value": "AS Rajpoot's 5 for 14 in 2018",
+   "display": "AS Rajpoot's 5 for 14 in 2018",
+   "label": "Punjab Kings' best bowling figures",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 1605,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "max wickets, then fewest runs",
+    "passed": true
+   }
+  },
+  "lr-top-recent": {
+   "value": "two",
+   "display": "two",
+   "label": "Top-ten innings from 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 10,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "lr-all-recent": {
+   "value": 16,
+   "display": "16%",
+   "label": "Share of all PBKS innings played in 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 2168,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "sample-size floor ≥ 100 innings",
+    "passed": true,
+    "detail": "n = 2168"
+   }
+  },
+  "lr-bowl-recent": {
+   "value": "none",
+   "display": "none",
+   "label": "Top-ten bowling spells from 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 10,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "lr-allb-recent": {
+   "value": 16,
+   "display": "16%",
+   "label": "Share of all PBKS bowling spells in 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 1605,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "sample-size floor ≥ 100 spells",
+    "passed": true,
+    "detail": "n = 1605"
+   }
+  }
+ },
+ "tables": {
+  "lr-top": {
+   "label": "Punjab Kings' highest individual innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 2168,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) ORDER BY f.runs DESC, f.balls_faced",
+   "rows": [
+    {
+     "innings": "KL Rahul, 2020",
+     "runs": 132,
+     "balls": 69
+    },
+    {
+     "innings": "V Sehwag, 2014",
+     "runs": 122,
+     "balls": 58
+    },
+    {
+     "innings": "PC Valthaty, 2011",
+     "runs": 120,
+     "balls": 63
+    },
+    {
+     "innings": "WP Saha, 2014",
+     "runs": 115,
+     "balls": 55
+    },
+    {
+     "innings": "SE Marsh, 2008",
+     "runs": 115,
+     "balls": 69
+    },
+    {
+     "innings": "DPMD Jayawardene, 2010",
+     "runs": 110,
+     "balls": 59
+    },
+    {
+     "innings": "JM Bairstow, 2024",
+     "runs": 108,
+     "balls": 48
+    },
+    {
+     "innings": "C Connolly, 2026",
+     "runs": 107,
+     "balls": 59
+    },
+    {
+     "innings": "MA Agarwal, 2020",
+     "runs": 106,
+     "balls": 50
+    },
+    {
+     "innings": "AC Gilchrist, 2011",
+     "runs": 106,
+     "balls": 55
+    }
+   ]
+  }
+ }
+}

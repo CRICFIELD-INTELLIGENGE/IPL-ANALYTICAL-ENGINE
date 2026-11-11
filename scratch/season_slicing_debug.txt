@@ -1,0 +1,220 @@
+L500:   if (fPr.includes("clutch") || fPr.includes("moment")) return isClutch;
+L501:   if (fPr.includes("playoff")) return isPlayoffPressure;
+L502:   if (fPr.includes("high")) return isHighPressure;
+L503:   return true;
+L504: }
+L505: 
+L506: // ─────────────────────────────────────────────────────────────────────────────
+L507: //  MAIN QUERY AGGREGATOR
+L508: // ─────────────────────────────────────────────────────────────────────────────
+L509: 
+L510: export async function aggregateQueryStats(filters: QueryFilters) {
+L511:   const resolvedFilters = { ...filters };
+L512:   if (filters.batter && hasDb()) {
+L513:     resolvedFilters.batter = await resolvePlayerDbName(filters.batter);
+L514:   }
+L515:   if (filters.bowler && hasDb()) {
+L516:     resolvedFilters.bowler = await resolvePlayerDbName(filters.bowler);
+L517:   }
+L518: 
+L519:   // The SQL-backed players table has no populated batting_style column, so
+L520:   // the "vs LHB"/"vs RHB" filter can only be honored via the JSON path,
+L521:   // which resolves handedness per-ball from the player-bio dataset.
+L522:   const needsHandednessFilter = !!filters.battingHand && filters.battingHand !== "All Batters" && filters.battingHand !== "All";
+L523: 
+L524:   if (hasDb() && !needsHandednessFilter) {
+L525:     try {
+L526:       return await aggregateQueryStatsSql(resolvedFilters);
+L527:     } catch (err) {
+L528:       console.warn("SQL Query Stats failed, falling back to JSON:", err);
+L529:     }
+L530:   }
+L531:   return await aggregateQueryStatsJson(resolvedFilters);
+L532: }
+L533: 
+L534: async function aggregateQueryStatsJson(filters: QueryFilters) {
+L535:   ensureInit();
+L536:   const matchIds = filterMatches(filters);
+L537: 
+L538:   const batterStats = new Map<string, {
+L539:     runs: number; balls: number; fours: number; sixes: number;
+L540:     innings: Set<string>; notOuts: Set<string>; matchScores: Map<string, number>;
+L541:     ppRuns: number; ppBalls: number; middleRuns: number; middleBalls: number;
+L542:     deathRuns: number; deathBalls: number;
+L543:     dismissals: { kind: string; bowler: string; over: number }[];
+L544:     deliveryStats: Map<string, { runs: number; balls: number; dismissals: number }>;
+L545:     scoringZones: Map<string, { runs: number; balls: number; boundaries: number }>;
+L546:   }>();
+L547: 
+L548:   const bowlerStats = new Map<string, {
+L549:     runs: number; balls: number; wickets: number; dots: number;
+L550:     innings: Set<string>;
+L551:     ppRuns: number; ppBalls: number; ppWickets: number;
+L552:     middleRuns: number; middleBalls: number; middleWickets: number;
+L553:     deathRuns: number; deathBalls: number; deathWickets: number;
+L554:     boundaries: number;
+L555:     bowlerType: BowlerType;
+L556:     handSplits: Record<BattingHand, HandSplit>;
+L557:     deliveryStats: Map<string, { runs: number; balls: number; wickets: number }>;
+L558:   }>();
+L559: 
+L560:   const selectedTeam = filters.team && filters.team !== "All Teams" ? filters.team : null;
+L561:   const selectedOpponent = filters.opponent && filters.opponent !== "All Opponents" ? filters.opponent : null;
+L562:   const filterBatter = filters.batter ? filters.batter.toLowerCase() : null;
+L563:   const filterBowler = filters.bowler ? filters.bowler.toLowerCase() : null;
+L564: 
+L565:   for (const matchId of matchIds) {
+L566:     const matchData = getMatchData(matchId);
+L567:     if (!matchData) continue;
+L568: 
+L569:     matchData.innings?.forEach((inn: any, inningIndex: number) => {
+L570:       const battingTeam  = inn.team;
+L571:       const btShort      = teamShort(battingTeam);
+L572:       const bowlingTeams = matchData.info.teams.filter((t: string) => t !== battingTeam);
+L573:       const blShort      = teamShort(bowlingTeams[0] || "");
+L574: 
+L575:       // Innings direction filter
+L576:       const chasingDefending = filters.chasingDefending;
+L577:       if (chasingDefending && chasingDefending !== "All" && chasingDefending !== "All") {
+L578:         if (chasingDefending === "Chasing" && inningIndex !== 1) return;
+L579:         if (chasingDefending === "Defending" && inningIndex !== 0) return;
+L580:       }
+L581: 
+L582:       // Innings (1st/2nd) filter
+L583:       if (filters.innings && filters.innings !== "All Innings" && filters.innings !== "Innings") {
+L584:         if (filters.innings.toLowerCase().includes("1st") && inningIndex !== 0) return;
+L585:         if (filters.innings.toLowerCase().includes("2nd") && inningIndex !== 1) return;
+L586:       }
+L587: 
+L588:       // Track wickets fallen per over for pressure filter
+L589:       let wicketsFallenSoFar = 0;
+L590: 
+L591:       inn.overs?.forEach((overObj: any) => {
+L592:         const overNum = overObj.over;
+L593:         if (!passesOverRangeFilter(overNum, (filters as QueryFilters).overRange)) return;
+L594: 
+L595:         overObj.deliveries?.forEach((d: any, ballIndex: number) => {
+L596:           const ext = d.extras ?? {};
+L597:           const isWide  = !!ext.wides;
+L598:           const isNoball = !!ext.noballs;
+L599:           const legalBall = !isWide && !isNoball;
+L600: 
+L601:           // Phase filter
+L602:           if (!passesPhaseFilter(overNum, filters)) return;
+L603: 
+L604:           // Bowler type filter
+L605:           const bType = getBowlerType(d.bowler);
+L606:           const bowlerTypeF = filters.bowlerType;
+L607:           if (bowlerTypeF && bowlerTypeF !== "All Bowlers") {
+L608:             const isSpinSel = bowlerTypeF.toLowerCase().includes("spin");
+L609:             if (isSpinSel && bType !== "Spinner") return;
+L610:             if (!isSpinSel && bType !== "Pacer") return;
+L611:           }
+L612: 
+L613:           // Delivery type filter
+L614:           if (!passesDeliveryTypeFilter(overNum, ballIndex, bType, filters.deliveryType)) return;
+L615: 
+L616:           // Pressure filter
+L617:           if (!passesPressureFilter(overNum, inningIndex, wicketsFallenSoFar, filters.pressure)) return;
+L618: 
+L619:           // Scoring area / fielding position filter
+L620:           if (filters.fieldingPosition && filters.fieldingPosition !== "Scoring Area" &&
+L621:               filters.fieldingPosition !== "All Positions" && filters.fieldingPosition !== "All Areas") {
+L622:             const zone = getScoringZone(overNum, ballIndex, d.runs?.batter || 0, bType);
+L623:             if (zone.toLowerCase() !== filters.fieldingPosition.toLowerCase()) return;
+L624:           }
+L625: 
+L626:           // Batter handedness filter (bowler-side: "vs LHB" / "vs RHB")
+L627:           if (filters.battingHand && filters.battingHand !== "All Batters" && filters.battingHand !== "All") {
+L628:             const bh = filters.battingHand.toLowerCase();
+L629:             const hand = getBattingHand(d.batter);
+L630:             if (bh.includes("lhb") && hand !== "LHB") return;
+L631:             if (bh.includes("rhb") && hand !== "RHB") return;
+L632:           }
+L633: 
+L634:           // Representation source-of-truth filter
+L635:           if (!passesRepresentationFilter(d.batter, filters, btShort)) return;
+L636:           if (!passesRepresentationFilter(d.bowler, filters, blShort)) return;
+L637: 
+L638:           // Batter name filter (for matchup)
+L639:           if (filters.batter && !playerNamesMatch(d.batter, filters.batter)) return;
+L640:           // Bowler name filter (for matchup)
+L641:           if (filters.bowler && !playerNamesMatch(d.bowler, filters.bowler)) return;
+L642: 
+L643:           const phase = phaseFromOver(overNum);
+L644:           const delivType = classifyDeliveryType(overNum, ballIndex, bType);
+L645:           const zone = getScoringZone(overNum, ballIndex, d.runs?.batter || 0, bType);
+L646: 
+L647:           // ── Accumulate batter stats ──────────────────────────────────────
+L648:           const batterCondition = !selectedTeam || btShort === selectedTeam;
+L649:           if (batterCondition) {
+L650:             let bs = batterStats.get(d.batter);
+L651:             if (!bs) {
+L652:               bs = {
+L653:                 runs: 0, balls: 0, fours: 0, sixes: 0,
+L654:                 innings: new Set(), notOuts: new Set(), matchScores: new Map(),
+L655:                 ppRuns: 0, ppBalls: 0, middleRuns: 0, middleBalls: 0,
+L656:                 deathRuns: 0, deathBalls: 0,
+L657:                 dismissals: [],
+L658:                 deliveryStats: new Map(),
+L659:                 scoringZones: new Map(),
+L660:               };
+L661:               batterStats.set(d.batter, bs);
+L662:             }
+L663:             const br = d.runs?.batter || 0;
+L664:             bs.runs += br;
+L665:             if (legalBall) bs.balls++;
+L666:             if (br === 4) bs.fours++;
+L667:             if (br === 6) bs.sixes++;
+L668:             bs.innings.add(matchId);
+L669:             bs.matchScores.set(matchId, (bs.matchScores.get(matchId) || 0) + br);
+L670: 
+L671:             if (phase === "powerplay") { bs.ppRuns += br; if (legalBall) bs.ppBalls++; }
+L672:             else if (phase === "middle") { bs.middleRuns += br; if (legalBall) bs.middleBalls++; }
+L673:             else { bs.deathRuns += br; if (legalBall) bs.deathBalls++; }
+L674: 
+L675:             // Delivery breakdown
+L676:             const ds = bs.deliveryStats.get(delivType) || { runs: 0, balls: 0, dismissals: 0 };
+L677:             ds.runs += br; if (legalBall) ds.balls++;
+L678:             bs.deliveryStats.set(delivType, ds);
+L679: 
+L680:             // Scoring zone
+L681:             const zs = bs.scoringZones.get(zone) || { runs: 0, balls: 0, boundaries: 0 };
+L682:             zs.runs += br; if (legalBall) zs.balls++;
+L683:             if (br === 4 || br === 6) zs.boundaries++;
+L684:             bs.scoringZones.set(zone, zs);
+L685:           }
+L686: 
+L687: // ── Accumulate bowler stats ──────────────────────────────────────
+L688:           const bowlerCondition = !selectedTeam || blShort === selectedTeam;
+L689:           if (bowlerCondition) {
+L690:             let ws = bowlerStats.get(d.bowler);
+L691:             if (!ws) {
+L692:               ws = {
+L693:                 runs: 0, balls: 0, wickets: 0, dots: 0, innings: new Set(),
+L694:                 ppRuns: 0, ppBalls: 0, ppWickets: 0,
+L695:                 middleRuns: 0, middleBalls: 0, middleWickets: 0,
+L696:                 deathRuns: 0, deathBalls: 0, deathWickets: 0,
+L697:                 boundaries: 0,
+L698:                 bowlerType: bType,
+L699:                 handSplits: { LHB: newHandSplit(), RHB: newHandSplit(), Unknown: newHandSplit() },
+L700:                 deliveryStats: new Map(),
+L701:               };
+L702:               bowlerStats.set(d.bowler, ws);
+L703:             }
+L704:             const conceded = (d.runs?.batter || 0) + (ext.wides ?? 0) + (ext.noballs ?? 0);
+L705:             ws.runs += conceded;
+L706:             if (legalBall) ws.balls++;
+L707:             const batterRuns = d.runs?.batter || 0;
+L708:             if (legalBall && (batterRuns === 4 || batterRuns === 6)) ws.boundaries++;
+L709:             if (legalBall && (d.runs?.total || 0) === 0) ws.dots++;
+L710:             ws.innings.add(matchId);
+L711: 
+L712:             const battingHand = getBattingHand(d.batter);
+L713:             ws.handSplits[battingHand].runs += batterRuns;
+L714:             if (legalBall) ws.handSplits[battingHand].balls++;
+L715: 
+L716:             if (phase === "powerplay") { ws.ppRuns += conceded; if (legalBall) ws.ppBalls++; }
+L717:             else if (phase === "middle") { ws.middleRuns += conceded; if (legalBall) ws.middleBalls++; }
+L718:             else { ws.deathRuns += conceded; if (legalBall) ws.deathBalls++; }
+L719: 

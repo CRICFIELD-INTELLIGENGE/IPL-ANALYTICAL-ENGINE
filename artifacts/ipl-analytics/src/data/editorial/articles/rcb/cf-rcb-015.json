@@ -1,0 +1,210 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-015",
+ "planId": "cf-rcb-015",
+ "franchise": "RCB",
+ "aspect": "bowling-fielding",
+ "title": "Death-Overs Risk: The Cost of One Missed Length for Royal Challengers Bengaluru",
+ "slug": "rcb-death-overs-risk-the-cost-of-one-missed-length-for-rcb",
+ "dek": "A yorker that slips into a full toss is the most expensive single mistake in RCB's bowling. Ball-by-ball length data puts a price on it, and explains why the title sides finally won the last five overs.",
+ "excerpt": "In the death overs a missed yorker costs RCB about three-quarters of a run every time it happens. Repeated over the last four overs, that adds up to about three runs, the margin of many tight finishes. Here is how the title-era attack shrank the bill.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-25",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "RCB"
+ ],
+ "players": [
+  "Bhuvneshwar Kumar",
+  "Josh Hazlewood",
+  "Yash Dayal",
+  "Mohammed Siraj"
+ ],
+ "seasons": [
+  "2008\u20132026",
+  "2022\u20132026",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "When an RCB yorker becomes a full toss in the death, it costs {{ev:miss-cost-fulltoss}} extra runs per ball ({{ev:yorker-rpb}} vs {{ev:fulltoss-rpb}}).",
+  "RCB's death economy was worse than the league's in {{ev:rcb-death-seasons-worse}} of the last nineteen seasons, but better in each of 2024, 2025 and 2026.",
+  "Bhuvneshwar Kumar's death economy of {{ev:death-econ-b-kumar}} across {{ev:death-balls-b-kumar}} balls anchored the title-era attack."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Most Expensive Inch in Bengaluru",
+   "body": [
+    "Every death bowler aims at the same few centimetres at the base of the stumps. Hit them and the batter digs out a single at best. Miss by a hand's width and the yorker becomes a full toss, the most hittable ball in the game. RCB's history in the last five overs is, to a large degree, the story of how often they missed.",
+    "Across the full history in the CricField warehouse RCB conceded {{ev:rcb-death-econ-all}} runs per over in the death. They were more expensive than the league in {{ev:rcb-death-seasons-worse}} seasons, a record that shaped the franchise's reputation for posting big totals and still losing. The last three seasons broke the pattern: {{ev:rcb-death-econ-2024}} in 2024 against a league figure of {{ev:league-death-econ-2024}}, {{ev:rcb-death-econ-2025}} against {{ev:league-death-econ-2025}} in 2025, and {{ev:rcb-death-econ-2026}} against {{ev:league-death-econ-2026}} in 2026."
+   ],
+   "chartIds": [
+    "death-trend"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Pricing the Miss, Ball by Ball",
+   "body": [
+    "The warehouse carries a length label for {{ev:len-coverage}} of RCB's {{ev:len-balls-total}} legal death-over deliveries since 2022, parsed from ball-by-ball commentary. That is enough to price each length. A yorker cost RCB {{ev:yorker-rpb}} runs per ball. A full ball that was not a yorker cost {{ev:full-rpb}}. A full toss cost {{ev:fulltoss-rpb}}.",
+    "The gap between the intended ball and the missed one is {{ev:miss-cost-fulltoss}} runs, every time it happens. Boundaries tell the same story: {{ev:yorker-boundary-pct}} of RCB's death yorkers went for four or six, against {{ev:fulltoss-boundary-pct}} of the full tosses. Across the league over the same seasons the gap was {{ev:league-miss-cost}} runs per ball, so RCB's misses were if anything slightly cheaper than average.",
+    "Translate that into a spell. If one yorker per over turns into a full toss across the last four overs, the expected cost is {{ev:miss-cost-per-spell}} runs, roughly the margin of a tight finish. In RCB's labelled death deliveries since 2022, yorkers made up {{ev:yorker-share}} and full tosses {{ev:fulltoss-share}}: nearly one miss for every hit."
+   ],
+   "chartIds": [
+    "length-cost"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "How the Title Attack Rewrote the Last Five Overs",
+   "body": [
+    "The title-era bowlers did not stop missing; they changed how often they tried. Bhuvneshwar Kumar bowled {{ev:death-balls-b-kumar}} death balls for RCB between 2024 and 2026 at an economy of {{ev:death-econ-b-kumar}}, and the bowler table shows the highest yorker share in the group with a full-toss share well below Hazlewood's and Yash Dayal's. Josh Hazlewood conceded {{ev:death-econ-jr-hazlewood}} across {{ev:death-balls-jr-hazlewood}} balls; Dayal is the cautionary case, with more full tosses than yorkers among his labelled deliveries.",
+    "That mix matters. The length table shows that a good-length ball was RCB's cheapest delivery at the death, and the bouncer produced the highest dot-ball rate. A plan built purely on yorkers carries the full-toss risk on every ball; a plan that blends hard lengths and bouncers caps the downside when execution slips.",
+    "For captains the lesson is about sequencing. Give the yorker specialist the overs where the batter is set and swinging, and use the hard-length bowler when the batter is new or the boundary is long on one side."
+   ],
+   "chartIds": [
+    "death-bowlers"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What the Length Labels Cannot See",
+   "body": [
+    "These labels come from text commentary, not ball-tracking, and they leave about one delivery in five unlabelled. Commentators also describe outcomes as much as intentions: a ball hit for six is more likely to be called a full toss than one dug out for a single, which would inflate the measured cost of the miss.",
+    "The comparison also ignores the batter. Yorkers tend to be bowled to set hitters at the very end of an innings, and length balls earlier in the death to newer batters; some of the price difference belongs to the situation rather than the length.",
+    "{{hyp:label-bias}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Budget for the Miss, Then Shrink It",
+   "body": [
+    "RCB's death bowling improved because the bill for missed lengths got smaller, not because the misses vanished. The data supports a plan that treats the yorker as a high-reward option rather than a default, with hard lengths as the floor.",
+    "For recruitment, the measurable skill is not how many yorkers a bowler attempts but how rarely his misses become full tosses. That ratio, tracked across seasons, is a better scouting signal than raw death economy, which mixes skill with the matches a bowler happened to play."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "death-trend",
+   "type": "line",
+   "title": "Death-overs economy by season",
+   "subtitle": "RCB bowling vs IPL average, overs 16\u201320",
+   "table": "death-econ-by-season",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "rcb",
+     "label": "RCB"
+    },
+    {
+     "key": "league",
+     "label": "IPL average"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per over",
+   "takeaway": "RCB's death bowling was more expensive than the league's in about half of all seasons, and cheaper in each of the last three.",
+   "ariaLabel": "Line chart of death-overs economy by season from 2008 to 2026 for RCB and the IPL average. RCB runs above the league in many seasons, peaking in 2018, and below it from 2024 to 2026."
+  },
+  {
+   "id": "length-cost",
+   "type": "column",
+   "title": "What each death-overs length costs RCB",
+   "subtitle": "RCB bowling, overs 16\u201320, 2022\u20132026, labelled balls",
+   "table": "death-length-cost",
+   "xKey": "length",
+   "series": [
+    {
+     "key": "runsPerBall",
+     "label": "Runs per ball"
+    }
+   ],
+   "xLabel": "Length (commentary label)",
+   "unit": "runs per ball",
+   "takeaway": "The full toss is the most expensive pitched-up ball; the yorker and good length are the cheapest.",
+   "ariaLabel": "Column chart of runs per ball conceded by RCB in the death overs by delivery length: yorker, full, full toss, length ball, good length, short of a length, short and bouncer."
+  },
+  {
+   "id": "death-bowlers",
+   "type": "bar",
+   "title": "RCB death bowlers, 2024\u20132026",
+   "subtitle": "Minimum 60 legal balls; yorker and full-toss share of labelled balls",
+   "table": "death-bowlers-2024-26",
+   "xKey": "bowler",
+   "series": [
+    {
+     "key": "yorkerPct",
+     "label": "Yorker %"
+    },
+    {
+     "key": "fullTossPct",
+     "label": "Full toss %"
+    }
+   ],
+   "unit": "% of labelled balls",
+   "takeaway": "Bhuvneshwar combined the most yorkers with few full tosses; Yash Dayal's misses outnumbered his hits.",
+   "ariaLabel": "Horizontal bar chart comparing yorker share and full-toss share for RCB death bowlers from 2024 to 2026."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026) with commentary-derived length labels",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Length labels parsed from text commentary; coverage reported in the article."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "label-bias",
+   "statement": "Hypothesis: commentary labelling inflates the cost of a full toss, because expensive deliveries are more often described as full tosses than cheap ones.",
+   "whyUnverified": "No ball-tracking data is available in the warehouse to check labels against.",
+   "howToTest": "Compare commentary labels with Hawk-Eye length data for a sample of matches where both exist."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An RCB fast bowler at the death in the title era.",
+   "wanted": "Bhuvneshwar Kumar or Josh Hazlewood bowling for RCB, 2025\u20132026, landscape."
+  },
+  {
+   "slot": "s2",
+   "narrative": "The yorker as the target length.",
+   "wanted": "An RCB bowler celebrating a wicket in the 2025 final or a late-innings wicket."
+  },
+  {
+   "slot": "s4",
+   "narrative": "Execution under pressure at the end of an innings.",
+   "wanted": "Yash Dayal or another RCB seamer bowling late in a 2025 match."
+  }
+ ],
+ "videos": [
+  {
+   "catalogueId": "JH-1540040398",
+   "afterSection": "s3",
+   "why": "RCB won the 2025 final by defending their total, so the closing overs are exactly the test this article describes."
+  }
+ ],
+ "related": [
+  "cf-rcb-012",
+  "cf-rcb-018",
+  "cf-rcb-028"
+ ],
+ "seo": {
+  "metaTitle": "Death-Overs Risk: what a missed yorker costs RCB | CricField",
+  "metaDescription": "Ball-by-ball length data prices RCB's missed yorkers in the death overs, and shows how Bhuvneshwar and the title-era attack cut the bill."
+ },
+ "methodology": "Death overs = overs sixteen to twenty of regulation innings. Economy uses runs charged to the bowler (byes and leg-byes excluded) per legal ball times six. Length labels come from the delivery_commentary table (commentary-derived), 2022\u20132026, lengths with at least forty labelled balls. Wickets exclude run outs. Generated by scripts/editorial/evidence/rcb/cf-rcb-015.ts."
+}

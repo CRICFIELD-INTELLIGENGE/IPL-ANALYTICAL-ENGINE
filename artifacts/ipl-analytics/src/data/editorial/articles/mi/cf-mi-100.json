@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-mi-100",
+ "planId": "cf-mi-100",
+ "franchise": "MI",
+ "aspect": "future",
+ "title": "The Future XI: Designing Mumbai Indians\u2019s Ideal Role Balance, Not a Dream Team",
+ "slug": "mi-the-future-xi-designing-mi-ideal-role-balance-not-a-dream-team",
+ "dek": "A dream team picks the best eleven names. A future XI starts from roles: how many bowlers a side really uses, how deep the batting goes, and how much spin the plan needs.",
+ "excerpt": "Since 2022, Mumbai Indians have used a measurable number of bowlers and batters per innings and a spin share that can be set against the league. Those numbers define the roles a future XI has to fill.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "MI"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "MI have used {{ev:fx-bm}} bowlers per innings since 2022, against {{ev:fx-bo}} for the rest of the IPL.",
+  "They have used {{ev:fx-tm}} batters per innings, against {{ev:fx-to}}.",
+  "Spin has bowled {{ev:fx-sm}} of their overs, against {{ev:fx-so}} across the league (bowlers with a known style)."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Roles Before Names",
+   "body": [
+    "A future XI should be designed as a set of roles: how many genuine bowling options, how deep the batting must go, and the balance of pace and spin. Names follow from the roles.",
+    "Since 2022, Mumbai Indians have used {{ev:fx-bm}} bowlers per innings, against {{ev:fx-bo}} for the rest of the IPL. The chart tracks it by season."
+   ],
+   "chartIds": [
+    "fx-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Batting Depth and Spin",
+   "body": [
+    "MI have used {{ev:fx-tm}} batters per innings, against {{ev:fx-to}} across the league, a measure of how often the lower order is needed.",
+    "Spin has bowled {{ev:fx-sm}} of their overs, against {{ev:fx-so}} for the league."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Proposal: A Role Template",
+   "body": [
+    "Proposal: design the future XI as six batting roles (two openers, an anchor, two middle-order hitters and a finisher), five bowling roles split by phase, and one impact-player slot reserved for the matchup of the day.",
+    "{{hyp:roles}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Limits",
+   "body": [
+    "Bowling style is known for most but not all bowlers. Counts of bowlers and batters used reflect match situations as well as plans: a collapse uses more batters whatever the design.",
+    "The impact-player rule makes any fixed XI less fixed than it used to be."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Build the Roles, Then Fill Them",
+   "body": [
+    "Mumbai Indians should define the roles their XI needs from how they actually play, then use the auction and academy to fill them.",
+    "That is the difference between a future XI and a dream team."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "fx-chart",
+   "type": "line",
+   "title": "Bowlers used per innings",
+   "subtitle": "MI vs rest of IPL, 2022\u20132026",
+   "table": "fx-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "MI"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "bowlers per innings",
+   "takeaway": "The number of bowling options used has shifted since the impact-player rule.",
+   "ariaLabel": "Line chart of the number of bowlers used per innings by MI and the rest of the IPL since 2022."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "roles",
+   "statement": "Hypothesis: sides that use six or more bowlers per innings concede fewer runs in the death overs, because they can save their best bowlers for the end.",
+   "whyUnverified": "The link between bowlers used and death economy has not been tested.",
+   "howToTest": "Correlate bowlers used per innings with death-overs economy across franchise-seasons."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "The Mumbai Indians XI of the future.",
+   "wanted": "Mumbai Indians team huddle."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-mi-091",
+  "cf-mi-023",
+  "cf-mi-040"
+ ],
+ "seo": {
+  "metaTitle": "The future XI: Mumbai Indians' ideal role balance",
+  "metaDescription": "How many bowlers and batters Mumbai Indians use per innings, their spin share, and a role template for a future XI."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Forward-looking proposals are labelled as such. Generated by scripts/editorial/engine. Bowling style from CricField player-bio data.",
+ "generator": "engine:v1"
+}

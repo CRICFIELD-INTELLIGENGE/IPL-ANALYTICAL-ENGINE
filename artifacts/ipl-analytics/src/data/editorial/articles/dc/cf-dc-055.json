@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-055",
+ "planId": "cf-dc-055",
+ "franchise": "DC",
+ "aspect": "fan-culture",
+ "title": "Rivalry Without the Scoreboard: Why Delhi Capitals Fixtures Feel Personal",
+ "slug": "dc-rivalry-without-the-scoreboard-why-dc-fixtures-feel-personal",
+ "dek": "Some fixtures feel personal before a ball is bowled. For Delhi Capitals, the most frequent opponent is Mumbai Indians, and the history between them explains some of the edge.",
+ "excerpt": "Delhi Capitals and Mumbai Indians have met more than any other pairing in Delhi Capitals' history. The record between them, its streaks and its close finishes, is what gives the fixture its weight.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "DC"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "DC have won {{ev:rv-won}} of {{ev:rv-n}} decided matches against Mumbai Indians.",
+  "The longest run of consecutive wins by one side in the fixture is {{ev:rv-streak}}, by MI.",
+  "DC have won {{ev:rv-last}} of the last five meetings; {{ev:rv-close}} meetings have been close finishes."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Why Some Fixtures Feel Personal",
+   "body": [
+    "Rivalries are built from history: repeated meetings, memorable finishes, streaks that one side's fans never let the other forget.",
+    "The CricField warehouse holds no survey, sentiment or social-media data, so it cannot measure what fans feel. It can measure what they have watched."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Record Between Them",
+   "body": [
+    "Delhi Capitals have won {{ev:rv-won}} of {{ev:rv-n}} decided matches against Mumbai Indians. The chart shows wins and losses in the fixture season by season.",
+    "The longest run of consecutive wins by one side is {{ev:rv-streak}}, by MI. {{ev:rv-close}} meetings have been close finishes."
+   ],
+   "chartIds": [
+    "rv-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Recent Memory",
+   "body": [
+    "Fans weight recent results most heavily. DC have won {{ev:rv-last}} of the last five meetings.",
+    "{{hyp:rival}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Most-Played Is a Stand-In",
+   "body": [
+    "The most frequent opponent is a measurable stand-in for a rivalry. The rivalry fans feel most may be with a different side, shaped by geography, a final or a single incident.",
+    "Identifying that would need fan survey data."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: History Gives the Fixture Its Edge",
+   "body": [
+    "Delhi Capitals' record against Mumbai Indians has enough streaks and close finishes to explain why the fixture matters.",
+    "What it means to fans is a question the scoreboard cannot answer."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "rv-chart",
+   "type": "column",
+   "title": "DC v MI",
+   "subtitle": "Wins and losses by season",
+   "table": "rv-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "won",
+     "label": "DC wins"
+    },
+    {
+     "key": "lost",
+     "label": "MI wins"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "matches",
+   "takeaway": "The fixture has swung between the two sides over time.",
+   "ariaLabel": "Grouped column chart of DC wins and losses against MI by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "rival",
+   "statement": "Hypothesis: fans rate the MI fixture as more important than other matches, and that rating follows the recent head-to-head record.",
+   "whyUnverified": "No fan survey data is available.",
+   "howToTest": "Survey fans on fixture importance before and after a season and compare with recent results."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Delhi Capitals against Mumbai Indians.",
+   "wanted": "Delhi Capitals v Mumbai Indians match action."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-046",
+  "cf-dc-030",
+  "cf-dc-056"
+ ],
+ "seo": {
+  "metaTitle": "Rivalry without the scoreboard: DC v MI",
+  "metaDescription": "The history between Delhi Capitals and Mumbai Indians: head-to-head record, streaks, recent form and close finishes."
+ },
+ "methodology": "CricField holds ball-by-ball cricket data and no fan survey, sentiment or social-media data. This article measures the cricket fans have experienced; statements about fans themselves are labelled hypotheses. Generated by scripts/editorial/engine. Rivalry = most frequent opponent.",
+ "generator": "engine:v1"
+}

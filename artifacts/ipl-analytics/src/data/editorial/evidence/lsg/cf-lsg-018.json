@@ -1,0 +1,153 @@
+{
+ "articleId": "cf-lsg-018",
+ "generatedAt": "2026-10-26T04:27:16.608Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "po-lsd": {
+   "value": 1.76,
+   "display": "1.76",
+   "label": "IPL runs per slower ball in the death",
+   "unit": "runs per ball",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Death, 2022–2026",
+   "sampleSize": {
+    "n": 1328,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (13) THEN 'team' ELSE 'rest' END side, CASE WHEN d.over_num <= 5 THEN 'Powerplay' WHEN d.over_num <= 14 THEN 'Middle' ELSE 'Death' END ph, CASE WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'slow' ELSE 'stock' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND (c.variation IN ('Slower ball','Off-cutter','Leg-cutter') OR c.length IS NOT NULL) AND d.bowler_id IN (SELECT d2.bowler_id FROM deliveries d2 JOIN delivery_commentary c2 ON c2.delivery_id = d2.delivery_id WHERE c2.variation IN ('Slower ball','Off-cutter','Leg-cutter') GROUP BY d2.bowler_id HAVING COUNT(*) >= 10) GROUP BY side, ph, dkind",
+   "validation": {
+    "method": "sample-size floor ≥ 300 balls",
+    "passed": true,
+    "detail": "n = 1328"
+   }
+  },
+  "po-lod": {
+   "value": 1.72,
+   "display": "1.72",
+   "label": "IPL runs per other labelled ball in the death",
+   "unit": "runs per ball",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Death, 2022–2026",
+   "sampleSize": {
+    "n": 9625,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (13) THEN 'team' ELSE 'rest' END side, CASE WHEN d.over_num <= 5 THEN 'Powerplay' WHEN d.over_num <= 14 THEN 'Middle' ELSE 'Death' END ph, CASE WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'slow' ELSE 'stock' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND (c.variation IN ('Slower ball','Off-cutter','Leg-cutter') OR c.length IS NOT NULL) AND d.bowler_id IN (SELECT d2.bowler_id FROM deliveries d2 JOIN delivery_commentary c2 ON c2.delivery_id = d2.delivery_id WHERE c2.variation IN ('Slower ball','Off-cutter','Leg-cutter') GROUP BY d2.bowler_id HAVING COUNT(*) >= 10) GROUP BY side, ph, dkind",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 balls",
+    "passed": true,
+    "detail": "n = 9625"
+   }
+  },
+  "po-lsp": {
+   "value": 1.73,
+   "display": "1.73",
+   "label": "IPL runs per slower ball in the powerplay",
+   "unit": "runs per ball",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Powerplay, 2022–2026",
+   "sampleSize": {
+    "n": 659,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (13) THEN 'team' ELSE 'rest' END side, CASE WHEN d.over_num <= 5 THEN 'Powerplay' WHEN d.over_num <= 14 THEN 'Middle' ELSE 'Death' END ph, CASE WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'slow' ELSE 'stock' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND (c.variation IN ('Slower ball','Off-cutter','Leg-cutter') OR c.length IS NOT NULL) AND d.bowler_id IN (SELECT d2.bowler_id FROM deliveries d2 JOIN delivery_commentary c2 ON c2.delivery_id = d2.delivery_id WHERE c2.variation IN ('Slower ball','Off-cutter','Leg-cutter') GROUP BY d2.bowler_id HAVING COUNT(*) >= 10) GROUP BY side, ph, dkind",
+   "validation": {
+    "method": "sample-size floor ≥ 200 balls",
+    "passed": true,
+    "detail": "n = 659"
+   }
+  },
+  "po-lop": {
+   "value": 1.39,
+   "display": "1.39",
+   "label": "IPL runs per other labelled ball in the powerplay",
+   "unit": "runs per ball",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Powerplay, 2022–2026",
+   "sampleSize": {
+    "n": 13756,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (13) THEN 'team' ELSE 'rest' END side, CASE WHEN d.over_num <= 5 THEN 'Powerplay' WHEN d.over_num <= 14 THEN 'Middle' ELSE 'Death' END ph, CASE WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'slow' ELSE 'stock' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND (c.variation IN ('Slower ball','Off-cutter','Leg-cutter') OR c.length IS NOT NULL) AND d.bowler_id IN (SELECT d2.bowler_id FROM deliveries d2 JOIN delivery_commentary c2 ON c2.delivery_id = d2.delivery_id WHERE c2.variation IN ('Slower ball','Off-cutter','Leg-cutter') GROUP BY d2.bowler_id HAVING COUNT(*) >= 10) GROUP BY side, ph, dkind",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 balls",
+    "passed": true,
+    "detail": "n = 13756"
+   }
+  },
+  "po-tshare": {
+   "value": 9.8,
+   "display": "9.8%",
+   "label": "Slower balls as a share of Lucknow Super Giants' labelled deliveries",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 3731,
+    "unit": "labelled balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (13) THEN 'team' ELSE 'rest' END side, CASE WHEN d.over_num <= 5 THEN 'Powerplay' WHEN d.over_num <= 14 THEN 'Middle' ELSE 'Death' END ph, CASE WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'slow' ELSE 'stock' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND (c.variation IN ('Slower ball','Off-cutter','Leg-cutter') OR c.length IS NOT NULL) AND d.bowler_id IN (SELECT d2.bowler_id FROM deliveries d2 JOIN delivery_commentary c2 ON c2.delivery_id = d2.delivery_id WHERE c2.variation IN ('Slower ball','Off-cutter','Leg-cutter') GROUP BY d2.bowler_id HAVING COUNT(*) >= 10) GROUP BY side, ph, dkind",
+   "validation": {
+    "method": "sample-size floor ≥ 300 balls",
+    "passed": true,
+    "detail": "n = 3731"
+   }
+  },
+  "po-lshare": {
+   "value": 8.8,
+   "display": "8.8%",
+   "label": "Slower balls as a share of the rest of the IPL's labelled deliveries",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 37577,
+    "unit": "labelled balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (13) THEN 'team' ELSE 'rest' END side, CASE WHEN d.over_num <= 5 THEN 'Powerplay' WHEN d.over_num <= 14 THEN 'Middle' ELSE 'Death' END ph, CASE WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'slow' ELSE 'stock' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND (c.variation IN ('Slower ball','Off-cutter','Leg-cutter') OR c.length IS NOT NULL) AND d.bowler_id IN (SELECT d2.bowler_id FROM deliveries d2 JOIN delivery_commentary c2 ON c2.delivery_id = d2.delivery_id WHERE c2.variation IN ('Slower ball','Off-cutter','Leg-cutter') GROUP BY d2.bowler_id HAVING COUNT(*) >= 10) GROUP BY side, ph, dkind",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 balls",
+    "passed": true,
+    "detail": "n = 37577"
+   }
+  }
+ },
+ "tables": {
+  "po-phase": {
+   "label": "Slower balls vs other labelled deliveries by phase, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Runs per ball; commentary-derived variation labels",
+   "sampleSize": {
+    "n": 41308,
+    "unit": "labelled balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (13) THEN 'team' ELSE 'rest' END side, CASE WHEN d.over_num <= 5 THEN 'Powerplay' WHEN d.over_num <= 14 THEN 'Middle' ELSE 'Death' END ph, CASE WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'slow' ELSE 'stock' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND (c.variation IN ('Slower ball','Off-cutter','Leg-cutter') OR c.length IS NOT NULL) AND d.bowler_id IN (SELECT d2.bowler_id FROM deliveries d2 JOIN delivery_commentary c2 ON c2.delivery_id = d2.delivery_id WHERE c2.variation IN ('Slower ball','Off-cutter','Leg-cutter') GROUP BY d2.bowler_id HAVING COUNT(*) >= 10) GROUP BY side, ph, dkind",
+   "rows": [
+    {
+     "phase": "Powerplay",
+     "slowerBall": 1.73,
+     "otherBall": 1.39,
+     "teamSlower": 1.78
+    },
+    {
+     "phase": "Middle",
+     "slowerBall": 1.58,
+     "otherBall": 1.42,
+     "teamSlower": 1.39
+    },
+    {
+     "phase": "Death",
+     "slowerBall": 1.76,
+     "otherBall": 1.72,
+     "teamSlower": 1.71
+    }
+   ]
+  }
+ }
+}

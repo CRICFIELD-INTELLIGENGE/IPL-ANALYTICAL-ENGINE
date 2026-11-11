@@ -1,0 +1,38 @@
+[
+ {
+  "route": "/home",
+  "files": 16,
+  "rawKb": 1402.7,
+  "gzipKb": 252
+ },
+ {
+  "route": "/stats",
+  "files": 27,
+  "rawKb": 1903.4,
+  "gzipKb": 385.5
+ },
+ {
+  "route": "/scout",
+  "files": 9,
+  "rawKb": 1363.7,
+  "gzipKb": 240.5
+ },
+ {
+  "route": "/ai-analyst",
+  "files": 41,
+  "rawKb": 1882.2,
+  "gzipKb": 392.1
+ },
+ {
+  "route": "/players/v-kohli",
+  "files": 42,
+  "rawKb": 2458.7,
+  "gzipKb": 532.7
+ },
+ {
+  "route": "/match/:id",
+  "files": 34,
+  "rawKb": 1486.9,
+  "gzipKb": 277.4
+ }
+]

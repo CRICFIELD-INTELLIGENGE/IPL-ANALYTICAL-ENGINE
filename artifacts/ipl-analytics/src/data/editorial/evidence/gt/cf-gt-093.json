@@ -1,0 +1,414 @@
+{
+ "articleId": "cf-gt-093",
+ "generatedAt": "2026-10-26T04:26:58.022Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "tw-home-matches": {
+   "value": 53,
+   "display": "53",
+   "label": "Matches at Ahmedabad in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams, regulation innings",
+   "sampleSize": {
+    "n": 53,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 53"
+   }
+  },
+  "tw-rr-home": {
+   "value": 8.94,
+   "display": "8.94",
+   "label": "Run rate at Ahmedabad",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 12193,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "plausibility range 6–12 for run rate",
+    "passed": true,
+    "detail": "value 8.943164110555237"
+   }
+  },
+  "tw-rr-other": {
+   "value": 8.45,
+   "display": "8.45",
+   "label": "Run rate at all other IPL venues",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All other venues",
+   "sampleSize": {
+    "n": 272272,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "plausibility range 6–12 for run rate",
+    "passed": true,
+    "detail": "value 8.445576482341188"
+   }
+  },
+  "tw-six-home": {
+   "value": 15.4,
+   "display": "15.4",
+   "label": "Sixes per match at Ahmedabad",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 53,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 53"
+   }
+  },
+  "tw-six-other": {
+   "value": 12.6,
+   "display": "12.6",
+   "label": "Sixes per match at other venues",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All other venues",
+   "sampleSize": {
+    "n": 1190,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 matches",
+    "passed": true,
+    "detail": "n = 1190"
+   }
+  },
+  "tw-first-home": {
+   "value": 181,
+   "display": "181",
+   "label": "Average first-innings score at Ahmedabad",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings",
+   "sampleSize": {
+    "n": 53,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 innings",
+    "passed": true,
+    "detail": "n = 53"
+   }
+  },
+  "tw-first-other": {
+   "value": 168,
+   "display": "168",
+   "label": "Average first-innings score at other venues",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings",
+   "sampleSize": {
+    "n": 1190,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 innings",
+    "passed": true,
+    "detail": "n = 1190"
+   }
+  },
+  "tw-chase-home": {
+   "value": 50.9,
+   "display": "50.9%",
+   "label": "Chasing side's win rate at Ahmedabad",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 53,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 53"
+   }
+  },
+  "tw-chase-other": {
+   "value": 54.6,
+   "display": "54.6%",
+   "label": "Chasing side's win rate at other venues",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 1181,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 matches",
+    "passed": true,
+    "detail": "n = 1181"
+   }
+  },
+  "tw-home-win": {
+   "value": 58.1,
+   "display": "58.1%",
+   "label": "GT win rate at Ahmedabad",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "GT matches with a result at the ground",
+   "sampleSize": {
+    "n": 31,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 31"
+   }
+  },
+  "tw-away-win": {
+   "value": 63,
+   "display": "63.0%",
+   "label": "GT win rate elsewhere",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "GT matches with a result at other venues",
+   "sampleSize": {
+    "n": 46,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 46"
+   }
+  },
+  "tw-home-n": {
+   "value": 31,
+   "display": "31",
+   "label": "GT decided matches at Ahmedabad",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 31,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 31"
+   }
+  },
+  "tw-home-ci": {
+   "value": "41–74%",
+   "display": "41–74%",
+   "label": "95% interval for GT's home win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Wilson score interval",
+   "sampleSize": {
+    "n": 31,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "interval contains point estimate",
+    "passed": true
+   }
+  },
+  "tw-home-p": {
+   "value": 0.47,
+   "display": "0.47",
+   "label": "Probability of a home record at least this far from 50/50 if each match were a coin toss",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Two-sided exact binomial test",
+   "sampleSize": {
+    "n": 31,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "plausibility range 0–1 for p-value",
+    "passed": true,
+    "detail": "value 0.4731307956769806"
+   }
+  },
+  "tw-toss-field": {
+   "value": 74,
+   "display": "74%",
+   "label": "Toss winners choosing to bowl first at Ahmedabad",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 53,
+    "unit": "matches"
+   },
+   "query": "SELECT SUM(CASE WHEN toss_decision = 'field' THEN 1 ELSE 0 END) field, COUNT(*) n FROM matches m WHERE m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%')",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 53"
+   }
+  },
+  "tw-hp": {
+   "value": 9.18,
+   "display": "9.18",
+   "label": "Pace economy at Ahmedabad, 2022–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams",
+   "sampleSize": {
+    "n": 4153,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, pl.name, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY v, pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 300 legal balls",
+    "passed": true,
+    "detail": "n = 4153"
+   }
+  },
+  "tw-hs": {
+   "value": 8.92,
+   "display": "8.92",
+   "label": "Spin economy at Ahmedabad, 2022–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams",
+   "sampleSize": {
+    "n": 2295,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, pl.name, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY v, pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 300 legal balls",
+    "passed": true,
+    "detail": "n = 2295"
+   }
+  },
+  "tw-op": {
+   "value": 9.47,
+   "display": "9.47",
+   "label": "Pace economy at other venues",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams",
+   "sampleSize": {
+    "n": 35015,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, pl.name, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY v, pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 3000 legal balls",
+    "passed": true,
+    "detail": "n = 35015"
+   }
+  },
+  "tw-os": {
+   "value": 8.33,
+   "display": "8.33",
+   "label": "Spin economy at other venues",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams",
+   "sampleSize": {
+    "n": 19631,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, pl.name, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY v, pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 3000 legal balls",
+    "passed": true,
+    "detail": "n = 19631"
+   }
+  },
+  "tw-cover": {
+   "value": 78,
+   "display": "78%",
+   "label": "Share of balls at Ahmedabad with a known bowling type",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 133,
+    "unit": "bowlers"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, pl.name, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY v, pl.name",
+   "validation": {
+    "method": "plausibility range 40–100 for coverage",
+    "passed": true,
+    "detail": "value 78.15757575757576"
+   }
+  }
+ },
+ "tables": {
+  "tw-home-away": {
+   "label": "GT win rate at Ahmedabad vs elsewhere",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 77,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "rows": [
+    {
+     "where": "Ahmedabad",
+     "winPct": 58.1,
+     "matches": 31
+    },
+    {
+     "where": "Elsewhere",
+     "winPct": 63,
+     "matches": 46
+    }
+   ]
+  },
+  "tw-type": {
+   "label": "Pace and spin economy at Ahmedabad vs other venues, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams; bowling type from player-bio data",
+   "sampleSize": {
+    "n": 61094,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Narendra Modi%' OR name LIKE '%Motera%') THEN 'home' ELSE 'other' END v, pl.name, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY v, pl.name",
+   "rows": [
+    {
+     "where": "Ahmedabad",
+     "pace": 9.18,
+     "spin": 8.92
+    },
+    {
+     "where": "Other venues",
+     "pace": 9.47,
+     "spin": 8.33
+    }
+   ]
+  }
+ }
+}

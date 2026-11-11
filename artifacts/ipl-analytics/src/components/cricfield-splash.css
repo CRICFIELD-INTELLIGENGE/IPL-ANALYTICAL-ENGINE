@@ -1,0 +1,19 @@
+/* The Opening Delivery: existing brand SVG, site backgrounds, inherited brand accent. */
+.cf-opening{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:#050816;pointer-events:none;isolation:isolate;animation:cf-opening-exit 2300ms linear both;color:hsl(var(--foreground));font-family:"Outfit","Inter",system-ui,sans-serif}
+.cf-opening-stage{position:relative;width:min(960px,90vw);height:300px;display:grid;place-items:center;overflow:visible;--delivery-start:-420px;--delivery-end:420px;--ball-size:48px}
+.cf-opening-brand{width:min(520px,65vw);opacity:0;transform:translateY(8px);animation:cf-opening-reveal 2300ms cubic-bezier(.2,.7,.2,1) both}
+.cf-opening-logo,.cf-opening-logo svg{width:100%;height:auto;display:block;overflow:visible}
+.cf-opening-logo svg *{animation:none!important}
+.cf-opening-delivery{position:absolute;left:calc(50% - var(--ball-size)/2);top:calc(50% - var(--ball-size)/2);width:var(--ball-size);height:var(--ball-size);opacity:0;animation:cf-opening-ball 2300ms cubic-bezier(.22,.7,.24,1) both;will-change:transform,opacity}
+.cf-opening-delivery svg{display:block;width:100%;height:100%}
+.cf-opening-glow{position:absolute;width:70%;height:140px;border-radius:50%;background:radial-gradient(ellipse,var(--team-glow),transparent 70%);opacity:0;animation:cf-opening-atmosphere 2300ms ease both}
+.cf-opening-trail{position:absolute;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--team-accent),transparent);transform:scaleX(0);opacity:0;animation:cf-opening-seam 2300ms ease both;transform-origin:left}
+.cf-opening-skip{pointer-events:auto;position:absolute;right:max(24px,env(safe-area-inset-right,0px));bottom:max(24px,env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:12px;min-height:44px;padding:10px 15px;border:1px solid hsl(var(--border));border-radius:12px;background:hsl(var(--background));color:hsl(var(--foreground));font:600 12px "Inter",system-ui,sans-serif;cursor:pointer}
+.cf-opening-skip:focus-visible{outline:2px solid var(--team-accent);outline-offset:4px}
+@keyframes cf-opening-ball{0%,12%{opacity:0;transform:translateX(var(--delivery-start)) rotate(-65deg) scale(.55)}13%{opacity:.25}35%{opacity:1;transform:translateX(-65px) translateY(-8px) rotate(30deg) scale(1)}54%{opacity:1;transform:translateX(var(--delivery-end)) rotate(155deg) scale(.7)}61%,100%{opacity:0;transform:translateX(var(--delivery-end)) rotate(180deg) scale(.5)}}
+@keyframes cf-opening-reveal{0%,36%{opacity:0;transform:translateY(8px)}61%,82%{opacity:1;transform:translateY(0)}100%{opacity:1;transform:translateY(0)}}
+@keyframes cf-opening-seam{0%,29%{opacity:0;transform:scaleX(0)}38%{opacity:.55;transform:scaleX(.5)}55%{opacity:.2;transform:scaleX(1)}65%,100%{opacity:0;transform:scaleX(1)}}
+@keyframes cf-opening-atmosphere{0%,13%{opacity:0}37%,73%{opacity:.6}100%{opacity:0}}
+@keyframes cf-opening-exit{0%,82%{opacity:1}100%{opacity:0}}
+@media(max-width:767px){.cf-opening-stage{width:100%;height:240px;--delivery-start:-135px;--delivery-end:135px;--ball-size:34px;padding:0 max(28px,env(safe-area-inset-left,0px))}.cf-opening-brand{width:min(320px,80vw)}.cf-opening-delivery{top:calc(50% - 55px)}.cf-opening-trail{top:calc(50% - 38px);left:15%;right:15%}.cf-opening-glow{height:190px;width:90%}.cf-opening-skip{right:max(18px,env(safe-area-inset-right,0px));bottom:max(20px,env(safe-area-inset-bottom,0px))}}
+@media(prefers-reduced-motion:reduce){.cf-opening{display:none}.cf-opening *{animation:none!important}}

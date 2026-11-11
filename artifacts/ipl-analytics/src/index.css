@@ -1,0 +1,413 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  --background: 228 60% 5%;
+  --foreground: 0 0% 100%;
+  --card: 226 48% 9%;
+  --card-foreground: 0 0% 100%;
+  --popover: 228 60% 5%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 213 22% 68%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 226 48% 12%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 226 48% 15%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 213 22% 68%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 226 48% 15%;
+  --input: 226 48% 15%;
+  --ring: 263 83% 58%;
+  --radius: 16px;
+
+  /* TEAM THEME DYNAMIC TOKENS (DEFAULT NEUTRAL ELECTRIC PURPLE) */
+  --team-accent: #A8B7C7;
+  --team-secondary: #06B6D4;
+  --team-glow: rgba(139, 92, 246, 0.25);
+  --team-surface-tint: rgba(139, 92, 246, 0.12);
+  --team-title-ink: #3b82f6;
+  --team-title-surface: #0c1c36;
+}
+
+/* Consistent franchise titles: strong ink over a deep team-coloured surface. */
+:root[data-team] {
+  --team-title-ink: color-mix(in srgb, var(--team-accent) 86%, #90a7c0);
+  --team-title-surface: color-mix(in srgb, var(--team-accent) 14%, #060e20);
+}
+/* Preserve the white title; only its existing accent span follows the team. */
+.editorial-shell main:not([data-white-titles="true"]) h1:not(.home-hero-copy h1) > span {
+  color: var(--team-title-ink);
+}
+
+
+/* Map the shadcn HSL tokens above to Tailwind v4 colors so utilities such as
+   bg-primary/20, text-muted-foreground and ring-ring generate CSS. */
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+}
+
+/* MASTER VIEWPORT LOCK — REMOVED FOR DYNAMIC DASHBOARD SCROLLING */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  background-color: #050816;
+}
+
+@layer base {
+  * { border-color: rgba(255, 255, 255, 0.05); }
+  body {
+    font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: hsl(var(--foreground));
+    background:
+      radial-gradient(1200px 600px at 10% -10%, var(--team-glow, hsl(270 95% 25% / 0.35)), transparent 65%),
+      radial-gradient(900px 500px at 110% 10%, var(--team-surface-tint, hsl(220 100% 30% / 0.30)), transparent 60%),
+      radial-gradient(700px 400px at 50% 110%, var(--team-glow, hsl(320 100% 30% / 0.20)), transparent 65%),
+      #050816;
+    transition: background 0.6s ease-in-out;
+  }
+}
+
+/* Dynamic Team Helper Utilities */
+.team-accent-text { color: var(--team-accent, #8B5CF6); }
+.team-accent-bg { background-color: var(--team-accent, #8B5CF6); }
+.team-accent-border { border-color: var(--team-accent, #8B5CF6); }
+.team-glow-box { box-shadow: 0 0 25px var(--team-glow, rgba(139, 92, 246, 0.25)); }
+
+/* Utilities */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(124, 58, 237, 0.2); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(124, 58, 237, 0.4); }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; }
+@supports (scrollbar-width: none) {
+  .no-scrollbar { scrollbar-width: none; }
+}
+
+.ticker-dot { width: 6px; height: 6px; border-radius: 999px; }
+
+@keyframes verticalScroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-vertical-scroll {
+  animation: verticalScroll 28s linear infinite;
+}
+
+.animate-vertical-scroll:hover {
+  animation-play-state: paused;
+}
+
+.scanline {
+  background: linear-gradient(to bottom, transparent 50%, rgba(255, 255, 255, 0.02) 50%);
+  background-size: 100% 4px;
+}
+
+.premium-card {
+  background-color: #0B1020;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+@keyframes ipl-glow {
+  0% { color: #06B6D4; text-shadow: 0 0 12px rgba(6, 182, 212, 0.4); }
+  33% { color: #8B5CF6; text-shadow: 0 0 15px rgba(139, 92, 246, 0.4); }
+  66% { color: #D946EF; text-shadow: 0 0 12px rgba(217, 70, 239, 0.4); }
+  100% { color: #3B82F6; text-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+}
+
+.animate-ipl-glow {
+  animation: ipl-glow 6s infinite ease-in-out;
+}
+
+/* Custom Background Utilities to eliminate inline CSS */
+.bg-grid-40 {
+  background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.hero-header-bg {
+  background-image: url("/src/assets/advance stats title image.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  filter: brightness(1.2);
+}
+
+/* Container holding the tabs */
+.tabs-container {
+  display: flex;
+  flex-wrap: wrap;       /* Prevents overlapping on smaller screens */
+  gap: 10px;             /* Ensures clean spacing between each tab */
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 20px;
+}
+
+/* Individual tab styling */
+.tab-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  white-space: nowrap;    /* Prevents label text from crumpling */
+  border-radius: 6px;
+  background: #111827;
+  border: 1px solid #1f293d;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-item.active {
+  background: #1e293b;
+  color: #ffffff;
+  border-color: #3b82f6;
+}
+
+/* News-desk ticker: a continuous marquee. The track holds the list twice, so
+   translating it by exactly half its width loops without a visible seam. */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: ticker-scroll 48s linear infinite;
+  width: max-content;
+}
+.ticker-track:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+}
+
+/* CINEMATIC ANIMATED PLAYER DP HOVER EFFECT */
+.player-dp-frame {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+
+.player-dp-frame:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.player-dp-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(8px);
+}
+
+.player-dp-frame:hover .player-dp-glow {
+  opacity: 0.75;
+  transform: scale(1.08);
+}
+
+.player-dp-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px solid transparent;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.player-dp-frame:hover .player-dp-ring {
+  border-color: var(--dp-accent-color, #f97316);
+  box-shadow: 0 0 16px var(--dp-accent-glow, rgba(249, 115, 22, 0.55)), inset 0 0 10px var(--dp-accent-glow, rgba(249, 115, 22, 0.35));
+}
+
+.player-dp-img {
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
+  transform-origin: bottom center;
+  will-change: transform;
+}
+
+.player-dp-frame:hover .player-dp-img {
+  transform: scale(1.14) translateY(-3px);
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.65)) contrast(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player-dp-frame,
+  .player-dp-frame:hover,
+  .player-dp-img,
+  .player-dp-frame:hover .player-dp-img,
+  .player-dp-glow,
+  .player-dp-ring {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   CRICFIELD SCOUT LAB — "THE SCOUTING ROOM" DESIGN SYSTEM TOKENS
+   ========================================================================== */
+.font-display {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.font-body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.font-mono-num {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Pitch & Stadium Line Geometry */
+.pitch-strip-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(184, 243, 107, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(184, 243, 107, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.stadium-mesh-bg {
+  background: 
+    radial-gradient(circle at 80% 20%, rgba(76, 201, 192, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 15% 85%, rgba(184, 243, 107, 0.06) 0%, transparent 40%),
+    #0B1118;
+}
+
+.scout-card-surface {
+  background: #14212A;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.scout-card-surface:hover {
+  border-color: rgba(184, 243, 107, 0.3);
+}
+
+
+
+/* Getty Embedded Viewer on the dark editorial surface.
+ * Constrain maximum width to 594px so Getty's cross-origin iframe viewer never exposes its white body margins.
+ * Force all parent and injected containers to transparent dark styling.
+ */
+html, body {
+  /* Clip horizontal overflow without creating a scroll container that traps sticky sections. */
+  overflow-x: clip;
+}
+
+.getty-embed-wrapper,
+.editorial-getty-embed {
+  background: #08131F !important;
+  background-color: #08131F !important;
+  overflow: hidden !important;
+  border-radius: 0.75rem !important;
+  width: 100% !important;
+  max-width: 594px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  position: relative !important;
+}
+
+/* Force all Getty-injected DOM wrappers to be 100% transparent with no shadows */
+.getty-embed-wrapper *,
+.editorial-getty-embed *,
+div[class*="getty"],
+div[class*="getty"] *,
+div[class*="gie"],
+div[class*="gie"] * {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Constrain Getty container so it never stretches past 594px where letterboxing occurs */
+.getty.embed.image,
+div[class*="getty"][class*="embed"] {
+  max-width: 594px !important;
+  margin: 0 auto !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Force the Getty iframe to fill its aspect box cleanly with dark scheme and transparent background */
+.getty-embed-wrapper iframe,
+.editorial-getty-embed iframe,
+.getty.embed.image iframe,
+iframe[src*="gettyimages.com"] {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 594px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color-scheme: dark !important;
+  border: none !important;
+  display: block !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+.editorial-shell main[data-white-titles="true"] h1,
+.editorial-shell main[data-white-titles="true"] h1 > span { color:#fff; }
+
+/* Team-aware supporting labels, calls to action and analytical surfaces. */
+.franchise-eyebrow { color:var(--team-accent,#8ba7ff); }
+.franchise-action { background:color-mix(in srgb,var(--team-accent) 32%,#0a1528) !important; color:#fff !important; border:1px solid color-mix(in srgb,var(--team-accent) 55%,#172435); }
+.franchise-action:hover { filter:brightness(1.18); }
+.editorial-shell main[data-team-surfaces="true"] { background:color-mix(in srgb,var(--team-accent) 7%,#050b17); }
+.editorial-shell main[data-team-surfaces="true"] :is(.bg-\[\#050816\],.bg-\[\#0B1020\],.bg-\[\#060913\],.bg-\[\#070c16\]) { background-color:color-mix(in srgb,var(--team-accent) 9%,#080f20); }
+.editorial-shell main[data-team-surfaces="true"] .hero-header-bg { background:linear-gradient(130deg,color-mix(in srgb,var(--team-accent) 22%,#071225),#050a16); }
+
+.stats-team-overlay { background:linear-gradient(120deg,color-mix(in srgb,var(--team-accent) 22%,transparent),#05081633); }
+.editorial-shell main[data-analytics-theme="true"] { --analytics-accent:var(--team-accent,#3b82f6); }
+.editorial-shell main[data-analytics-theme="true"] :is(.text-primary,[class*="text-purple-"],[class*="text-violet-"]) { color:var(--analytics-accent); }
+.editorial-shell main[data-analytics-theme="true"] :is([class*="bg-purple-"],[class*="bg-violet-"],[class*="bg-primary/"]) { background-color:color-mix(in srgb,var(--analytics-accent) 17%,#091224); }
+.editorial-shell main[data-analytics-theme="true"] :is([class*="border-purple-"],[class*="border-violet-"],[class*="border-primary/"]) { border-color:color-mix(in srgb,var(--analytics-accent) 40%,#182436); }
+
+/* Quiet graphite surfaces keep franchise accents clear across score and stats views. */
+.editorial-shell main[data-team-surfaces="true"],
+.editorial-shell main[data-analytics-theme="true"] { background:#090c10; }
+.editorial-shell main[data-team-surfaces="true"] :is(.bg-\[\#050816\],.bg-\[\#0B1020\],.bg-\[\#060913\],.bg-\[\#070c16\]) { background-color:#0e1218; }
+
+/* Surfaces remain graphite; franchise identity belongs to compact accents. */
+.editorial-shell { --team-title-surface:#10151b; }
+.franchise-action { background:#171e27 !important; border-color:color-mix(in srgb,var(--team-accent) 35%,#343b43); }
+.editorial-shell main[data-team-surfaces="true"] .hero-header-bg { background:linear-gradient(130deg,#121820,#090c10); }
+.stats-team-overlay { background:linear-gradient(120deg,#ffffff04,transparent); }
+.editorial-shell main :is([class*="bg-purple-"],[class*="bg-violet-"],[class*="bg-primary/"]) { background-color:#121820; }
+.editorial-shell main[data-analytics-theme="true"] :is([class*="bg-purple-"],[class*="bg-violet-"],[class*="bg-primary/"]) { background-color:#121820; }
+.editorial-shell main :is([class*="from-purple-"],[class*="from-violet-"]) { --tw-gradient-from:#171e27; }
+.editorial-shell main :is([class*="to-purple-"],[class*="to-violet-"]) { --tw-gradient-to:#0a0e13; }
+.editorial-shell main :is([class*="via-purple-"],[class*="via-violet-"]) { --tw-gradient-via:#10161d; }
+.dimension-slicing-scroll{scrollbar-width:thin;scrollbar-color:#ffffff35 transparent;scrollbar-gutter:stable}.dimension-slicing-scroll::-webkit-scrollbar{width:4px}.dimension-slicing-scroll::-webkit-scrollbar-track{background:transparent}.dimension-slicing-scroll::-webkit-scrollbar-thumb{background:#ffffff30;border-radius:8px}.dimension-slicing-scroll:hover::-webkit-scrollbar-thumb{background:#ffffff50}

@@ -1,0 +1,310 @@
+{
+ "articleId": "cf-srh-025",
+ "generatedAt": "2026-10-26T04:22:06.250Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "def-l160": {
+   "value": 35.6,
+   "display": "35.6%",
+   "label": "IPL win rate defending 160–179, 2022–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batting first",
+   "sampleSize": {
+    "n": 73,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 160 THEN 'under 160' WHEN i1.runs < 180 THEN '160–179' WHEN i1.runs < 200 THEN '180–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i1.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i1.batting_team_id IN (1) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i1.batting_team_id IN (1) AND m.winner_id = i1.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 WHERE m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 30 matches",
+    "passed": true,
+    "detail": "n = 73"
+   }
+  },
+  "def-l200": {
+   "value": 69.9,
+   "display": "69.9%",
+   "label": "IPL win rate defending 200+, 2022–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batting first",
+   "sampleSize": {
+    "n": 133,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 160 THEN 'under 160' WHEN i1.runs < 180 THEN '160–179' WHEN i1.runs < 200 THEN '180–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i1.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i1.batting_team_id IN (1) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i1.batting_team_id IN (1) AND m.winner_id = i1.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 WHERE m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 30 matches",
+    "passed": true,
+    "detail": "n = 133"
+   }
+  },
+  "def-lunder": {
+   "value": 17.6,
+   "display": "17.6%",
+   "label": "IPL win rate defending under 160, 2022–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batting first",
+   "sampleSize": {
+    "n": 85,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 160 THEN 'under 160' WHEN i1.runs < 180 THEN '160–179' WHEN i1.runs < 200 THEN '180–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i1.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i1.batting_team_id IN (1) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i1.batting_team_id IN (1) AND m.winner_id = i1.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 WHERE m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 30 matches",
+    "passed": true,
+    "detail": "n = 85"
+   }
+  },
+  "def-t": {
+   "value": 47.4,
+   "display": "47.4%",
+   "label": "SRH win rate batting first, 2022–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 38,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 160 THEN 'under 160' WHEN i1.runs < 180 THEN '160–179' WHEN i1.runs < 200 THEN '180–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i1.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i1.batting_team_id IN (1) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i1.batting_team_id IN (1) AND m.winner_id = i1.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 WHERE m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 38"
+   }
+  },
+  "defd-team-e1": {
+   "value": 9.4,
+   "display": "9.40",
+   "label": "SRH death overs economy, 2013–2023",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "SRH bowling, overs 16–20, regulation innings, 2013–2023",
+   "sampleSize": {
+    "n": 4438,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2013 AND 2023 AND i.bowling_team_id IN (1)",
+   "validation": {
+    "method": "plausibility range 4–14 for economy",
+    "passed": true,
+    "detail": "value 9.40423614240649"
+   }
+  },
+  "defd-league-e1": {
+   "value": 9.88,
+   "display": "9.88",
+   "label": "IPL death overs economy, 2013–2023",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams, overs 16–20, regulation innings, 2013–2023",
+   "sampleSize": {
+    "n": 36598,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2013 AND 2023",
+   "validation": {
+    "method": "plausibility range 4–14 for economy",
+    "passed": true,
+    "detail": "value 9.881031750368873"
+   }
+  },
+  "defd-team-e2": {
+   "value": 10.91,
+   "display": "10.91",
+   "label": "SRH death overs economy, 2024–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "SRH bowling, overs 16–20, regulation innings, 2024–2026",
+   "sampleSize": {
+    "n": 1076,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND i.bowling_team_id IN (1)",
+   "validation": {
+    "method": "sample-size floor ≥ 200 balls",
+    "passed": true,
+    "detail": "n = 1076"
+   }
+  },
+  "defd-league-e2": {
+   "value": 10.84,
+   "display": "10.84",
+   "label": "IPL death overs economy, 2024–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams, overs 16–20, regulation innings, 2024–2026",
+   "sampleSize": {
+    "n": 10842,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026",
+   "validation": {
+    "method": "plausibility range 4–14 for economy",
+    "passed": true,
+    "detail": "value 10.842280022136137"
+   }
+  },
+  "defd-good-seasons": {
+   "value": 10,
+   "display": "10",
+   "label": "Seasons SRH conceded less than the league in the death overs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season-level comparison",
+   "sampleSize": {
+    "n": 14,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (1) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "count over season table",
+    "passed": true
+   }
+  },
+  "defd-season-count": {
+   "value": 14,
+   "display": "14",
+   "label": "SRH seasons in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons with data",
+   "sampleSize": {
+    "n": 14,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (1) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range 1–19 for season count",
+    "passed": true,
+    "detail": "value 14"
+   }
+  }
+ },
+ "tables": {
+  "def-bands": {
+   "label": "Defending win rate by first-innings total, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Side batting first; matches with a result",
+   "sampleSize": {
+    "n": 362,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 160 THEN 'under 160' WHEN i1.runs < 180 THEN '160–179' WHEN i1.runs < 200 THEN '180–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i1.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i1.batting_team_id IN (1) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i1.batting_team_id IN (1) AND m.winner_id = i1.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 WHERE m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY band",
+   "rows": [
+    {
+     "total": "under 160",
+     "league": 17.6,
+     "team": 0,
+     "teamMatches": 8
+    },
+    {
+     "total": "160–179",
+     "league": 35.6,
+     "team": 16.7,
+     "teamMatches": 6
+    },
+    {
+     "total": "180–199",
+     "league": 56.3,
+     "team": 50,
+     "teamMatches": 8
+    },
+    {
+     "total": "200+",
+     "league": 69.9,
+     "team": 81.3,
+     "teamMatches": 16
+    }
+   ]
+  },
+  "defd-series": {
+   "label": "Death overs economy by season: SRH vs IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "overs 16–20, regulation innings; runs charged to bowler ÷ legal balls × 6",
+   "sampleSize": {
+    "n": 5514,
+    "unit": "SRH legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (1) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "rows": [
+    {
+     "season": "2013",
+     "team": 9.14,
+     "league": 9.41
+    },
+    {
+     "season": "2014",
+     "team": 8.95,
+     "league": 9.77
+    },
+    {
+     "season": "2015",
+     "team": 10.25,
+     "league": 10.14
+    },
+    {
+     "season": "2016",
+     "team": 8.74,
+     "league": 9.98
+    },
+    {
+     "season": "2017",
+     "team": 8.89,
+     "league": 9.47
+    },
+    {
+     "season": "2018",
+     "team": 8.78,
+     "league": 9.96
+    },
+    {
+     "season": "2019",
+     "team": 9.39,
+     "league": 9.98
+    },
+    {
+     "season": "2020",
+     "team": 9.81,
+     "league": 10.04
+    },
+    {
+     "season": "2021",
+     "team": 8.94,
+     "league": 9.25
+    },
+    {
+     "season": "2022",
+     "team": 10.78,
+     "league": 10.31
+    },
+    {
+     "season": "2023",
+     "team": 10.17,
+     "league": 10.28
+    },
+    {
+     "season": "2024",
+     "team": 11.85,
+     "league": 11.03
+    },
+    {
+     "season": "2025",
+     "team": 10.94,
+     "league": 10.83
+    },
+    {
+     "season": "2026",
+     "team": 9.89,
+     "league": 10.67
+    }
+   ]
+  }
+ }
+}

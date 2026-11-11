@@ -1,0 +1,263 @@
+{
+ "articleId": "cf-rr-003",
+ "generatedAt": "2026-10-26T04:23:06.283Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "bnd-t2": {
+   "value": 65.4,
+   "display": "65.4%",
+   "label": "RR share of runs from boundaries, 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Fours and sixes off the bat ÷ all runs",
+   "sampleSize": {
+    "n": 8326,
+    "unit": "runs"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (10) AND d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) team, SUM(CASE WHEN d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(d.total_runs) league, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) teamRuns FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING teamRuns > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range 30–85 for share",
+    "passed": true,
+    "detail": "value 65.36151813595964"
+   }
+  },
+  "bnd-l2": {
+   "value": 63.8,
+   "display": "63.8%",
+   "label": "IPL share of runs from boundaries, 2024–2026 (mean of seasons)",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Fours and sixes off the bat ÷ all runs",
+   "sampleSize": {
+    "n": 3,
+    "unit": "runs"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (10) AND d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) team, SUM(CASE WHEN d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(d.total_runs) league, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) teamRuns FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING teamRuns > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range 30–85 for share",
+    "passed": true,
+    "detail": "value 63.786589343503174"
+   }
+  },
+  "bnd-tall": {
+   "value": 58.4,
+   "display": "58.4%",
+   "label": "RR share of runs from boundaries, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Fours and sixes off the bat ÷ all runs",
+   "sampleSize": {
+    "n": 40391,
+    "unit": "runs"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (10) AND d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) team, SUM(CASE WHEN d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(d.total_runs) league, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) teamRuns FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING teamRuns > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range 30–85 for share",
+    "passed": true,
+    "detail": "value 58.399148325121935"
+   }
+  },
+  "bnd-wlow": {
+   "value": 37,
+   "display": "37.0%",
+   "label": "IPL win rate for innings with under 55% of runs from boundaries",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All innings with a result",
+   "sampleSize": {
+    "n": 1024,
+    "unit": "innings"
+   },
+   "query": "WITH inn AS (SELECT i.innings_id, i.batting_team_id bt, i.match_id, SUM(CASE WHEN d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 1.0 / NULLIF(SUM(d.total_runs), 0) share FROM innings i JOIN deliveries d ON d.innings_id = i.innings_id WHERE i.innings_number <= 2 GROUP BY i.innings_id) SELECT CASE WHEN share < 0.55 THEN 'under 55%' WHEN share < 0.65 THEN '55–65%' ELSE '65% or more' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = inn.bt THEN 1 ELSE 0 END) won, SUM(CASE WHEN inn.bt IN (10) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN inn.bt IN (10) AND m.winner_id = inn.bt THEN 1 ELSE 0 END) tw FROM inn JOIN matches m ON m.match_id = inn.match_id WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 100 innings",
+    "passed": true,
+    "detail": "n = 1024"
+   }
+  },
+  "bnd-whigh": {
+   "value": 70,
+   "display": "70.0%",
+   "label": "IPL win rate for innings with 65% or more of runs from boundaries",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All innings with a result",
+   "sampleSize": {
+    "n": 486,
+    "unit": "innings"
+   },
+   "query": "WITH inn AS (SELECT i.innings_id, i.batting_team_id bt, i.match_id, SUM(CASE WHEN d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 1.0 / NULLIF(SUM(d.total_runs), 0) share FROM innings i JOIN deliveries d ON d.innings_id = i.innings_id WHERE i.innings_number <= 2 GROUP BY i.innings_id) SELECT CASE WHEN share < 0.55 THEN 'under 55%' WHEN share < 0.65 THEN '55–65%' ELSE '65% or more' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = inn.bt THEN 1 ELSE 0 END) won, SUM(CASE WHEN inn.bt IN (10) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN inn.bt IN (10) AND m.winner_id = inn.bt THEN 1 ELSE 0 END) tw FROM inn JOIN matches m ON m.match_id = inn.match_id WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 100 innings",
+    "passed": true,
+    "detail": "n = 486"
+   }
+  },
+  "bnd-x-best-v": {
+   "value": 68.7,
+   "display": "68.7",
+   "label": "RR share of runs from boundaries in 2026",
+   "unit": "% of runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "RR, 2026",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (10) AND d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) team, SUM(CASE WHEN d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(d.total_runs) league, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) teamRuns FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING teamRuns > 0 ORDER BY year",
+   "validation": {
+    "method": "taken from the season table",
+    "passed": true
+   }
+  },
+  "bnd-x-worst-v": {
+   "value": 50.8,
+   "display": "50.8",
+   "label": "RR share of runs from boundaries in 2009",
+   "unit": "% of runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "RR, 2009",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (10) AND d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) team, SUM(CASE WHEN d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(d.total_runs) league, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) teamRuns FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING teamRuns > 0 ORDER BY year",
+   "validation": {
+    "method": "taken from the season table",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "bnd-series": {
+   "label": "Share of runs from boundaries: RR vs IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Fours and sixes off the bat as a share of all runs",
+   "sampleSize": {
+    "n": 40391,
+    "unit": "RR runs"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (10) AND d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) team, SUM(CASE WHEN d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 100.0 / SUM(d.total_runs) league, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.total_runs ELSE 0 END) teamRuns FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING teamRuns > 0 ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "team": 59.4,
+     "league": 58.8
+    },
+    {
+     "season": "2009",
+     "team": 50.8,
+     "league": 50.9
+    },
+    {
+     "season": "2010",
+     "team": 57.5,
+     "league": 54.8
+    },
+    {
+     "season": "2011",
+     "team": 51.2,
+     "league": 54.4
+    },
+    {
+     "season": "2012",
+     "team": 55.6,
+     "league": 53.6
+    },
+    {
+     "season": "2013",
+     "team": 55,
+     "league": 54.4
+    },
+    {
+     "season": "2014",
+     "team": 54.8,
+     "league": 55.7
+    },
+    {
+     "season": "2015",
+     "team": 53.3,
+     "league": 57.7
+    },
+    {
+     "season": "2018",
+     "team": 52.7,
+     "league": 59.5
+    },
+    {
+     "season": "2019",
+     "team": 55.6,
+     "league": 58.3
+    },
+    {
+     "season": "2020",
+     "team": 57.4,
+     "league": 55.5
+    },
+    {
+     "season": "2021",
+     "team": 58.7,
+     "league": 55.4
+    },
+    {
+     "season": "2022",
+     "team": 62,
+     "league": 59.2
+    },
+    {
+     "season": "2023",
+     "team": 63.3,
+     "league": 60.1
+    },
+    {
+     "season": "2024",
+     "team": 61.1,
+     "league": 62.6
+    },
+    {
+     "season": "2025",
+     "team": 65.8,
+     "league": 63.6
+    },
+    {
+     "season": "2026",
+     "team": 68.7,
+     "league": 65.2
+    }
+   ]
+  },
+  "bnd-win": {
+   "label": "Win rate by share of runs from boundaries",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All IPL innings with a result",
+   "sampleSize": {
+    "n": 2468,
+    "unit": "innings"
+   },
+   "query": "WITH inn AS (SELECT i.innings_id, i.batting_team_id bt, i.match_id, SUM(CASE WHEN d.is_boundary = 1 THEN d.batter_runs ELSE 0 END) * 1.0 / NULLIF(SUM(d.total_runs), 0) share FROM innings i JOIN deliveries d ON d.innings_id = i.innings_id WHERE i.innings_number <= 2 GROUP BY i.innings_id) SELECT CASE WHEN share < 0.55 THEN 'under 55%' WHEN share < 0.65 THEN '55–65%' ELSE '65% or more' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = inn.bt THEN 1 ELSE 0 END) won, SUM(CASE WHEN inn.bt IN (10) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN inn.bt IN (10) AND m.winner_id = inn.bt THEN 1 ELSE 0 END) tw FROM inn JOIN matches m ON m.match_id = inn.match_id WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "rows": [
+    {
+     "band": "under 55%",
+     "league": 37,
+     "team": 37.7
+    },
+    {
+     "band": "55–65%",
+     "league": 53.8,
+     "team": 54.7
+    },
+    {
+     "band": "65% or more",
+     "league": 70,
+     "team": 66.7
+    }
+   ]
+  }
+ }
+}

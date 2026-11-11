@@ -1,0 +1,7 @@
+import {buildGettyEditorialUrl} from '@/lib/getty-editorial-search';
+import type {CSSProperties} from 'react';
+import './player-milestone-passport.css';
+export function PlayerMilestonePassport({name,debut,country,accent}:{name:string;debut?:string|number|null;country?:string|null;accent?:string}){
+ const searchUrl=buildGettyEditorialUrl({playerName:name,year:debut??undefined,eventType:'debut'});
+ return <section style={{"--passport-accent":accent??"#b79b62"} as CSSProperties} className="player-milestone-passport" aria-label={`${name} cricket milestone passport`}><header><span>CRICFIELD ARCHIVE</span><span>CRICKET PASSPORT</span></header><div className="passport-title"><span>Ⅲ</span><div><small>PLAYER MILESTONE</small><h4>{name}</h4></div></div><dl><div><dt>Occasion</dt><dd>{debut?'First recorded IPL season':'Career milestone'}</dd></div><div><dt>Season</dt><dd>{debut??'Awaiting verified record'}</dd></div><div><dt>Country</dt><dd>{country||'Not recorded'}</dd></div></dl><div className="passport-stamp">{debut?'IPL DEBUT':'ARCHIVE'}<strong>{debut??'PENDING'}</strong></div><p>{debut?'An opening chapter in this player’s recorded IPL career.':'A verified occasion is needed before a milestone can be issued.'}</p><footer><a href={searchUrl} target="_blank" rel="noreferrer">Find this occasion on Getty Images ↗</a><span>EVENT PHOTO · NOT YET VERIFIED</span></footer><div className="passport-machine" aria-hidden="true">CRICFIELD&lt;&lt;{name.toUpperCase().replace(/[^A-Z]/g,'&lt;')}&lt;&lt;IPL&lt;&lt;{debut??'UNKNOWN'}</div></section>;
+}

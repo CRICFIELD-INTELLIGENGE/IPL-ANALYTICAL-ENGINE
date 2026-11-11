@@ -1,0 +1,149 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-mi-014",
+ "planId": "cf-mi-014",
+ "franchise": "MI",
+ "aspect": "bowling-fielding",
+ "title": "Middle-Overs Spin: Can Mumbai Indians Create Pressure Without Immediate Wickets?",
+ "slug": "mi-middle-overs-spin-can-mi-create-pressure-without-immediate-wickets",
+ "dek": "Can Mumbai Indians' spinners squeeze an innings without taking wickets? Dot-ball rates and economy in the middle overs since 2022 measure the pressure they create.",
+ "excerpt": "Mumbai Indians' middle-overs spin has been more expensive than the rest of the league's since 2022. Pressure without wickets is real, but it has to be measured in dots and runs, not reputation.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "MI"
+ ],
+ "players": [
+  "PP Chawla"
+ ],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "MI spinners conceded {{ev:mos-te}} an over in overs seven to fifteen since 2022; the rest of the IPL's spinners conceded {{ev:mos-le}}.",
+  "Their dot-ball rate was {{ev:mos-td}}, against {{ev:mos-ld}} league-wide.",
+  "Spinners bowled {{ev:mos-share}} of Mumbai Indians' typed middle-overs balls; across the rest of the league, {{ev:mos-lshare}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Squeeze Theory",
+   "body": [
+    "The case for middle-overs spin is pressure: a run of dot balls forces a batter to take a risk, and the wicket follows, sometimes off the next bowler. If the theory holds, a spinner can be valuable without a big wicket tally.",
+    "Since 2022, with bowling type known from player-bio data, Mumbai Indians' spinners have conceded {{ev:mos-te}} an over in overs seven to fifteen against {{ev:mos-le}} for the rest of the league."
+   ],
+   "chartIds": [
+    "mos-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Dots as the Currency of Pressure",
+   "body": [
+    "Mumbai Indians' spinners have bowled dot balls on {{ev:mos-td}} of their middle-overs deliveries, against {{ev:mos-ld}} for the rest of the IPL. Spin has taken {{ev:mos-share}} of the franchise's typed middle-overs balls, against {{ev:mos-lshare}} elsewhere.",
+    "{{ev:mos-lead}} has carried the biggest middle-overs spin workload since 2022, at an economy of {{ev:mos-lead-econ}}."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Using Spin to Set Up Wickets",
+   "body": [
+    "If spin squeezes and pace strikes, the order of bowlers matters: a tight spell from a spinner is most useful immediately before a wicket-taking seamer returns.",
+    "For MI the measurable test is what happens in the over after a spinner's dot-heavy over, a pattern that the ball-by-ball data can track."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Pressure Can Be an Illusion",
+   "body": [
+    "A low economy in the middle overs may reflect batters choosing to consolidate rather than spinners forcing them to. Without measuring what the following overs yield, the squeeze cannot be proven.",
+    "{{hyp:carry}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Measure the Squeeze",
+   "body": [
+    "Mumbai Indians' spin has been more expensive than the league's in the middle overs since 2022. The franchise should value spinners on dot rate and economy, and test whether their dot-heavy overs lead to wickets for the next bowler.",
+    "That would turn the squeeze from a clich\u00e9 into a number the selectors can use."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "mos-chart",
+   "type": "column",
+   "title": "Middle-overs economy by bowling type",
+   "subtitle": "Overs 7\u201315, 2022\u20132026",
+   "table": "mos-cmp",
+   "xKey": "bowling",
+   "series": [
+    {
+     "key": "teamEconomy",
+     "label": "MI"
+    },
+    {
+     "key": "leagueEconomy",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Bowling type",
+   "unit": "runs per over",
+   "takeaway": "Mumbai Indians' middle-overs spin has been more expensive than the rest of the league's.",
+   "ariaLabel": "Grouped column chart of middle-overs economy for spin and pace bowling."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-bio",
+   "kind": "cricfield-dataset",
+   "title": "CricField player-bio dataset (bowling styles)",
+   "publisher": "CricField",
+   "note": "Joined via squad lists; balls by bowlers of unknown type excluded."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "carry",
+   "statement": "Hypothesis: dot-heavy spin overs raise the chance of a wicket in the following over.",
+   "whyUnverified": "The over-to-over carry-over effect has not been modelled.",
+   "howToTest": "Compare wicket rates in overs that follow a spin over with three or more dots against other overs."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Mumbai Indians spin in the middle overs.",
+   "wanted": "PP Chawla bowling spin for Mumbai Indians."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-mi-008",
+  "cf-mi-013",
+  "cf-mi-004"
+ ],
+ "seo": {
+  "metaTitle": "Middle-overs spin: can MI squeeze without wickets?",
+  "metaDescription": "Mumbai Indians' spin economy and dot-ball rate in overs seven to fifteen since 2022, against the rest of the IPL."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Economy uses runs charged to the bowler (byes and leg-byes excluded) per legal ball times six. Bowler wickets exclude run outs. Generated from the CricField warehouse by scripts/editorial/engine. Middle overs = seven to fifteen. Bowling type from CricField player-bio data via squad lists; unknown types excluded.",
+ "generator": "engine:v1"
+}

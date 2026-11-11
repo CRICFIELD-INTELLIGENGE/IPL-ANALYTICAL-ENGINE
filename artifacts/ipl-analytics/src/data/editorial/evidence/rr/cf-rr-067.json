@@ -1,0 +1,201 @@
+{
+ "articleId": "cf-rr-067",
+ "generatedAt": "2026-10-26T04:23:26.023Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "sp-size1": {
+   "value": 24,
+   "display": "24",
+   "label": "Average RR squad size, 2008–2023",
+   "unit": "players",
+   "dataset": "CricField squads-by-season.json",
+   "filters": "Squad lists",
+   "sampleSize": {
+    "n": 14,
+    "unit": "seasons"
+   },
+   "query": "squads-by-season.json",
+   "validation": {
+    "method": "plausibility range 10–35 for squad size",
+    "passed": true,
+    "detail": "value 24"
+   }
+  },
+  "sp-size2": {
+   "value": 25,
+   "display": "25",
+   "label": "Average RR squad size, 2024–2026",
+   "unit": "players",
+   "dataset": "CricField squads-by-season.json",
+   "filters": "Squad lists",
+   "sampleSize": {
+    "n": 3,
+    "unit": "seasons"
+   },
+   "query": "squads-by-season.json",
+   "validation": {
+    "method": "plausibility range 10–35 for squad size",
+    "passed": true,
+    "detail": "value 24.666666666666668"
+   }
+  },
+  "sp-used1": {
+   "value": 86,
+   "display": "86%",
+   "label": "Share of the RR squad that played, 2008–2023",
+   "unit": "%",
+   "dataset": "CricField squads-by-season.json",
+   "filters": "Squad lists",
+   "sampleSize": {
+    "n": 14,
+    "unit": "seasons"
+   },
+   "query": "squads-by-season.json",
+   "validation": {
+    "method": "sample-size floor ≥ 2 seasons",
+    "passed": true,
+    "detail": "n = 14"
+   }
+  },
+  "sp-used2": {
+   "value": 80,
+   "display": "80%",
+   "label": "Share of the RR squad that played, 2024–2026",
+   "unit": "%",
+   "dataset": "CricField squads-by-season.json",
+   "filters": "Squad lists",
+   "sampleSize": {
+    "n": 3,
+    "unit": "seasons"
+   },
+   "query": "squads-by-season.json",
+   "validation": {
+    "method": "sample-size floor ≥ 2 seasons",
+    "passed": true,
+    "detail": "n = 3"
+   }
+  }
+ },
+ "tables": {
+  "sp-series": {
+   "label": "RR squad size and share of squad used, by season",
+   "dataset": "CricField squads-by-season.json",
+   "filters": "CricField squad lists; played = appeared in at least one match",
+   "sampleSize": {
+    "n": 410,
+    "unit": "squad places"
+   },
+   "query": "squads-by-season.json",
+   "rows": [
+    {
+     "season": "2008",
+     "squad": 21,
+     "played": 19,
+     "playedPct": 90.5
+    },
+    {
+     "season": "2009",
+     "squad": 23,
+     "played": 22,
+     "playedPct": 95.7
+    },
+    {
+     "season": "2010",
+     "squad": 25,
+     "played": 25,
+     "playedPct": 100
+    },
+    {
+     "season": "2011",
+     "squad": 22,
+     "played": 21,
+     "playedPct": 95.5
+    },
+    {
+     "season": "2012",
+     "squad": 20,
+     "played": 18,
+     "playedPct": 90
+    },
+    {
+     "season": "2013",
+     "squad": 25,
+     "played": 24,
+     "playedPct": 96
+    },
+    {
+     "season": "2014",
+     "squad": 26,
+     "played": 22,
+     "playedPct": 84.6
+    },
+    {
+     "season": "2015",
+     "squad": 20,
+     "played": 17,
+     "playedPct": 85
+    },
+    {
+     "season": "2018",
+     "squad": 25,
+     "played": 19,
+     "playedPct": 76
+    },
+    {
+     "season": "2019",
+     "squad": 25,
+     "played": 20,
+     "playedPct": 80
+    },
+    {
+     "season": "2020",
+     "squad": 24,
+     "played": 17,
+     "playedPct": 70.8
+    },
+    {
+     "season": "2021",
+     "squad": 28,
+     "played": 24,
+     "playedPct": 85.7
+    },
+    {
+     "season": "2022",
+     "squad": 25,
+     "played": 18,
+     "playedPct": 72
+    },
+    {
+     "season": "2023",
+     "squad": 27,
+     "played": 22,
+     "playedPct": 81.5
+    },
+    {
+     "season": "2024",
+     "squad": 24,
+     "played": 19,
+     "playedPct": 79.2
+    },
+    {
+     "season": "2025",
+     "squad": 22,
+     "played": 19,
+     "playedPct": 86.4
+    },
+    {
+     "season": "2026",
+     "squad": 28,
+     "played": 21,
+     "playedPct": 75
+    }
+   ]
+  }
+ }
+}

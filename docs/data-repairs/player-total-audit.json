@@ -1,0 +1,1352 @@
+[
+  {
+    "player": "Pankaj Singh",
+    "season": "2008",
+    "storedRuns": 5,
+    "archiveRuns": 32,
+    "storedInnings": 2,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "BB McCullum",
+    "season": "2009",
+    "storedRuns": 285,
+    "archiveRuns": 286,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "YK Pathan",
+    "season": "2009",
+    "storedRuns": 243,
+    "archiveRuns": 261,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "CH Gayle",
+    "season": "2009",
+    "storedRuns": 171,
+    "archiveRuns": 184,
+    "storedInnings": 7,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "Pankaj Singh",
+    "season": "2009",
+    "storedRuns": 1,
+    "archiveRuns": 9,
+    "storedInnings": 2,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "SK Raina",
+    "season": "2010",
+    "storedRuns": 520,
+    "archiveRuns": 528,
+    "storedInnings": 16,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "DPMD Jayawardene",
+    "season": "2010",
+    "storedRuns": 439,
+    "archiveRuns": 445,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "Yuvraj Singh",
+    "season": "2010",
+    "storedRuns": 255,
+    "archiveRuns": 259,
+    "storedInnings": 14,
+    "archiveInnings": 14,
+    "status": "review-required"
+  },
+  {
+    "player": "JA Morkel",
+    "season": "2010",
+    "storedRuns": 198,
+    "archiveRuns": 199,
+    "storedInnings": 11,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "Pankaj Singh",
+    "season": "2010",
+    "storedRuns": 1,
+    "archiveRuns": 10,
+    "storedInnings": 1,
+    "archiveInnings": 6,
+    "status": "review-required"
+  },
+  {
+    "player": "CH Gayle",
+    "season": "2013",
+    "storedRuns": 708,
+    "archiveRuns": 720,
+    "storedInnings": 16,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "V Kohli",
+    "season": "2013",
+    "storedRuns": 634,
+    "archiveRuns": 639,
+    "storedInnings": 16,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "AB de Villiers",
+    "season": "2013",
+    "storedRuns": 360,
+    "archiveRuns": 373,
+    "storedInnings": 14,
+    "archiveInnings": 14,
+    "status": "review-required"
+  },
+  {
+    "player": "NLTC Perera",
+    "season": "2013",
+    "storedRuns": 233,
+    "archiveRuns": 235,
+    "storedInnings": 14,
+    "archiveInnings": 14,
+    "status": "review-required"
+  },
+  {
+    "player": "CL White",
+    "season": "2013",
+    "storedRuns": 209,
+    "archiveRuns": 226,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "IK Pathan",
+    "season": "2013",
+    "storedRuns": 142,
+    "archiveRuns": 153,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "MK Pandey",
+    "season": "2014",
+    "storedRuns": 401,
+    "archiveRuns": 409,
+    "storedInnings": 15,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "SR Watson",
+    "season": "2014",
+    "storedRuns": 240,
+    "archiveRuns": 246,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "Shakib Al Hasan",
+    "season": "2014",
+    "storedRuns": 227,
+    "archiveRuns": 229,
+    "storedInnings": 11,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "SPD Smith",
+    "season": "2014",
+    "storedRuns": 147,
+    "archiveRuns": 152,
+    "storedInnings": 7,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "SPD Smith",
+    "season": "2015",
+    "storedRuns": 293,
+    "archiveRuns": 298,
+    "storedInnings": 12,
+    "archiveInnings": 12,
+    "status": "review-required"
+  },
+  {
+    "player": "GJ Maxwell",
+    "season": "2015",
+    "storedRuns": 145,
+    "archiveRuns": 146,
+    "storedInnings": 11,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "SE Marsh",
+    "season": "2015",
+    "storedRuns": 81,
+    "archiveRuns": 93,
+    "storedInnings": 4,
+    "archiveInnings": 4,
+    "status": "review-required"
+  },
+  {
+    "player": "KA Pollard",
+    "season": "2017",
+    "storedRuns": 385,
+    "archiveRuns": 395,
+    "storedInnings": 16,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "BB McCullum",
+    "season": "2017",
+    "storedRuns": 319,
+    "archiveRuns": 320,
+    "storedInnings": 11,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "AJ Finch",
+    "season": "2017",
+    "storedRuns": 299,
+    "archiveRuns": 300,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "JC Buttler",
+    "season": "2017",
+    "storedRuns": 272,
+    "archiveRuns": 273,
+    "storedInnings": 10,
+    "archiveInnings": 10,
+    "status": "review-required"
+  },
+  {
+    "player": "AD Russell",
+    "season": "2019",
+    "storedRuns": 510,
+    "archiveRuns": 514,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "RR Pant",
+    "season": "2019",
+    "storedRuns": 488,
+    "archiveRuns": 494,
+    "storedInnings": 16,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "SS Iyer",
+    "season": "2019",
+    "storedRuns": 463,
+    "archiveRuns": 467,
+    "storedInnings": 16,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "HH Pandya",
+    "season": "2019",
+    "storedRuns": 402,
+    "archiveRuns": 409,
+    "storedInnings": 15,
+    "archiveInnings": 15,
+    "status": "review-required"
+  },
+  {
+    "player": "MK Pandey",
+    "season": "2019",
+    "storedRuns": 344,
+    "archiveRuns": 345,
+    "storedInnings": 11,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "RV Uthappa",
+    "season": "2019",
+    "storedRuns": 282,
+    "archiveRuns": 284,
+    "storedInnings": 11,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "KA Pollard",
+    "season": "2019",
+    "storedRuns": 279,
+    "archiveRuns": 281,
+    "storedInnings": 12,
+    "archiveInnings": 12,
+    "status": "review-required"
+  },
+  {
+    "player": "KD Karthik",
+    "season": "2019",
+    "storedRuns": 253,
+    "archiveRuns": 254,
+    "storedInnings": 12,
+    "archiveInnings": 12,
+    "status": "review-required"
+  },
+  {
+    "player": "Mohammad Nabi",
+    "season": "2019",
+    "storedRuns": 115,
+    "archiveRuns": 121,
+    "storedInnings": 7,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "MJ Guptill",
+    "season": "2019",
+    "storedRuns": 81,
+    "archiveRuns": 82,
+    "storedInnings": 3,
+    "archiveInnings": 3,
+    "status": "review-required"
+  },
+  {
+    "player": "KL Rahul",
+    "season": "2021",
+    "storedRuns": 1296,
+    "archiveRuns": 626,
+    "storedInnings": 27,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "S Dhawan",
+    "season": "2021",
+    "storedRuns": 1205,
+    "archiveRuns": 587,
+    "storedInnings": 33,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "F du Plessis",
+    "season": "2021",
+    "storedRuns": 1082,
+    "archiveRuns": 633,
+    "storedInnings": 29,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "Shubman Gill",
+    "season": "2021",
+    "storedRuns": 918,
+    "archiveRuns": 478,
+    "storedInnings": 31,
+    "archiveInnings": 17,
+    "status": "review-required"
+  },
+  {
+    "player": "D Padikkal",
+    "season": "2021",
+    "storedRuns": 884,
+    "archiveRuns": 411,
+    "storedInnings": 29,
+    "archiveInnings": 14,
+    "status": "review-required"
+  },
+  {
+    "player": "V Kohli",
+    "season": "2021",
+    "storedRuns": 871,
+    "archiveRuns": 405,
+    "storedInnings": 30,
+    "archiveInnings": 15,
+    "status": "review-required"
+  },
+  {
+    "player": "MA Agarwal",
+    "season": "2021",
+    "storedRuns": 865,
+    "archiveRuns": 441,
+    "storedInnings": 23,
+    "archiveInnings": 12,
+    "status": "review-required"
+  },
+  {
+    "player": "SV Samson",
+    "season": "2021",
+    "storedRuns": 859,
+    "archiveRuns": 484,
+    "storedInnings": 28,
+    "archiveInnings": 14,
+    "status": "review-required"
+  },
+  {
+    "player": "RD Gaikwad",
+    "season": "2021",
+    "storedRuns": 839,
+    "archiveRuns": 635,
+    "storedInnings": 22,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "Q de Kock",
+    "season": "2021",
+    "storedRuns": 800,
+    "archiveRuns": 297,
+    "storedInnings": 27,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "SA Yadav",
+    "season": "2021",
+    "storedRuns": 797,
+    "archiveRuns": 317,
+    "storedInnings": 29,
+    "archiveInnings": 14,
+    "status": "review-required"
+  },
+  {
+    "player": "AB de Villiers",
+    "season": "2021",
+    "storedRuns": 767,
+    "archiveRuns": 313,
+    "storedInnings": 28,
+    "archiveInnings": 14,
+    "status": "review-required"
+  },
+  {
+    "player": "RR Pant",
+    "season": "2021",
+    "storedRuns": 762,
+    "archiveRuns": 424,
+    "storedInnings": 30,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "Ishan Kishan",
+    "season": "2021",
+    "storedRuns": 757,
+    "archiveRuns": 241,
+    "storedInnings": 23,
+    "archiveInnings": 10,
+    "status": "review-required"
+  },
+  {
+    "player": "DA Warner",
+    "season": "2021",
+    "storedRuns": 743,
+    "archiveRuns": 197,
+    "storedInnings": 24,
+    "archiveInnings": 8,
+    "status": "review-required"
+  },
+  {
+    "player": "N Rana",
+    "season": "2021",
+    "storedRuns": 735,
+    "archiveRuns": 383,
+    "storedInnings": 30,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "MK Pandey",
+    "season": "2021",
+    "storedRuns": 717,
+    "archiveRuns": 292,
+    "storedInnings": 23,
+    "archiveInnings": 8,
+    "status": "review-required"
+  },
+  {
+    "player": "RG Sharma",
+    "season": "2021",
+    "storedRuns": 713,
+    "archiveRuns": 381,
+    "storedInnings": 25,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "PP Shaw",
+    "season": "2021",
+    "storedRuns": 707,
+    "archiveRuns": 479,
+    "storedInnings": 28,
+    "archiveInnings": 15,
+    "status": "review-required"
+  },
+  {
+    "player": "SS Iyer",
+    "season": "2021",
+    "storedRuns": 694,
+    "archiveRuns": 175,
+    "storedInnings": 25,
+    "archiveInnings": 8,
+    "status": "review-required"
+  },
+  {
+    "player": "RA Tripathi",
+    "season": "2021",
+    "storedRuns": 627,
+    "archiveRuns": 397,
+    "storedInnings": 27,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "GJ Maxwell",
+    "season": "2021",
+    "storedRuns": 621,
+    "archiveRuns": 513,
+    "storedInnings": 25,
+    "archiveInnings": 14,
+    "status": "review-required"
+  },
+  {
+    "player": "AT Rayudu",
+    "season": "2021",
+    "storedRuns": 616,
+    "archiveRuns": 257,
+    "storedInnings": 24,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "JM Bairstow",
+    "season": "2021",
+    "storedRuns": 593,
+    "archiveRuns": 248,
+    "storedInnings": 18,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "KS Williamson",
+    "season": "2021",
+    "storedRuns": 583,
+    "archiveRuns": 270,
+    "storedInnings": 21,
+    "archiveInnings": 10,
+    "status": "review-required"
+  },
+  {
+    "player": "JC Buttler",
+    "season": "2021",
+    "storedRuns": 582,
+    "archiveRuns": 254,
+    "storedInnings": 19,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "EJG Morgan",
+    "season": "2021",
+    "storedRuns": 551,
+    "archiveRuns": 133,
+    "storedInnings": 29,
+    "archiveInnings": 15,
+    "status": "review-required"
+  },
+  {
+    "player": "KA Pollard",
+    "season": "2021",
+    "storedRuns": 513,
+    "archiveRuns": 245,
+    "storedInnings": 25,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "CH Gayle",
+    "season": "2021",
+    "storedRuns": 481,
+    "archiveRuns": 193,
+    "storedInnings": 17,
+    "archiveInnings": 10,
+    "status": "review-required"
+  },
+  {
+    "player": "SPD Smith",
+    "season": "2021",
+    "storedRuns": 463,
+    "archiveRuns": 152,
+    "storedInnings": 21,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "RA Jadeja",
+    "season": "2021",
+    "storedRuns": 459,
+    "archiveRuns": 227,
+    "storedInnings": 22,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "MP Stoinis",
+    "season": "2021",
+    "storedRuns": 441,
+    "archiveRuns": 89,
+    "storedInnings": 24,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "N Pooran",
+    "season": "2021",
+    "storedRuns": 438,
+    "archiveRuns": 85,
+    "storedInnings": 24,
+    "archiveInnings": 10,
+    "status": "review-required"
+  },
+  {
+    "player": "SO Hetmyer",
+    "season": "2021",
+    "storedRuns": 427,
+    "archiveRuns": 242,
+    "storedInnings": 23,
+    "archiveInnings": 12,
+    "status": "review-required"
+  },
+  {
+    "player": "R Tewatia",
+    "season": "2021",
+    "storedRuns": 410,
+    "archiveRuns": 155,
+    "storedInnings": 22,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "HH Pandya",
+    "season": "2021",
+    "storedRuns": 408,
+    "archiveRuns": 127,
+    "storedInnings": 24,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "KD Karthik",
+    "season": "2021",
+    "storedRuns": 392,
+    "archiveRuns": 223,
+    "storedInnings": 29,
+    "archiveInnings": 15,
+    "status": "review-required"
+  },
+  {
+    "player": "MM Ali",
+    "season": "2021",
+    "storedRuns": 369,
+    "archiveRuns": 357,
+    "storedInnings": 18,
+    "archiveInnings": 15,
+    "status": "review-required"
+  },
+  {
+    "player": "S Dube",
+    "season": "2021",
+    "storedRuns": 359,
+    "archiveRuns": 230,
+    "storedInnings": 18,
+    "archiveInnings": 9,
+    "status": "review-required"
+  },
+  {
+    "player": "WP Saha",
+    "season": "2021",
+    "storedRuns": 345,
+    "archiveRuns": 131,
+    "storedInnings": 13,
+    "archiveInnings": 9,
+    "status": "review-required"
+  },
+  {
+    "player": "MS Dhoni",
+    "season": "2021",
+    "storedRuns": 314,
+    "archiveRuns": 114,
+    "storedInnings": 23,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "RV Uthappa",
+    "season": "2021",
+    "storedRuns": 311,
+    "archiveRuns": 115,
+    "storedInnings": 16,
+    "archiveInnings": 4,
+    "status": "review-required"
+  },
+  {
+    "player": "AD Russell",
+    "season": "2021",
+    "storedRuns": 300,
+    "archiveRuns": 183,
+    "storedInnings": 17,
+    "archiveInnings": 8,
+    "status": "review-required"
+  },
+  {
+    "player": "YBK Jaiswal",
+    "season": "2021",
+    "storedRuns": 289,
+    "archiveRuns": 249,
+    "storedInnings": 13,
+    "archiveInnings": 10,
+    "status": "review-required"
+  },
+  {
+    "player": "BA Stokes",
+    "season": "2021",
+    "storedRuns": 285,
+    "archiveRuns": 0,
+    "storedInnings": 9,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "DJ Hooda",
+    "season": "2021",
+    "storedRuns": 261,
+    "archiveRuns": 160,
+    "storedInnings": 16,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "KH Pandya",
+    "season": "2021",
+    "storedRuns": 252,
+    "archiveRuns": 143,
+    "storedInnings": 23,
+    "archiveInnings": 12,
+    "status": "review-required"
+  },
+  {
+    "player": "SM Curran",
+    "season": "2021",
+    "storedRuns": 242,
+    "archiveRuns": 56,
+    "storedInnings": 15,
+    "archiveInnings": 4,
+    "status": "review-required"
+  },
+  {
+    "player": "PJ Cummins",
+    "season": "2021",
+    "storedRuns": 239,
+    "archiveRuns": 93,
+    "storedInnings": 15,
+    "archiveInnings": 5,
+    "status": "review-required"
+  },
+  {
+    "player": "Abdul Samad",
+    "season": "2021",
+    "storedRuns": 222,
+    "archiveRuns": 111,
+    "storedInnings": 17,
+    "archiveInnings": 10,
+    "status": "review-required"
+  },
+  {
+    "player": "SS Tiwary",
+    "season": "2021",
+    "storedRuns": 218,
+    "archiveRuns": 115,
+    "storedInnings": 9,
+    "archiveInnings": 4,
+    "status": "review-required"
+  },
+  {
+    "player": "PK Garg",
+    "season": "2021",
+    "storedRuns": 205,
+    "archiveRuns": 72,
+    "storedInnings": 15,
+    "archiveInnings": 5,
+    "status": "review-required"
+  },
+  {
+    "player": "SP Narine",
+    "season": "2021",
+    "storedRuns": 183,
+    "archiveRuns": 62,
+    "storedInnings": 19,
+    "archiveInnings": 10,
+    "status": "review-required"
+  },
+  {
+    "player": "R Parag",
+    "season": "2021",
+    "storedRuns": 179,
+    "archiveRuns": 93,
+    "storedInnings": 18,
+    "archiveInnings": 10,
+    "status": "review-required"
+  },
+  {
+    "player": "Abhishek Sharma",
+    "season": "2021",
+    "storedRuns": 169,
+    "archiveRuns": 98,
+    "storedInnings": 14,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "AR Patel",
+    "season": "2021",
+    "storedRuns": 157,
+    "archiveRuns": 40,
+    "storedInnings": 15,
+    "archiveInnings": 6,
+    "status": "review-required"
+  },
+  {
+    "player": "V Shankar",
+    "season": "2021",
+    "storedRuns": 155,
+    "archiveRuns": 58,
+    "storedInnings": 10,
+    "archiveInnings": 5,
+    "status": "review-required"
+  },
+  {
+    "player": "MK Lomror",
+    "season": "2021",
+    "storedRuns": 153,
+    "archiveRuns": 94,
+    "storedInnings": 7,
+    "archiveInnings": 4,
+    "status": "review-required"
+  },
+  {
+    "player": "JO Holder",
+    "season": "2021",
+    "storedRuns": 151,
+    "archiveRuns": 85,
+    "storedInnings": 11,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "Mandeep Singh",
+    "season": "2021",
+    "storedRuns": 145,
+    "archiveRuns": 15,
+    "storedInnings": 8,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "Washington Sundar",
+    "season": "2021",
+    "storedRuns": 142,
+    "archiveRuns": 31,
+    "storedInnings": 13,
+    "archiveInnings": 4,
+    "status": "review-required"
+  },
+  {
+    "player": "AM Rahane",
+    "season": "2021",
+    "storedRuns": 121,
+    "archiveRuns": 8,
+    "storedInnings": 9,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "Rashid Khan",
+    "season": "2021",
+    "storedRuns": 118,
+    "archiveRuns": 83,
+    "storedInnings": 16,
+    "archiveInnings": 10,
+    "status": "review-required"
+  },
+  {
+    "player": "KM Jadhav",
+    "season": "2021",
+    "storedRuns": 117,
+    "archiveRuns": 55,
+    "storedInnings": 10,
+    "archiveInnings": 5,
+    "status": "review-required"
+  },
+  {
+    "player": "TK Curran",
+    "season": "2021",
+    "storedRuns": 104,
+    "archiveRuns": 21,
+    "storedInnings": 6,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "CH Morris",
+    "season": "2021",
+    "storedRuns": 101,
+    "archiveRuns": 67,
+    "storedInnings": 12,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "R Ashwin",
+    "season": "2021",
+    "storedRuns": 81,
+    "archiveRuns": 44,
+    "storedInnings": 10,
+    "archiveInnings": 5,
+    "status": "review-required"
+  },
+  {
+    "player": "HV Patel",
+    "season": "2021",
+    "storedRuns": 80,
+    "archiveRuns": 59,
+    "storedInnings": 9,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "K Rabada",
+    "season": "2021",
+    "storedRuns": 69,
+    "archiveRuns": 13,
+    "storedInnings": 9,
+    "archiveInnings": 3,
+    "status": "review-required"
+  },
+  {
+    "player": "CJ Jordan",
+    "season": "2021",
+    "storedRuns": 61,
+    "archiveRuns": 32,
+    "storedInnings": 6,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "LH Ferguson",
+    "season": "2021",
+    "storedRuns": 61,
+    "archiveRuns": 18,
+    "storedInnings": 3,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "Shahbaz Ahmed",
+    "season": "2021",
+    "storedRuns": 60,
+    "archiveRuns": 59,
+    "storedInnings": 8,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "DJ Bravo",
+    "season": "2021",
+    "storedRuns": 54,
+    "archiveRuns": 47,
+    "storedInnings": 5,
+    "archiveInnings": 3,
+    "status": "review-required"
+  },
+  {
+    "player": "JD Unadkat",
+    "season": "2021",
+    "storedRuns": 50,
+    "archiveRuns": 41,
+    "storedInnings": 4,
+    "archiveInnings": 3,
+    "status": "review-required"
+  },
+  {
+    "player": "Mohammad Nabi",
+    "season": "2021",
+    "storedRuns": 45,
+    "archiveRuns": 34,
+    "storedInnings": 4,
+    "archiveInnings": 3,
+    "status": "review-required"
+  },
+  {
+    "player": "S Gopal",
+    "season": "2021",
+    "storedRuns": 44,
+    "archiveRuns": 7,
+    "storedInnings": 7,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "Mohammed Siraj",
+    "season": "2021",
+    "storedRuns": 37,
+    "archiveRuns": 20,
+    "storedInnings": 7,
+    "archiveInnings": 4,
+    "status": "review-required"
+  },
+  {
+    "player": "Shivam Mavi",
+    "season": "2021",
+    "storedRuns": 35,
+    "archiveRuns": 25,
+    "storedInnings": 5,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "P Simran Singh",
+    "season": "2021",
+    "storedRuns": 34,
+    "archiveRuns": 19,
+    "storedInnings": 4,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "B Kumar",
+    "season": "2021",
+    "storedRuns": 34,
+    "archiveRuns": 34,
+    "storedInnings": 8,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "SN Khan",
+    "season": "2021",
+    "storedRuns": 33,
+    "archiveRuns": 0,
+    "storedInnings": 5,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "NM Coulter-Nile",
+    "season": "2021",
+    "storedRuns": 29,
+    "archiveRuns": 4,
+    "storedInnings": 4,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "Navdeep Saini",
+    "season": "2021",
+    "storedRuns": 29,
+    "archiveRuns": 2,
+    "storedInnings": 4,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "KL Nagarkoti",
+    "season": "2021",
+    "storedRuns": 22,
+    "archiveRuns": 0,
+    "storedInnings": 7,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "JJ Bumrah",
+    "season": "2021",
+    "storedRuns": 21,
+    "archiveRuns": 16,
+    "storedInnings": 8,
+    "archiveInnings": 7,
+    "status": "review-required"
+  },
+  {
+    "player": "Sandeep Sharma",
+    "season": "2021",
+    "storedRuns": 20,
+    "archiveRuns": 8,
+    "storedInnings": 7,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "M Ashwin",
+    "season": "2021",
+    "storedRuns": 19,
+    "archiveRuns": 15,
+    "storedInnings": 3,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "JDS Neesham",
+    "season": "2021",
+    "storedRuns": 19,
+    "archiveRuns": 0,
+    "storedInnings": 5,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "SN Thakur",
+    "season": "2021",
+    "storedRuns": 17,
+    "archiveRuns": 5,
+    "storedInnings": 6,
+    "archiveInnings": 4,
+    "status": "review-required"
+  },
+  {
+    "player": "RD Chahar",
+    "season": "2021",
+    "storedRuns": 16,
+    "archiveRuns": 14,
+    "storedInnings": 5,
+    "archiveInnings": 4,
+    "status": "review-required"
+  },
+  {
+    "player": "Mohammed Shami",
+    "season": "2021",
+    "storedRuns": 15,
+    "archiveRuns": 13,
+    "storedInnings": 5,
+    "archiveInnings": 3,
+    "status": "review-required"
+  },
+  {
+    "player": "CV Varun",
+    "season": "2021",
+    "storedRuns": 12,
+    "archiveRuns": 2,
+    "storedInnings": 5,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "YS Chahal",
+    "season": "2021",
+    "storedRuns": 11,
+    "archiveRuns": 10,
+    "storedInnings": 3,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "Ravi Bishnoi",
+    "season": "2021",
+    "storedRuns": 8,
+    "archiveRuns": 1,
+    "storedInnings": 3,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "DL Chahar",
+    "season": "2021",
+    "storedRuns": 8,
+    "archiveRuns": 1,
+    "storedInnings": 4,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "S Nadeem",
+    "season": "2021",
+    "storedRuns": 7,
+    "archiveRuns": 0,
+    "storedInnings": 3,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "Kartik Tyagi",
+    "season": "2021",
+    "storedRuns": 6,
+    "archiveRuns": 2,
+    "storedInnings": 4,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "DR Sams",
+    "season": "2021",
+    "storedRuns": 6,
+    "archiveRuns": 6,
+    "storedInnings": 3,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "M Prasidh Krishna",
+    "season": "2021",
+    "storedRuns": 2,
+    "archiveRuns": 0,
+    "storedInnings": 3,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "Mujeeb Ur Rahman",
+    "season": "2021",
+    "storedRuns": 2,
+    "archiveRuns": 1,
+    "storedInnings": 2,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "Arshdeep Singh",
+    "season": "2021",
+    "storedRuns": 2,
+    "archiveRuns": 2,
+    "storedInnings": 3,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "TA Boult",
+    "season": "2021",
+    "storedRuns": 1,
+    "archiveRuns": 1,
+    "storedInnings": 3,
+    "archiveInnings": 2,
+    "status": "review-required"
+  },
+  {
+    "player": "KK Ahmed",
+    "season": "2021",
+    "storedRuns": 1,
+    "archiveRuns": 1,
+    "storedInnings": 2,
+    "archiveInnings": 1,
+    "status": "review-required"
+  },
+  {
+    "player": "KL Rahul",
+    "season": "2025",
+    "storedRuns": 539,
+    "archiveRuns": 546,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "R Parag",
+    "season": "2025",
+    "storedRuns": 393,
+    "archiveRuns": 397,
+    "storedInnings": 14,
+    "archiveInnings": 14,
+    "status": "review-required"
+  },
+  {
+    "player": "T Stubbs",
+    "season": "2025",
+    "storedRuns": 300,
+    "archiveRuns": 306,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "SO Hetmyer",
+    "season": "2025",
+    "storedRuns": 239,
+    "archiveRuns": 245,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "V Kohli",
+    "season": "2026",
+    "storedRuns": 741,
+    "archiveRuns": 675,
+    "storedInnings": 16,
+    "archiveInnings": 16,
+    "status": "review-required"
+  },
+  {
+    "player": "RR Pant",
+    "season": "2026",
+    "storedRuns": 312,
+    "archiveRuns": 313,
+    "storedInnings": 13,
+    "archiveInnings": 13,
+    "status": "review-required"
+  },
+  {
+    "player": "RK Singh",
+    "season": "2026",
+    "storedRuns": 295,
+    "archiveRuns": 299,
+    "storedInnings": 11,
+    "archiveInnings": 11,
+    "status": "review-required"
+  },
+  {
+    "player": "SP Narine",
+    "season": "2026",
+    "storedRuns": 380,
+    "archiveRuns": 40,
+    "storedInnings": 4,
+    "archiveInnings": 4,
+    "status": "review-required"
+  },
+  {
+    "player": "Salil Arora",
+    "season": "2026",
+    "storedRuns": 35,
+    "archiveRuns": 156,
+    "storedInnings": 1,
+    "archiveInnings": 11,
+    "status": "repaired-from-match-archive"
+  },
+  {
+    "player": "Ravi Singh",
+    "season": "2026",
+    "storedRuns": 4,
+    "archiveRuns": 303,
+    "storedInnings": 1,
+    "archiveInnings": 12,
+    "status": "repaired-from-match-archive"
+  }
+]

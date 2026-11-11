@@ -1,0 +1,144 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-pbks-094",
+ "planId": "cf-pbks-094",
+ "franchise": "PBKS",
+ "aspect": "future",
+ "title": "The Next Tactical Edge: What Happens When Punjab Kings Models Every Delivery?",
+ "slug": "pbks-the-next-tactical-edge-what-happens-when-pbks-models-every-delivery",
+ "dek": "What happens when Punjab Kings model every delivery? Commentary tags already record the length of most balls, and the economy by length points to the next tactical edge.",
+ "excerpt": "Since 2024, Punjab Kings' bowlers have out-performed the league most at one length and under-performed most at another. Delivery-level data turns that into a bowling plan.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "PBKS"
+ ],
+ "players": [],
+ "seasons": [
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:te-cover}} of Punjab Kings' deliveries since 2024 carry a length tag in the ball-by-ball commentary.",
+  "Their biggest edge is at {{ev:te-best}} ({{ev:te-best-d}} runs an over against the league); their biggest gap at {{ev:te-worst}} ({{ev:te-worst-d}}).",
+  "Yorkers make up {{ev:te-yshare}} of their tagged deliveries, against {{ev:te-ylg}} for the rest of the league."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Every Delivery, Tagged",
+   "body": [
+    "Ball-by-ball commentary records the length of most deliveries: yorker, full, good length, short and so on. That turns a scorecard into a dataset of bowling execution.",
+    "{{ev:te-cover}} of Punjab Kings' deliveries since 2024 carry a length tag."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Where the Edge Is",
+   "body": [
+    "Punjab Kings' bowlers have out-performed the rest of the league most at {{ev:te-best}}, by {{ev:te-best-d}} runs an over, and under-performed most at {{ev:te-worst}}, by {{ev:te-worst-d}}.",
+    "The chart compares their economy at every length with the league's."
+   ],
+   "chartIds": [
+    "te-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "From Lengths to Plans",
+   "body": [
+    "Yorkers make up {{ev:te-yshare}} of their tagged deliveries, against {{ev:te-ylg}} for the league. Shifting the length mix towards where they out-perform is a plan any coach can act on.",
+    "{{hyp:length}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Limits of the Tags",
+   "body": [
+    "Commentary tags are written by people in real time and are not ball-tracking; boundaries between good length and length ball are subjective. Untagged deliveries are excluded.",
+    "Economy by length also depends on phase and batter, which a fuller model would control for."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Bowl More of What Works",
+   "body": [
+    "Punjab Kings should review their length mix against the economy by length, phase by phase.",
+    "Ball-tracking data would make the next version of this analysis far more precise."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "te-chart",
+   "type": "bar",
+   "title": "Economy by length",
+   "subtitle": "PBKS vs rest of IPL, 2024\u20132026",
+   "table": "te-len",
+   "xKey": "length",
+   "series": [
+    {
+     "key": "team",
+     "label": "PBKS"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "unit": "runs per over",
+   "takeaway": "The edge and the gap sit at different lengths.",
+   "ariaLabel": "Horizontal grouped bar chart of Punjab Kings' economy at each delivery length compared with the rest of the IPL since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "length",
+   "statement": "Hypothesis: Punjab Kings' edge at full toss holds within each phase, not only overall.",
+   "whyUnverified": "Economy by length has not been split by phase.",
+   "howToTest": "Repeat the comparison separately for powerplay, middle and death overs."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "60",
+   "reason": "Minimum balls per length for the comparison."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Punjab Kings bowler executing a plan.",
+   "wanted": "Punjab Kings bowler delivering."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-pbks-011",
+  "cf-pbks-089",
+  "cf-pbks-098"
+ ],
+ "seo": {
+  "metaTitle": "The next tactical edge: modelling every PBKS delivery",
+  "metaDescription": "Punjab Kings' economy by delivery length since 2024 against the league, from ball-by-ball commentary tags."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Forward-looking proposals are labelled as such. Generated by scripts/editorial/engine. Lengths from ball-by-ball commentary tags; untagged deliveries excluded.",
+ "generator": "engine:v1"
+}

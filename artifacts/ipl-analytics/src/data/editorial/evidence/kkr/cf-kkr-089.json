@@ -1,0 +1,159 @@
+{
+ "articleId": "cf-kkr-089",
+ "generatedAt": "2026-10-26T04:21:16.136Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "bp-best": {
+   "value": 171,
+   "display": "171",
+   "label": "Expected runs conceded under the optimal plan",
+   "unit": "runs per 20 overs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Five busiest bowlers, four overs each",
+   "sampleSize": {
+    "n": 12315,
+    "unit": "feasible plans"
+   },
+   "query": "SELECT pl.name, CASE WHEN d.over_num <= 5 THEN 0 WHEN d.over_num <= 14 THEN 1 ELSE 2 END ph, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, ph",
+   "validation": {
+    "method": "plausibility range 120–260 for runs",
+    "passed": true,
+    "detail": "value 171.41019620816857"
+   }
+  },
+  "bp-avg": {
+   "value": 184,
+   "display": "184",
+   "label": "Average expected runs across all feasible plans",
+   "unit": "runs per 20 overs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Same bowlers",
+   "sampleSize": {
+    "n": 12315,
+    "unit": "feasible plans"
+   },
+   "query": "SELECT pl.name, CASE WHEN d.over_num <= 5 THEN 0 WHEN d.over_num <= 14 THEN 1 ELSE 2 END ph, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, ph",
+   "validation": {
+    "method": "plausibility range 120–260 for runs",
+    "passed": true,
+    "detail": "value 184.17471667580074"
+   }
+  },
+  "bp-save": {
+   "value": 12.8,
+   "display": "12.8",
+   "label": "Runs saved by the optimal plan against the average plan",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Derived",
+   "sampleSize": {
+    "n": 12315,
+    "unit": "feasible plans"
+   },
+   "query": "SELECT pl.name, CASE WHEN d.over_num <= 5 THEN 0 WHEN d.over_num <= 14 THEN 1 ELSE 2 END ph, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, ph",
+   "validation": {
+    "method": "plausibility range 0–40 for runs",
+    "passed": true,
+    "detail": "value 12.764520467632167"
+   }
+  },
+  "bp-count": {
+   "value": 12315,
+   "display": "12,315",
+   "label": "Feasible plans checked",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Four overs each; six, nine and five overs by phase",
+   "sampleSize": {
+    "n": 12315,
+    "unit": "plans"
+   },
+   "query": "SELECT pl.name, CASE WHEN d.over_num <= 5 THEN 0 WHEN d.over_num <= 14 THEN 1 ELSE 2 END ph, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, ph",
+   "validation": {
+    "method": "sample-size floor ≥ 10 plans",
+    "passed": true,
+    "detail": "n = 12315"
+   }
+  },
+  "bp-death": {
+   "value": "SP Narine",
+   "display": "SP Narine",
+   "label": "Bowler given the most death overs in the optimal plan",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Optimal plan",
+   "sampleSize": {
+    "n": 5,
+    "unit": "bowlers"
+   },
+   "query": "SELECT pl.name, CASE WHEN d.over_num <= 5 THEN 0 WHEN d.over_num <= 14 THEN 1 ELSE 2 END ph, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, ph",
+   "validation": {
+    "method": "max death overs",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "bp-plan": {
+   "label": "Optimal twenty-over plan for Kolkata Knight Riders' five busiest bowlers",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs per phase; shrunk economy, 2024–2026",
+   "sampleSize": {
+    "n": 12315,
+    "unit": "feasible plans"
+   },
+   "query": "SELECT pl.name, CASE WHEN d.over_num <= 5 THEN 0 WHEN d.over_num <= 14 THEN 1 ELSE 2 END ph, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, ph",
+   "rows": [
+    {
+     "bowler": "SP Narine",
+     "powerplay": 0,
+     "middle": 1,
+     "death": 3,
+     "ppEcon": 8.81,
+     "midEcon": 7.13,
+     "deathEcon": 7.55
+    },
+    {
+     "bowler": "CV Varun",
+     "powerplay": 0,
+     "middle": 4,
+     "death": 0,
+     "ppEcon": 9.1,
+     "midEcon": 7.88,
+     "deathEcon": 9.84
+    },
+    {
+     "bowler": "VG Arora",
+     "powerplay": 4,
+     "middle": 0,
+     "death": 0,
+     "ppEcon": 9.31,
+     "midEcon": 11.12,
+     "deathEcon": 10.29
+    },
+    {
+     "bowler": "Harshit Rana",
+     "powerplay": 2,
+     "middle": 0,
+     "death": 2,
+     "ppEcon": 9.99,
+     "midEcon": 9.31,
+     "deathEcon": 9.71
+    },
+    {
+     "bowler": "Kartik Tyagi",
+     "powerplay": 0,
+     "middle": 4,
+     "death": 0,
+     "ppEcon": 10.5,
+     "midEcon": 8.36,
+     "deathEcon": 10.68
+    }
+   ]
+  }
+ }
+}

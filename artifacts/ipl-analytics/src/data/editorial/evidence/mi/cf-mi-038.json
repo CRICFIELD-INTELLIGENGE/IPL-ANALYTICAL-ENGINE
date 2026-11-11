@@ -1,0 +1,142 @@
+{
+ "articleId": "cf-mi-038",
+ "generatedAt": "2026-10-26T04:19:26.650Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "rs-ppbat": {
+   "value": 9,
+   "display": "9",
+   "label": "IPL players who were elite powerplay hitters, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 100 balls in the phase; elite = 15% better than the phase average",
+   "sampleSize": {
+    "n": 48,
+    "unit": "players"
+   },
+   "query": "WITH p AS (SELECT d.batter_id pid, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY d.batter_id), lg AS (SELECT SUM(runs) * 1.0 / SUM(balls) avg FROM p) SELECT COUNT(*) qualified, SUM(CASE WHEN runs * 1.0 / balls > (SELECT avg FROM lg) * 1.15 THEN 1 ELSE 0 END) elite FROM p WHERE balls >= 100",
+   "validation": {
+    "method": "sample-size floor ≥ 10 players",
+    "passed": true,
+    "detail": "n = 48"
+   }
+  },
+  "rs-deathbat": {
+   "value": 12,
+   "display": "12",
+   "label": "IPL players who were elite death-overs hitters, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 100 balls in the phase; elite = 15% better than the phase average",
+   "sampleSize": {
+    "n": 38,
+    "unit": "players"
+   },
+   "query": "WITH p AS (SELECT d.batter_id pid, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY d.batter_id), lg AS (SELECT SUM(runs) * 1.0 / SUM(balls) avg FROM p) SELECT COUNT(*) qualified, SUM(CASE WHEN runs * 1.0 / balls > (SELECT avg FROM lg) * 1.15 THEN 1 ELSE 0 END) elite FROM p WHERE balls >= 100",
+   "validation": {
+    "method": "sample-size floor ≥ 10 players",
+    "passed": true,
+    "detail": "n = 38"
+   }
+  },
+  "rs-ppbowl": {
+   "value": 6,
+   "display": "6",
+   "label": "IPL players who were elite new-ball bowlers, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 100 balls in the phase; elite = 15% better than the phase average",
+   "sampleSize": {
+    "n": 48,
+    "unit": "players"
+   },
+   "query": "WITH p AS (SELECT d.bowler_id pid, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY d.bowler_id), lg AS (SELECT SUM(runs) * 1.0 / SUM(balls) avg FROM p) SELECT COUNT(*) qualified, SUM(CASE WHEN runs * 1.0 / balls < (SELECT avg FROM lg) * 0.88 THEN 1 ELSE 0 END) elite FROM p WHERE balls >= 100",
+   "validation": {
+    "method": "sample-size floor ≥ 10 players",
+    "passed": true,
+    "detail": "n = 48"
+   }
+  },
+  "rs-deathbowl": {
+   "value": 7,
+   "display": "7",
+   "label": "IPL players who were elite death bowlers, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 100 balls in the phase; elite = 15% better than the phase average",
+   "sampleSize": {
+    "n": 40,
+    "unit": "players"
+   },
+   "query": "WITH p AS (SELECT d.bowler_id pid, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY d.bowler_id), lg AS (SELECT SUM(runs) * 1.0 / SUM(balls) avg FROM p) SELECT COUNT(*) qualified, SUM(CASE WHEN runs * 1.0 / balls < (SELECT avg FROM lg) * 0.88 THEN 1 ELSE 0 END) elite FROM p WHERE balls >= 100",
+   "validation": {
+    "method": "sample-size floor ≥ 10 players",
+    "passed": true,
+    "detail": "n = 40"
+   }
+  },
+  "rs-midbowl": {
+   "value": 12,
+   "display": "12",
+   "label": "IPL players who were elite middle-overs bowlers, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 100 balls in the phase; elite = 15% better than the phase average",
+   "sampleSize": {
+    "n": 77,
+    "unit": "players"
+   },
+   "query": "WITH p AS (SELECT d.bowler_id pid, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY d.bowler_id), lg AS (SELECT SUM(runs) * 1.0 / SUM(balls) avg FROM p) SELECT COUNT(*) qualified, SUM(CASE WHEN runs * 1.0 / balls < (SELECT avg FROM lg) * 0.88 THEN 1 ELSE 0 END) elite FROM p WHERE balls >= 100",
+   "validation": {
+    "method": "sample-size floor ≥ 10 players",
+    "passed": true,
+    "detail": "n = 77"
+   }
+  }
+ },
+ "tables": {
+  "rs-roles": {
+   "label": "Elite players by role across the IPL, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Elite = at least 15% better than the phase average (min. 100 balls)",
+   "sampleSize": {
+    "n": 251,
+    "unit": "players"
+   },
+   "query": "WITH p AS (SELECT d.bowler_id pid, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY d.bowler_id), lg AS (SELECT SUM(runs) * 1.0 / SUM(balls) avg FROM p) SELECT COUNT(*) qualified, SUM(CASE WHEN runs * 1.0 / balls < (SELECT avg FROM lg) * 0.88 THEN 1 ELSE 0 END) elite FROM p WHERE balls >= 100",
+   "rows": [
+    {
+     "role": "Powerplay hitter",
+     "elite": 9,
+     "qualified": 48,
+     "elitePct": 18.8
+    },
+    {
+     "role": "Death-overs hitter",
+     "elite": 12,
+     "qualified": 38,
+     "elitePct": 31.6
+    },
+    {
+     "role": "New-ball bowler",
+     "elite": 6,
+     "qualified": 48,
+     "elitePct": 12.5
+    },
+    {
+     "role": "Death bowler",
+     "elite": 7,
+     "qualified": 40,
+     "elitePct": 17.5
+    },
+    {
+     "role": "Middle-overs bowler",
+     "elite": 12,
+     "qualified": 77,
+     "elitePct": 15.6
+    }
+   ]
+  }
+ }
+}

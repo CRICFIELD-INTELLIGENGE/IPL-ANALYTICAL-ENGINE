@@ -1,0 +1,177 @@
+{
+ "articleId": "cf-mi-058",
+ "generatedAt": "2026-10-26T04:19:32.603Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "lp-countries": {
+   "value": 9,
+   "display": "9",
+   "label": "Countries represented among Mumbai Indians' players",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Players with known nationality",
+   "sampleSize": {
+    "n": 297,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (4) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (4) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (4) OR i.bowling_team_id IN (4)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "plausibility range 2–15 for countries",
+    "passed": true,
+    "detail": "value 9"
+   }
+  },
+  "lp-os": {
+   "value": 37,
+   "display": "37%",
+   "label": "Share of Mumbai Indians' balls faced and bowled by overseas players",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 53379,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (4) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (4) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (4) OR i.bowling_team_id IN (4)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "plausibility range 5–70 for share",
+    "passed": true,
+    "detail": "value 37.23374360703647"
+   }
+  },
+  "lp-cover": {
+   "value": 95,
+   "display": "95%",
+   "label": "Share of balls covered by known nationality, in the seasons analysed",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons with at least 80% coverage",
+   "sampleSize": {
+    "n": 55978,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (4) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (4) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (4) OR i.bowling_team_id IN (4)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "plausibility range 80–100 for coverage",
+    "passed": true,
+    "detail": "value 95.35710457679802"
+   }
+  },
+  "lp-yrs": {
+   "value": 16,
+   "display": "16",
+   "label": "Seasons with reliable nationality data",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "At least 80% of balls covered",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (4) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (4) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (4) OR i.bowling_team_id IN (4)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 3 seasons",
+    "passed": true,
+    "detail": "n = 16"
+   }
+  },
+  "lp-all": {
+   "value": 19,
+   "display": "19",
+   "label": "MI seasons in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (4) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (4) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (4) OR i.bowling_team_id IN (4)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "lp-series": {
+   "label": "Share of Mumbai Indians' balls faced and bowled by overseas players",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Nationality from CricField player-bio data, squad lists as fallback; seasons with at least 80% coverage",
+   "sampleSize": {
+    "n": 53379,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (4) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (4) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (4) OR i.bowling_team_id IN (4)) GROUP BY year, pl.name",
+   "rows": [
+    {
+     "season": "2008",
+     "overseasPct": 54.7
+    },
+    {
+     "season": "2009",
+     "overseasPct": 57.6
+    },
+    {
+     "season": "2013",
+     "overseasPct": 43.4
+    },
+    {
+     "season": "2014",
+     "overseasPct": 37.6
+    },
+    {
+     "season": "2015",
+     "overseasPct": 35.1
+    },
+    {
+     "season": "2016",
+     "overseasPct": 34.9
+    },
+    {
+     "season": "2017",
+     "overseasPct": 40.1
+    },
+    {
+     "season": "2018",
+     "overseasPct": 31.4
+    },
+    {
+     "season": "2019",
+     "overseasPct": 32.7
+    },
+    {
+     "season": "2020",
+     "overseasPct": 32.9
+    },
+    {
+     "season": "2021",
+     "overseasPct": 36.3
+    },
+    {
+     "season": "2022",
+     "overseasPct": 31.3
+    },
+    {
+     "season": "2023",
+     "overseasPct": 37
+    },
+    {
+     "season": "2024",
+     "overseasPct": 26.8
+    },
+    {
+     "season": "2025",
+     "overseasPct": 35.7
+    },
+    {
+     "season": "2026",
+     "overseasPct": 36.1
+    }
+   ]
+  }
+ }
+}

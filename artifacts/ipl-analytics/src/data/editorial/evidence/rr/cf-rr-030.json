@@ -1,0 +1,134 @@
+{
+ "articleId": "cf-rr-030",
+ "generatedAt": "2026-10-26T04:23:19.559Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "cap-n": {
+   "value": 8,
+   "display": "8",
+   "label": "RR captains listed",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "captains.json",
+   "sampleSize": {
+    "n": 8,
+    "unit": "captains"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "plausibility range 1–30 for captain count",
+    "passed": true,
+    "detail": "value 8"
+   }
+  },
+  "cap-top": {
+   "value": "Sanju Samson",
+   "display": "Sanju Samson",
+   "label": "RR's longest-serving captain with a franchise-only record",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact records only",
+   "sampleSize": {
+    "n": 67,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "rank by matches",
+    "passed": true
+   }
+  },
+  "cap-top-pct": {
+   "value": 49.3,
+   "display": "49.3%",
+   "label": "Sanju Samson win rate as RR captain",
+   "unit": "%",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "2021–2025",
+   "sampleSize": {
+    "n": 67,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 67"
+   }
+  },
+  "cap-top-n": {
+   "value": 67,
+   "display": "67",
+   "label": "Matches with Sanju Samson as RR captain",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact record",
+   "sampleSize": {
+    "n": 67,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 67"
+   }
+  },
+  "cap-team": {
+   "value": 50.2,
+   "display": "50.2%",
+   "label": "RR win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 249,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (10) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (10) OR m.team2_id IN (10)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 249"
+   }
+  }
+ },
+ "tables": {
+  "cap-tab": {
+   "label": "RR captains with franchise-only records",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Captains whose record covers this franchise alone (min. five matches)",
+   "sampleSize": {
+    "n": 144,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "rows": [
+    {
+     "captain": "Sanju Samson",
+     "seasons": "2021–2025",
+     "matches": 67,
+     "winPct": 49.3,
+     "titles": 0
+    },
+    {
+     "captain": "Shane Warne",
+     "seasons": "2008–2011",
+     "matches": 55,
+     "winPct": 54.5,
+     "titles": 1
+    },
+    {
+     "captain": "Riyan Parag",
+     "seasons": "2025–2026",
+     "matches": 22,
+     "winPct": 45.5,
+     "titles": 0
+    }
+   ]
+  }
+ }
+}

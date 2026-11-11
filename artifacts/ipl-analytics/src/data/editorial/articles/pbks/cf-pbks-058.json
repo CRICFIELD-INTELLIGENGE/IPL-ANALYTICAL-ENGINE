@@ -1,0 +1,136 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-pbks-058",
+ "planId": "cf-pbks-058",
+ "franchise": "PBKS",
+ "aspect": "fan-culture",
+ "title": "Local Pride and Global Reach: Who Feels Represented by Punjab Kings?",
+ "slug": "pbks-local-pride-and-global-reach-who-feels-represented-by-pbks",
+ "dek": "Punjab Kings carry a city's name and a squad drawn from around the world. The balance between local and overseas players shapes who feels represented.",
+ "excerpt": "In the seasons where nationality data is reliable, overseas players have faced or bowled a measurable share of Punjab Kings' deliveries. Local pride and global reach both have a basis on the field.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "PBKS"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "Players from {{ev:lp-countries}} countries have played for PBKS.",
+  "Overseas players faced or bowled {{ev:lp-os}} of the side's balls.",
+  "The figures cover the {{ev:lp-yrs}} of {{ev:lp-all}} seasons with reliable nationality data."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "A City's Name, a World Squad",
+   "body": [
+    "IPL franchises are rooted in a city but built from an international market. Fans at home see local heroes alongside overseas stars, and fans abroad follow their compatriots.",
+    "The CricField warehouse holds no survey, sentiment or social-media data, so it cannot measure what fans feel. It can measure what they have watched."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Who Has Represented the Franchise",
+   "body": [
+    "Players from {{ev:lp-countries}} countries have played for Punjab Kings. Overseas players faced or bowled {{ev:lp-os}} of the side's balls.",
+    "The chart tracks that overseas share season by season."
+   ],
+   "chartIds": [
+    "lp-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Local Heroes",
+   "body": [
+    "The Indian share of the action is where local pride is built, although \"local\" often means national rather than from the franchise's own city or state; birthplace by state is not in the data.",
+    "{{hyp:local}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Global Reach",
+   "body": [
+    "Overseas players bring followings from their home countries. Measuring that reach would need audience data by country.",
+    "Nationality comes from CricField player-bio records and squad lists. Only the {{ev:lp-yrs}} of {{ev:lp-all}} seasons where it covers at least four-fifths of the balls are used, and within them it covers {{ev:lp-cover}}; squad-list nationality contains known errors."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Both Stories Are Real",
+   "body": [
+    "Punjab Kings have a measurable mix of Indian and overseas contributors. Local pride and global reach both rest on players who have actually played.",
+    "Who feels represented is a survey question."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "lp-chart",
+   "type": "line",
+   "title": "Overseas share of the action",
+   "subtitle": "PBKS, share of balls faced and bowled",
+   "table": "lp-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "overseasPct",
+     "label": "Overseas share"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of balls",
+   "takeaway": "The overseas share of the action changes from season to season.",
+   "ariaLabel": "Line chart of the share of Punjab Kings' balls faced and bowled by overseas players, by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "local",
+   "statement": "Hypothesis: fans in the franchise's home state feel more represented when players from that state play a larger share of the matches.",
+   "whyUnverified": "Player home state and fan sentiment are not in the data.",
+   "howToTest": "Add players' home states and survey fans on representation."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Punjab Kings: a local side with global players.",
+   "wanted": "Punjab Kings Indian and overseas players together."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-pbks-034",
+  "cf-pbks-049",
+  "cf-pbks-099"
+ ],
+ "seo": {
+  "metaTitle": "Local pride and global reach at PBKS",
+  "metaDescription": "How many countries have been represented at Punjab Kings, and how much of the action overseas players have had."
+ },
+ "methodology": "CricField holds ball-by-ball cricket data and no fan survey, sentiment or social-media data. This article measures the cricket fans have experienced; statements about fans themselves are labelled hypotheses. Generated by scripts/editorial/engine. Nationality from CricField player-bio data, with season squad lists as fallback; only seasons where nationality covers at least 80% of balls are analysed.",
+ "generator": "engine:v1"
+}

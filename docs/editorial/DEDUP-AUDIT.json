@@ -1,0 +1,5815 @@
+{
+ "summary": {
+  "generatedAt": "2026-10-26T09:04:57.269Z",
+  "legacyArticles": 100,
+  "verdicts": {
+   "partial-overlap": 49,
+   "duplicate": 49,
+   "distinct": 2
+  },
+  "calibration": {
+   "reviewed": 100,
+   "automaticTopMatchAgrees": 26
+  },
+  "legacyTablesChecked": 100,
+  "legacyTablesMisstated": 100,
+  "distinctKeyFindingTemplates": 1,
+  "legacyLabelledVerified": 80
+ },
+ "pairs": [
+  {
+   "franchise": "SRH",
+   "legacyId": "art-srh-01",
+   "legacySlug": "srh-the-orange-revolution-how-srh-reinvented-their-t20-identity",
+   "legacyTitle": "The Orange Revolution: How SRH Reinvented Their T20 Identity",
+   "legacyWords": 570,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-srh-062",
+    "title": "The Season That Changed the Conversation Around Sunrisers Hyderabad",
+    "words": 196,
+    "generator": "engine:v1",
+    "score": 0.011
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-srh-004",
+     "title": "Middle-Overs Momentum: Where Sunrisers Hyderabad Gains or Loses Run Rate",
+     "words": 278,
+     "generator": "engine:v1",
+     "score": 0.092
+    },
+    {
+     "planId": "cf-srh-016",
+     "title": "Fielding as Run Prevention: Measuring the Hidden Value of Sunrisers Hyderabad’s Saves",
+     "words": 256,
+     "generator": "engine:v1",
+     "score": 0.086
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.15,
+     "actualTeam": 8.47,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.3,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.65,
+     "actualTeam": 9.7,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "SRH",
+   "legacyId": "art-srh-02",
+   "legacySlug": "srh-powerplay-without-permission-the-mathematics-of-srhs-batting-aggression",
+   "legacyTitle": "Powerplay Without Permission: The Mathematics of SRH's Batting Aggression",
+   "legacyWords": 567,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-srh-001",
+    "title": "The Powerplay Equation: When Sunrisers Hyderabad Should Attack the First Six Overs",
+    "words": 407,
+    "generator": "engine:v1",
+    "score": 0.22
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-srh-009",
+     "title": "Dot-Ball Debt: How Sunrisers Hyderabad Can Price the Cost of a Quiet Over",
+     "words": 289,
+     "generator": "engine:v1",
+     "score": 0.195
+    },
+    {
+     "planId": "cf-srh-080",
+     "title": "The Scout’s Blind Spot: Which Small-Sample Stars Might Mislead Sunrisers Hyderabad?",
+     "words": 240,
+     "generator": "engine:v1",
+     "score": 0.16
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.47,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.5,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.9,
+     "actualTeam": 9.7,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "SRH",
+   "legacyId": "art-srh-03",
+   "legacySlug": "srh-the-lost-art-of-defence-what-happened-to-srhs-bowling-first-philosophy",
+   "legacyTitle": "The Lost Art of Defence: What Happened to SRH's Bowling-First Philosophy?",
+   "legacyWords": 572,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-srh-025",
+    "title": "Defending 160 Versus 200: Why Sunrisers Hyderabad Needs Two Bowling Playbooks",
+    "words": 250,
+    "generator": "engine:v1",
+    "score": 0.097
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-srh-001",
+     "title": "The Powerplay Equation: When Sunrisers Hyderabad Should Attack the First Six Overs",
+     "words": 407,
+     "generator": "engine:v1",
+     "score": 0.089
+    },
+    {
+     "planId": "cf-srh-067",
+     "title": "From Auction Table to Playing XI: How Sunrisers Hyderabad’s Squad Philosophy Evolved",
+     "words": 178,
+     "generator": "engine:v1",
+     "score": 0.078
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.85,
+     "actualTeam": 8.47,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.7,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.15,
+     "actualTeam": 9.7,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "SRH",
+   "legacyId": "art-srh-04",
+   "legacySlug": "srh-when-200-isnt-enough-srhs-relationship-with-high-scoring-pressure",
+   "legacyTitle": "When 200 Isn't Enough: SRH's Relationship with High-Scoring Pressure",
+   "legacyWords": 576,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-srh-010",
+    "title": "The 200-Run Question: Which Conditions Make Sunrisers Hyderabad a High-Scoring Side?",
+    "words": 262,
+    "generator": "engine:v1",
+    "score": 0.139
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-srh-066",
+     "title": "The Matches That Built Sunrisers Hyderabad’s Reputation Under Pressure",
+     "words": 160,
+     "generator": "engine:v1",
+     "score": 0.104
+    },
+    {
+     "planId": "cf-srh-081",
+     "title": "Win Probability, Ball by Ball: Building a Model for Sunrisers Hyderabad",
+     "words": 212,
+     "generator": "engine:v1",
+     "score": 0.098
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.2,
+     "actualTeam": 8.47,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.9,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.4,
+     "actualTeam": 9.7,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "SRH",
+   "legacyId": "art-srh-05",
+   "legacySlug": "srh-the-hyderabad-equation-does-uppal-reward-aggression-or-discipline",
+   "legacyTitle": "The Hyderabad Equation: Does Uppal Reward Aggression or Discipline?",
+   "legacyWords": 571,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-srh-022",
+    "title": "Home-Ground Advantage: What Makes Hyderabad Different for Sunrisers Hyderabad?",
+    "words": 248,
+    "generator": "engine:v1",
+    "score": 0.045
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-srh-065",
+     "title": "A Timeline of Sunrisers Hyderabad’s Home-Ground Evolution",
+     "words": 192,
+     "generator": "engine:v1",
+     "score": 0.101
+    },
+    {
+     "planId": "cf-srh-003",
+     "title": "Boundary Dependency: How Much of Sunrisers Hyderabad’s Scoring Comes in Fours and Sixes?",
+     "words": 316,
+     "generator": "engine:v1",
+     "score": 0.096
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.55,
+     "actualTeam": 8.47,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.1,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.65,
+     "actualTeam": 9.7,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "SRH",
+   "legacyId": "art-srh-06",
+   "legacySlug": "srh-buying-firepower-has-srhs-auction-spending-matched-its-batting-ambition",
+   "legacyTitle": "Buying Firepower: Has SRH's Auction Spending Matched Its Batting Ambition?",
+   "legacyWords": 571,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-srh-039",
+    "title": "Salary Versus Contribution: Designing an Auction ROI Model for Sunrisers Hyderabad",
+    "words": 227,
+    "generator": "engine:v1",
+    "score": 0.062
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-srh-033",
+     "title": "Retention Mathematics: Which Player Roles Should Sunrisers Hyderabad Protect?",
+     "words": 203,
+     "generator": "engine:v1",
+     "score": 0.149
+    },
+    {
+     "planId": "cf-srh-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Sunrisers Hyderabad?",
+     "words": 268,
+     "generator": "engine:v1",
+     "score": 0.136
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.9,
+     "actualTeam": 8.47,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.3,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.9,
+     "actualTeam": 9.7,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "SRH",
+   "legacyId": "art-srh-07",
+   "legacySlug": "srh-the-sixth-bowler-problem-how-balanced-is-srhs-ideal-xi",
+   "legacyTitle": "The Sixth Bowler Problem: How Balanced Is SRH's Ideal XI?",
+   "legacyWords": 570,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-srh-020",
+    "title": "The Sixth-Bowler Insurance Policy: How Much Flexibility Does Sunrisers Hyderabad Need?",
+    "words": 261,
+    "generator": "engine:v1",
+    "score": 0.114
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-srh-089",
+     "title": "Bowling Plans as Optimization: Allocating 20 Overs for Sunrisers Hyderabad",
+     "words": 223,
+     "generator": "engine:v1",
+     "score": 0.116
+    },
+    {
+     "planId": "cf-srh-005",
+     "title": "The Finisher’s Clock: When Should Sunrisers Hyderabad Send in Its Power Hitters?",
+     "words": 277,
+     "generator": "engine:v1",
+     "score": 0.102
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.25,
+     "actualTeam": 8.47,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.15,
+     "actualTeam": 9.7,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "SRH",
+   "legacyId": "art-srh-08",
+   "legacySlug": "srh-from-warner-to-the-new-era-the-evolution-of-an-orange-identity",
+   "legacyTitle": "From Warner to the New Era: The Evolution of an Orange Identity",
+   "legacyWords": 573,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-srh-067",
+    "title": "From Auction Table to Playing XI: How Sunrisers Hyderabad’s Squad Philosophy Evolved",
+    "words": 178,
+    "generator": "engine:v1",
+    "score": 0
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-srh-064",
+     "title": "The Captaincy Eras: How Leadership Changed Sunrisers Hyderabad’s Playing Identity",
+     "words": 229,
+     "generator": "engine:v1",
+     "score": 0.1
+    },
+    {
+     "planId": "cf-srh-065",
+     "title": "A Timeline of Sunrisers Hyderabad’s Home-Ground Evolution",
+     "words": 192,
+     "generator": "engine:v1",
+     "score": 0.092
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.6,
+     "actualTeam": 8.47,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.7,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.4,
+     "actualTeam": 9.7,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "SRH",
+   "legacyId": "art-srh-09",
+   "legacySlug": "srh-the-boundary-paradox-can-more-sixes-sometimes-produce-less-control",
+   "legacyTitle": "The Boundary Paradox: Can More Sixes Sometimes Produce Less Control?",
+   "legacyWords": 569,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-srh-003",
+    "title": "Boundary Dependency: How Much of Sunrisers Hyderabad’s Scoring Comes in Fours and Sixes?",
+    "words": 316,
+    "generator": "engine:v1",
+    "score": 0.102
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-srh-014",
+     "title": "Middle-Overs Spin: Can Sunrisers Hyderabad Create Pressure Without Immediate Wickets?",
+     "words": 268,
+     "generator": "engine:v1",
+     "score": 0.154
+    },
+    {
+     "planId": "cf-srh-009",
+     "title": "Dot-Ball Debt: How Sunrisers Hyderabad Can Price the Cost of a Quiet Over",
+     "words": 289,
+     "generator": "engine:v1",
+     "score": 0.148
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.95,
+     "actualTeam": 8.47,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.9,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.65,
+     "actualTeam": 9.7,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "SRH",
+   "legacyId": "art-srh-10",
+   "legacySlug": "srh-beyond-the-big-hitters-where-should-srh-find-its-next-competitive-advantage",
+   "legacyTitle": "Beyond the Big Hitters: Where Should SRH Find Its Next Competitive Advantage?",
+   "legacyWords": 578,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-srh-091",
+    "title": "The 2027 Blueprint: What Should Sunrisers Hyderabad Build for the Next Cycle?",
+    "words": 193,
+    "generator": "engine:v1",
+    "score": 0.016
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-srh-072",
+     "title": "Domestic Pathways: Where Could Sunrisers Hyderabad Find Undervalued Talent?",
+     "words": 207,
+     "generator": "engine:v1",
+     "score": 0.126
+    },
+    {
+     "planId": "cf-srh-035",
+     "title": "The Uncapped Advantage: Finding Low-Cost Impact for Sunrisers Hyderabad",
+     "words": 204,
+     "generator": "engine:v1",
+     "score": 0.116
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 12.3,
+     "actualTeam": 8.47,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 10.1,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.9,
+     "actualTeam": 9.7,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RCB",
+   "legacyId": "art-rcb-01",
+   "legacySlug": "rcb-beyond-the-superstars-what-really-defines-rcbs-cricketing-identity",
+   "legacyTitle": "Beyond the Superstars: What Really Defines RCB's Cricketing Identity?",
+   "legacyWords": 579,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rcb-061",
+    "title": "The Founding Identity: How Royal Challengers Bengaluru Became More Than an IPL Entry",
+    "words": 185,
+    "generator": "engine:v1",
+    "score": 0.104
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rcb-069",
+     "title": "The Turning-Point Audit: What Really Changed in Royal Challengers Bengaluru’s Best Seasons?",
+     "words": 202,
+     "generator": "engine:v1",
+     "score": 0.104
+    },
+    {
+     "planId": "cf-rcb-064",
+     "title": "The Captaincy Eras: How Leadership Changed Royal Challengers Bengaluru’s Playing Identity",
+     "words": 232,
+     "generator": "engine:v1",
+     "score": 0.097
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "existing reviewed decision",
+   "why": "Existing reviewed decision: revise. Identity essay overlaps 'The Founding Identity'; rewrite in the History batch keeps the legacy URL.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.15,
+     "actualTeam": 7.97,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.3,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.65,
+     "actualTeam": 10.63,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RCB",
+   "legacyId": "art-rcb-02",
+   "legacySlug": "rcb-the-anatomy-of-a-chase-how-rcb-constructs-successful-run-pursuits",
+   "legacyTitle": "The Anatomy of a Chase: How RCB Constructs Successful Run Pursuits",
+   "legacyWords": 581,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rcb-006",
+    "title": "Chasing Under Pressure: Does Royal Challengers Bengaluru Bat Differently When the Target Climbs?",
+    "words": 273,
+    "generator": "engine:v1",
+    "score": 0.029
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rcb-014",
+     "title": "Middle-Overs Spin: Can Royal Challengers Bengaluru Create Pressure Without Immediate Wickets?",
+     "words": 271,
+     "generator": "engine:v1",
+     "score": 0.129
+    },
+    {
+     "planId": "cf-rcb-004",
+     "title": "Middle-Overs Momentum: Where Royal Challengers Bengaluru Gains or Loses Run Rate",
+     "words": 280,
+     "generator": "engine:v1",
+     "score": 0.127
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "existing reviewed decision",
+   "why": "Existing reviewed decision: revise. Chase construction is the same question as 'Chasing Under Pressure'.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.5,
+     "actualTeam": 7.97,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.5,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.9,
+     "actualTeam": 10.63,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RCB",
+   "legacyId": "art-rcb-03",
+   "legacySlug": "rcb-bowling-at-chinnaswamy-why-economy-rate-doesnt-tell-the-whole-story",
+   "legacyTitle": "Bowling at Chinnaswamy: Why Economy Rate Doesn't Tell the Whole Story",
+   "legacyWords": 588,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rcb-013",
+    "title": "Wickets Versus Economy: How Royal Challengers Bengaluru Should Judge Its Bowlers",
+    "words": 276,
+    "generator": "engine:v1",
+    "score": 0.15
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rcb-020",
+     "title": "The Sixth-Bowler Insurance Policy: How Much Flexibility Does Royal Challengers Bengaluru Need?",
+     "words": 263,
+     "generator": "engine:v1",
+     "score": 0.149
+    },
+    {
+     "planId": "cf-rcb-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Royal Challengers Bengaluru Fans?",
+     "words": 225,
+     "generator": "engine:v1",
+     "score": 0.128
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "existing reviewed decision",
+   "why": "Existing reviewed decision: revise. Economy-rate critique is the core of 'Wickets Versus Economy'.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.85,
+     "actualTeam": 7.97,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.7,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.15,
+     "actualTeam": 10.63,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RCB",
+   "legacyId": "art-rcb-04",
+   "legacySlug": "rcb-the-weight-of-expectation-rcbs-performance-in-high-pressure-matches",
+   "legacyTitle": "The Weight of Expectation: RCB's Performance in High-Pressure Matches",
+   "legacyWords": 586,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-rcb-085",
+    "title": "Clutch or Coincidence? Testing Royal Challengers Bengaluru’s Pressure-Performance Narratives",
+    "words": 535,
+    "score": 0.12
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rcb-066",
+     "title": "The Matches That Built Royal Challengers Bengaluru’s Reputation Under Pressure",
+     "words": 163,
+     "generator": "engine:v1",
+     "score": 0.138
+    },
+    {
+     "planId": "cf-rcb-081",
+     "title": "Win Probability, Ball by Ball: Building a Model for Royal Challengers Bengaluru",
+     "words": 214,
+     "generator": "engine:v1",
+     "score": 0.129
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "existing reviewed decision",
+   "why": "Existing reviewed decision: revise. High-pressure performance claim is tested statistically in 'Clutch or Coincidence?' (Batch 1); the 2024 run stays as a case study. cf-rcb-066 is related reading, not a duplicate.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.2,
+     "actualTeam": 7.97,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.9,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.4,
+     "actualTeam": 10.63,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RCB",
+   "legacyId": "art-rcb-05",
+   "legacySlug": "rcb-the-chinnaswamy-effect-how-much-does-the-ground-change-cricket",
+   "legacyTitle": "The Chinnaswamy Effect: How Much Does the Ground Change Cricket?",
+   "legacyWords": 582,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rcb-022",
+    "title": "Home-Ground Advantage: What Makes Chinnaswamy Different for Royal Challengers Bengaluru?",
+    "words": 626,
+    "score": 0.129
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rcb-080",
+     "title": "The Scout’s Blind Spot: Which Small-Sample Stars Might Mislead Royal Challengers Bengaluru?",
+     "words": 553,
+     "score": 0.128
+    },
+    {
+     "planId": "cf-rcb-021",
+     "title": "The Toss Illusion: How Much Should Royal Challengers Bengaluru Change Its Plan After the Coin Flip?",
+     "words": 238,
+     "generator": "engine:v1",
+     "score": 0.109
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "existing reviewed decision",
+   "why": "Existing reviewed decision: revise. Semantic duplicate of 'Home-Ground Advantage: What Makes Chinnaswamy Different' (Batch 1). Legacy text contained unsourced physical claims (altitude, boundary metres); v2 replaces them with warehouse evidence.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.55,
+     "actualTeam": 7.97,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.1,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.65,
+     "actualTeam": 10.63,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RCB",
+   "legacyId": "art-rcb-06",
+   "legacySlug": "rcb-the-price-of-star-power-rcbs-auction-spending-under-the-microscope",
+   "legacyTitle": "The Price of Star Power: RCB's Auction Spending Under the Microscope",
+   "legacyWords": 592,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rcb-032",
+    "title": "Star Premium Versus Squad Depth: Where Should Royal Challengers Bengaluru Spend Its Budget?",
+    "words": 248,
+    "generator": "engine:v1",
+    "score": 0.13
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rcb-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Royal Challengers Bengaluru?",
+     "words": 269,
+     "generator": "engine:v1",
+     "score": 0.141
+    },
+    {
+     "planId": "cf-rcb-080",
+     "title": "The Scout’s Blind Spot: Which Small-Sample Stars Might Mislead Royal Challengers Bengaluru?",
+     "words": 553,
+     "score": 0.112
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "existing reviewed decision",
+   "why": "Existing reviewed decision: revise. Star-power spending maps to 'Star Premium Versus Squad Depth'. Not the same question as cf-rcb-039 (ROI model, Batch 1), which links to it as related reading.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.9,
+     "actualTeam": 7.97,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.3,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.9,
+     "actualTeam": 10.63,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RCB",
+   "legacyId": "art-rcb-07",
+   "legacySlug": "rcb-batting-depth-or-bowling-insurance-the-rcb-selection-dilemma",
+   "legacyTitle": "Batting Depth or Bowling Insurance: The RCB Selection Dilemma",
+   "legacyWords": 581,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rcb-020",
+    "title": "The Sixth-Bowler Insurance Policy: How Much Flexibility Does Royal Challengers Bengaluru Need?",
+    "words": 263,
+    "generator": "engine:v1",
+    "score": 0.12
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rcb-100",
+     "title": "The Future XI: Designing Royal Challengers Bengaluru’s Ideal Role Balance, Not a Dream Team",
+     "words": 551,
+     "score": 0.198
+    },
+    {
+     "planId": "cf-rcb-008",
+     "title": "Spin Versus Pace: Mapping Royal Challengers Bengaluru’s Batting Trade-Offs",
+     "words": 256,
+     "generator": "engine:v1",
+     "score": 0.154
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "existing reviewed decision",
+   "why": "Existing reviewed decision: revise. Batting depth vs bowling insurance is the sixth-bowler question.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.25,
+     "actualTeam": 7.97,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.15,
+     "actualTeam": 10.63,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RCB",
+   "legacyId": "art-rcb-08",
+   "legacySlug": "rcb-from-gayle-and-ab-to-the-modern-xi-rcbs-batting-evolution",
+   "legacyTitle": "From Gayle and AB to the Modern XI: RCB's Batting Evolution",
+   "legacyWords": 586,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-rcb-075",
+    "title": "Cross-League Translation: Which Overseas Performances Matter for Royal Challengers Bengaluru?",
+    "words": 226,
+    "generator": "engine:v1",
+    "score": 0.085
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rcb-002",
+     "title": "The Anchor Paradox: Does Royal Challengers Bengaluru Still Need a Traditional No. 3?",
+     "words": 332,
+     "generator": "engine:v1",
+     "score": 0.064
+    },
+    {
+     "planId": "cf-rcb-005",
+     "title": "The Finisher’s Clock: When Should Royal Challengers Bengaluru Send in Its Power Hitters?",
+     "words": 280,
+     "generator": "engine:v1",
+     "score": 0.06
+    }
+   ],
+   "verdict": "distinct",
+   "verdictSource": "existing reviewed decision",
+   "why": "Existing reviewed decision: keep-separate. Batting-era retrospective has no direct plan slot (closest: cf-rcb-064 captaincy eras, cf-rcb-067 squad philosophy). Kept as an archive piece.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.6,
+     "actualTeam": 7.97,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.7,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.4,
+     "actualTeam": 10.63,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RCB",
+   "legacyId": "art-rcb-09",
+   "legacySlug": "rcb-the-200-run-illusion-when-big-totals-hide-tactical-weaknesses",
+   "legacyTitle": "The 200-Run Illusion: When Big Totals Hide Tactical Weaknesses",
+   "legacyWords": 588,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rcb-010",
+    "title": "The 200-Run Question: Which Conditions Make Royal Challengers Bengaluru a High-Scoring Side?",
+    "words": 266,
+    "generator": "engine:v1",
+    "score": 0.227
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rcb-065",
+     "title": "A Timeline of Royal Challengers Bengaluru’s Home-Ground Evolution",
+     "words": 194,
+     "generator": "engine:v1",
+     "score": 0.109
+    },
+    {
+     "planId": "cf-rcb-082",
+     "title": "Expected Runs Versus Actual Runs: Where Does Royal Challengers Bengaluru Overperform?",
+     "words": 204,
+     "generator": "engine:v1",
+     "score": 0.082
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "existing reviewed decision",
+   "why": "Existing reviewed decision: revise. Same subject as 'The 200-Run Question'.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.95,
+     "actualTeam": 7.97,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.9,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.65,
+     "actualTeam": 10.63,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RCB",
+   "legacyId": "art-rcb-10",
+   "legacySlug": "rcb-the-next-rcb-advantage-finding-value-beyond-famous-names",
+   "legacyTitle": "The Next RCB Advantage: Finding Value Beyond Famous Names",
+   "legacyWords": 578,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rcb-035",
+    "title": "The Uncapped Advantage: Finding Low-Cost Impact for Royal Challengers Bengaluru",
+    "words": 206,
+    "generator": "engine:v1",
+    "score": 0.078
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rcb-091",
+     "title": "The 2027 Blueprint: What Should Royal Challengers Bengaluru Build for the Next Cycle?",
+     "words": 196,
+     "generator": "engine:v1",
+     "score": 0.129
+    },
+    {
+     "planId": "cf-rcb-080",
+     "title": "The Scout’s Blind Spot: Which Small-Sample Stars Might Mislead Royal Challengers Bengaluru?",
+     "words": 553,
+     "score": 0.113
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "existing reviewed decision",
+   "why": "Existing reviewed decision: revise. Value beyond famous names maps to 'The Uncapped Advantage'.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 12.3,
+     "actualTeam": 7.97,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 10.1,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.9,
+     "actualTeam": 10.63,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "CSK",
+   "legacyId": "art-csk-01",
+   "legacySlug": "csk-the-yellow-blueprint-is-csks-greatest-strength-its-system",
+   "legacyTitle": "The Yellow Blueprint: Is CSK's Greatest Strength Its System?",
+   "legacyWords": 578,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-csk-040",
+    "title": "Three-Year Squad Planning: Can Chennai Super Kings Build Beyond One Season?",
+    "words": 223,
+    "generator": "engine:v1",
+    "score": 0.011
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-csk-041",
+     "title": "The Business of Belonging: How Chennai Super Kings Converts Attention into Revenue",
+     "words": 232,
+     "generator": "engine:v1",
+     "score": 0.077
+    },
+    {
+     "planId": "cf-csk-056",
+     "title": "The Last-Over Nervous System: What Pressure Does to Chennai Super Kings Fans",
+     "words": 216,
+     "generator": "engine:v1",
+     "score": 0.077
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (full read)",
+   "why": "Both argue that continuity is CSK's edge; the legacy piece adds role clarity and culture, the new piece measures season-to-season continuity.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.15,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.3,
+     "actualTeam": 7.87,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.65,
+     "actualTeam": 10.41,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "CSK",
+   "legacyId": "art-csk-02",
+   "legacySlug": "csk-the-art-of-controlled-aggression-how-csk-manages-the-middle-overs",
+   "legacyTitle": "The Art of Controlled Aggression: How CSK Manages the Middle Overs",
+   "legacyWords": 585,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-csk-004",
+    "title": "Middle-Overs Momentum: Where Chennai Super Kings Gains or Loses Run Rate",
+    "words": 280,
+    "generator": "engine:v1",
+    "score": 0.096
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-csk-014",
+     "title": "Middle-Overs Spin: Can Chennai Super Kings Create Pressure Without Immediate Wickets?",
+     "words": 270,
+     "generator": "engine:v1",
+     "score": 0.158
+    },
+    {
+     "planId": "cf-csk-078",
+     "title": "Spin Talent Radar: What Separates a Prospect from a Starter for Chennai Super Kings?",
+     "words": 192,
+     "generator": "engine:v1",
+     "score": 0.118
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (full read)",
+   "why": "Same question: how CSK bat through overs 7–15.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.5,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.5,
+     "actualTeam": 7.87,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.9,
+     "actualTeam": 10.41,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "CSK",
+   "legacyId": "art-csk-03",
+   "legacySlug": "csk-spin-pace-and-patience-decoding-csks-bowling-combinations",
+   "legacyTitle": "Spin, Pace and Patience: Decoding CSK's Bowling Combinations",
+   "legacyWords": 578,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-csk-019",
+    "title": "Bowler Matchups: When Should Chennai Super Kings Break Its Preferred Rotation?",
+    "words": 259,
+    "generator": "engine:v1",
+    "score": 0.051
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-csk-008",
+     "title": "Spin Versus Pace: Mapping Chennai Super Kings’s Batting Trade-Offs",
+     "words": 256,
+     "generator": "engine:v1",
+     "score": 0.127
+    },
+    {
+     "planId": "cf-csk-094",
+     "title": "The Next Tactical Edge: What Happens When Chennai Super Kings Models Every Delivery?",
+     "words": 184,
+     "generator": "engine:v1",
+     "score": 0.11
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (full read)",
+   "why": "Legacy surveys bowler combinations by name; new piece tests rotation and match-ups with data. Pace/spin roles also overlap cf-csk-011, 014, 015.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.85,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.7,
+     "actualTeam": 7.87,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.15,
+     "actualTeam": 10.41,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "CSK",
+   "legacyId": "art-csk-04",
+   "legacySlug": "csk-the-dhoni-effect-can-captaincy-decisions-be-measured",
+   "legacyTitle": "The Dhoni Effect: Can Captaincy Decisions Be Measured?",
+   "legacyWords": 575,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-csk-030",
+    "title": "Captaincy Under Uncertainty: Which Decisions Matter Most for Chennai Super Kings?",
+    "words": 251,
+    "generator": "engine:v1",
+    "score": 0.105
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-csk-016",
+     "title": "Fielding as Run Prevention: Measuring the Hidden Value of Chennai Super Kings’s Saves",
+     "words": 257,
+     "generator": "engine:v1",
+     "score": 0.096
+    },
+    {
+     "planId": "cf-csk-017",
+     "title": "Catch Difficulty Index: How to Evaluate Chennai Super Kings Beyond Raw Drop Counts",
+     "words": 240,
+     "generator": "engine:v1",
+     "score": 0.09
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (full read)",
+   "why": "Both on captaincy decisions; legacy is about Dhoni personally, new piece covers franchise-level decisions and declines to compare Dhoni's combined-franchise record.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.2,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.9,
+     "actualTeam": 7.87,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.4,
+     "actualTeam": 10.41,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "CSK",
+   "legacyId": "art-csk-05",
+   "legacySlug": "csk-the-chepauk-code-why-venue-specific-strategy-matters",
+   "legacyTitle": "The Chepauk Code: Why Venue-Specific Strategy Matters",
+   "legacyWords": 576,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-csk-022",
+    "title": "Home-Ground Advantage: What Makes Chepauk Different for Chennai Super Kings?",
+    "words": 243,
+    "generator": "engine:v1",
+    "score": 0.056
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-csk-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Chennai Super Kings Fans?",
+     "words": 225,
+     "generator": "engine:v1",
+     "score": 0.085
+    },
+    {
+     "planId": "cf-csk-029",
+     "title": "Risk Budgeting: How Aggressive Should Chennai Super Kings Be at Different Match States?",
+     "words": 251,
+     "generator": "engine:v1",
+     "score": 0.06
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (full read)",
+   "why": "Same subject: what makes Chepauk different for CSK.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.55,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.1,
+     "actualTeam": 7.87,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.65,
+     "actualTeam": 10.41,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "CSK",
+   "legacyId": "art-csk-06",
+   "legacySlug": "csk-experience-as-an-asset-does-csks-auction-philosophy-deliver-value",
+   "legacyTitle": "Experience as an Asset: Does CSK's Auction Philosophy Deliver Value?",
+   "legacyWords": 584,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-csk-074",
+    "title": "Age Curves: When Do Chennai Super Kings’s Batters and Bowlers Typically Peak?",
+    "words": 225,
+    "generator": "engine:v1",
+    "score": 0.005
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-csk-072",
+     "title": "Domestic Pathways: Where Could Chennai Super Kings Find Undervalued Talent?",
+     "words": 210,
+     "generator": "engine:v1",
+     "score": 0.082
+    },
+    {
+     "planId": "cf-csk-067",
+     "title": "From Auction Table to Playing XI: How Chennai Super Kings’s Squad Philosophy Evolved",
+     "words": 180,
+     "generator": "engine:v1",
+     "score": 0.077
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (full read)",
+   "why": "Legacy argues veterans are undervalued at auction; new piece measures performance by age. Value side overlaps cf-csk-039.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.9,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.3,
+     "actualTeam": 7.87,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.9,
+     "actualTeam": 10.41,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "CSK",
+   "legacyId": "art-csk-07",
+   "legacySlug": "csk-the-matchup-machine-how-csk-can-build-an-xi-for-different-conditions",
+   "legacyTitle": "The Matchup Machine: How CSK Can Build an XI for Different Conditions",
+   "legacyWords": 590,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-csk-027",
+    "title": "Opponent-Specific Plans: Should Chennai Super Kings Build a New XI for Every Match?",
+    "words": 242,
+    "generator": "engine:v1",
+    "score": 0.046
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-csk-067",
+     "title": "From Auction Table to Playing XI: How Chennai Super Kings’s Squad Philosophy Evolved",
+     "words": 180,
+     "generator": "engine:v1",
+     "score": 0.128
+    },
+    {
+     "planId": "cf-csk-029",
+     "title": "Risk Budgeting: How Aggressive Should Chennai Super Kings Be at Different Match States?",
+     "words": 251,
+     "generator": "engine:v1",
+     "score": 0.126
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (full read)",
+   "why": "Both ask whether to change the XI per match; legacy by conditions and venue, new piece by opponent.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.25,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.5,
+     "actualTeam": 7.87,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.15,
+     "actualTeam": 10.41,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "CSK",
+   "legacyId": "art-csk-08",
+   "legacySlug": "csk-the-generational-transition-how-csks-cricket-has-evolved",
+   "legacyTitle": "The Generational Transition: How CSK's Cricket Has Evolved",
+   "legacyWords": 580,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-csk-067",
+    "title": "From Auction Table to Playing XI: How Chennai Super Kings’s Squad Philosophy Evolved",
+    "words": 180,
+    "generator": "engine:v1",
+    "score": 0.043
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-csk-083",
+     "title": "A Venue-Adjusted Rating System for Chennai Super Kings Players",
+     "words": 195,
+     "generator": "engine:v1",
+     "score": 0.055
+    },
+    {
+     "planId": "cf-csk-022",
+     "title": "Home-Ground Advantage: What Makes Chepauk Different for Chennai Super Kings?",
+     "words": 243,
+     "generator": "engine:v1",
+     "score": 0.052
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (full read)",
+   "why": "Both trace how CSK's squad evolved; legacy is a narrative of eras, new piece measures squad size and usage. Leadership side overlaps cf-csk-064.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.6,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.7,
+     "actualTeam": 7.87,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.4,
+     "actualTeam": 10.41,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "CSK",
+   "legacyId": "art-csk-09",
+   "legacySlug": "csk-the-dot-ball-economy-how-csk-creates-pressure-without-taking-wickets",
+   "legacyTitle": "The Dot-Ball Economy: How CSK Creates Pressure Without Taking Wickets",
+   "legacyWords": 583,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-csk-014",
+    "title": "Middle-Overs Spin: Can Chennai Super Kings Create Pressure Without Immediate Wickets?",
+    "words": 270,
+    "generator": "engine:v1",
+    "score": 0.255
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-csk-013",
+     "title": "Wickets Versus Economy: How Chennai Super Kings Should Judge Its Bowlers",
+     "words": 276,
+     "generator": "engine:v1",
+     "score": 0.152
+    },
+    {
+     "planId": "cf-csk-094",
+     "title": "The Next Tactical Edge: What Happens When Chennai Super Kings Models Every Delivery?",
+     "words": 184,
+     "generator": "engine:v1",
+     "score": 0.104
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (full read)",
+   "why": "Same thesis: CSK build pressure with dot balls rather than wickets.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.95,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.9,
+     "actualTeam": 7.87,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.65,
+     "actualTeam": 10.41,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "CSK",
+   "legacyId": "art-csk-10",
+   "legacySlug": "csk-life-beyond-familiar-names-building-csks-next-core",
+   "legacyTitle": "Life Beyond Familiar Names: Building CSK's Next Core",
+   "legacyWords": 570,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-csk-091",
+    "title": "The 2027 Blueprint: What Should Chennai Super Kings Build for the Next Cycle?",
+    "words": 196,
+    "generator": "engine:v1",
+    "score": 0.078
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-csk-076",
+     "title": "The Finisher Search: How Chennai Super Kings Can Identify Genuine Death-Overs Hitters",
+     "words": 188,
+     "generator": "engine:v1",
+     "score": 0.092
+    },
+    {
+     "planId": "cf-csk-100",
+     "title": "The Future XI: Designing Chennai Super Kings’s Ideal Role Balance, Not a Dream Team",
+     "words": 217,
+     "generator": "engine:v1",
+     "score": 0.09
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (full read)",
+   "why": "Same question: what CSK should build for the next cycle.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 12.3,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 10.1,
+     "actualTeam": 7.87,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.9,
+     "actualTeam": 10.41,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "MI",
+   "legacyId": "art-mi-01",
+   "legacySlug": "mi-the-mumbai-talent-factory-how-mi-builds-its-cricketing-core",
+   "legacyTitle": "The Mumbai Talent Factory: How MI Builds Its Cricketing Core",
+   "legacyWords": 571,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-mi-079",
+    "title": "Bench-to-XI Pipeline: How Mumbai Indians Can Develop Without Sacrificing Results",
+    "words": 193,
+    "generator": "engine:v1",
+    "score": 0.091
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-mi-099",
+     "title": "The Multi-League Talent Pipeline: How Mumbai Indians Could Scout Globally",
+     "words": 194,
+     "generator": "engine:v1",
+     "score": 0.175
+    },
+    {
+     "planId": "cf-mi-072",
+     "title": "Domestic Pathways: Where Could Mumbai Indians Find Undervalued Talent?",
+     "words": 208,
+     "generator": "engine:v1",
+     "score": 0.163
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.15,
+     "actualTeam": 7.96,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.3,
+     "actualTeam": 7.91,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.65,
+     "actualTeam": 10.4,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "MI",
+   "legacyId": "art-mi-02",
+   "legacySlug": "mi-the-death-over-blueprint-why-mis-batting-depth-matters",
+   "legacyTitle": "The Death-Over Blueprint: Why MI's Batting Depth Matters",
+   "legacyWords": 571,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-mi-005",
+    "title": "The Finisher’s Clock: When Should Mumbai Indians Send in Its Power Hitters?",
+    "words": 277,
+    "generator": "engine:v1",
+    "score": 0.104
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-mi-011",
+     "title": "New-Ball Blueprint: What Should Mumbai Indians Optimize Before Over Four?",
+     "words": 296,
+     "generator": "engine:v1",
+     "score": 0.104
+    },
+    {
+     "planId": "cf-mi-076",
+     "title": "The Finisher Search: How Mumbai Indians Can Identify Genuine Death-Overs Hitters",
+     "words": 185,
+     "generator": "engine:v1",
+     "score": 0.104
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.5,
+     "actualTeam": 7.96,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.5,
+     "actualTeam": 7.91,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.9,
+     "actualTeam": 10.4,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "MI",
+   "legacyId": "art-mi-03",
+   "legacySlug": "mi-the-bumrah-equation-measuring-the-value-of-an-elite-bowler",
+   "legacyTitle": "The Bumrah Equation: Measuring the Value of an Elite Bowler",
+   "legacyWords": 580,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-mi-037",
+    "title": "Replacement Value: When Should Mumbai Indians Walk Away from a Bidding War?",
+    "words": 208,
+    "generator": "engine:v1",
+    "score": 0.103
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-mi-010",
+     "title": "The 200-Run Question: Which Conditions Make Mumbai Indians a High-Scoring Side?",
+     "words": 262,
+     "generator": "engine:v1",
+     "score": 0.103
+    },
+    {
+     "planId": "cf-mi-020",
+     "title": "The Sixth-Bowler Insurance Policy: How Much Flexibility Does Mumbai Indians Need?",
+     "words": 261,
+     "generator": "engine:v1",
+     "score": 0.103
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.85,
+     "actualTeam": 7.96,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.7,
+     "actualTeam": 7.91,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.15,
+     "actualTeam": 10.4,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "MI",
+   "legacyId": "art-mi-04",
+   "legacySlug": "mi-championship-temperament-does-mi-perform-differently-under-pressure",
+   "legacyTitle": "Championship Temperament: Does MI Perform Differently Under Pressure?",
+   "legacyWords": 568,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-mi-085",
+    "title": "Clutch or Coincidence? Testing Mumbai Indians’s Pressure-Performance Narratives",
+    "words": 204,
+    "generator": "engine:v1",
+    "score": 0.117
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-mi-066",
+     "title": "The Matches That Built Mumbai Indians’s Reputation Under Pressure",
+     "words": 160,
+     "generator": "engine:v1",
+     "score": 0.246
+    },
+    {
+     "planId": "cf-mi-006",
+     "title": "Chasing Under Pressure: Does Mumbai Indians Bat Differently When the Target Climbs?",
+     "words": 271,
+     "generator": "engine:v1",
+     "score": 0.173
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.2,
+     "actualTeam": 7.96,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.9,
+     "actualTeam": 7.91,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.4,
+     "actualTeam": 10.4,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "MI",
+   "legacyId": "art-mi-05",
+   "legacySlug": "mi-the-wankhede-factor-how-venue-conditions-shape-mis-strategy",
+   "legacyTitle": "The Wankhede Factor: How Venue Conditions Shape MI's Strategy",
+   "legacyWords": 576,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-mi-022",
+    "title": "Home-Ground Advantage: What Makes Wankhede Different for Mumbai Indians?",
+    "words": 248,
+    "generator": "engine:v1",
+    "score": 0.056
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-mi-093",
+     "title": "A Digital Twin of Wankhede: Simulating Mumbai Indians’s Home Conditions",
+     "words": 216,
+     "generator": "engine:v1",
+     "score": 0.089
+    },
+    {
+     "planId": "cf-mi-058",
+     "title": "Local Pride and Global Reach: Who Feels Represented by Mumbai Indians?",
+     "words": 207,
+     "generator": "engine:v1",
+     "score": 0.083
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.55,
+     "actualTeam": 7.96,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.1,
+     "actualTeam": 7.91,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.65,
+     "actualTeam": 10.4,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "MI",
+   "legacyId": "art-mi-06",
+   "legacySlug": "mi-finding-the-next-star-mis-auction-investment-and-player-development",
+   "legacyTitle": "Finding the Next Star: MI's Auction Investment and Player Development",
+   "legacyWords": 576,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-mi-033",
+    "title": "Retention Mathematics: Which Player Roles Should Mumbai Indians Protect?",
+    "words": 203,
+    "generator": "engine:v1",
+    "score": 0.136
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-mi-039",
+     "title": "Salary Versus Contribution: Designing an Auction ROI Model for Mumbai Indians",
+     "words": 227,
+     "generator": "engine:v1",
+     "score": 0.136
+    },
+    {
+     "planId": "cf-mi-072",
+     "title": "Domestic Pathways: Where Could Mumbai Indians Find Undervalued Talent?",
+     "words": 208,
+     "generator": "engine:v1",
+     "score": 0.126
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.9,
+     "actualTeam": 7.96,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.3,
+     "actualTeam": 7.91,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.9,
+     "actualTeam": 10.4,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "MI",
+   "legacyId": "art-mi-07",
+   "legacySlug": "mi-the-balance-of-eleven-when-too-many-match-winners-become-a-selection-problem",
+   "legacyTitle": "The Balance of Eleven: When Too Many Match-Winners Become a Selection Problem",
+   "legacyWords": 574,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-mi-020",
+    "title": "The Sixth-Bowler Insurance Policy: How Much Flexibility Does Mumbai Indians Need?",
+    "words": 261,
+    "generator": "engine:v1",
+    "score": 0.116
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-mi-100",
+     "title": "The Future XI: Designing Mumbai Indians’s Ideal Role Balance, Not a Dream Team",
+     "words": 215,
+     "generator": "engine:v1",
+     "score": 0.185
+    },
+    {
+     "planId": "cf-mi-058",
+     "title": "Local Pride and Global Reach: Who Feels Represented by Mumbai Indians?",
+     "words": 207,
+     "generator": "engine:v1",
+     "score": 0.12
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.25,
+     "actualTeam": 7.96,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.5,
+     "actualTeam": 7.91,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.15,
+     "actualTeam": 10.4,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "MI",
+   "legacyId": "art-mi-08",
+   "legacySlug": "mi-from-the-early-years-to-the-modern-era-mis-tactical-evolution",
+   "legacyTitle": "From the Early Years to the Modern Era: MI's Tactical Evolution",
+   "legacyWords": 576,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-mi-063",
+    "title": "Five Defining Tactical Decisions in Mumbai Indians’s IPL Story",
+    "words": 244,
+    "generator": "engine:v1",
+    "score": 0.045
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-mi-067",
+     "title": "From Auction Table to Playing XI: How Mumbai Indians’s Squad Philosophy Evolved",
+     "words": 178,
+     "generator": "engine:v1",
+     "score": 0.104
+    },
+    {
+     "planId": "cf-mi-061",
+     "title": "The Founding Identity: How Mumbai Indians Became More Than an IPL Entry",
+     "words": 183,
+     "generator": "engine:v1",
+     "score": 0.103
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.6,
+     "actualTeam": 7.96,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.7,
+     "actualTeam": 7.91,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.4,
+     "actualTeam": 10.4,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "MI",
+   "legacyId": "art-mi-09",
+   "legacySlug": "mi-the-invisible-overs-where-mi-gains-or-loses-matches-without-boundaries",
+   "legacyTitle": "The Invisible Overs: Where MI Gains or Loses Matches Without Boundaries",
+   "legacyWords": 577,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-mi-004",
+    "title": "Middle-Overs Momentum: Where Mumbai Indians Gains or Loses Run Rate",
+    "words": 278,
+    "generator": "engine:v1",
+    "score": 0.222
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-mi-009",
+     "title": "Dot-Ball Debt: How Mumbai Indians Can Price the Cost of a Quiet Over",
+     "words": 289,
+     "generator": "engine:v1",
+     "score": 0.149
+    },
+    {
+     "planId": "cf-mi-014",
+     "title": "Middle-Overs Spin: Can Mumbai Indians Create Pressure Without Immediate Wickets?",
+     "words": 268,
+     "generator": "engine:v1",
+     "score": 0.141
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.95,
+     "actualTeam": 7.96,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.9,
+     "actualTeam": 7.91,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.65,
+     "actualTeam": 10.4,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "MI",
+   "legacyId": "art-mi-10",
+   "legacySlug": "mi-the-next-mumbai-core-which-player-profiles-should-mi-prioritize",
+   "legacyTitle": "The Next Mumbai Core: Which Player Profiles Should MI Prioritize?",
+   "legacyWords": 577,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-mi-091",
+    "title": "The 2027 Blueprint: What Should Mumbai Indians Build for the Next Cycle?",
+    "words": 193,
+    "generator": "engine:v1",
+    "score": 0.011
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-mi-076",
+     "title": "The Finisher Search: How Mumbai Indians Can Identify Genuine Death-Overs Hitters",
+     "words": 185,
+     "generator": "engine:v1",
+     "score": 0.134
+    },
+    {
+     "planId": "cf-mi-080",
+     "title": "The Scout’s Blind Spot: Which Small-Sample Stars Might Mislead Mumbai Indians?",
+     "words": 240,
+     "generator": "engine:v1",
+     "score": 0.115
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 12.3,
+     "actualTeam": 7.96,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 10.1,
+     "actualTeam": 7.91,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.9,
+     "actualTeam": 10.4,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "KKR",
+   "legacyId": "art-kkr-01",
+   "legacySlug": "kkr-the-knight-riders-formula-how-kkr-blends-risk-and-control",
+   "legacyTitle": "The Knight Riders Formula: How KKR Blends Risk and Control",
+   "legacyWords": 581,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-kkr-064",
+    "title": "The Captaincy Eras: How Leadership Changed Kolkata Knight Riders’s Playing Identity",
+    "words": 231,
+    "generator": "engine:v1",
+    "score": 0.005
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-kkr-029",
+     "title": "Risk Budgeting: How Aggressive Should Kolkata Knight Riders Be at Different Match States?",
+     "words": 251,
+     "generator": "engine:v1",
+     "score": 0.061
+    },
+    {
+     "planId": "cf-kkr-094",
+     "title": "The Next Tactical Edge: What Happens When Kolkata Knight Riders Models Every Delivery?",
+     "words": 184,
+     "generator": "engine:v1",
+     "score": 0.055
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.15,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.3,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.65,
+     "actualTeam": 10.01,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "KKR",
+   "legacyId": "art-kkr-02",
+   "legacySlug": "kkr-opening-the-floodgates-kkrs-powerplay-batting-experiments",
+   "legacyTitle": "Opening the Floodgates: KKR's Powerplay Batting Experiments",
+   "legacyWords": 583,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-kkr-001",
+    "title": "The Powerplay Equation: When Kolkata Knight Riders Should Attack the First Six Overs",
+    "words": 410,
+    "generator": "engine:v1",
+    "score": 0.093
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-kkr-005",
+     "title": "The Finisher’s Clock: When Should Kolkata Knight Riders Send in Its Power Hitters?",
+     "words": 280,
+     "generator": "engine:v1",
+     "score": 0.103
+    },
+    {
+     "planId": "cf-kkr-088",
+     "title": "Batting Partnerships as Networks: Mapping Kolkata Knight Riders’s Run Creation",
+     "words": 180,
+     "generator": "engine:v1",
+     "score": 0.092
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.5,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.9,
+     "actualTeam": 10.01,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "KKR",
+   "legacyId": "art-kkr-03",
+   "legacySlug": "kkr-the-spin-web-how-kkr-uses-bowling-matchups-to-control-innings",
+   "legacyTitle": "The Spin Web: How KKR Uses Bowling Matchups to Control Innings",
+   "legacyWords": 585,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-kkr-014",
+    "title": "Middle-Overs Spin: Can Kolkata Knight Riders Create Pressure Without Immediate Wickets?",
+    "words": 270,
+    "generator": "engine:v1",
+    "score": 0.141
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-kkr-100",
+     "title": "The Future XI: Designing Kolkata Knight Riders’s Ideal Role Balance, Not a Dream Team",
+     "words": 217,
+     "generator": "engine:v1",
+     "score": 0.126
+    },
+    {
+     "planId": "cf-kkr-011",
+     "title": "New-Ball Blueprint: What Should Kolkata Knight Riders Optimize Before Over Four?",
+     "words": 299,
+     "generator": "engine:v1",
+     "score": 0.11
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.85,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.7,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.15,
+     "actualTeam": 10.01,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "KKR",
+   "legacyId": "art-kkr-04",
+   "legacySlug": "kkr-the-russell-factor-what-does-an-explosive-all-rounder-really-contribute",
+   "legacyTitle": "The Russell Factor: What Does an Explosive All-Rounder Really Contribute?",
+   "legacyWords": 582,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-kkr-039",
+    "title": "Salary Versus Contribution: Designing an Auction ROI Model for Kolkata Knight Riders",
+    "words": 229,
+    "generator": "engine:v1",
+    "score": 0.006
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-kkr-074",
+     "title": "Age Curves: When Do Kolkata Knight Riders’s Batters and Bowlers Typically Peak?",
+     "words": 225,
+     "generator": "engine:v1",
+     "score": 0.129
+    },
+    {
+     "planId": "cf-kkr-007",
+     "title": "Left–Right Combinations: Are They Worth More Than Individual Strike Rate for Kolkata Knight Riders?",
+     "words": 262,
+     "generator": "engine:v1",
+     "score": 0.127
+    }
+   ],
+   "verdict": "distinct",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.2,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.9,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.4,
+     "actualTeam": 10.01,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "KKR",
+   "legacyId": "art-kkr-05",
+   "legacySlug": "kkr-the-eden-gardens-paradox-is-it-a-batters-paradise-or-a-tactical-battleground",
+   "legacyTitle": "The Eden Gardens Paradox: Is It a Batter's Paradise or a Tactical Battleground?",
+   "legacyWords": 593,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-kkr-022",
+    "title": "Home-Ground Advantage: What Makes Eden Gardens Different for Kolkata Knight Riders?",
+    "words": 255,
+    "generator": "engine:v1",
+    "score": 0.106
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-kkr-065",
+     "title": "A Timeline of Kolkata Knight Riders’s Home-Ground Evolution",
+     "words": 196,
+     "generator": "engine:v1",
+     "score": 0.15
+    },
+    {
+     "planId": "cf-kkr-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Kolkata Knight Riders Fans?",
+     "words": 228,
+     "generator": "engine:v1",
+     "score": 0.096
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.55,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.1,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.65,
+     "actualTeam": 10.01,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "KKR",
+   "legacyId": "art-kkr-06",
+   "legacySlug": "kkr-buying-versatility-how-kkr-values-multi-skilled-players",
+   "legacyTitle": "Buying Versatility: How KKR Values Multi-Skilled Players",
+   "legacyWords": 576,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-kkr-032",
+    "title": "Star Premium Versus Squad Depth: Where Should Kolkata Knight Riders Spend Its Budget?",
+    "words": 244,
+    "generator": "engine:v1",
+    "score": 0.059
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-kkr-033",
+     "title": "Retention Mathematics: Which Player Roles Should Kolkata Knight Riders Protect?",
+     "words": 205,
+     "generator": "engine:v1",
+     "score": 0.116
+    },
+    {
+     "planId": "cf-kkr-039",
+     "title": "Salary Versus Contribution: Designing an Auction ROI Model for Kolkata Knight Riders",
+     "words": 229,
+     "generator": "engine:v1",
+     "score": 0.109
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.9,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.3,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.9,
+     "actualTeam": 10.01,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "KKR",
+   "legacyId": "art-kkr-07",
+   "legacySlug": "kkr-the-floating-batting-order-can-flexibility-outperform-fixed-roles",
+   "legacyTitle": "The Floating Batting Order: Can Flexibility Outperform Fixed Roles?",
+   "legacyWords": 581,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-kkr-024",
+    "title": "Batting Order as a Decision Tree: Who Should Kolkata Knight Riders Promote and Why?",
+    "words": 236,
+    "generator": "engine:v1",
+    "score": 0.087
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-kkr-019",
+     "title": "Bowler Matchups: When Should Kolkata Knight Riders Break Its Preferred Rotation?",
+     "words": 259,
+     "generator": "engine:v1",
+     "score": 0.098
+    },
+    {
+     "planId": "cf-kkr-088",
+     "title": "Batting Partnerships as Networks: Mapping Kolkata Knight Riders’s Run Creation",
+     "words": 180,
+     "generator": "engine:v1",
+     "score": 0.087
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.25,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.5,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.15,
+     "actualTeam": 10.01,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "KKR",
+   "legacyId": "art-kkr-08",
+   "legacySlug": "kkr-from-gambhirs-era-to-modern-kkr-the-evolution-of-a-tactical-identity",
+   "legacyTitle": "From Gambhir's Era to Modern KKR: The Evolution of a Tactical Identity",
+   "legacyWords": 590,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-kkr-064",
+    "title": "The Captaincy Eras: How Leadership Changed Kolkata Knight Riders’s Playing Identity",
+    "words": 231,
+    "generator": "engine:v1",
+    "score": 0.097
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-kkr-063",
+     "title": "Five Defining Tactical Decisions in Kolkata Knight Riders’s IPL Story",
+     "words": 246,
+     "generator": "engine:v1",
+     "score": 0.083
+    },
+    {
+     "planId": "cf-kkr-066",
+     "title": "The Matches That Built Kolkata Knight Riders’s Reputation Under Pressure",
+     "words": 163,
+     "generator": "engine:v1",
+     "score": 0.067
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.6,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.7,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.4,
+     "actualTeam": 10.01,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "KKR",
+   "legacyId": "art-kkr-09",
+   "legacySlug": "kkr-the-two-over-swing-identifying-kkrs-most-influential-match-phases",
+   "legacyTitle": "The Two-Over Swing: Identifying KKR's Most Influential Match Phases",
+   "legacyWords": 578,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-kkr-081",
+    "title": "Win Probability, Ball by Ball: Building a Model for Kolkata Knight Riders",
+    "words": 214,
+    "generator": "engine:v1",
+    "score": 0.055
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-kkr-001",
+     "title": "The Powerplay Equation: When Kolkata Knight Riders Should Attack the First Six Overs",
+     "words": 410,
+     "generator": "engine:v1",
+     "score": 0.122
+    },
+    {
+     "planId": "cf-kkr-014",
+     "title": "Middle-Overs Spin: Can Kolkata Knight Riders Create Pressure Without Immediate Wickets?",
+     "words": 270,
+     "generator": "engine:v1",
+     "score": 0.116
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.95,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.9,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.65,
+     "actualTeam": 10.01,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "KKR",
+   "legacyId": "art-kkr-10",
+   "legacySlug": "kkr-the-next-tactical-experiment-where-kkr-can-find-an-edge",
+   "legacyTitle": "The Next Tactical Experiment: Where KKR Can Find an Edge",
+   "legacyWords": 583,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-kkr-091",
+    "title": "The 2027 Blueprint: What Should Kolkata Knight Riders Build for the Next Cycle?",
+    "words": 196,
+    "generator": "engine:v1",
+    "score": 0.017
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-kkr-094",
+     "title": "The Next Tactical Edge: What Happens When Kolkata Knight Riders Models Every Delivery?",
+     "words": 184,
+     "generator": "engine:v1",
+     "score": 0.098
+    },
+    {
+     "planId": "cf-kkr-072",
+     "title": "Domestic Pathways: Where Could Kolkata Knight Riders Find Undervalued Talent?",
+     "words": 210,
+     "generator": "engine:v1",
+     "score": 0.083
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 12.3,
+     "actualTeam": 8.05,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 10.1,
+     "actualTeam": 7.89,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.9,
+     "actualTeam": 10.01,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RR",
+   "legacyId": "art-rr-01",
+   "legacySlug": "rr-the-pink-laboratory-how-rr-turns-scouting-into-competitive-advantage",
+   "legacyTitle": "The Pink Laboratory: How RR Turns Scouting into Competitive Advantage",
+   "legacyWords": 573,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rr-092",
+    "title": "AI-Assisted Scouting: Where Algorithms Could Help Rajasthan Royals Recruit",
+    "words": 215,
+    "generator": "engine:v1",
+    "score": 0.046
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rr-043",
+     "title": "Jersey Economics: How Rajasthan Royals Can Turn Identity into Merchandise Demand",
+     "words": 203,
+     "generator": "engine:v1",
+     "score": 0.078
+    },
+    {
+     "planId": "cf-rr-029",
+     "title": "Risk Budgeting: How Aggressive Should Rajasthan Royals Be at Different Match States?",
+     "words": 249,
+     "generator": "engine:v1",
+     "score": 0.066
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.15,
+     "actualTeam": 8.16,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.3,
+     "actualTeam": 8.02,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.65,
+     "actualTeam": 9.75,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RR",
+   "legacyId": "art-rr-02",
+   "legacySlug": "rr-the-young-batter-equation-how-early-career-players-handle-ipl-pressure",
+   "legacyTitle": "The Young Batter Equation: How Early-Career Players Handle IPL Pressure",
+   "legacyWords": 573,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rr-074",
+    "title": "Age Curves: When Do Rajasthan Royals’s Batters and Bowlers Typically Peak?",
+    "words": 223,
+    "generator": "engine:v1",
+    "score": 0.135
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rr-075",
+     "title": "Cross-League Translation: Which Overseas Performances Matter for Rajasthan Royals?",
+     "words": 225,
+     "generator": "engine:v1",
+     "score": 0.169
+    },
+    {
+     "planId": "cf-rr-001",
+     "title": "The Powerplay Equation: When Rajasthan Royals Should Attack the First Six Overs",
+     "words": 407,
+     "generator": "engine:v1",
+     "score": 0.161
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.16,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.5,
+     "actualTeam": 8.02,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.9,
+     "actualTeam": 9.75,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RR",
+   "legacyId": "art-rr-03",
+   "legacySlug": "rr-the-bowling-balance-can-rr-combine-wicket-taking-with-run-prevention",
+   "legacyTitle": "The Bowling Balance: Can RR Combine Wicket-Taking with Run Prevention?",
+   "legacyWords": 571,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rr-013",
+    "title": "Wickets Versus Economy: How Rajasthan Royals Should Judge Its Bowlers",
+    "words": 274,
+    "generator": "engine:v1",
+    "score": 0.142
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rr-014",
+     "title": "Middle-Overs Spin: Can Rajasthan Royals Create Pressure Without Immediate Wickets?",
+     "words": 268,
+     "generator": "engine:v1",
+     "score": 0.194
+    },
+    {
+     "planId": "cf-rr-001",
+     "title": "The Powerplay Equation: When Rajasthan Royals Should Attack the First Six Overs",
+     "words": 407,
+     "generator": "engine:v1",
+     "score": 0.162
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.85,
+     "actualTeam": 8.16,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.7,
+     "actualTeam": 8.02,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.15,
+     "actualTeam": 9.75,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RR",
+   "legacyId": "art-rr-04",
+   "legacySlug": "rr-talent-versus-temperament-measuring-consistency-in-rrs-emerging-players",
+   "legacyTitle": "Talent Versus Temperament: Measuring Consistency in RR's Emerging Players",
+   "legacyWords": 574,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-rr-080",
+    "title": "The Scout’s Blind Spot: Which Small-Sample Stars Might Mislead Rajasthan Royals?",
+    "words": 240,
+    "generator": "engine:v1",
+    "score": 0.072
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rr-097",
+     "title": "The Academy Question: Should Rajasthan Royals Invest More in Talent Development?",
+     "words": 189,
+     "generator": "engine:v1",
+     "score": 0.181
+    },
+    {
+     "planId": "cf-rr-006",
+     "title": "Chasing Under Pressure: Does Rajasthan Royals Bat Differently When the Target Climbs?",
+     "words": 271,
+     "generator": "engine:v1",
+     "score": 0.09
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.2,
+     "actualTeam": 8.16,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.9,
+     "actualTeam": 8.02,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.4,
+     "actualTeam": 9.75,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RR",
+   "legacyId": "art-rr-05",
+   "legacySlug": "rr-the-jaipur-advantage-what-makes-sawai-mansingh-stadium-different",
+   "legacyTitle": "The Jaipur Advantage: What Makes Sawai Mansingh Stadium Different?",
+   "legacyWords": 568,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rr-022",
+    "title": "Home-Ground Advantage: What Makes Jaipur Different for Rajasthan Royals?",
+    "words": 248,
+    "generator": "engine:v1",
+    "score": 0.189
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rr-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Rajasthan Royals Fans?",
+     "words": 221,
+     "generator": "engine:v1",
+     "score": 0.092
+    },
+    {
+     "planId": "cf-rr-088",
+     "title": "Batting Partnerships as Networks: Mapping Rajasthan Royals’s Run Creation",
+     "words": 178,
+     "generator": "engine:v1",
+     "score": 0.087
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.55,
+     "actualTeam": 8.16,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.1,
+     "actualTeam": 8.02,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.65,
+     "actualTeam": 9.75,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RR",
+   "legacyId": "art-rr-06",
+   "legacySlug": "rr-the-value-hunter-does-rr-find-better-returns-from-lesser-known-players",
+   "legacyTitle": "The Value Hunter: Does RR Find Better Returns from Lesser-Known Players?",
+   "legacyWords": 577,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rr-035",
+    "title": "The Uncapped Advantage: Finding Low-Cost Impact for Rajasthan Royals",
+    "words": 204,
+    "generator": "engine:v1",
+    "score": 0.077
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rr-072",
+     "title": "Domestic Pathways: Where Could Rajasthan Royals Find Undervalued Talent?",
+     "words": 209,
+     "generator": "engine:v1",
+     "score": 0.158
+    },
+    {
+     "planId": "cf-rr-037",
+     "title": "Replacement Value: When Should Rajasthan Royals Walk Away from a Bidding War?",
+     "words": 208,
+     "generator": "engine:v1",
+     "score": 0.155
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.9,
+     "actualTeam": 8.16,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.3,
+     "actualTeam": 8.02,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.9,
+     "actualTeam": 9.75,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RR",
+   "legacyId": "art-rr-07",
+   "legacySlug": "rr-the-flexible-xi-how-rr-can-optimize-its-overseas-combination",
+   "legacyTitle": "The Flexible XI: How RR Can Optimize Its Overseas Combination",
+   "legacyWords": 573,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rr-034",
+    "title": "Overseas Slots as Scarce Assets: How Should Rajasthan Royals Allocate Four Places?",
+    "words": 207,
+    "generator": "engine:v1",
+    "score": 0.057
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rr-097",
+     "title": "The Academy Question: Should Rajasthan Royals Invest More in Talent Development?",
+     "words": 189,
+     "generator": "engine:v1",
+     "score": 0.115
+    },
+    {
+     "planId": "cf-rr-087",
+     "title": "The Uncertainty Score: How Confident Are We in Rajasthan Royals Player Rankings?",
+     "words": 204,
+     "generator": "engine:v1",
+     "score": 0.11
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.25,
+     "actualTeam": 8.16,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.02,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.15,
+     "actualTeam": 9.75,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RR",
+   "legacyId": "art-rr-08",
+   "legacySlug": "rr-from-underdogs-to-contenders-rajasthans-strategic-evolution",
+   "legacyTitle": "From Underdogs to Contenders: Rajasthan's Strategic Evolution",
+   "legacyWords": 567,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-rr-062",
+    "title": "The Season That Changed the Conversation Around Rajasthan Royals",
+    "words": 196,
+    "generator": "engine:v1",
+    "score": 0.012
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rr-061",
+     "title": "The Founding Identity: How Rajasthan Royals Became More Than an IPL Entry",
+     "words": 183,
+     "generator": "engine:v1",
+     "score": 0.121
+    },
+    {
+     "planId": "cf-rr-064",
+     "title": "The Captaincy Eras: How Leadership Changed Rajasthan Royals’s Playing Identity",
+     "words": 229,
+     "generator": "engine:v1",
+     "score": 0.071
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.6,
+     "actualTeam": 8.16,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.7,
+     "actualTeam": 8.02,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.4,
+     "actualTeam": 9.75,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RR",
+   "legacyId": "art-rr-09",
+   "legacySlug": "rr-the-breakout-illusion-which-young-player-performances-are-sustainable",
+   "legacyTitle": "The Breakout Illusion: Which Young-Player Performances Are Sustainable?",
+   "legacyWords": 568,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rr-080",
+    "title": "The Scout’s Blind Spot: Which Small-Sample Stars Might Mislead Rajasthan Royals?",
+    "words": 240,
+    "generator": "engine:v1",
+    "score": 0.119
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rr-097",
+     "title": "The Academy Question: Should Rajasthan Royals Invest More in Talent Development?",
+     "words": 189,
+     "generator": "engine:v1",
+     "score": 0.135
+    },
+    {
+     "planId": "cf-rr-072",
+     "title": "Domestic Pathways: Where Could Rajasthan Royals Find Undervalued Talent?",
+     "words": 209,
+     "generator": "engine:v1",
+     "score": 0.12
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.95,
+     "actualTeam": 8.16,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.9,
+     "actualTeam": 8.02,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.65,
+     "actualTeam": 9.75,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "RR",
+   "legacyId": "art-rr-10",
+   "legacySlug": "rr-finding-the-next-unknown-star-rrs-future-scouting-blueprint",
+   "legacyTitle": "Finding the Next Unknown Star: RR's Future Scouting Blueprint",
+   "legacyWords": 571,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-rr-072",
+    "title": "Domestic Pathways: Where Could Rajasthan Royals Find Undervalued Talent?",
+    "words": 209,
+    "generator": "engine:v1",
+    "score": 0.096
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-rr-091",
+     "title": "The 2027 Blueprint: What Should Rajasthan Royals Build for the Next Cycle?",
+     "words": 193,
+     "generator": "engine:v1",
+     "score": 0.117
+    },
+    {
+     "planId": "cf-rr-099",
+     "title": "The Multi-League Talent Pipeline: How Rajasthan Royals Could Scout Globally",
+     "words": 194,
+     "generator": "engine:v1",
+     "score": 0.108
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 12.3,
+     "actualTeam": 8.16,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 10.1,
+     "actualTeam": 8.02,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.9,
+     "actualTeam": 9.75,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "DC",
+   "legacyId": "art-dc-01",
+   "legacySlug": "dc-the-capitals-conundrum-why-talent-doesnt-always-translate-into-results",
+   "legacyTitle": "The Capitals Conundrum: Why Talent Doesn't Always Translate into Results",
+   "legacyWords": 573,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-dc-069",
+    "title": "The Turning-Point Audit: What Really Changed in Delhi Capitals’s Best Seasons?",
+    "words": 200,
+    "generator": "engine:v1",
+    "score": 0
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-dc-097",
+     "title": "The Academy Question: Should Delhi Capitals Invest More in Talent Development?",
+     "words": 189,
+     "generator": "engine:v1",
+     "score": 0.09
+    },
+    {
+     "planId": "cf-dc-041",
+     "title": "The Business of Belonging: How Delhi Capitals Converts Attention into Revenue",
+     "words": 228,
+     "generator": "engine:v1",
+     "score": 0.077
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.15,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.3,
+     "actualTeam": 7.78,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.65,
+     "actualTeam": 9.84,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "DC",
+   "legacyId": "art-dc-02",
+   "legacySlug": "dc-the-middle-over-mystery-where-delhis-batting-momentum-changes",
+   "legacyTitle": "The Middle-Over Mystery: Where Delhi's Batting Momentum Changes",
+   "legacyWords": 568,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-dc-004",
+    "title": "Middle-Overs Momentum: Where Delhi Capitals Gains or Loses Run Rate",
+    "words": 278,
+    "generator": "engine:v1",
+    "score": 0.14
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-dc-001",
+     "title": "The Powerplay Equation: When Delhi Capitals Should Attack the First Six Overs",
+     "words": 407,
+     "generator": "engine:v1",
+     "score": 0.104
+    },
+    {
+     "planId": "cf-dc-014",
+     "title": "Middle-Overs Spin: Can Delhi Capitals Create Pressure Without Immediate Wickets?",
+     "words": 268,
+     "generator": "engine:v1",
+     "score": 0.104
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.5,
+     "actualTeam": 7.78,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.9,
+     "actualTeam": 9.84,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "DC",
+   "legacyId": "art-dc-03",
+   "legacySlug": "dc-the-wicket-taking-trade-off-delhis-bowling-risk-versus-reward",
+   "legacyTitle": "The Wicket-Taking Trade-Off: Delhi's Bowling Risk Versus Reward",
+   "legacyWords": 569,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-dc-013",
+    "title": "Wickets Versus Economy: How Delhi Capitals Should Judge Its Bowlers",
+    "words": 274,
+    "generator": "engine:v1",
+    "score": 0.101
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-dc-001",
+     "title": "The Powerplay Equation: When Delhi Capitals Should Attack the First Six Overs",
+     "words": 407,
+     "generator": "engine:v1",
+     "score": 0.173
+    },
+    {
+     "planId": "cf-dc-008",
+     "title": "Spin Versus Pace: Mapping Delhi Capitals’s Batting Trade-Offs",
+     "words": 253,
+     "generator": "engine:v1",
+     "score": 0.147
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.85,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.7,
+     "actualTeam": 7.78,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.15,
+     "actualTeam": 9.84,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "DC",
+   "legacyId": "art-dc-04",
+   "legacySlug": "dc-the-pressure-test-how-dc-responds-when-matches-become-close",
+   "legacyTitle": "The Pressure Test: How DC Responds When Matches Become Close",
+   "legacyWords": 570,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-dc-085",
+    "title": "Clutch or Coincidence? Testing Delhi Capitals’s Pressure-Performance Narratives",
+    "words": 204,
+    "generator": "engine:v1",
+    "score": 0.123
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-dc-066",
+     "title": "The Matches That Built Delhi Capitals’s Reputation Under Pressure",
+     "words": 160,
+     "generator": "engine:v1",
+     "score": 0.277
+    },
+    {
+     "planId": "cf-dc-056",
+     "title": "The Last-Over Nervous System: What Pressure Does to Delhi Capitals Fans",
+     "words": 213,
+     "generator": "engine:v1",
+     "score": 0.264
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.2,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.9,
+     "actualTeam": 7.78,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.4,
+     "actualTeam": 9.84,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "DC",
+   "legacyId": "art-dc-05",
+   "legacySlug": "dc-the-kotla-equation-how-delhis-home-conditions-influence-results",
+   "legacyTitle": "The Kotla Equation: How Delhi's Home Conditions Influence Results",
+   "legacyWords": 578,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-dc-022",
+    "title": "Home-Ground Advantage: What Makes Delhi Different for Delhi Capitals?",
+    "words": 248,
+    "generator": "engine:v1",
+    "score": 0.107
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-dc-093",
+     "title": "A Digital Twin of Delhi: Simulating Delhi Capitals’s Home Conditions",
+     "words": 216,
+     "generator": "engine:v1",
+     "score": 0.16
+    },
+    {
+     "planId": "cf-dc-065",
+     "title": "A Timeline of Delhi Capitals’s Home-Ground Evolution",
+     "words": 192,
+     "generator": "engine:v1",
+     "score": 0.148
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.55,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.1,
+     "actualTeam": 7.78,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.65,
+     "actualTeam": 9.84,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "DC",
+   "legacyId": "art-dc-06",
+   "legacySlug": "dc-the-auction-reset-has-dc-invested-in-the-right-player-profiles",
+   "legacyTitle": "The Auction Reset: Has DC Invested in the Right Player Profiles?",
+   "legacyWords": 577,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-dc-038",
+    "title": "Role Scarcity Index: Which Skill Sets Are Hardest for Delhi Capitals to Buy?",
+    "words": 227,
+    "generator": "engine:v1",
+    "score": 0.045
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-dc-020",
+     "title": "The Sixth-Bowler Insurance Policy: How Much Flexibility Does Delhi Capitals Need?",
+     "words": 261,
+     "generator": "engine:v1",
+     "score": 0.112
+    },
+    {
+     "planId": "cf-dc-072",
+     "title": "Domestic Pathways: Where Could Delhi Capitals Find Undervalued Talent?",
+     "words": 207,
+     "generator": "engine:v1",
+     "score": 0.097
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.9,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.3,
+     "actualTeam": 7.78,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.9,
+     "actualTeam": 9.84,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "DC",
+   "legacyId": "art-dc-07",
+   "legacySlug": "dc-the-missing-combination-what-does-dcs-most-balanced-xi-look-like",
+   "legacyTitle": "The Missing Combination: What Does DC's Most Balanced XI Look Like?",
+   "legacyWords": 576,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-dc-100",
+    "title": "The Future XI: Designing Delhi Capitals’s Ideal Role Balance, Not a Dream Team",
+    "words": 215,
+    "generator": "engine:v1",
+    "score": 0.096
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-dc-007",
+     "title": "Left–Right Combinations: Are They Worth More Than Individual Strike Rate for Delhi Capitals?",
+     "words": 260,
+     "generator": "engine:v1",
+     "score": 0.129
+    },
+    {
+     "planId": "cf-dc-008",
+     "title": "Spin Versus Pace: Mapping Delhi Capitals’s Batting Trade-Offs",
+     "words": 253,
+     "generator": "engine:v1",
+     "score": 0.098
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.25,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.5,
+     "actualTeam": 7.78,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.15,
+     "actualTeam": 9.84,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "DC",
+   "legacyId": "art-dc-08",
+   "legacySlug": "dc-from-daredevils-to-capitals-has-the-franchises-cricketing-dna-changed",
+   "legacyTitle": "From Daredevils to Capitals: Has the Franchise's Cricketing DNA Changed?",
+   "legacyWords": 577,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-dc-067",
+    "title": "From Auction Table to Playing XI: How Delhi Capitals’s Squad Philosophy Evolved",
+    "words": 178,
+    "generator": "engine:v1",
+    "score": 0.057
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-dc-064",
+     "title": "The Captaincy Eras: How Leadership Changed Delhi Capitals’s Playing Identity",
+     "words": 229,
+     "generator": "engine:v1",
+     "score": 0.148
+    },
+    {
+     "planId": "cf-dc-030",
+     "title": "Captaincy Under Uncertainty: Which Decisions Matter Most for Delhi Capitals?",
+     "words": 251,
+     "generator": "engine:v1",
+     "score": 0.105
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.6,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.7,
+     "actualTeam": 7.78,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.4,
+     "actualTeam": 9.84,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "DC",
+   "legacyId": "art-dc-09",
+   "legacySlug": "dc-the-partnership-problem-are-individual-performances-hiding-team-weaknesses",
+   "legacyTitle": "The Partnership Problem: Are Individual Performances Hiding Team Weaknesses?",
+   "legacyWords": 576,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-dc-088",
+    "title": "Batting Partnerships as Networks: Mapping Delhi Capitals’s Run Creation",
+    "words": 178,
+    "generator": "engine:v1",
+    "score": 0.048
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-dc-014",
+     "title": "Middle-Overs Spin: Can Delhi Capitals Create Pressure Without Immediate Wickets?",
+     "words": 268,
+     "generator": "engine:v1",
+     "score": 0.096
+    },
+    {
+     "planId": "cf-dc-004",
+     "title": "Middle-Overs Momentum: Where Delhi Capitals Gains or Loses Run Rate",
+     "words": 278,
+     "generator": "engine:v1",
+     "score": 0.092
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.95,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.9,
+     "actualTeam": 7.78,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.65,
+     "actualTeam": 9.84,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "DC",
+   "legacyId": "art-dc-10",
+   "legacySlug": "dc-building-a-sustainable-core-what-should-delhi-prioritize-next",
+   "legacyTitle": "Building a Sustainable Core: What Should Delhi Prioritize Next?",
+   "legacyWords": 572,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-dc-091",
+    "title": "The 2027 Blueprint: What Should Delhi Capitals Build for the Next Cycle?",
+    "words": 193,
+    "generator": "engine:v1",
+    "score": 0.061
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-dc-071",
+     "title": "The Next Opener: What Profile Should Delhi Capitals Scout?",
+     "words": 213,
+     "generator": "engine:v1",
+     "score": 0.144
+    },
+    {
+     "planId": "cf-dc-020",
+     "title": "The Sixth-Bowler Insurance Policy: How Much Flexibility Does Delhi Capitals Need?",
+     "words": 261,
+     "generator": "engine:v1",
+     "score": 0.103
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 12.3,
+     "actualTeam": 8.04,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 10.1,
+     "actualTeam": 7.78,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.9,
+     "actualTeam": 9.84,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "PBKS",
+   "legacyId": "art-pbks-01",
+   "legacySlug": "pbks-the-punjab-paradox-why-explosive-cricket-doesnt-always-mean-consistency",
+   "legacyTitle": "The Punjab Paradox: Why Explosive Cricket Doesn't Always Mean Consistency",
+   "legacyWords": 572,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-pbks-029",
+    "title": "Risk Budgeting: How Aggressive Should Punjab Kings Be at Different Match States?",
+    "words": 249,
+    "generator": "engine:v1",
+    "score": 0
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-pbks-076",
+     "title": "The Finisher Search: How Punjab Kings Can Identify Genuine Death-Overs Hitters",
+     "words": 185,
+     "generator": "engine:v1",
+     "score": 0.088
+    },
+    {
+     "planId": "cf-pbks-061",
+     "title": "The Founding Identity: How Punjab Kings Became More Than an IPL Entry",
+     "words": 183,
+     "generator": "engine:v1",
+     "score": 0.084
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.15,
+     "actualTeam": 8.23,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.3,
+     "actualTeam": 8.13,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.65,
+     "actualTeam": 9.96,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "PBKS",
+   "legacyId": "art-pbks-02",
+   "legacySlug": "pbks-attack-from-ball-one-how-pbks-approaches-powerplay-batting",
+   "legacyTitle": "Attack from Ball One: How PBKS Approaches Powerplay Batting",
+   "legacyWords": 573,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-pbks-001",
+    "title": "The Powerplay Equation: When Punjab Kings Should Attack the First Six Overs",
+    "words": 408,
+    "generator": "engine:v1",
+    "score": 0.129
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-pbks-016",
+     "title": "Fielding as Run Prevention: Measuring the Hidden Value of Punjab Kings’s Saves",
+     "words": 255,
+     "generator": "engine:v1",
+     "score": 0.116
+    },
+    {
+     "planId": "cf-pbks-094",
+     "title": "The Next Tactical Edge: What Happens When Punjab Kings Models Every Delivery?",
+     "words": 181,
+     "generator": "engine:v1",
+     "score": 0.104
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.23,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.5,
+     "actualTeam": 8.13,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.9,
+     "actualTeam": 9.96,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "PBKS",
+   "legacyId": "art-pbks-03",
+   "legacySlug": "pbks-the-death-overs-question-where-punjabs-bowling-strategy-succeeds-or-fails",
+   "legacyTitle": "The Death-Overs Question: Where Punjab's Bowling Strategy Succeeds or Fails",
+   "legacyWords": 574,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-pbks-015",
+    "title": "Death-Overs Risk: The Cost of One Missed Length for Punjab Kings",
+    "words": 259,
+    "generator": "engine:v1",
+    "score": 0.127
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-pbks-029",
+     "title": "Risk Budgeting: How Aggressive Should Punjab Kings Be at Different Match States?",
+     "words": 249,
+     "generator": "engine:v1",
+     "score": 0.128
+    },
+    {
+     "planId": "cf-pbks-011",
+     "title": "New-Ball Blueprint: What Should Punjab Kings Optimize Before Over Four?",
+     "words": 296,
+     "generator": "engine:v1",
+     "score": 0.117
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.85,
+     "actualTeam": 8.23,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.7,
+     "actualTeam": 8.13,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.15,
+     "actualTeam": 9.96,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "PBKS",
+   "legacyId": "art-pbks-04",
+   "legacySlug": "pbks-the-chase-psychology-how-pbks-handles-required-run-rate-pressure",
+   "legacyTitle": "The Chase Psychology: How PBKS Handles Required Run Rate Pressure",
+   "legacyWords": 572,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-pbks-006",
+    "title": "Chasing Under Pressure: Does Punjab Kings Bat Differently When the Target Climbs?",
+    "words": 271,
+    "generator": "engine:v1",
+    "score": 0.14
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-pbks-004",
+     "title": "Middle-Overs Momentum: Where Punjab Kings Gains or Loses Run Rate",
+     "words": 278,
+     "generator": "engine:v1",
+     "score": 0.093
+    },
+    {
+     "planId": "cf-pbks-081",
+     "title": "Win Probability, Ball by Ball: Building a Model for Punjab Kings",
+     "words": 210,
+     "generator": "engine:v1",
+     "score": 0.088
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.2,
+     "actualTeam": 8.23,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.9,
+     "actualTeam": 8.13,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.4,
+     "actualTeam": 9.96,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "PBKS",
+   "legacyId": "art-pbks-05",
+   "legacySlug": "pbks-the-home-ground-puzzle-how-punjabs-venue-changes-affect-strategy",
+   "legacyTitle": "The Home-Ground Puzzle: How Punjab's Venue Changes Affect Strategy",
+   "legacyWords": 574,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-pbks-065",
+    "title": "A Timeline of Punjab Kings’s Home-Ground Evolution",
+    "words": 192,
+    "generator": "engine:v1",
+    "score": 0.149
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-pbks-022",
+     "title": "Home-Ground Advantage: What Makes Mohali Different for Punjab Kings?",
+     "words": 248,
+     "generator": "engine:v1",
+     "score": 0.091
+    },
+    {
+     "planId": "cf-pbks-063",
+     "title": "Five Defining Tactical Decisions in Punjab Kings’s IPL Story",
+     "words": 244,
+     "generator": "engine:v1",
+     "score": 0.079
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.55,
+     "actualTeam": 8.23,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.1,
+     "actualTeam": 8.13,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.65,
+     "actualTeam": 9.96,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "PBKS",
+   "legacyId": "art-pbks-06",
+   "legacySlug": "pbks-auction-ambition-does-pbks-spend-for-balance-or-star-power",
+   "legacyTitle": "Auction Ambition: Does PBKS Spend for Balance or Star Power?",
+   "legacyWords": 581,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-pbks-032",
+    "title": "Star Premium Versus Squad Depth: Where Should Punjab Kings Spend Its Budget?",
+    "words": 246,
+    "generator": "engine:v1",
+    "score": 0.132
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-pbks-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Punjab Kings?",
+     "words": 268,
+     "generator": "engine:v1",
+     "score": 0.096
+    },
+    {
+     "planId": "cf-pbks-035",
+     "title": "The Uncapped Advantage: Finding Low-Cost Impact for Punjab Kings",
+     "words": 204,
+     "generator": "engine:v1",
+     "score": 0.077
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.9,
+     "actualTeam": 8.23,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.3,
+     "actualTeam": 8.13,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.9,
+     "actualTeam": 9.96,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "PBKS",
+   "legacyId": "art-pbks-07",
+   "legacySlug": "pbks-the-xi-that-fits-building-punjabs-ideal-role-combination",
+   "legacyTitle": "The XI That Fits: Building Punjab's Ideal Role Combination",
+   "legacyWords": 572,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-pbks-100",
+    "title": "The Future XI: Designing Punjab Kings’s Ideal Role Balance, Not a Dream Team",
+    "words": 215,
+    "generator": "engine:v1",
+    "score": 0.206
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-pbks-073",
+     "title": "The Role-Fit Test: Why Good Players Can Be Wrong Signings for Punjab Kings",
+     "words": 211,
+     "generator": "engine:v1",
+     "score": 0.155
+    },
+    {
+     "planId": "cf-pbks-024",
+     "title": "Batting Order as a Decision Tree: Who Should Punjab Kings Promote and Why?",
+     "words": 235,
+     "generator": "engine:v1",
+     "score": 0.091
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.25,
+     "actualTeam": 8.23,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.13,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.15,
+     "actualTeam": 9.96,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "PBKS",
+   "legacyId": "art-pbks-08",
+   "legacySlug": "pbks-the-reinvention-cycle-how-punjabs-squad-identity-has-changed",
+   "legacyTitle": "The Reinvention Cycle: How Punjab's Squad Identity Has Changed",
+   "legacyWords": 573,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-pbks-067",
+    "title": "From Auction Table to Playing XI: How Punjab Kings’s Squad Philosophy Evolved",
+    "words": 179,
+    "generator": "engine:v1",
+    "score": 0.082
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-pbks-061",
+     "title": "The Founding Identity: How Punjab Kings Became More Than an IPL Entry",
+     "words": 183,
+     "generator": "engine:v1",
+     "score": 0.123
+    },
+    {
+     "planId": "cf-pbks-064",
+     "title": "The Captaincy Eras: How Leadership Changed Punjab Kings’s Playing Identity",
+     "words": 230,
+     "generator": "engine:v1",
+     "score": 0.093
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.6,
+     "actualTeam": 8.23,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.7,
+     "actualTeam": 8.13,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.4,
+     "actualTeam": 9.96,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "PBKS",
+   "legacyId": "art-pbks-09",
+   "legacySlug": "pbks-the-momentum-trap-when-one-big-over-changes-punjabs-match-trajectory",
+   "legacyTitle": "The Momentum Trap: When One Big Over Changes Punjab's Match Trajectory",
+   "legacyWords": 574,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-pbks-026",
+    "title": "The Timeout Decision: Can Punjab Kings Interrupt an Opposition Surge?",
+    "words": 242,
+    "generator": "engine:v1",
+    "score": 0.135
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-pbks-081",
+     "title": "Win Probability, Ball by Ball: Building a Model for Punjab Kings",
+     "words": 210,
+     "generator": "engine:v1",
+     "score": 0.231
+    },
+    {
+     "planId": "cf-pbks-004",
+     "title": "Middle-Overs Momentum: Where Punjab Kings Gains or Loses Run Rate",
+     "words": 278,
+     "generator": "engine:v1",
+     "score": 0.207
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.95,
+     "actualTeam": 8.23,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.9,
+     "actualTeam": 8.13,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.65,
+     "actualTeam": 9.96,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "PBKS",
+   "legacyId": "art-pbks-10",
+   "legacySlug": "pbks-from-potential-to-predictability-what-should-pbks-build-around",
+   "legacyTitle": "From Potential to Predictability: What Should PBKS Build Around?",
+   "legacyWords": 572,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-pbks-091",
+    "title": "The 2027 Blueprint: What Should Punjab Kings Build for the Next Cycle?",
+    "words": 193,
+    "generator": "engine:v1",
+    "score": 0.073
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-pbks-067",
+     "title": "From Auction Table to Playing XI: How Punjab Kings’s Squad Philosophy Evolved",
+     "words": 179,
+     "generator": "engine:v1",
+     "score": 0.078
+    },
+    {
+     "planId": "cf-pbks-030",
+     "title": "Captaincy Under Uncertainty: Which Decisions Matter Most for Punjab Kings?",
+     "words": 252,
+     "generator": "engine:v1",
+     "score": 0.058
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 12.3,
+     "actualTeam": 8.23,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 10.1,
+     "actualTeam": 8.13,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.9,
+     "actualTeam": 9.96,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "GT",
+   "legacyId": "art-gt-01",
+   "legacySlug": "gt-the-titans-blueprint-how-gt-built-a-competitive-identity-so-quickly",
+   "legacyTitle": "The Titans Blueprint: How GT Built a Competitive Identity So Quickly",
+   "legacyWords": 579,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-gt-061",
+    "title": "The Founding Identity: How Gujarat Titans Became More Than an IPL Entry",
+    "words": 183,
+    "generator": "engine:v1",
+    "score": 0.083
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-gt-066",
+     "title": "The Matches That Built Gujarat Titans’s Reputation Under Pressure",
+     "words": 160,
+     "generator": "engine:v1",
+     "score": 0.092
+    },
+    {
+     "planId": "cf-gt-090",
+     "title": "A Transparent Power Ranking: Where Should Gujarat Titans Stand and Why?",
+     "words": 174,
+     "generator": "engine:v1",
+     "score": 0.091
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.15,
+     "actualTeam": 8.65,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.3,
+     "actualTeam": 8.8,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.65,
+     "actualTeam": 10.79,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "GT",
+   "legacyId": "art-gt-02",
+   "legacySlug": "gt-calculated-batting-does-gujarat-prefer-efficiency-over-aggression",
+   "legacyTitle": "Calculated Batting: Does Gujarat Prefer Efficiency Over Aggression?",
+   "legacyWords": 568,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-gt-002",
+    "title": "The Anchor Paradox: Does Gujarat Titans Still Need a Traditional No. 3?",
+    "words": 326,
+    "generator": "engine:v1",
+    "score": 0.095
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-gt-005",
+     "title": "The Finisher’s Clock: When Should Gujarat Titans Send in Its Power Hitters?",
+     "words": 277,
+     "generator": "engine:v1",
+     "score": 0.102
+    },
+    {
+     "planId": "cf-gt-015",
+     "title": "Death-Overs Risk: The Cost of One Missed Length for Gujarat Titans",
+     "words": 259,
+     "generator": "engine:v1",
+     "score": 0.077
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.65,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.5,
+     "actualTeam": 8.8,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.9,
+     "actualTeam": 10.79,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "GT",
+   "legacyId": "art-gt-03",
+   "legacySlug": "gt-the-bowling-foundation-how-gt-controls-scoring-across-innings-phases",
+   "legacyTitle": "The Bowling Foundation: How GT Controls Scoring Across Innings Phases",
+   "legacyWords": 574,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-gt-089",
+    "title": "Bowling Plans as Optimization: Allocating 20 Overs for Gujarat Titans",
+    "words": 223,
+    "generator": "engine:v1",
+    "score": 0.039
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-gt-013",
+     "title": "Wickets Versus Economy: How Gujarat Titans Should Judge Its Bowlers",
+     "words": 274,
+     "generator": "engine:v1",
+     "score": 0.141
+    },
+    {
+     "planId": "cf-gt-011",
+     "title": "New-Ball Blueprint: What Should Gujarat Titans Optimize Before Over Four?",
+     "words": 296,
+     "generator": "engine:v1",
+     "score": 0.109
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.85,
+     "actualTeam": 8.65,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.7,
+     "actualTeam": 8.8,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.15,
+     "actualTeam": 10.79,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "GT",
+   "legacyId": "art-gt-04",
+   "legacySlug": "gt-the-chase-equation-how-gujarat-handles-tight-finishes",
+   "legacyTitle": "The Chase Equation: How Gujarat Handles Tight Finishes",
+   "legacyWords": 572,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-gt-056",
+    "title": "The Last-Over Nervous System: What Pressure Does to Gujarat Titans Fans",
+    "words": 213,
+    "generator": "engine:v1",
+    "score": 0.122
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-gt-005",
+     "title": "The Finisher’s Clock: When Should Gujarat Titans Send in Its Power Hitters?",
+     "words": 277,
+     "generator": "engine:v1",
+     "score": 0.145
+    },
+    {
+     "planId": "cf-gt-066",
+     "title": "The Matches That Built Gujarat Titans’s Reputation Under Pressure",
+     "words": 160,
+     "generator": "engine:v1",
+     "score": 0.138
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.2,
+     "actualTeam": 8.65,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.9,
+     "actualTeam": 8.8,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.4,
+     "actualTeam": 10.79,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "GT",
+   "legacyId": "art-gt-05",
+   "legacySlug": "gt-the-ahmedabad-factor-how-narendra-modi-stadium-influences-gts-cricket",
+   "legacyTitle": "The Ahmedabad Factor: How Narendra Modi Stadium Influences GT's Cricket",
+   "legacyWords": 580,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-gt-022",
+    "title": "Home-Ground Advantage: What Makes Ahmedabad Different for Gujarat Titans?",
+    "words": 248,
+    "generator": "engine:v1",
+    "score": 0.095
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-gt-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Gujarat Titans Fans?",
+     "words": 221,
+     "generator": "engine:v1",
+     "score": 0.09
+    },
+    {
+     "planId": "cf-gt-058",
+     "title": "Local Pride and Global Reach: Who Feels Represented by Gujarat Titans?",
+     "words": 207,
+     "generator": "engine:v1",
+     "score": 0.088
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.55,
+     "actualTeam": 8.65,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.1,
+     "actualTeam": 8.8,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.65,
+     "actualTeam": 10.79,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "GT",
+   "legacyId": "art-gt-06",
+   "legacySlug": "gt-value-over-visibility-what-gts-auction-choices-reveal",
+   "legacyTitle": "Value Over Visibility: What GT's Auction Choices Reveal",
+   "legacyWords": 574,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-gt-031",
+    "title": "The Auction Price Puzzle: What Is a Win Worth to Gujarat Titans?",
+    "words": 265,
+    "generator": "engine:v1",
+    "score": 0.09
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-gt-037",
+     "title": "Replacement Value: When Should Gujarat Titans Walk Away from a Bidding War?",
+     "words": 208,
+     "generator": "engine:v1",
+     "score": 0.149
+    },
+    {
+     "planId": "cf-gt-021",
+     "title": "The Toss Illusion: How Much Should Gujarat Titans Change Its Plan After the Coin Flip?",
+     "words": 234,
+     "generator": "engine:v1",
+     "score": 0.057
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.9,
+     "actualTeam": 8.65,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.3,
+     "actualTeam": 8.8,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.9,
+     "actualTeam": 10.79,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "GT",
+   "legacyId": "art-gt-07",
+   "legacySlug": "gt-the-balance-sheet-of-eleven-how-gt-can-optimize-its-squad",
+   "legacyTitle": "The Balance Sheet of Eleven: How GT Can Optimize Its Squad",
+   "legacyWords": 575,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-gt-100",
+    "title": "The Future XI: Designing Gujarat Titans’s Ideal Role Balance, Not a Dream Team",
+    "words": 215,
+    "generator": "engine:v1",
+    "score": 0.134
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-gt-058",
+     "title": "Local Pride and Global Reach: Who Feels Represented by Gujarat Titans?",
+     "words": 207,
+     "generator": "engine:v1",
+     "score": 0.163
+    },
+    {
+     "planId": "cf-gt-099",
+     "title": "The Multi-League Talent Pipeline: How Gujarat Titans Could Scout Globally",
+     "words": 194,
+     "generator": "engine:v1",
+     "score": 0.126
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.25,
+     "actualTeam": 8.65,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.8,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.15,
+     "actualTeam": 10.79,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "GT",
+   "legacyId": "art-gt-08",
+   "legacySlug": "gt-the-first-five-seasons-how-gujarats-approach-has-evolved",
+   "legacyTitle": "The First Five Seasons: How Gujarat's Approach Has Evolved",
+   "legacyWords": 576,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-gt-062",
+    "title": "The Season That Changed the Conversation Around Gujarat Titans",
+    "words": 196,
+    "generator": "engine:v1",
+    "score": 0.097
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-gt-091",
+     "title": "The 2027 Blueprint: What Should Gujarat Titans Build for the Next Cycle?",
+     "words": 193,
+     "generator": "engine:v1",
+     "score": 0.128
+    },
+    {
+     "planId": "cf-gt-063",
+     "title": "Five Defining Tactical Decisions in Gujarat Titans’s IPL Story",
+     "words": 244,
+     "generator": "engine:v1",
+     "score": 0.126
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.6,
+     "actualTeam": 8.65,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.7,
+     "actualTeam": 8.8,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.4,
+     "actualTeam": 10.79,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "GT",
+   "legacyId": "art-gt-09",
+   "legacySlug": "gt-the-quiet-match-winners-identifying-gts-underappreciated-contributions",
+   "legacyTitle": "The Quiet Match-Winners: Identifying GT's Underappreciated Contributions",
+   "legacyWords": 570,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-gt-068",
+    "title": "The Forgotten Contributors: Players Who Shaped Gujarat Titans Beyond Headlines",
+    "words": 155,
+    "generator": "engine:v1",
+    "score": 0.042
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-gt-009",
+     "title": "Dot-Ball Debt: How Gujarat Titans Can Price the Cost of a Quiet Over",
+     "words": 289,
+     "generator": "engine:v1",
+     "score": 0.149
+    },
+    {
+     "planId": "cf-gt-010",
+     "title": "The 200-Run Question: Which Conditions Make Gujarat Titans a High-Scoring Side?",
+     "words": 262,
+     "generator": "engine:v1",
+     "score": 0.129
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.95,
+     "actualTeam": 8.65,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.9,
+     "actualTeam": 8.8,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.65,
+     "actualTeam": 10.79,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "GT",
+   "legacyId": "art-gt-10",
+   "legacySlug": "gt-the-next-competitive-edge-what-does-gujarat-need-to-strengthen",
+   "legacyTitle": "The Next Competitive Edge: What Does Gujarat Need to Strengthen?",
+   "legacyWords": 576,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-gt-091",
+    "title": "The 2027 Blueprint: What Should Gujarat Titans Build for the Next Cycle?",
+    "words": 193,
+    "generator": "engine:v1",
+    "score": 0.011
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-gt-089",
+     "title": "Bowling Plans as Optimization: Allocating 20 Overs for Gujarat Titans",
+     "words": 223,
+     "generator": "engine:v1",
+     "score": 0.115
+    },
+    {
+     "planId": "cf-gt-100",
+     "title": "The Future XI: Designing Gujarat Titans’s Ideal Role Balance, Not a Dream Team",
+     "words": 215,
+     "generator": "engine:v1",
+     "score": 0.109
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 12.3,
+     "actualTeam": 8.65,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 10.1,
+     "actualTeam": 8.8,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.9,
+     "actualTeam": 10.79,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "LSG",
+   "legacyId": "art-lsg-01",
+   "legacySlug": "lsg-the-super-giants-experiment-searching-for-lsgs-cricketing-identity",
+   "legacyTitle": "The Super Giants Experiment: Searching for LSG's Cricketing Identity",
+   "legacyWords": 584,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-lsg-061",
+    "title": "The Founding Identity: How Lucknow Super Giants Became More Than an IPL Entry",
+    "words": 185,
+    "generator": "engine:v1",
+    "score": 0.052
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-lsg-044",
+     "title": "Sponsor Fit: Which Brand Categories Align with Lucknow Super Giants’s Audience?",
+     "words": 219,
+     "generator": "engine:v1",
+     "score": 0.097
+    },
+    {
+     "planId": "cf-lsg-063",
+     "title": "Five Defining Tactical Decisions in Lucknow Super Giants’s IPL Story",
+     "words": 246,
+     "generator": "engine:v1",
+     "score": 0.097
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.15,
+     "actualTeam": 8.63,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.3,
+     "actualTeam": 8.62,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.65,
+     "actualTeam": 10.54,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "LSG",
+   "legacyId": "art-lsg-02",
+   "legacySlug": "lsg-the-tempo-debate-is-lsgs-batting-approach-built-for-modern-t20",
+   "legacyTitle": "The Tempo Debate: Is LSG's Batting Approach Built for Modern T20?",
+   "legacyWords": 589,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-lsg-002",
+    "title": "The Anchor Paradox: Does Lucknow Super Giants Still Need a Traditional No. 3?",
+    "words": 332,
+    "generator": "engine:v1",
+    "score": 0.102
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-lsg-005",
+     "title": "The Finisher’s Clock: When Should Lucknow Super Giants Send in Its Power Hitters?",
+     "words": 280,
+     "generator": "engine:v1",
+     "score": 0.11
+    },
+    {
+     "planId": "cf-lsg-066",
+     "title": "The Matches That Built Lucknow Super Giants’s Reputation Under Pressure",
+     "words": 163,
+     "generator": "engine:v1",
+     "score": 0.106
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.63,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.5,
+     "actualTeam": 8.62,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 11.9,
+     "actualTeam": 10.54,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "LSG",
+   "legacyId": "art-lsg-03",
+   "legacySlug": "lsg-the-middle-over-squeeze-how-lsg-uses-bowling-to-control-matches",
+   "legacyTitle": "The Middle-Over Squeeze: How LSG Uses Bowling to Control Matches",
+   "legacyWords": 582,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-lsg-014",
+    "title": "Middle-Overs Spin: Can Lucknow Super Giants Create Pressure Without Immediate Wickets?",
+    "words": 270,
+    "generator": "engine:v1",
+    "score": 0.116
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-lsg-004",
+     "title": "Middle-Overs Momentum: Where Lucknow Super Giants Gains or Loses Run Rate",
+     "words": 280,
+     "generator": "engine:v1",
+     "score": 0.115
+    },
+    {
+     "planId": "cf-lsg-019",
+     "title": "Bowler Matchups: When Should Lucknow Super Giants Break Its Preferred Rotation?",
+     "words": 259,
+     "generator": "engine:v1",
+     "score": 0.102
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 9.85,
+     "actualTeam": 8.63,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.7,
+     "actualTeam": 8.62,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.15,
+     "actualTeam": 10.54,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "LSG",
+   "legacyId": "art-lsg-04",
+   "legacySlug": "lsg-the-finishing-question-what-happens-when-lsg-enters-the-final-five-overs",
+   "legacyTitle": "The Finishing Question: What Happens When LSG Enters the Final Five Overs?",
+   "legacyWords": 585,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-lsg-005",
+    "title": "The Finisher’s Clock: When Should Lucknow Super Giants Send in Its Power Hitters?",
+    "words": 280,
+    "generator": "engine:v1",
+    "score": 0.145
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-lsg-066",
+     "title": "The Matches That Built Lucknow Super Giants’s Reputation Under Pressure",
+     "words": 163,
+     "generator": "engine:v1",
+     "score": 0.149
+    },
+    {
+     "planId": "cf-lsg-056",
+     "title": "The Last-Over Nervous System: What Pressure Does to Lucknow Super Giants Fans",
+     "words": 216,
+     "generator": "engine:v1",
+     "score": 0.116
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.2,
+     "actualTeam": 8.63,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 8.9,
+     "actualTeam": 8.62,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.4,
+     "actualTeam": 10.54,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "LSG",
+   "legacyId": "art-lsg-05",
+   "legacySlug": "lsg-the-ekana-effect-how-lucknows-home-venue-changes-batting-expectations",
+   "legacyTitle": "The Ekana Effect: How Lucknow's Home Venue Changes Batting Expectations",
+   "legacyWords": 589,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-lsg-022",
+    "title": "Home-Ground Advantage: What Makes Lucknow Different for Lucknow Super Giants?",
+    "words": 250,
+    "generator": "engine:v1",
+    "score": 0.113
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-lsg-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Lucknow Super Giants Fans?",
+     "words": 225,
+     "generator": "engine:v1",
+     "score": 0.129
+    },
+    {
+     "planId": "cf-lsg-083",
+     "title": "A Venue-Adjusted Rating System for Lucknow Super Giants Players",
+     "words": 195,
+     "generator": "engine:v1",
+     "score": 0.116
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.55,
+     "actualTeam": 8.63,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.1,
+     "actualTeam": 8.62,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.65,
+     "actualTeam": 10.54,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "LSG",
+   "legacyId": "art-lsg-06",
+   "legacySlug": "lsg-auction-economics-does-lsg-pay-for-impact-or-reputation",
+   "legacyTitle": "Auction Economics: Does LSG Pay for Impact or Reputation?",
+   "legacyWords": 585,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-lsg-039",
+    "title": "Salary Versus Contribution: Designing an Auction ROI Model for Lucknow Super Giants",
+    "words": 229,
+    "generator": "engine:v1",
+    "score": 0.101
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-lsg-066",
+     "title": "The Matches That Built Lucknow Super Giants’s Reputation Under Pressure",
+     "words": 163,
+     "generator": "engine:v1",
+     "score": 0.097
+    },
+    {
+     "planId": "cf-lsg-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Lucknow Super Giants?",
+     "words": 272,
+     "generator": "engine:v1",
+     "score": 0.09
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 10.9,
+     "actualTeam": 8.63,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.3,
+     "actualTeam": 8.62,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 12.9,
+     "actualTeam": 10.54,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "LSG",
+   "legacyId": "art-lsg-07",
+   "legacySlug": "lsg-the-role-allocation-puzzle-finding-lsgs-best-batting-and-bowling-combination",
+   "legacyTitle": "The Role-Allocation Puzzle: Finding LSG's Best Batting and Bowling Combination",
+   "legacyWords": 582,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-lsg-100",
+    "title": "The Future XI: Designing Lucknow Super Giants’s Ideal Role Balance, Not a Dream Team",
+    "words": 217,
+    "generator": "engine:v1",
+    "score": 0.138
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-lsg-069",
+     "title": "The Turning-Point Audit: What Really Changed in Lucknow Super Giants’s Best Seasons?",
+     "words": 202,
+     "generator": "engine:v1",
+     "score": 0.156
+    },
+    {
+     "planId": "cf-lsg-074",
+     "title": "Age Curves: When Do Lucknow Super Giants’s Batters and Bowlers Typically Peak?",
+     "words": 225,
+     "generator": "engine:v1",
+     "score": 0.128
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.25,
+     "actualTeam": 8.63,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.5,
+     "actualTeam": 8.62,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.15,
+     "actualTeam": 10.54,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "LSG",
+   "legacyId": "art-lsg-08",
+   "legacySlug": "lsg-the-early-years-how-lsgs-tactical-identity-has-changed",
+   "legacyTitle": "The Early Years: How LSG's Tactical Identity Has Changed",
+   "legacyWords": 585,
+   "legacyConfidenceLabel": "Needs Review",
+   "match": {
+    "planId": "cf-lsg-062",
+    "title": "The Season That Changed the Conversation Around Lucknow Super Giants",
+    "words": 199,
+    "generator": "engine:v1",
+    "score": 0.096
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-lsg-061",
+     "title": "The Founding Identity: How Lucknow Super Giants Became More Than an IPL Entry",
+     "words": 185,
+     "generator": "engine:v1",
+     "score": 0.159
+    },
+    {
+     "planId": "cf-lsg-069",
+     "title": "The Turning-Point Audit: What Really Changed in Lucknow Super Giants’s Best Seasons?",
+     "words": 202,
+     "generator": "engine:v1",
+     "score": 0.144
+    }
+   ],
+   "verdict": "partial-overlap",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.6,
+     "actualTeam": 8.63,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.7,
+     "actualTeam": 8.62,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.4,
+     "actualTeam": 10.54,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "LSG",
+   "legacyId": "art-lsg-09",
+   "legacySlug": "lsg-the-dot-ball-paradox-when-conservative-batting-becomes-expensive",
+   "legacyTitle": "The Dot-Ball Paradox: When Conservative Batting Becomes Expensive",
+   "legacyWords": 584,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-lsg-009",
+    "title": "Dot-Ball Debt: How Lucknow Super Giants Can Price the Cost of a Quiet Over",
+    "words": 291,
+    "generator": "engine:v1",
+    "score": 0.203
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-lsg-011",
+     "title": "New-Ball Blueprint: What Should Lucknow Super Giants Optimize Before Over Four?",
+     "words": 299,
+     "generator": "engine:v1",
+     "score": 0.164
+    },
+    {
+     "planId": "cf-lsg-002",
+     "title": "The Anchor Paradox: Does Lucknow Super Giants Still Need a Traditional No. 3?",
+     "words": 332,
+     "generator": "engine:v1",
+     "score": 0.142
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 11.95,
+     "actualTeam": 8.63,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 9.9,
+     "actualTeam": 8.62,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.65,
+     "actualTeam": 10.54,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  },
+  {
+   "franchise": "LSG",
+   "legacyId": "art-lsg-10",
+   "legacySlug": "lsg-the-next-lsg-blueprint-which-player-profiles-fit-its-future",
+   "legacyTitle": "The Next LSG Blueprint: Which Player Profiles Fit Its Future?",
+   "legacyWords": 585,
+   "legacyConfidenceLabel": "Verified",
+   "match": {
+    "planId": "cf-lsg-091",
+    "title": "The 2027 Blueprint: What Should Lucknow Super Giants Build for the Next Cycle?",
+    "words": 196,
+    "generator": "engine:v1",
+    "score": 0.081
+   },
+   "runnersUp": [
+    {
+     "planId": "cf-lsg-015",
+     "title": "Death-Overs Risk: The Cost of One Missed Length for Lucknow Super Giants",
+     "words": 261,
+     "generator": "engine:v1",
+     "score": 0.124
+    },
+    {
+     "planId": "cf-lsg-080",
+     "title": "The Scout’s Blind Spot: Which Small-Sample Stars Might Mislead Lucknow Super Giants?",
+     "words": 242,
+     "generator": "engine:v1",
+     "score": 0.119
+    }
+   ],
+   "verdict": "duplicate",
+   "verdictSource": "reviewed (topic level)",
+   "why": "Topic-level review (title, subtitle, section headings); confirm by reading both before acting.",
+   "tableCheck": [
+    {
+     "phase": "Powerplay",
+     "claimedTeam": 12.3,
+     "actualTeam": 8.63,
+     "claimedLeague": 8.65,
+     "actualLeague": 8.09
+    },
+    {
+     "phase": "Middle",
+     "claimedTeam": 10.1,
+     "actualTeam": 8.62,
+     "claimedLeague": 8.2,
+     "actualLeague": 7.95
+    },
+    {
+     "phase": "Death",
+     "claimedTeam": 13.9,
+     "actualTeam": 10.54,
+     "claimedLeague": 10.85,
+     "actualLeague": 10.06
+    }
+   ],
+   "tableMisstated": true
+  }
+ ]
+}

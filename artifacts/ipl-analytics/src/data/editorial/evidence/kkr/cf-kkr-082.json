@@ -1,0 +1,188 @@
+{
+ "articleId": "cf-kkr-082",
+ "generatedAt": "2026-10-26T04:21:13.674Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "xr-n": {
+   "value": 125,
+   "display": "125",
+   "label": "KKR first innings reaching the eleventh over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 125,
+    "unit": "innings"
+   },
+   "query": "WITH p AS (SELECT d.innings_id, SUM(CASE WHEN d.over_num < 10 THEN d.total_runs ELSE 0 END) r10, SUM(CASE WHEN d.over_num < 10 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b10, MAX(CASE WHEN d.over_num >= 10 THEN 1 ELSE 0 END) reached FROM deliveries d GROUP BY d.innings_id), w AS (SELECT d.innings_id, COUNT(*) w10 FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id WHERE d.over_num < 10 GROUP BY d.innings_id) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id bt, m.winner_id win, i.runs final, p.r10, p.b10, COALESCE(w.w10, 0) w10, i1.runs target1 FROM innings i JOIN p ON p.innings_id = i.innings_id LEFT JOIN w ON w.innings_id = i.innings_id JOIN matches m ON m.match_id = i.match_id LEFT JOIN innings i1 ON i1.match_id = i.match_id AND i1.innings_number = 1 WHERE i.innings_number = 1 AND p.reached = 1 AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 30 innings",
+    "passed": true,
+    "detail": "n = 125"
+   }
+  },
+  "xr-res": {
+   "value": 1.6,
+   "display": "+1.6",
+   "label": "Kolkata Knight Riders' average runs above expectation in the back ten overs",
+   "unit": "runs per innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings",
+   "sampleSize": {
+    "n": 125,
+    "unit": "innings"
+   },
+   "query": "WITH p AS (SELECT d.innings_id, SUM(CASE WHEN d.over_num < 10 THEN d.total_runs ELSE 0 END) r10, SUM(CASE WHEN d.over_num < 10 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b10, MAX(CASE WHEN d.over_num >= 10 THEN 1 ELSE 0 END) reached FROM deliveries d GROUP BY d.innings_id), w AS (SELECT d.innings_id, COUNT(*) w10 FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id WHERE d.over_num < 10 GROUP BY d.innings_id) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id bt, m.winner_id win, i.runs final, p.r10, p.b10, COALESCE(w.w10, 0) w10, i1.runs target1 FROM innings i JOIN p ON p.innings_id = i.innings_id LEFT JOIN w ON w.innings_id = i.innings_id JOIN matches m ON m.match_id = i.match_id LEFT JOIN innings i1 ON i1.match_id = i.match_id AND i1.innings_number = 1 WHERE i.innings_number = 1 AND p.reached = 1 AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 30 innings",
+    "passed": true,
+    "detail": "n = 125"
+   }
+  },
+  "xr-se": {
+   "value": 3.7,
+   "display": "3.7",
+   "label": "Half-width of the 95% interval on that average",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Normal approximation",
+   "sampleSize": {
+    "n": 125,
+    "unit": "innings"
+   },
+   "query": "WITH p AS (SELECT d.innings_id, SUM(CASE WHEN d.over_num < 10 THEN d.total_runs ELSE 0 END) r10, SUM(CASE WHEN d.over_num < 10 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b10, MAX(CASE WHEN d.over_num >= 10 THEN 1 ELSE 0 END) reached FROM deliveries d GROUP BY d.innings_id), w AS (SELECT d.innings_id, COUNT(*) w10 FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id WHERE d.over_num < 10 GROUP BY d.innings_id) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id bt, m.winner_id win, i.runs final, p.r10, p.b10, COALESCE(w.w10, 0) w10, i1.runs target1 FROM innings i JOIN p ON p.innings_id = i.innings_id LEFT JOIN w ON w.innings_id = i.innings_id JOIN matches m ON m.match_id = i.match_id LEFT JOIN innings i1 ON i1.match_id = i.match_id AND i1.innings_number = 1 WHERE i.innings_number = 1 AND p.reached = 1 AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "plausibility range 0–20 for standard error",
+    "passed": true,
+    "detail": "value 1.9097866175720295"
+   }
+  },
+  "xr-pos": {
+   "value": 11,
+   "display": "11",
+   "label": "Seasons with a positive average residual",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "WITH p AS (SELECT d.innings_id, SUM(CASE WHEN d.over_num < 10 THEN d.total_runs ELSE 0 END) r10, SUM(CASE WHEN d.over_num < 10 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b10, MAX(CASE WHEN d.over_num >= 10 THEN 1 ELSE 0 END) reached FROM deliveries d GROUP BY d.innings_id), w AS (SELECT d.innings_id, COUNT(*) w10 FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id WHERE d.over_num < 10 GROUP BY d.innings_id) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id bt, m.winner_id win, i.runs final, p.r10, p.b10, COALESCE(w.w10, 0) w10, i1.runs target1 FROM innings i JOIN p ON p.innings_id = i.innings_id LEFT JOIN w ON w.innings_id = i.innings_id JOIN matches m ON m.match_id = i.match_id LEFT JOIN innings i1 ON i1.match_id = i.match_id AND i1.innings_number = 1 WHERE i.innings_number = 1 AND p.reached = 1 AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "xr-yrs": {
+   "value": 19,
+   "display": "19",
+   "label": "Seasons in the comparison",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "WITH p AS (SELECT d.innings_id, SUM(CASE WHEN d.over_num < 10 THEN d.total_runs ELSE 0 END) r10, SUM(CASE WHEN d.over_num < 10 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b10, MAX(CASE WHEN d.over_num >= 10 THEN 1 ELSE 0 END) reached FROM deliveries d GROUP BY d.innings_id), w AS (SELECT d.innings_id, COUNT(*) w10 FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id WHERE d.over_num < 10 GROUP BY d.innings_id) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id bt, m.winner_id win, i.runs final, p.r10, p.b10, COALESCE(w.w10, 0) w10, i1.runs target1 FROM innings i JOIN p ON p.innings_id = i.innings_id LEFT JOIN w ON w.innings_id = i.innings_id JOIN matches m ON m.match_id = i.match_id LEFT JOIN innings i1 ON i1.match_id = i.match_id AND i1.innings_number = 1 WHERE i.innings_number = 1 AND p.reached = 1 AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "xr-series": {
+   "label": "KKR first-innings totals vs expected, by season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Expected = runs after ten overs + rest-of-league average for the back ten overs, same season and wickets band",
+   "sampleSize": {
+    "n": 125,
+    "unit": "innings"
+   },
+   "query": "WITH p AS (SELECT d.innings_id, SUM(CASE WHEN d.over_num < 10 THEN d.total_runs ELSE 0 END) r10, SUM(CASE WHEN d.over_num < 10 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b10, MAX(CASE WHEN d.over_num >= 10 THEN 1 ELSE 0 END) reached FROM deliveries d GROUP BY d.innings_id), w AS (SELECT d.innings_id, COUNT(*) w10 FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id WHERE d.over_num < 10 GROUP BY d.innings_id) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id bt, m.winner_id win, i.runs final, p.r10, p.b10, COALESCE(w.w10, 0) w10, i1.runs target1 FROM innings i JOIN p ON p.innings_id = i.innings_id LEFT JOIN w ON w.innings_id = i.innings_id JOIN matches m ON m.match_id = i.match_id LEFT JOIN innings i1 ON i1.match_id = i.match_id AND i1.innings_number = 1 WHERE i.innings_number = 1 AND p.reached = 1 AND m.winner_id IS NOT NULL",
+   "rows": [
+    {
+     "season": "2008",
+     "residual": -5.6
+    },
+    {
+     "season": "2009",
+     "residual": 4.4
+    },
+    {
+     "season": "2010",
+     "residual": 6.7
+    },
+    {
+     "season": "2011",
+     "residual": -1
+    },
+    {
+     "season": "2012",
+     "residual": -21.2
+    },
+    {
+     "season": "2013",
+     "residual": -5.2
+    },
+    {
+     "season": "2014",
+     "residual": 1
+    },
+    {
+     "season": "2015",
+     "residual": -1.8
+    },
+    {
+     "season": "2016",
+     "residual": 3.2
+    },
+    {
+     "season": "2017",
+     "residual": 4.3
+    },
+    {
+     "season": "2018",
+     "residual": 24.6
+    },
+    {
+     "season": "2019",
+     "residual": 14.2
+    },
+    {
+     "season": "2020",
+     "residual": 7.2
+    },
+    {
+     "season": "2021",
+     "residual": 1.2
+    },
+    {
+     "season": "2022",
+     "residual": 1.6
+    },
+    {
+     "season": "2023",
+     "residual": -5.2
+    },
+    {
+     "season": "2024",
+     "residual": 11.9
+    },
+    {
+     "season": "2025",
+     "residual": -4.9
+    },
+    {
+     "season": "2026",
+     "residual": -1
+    }
+   ]
+  }
+ }
+}

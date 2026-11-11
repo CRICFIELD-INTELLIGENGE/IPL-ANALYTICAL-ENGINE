@@ -1,0 +1,235 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-001",
+ "planId": "cf-rcb-001",
+ "franchise": "RCB",
+ "aspect": "batting",
+ "title": "The Powerplay Equation: When Royal Challengers Bengaluru Should Attack the First Six Overs",
+ "slug": "rcb-the-powerplay-equation-when-rcb-should-attack-the-first-six-overs",
+ "dek": "For sixteen seasons RCB's powerplay ran slower than the league's on aggregate. Then they flipped it. The data says the flip only pays if the wickets stay in the shed.",
+ "excerpt": "Runs in the first six overs matter, but wickets matter more. Across every IPL innings since 2008, keeping wickets beats adding ten quick runs, and RCB's title-era openers learned to do both.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-25",
+ "status": "review",
+ "featured": true,
+ "storyType": "investigation",
+ "teams": [
+  "RCB"
+ ],
+ "players": [
+  "Virat Kohli",
+  "Phil Salt",
+  "Faf du Plessis",
+  "Devdutt Padikkal"
+ ],
+ "seasons": [
+  "2008\u20132026",
+  "2024",
+  "2025",
+  "2026"
+ ],
+ "keyTakeaways": [
+  "RCB's powerplay run rate trailed the league from 2008 to 2023 ({{ev:rcb-pp-rr-2008-23}} vs {{ev:league-pp-rr-2008-23}}) and has led it since 2024 ({{ev:rcb-pp-rr-2024-26}} vs {{ev:league-pp-rr-2024-26}}).",
+  "Across {{ev:league-pp-innings}} IPL innings, losing two or more powerplay wickets costs more win probability than scoring ten extra runs earns.",
+  "Virat Kohli's title-era powerplay combined a {{ev:pp-sr-v-kohli}} strike rate with {{ev:pp-bpd-v-kohli}} balls per dismissal, roughly double Phil Salt's {{ev:pp-bpd-pd-salt}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Sixteen Seasons Behind the Curve",
+   "body": [
+    "For most of its history, Royal Challengers Bengaluru were a famous batting side that started slowly. Between 2008 and 2023 RCB scored at {{ev:rcb-pp-rr-2008-23}} runs per over in the powerplay while the league scored at {{ev:league-pp-rr-2008-23}}. The superstar names arrived later in the innings; the first six overs were often spent rebuilding.",
+    "That changed in the impact-player era. Since 2024 RCB have scored at {{ev:rcb-pp-rr-2024-26}} runs per over in the powerplay, ahead of a league that has itself sped up to {{ev:league-pp-rr-2024-26}}. Across all {{ev:season-count}} seasons in the CricField warehouse, RCB finished above the league powerplay rate in {{ev:rcb-pp-seasons-above-league}}.",
+    "The question this piece answers is narrower than \"should RCB attack?\". Everyone attacks now. The real question is what the attack is allowed to cost."
+   ],
+   "chartIds": [
+    "pp-rate-trend"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What a Wicket Is Worth Before the Field Spreads",
+   "body": [
+    "We took every IPL innings with a result since 2008, {{ev:league-pp-innings}} of them, and grouped them by how many wickets fell in the powerplay. Sides that lost none won {{ev:league-win-pp-wkts-0}} of the time. One wicket brought that down to {{ev:league-win-pp-wkts-1}}, two to {{ev:league-win-pp-wkts-2}}, and three or more to {{ev:league-win-pp-wkts-3plus}}.",
+    "RCB's own {{ev:rcb-pp-innings}} innings follow the same staircase almost exactly: {{ev:rcb-win-pp-wkts-0}} with no powerplay wickets lost, {{ev:rcb-win-pp-wkts-1}} with one, {{ev:rcb-win-pp-wkts-2}} with two and {{ev:rcb-win-pp-wkts-3plus}} with three or more. There is nothing special about Bengaluru here. The penalty for early wickets is a law of the format.",
+    "Now set runs against wickets. Innings that scored between forty and forty-nine in the powerplay and kept wickets in hand won {{ev:trade-40s-keep}} of the time; the same run band with two or more wickets down won {{ev:trade-40s-lose}}. An innings that raced past sixty but lost two or more wickets won {{ev:trade-60s-lose}}, which is worse than a calmer fifty-something with wickets intact at {{ev:trade-50s-keep}}."
+   ],
+   "chartIds": [
+    "pp-wickets-win",
+    "pp-trade"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "How the Title-Era Openers Squared the Circle",
+   "body": [
+    "RCB's recent openers show two different ways to pay for speed. Phil Salt struck at {{ev:pp-sr-pd-salt}} across {{ev:pp-balls-pd-salt}} powerplay balls from 2024 to 2026, the purest version of the attacking brief. Faf du Plessis struck at {{ev:pp-sr-f-du-plessis}} across {{ev:pp-balls-f-du-plessis}} balls.",
+    "Virat Kohli's numbers are the more interesting ones. Across {{ev:pp-balls-v-kohli}} powerplay balls in the same window he struck at {{ev:pp-sr-v-kohli}} and was dismissed once every {{ev:pp-bpd-v-kohli}} balls, against {{ev:pp-bpd-pd-salt}} for Salt and {{ev:pp-bpd-f-du-plessis}} for du Plessis. In the language of this article, Kohli bought the runs without spending the wickets.",
+    "The practical rule that follows is simple. With one specialist aggressor at the top, the partner's job is to keep the innings' wicket count low rather than to match the strike rate. Two all-out hitters together raise the ceiling, but the evidence above says the floor drops faster than the ceiling rises."
+   ],
+   "chartIds": [
+    "pp-batters"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "The Case for Swinging Anyway",
+   "body": [
+    "There is a fair objection. Run-scoring has risen across the league, and the impact-player rule adds a batter to every lineup, so a lost wicket may cost less now than it did in the early seasons that dominate the full sample. If depth has grown, an early collapse is easier to absorb.",
+    "The staircase does survive when the data is restricted to 2023\u20132026: {{ev:league-recent-win-pp-wkts-0}} with no wickets lost, {{ev:league-recent-win-pp-wkts-1}} with one, {{ev:league-recent-win-pp-wkts-2}} with two and {{ev:league-recent-win-pp-wkts-3plus}} with three or more. But the first step is noticeably shallower than in the full sample, which is exactly what the depth argument predicts. The second wicket still hurts as much as ever. We also cannot separate cause from effect perfectly: a side may lose early wickets precisely because the pitch is difficult, in which case the low win rate reflects the conditions rather than the wickets themselves.",
+    "{{hyp:depth-discount}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Attack With One Hand on the Wicket Count",
+   "body": [
+    "RCB should keep attacking the powerplay; the league has moved and standing still would concede ground. But the evidence is clear that the binding constraint is wickets, not runs. A fifty-for-one start beats a sixty-five-for-three start more often than intuition suggests.",
+    "The structure that served the 2025 and 2026 title sides, one batter licensed to go at every ball and one who absorbs risk, is the one the numbers favour. Future selection should protect that pairing rather than chase a second pure hitter for the top order."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "pp-rate-trend",
+   "type": "line",
+   "title": "Powerplay run rate by season",
+   "subtitle": "RCB batting vs IPL average, overs 1\u20136",
+   "table": "pp-by-season",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "rcb",
+     "label": "RCB"
+    },
+    {
+     "key": "league",
+     "label": "IPL average"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per over",
+   "takeaway": "RCB swung above and below the league before 2023 and have scored faster than it in every season since.",
+   "ariaLabel": "Line chart of powerplay run rate by season from 2008 to 2026 for RCB and the IPL average. RCB is below the average in most seasons before 2023 and above it from 2023 onward."
+  },
+  {
+   "id": "pp-wickets-win",
+   "type": "column",
+   "title": "Win rate by wickets lost in the powerplay",
+   "subtitle": "All innings with a result, 2008\u20132026",
+   "table": "pp-wickets-win",
+   "xKey": "wickets",
+   "series": [
+    {
+     "key": "rcbWinPct",
+     "label": "RCB"
+    },
+    {
+     "key": "leagueWinPct",
+     "label": "IPL"
+    }
+   ],
+   "xLabel": "Wickets lost in overs 1\u20136",
+   "unit": "% of innings won",
+   "takeaway": "Each extra powerplay wicket has cost the league between {{ev:league-step-min}} and {{ev:league-step-max}} percentage points of win rate, and RCB follow the same pattern.",
+   "ariaLabel": "Column chart comparing RCB and IPL win rates by powerplay wickets lost: zero, one, two, three or more. Win rate falls steadily as wickets rise."
+  },
+  {
+   "id": "pp-trade",
+   "type": "column",
+   "title": "Runs or wickets? Win rate by powerplay score",
+   "subtitle": "All IPL innings with a result, 2008\u20132026",
+   "table": "pp-runs-wickets-trade",
+   "xKey": "runs",
+   "series": [
+    {
+     "key": "keepWickets",
+     "label": "0\u20131 wickets lost"
+    },
+    {
+     "key": "loseTwoPlus",
+     "label": "2+ wickets lost"
+    }
+   ],
+   "xLabel": "Powerplay runs",
+   "unit": "% of innings won",
+   "takeaway": "In every run band, keeping wickets wins more often, and a fast start with wickets down trails a moderate start with wickets intact.",
+   "ariaLabel": "Grouped column chart of win rate by powerplay runs band, split by wickets lost. The zero-to-one-wicket bars are higher than the two-plus bars in every band."
+  },
+  {
+   "id": "pp-batters",
+   "type": "bar",
+   "title": "How long RCB's powerplay batters survive, 2024\u20132026",
+   "subtitle": "Balls faced per dismissal in overs 1\u20136; minimum 60 balls (strike rates in the data table)",
+   "table": "pp-batters-2024-26",
+   "xKey": "batter",
+   "series": [
+    {
+     "key": "ballsPerDismissal",
+     "label": "Balls per dismissal"
+    }
+   ],
+   "unit": "balls per dismissal",
+   "takeaway": "Among the openers, Kohli survives roughly twice as long per dismissal as Salt and du Plessis, at a similar strike rate.",
+   "ariaLabel": "Horizontal bar chart of balls faced per dismissal in the powerplay for RCB batters from 2024 to 2026 with at least sixty balls."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only, super overs excluded."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "depth-discount",
+   "statement": "Hypothesis: the impact-player rule has made an early wicket cheaper than the 2008\u20132026 averages imply.",
+   "whyUnverified": "The recent sample (2023\u20132026) is too small to estimate the wicket penalty separately with useful precision.",
+   "howToTest": "Re-run the wickets-lost analysis on 2023 onwards once another two seasons are available, or model win probability with an era interaction term."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "RCB openers attacking the powerplay in the title era.",
+   "wanted": "Virat Kohli or Phil Salt batting for RCB, 2025\u20132026, landscape, attacking shot."
+  },
+  {
+   "slot": "s2",
+   "narrative": "The cost of early wickets.",
+   "wanted": "An RCB batter walking back early in an innings, or bowlers celebrating an early wicket against RCB."
+  },
+  {
+   "slot": "s4",
+   "narrative": "Kohli's anchor-aggressor balance.",
+   "wanted": "Virat Kohli batting for RCB in 2025 or 2026."
+  }
+ ],
+ "videos": [
+  {
+   "catalogueId": "JH-1540066414",
+   "afterSection": "s3",
+   "why": "RCB's 2026 chase in Delhi was finished inside the first seven overs: a powerplay run chase in its purest form."
+  }
+ ],
+ "related": [
+  "cf-rcb-002",
+  "cf-rcb-009",
+  "cf-rcb-085"
+ ],
+ "seo": {
+  "metaTitle": "The Powerplay Equation: when should RCB attack? | CricField",
+  "metaDescription": "RCB flipped from slow to fast starters after 2023. Ball-by-ball data shows powerplay wickets cost more than extra runs earn, and how Kohli squared the circle."
+ },
+ "methodology": "Powerplay = overs one to six of regulation innings; run rate = all runs divided by legal balls times six. Win rates use innings from matches with a result. Wickets exclude retired-hurt. Batter tables use balls faced excluding wides, 2024\u20132026, minimum sixty balls. Every figure is generated by scripts/editorial/evidence/rcb/cf-rcb-001.ts from the CricField warehouse."
+}

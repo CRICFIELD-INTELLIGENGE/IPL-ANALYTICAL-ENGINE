@@ -1,0 +1,135 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-lsg-056",
+ "planId": "cf-lsg-056",
+ "franchise": "LSG",
+ "aspect": "fan-culture",
+ "title": "The Last-Over Nervous System: What Pressure Does to Lucknow Super Giants Fans",
+ "slug": "lsg-the-last-over-nervous-system-what-pressure-does-to-lsg-fans",
+ "dek": "No part of a match tests a fan like the final over. Lucknow Super Giants' record in close finishes shows how often the nerves have been rewarded.",
+ "excerpt": "Lucknow Super Giants have played many close finishes, and won more than half. Whether that record reflects skill or luck is the question every nervous fan asks.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "LSG"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "LSG have won {{ev:lo-close-won}} of {{ev:lo-close-n}} close matches ({{ev:lo-close-pct}}); in other matches they won {{ev:lo-other-pct}}.",
+  "{{ev:lo-lo}} of their matches were decided by a chase completed in the final over; LSG won {{ev:lo-lw}}.",
+  "If each close match were a coin toss, a record this far from even would occur with probability {{ev:lo-close-p}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Twenty Overs, One Over",
+   "body": [
+    "Close finishes are where fandom is most physical: the last over, the required runs, the field coming in. They are also where results feel least controllable.",
+    "The CricField warehouse holds no survey, sentiment or social-media data, so it cannot measure what fans feel. It can measure what they have watched."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Record in Close Matches",
+   "body": [
+    "Lucknow Super Giants have won {{ev:lo-close-won}} of {{ev:lo-close-n}} close matches, {{ev:lo-close-pct}}, against {{ev:lo-other-pct}} in matches that were not close. That ranks them {{ev:lo-close-rank}} of ten franchises.",
+    "The ninety-five per cent interval for their close-match win rate is {{ev:lo-close-ci}}. If each close match were a coin toss, a record this far from even would occur with probability {{ev:lo-close-p}}."
+   ],
+   "chartIds": [
+    "lo-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Final-Over Chases",
+   "body": [
+    "{{ev:lo-lo}} of Lucknow Super Giants' matches were decided by a chase completed in the final over, and LSG won {{ev:lo-lw}} of them.",
+    "Across the league, the number of franchises whose close-match record differs from a coin toss at the conventional threshold is {{ev:lo-close-sig}}."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Skill or Luck?",
+   "body": [
+    "Close-match records are noisy; a few deliveries decide them. Fans remember the wins and losses as character, but the statistics usually point to chance.",
+    "{{hyp:nerve}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Nerves, Not a Pattern",
+   "body": [
+    "Lucknow Super Giants' close-match record is consistent with chance; the nerves are real, but the pattern is not proven.",
+    "Measuring what close finishes do to fans would need attendance and engagement data around those matches."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "lo-chart",
+   "type": "bar",
+   "title": "Win rate in close matches",
+   "subtitle": "All franchises, all seasons",
+   "table": "lo-close-table",
+   "xKey": "franchise",
+   "series": [
+    {
+     "key": "closeWinPct",
+     "label": "Close-match win rate"
+    }
+   ],
+   "unit": "% of close matches",
+   "takeaway": "Close-match records cluster around even.",
+   "ariaLabel": "Horizontal bar chart of each franchise's win rate in close matches."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "nerve",
+   "statement": "Hypothesis: fans' perception of a franchise as 'clutch' follows its last few close finishes rather than its long-run record.",
+   "whyUnverified": "No fan perception data is available.",
+   "howToTest": "Survey fans on clutch reputation and compare with recent and long-run close-match records."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A tense finish for Lucknow Super Giants.",
+   "wanted": "Lucknow Super Giants last-over finish celebration."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-lsg-085",
+  "cf-lsg-026",
+  "cf-lsg-060"
+ ],
+ "seo": {
+  "metaTitle": "The last-over nervous system: LSG in close finishes",
+  "metaDescription": "Lucknow Super Giants' record in close matches and final-over chases, and whether it is skill or chance."
+ },
+ "methodology": "CricField holds ball-by-ball cricket data and no fan survey, sentiment or social-media data. This article measures the cricket fans have experienced; statements about fans themselves are labelled hypotheses. Generated by scripts/editorial/engine. Close = decided by ten runs or fewer, six balls or fewer to spare, or a super over. Final-over chase = chasing side won with five or fewer legal balls to spare.",
+ "generator": "engine:v1"
+}

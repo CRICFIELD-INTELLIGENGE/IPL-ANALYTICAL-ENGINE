@@ -1,0 +1,162 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-kkr-028",
+ "planId": "cf-kkr-028",
+ "franchise": "KKR",
+ "aspect": "tactical",
+ "title": "The Last Five Overs: When Kolkata Knight Riders Should Preserve or Spend Resources",
+ "slug": "kkr-the-last-five-overs-when-kkr-should-preserve-or-spend-resources",
+ "dek": "When should Kolkata Knight Riders preserve resources in the last five overs and when should they spend them? Wickets in hand at the fifteenth over set the ceiling.",
+ "excerpt": "Since 2024 Kolkata Knight Riders have out-scored their opponents in the last five overs. League-wide, wickets in hand at the fifteenth over decide how fast the finish can be.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "KKR"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "KKR scored {{ev:l5bat-team-e2}} an over in overs sixteen to twenty since 2024 and conceded {{ev:l5bowl-team-e2}}: a net of {{ev:l5-net}} per over.",
+  "League-wide since 2022, sides three or fewer down after fifteen overs scored {{ev:l5-fresh}} in the death; six or more down, {{ev:l5-deep}}.",
+  "The league's death-overs scoring rate since 2024 is {{ev:l5bat-league-e2}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Five Overs, Two Ledgers",
+   "body": [
+    "The last five overs are where most T20 matches are decided, and every team has two ledgers there: runs scored and runs conceded.",
+    "Since 2024 Kolkata Knight Riders have scored {{ev:l5bat-team-e2}} an over in the death and conceded {{ev:l5bowl-team-e2}}, a net of {{ev:l5-net}} per over. The league scoring rate in that phase is {{ev:l5bat-league-e2}}."
+   ],
+   "chartIds": [
+    "l5-bat"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Wickets in Hand Set the Ceiling",
+   "body": [
+    "How fast a side can finish depends on what it has left. Across the league since 2022, sides with three or fewer wickets down after fifteen overs scored {{ev:l5-fresh}} an over in the death; sides six or more down scored {{ev:l5-deep}}.",
+    "That is the price of spending wickets earlier: a slower finish."
+   ],
+   "chartIds": [
+    "l5-state"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Preserve or Spend",
+   "body": [
+    "With the bat, the rule follows from the table: protect wickets through the middle overs when the finishers are strong, because they convert wickets in hand into runs at the death.",
+    "With the ball, spend the best death bowler's overs where the batting side has most wickets in hand, since that is where the scoring ceiling is highest."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Correlation and Collapse",
+   "body": [
+    "Sides six down after fifteen overs are often the weaker batting sides, so part of the slower finish reflects quality rather than state. The table describes outcomes, not the effect of a single decision.",
+    "{{hyp:state}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Bank Wickets, Then Cash Them",
+   "body": [
+    "Kolkata Knight Riders have won the death-overs ledger since 2024. The league evidence says wickets in hand at the fifteenth over are what turn a finish into a big one.",
+    "Batting plans should protect wickets until the fifteenth over; bowling plans should target that same window."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "l5-bat",
+   "type": "line",
+   "title": "Death-overs run rate by season",
+   "subtitle": "KKR batting vs IPL, overs 16\u201320",
+   "table": "l5bat-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "KKR"
+    },
+    {
+     "key": "league",
+     "label": "IPL average"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per over",
+   "takeaway": "KKR have scored faster than the league at the death since 2024.",
+   "ariaLabel": "Line chart of KKR death-overs run rate and the IPL average by season."
+  },
+  {
+   "id": "l5-state",
+   "type": "column",
+   "title": "Death-overs run rate by wickets lost after fifteen overs",
+   "subtitle": "IPL, 2022\u20132026",
+   "table": "l5-state",
+   "xKey": "state",
+   "series": [
+    {
+     "key": "runRate",
+     "label": "Run rate"
+    }
+   ],
+   "xLabel": "Wickets lost after over fifteen",
+   "unit": "runs per over",
+   "takeaway": "More wickets in hand after fifteen overs means a faster finish.",
+   "ariaLabel": "Column chart of death-overs run rate grouped by wickets lost after fifteen overs."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "state",
+   "statement": "Hypothesis: the run-rate gap between wickets-in-hand states persists after controlling for batting quality.",
+   "whyUnverified": "Batting quality has not been adjusted for in the state comparison.",
+   "howToTest": "Compare the same sides' death-overs scoring across different wicket states."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Kolkata Knight Riders in the last five overs.",
+   "wanted": "Kolkata Knight Riders batter hitting late in an innings."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-kkr-005",
+  "cf-kkr-015",
+  "cf-kkr-029"
+ ],
+ "seo": {
+  "metaTitle": "The last five overs: when KKR preserve or spend",
+  "metaDescription": "Kolkata Knight Riders' death-overs runs scored and conceded since 2024, and how wickets in hand after fifteen overs set the finish."
+ },
+ "methodology": "Regulation innings only (super overs excluded); win rates use matches with a result. Generated from the CricField warehouse by scripts/editorial/engine. Death overs = sixteen to twenty. Wicket states count all dismissals before the sixteenth over; innings with at least four death overs.",
+ "generator": "engine:v1"
+}

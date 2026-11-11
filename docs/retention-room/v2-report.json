@@ -1,0 +1,3720 @@
+{
+ "generatedFrom": {
+  "modelVersion": "cf-intel-2026.093e7efea1",
+  "dataCutoff": "2026-05-30",
+  "crr": "crr-2.0",
+  "previous": "rri-1.0"
+ },
+ "method": {
+  "version": "crr-2.0",
+  "weights": {
+   "performance": 30,
+   "scarcity": 25,
+   "economics": 20,
+   "fit": 15,
+   "horizon": 10
+  },
+  "bands": [
+   {
+    "min": 90,
+    "category": "Franchise Cornerstone"
+   },
+   {
+    "min": 80,
+    "category": "Priority Retain"
+   },
+   {
+    "min": 70,
+    "category": "Strong Retain"
+   },
+   {
+    "min": 55,
+    "category": "Retention Dilemma"
+   },
+   {
+    "min": 40,
+    "category": "Release / Buyback Review"
+   },
+   {
+    "min": 0,
+    "category": "Release Candidate"
+   }
+  ],
+  "minCoverage": 60,
+  "sensitivitySets": {
+   "equal": {
+    "performance": 20,
+    "scarcity": 20,
+    "economics": 20,
+    "fit": 20,
+    "horizon": 20
+   },
+   "performance-led": {
+    "performance": 45,
+    "scarcity": 20,
+    "economics": 15,
+    "fit": 15,
+    "horizon": 5
+   },
+   "money-led": {
+    "performance": 25,
+    "scarcity": 20,
+    "economics": 35,
+    "fit": 10,
+    "horizon": 10
+   },
+   "no-age": {
+    "performance": 33,
+    "scarcity": 28,
+    "economics": 22,
+    "fit": 17,
+    "horizon": 0
+   }
+  },
+  "note": "A recommendation on a 0–100 scale, not a chance of being retained. Weights and bands are provisional: there are no franchise decisions yet to calibrate them against.",
+  "performance": {
+   "chosen": "even-3y",
+   "rows": [
+    {
+     "key": "brief-3y",
+     "label": "Three seasons, 0.50 / 0.35 / 0.15",
+     "selection": {
+      "n": 676,
+      "rankCorrelation": 0.162
+     },
+     "holdout": {
+      "n": 326,
+      "rankCorrelation": 0.195
+     }
+    },
+    {
+     "key": "recent-3y",
+     "label": "Three seasons, 0.60 / 0.30 / 0.10",
+     "selection": {
+      "n": 676,
+      "rankCorrelation": 0.163
+     },
+     "holdout": {
+      "n": 326,
+      "rankCorrelation": 0.195
+     }
+    },
+    {
+     "key": "even-3y",
+     "label": "Three seasons, equal",
+     "selection": {
+      "n": 676,
+      "rankCorrelation": 0.164
+     },
+     "holdout": {
+      "n": 326,
+      "rankCorrelation": 0.182
+     }
+    },
+    {
+     "key": "decay-all",
+     "label": "All seasons, halving each year (V1)",
+     "selection": {
+      "n": 685,
+      "rankCorrelation": 0.161
+     },
+     "holdout": {
+      "n": 328,
+      "rankCorrelation": 0.198
+     }
+    },
+    {
+     "key": "single",
+     "label": "Latest season only",
+     "selection": {
+      "n": 628,
+      "rankCorrelation": 0.141
+     },
+     "holdout": {
+      "n": 301,
+      "rankCorrelation": 0.18
+     }
+    }
+   ],
+   "rule": "Chosen on next-season rank correlation over 2016–2023; 2024–2026 is reported, not used to choose.",
+   "chosenLabel": "Three seasons, equal"
+  },
+  "aging": {
+   "bat": [
+    {
+     "band": "under-25",
+     "change": 0.23,
+     "n": 96
+    },
+    {
+     "band": "25-28",
+     "change": 0.2,
+     "n": 143
+    },
+    {
+     "band": "29-31",
+     "change": -0.47,
+     "n": 103
+    },
+    {
+     "band": "32-34",
+     "change": -0.06,
+     "n": 82
+    },
+    {
+     "band": "35+",
+     "change": 0.04,
+     "n": 72
+    }
+   ],
+   "bowl": [
+    {
+     "band": "under-25",
+     "change": -0.1,
+     "n": 76
+    },
+    {
+     "band": "25-28",
+     "change": -0.38,
+     "n": 125
+    },
+    {
+     "band": "29-31",
+     "change": 0.39,
+     "n": 90
+    },
+    {
+     "band": "32-34",
+     "change": 0.28,
+     "n": 64
+    },
+    {
+     "band": "35+",
+     "change": -0.04,
+     "n": 50
+    }
+   ],
+   "shrink": 30,
+   "note": "Runs per match change from one season to the next by age at the second season, relative to the average change at all ages (which is regression to the mean). Shrunk toward zero by n/(n+30)."
+  },
+  "decisionBacktest": {
+   "n": 850,
+   "seasons": [
+    2021,
+    2023,
+    2024,
+    2026
+   ],
+   "methods": [
+    {
+     "key": "brief-3y",
+     "label": "Three seasons, 0.50 / 0.35 / 0.15",
+     "auc": 0.664
+    },
+    {
+     "key": "recent-3y",
+     "label": "Three seasons, 0.60 / 0.30 / 0.10",
+     "auc": 0.672
+    },
+    {
+     "key": "even-3y",
+     "label": "Three seasons, equal",
+     "auc": 0.637
+    },
+    {
+     "key": "decay-all",
+     "label": "All seasons, halving each year (V1)",
+     "auc": 0.666
+    },
+    {
+     "key": "single",
+     "label": "Latest season only",
+     "auc": 0.682
+    }
+   ],
+   "forecastModelAuc": 0.782,
+   "note": "Area under the ROC curve for ranking kept players above released ones, on the out-of-time retention decisions. 0.5 is chance."
+  },
+  "components": {
+   "performance": "Three seasons, weighted by balls, shrunk toward the league prior by empirical Bayes; a missing season adds nothing rather than counting as zero. Phase, venue and opposition adjusted. Percentile among squad players of the same role.",
+   "scarcity": "Gap to the best unsigned player in the same granular role and nationality (70%), and how many teammates already cover the role (30%).",
+   "economics": "Expected auction price against the contract, as a percentile. Left out when the salary is missing or the price model is outside its training range.",
+   "fit": "Change to the franchise's best XII from the squad optimiser (50%) and whether the player is in that XII (50%). No captaincy bonus.",
+   "horizon": "Age effect on output over the next three seasons, measured on IPL history. Left out where the birth date is not verified."
+  }
+ },
+ "distribution": {
+  "crr": {
+   "Strong Retain": 31,
+   "Franchise Cornerstone": 10,
+   "Priority Retain": 13,
+   "Insufficient Evidence": 51,
+   "Retention Dilemma": 34,
+   "Release / Buyback Review": 54,
+   "Release Candidate": 91
+  },
+  "previous": {
+   "Priority Retain": 50,
+   "Strong Retain": 34,
+   "Retention Dilemma": 49,
+   "Release Candidate": 56,
+   "Insufficient Evidence": 53,
+   "Consider Release": 42
+  },
+  "order": [
+   "Franchise Cornerstone",
+   "Priority Retain",
+   "Strong Retain",
+   "Retention Dilemma",
+   "Release / Buyback Review",
+   "Release Candidate",
+   "Insufficient Evidence"
+  ]
+ },
+ "transitions": {
+  "Priority Retain → Strong Retain": 21,
+  "Priority Retain → Franchise Cornerstone": 10,
+  "Strong Retain → Priority Retain": 1,
+  "Priority Retain → Priority Retain": 9,
+  "Retention Dilemma → Priority Retain": 3,
+  "Retention Dilemma → Strong Retain": 5,
+  "Release Candidate → Insufficient Evidence": 5,
+  "Insufficient Evidence → Insufficient Evidence": 46,
+  "Strong Retain → Strong Retain": 5,
+  "Priority Retain → Retention Dilemma": 8,
+  "Release Candidate → Retention Dilemma": 2,
+  "Retention Dilemma → Retention Dilemma": 7,
+  "Strong Retain → Retention Dilemma": 15,
+  "Consider Release → Retention Dilemma": 2,
+  "Strong Retain → Release / Buyback Review": 11,
+  "Consider Release → Release / Buyback Review": 9,
+  "Retention Dilemma → Release / Buyback Review": 16,
+  "Release Candidate → Release / Buyback Review": 14,
+  "Insufficient Evidence → Release / Buyback Review": 2,
+  "Priority Retain → Release / Buyback Review": 2,
+  "Consider Release → Release Candidate": 31,
+  "Release Candidate → Release Candidate": 35,
+  "Retention Dilemma → Release Candidate": 18,
+  "Insufficient Evidence → Release Candidate": 5,
+  "Strong Retain → Release Candidate": 2
+ },
+ "biggestMoves": [
+  {
+   "name": "Aman Hakim Khan",
+   "team": "CSK",
+   "role": "Indian middle order",
+   "crr": 79,
+   "tier": "Insufficient Evidence",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 15,
+   "components": {
+    "performance": null,
+    "scarcity": null,
+    "economics": null,
+    "fit": 0.79,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 12,
+    "category": "Insufficient Evidence"
+   },
+   "stability": 1,
+   "range": [
+    79,
+    79
+   ],
+   "change": 67
+  },
+  {
+   "name": "T Banton",
+   "team": "GT",
+   "role": "Overseas wicketkeeper-batter",
+   "crr": 79,
+   "tier": "Insufficient Evidence",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 15,
+   "components": {
+    "performance": null,
+    "scarcity": null,
+    "economics": null,
+    "fit": 0.79,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 23.3,
+    "category": "Release Candidate"
+   },
+   "stability": 1,
+   "range": [
+    79,
+    79
+   ],
+   "change": 55.7
+  },
+  {
+   "name": "N Thushara",
+   "team": "RCB",
+   "role": "Overseas death-overs pacer",
+   "crr": 69.5,
+   "tier": "Retention Dilemma",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 80,
+   "components": {
+    "performance": 0.84,
+    "scarcity": 0.92,
+    "economics": null,
+    "fit": 0,
+    "horizon": 0.74
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 15.2,
+    "category": "Release Candidate"
+   },
+   "stability": 0.5,
+   "range": [
+    62.5,
+    72
+   ],
+   "change": 54.3
+  },
+  {
+   "name": "B Muzarabani",
+   "team": "KKR",
+   "role": "Overseas spinner",
+   "crr": 52.4,
+   "tier": "Release / Buyback Review",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.64,
+    "scarcity": 0.7,
+    "economics": null,
+    "fit": 0,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 1.3,
+    "category": "Insufficient Evidence"
+   },
+   "stability": 1,
+   "range": [
+    44.7,
+    54.5
+   ],
+   "change": 51.1
+  },
+  {
+   "name": "Ravi Singh",
+   "team": "RR",
+   "role": "Indian wicketkeeper-batter",
+   "crr": 52.3,
+   "tier": "Release / Buyback Review",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.57,
+    "scarcity": 0.48,
+    "economics": null,
+    "fit": 0.5,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 9,
+    "category": "Release Candidate"
+   },
+   "stability": 1,
+   "range": [
+    51.7,
+    53.4
+   ],
+   "change": 43.3
+  },
+  {
+   "name": "Akshat Raghuwanshi",
+   "team": "LSG",
+   "role": "Indian middle order",
+   "crr": 60.7,
+   "tier": "Retention Dilemma",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.5,
+    "scarcity": 0.62,
+    "economics": null,
+    "fit": 0.8,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 18.4,
+    "category": "Release Candidate"
+   },
+   "stability": 1,
+   "range": [
+    58.6,
+    64
+   ],
+   "change": 42.3
+  },
+  {
+   "name": "Swapnil Singh",
+   "team": "RCB",
+   "role": "Indian finger spinner",
+   "crr": 51.2,
+   "tier": "Release / Buyback Review",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 80,
+   "components": {
+    "performance": 0.73,
+    "scarcity": 0.59,
+    "economics": null,
+    "fit": 0,
+    "horizon": 0.43
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 12.2,
+    "category": "Release Candidate"
+   },
+   "stability": 0.75,
+   "range": [
+    43.8,
+    55.1
+   ],
+   "change": 39
+  },
+  {
+   "name": "D Madushanka",
+   "team": "SRH",
+   "role": "Overseas middle-overs pacer",
+   "crr": 44.2,
+   "tier": "Release / Buyback Review",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 80,
+   "components": {
+    "performance": 0.58,
+    "scarcity": 0.65,
+    "economics": null,
+    "fit": 0,
+    "horizon": 0.17
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 5.2,
+    "category": "Insufficient Evidence"
+   },
+   "stability": 0.75,
+   "range": [
+    35,
+    47.9
+   ],
+   "change": 39
+  },
+  {
+   "name": "T Dahiya",
+   "team": "KKR",
+   "role": "Nationality unverified finisher",
+   "crr": 39.5,
+   "tier": "Release Candidate",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.43,
+    "scarcity": 0.59,
+    "economics": null,
+    "fit": 0,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 1.3,
+    "category": "Insufficient Evidence"
+   },
+   "stability": 0.75,
+   "range": [
+    34,
+    41
+   ],
+   "change": 38.2
+  },
+  {
+   "name": "SR Dubey",
+   "team": "KKR",
+   "role": "Nationality unverified spinner",
+   "crr": 81.5,
+   "tier": "Strong Retain",
+   "cappedFrom": "Priority Retain",
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.75,
+    "scarcity": 0.83,
+    "economics": null,
+    "fit": 0.92,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 44.9,
+    "category": "Retention Dilemma"
+   },
+   "stability": 0,
+   "range": [
+    80.2,
+    83.3
+   ],
+   "change": 36.6
+  },
+  {
+   "name": "S Gopal",
+   "team": "CSK",
+   "role": "Indian wrist spinner",
+   "crr": 51.3,
+   "tier": "Release / Buyback Review",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 80,
+   "components": {
+    "performance": 0.56,
+    "scarcity": 0.71,
+    "economics": null,
+    "fit": 0,
+    "horizon": 0.65
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 15.3,
+    "category": "Release Candidate"
+   },
+   "stability": 1,
+   "range": [
+    48,
+    53.4
+   ],
+   "change": 36
+  },
+  {
+   "name": "R Sai Kishore",
+   "team": "GT",
+   "role": "Indian finger spinner",
+   "crr": 81.7,
+   "tier": "Priority Retain",
+   "cappedFrom": null,
+   "confidence": "medium",
+   "coverage": 80,
+   "components": {
+    "performance": 0.79,
+    "scarcity": 0.81,
+    "economics": null,
+    "fit": 0.8,
+    "horizon": 0.94
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 45.9,
+    "category": "Retention Dilemma"
+   },
+   "stability": 0.75,
+   "range": [
+    79.9,
+    83.5
+   ],
+   "change": 35.8
+  },
+  {
+   "name": "P Dubey",
+   "team": "PBKS",
+   "role": "Indian wrist spinner",
+   "crr": 52.8,
+   "tier": "Release / Buyback Review",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 80,
+   "components": {
+    "performance": 0.59,
+    "scarcity": 0.72,
+    "economics": null,
+    "fit": 0,
+    "horizon": 0.65
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 17.3,
+    "category": "Release Candidate"
+   },
+   "stability": 1,
+   "range": [
+    49,
+    54.8
+   ],
+   "change": 35.5
+  },
+  {
+   "name": "M Prasidh Krishna",
+   "team": "GT",
+   "role": "Indian middle-overs pacer",
+   "crr": 83.6,
+   "tier": "Priority Retain",
+   "cappedFrom": null,
+   "confidence": "medium",
+   "coverage": 80,
+   "components": {
+    "performance": 0.77,
+    "scarcity": 0.83,
+    "economics": null,
+    "fit": 0.93,
+    "horizon": 0.91
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 49.3,
+    "category": "Retention Dilemma"
+   },
+   "stability": 1,
+   "range": [
+    82.1,
+    86
+   ],
+   "change": 34.3
+  },
+  {
+   "name": "PHKD Mendis",
+   "team": "SRH",
+   "role": "Overseas finisher",
+   "crr": 50.9,
+   "tier": "Release / Buyback Review",
+   "cappedFrom": null,
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.72,
+    "scarcity": 0.56,
+    "economics": null,
+    "fit": 0,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 17.1,
+    "category": "Release Candidate"
+   },
+   "stability": 1,
+   "range": [
+    42.7,
+    54.5
+   ],
+   "change": 33.8
+  }
+ ],
+ "sensitivity": {
+  "meanTierStability": 0.82,
+  "unstable": [
+   {
+    "name": "V Suryavanshi",
+    "team": "RR",
+    "crr": 98.4,
+    "tier": "Strong Retain",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 98.3,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "performance-led",
+      "index": 98.6,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "money-led",
+      "index": 98.5,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "no-age",
+      "index": 98.4,
+      "category": "Franchise Cornerstone"
+     }
+    ]
+   },
+   {
+    "name": "JC Archer",
+    "team": "RR",
+    "crr": 96.1,
+    "tier": "Strong Retain",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 96.7,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "performance-led",
+      "index": 95.4,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "money-led",
+      "index": 95.9,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "no-age",
+      "index": 96.1,
+      "category": "Franchise Cornerstone"
+     }
+    ]
+   },
+   {
+    "name": "E Malinga",
+    "team": "SRH",
+    "crr": 96.1,
+    "tier": "Strong Retain",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 96.3,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "performance-led",
+      "index": 95.9,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "money-led",
+      "index": 96.1,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "no-age",
+      "index": 96.2,
+      "category": "Franchise Cornerstone"
+     }
+    ]
+   },
+   {
+    "name": "JO Holder",
+    "team": "GT",
+    "crr": 94.9,
+    "tier": "Strong Retain",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 95.3,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "performance-led",
+      "index": 94.5,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "money-led",
+      "index": 94.8,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "no-age",
+      "index": 94.9,
+      "category": "Franchise Cornerstone"
+     }
+    ]
+   },
+   {
+    "name": "Prince Yadav",
+    "team": "LSG",
+    "crr": 93.9,
+    "tier": "Strong Retain",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 94.3,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "performance-led",
+      "index": 93.2,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "money-led",
+      "index": 93.7,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "no-age",
+      "index": 93.9,
+      "category": "Franchise Cornerstone"
+     }
+    ]
+   },
+   {
+    "name": "Noor Ahmad",
+    "team": "CSK",
+    "crr": 87.9,
+    "tier": "Priority Retain",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 79,
+      "category": "Strong Retain"
+     },
+     {
+      "set": "performance-led",
+      "index": 92.5,
+      "category": "Franchise Cornerstone"
+     },
+     {
+      "set": "money-led",
+      "index": 85.8,
+      "category": "Priority Retain"
+     },
+     {
+      "set": "no-age",
+      "index": 96.9,
+      "category": "Franchise Cornerstone"
+     }
+    ]
+   },
+   {
+    "name": "AJ Hosein",
+    "team": "CSK",
+    "crr": 82.3,
+    "tier": "Strong Retain",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 82.3,
+      "category": "Priority Retain"
+     },
+     {
+      "set": "performance-led",
+      "index": 82.9,
+      "category": "Priority Retain"
+     },
+     {
+      "set": "money-led",
+      "index": 78.7,
+      "category": "Strong Retain"
+     },
+     {
+      "set": "no-age",
+      "index": 82.4,
+      "category": "Priority Retain"
+     }
+    ]
+   },
+   {
+    "name": "SR Dubey",
+    "team": "KKR",
+    "crr": 81.5,
+    "tier": "Strong Retain",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 83.3,
+      "category": "Priority Retain"
+     },
+     {
+      "set": "performance-led",
+      "index": 80.2,
+      "category": "Priority Retain"
+     },
+     {
+      "set": "money-led",
+      "index": 81,
+      "category": "Priority Retain"
+     },
+     {
+      "set": "no-age",
+      "index": 81.6,
+      "category": "Priority Retain"
+     }
+    ]
+   },
+   {
+    "name": "Abhishek Sharma",
+    "team": "SRH",
+    "crr": 77.1,
+    "tier": "Strong Retain",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 71,
+      "category": "Strong Retain"
+     },
+     {
+      "set": "performance-led",
+      "index": 82.7,
+      "category": "Priority Retain"
+     },
+     {
+      "set": "money-led",
+      "index": 69.4,
+      "category": "Retention Dilemma"
+     },
+     {
+      "set": "no-age",
+      "index": 81.9,
+      "category": "Priority Retain"
+     }
+    ]
+   },
+   {
+    "name": "RA Jadeja",
+    "team": "RR",
+    "crr": 72.5,
+    "tier": "Strong Retain",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 67.8,
+      "category": "Retention Dilemma"
+     },
+     {
+      "set": "performance-led",
+      "index": 80.1,
+      "category": "Priority Retain"
+     },
+     {
+      "set": "money-led",
+      "index": 63.3,
+      "category": "Retention Dilemma"
+     },
+     {
+      "set": "no-age",
+      "index": 75.5,
+      "category": "Strong Retain"
+     }
+    ]
+   },
+   {
+    "name": "PWH de Silva",
+    "team": "LSG",
+    "crr": 70.3,
+    "tier": "Strong Retain",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 67,
+      "category": "Retention Dilemma"
+     },
+     {
+      "set": "performance-led",
+      "index": 69.6,
+      "category": "Retention Dilemma"
+     },
+     {
+      "set": "money-led",
+      "index": 72.2,
+      "category": "Strong Retain"
+     },
+     {
+      "set": "no-age",
+      "index": 67.6,
+      "category": "Retention Dilemma"
+     }
+    ]
+   },
+   {
+    "name": "Avesh Khan",
+    "team": "LSG",
+    "crr": 44.3,
+    "tier": "Release / Buyback Review",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 53.4,
+      "category": "Release / Buyback Review"
+     },
+     {
+      "set": "performance-led",
+      "index": 39.8,
+      "category": "Release Candidate"
+     },
+     {
+      "set": "money-led",
+      "index": 38.6,
+      "category": "Release Candidate"
+     },
+     {
+      "set": "no-age",
+      "index": 39.6,
+      "category": "Release Candidate"
+     }
+    ]
+   },
+   {
+    "name": "Umran Malik",
+    "team": "KKR",
+    "crr": 39.9,
+    "tier": "Release Candidate",
+    "byWeights": [
+     {
+      "set": "equal",
+      "index": 40,
+      "category": "Release / Buyback Review"
+     },
+     {
+      "set": "performance-led",
+      "index": 40.4,
+      "category": "Release / Buyback Review"
+     },
+     {
+      "set": "money-led",
+      "index": 42.3,
+      "category": "Release / Buyback Review"
+     },
+     {
+      "set": "no-age",
+      "index": 35.3,
+      "category": "Release Candidate"
+     }
+    ]
+   }
+  ]
+ },
+ "confidence": {
+  "low": 132,
+  "medium": 79,
+  "high": 73
+ },
+ "capped": [
+  {
+   "name": "V Suryavanshi",
+   "team": "RR",
+   "role": "Nationality unverified opener",
+   "crr": 98.4,
+   "tier": "Strong Retain",
+   "cappedFrom": "Franchise Cornerstone",
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.99,
+    "scarcity": 0.98,
+    "economics": null,
+    "fit": 0.98,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 68.2,
+    "category": "Priority Retain"
+   },
+   "stability": 0,
+   "range": [
+    98.3,
+    98.6
+   ]
+  },
+  {
+   "name": "JC Archer",
+   "team": "RR",
+   "role": "Overseas new-ball pacer",
+   "crr": 96.1,
+   "tier": "Strong Retain",
+   "cappedFrom": "Franchise Cornerstone",
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.93,
+    "scarcity": 0.98,
+    "economics": null,
+    "fit": 0.99,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 75.7,
+    "category": "Priority Retain"
+   },
+   "stability": 0,
+   "range": [
+    95.4,
+    96.7
+   ]
+  },
+  {
+   "name": "E Malinga",
+   "team": "SRH",
+   "role": "Overseas death-overs pacer",
+   "crr": 96.1,
+   "tier": "Strong Retain",
+   "cappedFrom": "Franchise Cornerstone",
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.95,
+    "scarcity": 0.97,
+    "economics": null,
+    "fit": 0.97,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 80.8,
+    "category": "Priority Retain"
+   },
+   "stability": 0,
+   "range": [
+    95.9,
+    96.3
+   ]
+  },
+  {
+   "name": "JO Holder",
+   "team": "GT",
+   "role": "Overseas middle-overs pacer",
+   "crr": 94.9,
+   "tier": "Strong Retain",
+   "cappedFrom": "Franchise Cornerstone",
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.93,
+    "scarcity": 0.96,
+    "economics": null,
+    "fit": 0.97,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 69.7,
+    "category": "Priority Retain"
+   },
+   "stability": 0,
+   "range": [
+    94.5,
+    95.3
+   ]
+  },
+  {
+   "name": "Prince Yadav",
+   "team": "LSG",
+   "role": "Indian death-overs pacer",
+   "crr": 93.9,
+   "tier": "Strong Retain",
+   "cappedFrom": "Franchise Cornerstone",
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.91,
+    "scarcity": 0.96,
+    "economics": null,
+    "fit": 0.96,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 83.2,
+    "category": "Priority Retain"
+   },
+   "stability": 0,
+   "range": [
+    93.2,
+    94.3
+   ]
+  },
+  {
+   "name": "AJ Hosein",
+   "team": "CSK",
+   "role": "Overseas finger spinner",
+   "crr": 82.3,
+   "tier": "Strong Retain",
+   "cappedFrom": "Priority Retain",
+   "confidence": "low",
+   "coverage": 90,
+   "components": {
+    "performance": 0.83,
+    "scarcity": 0.9,
+    "economics": 0.66,
+    "fit": 0.9,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 66.2,
+    "category": "Priority Retain"
+   },
+   "stability": 0.25,
+   "range": [
+    78.7,
+    82.9
+   ]
+  },
+  {
+   "name": "SR Dubey",
+   "team": "KKR",
+   "role": "Nationality unverified spinner",
+   "crr": 81.5,
+   "tier": "Strong Retain",
+   "cappedFrom": "Priority Retain",
+   "confidence": "low",
+   "coverage": 70,
+   "components": {
+    "performance": 0.75,
+    "scarcity": 0.83,
+    "economics": null,
+    "fit": 0.92,
+    "horizon": null
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 44.9,
+    "category": "Retention Dilemma"
+   },
+   "stability": 0,
+   "range": [
+    80.2,
+    83.3
+   ]
+  }
+ ],
+ "miCaseStudies": [
+  {
+   "name": "JJ Bumrah",
+   "team": "MI",
+   "role": "Indian death-overs pacer",
+   "crr": 95.4,
+   "tier": "Franchise Cornerstone",
+   "cappedFrom": null,
+   "confidence": "medium",
+   "coverage": 80,
+   "components": {
+    "performance": 1,
+    "scarcity": 1,
+    "economics": null,
+    "fit": 0.99,
+    "horizon": 0.65
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 68.5,
+    "category": "Priority Retain"
+   },
+   "stability": 1,
+   "range": [
+    91,
+    99.8
+   ],
+   "evidence": [
+    "Three-season performance: +4.6 runs above replacement per match over 2024, 2025, 2026 (±1.7), 100th percentile of squad bowlers. 2024: 13 m, +16.6/m; 2025: 12 m, +13.0/m; 2026: 13 m, +1.8/m",
+    "Role scarcity: Indian death-overs pacer. Best unsigned in the role: MM Sharma at -0.5, a gap of +5.1 per match; 0 teammates cover it.",
+    "Auction economics: Not scored: Rated above nearly every player ever sold: players this good are usually retained, so few sales show what one would fetch.",
+    "Tactical XI/XII fit: In the MI best XII; +2.0 runs per match against the next-best squad option",
+    "Age and cycle horizon: Age 34 in 2027. Players this age change by +0.3 runs per match next season and +0.2 over three, measured on IPL history"
+   ],
+   "scenarios": [
+    {
+     "kind": "retain",
+     "label": "Retain",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": -1800,
+     "detail": "Keeps +4.6 runs per match for ₹18.00 Cr of the purse."
+    },
+    {
+     "kind": "release_buyback",
+     "label": "Release and buy back",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": null,
+     "probability": null,
+     "detail": "Price model cannot be relied on here: Rated above nearly every player ever sold: players this good are usually retained, so few sales show what one would fetch."
+    },
+    {
+     "kind": "release_replace",
+     "label": "Release and replace",
+     "available": true,
+     "rarChange": -5.11,
+     "purseChangeLakh": 1702.6,
+     "detail": "Best unsigned Indian death-overs pacer: MM Sharma, -0.5 per match, expected ₹0.97 Cr."
+    }
+   ],
+   "limitations": [
+    "Auction economics: Not scored: Rated above nearly every player ever sold: players this good are usually retained, so few sales show what one would fetch.",
+    "Availability and injury status are not verified.",
+    "Released players are not in the unsigned pool until the deadline, so replacement supply is understated.",
+    "Weights and tier bands are provisional. No franchise decisions exist yet to calibrate them."
+   ]
+  },
+  {
+   "name": "HH Pandya",
+   "team": "MI",
+   "role": "Indian seam all-rounder",
+   "crr": 14.3,
+   "tier": "Release Candidate",
+   "cappedFrom": null,
+   "confidence": "high",
+   "coverage": 100,
+   "components": {
+    "performance": 0,
+    "scarcity": 0.3,
+    "economics": 0.07,
+    "fit": 0,
+    "horizon": 0.54
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 21.6,
+    "category": "Release Candidate"
+   },
+   "stability": 1,
+   "range": [
+    9.8,
+    18.2
+   ],
+   "evidence": [
+    "Three-season performance: -1.7 runs above replacement per match over 2024, 2025, 2026 (±1.4), 0th percentile of squad all-rounders. 2024: 14 m, -10.7/m; 2025: 15 m, -3.5/m; 2026: 10 m, -10.1/m",
+    "Role scarcity: Indian seam all-rounder. Best unsigned in the role: MM Ali at +0.4, a gap of -2.1 per match; 0 teammates cover it.",
+    "Auction economics: ₹16.35 Cr contract against ₹6.31 Cr expected at auction (80% range ₹1.70 Cr–₹14.16 Cr).",
+    "Tactical XI/XII fit: Outside the MI best XII",
+    "Age and cycle horizon: Age 34 in 2027. Players this age change by +0.1 runs per match next season and +0.1 over three, measured on IPL history"
+   ],
+   "scenarios": [
+    {
+     "kind": "retain",
+     "label": "Retain",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": -1635.0000000000002,
+     "detail": "Keeps -1.7 runs per match for ₹16.35 Cr of the purse."
+    },
+    {
+     "kind": "release_buyback",
+     "label": "Release and buy back",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": 1003.8,
+     "probability": {
+      "value": 0.88,
+      "meaning": "Chance the auction price falls at or below the current contract, from the price model's 80% interval. Not a chance of winning the bid."
+     },
+     "detail": "Expected price ₹6.31 Cr; buying back at that price would free ₹10.04 Cr. Other franchises can bid."
+    },
+    {
+     "kind": "release_replace",
+     "label": "Release and replace",
+     "available": true,
+     "rarChange": 2.12,
+     "purseChangeLakh": 1537.1,
+     "detail": "Best unsigned Indian seam all-rounder: MM Ali, +0.4 per match, expected ₹0.98 Cr."
+    },
+    {
+     "kind": "trade",
+     "label": "Trade to PBKS (Negotiations Reported)",
+     "available": true,
+     "status": "Negotiations Reported",
+     "rarChange": 2.04,
+     "purseChangeLakh": -260,
+     "sources": [
+      {
+       "publisher": "The Federal, citing Sportstar",
+       "url": "https://thefederal.com/sports/cricket/ipl-2027-trade-hardik-set-to-join-pbks-report-261701",
+       "official": false
+      },
+      {
+       "publisher": "CricTracker, quoting an MI official",
+       "url": "https://www.crictracker.com/cricket-news/mumbai-indians-official-provides-huge-update-on-hardik-pandya-player-trade-ahead-of-ipl-2027/",
+       "official": false
+      }
+     ],
+     "detail": "Hypothetical. Negotiations Reported as of 2026-11-04: HH Pandya to PBKS for Arshdeep Singh and Vishnu Vinod. Nothing changes until the trade is completed."
+    }
+   ],
+   "limitations": [
+    "Availability and injury status are not verified.",
+    "Released players are not in the unsigned pool until the deadline, so replacement supply is understated.",
+    "Weights and tier bands are provisional. No franchise decisions exist yet to calibrate them."
+   ]
+  },
+  {
+   "name": "RG Sharma",
+   "team": "MI",
+   "role": "Indian opener",
+   "crr": 11,
+   "tier": "Release Candidate",
+   "cappedFrom": null,
+   "confidence": "high",
+   "coverage": 100,
+   "components": {
+    "performance": 0,
+    "scarcity": 0.18,
+    "economics": 0.05,
+    "fit": 0,
+    "horizon": 0.55
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 20.5,
+    "category": "Release Candidate"
+   },
+   "stability": 1,
+   "range": [
+    6.1,
+    15.6
+   ],
+   "evidence": [
+    "Three-season performance: -0.7 runs above replacement per match over 2024, 2025, 2026 (±1.3), 0th percentile of squad batters. 2024: 14 m, -3.9/m; 2025: 15 m, -5.0/m; 2026: 9 m, +3.2/m",
+    "Role scarcity: Indian opener. Best unsigned in the role: Atharva Taide at +0.0, a gap of -0.7 per match; 1 teammate covers it.",
+    "Auction economics: ₹16.30 Cr contract against ₹5.72 Cr expected at auction (80% range ₹1.54 Cr–₹12.82 Cr).",
+    "Tactical XI/XII fit: Outside the MI best XII",
+    "Age and cycle horizon: Age 40 in 2027. Players this age change by +0.0 runs per match next season and +0.1 over three, measured on IPL history"
+   ],
+   "scenarios": [
+    {
+     "kind": "retain",
+     "label": "Retain",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": -1630,
+     "detail": "Keeps -0.7 runs per match for ₹16.30 Cr of the purse."
+    },
+    {
+     "kind": "release_buyback",
+     "label": "Release and buy back",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": 1058.3,
+     "probability": {
+      "value": 0.9,
+      "meaning": "Chance the auction price falls at or below the current contract, from the price model's 80% interval. Not a chance of winning the bid."
+     },
+     "detail": "Expected price ₹5.72 Cr; buying back at that price would free ₹10.58 Cr. Other franchises can bid."
+    },
+    {
+     "kind": "release_replace",
+     "label": "Release and replace",
+     "available": true,
+     "rarChange": 0.74,
+     "purseChangeLakh": 1573.7,
+     "detail": "Best unsigned Indian opener: Atharva Taide, +0.0 per match, expected ₹0.56 Cr."
+    }
+   ],
+   "limitations": [
+    "Availability and injury status are not verified.",
+    "Released players are not in the unsigned pool until the deadline, so replacement supply is understated.",
+    "Weights and tier bands are provisional. No franchise decisions exist yet to calibrate them."
+   ]
+  },
+  {
+   "name": "Tilak Varma",
+   "team": "MI",
+   "role": "Indian left-handed middle order",
+   "crr": 53.5,
+   "tier": "Release / Buyback Review",
+   "cappedFrom": null,
+   "confidence": "high",
+   "coverage": 100,
+   "components": {
+    "performance": 0.75,
+    "scarcity": 0.59,
+    "economics": 0.43,
+    "fit": 0,
+    "horizon": 0.76
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 40.3,
+    "category": "Retention Dilemma"
+   },
+   "stability": 0.75,
+   "range": [
+    50.6,
+    55.8
+   ],
+   "evidence": [
+    "Three-season performance: +0.3 runs above replacement per match over 2024, 2025, 2026 (±1.3), 75th percentile of squad batters. 2024: 13 m, +5.7/m; 2025: 13 m, +1.1/m; 2026: 14 m, -2.9/m",
+    "Role scarcity: Indian left-handed middle order. Best unsigned in the role: MS Bhandage at +0.0, a gap of +0.3 per match; 1 teammate covers it.",
+    "Auction economics: ₹8.00 Cr contract against ₹7.23 Cr expected at auction (80% range ₹1.95 Cr–₹16.22 Cr).",
+    "Tactical XI/XII fit: Outside the MI best XII",
+    "Age and cycle horizon: Age 25 in 2027. Players this age change by +0.2 runs per match next season and +0.6 over three, measured on IPL history"
+   ],
+   "scenarios": [
+    {
+     "kind": "retain",
+     "label": "Retain",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": -800,
+     "detail": "Keeps +0.3 runs per match for ₹8.00 Cr of the purse."
+    },
+    {
+     "kind": "release_buyback",
+     "label": "Release and buy back",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": 76.8,
+     "probability": {
+      "value": 0.55,
+      "meaning": "Chance the auction price falls at or below the current contract, from the price model's 80% interval. Not a chance of winning the bid."
+     },
+     "detail": "Expected price ₹7.23 Cr; buying back at that price would free ₹0.77 Cr. Other franchises can bid."
+    },
+    {
+     "kind": "release_replace",
+     "label": "Release and replace",
+     "available": true,
+     "rarChange": -0.28,
+     "purseChangeLakh": 757.8,
+     "detail": "Best unsigned Indian left-handed middle order: MS Bhandage, +0.0 per match, expected ₹0.42 Cr."
+    }
+   ],
+   "limitations": [
+    "Availability and injury status are not verified.",
+    "Released players are not in the unsigned pool until the deadline, so replacement supply is understated.",
+    "Weights and tier bands are provisional. No franchise decisions exist yet to calibrate them."
+   ]
+  },
+  {
+   "name": "SA Yadav",
+   "team": "MI",
+   "role": "Indian middle order",
+   "crr": 73.5,
+   "tier": "Strong Retain",
+   "cappedFrom": null,
+   "confidence": "high",
+   "coverage": 100,
+   "components": {
+    "performance": 0.93,
+    "scarcity": 0.94,
+    "economics": 0.17,
+    "fit": 0.88,
+    "horizon": 0.55
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 62.4,
+    "category": "Priority Retain"
+   },
+   "stability": 0.5,
+   "range": [
+    62.3,
+    79.1
+   ],
+   "evidence": [
+    "Three-season performance: +0.9 runs above replacement per match over 2024, 2025, 2026 (±1.3), 93th percentile of squad batters. 2024: 11 m, +6.7/m; 2025: 16 m, +4.6/m; 2026: 13 m, -0.6/m",
+    "Role scarcity: Indian middle order. Best unsigned in the role: V Shankar at -0.3, a gap of +1.2 per match; 0 teammates cover it.",
+    "Auction economics: ₹16.35 Cr contract against ₹8.53 Cr expected at auction (80% range ₹2.30 Cr–₹19.13 Cr).",
+    "Tactical XI/XII fit: In the MI best XII; +0.5 runs per match against the next-best squad option",
+    "Age and cycle horizon: Age 37 in 2027. Players this age change by +0.0 runs per match next season and +0.1 over three, measured on IPL history"
+   ],
+   "scenarios": [
+    {
+     "kind": "retain",
+     "label": "Retain",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": -1635.0000000000002,
+     "detail": "Keeps +0.9 runs per match for ₹16.35 Cr of the purse."
+    },
+    {
+     "kind": "release_buyback",
+     "label": "Release and buy back",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": 782.1,
+     "probability": {
+      "value": 0.78,
+      "meaning": "Chance the auction price falls at or below the current contract, from the price model's 80% interval. Not a chance of winning the bid."
+     },
+     "detail": "Expected price ₹8.53 Cr; buying back at that price would free ₹7.82 Cr. Other franchises can bid."
+    },
+    {
+     "kind": "release_replace",
+     "label": "Release and replace",
+     "available": true,
+     "rarChange": -1.16,
+     "purseChangeLakh": 1553,
+     "detail": "Best unsigned Indian middle order: V Shankar, -0.3 per match, expected ₹0.82 Cr."
+    }
+   ],
+   "limitations": [
+    "Availability and injury status are not verified.",
+    "Released players are not in the unsigned pool until the deadline, so replacement supply is understated.",
+    "Weights and tier bands are provisional. No franchise decisions exist yet to calibrate them."
+   ]
+  },
+  {
+   "name": "TA Boult",
+   "team": "MI",
+   "role": "Overseas new-ball pacer",
+   "crr": 70.7,
+   "tier": "Strong Retain",
+   "cappedFrom": null,
+   "confidence": "high",
+   "coverage": 100,
+   "components": {
+    "performance": 0.89,
+    "scarcity": 0.95,
+    "economics": 0.15,
+    "fit": 0.93,
+    "horizon": 0.33
+   },
+   "previous": {
+    "version": "rri-1.0",
+    "index": 49.6,
+    "category": "Retention Dilemma"
+   },
+   "stability": 0.5,
+   "range": [
+    59.1,
+    76.9
+   ],
+   "evidence": [
+    "Three-season performance: +1.0 runs above replacement per match over 2024, 2025, 2026 (±1.6), 89th percentile of squad bowlers. 2024: 15 m, +1.5/m; 2025: 16 m, +4.4/m; 2026: 5 m, -9.4/m",
+    "Role scarcity: Overseas new-ball pacer. Best unsigned in the role: RJW Topley at -0.5, a gap of +1.5 per match; 0 teammates cover it. Uses one of 8 overseas places.",
+    "Auction economics: ₹12.50 Cr contract against ₹6.42 Cr expected at auction (80% range ₹1.73 Cr–₹14.40 Cr).",
+    "Tactical XI/XII fit: In the MI best XII; +0.8 runs per match against the next-best squad option",
+    "Age and cycle horizon: Age 38 in 2027. Players this age change by -0.0 runs per match next season and -0.1 over three, measured on IPL history"
+   ],
+   "scenarios": [
+    {
+     "kind": "retain",
+     "label": "Retain",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": -1250,
+     "detail": "Keeps +1.0 runs per match for ₹12.50 Cr of the purse."
+    },
+    {
+     "kind": "release_buyback",
+     "label": "Release and buy back",
+     "available": true,
+     "rarChange": 0,
+     "purseChangeLakh": 608.2,
+     "probability": {
+      "value": 0.79,
+      "meaning": "Chance the auction price falls at or below the current contract, from the price model's 80% interval. Not a chance of winning the bid."
+     },
+     "detail": "Expected price ₹6.42 Cr; buying back at that price would free ₹6.08 Cr. Other franchises can bid."
+    },
+    {
+     "kind": "release_replace",
+     "label": "Release and replace",
+     "available": true,
+     "rarChange": -1.46,
+     "purseChangeLakh": 1105.1,
+     "detail": "Best unsigned Overseas new-ball pacer: RJW Topley, -0.5 per match, expected ₹1.45 Cr."
+    }
+   ],
+   "limitations": [
+    "Availability and injury status are not verified.",
+    "Released players are not in the unsigned pool until the deadline, so replacement supply is understated.",
+    "Weights and tier bands are provisional. No franchise decisions exist yet to calibrate them."
+   ]
+  }
+ ],
+ "franchises": {
+  "CSK": {
+   "squad": 30,
+   "tiers": {
+    "Priority Retain": 1,
+    "Strong Retain": 4,
+    "Insufficient Evidence": 5,
+    "Retention Dilemma": 3,
+    "Release / Buyback Review": 8,
+    "Release Candidate": 9
+   },
+   "top": [
+    {
+     "name": "Noor Ahmad",
+     "team": "CSK",
+     "role": "Overseas wrist spinner",
+     "crr": 87.9,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.96,
+      "scarcity": 0.98,
+      "economics": null,
+      "fit": 0.97,
+      "horizon": 0.25
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 77.4,
+      "category": "Priority Retain"
+     },
+     "stability": 0.25,
+     "range": [
+      79,
+      96.9
+     ]
+    },
+    {
+     "name": "AJ Hosein",
+     "team": "CSK",
+     "role": "Overseas finger spinner",
+     "crr": 82.3,
+     "tier": "Strong Retain",
+     "cappedFrom": "Priority Retain",
+     "confidence": "low",
+     "coverage": 90,
+     "components": {
+      "performance": 0.83,
+      "scarcity": 0.9,
+      "economics": 0.66,
+      "fit": 0.9,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 66.2,
+      "category": "Priority Retain"
+     },
+     "stability": 0.25,
+     "range": [
+      78.7,
+      82.9
+     ]
+    },
+    {
+     "name": "Aman Hakim Khan",
+     "team": "CSK",
+     "role": "Indian middle order",
+     "crr": 79,
+     "tier": "Insufficient Evidence",
+     "cappedFrom": null,
+     "confidence": "low",
+     "coverage": 15,
+     "components": {
+      "performance": null,
+      "scarcity": null,
+      "economics": null,
+      "fit": 0.79,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 12,
+      "category": "Insufficient Evidence"
+     },
+     "stability": 1,
+     "range": [
+      79,
+      79
+     ]
+    },
+    {
+     "name": "A Mhatre",
+     "team": "CSK",
+     "role": "Indian opener",
+     "crr": 75.2,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 90,
+     "components": {
+      "performance": 0.78,
+      "scarcity": 0.52,
+      "economics": 0.95,
+      "fit": 0.82,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 61.1,
+      "category": "Strong Retain"
+     },
+     "stability": 1,
+     "range": [
+      75.1,
+      79.3
+     ]
+    },
+    {
+     "name": "J Overton",
+     "team": "CSK",
+     "role": "Overseas death-overs pacer",
+     "crr": 71.5,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 90,
+     "components": {
+      "performance": 0.62,
+      "scarcity": 0.53,
+      "economics": 0.92,
+      "fit": 0.94,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 69.4,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      69.9,
+      75.3
+     ]
+    },
+    {
+     "name": "SV Samson",
+     "team": "CSK",
+     "role": "Indian wicketkeeper-batter",
+     "crr": 71.2,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.9,
+      "scarcity": 0.91,
+      "economics": 0.23,
+      "fit": 0.86,
+      "horizon": 0.39
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 57.6,
+      "category": "Strong Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      61.3,
+      77
+     ]
+    }
+   ],
+   "releaseCandidates": [
+    "Urvil Patel",
+    "MS Dhoni",
+    "Gurjapneet Singh",
+    "SH Johnson",
+    "Mukesh Choudhary",
+    "RD Gaikwad",
+    "MW Short",
+    "Kartik Sharma",
+    "MJ Henry"
+   ]
+  },
+  "DC": {
+   "squad": 28,
+   "tiers": {
+    "Franchise Cornerstone": 1,
+    "Strong Retain": 4,
+    "Retention Dilemma": 2,
+    "Release / Buyback Review": 3,
+    "Release Candidate": 13,
+    "Insufficient Evidence": 5
+   },
+   "top": [
+    {
+     "name": "L Ngidi",
+     "team": "DC",
+     "role": "Overseas death-overs pacer",
+     "crr": 94.9,
+     "tier": "Franchise Cornerstone",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.94,
+      "scarcity": 0.97,
+      "economics": null,
+      "fit": 0.96,
+      "horizon": 0.91
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 82.8,
+      "category": "Priority Retain"
+     },
+     "stability": 1,
+     "range": [
+      94.5,
+      95.5
+     ]
+    },
+    {
+     "name": "KL Rahul",
+     "team": "DC",
+     "role": "Indian wicketkeeper-batter",
+     "crr": 79.4,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.97,
+      "scarcity": 0.94,
+      "economics": 0.38,
+      "fit": 0.91,
+      "horizon": 0.55
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 67.5,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      70.9,
+      84.6
+     ]
+    },
+    {
+     "name": "P Nissanka",
+     "team": "DC",
+     "role": "Overseas opener",
+     "crr": 74.1,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 90,
+     "components": {
+      "performance": 0.79,
+      "scarcity": 0.73,
+      "economics": 0.59,
+      "fit": 0.86,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 61.6,
+      "category": "Strong Retain"
+     },
+     "stability": 1,
+     "range": [
+      70.7,
+      75.7
+     ]
+    },
+    {
+     "name": "V Nigam",
+     "team": "DC",
+     "role": "Indian wrist spinner",
+     "crr": 71.6,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 90,
+     "components": {
+      "performance": 0.44,
+      "scarcity": 0.67,
+      "economics": 0.99,
+      "fit": 0.98,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 59.6,
+      "category": "Strong Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      66.1,
+      77
+     ]
+    },
+    {
+     "name": "Ashutosh Sharma",
+     "team": "DC",
+     "role": "Indian finisher",
+     "crr": 70.2,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.86,
+      "scarcity": 0.89,
+      "economics": 0.46,
+      "fit": 0.86,
+      "horizon": 0
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 66,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      61.4,
+      78
+     ]
+    },
+    {
+     "name": "AR Patel",
+     "team": "DC",
+     "role": "Indian spin all-rounder",
+     "crr": 67,
+     "tier": "Retention Dilemma",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.8,
+      "scarcity": 0.7,
+      "economics": 0.26,
+      "fit": 0.89,
+      "horizon": 0.69
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 63.9,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      58.9,
+      70.7
+     ]
+    }
+   ],
+   "releaseCandidates": [
+    "Mukesh Kumar",
+    "Zeeshan Ansari",
+    "Sameer Rizvi",
+    "DA Miller",
+    "MA Starc",
+    "PVD Chameera",
+    "T Vijay",
+    "KK Nair",
+    "SU Parakh",
+    "Abishek Porel",
+    "N Rana",
+    "RR Pant",
+    "Auqib Nabi"
+   ]
+  },
+  "GT": {
+   "squad": 31,
+   "tiers": {
+    "Strong Retain": 2,
+    "Franchise Cornerstone": 3,
+    "Priority Retain": 2,
+    "Insufficient Evidence": 9,
+    "Retention Dilemma": 4,
+    "Release Candidate": 11
+   },
+   "top": [
+    {
+     "name": "JO Holder",
+     "team": "GT",
+     "role": "Overseas middle-overs pacer",
+     "crr": 94.9,
+     "tier": "Strong Retain",
+     "cappedFrom": "Franchise Cornerstone",
+     "confidence": "low",
+     "coverage": 70,
+     "components": {
+      "performance": 0.93,
+      "scarcity": 0.96,
+      "economics": null,
+      "fit": 0.97,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 69.7,
+      "category": "Priority Retain"
+     },
+     "stability": 0,
+     "range": [
+      94.5,
+      95.3
+     ]
+    },
+    {
+     "name": "K Rabada",
+     "team": "GT",
+     "role": "Overseas new-ball pacer",
+     "crr": 93.9,
+     "tier": "Franchise Cornerstone",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.92,
+      "scarcity": 0.97,
+      "economics": null,
+      "fit": 0.99,
+      "horizon": 0.84
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 79,
+      "category": "Priority Retain"
+     },
+     "stability": 1,
+     "range": [
+      93,
+      95.3
+     ]
+    },
+    {
+     "name": "B Sai Sudharsan",
+     "team": "GT",
+     "role": "Indian opener",
+     "crr": 93.2,
+     "tier": "Franchise Cornerstone",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.97,
+      "scarcity": 0.94,
+      "economics": null,
+      "fit": 0.96,
+      "horizon": 0.76
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 70.4,
+      "category": "Priority Retain"
+     },
+     "stability": 1,
+     "range": [
+      90.7,
+      95.7
+     ]
+    },
+    {
+     "name": "Rashid Khan",
+     "team": "GT",
+     "role": "Overseas wrist spinner",
+     "crr": 90.8,
+     "tier": "Franchise Cornerstone",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.85,
+      "scarcity": 0.93,
+      "economics": null,
+      "fit": 1,
+      "horizon": 0.89
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 76.5,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      89.8,
+      91.8
+     ]
+    },
+    {
+     "name": "M Prasidh Krishna",
+     "team": "GT",
+     "role": "Indian middle-overs pacer",
+     "crr": 83.6,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.77,
+      "scarcity": 0.83,
+      "economics": null,
+      "fit": 0.93,
+      "horizon": 0.91
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 49.3,
+      "category": "Retention Dilemma"
+     },
+     "stability": 1,
+     "range": [
+      82.1,
+      86
+     ]
+    },
+    {
+     "name": "R Sai Kishore",
+     "team": "GT",
+     "role": "Indian finger spinner",
+     "crr": 81.7,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.79,
+      "scarcity": 0.81,
+      "economics": null,
+      "fit": 0.8,
+      "horizon": 0.94
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 45.9,
+      "category": "Retention Dilemma"
+     },
+     "stability": 0.75,
+     "range": [
+      79.9,
+      83.5
+     ]
+    }
+   ],
+   "releaseCandidates": [
+    "N Sindhu",
+    "Ashok Sharma",
+    "Anuj Rawat",
+    "MJ Suthar",
+    "Arshad Khan",
+    "K Khejroliya",
+    "GD Phillips",
+    "L Wood",
+    "I Sharma",
+    "JC Buttler",
+    "Washington Sundar"
+   ]
+  },
+  "KKR": {
+   "squad": 31,
+   "tiers": {
+    "Franchise Cornerstone": 1,
+    "Priority Retain": 3,
+    "Strong Retain": 2,
+    "Retention Dilemma": 5,
+    "Release / Buyback Review": 3,
+    "Release Candidate": 11,
+    "Insufficient Evidence": 6
+   },
+   "top": [
+    {
+     "name": "SP Narine",
+     "team": "KKR",
+     "role": "Overseas finger spinner",
+     "crr": 91.2,
+     "tier": "Franchise Cornerstone",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.99,
+      "scarcity": 1,
+      "economics": null,
+      "fit": 0.99,
+      "horizon": 0.34
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 77.5,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      83,
+      99.4
+     ]
+    },
+    {
+     "name": "CV Varun",
+     "team": "KKR",
+     "role": "Nationality unverified wrist spinner",
+     "crr": 89.6,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.98,
+      "scarcity": 0.99,
+      "economics": null,
+      "fit": 0.95,
+      "horizon": 0.33
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 60.2,
+      "category": "Strong Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      81.3,
+      97.7
+     ]
+    },
+    {
+     "name": "A Raghuvanshi",
+     "team": "KKR",
+     "role": "Indian wicketkeeper-batter",
+     "crr": 85.5,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.8,
+      "scarcity": 0.9,
+      "economics": 0.85,
+      "fit": 0.91,
+      "horizon": 0.83
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 84,
+      "category": "Priority Retain"
+     },
+     "stability": 1,
+     "range": [
+      84.6,
+      85.8
+     ]
+    },
+    {
+     "name": "Mustafizur Rahman",
+     "team": "KKR",
+     "role": "Overseas death-overs pacer",
+     "crr": 81.6,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.82,
+      "scarcity": 0.74,
+      "economics": null,
+      "fit": 0.89,
+      "horizon": 0.88
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 48.6,
+      "category": "Retention Dilemma"
+     },
+     "stability": 1,
+     "range": [
+      80.7,
+      83.2
+     ]
+    },
+    {
+     "name": "SR Dubey",
+     "team": "KKR",
+     "role": "Nationality unverified spinner",
+     "crr": 81.5,
+     "tier": "Strong Retain",
+     "cappedFrom": "Priority Retain",
+     "confidence": "low",
+     "coverage": 70,
+     "components": {
+      "performance": 0.75,
+      "scarcity": 0.83,
+      "economics": null,
+      "fit": 0.92,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 44.9,
+      "category": "Retention Dilemma"
+     },
+     "stability": 0,
+     "range": [
+      80.2,
+      83.3
+     ]
+    },
+    {
+     "name": "FH Allen",
+     "team": "KKR",
+     "role": "Overseas wicketkeeper-batter",
+     "crr": 70.3,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 90,
+     "components": {
+      "performance": 0.7,
+      "scarcity": 0.47,
+      "economics": 0.89,
+      "fit": 0.85,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 63.9,
+      "category": "Priority Retain"
+     },
+     "stability": 1,
+     "range": [
+      70.3,
+      73.9
+     ]
+    }
+   ],
+   "releaseCandidates": [
+    "RA Tripathi",
+    "Umran Malik",
+    "VG Arora",
+    "T Dahiya",
+    "C Green",
+    "M Pathirana",
+    "AM Rahane",
+    "Navdeep Saini",
+    "Ramandeep Singh",
+    "TL Seifert",
+    "Akash Deep"
+   ]
+  },
+  "LSG": {
+   "squad": 26,
+   "tiers": {
+    "Strong Retain": 4,
+    "Franchise Cornerstone": 1,
+    "Priority Retain": 1,
+    "Retention Dilemma": 2,
+    "Release / Buyback Review": 7,
+    "Release Candidate": 10,
+    "Insufficient Evidence": 1
+   },
+   "top": [
+    {
+     "name": "Prince Yadav",
+     "team": "LSG",
+     "role": "Indian death-overs pacer",
+     "crr": 93.9,
+     "tier": "Strong Retain",
+     "cappedFrom": "Franchise Cornerstone",
+     "confidence": "low",
+     "coverage": 70,
+     "components": {
+      "performance": 0.91,
+      "scarcity": 0.96,
+      "economics": null,
+      "fit": 0.96,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 83.2,
+      "category": "Priority Retain"
+     },
+     "stability": 0,
+     "range": [
+      93.2,
+      94.3
+     ]
+    },
+    {
+     "name": "Mohsin Khan",
+     "team": "LSG",
+     "role": "Indian new-ball pacer",
+     "crr": 90,
+     "tier": "Franchise Cornerstone",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.85,
+      "scarcity": 0.9,
+      "economics": null,
+      "fit": 0.94,
+      "horizon": 0.99
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 71,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      88.6,
+      92
+     ]
+    },
+    {
+     "name": "MR Marsh",
+     "team": "LSG",
+     "role": "Overseas opener",
+     "crr": 83.9,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.9,
+      "scarcity": 0.86,
+      "economics": 0.81,
+      "fit": 0.91,
+      "horizon": 0.55
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 75.8,
+      "category": "Priority Retain"
+     },
+     "stability": 1,
+     "range": [
+      80.6,
+      87.1
+     ]
+    },
+    {
+     "name": "JP Inglis",
+     "team": "LSG",
+     "role": "Overseas wicketkeeper-batter",
+     "crr": 79.4,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 90,
+     "components": {
+      "performance": 0.93,
+      "scarcity": 0.72,
+      "economics": 0.58,
+      "fit": 0.93,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 71.1,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      74.7,
+      83.1
+     ]
+    },
+    {
+     "name": "Kuldeep Yadav",
+     "team": "LSG",
+     "role": "Indian wrist spinner",
+     "crr": 71.4,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.9,
+      "scarcity": 0.96,
+      "economics": 0.06,
+      "fit": 0.79,
+      "horizon": 0.73
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 47.6,
+      "category": "Retention Dilemma"
+     },
+     "stability": 0.5,
+     "range": [
+      59,
+      76.1
+     ]
+    },
+    {
+     "name": "PWH de Silva",
+     "team": "LSG",
+     "role": "Overseas wrist spinner",
+     "crr": 70.3,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 100,
+     "components": {
+      "performance": 0.8,
+      "scarcity": 0.92,
+      "economics": 0.7,
+      "fit": 0,
+      "horizon": 0.93
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 47.5,
+      "category": "Retention Dilemma"
+     },
+     "stability": 0.25,
+     "range": [
+      67,
+      72.2
+     ]
+    }
+   ],
+   "releaseCandidates": [
+    "M Siddharth",
+    "A Nortje",
+    "Akash Singh",
+    "MD Choudhary",
+    "AA Kulkarni",
+    "MP Breetzke",
+    "Shahbaz Ahmed",
+    "A Badoni",
+    "Mohammed Shami",
+    "MP Yadav"
+   ]
+  },
+  "MI": {
+   "squad": 29,
+   "tiers": {
+    "Franchise Cornerstone": 1,
+    "Priority Retain": 3,
+    "Strong Retain": 2,
+    "Retention Dilemma": 4,
+    "Release / Buyback Review": 7,
+    "Release Candidate": 8,
+    "Insufficient Evidence": 4
+   },
+   "top": [
+    {
+     "name": "JJ Bumrah",
+     "team": "MI",
+     "role": "Indian death-overs pacer",
+     "crr": 95.4,
+     "tier": "Franchise Cornerstone",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 1,
+      "scarcity": 1,
+      "economics": null,
+      "fit": 0.99,
+      "horizon": 0.65
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 68.5,
+      "category": "Priority Retain"
+     },
+     "stability": 1,
+     "range": [
+      91,
+      99.8
+     ]
+    },
+    {
+     "name": "RD Rickelton",
+     "team": "MI",
+     "role": "Overseas wicketkeeper-batter",
+     "crr": 88.4,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 90,
+     "components": {
+      "performance": 0.83,
+      "scarcity": 0.84,
+      "economics": 1,
+      "fit": 0.91,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 77.4,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      87.2,
+      90.7
+     ]
+    },
+    {
+     "name": "MJ Santner",
+     "team": "MI",
+     "role": "Overseas finger spinner",
+     "crr": 82.7,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 100,
+     "components": {
+      "performance": 0.88,
+      "scarcity": 0.92,
+      "economics": 0.77,
+      "fit": 0.93,
+      "horizon": 0.39
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 68.6,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      77.8,
+      87.6
+     ]
+    },
+    {
+     "name": "Ashwani Kumar",
+     "team": "MI",
+     "role": "Indian middle-overs pacer",
+     "crr": 82.7,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 90,
+     "components": {
+      "performance": 0.78,
+      "scarcity": 0.83,
+      "economics": 0.84,
+      "fit": 0.9,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 69.7,
+      "category": "Priority Retain"
+     },
+     "stability": 1,
+     "range": [
+      81.9,
+      83.8
+     ]
+    },
+    {
+     "name": "SA Yadav",
+     "team": "MI",
+     "role": "Indian middle order",
+     "crr": 73.5,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.93,
+      "scarcity": 0.94,
+      "economics": 0.17,
+      "fit": 0.88,
+      "horizon": 0.55
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 62.4,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      62.3,
+      79.1
+     ]
+    },
+    {
+     "name": "TA Boult",
+     "team": "MI",
+     "role": "Overseas new-ball pacer",
+     "crr": 70.7,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.89,
+      "scarcity": 0.95,
+      "economics": 0.15,
+      "fit": 0.93,
+      "horizon": 0.33
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 49.6,
+      "category": "Retention Dilemma"
+     },
+     "stability": 0.5,
+     "range": [
+      59.1,
+      76.9
+     ]
+    }
+   ],
+   "releaseCandidates": [
+    "R Minz",
+    "DV Malewar",
+    "Q de Kock",
+    "SE Rutherford",
+    "Krish Bhagat",
+    "SN Thakur",
+    "HH Pandya",
+    "RG Sharma"
+   ]
+  },
+  "PBKS": {
+   "squad": 25,
+   "tiers": {
+    "Priority Retain": 2,
+    "Strong Retain": 2,
+    "Retention Dilemma": 4,
+    "Release / Buyback Review": 7,
+    "Release Candidate": 6,
+    "Insufficient Evidence": 4
+   },
+   "top": [
+    {
+     "name": "C Connolly",
+     "team": "PBKS",
+     "role": "Overseas left-handed middle order",
+     "crr": 86.7,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 90,
+     "components": {
+      "performance": 0.89,
+      "scarcity": 0.87,
+      "economics": 0.82,
+      "fit": 0.88,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 72.5,
+      "category": "Priority Retain"
+     },
+     "stability": 1,
+     "range": [
+      85.7,
+      87.3
+     ]
+    },
+    {
+     "name": "Priyansh Arya",
+     "team": "PBKS",
+     "role": "Indian opener",
+     "crr": 82.6,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 90,
+     "components": {
+      "performance": 0.88,
+      "scarcity": 0.86,
+      "economics": 0.67,
+      "fit": 0.87,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 70.3,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      79.3,
+      84.1
+     ]
+    },
+    {
+     "name": "Harpreet Brar",
+     "team": "PBKS",
+     "role": "Indian finger spinner",
+     "crr": 78.5,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 100,
+     "components": {
+      "performance": 0.81,
+      "scarcity": 0.84,
+      "economics": 0.52,
+      "fit": 0.95,
+      "horizon": 0.86
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 69.6,
+      "category": "Priority Retain"
+     },
+     "stability": 1,
+     "range": [
+      73.4,
+      79.6
+     ]
+    },
+    {
+     "name": "Shashank Singh",
+     "team": "PBKS",
+     "role": "Indian finisher",
+     "crr": 77.4,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.85,
+      "scarcity": 0.89,
+      "economics": 0.6,
+      "fit": 0.86,
+      "horizon": 0.47
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 66.8,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      73.4,
+      80.8
+     ]
+    },
+    {
+     "name": "Arshdeep Singh",
+     "team": "PBKS",
+     "role": "Indian death-overs pacer",
+     "crr": 69.8,
+     "tier": "Retention Dilemma",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.72,
+      "scarcity": 0.91,
+      "economics": 0.19,
+      "fit": 0.97,
+      "horizon": 0.71
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 64.6,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      59.7,
+      71.6
+     ]
+    },
+    {
+     "name": "SS Iyer",
+     "team": "PBKS",
+     "role": "Indian middle order",
+     "crr": 60.9,
+     "tier": "Retention Dilemma",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.79,
+      "scarcity": 0.72,
+      "economics": 0.11,
+      "fit": 0.87,
+      "horizon": 0.39
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 63.9,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      50.6,
+      66.6
+     ]
+    }
+   ],
+   "releaseCandidates": [
+    "BJ Dwarshuis",
+    "Vijaykumar Vyshak",
+    "Musheer Khan",
+    "Yash Thakur",
+    "LH Ferguson",
+    "M Jansen"
+   ]
+  },
+  "RCB": {
+   "squad": 26,
+   "tiers": {
+    "Franchise Cornerstone": 2,
+    "Priority Retain": 1,
+    "Strong Retain": 2,
+    "Retention Dilemma": 4,
+    "Release / Buyback Review": 5,
+    "Release Candidate": 6,
+    "Insufficient Evidence": 6
+   },
+   "top": [
+    {
+     "name": "V Kohli",
+     "team": "RCB",
+     "role": "Indian opener",
+     "crr": 93.2,
+     "tier": "Franchise Cornerstone",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 1,
+      "scarcity": 0.98,
+      "economics": null,
+      "fit": 0.97,
+      "horizon": 0.55
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 73.6,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      87.5,
+      98.6
+     ]
+    },
+    {
+     "name": "B Kumar",
+     "team": "RCB",
+     "role": "Indian death-overs pacer",
+     "crr": 90.7,
+     "tier": "Franchise Cornerstone",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.98,
+      "scarcity": 0.99,
+      "economics": null,
+      "fit": 1,
+      "horizon": 0.34
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 75.1,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      82.8,
+      98.8
+     ]
+    },
+    {
+     "name": "RM Patidar",
+     "team": "RCB",
+     "role": "Indian middle order",
+     "crr": 89.5,
+     "tier": "Priority Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 0.96,
+      "scarcity": 0.95,
+      "economics": null,
+      "fit": 0.95,
+      "horizon": 0.48
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 80.2,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      83.5,
+      95.4
+     ]
+    },
+    {
+     "name": "JR Hazlewood",
+     "team": "RCB",
+     "role": "Overseas new-ball pacer",
+     "crr": 76.9,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "low",
+     "coverage": 70,
+     "components": {
+      "performance": 0.97,
+      "scarcity": 0.99,
+      "economics": null,
+      "fit": 0,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 44,
+      "category": "Retention Dilemma"
+     },
+     "stability": 0.5,
+     "range": [
+      65.3,
+      80.1
+     ]
+    },
+    {
+     "name": "TH David",
+     "team": "RCB",
+     "role": "Overseas finisher",
+     "crr": 76.4,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.83,
+      "scarcity": 0.78,
+      "economics": 0.88,
+      "fit": 0.85,
+      "horizon": 0.16
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 74.7,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      70,
+      83
+     ]
+    },
+    {
+     "name": "KH Pandya",
+     "team": "RCB",
+     "role": "Indian finger spinner",
+     "crr": 69.9,
+     "tier": "Retention Dilemma",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.8,
+      "scarcity": 0.67,
+      "economics": 0.64,
+      "fit": 0.78,
+      "horizon": 0.46
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 68.1,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      67,
+      73
+     ]
+    }
+   ],
+   "releaseCandidates": [
+    "D Padikkal",
+    "JG Bethell",
+    "RJ Gleeson",
+    "JM Sharma",
+    "Rasikh Salam",
+    "Abhinandan Singh"
+   ]
+  },
+  "RR": {
+   "squad": 28,
+   "tiers": {
+    "Strong Retain": 4,
+    "Retention Dilemma": 2,
+    "Release / Buyback Review": 9,
+    "Release Candidate": 10,
+    "Insufficient Evidence": 3
+   },
+   "top": [
+    {
+     "name": "V Suryavanshi",
+     "team": "RR",
+     "role": "Nationality unverified opener",
+     "crr": 98.4,
+     "tier": "Strong Retain",
+     "cappedFrom": "Franchise Cornerstone",
+     "confidence": "low",
+     "coverage": 70,
+     "components": {
+      "performance": 0.99,
+      "scarcity": 0.98,
+      "economics": null,
+      "fit": 0.98,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 68.2,
+      "category": "Priority Retain"
+     },
+     "stability": 0,
+     "range": [
+      98.3,
+      98.6
+     ]
+    },
+    {
+     "name": "JC Archer",
+     "team": "RR",
+     "role": "Overseas new-ball pacer",
+     "crr": 96.1,
+     "tier": "Strong Retain",
+     "cappedFrom": "Franchise Cornerstone",
+     "confidence": "low",
+     "coverage": 70,
+     "components": {
+      "performance": 0.93,
+      "scarcity": 0.98,
+      "economics": null,
+      "fit": 0.99,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 75.7,
+      "category": "Priority Retain"
+     },
+     "stability": 0,
+     "range": [
+      95.4,
+      96.7
+     ]
+    },
+    {
+     "name": "R Parag",
+     "team": "RR",
+     "role": "Indian middle order",
+     "crr": 76.5,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.9,
+      "scarcity": 0.92,
+      "economics": 0.32,
+      "fit": 0.85,
+      "horizon": 0.73
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 65,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      67.9,
+      80.1
+     ]
+    },
+    {
+     "name": "RA Jadeja",
+     "team": "RR",
+     "role": "Indian spin all-rounder",
+     "crr": 72.5,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 1,
+      "scarcity": 0.76,
+      "economics": 0.27,
+      "fit": 0.9,
+      "horizon": 0.46
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 70.1,
+      "category": "Priority Retain"
+     },
+     "stability": 0.25,
+     "range": [
+      63.3,
+      80.1
+     ]
+    },
+    {
+     "name": "N Burger",
+     "team": "RR",
+     "role": "Overseas new-ball pacer",
+     "crr": 62.4,
+     "tier": "Retention Dilemma",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 100,
+     "components": {
+      "performance": 0.35,
+      "scarcity": 0.61,
+      "economics": 0.66,
+      "fit": 0.98,
+      "horizon": 0.87
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 55.8,
+      "category": "Strong Retain"
+     },
+     "stability": 1,
+     "range": [
+      56.9,
+      69.4
+     ]
+    },
+    {
+     "name": "Sandeep Sharma",
+     "team": "RR",
+     "role": "Indian death-overs pacer",
+     "crr": 60,
+     "tier": "Retention Dilemma",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.66,
+      "scarcity": 0.68,
+      "economics": 0.12,
+      "fit": 0.95,
+      "horizon": 0.65
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 42,
+      "category": "Retention Dilemma"
+     },
+     "stability": 0.75,
+     "range": [
+      50.3,
+      62.6
+     ]
+    }
+   ],
+   "releaseCandidates": [
+    "KR Sen",
+    "SS Mishra",
+    "AF Milne",
+    "KT Maphaka",
+    "YBK Jaiswal",
+    "MD Shanaka",
+    "LG Pretorius",
+    "Dhruv Jurel",
+    "SO Hetmyer",
+    "Ravi Bishnoi"
+   ]
+  },
+  "SRH": {
+   "squad": 30,
+   "tiers": {
+    "Strong Retain": 5,
+    "Franchise Cornerstone": 1,
+    "Retention Dilemma": 4,
+    "Release / Buyback Review": 5,
+    "Release Candidate": 7,
+    "Insufficient Evidence": 8
+   },
+   "top": [
+    {
+     "name": "E Malinga",
+     "team": "SRH",
+     "role": "Overseas death-overs pacer",
+     "crr": 96.1,
+     "tier": "Strong Retain",
+     "cappedFrom": "Franchise Cornerstone",
+     "confidence": "low",
+     "coverage": 70,
+     "components": {
+      "performance": 0.95,
+      "scarcity": 0.97,
+      "economics": null,
+      "fit": 0.97,
+      "horizon": null
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 80.8,
+      "category": "Priority Retain"
+     },
+     "stability": 0,
+     "range": [
+      95.9,
+      96.3
+     ]
+    },
+    {
+     "name": "H Klaasen",
+     "team": "SRH",
+     "role": "Overseas wicketkeeper-batter",
+     "crr": 92.1,
+     "tier": "Franchise Cornerstone",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 80,
+     "components": {
+      "performance": 1,
+      "scarcity": 0.95,
+      "economics": null,
+      "fit": 0.96,
+      "horizon": 0.55
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 73.6,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      86.5,
+      97.3
+     ]
+    },
+    {
+     "name": "PJ Cummins",
+     "team": "SRH",
+     "role": "Overseas new-ball pacer",
+     "crr": 77.4,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.89,
+      "scarcity": 0.95,
+      "economics": 0.28,
+      "fit": 1,
+      "horizon": 0.63
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 64.2,
+      "category": "Priority Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      67.4,
+      81.4
+     ]
+    },
+    {
+     "name": "Abhishek Sharma",
+     "team": "SRH",
+     "role": "Indian opener",
+     "crr": 77.1,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.94,
+      "scarcity": 0.93,
+      "economics": 0.42,
+      "fit": 0.92,
+      "horizon": 0.34
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 77.6,
+      "category": "Priority Retain"
+     },
+     "stability": 0.25,
+     "range": [
+      69.4,
+      82.7
+     ]
+    },
+    {
+     "name": "Sakib Hussain",
+     "team": "SRH",
+     "role": "Indian death-overs pacer",
+     "crr": 76.1,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "medium",
+     "coverage": 100,
+     "components": {
+      "performance": 0.75,
+      "scarcity": 0.78,
+      "economics": 0.99,
+      "fit": 0.85,
+      "horizon": 0.15
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 71.3,
+      "category": "Priority Retain"
+     },
+     "stability": 0.75,
+     "range": [
+      70.4,
+      82.8
+     ]
+    },
+    {
+     "name": "TM Head",
+     "team": "SRH",
+     "role": "Overseas wicketkeeper-batter",
+     "crr": 71.1,
+     "tier": "Strong Retain",
+     "cappedFrom": null,
+     "confidence": "high",
+     "coverage": 100,
+     "components": {
+      "performance": 0.87,
+      "scarcity": 0.7,
+      "economics": 0.55,
+      "fit": 0.78,
+      "horizon": 0.48
+     },
+     "previous": {
+      "version": "rri-1.0",
+      "index": 57.5,
+      "category": "Strong Retain"
+     },
+     "stability": 0.5,
+     "range": [
+      67.6,
+      75.5
+     ]
+    }
+   ],
+   "releaseCandidates": [
+    "Nithish Kumar Reddy",
+    "R Smaran",
+    "S Arora",
+    "DA Payne",
+    "HV Patel",
+    "G Coetzee",
+    "LS Livingstone"
+   ]
+  }
+ },
+ "tradeAudit": {
+  "updatedAt": "2026-11-04",
+  "entries": 4,
+  "byStatus": {
+   "Rumour": 1,
+   "Reported Interest": 0,
+   "Negotiations Reported": 1,
+   "Officially Confirmed": 0,
+   "Completed": 2,
+   "Denied": 0,
+   "Stalled": 0,
+   "Superseded": 0
+  },
+  "squadChanging": [
+   {
+    "id": "2027-pant-kuldeep",
+    "officialSource": true
+   },
+   {
+    "id": "2027-natarajan-zeeshan",
+    "officialSource": false
+   }
+  ],
+  "unresolvedPlayers": [],
+  "sources": [
+   {
+    "entry": "2027-pant-kuldeep",
+    "publisher": "IPL (iplt20.com)",
+    "official": true,
+    "url": "https://www.iplt20.com/news/4379/rishabh-pant-and-kuldeep-yadav-complete-high-profile-trade-between-dc-and-lsg",
+    "publishedOn": "2026-06-23"
+   },
+   {
+    "entry": "2027-natarajan-zeeshan",
+    "publisher": "CricTracker",
+    "official": false,
+    "url": "https://www.crictracker.com/cricket-news/t-natarajan-reunites-with-srh-as-zeeshan-ansari-moves-to-dc-in-player-trade/",
+    "publishedOn": "2026-10-14"
+   },
+   {
+    "entry": "2027-hardik-arshdeep",
+    "publisher": "The Federal, citing Sportstar",
+    "official": false,
+    "url": "https://thefederal.com/sports/cricket/ipl-2027-trade-hardik-set-to-join-pbks-report-261701",
+    "publishedOn": "2026-11-03"
+   },
+   {
+    "entry": "2027-hardik-arshdeep",
+    "publisher": "CricTracker, quoting an MI official",
+    "official": false,
+    "url": "https://www.crictracker.com/cricket-news/mumbai-indians-official-provides-huge-update-on-hardik-pandya-player-trade-ahead-of-ipl-2027/",
+    "publishedOn": "2026-08-01"
+   },
+   {
+    "entry": "2027-stoinis-mohsin",
+    "publisher": "Khel Now",
+    "official": false,
+    "url": "https://khelnow.com/cricket/marcus-stoinis-mohsin-khan-likely-swapped-ipl-2027-202611",
+    "publishedOn": "2026-11",
+    "note": "Headline only. CricField has not read the article, and the publication date is the month in its URL."
+   }
+  ],
+  "appliedInSnapshot": [
+   {
+    "entryId": "2027-pant-kuldeep",
+    "canonicalId": "cs:919a3be2",
+    "player": "Rishabh Pant",
+    "from": "LSG",
+    "to": "DC",
+    "feeLakh": 1500
+   },
+   {
+    "entryId": "2027-pant-kuldeep",
+    "canonicalId": "cs:8d2c70ad",
+    "player": "Kuldeep Yadav",
+    "from": "DC",
+    "to": "LSG",
+    "feeLakh": 1350
+   },
+   {
+    "entryId": "2027-natarajan-zeeshan",
+    "canonicalId": "cs:ce794613",
+    "player": "T Natarajan",
+    "from": "DC",
+    "to": "SRH",
+    "feeLakh": 500
+   },
+   {
+    "entryId": "2027-natarajan-zeeshan",
+    "canonicalId": "cs:36619795",
+    "player": "Zeeshan Ansari",
+    "from": "SRH",
+    "to": "DC",
+    "feeLakh": 40
+   }
+  ]
+ },
+ "dataDefects": {
+  "squadPlayersWithoutContract": [
+   {
+    "id": "cs:85e0cf10",
+    "name": "M Prasidh Krishna",
+    "team": "GT"
+   },
+   {
+    "id": "cs:327b58d3",
+    "name": "PVD Chameera",
+    "team": "DC"
+   },
+   {
+    "id": "cs:d5130a30",
+    "name": "B Sai Sudharsan",
+    "team": "GT"
+   },
+   {
+    "id": "cs:c7a995d3",
+    "name": "R Sai Kishore",
+    "team": "GT"
+   }
+  ],
+  "unknownNationality": [
+   "CV Varun",
+   "V Suryavanshi",
+   "DA Payne",
+   "R Smaran",
+   "SR Dubey",
+   "T Dahiya"
+  ],
+  "missingSalary": 36,
+  "missingBirthDate": 118
+ }
+}

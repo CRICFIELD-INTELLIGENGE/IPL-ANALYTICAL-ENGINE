@@ -1,0 +1,3701 @@
+{
+  "players": {
+    "DA Warner": {
+      "file": "b0d0b4bfcfabacfb.json",
+      "balls": 4849,
+      "directionRecorded": 3437
+    },
+    "S Dhawan": {
+      "file": "7ae6679e3dd62c23.json",
+      "balls": 5483,
+      "directionRecorded": 3664
+    },
+    "MC Henriques": {
+      "file": "e07769bd8d24ad37.json",
+      "balls": 801,
+      "directionRecorded": 571
+    },
+    "Yuvraj Singh": {
+      "file": "2db08dc3baaa9005.json",
+      "balls": 2207,
+      "directionRecorded": 1345
+    },
+    "DJ Hooda": {
+      "file": "67d3857c6cbaf06d.json",
+      "balls": 1213,
+      "directionRecorded": 873
+    },
+    "BCJ Cutting": {
+      "file": "4035e336373dbd4f.json",
+      "balls": 146,
+      "directionRecorded": 98
+    },
+    "CH Gayle": {
+      "file": "a99c796a93bf532e.json",
+      "balls": 3516,
+      "directionRecorded": 2048
+    },
+    "Mandeep Singh": {
+      "file": "4abb821d8346bcec.json",
+      "balls": 1418,
+      "directionRecorded": 956
+    },
+    "TM Head": {
+      "file": "87160b215b3fb41c.json",
+      "balls": 959,
+      "directionRecorded": 649
+    },
+    "KM Jadhav": {
+      "file": "646dc41c9466de80.json",
+      "balls": 1012,
+      "directionRecorded": 669
+    },
+    "SR Watson": {
+      "file": "33b4f94e7ab8183d.json",
+      "balls": 2892,
+      "directionRecorded": 1858
+    },
+    "Sachin Baby": {
+      "file": "dbab2335d22f12ca.json",
+      "balls": 123,
+      "directionRecorded": 95
+    },
+    "STR Binny": {
+      "file": "57518e006cd78123.json",
+      "balls": 700,
+      "directionRecorded": 467
+    },
+    "S Aravind": {
+      "file": "717feb454c61197b.json",
+      "balls": 59,
+      "directionRecorded": 39
+    },
+    "YS Chahal": {
+      "file": "79dafa8fc3d67258.json",
+      "balls": 89,
+      "directionRecorded": 43
+    },
+    "TS Mills": {
+      "file": "9ac230125bc7a8f4.json",
+      "balls": 14,
+      "directionRecorded": 10
+    },
+    "A Choudhary": {
+      "file": "339b06a98e7fd81f.json",
+      "balls": 20,
+      "directionRecorded": 18
+    },
+    "PA Patel": {
+      "file": "a4507358f9e391e0.json",
+      "balls": 2442,
+      "directionRecorded": 1583
+    },
+    "JC Buttler": {
+      "file": "b1082d872027b0db.json",
+      "balls": 3208,
+      "directionRecorded": 2242
+    },
+    "RG Sharma": {
+      "file": "80e8766c58e62c1c.json",
+      "balls": 5659,
+      "directionRecorded": 3922
+    },
+    "N Rana": {
+      "file": "82ba46086a62185a.json",
+      "balls": 2314,
+      "directionRecorded": 1515
+    },
+    "AT Rayudu": {
+      "file": "d6c0501a36505caa.json",
+      "balls": 3490,
+      "directionRecorded": 2412
+    },
+    "KH Pandya": {
+      "file": "93281bf669a3a49b.json",
+      "balls": 1539,
+      "directionRecorded": 1016
+    },
+    "KA Pollard": {
+      "file": "3f4384c90223b35b.json",
+      "balls": 2447,
+      "directionRecorded": 1479
+    },
+    "HH Pandya": {
+      "file": "c0a43498977dcb5a.json",
+      "balls": 2116,
+      "directionRecorded": 1431
+    },
+    "TG Southee": {
+      "file": "a2f3a2fb02f6ef23.json",
+      "balls": 108,
+      "directionRecorded": 69
+    },
+    "AM Rahane": {
+      "file": "cf75f05449205266.json",
+      "balls": 4391,
+      "directionRecorded": 2972
+    },
+    "MA Agarwal": {
+      "file": "bda19a57e56a216c.json",
+      "balls": 2146,
+      "directionRecorded": 1457
+    },
+    "SPD Smith": {
+      "file": "38d0402362617f7f.json",
+      "balls": 1999,
+      "directionRecorded": 1410
+    },
+    "BA Stokes": {
+      "file": "f7ab4160779d3ccc.json",
+      "balls": 718,
+      "directionRecorded": 526
+    },
+    "MS Dhoni": {
+      "file": "e39a7b99616332d6.json",
+      "balls": 4101,
+      "directionRecorded": 2726
+    },
+    "JJ Roy": {
+      "file": "842d3e9698958856.json",
+      "balls": 460,
+      "directionRecorded": 304
+    },
+    "BB McCullum": {
+      "file": "9cba17821295af62.json",
+      "balls": 2272,
+      "directionRecorded": 1447
+    },
+    "SK Raina": {
+      "file": "85936177afa5f28a.json",
+      "balls": 4177,
+      "directionRecorded": 2823
+    },
+    "AJ Finch": {
+      "file": "08bce4b90e5ccb54.json",
+      "balls": 1696,
+      "directionRecorded": 1057
+    },
+    "KD Karthik": {
+      "file": "757a19d770ae8904.json",
+      "balls": 3687,
+      "directionRecorded": 2435
+    },
+    "G Gambhir": {
+      "file": "644631805636c85f.json",
+      "balls": 3524,
+      "directionRecorded": 2431
+    },
+    "CA Lynn": {
+      "file": "f0d9245f5d9635a2.json",
+      "balls": 974,
+      "directionRecorded": 624
+    },
+    "MK Tiwary": {
+      "file": "6b8393855890bf55.json",
+      "balls": 1489,
+      "directionRecorded": 996
+    },
+    "DT Christian": {
+      "file": "2c299afa047dff7a.json",
+      "balls": 408,
+      "directionRecorded": 262
+    },
+    "HM Amla": {
+      "file": "deb395cb14a3b228.json",
+      "balls": 418,
+      "directionRecorded": 313
+    },
+    "M Vohra": {
+      "file": "30d0eacaa85c0671.json",
+      "balls": 863,
+      "directionRecorded": 559
+    },
+    "WP Saha": {
+      "file": "871b4b0d2abfee1a.json",
+      "balls": 2368,
+      "directionRecorded": 1579
+    },
+    "AR Patel": {
+      "file": "10ba7f58a6fed155.json",
+      "balls": 1635,
+      "directionRecorded": 1122
+    },
+    "GJ Maxwell": {
+      "file": "1f01ae0420ce25ad.json",
+      "balls": 1896,
+      "directionRecorded": 1255
+    },
+    "DA Miller": {
+      "file": "8323f145a504c072.json",
+      "balls": 2441,
+      "directionRecorded": 1710
+    },
+    "Vishnu Vinod": {
+      "file": "d4e02d15035d265c.json",
+      "balls": 66,
+      "directionRecorded": 43
+    },
+    "Iqbal Abdulla": {
+      "file": "ab55d508732338e9.json",
+      "balls": 86,
+      "directionRecorded": 56
+    },
+    "P Negi": {
+      "file": "896680d64334fa52.json",
+      "balls": 301,
+      "directionRecorded": 196
+    },
+    "AP Tare": {
+      "file": "a2495efcfd1f0ede.json",
+      "balls": 285,
+      "directionRecorded": 174
+    },
+    "SW Billings": {
+      "file": "ec521e83c4c07bae.json",
+      "balls": 399,
+      "directionRecorded": 269
+    },
+    "KK Nair": {
+      "file": "f5b8bb5467b5d99c.json",
+      "balls": 1332,
+      "directionRecorded": 944
+    },
+    "SV Samson": {
+      "file": "8d3b1681157e3d56.json",
+      "balls": 3770,
+      "directionRecorded": 2686
+    },
+    "RR Pant": {
+      "file": "3f97f5f41e041d14.json",
+      "balls": 2739,
+      "directionRecorded": 1868
+    },
+    "CH Morris": {
+      "file": "96320305e187407b.json",
+      "balls": 413,
+      "directionRecorded": 294
+    },
+    "CR Brathwaite": {
+      "file": "81b0ab8990ef11fd.json",
+      "balls": 120,
+      "directionRecorded": 70
+    },
+    "PJ Cummins": {
+      "file": "112dca0d7d3a5640.json",
+      "balls": 437,
+      "directionRecorded": 267
+    },
+    "A Mishra": {
+      "file": "ff6d0a56f86a6b7e.json",
+      "balls": 440,
+      "directionRecorded": 272
+    },
+    "S Nadeem": {
+      "file": "82b3ffdb51a70ecf.json",
+      "balls": 88,
+      "directionRecorded": 52
+    },
+    "Z Khan": {
+      "file": "04ca8876d2c78177.json",
+      "balls": 141,
+      "directionRecorded": 70
+    },
+    "DR Smith": {
+      "file": "16dea3a02034fc8f.json",
+      "balls": 1803,
+      "directionRecorded": 1111
+    },
+    "DS Kulkarni": {
+      "file": "7bc08c6a298ad7e6.json",
+      "balls": 113,
+      "directionRecorded": 63
+    },
+    "P Kumar": {
+      "file": "7d09132399237ebe.json",
+      "balls": 323,
+      "directionRecorded": 184
+    },
+    "Basil Thampi": {
+      "file": "15df9deb90bc25ea.json",
+      "balls": 37,
+      "directionRecorded": 21
+    },
+    "RV Uthappa": {
+      "file": "53da08ba1dc5ce42.json",
+      "balls": 3927,
+      "directionRecorded": 2565
+    },
+    "MK Pandey": {
+      "file": "af363a7fd77a9efe.json",
+      "balls": 3406,
+      "directionRecorded": 2380
+    },
+    "YK Pathan": {
+      "file": "08bb5a40050aeb00.json",
+      "balls": 2334,
+      "directionRecorded": 1516
+    },
+    "SA Yadav": {
+      "file": "1a1047dc80c55647.json",
+      "balls": 3154,
+      "directionRecorded": 2278
+    },
+    "CR Woakes": {
+      "file": "ef4353e825be7040.json",
+      "balls": 77,
+      "directionRecorded": 56
+    },
+    "SP Narine": {
+      "file": "5f6a154d6c8b5fb3.json",
+      "balls": 1178,
+      "directionRecorded": 674
+    },
+    "Harbhajan Singh": {
+      "file": "a25a522ce7a2f65b.json",
+      "balls": 636,
+      "directionRecorded": 390
+    },
+    "AB de Villiers": {
+      "file": "693192424a2cb991.json",
+      "balls": 3487,
+      "directionRecorded": 2437
+    },
+    "CJ Anderson": {
+      "file": "44a0e57bddde2107.json",
+      "balls": 436,
+      "directionRecorded": 270
+    },
+    "F du Plessis": {
+      "file": "cbd5e433b006d723.json",
+      "balls": 3605,
+      "directionRecorded": 2497
+    },
+    "RA Tripathi": {
+      "file": "f1cce0e05cbd7726.json",
+      "balls": 1707,
+      "directionRecorded": 1173
+    },
+    "R Bhatia": {
+      "file": "371ce44c4df6e41e.json",
+      "balls": 290,
+      "directionRecorded": 199
+    },
+    "DL Chahar": {
+      "file": "8ea921e0d0059ba8.json",
+      "balls": 105,
+      "directionRecorded": 70
+    },
+    "A Zampa": {
+      "file": "07bdb80bfef350b8.json",
+      "balls": 25,
+      "directionRecorded": 14
+    },
+    "AB Dinda": {
+      "file": "9b06c81a79ae6742.json",
+      "balls": 50,
+      "directionRecorded": 22
+    },
+    "Imran Tahir": {
+      "file": "cdca32407c6e8d28.json",
+      "balls": 37,
+      "directionRecorded": 19
+    },
+    "NV Ojha": {
+      "file": "b59b0c21ace17737.json",
+      "balls": 1360,
+      "directionRecorded": 814
+    },
+    "V Shankar": {
+      "file": "3c32224bfae6ab9f.json",
+      "balls": 985,
+      "directionRecorded": 679
+    },
+    "Rashid Khan": {
+      "file": "6636e80e2a601be9.json",
+      "balls": 432,
+      "directionRecorded": 260
+    },
+    "B Kumar": {
+      "file": "4a141451af3e8ce7.json",
+      "balls": 392,
+      "directionRecorded": 234
+    },
+    "MP Stoinis": {
+      "file": "eb43ce2e3fd23d49.json",
+      "balls": 1588,
+      "directionRecorded": 1097
+    },
+    "MM Sharma": {
+      "file": "44db0b903eb9654d.json",
+      "balls": 140,
+      "directionRecorded": 89
+    },
+    "VR Aaron": {
+      "file": "92305012452adca8.json",
+      "balls": 73,
+      "directionRecorded": 38
+    },
+    "V Kohli": {
+      "file": "689fe53199d5d13c.json",
+      "balls": 7127,
+      "directionRecorded": 5072
+    },
+    "MJ McClenaghan": {
+      "file": "d65a10e078b7ffd4.json",
+      "balls": 73,
+      "directionRecorded": 46
+    },
+    "Ankit Sharma": {
+      "file": "02cb3548876bc123.json",
+      "balls": 69,
+      "directionRecorded": 49
+    },
+    "SN Thakur": {
+      "file": "6948f02d06791b04.json",
+      "balls": 276,
+      "directionRecorded": 160
+    },
+    "RD Chahar": {
+      "file": "5f555d28af79da20.json",
+      "balls": 127,
+      "directionRecorded": 77
+    },
+    "LH Ferguson": {
+      "file": "717af9ff4cf0d094.json",
+      "balls": 49,
+      "directionRecorded": 34
+    },
+    "C de Grandhomme": {
+      "file": "2f5e9b74607f325c.json",
+      "balls": 229,
+      "directionRecorded": 153
+    },
+    "Bipul Sharma": {
+      "file": "8b76eebaefe44a09.json",
+      "balls": 124,
+      "directionRecorded": 81
+    },
+    "SS Iyer": {
+      "file": "e522639db91fd2e1.json",
+      "balls": 3211,
+      "directionRecorded": 2241
+    },
+    "EJG Morgan": {
+      "file": "707b21d5b782ead6.json",
+      "balls": 1181,
+      "directionRecorded": 739
+    },
+    "KC Cariappa": {
+      "file": "e1e0dd9ca7b46fbd.json",
+      "balls": 21,
+      "directionRecorded": 13
+    },
+    "Sandeep Sharma": {
+      "file": "09563f55909bf38f.json",
+      "balls": 79,
+      "directionRecorded": 45
+    },
+    "Ishan Kishan": {
+      "file": "310d8ad5225be0e5.json",
+      "balls": 2579,
+      "directionRecorded": 1752
+    },
+    "JD Unadkat": {
+      "file": "2ea22e0ffbcbb983.json",
+      "balls": 173,
+      "directionRecorded": 106
+    },
+    "AF Milne": {
+      "file": "dc340b7ad8595f8b.json",
+      "balls": 33,
+      "directionRecorded": 19
+    },
+    "S Badree": {
+      "file": "2e1eaf87b4b236b2.json",
+      "balls": 25,
+      "directionRecorded": 12
+    },
+    "AD Mathews": {
+      "file": "632043c242837615.json",
+      "balls": 599,
+      "directionRecorded": 389
+    },
+    "Mohammed Shami": {
+      "file": "df1f91aac855a4d0.json",
+      "balls": 116,
+      "directionRecorded": 65
+    },
+    "Mohammad Nabi": {
+      "file": "bbc7f0435e06e3cf.json",
+      "balls": 157,
+      "directionRecorded": 113
+    },
+    "I Sharma": {
+      "file": "262a043367b70dc8.json",
+      "balls": 71,
+      "directionRecorded": 34
+    },
+    "RA Jadeja": {
+      "file": "760706e67829128b.json",
+      "balls": 2816,
+      "directionRecorded": 1890
+    },
+    "AJ Tye": {
+      "file": "89f5ed17b6525295.json",
+      "balls": 79,
+      "directionRecorded": 46
+    },
+    "KS Williamson": {
+      "file": "864bbe1824c9c852.json",
+      "balls": 1734,
+      "directionRecorded": 1239
+    },
+    "SE Marsh": {
+      "file": "532634bb82bc0b61.json",
+      "balls": 1913,
+      "directionRecorded": 1248
+    },
+    "Shakib Al Hasan": {
+      "file": "8fc0e7e130986e6e.json",
+      "balls": 665,
+      "directionRecorded": 445
+    },
+    "JP Faulkner": {
+      "file": "5c7f9a028f33e5de.json",
+      "balls": 406,
+      "directionRecorded": 285
+    },
+    "MG Johnson": {
+      "file": "13320ac27f0cab84.json",
+      "balls": 168,
+      "directionRecorded": 78
+    },
+    "K Rabada": {
+      "file": "9039c9b6e88b4121.json",
+      "balls": 256,
+      "directionRecorded": 131
+    },
+    "AD Nath": {
+      "file": "4c31911f59677d76.json",
+      "balls": 99,
+      "directionRecorded": 59
+    },
+    "NM Coulter-Nile": {
+      "file": "6665c3e4644c188a.json",
+      "balls": 75,
+      "directionRecorded": 34
+    },
+    "Kuldeep Yadav": {
+      "file": "ac5c16f6c91bbb6d.json",
+      "balls": 263,
+      "directionRecorded": 134
+    },
+    "UT Yadav": {
+      "file": "f77f5c50d9a759c9.json",
+      "balls": 211,
+      "directionRecorded": 119
+    },
+    "Washington Sundar": {
+      "file": "06501b4741ced0ff.json",
+      "balls": 689,
+      "directionRecorded": 493
+    },
+    "KV Sharma": {
+      "file": "f957b7a8b85889b7.json",
+      "balls": 307,
+      "directionRecorded": 181
+    },
+    "DM Bravo": {
+      "file": "eff4db03c4bb53a2.json",
+      "balls": 5,
+      "directionRecorded": 3
+    },
+    "AR Bawne": {
+      "file": "9ac35755116baf2e.json",
+      "balls": 12,
+      "directionRecorded": 8
+    },
+    "SP Jackson": {
+      "file": "d8e532fc3a1a7111.json",
+      "balls": 57,
+      "directionRecorded": 40
+    },
+    "MJ Guptill": {
+      "file": "f46e18d95d831b41.json",
+      "balls": 197,
+      "directionRecorded": 133
+    },
+    "Anureet Singh": {
+      "file": "77ff1edf94f2f00c.json",
+      "balls": 47,
+      "directionRecorded": 26
+    },
+    "IK Pathan": {
+      "file": "85bfcdd9166c8b87.json",
+      "balls": 985,
+      "directionRecorded": 600
+    },
+    "Ankit Soni": {
+      "file": "89f73b3ba93908b5.json",
+      "balls": 9,
+      "directionRecorded": 3
+    },
+    "JJ Bumrah": {
+      "file": "188b933c65480653.json",
+      "balls": 89,
+      "directionRecorded": 51
+    },
+    "SL Malinga": {
+      "file": "26dd75b6e312e777.json",
+      "balls": 103,
+      "directionRecorded": 56
+    },
+    "PJ Sangwan": {
+      "file": "39a4debdefe4c951.json",
+      "balls": 47,
+      "directionRecorded": 24
+    },
+    "S Kaul": {
+      "file": "beec6835e7b435e2.json",
+      "balls": 36,
+      "directionRecorded": 19
+    },
+    "LMP Simmons": {
+      "file": "b62e1a87525e19d2.json",
+      "balls": 878,
+      "directionRecorded": 593
+    },
+    "MN Samuels": {
+      "file": "c8d9cf8db18e350d.json",
+      "balls": 174,
+      "directionRecorded": 92
+    },
+    "Swapnil Singh": {
+      "file": "4e655fc69b7fbda5.json",
+      "balls": 46,
+      "directionRecorded": 28
+    },
+    "R Tewatia": {
+      "file": "b970d05049f797a2.json",
+      "balls": 994,
+      "directionRecorded": 649
+    },
+    "MM Patel": {
+      "file": "0cbd5514fa146909.json",
+      "balls": 41,
+      "directionRecorded": 25
+    },
+    "SS Tiwary": {
+      "file": "ac0227972fc8ef28.json",
+      "balls": 1291,
+      "directionRecorded": 874
+    },
+    "TA Boult": {
+      "file": "9eec828ed85878b9.json",
+      "balls": 90,
+      "directionRecorded": 56
+    },
+    "CJ Jordan": {
+      "file": "282fa1b507e42724.json",
+      "balls": 81,
+      "directionRecorded": 45
+    },
+    "IR Jaggi": {
+      "file": "7b11733a3bf1e403.json",
+      "balls": 100,
+      "directionRecorded": 69
+    },
+    "PP Chawla": {
+      "file": "117d7c1f494e5323.json",
+      "balls": 580,
+      "directionRecorded": 343
+    },
+    "AS Rajpoot": {
+      "file": "f3ee08f8b93eea79.json",
+      "balls": 41,
+      "directionRecorded": 20
+    },
+    "E Lewis": {
+      "file": "e2d5cf21542ea242.json",
+      "balls": 499,
+      "directionRecorded": 332
+    },
+    "DJ Bravo": {
+      "file": "0bc51c74b1a0234d.json",
+      "balls": 1247,
+      "directionRecorded": 825
+    },
+    "MA Wood": {
+      "file": "dc1e782b8acb7cec.json",
+      "balls": 10,
+      "directionRecorded": 4
+    },
+    "C Munro": {
+      "file": "680a97c84b8d12f0.json",
+      "balls": 144,
+      "directionRecorded": 84
+    },
+    "KL Rahul": {
+      "file": "f61d9cb344f5c0b8.json",
+      "balls": 4302,
+      "directionRecorded": 3099
+    },
+    "Q de Kock": {
+      "file": "44b1bec9b0efa49f.json",
+      "balls": 2618,
+      "directionRecorded": 1767
+    },
+    "SN Khan": {
+      "file": "44543612532f7a28.json",
+      "balls": 556,
+      "directionRecorded": 382
+    },
+    "RK Singh": {
+      "file": "542e033e063bbe2d.json",
+      "balls": 1005,
+      "directionRecorded": 653
+    },
+    "AD Russell": {
+      "file": "04d310024665c532.json",
+      "balls": 1626,
+      "directionRecorded": 905
+    },
+    "R Vinay Kumar": {
+      "file": "e4c624badd033e36.json",
+      "balls": 289,
+      "directionRecorded": 175
+    },
+    "DJM Short": {
+      "file": "125086aadb15dc7f.json",
+      "balls": 102,
+      "directionRecorded": 67
+    },
+    "K Gowtham": {
+      "file": "f4d392633dac4ca4.json",
+      "balls": 159,
+      "directionRecorded": 106
+    },
+    "S Gopal": {
+      "file": "cccd915e85266a13.json",
+      "balls": 173,
+      "directionRecorded": 115
+    },
+    "B Laughlin": {
+      "file": "6bc1a8563ca55531.json",
+      "balls": 13,
+      "directionRecorded": 10
+    },
+    "TK Curran": {
+      "file": "5aa9d23ddc2b38bb.json",
+      "balls": 108,
+      "directionRecorded": 73
+    },
+    "M Markande": {
+      "file": "9220ba880195f369.json",
+      "balls": 44,
+      "directionRecorded": 29
+    },
+    "B Stanlake": {
+      "file": "154a15a7aba974eb.json",
+      "balls": 2,
+      "directionRecorded": 2
+    },
+    "R Ashwin": {
+      "file": "79ebe611aa4c4867.json",
+      "balls": 728,
+      "directionRecorded": 513
+    },
+    "Mujeeb Ur Rahman": {
+      "file": "cf2bbf7fab27f66f.json",
+      "balls": 15,
+      "directionRecorded": 10
+    },
+    "A Dananjaya": {
+      "file": "77e50df441ccb934.json",
+      "balls": 5,
+      "directionRecorded": 3
+    },
+    "Shubman Gill": {
+      "file": "705510d588040cc9.json",
+      "balls": 3339,
+      "directionRecorded": 2418
+    },
+    "Shivam Mavi": {
+      "file": "4f59b5249321438a.json",
+      "balls": 58,
+      "directionRecorded": 39
+    },
+    "M Vijay": {
+      "file": "c23d5a900e8c20d2.json",
+      "balls": 2208,
+      "directionRecorded": 1439
+    },
+    "Mohammed Siraj": {
+      "file": "d0d031656ce9a17a.json",
+      "balls": 144,
+      "directionRecorded": 78
+    },
+    "H Klaasen": {
+      "file": "3666799cbfd073d6.json",
+      "balls": 1320,
+      "directionRecorded": 956
+    },
+    "RK Bhui": {
+      "file": "9448c6647e3ec80b.json",
+      "balls": 27,
+      "directionRecorded": 13
+    },
+    "JC Archer": {
+      "file": "090e07c040618378.json",
+      "balls": 232,
+      "directionRecorded": 132
+    },
+    "BB Sran": {
+      "file": "0decbca74ce411b1.json",
+      "balls": 14,
+      "directionRecorded": 10
+    },
+    "PP Shaw": {
+      "file": "bdd020a10ca9ab8d.json",
+      "balls": 1321,
+      "directionRecorded": 877
+    },
+    "LE Plunkett": {
+      "file": "630b8d86b4443e02.json",
+      "balls": 3,
+      "directionRecorded": 2
+    },
+    "Mustafizur Rahman": {
+      "file": "c4182b2fa5ba0e15.json",
+      "balls": 24,
+      "directionRecorded": 12
+    },
+    "AD Hales": {
+      "file": "0c42789b889aefbc.json",
+      "balls": 119,
+      "directionRecorded": 90
+    },
+    "MK Lomror": {
+      "file": "0b70372ee157272c.json",
+      "balls": 389,
+      "directionRecorded": 253
+    },
+    "JP Duminy": {
+      "file": "d3579ce1385b8d46.json",
+      "balls": 1680,
+      "directionRecorded": 1152
+    },
+    "M Ashwin": {
+      "file": "c96b8e2cef481510.json",
+      "balls": 50,
+      "directionRecorded": 32
+    },
+    "DR Shorey": {
+      "file": "ad4c80bbd403c853.json",
+      "balls": 20,
+      "directionRecorded": 13
+    },
+    "MM Ali": {
+      "file": "fedd7eba53d6d823.json",
+      "balls": 865,
+      "directionRecorded": 567
+    },
+    "M Prasidh Krishna": {
+      "file": "37d13cb0628363f0.json",
+      "balls": 31,
+      "directionRecorded": 18
+    },
+    "HV Patel": {
+      "file": "97d69da4578d4975.json",
+      "balls": 250,
+      "directionRecorded": 163
+    },
+    "P Chopra": {
+      "file": "4e9a77a37129d125.json",
+      "balls": 6,
+      "directionRecorded": 4
+    },
+    "JPR Scantlebury-Searles": {
+      "file": "9f751a5f1990c8bd.json",
+      "balls": 6,
+      "directionRecorded": 5
+    },
+    "Abhishek Sharma": {
+      "file": "d59761ec1a96c985.json",
+      "balls": 1471,
+      "directionRecorded": 990
+    },
+    "IS Sodhi": {
+      "file": "9f03e1b5cd098e72.json",
+      "balls": 18,
+      "directionRecorded": 11
+    },
+    "SP Goswami": {
+      "file": "54e6ff077ca308ea.json",
+      "balls": 307,
+      "directionRecorded": 191
+    },
+    "SO Hetmyer": {
+      "file": "4d6fc53989c5a5a3.json",
+      "balls": 1110,
+      "directionRecorded": 732
+    },
+    "S Dube": {
+      "file": "600491a28eac26e9.json",
+      "balls": 1555,
+      "directionRecorded": 1053
+    },
+    "NA Saini": {
+      "file": "1464b89ecda22e67.json",
+      "balls": 36,
+      "directionRecorded": 18
+    },
+    "JM Bairstow": {
+      "file": "af0e25e5e83715fb.json",
+      "balls": 1181,
+      "directionRecorded": 749
+    },
+    "CA Ingram": {
+      "file": "9ae9c6c370823ce2.json",
+      "balls": 183,
+      "directionRecorded": 123
+    },
+    "KMA Paul": {
+      "file": "4621ef9c26f21f62.json",
+      "balls": 26,
+      "directionRecorded": 11
+    },
+    "Rasikh Salam": {
+      "file": "b9f00b5114428d8a.json",
+      "balls": 43,
+      "directionRecorded": 27
+    },
+    "N Pooran": {
+      "file": "55ac1f06177b1e7c.json",
+      "balls": 1629,
+      "directionRecorded": 1035
+    },
+    "NS Naik": {
+      "file": "fca6e889fd257e8e.json",
+      "balls": 53,
+      "directionRecorded": 32
+    },
+    "GH Vihari": {
+      "file": "295e7de908f043ab.json",
+      "balls": 331,
+      "directionRecorded": 213
+    },
+    "P Ray Barman": {
+      "file": "754dfd0b7bceed69.json",
+      "balls": 25,
+      "directionRecorded": 18
+    },
+    "SM Curran": {
+      "file": "5814ae362c021228.json",
+      "balls": 761,
+      "directionRecorded": 516
+    },
+    "GC Viljoen": {
+      "file": "073a6f2cccdead97.json",
+      "balls": 7,
+      "directionRecorded": 3
+    },
+    "Avesh Khan": {
+      "file": "b4fc30c05b021841.json",
+      "balls": 46,
+      "directionRecorded": 22
+    },
+    "S Lamichhane": {
+      "file": "c4a41016352fd69e.json",
+      "balls": 1,
+      "directionRecorded": 0
+    },
+    "HF Gurney": {
+      "file": "512772ca043b4ae0.json",
+      "balls": 5,
+      "directionRecorded": 2
+    },
+    "SD Lad": {
+      "file": "3d8b38b523224ac2.json",
+      "balls": 13,
+      "directionRecorded": 7
+    },
+    "AS Joseph": {
+      "file": "0c56e98b2670484d.json",
+      "balls": 32,
+      "directionRecorded": 20
+    },
+    "R Parag": {
+      "file": "94ad8dd53789aa7b.json",
+      "balls": 1359,
+      "directionRecorded": 917
+    },
+    "MJ Santner": {
+      "file": "62a2f6e4300cac2c.json",
+      "balls": 132,
+      "directionRecorded": 86
+    },
+    "JL Denly": {
+      "file": "463635e9cd524f49.json",
+      "balls": 1,
+      "directionRecorded": 0
+    },
+    "LS Livingstone": {
+      "file": "c949818250c016d4.json",
+      "balls": 725,
+      "directionRecorded": 474
+    },
+    "KK Ahmed": {
+      "file": "394c968ea41614a9.json",
+      "balls": 9,
+      "directionRecorded": 5
+    },
+    "AJ Turner": {
+      "file": "4822b077d4c9dd75.json",
+      "balls": 31,
+      "directionRecorded": 20
+    },
+    "Harpreet Brar": {
+      "file": "2e31d00584406c04.json",
+      "balls": 217,
+      "directionRecorded": 131
+    },
+    "SE Rutherford": {
+      "file": "4cd55c51784f04ab.json",
+      "balls": 393,
+      "directionRecorded": 239
+    },
+    "Y Prithvi Raj": {
+      "file": "a3c927cf0711e2e0.json",
+      "balls": 1,
+      "directionRecorded": 0
+    },
+    "Gurkeerat Singh": {
+      "file": "001bd80394211aad.json",
+      "balls": 436,
+      "directionRecorded": 291
+    },
+    "P Simran Singh": {
+      "file": "45c92a3e33ad701c.json",
+      "balls": 1220,
+      "directionRecorded": 804
+    },
+    "J Suchith": {
+      "file": "e7ca6aa8a6a2bed0.json",
+      "balls": 62,
+      "directionRecorded": 35
+    },
+    "JL Pattinson": {
+      "file": "764e91f35900465a.json",
+      "balls": 13,
+      "directionRecorded": 8
+    },
+    "A Nortje": {
+      "file": "5bf5c4ef9fb79b10.json",
+      "balls": 52,
+      "directionRecorded": 31
+    },
+    "T Banton": {
+      "file": "addd38d1590b6d82.json",
+      "balls": 22,
+      "directionRecorded": 11
+    },
+    "D Padikkal": {
+      "file": "fc690d3b70ce311f.json",
+      "balls": 1779,
+      "directionRecorded": 1144
+    },
+    "YBK Jaiswal": {
+      "file": "a42a94d67fe9ab50.json",
+      "balls": 1750,
+      "directionRecorded": 1205
+    },
+    "RD Gaikwad": {
+      "file": "4be678ff613f1798.json",
+      "balls": 2154,
+      "directionRecorded": 1554
+    },
+    "TU Deshpande": {
+      "file": "68bab273a6eafe99.json",
+      "balls": 38,
+      "directionRecorded": 23
+    },
+    "Abdul Samad": {
+      "file": "b7aaed194a346ee3.json",
+      "balls": 598,
+      "directionRecorded": 381
+    },
+    "JO Holder": {
+      "file": "75febd19fd410c59.json",
+      "balls": 272,
+      "directionRecorded": 177
+    },
+    "PK Garg": {
+      "file": "e30023dca9ef33a3.json",
+      "balls": 247,
+      "directionRecorded": 166
+    },
+    "JR Philippe": {
+      "file": "5fcd387ca0d72e50.json",
+      "balls": 80,
+      "directionRecorded": 47
+    },
+    "Kartik Tyagi": {
+      "file": "1cf0b02b1a77209a.json",
+      "balls": 26,
+      "directionRecorded": 13
+    },
+    "KL Nagarkoti": {
+      "file": "6b82791bfb2c32f2.json",
+      "balls": 34,
+      "directionRecorded": 12
+    },
+    "CV Varun": {
+      "file": "8ca6c65da3a9e840.json",
+      "balls": 56,
+      "directionRecorded": 30
+    },
+    "I Udana": {
+      "file": "4b305d503bf339c9.json",
+      "balls": 11,
+      "directionRecorded": 8
+    },
+    "JDS Neesham": {
+      "file": "ce3fd00fc70e3e83.json",
+      "balls": 93,
+      "directionRecorded": 62
+    },
+    "Ravi Bishnoi": {
+      "file": "18d6cb8ba14ffb88.json",
+      "balls": 71,
+      "directionRecorded": 36
+    },
+    "Shahbaz Ahmed": {
+      "file": "e430a3af79704dd0.json",
+      "balls": 516,
+      "directionRecorded": 352
+    },
+    "AT Carey": {
+      "file": "2dd9444b90ecd4ac.json",
+      "balls": 29,
+      "directionRecorded": 21
+    },
+    "DW Steyn": {
+      "file": "793b040970bcfceb.json",
+      "balls": 163,
+      "directionRecorded": 88
+    },
+    "N Jagadeesan": {
+      "file": "7724f7c5ad8c5a61.json",
+      "balls": 155,
+      "directionRecorded": 95
+    },
+    "T Natarajan": {
+      "file": "d186a068c28d924c.json",
+      "balls": 7,
+      "directionRecorded": 4
+    },
+    "MR Marsh": {
+      "file": "e92de3a9083c9fca.json",
+      "balls": 1291,
+      "directionRecorded": 834
+    },
+    "P Dubey": {
+      "file": "b79ac58b1fd1674d.json",
+      "balls": 33,
+      "directionRecorded": 18
+    },
+    "SS Cottrell": {
+      "file": "4361f8ea9e8d5df9.json",
+      "balls": 2,
+      "directionRecorded": 0
+    },
+    "Arshdeep Singh": {
+      "file": "0f9d2608a9aba19d.json",
+      "balls": 49,
+      "directionRecorded": 25
+    },
+    "DR Sams": {
+      "file": "7c313b8b583eabf1.json",
+      "balls": 48,
+      "directionRecorded": 26
+    },
+    "M Jansen": {
+      "file": "fa5ea701f4544dcd.json",
+      "balls": 186,
+      "directionRecorded": 116
+    },
+    "RM Patidar": {
+      "file": "12078705727086e8.json",
+      "balls": 1035,
+      "directionRecorded": 697
+    },
+    "KA Jamieson": {
+      "file": "3f9a372391f58966.json",
+      "balls": 74,
+      "directionRecorded": 42
+    },
+    "M Shahrukh Khan": {
+      "file": "15a6f9524e916e86.json",
+      "balls": 551,
+      "directionRecorded": 346
+    },
+    "JA Richardson": {
+      "file": "212e9eb6d4577d32.json",
+      "balls": 27,
+      "directionRecorded": 18
+    },
+    "Lalit Yadav": {
+      "file": "ccbe60fd9a6b6861.json",
+      "balls": 301,
+      "directionRecorded": 194
+    },
+    "Virat Singh": {
+      "file": "48a0ad9aa2bfe63c.json",
+      "balls": 26,
+      "directionRecorded": 13
+    },
+    "J Yadav": {
+      "file": "19fa7ed9891680a8.json",
+      "balls": 38,
+      "directionRecorded": 29
+    },
+    "FA Allen": {
+      "file": "ecbdb4bb880567e2.json",
+      "balls": 19,
+      "directionRecorded": 9
+    },
+    "C Sakariya": {
+      "file": "53555cd1a68c2786.json",
+      "balls": 31,
+      "directionRecorded": 13
+    },
+    "DJ Malan": {
+      "file": "bc778ad18c79f358.json",
+      "balls": 26,
+      "directionRecorded": 22
+    },
+    "KS Bharat": {
+      "file": "916a7b654d8914ed.json",
+      "balls": 168,
+      "directionRecorded": 119
+    },
+    "PWH de Silva": {
+      "file": "e65ab5250e90abae.json",
+      "balls": 95,
+      "directionRecorded": 52
+    },
+    "VR Iyer": {
+      "file": "973a26727157d7f1.json",
+      "balls": 1223,
+      "directionRecorded": 850
+    },
+    "GD Phillips": {
+      "file": "c1b553187f24e8e2.json",
+      "balls": 112,
+      "directionRecorded": 72
+    },
+    "GHS Garton": {
+      "file": "1a9bf4b39adcfbb8.json",
+      "balls": 4,
+      "directionRecorded": 3
+    },
+    "AK Markram": {
+      "file": "3bea175fe261e26e.json",
+      "balls": 1264,
+      "directionRecorded": 926
+    },
+    "K Yadav": {
+      "file": "74a453218900314d.json",
+      "balls": 4,
+      "directionRecorded": 3
+    },
+    "T Shamsi": {
+      "file": "5ee00bed1bc2beb2.json",
+      "balls": 4,
+      "directionRecorded": 3
+    },
+    "NT Ellis": {
+      "file": "6c742ba07eb0457d.json",
+      "balls": 26,
+      "directionRecorded": 17
+    },
+    "RV Patel": {
+      "file": "5a3d96bfb742dd4d.json",
+      "balls": 76,
+      "directionRecorded": 58
+    },
+    "TL Seifert": {
+      "file": "1bb41c14b76e5b6a.json",
+      "balls": 44,
+      "directionRecorded": 28
+    },
+    "Anmolpreet Singh": {
+      "file": "6e14296f80d7fa4c.json",
+      "balls": 117,
+      "directionRecorded": 75
+    },
+    "Anuj Rawat": {
+      "file": "02c1c6aeed59985d.json",
+      "balls": 276,
+      "directionRecorded": 166
+    },
+    "TH David": {
+      "file": "62a1ec6ac64e9f68.json",
+      "balls": 697,
+      "directionRecorded": 493
+    },
+    "DP Conway": {
+      "file": "06b6d1474d483de8.json",
+      "balls": 794,
+      "directionRecorded": 500
+    },
+    "Tilak Varma": {
+      "file": "d6eee8c4701abde2.json",
+      "balls": 1344,
+      "directionRecorded": 916
+    },
+    "R Powell": {
+      "file": "5c5fb3f6ef17de1a.json",
+      "balls": 409,
+      "directionRecorded": 245
+    },
+    "PBB Rajapaksa": {
+      "file": "12ee2ef0bfb7848f.json",
+      "balls": 201,
+      "directionRecorded": 140
+    },
+    "RA Bawa": {
+      "file": "d16c08175bdc7bb0.json",
+      "balls": 32,
+      "directionRecorded": 19
+    },
+    "OF Smith": {
+      "file": "b7eee9e0c7287e90.json",
+      "balls": 50,
+      "directionRecorded": 30
+    },
+    "A Badoni": {
+      "file": "c24a43f6b4658a7c.json",
+      "balls": 885,
+      "directionRecorded": 603
+    },
+    "PVD Chameera": {
+      "file": "e453b724b9a4fa3e.json",
+      "balls": 49,
+      "directionRecorded": 28
+    },
+    "MS Wade": {
+      "file": "202a602632e06938.json",
+      "balls": 185,
+      "directionRecorded": 121
+    },
+    "A Manohar": {
+      "file": "2db16aae27ebd75e.json",
+      "balls": 243,
+      "directionRecorded": 156
+    },
+    "R Shepherd": {
+      "file": "a25778586c4059c2.json",
+      "balls": 161,
+      "directionRecorded": 104
+    },
+    "DJ Willey": {
+      "file": "0639667e39f86a1c.json",
+      "balls": 64,
+      "directionRecorded": 42
+    },
+    "D Pretorius": {
+      "file": "2bd09f49f3fda867.json",
+      "balls": 28,
+      "directionRecorded": 20
+    },
+    "Navdeep Saini": {
+      "file": "be68fd8408753cd4.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "JM Sharma": {
+      "file": "e14c6b3a22dc535a.json",
+      "balls": 752,
+      "directionRecorded": 483
+    },
+    "VG Arora": {
+      "file": "ee62cef2cb7e1221.json",
+      "balls": 28,
+      "directionRecorded": 13
+    },
+    "Mukesh Choudhary": {
+      "file": "88c0b5a49a19eca8.json",
+      "balls": 8,
+      "directionRecorded": 5
+    },
+    "Umran Malik": {
+      "file": "899697c01b065f14.json",
+      "balls": 16,
+      "directionRecorded": 10
+    },
+    "D Brevis": {
+      "file": "758cc6a8a3919119.json",
+      "balls": 432,
+      "directionRecorded": 290
+    },
+    "B Sai Sudharsan": {
+      "file": "4185a24b0a56158c.json",
+      "balls": 1760,
+      "directionRecorded": 1224
+    },
+    "Ramandeep Singh": {
+      "file": "496bded699ede138.json",
+      "balls": 212,
+      "directionRecorded": 142
+    },
+    "HE van der Dussen": {
+      "file": "58570624b30a88dc.json",
+      "balls": 25,
+      "directionRecorded": 16
+    },
+    "SS Prabhudessai": {
+      "file": "2e700e0d1e803766.json",
+      "balls": 113,
+      "directionRecorded": 67
+    },
+    "Akash Deep": {
+      "file": "9cfb50a26c58cb30.json",
+      "balls": 14,
+      "directionRecorded": 6
+    },
+    "JR Hazlewood": {
+      "file": "3a9a0fe826296463.json",
+      "balls": 31,
+      "directionRecorded": 17
+    },
+    "KR Sen": {
+      "file": "e65727d4760a5024.json",
+      "balls": 3,
+      "directionRecorded": 0
+    },
+    "Aman Hakim Khan": {
+      "file": "1619192957b9ab65.json",
+      "balls": 109,
+      "directionRecorded": 71
+    },
+    "HR Shokeen": {
+      "file": "958f26df6bf32422.json",
+      "balls": 67,
+      "directionRecorded": 39
+    },
+    "Yash Dayal": {
+      "file": "bb0c9c7c240d0017.json",
+      "balls": 9,
+      "directionRecorded": 4
+    },
+    "DJ Mitchell": {
+      "file": "6b2bd5dfcfd0cca8.json",
+      "balls": 274,
+      "directionRecorded": 192
+    },
+    "Shashank Singh": {
+      "file": "b0083513bb6a37cd.json",
+      "balls": 588,
+      "directionRecorded": 386
+    },
+    "B Indrajith": {
+      "file": "0f908c6c7170d329.json",
+      "balls": 31,
+      "directionRecorded": 20
+    },
+    "Harshit Rana": {
+      "file": "cf79ba9e27894a12.json",
+      "balls": 57,
+      "directionRecorded": 25
+    },
+    "Mohsin Khan": {
+      "file": "0af3ff5eeb54a5e9.json",
+      "balls": 31,
+      "directionRecorded": 15
+    },
+    "R Dhawan": {
+      "file": "41dba497b74e4136.json",
+      "balls": 188,
+      "directionRecorded": 134
+    },
+    "Simarjeet Singh": {
+      "file": "cd735d690e0015f1.json",
+      "balls": 15,
+      "directionRecorded": 6
+    },
+    "M Theekshana": {
+      "file": "b964ff6a569263da.json",
+      "balls": 34,
+      "directionRecorded": 18
+    },
+    "SA Abbott": {
+      "file": "564cc0e903222652.json",
+      "balls": 18,
+      "directionRecorded": 10
+    },
+    "AS Roy": {
+      "file": "9cbf54e9720f0c46.json",
+      "balls": 66,
+      "directionRecorded": 47
+    },
+    "Fazalhaq Farooqi": {
+      "file": "e0b65ec09c51465e.json",
+      "balls": 15,
+      "directionRecorded": 10
+    },
+    "K Kartikeya": {
+      "file": "fe7edb5c20170cc9.json",
+      "balls": 18,
+      "directionRecorded": 9
+    },
+    "RP Meredith": {
+      "file": "64dbea7305ae01e5.json",
+      "balls": 3,
+      "directionRecorded": 1
+    },
+    "KS Sharma": {
+      "file": "1efedc578c08b8c5.json",
+      "balls": 25,
+      "directionRecorded": 16
+    },
+    "T Stubbs": {
+      "file": "16bfe118fa4fb58e.json",
+      "balls": 667,
+      "directionRecorded": 480
+    },
+    "R Sanjay Yadav": {
+      "file": "9e16b7aefa724f55.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "A Tomar": {
+      "file": "766f4909abc25270.json",
+      "balls": 8,
+      "directionRecorded": 5
+    },
+    "PN Mankad": {
+      "file": "0076277f01e1b48d.json",
+      "balls": 75,
+      "directionRecorded": 48
+    },
+    "OC McCoy": {
+      "file": "1183207b74b925fd.json",
+      "balls": 5,
+      "directionRecorded": 3
+    },
+    "Sikandar Raza": {
+      "file": "500a412567da025e.json",
+      "balls": 143,
+      "directionRecorded": 97
+    },
+    "Rahmanullah Gurbaz": {
+      "file": "f0b1894ef88e7b2d.json",
+      "balls": 283,
+      "directionRecorded": 155
+    },
+    "KR Mayers": {
+      "file": "84eec9ae0b4c341b.json",
+      "balls": 276,
+      "directionRecorded": 184
+    },
+    "RR Rossouw": {
+      "file": "c3292e942141f733.json",
+      "balls": 321,
+      "directionRecorded": 208
+    },
+    "Mukesh Kumar": {
+      "file": "30a05cc40356e45e.json",
+      "balls": 20,
+      "directionRecorded": 11
+    },
+    "HC Brook": {
+      "file": "6ae5da987f5331b0.json",
+      "balls": 159,
+      "directionRecorded": 98
+    },
+    "AU Rashid": {
+      "file": "917bc5071c0078da.json",
+      "balls": 17,
+      "directionRecorded": 13
+    },
+    "C Green": {
+      "file": "7c4ac3ae5add8cf0.json",
+      "balls": 702,
+      "directionRecorded": 480
+    },
+    "N Wadhera": {
+      "file": "1022c35cd3100c3d.json",
+      "balls": 583,
+      "directionRecorded": 349
+    },
+    "Arshad Khan": {
+      "file": "d4c42040f4c36b64.json",
+      "balls": 102,
+      "directionRecorded": 60
+    },
+    "Abishek Porel": {
+      "file": "0ca2631c725cc04f.json",
+      "balls": 548,
+      "directionRecorded": 376
+    },
+    "Dhruv Jurel": {
+      "file": "a84750e01dbbd32f.json",
+      "balls": 801,
+      "directionRecorded": 544
+    },
+    "MG Bracewell": {
+      "file": "bcad44df68ffe173.json",
+      "balls": 49,
+      "directionRecorded": 27
+    },
+    "MW Short": {
+      "file": "1e4223a1fc232a0d.json",
+      "balls": 153,
+      "directionRecorded": 109
+    },
+    "Mohit Rathee": {
+      "file": "52197102fa3112c8.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "YV Dhull": {
+      "file": "59817e791c58f295.json",
+      "balls": 23,
+      "directionRecorded": 18
+    },
+    "Yudhvir Singh": {
+      "file": "ea296d3ebf8f3a5f.json",
+      "balls": 16,
+      "directionRecorded": 11
+    },
+    "Atharva Taide": {
+      "file": "29d65efa337ddc81.json",
+      "balls": 188,
+      "directionRecorded": 113
+    },
+    "Harpreet Singh": {
+      "file": "6df469cddc219e1b.json",
+      "balls": 119,
+      "directionRecorded": 74
+    },
+    "WD Parnell": {
+      "file": "e14d1a5e4b1420ba.json",
+      "balls": 86,
+      "directionRecorded": 48
+    },
+    "Liton Das": {
+      "file": "3eefc6c0cb367028.json",
+      "balls": 4,
+      "directionRecorded": 3
+    },
+    "PD Salt": {
+      "file": "134247294533a7a7.json",
+      "balls": 746,
+      "directionRecorded": 516
+    },
+    "Vijaykumar Vyshak": {
+      "file": "977287328fd918ce.json",
+      "balls": 17,
+      "directionRecorded": 9
+    },
+    "Abdul Basith": {
+      "file": "a363de27aeac7a08.json",
+      "balls": 1,
+      "directionRecorded": 1
+    },
+    "D Wiese": {
+      "file": "55630592372cb227.json",
+      "balls": 105,
+      "directionRecorded": 69
+    },
+    "Arjun Tendulkar": {
+      "file": "c1f8528816ba26c3.json",
+      "balls": 14,
+      "directionRecorded": 6
+    },
+    "JP Behrendorff": {
+      "file": "b103287418407b38.json",
+      "balls": 9,
+      "directionRecorded": 6
+    },
+    "AJ Hosein": {
+      "file": "8a648ed03a9b6d2c.json",
+      "balls": 14,
+      "directionRecorded": 12
+    },
+    "Naveen-ul-Haq": {
+      "file": "c15382c0ad39adc8.json",
+      "balls": 26,
+      "directionRecorded": 14
+    },
+    "Noor Ahmad": {
+      "file": "13c06b7cc71c5db7.json",
+      "balls": 59,
+      "directionRecorded": 31
+    },
+    "JE Root": {
+      "file": "fa48dc5a49200c1d.json",
+      "balls": 15,
+      "directionRecorded": 11
+    },
+    "KM Asif": {
+      "file": "c52f9879c4ffbeb7.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "MD Shanaka": {
+      "file": "df5c95f5d30a25cc.json",
+      "balls": 74,
+      "directionRecorded": 51
+    },
+    "Sanvir Singh": {
+      "file": "99088fed280bc982.json",
+      "balls": 22,
+      "directionRecorded": 14
+    },
+    "Vivrant Sharma": {
+      "file": "9523951c679ddd90.json",
+      "balls": 49,
+      "directionRecorded": 38
+    },
+    "DG Nalkande": {
+      "file": "8ed8e4c24f28ce4a.json",
+      "balls": 12,
+      "directionRecorded": 10
+    },
+    "R Ravindra": {
+      "file": "757133254f55559b.json",
+      "balls": 298,
+      "directionRecorded": 212
+    },
+    "SD Hope": {
+      "file": "fb9a8e09b52b5298.json",
+      "balls": 125,
+      "directionRecorded": 84
+    },
+    "Sumit Kumar": {
+      "file": "aaed3aef9016a9f8.json",
+      "balls": 26,
+      "directionRecorded": 13
+    },
+    "MA Starc": {
+      "file": "39358277f9794cab.json",
+      "balls": 122,
+      "directionRecorded": 75
+    },
+    "Azmatullah Omarzai": {
+      "file": "12963870812dcbfe.json",
+      "balls": 105,
+      "directionRecorded": 74
+    },
+    "Naman Dhir": {
+      "file": "32515bc2b93df939.json",
+      "balls": 444,
+      "directionRecorded": 318
+    },
+    "G Coetzee": {
+      "file": "0a45b7ae46481545.json",
+      "balls": 33,
+      "directionRecorded": 19
+    },
+    "SZ Mulani": {
+      "file": "e2f131a3d4b685ea.json",
+      "balls": 1,
+      "directionRecorded": 0
+    },
+    "Sameer Rizvi": {
+      "file": "389ba69f26ec405e.json",
+      "balls": 304,
+      "directionRecorded": 210
+    },
+    "SH Johnson": {
+      "file": "8016f084fffa6dc3.json",
+      "balls": 12,
+      "directionRecorded": 8
+    },
+    "Akash Madhwal": {
+      "file": "06ae13ae57ee5d1c.json",
+      "balls": 14,
+      "directionRecorded": 7
+    },
+    "SB Dubey": {
+      "file": "d1bae09f5aace767.json",
+      "balls": 148,
+      "directionRecorded": 97
+    },
+    "Mayank Dagar": {
+      "file": "fe4e54d29e531a0a.json",
+      "balls": 1,
+      "directionRecorded": 0
+    },
+    "RJW Topley": {
+      "file": "858aef007eabac53.json",
+      "balls": 6,
+      "directionRecorded": 4
+    },
+    "A Raghuvanshi": {
+      "file": "22a22806e7cd9351.json",
+      "balls": 628,
+      "directionRecorded": 436
+    },
+    "Ashutosh Sharma": {
+      "file": "8ac22efd26109e46.json",
+      "balls": 356,
+      "directionRecorded": 222
+    },
+    "Nithish Kumar Reddy": {
+      "file": "f4e8bf34c070ffb5.json",
+      "balls": 566,
+      "directionRecorded": 402
+    },
+    "Saurav Chauhan": {
+      "file": "8e31ec0fa4a0fdfe.json",
+      "balls": 16,
+      "directionRecorded": 5
+    },
+    "Kumar Kushagra": {
+      "file": "cb4e5792be470799.json",
+      "balls": 21,
+      "directionRecorded": 11
+    },
+    "BR Sharath": {
+      "file": "185b3b1063369b6f.json",
+      "balls": 5,
+      "directionRecorded": 2
+    },
+    "WG Jacks": {
+      "file": "9bdc93d04b6f13c7.json",
+      "balls": 385,
+      "directionRecorded": 276
+    },
+    "J Fraser-McGurk": {
+      "file": "716d06961ba88392.json",
+      "balls": 203,
+      "directionRecorded": 138
+    },
+    "Tanush Kotian": {
+      "file": "28ba8429580fbc2d.json",
+      "balls": 32,
+      "directionRecorded": 16
+    },
+    "KA Maharaj": {
+      "file": "9d3b6de70c8ef46c.json",
+      "balls": 2,
+      "directionRecorded": 2
+    },
+    "Arshad Khan (2)": {
+      "file": "eccdacb2b3dcfec4.json",
+      "balls": 4,
+      "directionRecorded": 1
+    },
+    "R Sai Kishore": {
+      "file": "7fa06665df14dc53.json",
+      "balls": 16,
+      "directionRecorded": 7
+    },
+    "L Wood": {
+      "file": "b0c163419e124a2c.json",
+      "balls": 3,
+      "directionRecorded": 1
+    },
+    "LB Williams": {
+      "file": "d57112b1ed8c6a11.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "AA Kulkarni": {
+      "file": "106eef6968d003f7.json",
+      "balls": 33,
+      "directionRecorded": 22
+    },
+    "MJ Suthar": {
+      "file": "cf6ff89126e3edeb.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "RJ Gleeson": {
+      "file": "df7310c31f16a43d.json",
+      "balls": 2,
+      "directionRecorded": 2
+    },
+    "Gulbadin Naib": {
+      "file": "0cfeb086788097bc.json",
+      "balls": 15,
+      "directionRecorded": 9
+    },
+    "D Ferreira": {
+      "file": "507b71338a75b7c1.json",
+      "balls": 195,
+      "directionRecorded": 129
+    },
+    "A Kamboj": {
+      "file": "46325bcd2f49510a.json",
+      "balls": 55,
+      "directionRecorded": 33
+    },
+    "T Kohler-Cadmore": {
+      "file": "74e0937dcbb630f5.json",
+      "balls": 54,
+      "directionRecorded": 34
+    },
+    "Shivam Singh": {
+      "file": "cc8a0a5c487ef7cd.json",
+      "balls": 3,
+      "directionRecorded": 2
+    },
+    "V Viyaskanth": {
+      "file": "10f33336b29ed92e.json",
+      "balls": 5,
+      "directionRecorded": 2
+    },
+    "Aniket Verma": {
+      "file": "64e98f970e0b1c7a.json",
+      "balls": 205,
+      "directionRecorded": 133
+    },
+    "RD Rickelton": {
+      "file": "843d9f8034125fe3.json",
+      "balls": 513,
+      "directionRecorded": 346
+    },
+    "R Minz": {
+      "file": "246f7f55aac5733f.json",
+      "balls": 20,
+      "directionRecorded": 8
+    },
+    "PVSN Raju": {
+      "file": "630405842195b6d6.json",
+      "balls": 1,
+      "directionRecorded": 0
+    },
+    "V Nigam": {
+      "file": "dbbc11ea9173ab46.json",
+      "balls": 92,
+      "directionRecorded": 61
+    },
+    "Priyansh Arya": {
+      "file": "fc268a0d4173ce45.json",
+      "balls": 491,
+      "directionRecorded": 302
+    },
+    "PWA Mulder": {
+      "file": "161c16aaf2d8a13e.json",
+      "balls": 12,
+      "directionRecorded": 9
+    },
+    "J Overton": {
+      "file": "e0e203e9f51b6c15.json",
+      "balls": 98,
+      "directionRecorded": 63
+    },
+    "PHKD Mendis": {
+      "file": "f7b33a28e0f54d7c.json",
+      "balls": 72,
+      "directionRecorded": 49
+    },
+    "Suryansh Shedge": {
+      "file": "5d72cbc0d8b4a6e6.json",
+      "balls": 104,
+      "directionRecorded": 72
+    },
+    "SK Rasheed": {
+      "file": "6cb7b65c7dbb2818.json",
+      "balls": 67,
+      "directionRecorded": 43
+    },
+    "JP Inglis": {
+      "file": "2cc69ddfa61d3138.json",
+      "balls": 328,
+      "directionRecorded": 217
+    },
+    "XC Bartlett": {
+      "file": "05052342f43c0e51.json",
+      "balls": 29,
+      "directionRecorded": 19
+    },
+    "MS Bhandage": {
+      "file": "01d691ac22b9b3f8.json",
+      "balls": 4,
+      "directionRecorded": 1
+    },
+    "V Suryavanshi": {
+      "file": "97f0cdfaa829cf7c.json",
+      "balls": 473,
+      "directionRecorded": 269
+    },
+    "A Mhatre": {
+      "file": "46fee25257d3eec6.json",
+      "balls": 250,
+      "directionRecorded": 177
+    },
+    "C Bosch": {
+      "file": "bbfa51738149fe2e.json",
+      "balls": 63,
+      "directionRecorded": 41
+    },
+    "Prince Yadav": {
+      "file": "6e9e902a49bc0126.json",
+      "balls": 12,
+      "directionRecorded": 4
+    },
+    "DS Rathi": {
+      "file": "41732708e0f88891.json",
+      "balls": 9,
+      "directionRecorded": 2
+    },
+    "JG Bethell": {
+      "file": "ae60466802a9e1e0.json",
+      "balls": 120,
+      "directionRecorded": 76
+    },
+    "KS Rathore": {
+      "file": "fd338b5456972ef2.json",
+      "balls": 5,
+      "directionRecorded": 3
+    },
+    "Urvil Patel": {
+      "file": "cc19da189a5649eb.json",
+      "balls": 102,
+      "directionRecorded": 69
+    },
+    "MJ Owen": {
+      "file": "18a11e374f380252.json",
+      "balls": 2,
+      "directionRecorded": 2
+    },
+    "KT Maphaka": {
+      "file": "a21b9c9ab950bc3f.json",
+      "balls": 3,
+      "directionRecorded": 1
+    },
+    "M Tiwari": {
+      "file": "f972903491f642bf.json",
+      "balls": 12,
+      "directionRecorded": 8
+    },
+    "L Ngidi": {
+      "file": "b2178703b511b22d.json",
+      "balls": 9,
+      "directionRecorded": 5
+    },
+    "MP Breetzke": {
+      "file": "a651dc99b13af8cb.json",
+      "balls": 12,
+      "directionRecorded": 11
+    },
+    "Musheer Khan": {
+      "file": "2a2ae89da68eb523.json",
+      "balls": 3,
+      "directionRecorded": 0
+    },
+    "BKG Mendis": {
+      "file": "33861ff02512c321.json",
+      "balls": 11,
+      "directionRecorded": 6
+    },
+    "Sediqullah Atal": {
+      "file": "edc268740fd8c988.json",
+      "balls": 16,
+      "directionRecorded": 12
+    },
+    "S Arora": {
+      "file": "25dcec047f438078.json",
+      "balls": 81,
+      "directionRecorded": 52
+    },
+    "Harsh Dubey": {
+      "file": "800f5aaf20c6e3a3.json",
+      "balls": 11,
+      "directionRecorded": 4
+    },
+    "DA Payne": {
+      "file": "0401c24662cc3400.json",
+      "balls": 5,
+      "directionRecorded": 4
+    },
+    "FH Allen": {
+      "file": "57877750cce1a482.json",
+      "balls": 168,
+      "directionRecorded": 105
+    },
+    "Kartik Sharma": {
+      "file": "0ce9730d60078c77.json",
+      "balls": 220,
+      "directionRecorded": 145
+    },
+    "MJ Henry": {
+      "file": "7ce47ed9c9eabb26.json",
+      "balls": 10,
+      "directionRecorded": 7
+    },
+    "C Connolly": {
+      "file": "86a5c33821f87978.json",
+      "balls": 316,
+      "directionRecorded": 203
+    },
+    "MD Choudhary": {
+      "file": "077bc4e8c54fd1b2.json",
+      "balls": 122,
+      "directionRecorded": 79
+    },
+    "P Nissanka": {
+      "file": "8be6a580a26bb2ff.json",
+      "balls": 180,
+      "directionRecorded": 132
+    },
+    "Shivang Kumar": {
+      "file": "930d56920f8f6b64.json",
+      "balls": 50,
+      "directionRecorded": 33
+    },
+    "PR Veer": {
+      "file": "462395c23337a87a.json",
+      "balls": 72,
+      "directionRecorded": 38
+    },
+    "Ashok Sharma": {
+      "file": "e343319c2b0ae121.json",
+      "balls": 5,
+      "directionRecorded": 1
+    },
+    "Auqib Nabi": {
+      "file": "84f4343e6c2d6aae.json",
+      "balls": 4,
+      "directionRecorded": 4
+    },
+    "GF Linde": {
+      "file": "8289c13fbbc33897.json",
+      "balls": 21,
+      "directionRecorded": 11
+    },
+    "LG Pretorius": {
+      "file": "a2370729e26ee4a4.json",
+      "balls": 8,
+      "directionRecorded": 4
+    },
+    "N Burger": {
+      "file": "8ba2f80d3be599f3.json",
+      "balls": 9,
+      "directionRecorded": 7
+    },
+    "PP Hinge": {
+      "file": "d6ec67494626088f.json",
+      "balls": 9,
+      "directionRecorded": 4
+    },
+    "Brijesh Sharma": {
+      "file": "0af51094eb22f9b5.json",
+      "balls": 4,
+      "directionRecorded": 3
+    },
+    "Himmat Singh": {
+      "file": "fa510c3478ff8a0a.json",
+      "balls": 74,
+      "directionRecorded": 54
+    },
+    "DV Malewar": {
+      "file": "39afa1c66feb27c5.json",
+      "balls": 5,
+      "directionRecorded": 2
+    },
+    "MP Yadav": {
+      "file": "afed0a83b999d60c.json",
+      "balls": 6,
+      "directionRecorded": 1
+    },
+    "Krish Bhagat": {
+      "file": "d7a501650c5c2640.json",
+      "balls": 21,
+      "directionRecorded": 11
+    },
+    "Ashwani Kumar": {
+      "file": "0f4003ba18760ab1.json",
+      "balls": 6,
+      "directionRecorded": 2
+    },
+    "SU Parakh": {
+      "file": "cdd680cae45d63d9.json",
+      "balls": 33,
+      "directionRecorded": 24
+    },
+    "R Smaran": {
+      "file": "2c691b48596c5951.json",
+      "balls": 25,
+      "directionRecorded": 15
+    },
+    "E Malinga": {
+      "file": "f58009aa9f486ea2.json",
+      "balls": 18,
+      "directionRecorded": 8
+    },
+    "N Sindhu": {
+      "file": "8c9699da39659f0c.json",
+      "balls": 51,
+      "directionRecorded": 35
+    },
+    "Akshat Raghuwanshi": {
+      "file": "77f65eec849d8e51.json",
+      "balls": 27,
+      "directionRecorded": 21
+    },
+    "Ravi Singh": {
+      "file": "7b3c4cfe064ebfa0.json",
+      "balls": 2,
+      "directionRecorded": 0
+    },
+    "T Dahiya": {
+      "file": "bb0282ab64741f9d.json",
+      "balls": 15,
+      "directionRecorded": 7
+    },
+    "AM Ghazanfar": {
+      "file": "53628435b9bb4aa4.json",
+      "balls": 3,
+      "directionRecorded": 2
+    },
+    "SR Dubey": {
+      "file": "58f51491a759fcd1.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "SS Mishra": {
+      "file": "eac4057a1b0f23a8.json",
+      "balls": 3,
+      "directionRecorded": 1
+    },
+    "Salil Arora": {
+      "file": "bb97689ae516e5d1.json",
+      "balls": 25,
+      "directionRecorded": 16
+    },
+    "Sakib Hussain": {
+      "file": "0e943207f48016ad.json",
+      "balls": 7,
+      "directionRecorded": 2
+    },
+    "SC Ganguly": {
+      "file": "adf584ee0000f51f.json",
+      "balls": 1326,
+      "directionRecorded": 817
+    },
+    "RT Ponting": {
+      "file": "00824a2c209c3fa0.json",
+      "balls": 129,
+      "directionRecorded": 86
+    },
+    "DJ Hussey": {
+      "file": "716d2ec03c41d633.json",
+      "balls": 1101,
+      "directionRecorded": 758
+    },
+    "Mohammad Hafeez": {
+      "file": "cd0ea171a240ead0.json",
+      "balls": 84,
+      "directionRecorded": 49
+    },
+    "R Dravid": {
+      "file": "d2842fb0e0c98643.json",
+      "balls": 1918,
+      "directionRecorded": 1265
+    },
+    "W Jaffer": {
+      "file": "c7c453e6f3748918.json",
+      "balls": 129,
+      "directionRecorded": 82
+    },
+    "JH Kallis": {
+      "file": "eccad68555b0d54a.json",
+      "balls": 2291,
+      "directionRecorded": 1466
+    },
+    "CL White": {
+      "file": "0bc12c6012bd51b9.json",
+      "balls": 774,
+      "directionRecorded": 524
+    },
+    "MV Boucher": {
+      "file": "e9108c088d3d575c.json",
+      "balls": 318,
+      "directionRecorded": 200
+    },
+    "B Akhil": {
+      "file": "c4701e3b83f6d82e.json",
+      "balls": 57,
+      "directionRecorded": 28
+    },
+    "AA Noffke": {
+      "file": "b4c4aebb60728c03.json",
+      "balls": 12,
+      "directionRecorded": 6
+    },
+    "SB Joshi": {
+      "file": "201dbe128da42a2d.json",
+      "balls": 16,
+      "directionRecorded": 10
+    },
+    "ML Hayden": {
+      "file": "043fc72b96bec4b1.json",
+      "balls": 839,
+      "directionRecorded": 430
+    },
+    "MEK Hussey": {
+      "file": "b10aa074d1850dad.json",
+      "balls": 1648,
+      "directionRecorded": 1053
+    },
+    "JDP Oram": {
+      "file": "89fe67d050cc0f8f.json",
+      "balls": 110,
+      "directionRecorded": 59
+    },
+    "S Badrinath": {
+      "file": "23c9b9f06db0aa63.json",
+      "balls": 1245,
+      "directionRecorded": 796
+    },
+    "K Goel": {
+      "file": "990f099db7a4b4ba.json",
+      "balls": 239,
+      "directionRecorded": 137
+    },
+    "JR Hopes": {
+      "file": "683c26c89dce1f45.json",
+      "balls": 314,
+      "directionRecorded": 216
+    },
+    "KC Sangakkara": {
+      "file": "9f268d5657459040.json",
+      "balls": 1424,
+      "directionRecorded": 922
+    },
+    "SM Katich": {
+      "file": "66a3b44af8cbbc6d.json",
+      "balls": 191,
+      "directionRecorded": 119
+    },
+    "T Kohli": {
+      "file": "e30c4bdf6f3dc41c.json",
+      "balls": 20,
+      "directionRecorded": 9
+    },
+    "M Kaif": {
+      "file": "c92b2dc0f347df60.json",
+      "balls": 258,
+      "directionRecorded": 167
+    },
+    "DS Lehmann": {
+      "file": "e3acb3da12ea1024.json",
+      "balls": 19,
+      "directionRecorded": 12
+    },
+    "M Rawat": {
+      "file": "bcd8e291305bdc3c.json",
+      "balls": 70,
+      "directionRecorded": 37
+    },
+    "D Salunkhe": {
+      "file": "dcd4c460340be31b.json",
+      "balls": 24,
+      "directionRecorded": 15
+    },
+    "SK Warne": {
+      "file": "16d997ce0dad5515.json",
+      "balls": 219,
+      "directionRecorded": 130
+    },
+    "SK Trivedi": {
+      "file": "3c43281d3088bb16.json",
+      "balls": 61,
+      "directionRecorded": 36
+    },
+    "V Sehwag": {
+      "file": "81322c288abfc7e9.json",
+      "balls": 1833,
+      "directionRecorded": 1149
+    },
+    "L Ronchi": {
+      "file": "b92aff7398abf162.json",
+      "balls": 37,
+      "directionRecorded": 11
+    },
+    "ST Jayasuriya": {
+      "file": "d88d4eff485a093f.json",
+      "balls": 573,
+      "directionRecorded": 331
+    },
+    "DJ Thornely": {
+      "file": "f6d08a75cb715846.json",
+      "balls": 54,
+      "directionRecorded": 26
+    },
+    "PR Shah": {
+      "file": "2231ad936580b0ff.json",
+      "balls": 97,
+      "directionRecorded": 58
+    },
+    "AM Nayar": {
+      "file": "109f63ad2bc0b806.json",
+      "balls": 588,
+      "directionRecorded": 364
+    },
+    "SM Pollock": {
+      "file": "9cf415eb48a32fcf.json",
+      "balls": 116,
+      "directionRecorded": 49
+    },
+    "S Chanderpaul": {
+      "file": "a11d1847455ce339.json",
+      "balls": 33,
+      "directionRecorded": 21
+    },
+    "LRPL Taylor": {
+      "file": "62298b4761799ee3.json",
+      "balls": 847,
+      "directionRecorded": 504
+    },
+    "AC Gilchrist": {
+      "file": "d570ec3918c335ba.json",
+      "balls": 1555,
+      "directionRecorded": 919
+    },
+    "Y Venugopal Rao": {
+      "file": "4bebe98dc909df28.json",
+      "balls": 865,
+      "directionRecorded": 541
+    },
+    "VVS Laxman": {
+      "file": "ba6baac285dad45e.json",
+      "balls": 271,
+      "directionRecorded": 156
+    },
+    "A Symonds": {
+      "file": "9cf7a6c0b3d3793f.json",
+      "balls": 781,
+      "directionRecorded": 520
+    },
+    "SB Styris": {
+      "file": "0c3c7a81f158eceb.json",
+      "balls": 134,
+      "directionRecorded": 95
+    },
+    "AS Yadav": {
+      "file": "6588a3141357c083.json",
+      "balls": 40,
+      "directionRecorded": 25
+    },
+    "SB Bangar": {
+      "file": "65ea607b1b3f5bab.json",
+      "balls": 58,
+      "directionRecorded": 41
+    },
+    "WPUJC Vaas": {
+      "file": "d957d1ce76292acc.json",
+      "balls": 73,
+      "directionRecorded": 53
+    },
+    "RP Singh": {
+      "file": "4d04404d3912e0b5.json",
+      "balls": 78,
+      "directionRecorded": 38
+    },
+    "LR Shukla": {
+      "file": "ef4eace730bd77c9.json",
+      "balls": 358,
+      "directionRecorded": 212
+    },
+    "DPMD Jayawardene": {
+      "file": "9a0352cdac02a8a4.json",
+      "balls": 1522,
+      "directionRecorded": 926
+    },
+    "S Sohal": {
+      "file": "90a5d01d254a1687.json",
+      "balls": 311,
+      "directionRecorded": 172
+    },
+    "B Lee": {
+      "file": "fde40f9072456dd2.json",
+      "balls": 102,
+      "directionRecorded": 54
+    },
+    "WA Mota": {
+      "file": "799d4f9a7c7fe9ec.json",
+      "balls": 76,
+      "directionRecorded": 46
+    },
+    "Kamran Akmal": {
+      "file": "18371016b96c80bf.json",
+      "balls": 78,
+      "directionRecorded": 58
+    },
+    "Shahid Afridi": {
+      "file": "cc4605bfb4a5699f.json",
+      "balls": 46,
+      "directionRecorded": 37
+    },
+    "MA Khote": {
+      "file": "16585e644d268b73.json",
+      "balls": 22,
+      "directionRecorded": 7
+    },
+    "A Nehra": {
+      "file": "c027ab9b5d635062.json",
+      "balls": 63,
+      "directionRecorded": 37
+    },
+    "GC Smith": {
+      "file": "03d5e07e27878cd9.json",
+      "balls": 691,
+      "directionRecorded": 454
+    },
+    "Pankaj Singh": {
+      "file": "868cf67fd91a5386.json",
+      "balls": 12,
+      "directionRecorded": 6
+    },
+    "RR Sarwan": {
+      "file": "5827c57bd3bb606d.json",
+      "balls": 78,
+      "directionRecorded": 52
+    },
+    "S Sreesanth": {
+      "file": "36f11c51402958d7.json",
+      "balls": 57,
+      "directionRecorded": 21
+    },
+    "VRV Singh": {
+      "file": "e570e811dab2d856.json",
+      "balls": 3,
+      "directionRecorded": 1
+    },
+    "AB Agarkar": {
+      "file": "4a16dc28b1c3bd27.json",
+      "balls": 160,
+      "directionRecorded": 100
+    },
+    "M Kartik": {
+      "file": "f9962f59e82cc715.json",
+      "balls": 109,
+      "directionRecorded": 67
+    },
+    "Shoaib Malik": {
+      "file": "7be0c6727d6b9958.json",
+      "balls": 49,
+      "directionRecorded": 33
+    },
+    "MF Maharoof": {
+      "file": "17508c71aad9768a.json",
+      "balls": 124,
+      "directionRecorded": 75
+    },
+    "VY Mahesh": {
+      "file": "1ab88a66b7f0195b.json",
+      "balls": 28,
+      "directionRecorded": 13
+    },
+    "TM Srivastava": {
+      "file": "9afd72adb2e9bc77.json",
+      "balls": 11,
+      "directionRecorded": 6
+    },
+    "B Chipli": {
+      "file": "c7ee95a1d6047f4c.json",
+      "balls": 256,
+      "directionRecorded": 165
+    },
+    "DB Das": {
+      "file": "d7284d952f1367e9.json",
+      "balls": 267,
+      "directionRecorded": 172
+    },
+    "HH Gibbs": {
+      "file": "86af8444caaa67a8.json",
+      "balls": 837,
+      "directionRecorded": 494
+    },
+    "DNT Zoysa": {
+      "file": "d17dba56516bc25b.json",
+      "balls": 9,
+      "directionRecorded": 7
+    },
+    "D Kalyankrishna": {
+      "file": "6b5c9134927e4a9c.json",
+      "balls": 8,
+      "directionRecorded": 2
+    },
+    "SA Asnodkar": {
+      "file": "d420fe7dccb9213e.json",
+      "balls": 352,
+      "directionRecorded": 228
+    },
+    "Sohail Tanvir": {
+      "file": "1f02dfc678663ddb.json",
+      "balls": 31,
+      "directionRecorded": 21
+    },
+    "Salman Butt": {
+      "file": "edd48f72330522f7.json",
+      "balls": 172,
+      "directionRecorded": 109
+    },
+    "BJ Hodge": {
+      "file": "21734d0612d3a08c.json",
+      "balls": 1153,
+      "directionRecorded": 730
+    },
+    "Umar Gul": {
+      "file": "3659ab935c2e4ca8.json",
+      "balls": 19,
+      "directionRecorded": 14
+    },
+    "SP Fleming": {
+      "file": "ee40f2b3960cf7e9.json",
+      "balls": 171,
+      "directionRecorded": 109
+    },
+    "S Vidyut": {
+      "file": "f8188180f5dad5f9.json",
+      "balls": 115,
+      "directionRecorded": 79
+    },
+    "JA Morkel": {
+      "file": "768b5e1ffec54867.json",
+      "balls": 712,
+      "directionRecorded": 476
+    },
+    "LPC Silva": {
+      "file": "b0541c42de889ed8.json",
+      "balls": 27,
+      "directionRecorded": 17
+    },
+    "DB Ravi Teja": {
+      "file": "c8565c28bd1b780a.json",
+      "balls": 325,
+      "directionRecorded": 218
+    },
+    "Misbah-ul-Haq": {
+      "file": "8674fe0d2c238065.json",
+      "balls": 82,
+      "directionRecorded": 62
+    },
+    "YV Takawale": {
+      "file": "92ad4184a160b467.json",
+      "balls": 183,
+      "directionRecorded": 107
+    },
+    "RR Raje": {
+      "file": "064e4b5a143fdb42.json",
+      "balls": 18,
+      "directionRecorded": 13
+    },
+    "Mohammad Asif": {
+      "file": "1140347f61d93b3c.json",
+      "balls": 6,
+      "directionRecorded": 5
+    },
+    "GD McGrath": {
+      "file": "c12cc6ee9fea1a2b.json",
+      "balls": 5,
+      "directionRecorded": 2
+    },
+    "Joginder Sharma": {
+      "file": "c1ba503e2668832f.json",
+      "balls": 30,
+      "directionRecorded": 23
+    },
+    "MS Gony": {
+      "file": "dc42e31f706b5f59.json",
+      "balls": 76,
+      "directionRecorded": 43
+    },
+    "M Muralitharan": {
+      "file": "1007dd44c5d1f768.json",
+      "balls": 30,
+      "directionRecorded": 21
+    },
+    "M Ntini": {
+      "file": "fd8df5eb6e98763a.json",
+      "balls": 19,
+      "directionRecorded": 6
+    },
+    "DT Patil": {
+      "file": "90d1cc59e2295beb.json",
+      "balls": 13,
+      "directionRecorded": 9
+    },
+    "A Kumble": {
+      "file": "e89d718579355192.json",
+      "balls": 49,
+      "directionRecorded": 28
+    },
+    "S Anirudha": {
+      "file": "8bc2ef33e88e424d.json",
+      "balls": 121,
+      "directionRecorded": 77
+    },
+    "CK Kapugedera": {
+      "file": "56104ae6047d1af8.json",
+      "balls": 24,
+      "directionRecorded": 17
+    },
+    "A Chopra": {
+      "file": "541da88afc5088d7.json",
+      "balls": 75,
+      "directionRecorded": 52
+    },
+    "T Taibu": {
+      "file": "2c121055b8ceef84.json",
+      "balls": 26,
+      "directionRecorded": 15
+    },
+    "J Arunkumar": {
+      "file": "4cc75d1be0f66815.json",
+      "balls": 24,
+      "directionRecorded": 13
+    },
+    "PP Ojha": {
+      "file": "7aacd3337ffbf00b.json",
+      "balls": 45,
+      "directionRecorded": 23
+    },
+    "SR Tendulkar": {
+      "file": "b87a22501dd58b14.json",
+      "balls": 2044,
+      "directionRecorded": 1302
+    },
+    "U Kaul": {
+      "file": "7a1eee42867a878b.json",
+      "balls": 1,
+      "directionRecorded": 0
+    },
+    "TM Dilshan": {
+      "file": "bca9b4e88fbd2943.json",
+      "balls": 1047,
+      "directionRecorded": 674
+    },
+    "AD Mascarenhas": {
+      "file": "3a394405389c7716.json",
+      "balls": 79,
+      "directionRecorded": 52
+    },
+    "Niraj Patel": {
+      "file": "95598be749f24087.json",
+      "balls": 124,
+      "directionRecorded": 75
+    },
+    "LA Pomersbach": {
+      "file": "0590edaf3f29112f.json",
+      "balls": 251,
+      "directionRecorded": 156
+    },
+    "Younis Khan": {
+      "file": "193f4c682e57a908.json",
+      "balls": 7,
+      "directionRecorded": 5
+    },
+    "PM Sarvesh Kumar": {
+      "file": "2999afd9e47cde95.json",
+      "balls": 2,
+      "directionRecorded": 0
+    },
+    "DP Vijaykumar": {
+      "file": "71a4a09fcbc3c245.json",
+      "balls": 1,
+      "directionRecorded": 1
+    },
+    "Shoaib Akhtar": {
+      "file": "e849c5327c22d217.json",
+      "balls": 8,
+      "directionRecorded": 3
+    },
+    "Abdur Razzak": {
+      "file": "e7ea7fa5a1df68e1.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "H Das": {
+      "file": "2d9397452ab5a427.json",
+      "balls": 5,
+      "directionRecorded": 2
+    },
+    "SD Chitnis": {
+      "file": "f746fd6b16c4af5e.json",
+      "balls": 92,
+      "directionRecorded": 57
+    },
+    "CRD Fernando": {
+      "file": "5a870a0703fe2974.json",
+      "balls": 3,
+      "directionRecorded": 3
+    },
+    "VS Yeligati": {
+      "file": "c6771d3086b8519e.json",
+      "balls": 2,
+      "directionRecorded": 2
+    },
+    "L Balaji": {
+      "file": "08c102f7dd3de90f.json",
+      "balls": 50,
+      "directionRecorded": 23
+    },
+    "A Mukund": {
+      "file": "98b1b515eee414e4.json",
+      "balls": 23,
+      "directionRecorded": 18
+    },
+    "RR Powar": {
+      "file": "9365976cd599ad8e.json",
+      "balls": 64,
+      "directionRecorded": 41
+    },
+    "A Flintoff": {
+      "file": "318ef2c813c93f65.json",
+      "balls": 57,
+      "directionRecorded": 29
+    },
+    "T Thushara": {
+      "file": "e5afb76e697d9432.json",
+      "balls": 19,
+      "directionRecorded": 10
+    },
+    "JD Ryder": {
+      "file": "e49be7e6fd225d11.json",
+      "balls": 466,
+      "directionRecorded": 261
+    },
+    "KP Pietersen": {
+      "file": "eb3bfba00016f3fe.json",
+      "balls": 758,
+      "directionRecorded": 490
+    },
+    "T Henderson": {
+      "file": "f8ba950aa12310a1.json",
+      "balls": 16,
+      "directionRecorded": 9
+    },
+    "Kamran Khan": {
+      "file": "1f41373865c8a189.json",
+      "balls": 5,
+      "directionRecorded": 2
+    },
+    "RS Bopara": {
+      "file": "1ddb40c8c4d7906b.json",
+      "balls": 468,
+      "directionRecorded": 267
+    },
+    "R Bishnoi": {
+      "file": "38b1a4e42cd8c2bc.json",
+      "balls": 17,
+      "directionRecorded": 9
+    },
+    "FH Edwards": {
+      "file": "dad944b388340d55.json",
+      "balls": 5,
+      "directionRecorded": 1
+    },
+    "PC Valthaty": {
+      "file": "825465f5b2c0e89c.json",
+      "balls": 432,
+      "directionRecorded": 236
+    },
+    "RJ Quiney": {
+      "file": "b5e0e249a404633e.json",
+      "balls": 105,
+      "directionRecorded": 60
+    },
+    "AS Raut": {
+      "file": "13ae31f5764760fb.json",
+      "balls": 172,
+      "directionRecorded": 100
+    },
+    "Yashpal Singh": {
+      "file": "eaf4795d3c86c31b.json",
+      "balls": 67,
+      "directionRecorded": 46
+    },
+    "M Manhas": {
+      "file": "e37d0710ddf99b9f.json",
+      "balls": 486,
+      "directionRecorded": 312
+    },
+    "AA Bilakhia": {
+      "file": "f6a57b039f70f777.json",
+      "balls": 88,
+      "directionRecorded": 51
+    },
+    "AN Ghosh": {
+      "file": "d8690b514d5f45e3.json",
+      "balls": 8,
+      "directionRecorded": 4
+    },
+    "BAW Mendis": {
+      "file": "1d15a552ba2478ce.json",
+      "balls": 6,
+      "directionRecorded": 3
+    },
+    "DL Vettori": {
+      "file": "5fedd9b057455f4f.json",
+      "balls": 118,
+      "directionRecorded": 73
+    },
+    "MN van Wyk": {
+      "file": "8825bf870d69e44a.json",
+      "balls": 135,
+      "directionRecorded": 85
+    },
+    "RE van der Merwe": {
+      "file": "1adac88e8bf3bf7d.json",
+      "balls": 144,
+      "directionRecorded": 73
+    },
+    "TL Suman": {
+      "file": "03f9a6fa557e1edf.json",
+      "balls": 587,
+      "directionRecorded": 366
+    },
+    "Shoaib Ahmed": {
+      "file": "d469a7aa9efb1e84.json",
+      "balls": 6,
+      "directionRecorded": 2
+    },
+    "GR Napier": {
+      "file": "001ea29587f76cdb.json",
+      "balls": 16,
+      "directionRecorded": 11
+    },
+    "KP Appanna": {
+      "file": "69d9da47927a8fdd.json",
+      "balls": 4,
+      "directionRecorded": 3
+    },
+    "LA Carseldine": {
+      "file": "215168cfdbb9582a.json",
+      "balls": 71,
+      "directionRecorded": 40
+    },
+    "SM Harwood": {
+      "file": "608926eb3ac1d71c.json",
+      "balls": 14,
+      "directionRecorded": 9
+    },
+    "SB Jakati": {
+      "file": "8f318b49307eb7ae.json",
+      "balls": 30,
+      "directionRecorded": 17
+    },
+    "RJ Harris": {
+      "file": "329ad2e4b6f19640.json",
+      "balls": 112,
+      "directionRecorded": 70
+    },
+    "D du Preez": {
+      "file": "5f23eab632e85a01.json",
+      "balls": 13,
+      "directionRecorded": 10
+    },
+    "M Morkel": {
+      "file": "68896511d3f0a8d3.json",
+      "balls": 93,
+      "directionRecorded": 53
+    },
+    "J Botha": {
+      "file": "183737fe0003de0d.json",
+      "balls": 364,
+      "directionRecorded": 222
+    },
+    "C Nanda": {
+      "file": "0fbf45c50b9a0c59.json",
+      "balls": 1,
+      "directionRecorded": 1
+    },
+    "Mashrafe Mortaza": {
+      "file": "e8c196fa3d15d2b7.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "A Singh": {
+      "file": "5a709800a3cf1e4c.json",
+      "balls": 10,
+      "directionRecorded": 3
+    },
+    "GJ Bailey": {
+      "file": "42d27da1c0675368.json",
+      "balls": 552,
+      "directionRecorded": 376
+    },
+    "AB McDonald": {
+      "file": "f90f4a5275904cf2.json",
+      "balls": 103,
+      "directionRecorded": 58
+    },
+    "Y Nagar": {
+      "file": "f3f502454e28dc57.json",
+      "balls": 271,
+      "directionRecorded": 155
+    },
+    "SS Shaikh": {
+      "file": "b7b6e9338e29f48b.json",
+      "balls": 7,
+      "directionRecorded": 4
+    },
+    "Mohammad Ashraful": {
+      "file": "646b625182b309f8.json",
+      "balls": 12,
+      "directionRecorded": 2
+    },
+    "CA Pujara": {
+      "file": "141b07b90d6fd5a6.json",
+      "balls": 403,
+      "directionRecorded": 239
+    },
+    "OA Shah": {
+      "file": "4f4b3b161eef613d.json",
+      "balls": 405,
+      "directionRecorded": 247
+    },
+    "Anirudh Singh": {
+      "file": "b5c6fe818fc24b52.json",
+      "balls": 69,
+      "directionRecorded": 47
+    },
+    "Jaskaran Singh": {
+      "file": "34aebe8fbf87055d.json",
+      "balls": 11,
+      "directionRecorded": 6
+    },
+    "R Sathish": {
+      "file": "d311a39d9de5d78c.json",
+      "balls": 236,
+      "directionRecorded": 142
+    },
+    "R McLaren": {
+      "file": "874e9bf5ae0d6fd2.json",
+      "balls": 178,
+      "directionRecorded": 97
+    },
+    "AA Jhunjhunwala": {
+      "file": "68d645022c103bd9.json",
+      "balls": 218,
+      "directionRecorded": 130
+    },
+    "P Dogra": {
+      "file": "6d4aad427bead9bf.json",
+      "balls": 141,
+      "directionRecorded": 92
+    },
+    "A Uniyal": {
+      "file": "86e74a8a1c8bf671.json",
+      "balls": 7,
+      "directionRecorded": 2
+    },
+    "MS Bisla": {
+      "file": "6c1a0c52e10e3a7c.json",
+      "balls": 737,
+      "directionRecorded": 424
+    },
+    "YA Abdulla": {
+      "file": "b1a7ddbb07337c28.json",
+      "balls": 1,
+      "directionRecorded": 0
+    },
+    "JM Kemp": {
+      "file": "d6e490f1748ea4f4.json",
+      "balls": 25,
+      "directionRecorded": 18
+    },
+    "S Tyagi": {
+      "file": "a0738baf249ad0ff.json",
+      "balls": 4,
+      "directionRecorded": 3
+    },
+    "RS Gavaskar": {
+      "file": "bbffa8fc31a711ad.json",
+      "balls": 8,
+      "directionRecorded": 2
+    },
+    "SE Bond": {
+      "file": "efbc86b2a6d291ac.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "S Ladda": {
+      "file": "a7249d13fb4c257a.json",
+      "balls": 10,
+      "directionRecorded": 6
+    },
+    "DP Nannes": {
+      "file": "78cf1277b43e8306.json",
+      "balls": 13,
+      "directionRecorded": 5
+    },
+    "MJ Lumb": {
+      "file": "3d8954e27755b996.json",
+      "balls": 198,
+      "directionRecorded": 100
+    },
+    "DR Martyn": {
+      "file": "c57d89f24da18fe7.json",
+      "balls": 26,
+      "directionRecorded": 11
+    },
+    "S Narwal": {
+      "file": "4d902b1321d1a772.json",
+      "balls": 29,
+      "directionRecorded": 21
+    },
+    "AB Barath": {
+      "file": "d9120c2c25a74584.json",
+      "balls": 43,
+      "directionRecorded": 26
+    },
+    "FY Fazal": {
+      "file": "4bfbc7b4ac40fbd2.json",
+      "balls": 179,
+      "directionRecorded": 119
+    },
+    "AC Voges": {
+      "file": "eb8f2dba0635a2af.json",
+      "balls": 143,
+      "directionRecorded": 95
+    },
+    "MD Mishra": {
+      "file": "a3e95c4d3575e6db.json",
+      "balls": 213,
+      "directionRecorded": 138
+    },
+    "J Theron": {
+      "file": "983fa9755ba8d5eb.json",
+      "balls": 13,
+      "directionRecorded": 8
+    },
+    "SJ Srivastava": {
+      "file": "50295d2e2df96b8a.json",
+      "balls": 5,
+      "directionRecorded": 4
+    },
+    "R Sharma": {
+      "file": "a4cc2a5242fd0bcf.json",
+      "balls": 77,
+      "directionRecorded": 39
+    },
+    "SW Tait": {
+      "file": "ce892327205e19e1.json",
+      "balls": 26,
+      "directionRecorded": 19
+    },
+    "KB Arun Karthik": {
+      "file": "c39fde06c55ec29d.json",
+      "balls": 53,
+      "directionRecorded": 32
+    },
+    "KAJ Roach": {
+      "file": "9d2069584ed5ecfd.json",
+      "balls": 9,
+      "directionRecorded": 6
+    },
+    "PD Collingwood": {
+      "file": "9f2e7bef86025a88.json",
+      "balls": 159,
+      "directionRecorded": 116
+    },
+    "CK Langeveldt": {
+      "file": "71c349edd3e78b5d.json",
+      "balls": 9,
+      "directionRecorded": 5
+    },
+    "VS Malik": {
+      "file": "68a2d843e10d211f.json",
+      "balls": 7,
+      "directionRecorded": 3
+    },
+    "A Mithun": {
+      "file": "5a7f2e9c6958c7d7.json",
+      "balls": 26,
+      "directionRecorded": 17
+    },
+    "AP Dole": {
+      "file": "24adccdb2bd056b0.json",
+      "balls": 23,
+      "directionRecorded": 16
+    },
+    "AN Ahmed": {
+      "file": "9d0d6a3642fa090d.json",
+      "balls": 27,
+      "directionRecorded": 16
+    },
+    "RS Sodhi": {
+      "file": "36ba93ff47f8514b.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "DE Bollinger": {
+      "file": "e0fd35efae945ca9.json",
+      "balls": 23,
+      "directionRecorded": 12
+    },
+    "S Sriram": {
+      "file": "2e808551e4919172.json",
+      "balls": 38,
+      "directionRecorded": 20
+    },
+    "B Sumanth": {
+      "file": "9ca7b0dce843d69c.json",
+      "balls": 38,
+      "directionRecorded": 25
+    },
+    "C Madan": {
+      "file": "a8be46bec7d2d9d8.json",
+      "balls": 21,
+      "directionRecorded": 7
+    },
+    "AG Paunikar": {
+      "file": "1b27971dd182203c.json",
+      "balls": 61,
+      "directionRecorded": 26
+    },
+    "Harmeet Singh": {
+      "file": "bb697dece5f56822.json",
+      "balls": 12,
+      "directionRecorded": 9
+    },
+    "RV Gomez": {
+      "file": "1518527953022947.json",
+      "balls": 53,
+      "directionRecorded": 32
+    },
+    "AUK Pathan": {
+      "file": "a6c772793089ac10.json",
+      "balls": 26,
+      "directionRecorded": 8
+    },
+    "UBT Chand": {
+      "file": "d7fcb8e81280d785.json",
+      "balls": 314,
+      "directionRecorded": 182
+    },
+    "DJ Jacobs": {
+      "file": "d0f72768390316fb.json",
+      "balls": 101,
+      "directionRecorded": 53
+    },
+    "Sunny Singh": {
+      "file": "5469ccf348e0f3ff.json",
+      "balls": 31,
+      "directionRecorded": 23
+    },
+    "NJ Rimmington": {
+      "file": "ea6d6b32c9f746b9.json",
+      "balls": 1,
+      "directionRecorded": 1
+    },
+    "AL Menaria": {
+      "file": "e1c45b2d20553b5c.json",
+      "balls": 367,
+      "directionRecorded": 238
+    },
+    "JJ van der Wath": {
+      "file": "d472e58ee36e4da3.json",
+      "balls": 17,
+      "directionRecorded": 7
+    },
+    "R Ninan": {
+      "file": "101621878f1a05a9.json",
+      "balls": 6,
+      "directionRecorded": 3
+    },
+    "TD Paine": {
+      "file": "67aec1a31294078b.json",
+      "balls": 29,
+      "directionRecorded": 17
+    },
+    "SB Wagh": {
+      "file": "7d0e60c517c97011.json",
+      "balls": 3,
+      "directionRecorded": 3
+    },
+    "AC Thomas": {
+      "file": "5f5bcffb8a023dbe.json",
+      "balls": 19,
+      "directionRecorded": 9
+    },
+    "JEC Franklin": {
+      "file": "4d0fc539f1d9f6de.json",
+      "balls": 309,
+      "directionRecorded": 208
+    },
+    "DH Yagnik": {
+      "file": "3a9c648d7ae26358.json",
+      "balls": 142,
+      "directionRecorded": 82
+    },
+    "S Randiv": {
+      "file": "4e9828a96f3e5c9d.json",
+      "balls": 4,
+      "directionRecorded": 2
+    },
+    "BJ Haddin": {
+      "file": "8423e69e33344621.json",
+      "balls": 11,
+      "directionRecorded": 9
+    },
+    "NLTC Perera": {
+      "file": "3af8ae540da141e9.json",
+      "balls": 326,
+      "directionRecorded": 207
+    },
+    "NL McCullum": {
+      "file": "5f5cf4afc916f36a.json",
+      "balls": 23,
+      "directionRecorded": 13
+    },
+    "JE Taylor": {
+      "file": "92699862414eb9fe.json",
+      "balls": 4,
+      "directionRecorded": 0
+    },
+    "J Syed Mohammad": {
+      "file": "5a4bd6a8a264f8a2.json",
+      "balls": 27,
+      "directionRecorded": 19
+    },
+    "RN ten Doeschate": {
+      "file": "f5bf3fbf1fded3a8.json",
+      "balls": 238,
+      "directionRecorded": 154
+    },
+    "TR Birt": {
+      "file": "7b7e6299384f7faa.json",
+      "balls": 59,
+      "directionRecorded": 33
+    },
+    "AG Murtaza": {
+      "file": "5c00b9d4bc2f0fe0.json",
+      "balls": 14,
+      "directionRecorded": 11
+    },
+    "M Klinger": {
+      "file": "a13ba517725d82f6.json",
+      "balls": 78,
+      "directionRecorded": 46
+    },
+    "AC Blizzard": {
+      "file": "deff0f46d5e751d1.json",
+      "balls": 91,
+      "directionRecorded": 57
+    },
+    "I Malhotra": {
+      "file": "71ae263c8a0788ff.json",
+      "balls": 4,
+      "directionRecorded": 3
+    },
+    "L Ablish": {
+      "file": "fc96e7b095abd70c.json",
+      "balls": 2,
+      "directionRecorded": 2
+    },
+    "P Parameswaran": {
+      "file": "69f95066a8dfbf50.json",
+      "balls": 3,
+      "directionRecorded": 1
+    },
+    "CJ Ferguson": {
+      "file": "0557ea9b472c97a6.json",
+      "balls": 119,
+      "directionRecorded": 76
+    },
+    "AA Chavan": {
+      "file": "5d20f5caa8162291.json",
+      "balls": 11,
+      "directionRecorded": 8
+    },
+    "ND Doshi": {
+      "file": "76a7a0768506c957.json",
+      "balls": 13,
+      "directionRecorded": 5
+    },
+    "Y Gnaneswara Rao": {
+      "file": "f300dc36d7f3c9c5.json",
+      "balls": 18,
+      "directionRecorded": 13
+    },
+    "S Rana": {
+      "file": "28000c39b236d463.json",
+      "balls": 82,
+      "directionRecorded": 52
+    },
+    "BA Bhatt": {
+      "file": "687db74f0e225547.json",
+      "balls": 7,
+      "directionRecorded": 1
+    },
+    "RE Levi": {
+      "file": "2bc95bd6e38361e1.json",
+      "balls": 74,
+      "directionRecorded": 44
+    },
+    "KK Cooper": {
+      "file": "12c0c702fb9765ae.json",
+      "balls": 70,
+      "directionRecorded": 43
+    },
+    "DAJ Bracewell": {
+      "file": "c3ef4048f927b372.json",
+      "balls": 9,
+      "directionRecorded": 8
+    },
+    "DJ Harris": {
+      "file": "647e2af77fec3990.json",
+      "balls": 103,
+      "directionRecorded": 69
+    },
+    "GB Hogg": {
+      "file": "3321080c503bc165.json",
+      "balls": 22,
+      "directionRecorded": 17
+    },
+    "RR Bhatkal": {
+      "file": "b5e926e0b7ad2e4d.json",
+      "balls": 2,
+      "directionRecorded": 0
+    },
+    "CJ McKay": {
+      "file": "251a9e5a1d4210cf.json",
+      "balls": 15,
+      "directionRecorded": 10
+    },
+    "N Saini": {
+      "file": "1d84578c985bb4aa.json",
+      "balls": 143,
+      "directionRecorded": 91
+    },
+    "Azhar Mahmood": {
+      "file": "6dc00dce897e2058.json",
+      "balls": 311,
+      "directionRecorded": 196
+    },
+    "RJ Peterson": {
+      "file": "6c3cbeb08219eb2b.json",
+      "balls": 32,
+      "directionRecorded": 22
+    },
+    "KMDN Kulasekara": {
+      "file": "f2bb448f1af3b92b.json",
+      "balls": 3,
+      "directionRecorded": 3
+    },
+    "A Ashish Reddy": {
+      "file": "67b1ac7b7639f22d.json",
+      "balls": 196,
+      "directionRecorded": 128
+    },
+    "V Pratap Singh": {
+      "file": "d41ffcfd7e72a38f.json",
+      "balls": 1,
+      "directionRecorded": 0
+    },
+    "BB Samantray": {
+      "file": "37beb9308af6e0f0.json",
+      "balls": 116,
+      "directionRecorded": 61
+    },
+    "MJ Clarke": {
+      "file": "2b2d6fdfe0a0cabd.json",
+      "balls": 96,
+      "directionRecorded": 63
+    },
+    "AP Majumdar": {
+      "file": "e99bf496c1f957b6.json",
+      "balls": 77,
+      "directionRecorded": 51
+    },
+    "PA Reddy": {
+      "file": "d2dcd140da0412a8.json",
+      "balls": 167,
+      "directionRecorded": 108
+    },
+    "K Upadhyay": {
+      "file": "59ba017c71a728d4.json",
+      "balls": 9,
+      "directionRecorded": 5
+    },
+    "P Awana": {
+      "file": "fded1cb721de907c.json",
+      "balls": 14,
+      "directionRecorded": 7
+    },
+    "A Chandila": {
+      "file": "9af79d8eb1bed6c8.json",
+      "balls": 7,
+      "directionRecorded": 5
+    },
+    "Sunny Gupta": {
+      "file": "952839a6ac120ab9.json",
+      "balls": 1,
+      "directionRecorded": 0
+    },
+    "MC Juneja": {
+      "file": "036bd052e5137bc6.json",
+      "balls": 134,
+      "directionRecorded": 93
+    },
+    "MDKJ Perera": {
+      "file": "b4892e52c4eed0ed.json",
+      "balls": 13,
+      "directionRecorded": 6
+    },
+    "R Shukla": {
+      "file": "0a96758f2796818b.json",
+      "balls": 23,
+      "directionRecorded": 13
+    },
+    "BMAJ Mendis": {
+      "file": "27fe96541c09ff07.json",
+      "balls": 27,
+      "directionRecorded": 19
+    },
+    "R Rampaul": {
+      "file": "aaa0ce6a16e3f715.json",
+      "balls": 52,
+      "directionRecorded": 32
+    },
+    "SMSM Senanayake": {
+      "file": "0472b38308de0786.json",
+      "balls": 17,
+      "directionRecorded": 11
+    },
+    "BJ Rohrer": {
+      "file": "07c0db650bc7d518.json",
+      "balls": 146,
+      "directionRecorded": 78
+    },
+    "LJ Wright": {
+      "file": "74b42d4f541c44df.json",
+      "balls": 63,
+      "directionRecorded": 41
+    },
+    "IC Pandey": {
+      "file": "a2c4145007e785b5.json",
+      "balls": 2,
+      "directionRecorded": 0
+    },
+    "CM Gautam": {
+      "file": "3f45cf4e8db99676.json",
+      "balls": 158,
+      "directionRecorded": 85
+    },
+    "X Thalaivan Sargunam": {
+      "file": "0b93e0325c90574c.json",
+      "balls": 17,
+      "directionRecorded": 9
+    },
+    "DJG Sammy": {
+      "file": "a16f80d539b5c7fc.json",
+      "balls": 251,
+      "directionRecorded": 148
+    },
+    "KW Richardson": {
+      "file": "0c4cb3970529bfe2.json",
+      "balls": 39,
+      "directionRecorded": 21
+    },
+    "UA Birla": {
+      "file": "9ff5c424b2005f79.json",
+      "balls": 15,
+      "directionRecorded": 5
+    },
+    "Parvez Rasool": {
+      "file": "ffbad491fa7f62ca.json",
+      "balls": 20,
+      "directionRecorded": 12
+    },
+    "PV Tambe": {
+      "file": "0ab60b2545543b08.json",
+      "balls": 39,
+      "directionRecorded": 19
+    },
+    "NJ Maddinson": {
+      "file": "e00dcd034e86739c.json",
+      "balls": 21,
+      "directionRecorded": 9
+    },
+    "BR Dunk": {
+      "file": "ea07932f3a465646.json",
+      "balls": 36,
+      "directionRecorded": 27
+    },
+    "Shivam Sharma": {
+      "file": "df6c1938f837f84a.json",
+      "balls": 3,
+      "directionRecorded": 2
+    },
+    "VH Zol": {
+      "file": "19c34be368d53d77.json",
+      "balls": 26,
+      "directionRecorded": 18
+    },
+    "BE Hendricks": {
+      "file": "1af45e9da35c156f.json",
+      "balls": 3,
+      "directionRecorded": 2
+    },
+    "M de Lange": {
+      "file": "b97a31f9af4c9649.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "Karanveer Singh": {
+      "file": "24851583f2db791d.json",
+      "balls": 17,
+      "directionRecorded": 9
+    },
+    "RG More": {
+      "file": "8763ede5eb434359.json",
+      "balls": 2,
+      "directionRecorded": 1
+    },
+    "DJ Muthuswami": {
+      "file": "3366f74a61bd5e3f.json",
+      "balls": 3,
+      "directionRecorded": 2
+    },
+    "P Sahu": {
+      "file": "680ffdfc291602cb.json",
+      "balls": 13,
+      "directionRecorded": 6
+    },
+    "KJ Abbott": {
+      "file": "6cb1d8fe0c827db2.json",
+      "balls": 8,
+      "directionRecorded": 4
+    },
+    "PSP Handscomb": {
+      "file": "c154e2aaa5284b03.json",
+      "balls": 12,
+      "directionRecorded": 10
+    },
+    "UT Khawaja": {
+      "file": "f6dfee8502893d32.json",
+      "balls": 105,
+      "directionRecorded": 80
+    },
+    "F Behardien": {
+      "file": "4e951cb9a6929a20.json",
+      "balls": 13,
+      "directionRecorded": 11
+    },
+    "S Kaushik": {
+      "file": "e6f4f24def9c2134.json",
+      "balls": 1,
+      "directionRecorded": 1
+    },
+    "ER Dwivedi": {
+      "file": "005bd6d73ab2d19f.json",
+      "balls": 15,
+      "directionRecorded": 10
+    }
+  },
+  "source": "Cricsheet CSV + commentary-parsed labels",
+  "rejectedInnings": 0
+}

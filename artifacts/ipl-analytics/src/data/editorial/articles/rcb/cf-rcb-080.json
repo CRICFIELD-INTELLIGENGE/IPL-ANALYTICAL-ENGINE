@@ -1,0 +1,175 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-080",
+ "planId": "cf-rcb-080",
+ "franchise": "RCB",
+ "aspect": "scouting",
+ "title": "The Scout\u2019s Blind Spot: Which Small-Sample Stars Might Mislead Royal Challengers Bengaluru?",
+ "slug": "rcb-the-scouts-blind-spot-which-small-sample-stars-might-mislead-rcb",
+ "dek": "A strike rate built on a few dozen balls is mostly noise. Across nearly a thousand IPL batter-seasons, CricField measured how much of a hot start survives into the next year, and the answer should change how RCB reads a cameo.",
+ "excerpt": "When a batter's strike-rate edge comes from fewer than sixty balls, only a sliver of it carries into the next season. A simple shrinkage rule cuts prediction error roughly in half, and RCB's own recent cameos show why it matters.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-25",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RCB"
+ ],
+ "players": [
+  "Romario Shepherd",
+  "Jacob Bethell",
+  "Mahipal Lomror"
+ ],
+ "seasons": [
+  "2008\u20132026",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "When a strike-rate edge comes from fewer than sixty balls, only {{ev:retain-10-59}} of it survives into the next season; from a full season's workload, {{ev:retain-150-299}} survives.",
+  "Blending each batter's record with {{ev:shrink-k}} balls of league-average batting cut next-season prediction error by {{ev:shrink-gain}}.",
+  "{{ev:rcb-top-raw-name}} struck at {{ev:rcb-top-raw}} across {{ev:rcb-top-balls}} balls; the shrunk estimate is {{ev:rcb-top-shrunk}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Cameo Problem",
+   "body": [
+    "Every season produces a few batters who look like discoveries. A late-order hitter clears the ropes in three innings, faces a couple of dozen balls at an outrageous strike rate, and goes into the auction conversation as a finisher. Some become stars. Most do not.",
+    "For a franchise like RCB, which has to fill its lower order and bench with players who rarely face many balls, the question is practical: how much of a short burst should a scout believe? CricField answered it with every consecutive pair of IPL seasons for every batter, {{ev:pairs}} pairs in all."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "How Much of a Hot Start Survives",
+   "body": [
+    "For each batter-season we measured strike rate relative to that season's league average, then asked how much of the edge reappeared the following season, among players who batted enough to judge. The answer depends heavily on how many balls produced the edge.",
+    "With fewer than sixty balls, only {{ev:retain-10-59}} of a batter's edge carried over. With sixty to a hundred and fifty balls, {{ev:retain-60-149}}. With a full season's workload of a hundred and fifty to three hundred balls, {{ev:retain-150-299}}, and with more than three hundred, {{ev:retain-300plus}}. Even large samples regress a long way, but small ones regress almost completely.",
+    "The hottest starters show the effect most clearly. Batters who faced sixty to a hundred and fifty balls and struck at least thirty points above the league averaged {{ev:hot-now-60-149}} in that season and {{ev:hot-next-60-149}} the next. For hot batters with a full season's workload the slide was smaller, from {{ev:hot-now-150-299}} to {{ev:hot-next-150-299}}."
+   ],
+   "chartIds": [
+    "retention"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "A Shrinkage Rule a Scout Can Use",
+   "body": [
+    "The practical fix is to blend each batter's record with an imaginary block of league-average batting before judging it. We tested every block size and found that adding {{ev:shrink-k}} balls of league-average strike rate predicted the next season best, cutting prediction error by {{ev:shrink-gain}} compared with taking strike rates at face value.",
+    "Applied to RCB's own small samples from 2024 to 2026, the rule is sobering. {{ev:rcb-top-raw-name}} struck at {{ev:rcb-top-raw}} from {{ev:rcb-top-balls}} balls; shrunk, the estimate is {{ev:rcb-top-shrunk}}, a little above the league average rather than a historic outlier. The table shows the same pattern for every RCB batter with fewer than a hundred balls in a season.",
+    "None of this says the cameo players were poor signings. It says that a short burst should move a scout's estimate only a little, and that the decision should rest on longer records, domestic and overseas, rather than on the burst itself."
+   ],
+   "chartIds": [
+    "rcb-shrunk"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "When a Small Sample Is Telling the Truth",
+   "body": [
+    "Shrinkage treats every batter as average until proven otherwise. That is fair for unknowns but harsh on players whose small IPL sample sits on top of a long record elsewhere, or on genuine late developers whose skills have changed. A single prior weight for every player also ignores role: a finisher's strike rate is inflated by the overs he bats in.",
+    "{{hyp:role-prior}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Shrink First, Then Scout",
+   "body": [
+    "Before RCB's scouts, or anyone else, react to a cameo, they should shrink it. A strike rate from a few dozen balls is mostly noise, and the data says so with unusual clarity.",
+    "The blind spot is not that small samples are useless. It is that they arrive with the most vivid evidence, the sixes everyone remembers, and the least predictive power. A disciplined franchise writes the shrunk number next to the raw one on every scouting sheet."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "retention",
+   "type": "column",
+   "title": "How much of a strike-rate edge survives a season",
+   "subtitle": "IPL batter-seasons 2008\u20132025 followed by a season with 60+ balls",
+   "table": "retention-by-sample",
+   "xKey": "sample",
+   "series": [
+    {
+     "key": "retainedPct",
+     "label": "Edge retained next season"
+    }
+   ],
+   "xLabel": "Balls faced in the first season",
+   "unit": "% of edge retained",
+   "takeaway": "Edges built on small samples almost vanish; even full-season edges keep only about a third.",
+   "ariaLabel": "Column chart of the share of a batter's strike-rate edge retained the next season, by sample size in the first season: ten to fifty-nine balls, sixty to one hundred and forty-nine, one hundred and fifty to two hundred and ninety-nine, and three hundred plus."
+  },
+  {
+   "id": "rcb-shrunk",
+   "type": "bar",
+   "title": "RCB small samples: raw vs shrunk strike rate",
+   "subtitle": "RCB batter-seasons 2024\u20132026 with 15\u201399 balls",
+   "table": "rcb-small-samples",
+   "xKey": "batter",
+   "series": [
+    {
+     "key": "rawSR",
+     "label": "Raw strike rate"
+    },
+    {
+     "key": "shrunkSR",
+     "label": "Shrunk estimate"
+    }
+   ],
+   "unit": "runs per 100 balls",
+   "takeaway": "Shrinkage pulls every small-sample strike rate towards the league average, the extreme ones most of all.",
+   "ariaLabel": "Horizontal bar chart comparing raw and shrunk strike rates for RCB batters with between fifteen and ninety-nine balls in a season from 2024 to 2026."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/"
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "role-prior",
+   "statement": "Hypothesis: a role-specific prior (finisher, opener, anchor) would predict next-season strike rate better than a single league-average prior.",
+   "whyUnverified": "Batting roles are not reliably labelled in the warehouse, so role-specific priors have not been estimated.",
+   "howToTest": "Classify batter-seasons by average entry over, estimate a separate prior for each class, and compare prediction error with the single-prior model."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A lower-order hitter's cameo for RCB.",
+   "wanted": "Romario Shepherd batting for RCB in 2025, landscape."
+  },
+  {
+   "slot": "s2",
+   "narrative": "Young batters judged on short runs.",
+   "wanted": "Jacob Bethell batting for RCB."
+  },
+  {
+   "slot": "s4",
+   "narrative": "The finisher's role.",
+   "wanted": "An RCB lower-order batter hitting late in an innings."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-084",
+  "cf-rcb-087",
+  "cf-rcb-076"
+ ],
+ "seo": {
+  "metaTitle": "The scout's blind spot: small-sample stars at RCB | CricField",
+  "metaDescription": "Across almost a thousand IPL batter-seasons, small-sample strike rates barely carry over. A simple shrinkage rule halves prediction error; RCB's cameos show why."
+ },
+ "methodology": "Strike rate is measured relative to each season's league strike rate. Pairs link a batter-season with at least ten balls to the next season with at least sixty. Retention is the slope of next-season relative strike rate on this-season relative strike rate within each sample band. The shrinkage weight was chosen by grid search over zero to fifteen hundred balls. Generated by scripts/editorial/evidence/rcb/cf-rcb-080.ts."
+}

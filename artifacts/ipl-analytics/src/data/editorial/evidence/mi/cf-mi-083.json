@@ -1,0 +1,176 @@
+{
+ "articleId": "cf-mi-083",
+ "generatedAt": "2026-10-26T04:19:59.835Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "va-n": {
+   "value": 11,
+   "display": "11",
+   "label": "MI batters with at least 200 balls, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 11,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.venue_id, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (4) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY pl.name, year, m.venue_id",
+   "validation": {
+    "method": "sample-size floor ≥ 4 batters",
+    "passed": true,
+    "detail": "n = 11"
+   }
+  },
+  "va-top-name": {
+   "value": "TH David",
+   "display": "TH David",
+   "label": "Highest venue-adjusted rating",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 200 balls",
+   "sampleSize": {
+    "n": 384,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.venue_id, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (4) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY pl.name, year, m.venue_id",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "va-top-v": {
+   "value": 121,
+   "display": "121",
+   "label": "That batter's venue-adjusted rating",
+   "unit": "index",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 384,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.venue_id, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (4) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY pl.name, year, m.venue_id",
+   "validation": {
+    "method": "plausibility range 50–200 for index",
+    "passed": true,
+    "detail": "value 120.6798837980813"
+   }
+  },
+  "va-hf": {
+   "value": 99,
+   "display": "99",
+   "label": "Scoring at Wankhede relative to the IPL average, 2022–2026",
+   "unit": "index",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Runs per ball off the bat, all teams",
+   "sampleSize": {
+    "n": 2,
+    "unit": "venues"
+   },
+   "query": "SELECT m.venue_id, SUM(d.batter_runs) * 1.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) rpb, COUNT(DISTINCT m.match_id) n FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY m.venue_id",
+   "validation": {
+    "method": "plausibility range 60–140 for index",
+    "passed": true,
+    "detail": "value 99.30591439230318"
+   }
+  },
+  "va-mover": {
+   "value": "Ishan Kishan",
+   "display": "Ishan Kishan",
+   "label": "Batter whose rank moves most after venue adjustment",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 200 balls",
+   "sampleSize": {
+    "n": 11,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.venue_id, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (4) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY pl.name, year, m.venue_id",
+   "validation": {
+    "method": "max absolute rank change",
+    "passed": true
+   }
+  },
+  "va-move-n": {
+   "value": "3",
+   "display": "3",
+   "label": "Places moved",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 11,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.venue_id, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (4) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY pl.name, year, m.venue_id",
+   "validation": {
+    "method": "rank difference",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "va-top": {
+   "label": "MI batters: venue-adjusted rating, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "100 = league average for the season and venue; min. 200 balls",
+   "sampleSize": {
+    "n": 11,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.venue_id, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (4) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY pl.name, year, m.venue_id",
+   "rows": [
+    {
+     "batter": "TH David",
+     "venueAdjusted": 121,
+     "seasonOnly": 119,
+     "strikeRate": 171.4
+    },
+    {
+     "batter": "SA Yadav",
+     "venueAdjusted": 114,
+     "seasonOnly": 112,
+     "strikeRate": 164.9
+    },
+    {
+     "batter": "C Green",
+     "venueAdjusted": 113,
+     "seasonOnly": 113,
+     "strikeRate": 160.3
+    },
+    {
+     "batter": "RD Rickelton",
+     "venueAdjusted": 108,
+     "seasonOnly": 109,
+     "strikeRate": 168.2
+    },
+    {
+     "batter": "Naman Dhir",
+     "venueAdjusted": 107,
+     "seasonOnly": 106,
+     "strikeRate": 164
+    },
+    {
+     "batter": "Tilak Varma",
+     "venueAdjusted": 99,
+     "seasonOnly": 99,
+     "strikeRate": 144.7
+    },
+    {
+     "batter": "N Wadhera",
+     "venueAdjusted": 99,
+     "seasonOnly": 97,
+     "strikeRate": 140
+    },
+    {
+     "batter": "Ishan Kishan",
+     "venueAdjusted": 99,
+     "seasonOnly": 96,
+     "strikeRate": 135.3
+    }
+   ]
+  }
+ }
+}

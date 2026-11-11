@@ -1,0 +1,144 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-lsg-038",
+ "planId": "cf-lsg-038",
+ "franchise": "LSG",
+ "aspect": "auction-economics",
+ "title": "Role Scarcity Index: Which Skill Sets Are Hardest for Lucknow Super Giants to Buy?",
+ "slug": "lsg-role-scarcity-index-which-skill-sets-are-hardest-for-lsg-to-buy",
+ "dek": "Which skills are hardest for Lucknow Super Giants to buy? Counting the genuinely elite performers in each role across the league shows where the market is thinnest.",
+ "excerpt": "Across the IPL since 2024, the scarcest role by this measure is the new-ball bowler. Scarce roles deserve retention priority and higher walk-away prices.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "LSG"
+ ],
+ "players": [],
+ "seasons": [
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "Since 2024 the league has had {{ev:rs-deathbowl}} elite death bowlers and {{ev:rs-ppbowl}} elite new-ball bowlers (min. one hundred balls in the phase).",
+  "It has had {{ev:rs-ppbat}} elite powerplay hitters and {{ev:rs-deathbat}} elite death-overs hitters.",
+  "The scarcest role on this measure is the new-ball bowler."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Supply and Demand at the Auction",
+   "body": [
+    "Auction prices follow scarcity. Ten franchises each want a death bowler, a powerplay hitter and a middle-overs controller, but the supply of genuinely elite performers in each role is small.",
+    "CricField counted IPL players since 2024 who were at least fifteen per cent better than the phase average with a meaningful workload. The league had {{ev:rs-deathbowl}} elite death bowlers, {{ev:rs-ppbowl}} elite new-ball bowlers and {{ev:rs-midbowl}} elite middle-overs bowlers."
+   ],
+   "chartIds": [
+    "rs-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Batting Side",
+   "body": [
+    "On the batting side there were {{ev:rs-ppbat}} elite powerplay hitters and {{ev:rs-deathbat}} elite death-overs hitters by the same test.",
+    "The scarcest role on this measure is the new-ball bowler, which is where competition at the auction will be fiercest."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "What It Means for LSG",
+   "body": [
+    "Lucknow Super Giants should protect players in the scarcest roles at retention, and accept higher prices for them at the auction, while buying plentiful roles cheaply.",
+    "The surplus-over-replacement analysis in this series should be adjusted upwards for scarce roles, because the true replacement is weaker there."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Elite Is a Moving Target",
+   "body": [
+    "A fixed threshold makes the count sensitive to sample size: players with just over a hundred balls can qualify on a hot streak. The counts describe the last three seasons, not a permanent market.",
+    "{{hyp:shrink}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Pay for Scarcity, Save on Abundance",
+   "body": [
+    "Lucknow Super Giants should rank auction targets by role scarcity first and individual quality second.",
+    "Repeating this count each season would show how the market's supply is shifting."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "rs-chart",
+   "type": "bar",
+   "title": "Elite players by role",
+   "subtitle": "IPL, 2024\u20132026, min. 100 balls in the phase",
+   "table": "rs-roles",
+   "xKey": "role",
+   "series": [
+    {
+     "key": "elite",
+     "label": "Elite players"
+    }
+   ],
+   "unit": "players",
+   "takeaway": "The new-ball bowler is the scarcest role on this measure.",
+   "ariaLabel": "Horizontal bar chart of the number of elite IPL players in each role since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "shrink",
+   "statement": "Hypothesis: counting elite players after shrinking their rates towards the average changes the ranking of scarce roles.",
+   "whyUnverified": "Shrinkage has not been applied to the role counts.",
+   "howToTest": "Shrink each player's phase rate with an empirical-Bayes prior and recount."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "15",
+   "reason": "Elite threshold (15% better than the phase average), stated in a table label."
+  },
+  {
+   "text": "100",
+   "reason": "Minimum balls in the phase."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A scarce skill: Lucknow Super Giants bowling at the death.",
+   "wanted": "Lucknow Super Giants death bowler."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-lsg-033",
+  "cf-lsg-037",
+  "cf-lsg-034"
+ ],
+ "seo": {
+  "metaTitle": "Role scarcity: which skills LSG find hardest to buy",
+  "metaDescription": "How many elite powerplay hitters, death bowlers and other specialists the IPL has had since 2024, and what scarcity means for Lucknow Super Giants."
+ },
+ "methodology": "Contribution is tempo runs above average (tRAA): batting runs above what an average batter would score from the same balls in the same season and phase, plus bowling runs saved against the average bowler in the same season and phase. Wickets and dismissals are not valued in this version. Prices come from CricField squad lists (\u20b9 crore = 100 lakh). Generated by scripts/editorial/engine. Elite = at least 15% better than the phase average (strike rate for batters, economy for bowlers) with at least 100 balls in the phase, 2024\u20132026.",
+ "generator": "engine:v1"
+}

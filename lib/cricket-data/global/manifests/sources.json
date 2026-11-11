@@ -1,0 +1,26 @@
+{
+  "$comment": "Competition catalogue for the global data engine. URLs follow the Cricsheet downloads page (https://cricsheet.org/downloads/). Only entries with enabled=true are downloaded. catalogueMatches is the men's match count shown on that page when the entry was added, used by validation. Batch 2 is listed but disabled until approved.",
+  "catalogueCheckedAt": "2026-10-10",
+  "licence": "Cricsheet match data: Open Data Commons Attribution License (ODC-BY 1.0), https://opendatacommons.org/licenses/by/1-0/ — see https://cricsheet.org/licensing/",
+  "competitions": [
+    { "code": "ipl", "name": "Indian Premier League", "region": "India", "format": "T20", "gender": "male", "teamType": "club", "slug": "ipl_json", "batch": 1, "enabled": true, "catalogueMatches": 1243, "note": "Loaded for cross-league comparison and reconciled against sqlite.db; never replaces it." },
+    { "code": "smat", "name": "Syed Mushtaq Ali Trophy", "region": "India", "format": "T20", "gender": "male", "teamType": "club", "slug": "sma_json", "batch": 1, "enabled": true, "catalogueMatches": 695 },
+    { "code": "bbl", "name": "Big Bash League", "region": "Australia", "format": "T20", "gender": "male", "teamType": "club", "slug": "bbl_json", "batch": 1, "enabled": true, "catalogueMatches": 662 },
+    { "code": "sa20", "name": "SA20", "region": "South Africa", "format": "T20", "gender": "male", "teamType": "club", "slug": "sat_json", "batch": 1, "enabled": true, "catalogueMatches": 130 },
+    { "code": "cpl", "name": "Caribbean Premier League", "region": "West Indies", "format": "T20", "gender": "male", "teamType": "club", "slug": "cpl_json", "batch": 1, "enabled": true, "catalogueMatches": 445 },
+    { "code": "ilt20", "name": "International League T20", "region": "United Arab Emirates", "format": "T20", "gender": "male", "teamType": "club", "slug": "ilt_json", "batch": 1, "enabled": true, "catalogueMatches": 134 },
+
+    { "code": "psl", "name": "Pakistan Super League", "region": "Pakistan", "format": "T20", "gender": "male", "teamType": "club", "slug": "psl_json", "batch": 2, "enabled": false, "catalogueMatches": 357, "note": "Awaiting Batch 2 approval." },
+    { "code": "bpl", "name": "Bangladesh Premier League", "region": "Bangladesh", "format": "T20", "gender": "male", "teamType": "club", "slug": "bpl_json", "batch": 2, "enabled": false, "catalogueMatches": 469, "note": "Awaiting Batch 2 approval." },
+    { "code": "lpl", "name": "Lanka Premier League", "region": "Sri Lanka", "format": "T20", "gender": "male", "teamType": "club", "slug": "lpl_json", "batch": 2, "enabled": false, "catalogueMatches": 143, "note": "Awaiting Batch 2 approval." },
+    { "code": "mlc", "name": "Major League Cricket", "region": "United States of America", "format": "T20", "gender": "male", "teamType": "club", "slug": "mlc_json", "batch": 2, "enabled": false, "catalogueMatches": 109, "note": "Awaiting Batch 2 approval." },
+    { "code": "hundred", "name": "The Hundred (men)", "region": "England", "format": "100-ball", "gender": "male", "teamType": "club", "slug": "hnd_male_json", "batch": 2, "enabled": false, "catalogueMatches": 201, "note": "Awaiting Batch 2 approval. 5-ball sets." },
+    { "code": "blast", "name": "T20 Blast", "region": "England", "format": "T20", "gender": "male", "teamType": "club", "slug": "ntb_json", "batch": 2, "enabled": false, "catalogueMatches": 1570, "note": "Awaiting Batch 2 approval." },
+    { "code": "supersmash", "name": "Super Smash (men)", "region": "New Zealand", "format": "T20", "gender": "male", "teamType": "club", "slug": "ssm_male_json", "batch": 2, "enabled": false, "catalogueMatches": 270, "note": "Awaiting Batch 2 approval." },
+    { "code": "t20i", "name": "Men's T20 Internationals", "region": "International", "format": "T20I", "gender": "male", "teamType": "international", "slug": "t20s_male_json", "batch": 2, "enabled": false, "catalogueMatches": 3592, "note": "Awaiting Batch 2 approval. Cricsheet withholds Afghanistan-related matches, so coverage is incomplete." }
+  ],
+  "registers": [
+    { "name": "people", "url": "https://cricsheet.org/register/people.csv", "enabled": true },
+    { "name": "names", "url": "https://cricsheet.org/register/names.csv", "enabled": true }
+  ]
+}

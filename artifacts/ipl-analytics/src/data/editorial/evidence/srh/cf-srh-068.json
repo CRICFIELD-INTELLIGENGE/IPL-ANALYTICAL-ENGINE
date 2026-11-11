@@ -1,0 +1,143 @@
+{
+ "articleId": "cf-srh-068",
+ "generatedAt": "2026-10-26T04:22:28.121Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "fc-r1": {
+   "value": "Ishan Kishan",
+   "display": "Ishan Kishan",
+   "label": "Leading SRH run-scorer with two seasons or fewer at the franchise",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 77,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) GROUP BY pl.name",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "fc-r1n": {
+   "value": 956,
+   "display": "956",
+   "label": "Runs by that player for the franchise",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 562,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) GROUP BY pl.name",
+   "validation": {
+    "method": "plausibility range 100–1500 for runs",
+    "passed": true,
+    "detail": "value 956"
+   }
+  },
+  "fc-w1": {
+   "value": "E Malinga",
+   "display": "E Malinga",
+   "label": "Leading SRH wicket-taker with two seasons or fewer at the franchise",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-credited",
+   "sampleSize": {
+    "n": 49,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (1) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "fc-w1n": {
+   "value": 33,
+   "display": "33",
+   "label": "Wickets by that player for the franchise",
+   "unit": "wickets",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-credited",
+   "sampleSize": {
+    "n": 33,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (1) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name",
+   "validation": {
+    "method": "plausibility range 5–60 for wickets",
+    "passed": true,
+    "detail": "value 33"
+   }
+  },
+  "fc-n": {
+   "value": 87,
+   "display": "87",
+   "label": "Players with two seasons or fewer at SRH",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2013–2026",
+   "sampleSize": {
+    "n": 125,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(DISTINCT x.y) seasons, MIN(x.y) first, MAX(x.y) last FROM ( SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) UNION SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.bowler_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (1)) x JOIN players pl ON pl.player_id = x.pid GROUP BY pl.name ORDER BY seasons DESC, pl.name",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "fc-runs": {
+   "label": "SRH leading run-scorers who played two seasons or fewer",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 77,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) GROUP BY pl.name",
+   "rows": [
+    {
+     "player": "Ishan Kishan (2025–2026)",
+     "runs": 956
+    },
+    {
+     "player": "Yuvraj Singh (2016–2017)",
+     "runs": 488
+    },
+    {
+     "player": "MA Agarwal (2023–2024)",
+     "runs": 334
+    },
+    {
+     "player": "Aniket Verma (2025–2026)",
+     "runs": 315
+    },
+    {
+     "player": "EJG Morgan (2015–2016)",
+     "runs": 310
+    },
+    {
+     "player": "AJ Finch (2014)",
+     "runs": 309
+    },
+    {
+     "player": "KL Rahul (2014–2015)",
+     "runs": 308
+    },
+    {
+     "player": "N Pooran (2022)",
+     "runs": 306
+    }
+   ]
+  }
+ }
+}

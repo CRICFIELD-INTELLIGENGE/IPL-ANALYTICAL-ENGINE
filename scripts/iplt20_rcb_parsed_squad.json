@@ -1,0 +1,82 @@
+[
+  {
+    "id": "player-73907",
+    "externalId": 73907,
+    "name": "Jacob Bethell",
+    "role": "batsman",
+    "country": "England",
+    "countryCode": "gb-eng",
+    "isInternational": true,
+    "isCaptain": false,
+    "isWicketKeeper": false,
+    "jerseyNumber": "",
+    "imageUrl": "https://www.iplt20.com/api/team-assets?pathname=player%2F8903%2F2138%2F73907.png&brand=ipl",
+    "imageUrlSet": {
+      "small": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F73907.png%26brand%3Dipl&w=384&q=75",
+      "medium": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F73907.png%26brand%3Dipl&w=750&q=75",
+      "large": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F73907.png%26brand%3Dipl&w=1080&q=75",
+      "xlarge": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F73907.png%26brand%3Dipl&w=1920&q=75"
+    },
+    "backgroundImageUrl": "https://www.iplt20.com/api/team-assets?pathname=static%2Fteams%2F2138%2Fplayer-bg.svg&brand=ipl"
+  },
+  {
+    "id": "player-91255",
+    "externalId": 91255,
+    "name": "Kanishk Chouhan",
+    "role": "bowler",
+    "country": "India",
+    "countryCode": "in",
+    "isInternational": false,
+    "isCaptain": false,
+    "isWicketKeeper": false,
+    "jerseyNumber": "",
+    "imageUrl": "https://www.iplt20.com/api/team-assets?pathname=player%2F8903%2F2138%2F91255.png&brand=ipl",
+    "imageUrlSet": {
+      "small": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F91255.png%26brand%3Dipl&w=384&q=75",
+      "medium": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F91255.png%26brand%3Dipl&w=750&q=75",
+      "large": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F91255.png%26brand%3Dipl&w=1080&q=75",
+      "xlarge": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F91255.png%26brand%3Dipl&w=1920&q=75"
+    },
+    "backgroundImageUrl": "https://www.iplt20.com/api/team-assets?pathname=static%2Fteams%2F2138%2Fplayer-bg.svg&brand=ipl"
+  },
+  {
+    "id": "player-69894",
+    "externalId": 69894,
+    "name": "Jordan Cox",
+    "role": "batsman",
+    "country": "England",
+    "countryCode": "gb-eng",
+    "isInternational": true,
+    "isCaptain": false,
+    "isWicketKeeper": true,
+    "jerseyNumber": "",
+    "imageUrl": "https://www.iplt20.com/api/team-assets?pathname=player%2F8903%2F2138%2F69894.png&brand=ipl",
+    "imageUrlSet": {
+      "small": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F69894.png%26brand%3Dipl&w=384&q=75",
+      "medium": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F69894.png%26brand%3Dipl&w=750&q=75",
+      "large": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F69894.png%26brand%3Dipl&w=1080&q=75",
+      "xlarge": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F69894.png%26brand%3Dipl&w=1920&q=75"
+    },
+    "backgroundImageUrl": "https://www.iplt20.com/api/team-assets?pathname=static%2Fteams%2F2138%2Fplayer-bg.svg&brand=ipl"
+  },
+  {
+    "id": "player-68859",
+    "externalId": 68859,
+    "name": "Rasikh Dar",
+    "role": "bowler",
+    "country": "India",
+    "countryCode": "in",
+    "isInternational": false,
+    "isCaptain": false,
+    "isWicketKeeper": false,
+    "jerseyNumber": "",
+    "imageUrl": "https://www.iplt20.com/api/team-assets?pathname=player%2F8903%2F2138%2F68859.png&brand=ipl",
+    "imageUrlSet": {
+      "small": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F68859.png%26brand%3Dipl&w=384&q=75",
+      "medium": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F68859.png%26brand%3Dipl&w=750&q=75",
+      "large": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F68859.png%26brand%3Dipl&w=1080&q=75",
+      "xlarge": "https://www.iplt20.com/_next/image?url=%2Fapi%2Fteam-assets%3Fpathname%3Dplayer%252F8903%252F2138%252F68859.png%26brand%3Dipl&w=1920&q=75"
+    },
+    "backgroundImageUrl": "https://www.iplt20.com/api/team-assets?pathname=static%2Fteams%2F2138%2Fplayer-bg.svg&brand=ipl"
+  }
+]

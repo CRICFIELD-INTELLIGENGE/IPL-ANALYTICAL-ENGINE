@@ -1,0 +1,394 @@
+{
+ "articleId": "cf-dc-022",
+ "generatedAt": "2026-10-26T11:34:07.741Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "hg-home-matches": {
+   "value": 104,
+   "display": "104",
+   "label": "Matches at Delhi in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams, regulation innings",
+   "sampleSize": {
+    "n": 104,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 104"
+   }
+  },
+  "hg-rr-home": {
+   "value": 8.67,
+   "display": "8.67",
+   "label": "Run rate at Delhi",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 23639,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "plausibility range 6–12 for run rate",
+    "passed": true,
+    "detail": "value 8.674732433690089"
+   }
+  },
+  "hg-rr-other": {
+   "value": 8.45,
+   "display": "8.45",
+   "label": "Run rate at all other IPL venues",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All other venues",
+   "sampleSize": {
+    "n": 260826,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "plausibility range 6–12 for run rate",
+    "passed": true,
+    "detail": "value 8.448068827494192"
+   }
+  },
+  "hg-six-home": {
+   "value": 13.5,
+   "display": "13.5",
+   "label": "Sixes per match at Delhi",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 104,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 104"
+   }
+  },
+  "hg-six-other": {
+   "value": 12.6,
+   "display": "12.6",
+   "label": "Sixes per match at other venues",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All other venues",
+   "sampleSize": {
+    "n": 1139,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 matches",
+    "passed": true,
+    "detail": "n = 1139"
+   }
+  },
+  "hg-first-home": {
+   "value": 172,
+   "display": "172",
+   "label": "Average first-innings score at Delhi",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings",
+   "sampleSize": {
+    "n": 104,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 innings",
+    "passed": true,
+    "detail": "n = 104"
+   }
+  },
+  "hg-first-other": {
+   "value": 168,
+   "display": "168",
+   "label": "Average first-innings score at other venues",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings",
+   "sampleSize": {
+    "n": 1139,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 innings",
+    "passed": true,
+    "detail": "n = 1139"
+   }
+  },
+  "hg-chase-home": {
+   "value": 53.4,
+   "display": "53.4%",
+   "label": "Chasing side's win rate at Delhi",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 103,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 103"
+   }
+  },
+  "hg-chase-other": {
+   "value": 54.6,
+   "display": "54.6%",
+   "label": "Chasing side's win rate at other venues",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 1131,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 matches",
+    "passed": true,
+    "detail": "n = 1131"
+   }
+  },
+  "hg-home-win": {
+   "value": 43,
+   "display": "43.0%",
+   "label": "DC win rate at Delhi",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "DC matches with a result at the ground",
+   "sampleSize": {
+    "n": 93,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (8,11) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (8,11) OR m.team2_id IN (8,11)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 93"
+   }
+  },
+  "hg-away-win": {
+   "value": 48.4,
+   "display": "48.4%",
+   "label": "DC win rate elsewhere",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "DC matches with a result at other venues",
+   "sampleSize": {
+    "n": 184,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (8,11) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (8,11) OR m.team2_id IN (8,11)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 184"
+   }
+  },
+  "hg-home-n": {
+   "value": 93,
+   "display": "93",
+   "label": "DC decided matches at Delhi",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 93,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (8,11) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (8,11) OR m.team2_id IN (8,11)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 93"
+   }
+  },
+  "hg-home-ci": {
+   "value": "33–53%",
+   "display": "33–53%",
+   "label": "95% interval for DC's home win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Wilson score interval",
+   "sampleSize": {
+    "n": 93,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (8,11) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (8,11) OR m.team2_id IN (8,11)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "interval contains point estimate",
+    "passed": true
+   }
+  },
+  "hg-home-p": {
+   "value": 0.21,
+   "display": "0.21",
+   "label": "Probability of a home record at least this far from 50/50 if each match were a coin toss",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Two-sided exact binomial test",
+   "sampleSize": {
+    "n": 93,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (8,11) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (8,11) OR m.team2_id IN (8,11)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "plausibility range 0–1 for p-value",
+    "passed": true,
+    "detail": "value 0.21315354012774082"
+   }
+  },
+  "hg-toss-field": {
+   "value": 63,
+   "display": "63%",
+   "label": "Toss winners choosing to bowl first at Delhi",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 104,
+    "unit": "matches"
+   },
+   "query": "SELECT SUM(CASE WHEN toss_decision = 'field' THEN 1 ELSE 0 END) field, COUNT(*) n FROM matches m WHERE m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%')",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 104"
+   }
+  }
+ },
+ "tables": {
+  "hg-home-away": {
+   "label": "DC win rate at Delhi vs elsewhere",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 277,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (8,11) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (8,11) OR m.team2_id IN (8,11)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "rows": [
+    {
+     "where": "Delhi",
+     "winPct": 43,
+     "matches": 93
+    },
+    {
+     "where": "Elsewhere",
+     "winPct": 48.4,
+     "matches": 184
+    }
+   ]
+  },
+  "hg-series": {
+   "label": "Average first-innings score: Delhi vs IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings; seasons in which the ground hosted",
+   "sampleSize": {
+    "n": 104,
+    "unit": "innings at the ground"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, AVG(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN i.runs END) home, AVG(i.runs) league, SUM(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Kotla%' OR name LIKE '%Arun Jaitley%') THEN 1 ELSE 0 END) n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY year HAVING n > 0 ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "ground": 166,
+     "league": 161
+    },
+    {
+     "season": "2010",
+     "ground": 173,
+     "league": 165
+    },
+    {
+     "season": "2011",
+     "ground": 143,
+     "league": 152
+    },
+    {
+     "season": "2012",
+     "ground": 165,
+     "league": 158
+    },
+    {
+     "season": "2013",
+     "ground": 155,
+     "league": 156
+    },
+    {
+     "season": "2014",
+     "ground": 159,
+     "league": 163
+    },
+    {
+     "season": "2015",
+     "ground": 147,
+     "league": 166
+    },
+    {
+     "season": "2016",
+     "ground": 160,
+     "league": 163
+    },
+    {
+     "season": "2017",
+     "ground": 184,
+     "league": 166
+    },
+    {
+     "season": "2018",
+     "ground": 180,
+     "league": 172
+    },
+    {
+     "season": "2019",
+     "ground": 156,
+     "league": 167
+    },
+    {
+     "season": "2021",
+     "ground": 195,
+     "league": 159
+    },
+    {
+     "season": "2023",
+     "ground": 176,
+     "league": 183
+    },
+    {
+     "season": "2024",
+     "ground": 235,
+     "league": 190
+    },
+    {
+     "season": "2025",
+     "ground": 203,
+     "league": 189
+    },
+    {
+     "season": "2026",
+     "ground": 172,
+     "league": 193
+    }
+   ]
+  }
+ }
+}

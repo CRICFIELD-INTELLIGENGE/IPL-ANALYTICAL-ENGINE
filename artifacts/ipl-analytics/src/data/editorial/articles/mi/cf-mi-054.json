@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-mi-054",
+ "planId": "cf-mi-054",
+ "franchise": "MI",
+ "aspect": "fan-culture",
+ "title": "The Meme Economy: How Online Humor Rewrites Mumbai Indians\u2019s Story",
+ "slug": "mi-the-meme-economy-how-online-humor-rewrites-mi-story",
+ "dek": "Online humour feeds on collapses and thrashings. The data cannot read the jokes about Mumbai Indians, but it can count the moments that tend to start them.",
+ "excerpt": "Mumbai Indians have suffered heavy defeats and sub-120 totals, the raw material of online mockery. How those moments are retold is a question about fans, not scorecards.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "MI"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:me-hv}} of Mumbai Indians' defeats, {{ev:me-hvpct}}, were heavy: by forty runs or more, or with thirty balls or more to spare.",
+  "They have been bowled out or held under 120 in {{ev:me-low}} innings of ten overs or more.",
+  "Their lowest such total is {{ev:me-lowest}}, in {{ev:me-lowest-y}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Raw Material of Memes",
+   "body": [
+    "Online humour about a team tends to start from the same moments: collapses, thrashings and scorelines that are easy to screenshot.",
+    "The CricField warehouse holds no survey, sentiment or social-media data, so it cannot measure what fans feel. It can measure what they have watched."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Counting the Bad Days",
+   "body": [
+    "{{ev:me-hv}} of Mumbai Indians' defeats were heavy, {{ev:me-hvpct}} of all their losses, by forty runs or more or with thirty balls or more to spare.",
+    "They have been held under 120 in {{ev:me-low}} innings of ten overs or more; the lowest was {{ev:me-lowest}}, in {{ev:me-lowest-y}}. The chart counts both by season."
+   ],
+   "chartIds": [
+    "me-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Rewriting the Story",
+   "body": [
+    "Memes compress a season into one image. A single collapse can define how a team is talked about long after a strong run of results.",
+    "{{hyp:meme}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Owning the Joke",
+   "body": [
+    "Some franchises lean into self-deprecating humour; others ignore it. Which approach protects the brand is not something match data can show.",
+    "Testing it would need social-media sentiment data around specific matches."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Bad Days Are Rare but Memorable",
+   "body": [
+    "Heavy defeats make up a measurable minority of Mumbai Indians' losses. Their weight in the online story is likely far larger than their share of results.",
+    "That gap is the meme economy, and it needs sentiment data to measure."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "me-chart",
+   "type": "column",
+   "title": "Heavy defeats and sub-120 totals",
+   "subtitle": "MI, by season",
+   "table": "me-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "heavyDefeats",
+     "label": "Heavy defeats"
+    },
+    {
+     "key": "under120",
+     "label": "Totals under 120"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "count",
+   "takeaway": "Bad days come in clusters in some seasons.",
+   "ariaLabel": "Grouped column chart of MI heavy defeats and totals under 120 by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "meme",
+   "statement": "Hypothesis: social-media mentions of a franchise spike more after a heavy defeat than after a win of the same margin.",
+   "whyUnverified": "No social-media data is available.",
+   "howToTest": "Compare mention volume and sentiment after heavy defeats and big wins."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "120",
+   "reason": "Low-total threshold used as a definition."
+  },
+  {
+   "text": "40",
+   "reason": "Heavy-defeat run margin stated in a table label."
+  },
+  {
+   "text": "30",
+   "reason": "Heavy-defeat balls-to-spare threshold stated in a table label."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Mumbai Indians on a difficult day.",
+   "wanted": "Mumbai Indians players dejected."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-mi-059",
+  "cf-mi-051",
+  "cf-mi-047"
+ ],
+ "seo": {
+  "metaTitle": "The meme economy: Mumbai Indians' bad days, counted",
+  "metaDescription": "How many heavy defeats and low totals Mumbai Indians have suffered, and why those moments dominate the online story."
+ },
+ "methodology": "CricField holds ball-by-ball cricket data and no fan survey, sentiment or social-media data. This article measures the cricket fans have experienced; statements about fans themselves are labelled hypotheses. Generated by scripts/editorial/engine. Heavy defeat = lost by forty runs or more, or with thirty balls or more to spare. Low totals count innings of at least ten overs.",
+ "generator": "engine:v1"
+}

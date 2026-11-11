@@ -1,0 +1,135 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-srh-027",
+ "planId": "cf-srh-027",
+ "franchise": "SRH",
+ "aspect": "tactical",
+ "title": "Opponent-Specific Plans: Should Sunrisers Hyderabad Build a New XI for Every Match?",
+ "slug": "srh-opponent-specific-plans-should-srh-build-a-new-xi-for-every-match",
+ "dek": "Should Sunrisers Hyderabad rebuild their eleven for every opponent? Head-to-head records show how much results really vary from one rival to the next.",
+ "excerpt": "Sunrisers Hyderabad's head-to-head win rates span a wide range across their opponents. Some of that is genuine match-up, some is the noise of small samples.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "SRH"
+ ],
+ "players": [],
+ "seasons": [
+  "2013\u20132026"
+ ],
+ "keyTakeaways": [
+  "SRH have played {{ev:opp-most-opp}} most often ({{ev:opp-most-n}} decided matches), winning {{ev:opp-most-pct}}.",
+  "Their best record is against {{ev:opp-best-opp}} ({{ev:opp-best-pct}}); their weakest against {{ev:opp-worst-opp}} ({{ev:opp-worst-pct}}).",
+  "The gap between best and worst head-to-head records is {{ev:opp-spread}} percentage points."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "One Eleven or Ten",
+   "body": [
+    "Every opponent has a different shape: some bat deep, some rely on spin, some have a single destructive opener. The question is whether Sunrisers Hyderabad should pick a different eleven for each, or keep a stable side and adjust tactics.",
+    "The head-to-head record is the starting point. SRH have met {{ev:opp-most-opp}} most often, winning {{ev:opp-most-pct}} of {{ev:opp-most-n}} decided matches."
+   ],
+   "chartIds": [
+    "opp-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "How Much Results Vary",
+   "body": [
+    "Sunrisers Hyderabad's best record, among opponents met at least six times, is against {{ev:opp-best-opp}} at {{ev:opp-best-pct}}; their weakest is against {{ev:opp-worst-opp}} at {{ev:opp-worst-pct}}.",
+    "The spread between those records is {{ev:opp-spread}} percentage points. Part of that spread is real, part is what any team would see by chance over a dozen or so matches per opponent."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Where Specific Plans Pay",
+   "body": [
+    "Opponent-specific selection pays when an opponent has a structural weakness that one player in the squad exploits, such as a left-arm wrist spinner against a right-hand-heavy top order.",
+    "It does not pay when it unsettles a stable core. For SRH, one or two match-up changes per game is a sensible ceiling."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Small Samples, Big Stories",
+   "body": [
+    "Head-to-head records are built from few matches over many seasons, with different squads each time. A poor record against one rival can be history rather than a current weakness.",
+    "{{hyp:era}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Stable Core, Targeted Changes",
+   "body": [
+    "Sunrisers Hyderabad should keep a stable core and make targeted changes where an opponent's structure creates a clear match-up.",
+    "Recent head-to-head results, weighted towards the last three seasons, are a better guide than the all-time record."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "opp-chart",
+   "type": "bar",
+   "title": "SRH head-to-head win rate",
+   "subtitle": "Matches with a result, current franchises",
+   "table": "opp-h2h",
+   "xKey": "opponent",
+   "series": [
+    {
+     "key": "winPct",
+     "label": "Win rate"
+    }
+   ],
+   "unit": "% of matches won",
+   "takeaway": "Head-to-head records vary, but small samples exaggerate the differences.",
+   "ariaLabel": "Horizontal bar chart of SRH win rate against each current franchise."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "era",
+   "statement": "Hypothesis: head-to-head records from more than three seasons ago do not predict current results.",
+   "whyUnverified": "Recency-weighted head-to-head records have not been tested for predictive power.",
+   "howToTest": "Compare all-time and last-three-season head-to-head records as predictors of the next season's results."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Sunrisers Hyderabad against a rival.",
+   "wanted": "Sunrisers Hyderabad playing Kolkata Knight Riders."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-srh-055",
+  "cf-srh-086",
+  "cf-srh-019"
+ ],
+ "seo": {
+  "metaTitle": "Opponent-specific plans: should SRH change the XI?",
+  "metaDescription": "Sunrisers Hyderabad's head-to-head records against every current IPL franchise, and when opponent-specific selection pays."
+ },
+ "methodology": "Regulation innings only (super overs excluded); win rates use matches with a result. Generated from the CricField warehouse by scripts/editorial/engine. Opponents are grouped under their current franchise names.",
+ "generator": "engine:v1"
+}

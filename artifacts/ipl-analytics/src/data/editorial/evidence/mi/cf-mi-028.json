@@ -1,0 +1,519 @@
+{
+ "articleId": "cf-mi-028",
+ "generatedAt": "2026-10-26T04:19:14.089Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "l5bat-team-e1": {
+   "value": 10.32,
+   "display": "10.32",
+   "label": "MI last five overs run rate, 2008–2023",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "MI batting, overs 16–20, regulation innings, 2008–2023",
+   "sampleSize": {
+    "n": 6533,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2023 AND i.batting_team_id IN (4)",
+   "validation": {
+    "method": "plausibility range 4–14 for run rate",
+    "passed": true,
+    "detail": "value 10.32389407622838"
+   }
+  },
+  "l5bat-league-e1": {
+   "value": 9.87,
+   "display": "9.87",
+   "label": "IPL last five overs run rate, 2008–2023",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams, overs 16–20, regulation innings, 2008–2023",
+   "sampleSize": {
+    "n": 52944,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2023",
+   "validation": {
+    "method": "plausibility range 4–14 for run rate",
+    "passed": true,
+    "detail": "value 9.870806890299184"
+   }
+  },
+  "l5bat-team-e2": {
+   "value": 10.86,
+   "display": "10.86",
+   "label": "MI last five overs run rate, 2024–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "MI batting, overs 16–20, regulation innings, 2024–2026",
+   "sampleSize": {
+    "n": 1103,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND i.batting_team_id IN (4)",
+   "validation": {
+    "method": "sample-size floor ≥ 200 balls",
+    "passed": true,
+    "detail": "n = 1103"
+   }
+  },
+  "l5bat-league-e2": {
+   "value": 10.99,
+   "display": "10.99",
+   "label": "IPL last five overs run rate, 2024–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams, overs 16–20, regulation innings, 2024–2026",
+   "sampleSize": {
+    "n": 10842,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026",
+   "validation": {
+    "method": "plausibility range 4–14 for run rate",
+    "passed": true,
+    "detail": "value 10.986164914222469"
+   }
+  },
+  "l5bat-good-seasons": {
+   "value": 14,
+   "display": "14",
+   "label": "Seasons MI scored faster than the league in the last five overs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season-level comparison",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "count over season table",
+    "passed": true
+   }
+  },
+  "l5bat-season-count": {
+   "value": 19,
+   "display": "19",
+   "label": "MI seasons in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons with data",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range 1–19 for season count",
+    "passed": true,
+    "detail": "value 19"
+   }
+  },
+  "l5bowl-team-e1": {
+   "value": 9.39,
+   "display": "9.39",
+   "label": "MI last five overs economy, 2008–2023",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "MI bowling, overs 16–20, regulation innings, 2008–2023",
+   "sampleSize": {
+    "n": 6442,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2023 AND i.bowling_team_id IN (4)",
+   "validation": {
+    "method": "plausibility range 4–14 for economy",
+    "passed": true,
+    "detail": "value 9.394908413536168"
+   }
+  },
+  "l5bowl-league-e1": {
+   "value": 9.68,
+   "display": "9.68",
+   "label": "IPL last five overs economy, 2008–2023",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams, overs 16–20, regulation innings, 2008–2023",
+   "sampleSize": {
+    "n": 52944,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2023",
+   "validation": {
+    "method": "plausibility range 4–14 for economy",
+    "passed": true,
+    "detail": "value 9.682230281051677"
+   }
+  },
+  "l5bowl-team-e2": {
+   "value": 10.63,
+   "display": "10.63",
+   "label": "MI last five overs economy, 2024–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "MI bowling, overs 16–20, regulation innings, 2024–2026",
+   "sampleSize": {
+    "n": 1051,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND i.bowling_team_id IN (4)",
+   "validation": {
+    "method": "sample-size floor ≥ 200 balls",
+    "passed": true,
+    "detail": "n = 1051"
+   }
+  },
+  "l5bowl-league-e2": {
+   "value": 10.84,
+   "display": "10.84",
+   "label": "IPL last five overs economy, 2024–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams, overs 16–20, regulation innings, 2024–2026",
+   "sampleSize": {
+    "n": 10842,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026",
+   "validation": {
+    "method": "plausibility range 4–14 for economy",
+    "passed": true,
+    "detail": "value 10.842280022136137"
+   }
+  },
+  "l5bowl-good-seasons": {
+   "value": 12,
+   "display": "12",
+   "label": "Seasons MI conceded less than the league in the last five overs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season-level comparison",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (4) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "count over season table",
+    "passed": true
+   }
+  },
+  "l5bowl-season-count": {
+   "value": 19,
+   "display": "19",
+   "label": "MI seasons in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons with data",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (4) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range 1–19 for season count",
+    "passed": true,
+    "detail": "value 19"
+   }
+  },
+  "l5-fresh": {
+   "value": 11.62,
+   "display": "11.62",
+   "label": "IPL death-overs run rate with three or fewer wickets down after fifteen overs",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 230,
+    "unit": "innings"
+   },
+   "query": "WITH st AS (SELECT d.innings_id, SUM(CASE WHEN dm.dismissal_id IS NOT NULL THEN 1 ELSE 0 END) wk FROM deliveries d LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE d.over_num < 15 GROUP BY d.innings_id), de AS (SELECT d.innings_id, SUM(d.total_runs) r, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b FROM deliveries d WHERE d.over_num >= 15 GROUP BY d.innings_id) SELECT CASE WHEN st.wk <= 3 THEN '0–3 down' WHEN st.wk <= 5 THEN '4–5 down' ELSE '6+ down' END state, SUM(de.r) * 6.0 / SUM(de.b) rr, COUNT(*) n FROM st JOIN de ON de.innings_id = st.innings_id JOIN innings i ON i.innings_id = st.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND de.b >= 24 GROUP BY state",
+   "validation": {
+    "method": "sample-size floor ≥ 100 innings",
+    "passed": true,
+    "detail": "n = 230"
+   }
+  },
+  "l5-deep": {
+   "value": 9.19,
+   "display": "9.19",
+   "label": "IPL death-overs run rate with six or more wickets down after fifteen overs",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 81,
+    "unit": "innings"
+   },
+   "query": "WITH st AS (SELECT d.innings_id, SUM(CASE WHEN dm.dismissal_id IS NOT NULL THEN 1 ELSE 0 END) wk FROM deliveries d LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE d.over_num < 15 GROUP BY d.innings_id), de AS (SELECT d.innings_id, SUM(d.total_runs) r, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b FROM deliveries d WHERE d.over_num >= 15 GROUP BY d.innings_id) SELECT CASE WHEN st.wk <= 3 THEN '0–3 down' WHEN st.wk <= 5 THEN '4–5 down' ELSE '6+ down' END state, SUM(de.r) * 6.0 / SUM(de.b) rr, COUNT(*) n FROM st JOIN de ON de.innings_id = st.innings_id JOIN innings i ON i.innings_id = st.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND de.b >= 24 GROUP BY state",
+   "validation": {
+    "method": "sample-size floor ≥ 50 innings",
+    "passed": true,
+    "detail": "n = 81"
+   }
+  },
+  "l5-net": {
+   "value": 0.23,
+   "display": "0.23",
+   "label": "MI death-overs net run rate since 2024 (scored minus conceded)",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 3,
+    "unit": "seasons"
+   },
+   "query": "phase blocks",
+   "validation": {
+    "method": "arithmetic on validated metrics",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "l5bat-series": {
+   "label": "Last five overs run rate by season: MI vs IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "overs 16–20, regulation innings; all runs ÷ legal balls × 6",
+   "sampleSize": {
+    "n": 7636,
+    "unit": "MI legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "team": 9.95,
+     "league": 9.95
+    },
+    {
+     "season": "2009",
+     "team": 9.55,
+     "league": 9.13
+    },
+    {
+     "season": "2010",
+     "team": 11.4,
+     "league": 9.59
+    },
+    {
+     "season": "2011",
+     "team": 9.57,
+     "league": 9.11
+    },
+    {
+     "season": "2012",
+     "team": 8.53,
+     "league": 9.52
+    },
+    {
+     "season": "2013",
+     "team": 10.39,
+     "league": 9.57
+    },
+    {
+     "season": "2014",
+     "team": 9,
+     "league": 10.04
+    },
+    {
+     "season": "2015",
+     "team": 12.22,
+     "league": 10.31
+    },
+    {
+     "season": "2016",
+     "team": 10.73,
+     "league": 10.17
+    },
+    {
+     "season": "2017",
+     "team": 10.64,
+     "league": 9.64
+    },
+    {
+     "season": "2018",
+     "team": 9.24,
+     "league": 10.14
+    },
+    {
+     "season": "2019",
+     "team": 10.9,
+     "league": 10.17
+    },
+    {
+     "season": "2020",
+     "team": 12.44,
+     "league": 10.2
+    },
+    {
+     "season": "2021",
+     "team": 8.9,
+     "league": 9.41
+    },
+    {
+     "season": "2022",
+     "team": 10.52,
+     "league": 10.45
+    },
+    {
+     "season": "2023",
+     "team": 10.85,
+     "league": 10.49
+    },
+    {
+     "season": "2024",
+     "team": 11.24,
+     "league": 11.21
+    },
+    {
+     "season": "2025",
+     "team": 11.1,
+     "league": 10.96
+    },
+    {
+     "season": "2026",
+     "team": 10.26,
+     "league": 10.79
+    }
+   ]
+  },
+  "l5bowl-series": {
+   "label": "Last five overs economy by season: MI vs IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "overs 16–20, regulation innings; runs charged to bowler ÷ legal balls × 6",
+   "sampleSize": {
+    "n": 7493,
+    "unit": "MI legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (4) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "team": 9.75,
+     "league": 9.72
+    },
+    {
+     "season": "2009",
+     "team": 7.41,
+     "league": 8.89
+    },
+    {
+     "season": "2010",
+     "team": 8.63,
+     "league": 9.38
+    },
+    {
+     "season": "2011",
+     "team": 8.36,
+     "league": 8.9
+    },
+    {
+     "season": "2012",
+     "team": 9.57,
+     "league": 9.35
+    },
+    {
+     "season": "2013",
+     "team": 8.75,
+     "league": 9.41
+    },
+    {
+     "season": "2014",
+     "team": 9.83,
+     "league": 9.77
+    },
+    {
+     "season": "2015",
+     "team": 10.28,
+     "league": 10.14
+    },
+    {
+     "season": "2016",
+     "team": 9.61,
+     "league": 9.98
+    },
+    {
+     "season": "2017",
+     "team": 9.1,
+     "league": 9.47
+    },
+    {
+     "season": "2018",
+     "team": 9.31,
+     "league": 9.96
+    },
+    {
+     "season": "2019",
+     "team": 9.77,
+     "league": 9.98
+    },
+    {
+     "season": "2020",
+     "team": 8.81,
+     "league": 10.04
+    },
+    {
+     "season": "2021",
+     "team": 8.79,
+     "league": 9.25
+    },
+    {
+     "season": "2022",
+     "team": 10.62,
+     "league": 10.31
+    },
+    {
+     "season": "2023",
+     "team": 11.63,
+     "league": 10.28
+    },
+    {
+     "season": "2024",
+     "team": 10.87,
+     "league": 11.03
+    },
+    {
+     "season": "2025",
+     "team": 10.03,
+     "league": 10.83
+    },
+    {
+     "season": "2026",
+     "team": 11.12,
+     "league": 10.67
+    }
+   ]
+  },
+  "l5-state": {
+   "label": "Death-overs run rate by wickets lost after fifteen overs, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Innings with at least four death overs batted",
+   "sampleSize": {
+    "n": 571,
+    "unit": "innings"
+   },
+   "query": "WITH st AS (SELECT d.innings_id, SUM(CASE WHEN dm.dismissal_id IS NOT NULL THEN 1 ELSE 0 END) wk FROM deliveries d LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE d.over_num < 15 GROUP BY d.innings_id), de AS (SELECT d.innings_id, SUM(d.total_runs) r, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b FROM deliveries d WHERE d.over_num >= 15 GROUP BY d.innings_id) SELECT CASE WHEN st.wk <= 3 THEN '0–3 down' WHEN st.wk <= 5 THEN '4–5 down' ELSE '6+ down' END state, SUM(de.r) * 6.0 / SUM(de.b) rr, COUNT(*) n FROM st JOIN de ON de.innings_id = st.innings_id JOIN innings i ON i.innings_id = st.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND de.b >= 24 GROUP BY state",
+   "rows": [
+    {
+     "state": "0–3 down",
+     "runRate": 11.62,
+     "innings": 230
+    },
+    {
+     "state": "4–5 down",
+     "runRate": 10.53,
+     "innings": 260
+    },
+    {
+     "state": "6+ down",
+     "runRate": 9.19,
+     "innings": 81
+    }
+   ]
+  }
+ }
+}

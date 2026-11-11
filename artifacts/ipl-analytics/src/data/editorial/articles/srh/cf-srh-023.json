@@ -1,0 +1,141 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-srh-023",
+ "planId": "cf-srh-023",
+ "franchise": "SRH",
+ "aspect": "tactical",
+ "title": "Impact Player Chess: Which Substitution Gives Sunrisers Hyderabad the Biggest Edge?",
+ "slug": "srh-impact-player-chess-which-substitution-gives-srh-the-biggest-edge",
+ "dek": "The impact-player rule turned team selection into a match-day decision. Which substitution gives Sunrisers Hyderabad the biggest edge? The before-and-after numbers frame the question.",
+ "excerpt": "Sunrisers Hyderabad's totals have risen faster than the league's since the impact-player rule arrived in 2023. The substitution record itself is not in public data, so the choice has to be reasoned from its effects.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "SRH"
+ ],
+ "players": [],
+ "seasons": [
+  "2019\u20132022",
+  "2023\u20132026"
+ ],
+ "keyTakeaways": [
+  "SRH averaged {{ev:ip-rb}} runs per innings in 2019\u20132022 and {{ev:ip-ri}} in 2023\u20132026.",
+  "The rest of the league moved from {{ev:ip-lb}} to {{ev:ip-li}}.",
+  "SRH used {{ev:ip-bb}} bowlers per innings before the rule and {{ev:ip-bi}} after it."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "A Twelfth Player, Chosen Late",
+   "body": [
+    "Since 2023 each side can bring in a substitute who bats or bowls in full. The obvious use is to bat deep in the first innings and swap in a bowler for the second, or the reverse when chasing.",
+    "The effect on scoring is visible. Sunrisers Hyderabad averaged {{ev:ip-rb}} runs per innings in 2019\u20132022 and {{ev:ip-ri}} since 2023; the rest of the league went from {{ev:ip-lb}} to {{ev:ip-li}}."
+   ],
+   "chartIds": [
+    "ip-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What Changed in the Field",
+   "body": [
+    "SRH used {{ev:ip-bb}} bowlers per innings before the rule and {{ev:ip-bi}} after it. A deeper bench of bowling options can change how overs are shared, even if the core five still bowl most of them.",
+    "The comparison table sets each measure for SRH beside the rest of the league."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Choosing the Substitution",
+   "body": [
+    "The highest-value substitution is the one that fills the side's weakest phase. If the death bowling is the weak link, an extra specialist for the second innings is worth more than an extra batter; if the middle order collapses, the reverse.",
+    "For SRH, the phase-by-phase comparisons elsewhere in this series identify which phase that is."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What the Data Cannot See",
+   "body": [
+    "Public ball-by-ball data does not record which player was the impact substitute, so the effect of each choice cannot be measured directly. The before-and-after comparison also mixes the rule with a general rise in scoring.",
+    "{{hyp:subs}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Substitute for the Weakest Phase",
+   "body": [
+    "The rule has lifted Sunrisers Hyderabad's scoring relative to the league. The edge comes from using the substitution to patch the side's weakest phase each match.",
+    "Recording every substitution and the phase it was meant to strengthen would let the franchise measure the choice directly."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ip-chart",
+   "type": "column",
+   "title": "Runs per innings before and after the impact-player rule",
+   "subtitle": "2019\u20132022 vs 2023\u20132026",
+   "table": "ip-runs",
+   "xKey": "period",
+   "series": [
+    {
+     "key": "team",
+     "label": "SRH"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Period",
+   "unit": "runs per innings",
+   "takeaway": "Scoring rose after the rule arrived, for SRH and the rest of the league.",
+   "ariaLabel": "Grouped column chart of average runs per innings before and after the impact-player rule."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "subs",
+   "statement": "Hypothesis: Sunrisers Hyderabad's choice of impact substitute has a measurable effect on the phase it targets.",
+   "whyUnverified": "Substitution records are not in Cricsheet data.",
+   "howToTest": "Join substitution records from match reports and compare phase performance by substitute type."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Sunrisers Hyderabad in the impact-player era.",
+   "wanted": "Sunrisers Hyderabad team huddle, recent season."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-srh-020",
+  "cf-srh-024",
+  "cf-srh-100"
+ ],
+ "seo": {
+  "metaTitle": "Impact player chess: the best substitution for SRH",
+  "metaDescription": "How Sunrisers Hyderabad's scoring and bowling usage changed after the impact-player rule, and how to choose the substitution."
+ },
+ "methodology": "Regulation innings only (super overs excluded); win rates use matches with a result. Generated from the CricField warehouse by scripts/editorial/engine. Before = 2019\u20132022, after = 2023\u20132026. Batters and bowlers used are distinct players who faced or bowled at least one ball in the innings.",
+ "generator": "engine:v1"
+}

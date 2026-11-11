@@ -1,0 +1,147 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-008",
+ "planId": "cf-dc-008",
+ "franchise": "DC",
+ "aspect": "batting",
+ "title": "Spin Versus Pace: Mapping Delhi Capitals\u2019s Batting Trade-Offs",
+ "slug": "dc-spin-versus-pace-mapping-dc-batting-trade-offs",
+ "dek": "Do Delhi Capitals score more freely against pace or spin, and what does each cost them in wickets? Bowling-type data since 2022 maps the trade-off.",
+ "excerpt": "Since 2022 Delhi Capitals' batting has tracked the league closely against both pace and spin, with no clear weakness for opponents to target.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "DC"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "DC struck at {{ev:svp-team-pace-sr}} against pace and {{ev:svp-team-spin-sr}} against spin (2022\u20132026).",
+  "The rest of the IPL struck at {{ev:svp-rest-pace-sr}} and {{ev:svp-rest-spin-sr}} respectively.",
+  "Bowling type is known for {{ev:svp-cov}} of deliveries in the window."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Two Different Games",
+   "body": [
+    "Batting against pace and batting against spin reward different skills: one punishes the ball that is too full or too short, the other the ball that is flighted or too flat. Every side has a lean, and opposition analysts look for it first.",
+    "CricField attached each bowler's type from player-bio data to every delivery since 2022. Bowling type is known for {{ev:svp-cov}} of balls."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Delhi Capitals' Lean",
+   "body": [
+    "Against pace, Delhi Capitals struck at {{ev:svp-team-pace-sr}} and lost a wicket every {{ev:svp-team-pace-bpd}} balls. Against spin they struck at {{ev:svp-team-spin-sr}}, losing a wicket every {{ev:svp-team-spin-bpd}} balls.",
+    "The league comparison matters because everyone scores at different rates against the two types: the rest of the IPL struck at {{ev:svp-rest-pace-sr}} against pace and {{ev:svp-rest-spin-sr}} against spin. Relative to that baseline the gaps are small, too small to call a weakness at these sample sizes."
+   ],
+   "chartIds": [
+    "svp-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "How Opponents Will Plan",
+   "body": [
+    "With no clear weakness, opposition plans are more likely to target individual batters than the line-up as a whole.",
+    "The useful work is at player level: each batter's split against pace and spin, tracked season by season."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Type Is Not Everything",
+   "body": [
+    "Pace and spin are broad labels. A left-arm wrist spinner and an off-spinner pose different problems, as do a swing bowler and a hit-the-deck quick. The comparison here also excludes bowlers whose type is unknown.",
+    "{{hyp:subtype}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Balanced, So Plan Batter by Batter",
+   "body": [
+    "Delhi Capitals have no team-wide weakness by bowling type; the plan should be built around individual match-ups.",
+    "Tracking strike rate and balls per dismissal by bowling type each season would show whether the gap is closing."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "svp-chart",
+   "type": "column",
+   "title": "Strike rate against pace and spin",
+   "subtitle": "2022\u20132026, bowling type known",
+   "table": "svp",
+   "xKey": "bowling",
+   "series": [
+    {
+     "key": "teamSR",
+     "label": "DC"
+    },
+    {
+     "key": "leagueSR",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Bowling type",
+   "unit": "runs per 100 balls",
+   "takeaway": "DC track the league closely against both types.",
+   "ariaLabel": "Grouped column chart of batting strike rate against pace and spin bowling."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-bio",
+   "kind": "cricfield-dataset",
+   "title": "CricField player-bio dataset (batting and bowling styles)",
+   "publisher": "CricField",
+   "note": "Joined via squad lists; coverage reported in the article."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "subtype",
+   "statement": "Hypothesis: Delhi Capitals' weakness is concentrated against one sub-type of bowling rather than all pace.",
+   "whyUnverified": "Bowling sub-types (wrist spin, left-arm orthodox, swing) have not been analysed separately.",
+   "howToTest": "Split the comparison by detailed bowling style where coverage allows."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Delhi Capitals batting against spin.",
+   "wanted": "Delhi Capitals batter sweeping or driving against spin."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-014",
+  "cf-dc-019",
+  "cf-dc-004"
+ ],
+ "seo": {
+  "metaTitle": "Spin versus pace: Delhi Capitals' batting trade-offs",
+  "metaDescription": "Delhi Capitals strike rate and balls per dismissal against pace and spin since 2022, compared with the rest of the IPL."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Run rates use all runs per legal ball times six. Every figure is generated from the CricField warehouse by scripts/editorial/engine. Bowling type from CricField player-bio data joined via squad lists; balls by bowlers of unknown or mixed type are excluded. Wickets exclude run outs.",
+ "generator": "engine:v1"
+}

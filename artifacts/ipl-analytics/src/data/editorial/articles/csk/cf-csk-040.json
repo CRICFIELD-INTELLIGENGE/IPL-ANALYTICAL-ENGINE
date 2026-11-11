@@ -1,0 +1,136 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-csk-040",
+ "planId": "cf-csk-040",
+ "franchise": "CSK",
+ "aspect": "auction-economics",
+ "title": "Three-Year Squad Planning: Can Chennai Super Kings Build Beyond One Season?",
+ "slug": "csk-three-year-squad-planning-can-csk-build-beyond-one-season",
+ "dek": "Can Chennai Super Kings build beyond one season? Squad continuity, the share of each season's work done by returning players, shows how much they plan in cycles.",
+ "excerpt": "On average, Chennai Super Kings' returning players have done a measurable share of each season's batting and bowling. Mega-auctions reset that number; good planning keeps a core through them.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "CSK"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "On average {{ev:cont-avg}} of Chennai Super Kings' runs and balls bowled came from players who had also played for them the previous season.",
+  "In 2026 the figure was {{ev:cont-last}}.",
+  "Their most continuous season was {{ev:cont-hi}}; their least, {{ev:cont-lo}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Seasons or Cycles",
+   "body": [
+    "IPL squads are rebuilt at mega-auctions every few years and adjusted at mini-auctions in between. A franchise that plans in three-year cycles keeps a core through the reset; one that plans season by season rebuilds from scratch.",
+    "On average {{ev:cont-avg}} of Chennai Super Kings' runs scored and balls bowled have come from players who also played for them the season before."
+   ],
+   "chartIds": [
+    "cont-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Where the Resets Came",
+   "body": [
+    "Their most continuous season was {{ev:cont-hi}} and their least continuous {{ev:cont-lo}}. In 2026, returning players did {{ev:cont-last}} of the work.",
+    "In seasons that followed a mega-auction, returning players did {{ev:cont-mega}} of the work on average, against {{ev:cont-other}} in other seasons."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Planning Through the Reset",
+   "body": [
+    "A three-year plan names the core roles to keep, the ones to buy and the young players to develop into the next core. Retention choices then follow from the plan rather than from the last season's form.",
+    "For CSK, that means deciding at each mini-auction which players are meant to be in the next mega-auction's retention list."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Continuity Is Not Always Good",
+   "body": [
+    "Keeping a core is only valuable if the core is good. A franchise can be highly continuous and consistently mediocre.",
+    "{{hyp:continuity}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Plan the Core Three Years Out",
+   "body": [
+    "Chennai Super Kings should plan their core across auction cycles and treat each mini-auction as a step towards the next mega-auction.",
+    "Continuity should be a result of that plan, not a goal in itself."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "cont-chart",
+   "type": "column",
+   "title": "Squad continuity by season",
+   "subtitle": "CSK: share of runs and balls from returning players",
+   "table": "cont-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "continuity",
+     "label": "Continuity"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of runs plus balls",
+   "takeaway": "Continuity is lower in seasons that follow a mega-auction.",
+   "ariaLabel": "Column chart of CSK squad continuity by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "continuity",
+   "statement": "Hypothesis: higher season-to-season continuity is associated with better results across franchises.",
+   "whyUnverified": "The relationship between continuity and results has not been tested.",
+   "howToTest": "Correlate continuity with win rate across all franchise-seasons."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Chennai Super Kings's core group.",
+   "wanted": "Chennai Super Kings players celebrating together."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-csk-033",
+  "cf-csk-091",
+  "cf-csk-067"
+ ],
+ "seo": {
+  "metaTitle": "Three-year squad planning at CSK",
+  "metaDescription": "How much of each Chennai Super Kings season's work was done by returning players, and how to plan a core across auction cycles."
+ },
+ "methodology": "Continuity = runs scored plus legal balls bowled by players who also batted or bowled for the franchise in the previous season, as a share of the season's total. Regulation innings. Generated by scripts/editorial/engine.",
+ "generator": "engine:v1"
+}

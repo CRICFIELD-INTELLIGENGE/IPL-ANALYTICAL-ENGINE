@@ -1,0 +1,103 @@
+{
+  "$comment": "Day 4 identity proposals. NOT APPLIED. Each item states its evidence (all from files already in the repository: lib/cricket-data/global/warehouse/global.db = Cricsheet register + match appearances, read-only; artifacts/ipl-analytics/public/data/*.json). Apply only after approval, with backups, then regenerate the recent-matches index and re-run the identity audit and test:step3.",
+  "generated": "2026-10-14",
+  "mergeScrapedPairs": [
+    {
+      "id": "P1a",
+      "keep": "arshad-khan",
+      "fold": "arshad-khan-(2)",
+      "registryId": "12314277",
+      "verdict": "same person",
+      "evidence": [
+        "Cricsheet register: one identifier 12314277, register name 'Arshad Khan', unique_name 'Arshad Khan (2)', one Cricinfo id (1244751); 'Arshad Khan' and 'Arshad Khan (2)' are both its written names in IPL match files.",
+        "Both bios: Left hand Bat, Left arm Medium; fullName 'Arshad Khan' / 'Mohd Arshad Khan'.",
+        "The two bios carry different scraped playerIds (8389, 10707); those ids are not Cricinfo ids (Kohli's bio playerId is 332, his Cricinfo id 253802), so they are not evidence of two people."
+      ],
+      "keepReason": "carries the 2026 photo, birth date and current team (Gujarat Titans)",
+      "fieldsToFill": "none missing on the kept bio; differing values (team LSG vs GT, role) listed for review"
+    },
+    {
+      "id": "P1b",
+      "keep": "navdeep-saini",
+      "fold": "na-saini",
+      "registryId": "21d4e29b",
+      "verdict": "same person",
+      "evidence": [
+        "Cricsheet register: 21d4e29b 'NA Saini', Cricinfo 700167, BCCI and Pulse ids; register variants 'N Saini' and 'Navdeep Saini'.",
+        "Both bios: Right-arm fast, fullName 'Navdeep Saini' / 'Navdeep Amarjeet Saini'."
+      ],
+      "keepReason": "carries the 2026 photo, birth date and current team (Kolkata Knight Riders)",
+      "caution": "navdeep-saini's playerName is 'N Saini', which is also the playerName of n-saini (Nitin Saini, playerId 34811). After the merge, set navdeep-saini.playerName to the register name 'NA Saini' so the two people never share a written name."
+    },
+    {
+      "id": "P1c",
+      "keep": "wanindu-hasaranga",
+      "fold": "pwh-de-silva",
+      "registryId": "a97c8ec2",
+      "verdict": "same person",
+      "evidence": [
+        "Cricsheet register: a97c8ec2 'PWH de Silva', Cricinfo 784379; register variants 'Wanindu Hasaranga' and 'W Hasaranga'.",
+        "scripts/data/player-identity-aliases.json already has a reviewed alias wanindu-hasaranga → a97c8ec2 (2026-10-10).",
+        "pwh-de-silva fullName 'Pinnaduwage Wanindu Hasaranga de Silva'."
+      ],
+      "keepReason": "aliased, carries the 2026 photo and current team (Lucknow Super Giants)"
+    }
+  ],
+  "spellingVariant": [
+    {
+      "id": "P2",
+      "keep": "abishek-porel",
+      "fold": "abhishek-porel",
+      "registryId": "ad3b6e95",
+      "verdict": "same person (strong repository evidence; the Day 3 automatic rule rejected it only on spelling)",
+      "evidence": [
+        "squads-by-season.json 2025 and 2026 Delhi Capitals: name 'Abhishek Porel', cricsheetName 'Abishek Porel', wicketkeeper.",
+        "Cricsheet register: ad3b6e95 'Abishek Porel', Cricinfo 1277545; IPL appearances Delhi Capitals 2023 ×4, 2024 ×14, 2025 ×14, 2026 ×4.",
+        "abishek-porel bio: Delhi Capitals, wicketkeeper, born 17 Oct 2002; abhishek-porel bio: Delhi Capitals, wicketkeeper, 2026 photo only."
+      ],
+      "fieldsToFill": ["image (2026 photo) into abishek-porel"]
+    }
+  ],
+  "unverifiedDuplicates": [
+    {
+      "id": "P3",
+      "keep": "tejasvi-singh",
+      "remove": ["tejaswi-dahiya", "tejasvi-dahiya"],
+      "verdict": "the three bios are identical copies of one unverified profile; collapse to one, keep the empty state",
+      "evidence": [
+        "All three: playerName and fullName 'Tejasvi Singh Dahiya', Kolkata Knight Riders, wicketkeeper, the same image /players/kkr-2026/tejaswi-dahiya.webp.",
+        "tejasvi-singh is the slug of the 2026 KKR squad display name 'Tejasvi Singh'."
+      ],
+      "blocked": "Whether Tejasvi Singh Dahiya is the registered 'T Dahiya' (f12fe2a1, KKR 2026 ×2) is NOT established: the register lists no variant for f12fe2a1, and the 2026 KKR squad has 'Tejasvi Singh' (did not play) and 'T Dahiya' (played) as separate rows. No identity is assigned."
+    }
+  ],
+  "squadFileCorrections": [
+    {
+      "id": "P4a", "season": "2023", "team": "Kolkata Knight Riders", "name": "Shreyas Iyer",
+      "current": { "cricsheetName": "VR Iyer", "played": true },
+      "proposed": { "cricsheetName": null, "played": false },
+      "evidence": "SS Iyer (85ec8e33, register variant 'Shreyas Iyer') has no 2023 IPL appearance (KKR 2022 ×14, 2024 ×14). VR Iyer (a24be938) is Venkatesh Iyer (register variant 'Venkatesh Iyer'), a different person."
+    },
+    {
+      "id": "P4b", "season": "2016", "team": "Mumbai Indians", "name": "Jitesh Sharma",
+      "current": { "cricsheetName": "RG Sharma", "played": true },
+      "proposed": { "cricsheetName": null, "played": false },
+      "evidence": "JM Sharma (800d2d97) first appears in the IPL in 2022 (Punjab Kings). RG Sharma (740742ef, register variant 'Rohit Sharma') is Rohit Sharma, who played 14 matches for MI in 2016."
+    },
+    {
+      "id": "P4c", "season": "2024", "team": "Gujarat Titans", "name": "Jayant Yadav",
+      "current": { "cricsheetName": "UT Yadav", "played": true },
+      "proposed": { "cricsheetName": null, "played": false },
+      "evidence": "J Yadav (81049310, register variant 'Jayant Yadav') has no 2024 IPL appearance (GT 2023 ×1). UT Yadav (cc1e8c68, register variant 'Umesh Yadav') is Umesh Yadav."
+    }
+  ],
+  "aliases": {
+    "$comment": "Proposed entries for scripts/data/player-identity-aliases.json. In every case the bio's display name is a Cricsheet register variant of exactly one identifier (checked against all 18k registered players in global.db), and that identifier has IPL appearances.",
+    "pathum-nissanka": { "cricsheetId": "8ee36b18", "evidence": "Register variant 'Pathum Nissanka' of 8ee36b18 'P Nissanka' (Cricinfo 1028655), unique in the register; written 'P Nissanka' in 10 IPL matches for Delhi Capitals 2026. Bio: Delhi Capitals.", "reviewed": "PENDING" },
+    "jayant-yadav": { "cricsheetId": "81049310", "evidence": "Register variant 'Jayant Yadav' of 81049310 'J Yadav' (Cricinfo 447587), unique; IPL: Delhi Daredevils 2015–17, Mumbai Indians 2019–21, Gujarat Titans 2023. Bio: Gujarat Titans. NOT UT Yadav (see P4c).", "reviewed": "PENDING" },
+    "keshav-maharaj": { "cricsheetId": "0b60eb09", "evidence": "Register variant 'Keshav Maharaj' of 0b60eb09 'KA Maharaj' (Cricinfo 267724), unique; IPL: Rajasthan Royals 2024 ×2. Bio: Mumbai Indians 2026 (no 2026 appearance yet).", "reviewed": "PENDING" },
+    "ben-dwarshuis": { "cricsheetId": "e1b9f3a9", "evidence": "Register variant 'Ben Dwarshuis' of e1b9f3a9 'BJ Dwarshuis' (Cricinfo 679567), unique; IPL: Punjab Kings 2026 ×1. Bio: Punjab Kings.", "reviewed": "PENDING" },
+    "richard-gleeson": { "cricsheetId": "402f8494", "evidence": "Register variant 'Richard Gleeson' of 402f8494 'RJ Gleeson' (Cricinfo 473191), unique; IPL: Chennai Super Kings 2024 ×2, Mumbai Indians 2025 ×1. Bio: Royal Challengers Bengaluru 2026.", "reviewed": "PENDING" },
+    "lhuan-dre-pretorius": { "cricsheetId": "60aa2db3", "evidence": "Register variant 'Lhuan-dre Pretorius' of 60aa2db3 'LG Pretorius' (Cricinfo 1385640), unique; IPL: Rajasthan Royals 2026 ×2. Bio: Rajasthan Royals.", "reviewed": "PENDING" }
+  }
+}

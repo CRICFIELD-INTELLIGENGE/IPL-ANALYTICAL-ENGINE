@@ -1,0 +1,182 @@
+{
+ "articleId": "cf-lsg-090",
+ "generatedAt": "2026-10-26T04:27:55.110Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "pr-me-rank": {
+   "value": "tenth",
+   "display": "tenth",
+   "label": "Lucknow Super Giants' place in the power ranking",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2025–2026",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "SELECT i.batting_team_id bt, i.bowling_team_id wt, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2025 AND 2026 GROUP BY bt, wt",
+   "validation": {
+    "method": "plausibility range 1–10 for rank",
+    "passed": true,
+    "detail": "value 10"
+   }
+  },
+  "pr-net": {
+   "value": -0.51,
+   "display": "−0.51",
+   "label": "Lucknow Super Giants' net run rate (runs per over scored minus conceded)",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2025–2026",
+   "sampleSize": {
+    "n": 28,
+    "unit": "matches"
+   },
+   "query": "SELECT i.batting_team_id bt, i.bowling_team_id wt, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2025 AND 2026 GROUP BY bt, wt",
+   "validation": {
+    "method": "plausibility range -3–3 for net run rate",
+    "passed": true,
+    "detail": "value -0.5074041631984709"
+   }
+  },
+  "pr-win": {
+   "value": 36,
+   "display": "36%",
+   "label": "Lucknow Super Giants' win rate",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2025–2026",
+   "sampleSize": {
+    "n": 28,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 28"
+   }
+  },
+  "pr-top": {
+   "value": "RCB",
+   "display": "RCB",
+   "label": "Top-ranked franchise",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2025–2026",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "SELECT i.batting_team_id bt, i.bowling_team_id wt, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2025 AND 2026 GROUP BY bt, wt",
+   "validation": {
+    "method": "max score",
+    "passed": true
+   }
+  },
+  "pr-r": {
+   "value": 0.82,
+   "display": "0.82",
+   "label": "Correlation between net run rate and win rate across franchises",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2025–2026",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "SELECT i.batting_team_id bt, i.bowling_team_id wt, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2025 AND 2026 GROUP BY bt, wt",
+   "validation": {
+    "method": "ten franchises",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "pr-rank": {
+   "label": "CricField power ranking, 2025–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Score = average of standardised net run rate and standardised win rate",
+   "sampleSize": {
+    "n": 144,
+    "unit": "matches"
+   },
+   "query": "SELECT i.batting_team_id bt, i.bowling_team_id wt, SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2025 AND 2026 GROUP BY bt, wt ;; WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "rows": [
+    {
+     "rank": 1,
+     "franchise": "RCB",
+     "score": 2,
+     "netRunRate": 0.72,
+     "winPct": 71
+    },
+    {
+     "rank": 2,
+     "franchise": "PBKS",
+     "score": 0.8,
+     "netRunRate": 0.26,
+     "winPct": 58.6
+    },
+    {
+     "rank": 3,
+     "franchise": "SRH",
+     "score": 0.59,
+     "netRunRate": 0.28,
+     "winPct": 53.6
+    },
+    {
+     "rank": 4,
+     "franchise": "GT",
+     "score": 0.57,
+     "netRunRate": 0.08,
+     "winPct": 59.4
+    },
+    {
+     "rank": 5,
+     "franchise": "MI",
+     "score": -0.17,
+     "netRunRate": 0.08,
+     "winPct": 43.3
+    },
+    {
+     "rank": 6,
+     "franchise": "RR",
+     "score": -0.3,
+     "netRunRate": -0.02,
+     "winPct": 43.3
+    },
+    {
+     "rank": 7,
+     "franchise": "KKR",
+     "score": -0.46,
+     "netRunRate": -0.15,
+     "winPct": 44
+    },
+    {
+     "rank": 8,
+     "franchise": "DC",
+     "score": -0.48,
+     "netRunRate": -0.43,
+     "winPct": 51.9
+    },
+    {
+     "rank": 9,
+     "franchise": "CSK",
+     "score": -1.21,
+     "netRunRate": -0.41,
+     "winPct": 35.7
+    },
+    {
+     "rank": 10,
+     "franchise": "LSG",
+     "score": -1.33,
+     "netRunRate": -0.51,
+     "winPct": 35.7
+    }
+   ]
+  }
+ }
+}

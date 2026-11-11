@@ -1,0 +1,136 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-srh-045",
+ "planId": "cf-srh-045",
+ "franchise": "SRH",
+ "aspect": "business",
+ "title": "Digital Reach Versus Real Loyalty: Measuring Sunrisers Hyderabad Beyond Followers",
+ "slug": "srh-digital-reach-versus-real-loyalty-measuring-srh-beyond-followers",
+ "dek": "Followers can be bought; loyalty is earned. The data cannot count Sunrisers Hyderabad's fans, but it can measure what they have been given to stay loyal to.",
+ "excerpt": "Sunrisers Hyderabad have won at least half their matches in a measurable number of seasons, with a longest playoff drought the data can pin down. Those are the conditions loyalty has had to survive.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "SRH"
+ ],
+ "players": [],
+ "seasons": [
+  "2013\u20132026"
+ ],
+ "keyTakeaways": [
+  "SRH have won at least half their decided matches in {{ev:dr-above}} of {{ev:dr-n-seasons}} seasons.",
+  "Their season win rates have a spread of {{ev:dr-sd}} percentage points.",
+  "Their longest run of seasons without a playoff place is {{ev:dr-drought}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Reach Is Not Loyalty",
+   "body": [
+    "Follower counts measure reach: how many people could see a post. Loyalty is different: whether people stay, return and spend when results turn.",
+    "The CricField warehouse is ball-by-ball cricket data. It contains no follower, engagement, membership or ticket-renewal data, so it cannot measure the commercial side of this question directly."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What Fans Have Been Given",
+   "body": [
+    "What the data can measure is the experience fans have been loyal to. Sunrisers Hyderabad have won at least half their decided matches in {{ev:dr-above}} of {{ev:dr-n-seasons}} seasons and reached the playoffs in {{ev:dr-playoffs}}.",
+    "Their season win rates have a spread of {{ev:dr-sd}} percentage points, and their longest run without a playoff place is {{ev:dr-drought}} seasons."
+   ],
+   "chartIds": [
+    "dr-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Measuring Loyalty Properly",
+   "body": [
+    "Real loyalty measures include repeat ticket buyers, membership renewals, attendance in losing seasons and engagement that persists after defeats.",
+    "{{hyp:loyal}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Why Consistency Matters",
+   "body": [
+    "A franchise with steady results asks less of its fans than one that swings between highs and lows. The spread of season win rates is a simple measure of that swing.",
+    "Whether steadiness or occasional glory builds deeper loyalty is a question for fan data, not match data."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Measure Retention, Not Reach",
+   "body": [
+    "Sunrisers Hyderabad should judge their fan base on retention through bad seasons rather than follower totals.",
+    "The season record here is the context any such measure has to be read against."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "dr-chart",
+   "type": "column",
+   "title": "Win rate by season",
+   "subtitle": "Sunrisers Hyderabad",
+   "table": "dr-seasons",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "winPct",
+     "label": "Win rate"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of decided matches",
+   "takeaway": "The season-to-season swing is what fan loyalty has had to absorb.",
+   "ariaLabel": "Column chart of SRH win rate in each season, as a share of decided matches."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "loyal",
+   "statement": "Hypothesis: membership renewals and repeat ticket purchases fall less after a losing season than social-media engagement does.",
+   "whyUnverified": "No membership, ticketing or engagement data is available.",
+   "howToTest": "Compare year-on-year changes in renewals and engagement against season win rate."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Loyal Sunrisers Hyderabad supporters.",
+   "wanted": "Sunrisers Hyderabad fans cheering."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-srh-051",
+  "cf-srh-059",
+  "cf-srh-041"
+ ],
+ "seo": {
+  "metaTitle": "Digital reach versus real loyalty at SRH",
+  "metaDescription": "What Sunrisers Hyderabad's fans have been loyal to: winning seasons, playoff droughts and the swing between them."
+ },
+ "methodology": "CricField measures the cricket a franchise puts on the field; it holds no revenue, attendance, audience, merchandise or social-media data. Commercial ideas in this article are labelled hypotheses with the data needed to test them. Generated by scripts/editorial/engine. Season win rate = wins \u00f7 matches with a result.",
+ "generator": "engine:v1"
+}

@@ -1,0 +1,821 @@
+{
+ "generatedAt": "2026-10-26T08:15:45.022Z",
+ "checks": [
+  {
+   "name": "Getty viewer registers itself while mounted (drives ad-free pages)",
+   "pass": true,
+   "detail": "editorial-image-figure.tsx"
+  },
+  {
+   "name": "Photo components refuse Getty photos in commercial zones and without embed consent",
+   "pass": true,
+   "detail": "usePhotoAllowed in EditorialImageFigure and EditorialCardMedia"
+  },
+  {
+   "name": "AdVessel is a commercial zone and withdraws on Getty pages",
+   "pass": false,
+   "detail": "ad-vessel.tsx"
+  },
+  {
+   "name": "AdSlot is a commercial zone and withdraws on Getty pages",
+   "pass": false,
+   "detail": "ad-slot.tsx"
+  },
+  {
+   "name": "Shop route is a commercial zone with no editorial photo components",
+   "pass": true,
+   "detail": "zone=shop, getty=false"
+  },
+  {
+   "name": "Sponsor modules on /dugout/articles/:slug are withheld while Getty embeds show",
+   "pass": true,
+   "detail": "src/pages/article-detail.tsx"
+  },
+  {
+   "name": "Sponsor modules on /articles/:slug are withheld while Getty embeds show",
+   "pass": true,
+   "detail": "src/pages/article-detail.tsx"
+  },
+  {
+   "name": "Sponsor modules on /dugout are withheld while Getty embeds show",
+   "pass": true,
+   "detail": "src/pages/dugout.tsx"
+  },
+  {
+   "name": "Sponsor modules on /dugout/:team are withheld while Getty embeds show",
+   "pass": true,
+   "detail": "src/pages/dugout.tsx"
+  },
+  {
+   "name": "No Getty image-file URLs (hotlinks) in the app source",
+   "pass": true,
+   "detail": "none"
+  },
+  {
+   "name": "Getty's widget script is loaded only by the consent-gated viewer",
+   "pass": true,
+   "detail": "only editorial-image-figure.tsx"
+  },
+  {
+   "name": "Consent banner asks about embedded Getty content",
+   "pass": true,
+   "detail": "consent-banner.tsx"
+  },
+  {
+   "name": "Privacy policy discloses Getty's Embedded Viewer and offers controls",
+   "pass": true,
+   "detail": "privacy.tsx"
+  },
+  {
+   "name": "No approved record lacks a review (no automatic approvals)",
+   "pass": true,
+   "detail": "{\"approved-embed\":340,\"pending-license\":990}"
+  }
+ ],
+ "routes": [
+  {
+   "path": "/home",
+   "file": "src/pages/home.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "3847561029"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/dugout/articles/:slug",
+   "file": "src/pages/article-detail.tsx",
+   "admin": false,
+   "getty": true,
+   "adUnits": 2,
+   "adSlots": [
+    "1029384758"
+   ],
+   "sponsorModules": 4,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/articles/:slug",
+   "file": "src/pages/article-detail.tsx",
+   "admin": false,
+   "getty": true,
+   "adUnits": 2,
+   "adSlots": [
+    "1029384758"
+   ],
+   "sponsorModules": 4,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/dugout",
+   "file": "src/pages/dugout.tsx",
+   "admin": false,
+   "getty": true,
+   "adUnits": 2,
+   "adSlots": [
+    "1029384770",
+    "1029384760"
+   ],
+   "sponsorModules": 1,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/dugout/:team",
+   "file": "src/pages/dugout.tsx",
+   "admin": false,
+   "getty": true,
+   "adUnits": 2,
+   "adSlots": [
+    "1029384770",
+    "1029384760"
+   ],
+   "sponsorModules": 1,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/admin/photo-pipeline",
+   "file": "src/pages/photo-pipeline-dashboard.tsx",
+   "admin": true,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/photo-pipeline",
+   "file": "src/pages/photo-pipeline-dashboard.tsx",
+   "admin": true,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/admin/editorial-images",
+   "file": "src/pages/editorial-image-review.tsx",
+   "admin": true,
+   "getty": true,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/arena",
+   "file": "src/pages/fan-arena.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/beyond-xi",
+   "file": "src/pages/fan-arena.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/fan-arena",
+   "file": "src/pages/fan-arena.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/intelligence",
+   "file": "src/pages/intelligence.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/feed",
+   "file": "src/pages/feed.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "1029384759"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/stats",
+   "file": "src/pages/stats.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "1029384758"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/pulse",
+   "file": "src/pages/pulse.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/scout",
+   "file": "src/pages/scout-home.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/scout/player/:id",
+   "file": "src/pages/scout-player.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/scout/compare",
+   "file": "src/pages/scout-compare.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/scout/roles",
+   "file": "src/pages/scout-roles.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/arcade",
+   "file": "src/pages/arcade/arcade-home.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/arcade/hand-cricket",
+   "file": "src/pages/arcade/hand-cricket-game.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/arcade/higher-or-lower",
+   "file": "src/pages/arcade/higher-or-lower-game.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/arcade/guess-cricketer",
+   "file": "src/pages/arcade/guess-cricketer-game.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/arcade/super-over",
+   "file": "src/pages/arcade/super-over-game.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/arcade/build-your-xi",
+   "file": "src/pages/arcade/build-your-xi-game.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/arcade/auction-room",
+   "file": "src/pages/arcade/auction-room-game.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/match/:id",
+   "file": "src/pages/match-detail.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/strategy",
+   "file": "src/pages/feed.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "1029384759"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/reports",
+   "file": "src/pages/section-pages.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "1029384756"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/blogs",
+   "file": "src/pages/section-pages.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "1029384756"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/scores",
+   "file": "src/pages/scores.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "1029384757"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst/ask",
+   "file": "src/pages/ai-analyst-ask.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "2938475610"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst/weakness",
+   "file": "src/pages/ai-analyst-weakness.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst/pressure",
+   "file": "src/pages/ai-analyst-pressure.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst/feed",
+   "file": "src/pages/ai-analyst-feed.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst/strategy-sim",
+   "file": "src/pages/ai-analyst-strategy-sim.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "1029384756"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst/alt-universe",
+   "file": "src/pages/ai-analyst-alt-universe.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "2948571630"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst/opposition-map",
+   "file": "src/pages/ai-analyst-opposition-map.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "1029485739"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst/decision-replay",
+   "file": "src/pages/ai-analyst-decision-replay.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "1029384850"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst/squad-dna",
+   "file": "src/pages/ai-analyst-squad-dna.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst/auction-war-room",
+   "file": "src/pages/ai-analyst-auction.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst/player-pool",
+   "file": "src/pages/ai-analyst-player-pool.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/ai-analyst",
+   "file": "src/pages/section-pages.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "1029384756"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/players/:slug",
+   "file": "src/pages/player.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/venues/:slug",
+   "file": "src/pages/venue.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/teams/:slug",
+   "file": "src/pages/team.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/visualizations",
+   "file": "src/pages/visualizations.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 1,
+   "adSlots": [
+    "7293840192"
+   ],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/shop",
+   "file": "src/pages/shop.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": true,
+   "premium": false,
+   "commercialZone": "shop"
+  },
+  {
+   "path": "/about",
+   "file": "src/pages/about.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/methodology",
+   "file": "src/pages/methodology.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/data-sources",
+   "file": "src/pages/data-sources.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/contact",
+   "file": "src/pages/contact.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/disclaimer",
+   "file": "src/pages/disclaimer.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  },
+  {
+   "path": "/privacy",
+   "file": "src/pages/privacy.tsx",
+   "admin": false,
+   "getty": false,
+   "adUnits": 0,
+   "adSlots": [],
+   "sponsorModules": 0,
+   "sponsorGuarded": true,
+   "shop": false,
+   "premium": false,
+   "commercialZone": null
+  }
+ ],
+ "registry": {
+  "approved-embed": 340,
+  "pending-license": 990
+ }
+}

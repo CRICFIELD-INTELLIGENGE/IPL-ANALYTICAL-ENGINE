@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-048",
+ "planId": "cf-rcb-048",
+ "franchise": "RCB",
+ "aspect": "business",
+ "title": "Women and Family Fans: What Inclusive Growth Could Mean for Royal Challengers Bengaluru",
+ "slug": "rcb-women-and-family-fans-what-inclusive-growth-could-mean-for-rcb",
+ "dek": "Growing Royal Challengers Bengaluru's fan base beyond its core means reaching women and families. The data cannot count them, but it can show when the cricket is easiest to attend.",
+ "excerpt": "A share of Royal Challengers Bengaluru's matches fall on weekends and double-header days, the fixtures most suited to family attendance. Who actually comes is a question for audience research.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RCB"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:wf-wk}} of Royal Challengers Bengaluru's matches have been played on a Saturday or Sunday.",
+  "{{ev:wf-dh}} fell on double-header days, when one IPL match starts in the afternoon.",
+  "RCB have played {{ev:wf-hwk}} weekend matches at Chinnaswamy."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Growth Beyond the Core",
+   "body": [
+    "Inclusive growth means building a fan base that reflects the whole population: women, children and families as well as the traditional core. That growth needs different products, timings and experiences.",
+    "The CricField warehouse is ball-by-ball cricket data. It contains no audience gender, age or household data, so it cannot measure the commercial side of this question directly."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "When the Cricket Is Easiest to Attend",
+   "body": [
+    "Timing matters for families. {{ev:wf-wk}} of Royal Challengers Bengaluru's matches have been on a Saturday or Sunday, and {{ev:wf-dh}} fell on double-header days, when one of the day's two matches starts in the afternoon.",
+    "Royal Challengers Bengaluru have played {{ev:wf-hwk}} weekend matches at Chinnaswamy: the fixtures where a family day out is most practical. The chart tracks both shares by season."
+   ],
+   "chartIds": [
+    "wf-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "What Inclusive Growth Would Involve",
+   "body": [
+    "Family pricing, safe and accessible stands, women-focused content and links with the women's game are the usual levers.",
+    "{{hyp:family}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What a Study Would Need",
+   "body": [
+    "Measuring progress would need ticket-holder demographics, survey data and digital-audience breakdowns over several seasons.",
+    "Without that, any claim about who attends is an assumption."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Use the Calendar",
+   "body": [
+    "The fixtures most suited to families are a known, limited set each season. Royal Challengers Bengaluru can target those dates for family-focused offers.",
+    "Whether that grows the audience needs demographic data to show."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "wf-chart",
+   "type": "line",
+   "title": "Weekend and double-header matches",
+   "subtitle": "RCB, share of matches by season",
+   "table": "wf-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "weekendPct",
+     "label": "Weekend"
+    },
+    {
+     "key": "doubleHeaderPct",
+     "label": "Double-header day"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of matches",
+   "takeaway": "The share of family-friendly fixtures changes from season to season.",
+   "ariaLabel": "Line chart of the share of RCB matches on weekends and on double-header days by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "family",
+   "statement": "Hypothesis: afternoon weekend matches attract a higher share of family and women ticket-buyers than evening weekday matches.",
+   "whyUnverified": "No ticket-holder demographic data is available.",
+   "howToTest": "Compare ticket-holder demographics across match slots for a full season."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Families at an Royal Challengers Bengaluru match.",
+   "wanted": "Royal Challengers Bengaluru fans, families in the crowd."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-042",
+  "cf-rcb-096",
+  "cf-rcb-057"
+ ],
+ "seo": {
+  "metaTitle": "Women and family fans: inclusive growth for RCB",
+  "metaDescription": "How many Royal Challengers Bengaluru matches fall on weekends and double-header days, and what inclusive fan growth would need."
+ },
+ "methodology": "CricField measures the cricket a franchise puts on the field; it holds no revenue, attendance, audience, merchandise or social-media data. Commercial ideas in this article are labelled hypotheses with the data needed to test them. Generated by scripts/editorial/engine. Double-header day = a date with two IPL matches in the warehouse.",
+ "generator": "engine:v1"
+}

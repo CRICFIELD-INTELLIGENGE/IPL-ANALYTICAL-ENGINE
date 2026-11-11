@@ -1,0 +1,144 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-033",
+ "planId": "cf-rcb-033",
+ "franchise": "RCB",
+ "aspect": "auction-economics",
+ "title": "Retention Mathematics: Which Player Roles Should Royal Challengers Bengaluru Protect?",
+ "slug": "rcb-retention-mathematics-which-player-roles-should-rcb-protect",
+ "dek": "Which players should Royal Challengers Bengaluru protect when the retention window opens? Comparing retained players with auction signings shows what each route has returned.",
+ "excerpt": "Since 2018, Royal Challengers Bengaluru's retained players have returned more contribution per crore than their auction signings. Retention is a bet on continuity; here is how it has paid.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RCB"
+ ],
+ "players": [
+  "Bhuvneshwar Kumar"
+ ],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "Retained players took {{ev:ret-share}} of Royal Challengers Bengaluru's recorded spend across {{ev:ret-n}} player-seasons since 2018.",
+  "Tempo runs above average per crore: {{ev:ret-per}} for retained players, {{ev:ret-aper}} for auction signings.",
+  "{{ev:ret-played}} of retained player-seasons saw action, against {{ev:ret-aplayed}} for auction signings."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Retention Bet",
+   "body": [
+    "Retention locks in a known quantity at a fixed price before the auction. It protects a core and saves bidding wars, but it spends a large share of the purse before the market has opened.",
+    "Since 2018, retained players have taken {{ev:ret-share}} of Royal Challengers Bengaluru's recorded spend across {{ev:ret-n}} player-seasons."
+   ],
+   "chartIds": [
+    "ret-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What Retention Returned",
+   "body": [
+    "Retained players returned {{ev:ret-per}} tempo runs above average per crore; auction signings returned {{ev:ret-aper}}. {{ev:ret-played}} of retained player-seasons saw action, against {{ev:ret-aplayed}} for auction signings.",
+    "The highest-contributing retained season was {{ev:ret-top}}."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Which Roles to Protect",
+   "body": [
+    "Retention is most valuable for roles the auction rarely supplies at a fair price: an elite death bowler, a wicketkeeper who bats in the top order, or a spinner who controls the middle overs.",
+    "For RCB, the retention list should be drawn from the scarce roles first and the famous names second."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Retention Prices Are Not Market Prices",
+   "body": [
+    "Retention prices are set by league rules and slot values, not by bidding, so comparing them with auction prices is not like for like.",
+    "{{hyp:slots}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Retain for Scarcity, Not Fame",
+   "body": [
+    "Royal Challengers Bengaluru's retained players have returned more per crore than auction signings since 2018. Retention should be reserved for roles the auction cannot reliably refill.",
+    "The role-scarcity analysis in this series identifies which roles those are."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ret-chart",
+   "type": "column",
+   "title": "Return per crore: retained vs auction",
+   "subtitle": "RCB, 2018\u20132026",
+   "table": "ret-cmp",
+   "xKey": "route",
+   "series": [
+    {
+     "key": "perCrore",
+     "label": "tRAA per crore"
+    }
+   ],
+   "xLabel": "Acquisition route",
+   "unit": "runs per \u20b91 Cr",
+   "takeaway": "Retained players have returned more per crore than auction signings.",
+   "ariaLabel": "Column chart of tempo runs above average per crore for retained players and auction signings."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-squads",
+   "kind": "cricfield-dataset",
+   "title": "CricField squads-by-season dataset",
+   "publisher": "CricField"
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "slots",
+   "statement": "Hypothesis: retention slot prices systematically under-price the first retained player and over-price the later ones.",
+   "whyUnverified": "Retention slot structures have changed across cycles and are not modelled.",
+   "howToTest": "Compare retained players' tRAA with what similar players fetched at the same auction."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Royal Challengers Bengaluru retained core.",
+   "wanted": "Bhuvneshwar Kumar playing for Royal Challengers Bengaluru."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-038",
+  "cf-rcb-040",
+  "cf-rcb-032"
+ ],
+ "seo": {
+  "metaTitle": "Retention mathematics: which roles RCB should protect",
+  "metaDescription": "Royal Challengers Bengaluru's retained players against auction signings since 2018: spend, contribution per crore and how often each played."
+ },
+ "methodology": "Contribution is tempo runs above average (tRAA): batting runs above what an average batter would score from the same balls in the same season and phase, plus bowling runs saved against the average bowler in the same season and phase. Wickets and dismissals are not valued in this version. Prices come from CricField squad lists (\u20b9 crore = 100 lakh). Generated by scripts/editorial/engine.",
+ "generator": "engine:v1"
+}

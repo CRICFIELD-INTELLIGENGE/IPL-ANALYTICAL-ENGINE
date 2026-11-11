@@ -1,0 +1,153 @@
+{
+ "articleId": "cf-mi-053",
+ "generatedAt": "2026-10-26T04:19:31.472Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "hw-r1": {
+   "value": "RG Sharma",
+   "display": "RG Sharma",
+   "label": "Mumbai Indians' leading run-scorer",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 45163,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (4) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "hw-r1s": {
+   "value": 14,
+   "display": "14%",
+   "label": "Share of Mumbai Indians' runs scored by that player",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 45163,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (4) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 45163"
+   }
+  },
+  "hw-top3": {
+   "value": 30,
+   "display": "30%",
+   "label": "Share of Mumbai Indians' runs scored by the top three run-scorers",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 45163,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (4) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 45163"
+   }
+  },
+  "hw-w1": {
+   "value": "JJ Bumrah",
+   "display": "JJ Bumrah",
+   "label": "Mumbai Indians' leading wicket-taker",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-credited dismissals",
+   "sampleSize": {
+    "n": 1637,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (4) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "hw-w1s": {
+   "value": 11,
+   "display": "11%",
+   "label": "Share of Mumbai Indians' bowler wickets taken by that player",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 1637,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (4) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 100 wickets",
+    "passed": true,
+    "detail": "n = 1637"
+   }
+  }
+ },
+ "tables": {
+  "hw-top": {
+   "label": "MI leading run-scorers",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, all seasons",
+   "sampleSize": {
+    "n": 45163,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (4) GROUP BY pl.name ORDER BY runs DESC",
+   "rows": [
+    {
+     "player": "RG Sharma",
+     "runs": 6159,
+     "share": 13.6
+    },
+    {
+     "player": "SA Yadav",
+     "runs": 3973,
+     "share": 8.8
+    },
+    {
+     "player": "KA Pollard",
+     "runs": 3412,
+     "share": 7.6
+    },
+    {
+     "player": "AT Rayudu",
+     "runs": 2416,
+     "share": 5.3
+    },
+    {
+     "player": "SR Tendulkar",
+     "runs": 2334,
+     "share": 5.2
+    },
+    {
+     "player": "Ishan Kishan",
+     "runs": 2325,
+     "share": 5.1
+    },
+    {
+     "player": "HH Pandya",
+     "runs": 2122,
+     "share": 4.7
+    },
+    {
+     "player": "Tilak Varma",
+     "runs": 1858,
+     "share": 4.1
+    }
+   ]
+  }
+ }
+}

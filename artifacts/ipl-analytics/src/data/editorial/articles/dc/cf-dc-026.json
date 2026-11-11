@@ -1,0 +1,145 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-026",
+ "planId": "cf-dc-026",
+ "franchise": "DC",
+ "aspect": "tactical",
+ "title": "The Timeout Decision: Can Delhi Capitals Interrupt an Opposition Surge?",
+ "slug": "dc-the-timeout-decision-can-dc-interrupt-an-opposition-surge",
+ "dek": "Can Delhi Capitals stop an opposition surge by stopping the game? The over that follows a big over shows whether momentum is real.",
+ "excerpt": "League-wide since 2022, the over after a fifteen-run over has cost more than an average over. Delhi Capitals concede big overs at a rate the data can compare with the league.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "DC"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "DC conceded {{ev:to-tbig}} big overs (fifteen runs or more) per hundred overs since 2022; the rest of the IPL conceded {{ev:to-lbig}}.",
+  "Across the league, the over after a big over cost {{ev:to-lafter}} runs, against {{ev:to-lavg}} for an average over.",
+  "For DC the over after a big over cost {{ev:to-tafter}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Is Momentum Real?",
+   "body": [
+    "The strategic timeout exists partly to break momentum: after a big over, the bowling side regroups and resets. That only matters if surges carry on, so that a big over makes the next one more likely to be expensive.",
+    "Across the league since 2022, the over after a fifteen-run over cost {{ev:to-lafter}} runs, against {{ev:to-lavg}} for an average over. Surges do carry on, at least partly."
+   ],
+   "chartIds": [
+    "to-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Delhi Capitals' Exposure",
+   "body": [
+    "Delhi Capitals conceded {{ev:to-tbig}} big overs per hundred since 2022, against {{ev:to-lbig}} for the rest of the league. After those overs, their next over cost {{ev:to-tafter}}.",
+    "The fewer big overs a side concedes, the less often the timeout question arises at all."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Using the Break",
+   "body": [
+    "A timeout is most valuable when it changes something concrete: the bowler, the field or the plan for a set batter. Used as a pause without a change, it is a breather rather than a tactic.",
+    "For DC, the practical rule is to pair every reactive break with a specific change, and to record it."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Timeouts Are Not in the Data",
+   "body": [
+    "Public data does not record when timeouts were taken, so their effect cannot be measured directly. The analysis here tests the premise, momentum, rather than the timeout itself.",
+    "{{hyp:timeout}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Break With a Plan, Not a Pause",
+   "body": [
+    "The league evidence supports the idea that surges carry on. Delhi Capitals should use breaks to change bowler or field, not just to stop the clock.",
+    "Logging every break and what changed after it would show whether the decision pays."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "to-chart",
+   "type": "column",
+   "title": "Big overs and what followed",
+   "subtitle": "2022\u20132026",
+   "table": "to-cmp",
+   "xKey": "measure",
+   "series": [
+    {
+     "key": "team",
+     "label": "DC"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Measure",
+   "unit": "runs or overs",
+   "takeaway": "The over after a big over costs more than an average over.",
+   "ariaLabel": "Grouped column chart of big overs conceded and the runs in the following over."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "timeout",
+   "statement": "Hypothesis: overs immediately after a strategic timeout cost less than comparable overs without one.",
+   "whyUnverified": "Timeout timings are not in the warehouse.",
+   "howToTest": "Join timeout times from broadcast data and compare the following overs."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "15",
+   "reason": "Definition of a big over (fifteen runs or more), used in a table label."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Delhi Capitals regrouping on the field.",
+   "wanted": "Delhi Capitals players in a huddle on the field."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-028",
+  "cf-dc-029",
+  "cf-dc-030"
+ ],
+ "seo": {
+  "metaTitle": "The timeout decision: can DC stop a surge?",
+  "metaDescription": "How often Delhi Capitals concede fifteen-run overs and whether IPL scoring surges carry into the next over, since 2022."
+ },
+ "methodology": "Regulation innings only (super overs excluded); win rates use matches with a result. Generated from the CricField warehouse by scripts/editorial/engine. A big over is fifteen runs or more, overs one to nineteen; the following over is the next over in the same innings. 2022\u20132026.",
+ "generator": "engine:v1"
+}

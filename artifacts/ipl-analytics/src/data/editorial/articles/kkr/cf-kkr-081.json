@@ -1,0 +1,173 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-kkr-081",
+ "planId": "cf-kkr-081",
+ "franchise": "KKR",
+ "aspect": "data-science",
+ "title": "Win Probability, Ball by Ball: Building a Model for Kolkata Knight Riders",
+ "slug": "kkr-win-probability-ball-by-ball-building-a-model-for-kkr",
+ "dek": "How likely is Kolkata Knight Riders to win from here? A transparent win-probability model, fitted on every other IPL chase, answers the question halfway through any run chase.",
+ "excerpt": "Fitted on the rest of the league's chases, a simple halfway model expected Kolkata Knight Riders to win a certain number of their chases; they won fewer. The model is small enough to explain in a single table.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "KKR"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "Fitted on {{ev:wp-n}} chases by other sides, the model gives a chasing side {{ev:wp-easy}} needing under eight an over with no more than one wicket down, and {{ev:wp-hard}} needing twelve or more with four or more down.",
+  "From the positions KKR reached in {{ev:wp-m}} chases, the model expected {{ev:wp-exp}} wins; they won {{ev:wp-act}}.",
+  "The whole model fits in one table: required rate by wickets lost."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "A Model You Can Read",
+   "body": [
+    "Win-probability models usually hide inside software. This one is deliberately simple: take every IPL chase by sides other than KKR, note the required rate and wickets lost after ten overs, and record how often the chasing side won.",
+    "Fitted on {{ev:wp-n}} chases, the model gives a chasing side {{ev:wp-easy}} needing under eight an over with no more than one wicket down, and {{ev:wp-hard}} needing twelve or more with four or more down."
+   ],
+   "chartIds": [
+    "wp-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "KKR Against the Model",
+   "body": [
+    "Kolkata Knight Riders reached the eleventh over in {{ev:wp-m}} chases. From those positions the model expected {{ev:wp-exp}} wins; they won {{ev:wp-act}}.",
+    "They have finished chases worse than the positions suggested."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Ball by Ball",
+   "body": [
+    "The same table can be built for every over, which is how broadcast win-probability graphics work. CricField uses the halfway point here because it has the most data per cell.",
+    "{{hyp:wp}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What the Model Ignores",
+   "body": [
+    "It ignores venue, the batters at the crease and the bowlers still to bowl. Adding those would sharpen it, at the cost of transparency and larger data needs per cell.",
+    "Rain-shortened chases are treated as full twenty-over chases, so a few positions are misclassified."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Start Simple",
+   "body": [
+    "A two-variable table already explains much of who wins a chase. Kolkata Knight Riders have fallen short of it.",
+    "Extensions should be judged by how much they improve on this baseline."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "wp-chart",
+   "type": "column",
+   "title": "Chasing win probability at halfway",
+   "subtitle": "Rest of IPL, by required rate and wickets lost",
+   "table": "wp-grid",
+   "xKey": "requiredRate",
+   "series": [
+    {
+     "key": "w01",
+     "label": "0\u20131 down"
+    },
+    {
+     "key": "w23",
+     "label": "2\u20133 down"
+    },
+    {
+     "key": "w4",
+     "label": "4+ down"
+    }
+   ],
+   "xLabel": "Required rate after ten overs",
+   "unit": "% of chases won",
+   "takeaway": "Wickets in hand matter as much as the required rate.",
+   "ariaLabel": "Grouped column chart of chasing win rates after ten overs, by required rate band and wickets lost."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "wp",
+   "statement": "Hypothesis: adding a venue term improves the halfway model's accuracy more than adding the identity of the batters at the crease.",
+   "whyUnverified": "Neither extension has been fitted.",
+   "howToTest": "Fit both extensions on the same chases and compare out-of-sample log loss."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "8",
+   "reason": "Required-rate band boundary."
+  },
+  {
+   "text": "8\u201310",
+   "reason": "Band label."
+  },
+  {
+   "text": "10\u201312",
+   "reason": "Band label."
+  },
+  {
+   "text": "12",
+   "reason": "Band boundary."
+  },
+  {
+   "text": "0\u20131",
+   "reason": "Wickets band label."
+  },
+  {
+   "text": "2\u20133",
+   "reason": "Wickets band label."
+  },
+  {
+   "text": "4",
+   "reason": "Wickets band boundary."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Kolkata Knight Riders run chase.",
+   "wanted": "Kolkata Knight Riders batters chasing a target."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-kkr-060",
+  "cf-kkr-086",
+  "cf-kkr-085"
+ ],
+ "seo": {
+  "metaTitle": "Win probability: a transparent model for KKR chases",
+  "metaDescription": "A one-table win-probability model fitted on every IPL chase, and how Kolkata Knight Riders have performed against it."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Models are fitted on the warehouse itself and described in full here. Generated by scripts/editorial/engine. Cells with fewer than ten chases fall back to the overall chase win rate. KKR chases are excluded when fitting.",
+ "generator": "engine:v1"
+}

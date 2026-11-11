@@ -1,0 +1,139 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-kkr-053",
+ "planId": "cf-kkr-053",
+ "franchise": "KKR",
+ "aspect": "fan-culture",
+ "title": "Hero Worship Versus Franchise Loyalty: Who Do Kolkata Knight Riders Fans Really Follow?",
+ "slug": "kkr-hero-worship-versus-franchise-loyalty-who-do-kkr-fans-really-follow",
+ "dek": "Do Kolkata Knight Riders fans follow the badge or the stars? The data cannot read fans' minds, but it shows how much the franchise's story has depended on a few names.",
+ "excerpt": "G Gambhir has scored a large share of Kolkata Knight Riders' runs. The more a franchise's history rests on a few players, the more its fans' loyalty is tied up with them.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "player-story",
+ "teams": [
+  "KKR"
+ ],
+ "players": [
+  "G Gambhir",
+  "AD Russell",
+  "SP Narine"
+ ],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:hw-r1}} has scored {{ev:hw-r1s}} of Kolkata Knight Riders' runs; the top three run-scorers account for {{ev:hw-top3}}.",
+  "{{ev:hw-w1}} has taken {{ev:hw-w1s}} of the franchise's bowler-credited wickets.",
+  "What fans actually follow, the player or the badge, needs survey data to answer."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Stars and Badges",
+   "body": [
+    "Every franchise has fans who would follow a favourite player anywhere and fans who would support the badge whoever wore it. The balance matters when stars leave.",
+    "The CricField warehouse holds no survey, sentiment or social-media data, so it cannot measure what fans feel. It can measure what they have watched."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "How Much the Story Rests on a Few Names",
+   "body": [
+    "{{ev:hw-r1}} has scored {{ev:hw-r1s}} of Kolkata Knight Riders' runs, and the top three run-scorers account for {{ev:hw-top3}}. The chart lists the leading run-scorers and their share.",
+    "With the ball, {{ev:hw-w1}} has taken {{ev:hw-w1s}} of the franchise's bowler-credited wickets."
+   ],
+   "chartIds": [
+    "hw-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "When the Hero Leaves",
+   "body": [
+    "A franchise whose history is concentrated in a few names faces a test when those players retire or move. Fan loyalty is then tested against the badge alone.",
+    "{{hyp:hero}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Building Loyalty That Outlasts Stars",
+   "body": [
+    "Franchises protect against star dependence by building identity around the club: a home ground, a style of play and long-term community links.",
+    "Measuring whether that works would need fan data from before and after a star's departure."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Know the Concentration",
+   "body": [
+    "Kolkata Knight Riders' on-field story has leaned on its leading players to the degree shown above.",
+    "That concentration is a measure of how much fan attachment may be riding on a few names."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "hw-chart",
+   "type": "bar",
+   "title": "Leading run-scorers",
+   "subtitle": "KKR, all seasons",
+   "table": "hw-top",
+   "xKey": "player",
+   "series": [
+    {
+     "key": "runs",
+     "label": "Runs"
+    }
+   ],
+   "unit": "runs",
+   "takeaway": "A handful of players account for a large share of the franchise's runs.",
+   "ariaLabel": "Horizontal bar chart of Kolkata Knight Riders' leading run-scorers."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "hero",
+   "statement": "Hypothesis: attendance and engagement fall more after a star departs from a franchise whose runs are concentrated in few players.",
+   "whyUnverified": "No attendance or engagement data is available.",
+   "howToTest": "Compare attendance change after star departures across franchises with different run concentration."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "G Gambhir, Kolkata Knight Riders' leading run-scorer.",
+   "wanted": "G Gambhir batting for Kolkata Knight Riders."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-kkr-043",
+  "cf-kkr-068",
+  "cf-kkr-057"
+ ],
+ "seo": {
+  "metaTitle": "Hero worship versus franchise loyalty at KKR",
+  "metaDescription": "How much of Kolkata Knight Riders' history rests on a few players, and what that means for fan loyalty when stars leave."
+ },
+ "methodology": "CricField holds ball-by-ball cricket data and no fan survey, sentiment or social-media data. This article measures the cricket fans have experienced; statements about fans themselves are labelled hypotheses. Generated by scripts/editorial/engine. Bowler-credited wickets exclude run outs, retirements and obstructing the field.",
+ "generator": "engine:v1"
+}

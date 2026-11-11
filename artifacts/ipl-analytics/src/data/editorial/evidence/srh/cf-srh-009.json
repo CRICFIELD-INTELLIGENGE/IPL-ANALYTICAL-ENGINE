@@ -1,0 +1,248 @@
+{
+ "articleId": "cf-srh-009",
+ "generatedAt": "2026-10-26T04:21:44.522Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "dot-t2": {
+   "value": 31.4,
+   "display": "31.4%",
+   "label": "SRH dot-ball rate batting, 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Legal balls",
+   "sampleSize": {
+    "n": 5064,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (1) AND d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) team, SUM(CASE WHEN d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) league, SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range 15–60 for dot rate",
+    "passed": true,
+    "detail": "value 31.41785150078989"
+   }
+  },
+  "dot-l2": {
+   "value": 32.7,
+   "display": "32.7%",
+   "label": "IPL dot-ball rate, 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Legal balls, weighted by the franchise's balls per season",
+   "sampleSize": {
+    "n": 3,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (1) AND d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) team, SUM(CASE WHEN d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) league, SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range 15–60 for dot rate",
+    "passed": true,
+    "detail": "value 32.678579421494106"
+   }
+  },
+  "dot-wlow": {
+   "value": 65.3,
+   "display": "65.3%",
+   "label": "IPL win rate for innings with under 30% dot balls",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Innings with a result",
+   "sampleSize": {
+    "n": 527,
+    "unit": "innings"
+   },
+   "query": "WITH inn AS (SELECT i.innings_id, i.batting_team_id bt, i.match_id, SUM(CASE WHEN d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 1.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) dots FROM innings i JOIN deliveries d ON d.innings_id = i.innings_id WHERE i.innings_number <= 2 GROUP BY i.innings_id HAVING SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) >= 60) SELECT CASE WHEN dots < 0.30 THEN 'under 30%' WHEN dots < 0.36 THEN '30–36%' WHEN dots < 0.42 THEN '36–42%' ELSE '42% or more' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = inn.bt THEN 1 ELSE 0 END) won FROM inn JOIN matches m ON m.match_id = inn.match_id WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 50 innings",
+    "passed": true,
+    "detail": "n = 527"
+   }
+  },
+  "dot-whigh": {
+   "value": 26.7,
+   "display": "26.7%",
+   "label": "IPL win rate for innings with 42% or more dot balls",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Innings with a result",
+   "sampleSize": {
+    "n": 442,
+    "unit": "innings"
+   },
+   "query": "WITH inn AS (SELECT i.innings_id, i.batting_team_id bt, i.match_id, SUM(CASE WHEN d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 1.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) dots FROM innings i JOIN deliveries d ON d.innings_id = i.innings_id WHERE i.innings_number <= 2 GROUP BY i.innings_id HAVING SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) >= 60) SELECT CASE WHEN dots < 0.30 THEN 'under 30%' WHEN dots < 0.36 THEN '30–36%' WHEN dots < 0.42 THEN '36–42%' ELSE '42% or more' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = inn.bt THEN 1 ELSE 0 END) won FROM inn JOIN matches m ON m.match_id = inn.match_id WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 50 innings",
+    "passed": true,
+    "detail": "n = 442"
+   }
+  },
+  "dot-cost": {
+   "value": 1.5,
+   "display": "1.5",
+   "label": "Difference in dot balls per SRH innings against the league rate, 2024–2026",
+   "unit": "balls per innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Absolute difference in dot rate × 120 balls",
+   "sampleSize": {
+    "n": 3,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (1) AND d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) team, SUM(CASE WHEN d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) league, SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "arithmetic on validated metrics",
+    "passed": true
+   }
+  },
+  "dot-x-best-v": {
+   "value": 30.8,
+   "display": "30.8",
+   "label": "SRH dot-ball rate in 2019",
+   "unit": "% of legal balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "SRH, 2019",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (1) AND d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) team, SUM(CASE WHEN d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) league, SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "taken from the season table",
+    "passed": true
+   }
+  },
+  "dot-x-worst-v": {
+   "value": 38.6,
+   "display": "38.6",
+   "label": "SRH dot-ball rate in 2013",
+   "unit": "% of legal balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "SRH, 2013",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (1) AND d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) team, SUM(CASE WHEN d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) league, SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "taken from the season table",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "dot-series": {
+   "label": "Dot-ball rate by season: SRH batting vs IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Legal balls with no run of any kind",
+   "sampleSize": {
+    "n": 24275,
+    "unit": "SRH legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (1) AND d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) team, SUM(CASE WHEN d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 100.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) league, SUM(CASE WHEN i.batting_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "rows": [
+    {
+     "season": "2013",
+     "team": 38.6,
+     "league": 38.4
+    },
+    {
+     "season": "2014",
+     "team": 35.9,
+     "league": 36.3
+    },
+    {
+     "season": "2015",
+     "team": 35,
+     "league": 36.3
+    },
+    {
+     "season": "2016",
+     "team": 35.5,
+     "league": 34.1
+    },
+    {
+     "season": "2017",
+     "team": 31.1,
+     "league": 34
+    },
+    {
+     "season": "2018",
+     "team": 34,
+     "league": 34.4
+    },
+    {
+     "season": "2019",
+     "team": 30.8,
+     "league": 35.6
+    },
+    {
+     "season": "2020",
+     "team": 34.7,
+     "league": 34.8
+    },
+    {
+     "season": "2021",
+     "team": 37.4,
+     "league": 36.2
+    },
+    {
+     "season": "2022",
+     "team": 36.1,
+     "league": 37.1
+    },
+    {
+     "season": "2023",
+     "team": 33.4,
+     "league": 33.9
+    },
+    {
+     "season": "2024",
+     "team": 31.5,
+     "league": 32.9
+    },
+    {
+     "season": "2025",
+     "team": 31.1,
+     "league": 32.3
+    },
+    {
+     "season": "2026",
+     "team": 31.6,
+     "league": 32.7
+    }
+   ]
+  },
+  "dot-win": {
+   "label": "Win rate by dot-ball share of an innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "IPL innings with a result and at least ten overs batted",
+   "sampleSize": {
+    "n": 2446,
+    "unit": "innings"
+   },
+   "query": "WITH inn AS (SELECT i.innings_id, i.batting_team_id bt, i.match_id, SUM(CASE WHEN d.total_runs = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) * 1.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) dots FROM innings i JOIN deliveries d ON d.innings_id = i.innings_id WHERE i.innings_number <= 2 GROUP BY i.innings_id HAVING SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) >= 60) SELECT CASE WHEN dots < 0.30 THEN 'under 30%' WHEN dots < 0.36 THEN '30–36%' WHEN dots < 0.42 THEN '36–42%' ELSE '42% or more' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = inn.bt THEN 1 ELSE 0 END) won FROM inn JOIN matches m ON m.match_id = inn.match_id WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "rows": [
+    {
+     "band": "under 30%",
+     "winPct": 65.3
+    },
+    {
+     "band": "30–36%",
+     "winPct": 56.3
+    },
+    {
+     "band": "36–42%",
+     "winPct": 44
+    },
+    {
+     "band": "42% or more",
+     "winPct": 26.7
+    }
+   ]
+  }
+ }
+}

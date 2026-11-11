@@ -1,0 +1,177 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-lsg-074",
+ "planId": "cf-lsg-074",
+ "franchise": "LSG",
+ "aspect": "scouting",
+ "title": "Age Curves: When Do Lucknow Super Giants\u2019s Batters and Bowlers Typically Peak?",
+ "slug": "lsg-age-curves-when-do-lsg-batters-and-bowlers-typically-peak",
+ "dek": "When do batters peak in the IPL? Strike rate by age, relative to each season's average, shows where Lucknow Super Giants should expect their batters to be at their best.",
+ "excerpt": "Among IPL batters with a known birth date, relative strike rate barely changes with age: every band sits within a few points of the season average. Age, on this evidence, is a weak scouting signal for tempo.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "LSG"
+ ],
+ "players": [],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "Relative strike rate by age band: under twenty-five {{ev:ac-u25}}, twenty-five to twenty-nine {{ev:ac-a25}}, thirty to thirty-four {{ev:ac-a30}}, thirty-five and over {{ev:ac-a35}} (season average = one hundred).",
+  "The bands differ by less than five points, so there is no meaningful peak; birth dates cover batters facing {{ev:ac-cover}} of balls since 2018.",
+  "Lucknow Super Giants' batters since 2024 have averaged {{ev:ac-mine}} years, weighted by balls faced (coverage {{ev:ac-mine-cover}})."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Shape of a Career",
+   "body": [
+    "Batters improve with experience and decline with age; the question for a scout is where the peak falls and how steep the decline is in a format built on power and speed.",
+    "CricField grouped IPL batting since 2018 by age, measuring strike rate relative to each season's average so that rising scoring does not distort the curve."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Where the Peak Falls",
+   "body": [
+    "Relative strike rate was {{ev:ac-u25}} for batters under twenty-five, {{ev:ac-a25}} at twenty-five to twenty-nine, {{ev:ac-a30}} at thirty to thirty-four, and {{ev:ac-a35}} at thirty-five and over. The bands differ by less than five points: there is no meaningful peak.",
+    "Birth dates are known for batters who faced {{ev:ac-cover}} of balls since 2018, so the curve rests on part of the data."
+   ],
+   "chartIds": [
+    "ac-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Where LSG Sit",
+   "body": [
+    "Weighted by balls faced, Lucknow Super Giants' batters since 2024 have averaged {{ev:ac-mine}} years, on the batters whose birth date is known ({{ev:ac-mine-cover}} of their balls).",
+    "{{hyp:age}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Survivors Skew the Curve",
+   "body": [
+    "Only good older players keep getting picked, so the older bands contain survivors. The true decline for a typical player is likely steeper than the curve shows.",
+    "Bowling age curves need bowling-style and birth-date coverage that the data does not yet have."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Age Is a Weak Signal",
+   "body": [
+    "Lucknow Super Giants should not pay a premium for youth or discount experience on tempo grounds alone; the curve is nearly flat.",
+    "Fuller birth-date data would sharpen the curve considerably."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ac-chart",
+   "type": "column",
+   "title": "Relative strike rate by age",
+   "subtitle": "IPL batters with a known birth date, 2018\u20132026",
+   "table": "ac-bands",
+   "xKey": "age",
+   "series": [
+    {
+     "key": "index",
+     "label": "Index (100 = season average)"
+    }
+   ],
+   "xLabel": "Age band",
+   "unit": "index",
+   "takeaway": "Relative strike rate barely changes with age.",
+   "ariaLabel": "Column chart of IPL batters' strike rate relative to the season average, by age band."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "age",
+   "statement": "Hypothesis: Lucknow Super Giants' batting would gain tempo by shifting balls from batters aged thirty-five and over to batters in the peak band.",
+   "whyUnverified": "Replacement candidates and their ages have not been modelled.",
+   "howToTest": "Simulate reallocating balls by age band using each band's relative strike rate."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "5",
+   "reason": "Materiality threshold (five index points)."
+  },
+  {
+   "text": "2,000",
+   "reason": "Minimum balls per age band for the peak test."
+  },
+  {
+   "text": "100",
+   "reason": "Index baseline (season average = 100)."
+  },
+  {
+   "text": "25",
+   "reason": "Age-band boundary."
+  },
+  {
+   "text": "25\u201329",
+   "reason": "Age-band label."
+  },
+  {
+   "text": "30\u201334",
+   "reason": "Age-band label."
+  },
+  {
+   "text": "29",
+   "reason": "Age-band boundary."
+  },
+  {
+   "text": "30",
+   "reason": "Age-band boundary."
+  },
+  {
+   "text": "34",
+   "reason": "Age-band boundary."
+  },
+  {
+   "text": "35",
+   "reason": "Age-band boundary."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Lucknow Super Giants batters, young and experienced.",
+   "wanted": "Lucknow Super Giants batter."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-lsg-097",
+  "cf-lsg-079",
+  "cf-lsg-087"
+ ],
+ "seo": {
+  "metaTitle": "Age curves: when do Lucknow Super Giants' batters peak?",
+  "metaDescription": "IPL batting by age since 2018, relative to each season's average, and where Lucknow Super Giants' batters sit on the curve."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Age = season year minus birth year (birth dates from CricField player-bio data). Relative strike rate = runs \u00f7 (balls \u00d7 season-average runs per ball) \u00d7 100.",
+ "generator": "engine:v1"
+}

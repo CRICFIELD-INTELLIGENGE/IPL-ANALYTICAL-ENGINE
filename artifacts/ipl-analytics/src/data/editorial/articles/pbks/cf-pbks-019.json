@@ -1,0 +1,147 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-pbks-019",
+ "planId": "cf-pbks-019",
+ "franchise": "PBKS",
+ "aspect": "bowling-fielding",
+ "title": "Bowler Matchups: When Should Punjab Kings Break Its Preferred Rotation?",
+ "slug": "pbks-bowler-matchups-when-should-pbks-break-its-preferred-rotation",
+ "dek": "When should Punjab Kings break their preferred bowling rotation to target a batter? Bowling-type and batting-hand match-ups since 2022 show where the edges are.",
+ "excerpt": "League-wide since 2022, spin has been more expensive against left-handers than right-handers. Punjab Kings' own match-up profile shows whether they follow the pattern.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "PBKS"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "PBKS spin conceded {{ev:mu-team-spin-left}} an over to left-handers and {{ev:mu-team-spin-right}} to right-handers since 2022.",
+  "For the rest of the IPL, spin conceded {{ev:mu-rest-spin-left}} and {{ev:mu-rest-spin-right}}.",
+  "PBKS pace conceded {{ev:mu-team-pace-left}} to left-handers and {{ev:mu-team-pace-right}} to right-handers."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Rotations and Match-Ups",
+   "body": [
+    "Most captains bowl their attack in a familiar order. The match-up school says the order should bend to the batters at the crease: an off-spinner to a left-hander, a left-arm seamer to a right-hander, and so on.",
+    "CricField matched each delivery's bowling type and batting hand from player-bio data. Since 2022 Punjab Kings' spinners have conceded {{ev:mu-team-spin-left}} an over to left-handers and {{ev:mu-team-spin-right}} to right-handers."
+   ],
+   "chartIds": [
+    "mu-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Where the Edges Are",
+   "body": [
+    "For the rest of the league the comparable spin figures are {{ev:mu-rest-spin-left}} against left-handers and {{ev:mu-rest-spin-right}} against right-handers. Punjab Kings' pace attack conceded {{ev:mu-team-pace-left}} to left-handers and {{ev:mu-team-pace-right}} to right-handers.",
+    "The higher cost of Punjab Kings' spin against left-handers is the most direct signal for when to change the rotation."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "When to Break the Plan",
+   "body": [
+    "A match-up is worth breaking the rotation for when the gap is large and the sample behind it is solid. Small gaps in small samples are noise, and chasing them can leave the best bowlers with overs in the wrong phase.",
+    "For PBKS, the practical rule is to bend the order only for the strongest match-ups and keep the phase plan otherwise."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Handedness Is Only One Dimension",
+   "body": [
+    "A batter's hand is a crude stand-in for his strengths. Within each hand there are batters who sweep well and batters who cannot, which a type-by-hand table cannot see.",
+    "{{hyp:individual}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Bend the Rotation, Do Not Break the Phases",
+   "body": [
+    "Punjab Kings should use match-ups to choose between bowlers of similar quality in the same phase, not to move overs between phases.",
+    "Individual batter-against-bowler-type records, shrunk for small samples, are the next level of detail."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "mu-chart",
+   "type": "column",
+   "title": "Economy by match-up",
+   "subtitle": "Bowling type \u00d7 batter hand, 2022\u20132026",
+   "table": "mu-matrix",
+   "xKey": "matchup",
+   "series": [
+    {
+     "key": "team",
+     "label": "PBKS"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Match-up",
+   "unit": "runs per over",
+   "takeaway": "Match-up costs differ, but most gaps are a fraction of a run per over.",
+   "ariaLabel": "Grouped column chart of economy for pace and spin against left- and right-handed batters."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-bio",
+   "kind": "cricfield-dataset",
+   "title": "CricField player-bio dataset (batting hands and bowling styles)",
+   "publisher": "CricField",
+   "note": "Joined via squad lists; unknown types excluded."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "individual",
+   "statement": "Hypothesis: batter-specific match-ups carry more signal than bowling type against batting hand.",
+   "whyUnverified": "Batter-level match-up samples are small and have not been shrunk.",
+   "howToTest": "Estimate shrunk batter-against-bowling-type economies and compare their predictive power."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A Punjab Kings bowler targeting a batter.",
+   "wanted": "Punjab Kings spinner bowling."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-pbks-014",
+  "cf-pbks-020",
+  "cf-pbks-086"
+ ],
+ "seo": {
+  "metaTitle": "Bowler match-ups: when PBKS should break the rotation",
+  "metaDescription": "Punjab Kings' pace and spin economy against left- and right-handed batters since 2022, compared with the IPL."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Economy uses runs charged to the bowler (byes and leg-byes excluded) per legal ball times six. Bowler wickets exclude run outs. Generated from the CricField warehouse by scripts/editorial/engine. Bowling type and batting hand from CricField player-bio data via squad lists; unknown types excluded. 2022\u20132026.",
+ "generator": "engine:v1"
+}

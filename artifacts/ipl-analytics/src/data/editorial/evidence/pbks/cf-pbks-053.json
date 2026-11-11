@@ -1,0 +1,153 @@
+{
+ "articleId": "cf-pbks-053",
+ "generatedAt": "2026-10-26T04:25:33.048Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "hw-r1": {
+   "value": "KL Rahul",
+   "display": "KL Rahul",
+   "label": "Punjab Kings' leading run-scorer",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 43247,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "hw-r1s": {
+   "value": 6,
+   "display": "6%",
+   "label": "Share of Punjab Kings' runs scored by that player",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 43247,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 43247"
+   }
+  },
+  "hw-top3": {
+   "value": 16,
+   "display": "16%",
+   "label": "Share of Punjab Kings' runs scored by the top three run-scorers",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 43247,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 43247"
+   }
+  },
+  "hw-w1": {
+   "value": "Arshdeep Singh",
+   "display": "Arshdeep Singh",
+   "label": "Punjab Kings' leading wicket-taker",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-credited dismissals",
+   "sampleSize": {
+    "n": 1454,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "hw-w1s": {
+   "value": 8,
+   "display": "8%",
+   "label": "Share of Punjab Kings' bowler wickets taken by that player",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 1454,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 100 wickets",
+    "passed": true,
+    "detail": "n = 1454"
+   }
+  }
+ },
+ "tables": {
+  "hw-top": {
+   "label": "PBKS leading run-scorers",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, all seasons",
+   "sampleSize": {
+    "n": 43247,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) GROUP BY pl.name ORDER BY runs DESC",
+   "rows": [
+    {
+     "player": "KL Rahul",
+     "runs": 2548,
+     "share": 5.9
+    },
+    {
+     "player": "SE Marsh",
+     "runs": 2477,
+     "share": 5.7
+    },
+    {
+     "player": "P Simran Singh",
+     "runs": 1865,
+     "share": 4.3
+    },
+    {
+     "player": "DA Miller",
+     "runs": 1850,
+     "share": 4.3
+    },
+    {
+     "player": "MA Agarwal",
+     "runs": 1513,
+     "share": 3.5
+    },
+    {
+     "player": "GJ Maxwell",
+     "runs": 1342,
+     "share": 3.1
+    },
+    {
+     "player": "CH Gayle",
+     "runs": 1339,
+     "share": 3.1
+    },
+    {
+     "player": "WP Saha",
+     "runs": 1115,
+     "share": 2.6
+    }
+   ]
+  }
+ }
+}

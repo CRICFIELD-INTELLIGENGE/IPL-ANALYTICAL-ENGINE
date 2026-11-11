@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-gt-025",
+ "planId": "cf-gt-025",
+ "franchise": "GT",
+ "aspect": "tactical",
+ "title": "Defending 160 Versus 200: Why Gujarat Titans Needs Two Bowling Playbooks",
+ "slug": "gt-defending-160-versus-200-why-gt-needs-two-bowling-playbooks",
+ "dek": "Defending 160 and defending 200 are different jobs. Why Gujarat Titans need two bowling playbooks, and what the league data says each one must achieve.",
+ "excerpt": "Since 2022, IPL sides defending 160\u2013179 have won less often than sides defending 200 or more. The bowling plan has to change with the total.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "GT"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "Since 2022 IPL sides defending 160\u2013179 won {{ev:def-l160}}; defending 200 or more, {{ev:def-l200}}.",
+  "Below 160 the defending side won {{ev:def-lunder}}.",
+  "GT have won {{ev:def-t}} of matches when batting first since 2022."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Two Totals, Two Jobs",
+   "body": [
+    "A total of 200 lets a bowling side buy wickets with runs. A total of 160 does not: every boundary hurts, and the plan has to start with containment.",
+    "Across the IPL since 2022, sides defending 160\u2013179 have won {{ev:def-l160}} of the time; sides defending 200 or more, {{ev:def-l200}}; below 160, {{ev:def-lunder}}."
+   ],
+   "chartIds": [
+    "def-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Gujarat Titans' Record Batting First",
+   "body": [
+    "Gujarat Titans have won {{ev:def-t}} of their matches batting first since 2022. The team series in the chart shows how that varies by total, where the sample allows.",
+    "Their death bowling, which decides most defences, has run at {{ev:defd-team-e2}} an over since 2024 against {{ev:defd-league-e2}} for the league."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "The Two Playbooks",
+   "body": [
+    "Defending a big total: attack in the powerplay with catchers up, accept boundaries for wickets, and keep the best death bowler for the eighteenth and twentieth overs.",
+    "Defending a modest total: bowl to fields, use the slower bowlers in the middle overs to drag the required rate up, and spread the death overs so no bowler is exposed twice to a set hitter."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Totals Are Relative to Conditions",
+   "body": [
+    "A total of one hundred and seventy at a small, fast ground is a different defence from the same total on a slow pitch. Grouping by raw total ignores venue par scores.",
+    "{{hyp:par}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Choose the Playbook at the Innings Break",
+   "body": [
+    "Gujarat Titans should decide which playbook to use at the innings break, based on the total relative to the venue's par, not stick to one plan.",
+    "Recording which playbook was used and how it went would turn this into a measurable habit."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "def-chart",
+   "type": "column",
+   "title": "Defending win rate by total",
+   "subtitle": "Side batting first, 2022\u20132026",
+   "table": "def-bands",
+   "xKey": "total",
+   "series": [
+    {
+     "key": "league",
+     "label": "IPL"
+    },
+    {
+     "key": "team",
+     "label": "GT"
+    }
+   ],
+   "xLabel": "First-innings total",
+   "unit": "% of matches won",
+   "takeaway": "Defending gets steadily easier as the total rises.",
+   "ariaLabel": "Column chart of the batting-first side's win rate grouped by first-innings total."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "par",
+   "statement": "Hypothesis: defending success depends on the total relative to the venue's par score more than on the raw total.",
+   "whyUnverified": "Venue par scores have not been subtracted from each total.",
+   "howToTest": "Compute each venue's rolling par and group defences by total minus par."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "160",
+   "reason": "The 160 total named in the title and a band threshold."
+  },
+  {
+   "text": "200",
+   "reason": "The 200 total named in the title and a band threshold."
+  },
+  {
+   "text": "179",
+   "reason": "Band boundary (160\u2013179)."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Gujarat Titans defending a total.",
+   "wanted": "Gujarat Titans bowlers celebrating while defending a total."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-gt-010",
+  "cf-gt-015",
+  "cf-gt-028"
+ ],
+ "seo": {
+  "metaTitle": "Defending 160 versus 200: Gujarat Titans' two playbooks",
+  "metaDescription": "How often IPL sides defend 160 and 200 since 2022, Gujarat Titans' record batting first, and the bowling plan each total needs."
+ },
+ "methodology": "Regulation innings only (super overs excluded); win rates use matches with a result. Generated from the CricField warehouse by scripts/editorial/engine. Bands use the first-innings total; 2022\u20132026. Team bands with fewer than five matches are not shown.",
+ "generator": "engine:v1"
+}

@@ -1,0 +1,4300 @@
+{
+ "generatedAt": "2026-10-26",
+ "perFranchise": [
+  {
+   "code": "CSK",
+   "planned": 100,
+   "published": 0,
+   "review": 100,
+   "draft": 0,
+   "legacyMapped": 0,
+   "legacyArticles": 10,
+   "legacyReviewed": 0,
+   "notStarted": 0
+  },
+  {
+   "code": "MI",
+   "planned": 100,
+   "published": 0,
+   "review": 100,
+   "draft": 0,
+   "legacyMapped": 0,
+   "legacyArticles": 10,
+   "legacyReviewed": 0,
+   "notStarted": 0
+  },
+  {
+   "code": "RCB",
+   "planned": 100,
+   "published": 0,
+   "review": 100,
+   "draft": 0,
+   "legacyMapped": 9,
+   "legacyArticles": 10,
+   "legacyReviewed": 10,
+   "notStarted": 0
+  },
+  {
+   "code": "KKR",
+   "planned": 100,
+   "published": 0,
+   "review": 100,
+   "draft": 0,
+   "legacyMapped": 0,
+   "legacyArticles": 10,
+   "legacyReviewed": 0,
+   "notStarted": 0
+  },
+  {
+   "code": "SRH",
+   "planned": 100,
+   "published": 0,
+   "review": 100,
+   "draft": 0,
+   "legacyMapped": 0,
+   "legacyArticles": 10,
+   "legacyReviewed": 0,
+   "notStarted": 0
+  },
+  {
+   "code": "RR",
+   "planned": 100,
+   "published": 0,
+   "review": 100,
+   "draft": 0,
+   "legacyMapped": 0,
+   "legacyArticles": 10,
+   "legacyReviewed": 0,
+   "notStarted": 0
+  },
+  {
+   "code": "DC",
+   "planned": 100,
+   "published": 0,
+   "review": 100,
+   "draft": 0,
+   "legacyMapped": 0,
+   "legacyArticles": 10,
+   "legacyReviewed": 0,
+   "notStarted": 0
+  },
+  {
+   "code": "PBKS",
+   "planned": 100,
+   "published": 0,
+   "review": 100,
+   "draft": 0,
+   "legacyMapped": 0,
+   "legacyArticles": 10,
+   "legacyReviewed": 0,
+   "notStarted": 0
+  },
+  {
+   "code": "GT",
+   "planned": 100,
+   "published": 0,
+   "review": 100,
+   "draft": 0,
+   "legacyMapped": 0,
+   "legacyArticles": 10,
+   "legacyReviewed": 0,
+   "notStarted": 0
+  },
+  {
+   "code": "LSG",
+   "planned": 100,
+   "published": 0,
+   "review": 100,
+   "draft": 0,
+   "legacyMapped": 0,
+   "legacyArticles": 10,
+   "legacyReviewed": 0,
+   "notStarted": 0
+  }
+ ],
+ "legacy": [
+  {
+   "legacyId": "art-srh-01",
+   "legacySlug": "srh-the-orange-revolution-how-srh-reinvented-their-t20-identity",
+   "franchise": "SRH",
+   "legacyTitle": "The Orange Revolution: How SRH Reinvented Their T20 Identity",
+   "parameter": "Franchise DNA",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-srh-061",
+     "title": "The Founding Identity: How Sunrisers Hyderabad Became More Than an IPL Entry",
+     "score": 0.443,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-srh-064",
+     "title": "The Captaincy Eras: How Leadership Changed Sunrisers Hyderabad’s Playing Identity",
+     "score": 0.438,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-srh-067",
+     "title": "From Auction Table to Playing XI: How Sunrisers Hyderabad’s Squad Philosophy Evolved",
+     "score": 0.268,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.4,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-srh-02",
+   "legacySlug": "srh-powerplay-without-permission-the-mathematics-of-srhs-batting-aggression",
+   "franchise": "SRH",
+   "legacyTitle": "Powerplay Without Permission: The Mathematics of SRH's Batting Aggression",
+   "parameter": "Batting Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-srh-001",
+     "title": "The Powerplay Equation: When Sunrisers Hyderabad Should Attack the First Six Overs",
+     "score": 0.591,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "powerplay"
+     ]
+    },
+    {
+     "planId": "cf-srh-011",
+     "title": "New-Ball Blueprint: What Should Sunrisers Hyderabad Optimize Before Over Four?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "powerplay"
+     ]
+    },
+    {
+     "planId": "cf-srh-008",
+     "title": "Spin Versus Pace: Mapping Sunrisers Hyderabad’s Batting Trade-Offs",
+     "score": 0.117,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0,
+     "shared": []
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-srh-03",
+   "legacySlug": "srh-the-lost-art-of-defence-what-happened-to-srhs-bowling-first-philosophy",
+   "franchise": "SRH",
+   "legacyTitle": "The Lost Art of Defence: What Happened to SRH's Bowling-First Philosophy?",
+   "parameter": "Bowling Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-srh-061",
+     "title": "The Founding Identity: How Sunrisers Hyderabad Became More Than an IPL Entry",
+     "score": 0.313,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-srh-064",
+     "title": "The Captaincy Eras: How Leadership Changed Sunrisers Hyderabad’s Playing Identity",
+     "score": 0.313,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-srh-013",
+     "title": "Wickets Versus Economy: How Sunrisers Hyderabad Should Judge Its Bowlers",
+     "score": 0.278,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-srh-04",
+   "legacySlug": "srh-when-200-isnt-enough-srhs-relationship-with-high-scoring-pressure",
+   "franchise": "SRH",
+   "legacyTitle": "When 200 Isn't Enough: SRH's Relationship with High-Scoring Pressure",
+   "parameter": "Player Psychology",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-srh-010",
+     "title": "The 200-Run Question: Which Conditions Make Sunrisers Hyderabad a High-Scoring Side?",
+     "score": 0.347,
+     "titleOverlap": 0.25,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "highTotal"
+     ]
+    },
+    {
+     "planId": "cf-srh-066",
+     "title": "The Matches That Built Sunrisers Hyderabad’s Reputation Under Pressure",
+     "score": 0.272,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-srh-085",
+     "title": "Clutch or Coincidence? Testing Sunrisers Hyderabad’s Pressure-Performance Narratives",
+     "score": 0.272,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "pressure"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-srh-05",
+   "legacySlug": "srh-the-hyderabad-equation-does-uppal-reward-aggression-or-discipline",
+   "franchise": "SRH",
+   "legacyTitle": "The Hyderabad Equation: Does Uppal Reward Aggression or Discipline?",
+   "parameter": "Venue Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-srh-022",
+     "title": "Home-Ground Advantage: What Makes Hyderabad Different for Sunrisers Hyderabad?",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-srh-003",
+     "title": "Boundary Dependency: How Much of Sunrisers Hyderabad’s Scoring Comes in Fours and Sixes?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "boundary"
+     ]
+    },
+    {
+     "planId": "cf-srh-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Sunrisers Hyderabad Fans?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-srh-06",
+   "legacySlug": "srh-buying-firepower-has-srhs-auction-spending-matched-its-batting-ambition",
+   "franchise": "SRH",
+   "legacyTitle": "Buying Firepower: Has SRH's Auction Spending Matched Its Batting Ambition?",
+   "parameter": "Auction Economics",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-srh-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Sunrisers Hyderabad?",
+     "score": 0.352,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-srh-039",
+     "title": "Salary Versus Contribution: Designing an Auction ROI Model for Sunrisers Hyderabad",
+     "score": 0.347,
+     "titleOverlap": 0.071,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-srh-033",
+     "title": "Retention Mathematics: Which Player Roles Should Sunrisers Hyderabad Protect?",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-srh-07",
+   "legacySlug": "srh-the-sixth-bowler-problem-how-balanced-is-srhs-ideal-xi",
+   "franchise": "SRH",
+   "legacyTitle": "The Sixth Bowler Problem: How Balanced Is SRH's Ideal XI?",
+   "parameter": "Tactical Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-srh-020",
+     "title": "The Sixth-Bowler Insurance Policy: How Much Flexibility Does Sunrisers Hyderabad Need?",
+     "score": 0.335,
+     "titleOverlap": 0.222,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-srh-027",
+     "title": "Opponent-Specific Plans: Should Sunrisers Hyderabad Build a New XI for Every Match?",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-srh-003",
+     "title": "Boundary Dependency: How Much of Sunrisers Hyderabad’s Scoring Comes in Fours and Sixes?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "boundary"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-srh-08",
+   "legacySlug": "srh-from-warner-to-the-new-era-the-evolution-of-an-orange-identity",
+   "franchise": "SRH",
+   "legacyTitle": "From Warner to the New Era: The Evolution of an Orange Identity",
+   "parameter": "Historical Evolution",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-srh-064",
+     "title": "The Captaincy Eras: How Leadership Changed Sunrisers Hyderabad’s Playing Identity",
+     "score": 0.65,
+     "titleOverlap": 0.222,
+     "conceptOverlap": 1,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-srh-061",
+     "title": "The Founding Identity: How Sunrisers Hyderabad Became More Than an IPL Entry",
+     "score": 0.6,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 1,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-srh-067",
+     "title": "From Auction Table to Playing XI: How Sunrisers Hyderabad’s Squad Philosophy Evolved",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-srh-09",
+   "legacySlug": "srh-the-boundary-paradox-can-more-sixes-sometimes-produce-less-control",
+   "franchise": "SRH",
+   "legacyTitle": "The Boundary Paradox: Can More Sixes Sometimes Produce Less Control?",
+   "parameter": "Hidden Statistical Stories",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-srh-003",
+     "title": "Boundary Dependency: How Much of Sunrisers Hyderabad’s Scoring Comes in Fours and Sixes?",
+     "score": 0.238,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "boundary"
+     ]
+    },
+    {
+     "planId": "cf-srh-004",
+     "title": "Middle-Overs Momentum: Where Sunrisers Hyderabad Gains or Loses Run Rate",
+     "score": 0.117,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "middle"
+     ]
+    },
+    {
+     "planId": "cf-srh-009",
+     "title": "Dot-Ball Debt: How Sunrisers Hyderabad Can Price the Cost of a Quiet Over",
+     "score": 0.117,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "dotBall"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-srh-10",
+   "legacySlug": "srh-beyond-the-big-hitters-where-should-srh-find-its-next-competitive-advantage",
+   "franchise": "SRH",
+   "legacyTitle": "Beyond the Big Hitters: Where Should SRH Find Its Next Competitive Advantage?",
+   "parameter": "Future Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-srh-071",
+     "title": "The Next Opener: What Profile Should Sunrisers Hyderabad Scout?",
+     "score": 0.285,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "future",
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-srh-091",
+     "title": "The 2027 Blueprint: What Should Sunrisers Hyderabad Build for the Next Cycle?",
+     "score": 0.242,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-srh-078",
+     "title": "Spin Talent Radar: What Separates a Prospect from a Starter for Sunrisers Hyderabad?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "spin",
+      "scouting"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-rcb-01",
+   "legacySlug": "rcb-beyond-the-superstars-what-really-defines-rcbs-cricketing-identity",
+   "franchise": "RCB",
+   "legacyTitle": "Beyond the Superstars: What Really Defines RCB's Cricketing Identity?",
+   "parameter": "Franchise DNA",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rcb-061",
+     "title": "The Founding Identity: How Royal Challengers Bengaluru Became More Than an IPL Entry",
+     "score": 0.293,
+     "titleOverlap": 0.125,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-rcb-064",
+     "title": "The Captaincy Eras: How Leadership Changed Royal Challengers Bengaluru’s Playing Identity",
+     "score": 0.287,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-rcb-043",
+     "title": "Jersey Economics: How Royal Challengers Bengaluru Can Turn Identity into Merchandise Demand",
+     "score": 0.285,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "identity"
+     ]
+    }
+   ],
+   "decision": {
+    "legacyId": "art-rcb-01",
+    "planId": "cf-rcb-061",
+    "decision": "revise",
+    "reviewed": true,
+    "note": "Identity essay overlaps 'The Founding Identity'; rewrite in the History batch keeps the legacy URL."
+   }
+  },
+  {
+   "legacyId": "art-rcb-02",
+   "legacySlug": "rcb-the-anatomy-of-a-chase-how-rcb-constructs-successful-run-pursuits",
+   "franchise": "RCB",
+   "legacyTitle": "The Anatomy of a Chase: How RCB Constructs Successful Run Pursuits",
+   "parameter": "Batting Intelligence",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-rcb-004",
+     "title": "Middle-Overs Momentum: Where Royal Challengers Bengaluru Gains or Loses Run Rate",
+     "score": 0.212,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.2,
+     "shared": [
+      "middle"
+     ]
+    },
+    {
+     "planId": "cf-rcb-008",
+     "title": "Spin Versus Pace: Mapping Royal Challengers Bengaluru’s Batting Trade-Offs",
+     "score": 0.198,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "spin"
+     ]
+    },
+    {
+     "planId": "cf-rcb-014",
+     "title": "Middle-Overs Spin: Can Royal Challengers Bengaluru Create Pressure Without Immediate Wickets?",
+     "score": 0.188,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.4,
+     "shared": [
+      "middle",
+      "spin"
+     ]
+    }
+   ],
+   "decision": {
+    "legacyId": "art-rcb-02",
+    "planId": "cf-rcb-006",
+    "decision": "revise",
+    "reviewed": true,
+    "note": "Chase construction is the same question as 'Chasing Under Pressure'."
+   }
+  },
+  {
+   "legacyId": "art-rcb-03",
+   "legacySlug": "rcb-bowling-at-chinnaswamy-why-economy-rate-doesnt-tell-the-whole-story",
+   "franchise": "RCB",
+   "legacyTitle": "Bowling at Chinnaswamy: Why Economy Rate Doesn't Tell the Whole Story",
+   "parameter": "Bowling Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rcb-013",
+     "title": "Wickets Versus Economy: How Royal Challengers Bengaluru Should Judge Its Bowlers",
+     "score": 0.318,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-rcb-016",
+     "title": "Fielding as Run Prevention: Measuring the Hidden Value of Royal Challengers Bengaluru’s Saves",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-rcb-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Royal Challengers Bengaluru Fans?",
+     "score": 0.194,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": {
+    "legacyId": "art-rcb-03",
+    "planId": "cf-rcb-013",
+    "decision": "revise",
+    "reviewed": true,
+    "note": "Economy-rate critique is the core of 'Wickets Versus Economy'."
+   }
+  },
+  {
+   "legacyId": "art-rcb-04",
+   "legacySlug": "rcb-the-weight-of-expectation-rcbs-performance-in-high-pressure-matches",
+   "franchise": "RCB",
+   "legacyTitle": "The Weight of Expectation: RCB's Performance in High-Pressure Matches",
+   "parameter": "Player Psychology",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rcb-066",
+     "title": "The Matches That Built Royal Challengers Bengaluru’s Reputation Under Pressure",
+     "score": 0.325,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-rcb-085",
+     "title": "Clutch or Coincidence? Testing Royal Challengers Bengaluru’s Pressure-Performance Narratives",
+     "score": 0.325,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-rcb-070",
+     "title": "Legacy Versus Recency: How Should We Rank Royal Challengers Bengaluru’s Greatest Performances?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history"
+     ]
+    }
+   ],
+   "decision": {
+    "legacyId": "art-rcb-04",
+    "planId": "cf-rcb-085",
+    "decision": "revise",
+    "reviewed": true,
+    "note": "High-pressure performance claim is tested statistically in 'Clutch or Coincidence?' (Batch 1); the 2024 run stays as a case study. cf-rcb-066 is related reading, not a duplicate."
+   }
+  },
+  {
+   "legacyId": "art-rcb-05",
+   "legacySlug": "rcb-the-chinnaswamy-effect-how-much-does-the-ground-change-cricket",
+   "franchise": "RCB",
+   "legacyTitle": "The Chinnaswamy Effect: How Much Does the Ground Change Cricket?",
+   "parameter": "Venue Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rcb-022",
+     "title": "Home-Ground Advantage: What Makes Chinnaswamy Different for Royal Challengers Bengaluru?",
+     "score": 0.337,
+     "titleOverlap": 0.222,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-rcb-027",
+     "title": "Opponent-Specific Plans: Should Royal Challengers Bengaluru Build a New XI for Every Match?",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-rcb-093",
+     "title": "A Digital Twin of Chinnaswamy: Simulating Royal Challengers Bengaluru’s Home Conditions",
+     "score": 0.202,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": {
+    "legacyId": "art-rcb-05",
+    "planId": "cf-rcb-022",
+    "decision": "revise",
+    "reviewed": true,
+    "note": "Semantic duplicate of 'Home-Ground Advantage: What Makes Chinnaswamy Different' (Batch 1). Legacy text contained unsourced physical claims (altitude, boundary metres); v2 replaces them with warehouse evidence."
+   }
+  },
+  {
+   "legacyId": "art-rcb-06",
+   "legacySlug": "rcb-the-price-of-star-power-rcbs-auction-spending-under-the-microscope",
+   "franchise": "RCB",
+   "legacyTitle": "The Price of Star Power: RCB's Auction Spending Under the Microscope",
+   "parameter": "Auction Economics",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rcb-032",
+     "title": "Star Premium Versus Squad Depth: Where Should Royal Challengers Bengaluru Spend Its Budget?",
+     "score": 0.39,
+     "titleOverlap": 0.167,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction",
+      "star"
+     ]
+    },
+    {
+     "planId": "cf-rcb-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Royal Challengers Bengaluru?",
+     "score": 0.327,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-rcb-039",
+     "title": "Salary Versus Contribution: Designing an Auction ROI Model for Royal Challengers Bengaluru",
+     "score": 0.271,
+     "titleOverlap": 0.077,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "auction"
+     ]
+    }
+   ],
+   "decision": {
+    "legacyId": "art-rcb-06",
+    "planId": "cf-rcb-032",
+    "decision": "revise",
+    "reviewed": true,
+    "note": "Star-power spending maps to 'Star Premium Versus Squad Depth'. Not the same question as cf-rcb-039 (ROI model, Batch 1), which links to it as related reading."
+   }
+  },
+  {
+   "legacyId": "art-rcb-07",
+   "legacySlug": "rcb-batting-depth-or-bowling-insurance-the-rcb-selection-dilemma",
+   "franchise": "RCB",
+   "legacyTitle": "Batting Depth or Bowling Insurance: The RCB Selection Dilemma",
+   "parameter": "Tactical Intelligence",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-rcb-020",
+     "title": "The Sixth-Bowler Insurance Policy: How Much Flexibility Does Royal Challengers Bengaluru Need?",
+     "score": 0.247,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-rcb-022",
+     "title": "Home-Ground Advantage: What Makes Chinnaswamy Different for Royal Challengers Bengaluru?",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-rcb-027",
+     "title": "Opponent-Specific Plans: Should Royal Challengers Bengaluru Build a New XI for Every Match?",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "selection"
+     ]
+    }
+   ],
+   "decision": {
+    "legacyId": "art-rcb-07",
+    "planId": "cf-rcb-020",
+    "decision": "revise",
+    "reviewed": true,
+    "note": "Batting depth vs bowling insurance is the sixth-bowler question."
+   }
+  },
+  {
+   "legacyId": "art-rcb-08",
+   "legacySlug": "rcb-from-gayle-and-ab-to-the-modern-xi-rcbs-batting-evolution",
+   "franchise": "RCB",
+   "legacyTitle": "From Gayle and AB to the Modern XI: RCB's Batting Evolution",
+   "parameter": "Historical Evolution",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-rcb-065",
+     "title": "A Timeline of Royal Challengers Bengaluru’s Home-Ground Evolution",
+     "score": 0.238,
+     "titleOverlap": 0.143,
+     "conceptOverlap": 0.2,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-rcb-067",
+     "title": "From Auction Table to Playing XI: How Royal Challengers Bengaluru’s Squad Philosophy Evolved",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "history",
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-rcb-070",
+     "title": "Legacy Versus Recency: How Should We Rank Royal Challengers Bengaluru’s Greatest Performances?",
+     "score": 0.198,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "history"
+     ]
+    }
+   ],
+   "decision": {
+    "legacyId": "art-rcb-08",
+    "planId": null,
+    "decision": "keep-separate",
+    "reviewed": true,
+    "note": "Batting-era retrospective has no direct plan slot (closest: cf-rcb-064 captaincy eras, cf-rcb-067 squad philosophy). Kept as an archive piece."
+   }
+  },
+  {
+   "legacyId": "art-rcb-09",
+   "legacySlug": "rcb-the-200-run-illusion-when-big-totals-hide-tactical-weaknesses",
+   "franchise": "RCB",
+   "legacyTitle": "The 200-Run Illusion: When Big Totals Hide Tactical Weaknesses",
+   "parameter": "Hidden Statistical Stories",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rcb-010",
+     "title": "The 200-Run Question: Which Conditions Make Royal Challengers Bengaluru a High-Scoring Side?",
+     "score": 0.299,
+     "titleOverlap": 0.143,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "highTotal"
+     ]
+    },
+    {
+     "planId": "cf-rcb-083",
+     "title": "A Venue-Adjusted Rating System for Royal Challengers Bengaluru Players",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-rcb-022",
+     "title": "Home-Ground Advantage: What Makes Chinnaswamy Different for Royal Challengers Bengaluru?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": {
+    "legacyId": "art-rcb-09",
+    "planId": "cf-rcb-010",
+    "decision": "revise",
+    "reviewed": true,
+    "note": "Same subject as 'The 200-Run Question'."
+   }
+  },
+  {
+   "legacyId": "art-rcb-10",
+   "legacySlug": "rcb-the-next-rcb-advantage-finding-value-beyond-famous-names",
+   "franchise": "RCB",
+   "legacyTitle": "The Next RCB Advantage: Finding Value Beyond Famous Names",
+   "parameter": "Future Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rcb-071",
+     "title": "The Next Opener: What Profile Should Royal Challengers Bengaluru Scout?",
+     "score": 0.363,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "future",
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-rcb-091",
+     "title": "The 2027 Blueprint: What Should Royal Challengers Bengaluru Build for the Next Cycle?",
+     "score": 0.282,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-rcb-094",
+     "title": "The Next Tactical Edge: What Happens When Royal Challengers Bengaluru Models Every Delivery?",
+     "score": 0.274,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "future"
+     ]
+    }
+   ],
+   "decision": {
+    "legacyId": "art-rcb-10",
+    "planId": "cf-rcb-035",
+    "decision": "revise",
+    "reviewed": true,
+    "note": "Value beyond famous names maps to 'The Uncapped Advantage'."
+   }
+  },
+  {
+   "legacyId": "art-csk-01",
+   "legacySlug": "csk-the-yellow-blueprint-is-csks-greatest-strength-its-system",
+   "franchise": "CSK",
+   "legacyTitle": "The Yellow Blueprint: Is CSK's Greatest Strength Its System?",
+   "parameter": "Franchise DNA",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-csk-091",
+     "title": "The 2027 Blueprint: What Should Chennai Super Kings Build for the Next Cycle?",
+     "score": 0.285,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-csk-061",
+     "title": "The Founding Identity: How Chennai Super Kings Became More Than an IPL Entry",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-csk-064",
+     "title": "The Captaincy Eras: How Leadership Changed Chennai Super Kings’s Playing Identity",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "identity"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-csk-02",
+   "legacySlug": "csk-the-art-of-controlled-aggression-how-csk-manages-the-middle-overs",
+   "franchise": "CSK",
+   "legacyTitle": "The Art of Controlled Aggression: How CSK Manages the Middle Overs",
+   "parameter": "Batting Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-csk-014",
+     "title": "Middle-Overs Spin: Can Chennai Super Kings Create Pressure Without Immediate Wickets?",
+     "score": 0.31,
+     "titleOverlap": 0.167,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "middle",
+      "spin"
+     ]
+    },
+    {
+     "planId": "cf-csk-004",
+     "title": "Middle-Overs Momentum: Where Chennai Super Kings Gains or Loses Run Rate",
+     "score": 0.279,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "middle"
+     ]
+    },
+    {
+     "planId": "cf-csk-008",
+     "title": "Spin Versus Pace: Mapping Chennai Super Kings’s Batting Trade-Offs",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "spin"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-csk-03",
+   "legacySlug": "csk-spin-pace-and-patience-decoding-csks-bowling-combinations",
+   "franchise": "CSK",
+   "legacyTitle": "Spin, Pace and Patience: Decoding CSK's Bowling Combinations",
+   "parameter": "Bowling Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-csk-013",
+     "title": "Wickets Versus Economy: How Chennai Super Kings Should Judge Its Bowlers",
+     "score": 0.282,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-csk-008",
+     "title": "Spin Versus Pace: Mapping Chennai Super Kings’s Batting Trade-Offs",
+     "score": 0.238,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "spin"
+     ]
+    },
+    {
+     "planId": "cf-csk-016",
+     "title": "Fielding as Run Prevention: Measuring the Hidden Value of Chennai Super Kings’s Saves",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-csk-04",
+   "legacySlug": "csk-the-dhoni-effect-can-captaincy-decisions-be-measured",
+   "franchise": "CSK",
+   "legacyTitle": "The Dhoni Effect: Can Captaincy Decisions Be Measured?",
+   "parameter": "Player Psychology",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-csk-030",
+     "title": "Captaincy Under Uncertainty: Which Decisions Matter Most for Chennai Super Kings?",
+     "score": 0.193,
+     "titleOverlap": 0.25,
+     "conceptOverlap": 0,
+     "shared": []
+    },
+    {
+     "planId": "cf-csk-032",
+     "title": "Star Premium Versus Squad Depth: Where Should Chennai Super Kings Spend Its Budget?",
+     "score": 0.157,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "star"
+     ]
+    },
+    {
+     "planId": "cf-csk-024",
+     "title": "Batting Order as a Decision Tree: Who Should Chennai Super Kings Promote and Why?",
+     "score": 0.13,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0,
+     "shared": []
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-csk-05",
+   "legacySlug": "csk-the-chepauk-code-why-venue-specific-strategy-matters",
+   "franchise": "CSK",
+   "legacyTitle": "The Chepauk Code: Why Venue-Specific Strategy Matters",
+   "parameter": "Venue Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-csk-022",
+     "title": "Home-Ground Advantage: What Makes Chepauk Different for Chennai Super Kings?",
+     "score": 0.591,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-csk-093",
+     "title": "A Digital Twin of Chepauk: Simulating Chennai Super Kings’s Home Conditions",
+     "score": 0.511,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-csk-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Chennai Super Kings Fans?",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-csk-06",
+   "legacySlug": "csk-experience-as-an-asset-does-csks-auction-philosophy-deliver-value",
+   "franchise": "CSK",
+   "legacyTitle": "Experience as an Asset: Does CSK's Auction Philosophy Deliver Value?",
+   "parameter": "Auction Economics",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-csk-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Chennai Super Kings?",
+     "score": 0.36,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-csk-037",
+     "title": "Replacement Value: When Should Chennai Super Kings Walk Away from a Bidding War?",
+     "score": 0.356,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-csk-039",
+     "title": "Salary Versus Contribution: Designing an Auction ROI Model for Chennai Super Kings",
+     "score": 0.352,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-csk-07",
+   "legacySlug": "csk-the-matchup-machine-how-csk-can-build-an-xi-for-different-conditions",
+   "franchise": "CSK",
+   "legacyTitle": "The Matchup Machine: How CSK Can Build an XI for Different Conditions",
+   "parameter": "Tactical Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-csk-065",
+     "title": "A Timeline of Chennai Super Kings’s Home-Ground Evolution",
+     "score": 0.313,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "venue",
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-csk-022",
+     "title": "Home-Ground Advantage: What Makes Chepauk Different for Chennai Super Kings?",
+     "score": 0.282,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-csk-027",
+     "title": "Opponent-Specific Plans: Should Chennai Super Kings Build a New XI for Every Match?",
+     "score": 0.282,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "selection"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-csk-08",
+   "legacySlug": "csk-the-generational-transition-how-csks-cricket-has-evolved",
+   "franchise": "CSK",
+   "legacyTitle": "The Generational Transition: How CSK's Cricket Has Evolved",
+   "parameter": "Historical Evolution",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-csk-070",
+     "title": "Legacy Versus Recency: How Should We Rank Chennai Super Kings’s Greatest Performances?",
+     "score": 0.55,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-csk-061",
+     "title": "The Founding Identity: How Chennai Super Kings Became More Than an IPL Entry",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-csk-064",
+     "title": "The Captaincy Eras: How Leadership Changed Chennai Super Kings’s Playing Identity",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-csk-09",
+   "legacySlug": "csk-the-dot-ball-economy-how-csk-creates-pressure-without-taking-wickets",
+   "franchise": "CSK",
+   "legacyTitle": "The Dot-Ball Economy: How CSK Creates Pressure Without Taking Wickets",
+   "parameter": "Hidden Statistical Stories",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-csk-085",
+     "title": "Clutch or Coincidence? Testing Chennai Super Kings’s Pressure-Performance Narratives",
+     "score": 0.232,
+     "titleOverlap": 0.077,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-csk-013",
+     "title": "Wickets Versus Economy: How Chennai Super Kings Should Judge Its Bowlers",
+     "score": 0.199,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-csk-089",
+     "title": "Bowling Plans as Optimization: Allocating 20 Overs for Chennai Super Kings",
+     "score": 0.198,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-csk-10",
+   "legacySlug": "csk-life-beyond-familiar-names-building-csks-next-core",
+   "franchise": "CSK",
+   "legacyTitle": "Life Beyond Familiar Names: Building CSK's Next Core",
+   "parameter": "Future Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-csk-091",
+     "title": "The 2027 Blueprint: What Should Chennai Super Kings Build for the Next Cycle?",
+     "score": 0.337,
+     "titleOverlap": 0.222,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-csk-094",
+     "title": "The Next Tactical Edge: What Happens When Chennai Super Kings Models Every Delivery?",
+     "score": 0.274,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-csk-100",
+     "title": "The Future XI: Designing Chennai Super Kings’s Ideal Role Balance, Not a Dream Team",
+     "score": 0.198,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "future"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-mi-01",
+   "legacySlug": "mi-the-mumbai-talent-factory-how-mi-builds-its-cricketing-core",
+   "franchise": "MI",
+   "legacyTitle": "The Mumbai Talent Factory: How MI Builds Its Cricketing Core",
+   "parameter": "Franchise DNA",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-mi-070",
+     "title": "Legacy Versus Recency: How Should We Rank Mumbai Indians’s Greatest Performances?",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-mi-097",
+     "title": "The Academy Question: Should Mumbai Indians Invest More in Talent Development?",
+     "score": 0.285,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-mi-072",
+     "title": "Domestic Pathways: Where Could Mumbai Indians Find Undervalued Talent?",
+     "score": 0.28,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-mi-02",
+   "legacySlug": "mi-the-death-over-blueprint-why-mis-batting-depth-matters",
+   "franchise": "MI",
+   "legacyTitle": "The Death-Over Blueprint: Why MI's Batting Depth Matters",
+   "parameter": "Batting Intelligence",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-mi-100",
+     "title": "The Future XI: Designing Mumbai Indians’s Ideal Role Balance, Not a Dream Team",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "future",
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-mi-015",
+     "title": "Death-Overs Risk: The Cost of One Missed Length for Mumbai Indians",
+     "score": 0.199,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "death"
+     ]
+    },
+    {
+     "planId": "cf-mi-076",
+     "title": "The Finisher Search: How Mumbai Indians Can Identify Genuine Death-Overs Hitters",
+     "score": 0.199,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "death"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-mi-03",
+   "legacySlug": "mi-the-bumrah-equation-measuring-the-value-of-an-elite-bowler",
+   "franchise": "MI",
+   "legacyTitle": "The Bumrah Equation: Measuring the Value of an Elite Bowler",
+   "parameter": "Bowling Intelligence",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-mi-010",
+     "title": "The 200-Run Question: Which Conditions Make Mumbai Indians a High-Scoring Side?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "highTotal"
+     ]
+    },
+    {
+     "planId": "cf-mi-025",
+     "title": "Defending 160 Versus 200: Why Mumbai Indians Needs Two Bowling Playbooks",
+     "score": 0.191,
+     "titleOverlap": 0.077,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "highTotal"
+     ]
+    },
+    {
+     "planId": "cf-mi-016",
+     "title": "Fielding as Run Prevention: Measuring the Hidden Value of Mumbai Indians’s Saves",
+     "score": 0.162,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 0,
+     "shared": []
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-mi-04",
+   "legacySlug": "mi-championship-temperament-does-mi-perform-differently-under-pressure",
+   "franchise": "MI",
+   "legacyTitle": "Championship Temperament: Does MI Perform Differently Under Pressure?",
+   "parameter": "Player Psychology",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-mi-066",
+     "title": "The Matches That Built Mumbai Indians’s Reputation Under Pressure",
+     "score": 0.56,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 1,
+     "shared": [
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-mi-085",
+     "title": "Clutch or Coincidence? Testing Mumbai Indians’s Pressure-Performance Narratives",
+     "score": 0.511,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-mi-006",
+     "title": "Chasing Under Pressure: Does Mumbai Indians Bat Differently When the Target Climbs?",
+     "score": 0.37,
+     "titleOverlap": 0.3,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "pressure"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-mi-05",
+   "legacySlug": "mi-the-wankhede-factor-how-venue-conditions-shape-mis-strategy",
+   "franchise": "MI",
+   "legacyTitle": "The Wankhede Factor: How Venue Conditions Shape MI's Strategy",
+   "parameter": "Venue Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-mi-022",
+     "title": "Home-Ground Advantage: What Makes Wankhede Different for Mumbai Indians?",
+     "score": 0.591,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-mi-093",
+     "title": "A Digital Twin of Wankhede: Simulating Mumbai Indians’s Home Conditions",
+     "score": 0.56,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-mi-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Mumbai Indians Fans?",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-mi-06",
+   "legacySlug": "mi-finding-the-next-star-mis-auction-investment-and-player-development",
+   "franchise": "MI",
+   "legacyTitle": "Finding the Next Star: MI's Auction Investment and Player Development",
+   "parameter": "Auction Economics",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-mi-032",
+     "title": "Star Premium Versus Squad Depth: Where Should Mumbai Indians Spend Its Budget?",
+     "score": 0.35,
+     "titleOverlap": 0.077,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction",
+      "star"
+     ]
+    },
+    {
+     "planId": "cf-mi-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Mumbai Indians?",
+     "score": 0.278,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-mi-033",
+     "title": "Retention Mathematics: Which Player Roles Should Mumbai Indians Protect?",
+     "score": 0.278,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "auction"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-mi-07",
+   "legacySlug": "mi-the-balance-of-eleven-when-too-many-match-winners-become-a-selection-problem",
+   "franchise": "MI",
+   "legacyTitle": "The Balance of Eleven: When Too Many Match-Winners Become a Selection Problem",
+   "parameter": "Tactical Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-mi-027",
+     "title": "Opponent-Specific Plans: Should Mumbai Indians Build a New XI for Every Match?",
+     "score": 0.269,
+     "titleOverlap": 0.071,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-mi-032",
+     "title": "Star Premium Versus Squad Depth: Where Should Mumbai Indians Spend Its Budget?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "selection",
+      "star"
+     ]
+    },
+    {
+     "planId": "cf-mi-025",
+     "title": "Defending 160 Versus 200: Why Mumbai Indians Needs Two Bowling Playbooks",
+     "score": 0.198,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-mi-08",
+   "legacySlug": "mi-from-the-early-years-to-the-modern-era-mis-tactical-evolution",
+   "franchise": "MI",
+   "legacyTitle": "From the Early Years to the Modern Era: MI's Tactical Evolution",
+   "parameter": "Historical Evolution",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-mi-070",
+     "title": "Legacy Versus Recency: How Should We Rank Mumbai Indians’s Greatest Performances?",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-mi-065",
+     "title": "A Timeline of Mumbai Indians’s Home-Ground Evolution",
+     "score": 0.287,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-mi-064",
+     "title": "The Captaincy Eras: How Leadership Changed Mumbai Indians’s Playing Identity",
+     "score": 0.278,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "history"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-mi-09",
+   "legacySlug": "mi-the-invisible-overs-where-mi-gains-or-loses-matches-without-boundaries",
+   "franchise": "MI",
+   "legacyTitle": "The Invisible Overs: Where MI Gains or Loses Matches Without Boundaries",
+   "parameter": "Hidden Statistical Stories",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-mi-003",
+     "title": "Boundary Dependency: How Much of Mumbai Indians’s Scoring Comes in Fours and Sixes?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "boundary"
+     ]
+    },
+    {
+     "planId": "cf-mi-009",
+     "title": "Dot-Ball Debt: How Mumbai Indians Can Price the Cost of a Quiet Over",
+     "score": 0.191,
+     "titleOverlap": 0.077,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "dotBall"
+     ]
+    },
+    {
+     "planId": "cf-mi-004",
+     "title": "Middle-Overs Momentum: Where Mumbai Indians Gains or Loses Run Rate",
+     "score": 0.123,
+     "titleOverlap": 0.273,
+     "conceptOverlap": 0,
+     "shared": []
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-mi-10",
+   "legacySlug": "mi-the-next-mumbai-core-which-player-profiles-should-mi-prioritize",
+   "franchise": "MI",
+   "legacyTitle": "The Next Mumbai Core: Which Player Profiles Should MI Prioritize?",
+   "parameter": "Future Intelligence",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-mi-071",
+     "title": "The Next Opener: What Profile Should Mumbai Indians Scout?",
+     "score": 0.244,
+     "titleOverlap": 0.125,
+     "conceptOverlap": 0.4,
+     "shared": [
+      "future",
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-mi-091",
+     "title": "The 2027 Blueprint: What Should Mumbai Indians Build for the Next Cycle?",
+     "score": 0.224,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.2,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-mi-094",
+     "title": "The Next Tactical Edge: What Happens When Mumbai Indians Models Every Delivery?",
+     "score": 0.215,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.2,
+     "shared": [
+      "future"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-kkr-01",
+   "legacySlug": "kkr-the-knight-riders-formula-how-kkr-blends-risk-and-control",
+   "franchise": "KKR",
+   "legacyTitle": "The Knight Riders Formula: How KKR Blends Risk and Control",
+   "parameter": "Franchise DNA",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-kkr-043",
+     "title": "Jersey Economics: How Kolkata Knight Riders Can Turn Identity into Merchandise Demand",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-kkr-052",
+     "title": "The Color Code: How Kolkata Knight Riders’s Identity Shapes Fan Belonging",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-kkr-061",
+     "title": "The Founding Identity: How Kolkata Knight Riders Became More Than an IPL Entry",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "identity"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-kkr-02",
+   "legacySlug": "kkr-opening-the-floodgates-kkrs-powerplay-batting-experiments",
+   "franchise": "KKR",
+   "legacyTitle": "Opening the Floodgates: KKR's Powerplay Batting Experiments",
+   "parameter": "Batting Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-kkr-001",
+     "title": "The Powerplay Equation: When Kolkata Knight Riders Should Attack the First Six Overs",
+     "score": 0.36,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "powerplay"
+     ]
+    },
+    {
+     "planId": "cf-kkr-070",
+     "title": "Legacy Versus Recency: How Should We Rank Kolkata Knight Riders’s Greatest Performances?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-kkr-011",
+     "title": "New-Ball Blueprint: What Should Kolkata Knight Riders Optimize Before Over Four?",
+     "score": 0.157,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "powerplay"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-kkr-03",
+   "legacySlug": "kkr-the-spin-web-how-kkr-uses-bowling-matchups-to-control-innings",
+   "franchise": "KKR",
+   "legacyTitle": "The Spin Web: How KKR Uses Bowling Matchups to Control Innings",
+   "parameter": "Bowling Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-kkr-013",
+     "title": "Wickets Versus Economy: How Kolkata Knight Riders Should Judge Its Bowlers",
+     "score": 0.356,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-kkr-016",
+     "title": "Fielding as Run Prevention: Measuring the Hidden Value of Kolkata Knight Riders’s Saves",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-kkr-089",
+     "title": "Bowling Plans as Optimization: Allocating 20 Overs for Kolkata Knight Riders",
+     "score": 0.276,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-kkr-04",
+   "legacySlug": "kkr-the-russell-factor-what-does-an-explosive-all-rounder-really-contribute",
+   "franchise": "KKR",
+   "legacyTitle": "The Russell Factor: What Does an Explosive All-Rounder Really Contribute?",
+   "parameter": "Player Psychology",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-kkr-025",
+     "title": "Defending 160 Versus 200: Why Kolkata Knight Riders Needs Two Bowling Playbooks",
+     "score": 0.174,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.2,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-kkr-003",
+     "title": "Boundary Dependency: How Much of Kolkata Knight Riders’s Scoring Comes in Fours and Sixes?",
+     "score": 0.117,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "boundary"
+     ]
+    },
+    {
+     "planId": "cf-kkr-013",
+     "title": "Wickets Versus Economy: How Kolkata Knight Riders Should Judge Its Bowlers",
+     "score": 0.117,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-kkr-05",
+   "legacySlug": "kkr-the-eden-gardens-paradox-is-it-a-batters-paradise-or-a-tactical-battleground",
+   "franchise": "KKR",
+   "legacyTitle": "The Eden Gardens Paradox: Is It a Batter's Paradise or a Tactical Battleground?",
+   "parameter": "Venue Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-kkr-065",
+     "title": "A Timeline of Kolkata Knight Riders’s Home-Ground Evolution",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue",
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-kkr-022",
+     "title": "Home-Ground Advantage: What Makes Eden Gardens Different for Kolkata Knight Riders?",
+     "score": 0.39,
+     "titleOverlap": 0.167,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-kkr-093",
+     "title": "A Digital Twin of Eden Gardens: Simulating Kolkata Knight Riders’s Home Conditions",
+     "score": 0.31,
+     "titleOverlap": 0.167,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-kkr-06",
+   "legacySlug": "kkr-buying-versatility-how-kkr-values-multi-skilled-players",
+   "franchise": "KKR",
+   "legacyTitle": "Buying Versatility: How KKR Values Multi-Skilled Players",
+   "parameter": "Auction Economics",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-kkr-033",
+     "title": "Retention Mathematics: Which Player Roles Should Kolkata Knight Riders Protect?",
+     "score": 0.595,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 1,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-kkr-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Kolkata Knight Riders?",
+     "score": 0.55,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-kkr-037",
+     "title": "Replacement Value: When Should Kolkata Knight Riders Walk Away from a Bidding War?",
+     "score": 0.55,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "auction"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-kkr-07",
+   "legacySlug": "kkr-the-floating-batting-order-can-flexibility-outperform-fixed-roles",
+   "franchise": "KKR",
+   "legacyTitle": "The Floating Batting Order: Can Flexibility Outperform Fixed Roles?",
+   "parameter": "Tactical Intelligence",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-kkr-024",
+     "title": "Batting Order as a Decision Tree: Who Should Kolkata Knight Riders Promote and Why?",
+     "score": 0.17,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0,
+     "shared": []
+    },
+    {
+     "planId": "cf-kkr-021",
+     "title": "The Toss Illusion: How Much Should Kolkata Knight Riders Change Its Plan After the Coin Flip?",
+     "score": 0.08,
+     "titleOverlap": 0,
+     "conceptOverlap": 0,
+     "shared": []
+    },
+    {
+     "planId": "cf-kkr-022",
+     "title": "Home-Ground Advantage: What Makes Eden Gardens Different for Kolkata Knight Riders?",
+     "score": 0.08,
+     "titleOverlap": 0,
+     "conceptOverlap": 0,
+     "shared": []
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-kkr-08",
+   "legacySlug": "kkr-from-gambhirs-era-to-modern-kkr-the-evolution-of-a-tactical-identity",
+   "franchise": "KKR",
+   "legacyTitle": "From Gambhir's Era to Modern KKR: The Evolution of a Tactical Identity",
+   "parameter": "Historical Evolution",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-kkr-064",
+     "title": "The Captaincy Eras: How Leadership Changed Kolkata Knight Riders’s Playing Identity",
+     "score": 0.64,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 1,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-kkr-061",
+     "title": "The Founding Identity: How Kolkata Knight Riders Became More Than an IPL Entry",
+     "score": 0.595,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 1,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-kkr-067",
+     "title": "From Auction Table to Playing XI: How Kolkata Knight Riders’s Squad Philosophy Evolved",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-kkr-09",
+   "legacySlug": "kkr-the-two-over-swing-identifying-kkrs-most-influential-match-phases",
+   "franchise": "KKR",
+   "legacyTitle": "The Two-Over Swing: Identifying KKR's Most Influential Match Phases",
+   "parameter": "Hidden Statistical Stories",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-kkr-026",
+     "title": "The Timeout Decision: Can Kolkata Knight Riders Interrupt an Opposition Surge?",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "momentum"
+     ]
+    },
+    {
+     "planId": "cf-kkr-004",
+     "title": "Middle-Overs Momentum: Where Kolkata Knight Riders Gains or Loses Run Rate",
+     "score": 0.27,
+     "titleOverlap": 0.077,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "momentum"
+     ]
+    },
+    {
+     "planId": "cf-kkr-089",
+     "title": "Bowling Plans as Optimization: Allocating 20 Overs for Kolkata Knight Riders",
+     "score": 0.121,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0,
+     "shared": []
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-kkr-10",
+   "legacySlug": "kkr-the-next-tactical-experiment-where-kkr-can-find-an-edge",
+   "franchise": "KKR",
+   "legacyTitle": "The Next Tactical Experiment: Where KKR Can Find an Edge",
+   "parameter": "Future Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-kkr-094",
+     "title": "The Next Tactical Edge: What Happens When Kolkata Knight Riders Models Every Delivery?",
+     "score": 0.387,
+     "titleOverlap": 0.333,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-kkr-071",
+     "title": "The Next Opener: What Profile Should Kolkata Knight Riders Scout?",
+     "score": 0.37,
+     "titleOverlap": 0.125,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "future",
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-kkr-091",
+     "title": "The 2027 Blueprint: What Should Kolkata Knight Riders Build for the Next Cycle?",
+     "score": 0.287,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "future"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-rr-01",
+   "legacySlug": "rr-the-pink-laboratory-how-rr-turns-scouting-into-competitive-advantage",
+   "franchise": "RR",
+   "legacyTitle": "The Pink Laboratory: How RR Turns Scouting into Competitive Advantage",
+   "parameter": "Franchise DNA",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rr-070",
+     "title": "Legacy Versus Recency: How Should We Rank Rajasthan Royals’s Greatest Performances?",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-rr-035",
+     "title": "The Uncapped Advantage: Finding Low-Cost Impact for Rajasthan Royals",
+     "score": 0.276,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-rr-092",
+     "title": "AI-Assisted Scouting: Where Algorithms Could Help Rajasthan Royals Recruit",
+     "score": 0.276,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-rr-02",
+   "legacySlug": "rr-the-young-batter-equation-how-early-career-players-handle-ipl-pressure",
+   "franchise": "RR",
+   "legacyTitle": "The Young Batter Equation: How Early-Career Players Handle IPL Pressure",
+   "parameter": "Batting Intelligence",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-rr-003",
+     "title": "Boundary Dependency: How Much of Rajasthan Royals’s Scoring Comes in Fours and Sixes?",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "boundary"
+     ]
+    },
+    {
+     "planId": "cf-rr-006",
+     "title": "Chasing Under Pressure: Does Rajasthan Royals Bat Differently When the Target Climbs?",
+     "score": 0.227,
+     "titleOverlap": 0.067,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-rr-066",
+     "title": "The Matches That Built Rajasthan Royals’s Reputation Under Pressure",
+     "score": 0.189,
+     "titleOverlap": 0.071,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "pressure"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-rr-03",
+   "legacySlug": "rr-the-bowling-balance-can-rr-combine-wicket-taking-with-run-prevention",
+   "franchise": "RR",
+   "legacyTitle": "The Bowling Balance: Can RR Combine Wicket-Taking with Run Prevention?",
+   "parameter": "Bowling Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rr-014",
+     "title": "Middle-Overs Spin: Can Rajasthan Royals Create Pressure Without Immediate Wickets?",
+     "score": 0.3,
+     "titleOverlap": 0.071,
+     "conceptOverlap": 0.4,
+     "shared": [
+      "middle",
+      "spin"
+     ]
+    },
+    {
+     "planId": "cf-rr-013",
+     "title": "Wickets Versus Economy: How Rajasthan Royals Should Judge Its Bowlers",
+     "score": 0.288,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-rr-016",
+     "title": "Fielding as Run Prevention: Measuring the Hidden Value of Rajasthan Royals’s Saves",
+     "score": 0.273,
+     "titleOverlap": 0.167,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-rr-04",
+   "legacySlug": "rr-talent-versus-temperament-measuring-consistency-in-rrs-emerging-players",
+   "franchise": "RR",
+   "legacyTitle": "Talent Versus Temperament: Measuring Consistency in RR's Emerging Players",
+   "parameter": "Player Psychology",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rr-097",
+     "title": "The Academy Question: Should Rajasthan Royals Invest More in Talent Development?",
+     "score": 0.276,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-rr-072",
+     "title": "Domestic Pathways: Where Could Rajasthan Royals Find Undervalued Talent?",
+     "score": 0.272,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-rr-099",
+     "title": "The Multi-League Talent Pipeline: How Rajasthan Royals Could Scout Globally",
+     "score": 0.27,
+     "titleOverlap": 0.077,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-rr-05",
+   "legacySlug": "rr-the-jaipur-advantage-what-makes-sawai-mansingh-stadium-different",
+   "franchise": "RR",
+   "legacyTitle": "The Jaipur Advantage: What Makes Sawai Mansingh Stadium Different?",
+   "parameter": "Venue Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-rr-022",
+     "title": "Home-Ground Advantage: What Makes Jaipur Different for Rajasthan Royals?",
+     "score": 0.515,
+     "titleOverlap": 0.444,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-rr-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Rajasthan Royals Fans?",
+     "score": 0.276,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-rr-093",
+     "title": "A Digital Twin of Jaipur: Simulating Rajasthan Royals’s Home Conditions",
+     "score": 0.272,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-rr-06",
+   "legacySlug": "rr-the-value-hunter-does-rr-find-better-returns-from-lesser-known-players",
+   "franchise": "RR",
+   "legacyTitle": "The Value Hunter: Does RR Find Better Returns from Lesser-Known Players?",
+   "parameter": "Auction Economics",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rr-032",
+     "title": "Star Premium Versus Squad Depth: Where Should Rajasthan Royals Spend Its Budget?",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction",
+      "star"
+     ]
+    },
+    {
+     "planId": "cf-rr-033",
+     "title": "Retention Mathematics: Which Player Roles Should Rajasthan Royals Protect?",
+     "score": 0.274,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-rr-035",
+     "title": "The Uncapped Advantage: Finding Low-Cost Impact for Rajasthan Royals",
+     "score": 0.271,
+     "titleOverlap": 0.077,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "scouting"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-rr-07",
+   "legacySlug": "rr-the-flexible-xi-how-rr-can-optimize-its-overseas-combination",
+   "franchise": "RR",
+   "legacyTitle": "The Flexible XI: How RR Can Optimize Its Overseas Combination",
+   "parameter": "Tactical Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-rr-027",
+     "title": "Opponent-Specific Plans: Should Rajasthan Royals Build a New XI for Every Match?",
+     "score": 0.55,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-rr-020",
+     "title": "The Sixth-Bowler Insurance Policy: How Much Flexibility Does Rajasthan Royals Need?",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-rr-038",
+     "title": "Role Scarcity Index: Which Skill Sets Are Hardest for Rajasthan Royals to Buy?",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "selection"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-rr-08",
+   "legacySlug": "rr-from-underdogs-to-contenders-rajasthans-strategic-evolution",
+   "franchise": "RR",
+   "legacyTitle": "From Underdogs to Contenders: Rajasthan's Strategic Evolution",
+   "parameter": "Historical Evolution",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-rr-061",
+     "title": "The Founding Identity: How Rajasthan Royals Became More Than an IPL Entry",
+     "score": 0.55,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-rr-064",
+     "title": "The Captaincy Eras: How Leadership Changed Rajasthan Royals’s Playing Identity",
+     "score": 0.55,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-rr-067",
+     "title": "From Auction Table to Playing XI: How Rajasthan Royals’s Squad Philosophy Evolved",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-rr-09",
+   "legacySlug": "rr-the-breakout-illusion-which-young-player-performances-are-sustainable",
+   "franchise": "RR",
+   "legacyTitle": "The Breakout Illusion: Which Young-Player Performances Are Sustainable?",
+   "parameter": "Hidden Statistical Stories",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-rr-070",
+     "title": "Legacy Versus Recency: How Should We Rank Rajasthan Royals’s Greatest Performances?",
+     "score": 0.276,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-rr-035",
+     "title": "The Uncapped Advantage: Finding Low-Cost Impact for Rajasthan Royals",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-rr-072",
+     "title": "Domestic Pathways: Where Could Rajasthan Royals Find Undervalued Talent?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-rr-10",
+   "legacySlug": "rr-finding-the-next-unknown-star-rrs-future-scouting-blueprint",
+   "franchise": "RR",
+   "legacyTitle": "Finding the Next Unknown Star: RR's Future Scouting Blueprint",
+   "parameter": "Future Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-rr-071",
+     "title": "The Next Opener: What Profile Should Rajasthan Royals Scout?",
+     "score": 0.413,
+     "titleOverlap": 0.222,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "future",
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-rr-091",
+     "title": "The 2027 Blueprint: What Should Rajasthan Royals Build for the Next Cycle?",
+     "score": 0.327,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-rr-092",
+     "title": "AI-Assisted Scouting: Where Algorithms Could Help Rajasthan Royals Recruit",
+     "score": 0.274,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "scouting"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-dc-01",
+   "legacySlug": "dc-the-capitals-conundrum-why-talent-doesnt-always-translate-into-results",
+   "franchise": "DC",
+   "legacyTitle": "The Capitals Conundrum: Why Talent Doesn't Always Translate into Results",
+   "parameter": "Franchise DNA",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-dc-097",
+     "title": "The Academy Question: Should Delhi Capitals Invest More in Talent Development?",
+     "score": 0.28,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-dc-072",
+     "title": "Domestic Pathways: Where Could Delhi Capitals Find Undervalued Talent?",
+     "score": 0.276,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-dc-099",
+     "title": "The Multi-League Talent Pipeline: How Delhi Capitals Could Scout Globally",
+     "score": 0.272,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "scouting"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-dc-02",
+   "legacySlug": "dc-the-middle-over-mystery-where-delhis-batting-momentum-changes",
+   "franchise": "DC",
+   "legacyTitle": "The Middle-Over Mystery: Where Delhi's Batting Momentum Changes",
+   "parameter": "Batting Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-dc-004",
+     "title": "Middle-Overs Momentum: Where Delhi Capitals Gains or Loses Run Rate",
+     "score": 0.528,
+     "titleOverlap": 0.3,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "middle",
+      "momentum"
+     ]
+    },
+    {
+     "planId": "cf-dc-001",
+     "title": "The Powerplay Equation: When Delhi Capitals Should Attack the First Six Overs",
+     "score": 0.278,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "powerplay"
+     ]
+    },
+    {
+     "planId": "cf-dc-014",
+     "title": "Middle-Overs Spin: Can Delhi Capitals Create Pressure Without Immediate Wickets?",
+     "score": 0.169,
+     "titleOverlap": 0.167,
+     "conceptOverlap": 0.2,
+     "shared": [
+      "middle"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-dc-03",
+   "legacySlug": "dc-the-wicket-taking-trade-off-delhis-bowling-risk-versus-reward",
+   "franchise": "DC",
+   "legacyTitle": "The Wicket-Taking Trade-Off: Delhi's Bowling Risk Versus Reward",
+   "parameter": "Bowling Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-dc-013",
+     "title": "Wickets Versus Economy: How Delhi Capitals Should Judge Its Bowlers",
+     "score": 0.309,
+     "titleOverlap": 0.3,
+     "conceptOverlap": 0.2,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-dc-015",
+     "title": "Death-Overs Risk: The Cost of One Missed Length for Delhi Capitals",
+     "score": 0.206,
+     "titleOverlap": 0.071,
+     "conceptOverlap": 0.2,
+     "shared": [
+      "death"
+     ]
+    },
+    {
+     "planId": "cf-dc-012",
+     "title": "The Yorker Premium: Does Delhi Capitals Gain More from Execution or Variation?",
+     "score": 0.174,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.2,
+     "shared": [
+      "death"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-dc-04",
+   "legacySlug": "dc-the-pressure-test-how-dc-responds-when-matches-become-close",
+   "franchise": "DC",
+   "legacyTitle": "The Pressure Test: How DC Responds When Matches Become Close",
+   "parameter": "Player Psychology",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-dc-066",
+     "title": "The Matches That Built Delhi Capitals’s Reputation Under Pressure",
+     "score": 0.56,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 1,
+     "shared": [
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-dc-085",
+     "title": "Clutch or Coincidence? Testing Delhi Capitals’s Pressure-Performance Narratives",
+     "score": 0.56,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 1,
+     "shared": [
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-dc-056",
+     "title": "The Last-Over Nervous System: What Pressure Does to Delhi Capitals Fans",
+     "score": 0.276,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "pressure"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-dc-05",
+   "legacySlug": "dc-the-kotla-equation-how-delhis-home-conditions-influence-results",
+   "franchise": "DC",
+   "legacyTitle": "The Kotla Equation: How Delhi's Home Conditions Influence Results",
+   "parameter": "Venue Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-dc-022",
+     "title": "Home-Ground Advantage: What Makes Delhi Different for Delhi Capitals?",
+     "score": 0.595,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-dc-093",
+     "title": "A Digital Twin of Delhi: Simulating Delhi Capitals’s Home Conditions",
+     "score": 0.57,
+     "titleOverlap": 0.222,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-dc-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Delhi Capitals Fans?",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-dc-06",
+   "legacySlug": "dc-the-auction-reset-has-dc-invested-in-the-right-player-profiles",
+   "franchise": "DC",
+   "legacyTitle": "The Auction Reset: Has DC Invested in the Right Player Profiles?",
+   "parameter": "Auction Economics",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-dc-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Delhi Capitals?",
+     "score": 0.356,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-dc-033",
+     "title": "Retention Mathematics: Which Player Roles Should Delhi Capitals Protect?",
+     "score": 0.356,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-dc-039",
+     "title": "Salary Versus Contribution: Designing an Auction ROI Model for Delhi Capitals",
+     "score": 0.35,
+     "titleOverlap": 0.077,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-dc-07",
+   "legacySlug": "dc-the-missing-combination-what-does-dcs-most-balanced-xi-look-like",
+   "franchise": "DC",
+   "legacyTitle": "The Missing Combination: What Does DC's Most Balanced XI Look Like?",
+   "parameter": "Tactical Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-dc-027",
+     "title": "Opponent-Specific Plans: Should Delhi Capitals Build a New XI for Every Match?",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-dc-025",
+     "title": "Defending 160 Versus 200: Why Delhi Capitals Needs Two Bowling Playbooks",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-dc-013",
+     "title": "Wickets Versus Economy: How Delhi Capitals Should Judge Its Bowlers",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-dc-08",
+   "legacySlug": "dc-from-daredevils-to-capitals-has-the-franchises-cricketing-dna-changed",
+   "franchise": "DC",
+   "legacyTitle": "From Daredevils to Capitals: Has the Franchise's Cricketing DNA Changed?",
+   "parameter": "Historical Evolution",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-dc-064",
+     "title": "The Captaincy Eras: How Leadership Changed Delhi Capitals’s Playing Identity",
+     "score": 0.591,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-dc-061",
+     "title": "The Founding Identity: How Delhi Capitals Became More Than an IPL Entry",
+     "score": 0.55,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-dc-067",
+     "title": "From Auction Table to Playing XI: How Delhi Capitals’s Squad Philosophy Evolved",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-dc-09",
+   "legacySlug": "dc-the-partnership-problem-are-individual-performances-hiding-team-weaknesses",
+   "franchise": "DC",
+   "legacyTitle": "The Partnership Problem: Are Individual Performances Hiding Team Weaknesses?",
+   "parameter": "Hidden Statistical Stories",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-dc-088",
+     "title": "Batting Partnerships as Networks: Mapping Delhi Capitals’s Run Creation",
+     "score": 0.352,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "partnership"
+     ]
+    },
+    {
+     "planId": "cf-dc-004",
+     "title": "Middle-Overs Momentum: Where Delhi Capitals Gains or Loses Run Rate",
+     "score": 0.157,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "middle"
+     ]
+    },
+    {
+     "planId": "cf-dc-014",
+     "title": "Middle-Overs Spin: Can Delhi Capitals Create Pressure Without Immediate Wickets?",
+     "score": 0.117,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "middle"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-dc-10",
+   "legacySlug": "dc-building-a-sustainable-core-what-should-delhi-prioritize-next",
+   "franchise": "DC",
+   "legacyTitle": "Building a Sustainable Core: What Should Delhi Prioritize Next?",
+   "parameter": "Future Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-dc-071",
+     "title": "The Next Opener: What Profile Should Delhi Capitals Scout?",
+     "score": 0.37,
+     "titleOverlap": 0.125,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "future",
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-dc-091",
+     "title": "The 2027 Blueprint: What Should Delhi Capitals Build for the Next Cycle?",
+     "score": 0.349,
+     "titleOverlap": 0.25,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-dc-094",
+     "title": "The Next Tactical Edge: What Happens When Delhi Capitals Models Every Delivery?",
+     "score": 0.278,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "future"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-pbks-01",
+   "legacySlug": "pbks-the-punjab-paradox-why-explosive-cricket-doesnt-always-mean-consistency",
+   "franchise": "PBKS",
+   "legacyTitle": "The Punjab Paradox: Why Explosive Cricket Doesn't Always Mean Consistency",
+   "parameter": "Franchise DNA",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-pbks-070",
+     "title": "Legacy Versus Recency: How Should We Rank Punjab Kings’s Greatest Performances?",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-pbks-061",
+     "title": "The Founding Identity: How Punjab Kings Became More Than an IPL Entry",
+     "score": 0.198,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-pbks-064",
+     "title": "The Captaincy Eras: How Leadership Changed Punjab Kings’s Playing Identity",
+     "score": 0.198,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "history"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-pbks-02",
+   "legacySlug": "pbks-attack-from-ball-one-how-pbks-approaches-powerplay-batting",
+   "franchise": "PBKS",
+   "legacyTitle": "Attack from Ball One: How PBKS Approaches Powerplay Batting",
+   "parameter": "Batting Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-pbks-001",
+     "title": "The Powerplay Equation: When Punjab Kings Should Attack the First Six Overs",
+     "score": 0.327,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "powerplay"
+     ]
+    },
+    {
+     "planId": "cf-pbks-003",
+     "title": "Boundary Dependency: How Much of Punjab Kings’s Scoring Comes in Fours and Sixes?",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "boundary"
+     ]
+    },
+    {
+     "planId": "cf-pbks-006",
+     "title": "Chasing Under Pressure: Does Punjab Kings Bat Differently When the Target Climbs?",
+     "score": 0.198,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "chase"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-pbks-03",
+   "legacySlug": "pbks-the-death-overs-question-where-punjabs-bowling-strategy-succeeds-or-fails",
+   "franchise": "PBKS",
+   "legacyTitle": "The Death-Overs Question: Where Punjab's Bowling Strategy Succeeds or Fails",
+   "parameter": "Bowling Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-pbks-015",
+     "title": "Death-Overs Risk: The Cost of One Missed Length for Punjab Kings",
+     "score": 0.39,
+     "titleOverlap": 0.167,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "death"
+     ]
+    },
+    {
+     "planId": "cf-pbks-013",
+     "title": "Wickets Versus Economy: How Punjab Kings Should Judge Its Bowlers",
+     "score": 0.356,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-pbks-089",
+     "title": "Bowling Plans as Optimization: Allocating 20 Overs for Punjab Kings",
+     "score": 0.325,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-pbks-04",
+   "legacySlug": "pbks-the-chase-psychology-how-pbks-handles-required-run-rate-pressure",
+   "franchise": "PBKS",
+   "legacyTitle": "The Chase Psychology: How PBKS Handles Required Run Rate Pressure",
+   "parameter": "Player Psychology",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-pbks-006",
+     "title": "Chasing Under Pressure: Does Punjab Kings Bat Differently When the Target Climbs?",
+     "score": 0.505,
+     "titleOverlap": 0.077,
+     "conceptOverlap": 1,
+     "shared": [
+      "chase",
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-pbks-066",
+     "title": "The Matches That Built Punjab Kings’s Reputation Under Pressure",
+     "score": 0.272,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-pbks-085",
+     "title": "Clutch or Coincidence? Testing Punjab Kings’s Pressure-Performance Narratives",
+     "score": 0.272,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "pressure"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-pbks-05",
+   "legacySlug": "pbks-the-home-ground-puzzle-how-punjabs-venue-changes-affect-strategy",
+   "franchise": "PBKS",
+   "legacyTitle": "The Home-Ground Puzzle: How Punjab's Venue Changes Affect Strategy",
+   "parameter": "Venue Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-pbks-022",
+     "title": "Home-Ground Advantage: What Makes Mohali Different for Punjab Kings?",
+     "score": 0.632,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-pbks-093",
+     "title": "A Digital Twin of Mohali: Simulating Punjab Kings’s Home Conditions",
+     "score": 0.507,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-pbks-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Punjab Kings Fans?",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-pbks-06",
+   "legacySlug": "pbks-auction-ambition-does-pbks-spend-for-balance-or-star-power",
+   "franchise": "PBKS",
+   "legacyTitle": "Auction Ambition: Does PBKS Spend for Balance or Star Power?",
+   "parameter": "Auction Economics",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-pbks-032",
+     "title": "Star Premium Versus Squad Depth: Where Should Punjab Kings Spend Its Budget?",
+     "score": 0.514,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 0.75,
+     "shared": [
+      "auction",
+      "selection",
+      "star"
+     ]
+    },
+    {
+     "planId": "cf-pbks-100",
+     "title": "The Future XI: Designing Punjab Kings’s Ideal Role Balance, Not a Dream Team",
+     "score": 0.272,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "future",
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-pbks-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Punjab Kings?",
+     "score": 0.242,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "auction"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-pbks-07",
+   "legacySlug": "pbks-the-xi-that-fits-building-punjabs-ideal-role-combination",
+   "franchise": "PBKS",
+   "legacyTitle": "The XI That Fits: Building Punjab's Ideal Role Combination",
+   "parameter": "Tactical Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-pbks-027",
+     "title": "Opponent-Specific Plans: Should Punjab Kings Build a New XI for Every Match?",
+     "score": 0.356,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-pbks-073",
+     "title": "The Role-Fit Test: Why Good Players Can Be Wrong Signings for Punjab Kings",
+     "score": 0.317,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-pbks-038",
+     "title": "Role Scarcity Index: Which Skill Sets Are Hardest for Punjab Kings to Buy?",
+     "score": 0.272,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "selection"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-pbks-08",
+   "legacySlug": "pbks-the-reinvention-cycle-how-punjabs-squad-identity-has-changed",
+   "franchise": "PBKS",
+   "legacyTitle": "The Reinvention Cycle: How Punjab's Squad Identity Has Changed",
+   "parameter": "Historical Evolution",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-pbks-064",
+     "title": "The Captaincy Eras: How Leadership Changed Punjab Kings’s Playing Identity",
+     "score": 0.483,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-pbks-061",
+     "title": "The Founding Identity: How Punjab Kings Became More Than an IPL Entry",
+     "score": 0.438,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-pbks-067",
+     "title": "From Auction Table to Playing XI: How Punjab Kings’s Squad Philosophy Evolved",
+     "score": 0.309,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.4,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-pbks-09",
+   "legacySlug": "pbks-the-momentum-trap-when-one-big-over-changes-punjabs-match-trajectory",
+   "franchise": "PBKS",
+   "legacyTitle": "The Momentum Trap: When One Big Over Changes Punjab's Match Trajectory",
+   "parameter": "Hidden Statistical Stories",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-pbks-026",
+     "title": "The Timeout Decision: Can Punjab Kings Interrupt an Opposition Surge?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "momentum"
+     ]
+    },
+    {
+     "planId": "cf-pbks-070",
+     "title": "Legacy Versus Recency: How Should We Rank Punjab Kings’s Greatest Performances?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-pbks-004",
+     "title": "Middle-Overs Momentum: Where Punjab Kings Gains or Loses Run Rate",
+     "score": 0.226,
+     "titleOverlap": 0.154,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "momentum"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-pbks-10",
+   "legacySlug": "pbks-from-potential-to-predictability-what-should-pbks-build-around",
+   "franchise": "PBKS",
+   "legacyTitle": "From Potential to Predictability: What Should PBKS Build Around?",
+   "parameter": "Future Intelligence",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-pbks-067",
+     "title": "From Auction Table to Playing XI: How Punjab Kings’s Squad Philosophy Evolved",
+     "score": 0.188,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.4,
+     "shared": [
+      "auction",
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-pbks-005",
+     "title": "The Finisher’s Clock: When Should Punjab Kings Send in Its Power Hitters?",
+     "score": 0.157,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "death"
+     ]
+    },
+    {
+     "planId": "cf-pbks-012",
+     "title": "The Yorker Premium: Does Punjab Kings Gain More from Execution or Variation?",
+     "score": 0.157,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "death"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-gt-01",
+   "legacySlug": "gt-the-titans-blueprint-how-gt-built-a-competitive-identity-so-quickly",
+   "franchise": "GT",
+   "legacyTitle": "The Titans Blueprint: How GT Built a Competitive Identity So Quickly",
+   "parameter": "Franchise DNA",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-gt-061",
+     "title": "The Founding Identity: How Gujarat Titans Became More Than an IPL Entry",
+     "score": 0.287,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-gt-091",
+     "title": "The 2027 Blueprint: What Should Gujarat Titans Build for the Next Cycle?",
+     "score": 0.285,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-gt-064",
+     "title": "The Captaincy Eras: How Leadership Changed Gujarat Titans’s Playing Identity",
+     "score": 0.282,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "identity"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-gt-02",
+   "legacySlug": "gt-calculated-batting-does-gujarat-prefer-efficiency-over-aggression",
+   "franchise": "GT",
+   "legacyTitle": "Calculated Batting: Does Gujarat Prefer Efficiency Over Aggression?",
+   "parameter": "Batting Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-gt-010",
+     "title": "The 200-Run Question: Which Conditions Make Gujarat Titans a High-Scoring Side?",
+     "score": 0.55,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "highTotal"
+     ]
+    },
+    {
+     "planId": "cf-gt-025",
+     "title": "Defending 160 Versus 200: Why Gujarat Titans Needs Two Bowling Playbooks",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "highTotal"
+     ]
+    },
+    {
+     "planId": "cf-gt-001",
+     "title": "The Powerplay Equation: When Gujarat Titans Should Attack the First Six Overs",
+     "score": 0.121,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0,
+     "shared": []
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-gt-03",
+   "legacySlug": "gt-the-bowling-foundation-how-gt-controls-scoring-across-innings-phases",
+   "franchise": "GT",
+   "legacyTitle": "The Bowling Foundation: How GT Controls Scoring Across Innings Phases",
+   "parameter": "Bowling Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-gt-013",
+     "title": "Wickets Versus Economy: How Gujarat Titans Should Judge Its Bowlers",
+     "score": 0.591,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-gt-016",
+     "title": "Fielding as Run Prevention: Measuring the Hidden Value of Gujarat Titans’s Saves",
+     "score": 0.55,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-gt-089",
+     "title": "Bowling Plans as Optimization: Allocating 20 Overs for Gujarat Titans",
+     "score": 0.511,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-gt-04",
+   "legacySlug": "gt-the-chase-equation-how-gujarat-handles-tight-finishes",
+   "franchise": "GT",
+   "legacyTitle": "The Chase Equation: How Gujarat Handles Tight Finishes",
+   "parameter": "Player Psychology",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-gt-006",
+     "title": "Chasing Under Pressure: Does Gujarat Titans Bat Differently When the Target Climbs?",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "chase",
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-gt-066",
+     "title": "The Matches That Built Gujarat Titans’s Reputation Under Pressure",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "pressure"
+     ]
+    },
+    {
+     "planId": "cf-gt-085",
+     "title": "Clutch or Coincidence? Testing Gujarat Titans’s Pressure-Performance Narratives",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "pressure"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-gt-05",
+   "legacySlug": "gt-the-ahmedabad-factor-how-narendra-modi-stadium-influences-gts-cricket",
+   "franchise": "GT",
+   "legacyTitle": "The Ahmedabad Factor: How Narendra Modi Stadium Influences GT's Cricket",
+   "parameter": "Venue Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-gt-022",
+     "title": "Home-Ground Advantage: What Makes Ahmedabad Different for Gujarat Titans?",
+     "score": 0.587,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-gt-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Gujarat Titans Fans?",
+     "score": 0.511,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-gt-093",
+     "title": "A Digital Twin of Ahmedabad: Simulating Gujarat Titans’s Home Conditions",
+     "score": 0.507,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-gt-06",
+   "legacySlug": "gt-value-over-visibility-what-gts-auction-choices-reveal",
+   "franchise": "GT",
+   "legacyTitle": "Value Over Visibility: What GT's Auction Choices Reveal",
+   "parameter": "Auction Economics",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-gt-032",
+     "title": "Star Premium Versus Squad Depth: Where Should Gujarat Titans Spend Its Budget?",
+     "score": 0.393,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "auction",
+      "star"
+     ]
+    },
+    {
+     "planId": "cf-gt-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Gujarat Titans?",
+     "score": 0.36,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-gt-037",
+     "title": "Replacement Value: When Should Gujarat Titans Walk Away from a Bidding War?",
+     "score": 0.356,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "auction"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-gt-07",
+   "legacySlug": "gt-the-balance-sheet-of-eleven-how-gt-can-optimize-its-squad",
+   "franchise": "GT",
+   "legacyTitle": "The Balance Sheet of Eleven: How GT Can Optimize Its Squad",
+   "parameter": "Tactical Intelligence",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-gt-027",
+     "title": "Opponent-Specific Plans: Should Gujarat Titans Build a New XI for Every Match?",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-gt-028",
+     "title": "The Last Five Overs: When Gujarat Titans Should Preserve or Spend Resources",
+     "score": 0.237,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "death"
+     ]
+    },
+    {
+     "planId": "cf-gt-100",
+     "title": "The Future XI: Designing Gujarat Titans’s Ideal Role Balance, Not a Dream Team",
+     "score": 0.158,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.25,
+     "shared": [
+      "selection"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-gt-08",
+   "legacySlug": "gt-the-first-five-seasons-how-gujarats-approach-has-evolved",
+   "franchise": "GT",
+   "legacyTitle": "The First Five Seasons: How Gujarat's Approach Has Evolved",
+   "parameter": "Historical Evolution",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-gt-070",
+     "title": "Legacy Versus Recency: How Should We Rank Gujarat Titans’s Greatest Performances?",
+     "score": 0.55,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-gt-061",
+     "title": "The Founding Identity: How Gujarat Titans Became More Than an IPL Entry",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history"
+     ]
+    },
+    {
+     "planId": "cf-gt-064",
+     "title": "The Captaincy Eras: How Leadership Changed Gujarat Titans’s Playing Identity",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-gt-09",
+   "legacySlug": "gt-the-quiet-match-winners-identifying-gts-underappreciated-contributions",
+   "franchise": "GT",
+   "legacyTitle": "The Quiet Match-Winners: Identifying GT's Underappreciated Contributions",
+   "parameter": "Hidden Statistical Stories",
+   "auto": "no-match",
+   "candidates": [
+    {
+     "planId": "cf-gt-032",
+     "title": "Star Premium Versus Squad Depth: Where Should Gujarat Titans Spend Its Budget?",
+     "score": 0.157,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "star"
+     ]
+    },
+    {
+     "planId": "cf-gt-081",
+     "title": "Win Probability, Ball by Ball: Building a Model for Gujarat Titans",
+     "score": 0.08,
+     "titleOverlap": 0,
+     "conceptOverlap": 0,
+     "shared": []
+    },
+    {
+     "planId": "cf-gt-082",
+     "title": "Expected Runs Versus Actual Runs: Where Does Gujarat Titans Overperform?",
+     "score": 0.08,
+     "titleOverlap": 0,
+     "conceptOverlap": 0,
+     "shared": []
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-gt-10",
+   "legacySlug": "gt-the-next-competitive-edge-what-does-gujarat-need-to-strengthen",
+   "franchise": "GT",
+   "legacyTitle": "The Next Competitive Edge: What Does Gujarat Need to Strengthen?",
+   "parameter": "Future Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-gt-094",
+     "title": "The Next Tactical Edge: What Happens When Gujarat Titans Models Every Delivery?",
+     "score": 0.264,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0.2,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-gt-071",
+     "title": "The Next Opener: What Profile Should Gujarat Titans Scout?",
+     "score": 0.244,
+     "titleOverlap": 0.125,
+     "conceptOverlap": 0.4,
+     "shared": [
+      "future",
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-gt-091",
+     "title": "The 2027 Blueprint: What Should Gujarat Titans Build for the Next Cycle?",
+     "score": 0.224,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.2,
+     "shared": [
+      "future"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-lsg-01",
+   "legacySlug": "lsg-the-super-giants-experiment-searching-for-lsgs-cricketing-identity",
+   "franchise": "LSG",
+   "legacyTitle": "The Super Giants Experiment: Searching for LSG's Cricketing Identity",
+   "parameter": "Franchise DNA",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-lsg-043",
+     "title": "Jersey Economics: How Lucknow Super Giants Can Turn Identity into Merchandise Demand",
+     "score": 0.52,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 1,
+     "shared": [
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-lsg-052",
+     "title": "The Color Code: How Lucknow Super Giants’s Identity Shapes Fan Belonging",
+     "score": 0.52,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 1,
+     "shared": [
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-lsg-061",
+     "title": "The Founding Identity: How Lucknow Super Giants Became More Than an IPL Entry",
+     "score": 0.371,
+     "titleOverlap": 0.125,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "identity"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-lsg-02",
+   "legacySlug": "lsg-the-tempo-debate-is-lsgs-batting-approach-built-for-modern-t20",
+   "franchise": "LSG",
+   "legacyTitle": "The Tempo Debate: Is LSG's Batting Approach Built for Modern T20?",
+   "parameter": "Batting Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-lsg-003",
+     "title": "Boundary Dependency: How Much of Lucknow Super Giants’s Scoring Comes in Fours and Sixes?",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "boundary"
+     ]
+    },
+    {
+     "planId": "cf-lsg-005",
+     "title": "The Finisher’s Clock: When Should Lucknow Super Giants Send in Its Power Hitters?",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "death"
+     ]
+    },
+    {
+     "planId": "cf-lsg-012",
+     "title": "The Yorker Premium: Does Lucknow Super Giants Gain More from Execution or Variation?",
+     "score": 0.235,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "death"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-lsg-03",
+   "legacySlug": "lsg-the-middle-over-squeeze-how-lsg-uses-bowling-to-control-matches",
+   "franchise": "LSG",
+   "legacyTitle": "The Middle-Over Squeeze: How LSG Uses Bowling to Control Matches",
+   "parameter": "Bowling Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-lsg-013",
+     "title": "Wickets Versus Economy: How Lucknow Super Giants Should Judge Its Bowlers",
+     "score": 0.356,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-lsg-089",
+     "title": "Bowling Plans as Optimization: Allocating 20 Overs for Lucknow Super Giants",
+     "score": 0.325,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-lsg-016",
+     "title": "Fielding as Run Prevention: Measuring the Hidden Value of Lucknow Super Giants’s Saves",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-lsg-04",
+   "legacySlug": "lsg-the-finishing-question-what-happens-when-lsg-enters-the-final-five-overs",
+   "franchise": "LSG",
+   "legacyTitle": "The Finishing Question: What Happens When LSG Enters the Final Five Overs?",
+   "parameter": "Player Psychology",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-lsg-028",
+     "title": "The Last Five Overs: When Lucknow Super Giants Should Preserve or Spend Resources",
+     "score": 0.397,
+     "titleOverlap": 0.182,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "death"
+     ]
+    },
+    {
+     "planId": "cf-lsg-076",
+     "title": "The Finisher Search: How Lucknow Super Giants Can Identify Genuine Death-Overs Hitters",
+     "score": 0.31,
+     "titleOverlap": 0.167,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "death"
+     ]
+    },
+    {
+     "planId": "cf-lsg-005",
+     "title": "The Finisher’s Clock: When Should Lucknow Super Giants Send in Its Power Hitters?",
+     "score": 0.276,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "death"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-lsg-05",
+   "legacySlug": "lsg-the-ekana-effect-how-lucknows-home-venue-changes-batting-expectations",
+   "franchise": "LSG",
+   "legacyTitle": "The Ekana Effect: How Lucknow's Home Venue Changes Batting Expectations",
+   "parameter": "Venue Intelligence",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-lsg-022",
+     "title": "Home-Ground Advantage: What Makes Lucknow Different for Lucknow Super Giants?",
+     "score": 0.591,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-lsg-093",
+     "title": "A Digital Twin of Lucknow: Simulating Lucknow Super Giants’s Home Conditions",
+     "score": 0.511,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    },
+    {
+     "planId": "cf-lsg-042",
+     "title": "The Stadium Economy: What Does Matchday Mean for Lucknow Super Giants Fans?",
+     "score": 0.47,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "venue"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-lsg-06",
+   "legacySlug": "lsg-auction-economics-does-lsg-pay-for-impact-or-reputation",
+   "franchise": "LSG",
+   "legacyTitle": "Auction Economics: Does LSG Pay for Impact or Reputation?",
+   "parameter": "Auction Economics",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-lsg-031",
+     "title": "The Auction Price Puzzle: What Is a Win Worth to Lucknow Super Giants?",
+     "score": 0.6,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 1,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-lsg-039",
+     "title": "Salary Versus Contribution: Designing an Auction ROI Model for Lucknow Super Giants",
+     "score": 0.591,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 1,
+     "shared": [
+      "auction"
+     ]
+    },
+    {
+     "planId": "cf-lsg-033",
+     "title": "Retention Mathematics: Which Player Roles Should Lucknow Super Giants Protect?",
+     "score": 0.55,
+     "titleOverlap": 0,
+     "conceptOverlap": 1,
+     "shared": [
+      "auction"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-lsg-07",
+   "legacySlug": "lsg-the-role-allocation-puzzle-finding-lsgs-best-batting-and-bowling-combination",
+   "franchise": "LSG",
+   "legacyTitle": "The Role-Allocation Puzzle: Finding LSG's Best Batting and Bowling Combination",
+   "parameter": "Tactical Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-lsg-027",
+     "title": "Opponent-Specific Plans: Should Lucknow Super Giants Build a New XI for Every Match?",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "selection"
+     ]
+    },
+    {
+     "planId": "cf-lsg-013",
+     "title": "Wickets Versus Economy: How Lucknow Super Giants Should Judge Its Bowlers",
+     "score": 0.272,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    },
+    {
+     "planId": "cf-lsg-089",
+     "title": "Bowling Plans as Optimization: Allocating 20 Overs for Lucknow Super Giants",
+     "score": 0.272,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "bowlingEconomy"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-lsg-08",
+   "legacySlug": "lsg-the-early-years-how-lsgs-tactical-identity-has-changed",
+   "franchise": "LSG",
+   "legacyTitle": "The Early Years: How LSG's Tactical Identity Has Changed",
+   "parameter": "Historical Evolution",
+   "auto": "semantic-duplicate",
+   "candidates": [
+    {
+     "planId": "cf-lsg-064",
+     "title": "The Captaincy Eras: How Leadership Changed Lucknow Super Giants’s Playing Identity",
+     "score": 0.64,
+     "titleOverlap": 0.2,
+     "conceptOverlap": 1,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-lsg-061",
+     "title": "The Founding Identity: How Lucknow Super Giants Became More Than an IPL Entry",
+     "score": 0.595,
+     "titleOverlap": 0.1,
+     "conceptOverlap": 1,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    },
+    {
+     "planId": "cf-lsg-067",
+     "title": "From Auction Table to Playing XI: How Lucknow Super Giants’s Squad Philosophy Evolved",
+     "score": 0.315,
+     "titleOverlap": 0,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "history",
+      "identity"
+     ]
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-lsg-09",
+   "legacySlug": "lsg-the-dot-ball-paradox-when-conservative-batting-becomes-expensive",
+   "franchise": "LSG",
+   "legacyTitle": "The Dot-Ball Paradox: When Conservative Batting Becomes Expensive",
+   "parameter": "Hidden Statistical Stories",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-lsg-009",
+     "title": "Dot-Ball Debt: How Lucknow Super Giants Can Price the Cost of a Quiet Over",
+     "score": 0.31,
+     "titleOverlap": 0.167,
+     "conceptOverlap": 0.5,
+     "shared": [
+      "dotBall"
+     ]
+    },
+    {
+     "planId": "cf-lsg-081",
+     "title": "Win Probability, Ball by Ball: Building a Model for Lucknow Super Giants",
+     "score": 0.121,
+     "titleOverlap": 0.091,
+     "conceptOverlap": 0,
+     "shared": []
+    },
+    {
+     "planId": "cf-lsg-088",
+     "title": "Batting Partnerships as Networks: Mapping Lucknow Super Giants’s Run Creation",
+     "score": 0.117,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0,
+     "shared": []
+    }
+   ],
+   "decision": null
+  },
+  {
+   "legacyId": "art-lsg-10",
+   "legacySlug": "lsg-the-next-lsg-blueprint-which-player-profiles-fit-its-future",
+   "franchise": "LSG",
+   "legacyTitle": "The Next LSG Blueprint: Which Player Profiles Fit Its Future?",
+   "parameter": "Future Intelligence",
+   "auto": "partial-overlap",
+   "candidates": [
+    {
+     "planId": "cf-lsg-071",
+     "title": "The Next Opener: What Profile Should Lucknow Super Giants Scout?",
+     "score": 0.363,
+     "titleOverlap": 0.111,
+     "conceptOverlap": 0.667,
+     "shared": [
+      "future",
+      "scouting"
+     ]
+    },
+    {
+     "planId": "cf-lsg-091",
+     "title": "The 2027 Blueprint: What Should Lucknow Super Giants Build for the Next Cycle?",
+     "score": 0.337,
+     "titleOverlap": 0.222,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "future"
+     ]
+    },
+    {
+     "planId": "cf-lsg-094",
+     "title": "The Next Tactical Edge: What Happens When Lucknow Super Giants Models Every Delivery?",
+     "score": 0.274,
+     "titleOverlap": 0.083,
+     "conceptOverlap": 0.333,
+     "shared": [
+      "future"
+     ]
+    }
+   ],
+   "decision": null
+  }
+ ]
+}

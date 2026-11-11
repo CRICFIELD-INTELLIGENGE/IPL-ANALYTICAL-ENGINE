@@ -1,0 +1,222 @@
+{
+ "articleId": "cf-gt-063",
+ "generatedAt": "2026-10-26T04:26:38.858Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "ts-pp1": {
+   "value": -0.05,
+   "display": "−0.05",
+   "label": "Powerplay batting vs league, 2022–2023",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Team minus rest of IPL",
+   "sampleSize": {
+    "n": 1188,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2023 AND i.batting_team_id IN (14)",
+   "validation": {
+    "method": "sample-size floor ≥ 600 legal balls",
+    "passed": true,
+    "detail": "n = 1188"
+   }
+  },
+  "ts-pp2": {
+   "value": -0.84,
+   "display": "−0.84",
+   "label": "Powerplay batting vs league, 2024–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Team minus rest of IPL",
+   "sampleSize": {
+    "n": 1584,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND i.batting_team_id IN (14)",
+   "validation": {
+    "method": "sample-size floor ≥ 600 legal balls",
+    "passed": true,
+    "detail": "n = 1584"
+   }
+  },
+  "ts-mid1": {
+   "value": -0.1,
+   "display": "−0.10",
+   "label": "Middle-overs batting vs league, 2022–2023",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Team minus rest of IPL",
+   "sampleSize": {
+    "n": 1775,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2023 AND i.batting_team_id IN (14)",
+   "validation": {
+    "method": "sample-size floor ≥ 600 legal balls",
+    "passed": true,
+    "detail": "n = 1775"
+   }
+  },
+  "ts-mid2": {
+   "value": 0.23,
+   "display": "+0.23",
+   "label": "Middle-overs batting vs league, 2024–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Team minus rest of IPL",
+   "sampleSize": {
+    "n": 2376,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND i.batting_team_id IN (14)",
+   "validation": {
+    "method": "sample-size floor ≥ 600 legal balls",
+    "passed": true,
+    "detail": "n = 2376"
+   }
+  },
+  "ts-death1": {
+   "value": -1.12,
+   "display": "−1.12",
+   "label": "Death bowling vs league, 2022–2023",
+   "unit": "runs per over conceded",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Team minus rest of IPL",
+   "sampleSize": {
+    "n": 866,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2023 AND i.bowling_team_id IN (14)",
+   "validation": {
+    "method": "sample-size floor ≥ 600 legal balls",
+    "passed": true,
+    "detail": "n = 866"
+   }
+  },
+  "ts-death2": {
+   "value": 0.2,
+   "display": "+0.20",
+   "label": "Death bowling vs league, 2024–2026",
+   "unit": "runs per over conceded",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Team minus rest of IPL",
+   "sampleSize": {
+    "n": 1094,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND i.bowling_team_id IN (14)",
+   "validation": {
+    "method": "sample-size floor ≥ 600 legal balls",
+    "passed": true,
+    "detail": "n = 1094"
+   }
+  },
+  "ts-toss1": {
+   "value": 68,
+   "display": "68%",
+   "label": "Share of won tosses where GT chose to bowl first, 2022–2023",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Tosses won",
+   "sampleSize": {
+    "n": 19,
+    "unit": "tosses"
+   },
+   "query": "SELECT SUM(CASE WHEN m.toss_decision = 'field' THEN 1 ELSE 0 END) f, COUNT(*) n FROM matches m WHERE m.toss_winner_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2023",
+   "validation": {
+    "method": "sample-size floor ≥ 10 tosses",
+    "passed": true,
+    "detail": "n = 19"
+   }
+  },
+  "ts-toss2": {
+   "value": 100,
+   "display": "100%",
+   "label": "Share of won tosses where GT chose to bowl first, 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Tosses won",
+   "sampleSize": {
+    "n": 17,
+    "unit": "tosses"
+   },
+   "query": "SELECT SUM(CASE WHEN m.toss_decision = 'field' THEN 1 ELSE 0 END) f, COUNT(*) n FROM matches m WHERE m.toss_winner_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 10 tosses",
+    "passed": true,
+    "detail": "n = 17"
+   }
+  },
+  "ts-b1": {
+   "value": 60,
+   "display": "60%",
+   "label": "Share of Gujarat Titans' batting runs from boundaries, 2022–2023",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Runs off the bat",
+   "sampleSize": {
+    "n": 1,
+    "unit": "era"
+   },
+   "query": "SELECT SUM(CASE WHEN d.batter_runs IN (4, 6) THEN d.batter_runs ELSE 0 END) * 1.0 / SUM(d.batter_runs) b FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2023",
+   "validation": {
+    "method": "plausibility range 30–80 for share",
+    "passed": true,
+    "detail": "value 59.929928084086306"
+   }
+  },
+  "ts-b2": {
+   "value": 63,
+   "display": "63%",
+   "label": "Share of Gujarat Titans' batting runs from boundaries, 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Runs off the bat",
+   "sampleSize": {
+    "n": 1,
+    "unit": "era"
+   },
+   "query": "SELECT SUM(CASE WHEN d.batter_runs IN (4, 6) THEN d.batter_runs ELSE 0 END) * 1.0 / SUM(d.batter_runs) b FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026",
+   "validation": {
+    "method": "plausibility range 30–80 for share",
+    "passed": true,
+    "detail": "value 63.130320890635225"
+   }
+  }
+ },
+ "tables": {
+  "ts-shifts": {
+   "label": "GT relative to the rest of the IPL, 2022–2023 vs 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Difference from the rest of the league (positive = higher)",
+   "sampleSize": {
+    "n": 0,
+    "unit": "eras"
+   },
+   "query": "SELECT SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2023 AND i.batting_team_id IN (14)",
+   "rows": [
+    {
+     "measure": "Powerplay batting vs league",
+     "before": -0.05,
+     "since2024": -0.84
+    },
+    {
+     "measure": "Middle-overs batting vs league",
+     "before": -0.1,
+     "since2024": 0.23
+    },
+    {
+     "measure": "Death bowling vs league",
+     "before": -1.12,
+     "since2024": 0.2
+    }
+   ]
+  }
+ }
+}

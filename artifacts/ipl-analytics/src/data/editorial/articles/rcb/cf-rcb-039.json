@@ -1,0 +1,211 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-039",
+ "planId": "cf-rcb-039",
+ "franchise": "RCB",
+ "aspect": "auction-economics",
+ "title": "Salary Versus Contribution: Designing an Auction ROI Model for Royal Challengers Bengaluru",
+ "slug": "rcb-salary-versus-contribution-designing-an-auction-roi-model-for-rcb",
+ "dek": "We built a transparent return-on-investment model for every rupee RCB spent on players from 2022 to 2026. It found real signal, and one very famous blind spot.",
+ "excerpt": "Price and on-field contribution are only loosely linked at RCB, the cheapest tier has been the worst value, and the simplest ROI model would have called Virat Kohli's title season a loss. Each finding says something about how to build a better model.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-25",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RCB"
+ ],
+ "players": [
+  "Virat Kohli",
+  "Rajat Patidar",
+  "Bhuvneshwar Kumar",
+  "Glenn Maxwell",
+  "Phil Salt"
+ ],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "Across {{ev:priced-player-seasons}} priced RCB player-seasons, price and contribution correlate at only {{ev:price-traa-corr}}.",
+  "Players bought for \u20b910 Cr or more returned {{ev:tier-top-per-cr}} tempo runs per crore; those under \u20b92 Cr returned {{ev:tier-low-per-cr}}.",
+  "A tempo-only model scores Virat Kohli's 2025 title season at {{ev:kohli-2025-traa}} runs, which shows exactly what such a model leaves out."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "What Did the Money Buy?",
+   "body": [
+    "Between 2022 and 2026 RCB's squad lists record {{ev:total-spend}} of auction and retention prices across {{ev:priced-player-seasons}} player-seasons. Two of those seasons ended with a trophy. The question an auction room should ask, and rarely can answer, is which rupees did the work.",
+    "This piece builds the simplest honest model we could defend, shows what it finds, and then shows where it breaks. The point is not a league table of bargains. It is a blueprint for an ROI model RCB could actually use."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "A Model You Can Audit",
+   "body": [
+    "Our contribution measure is tempo runs above average, or tRAA. For batting, it is the runs a player scored minus what an average IPL batter would have scored from the same number of balls in the same season and phase of the innings. For bowling, it is the runs an average bowler would have conceded from the same balls minus what the player actually conceded. Divide by price in crores and you have a return.",
+    "The headline is weak alignment. Across the player-seasons in which a priced RCB player actually batted or bowled, the correlation between price and tRAA was {{ev:price-traa-corr}}. Expensive players did contribute more on average, but the spread was wide.",
+    "By price tier the picture is clearer. The \u20b910 Cr-plus tier, {{ev:tier-top-spend}} in total, returned {{ev:tier-top-per-cr}} tRAA per crore. The \u20b92\u201310 Cr tier, {{ev:tier-mid-spend}}, returned {{ev:tier-mid-per-cr}}. The cheapest tier, {{ev:tier-low-spend}}, returned {{ev:tier-low-per-cr}}: the cheap players RCB actually used tended to cost runs, not save them. A further {{ev:unused-spend}} went on {{ev:unused-count}} player-seasons in which the player neither faced nor bowled a ball."
+   ],
+   "chartIds": [
+    "tier-roi",
+    "price-scatter"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Where the Model Agrees With the Dressing Room",
+   "body": [
+    "The biggest single-season contribution in the window belongs to {{ev:top-traa-player}}: {{ev:top-traa}} runs above average for a price of {{ev:top-traa-price}}. Rajat Patidar shows the other route to value. In 2024, on a price of {{ev:patidar-2024-price}}, he produced {{ev:patidar-2024-traa}} tempo runs, the best return per crore of any RCB player with a meaningful workload: {{ev:best-value-per-cr}} runs per crore. Two seasons later, as captain on a full retention price, he produced {{ev:patidar-2026-traa}}.",
+    "For the auction room the useful rule is about the bottom of the list. Squad places priced under \u20b92 Cr are not free options. When they are used, they have cost runs, which argues for fewer, better-chosen budget players rather than a long tail of cheap depth."
+   ],
+   "chartIds": [
+    "top-contributors"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "The Kohli Problem",
+   "body": [
+    "Now the blind spot. In 2025 Virat Kohli was RCB's leading run-scorer in a title-winning season. On a retention price of {{ev:kohli-2025-price}}, a tempo-only model scores him at {{ev:kohli-2025-traa}} tempo runs, because he scored slightly slower than the league's average batter in the same phases.",
+    "No one who watched that season would accept the verdict. The model is missing what Kohli was paid to provide: he rarely got out, which let the hitters around him swing freely. Tempo measures only half of batting; the other half is the wickets a batter does not lose, and that half is worth runs to his team-mates.",
+    "{{hyp:wicket-value}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Price Wickets, Then Trust the Model",
+   "body": [
+    "A useful RCB ROI model needs two terms, not one: tempo, as built here, and survival, valuing each wicket preserved at the runs it protects later in the innings. Without the second term the model will undervalue anchors and overvalue cameo hitters, which is precisely the error the franchise spent years being accused of.",
+    "With both terms in place, the early findings are still worth acting on. Spend concentrated on elite players has returned more than spend spread thin, and the cheapest squad places deserve more scouting effort per rupee, not less."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "tier-roi",
+   "type": "column",
+   "title": "Return per crore by price tier",
+   "subtitle": "RCB player-seasons 2022\u20132026, tempo runs above average per \u20b91 Cr",
+   "table": "tier-roi",
+   "xKey": "tier",
+   "series": [
+    {
+     "key": "tRAAperCrore",
+     "label": "tRAA per crore"
+    }
+   ],
+   "xLabel": "Price tier",
+   "unit": "runs per \u20b91 Cr",
+   "takeaway": "The most expensive tier returned the most per crore; the cheapest tier returned a loss.",
+   "ariaLabel": "Column chart of tempo runs above average per crore for three RCB price tiers: ten crore and above, two to ten crore, and under two crore. The under-two-crore tier is negative."
+  },
+  {
+   "id": "price-scatter",
+   "type": "scatter",
+   "title": "Price vs contribution, 2025\u20132026",
+   "subtitle": "Each dot is an RCB player-season with at least one ball faced or bowled",
+   "table": "scatter-2025-26",
+   "xKey": "priceCr",
+   "series": [
+    {
+     "key": "tRAA",
+     "label": "Tempo runs above average"
+    }
+   ],
+   "xLabel": "Price (\u20b9 crore)",
+   "unit": "runs",
+   "takeaway": "The cloud slopes only gently upwards: price explains a little of contribution, not most of it.",
+   "ariaLabel": "Scatter plot of RCB player price in crore against tempo runs above average for 2025 and 2026. Points are widely spread, with a weak upward trend."
+  },
+  {
+   "id": "top-contributors",
+   "type": "bar",
+   "title": "Largest single-season contributions",
+   "subtitle": "RCB 2022\u20132026, minimum 120 balls faced plus bowled",
+   "table": "top-contributors",
+   "xKey": "player",
+   "series": [
+    {
+     "key": "batting",
+     "label": "Batting"
+    },
+    {
+     "key": "bowling",
+     "label": "Bowling"
+    }
+   ],
+   "unit": "tempo runs above average",
+   "takeaway": "The top contributions came from both disciplines, and from both ends of the price list.",
+   "ariaLabel": "Horizontal bar chart of the eight largest single-season tempo runs above average at RCB from 2022 to 2026, split into batting and bowling components."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2022\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/"
+  },
+  {
+   "id": "cf-squads",
+   "kind": "cricfield-dataset",
+   "title": "CricField squads-by-season dataset (auction and retention prices)",
+   "publisher": "CricField",
+   "note": "Prices as recorded per season; a player-season without a recorded price is excluded."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "wicket-value",
+   "statement": "Hypothesis: adding a survival term (runs protected per wicket not lost) would move Kohli's 2025 season from negative to clearly positive and reorder the top of the list.",
+   "whyUnverified": "The value of a wicket in T20 depends on the match state and has not yet been estimated from the warehouse.",
+   "howToTest": "Estimate runs-per-wicket by over and wickets in hand from historical innings, add it to tRAA, and re-rank 2022\u20132026."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "10",
+   "reason": "Price-tier boundary (\u20b910 Cr), a definition rather than a finding."
+  },
+  {
+   "text": "2",
+   "reason": "Price-tier boundary (\u20b92 Cr), a definition rather than a finding."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "The value question: RCB's highest-priced and best-value players.",
+   "wanted": "Rajat Patidar or Virat Kohli in RCB colours, 2025\u20132026, landscape."
+  },
+  {
+   "slot": "s2",
+   "narrative": "The top single-season contribution.",
+   "wanted": "Bhuvneshwar Kumar bowling for RCB, 2025\u20132026."
+  },
+  {
+   "slot": "s4",
+   "narrative": "Kohli's 2025 season.",
+   "wanted": "Virat Kohli batting for RCB in 2025."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-032",
+  "cf-rcb-031",
+  "cf-rcb-080"
+ ],
+ "seo": {
+  "metaTitle": "Salary vs contribution: an auction ROI model for RCB | CricField",
+  "metaDescription": "A transparent tempo-runs model of RCB's 2022\u20132026 spend: weak price alignment, poor value at the bottom of the list, and the Kohli case that shows what is missing."
+ },
+ "methodology": "tRAA = batting runs minus balls faced times the league's runs per ball in the same season and phase, plus bowling balls times the league's runs per ball conceded in the same season and phase minus runs conceded. Wickets and dismissals are not valued in this version. Prices from CricField squads-by-season; player-seasons matched by Cricsheet name. Generated by scripts/editorial/evidence/rcb/cf-rcb-039.ts."
+}

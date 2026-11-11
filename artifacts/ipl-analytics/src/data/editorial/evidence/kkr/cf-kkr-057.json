@@ -1,0 +1,453 @@
+{
+ "articleId": "cf-kkr-057",
+ "generatedAt": "2026-10-26T04:21:04.170Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "gf-n-seasons": {
+   "value": 19,
+   "display": "19",
+   "label": "KKR seasons in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons with matches",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "plausibility range 1–19 for seasons",
+    "passed": true,
+    "detail": "value 19"
+   }
+  },
+  "gf-titles": {
+   "value": 3,
+   "display": "3",
+   "label": "KKR titles, as winner of the season's final",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Final = last match of each season",
+   "sampleSize": {
+    "n": 4,
+    "unit": "finals"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (6) OR m.team2_id IN (6))",
+   "validation": {
+    "method": "plausibility range 0–6 for titles",
+    "passed": true,
+    "detail": "value 3"
+   }
+  },
+  "gf-playoffs": {
+   "value": 10,
+   "display": "10",
+   "label": "KKR seasons with a playoff place",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Points-table playoff result or a final",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (6) OR m.team2_id IN (6))",
+   "validation": {
+    "method": "count over season table",
+    "passed": true
+   }
+  },
+  "gf-win-all": {
+   "value": 51.4,
+   "display": "51.4%",
+   "label": "KKR win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 276,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 276"
+   }
+  },
+  "gf-matches": {
+   "value": 276,
+   "display": "276",
+   "label": "KKR matches with a result",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 276,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 276"
+   }
+  },
+  "gf-best-year": {
+   "value": "2024",
+   "display": "2024",
+   "label": "KKR's best season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "max over season table",
+    "passed": true
+   }
+  },
+  "gf-best-pct": {
+   "value": 78.6,
+   "display": "78.6%",
+   "label": "KKR win rate in 2024",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024",
+   "sampleSize": {
+    "n": 14,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 14"
+   }
+  },
+  "gf-worst-year": {
+   "value": "2009",
+   "display": "2009",
+   "label": "KKR's weakest season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "min over season table",
+    "passed": true
+   }
+  },
+  "gf-worst-pct": {
+   "value": 23.1,
+   "display": "23.1%",
+   "label": "KKR win rate in 2009",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2009",
+   "sampleSize": {
+    "n": 13,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 13"
+   }
+  },
+  "gf-age": {
+   "value": 18,
+   "display": "18",
+   "label": "Years since Kolkata Knight Riders' first season",
+   "unit": "years",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008 to 2026",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(DISTINCT pid) players FROM ( SELECT m.season_id, m.match_id, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (6) UNION SELECT m.season_id, m.match_id, d.bowler_id FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6)) m GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "plausibility range 0–19 for years",
+    "passed": true,
+    "detail": "value 18"
+   }
+  },
+  "gf-avg": {
+   "value": 19,
+   "display": "19",
+   "label": "Players used per season, on average",
+   "unit": "players",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(DISTINCT pid) players FROM ( SELECT m.season_id, m.match_id, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (6) UNION SELECT m.season_id, m.match_id, d.bowler_id FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6)) m GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "plausibility range 12–35 for players",
+    "passed": true,
+    "detail": "value 19.42105263157895"
+   }
+  },
+  "gf-total": {
+   "value": 369,
+   "display": "369",
+   "label": "Player-seasons across the franchise's history",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(DISTINCT pid) players FROM ( SELECT m.season_id, m.match_id, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (6) UNION SELECT m.season_id, m.match_id, d.bowler_id FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6)) m GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sum",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "gf-series": {
+   "label": "Players used by KKR each season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batted or bowled in regulation innings",
+   "sampleSize": {
+    "n": 369,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(DISTINCT pid) players FROM ( SELECT m.season_id, m.match_id, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (6) UNION SELECT m.season_id, m.match_id, d.bowler_id FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6)) m GROUP BY year ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "players": 20
+    },
+    {
+     "season": "2009",
+     "players": 24
+    },
+    {
+     "season": "2010",
+     "players": 23
+    },
+    {
+     "season": "2011",
+     "players": 18
+    },
+    {
+     "season": "2012",
+     "players": 18
+    },
+    {
+     "season": "2013",
+     "players": 22
+    },
+    {
+     "season": "2014",
+     "players": 17
+    },
+    {
+     "season": "2015",
+     "players": 17
+    },
+    {
+     "season": "2016",
+     "players": 20
+    },
+    {
+     "season": "2017",
+     "players": 19
+    },
+    {
+     "season": "2018",
+     "players": 16
+    },
+    {
+     "season": "2019",
+     "players": 19
+    },
+    {
+     "season": "2020",
+     "players": 19
+    },
+    {
+     "season": "2021",
+     "players": 19
+    },
+    {
+     "season": "2022",
+     "players": 21
+    },
+    {
+     "season": "2023",
+     "players": 21
+    },
+    {
+     "season": "2024",
+     "players": 18
+    },
+    {
+     "season": "2025",
+     "players": 19
+    },
+    {
+     "season": "2026",
+     "players": 19
+    }
+   ]
+  },
+  "gf-seasons": {
+   "label": "KKR season by season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches with a result; position from the league-stage table",
+   "sampleSize": {
+    "n": 276,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (6) OR m.team2_id IN (6))",
+   "rows": [
+    {
+     "season": "2008",
+     "winPct": 46.2,
+     "matches": 13,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2009",
+     "winPct": 23.1,
+     "matches": 13,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2010",
+     "winPct": 50,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2011",
+     "winPct": 53.3,
+     "matches": 15,
+     "position": 4,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2012",
+     "winPct": 70.6,
+     "matches": 17,
+     "position": 2,
+     "outcome": "Champions"
+    },
+    {
+     "season": "2013",
+     "winPct": 37.5,
+     "matches": 16,
+     "position": 7,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2014",
+     "winPct": 68.8,
+     "matches": 16,
+     "position": 2,
+     "outcome": "Champions"
+    },
+    {
+     "season": "2015",
+     "winPct": 53.8,
+     "matches": 13,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2016",
+     "winPct": 53.3,
+     "matches": 15,
+     "position": 4,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2017",
+     "winPct": 56.3,
+     "matches": 16,
+     "position": 4,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2018",
+     "winPct": 56.3,
+     "matches": 16,
+     "position": 3,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2019",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2020",
+     "winPct": 50,
+     "matches": 14,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2021",
+     "winPct": 52.9,
+     "matches": 17,
+     "position": 4,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2022",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 7,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2023",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 7,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2024",
+     "winPct": 78.6,
+     "matches": 14,
+     "position": 1,
+     "outcome": "Champions"
+    },
+    {
+     "season": "2025",
+     "winPct": 41.7,
+     "matches": 12,
+     "position": 8,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2026",
+     "winPct": 46.2,
+     "matches": 13,
+     "position": 7,
+     "outcome": "Playoffs"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,139 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-srh-088",
+ "planId": "cf-srh-088",
+ "franchise": "SRH",
+ "aspect": "data-science",
+ "title": "Batting Partnerships as Networks: Mapping Sunrisers Hyderabad\u2019s Run Creation",
+ "slug": "srh-batting-partnerships-as-networks-mapping-srh-run-creation",
+ "dek": "Runs are made in pairs. Treating Sunrisers Hyderabad's partnerships as a network shows which batters hold the order together and how concentrated the run-making really is.",
+ "excerpt": "Since 2022, Sunrisers Hyderabad have used many batting pairs, but the five most productive account for a large share of partnership runs. Abhishek Sharma sits at the centre of the network.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "SRH"
+ ],
+ "players": [
+  "Abhishek Sharma",
+  "Abhishek Sharma",
+  "TM Head"
+ ],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "SRH have used {{ev:pn-pairs}} distinct batting pairs since 2022; the five most productive account for {{ev:pn-share}} of partnership runs.",
+  "The most productive pair is {{ev:pn-top-pair}}, with {{ev:pn-top-r}} runs together.",
+  "{{ev:pn-hub}} is involved in the most partnership runs ({{ev:pn-hub-r}}); {{ev:pn-mostp}} has batted with the most partners ({{ev:pn-mostp-n}})."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Batting as a Network",
+   "body": [
+    "Each batter is a node; each partnership is a link weighted by the runs the pair added. The shape of the network shows whether a side relies on one great pair or spreads the work.",
+    "Since 2022, Sunrisers Hyderabad have used {{ev:pn-pairs}} distinct batting pairs."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Strongest Links",
+   "body": [
+    "The most productive pair is {{ev:pn-top-pair}}, with {{ev:pn-top-r}} runs together. The five most productive pairs account for {{ev:pn-share}} of all partnership runs.",
+    "The chart lists the leading pairs and their run rate together."
+   ],
+   "chartIds": [
+    "pn-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "The Hubs",
+   "body": [
+    "{{ev:pn-hub}} is involved in more partnership runs than anyone, {{ev:pn-hub-r}}. {{ev:pn-mostp}} has batted with the most different partners, {{ev:pn-mostp-n}}, a sign of a flexible role.",
+    "{{hyp:network}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Method Notes",
+   "body": [
+    "Partnership runs include extras and are counted from the ball-by-ball record, using the striker and non-striker on each delivery.",
+    "The network describes who batted together, not why; batting order and match situation shape it heavily."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Protect the Hubs",
+   "body": [
+    "Sunrisers Hyderabad's run-making is concentrated around a few pairs and a central hub. Losing the hub would disrupt more partnerships than losing any other batter.",
+    "That is a case for planning his replacement before it is needed."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "pn-chart",
+   "type": "bar",
+   "title": "Most productive pairs",
+   "subtitle": "SRH, 2022\u20132026",
+   "table": "pn-top",
+   "xKey": "pair",
+   "series": [
+    {
+     "key": "runs",
+     "label": "Runs together"
+    }
+   ],
+   "unit": "runs",
+   "takeaway": "A few pairs account for much of the run-making.",
+   "ariaLabel": "Horizontal bar chart of Sunrisers Hyderabad's most productive batting pairs since 2022."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "network",
+   "statement": "Hypothesis: teams whose partnership runs are spread across more pairs lose fewer matches after an injury to a top-order batter.",
+   "whyUnverified": "Injury data is not in the warehouse.",
+   "howToTest": "Join injury absences to match results and compare by network concentration."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Sunrisers Hyderabad partnership.",
+   "wanted": "Abhishek Sharma and TM Head batting together for Sunrisers Hyderabad."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-srh-003",
+  "cf-srh-089",
+  "cf-srh-053"
+ ],
+ "seo": {
+  "metaTitle": "Batting partnerships as networks at SRH",
+  "metaDescription": "Sunrisers Hyderabad's batting pairs since 2022 mapped as a network: the strongest links, the hubs and how concentrated the run-making is."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Models are fitted on the warehouse itself and described in full here. Generated by scripts/editorial/engine. Partnerships built from striker and non-striker on each delivery (the warehouse partnership table is empty).",
+ "generator": "engine:v1"
+}

@@ -1,0 +1,273 @@
+{
+  "imported": [
+    {
+      "player": "A Mishra",
+      "file": "a mishra.jpg",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "AM Rahane",
+      "file": "a rahane.jpg",
+      "confidence": 0.88,
+      "teamId": null
+    },
+    {
+      "player": "B Kumar",
+      "file": "bhuvaneswar kumar.jpg",
+      "confidence": 0.88,
+      "teamId": null
+    },
+    {
+      "player": "JJ Bumrah",
+      "file": "bumrah.jpg",
+      "confidence": 0.82,
+      "teamId": null
+    },
+    {
+      "player": "DJ Bravo",
+      "file": "dj bravo.jpg",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "KL Rahul",
+      "file": "kl rahul.jpg",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "Lasith Malinga",
+      "file": "lasith malinga.jpg",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "Piyush Chawla",
+      "file": "p chawla.jpg",
+      "confidence": 0.88,
+      "teamId": null
+    },
+    {
+      "player": "R Ashwin",
+      "file": "r ashwin.jpg",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "Rashid Khan",
+      "file": "rashid khan.jpg",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "Rohit Sharma",
+      "file": "rohit sharma.jpg",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "Sunil Narine",
+      "file": "s narine.jpg",
+      "confidence": 0.88,
+      "teamId": null
+    },
+    {
+      "player": "SV Samson",
+      "file": "sanju samson.jpg",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "S Dhawan",
+      "file": "shikhar dhawan.jpg",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "Suresh Raina",
+      "file": "suresh raina.jpg",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "Virat Kohli",
+      "file": "virat kohli.jpg",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "Virat Kohli",
+      "file": "virat-kohli.png",
+      "confidence": 0.98,
+      "teamId": null
+    },
+    {
+      "player": "YS Chahal",
+      "file": "y chahal.jpg",
+      "confidence": 0.88,
+      "teamId": null
+    }
+  ],
+  "rejected": [
+    {
+      "file": "ab devillers.jpg",
+      "cleanedName": "ab devillers",
+      "reason": "No matching player identity found in 2008–2026 registry"
+    },
+    {
+      "file": "advance stats title image.png",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "csk insight.jpg",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "csk logo.png",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "dc logo.jpg",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "deccan chargers logo.jpg",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "gt logo.png",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "gujarat lions logo.jpg",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "hero-players.png",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "ipl logo.jpg",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "ipl media.jpg",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "kkr logo.png",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "live feed image.png",
+      "cleanedName": "live feed image",
+      "reason": "No matching player identity found in 2008–2026 registry"
+    },
+    {
+      "file": "lsg logo.jpg",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "mayank yadav.jpg",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "mi logo.jpg",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "msd.jpg",
+      "cleanedName": "msd",
+      "reason": "No matching player identity found in 2008–2026 registry"
+    },
+    {
+      "file": "pbks logo.png",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "r jadeja.jpg",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "rcb logo.png",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "srh logo.jpg",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "TITLE BANNER.png",
+      "reason": "Filtered out non-portrait graphic (logo/banner/sponsor/ad)"
+    },
+    {
+      "file": "venue heatmap.png",
+      "cleanedName": "venue heatmap",
+      "reason": "No matching player identity found in 2008–2026 registry"
+    },
+    {
+      "file": "venue.png",
+      "cleanedName": "venue",
+      "reason": "No matching player identity found in 2008–2026 registry"
+    }
+  ],
+  "ambiguous": [
+    {
+      "file": "abhisek sharma.jpg",
+      "match": {
+        "slug": "ankit-sharma",
+        "confidence": 0.65,
+        "type": "ambiguous_initial_collision",
+        "candidates": [
+          "ankit-sharma",
+          "abhishek-sharma",
+          "ashok-sharma",
+          "ashutosh-sharma"
+        ]
+      },
+      "meta": {
+        "cleanedName": "abhisek sharma",
+        "season": null,
+        "teamId": null,
+        "original": "abhisek sharma.jpg"
+      }
+    },
+    {
+      "file": "c gayle.jpg",
+      "match": {
+        "slug": "chris-gayle",
+        "confidence": 0.65,
+        "type": "ambiguous_initial_collision",
+        "candidates": [
+          "chris-gayle",
+          "ch-gayle"
+        ]
+      },
+      "meta": {
+        "cleanedName": "c gayle",
+        "season": null,
+        "teamId": null,
+        "original": "c gayle.jpg"
+      }
+    },
+    {
+      "file": "d warner.jpg",
+      "match": {
+        "slug": "da-warner",
+        "confidence": 0.65,
+        "type": "ambiguous_initial_collision",
+        "candidates": [
+          "da-warner",
+          "david-warner"
+        ]
+      },
+      "meta": {
+        "cleanedName": "d warner",
+        "season": null,
+        "teamId": null,
+        "original": "d warner.jpg"
+      }
+    }
+  ]
+}

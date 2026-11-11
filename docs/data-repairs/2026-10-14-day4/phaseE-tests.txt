@@ -1,0 +1,36 @@
+== api
+ℹ tests 43
+ℹ pass 43
+ℹ fail 0
+== global
+ℹ tests 23
+ℹ pass 23
+ℹ fail 0
+== step3 (+CORRECTED_DB)
+✖ outputs that do not depend on runs conceded are unchanged from the recorded baseline (61544.5756ms)
+ℹ tests 28
+ℹ pass 27
+ℹ fail 1
+ℹ skipped 0
+✖ failing tests:
+✖ outputs that do not depend on runs conceded are unchanged from the recorded baseline (61544.5756ms)
+== tc api-server: 0
+== tc scripts: 0
+== tc ipl-analytics: 11
+== hashes
+944b2c92046611a10a1642554e44df372e630f1962386c0ea854600e87346149 *sqlite.db
+e918c707553f11b20c71169d9d5e520a798c59b403567ac1bfae63d0353ed620 *sqlite.db-wal
+79c75f780ebe4d9e561e973e286ed5d0fbbd0d99d5c503b991e58927829f0037 *lib/cricket-data/global/warehouse/global.db
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 *lib/cricket-data/global/warehouse/global.db-wal
+2026-10-10 17:07:55 lib/cricket-data/global/warehouse/global.db
+2026-10-11 00:15:43 sqlite.db
+2026-10-11 00:15:43 sqlite.db-wal
+== step3 rerun (+CORRECTED_DB)
+ℹ tests 28
+ℹ pass 28
+ℹ fail 0
+ℹ skipped 0
+== tc scripts: 0
+944b2c92046611a1
+e918c707553f11b2
+79c75f780ebe4d9e

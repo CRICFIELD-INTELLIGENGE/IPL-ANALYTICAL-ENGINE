@@ -1,0 +1,136 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-kkr-085",
+ "planId": "cf-kkr-085",
+ "franchise": "KKR",
+ "aspect": "data-science",
+ "title": "Clutch or Coincidence? Testing Kolkata Knight Riders\u2019s Pressure-Performance Narratives",
+ "slug": "kkr-clutch-or-coincidence-testing-kkr-pressure-performance-narratives",
+ "dek": "Is Kolkata Knight Riders' record in tight finishes a skill or a coincidence? Two statistical tests, one on their own record and one on the whole league, give the answer.",
+ "excerpt": "Kolkata Knight Riders have won fewer than half their close matches. Across the league, a side's close-match record in one season barely predicts the next, which is the clearest test of whether clutch is real.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "KKR"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "KKR have won {{ev:cc-close-won}} of {{ev:cc-close-n}} close matches ({{ev:cc-close-pct}}); a record this far from even would arise by chance with probability {{ev:cc-close-p}}.",
+  "Across {{ev:cc-n}} franchise season pairs, close-match win rate in one season correlates with the next at {{ev:cc-r}}.",
+  "Franchises whose close-match record differs from a coin toss at the conventional threshold: {{ev:cc-close-sig}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Clutch Narrative",
+   "body": [
+    "Every franchise has a story about how it handles pressure. The statistical question is whether those stories describe a repeatable skill or a run of coin tosses that went one way.",
+    "Kolkata Knight Riders have won {{ev:cc-close-won}} of {{ev:cc-close-n}} close matches, {{ev:cc-close-pct}}, with a ninety-five per cent interval of {{ev:cc-close-ci}}."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Test One: Their Own Record",
+   "body": [
+    "If each close match were a coin toss, a record at least this far from even would occur with probability {{ev:cc-close-p}}. Across the league, the number of franchises whose record differs from a coin toss at the conventional threshold is {{ev:cc-close-sig}}.",
+    "Kolkata Knight Riders' record does not pass the first test."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Test Two: Does It Persist?",
+   "body": [
+    "A real skill should carry over from season to season. Across {{ev:cc-n}} franchise season pairs, close-match win rate in one season correlates with the next at {{ev:cc-r}}.",
+    "There is almost no persistence: last season's close-match record says little about this season's."
+   ],
+   "chartIds": [
+    "cc-chart"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Why Clutch Is So Hard to Find",
+   "body": [
+    "Close matches are decided by a handful of deliveries, so even a genuine edge is buried in noise. Squads also change from season to season.",
+    "{{hyp:clutch}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Coincidence",
+   "body": [
+    "On both tests, close-match records look like chance.",
+    "Kolkata Knight Riders should judge pressure performance on process, such as death bowling and wickets in hand, rather than on close-match results."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "cc-chart",
+   "type": "scatter",
+   "title": "Close-match win rate, this season vs next",
+   "subtitle": "Every franchise, seasons with three or more close matches",
+   "table": "cc-pairs",
+   "xKey": "thisSeason",
+   "series": [
+    {
+     "key": "nextSeason",
+     "label": "Next season"
+    }
+   ],
+   "xLabel": "This season (%)",
+   "unit": "% of close matches won",
+   "takeaway": "There is almost no link between seasons.",
+   "ariaLabel": "Scatter plot of franchise close-match win rate in one season against the next season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "clutch",
+   "statement": "Hypothesis: individual players' strike rates in the final two overs of close chases persist more from season to season than team close-match records do.",
+   "whyUnverified": "Player-level clutch persistence has not been measured.",
+   "howToTest": "Correlate each batter's final-two-over strike rate in close chases across consecutive seasons."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Kolkata Knight Riders under pressure.",
+   "wanted": "Kolkata Knight Riders tense finish."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-kkr-056",
+  "cf-kkr-026",
+  "cf-kkr-081"
+ ],
+ "seo": {
+  "metaTitle": "Clutch or coincidence? Testing Kolkata Knight Riders' pressure record",
+  "metaDescription": "Two statistical tests of whether Kolkata Knight Riders' close-match record reflects skill or chance."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Models are fitted on the warehouse itself and described in full here. Generated by scripts/editorial/engine. Close = decided by ten runs or fewer, six balls or fewer to spare, or a super over. Persistence uses franchise-seasons with at least three close matches in consecutive seasons.",
+ "generator": "engine:v1"
+}

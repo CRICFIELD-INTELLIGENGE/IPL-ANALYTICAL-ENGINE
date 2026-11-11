@@ -1,0 +1,30 @@
+== hashes BEFORE
+ab897a8ccdc590ca64b0512fd3c787a48dbd763779a6aeda76ef677b424309ac *sqlite.db
+79c75f780ebe4d9e561e973e286ed5d0fbbd0d99d5c503b991e58927829f0037 *lib/cricket-data/global/warehouse/global.db
+== api tests
+ℹ tests 48
+ℹ pass 48
+ℹ fail 0
+== global/scout
+ℹ tests 23
+ℹ pass 23
+ℹ fail 0
+== step3
+ℹ fail 0
+ℹ pass 27
+ℹ skipped 1
+ℹ tests 28
+== typecheck (root, libs first)
+root typecheck exit=0 errors=0
+tc api-server: 0
+tc scripts: 0
+tc ipl-analytics: 0
+== builds
+Done in 991ms
+web build exit=0
+== prod startup smoke (copy, read-only)
+14/14 passed
+== hashes AFTER
+ab897a8ccdc590ca64b0512fd3c787a48dbd763779a6aeda76ef677b424309ac *sqlite.db
+79c75f780ebe4d9e561e973e286ed5d0fbbd0d99d5c503b991e58927829f0037 *lib/cricket-data/global/warehouse/global.db
+sqlite.db-wal bytes 0

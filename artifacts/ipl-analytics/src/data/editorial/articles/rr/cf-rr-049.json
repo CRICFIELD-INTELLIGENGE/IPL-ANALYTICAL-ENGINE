@@ -1,0 +1,135 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-049",
+ "planId": "cf-rr-049",
+ "franchise": "RR",
+ "aspect": "business",
+ "title": "Regional Language Strategy: How Rajasthan Royals Can Speak to Multiple Audiences",
+ "slug": "rr-regional-language-strategy-how-rr-can-speak-to-multiple-audiences",
+ "dek": "Rajasthan Royals are followed far beyond one city. Where they have played maps the regions, and the languages, a franchise has to speak to.",
+ "excerpt": "Rajasthan Royals have played in many cities, and only a share of their matches at Jaipur. The travelling fixture list is a map of the audiences a multilingual strategy would serve.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RR"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "RR have played in {{ev:rl-cities-n}} cities, {{ev:rl-indian}} of them in India.",
+  "{{ev:rl-home}} of their matches were at Jaipur.",
+  "{{ev:rl-abroad}} of their matches were played outside India."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "A Franchise Followed Everywhere",
+   "body": [
+    "IPL franchises carry a city's name but draw fans from across the country and beyond. A regional language strategy starts from where those fans are.",
+    "Rajasthan Royals have played in {{ev:rl-cities-n}} cities, {{ev:rl-indian}} of them in India, and only {{ev:rl-home}} of their matches at Jaipur. {{ev:rl-abroad}} of their matches were played outside India."
+   ],
+   "chartIds": [
+    "rl-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Every Venue Is a Local Audience",
+   "body": [
+    "Each away fixture is a chance to speak to fans in that city's language. The chart lists the cities where RR have played most often.",
+    "The fixture list is a map of venues, not of fans; it shows where the team goes, not where its supporters live."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Speaking to Multiple Audiences",
+   "body": [
+    "A multilingual strategy usually means regional-language social channels, commentary partnerships and player content in the languages of the squad and the fan base.",
+    "{{hyp:language}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What the Warehouse Cannot See",
+   "body": [
+    "The CricField warehouse is ball-by-ball cricket data. It contains no audience location, language preference or regional engagement data, so it cannot measure the commercial side of this question directly.",
+    "Building the strategy properly would need audience location and language data from the franchise's own channels and broadcasters."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Follow the Fixture Map",
+   "body": [
+    "Rajasthan Royals travel to many cities every season. Away fixtures offer natural moments for regional-language content.",
+    "Which languages to prioritise needs audience data that this warehouse does not hold."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "rl-chart",
+   "type": "bar",
+   "title": "Where they have played most",
+   "subtitle": "RR matches by city",
+   "table": "rl-cities",
+   "xKey": "city",
+   "series": [
+    {
+     "key": "matches",
+     "label": "Matches"
+    }
+   ],
+   "unit": "matches",
+   "takeaway": "RR have played across many cities, not only at home.",
+   "ariaLabel": "Horizontal bar chart of RR matches by venue city."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "language",
+   "statement": "Hypothesis: regional-language posts timed around away fixtures draw higher engagement in that region than English-only posts.",
+   "whyUnverified": "No regional engagement data is available.",
+   "howToTest": "Run matched regional and English posts around away fixtures and compare regional engagement."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Rajasthan Royals on the road.",
+   "wanted": "Rajasthan Royals playing an away match."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rr-058",
+  "cf-rr-042",
+  "cf-rr-096"
+ ],
+ "seo": {
+  "metaTitle": "Regional language strategy for RR",
+  "metaDescription": "Where Rajasthan Royals have played, how few of their matches are at home, and what a multilingual fan strategy would need."
+ },
+ "methodology": "CricField measures the cricket a franchise puts on the field; it holds no revenue, attendance, audience, merchandise or social-media data. Commercial ideas in this article are labelled hypotheses with the data needed to test them. Generated by scripts/editorial/engine. Cities from venue records; matches outside India are those at venues in the UAE and South Africa.",
+ "generator": "engine:v1"
+}

@@ -1,0 +1,30 @@
+{
+  "desktop": {
+    "size": [
+      1440,
+      1000
+    ],
+    "changedPixels": 862,
+    "changedPercent": 0.0599,
+    "differenceBounds": [
+      113,
+      23,
+      1186,
+      920
+    ]
+  },
+  "mobile": {
+    "size": [
+      390,
+      844
+    ],
+    "changedPixels": 3727,
+    "changedPercent": 1.1323,
+    "differenceBounds": [
+      95,
+      96,
+      214,
+      129
+    ]
+  }
+}

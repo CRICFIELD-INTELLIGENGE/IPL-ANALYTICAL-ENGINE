@@ -1,0 +1,191 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-srh-011",
+ "planId": "cf-srh-011",
+ "franchise": "SRH",
+ "aspect": "bowling-fielding",
+ "title": "New-Ball Blueprint: What Should Sunrisers Hyderabad Optimize Before Over Four?",
+ "slug": "srh-new-ball-blueprint-what-should-srh-optimize-before-over-four",
+ "dek": "What should Sunrisers Hyderabad optimise before the fourth over: wickets or containment? The first three overs of every innings answer it.",
+ "excerpt": "Sunrisers Hyderabad have conceded more than the league in the first three overs since 2024. Across the IPL, early wickets move the result far more than a tight start does.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "SRH"
+ ],
+ "players": [
+  "PJ Cummins",
+  "B Kumar",
+  "Mohammed Shami"
+ ],
+ "seasons": [
+  "2013\u20132026",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "SRH conceded {{ev:nb-team-e2}} runs per over in overs one to three since 2024; the league conceded {{ev:nb-league-e2}}.",
+  "Bowling sides that took two or more wickets in the first three overs won {{ev:nb-l2}} of IPL matches; with none, {{ev:nb-l0}}.",
+  "SRH have struck in the first three overs in {{ev:nb-tshare}} of their bowling innings."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Three Overs That Shape an Innings",
+   "body": [
+    "The new ball offers swing, seam and a batter who has not yet seen the pace of the pitch. It is the best chance a bowling side gets to take a wicket cheaply, and the question is whether to attack with it or simply keep the scoring down.",
+    "Sunrisers Hyderabad conceded {{ev:nb-team-e1}} runs per over in the first three overs between 2013 and 2023, against {{ev:nb-league-e1}} for the league. Since 2024 the figures are {{ev:nb-team-e2}} and {{ev:nb-league-e2}}.",
+    "On this measure their strongest season was 2020, at {{ev:nb-x-best-v}}, and their weakest 2026, at {{ev:nb-x-worst-v}}."
+   ],
+   "chartIds": [
+    "nb-trend"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What an Early Wicket Is Worth",
+   "body": [
+    "Across every IPL innings with a result, the bowling side won {{ev:nb-l0}} of the time when it took no wicket in the first three overs, and {{ev:nb-l2}} when it took two or more.",
+    "SRH have taken at least one wicket in that window in {{ev:nb-tshare}} of their bowling innings."
+   ],
+   "chartIds": [
+    "nb-wkts"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Who Takes the New Ball",
+   "body": [
+    "Since 2024 {{ev:nbp-lead-name}} has bowled the most of Sunrisers Hyderabad's balls in the first three overs, {{ev:nbp-lead-balls}} of them, at an economy of {{ev:nbp-lead-econ}}.",
+    "The player table shows economy, dot-ball rate and wickets side by side. A new-ball bowler who concedes a little more but strikes more often can be the better choice, given what an early wicket is worth."
+   ],
+   "chartIds": [
+    "nb-players"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "When Containment Is the Right Plan",
+   "body": [
+    "Attacking lengths cost more when they miss. On a flat pitch against openers who punish width, a tight new-ball spell may protect a total better than a wicket hunt.",
+    "{{hyp:conditions}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Hunt Wickets With the New Ball",
+   "body": [
+    "The evidence shows how much an early wicket moves the result. Sunrisers Hyderabad should pick new-ball bowlers on strike rate in that window as much as on economy.",
+    "Field settings should follow: catchers in place for the first three overs, even at the cost of a few boundaries."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "nb-trend",
+   "type": "line",
+   "title": "Economy in overs 1\u20133 by season",
+   "subtitle": "SRH bowling vs IPL",
+   "table": "nb-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "SRH"
+    },
+    {
+     "key": "league",
+     "label": "IPL average"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per over",
+   "takeaway": "SRH have conceded more than the league with the new ball since 2024.",
+   "ariaLabel": "Line chart of SRH economy in the first three overs and the IPL average by season."
+  },
+  {
+   "id": "nb-wkts",
+   "type": "column",
+   "title": "Win rate by wickets taken in overs 1\u20133",
+   "subtitle": "Bowling side, innings with a result",
+   "table": "nb-wkts",
+   "xKey": "wickets",
+   "series": [
+    {
+     "key": "league",
+     "label": "IPL"
+    },
+    {
+     "key": "team",
+     "label": "SRH"
+    }
+   ],
+   "xLabel": "Wickets in overs 1\u20133",
+   "unit": "% of matches won",
+   "takeaway": "Early wickets lift the bowling side's win rate sharply.",
+   "ariaLabel": "Column chart of the bowling side's win rate by wickets taken in the first three overs."
+  },
+  {
+   "id": "nb-players",
+   "type": "bar",
+   "title": "SRH new-ball bowlers since 2024",
+   "subtitle": "Economy in overs 1\u20133, minimum 60 balls",
+   "table": "nbp-players",
+   "xKey": "player",
+   "series": [
+    {
+     "key": "economy",
+     "label": "Economy"
+    }
+   ],
+   "unit": "runs per over",
+   "takeaway": "New-ball economy varies widely within the attack.",
+   "ariaLabel": "Horizontal bar chart of new-ball economy for SRH bowlers since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "conditions",
+   "statement": "Hypothesis: the value of an early wicket depends on pitch and swing conditions more than on the bowler.",
+   "whyUnverified": "Pitch and ball-movement data are not recorded.",
+   "howToTest": "Compare early-wicket rates and match outcomes by venue and month."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Sunrisers Hyderabad new-ball bowling.",
+   "wanted": "PJ Cummins bowling with the new ball."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-srh-013",
+  "cf-srh-015",
+  "cf-srh-001"
+ ],
+ "seo": {
+  "metaTitle": "New-ball blueprint: what SRH should optimise",
+  "metaDescription": "Sunrisers Hyderabad's economy in the first three overs against the IPL, and how much an early wicket is worth to the bowling side."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Economy uses runs charged to the bowler (byes and leg-byes excluded) per legal ball times six. Bowler wickets exclude run outs. Generated from the CricField warehouse by scripts/editorial/engine. New ball = overs one to three.",
+ "generator": "engine:v1"
+}

@@ -1,0 +1,149 @@
+{
+ "articleId": "cf-srh-095",
+ "generatedAt": "2026-10-26T04:22:57.399Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "bh-n": {
+   "value": 50423,
+   "display": "50,423",
+   "label": "Deliveries in Sunrisers Hyderabad's matches",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 50423,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "sample-size floor ≥ 5000 deliveries",
+    "passed": true,
+    "detail": "n = 50423"
+   }
+  },
+  "bh-m": {
+   "value": 211,
+   "display": "211",
+   "label": "SRH matches with ball-by-ball data",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 211,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "sample-size floor ≥ 30 matches",
+    "passed": true,
+    "detail": "n = 211"
+   }
+  },
+  "bh-shot": {
+   "value": 66,
+   "display": "66%",
+   "label": "Share with the shot recorded",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Commentary tags",
+   "sampleSize": {
+    "n": 50423,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "bh-zone": {
+   "value": 68,
+   "display": "68%",
+   "label": "Share with the scoring zone recorded",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Commentary tags",
+   "sampleSize": {
+    "n": 50423,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "bh-len": {
+   "value": 67,
+   "display": "67%",
+   "label": "Share with the length recorded",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Commentary tags",
+   "sampleSize": {
+    "n": 50423,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "bh-spd": {
+   "value": 3,
+   "display": "3.0%",
+   "label": "Share with the speed recorded",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Commentary tags",
+   "sampleSize": {
+    "n": 50423,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "bh-cover": {
+   "label": "Ball-by-ball fields available for Sunrisers Hyderabad's matches",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Share of deliveries with each commentary field",
+   "sampleSize": {
+    "n": 50423,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) AND i.innings_number <= 2",
+   "rows": [
+    {
+     "field": "Shot played",
+     "coverage": 65.7
+    },
+    {
+     "field": "Scoring zone",
+     "coverage": 68.1
+    },
+    {
+     "field": "Line",
+     "coverage": 64.2
+    },
+    {
+     "field": "Length",
+     "coverage": 66.9
+    },
+    {
+     "field": "Speed",
+     "coverage": 3
+    }
+   ]
+  }
+ }
+}

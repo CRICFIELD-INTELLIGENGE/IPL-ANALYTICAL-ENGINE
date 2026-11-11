@@ -1,0 +1,166 @@
+{
+ "articleId": "cf-srh-087",
+ "generatedAt": "2026-10-26T04:22:48.583Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "un-n": {
+   "value": 8,
+   "display": "8",
+   "label": "SRH batters ranked",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Eight busiest, 2024–2026",
+   "sampleSize": {
+    "n": 8,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "validation": {
+    "method": "sample-size floor ≥ 4 batters",
+    "passed": true,
+    "detail": "n = 8"
+   }
+  },
+  "un-ov": {
+   "value": 7,
+   "display": "7",
+   "label": "Adjacent pairs in the ranking whose intervals overlap",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bootstrap intervals",
+   "sampleSize": {
+    "n": 7,
+    "unit": "pairs"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "un-pairs": {
+   "value": 7,
+   "display": "7",
+   "label": "Adjacent pairs in the ranking",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Ranking",
+   "sampleSize": {
+    "n": 7,
+    "unit": "pairs"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "un-wide": {
+   "value": "Aniket Verma",
+   "display": "Aniket Verma",
+   "label": "Batter with the widest interval",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bootstrap intervals",
+   "sampleSize": {
+    "n": 20,
+    "unit": "innings"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "validation": {
+    "method": "max width",
+    "passed": true
+   }
+  },
+  "un-wide-w": {
+   "value": 72,
+   "display": "72",
+   "label": "Width of that interval",
+   "unit": "strike-rate points",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "95% bootstrap",
+   "sampleSize": {
+    "n": 20,
+    "unit": "innings"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "validation": {
+    "method": "plausibility range 0–300 for width",
+    "passed": true,
+    "detail": "value 71.74924165824063"
+   }
+  }
+ },
+ "tables": {
+  "un-table": {
+   "label": "SRH batters' strike rates with 95% bootstrap intervals, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Eight busiest batters; innings resampled 2,000 times",
+   "sampleSize": {
+    "n": 245,
+    "unit": "innings"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "rows": [
+    {
+     "batter": "Abhishek Sharma",
+     "strikeRate": 201.1,
+     "low": 180.1,
+     "high": 220,
+     "innings": 44
+    },
+    {
+     "batter": "TM Head",
+     "strikeRate": 176.1,
+     "low": 155.6,
+     "high": 197.3,
+     "innings": 42
+    },
+    {
+     "batter": "Ishan Kishan",
+     "strikeRate": 170.1,
+     "low": 149.4,
+     "high": 189,
+     "innings": 28
+    },
+    {
+     "batter": "H Klaasen",
+     "strikeRate": 167,
+     "low": 152.9,
+     "high": 180.8,
+     "innings": 43
+    },
+    {
+     "batter": "Aniket Verma",
+     "strikeRate": 160.7,
+     "low": 121.7,
+     "high": 193.5,
+     "innings": 20
+    },
+    {
+     "batter": "PJ Cummins",
+     "strikeRate": 152.9,
+     "low": 124,
+     "high": 184.8,
+     "innings": 22
+    },
+    {
+     "batter": "Nithish Kumar Reddy",
+     "strikeRate": 145.5,
+     "low": 128.2,
+     "high": 160.6,
+     "innings": 35
+    },
+    {
+     "batter": "AK Markram",
+     "strikeRate": 124.3,
+     "low": 100,
+     "high": 144.3,
+     "innings": 11
+    }
+   ]
+  }
+ }
+}

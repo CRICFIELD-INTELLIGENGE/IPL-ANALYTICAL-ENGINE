@@ -1,0 +1,139 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-099",
+ "planId": "cf-rr-099",
+ "franchise": "RR",
+ "aspect": "future",
+ "title": "The Multi-League Talent Pipeline: How Rajasthan Royals Could Scout Globally",
+ "slug": "rr-the-multi-league-talent-pipeline-how-rr-could-scout-globally",
+ "dek": "IPL squads draw on a global market fed by leagues around the world. Where Rajasthan Royals source their overseas players, against the league, shows how wide their scouting net is.",
+ "excerpt": "Since 2024, overseas action in the IPL has come from a measurable set of countries, led by South Africa. Rajasthan Royals' largest source is West Indies. A global pipeline means scouting the leagues those players come through.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RR"
+ ],
+ "players": [],
+ "seasons": [
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "Overseas players from {{ev:ml-n}} countries have played in the IPL since 2024; {{ev:ml-top}} supply the largest share of overseas balls ({{ev:ml-top-s}}).",
+  "Rajasthan Royals' largest overseas source is {{ev:ml-me}}, with {{ev:ml-me-s}} of their overseas balls.",
+  "Nationality is known for players covering {{ev:ml-cover}} of IPL balls since 2024."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "A Global Market",
+   "body": [
+    "IPL franchises now compete with leagues in South Africa, the Caribbean, Australia, England, the UAE and the United States for overseas talent, and scout through all of them.",
+    "Since 2024, overseas players from {{ev:ml-n}} countries have played in the IPL. {{ev:ml-top}} supply the largest share of overseas balls, {{ev:ml-top-s}}."
+   ],
+   "chartIds": [
+    "ml-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Where RR Look",
+   "body": [
+    "Rajasthan Royals' largest overseas source is {{ev:ml-me}}, with {{ev:ml-me-s}} of their overseas balls. The chart compares their mix with the league's.",
+    "A franchise that draws from fewer countries than the league may be missing talent the market has already found."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Proposal: A Multi-League Pipeline",
+   "body": [
+    "Proposal: scout systematically through the leagues that feed the IPL, using ball-by-ball data from those leagues and the cross-league translation work in this series to rank candidates.",
+    "{{hyp:pipeline}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Data Limits",
+   "body": [
+    "Nationality comes from player-bio data and squad lists, covering players who faced or bowled {{ev:ml-cover}} of IPL balls since 2024; squad-list nationality contains known errors. Other leagues' data is not in the warehouse.",
+    "Country of birth and country represented can differ; the data uses the latter."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Widen the Net Deliberately",
+   "body": [
+    "Rajasthan Royals should compare their overseas sourcing with the league's and scout the leagues behind under-used countries.",
+    "Adding other leagues' ball-by-ball data would make that scouting measurable."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ml-chart",
+   "type": "bar",
+   "title": "Overseas action by country",
+   "subtitle": "IPL vs RR, 2024\u20132026",
+   "table": "ml-cty",
+   "xKey": "country",
+   "series": [
+    {
+     "key": "league",
+     "label": "IPL"
+    },
+    {
+     "key": "franchise",
+     "label": "RR"
+    }
+   ],
+   "unit": "% of overseas balls",
+   "takeaway": "The franchise's overseas mix differs from the league's.",
+   "ariaLabel": "Horizontal grouped bar chart of the share of overseas balls by country for the IPL and for RR since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "pipeline",
+   "statement": "Hypothesis: overseas players recruited from leagues with ball-by-ball data available perform closer to expectation in the IPL than those scouted by reputation.",
+   "whyUnverified": "Other leagues' data and scouting records are not available.",
+   "howToTest": "Compare IPL outcomes for overseas signings by the data available on them before signing."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Rajasthan Royals's overseas stars.",
+   "wanted": "Rajasthan Royals overseas player."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rr-075",
+  "cf-rr-034",
+  "cf-rr-058"
+ ],
+ "seo": {
+  "metaTitle": "The multi-league talent pipeline for RR",
+  "metaDescription": "Which countries supply the IPL's overseas talent since 2024, how Rajasthan Royals' sourcing compares, and how to scout globally."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Forward-looking proposals are labelled as such. Generated by scripts/editorial/engine. Nationality from CricField player-bio data with squad lists as fallback; overseas = any nationality other than India.",
+ "generator": "engine:v1"
+}

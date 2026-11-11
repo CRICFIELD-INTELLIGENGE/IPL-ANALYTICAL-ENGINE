@@ -1,0 +1,20 @@
+{
+  "total_players": 18623,
+  "before": {
+    "auction_country": 101,
+    "auction_specialism": 101,
+    "batting_hand": 816,
+    "bowling_style": 743,
+    "capped_status_2026": 101
+  },
+  "after": {
+    "auction_country": 101,
+    "auction_specialism": 101,
+    "batting_hand": 816,
+    "bowling_style": 743,
+    "capped_status_2026": 101,
+    "declared_role": 101,
+    "nationality": 101
+  },
+  "important": "Normalization preserves existing confidence, including corroborated_unreviewed. Country records are not proof of citizenship or IPL registration. Recent appearances do not prove active status. Statistical role is inferred separately from phase usage; declared_role is source-reported. No nationality or skill inferred from name or league."
+}

@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-srh-077",
+ "planId": "cf-srh-077",
+ "franchise": "SRH",
+ "aspect": "scouting",
+ "title": "Wicketkeeper Value: What Should Sunrisers Hyderabad Measure Beyond Dismissals?",
+ "slug": "srh-wicketkeeper-value-what-should-srh-measure-beyond-dismissals",
+ "dek": "A wicketkeeper is judged on catches and stumpings, but in modern T20 the bat matters as much as the gloves. Measuring both changes what Sunrisers Hyderabad should look for.",
+ "excerpt": "Since 2018, Sunrisers Hyderabad's keepers have batted at a strike rate the data can set against the rest of the league's keepers. In T20, a keeper who scores fast is worth more than one who only keeps tidily.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "SRH"
+ ],
+ "players": [],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "Sunrisers Hyderabad's keepers have scored at {{ev:wk-msr}} since 2018, against {{ev:wk-rsr}} for other IPL keepers.",
+  "They have made {{ev:wk-mrpi}} runs per innings, against {{ev:wk-rrpi}}.",
+  "Their keepers have taken {{ev:wk-mct}} catches and stumpings; stumpings make up {{ev:wk-share}}, against {{ev:wk-lshare}} across the league."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Beyond Dismissals",
+   "body": [
+    "Catches and stumpings are a keeper's visible output, but most chances are routine. In T20, the larger difference between keepers is often what they add with the bat.",
+    "CricField identifies a keeper as a fielder who made a stumping for that side in that season, which captures nearly every regular keeper."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "With the Bat",
+   "body": [
+    "Sunrisers Hyderabad's keepers have scored at {{ev:wk-msr}} since 2018, against {{ev:wk-rsr}} for other IPL keepers, and made {{ev:wk-mrpi}} runs per innings, against {{ev:wk-rrpi}}.",
+    "The chart compares their keepers' strike rate with the league's by season."
+   ],
+   "chartIds": [
+    "wk-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "With the Gloves",
+   "body": [
+    "Sunrisers Hyderabad's keepers have taken {{ev:wk-mct}} catches and stumpings. Stumpings make up {{ev:wk-share}} of them, against {{ev:wk-lshare}} across the league, a rough sign of how much they stand up to spin.",
+    "{{hyp:keeper}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What Is Not Measured",
+   "body": [
+    "The data does not record dropped chances, byes saved by diving stops, or the value of a keeper's advice on reviews and field settings.",
+    "Those are real, but they need video or tracking data to measure."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Price the Bat, Check the Gloves",
+   "body": [
+    "Sunrisers Hyderabad should value keepers primarily on batting tempo and role, and use keeping data to rule out weak glovework rather than to rank keepers.",
+    "Dropped-chance data would make the glovework side of the judgement far sharper."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "wk-chart",
+   "type": "line",
+   "title": "Keepers' batting strike rate",
+   "subtitle": "SRH vs rest of IPL, by season",
+   "table": "wk-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "SRH"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per 100 balls",
+   "takeaway": "Keepers' batting tempo varies widely between seasons.",
+   "ariaLabel": "Line chart comparing the batting strike rate of Sunrisers Hyderabad's keepers with other IPL keepers by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "keeper",
+   "statement": "Hypothesis: keepers who take a higher share of stumpings concede fewer byes and wides to spin, adding value not visible in dismissals.",
+   "whyUnverified": "Byes and wides by keeper have not been analysed.",
+   "howToTest": "Attribute byes to the keeper on the field and compare against stumping share."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Sunrisers Hyderabad wicketkeeper.",
+   "wanted": "Sunrisers Hyderabad wicketkeeper keeping or batting."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-srh-078",
+  "cf-srh-071",
+  "cf-srh-039"
+ ],
+ "seo": {
+  "metaTitle": "Wicketkeeper value: what SRH should measure",
+  "metaDescription": "How Sunrisers Hyderabad's keepers have batted and kept since 2018 against the league, and why the bat matters as much as the gloves."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Keeper = a fielder credited with a stumping for that side in that season.",
+ "generator": "engine:v1"
+}

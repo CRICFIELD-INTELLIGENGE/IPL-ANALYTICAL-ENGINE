@@ -1,0 +1,2756 @@
+{
+  "captains": [
+    {
+      "player": "MS Dhoni",
+      "country": "India",
+      "firstSeason": 2008,
+      "lastSeason": 2025,
+      "matches": 235,
+      "won": 136,
+      "lost": 97,
+      "tied": 0,
+      "noResult": 2,
+      "titles": 5,
+      "teams": [
+        "CSK",
+        "RPS"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Rohit Sharma",
+      "country": "India",
+      "firstSeason": 2013,
+      "lastSeason": 2023,
+      "matches": 158,
+      "won": 87,
+      "lost": 67,
+      "tied": 4,
+      "noResult": 0,
+      "titles": 5,
+      "teams": [
+        "MI"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Virat Kohli",
+      "country": "India",
+      "firstSeason": 2011,
+      "lastSeason": 2023,
+      "matches": 143,
+      "won": 66,
+      "lost": 70,
+      "tied": 3,
+      "noResult": 4,
+      "titles": 0,
+      "teams": [
+        "RCB"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Gautam Gambhir",
+      "country": "India",
+      "firstSeason": 2009,
+      "lastSeason": 2018,
+      "matches": 129,
+      "won": 71,
+      "lost": 57,
+      "tied": 1,
+      "noResult": 0,
+      "titles": 2,
+      "teams": [
+        "DC",
+        "KKR"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Shreyas Iyer",
+      "country": "India",
+      "firstSeason": 2018,
+      "lastSeason": 2026,
+      "matches": 101,
+      "won": 55,
+      "lost": 41,
+      "tied": 2,
+      "noResult": 3,
+      "titles": 1,
+      "teams": [
+        "DC",
+        "KKR",
+        "PBKS"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "David Warner",
+      "country": "Australia",
+      "firstSeason": 2013,
+      "lastSeason": 2023,
+      "matches": 83,
+      "won": 40,
+      "lost": 41,
+      "tied": 2,
+      "noResult": 0,
+      "titles": 1,
+      "teams": [
+        "DC",
+        "SRH"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Adam Gilchrist",
+      "country": "Australia",
+      "firstSeason": 2008,
+      "lastSeason": 2013,
+      "matches": 74,
+      "won": 35,
+      "lost": 39,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 1,
+      "teams": [
+        "DEC",
+        "PBKS"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Rishabh Pant",
+      "country": "India",
+      "firstSeason": 2021,
+      "lastSeason": 2026,
+      "matches": 71,
+      "won": 33,
+      "lost": 36,
+      "tied": 2,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "DC",
+        "LSG"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Hardik Pandya",
+      "country": "India",
+      "firstSeason": 2022,
+      "lastSeason": 2026,
+      "matches": 70,
+      "won": 37,
+      "lost": 33,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 1,
+      "teams": [
+        "GT",
+        "MI"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Sanju Samson",
+      "country": "India",
+      "firstSeason": 2021,
+      "lastSeason": 2025,
+      "matches": 67,
+      "won": 33,
+      "lost": 32,
+      "tied": 1,
+      "noResult": 1,
+      "titles": 0,
+      "teams": [
+        "RR"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "K. L. Rahul",
+      "country": "India",
+      "firstSeason": 2020,
+      "lastSeason": 2023,
+      "matches": 64,
+      "won": 31,
+      "lost": 31,
+      "tied": 2,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS",
+        "LSG"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Shane Warne",
+      "country": "Australia",
+      "firstSeason": 2008,
+      "lastSeason": 2011,
+      "matches": 55,
+      "won": 30,
+      "lost": 24,
+      "tied": 1,
+      "noResult": 0,
+      "titles": 1,
+      "teams": [
+        "RR"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Virender Sehwag",
+      "country": "India",
+      "firstSeason": 2008,
+      "lastSeason": 2015,
+      "matches": 53,
+      "won": 28,
+      "lost": 24,
+      "tied": 1,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "DC",
+        "PBKS"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Ajinkya Rahane",
+      "country": "India",
+      "firstSeason": 2017,
+      "lastSeason": 2026,
+      "matches": 52,
+      "won": 19,
+      "lost": 30,
+      "tied": 1,
+      "noResult": 2,
+      "titles": 0,
+      "teams": [
+        "KKR",
+        "RR",
+        "RPS"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Sachin Tendulkar",
+      "country": "India",
+      "firstSeason": 2008,
+      "lastSeason": 2011,
+      "matches": 51,
+      "won": 30,
+      "lost": 21,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "MI"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Rahul Dravid",
+      "country": "India",
+      "firstSeason": 2008,
+      "lastSeason": 2013,
+      "matches": 48,
+      "won": 22,
+      "lost": 26,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "RR",
+        "RCB"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Kumar Sangakkara",
+      "country": "Sri Lanka",
+      "firstSeason": 2010,
+      "lastSeason": 2013,
+      "matches": 47,
+      "won": 15,
+      "lost": 30,
+      "tied": 2,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS",
+        "DEC",
+        "SRH"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Kane Williamson",
+      "country": "New Zealand",
+      "firstSeason": 2018,
+      "lastSeason": 2022,
+      "matches": 46,
+      "won": 22,
+      "lost": 23,
+      "tied": 1,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "SRH"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Faf du Plessis",
+      "country": "South Africa",
+      "firstSeason": 2022,
+      "lastSeason": 2025,
+      "matches": 44,
+      "won": 22,
+      "lost": 22,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "DC",
+        "RCB"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Dinesh Karthik",
+      "country": "India",
+      "firstSeason": 2010,
+      "lastSeason": 2020,
+      "matches": 43,
+      "won": 21,
+      "lost": 21,
+      "tied": 1,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "DC",
+        "KKR"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Shubman Gill",
+      "country": "India",
+      "firstSeason": 2024,
+      "lastSeason": 2026,
+      "matches": 43,
+      "won": 24,
+      "lost": 19,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "GT"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Steven Smith",
+      "country": "Australia",
+      "firstSeason": 2012,
+      "lastSeason": 2020,
+      "matches": 43,
+      "won": 25,
+      "lost": 17,
+      "tied": 0,
+      "noResult": 1,
+      "titles": 0,
+      "teams": [
+        "PW",
+        "RPS",
+        "RR"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Yuvraj Singh",
+      "country": "India",
+      "firstSeason": 2008,
+      "lastSeason": 2011,
+      "matches": 43,
+      "won": 21,
+      "lost": 21,
+      "tied": 0,
+      "noResult": 1,
+      "titles": 0,
+      "teams": [
+        "PBKS",
+        "PW"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Saurav Ganguly",
+      "country": "India",
+      "firstSeason": 2008,
+      "lastSeason": 2012,
+      "matches": 42,
+      "won": 17,
+      "lost": 25,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "KKR",
+        "PW"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Pat Cummins",
+      "country": "Australia",
+      "firstSeason": 2024,
+      "lastSeason": 2026,
+      "matches": 38,
+      "won": 20,
+      "lost": 17,
+      "tied": 0,
+      "noResult": 1,
+      "titles": 0,
+      "teams": [
+        "SRH"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Suresh Raina",
+      "country": "India",
+      "firstSeason": 2010,
+      "lastSeason": 2019,
+      "matches": 34,
+      "won": 14,
+      "lost": 18,
+      "tied": 2,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "CSK",
+        "GL"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Ruturaj Gaikwad",
+      "country": "India",
+      "firstSeason": 2024,
+      "lastSeason": 2026,
+      "matches": 33,
+      "won": 14,
+      "lost": 19,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "CSK"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "George Bailey",
+      "country": "Australia",
+      "firstSeason": 2014,
+      "lastSeason": 2015,
+      "matches": 30,
+      "won": 14,
+      "lost": 16,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Mahela Jayawardene",
+      "country": "Sri Lanka",
+      "firstSeason": 2010,
+      "lastSeason": 2013,
+      "matches": 30,
+      "won": 10,
+      "lost": 19,
+      "tied": 1,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS",
+        "KTK",
+        "DC"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Rajat Patidar",
+      "country": "India",
+      "firstSeason": 2025,
+      "lastSeason": 2026,
+      "matches": 28,
+      "won": 20,
+      "lost": 8,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 2,
+      "teams": [
+        "RCB"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Ravichandran Ashwin",
+      "country": "India",
+      "firstSeason": 2018,
+      "lastSeason": 2019,
+      "matches": 28,
+      "won": 12,
+      "lost": 16,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Axar Patel",
+      "country": "India",
+      "firstSeason": 2024,
+      "lastSeason": 2026,
+      "matches": 27,
+      "won": 12,
+      "lost": 13,
+      "tied": 1,
+      "noResult": 1,
+      "titles": 0,
+      "teams": [
+        "DC"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Shikhar Dhawan",
+      "country": "India",
+      "firstSeason": 2014,
+      "lastSeason": 2024,
+      "matches": 27,
+      "won": 10,
+      "lost": 17,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "SRH",
+        "PBKS"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Anil Kumble",
+      "country": "India",
+      "firstSeason": 2009,
+      "lastSeason": 2010,
+      "matches": 26,
+      "won": 15,
+      "lost": 11,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "RCB"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Eoin Morgan",
+      "country": "England",
+      "firstSeason": 2020,
+      "lastSeason": 2021,
+      "matches": 24,
+      "won": 11,
+      "lost": 12,
+      "tied": 1,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "KKR"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Shane Watson",
+      "country": "Australia",
+      "firstSeason": 2008,
+      "lastSeason": 2017,
+      "matches": 24,
+      "won": 8,
+      "lost": 13,
+      "tied": 2,
+      "noResult": 1,
+      "titles": 0,
+      "teams": [
+        "RR",
+        "RCB"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Zaheer Khan",
+      "country": "India",
+      "firstSeason": 2016,
+      "lastSeason": 2017,
+      "matches": 23,
+      "won": 10,
+      "lost": 13,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "DC"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Daniel Vettori",
+      "country": "New Zealand",
+      "firstSeason": 2011,
+      "lastSeason": 2012,
+      "matches": 22,
+      "won": 12,
+      "lost": 10,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "RCB"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Riyan Parag",
+      "country": "India",
+      "firstSeason": 2025,
+      "lastSeason": 2026,
+      "matches": 22,
+      "won": 10,
+      "lost": 12,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "RR"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Harbhajan Singh",
+      "country": "India",
+      "firstSeason": 2008,
+      "lastSeason": 2012,
+      "matches": 20,
+      "won": 10,
+      "lost": 10,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "MI"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Kevin Pietersen",
+      "country": "England",
+      "firstSeason": 2009,
+      "lastSeason": 2014,
+      "matches": 17,
+      "won": 3,
+      "lost": 14,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "DC",
+        "RCB"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "JP Duminy",
+      "country": "South Africa",
+      "firstSeason": 2015,
+      "lastSeason": 2016,
+      "matches": 16,
+      "won": 6,
+      "lost": 9,
+      "tied": 0,
+      "noResult": 1,
+      "titles": 0,
+      "teams": [
+        "DC"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Mayank Agarwal",
+      "country": "India",
+      "firstSeason": 2021,
+      "lastSeason": 2022,
+      "matches": 14,
+      "won": 7,
+      "lost": 7,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Glenn Maxwell",
+      "country": "Australia",
+      "firstSeason": 2017,
+      "lastSeason": 2017,
+      "matches": 14,
+      "won": 7,
+      "lost": 7,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Nitish Rana",
+      "country": "India",
+      "firstSeason": 2023,
+      "lastSeason": 2023,
+      "matches": 14,
+      "won": 6,
+      "lost": 8,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "KKR"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Brendon McCullum",
+      "country": "New Zealand",
+      "firstSeason": 2009,
+      "lastSeason": 2016,
+      "matches": 14,
+      "won": 3,
+      "lost": 10,
+      "tied": 1,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "KKR",
+        "GL"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Aiden Markram",
+      "country": "South Africa",
+      "firstSeason": 2023,
+      "lastSeason": 2023,
+      "matches": 13,
+      "won": 4,
+      "lost": 9,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "SRH"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Cameron White",
+      "country": "Australia",
+      "firstSeason": 2011,
+      "lastSeason": 2013,
+      "matches": 12,
+      "won": 7,
+      "lost": 5,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "DEC",
+        "SRH"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "David Hussey",
+      "country": "Australia",
+      "firstSeason": 2012,
+      "lastSeason": 2013,
+      "matches": 12,
+      "won": 6,
+      "lost": 6,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Sam Curran",
+      "country": "England",
+      "firstSeason": 2023,
+      "lastSeason": 2024,
+      "matches": 11,
+      "won": 5,
+      "lost": 6,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Aaron Finch",
+      "country": "Australia",
+      "firstSeason": 2013,
+      "lastSeason": 2013,
+      "matches": 10,
+      "won": 2,
+      "lost": 8,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PW"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Murali Vijay",
+      "country": "India",
+      "firstSeason": 2016,
+      "lastSeason": 2016,
+      "matches": 8,
+      "won": 3,
+      "lost": 5,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Bhuvneshwar Kumar",
+      "country": "India",
+      "firstSeason": 2019,
+      "lastSeason": 2023,
+      "matches": 8,
+      "won": 2,
+      "lost": 6,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "SRH"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Ravindra Jadeja",
+      "country": "India",
+      "firstSeason": 2022,
+      "lastSeason": 2022,
+      "matches": 8,
+      "won": 2,
+      "lost": 6,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "CSK"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Ishan Kishan",
+      "country": "India",
+      "firstSeason": 2026,
+      "lastSeason": 2026,
+      "matches": 7,
+      "won": 4,
+      "lost": 3,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "SRH"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Kieron Pollard",
+      "country": "West Indies",
+      "firstSeason": 2019,
+      "lastSeason": 2021,
+      "matches": 6,
+      "won": 4,
+      "lost": 2,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "MI"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Krunal Pandya",
+      "country": "India",
+      "firstSeason": 2023,
+      "lastSeason": 2023,
+      "matches": 6,
+      "won": 3,
+      "lost": 2,
+      "tied": 0,
+      "noResult": 1,
+      "titles": 0,
+      "teams": [
+        "LSG"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "David Miller",
+      "country": "South Africa",
+      "firstSeason": 2016,
+      "lastSeason": 2016,
+      "matches": 6,
+      "won": 1,
+      "lost": 5,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "V. V. S. Laxman",
+      "country": "India",
+      "firstSeason": 2008,
+      "lastSeason": 2008,
+      "matches": 6,
+      "won": 1,
+      "lost": 5,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "DEC"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Ricky Ponting",
+      "country": "Australia",
+      "firstSeason": 2013,
+      "lastSeason": 2013,
+      "matches": 6,
+      "won": 3,
+      "lost": 3,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "MI"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Suryakumar Yadav",
+      "country": "India",
+      "firstSeason": 2023,
+      "lastSeason": 2026,
+      "matches": 5,
+      "won": 2,
+      "lost": 3,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "MI"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Angelo Mathews",
+      "country": "Sri Lanka",
+      "firstSeason": 2013,
+      "lastSeason": 2013,
+      "matches": 5,
+      "won": 1,
+      "lost": 4,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PW"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Shaun Pollock",
+      "country": "South Africa",
+      "firstSeason": 2008,
+      "lastSeason": 2008,
+      "matches": 4,
+      "won": 3,
+      "lost": 1,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "MI"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Jitesh Sharma",
+      "country": "India",
+      "firstSeason": 2024,
+      "lastSeason": 2026,
+      "matches": 4,
+      "won": 2,
+      "lost": 2,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PBKS",
+        "RCB"
+      ],
+      "singleTeam": false
+    },
+    {
+      "player": "Darren Sammy",
+      "country": "West Indies",
+      "firstSeason": 2014,
+      "lastSeason": 2014,
+      "matches": 4,
+      "won": 2,
+      "lost": 2,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "SRH"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Karun Nair",
+      "country": "India",
+      "firstSeason": 2017,
+      "lastSeason": 2017,
+      "matches": 3,
+      "won": 2,
+      "lost": 1,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "DC"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Rashid Khan",
+      "country": "Afghanistan",
+      "firstSeason": 2022,
+      "lastSeason": 2026,
+      "matches": 3,
+      "won": 1,
+      "lost": 2,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "GT"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "James Hopes",
+      "country": "Australia",
+      "firstSeason": 2011,
+      "lastSeason": 2011,
+      "matches": 3,
+      "won": 0,
+      "lost": 2,
+      "tied": 0,
+      "noResult": 1,
+      "titles": 0,
+      "teams": [
+        "DC"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Yashasvi Jaiswal",
+      "country": "India",
+      "firstSeason": 2026,
+      "lastSeason": 2026,
+      "matches": 2,
+      "won": 1,
+      "lost": 1,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "RR"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Jasprit Bumrah",
+      "country": "India",
+      "firstSeason": 2026,
+      "lastSeason": 2026,
+      "matches": 1,
+      "won": 1,
+      "lost": 0,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "MI"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Nicholas Pooran",
+      "country": "West Indies",
+      "firstSeason": 2024,
+      "lastSeason": 2024,
+      "matches": 1,
+      "won": 1,
+      "lost": 0,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "LSG"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Ross Taylor",
+      "country": "New Zealand",
+      "firstSeason": 2013,
+      "lastSeason": 2013,
+      "matches": 1,
+      "won": 1,
+      "lost": 0,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "PW"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Dwayne Bravo",
+      "country": "West Indies",
+      "firstSeason": 2010,
+      "lastSeason": 2010,
+      "matches": 1,
+      "won": 0,
+      "lost": 1,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "MI"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Manish Pandey",
+      "country": "India",
+      "firstSeason": 2021,
+      "lastSeason": 2021,
+      "matches": 1,
+      "won": 0,
+      "lost": 1,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "SRH"
+      ],
+      "singleTeam": true
+    },
+    {
+      "player": "Parthiv Patel",
+      "country": "India",
+      "firstSeason": 2011,
+      "lastSeason": 2011,
+      "matches": 1,
+      "won": 0,
+      "lost": 1,
+      "tied": 0,
+      "noResult": 0,
+      "titles": 0,
+      "teams": [
+        "KTK"
+      ],
+      "singleTeam": true
+    }
+  ],
+  "byFranchise": {
+    "Chennai Super Kings": [
+      {
+        "player": "MS Dhoni",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2025,
+        "titles": 5,
+        "matches": 235,
+        "won": 136,
+        "lost": 97,
+        "winPct": 57.9,
+        "exact": false,
+        "alsoLed": [
+          "Rising Pune Supergiant"
+        ]
+      },
+      {
+        "player": "Suresh Raina",
+        "country": "India",
+        "firstSeason": 2010,
+        "lastSeason": 2019,
+        "titles": 0,
+        "matches": 34,
+        "won": 14,
+        "lost": 18,
+        "winPct": 41.2,
+        "exact": false,
+        "alsoLed": [
+          "Gujarat Lions"
+        ]
+      },
+      {
+        "player": "Ruturaj Gaikwad",
+        "country": "India",
+        "firstSeason": 2024,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 33,
+        "won": 14,
+        "lost": 19,
+        "winPct": 42.4,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Ravindra Jadeja",
+        "country": "India",
+        "firstSeason": 2022,
+        "lastSeason": 2022,
+        "titles": 0,
+        "matches": 8,
+        "won": 2,
+        "lost": 6,
+        "winPct": 25,
+        "exact": true,
+        "alsoLed": []
+      }
+    ],
+    "Rising Pune Supergiant": [
+      {
+        "player": "MS Dhoni",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2025,
+        "titles": 5,
+        "matches": 235,
+        "won": 136,
+        "lost": 97,
+        "winPct": 57.9,
+        "exact": false,
+        "alsoLed": [
+          "Chennai Super Kings"
+        ]
+      },
+      {
+        "player": "Ajinkya Rahane",
+        "country": "India",
+        "firstSeason": 2017,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 52,
+        "won": 19,
+        "lost": 30,
+        "winPct": 36.5,
+        "exact": false,
+        "alsoLed": [
+          "Kolkata Knight Riders",
+          "Rajasthan Royals"
+        ]
+      },
+      {
+        "player": "Steven Smith",
+        "country": "Australia",
+        "firstSeason": 2012,
+        "lastSeason": 2020,
+        "titles": 0,
+        "matches": 43,
+        "won": 25,
+        "lost": 17,
+        "winPct": 58.1,
+        "exact": false,
+        "alsoLed": [
+          "Pune Warriors",
+          "Rajasthan Royals"
+        ]
+      }
+    ],
+    "Mumbai Indians": [
+      {
+        "player": "Rohit Sharma",
+        "country": "India",
+        "firstSeason": 2013,
+        "lastSeason": 2023,
+        "titles": 5,
+        "matches": 158,
+        "won": 87,
+        "lost": 67,
+        "winPct": 55.1,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Hardik Pandya",
+        "country": "India",
+        "firstSeason": 2022,
+        "lastSeason": 2026,
+        "titles": 1,
+        "matches": 70,
+        "won": 37,
+        "lost": 33,
+        "winPct": 52.9,
+        "exact": false,
+        "alsoLed": [
+          "Gujarat Titans"
+        ]
+      },
+      {
+        "player": "Sachin Tendulkar",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2011,
+        "titles": 0,
+        "matches": 51,
+        "won": 30,
+        "lost": 21,
+        "winPct": 58.8,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Harbhajan Singh",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2012,
+        "titles": 0,
+        "matches": 20,
+        "won": 10,
+        "lost": 10,
+        "winPct": 50,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Kieron Pollard",
+        "country": "West Indies",
+        "firstSeason": 2019,
+        "lastSeason": 2021,
+        "titles": 0,
+        "matches": 6,
+        "won": 4,
+        "lost": 2,
+        "winPct": 66.7,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Ricky Ponting",
+        "country": "Australia",
+        "firstSeason": 2013,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 6,
+        "won": 3,
+        "lost": 3,
+        "winPct": 50,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Suryakumar Yadav",
+        "country": "India",
+        "firstSeason": 2023,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 5,
+        "won": 2,
+        "lost": 3,
+        "winPct": 40,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Shaun Pollock",
+        "country": "South Africa",
+        "firstSeason": 2008,
+        "lastSeason": 2008,
+        "titles": 0,
+        "matches": 4,
+        "won": 3,
+        "lost": 1,
+        "winPct": 75,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Jasprit Bumrah",
+        "country": "India",
+        "firstSeason": 2026,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 1,
+        "won": 1,
+        "lost": 0,
+        "winPct": 100,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Dwayne Bravo",
+        "country": "West Indies",
+        "firstSeason": 2010,
+        "lastSeason": 2010,
+        "titles": 0,
+        "matches": 1,
+        "won": 0,
+        "lost": 1,
+        "winPct": 0,
+        "exact": true,
+        "alsoLed": []
+      }
+    ],
+    "Royal Challengers Bengaluru": [
+      {
+        "player": "Virat Kohli",
+        "country": "India",
+        "firstSeason": 2011,
+        "lastSeason": 2023,
+        "titles": 0,
+        "matches": 143,
+        "won": 66,
+        "lost": 70,
+        "winPct": 46.2,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Rahul Dravid",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 48,
+        "won": 22,
+        "lost": 26,
+        "winPct": 45.8,
+        "exact": false,
+        "alsoLed": [
+          "Rajasthan Royals"
+        ]
+      },
+      {
+        "player": "Faf du Plessis",
+        "country": "South Africa",
+        "firstSeason": 2022,
+        "lastSeason": 2025,
+        "titles": 0,
+        "matches": 44,
+        "won": 22,
+        "lost": 22,
+        "winPct": 50,
+        "exact": false,
+        "alsoLed": [
+          "Delhi Capitals"
+        ]
+      },
+      {
+        "player": "Rajat Patidar",
+        "country": "India",
+        "firstSeason": 2025,
+        "lastSeason": 2026,
+        "titles": 2,
+        "matches": 28,
+        "won": 20,
+        "lost": 8,
+        "winPct": 71.4,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Anil Kumble",
+        "country": "India",
+        "firstSeason": 2009,
+        "lastSeason": 2010,
+        "titles": 0,
+        "matches": 26,
+        "won": 15,
+        "lost": 11,
+        "winPct": 57.7,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Shane Watson",
+        "country": "Australia",
+        "firstSeason": 2008,
+        "lastSeason": 2017,
+        "titles": 0,
+        "matches": 24,
+        "won": 8,
+        "lost": 13,
+        "winPct": 33.3,
+        "exact": false,
+        "alsoLed": [
+          "Rajasthan Royals"
+        ]
+      },
+      {
+        "player": "Daniel Vettori",
+        "country": "New Zealand",
+        "firstSeason": 2011,
+        "lastSeason": 2012,
+        "titles": 0,
+        "matches": 22,
+        "won": 12,
+        "lost": 10,
+        "winPct": 54.5,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Kevin Pietersen",
+        "country": "England",
+        "firstSeason": 2009,
+        "lastSeason": 2014,
+        "titles": 0,
+        "matches": 17,
+        "won": 3,
+        "lost": 14,
+        "winPct": 17.6,
+        "exact": false,
+        "alsoLed": [
+          "Delhi Capitals"
+        ]
+      },
+      {
+        "player": "Jitesh Sharma",
+        "country": "India",
+        "firstSeason": 2024,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 4,
+        "won": 2,
+        "lost": 2,
+        "winPct": 50,
+        "exact": false,
+        "alsoLed": [
+          "Punjab Kings"
+        ]
+      }
+    ],
+    "Delhi Capitals": [
+      {
+        "player": "Gautam Gambhir",
+        "country": "India",
+        "firstSeason": 2009,
+        "lastSeason": 2018,
+        "titles": 2,
+        "matches": 129,
+        "won": 71,
+        "lost": 57,
+        "winPct": 55,
+        "exact": false,
+        "alsoLed": [
+          "Kolkata Knight Riders"
+        ]
+      },
+      {
+        "player": "Shreyas Iyer",
+        "country": "India",
+        "firstSeason": 2018,
+        "lastSeason": 2026,
+        "titles": 1,
+        "matches": 101,
+        "won": 55,
+        "lost": 41,
+        "winPct": 54.5,
+        "exact": false,
+        "alsoLed": [
+          "Kolkata Knight Riders",
+          "Punjab Kings"
+        ]
+      },
+      {
+        "player": "David Warner",
+        "country": "Australia",
+        "firstSeason": 2013,
+        "lastSeason": 2023,
+        "titles": 1,
+        "matches": 83,
+        "won": 40,
+        "lost": 41,
+        "winPct": 48.2,
+        "exact": false,
+        "alsoLed": [
+          "Sunrisers Hyderabad"
+        ]
+      },
+      {
+        "player": "Rishabh Pant",
+        "country": "India",
+        "firstSeason": 2021,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 71,
+        "won": 33,
+        "lost": 36,
+        "winPct": 46.5,
+        "exact": false,
+        "alsoLed": [
+          "Lucknow Super Giants"
+        ]
+      },
+      {
+        "player": "Virender Sehwag",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2015,
+        "titles": 0,
+        "matches": 53,
+        "won": 28,
+        "lost": 24,
+        "winPct": 52.8,
+        "exact": false,
+        "alsoLed": [
+          "Punjab Kings"
+        ]
+      },
+      {
+        "player": "Faf du Plessis",
+        "country": "South Africa",
+        "firstSeason": 2022,
+        "lastSeason": 2025,
+        "titles": 0,
+        "matches": 44,
+        "won": 22,
+        "lost": 22,
+        "winPct": 50,
+        "exact": false,
+        "alsoLed": [
+          "Royal Challengers Bengaluru"
+        ]
+      },
+      {
+        "player": "Dinesh Karthik",
+        "country": "India",
+        "firstSeason": 2010,
+        "lastSeason": 2020,
+        "titles": 0,
+        "matches": 43,
+        "won": 21,
+        "lost": 21,
+        "winPct": 48.8,
+        "exact": false,
+        "alsoLed": [
+          "Kolkata Knight Riders"
+        ]
+      },
+      {
+        "player": "Mahela Jayawardene",
+        "country": "Sri Lanka",
+        "firstSeason": 2010,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 30,
+        "won": 10,
+        "lost": 19,
+        "winPct": 33.3,
+        "exact": false,
+        "alsoLed": [
+          "Punjab Kings",
+          "Kochi Tuskers Kerala"
+        ]
+      },
+      {
+        "player": "Axar Patel",
+        "country": "India",
+        "firstSeason": 2024,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 27,
+        "won": 12,
+        "lost": 13,
+        "winPct": 44.4,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Zaheer Khan",
+        "country": "India",
+        "firstSeason": 2016,
+        "lastSeason": 2017,
+        "titles": 0,
+        "matches": 23,
+        "won": 10,
+        "lost": 13,
+        "winPct": 43.5,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Kevin Pietersen",
+        "country": "England",
+        "firstSeason": 2009,
+        "lastSeason": 2014,
+        "titles": 0,
+        "matches": 17,
+        "won": 3,
+        "lost": 14,
+        "winPct": 17.6,
+        "exact": false,
+        "alsoLed": [
+          "Royal Challengers Bengaluru"
+        ]
+      },
+      {
+        "player": "JP Duminy",
+        "country": "South Africa",
+        "firstSeason": 2015,
+        "lastSeason": 2016,
+        "titles": 0,
+        "matches": 16,
+        "won": 6,
+        "lost": 9,
+        "winPct": 37.5,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Karun Nair",
+        "country": "India",
+        "firstSeason": 2017,
+        "lastSeason": 2017,
+        "titles": 0,
+        "matches": 3,
+        "won": 2,
+        "lost": 1,
+        "winPct": 66.7,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "James Hopes",
+        "country": "Australia",
+        "firstSeason": 2011,
+        "lastSeason": 2011,
+        "titles": 0,
+        "matches": 3,
+        "won": 0,
+        "lost": 2,
+        "winPct": 0,
+        "exact": true,
+        "alsoLed": []
+      }
+    ],
+    "Kolkata Knight Riders": [
+      {
+        "player": "Gautam Gambhir",
+        "country": "India",
+        "firstSeason": 2009,
+        "lastSeason": 2018,
+        "titles": 2,
+        "matches": 129,
+        "won": 71,
+        "lost": 57,
+        "winPct": 55,
+        "exact": false,
+        "alsoLed": [
+          "Delhi Capitals"
+        ]
+      },
+      {
+        "player": "Shreyas Iyer",
+        "country": "India",
+        "firstSeason": 2018,
+        "lastSeason": 2026,
+        "titles": 1,
+        "matches": 101,
+        "won": 55,
+        "lost": 41,
+        "winPct": 54.5,
+        "exact": false,
+        "alsoLed": [
+          "Delhi Capitals",
+          "Punjab Kings"
+        ]
+      },
+      {
+        "player": "Ajinkya Rahane",
+        "country": "India",
+        "firstSeason": 2017,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 52,
+        "won": 19,
+        "lost": 30,
+        "winPct": 36.5,
+        "exact": false,
+        "alsoLed": [
+          "Rajasthan Royals",
+          "Rising Pune Supergiant"
+        ]
+      },
+      {
+        "player": "Dinesh Karthik",
+        "country": "India",
+        "firstSeason": 2010,
+        "lastSeason": 2020,
+        "titles": 0,
+        "matches": 43,
+        "won": 21,
+        "lost": 21,
+        "winPct": 48.8,
+        "exact": false,
+        "alsoLed": [
+          "Delhi Capitals"
+        ]
+      },
+      {
+        "player": "Saurav Ganguly",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2012,
+        "titles": 0,
+        "matches": 42,
+        "won": 17,
+        "lost": 25,
+        "winPct": 40.5,
+        "exact": false,
+        "alsoLed": [
+          "Pune Warriors"
+        ]
+      },
+      {
+        "player": "Eoin Morgan",
+        "country": "England",
+        "firstSeason": 2020,
+        "lastSeason": 2021,
+        "titles": 0,
+        "matches": 24,
+        "won": 11,
+        "lost": 12,
+        "winPct": 45.8,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Nitish Rana",
+        "country": "India",
+        "firstSeason": 2023,
+        "lastSeason": 2023,
+        "titles": 0,
+        "matches": 14,
+        "won": 6,
+        "lost": 8,
+        "winPct": 42.9,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Brendon McCullum",
+        "country": "New Zealand",
+        "firstSeason": 2009,
+        "lastSeason": 2016,
+        "titles": 0,
+        "matches": 14,
+        "won": 3,
+        "lost": 10,
+        "winPct": 21.4,
+        "exact": false,
+        "alsoLed": [
+          "Gujarat Lions"
+        ]
+      }
+    ],
+    "Punjab Kings": [
+      {
+        "player": "Shreyas Iyer",
+        "country": "India",
+        "firstSeason": 2018,
+        "lastSeason": 2026,
+        "titles": 1,
+        "matches": 101,
+        "won": 55,
+        "lost": 41,
+        "winPct": 54.5,
+        "exact": false,
+        "alsoLed": [
+          "Delhi Capitals",
+          "Kolkata Knight Riders"
+        ]
+      },
+      {
+        "player": "Adam Gilchrist",
+        "country": "Australia",
+        "firstSeason": 2008,
+        "lastSeason": 2013,
+        "titles": 1,
+        "matches": 74,
+        "won": 35,
+        "lost": 39,
+        "winPct": 47.3,
+        "exact": false,
+        "alsoLed": [
+          "Deccan Chargers"
+        ]
+      },
+      {
+        "player": "K. L. Rahul",
+        "country": "India",
+        "firstSeason": 2020,
+        "lastSeason": 2023,
+        "titles": 0,
+        "matches": 64,
+        "won": 31,
+        "lost": 31,
+        "winPct": 48.4,
+        "exact": false,
+        "alsoLed": [
+          "Lucknow Super Giants"
+        ]
+      },
+      {
+        "player": "Virender Sehwag",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2015,
+        "titles": 0,
+        "matches": 53,
+        "won": 28,
+        "lost": 24,
+        "winPct": 52.8,
+        "exact": false,
+        "alsoLed": [
+          "Delhi Capitals"
+        ]
+      },
+      {
+        "player": "Kumar Sangakkara",
+        "country": "Sri Lanka",
+        "firstSeason": 2010,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 47,
+        "won": 15,
+        "lost": 30,
+        "winPct": 31.9,
+        "exact": false,
+        "alsoLed": [
+          "Deccan Chargers",
+          "Sunrisers Hyderabad"
+        ]
+      },
+      {
+        "player": "Yuvraj Singh",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2011,
+        "titles": 0,
+        "matches": 43,
+        "won": 21,
+        "lost": 21,
+        "winPct": 48.8,
+        "exact": false,
+        "alsoLed": [
+          "Pune Warriors"
+        ]
+      },
+      {
+        "player": "George Bailey",
+        "country": "Australia",
+        "firstSeason": 2014,
+        "lastSeason": 2015,
+        "titles": 0,
+        "matches": 30,
+        "won": 14,
+        "lost": 16,
+        "winPct": 46.7,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Mahela Jayawardene",
+        "country": "Sri Lanka",
+        "firstSeason": 2010,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 30,
+        "won": 10,
+        "lost": 19,
+        "winPct": 33.3,
+        "exact": false,
+        "alsoLed": [
+          "Kochi Tuskers Kerala",
+          "Delhi Capitals"
+        ]
+      },
+      {
+        "player": "Ravichandran Ashwin",
+        "country": "India",
+        "firstSeason": 2018,
+        "lastSeason": 2019,
+        "titles": 0,
+        "matches": 28,
+        "won": 12,
+        "lost": 16,
+        "winPct": 42.9,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Shikhar Dhawan",
+        "country": "India",
+        "firstSeason": 2014,
+        "lastSeason": 2024,
+        "titles": 0,
+        "matches": 27,
+        "won": 10,
+        "lost": 17,
+        "winPct": 37,
+        "exact": false,
+        "alsoLed": [
+          "Sunrisers Hyderabad"
+        ]
+      },
+      {
+        "player": "Mayank Agarwal",
+        "country": "India",
+        "firstSeason": 2021,
+        "lastSeason": 2022,
+        "titles": 0,
+        "matches": 14,
+        "won": 7,
+        "lost": 7,
+        "winPct": 50,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Glenn Maxwell",
+        "country": "Australia",
+        "firstSeason": 2017,
+        "lastSeason": 2017,
+        "titles": 0,
+        "matches": 14,
+        "won": 7,
+        "lost": 7,
+        "winPct": 50,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "David Hussey",
+        "country": "Australia",
+        "firstSeason": 2012,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 12,
+        "won": 6,
+        "lost": 6,
+        "winPct": 50,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Sam Curran",
+        "country": "England",
+        "firstSeason": 2023,
+        "lastSeason": 2024,
+        "titles": 0,
+        "matches": 11,
+        "won": 5,
+        "lost": 6,
+        "winPct": 45.5,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Murali Vijay",
+        "country": "India",
+        "firstSeason": 2016,
+        "lastSeason": 2016,
+        "titles": 0,
+        "matches": 8,
+        "won": 3,
+        "lost": 5,
+        "winPct": 37.5,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "David Miller",
+        "country": "South Africa",
+        "firstSeason": 2016,
+        "lastSeason": 2016,
+        "titles": 0,
+        "matches": 6,
+        "won": 1,
+        "lost": 5,
+        "winPct": 16.7,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Jitesh Sharma",
+        "country": "India",
+        "firstSeason": 2024,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 4,
+        "won": 2,
+        "lost": 2,
+        "winPct": 50,
+        "exact": false,
+        "alsoLed": [
+          "Royal Challengers Bengaluru"
+        ]
+      }
+    ],
+    "Sunrisers Hyderabad": [
+      {
+        "player": "David Warner",
+        "country": "Australia",
+        "firstSeason": 2013,
+        "lastSeason": 2023,
+        "titles": 1,
+        "matches": 83,
+        "won": 40,
+        "lost": 41,
+        "winPct": 48.2,
+        "exact": false,
+        "alsoLed": [
+          "Delhi Capitals"
+        ]
+      },
+      {
+        "player": "Kumar Sangakkara",
+        "country": "Sri Lanka",
+        "firstSeason": 2010,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 47,
+        "won": 15,
+        "lost": 30,
+        "winPct": 31.9,
+        "exact": false,
+        "alsoLed": [
+          "Punjab Kings",
+          "Deccan Chargers"
+        ]
+      },
+      {
+        "player": "Kane Williamson",
+        "country": "New Zealand",
+        "firstSeason": 2018,
+        "lastSeason": 2022,
+        "titles": 0,
+        "matches": 46,
+        "won": 22,
+        "lost": 23,
+        "winPct": 47.8,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Pat Cummins",
+        "country": "Australia",
+        "firstSeason": 2024,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 38,
+        "won": 20,
+        "lost": 17,
+        "winPct": 52.6,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Shikhar Dhawan",
+        "country": "India",
+        "firstSeason": 2014,
+        "lastSeason": 2024,
+        "titles": 0,
+        "matches": 27,
+        "won": 10,
+        "lost": 17,
+        "winPct": 37,
+        "exact": false,
+        "alsoLed": [
+          "Punjab Kings"
+        ]
+      },
+      {
+        "player": "Aiden Markram",
+        "country": "South Africa",
+        "firstSeason": 2023,
+        "lastSeason": 2023,
+        "titles": 0,
+        "matches": 13,
+        "won": 4,
+        "lost": 9,
+        "winPct": 30.8,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Cameron White",
+        "country": "Australia",
+        "firstSeason": 2011,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 12,
+        "won": 7,
+        "lost": 5,
+        "winPct": 58.3,
+        "exact": false,
+        "alsoLed": [
+          "Deccan Chargers"
+        ]
+      },
+      {
+        "player": "Bhuvneshwar Kumar",
+        "country": "India",
+        "firstSeason": 2019,
+        "lastSeason": 2023,
+        "titles": 0,
+        "matches": 8,
+        "won": 2,
+        "lost": 6,
+        "winPct": 25,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Ishan Kishan",
+        "country": "India",
+        "firstSeason": 2026,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 7,
+        "won": 4,
+        "lost": 3,
+        "winPct": 57.1,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Darren Sammy",
+        "country": "West Indies",
+        "firstSeason": 2014,
+        "lastSeason": 2014,
+        "titles": 0,
+        "matches": 4,
+        "won": 2,
+        "lost": 2,
+        "winPct": 50,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Manish Pandey",
+        "country": "India",
+        "firstSeason": 2021,
+        "lastSeason": 2021,
+        "titles": 0,
+        "matches": 1,
+        "won": 0,
+        "lost": 1,
+        "winPct": 0,
+        "exact": true,
+        "alsoLed": []
+      }
+    ],
+    "Deccan Chargers": [
+      {
+        "player": "Adam Gilchrist",
+        "country": "Australia",
+        "firstSeason": 2008,
+        "lastSeason": 2013,
+        "titles": 1,
+        "matches": 74,
+        "won": 35,
+        "lost": 39,
+        "winPct": 47.3,
+        "exact": false,
+        "alsoLed": [
+          "Punjab Kings"
+        ]
+      },
+      {
+        "player": "Kumar Sangakkara",
+        "country": "Sri Lanka",
+        "firstSeason": 2010,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 47,
+        "won": 15,
+        "lost": 30,
+        "winPct": 31.9,
+        "exact": false,
+        "alsoLed": [
+          "Punjab Kings",
+          "Sunrisers Hyderabad"
+        ]
+      },
+      {
+        "player": "Cameron White",
+        "country": "Australia",
+        "firstSeason": 2011,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 12,
+        "won": 7,
+        "lost": 5,
+        "winPct": 58.3,
+        "exact": false,
+        "alsoLed": [
+          "Sunrisers Hyderabad"
+        ]
+      },
+      {
+        "player": "V. V. S. Laxman",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2008,
+        "titles": 0,
+        "matches": 6,
+        "won": 1,
+        "lost": 5,
+        "winPct": 16.7,
+        "exact": true,
+        "alsoLed": []
+      }
+    ],
+    "Lucknow Super Giants": [
+      {
+        "player": "Rishabh Pant",
+        "country": "India",
+        "firstSeason": 2021,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 71,
+        "won": 33,
+        "lost": 36,
+        "winPct": 46.5,
+        "exact": false,
+        "alsoLed": [
+          "Delhi Capitals"
+        ]
+      },
+      {
+        "player": "K. L. Rahul",
+        "country": "India",
+        "firstSeason": 2020,
+        "lastSeason": 2023,
+        "titles": 0,
+        "matches": 64,
+        "won": 31,
+        "lost": 31,
+        "winPct": 48.4,
+        "exact": false,
+        "alsoLed": [
+          "Punjab Kings"
+        ]
+      },
+      {
+        "player": "Krunal Pandya",
+        "country": "India",
+        "firstSeason": 2023,
+        "lastSeason": 2023,
+        "titles": 0,
+        "matches": 6,
+        "won": 3,
+        "lost": 2,
+        "winPct": 50,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Nicholas Pooran",
+        "country": "West Indies",
+        "firstSeason": 2024,
+        "lastSeason": 2024,
+        "titles": 0,
+        "matches": 1,
+        "won": 1,
+        "lost": 0,
+        "winPct": 100,
+        "exact": true,
+        "alsoLed": []
+      }
+    ],
+    "Gujarat Titans": [
+      {
+        "player": "Hardik Pandya",
+        "country": "India",
+        "firstSeason": 2022,
+        "lastSeason": 2026,
+        "titles": 1,
+        "matches": 70,
+        "won": 37,
+        "lost": 33,
+        "winPct": 52.9,
+        "exact": false,
+        "alsoLed": [
+          "Mumbai Indians"
+        ]
+      },
+      {
+        "player": "Shubman Gill",
+        "country": "India",
+        "firstSeason": 2024,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 43,
+        "won": 24,
+        "lost": 19,
+        "winPct": 55.8,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Rashid Khan",
+        "country": "Afghanistan",
+        "firstSeason": 2022,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 3,
+        "won": 1,
+        "lost": 2,
+        "winPct": 33.3,
+        "exact": true,
+        "alsoLed": []
+      }
+    ],
+    "Rajasthan Royals": [
+      {
+        "player": "Sanju Samson",
+        "country": "India",
+        "firstSeason": 2021,
+        "lastSeason": 2025,
+        "titles": 0,
+        "matches": 67,
+        "won": 33,
+        "lost": 32,
+        "winPct": 49.3,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Shane Warne",
+        "country": "Australia",
+        "firstSeason": 2008,
+        "lastSeason": 2011,
+        "titles": 1,
+        "matches": 55,
+        "won": 30,
+        "lost": 24,
+        "winPct": 54.5,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Ajinkya Rahane",
+        "country": "India",
+        "firstSeason": 2017,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 52,
+        "won": 19,
+        "lost": 30,
+        "winPct": 36.5,
+        "exact": false,
+        "alsoLed": [
+          "Kolkata Knight Riders",
+          "Rising Pune Supergiant"
+        ]
+      },
+      {
+        "player": "Rahul Dravid",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 48,
+        "won": 22,
+        "lost": 26,
+        "winPct": 45.8,
+        "exact": false,
+        "alsoLed": [
+          "Royal Challengers Bengaluru"
+        ]
+      },
+      {
+        "player": "Steven Smith",
+        "country": "Australia",
+        "firstSeason": 2012,
+        "lastSeason": 2020,
+        "titles": 0,
+        "matches": 43,
+        "won": 25,
+        "lost": 17,
+        "winPct": 58.1,
+        "exact": false,
+        "alsoLed": [
+          "Pune Warriors",
+          "Rising Pune Supergiant"
+        ]
+      },
+      {
+        "player": "Shane Watson",
+        "country": "Australia",
+        "firstSeason": 2008,
+        "lastSeason": 2017,
+        "titles": 0,
+        "matches": 24,
+        "won": 8,
+        "lost": 13,
+        "winPct": 33.3,
+        "exact": false,
+        "alsoLed": [
+          "Royal Challengers Bengaluru"
+        ]
+      },
+      {
+        "player": "Riyan Parag",
+        "country": "India",
+        "firstSeason": 2025,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 22,
+        "won": 10,
+        "lost": 12,
+        "winPct": 45.5,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Yashasvi Jaiswal",
+        "country": "India",
+        "firstSeason": 2026,
+        "lastSeason": 2026,
+        "titles": 0,
+        "matches": 2,
+        "won": 1,
+        "lost": 1,
+        "winPct": 50,
+        "exact": true,
+        "alsoLed": []
+      }
+    ],
+    "Pune Warriors": [
+      {
+        "player": "Steven Smith",
+        "country": "Australia",
+        "firstSeason": 2012,
+        "lastSeason": 2020,
+        "titles": 0,
+        "matches": 43,
+        "won": 25,
+        "lost": 17,
+        "winPct": 58.1,
+        "exact": false,
+        "alsoLed": [
+          "Rising Pune Supergiant",
+          "Rajasthan Royals"
+        ]
+      },
+      {
+        "player": "Yuvraj Singh",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2011,
+        "titles": 0,
+        "matches": 43,
+        "won": 21,
+        "lost": 21,
+        "winPct": 48.8,
+        "exact": false,
+        "alsoLed": [
+          "Punjab Kings"
+        ]
+      },
+      {
+        "player": "Saurav Ganguly",
+        "country": "India",
+        "firstSeason": 2008,
+        "lastSeason": 2012,
+        "titles": 0,
+        "matches": 42,
+        "won": 17,
+        "lost": 25,
+        "winPct": 40.5,
+        "exact": false,
+        "alsoLed": [
+          "Kolkata Knight Riders"
+        ]
+      },
+      {
+        "player": "Aaron Finch",
+        "country": "Australia",
+        "firstSeason": 2013,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 10,
+        "won": 2,
+        "lost": 8,
+        "winPct": 20,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Angelo Mathews",
+        "country": "Sri Lanka",
+        "firstSeason": 2013,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 5,
+        "won": 1,
+        "lost": 4,
+        "winPct": 20,
+        "exact": true,
+        "alsoLed": []
+      },
+      {
+        "player": "Ross Taylor",
+        "country": "New Zealand",
+        "firstSeason": 2013,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 1,
+        "won": 1,
+        "lost": 0,
+        "winPct": 100,
+        "exact": true,
+        "alsoLed": []
+      }
+    ],
+    "Gujarat Lions": [
+      {
+        "player": "Suresh Raina",
+        "country": "India",
+        "firstSeason": 2010,
+        "lastSeason": 2019,
+        "titles": 0,
+        "matches": 34,
+        "won": 14,
+        "lost": 18,
+        "winPct": 41.2,
+        "exact": false,
+        "alsoLed": [
+          "Chennai Super Kings"
+        ]
+      },
+      {
+        "player": "Brendon McCullum",
+        "country": "New Zealand",
+        "firstSeason": 2009,
+        "lastSeason": 2016,
+        "titles": 0,
+        "matches": 14,
+        "won": 3,
+        "lost": 10,
+        "winPct": 21.4,
+        "exact": false,
+        "alsoLed": [
+          "Kolkata Knight Riders"
+        ]
+      }
+    ],
+    "Kochi Tuskers Kerala": [
+      {
+        "player": "Mahela Jayawardene",
+        "country": "Sri Lanka",
+        "firstSeason": 2010,
+        "lastSeason": 2013,
+        "titles": 0,
+        "matches": 30,
+        "won": 10,
+        "lost": 19,
+        "winPct": 33.3,
+        "exact": false,
+        "alsoLed": [
+          "Punjab Kings",
+          "Delhi Capitals"
+        ]
+      },
+      {
+        "player": "Parthiv Patel",
+        "country": "India",
+        "firstSeason": 2011,
+        "lastSeason": 2011,
+        "titles": 0,
+        "matches": 1,
+        "won": 0,
+        "lost": 1,
+        "winPct": 0,
+        "exact": true,
+        "alsoLed": []
+      }
+    ]
+  }
+}

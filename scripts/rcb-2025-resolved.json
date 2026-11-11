@@ -1,0 +1,378 @@
+[
+  {
+    "player": {
+      "name": "Virat Kohli",
+      "cricsheetName": "V Kohli",
+      "country": "India",
+      "role": null,
+      "acquisition": "retained",
+      "priceLakh": 2100,
+      "priceUsd": null,
+      "priceDisplay": "₹21.00 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://documents.iplt20.com/ipl/IPLHeadshot2025/164.png",
+      "size": 1168969
+    }
+  },
+  {
+    "player": {
+      "name": "Josh Hazlewood",
+      "cricsheetName": "JR Hazlewood",
+      "country": "Australia",
+      "role": null,
+      "acquisition": "auction",
+      "priceLakh": 1250,
+      "priceUsd": null,
+      "priceDisplay": "₹12.50 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2026-03/2%20%2813%29.png",
+      "size": 529581
+    }
+  },
+  {
+    "player": {
+      "name": "Phil Salt",
+      "cricsheetName": "PD Salt",
+      "country": "England",
+      "role": null,
+      "acquisition": "auction",
+      "priceLakh": 1150,
+      "priceUsd": null,
+      "priceDisplay": "₹11.50 Cr",
+      "played": true
+    },
+    "source": null
+  },
+  {
+    "player": {
+      "name": "Jitesh Sharma",
+      "cricsheetName": "JM Sharma",
+      "country": "India",
+      "role": null,
+      "acquisition": "auction",
+      "priceLakh": 1100,
+      "priceUsd": null,
+      "priceDisplay": "₹11.00 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2026-03/Jitesh%203_0.png",
+      "size": 466324
+    }
+  },
+  {
+    "player": {
+      "name": "Rajat Patidar",
+      "cricsheetName": "RM Patidar",
+      "country": "India",
+      "role": null,
+      "acquisition": "retained",
+      "priceLakh": 1100,
+      "priceUsd": null,
+      "priceDisplay": "₹11.00 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2026-03/rajat.png",
+      "size": 492275
+    }
+  },
+  {
+    "player": {
+      "name": "Bhuvneshwar Kumar",
+      "cricsheetName": "B Kumar",
+      "country": "India",
+      "role": null,
+      "acquisition": "auction",
+      "priceLakh": 1075,
+      "priceUsd": null,
+      "priceDisplay": "₹10.75 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://documents.iplt20.com/ipl/IPLHeadshot2025/116.png",
+      "size": 1340358
+    }
+  },
+  {
+    "player": {
+      "name": "Liam Livingstone",
+      "cricsheetName": "LS Livingstone",
+      "country": "England",
+      "role": "All-rounder",
+      "acquisition": "auction",
+      "priceLakh": 875,
+      "priceUsd": null,
+      "priceDisplay": "₹8.75 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2025-03/livingstone.png",
+      "size": 500469
+    }
+  },
+  {
+    "player": {
+      "name": "Rasikh Salam Dar",
+      "cricsheetName": "Rasikh Salam",
+      "country": "India",
+      "role": null,
+      "acquisition": "auction",
+      "priceLakh": 600,
+      "priceUsd": null,
+      "priceDisplay": "₹6.00 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2026-03/2%20%2818%29.png",
+      "size": 536178
+    }
+  },
+  {
+    "player": {
+      "name": "Krunal Pandya",
+      "cricsheetName": "KH Pandya",
+      "country": "India",
+      "role": null,
+      "acquisition": "auction",
+      "priceLakh": 575,
+      "priceUsd": null,
+      "priceDisplay": "₹5.75 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2025-03/krunal.png",
+      "size": 418535
+    }
+  },
+  {
+    "player": {
+      "name": "Yash Dayal",
+      "cricsheetName": "Yash Dayal",
+      "country": "India",
+      "role": null,
+      "acquisition": "retained",
+      "priceLakh": 500,
+      "priceUsd": null,
+      "priceDisplay": "₹5.00 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2025-03/dayal.png",
+      "size": 442511
+    }
+  },
+  {
+    "player": {
+      "name": "Tim David",
+      "cricsheetName": "TH David",
+      "country": "Australia",
+      "role": "All-rounder",
+      "acquisition": "auction",
+      "priceLakh": 300,
+      "priceUsd": null,
+      "priceDisplay": "₹3.00 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2025-03/david.png",
+      "size": 438975
+    }
+  },
+  {
+    "player": {
+      "name": "Jacob Bethell",
+      "cricsheetName": "JG Bethell",
+      "country": "England",
+      "role": "All-rounder",
+      "acquisition": "auction",
+      "priceLakh": 260,
+      "priceUsd": null,
+      "priceDisplay": "₹2.60 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2025-03/bethell.png",
+      "size": 450648
+    }
+  },
+  {
+    "player": {
+      "name": "Suyash Sharma",
+      "cricsheetName": "Suyash Sharma",
+      "country": "India",
+      "role": null,
+      "acquisition": "auction",
+      "priceLakh": 260,
+      "priceUsd": null,
+      "priceDisplay": "₹2.60 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2026-03/2%20%2821%29.png",
+      "size": 499433
+    }
+  },
+  {
+    "player": {
+      "name": "Devdutt Padikkal",
+      "cricsheetName": "D Padikkal",
+      "country": "India",
+      "role": null,
+      "acquisition": "auction",
+      "priceLakh": 200,
+      "priceUsd": null,
+      "priceDisplay": "₹2.00 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2026-03/2%20%2810%29_0.png",
+      "size": 549796
+    }
+  },
+  {
+    "player": {
+      "name": "Nuwan Thushara",
+      "cricsheetName": "N Thushara",
+      "country": "Sri Lanka",
+      "role": "Bowler",
+      "acquisition": "auction",
+      "priceLakh": 160,
+      "priceUsd": null,
+      "priceDisplay": "₹1.60 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2025-03/nuwan.png",
+      "size": 476653
+    }
+  },
+  {
+    "player": {
+      "name": "Romario Shepherd",
+      "cricsheetName": "R Shepherd",
+      "country": "West Indies",
+      "role": "All-rounder",
+      "acquisition": "auction",
+      "priceLakh": 150,
+      "priceUsd": null,
+      "priceDisplay": "₹1.50 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2025-03/romario.png",
+      "size": 509538
+    }
+  },
+  {
+    "player": {
+      "name": "Lungi Ngidi",
+      "cricsheetName": "L Ngidi",
+      "country": "South Africa",
+      "role": "Bowler",
+      "acquisition": "auction",
+      "priceLakh": 100,
+      "priceUsd": null,
+      "priceDisplay": "₹1.00 Cr",
+      "played": true
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2026-03/2%20%2816%29.png",
+      "size": 534330
+    }
+  },
+  {
+    "player": {
+      "name": "Swapnil Singh",
+      "cricsheetName": null,
+      "country": "India",
+      "role": "All-rounder",
+      "acquisition": "auction",
+      "priceLakh": 50,
+      "priceUsd": null,
+      "priceDisplay": "₹50 L",
+      "played": false
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2026-03/2%20%2822%29.png",
+      "size": 551508
+    }
+  },
+  {
+    "player": {
+      "name": "Abhinandan Singh",
+      "cricsheetName": null,
+      "country": "India",
+      "role": "Bowler",
+      "acquisition": "auction",
+      "priceLakh": 30,
+      "priceUsd": null,
+      "priceDisplay": "₹30 L",
+      "played": false
+    },
+    "source": {
+      "url": "https://www.royalchallengers.com/PRRCB01/public/2026-03/2%20%2811%29.png",
+      "size": 595130
+    }
+  },
+  {
+    "player": {
+      "name": "Manoj Bhandage",
+      "cricsheetName": "MS Bhandage",
+      "country": "India",
+      "role": "All-rounder",
+      "acquisition": "auction",
+      "priceLakh": 30,
+      "priceUsd": null,
+      "priceDisplay": "₹30 L",
+      "played": true
+    },
+    "source": null
+  },
+  {
+    "player": {
+      "name": "Mohit Rathee",
+      "cricsheetName": null,
+      "country": "India",
+      "role": "Bowler",
+      "acquisition": "auction",
+      "priceLakh": 30,
+      "priceUsd": null,
+      "priceDisplay": "₹30 L",
+      "played": false
+    },
+    "source": null
+  },
+  {
+    "player": {
+      "name": "Swastik Chikara",
+      "cricsheetName": null,
+      "country": "India",
+      "role": "Batter",
+      "acquisition": "auction",
+      "priceLakh": 30,
+      "priceUsd": null,
+      "priceDisplay": "₹30 L",
+      "played": false
+    },
+    "source": null
+  },
+  {
+    "player": {
+      "name": "MA Agarwal",
+      "cricsheetName": "MA Agarwal",
+      "country": null,
+      "role": null,
+      "acquisition": null,
+      "priceLakh": null,
+      "priceUsd": null,
+      "priceDisplay": null,
+      "played": true
+    },
+    "source": null
+  }
+]

@@ -1,0 +1,1373 @@
+Most runs(in innings wise,phase wise,bowler wise,venue wise,team wise,season wise)
+High score(in innings wise,phase wise,bowler wise,venue wise,team wise,season wise)
+Batting average(in innings wise,phase wise,bowler wise,venue wise,team wise,season wise)
+Batting strike rate(in innings wise,phase wise,bowler wise,venue wise,team wise,season wise)
+Hundreds
+Fifties
+Fours(in innings wise,phase wise,bowler wise,venue wise,team wise,season wise)
+Sixes(in innings wise,phase wise,bowler wise,venue wise,team wise,season wise)
+Nineties
+Most runs from boundaries only in innings
+
+Most wickets(in innings wise,phase wise,bowler wise,venue wise,team wise,season wise)
+Bowling average
+Best bowling
+Most 4/5 wicket haul
+Best economy
+Bowling strike rate
+Most runs conceeded(in innings wise,phase wise,bowler wise,venue wise,team wise,season wise)
+
+Ball map
+Win probability
+Partnerships
+Run rate
+Overs
+Worn
+
+Most dismmisals(in innings wise,phase wise,bowler wise,venue wise,mode wise,team wise,season wise)
+
+
+
+Smart stats(total impact)
+Highest total
+Highest match aggregates
+Largest victories
+Most extras in an innings
+
+
+Special features of filter options like suppose in a live match if we ask doubts like particular batsman scoring areas (wagon wheel,ball trajectory,hawk eye) against particular bowler score over wise,phase wise how good is he? And in particular season (innings wise i want filter option to see his runs or wickets against particular kind of delivery,and shot selection wise,venue wise,chasing or first innings (is chasing under 120,150,200,250) like that many criteria queries… 
+
+
+And i asked most runs in ipl 2025
+Next i added query to get only from particular team..
+Next i asked to take particular player
+And i asked to get his strike rate 
+And next against particular bowler
+And next phase wise in death over 
+And next i want to know using all these filters his scoring areas
+
+Like that still many more possible scenarios,doubts..
+
+No of dot balls
+Purple & orange cap
+Super striker of the match
+Most valuable player
+Emerging player
+
+
+Features
+Blogs
+Articles
+News reports
+Spotlight writeupsa
+
+this i want to build I am building a production-grade AI-native platform called:
+
+# IPL ANALYTICS ENGINE
+
+This is NOT a cricket website.
+
+This is NOT a dashboard.
+
+This is NOT a stats portal.
+
+This is a:
+
+# CRICKET INTELLIGENCE OPERATING SYSTEM
+
+combining:
+
+* ESPNcricinfo Statsguru
+* Cricbuzz analytics
+* IPLT20 official data systems
+* IPLens intelligence
+* CricViz contextual analytics
+* Opta event intelligence
+* Bloomberg Terminal architecture
+* Formula 1 telemetry systems
+* Netflix behavioral analytics
+* McKinsey consulting intelligence
+* AI-native conversational querying
+* advanced sports knowledge graphs
+* future autonomous AI analyst systems
+
+====================================================
+CORE PHILOSOPHY
+===============
+
+I am NOT building:
+
+* static scorecards
+* simple dashboards
+* basic player stats
+* generic charts
+* fantasy-only analytics
+
+I AM building:
+
+* interconnected intelligence graphs
+* contextual analytics engines
+* event-based intelligence systems
+* AI-ready cricket architecture
+* immersive telemetry dashboards
+* dynamic query systems
+* conversational analytics engines
+* metadata-driven intelligence
+* future autonomous sports AI systems
+
+====================================================
+PRIMARY OBJECTIVE
+=================
+
+Create a complete IPL Intelligence Graph where:
+
+* every ball
+* every player
+* every delivery
+* every shot
+* every phase
+* every crowd reaction
+* every attention spike
+* every sponsorship moment
+* every auction decision
+* every emotional event
+* every tactical shift
+
+is connected into:
+
+# ONE INTERCONNECTED CRICKET KNOWLEDGE SYSTEM
+
+====================================================
+SYSTEM ARCHITECTURE
+===================
+
+The platform must support:
+
+* Power BI dashboards
+* AI querying
+* conversational analytics
+* nested filtering
+* telemetry-style visualization
+* advanced slicers
+* future API architecture
+* future website embedding
+* future LLM integration
+* future predictive AI systems
+* future autonomous cricket agents
+
+====================================================
+PRIMARY DATA SOURCES
+====================
+
+Use:
+
+* Cricsheet
+* ESPNcricinfo
+* Cricbuzz
+* IPLT20 official data
+* IPL auction data
+* Kaggle IPL datasets
+* Google Trends
+* YouTube analytics
+* Twitter/X engagement
+* Instagram reel trends
+* sponsorship reports
+* broadcast reports
+* publicly available articles/blogs
+* commentary text
+* scorecards
+* match reports
+* venue reports
+
+====================================================
+UNIVERSAL EVENT ENGINE
+======================
+
+THIS IS THE CORE OF THE ENTIRE SYSTEM.
+
+EVERY BALL should contain:
+
+* match_id
+* season
+* innings
+* over
+* ball
+* batter
+* bowler
+* non_striker
+* batting_team
+* bowling_team
+* venue
+* phase
+* current_rr
+* required_rr
+* wickets_left
+* pressure_score
+* momentum_state
+* match_importance
+* playoff_stage
+* chase_vs_defend
+* crowd_pressure
+* delivery_type
+* delivery_length
+* line
+* speed_approximation
+* shot_type
+* shot_zone
+* field_zone
+* scoring_zone
+* outcome
+* dismissal_type
+* fielding_position
+* partnership_context
+* collapse_state
+* acceleration_state
+* attention_spike
+* emotional_spike
+* sponsor_visibility
+* commentary_sentiment
+* social_media_spike
+
+This UNIVERSAL EVENT ENGINE becomes:
+
+# THE HEART OF THE CRICKET INTELLIGENCE GRAPH
+
+====================================================
+MASTER FILTER ARCHITECTURE
+==========================
+
+EVERY table, metric, chart and query must support:
+
+* season
+* player
+* team
+* venue
+* innings
+* over
+* phase
+* batter
+* bowler
+* opposition
+* playoff
+* qualifier
+* final
+* day/night
+* home/away
+* chasing/defending
+* required RR
+* wickets left
+* pressure state
+* collapse state
+* partnership state
+* delivery type
+* delivery length
+* line and length
+* bowler type
+* shot type
+* scoring zone
+* field zone
+* match importance
+* emotional intensity
+* momentum state
+* sponsor visibility
+* crowd pressure
+* social spike level
+* device type
+* language
+* geography
+* platform source
+* demographic segment
+
+====================================================
+LAYER 1 — SPORTS INTELLIGENCE ENGINE
+====================================
+
+====================================================
+A. CORE BATTING INTELLIGENCE
+============================
+
+Track:
+
+* most runs
+* high scores
+* batting average
+* batting strike rate
+* hundreds
+* fifties
+* nineties
+* ducks
+* fours
+* sixes
+* boundary %
+* dot-ball %
+* singles conversion
+* doubles conversion
+* boundary burst frequency
+* acceleration curves
+* batting tempo
+* balls 1-10 SR
+* balls 11-20 SR
+* balls 20+ SR
+* chase SR
+* playoff SR
+* pressure SR
+* clutch SR
+* phase SR
+* spin SR
+* pace SR
+* left-arm SR
+* right-arm SR
+* death-over SR
+* powerplay aggression
+* scoring zone dominance
+* shot success %
+* wagon wheel approximations
+
+====================================================
+B. CORE BOWLING INTELLIGENCE
+============================
+
+Track:
+
+* wickets
+* economy
+* strike rate
+* bowling average
+* dot-ball %
+* pressure economy
+* death-over economy
+* powerplay economy
+* wicket frequency
+* breakthrough overs
+* spell impact
+* variation success
+* yorker success
+* slower-ball success
+* bouncer success
+* pressure wicket %
+* clutch overs
+* phase-wise wicket rate
+* runs conceded patterns
+* matchup dominance
+* dismissal probability
+
+====================================================
+C. DELIVERY-TYPE ENGINE
+=======================
+
+Track:
+
+* yorkers
+* slower balls
+* cutters
+* short balls
+* bouncers
+* length balls
+* full tosses
+* googlies
+* off-breaks
+* leg-breaks
+* wide yorkers
+* hard lengths
+
+Analytics:
+
+* weakness maps
+* dismissal zones
+* scoring suppression
+* delivery success probability
+* pressure delivery efficiency
+
+====================================================
+D. SHOT-TYPE ENGINE
+===================
+
+Track:
+
+* pull
+* cut
+* flick
+* sweep
+* reverse sweep
+* lofted drive
+* straight drive
+* upper cut
+* paddle scoop
+* ramp shots
+
+Analytics:
+
+* scoring zones
+* safest scoring options
+* shot risk
+* boundary conversion
+* pressure shot selection
+* shot success under pressure
+
+====================================================
+E. BALL TRAJECTORY APPROXIMATION ENGINE
+=======================================
+
+Approximate:
+
+* line
+* length
+* release area
+* bounce profile
+* trajectory zones
+
+Outputs:
+
+* pitch maps
+* dismissal maps
+* scoring maps
+* bowler attack plans
+* batter weakness zones
+
+====================================================
+F. DELIVERY OUTCOME ENGINE
+==========================
+
+Track:
+
+* dots
+* singles
+* doubles
+* triples
+* boundaries
+* sixes
+* wickets
+* extras
+
+Analytics:
+
+* pressure release
+* boundary dependency
+* balls per boundary
+* scoring efficiency
+* strike rotation
+
+====================================================
+G. BALL CONTEXT ENGINE
+======================
+
+Track:
+
+* current RR
+* required RR
+* wickets left
+* collapse state
+* recovery state
+* pressure threshold
+* acceleration threshold
+* partnership dependency
+
+====================================================
+H. BATTING TEMPO ENGINE
+=======================
+
+Track:
+
+* innings pacing
+* acceleration curves
+* settling time
+* aggression spikes
+* finishing bursts
+
+====================================================
+I. COLLAPSE & RECOVERY ENGINE
+=============================
+
+Track:
+
+* collapse probability
+* recovery partnerships
+* rescue innings
+* stabilization metrics
+
+====================================================
+J. BOWLER SPELL ENGINE
+======================
+
+Track:
+
+* spell impact
+* pressure spell
+* wicket bursts
+* economy bursts
+* momentum-changing spells
+
+====================================================
+K. PHASE TRANSITION ENGINE
+==========================
+
+Track:
+
+* powerplay → middle transition
+* middle → death transition
+* acceleration after wickets
+* slowdown phases
+
+====================================================
+L. PRESSURE THRESHOLD ENGINE
+============================
+
+Track:
+
+* RR > 10
+* RR > 12
+* RR > 15
+* wickets under pressure
+* playoff pressure
+* final-over panic index
+
+====================================================
+M. PARTNERSHIP CHEMISTRY ENGINE
+===============================
+
+Track:
+
+* strike rotation chemistry
+* left-right combination efficiency
+* pressure partnerships
+* acceleration partnerships
+* rescue partnerships
+
+====================================================
+N. VENUE CONDITIONS ENGINE
+==========================
+
+Track:
+
+* dew factor
+* humidity
+* temperature
+* day/night conditions
+* pitch aging
+* spin vs pace bias
+
+====================================================
+O. OPPOSITION STRENGTH INDEX
+============================
+
+Track:
+
+* performance vs playoff teams
+* performance vs elite attacks
+* performance vs strong bowling units
+* flat-track bully detection
+
+====================================================
+P. MATCH NARRATIVE ENGINE
+=========================
+
+Track:
+
+* comeback wins
+* last-over thrillers
+* revenge matches
+* rivalry intensity
+* pressure collapses
+* iconic finishes
+
+====================================================
+Q. PLAYER ARCHETYPE ENGINE
+==========================
+
+Classify batters:
+
+* anchor
+* aggressor
+* finisher
+* accumulator
+* spin basher
+* pace basher
+
+Classify bowlers:
+
+* death specialist
+* powerplay specialist
+* wicket hunter
+* containment bowler
+
+====================================================
+R. MATCH IMPORTANCE ENGINE
+==========================
+
+Track:
+
+* league
+* qualifier
+* eliminator
+* playoff
+* final
+
+Analytics:
+
+* finals mentality
+* playoff pressure
+* clutch performance
+* choke index
+
+====================================================
+S. SMART QUERY ENGINE
+=====================
+
+Support conversational query chaining like:
+
+Most runs in IPL 2025
+↓
+only CSK
+↓
+only Conway
+↓
+against Bumrah
+↓
+death overs
+↓
+while chasing 180+
+↓
+show scoring zones
+↓
+show dismissal map
+↓
+show wagon wheel
+↓
+show shot success %
+↓
+show yorker weakness
+↓
+show acceleration graph
+
+====================================================
+LAYER 2 — FAN PSYCHOLOGY ENGINE
+===============================
+
+Track:
+
+* sentiment velocity
+* emotional spike index
+* fan loyalty score
+* nostalgia effect
+* crowd energy
+* hero worship
+* rivalry emotion
+* meme virality
+* Dhoni effect
+* Kohli attention pull
+* crowd amplification
+* emotional collapse after wicket
+* fan migration
+* playoff emotion pressure
+* regional fan intensity
+* sentiment volatility
+* social anger spikes
+* celebration virality
+
+====================================================
+LAYER 3 — PRODUCT & GAMIFICATION ENGINE
+=======================================
+
+Track:
+
+* fantasy conversion
+* app retention
+* clickstream
+* reward loops
+* swipe heatmaps
+* prediction confidence
+* feature fatigue
+* churn probability
+* UI interaction density
+* reward addiction loops
+* session depth
+* watch-to-fantasy conversion
+
+====================================================
+LAYER 4 — SECOND-SCREEN ECONOMY ENGINE
+======================================
+
+Track:
+
+* TV vs mobile split
+* reel spike timing
+* meme spread velocity
+* simultaneous app usage
+* commentary language shifts
+* social chatter spikes
+* reaction lag
+* second-screen synchronization
+* device fragmentation
+
+====================================================
+LAYER 5 — ATTENTION ECONOMY ENGINE
+==================================
+
+Track:
+
+* attention windows
+* replay frequency
+* sponsor visibility duration
+* ad-break dropoff
+* logo exposure time
+* eyeball-share estimation
+* attention collapse moments
+* strategic timeout engagement
+
+====================================================
+LAYER 6 — BROADCAST & MEDIA ENGINE
+==================================
+
+Track:
+
+* commentary energy index
+* graphics latency
+* replay loops
+* cinematic moment detection
+* camera-switch frequency
+* stump-mic engagement
+* commentator excitement score
+* language-wise engagement
+* narrative amplification
+
+====================================================
+LAYER 7 — BUSINESS & REVENUE ENGINE
+===================================
+
+Track:
+
+* sponsorship ROI
+* revenue per attention minute
+* ticket yield per star
+* media rights growth
+* merchandise efficiency
+* fan monetization funnels
+* sponsor recall lift
+* jersey visibility value
+* dynamic pricing intelligence
+
+====================================================
+AUCTION INTELLIGENCE ENGINE
+===========================
+
+Track:
+
+* auction price
+* base price
+* retained players
+* RTM usage
+* unsold players
+* role inflation
+* Indian vs overseas inflation
+* auction round
+* budget remaining
+* franchise spending split
+* salary efficiency
+* retention efficiency
+* auction steals
+* overvaluation index
+* undervaluation index
+* age risk
+* injury risk
+* form volatility
+* squad balance
+* role balance
+* playing XI optimization
+* tactical replacement simulation
+* chemistry score
+* captaincy synergy
+* squad depth score
+
+Create formulas:
+
+ROI = Performance Score / Auction Price
+
+Overvaluation Index =
+Auction Price - Expected Performance Value
+
+Team Balance Score =
+Batting Depth + Bowling Depth + Allrounder Coverage
+
+====================================================
+LAYER 8 — PLAYER BRAND ECONOMY ENGINE
+=====================================
+
+Track:
+
+* follower delta after innings
+* endorsement fit
+* aura score
+* charisma analytics
+* celebration virality
+* meme-worthiness
+* fashion influence
+* influencer crossover
+* face-recognition engagement
+* player-brand compatibility
+
+====================================================
+LAYER 9 — STRATEGY & ECONOMIC INTELLIGENCE ENGINE
+=================================================
+
+Track:
+
+* auction simulations
+* salary optimization
+* retention optimization
+* inflation forecasting
+* tactical matchup simulations
+* playoff qualification probability
+* game theory decisions
+* macro IPL economy
+* substitution simulations
+* squad chemistry intelligence
+
+====================================================
+LAYER 10 — AI INTELLIGENCE ENGINE
+=================================
+
+Build:
+
+* live win probability AI
+* captaincy critique AI
+* autonomous insight generation
+* conversational Statsguru
+* neural match simulations
+* reinforcement learning strategies
+* tactical recommendation systems
+* player embeddings
+* graph neural networks
+* sequence modeling
+* pressure forecasting
+* injury biomechanics approximation
+* autonomous commentary generation
+* LLM-powered cricket querying
+
+====================================================
+CSV TABLE REQUIREMENTS
+======================
+
+Create:
+
+* raw tables
+* normalized tables
+* feature-engineered tables
+* AI-ready tables
+* event-level tables
+* metadata tables
+* relationship tables
+* graph-ready tables
+
+====================================================
+POWER BI REQUIREMENTS
+=====================
+
+Optimize all datasets for:
+
+* KPI cards
+* slicers
+* drilldowns
+* radar charts
+* Sankey diagrams
+* telemetry dashboards
+* emotional spike maps
+* network graphs
+* momentum streams
+* retention curves
+* heatmaps
+* scatter plots
+* trajectory visuals
+* wagon wheel approximations
+* pressure timelines
+
+====================================================
+FUTURISTIC UI REQUIREMENTS
+==========================
+
+The platform should feel like:
+
+* Bloomberg for cricket
+* CricViz evolved by AI
+* ESPN Statsguru on steroids
+* Formula 1 telemetry dashboard
+* Netflix behavioral analytics
+* AI-native sports operating system
+
+Theme:
+
+* dark futuristic UI
+* glowing analytics cards
+* immersive telemetry layouts
+* live intelligence panels
+
+Colors:
+
+* background: #050816
+* cards: #0B1020
+* purple: #7C3AED
+* blue: #2563EB
+* green: #22C55E
+* gold: #FACC15
+
+====================================================
+FINAL REQUIREMENT
+=================
+
+Think like:
+
+* Opta engineers
+* CricViz architects
+* Bloomberg data systems
+* Formula 1 telemetry engineers
+* Netflix product analysts
+* McKinsey consultants
+* AI systems architects
+* sports intelligence researchers
+
+Go absurdly granular.
+
+Maximize:
+
+* dimensional slicing
+* metadata architecture
+* AI querying
+* conversational intelligence
+* event relationships
+* dashboard storytelling
+* telemetry immersion
+* Power BI scalability
+* future API architecture
+* future website integration
+* future autonomous sports AI systems
+
+FINAL OUTPUT SHOULD FEEL LIKE:
+
+# THE OPERATING SYSTEM OF CRICKET INTELLIGENCE  You are a Senior Sports Data Engineer, AI Systems Architect, Cricket Intelligence Researcher, and Power BI Analytics Engineer.
+
+I am building a production-grade platform called:
+
+# IPL ANALYTICS ENGINE
+
+This is a futuristic AI-powered Cricket Intelligence Operating System inspired by:
+
+* ESPNcricinfo Statsguru
+* Cricbuzz analytics
+* IPLT20 official platform
+* IPLens
+* CricViz
+* Bloomberg Terminal
+* Formula 1 telemetry systems
+* Netflix product analytics
+* McKinsey consulting intelligence
+
+====================================================
+IMPORTANT EXECUTION RULE
+========================
+
+DO NOT attempt to build everything unrealistically.
+
+ONLY build:
+
+* systems for which public data is realistically available
+* systems that can be created using:
+
+ * Cricsheet
+ * ESPNcricinfo
+ * Cricbuzz
+ * IPLT20
+ * Kaggle IPL datasets
+ * publicly available articles/reports
+
+For unavailable/proprietary systems:
+
+* DO NOT hallucinate fake data
+* DO NOT invent Hawkeye-level tracking
+* DO NOT create fake pitch coordinates
+
+Instead:
+mark them clearly as:
+
+# (UPCOMING)
+
+or
+
+# (SIMULATED APPROXIMATION)
+
+====================================================
+PRIMARY OBJECTIVE
+=================
+
+Build:
+
+1. IPL data pipeline
+2. Clean IPL intelligence datasets
+3. Feature-engineered metrics
+4. Power BI-ready CSV files
+5. Layer 1 Sports Intelligence dashboards first
+
+====================================================
+CURRENT BUILD PRIORITY
+======================
+
+FOCUS ONLY ON:
+
+# LAYER 1 — SPORTS INTELLIGENCE ENGINE
+
+and partial realistic systems from:
+
+* Layer 7 Auction Intelligence
+* Layer 9 Strategy Intelligence
+
+Everything else should currently show:
+
+# (UPCOMING)
+
+====================================================
+DATA SOURCES TO USE
+===================
+
+PRIMARY:
+
+* https://cricsheet.org
+* https://www.espncricinfo.com
+* https://www.cricbuzz.com
+* https://www.iplt20.com
+* Kaggle IPL datasets
+
+SECONDARY:
+
+* Google Trends
+* public IPL articles/blogs
+* public auction reports
+
+====================================================
+STEP 1 — BUILD DATA PIPELINE
+============================
+
+Write complete executable Python code for Google Colab.
+
+Use:
+
+* pandas
+* numpy
+* requests
+* BeautifulSoup
+* json
+* matplotlib
+* plotly
+
+====================================================
+STEP 2 — CREATE THESE CSV FILES
+===============================
+
+====================================================
+CORE MATCH ENGINE
+=================
+
+1. matches_clean.csv
+  Fields:
+
+* match_id
+* season
+* teams
+* toss winner
+* toss decision
+* venue
+* winner
+* margin
+* playoff indicator
+* player_of_match
+
+====================================================
+BALL-BY-BALL ENGINE
+===================
+
+2. deliveries_clean.csv
+  Fields:
+
+* match_id
+* innings
+* over
+* ball
+* batter
+* bowler
+* non_striker
+* batting_team
+* bowling_team
+* runs
+* extras
+* wicket
+* dismissal_type
+* phase
+* current_rr
+* required_rr
+
+====================================================
+BATTING INTELLIGENCE
+====================
+
+3. batting_stats.csv
+  Create:
+
+* runs
+* average
+* strike_rate
+* boundary %
+* six %
+* phase strike rates
+* chase strike rate
+* pressure strike rate
+* death-over SR
+* powerplay aggression
+* consistency score
+
+====================================================
+BOWLING INTELLIGENCE
+====================
+
+4. bowling_stats.csv
+  Create:
+
+* wickets
+* economy
+* bowling average
+* strike rate
+* dot-ball %
+* death-over economy
+* pressure economy
+* wicket frequency
+
+====================================================
+VENUE ENGINE
+============
+
+5. venue_analysis.csv
+  Create:
+
+* average score
+* toss impact
+* batting-first win %
+* chase success %
+* spin vs pace bias
+* venue run rate
+* dew approximation
+
+====================================================
+MATCHUP ENGINE
+==============
+
+6. player_matchups.csv
+  Create:
+
+* batter vs bowler
+* strike rate
+* dismissals
+* balls faced
+* matchup dominance
+
+====================================================
+CLUTCH ENGINE
+=============
+
+7. metric_clutch_index.csv
+
+Formula:
+
+Clutch Index =
+Death Over Runs +
+Pressure Strike Rate +
+Chase Impact
+
+====================================================
+MOMENTUM ENGINE
+===============
+
+8. metric_momentum_tracker.csv
+
+Track:
+
+* over-by-over momentum
+* wicket swings
+* pressure shifts
+* acceleration swings
+
+====================================================
+PARTNERSHIP ENGINE
+==================
+
+9. partnership_stats.csv
+
+Track:
+
+* highest partnerships
+* partnership run rate
+* rescue partnerships
+* acceleration partnerships
+
+====================================================
+AUCTION ENGINE
+==============
+
+10. ipl_auction_stats.csv
+
+Collect:
+
+* player
+* role
+* country
+* auction year
+* base price
+* sold price
+* retained
+* RTM
+* franchise
+
+====================================================
+ROI ENGINE
+==========
+
+11. player_roi.csv
+
+Formula:
+
+ROI =
+Performance Score / Auction Price
+
+====================================================
+STEP 3 — BUILD FEATURE ENGINEERING
+==================================
+
+Create:
+
+* powerplay
+* middle overs
+* death overs
+* pressure situations
+* playoff pressure
+* chase pressure
+* acceleration index
+* batting tempo
+* collapse recovery
+* clutch finishing
+* momentum differential
+
+====================================================
+STEP 4 — BUILD SMART FILTER SUPPORT
+===================================
+
+Structure ALL datasets to support:
+
+* season
+* team
+* player
+* venue
+* innings
+* phase
+* batter
+* bowler
+* chasing/defending
+* playoff
+* required RR
+* pressure state
+
+====================================================
+STEP 5 — POWER BI OPTIMIZATION
+==============================
+
+Optimize outputs for:
+
+* KPI cards
+* slicers
+* drilldowns
+* scatter plots
+* radar charts
+* heatmaps
+* momentum charts
+* pressure analysis
+* matchup analysis
+
+====================================================
+STEP 6 — MARK THESE SYSTEMS AS UPCOMING
+=======================================
+
+DO NOT attempt full implementation.
+
+Instead create:
+
+* placeholder CSVs
+* placeholder schemas
+* metadata definitions
+
+Mark as:
+
+# (UPCOMING)
+
+UPCOMING SYSTEMS:
+
+* exact Hawkeye tracking
+* exact ball coordinates
+* exact wagon wheels
+* biomechanics
+* eye tracking
+* crowd decibel systems
+* AI neural simulations
+* autonomous commentary AI
+* attention tracking AI
+* facial recognition emotion AI
+* reinforcement learning systems
+* graph neural networks
+
+====================================================
+STEP 7 — GENERATE PROJECT STRUCTURE
+===================================
+
+Create folder structure:
+
+/ipl_analytics_engine
+/raw_data
+/processed_data
+/feature_engineered
+/auction_data
+/powerbi_exports
+/upcoming_modules
+/reports
+
+====================================================
+STEP 8 — FINAL OUTPUT
+=====================
+
+At the end:
+
+1. Print all CSV filenames
+2. Print row counts
+3. Print missing-value report
+4. Print schema summary
+5. Print Power BI relationship suggestions
+6. Print suggested DAX measures
+7. Print dashboard page recommendations
+8. Print which systems are:
+
+  * COMPLETE
+  * PARTIAL
+  * UPCOMING
+
+====================================================
+IMPORTANT
+=========
+
+DO NOT over-engineer fake systems.
+
+Prioritize:
+
+* clean architecture
+* realistic public data
+* Power BI usability
+* recruiter-grade analytics
+* production-quality structure
+
+The goal is:
+
+# A REALISTIC, SHIPPABLE IPL INTELLIGENCE PLATFORM
+
+not fake enterprise buzzwords.  revamp all table of content and start fresh and store all required data
+ 

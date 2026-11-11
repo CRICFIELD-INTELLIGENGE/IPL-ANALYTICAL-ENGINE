@@ -1,0 +1,147 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-kkr-007",
+ "planId": "cf-kkr-007",
+ "franchise": "KKR",
+ "aspect": "batting",
+ "title": "Left\u2013Right Combinations: Are They Worth More Than Individual Strike Rate for Kolkata Knight Riders?",
+ "slug": "kkr-left-right-combinations-are-they-worth-more-than-individual-strike-rate-for-kkr",
+ "dek": "Do left\u2013right batting partnerships unsettle bowlers enough to be worth more than raw strike rate? Kolkata Knight Riders' partnerships since 2018 put the theory to a test.",
+ "excerpt": "Across the rest of the IPL since 2018, left\u2013right pairs have scored no faster than same-handed pairs. For Kolkata Knight Riders the gap runs the other way.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "KKR"
+ ],
+ "players": [],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "KKR scored at {{ev:lr-tmix}} with a left\u2013right pair at the crease and {{ev:lr-tsame}} with a same-handed pair (2018\u20132026).",
+  "For the rest of the league the figures are {{ev:lr-lmix}} and {{ev:lr-lsame}}.",
+  "Handedness is known for {{ev:lr-cov}} of deliveries in the window; the rest are excluded."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Theory of the Awkward Pair",
+   "body": [
+    "Coaches like a left\u2013right partnership because every strike change forces bowlers to reset their line and captains to move fielders. If the theory is right, mixed pairs should score faster than same-handed pairs over a large sample.",
+    "CricField tested it by attaching each batter's handedness from player-bio data to every delivery since 2018. Both batters' hands are known for {{ev:lr-cov}} of balls."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What the Partnerships Show",
+   "body": [
+    "Across the rest of the IPL, left\u2013right pairs scored at {{ev:lr-lmix}} runs per over and same-handed pairs at {{ev:lr-lsame}}. For Kolkata Knight Riders the figures are {{ev:lr-tmix}} and {{ev:lr-tsame}}.",
+    "KKR spent {{ev:lr-tshare}} of their balls since 2018 with a left\u2013right pair at the crease."
+   ],
+   "chartIds": [
+    "lr-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Using the Combination Deliberately",
+   "body": [
+    "If a mixed pair is worth even a fraction of a run per over, batting orders can be flexed to keep one left-hander in the middle at all times, especially against finger spin that turns into one hand and away from the other.",
+    "The decision is cheap to implement: it changes who walks out next, not who is picked."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Why the Gap Might Be an Illusion",
+   "body": [
+    "Mixed and same-handed pairs do not bat in the same situations. If left-handers are concentrated among openers, mixed pairs will be over-represented in the powerplay, where scoring is easier, and the comparison will flatter them.",
+    "{{hyp:phase}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: A Tiebreaker, Not a Selection Rule",
+   "body": [
+    "The data does not clearly support the left\u2013right theory league-wide. For Kolkata Knight Riders it should decide batting-order ties between batters of similar quality, not override strike rate and survival.",
+    "The next step is to repeat the comparison within each phase to remove the powerplay effect."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "lr-chart",
+   "type": "column",
+   "title": "Run rate by batting pair handedness",
+   "subtitle": "2018\u20132026, both batters' hands known",
+   "table": "lr-rr",
+   "xKey": "pair",
+   "series": [
+    {
+     "key": "team",
+     "label": "KKR"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Batting pair",
+   "unit": "runs per over",
+   "takeaway": "Left\u2013right pairs score no faster across the league.",
+   "ariaLabel": "Grouped column chart comparing run rates of left-right and same-handed batting pairs."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-bio",
+   "kind": "cricfield-dataset",
+   "title": "CricField player-bio dataset (batting and bowling styles)",
+   "publisher": "CricField",
+   "note": "Joined to ball-by-ball data through squad lists; coverage reported in the article."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "phase",
+   "statement": "Hypothesis: the left\u2013right advantage disappears once phase of innings is controlled for.",
+   "whyUnverified": "The comparison has not yet been split by powerplay, middle and death overs.",
+   "howToTest": "Repeat the comparison within each phase and weight by balls faced."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A Kolkata Knight Riders batting partnership.",
+   "wanted": "Two Kolkata Knight Riders batters together in the middle."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-kkr-088",
+  "cf-kkr-024",
+  "cf-kkr-002"
+ ],
+ "seo": {
+  "metaTitle": "Left\u2013right combinations: are they worth it for KKR?",
+  "metaDescription": "Kolkata Knight Riders run rates with left-right and same-handed batting pairs since 2018, against the rest of the IPL."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Run rates use all runs per legal ball times six. Every figure is generated from the CricField warehouse by scripts/editorial/engine. Handedness from CricField player-bio data joined via squad lists (Cricsheet names); deliveries where either batter's hand is unknown are excluded. Window 2018\u20132026.",
+ "generator": "engine:v1"
+}

@@ -1,0 +1,173 @@
+{
+ "articleId": "cf-mi-079",
+ "generatedAt": "2026-10-26T04:31:53.163Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "bx-d": {
+   "value": 105,
+   "display": "105",
+   "label": "IPL debutants for MI, 2008–2024",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First IPL season with the franchise",
+   "sampleSize": {
+    "n": 105,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (4) THEN 1 ELSE 0 END x, i.batting_team_id bt, i.bowling_team_id wt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, bt UNION ALL SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, 0, i.bowling_team_id, i.bowling_team_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, i.bowling_team_id",
+   "validation": {
+    "method": "sample-size floor ≥ 5 players",
+    "passed": true,
+    "detail": "n = 105"
+   }
+  },
+  "bx-r": {
+   "value": 20,
+   "display": "20",
+   "label": "Of those, players who became regulars for the franchise",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "At least two later seasons with 120+ balls",
+   "sampleSize": {
+    "n": 105,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (4) THEN 1 ELSE 0 END x, i.batting_team_id bt, i.bowling_team_id wt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, bt UNION ALL SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, 0, i.bowling_team_id, i.bowling_team_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, i.bowling_team_id",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "bx-pct": {
+   "value": 19,
+   "display": "19%",
+   "label": "Mumbai Indians' conversion rate",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 105,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (4) THEN 1 ELSE 0 END x, i.batting_team_id bt, i.bowling_team_id wt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, bt UNION ALL SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, 0, i.bowling_team_id, i.bowling_team_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, i.bowling_team_id",
+   "validation": {
+    "method": "sample-size floor ≥ 5 players",
+    "passed": true,
+    "detail": "n = 105"
+   }
+  },
+  "bx-lg": {
+   "value": 20,
+   "display": "20%",
+   "label": "Conversion rate across all ten franchises",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 685,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (4) THEN 1 ELSE 0 END x, i.batting_team_id bt, i.bowling_team_id wt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, bt UNION ALL SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, 0, i.bowling_team_id, i.bowling_team_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, i.bowling_team_id",
+   "validation": {
+    "method": "sample-size floor ≥ 100 players",
+    "passed": true,
+    "detail": "n = 685"
+   }
+  },
+  "bx-rank": {
+   "value": "fifth",
+   "display": "fifth",
+   "label": "Mumbai Indians' rank among franchises by conversion rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (4) THEN 1 ELSE 0 END x, i.batting_team_id bt, i.bowling_team_id wt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, bt UNION ALL SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, 0, i.bowling_team_id, i.bowling_team_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, i.bowling_team_id",
+   "validation": {
+    "method": "plausibility range 1–10 for rank",
+    "passed": true,
+    "detail": "value 5"
+   }
+  }
+ },
+ "tables": {
+  "bx-table": {
+   "label": "IPL debutants who became regulars for the franchise that gave them their debut",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Debut 2008–2024; regular = at least two later seasons with 120+ balls for that franchise",
+   "sampleSize": {
+    "n": 685,
+    "unit": "debutants"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (4) THEN 1 ELSE 0 END x, i.batting_team_id bt, i.bowling_team_id wt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, bt UNION ALL SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, 0, i.bowling_team_id, i.bowling_team_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, i.bowling_team_id",
+   "rows": [
+    {
+     "franchise": "KKR",
+     "debutants": 80,
+     "becameRegulars": 21,
+     "conversionPct": 26.3
+    },
+    {
+     "franchise": "CSK",
+     "debutants": 70,
+     "becameRegulars": 17,
+     "conversionPct": 24.3
+    },
+    {
+     "franchise": "DC",
+     "debutants": 85,
+     "becameRegulars": 19,
+     "conversionPct": 22.4
+    },
+    {
+     "franchise": "PBKS",
+     "debutants": 97,
+     "becameRegulars": 20,
+     "conversionPct": 20.6
+    },
+    {
+     "franchise": "MI",
+     "debutants": 105,
+     "becameRegulars": 20,
+     "conversionPct": 19
+    },
+    {
+     "franchise": "SRH",
+     "debutants": 38,
+     "becameRegulars": 7,
+     "conversionPct": 18.4
+    },
+    {
+     "franchise": "RR",
+     "debutants": 95,
+     "becameRegulars": 17,
+     "conversionPct": 17.9
+    },
+    {
+     "franchise": "LSG",
+     "debutants": 12,
+     "becameRegulars": 2,
+     "conversionPct": 16.7
+    },
+    {
+     "franchise": "RCB",
+     "debutants": 91,
+     "becameRegulars": 15,
+     "conversionPct": 16.5
+    },
+    {
+     "franchise": "GT",
+     "debutants": 12,
+     "becameRegulars": 1,
+     "conversionPct": 8.3
+    }
+   ]
+  }
+ }
+}

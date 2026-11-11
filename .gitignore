@@ -1,0 +1,110 @@
+# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# compiled output
+dist
+tmp
+out-tsc
+*.tsbuildinfo
+.expo
+.expo-shared
+
+# dependencies
+node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
+
+# Replit
+.cache/
+.local/
+
+# Cricsheet raw data (downloaded at build/dev time, not committed)
+lib/cricket-data/raw/
+
+# Generated cricket image-ingestion outputs
+artifacts/image-ingestion/data/*.csv
+artifacts/image-ingestion/data/*.json
+artifacts/image-ingestion/logs/*.log
+artifacts/image-ingestion/assets/**/*.webp
+!artifacts/image-ingestion/**/.gitkeep
+
+# Global data engine: raw Cricsheet archives and the rebuildable global.db stay local.
+# Manifests and reports under lib/cricket-data/global/ are tracked.
+lib/cricket-data/global/raw/
+lib/cricket-data/global/warehouse/
+
+# Day 5 — repository safety
+# SQLite sidecar files are transient state of an open database, never source (untracked on Day 5.5).
+*.db-wal
+*.db-shm
+*.db-journal
+# Database and data backups / copies made by repair work
+*.bak
+*.pre-*.bak
+sqlite.db.*
+# Stray empty databases created by scripts run from a sub-directory
+scripts/sqlite.db
+# Local environment files (only the documented example is tracked)
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+# Python caches from scratch tooling
+__pycache__/
+*.pyc
+
+# Day 5.5 — data is distributed as a versioned, checksummed release (data-release/, scripts/data-release.mjs),
+# not through Git. sqlite.db is 115 MB, above GitHub's 100 MB file limit.
+/sqlite.db
+/data-release/
+# Temporary scratch & test build caches
+scratch/
+artifacts/ipl-analytics/e2e/.dist/
+artifacts/ipl-analytics/e2e/stats-splash-build/
+artifacts/ipl-analytics/e2e/.results/
+*.log
+
+# Repair backups (local evidence; large)
+docs/data-repairs/**/backup/
+
+# Server-only credentials
+/env/*.env
+
+/integrations/whatsapp-prototype/data/
+
+# Private operational state
+/artifacts/api-server/data/platform.sqlite*
+# Player Intelligence: training tables are rebuilt by intelligence:train; published snapshots are tracked.
+/artifacts/api-server/data/intelligence/work/

@@ -1,0 +1,155 @@
+{
+ "statsQueryAllTime": [
+  "Ishan Kishan: Pacer → Unknown (1 balls)",
+  "T Vijay: Pacer → Unknown (12 balls)",
+  "Abhinandan Singh: Pacer → Unknown (58 balls)",
+  "DA Payne: Pacer → Unknown (30 balls)",
+  "B Muzarabani: Pacer → Unknown (42 balls)",
+  "Shivang Kumar: Pacer → Spinner (234 balls)",
+  "PR Veer: Pacer → Spinner (12 balls)",
+  "Auqib Nabi: Pacer → Unknown (78 balls)",
+  "Gurjapneet Singh: Pacer → Unknown (151 balls)",
+  "GF Linde: Pacer → Unknown (37 balls)",
+  "Yash Raj Punja: Pacer → Spinner (180 balls)",
+  "RS Ghosh: Pacer → Unknown (18 balls)",
+  "Raghu Sharma: Pacer → Unknown (90 balls)",
+  "SR Dubey: Pacer → Unknown (77 balls)",
+  "Harmeet Singh: Pacer → Unknown (525 balls)",
+  "Harmeet Singh (2): Pacer → Unknown (24 balls)",
+  "BJ Rohrer: Pacer → Unknown (6 balls)"
+ ],
+ "/api/ipl/stats/query?bowlerType=Pacer": {
+  "bowlers": "367 → 351",
+  "bowlerBalls": "182902 → 181852",
+  "batterBallsFaced": "183958 → 182905",
+  "removed": [
+   "Ishan Kishan (1)",
+   "T Vijay (12)",
+   "Abhinandan Singh (58)",
+   "DA Payne (30)",
+   "B Muzarabani (42)",
+   "Shivang Kumar (234)",
+   "PR Veer (12)",
+   "Auqib Nabi (78)",
+   "Gurjapneet Singh (151)",
+   "GF Linde (37)",
+   "Yash Raj Punja (180)",
+   "RS Ghosh (18)",
+   "Raghu Sharma (90)",
+   "SR Dubey (77)",
+   "Harmeet Singh (2) (24)",
+   "BJ Rohrer (6)"
+  ],
+  "added": []
+ },
+ "/api/ipl/stats/query?bowlerType=Spinner": {
+  "bowlers": "209 → 212",
+  "bowlerBalls": "101728 → 102154",
+  "batterBallsFaced": "101898 → 102324",
+  "removed": [],
+  "added": [
+   "Shivang Kumar (234)",
+   "PR Veer (12)",
+   "Yash Raj Punja (180)"
+  ]
+ },
+ "/api/ipl/stats/query?bowlerType=Pacer&season=2026": {
+  "bowlers": "87 → 74",
+  "bowlerBalls": "12128 → 11109",
+  "batterBallsFaced": "12182 → 11160",
+  "removed": [
+   "T Vijay (12)",
+   "Abhinandan Singh (58)",
+   "DA Payne (30)",
+   "B Muzarabani (42)",
+   "Shivang Kumar (234)",
+   "PR Veer (12)",
+   "Auqib Nabi (78)",
+   "Gurjapneet Singh (151)",
+   "GF Linde (37)",
+   "Yash Raj Punja (180)",
+   "RS Ghosh (18)",
+   "Raghu Sharma (90)",
+   "SR Dubey (77)"
+  ],
+  "added": []
+ },
+ "/api/ipl/stats/query?bowlerType=Spinner&season=2026": {
+  "bowlers": "38 → 41",
+  "bowlerBalls": "4540 → 4966",
+  "batterBallsFaced": "4549 → 4975",
+  "removed": [],
+  "added": [
+   "Shivang Kumar (234)",
+   "PR Veer (12)",
+   "Yash Raj Punja (180)"
+  ]
+ },
+ "/api/ipl/team-analytics?team=Mumbai%20Indians": {
+  "before": [
+   "Pace: 23055 balls, econ 8.52, wkts 1300",
+   "Spin: 10591 balls, econ 7.87, wkts 482"
+  ],
+  "after": [
+   "Pace: 22965 balls, econ 8.52, wkts 1299",
+   "Spin: 10591 balls, econ 7.87, wkts 482"
+  ]
+ },
+ "/api/ipl/team-analytics?team=Chennai%20Super%20Kings": {
+  "before": [
+   "Pace: 18416 balls, econ 8.74, wkts 1056",
+   "Spin: 12247 balls, econ 7.52, wkts 590"
+  ],
+  "after": [
+   "Pace: 18235 balls, econ 8.73, wkts 1051",
+   "Spin: 12259 balls, econ 7.53, wkts 590"
+  ]
+ },
+ "/api/ipl/team-analytics?team=Kolkata%20Knight%20Riders": {
+  "before": [
+   "Pace: 17653 balls, econ 8.85, wkts 954",
+   "Spin: 14014 balls, econ 7.58, wkts 678"
+  ],
+  "after": [
+   "Pace: 17534 balls, econ 8.85, wkts 944",
+   "Spin: 14014 balls, econ 7.58, wkts 678"
+  ]
+ },
+ "/api/ipl/venue-analytics?venue=Wankhede%20Stadium": {
+  "before": [
+   "Pace: 20494 balls, econ 9.02, wkts 1133",
+   "Spin: 10017 balls, econ 8.06, wkts 457"
+  ],
+  "after": [
+   "Pace: 20398 balls, econ 9.02, wkts 1128",
+   "Spin: 10041 balls, econ 8.07, wkts 459"
+  ]
+ },
+ "/api/ipl/venue-analytics?venue=MA%20Chidambaram%20Stadium": {
+  "before": [
+   "Pace: 13496 balls, econ 8.67, wkts 738",
+   "Spin: 9441 balls, econ 7.43, wkts 445"
+  ],
+  "after": [
+   "Pace: 13363 balls, econ 8.66, wkts 736",
+   "Spin: 9471 balls, econ 7.43, wkts 445"
+  ]
+ },
+ "/api/squad-dna/profile?team=CSK": [
+  "spin_sr: 142.2 → 139.3",
+  "pace_sr: 149.6 → 152.6",
+  "pace_econ: 9.80 → 9.92",
+  "spin_share: 32.4% → 36.3%"
+ ],
+ "/api/squad-dna/profile?team=KKR": [
+  "spin_sr: 148.7 → 148.8",
+  "pace_sr: 146.4 → 141.8",
+  "spin_econ: 8.08 → 8.06",
+  "pace_econ: 10.19 → 10.16",
+  "spin_share: 51.4% → 50.2%"
+ ],
+ "/api/strategy/setup?battingTeam=MI&bowlingTeam=KKR": [
+  "SR Dubey: Off-spin → SR Dubey: —",
+  "B Muzarabani: Right-arm pace → B Muzarabani: —"
+ ]
+}

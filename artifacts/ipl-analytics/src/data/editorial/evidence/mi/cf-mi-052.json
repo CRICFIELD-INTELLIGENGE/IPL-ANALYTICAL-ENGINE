@@ -1,0 +1,171 @@
+{
+ "articleId": "cf-mi-052",
+ "generatedAt": "2026-10-26T04:19:31.358Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "cc-pp": {
+   "value": 8,
+   "display": "8",
+   "label": "Seasons in which MI scored faster than the IPL in the powerplay",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "count over season series",
+    "passed": true
+   }
+  },
+  "cc-ppn": {
+   "value": 19,
+   "display": "19",
+   "label": "MI seasons in the series",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 3 seasons",
+    "passed": true,
+    "detail": "n = 19"
+   }
+  },
+  "cc-de": {
+   "value": 12,
+   "display": "12",
+   "label": "Seasons in which MI conceded less than the IPL in the death overs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs 16–20, regulation innings",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (4) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "count over season series",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "cc-series": {
+   "label": "MI powerplay run rate vs IPL by season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, overs 1–6",
+   "sampleSize": {
+    "n": 10473,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "team": 8.22,
+     "league": 7.7
+    },
+    {
+     "season": "2009",
+     "team": 6.45,
+     "league": 7.22
+    },
+    {
+     "season": "2010",
+     "team": 8.35,
+     "league": 7.89
+    },
+    {
+     "season": "2011",
+     "team": 6.9,
+     "league": 7.2
+    },
+    {
+     "season": "2012",
+     "team": 6.5,
+     "league": 7.22
+    },
+    {
+     "season": "2013",
+     "team": 6.75,
+     "league": 6.93
+    },
+    {
+     "season": "2014",
+     "team": 7.67,
+     "league": 7.55
+    },
+    {
+     "season": "2015",
+     "team": 7.25,
+     "league": 7.76
+    },
+    {
+     "season": "2016",
+     "team": 7.14,
+     "league": 7.7
+    },
+    {
+     "season": "2017",
+     "team": 8.46,
+     "league": 8.33
+    },
+    {
+     "season": "2018",
+     "team": 8.36,
+     "league": 8.42
+    },
+    {
+     "season": "2019",
+     "team": 8.04,
+     "league": 8.13
+    },
+    {
+     "season": "2020",
+     "team": 8.28,
+     "league": 7.71
+    },
+    {
+     "season": "2021",
+     "team": 8.05,
+     "league": 7.72
+    },
+    {
+     "season": "2022",
+     "team": 7.45,
+     "league": 7.82
+    },
+    {
+     "season": "2023",
+     "team": 9.24,
+     "league": 8.72
+    },
+    {
+     "season": "2024",
+     "team": 9.39,
+     "league": 9.47
+    },
+    {
+     "season": "2025",
+     "team": 9.74,
+     "league": 9.61
+    },
+    {
+     "season": "2026",
+     "team": 9.27,
+     "league": 10.1
+    }
+   ]
+  }
+ }
+}

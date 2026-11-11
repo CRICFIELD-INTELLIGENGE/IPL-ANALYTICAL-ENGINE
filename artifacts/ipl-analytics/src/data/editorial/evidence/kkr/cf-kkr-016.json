@@ -1,0 +1,167 @@
+{
+ "articleId": "cf-kkr-016",
+ "generatedAt": "2026-10-26T04:20:55.145Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "fld-tro": {
+   "value": 0.34,
+   "display": "0.34",
+   "label": "KKR run outs per bowling innings",
+   "unit": "per innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowling innings, 2022–2026",
+   "sampleSize": {
+    "n": 68,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (6) THEN 'team' ELSE 'rest' END side, COUNT(DISTINCT i.innings_id) inns, SUM(CASE WHEN dm.kind = 'run out' THEN 1 ELSE 0 END) ro, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.kind = 'stumped' THEN 1 ELSE 0 END) st, SUM(CASE WHEN d.is_wide = 1 OR d.is_noball = 1 THEN d.extra_runs ELSE 0 END) wnb, SUM(CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) byes FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 68"
+   }
+  },
+  "fld-lro": {
+   "value": 0.34,
+   "display": "0.34",
+   "label": "Rest of IPL run outs per bowling innings",
+   "unit": "per innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowling innings, 2022–2026",
+   "sampleSize": {
+    "n": 662,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (6) THEN 'team' ELSE 'rest' END side, COUNT(DISTINCT i.innings_id) inns, SUM(CASE WHEN dm.kind = 'run out' THEN 1 ELSE 0 END) ro, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.kind = 'stumped' THEN 1 ELSE 0 END) st, SUM(CASE WHEN d.is_wide = 1 OR d.is_noball = 1 THEN d.extra_runs ELSE 0 END) wnb, SUM(CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) byes FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 662"
+   }
+  },
+  "fld-tct": {
+   "value": 4.79,
+   "display": "4.79",
+   "label": "KKR catches per bowling innings",
+   "unit": "per innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowling innings, 2022–2026",
+   "sampleSize": {
+    "n": 68,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (6) THEN 'team' ELSE 'rest' END side, COUNT(DISTINCT i.innings_id) inns, SUM(CASE WHEN dm.kind = 'run out' THEN 1 ELSE 0 END) ro, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.kind = 'stumped' THEN 1 ELSE 0 END) st, SUM(CASE WHEN d.is_wide = 1 OR d.is_noball = 1 THEN d.extra_runs ELSE 0 END) wnb, SUM(CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) byes FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 68"
+   }
+  },
+  "fld-lct": {
+   "value": 4.37,
+   "display": "4.37",
+   "label": "Rest of IPL catches per bowling innings",
+   "unit": "per innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowling innings, 2022–2026",
+   "sampleSize": {
+    "n": 662,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (6) THEN 'team' ELSE 'rest' END side, COUNT(DISTINCT i.innings_id) inns, SUM(CASE WHEN dm.kind = 'run out' THEN 1 ELSE 0 END) ro, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.kind = 'stumped' THEN 1 ELSE 0 END) st, SUM(CASE WHEN d.is_wide = 1 OR d.is_noball = 1 THEN d.extra_runs ELSE 0 END) wnb, SUM(CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) byes FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 662"
+   }
+  },
+  "fld-tby": {
+   "value": 3.18,
+   "display": "3.18",
+   "label": "KKR byes and leg-byes conceded per innings",
+   "unit": "per innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowling innings, 2022–2026",
+   "sampleSize": {
+    "n": 68,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (6) THEN 'team' ELSE 'rest' END side, COUNT(DISTINCT i.innings_id) inns, SUM(CASE WHEN dm.kind = 'run out' THEN 1 ELSE 0 END) ro, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.kind = 'stumped' THEN 1 ELSE 0 END) st, SUM(CASE WHEN d.is_wide = 1 OR d.is_noball = 1 THEN d.extra_runs ELSE 0 END) wnb, SUM(CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) byes FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 68"
+   }
+  },
+  "fld-lby": {
+   "value": 2.53,
+   "display": "2.53",
+   "label": "Rest of IPL byes and leg-byes conceded per innings",
+   "unit": "per innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowling innings, 2022–2026",
+   "sampleSize": {
+    "n": 662,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (6) THEN 'team' ELSE 'rest' END side, COUNT(DISTINCT i.innings_id) inns, SUM(CASE WHEN dm.kind = 'run out' THEN 1 ELSE 0 END) ro, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.kind = 'stumped' THEN 1 ELSE 0 END) st, SUM(CASE WHEN d.is_wide = 1 OR d.is_noball = 1 THEN d.extra_runs ELSE 0 END) wnb, SUM(CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) byes FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 662"
+   }
+  },
+  "fld-inns": {
+   "value": 68,
+   "display": "68",
+   "label": "KKR bowling innings, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 68,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (6) THEN 'team' ELSE 'rest' END side, COUNT(DISTINCT i.innings_id) inns, SUM(CASE WHEN dm.kind = 'run out' THEN 1 ELSE 0 END) ro, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.kind = 'stumped' THEN 1 ELSE 0 END) st, SUM(CASE WHEN d.is_wide = 1 OR d.is_noball = 1 THEN d.extra_runs ELSE 0 END) wnb, SUM(CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) byes FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 68"
+   }
+  }
+ },
+ "tables": {
+  "fld-cmp": {
+   "label": "Fielding and discipline per innings, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Fielding side; run outs, catches and extras per bowling innings",
+   "sampleSize": {
+    "n": 730,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (6) THEN 'team' ELSE 'rest' END side, COUNT(DISTINCT i.innings_id) inns, SUM(CASE WHEN dm.kind = 'run out' THEN 1 ELSE 0 END) ro, SUM(CASE WHEN dm.kind IN ('caught','caught and bowled') THEN 1 ELSE 0 END) ct, SUM(CASE WHEN dm.kind = 'stumped' THEN 1 ELSE 0 END) st, SUM(CASE WHEN d.is_wide = 1 OR d.is_noball = 1 THEN d.extra_runs ELSE 0 END) wnb, SUM(CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) byes FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side",
+   "rows": [
+    {
+     "measure": "Run outs",
+     "team": 0.34,
+     "league": 0.34
+    },
+    {
+     "measure": "Catches",
+     "team": 4.79,
+     "league": 4.37
+    },
+    {
+     "measure": "Byes and leg-byes",
+     "team": 3.18,
+     "league": 2.53
+    }
+   ]
+  }
+ }
+}

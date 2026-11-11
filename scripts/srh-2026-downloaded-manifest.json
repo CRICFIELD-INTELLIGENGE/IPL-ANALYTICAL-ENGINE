@@ -1,0 +1,177 @@
+[
+  {
+    "name": "Abhishek Sharma",
+    "slug": "abhishek-sharma",
+    "localPath": "/players/srh-2026/abhishek-sharma.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/6f132a786c2d40b9aaf406a39bf64c9d.png",
+    "sizeBytes": 210348
+  },
+  {
+    "name": "Ishan Kishan",
+    "slug": "ishan-kishan",
+    "localPath": "/players/srh-2026/ishan-kishan.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/e2dedcec226e44f5a099d3cf887000a9.png",
+    "sizeBytes": 198897
+  },
+  {
+    "name": "Travis Head",
+    "slug": "travis-head",
+    "localPath": "/players/srh-2026/travis-head.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/a9c68ab5d28247f4ae6bf4c745a4c006.png",
+    "sizeBytes": 204746
+  },
+  {
+    "name": "Heinrich Klaasen",
+    "slug": "heinrich-klaasen",
+    "localPath": "/players/srh-2026/heinrich-klaasen.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/c87cd11c723e4ed7a86f147389a29dce.png",
+    "sizeBytes": 206668
+  },
+  {
+    "name": "Jaydev Unadkat",
+    "slug": "jaydev-unadkat",
+    "localPath": "/players/srh-2026/jaydev-unadkat.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/a5669d06297b4ff89e3a67e6365118cf.png",
+    "sizeBytes": 172781
+  },
+  {
+    "name": "Nitish Reddy",
+    "slug": "nitish-reddy",
+    "localPath": "/players/srh-2026/nitish-reddy.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/b14052c12a5a4a74b79a506d061fc2f5.png",
+    "sizeBytes": 208477
+  },
+  {
+    "name": "Pat Cummins",
+    "slug": "pat-cummins",
+    "localPath": "/players/srh-2026/pat-cummins.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/b05b97fe0933472abfde3b592609d575.png",
+    "sizeBytes": 193831
+  },
+  {
+    "name": "Shivam Mavi",
+    "slug": "shivam-mavi",
+    "localPath": "/players/srh-2026/shivam-mavi.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/cef85d257c8044fb81fca2bb0aaa30a3.png",
+    "sizeBytes": 170435
+  },
+  {
+    "name": "Harshal Patel",
+    "slug": "harshal-patel",
+    "localPath": "/players/srh-2026/harshal-patel.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/cbea1a5890cb4c748d922d12fbcadea0.png",
+    "sizeBytes": 191305
+  },
+  {
+    "name": "Liam Livingstone",
+    "slug": "liam-livingstone",
+    "localPath": "/players/srh-2026/liam-livingstone.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/68df092bf3c548f8901bb0959637e045.png",
+    "sizeBytes": 205903
+  },
+  {
+    "name": "Kamindu Mendis",
+    "slug": "kamindu-mendis",
+    "localPath": "/players/srh-2026/kamindu-mendis.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/969a8458ce9a46278be6f1d6cb3a45ec.png",
+    "sizeBytes": 222794
+  },
+  {
+    "name": "Eshan Malinga",
+    "slug": "eshan-malinga",
+    "localPath": "/players/srh-2026/eshan-malinga.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/218e58a9085740fcb3ddcefa17f2b55b.png",
+    "sizeBytes": 242898
+  },
+  {
+    "name": "Harsh Dubey",
+    "slug": "harsh-dubey",
+    "localPath": "/players/srh-2026/harsh-dubey.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/f26f24b29ba542ef9bc74235946297a2.png",
+    "sizeBytes": 160184
+  },
+  {
+    "name": "Zeeshan Ansari",
+    "slug": "zeeshan-ansari",
+    "localPath": "/players/srh-2026/zeeshan-ansari.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/a4bb7689ebbc4344a7770e16e11732ff.png",
+    "sizeBytes": 201541
+  },
+  {
+    "name": "Aniket Verma",
+    "slug": "aniket-verma",
+    "localPath": "/players/srh-2026/aniket-verma.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/614a2c5b812547e3a729834dac2fb7d1.png",
+    "sizeBytes": 195341
+  },
+  {
+    "name": "Sakib Hussain",
+    "slug": "sakib-hussain",
+    "localPath": "/players/srh-2026/sakib-hussain.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/573be17b60bc42bb8e10f56b0071b6a6.png",
+    "sizeBytes": 162815
+  },
+  {
+    "name": "Onkar Tarmale",
+    "slug": "onkar-tarmale",
+    "localPath": "/players/srh-2026/onkar-tarmale.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/a10363287da446129b54b98478c88afc.png",
+    "sizeBytes": 195801
+  },
+  {
+    "name": "Praful Hinge",
+    "slug": "praful-hinge",
+    "localPath": "/players/srh-2026/praful-hinge.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/fba122d046d245c7ad0f92ee0a4b2c7f.png",
+    "sizeBytes": 171970
+  },
+  {
+    "name": "Smaran Ravichandran",
+    "slug": "smaran-ravichandran",
+    "localPath": "/players/srh-2026/smaran-ravichandran.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/cdef284303e142d68091f0aba35d637d.png",
+    "sizeBytes": 171968
+  },
+  {
+    "name": "Salil Arora",
+    "slug": "salil-arora",
+    "localPath": "/players/srh-2026/salil-arora.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/ca9e68b28e124e6fbabeea7c327a4175.png",
+    "sizeBytes": 193500
+  },
+  {
+    "name": "Brydon Carse",
+    "slug": "brydon-carse",
+    "localPath": "/players/srh-2026/brydon-carse.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/d59bec96e00d44dfb2d4037129e34978.png",
+    "sizeBytes": 244429
+  },
+  {
+    "name": "Shivang Kumar",
+    "slug": "shivang-kumar",
+    "localPath": "/players/srh-2026/shivang-kumar.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/f7f6e62eacc642c4948017ed50c24a36.png",
+    "sizeBytes": 195327
+  },
+  {
+    "name": "Amit Kumar",
+    "slug": "amit-kumar",
+    "localPath": "/players/srh-2026/amit-kumar.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/09486bfd206043728907da2a33e2ebe4.png",
+    "sizeBytes": 193744
+  },
+  {
+    "name": "Krains Fuletra",
+    "slug": "krains-fuletra",
+    "localPath": "/players/srh-2026/krains-fuletra.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/9fecac6eed314bb292f0ba807e53243b.png",
+    "sizeBytes": 222246
+  },
+  {
+    "name": "David Payne",
+    "slug": "david-payne",
+    "localPath": "/players/srh-2026/david-payne.png",
+    "sourceUrl": "https://d1zakxcsliwds.cloudfront.net/image-pool/0fba5ed8fc754e3ba15a2ba407a27222.png",
+    "sizeBytes": 192908
+  }
+]

@@ -1,0 +1,422 @@
+{
+ "articleId": "cf-csk-060",
+ "generatedAt": "2026-10-26T04:17:38.920Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "cb-n-seasons": {
+   "value": 17,
+   "display": "17",
+   "label": "CSK seasons in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons with matches",
+   "sampleSize": {
+    "n": 17,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (9) OR m.team2_id IN (9)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "plausibility range 1–19 for seasons",
+    "passed": true,
+    "detail": "value 17"
+   }
+  },
+  "cb-titles": {
+   "value": 5,
+   "display": "5",
+   "label": "CSK titles, as winner of the season's final",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Final = last match of each season",
+   "sampleSize": {
+    "n": 10,
+    "unit": "finals"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (9) OR m.team2_id IN (9))",
+   "validation": {
+    "method": "plausibility range 0–6 for titles",
+    "passed": true,
+    "detail": "value 5"
+   }
+  },
+  "cb-playoffs": {
+   "value": 15,
+   "display": "15",
+   "label": "CSK seasons with a playoff place",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Points-table playoff result or a final",
+   "sampleSize": {
+    "n": 17,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (9) OR m.team2_id IN (9))",
+   "validation": {
+    "method": "count over season table",
+    "passed": true
+   }
+  },
+  "cb-win-all": {
+   "value": 55.8,
+   "display": "55.8%",
+   "label": "CSK win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 265,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (9) OR m.team2_id IN (9)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 265"
+   }
+  },
+  "cb-matches": {
+   "value": 265,
+   "display": "265",
+   "label": "CSK matches with a result",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 265,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (9) OR m.team2_id IN (9)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 265"
+   }
+  },
+  "cb-best-year": {
+   "value": "2011",
+   "display": "2011",
+   "label": "CSK's best season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 17,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (9) OR m.team2_id IN (9)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "max over season table",
+    "passed": true
+   }
+  },
+  "cb-best-pct": {
+   "value": 68.8,
+   "display": "68.8%",
+   "label": "CSK win rate in 2011",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2011",
+   "sampleSize": {
+    "n": 16,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (9) OR m.team2_id IN (9)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 16"
+   }
+  },
+  "cb-worst-year": {
+   "value": "2022",
+   "display": "2022",
+   "label": "CSK's weakest season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 17,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (9) OR m.team2_id IN (9)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "min over season table",
+    "passed": true
+   }
+  },
+  "cb-worst-pct": {
+   "value": 28.6,
+   "display": "28.6%",
+   "label": "CSK win rate in 2022",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022",
+   "sampleSize": {
+    "n": 14,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (9) OR m.team2_id IN (9)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 14"
+   }
+  },
+  "cb-n": {
+   "value": 37,
+   "display": "37",
+   "label": "CSK chases needing ten or more an over at halfway",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Required rate at the start of the eleventh over",
+   "sampleSize": {
+    "n": 37,
+    "unit": "chases"
+   },
+   "query": "WITH h AS (SELECT d.innings_id, SUM(d.total_runs) runs10, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls10, MAX(CASE WHEN d.over_num >= 10 THEN 1 ELSE 0 END) reached FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number = 2 GROUP BY d.innings_id), p AS (SELECT d.innings_id, SUM(CASE WHEN d.over_num < 10 THEN d.total_runs ELSE 0 END) r, SUM(CASE WHEN d.over_num < 10 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b FROM deliveries d GROUP BY d.innings_id) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id bt, m.winner_id w, (i1.runs + 1 - p.r) * 6.0 / (120 - p.b) rrr FROM innings i JOIN h ON h.innings_id = i.innings_id JOIN p ON p.innings_id = i.innings_id JOIN matches m ON m.match_id = i.match_id JOIN innings i1 ON i1.match_id = i.match_id AND i1.innings_number = 1 WHERE i.innings_number = 2 AND h.reached = 1 AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 5 chases",
+    "passed": true,
+    "detail": "n = 37"
+   }
+  },
+  "cb-w": {
+   "value": 9,
+   "display": "9",
+   "label": "CSK wins from those chases",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 37,
+    "unit": "chases"
+   },
+   "query": "WITH h AS (SELECT d.innings_id, SUM(d.total_runs) runs10, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls10, MAX(CASE WHEN d.over_num >= 10 THEN 1 ELSE 0 END) reached FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number = 2 GROUP BY d.innings_id), p AS (SELECT d.innings_id, SUM(CASE WHEN d.over_num < 10 THEN d.total_runs ELSE 0 END) r, SUM(CASE WHEN d.over_num < 10 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b FROM deliveries d GROUP BY d.innings_id) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id bt, m.winner_id w, (i1.runs + 1 - p.r) * 6.0 / (120 - p.b) rrr FROM innings i JOIN h ON h.innings_id = i.innings_id JOIN p ON p.innings_id = i.innings_id JOIN matches m ON m.match_id = i.match_id JOIN innings i1 ON i1.match_id = i.match_id AND i1.innings_number = 1 WHERE i.innings_number = 2 AND h.reached = 1 AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "cb-pct": {
+   "value": 24,
+   "display": "24%",
+   "label": "CSK win rate from those chases",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 37,
+    "unit": "chases"
+   },
+   "query": "WITH h AS (SELECT d.innings_id, SUM(d.total_runs) runs10, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls10, MAX(CASE WHEN d.over_num >= 10 THEN 1 ELSE 0 END) reached FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number = 2 GROUP BY d.innings_id), p AS (SELECT d.innings_id, SUM(CASE WHEN d.over_num < 10 THEN d.total_runs ELSE 0 END) r, SUM(CASE WHEN d.over_num < 10 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b FROM deliveries d GROUP BY d.innings_id) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id bt, m.winner_id w, (i1.runs + 1 - p.r) * 6.0 / (120 - p.b) rrr FROM innings i JOIN h ON h.innings_id = i.innings_id JOIN p ON p.innings_id = i.innings_id JOIN matches m ON m.match_id = i.match_id JOIN innings i1 ON i1.match_id = i.match_id AND i1.innings_number = 1 WHERE i.innings_number = 2 AND h.reached = 1 AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 5 chases",
+    "passed": true,
+    "detail": "n = 37"
+   }
+  },
+  "cb-lg": {
+   "value": 21,
+   "display": "21%",
+   "label": "Rest of IPL win rate from the same position",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 417,
+    "unit": "chases"
+   },
+   "query": "WITH h AS (SELECT d.innings_id, SUM(d.total_runs) runs10, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls10, MAX(CASE WHEN d.over_num >= 10 THEN 1 ELSE 0 END) reached FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number = 2 GROUP BY d.innings_id), p AS (SELECT d.innings_id, SUM(CASE WHEN d.over_num < 10 THEN d.total_runs ELSE 0 END) r, SUM(CASE WHEN d.over_num < 10 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b FROM deliveries d GROUP BY d.innings_id) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id bt, m.winner_id w, (i1.runs + 1 - p.r) * 6.0 / (120 - p.b) rrr FROM innings i JOIN h ON h.innings_id = i.innings_id JOIN p ON p.innings_id = i.innings_id JOIN matches m ON m.match_id = i.match_id JOIN innings i1 ON i1.match_id = i.match_id AND i1.innings_number = 1 WHERE i.innings_number = 2 AND h.reached = 1 AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 50 chases",
+    "passed": true,
+    "detail": "n = 417"
+   }
+  },
+  "cb-early": {
+   "value": 8,
+   "display": "8",
+   "label": "CSK seasons starting with three or more defeats in the first five decided matches",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 17,
+    "unit": "seasons"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "cb-early-po": {
+   "value": 6,
+   "display": "6",
+   "label": "Of those, seasons that still ended in a playoff place",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 8,
+    "unit": "seasons"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "cb-seasons": {
+   "label": "CSK season by season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches with a result; position from the league-stage table",
+   "sampleSize": {
+    "n": 265,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (9) OR m.team2_id IN (9)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (9) OR m.team2_id IN (9))",
+   "rows": [
+    {
+     "season": "2008",
+     "winPct": 56.3,
+     "matches": 16,
+     "position": 3,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2009",
+     "winPct": 57.1,
+     "matches": 14,
+     "position": 2,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2010",
+     "winPct": 56.3,
+     "matches": 16,
+     "position": 3,
+     "outcome": "Champions"
+    },
+    {
+     "season": "2011",
+     "winPct": 68.8,
+     "matches": 16,
+     "position": 2,
+     "outcome": "Champions"
+    },
+    {
+     "season": "2012",
+     "winPct": 55.6,
+     "matches": 18,
+     "position": 4,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2013",
+     "winPct": 66.7,
+     "matches": 18,
+     "position": 1,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2014",
+     "winPct": 62.5,
+     "matches": 16,
+     "position": 3,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2015",
+     "winPct": 58.8,
+     "matches": 17,
+     "position": 1,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2018",
+     "winPct": 68.8,
+     "matches": 16,
+     "position": 2,
+     "outcome": "Champions"
+    },
+    {
+     "season": "2019",
+     "winPct": 58.8,
+     "matches": 17,
+     "position": 2,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2020",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 7,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2021",
+     "winPct": 68.8,
+     "matches": 16,
+     "position": 2,
+     "outcome": "Champions"
+    },
+    {
+     "season": "2022",
+     "winPct": 28.6,
+     "matches": 14,
+     "position": 9,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2023",
+     "winPct": 66.7,
+     "matches": 15,
+     "position": 2,
+     "outcome": "Champions"
+    },
+    {
+     "season": "2024",
+     "winPct": 50,
+     "matches": 14,
+     "position": 5,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2025",
+     "winPct": 28.6,
+     "matches": 14,
+     "position": 10,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2026",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 8,
+     "outcome": "Playoffs"
+    }
+   ]
+  },
+  "cb-cmp": {
+   "label": "Chases won from a required rate of ten or more at halfway",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Second innings, required rate at the start of the eleventh over",
+   "sampleSize": {
+    "n": 454,
+    "unit": "chases"
+   },
+   "query": "WITH h AS (SELECT d.innings_id, SUM(d.total_runs) runs10, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls10, MAX(CASE WHEN d.over_num >= 10 THEN 1 ELSE 0 END) reached FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number = 2 GROUP BY d.innings_id), p AS (SELECT d.innings_id, SUM(CASE WHEN d.over_num < 10 THEN d.total_runs ELSE 0 END) r, SUM(CASE WHEN d.over_num < 10 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) b FROM deliveries d GROUP BY d.innings_id) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id bt, m.winner_id w, (i1.runs + 1 - p.r) * 6.0 / (120 - p.b) rrr FROM innings i JOIN h ON h.innings_id = i.innings_id JOIN p ON p.innings_id = i.innings_id JOIN matches m ON m.match_id = i.match_id JOIN innings i1 ON i1.match_id = i.match_id AND i1.innings_number = 1 WHERE i.innings_number = 2 AND h.reached = 1 AND m.winner_id IS NOT NULL",
+   "rows": [
+    {
+     "side": "CSK",
+     "winPct": 24.3,
+     "chases": 37
+    },
+    {
+     "side": "Rest of IPL",
+     "winPct": 20.9,
+     "chases": 417
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,178 @@
+{
+ "articleId": "cf-dc-023",
+ "generatedAt": "2026-10-26T04:24:10.712Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "ip-rb": {
+   "value": 160.7,
+   "display": "160.7",
+   "label": "DC runs per innings, 2019–2022",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, per innings",
+   "sampleSize": {
+    "n": 63,
+    "unit": "innings"
+   },
+   "query": "WITH bat AS (SELECT d.innings_id, COUNT(DISTINCT d.batter_id) batters FROM deliveries d GROUP BY d.innings_id), bowl AS (SELECT d.innings_id, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d GROUP BY d.innings_id) SELECT CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'impact' ELSE 'before' END era, CASE WHEN i.batting_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, AVG(bat.batters) batters, AVG(i.runs) runs, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id JOIN bat ON bat.innings_id = i.innings_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2019 GROUP BY era, side",
+   "validation": {
+    "method": "sample-size floor ≥ 10 innings",
+    "passed": true,
+    "detail": "n = 63"
+   }
+  },
+  "ip-ri": {
+   "value": 175,
+   "display": "175.0",
+   "label": "DC runs per innings, 2023–2026",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, per innings",
+   "sampleSize": {
+    "n": 56,
+    "unit": "innings"
+   },
+   "query": "WITH bat AS (SELECT d.innings_id, COUNT(DISTINCT d.batter_id) batters FROM deliveries d GROUP BY d.innings_id), bowl AS (SELECT d.innings_id, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d GROUP BY d.innings_id) SELECT CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'impact' ELSE 'before' END era, CASE WHEN i.batting_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, AVG(bat.batters) batters, AVG(i.runs) runs, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id JOIN bat ON bat.innings_id = i.innings_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2019 GROUP BY era, side",
+   "validation": {
+    "method": "sample-size floor ≥ 10 innings",
+    "passed": true,
+    "detail": "n = 56"
+   }
+  },
+  "ip-lb": {
+   "value": 161,
+   "display": "161.0",
+   "label": "Rest of IPL runs per innings, 2019–2022",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, per innings",
+   "sampleSize": {
+    "n": 445,
+    "unit": "innings"
+   },
+   "query": "WITH bat AS (SELECT d.innings_id, COUNT(DISTINCT d.batter_id) batters FROM deliveries d GROUP BY d.innings_id), bowl AS (SELECT d.innings_id, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d GROUP BY d.innings_id) SELECT CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'impact' ELSE 'before' END era, CASE WHEN i.batting_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, AVG(bat.batters) batters, AVG(i.runs) runs, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id JOIN bat ON bat.innings_id = i.innings_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2019 GROUP BY era, side",
+   "validation": {
+    "method": "sample-size floor ≥ 10 innings",
+    "passed": true,
+    "detail": "n = 445"
+   }
+  },
+  "ip-li": {
+   "value": 182.2,
+   "display": "182.2",
+   "label": "Rest of IPL runs per innings, 2023–2026",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, per innings",
+   "sampleSize": {
+    "n": 526,
+    "unit": "innings"
+   },
+   "query": "WITH bat AS (SELECT d.innings_id, COUNT(DISTINCT d.batter_id) batters FROM deliveries d GROUP BY d.innings_id), bowl AS (SELECT d.innings_id, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d GROUP BY d.innings_id) SELECT CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'impact' ELSE 'before' END era, CASE WHEN i.batting_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, AVG(bat.batters) batters, AVG(i.runs) runs, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id JOIN bat ON bat.innings_id = i.innings_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2019 GROUP BY era, side",
+   "validation": {
+    "method": "sample-size floor ≥ 10 innings",
+    "passed": true,
+    "detail": "n = 526"
+   }
+  },
+  "ip-bb": {
+   "value": 5.78,
+   "display": "5.78",
+   "label": "DC bowlers used per innings, 2019–2022",
+   "unit": "bowlers",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, per innings",
+   "sampleSize": {
+    "n": 63,
+    "unit": "innings"
+   },
+   "query": "WITH bat AS (SELECT d.innings_id, COUNT(DISTINCT d.batter_id) batters FROM deliveries d GROUP BY d.innings_id), bowl AS (SELECT d.innings_id, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d GROUP BY d.innings_id) SELECT CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'impact' ELSE 'before' END era, CASE WHEN i.batting_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, AVG(bat.batters) batters, AVG(i.runs) runs, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id JOIN bat ON bat.innings_id = i.innings_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2019 GROUP BY era, side",
+   "validation": {
+    "method": "sample-size floor ≥ 10 innings",
+    "passed": true,
+    "detail": "n = 63"
+   }
+  },
+  "ip-bi": {
+   "value": 5.89,
+   "display": "5.89",
+   "label": "DC bowlers used per innings, 2023–2026",
+   "unit": "bowlers",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, per innings",
+   "sampleSize": {
+    "n": 56,
+    "unit": "innings"
+   },
+   "query": "WITH bat AS (SELECT d.innings_id, COUNT(DISTINCT d.batter_id) batters FROM deliveries d GROUP BY d.innings_id), bowl AS (SELECT d.innings_id, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d GROUP BY d.innings_id) SELECT CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'impact' ELSE 'before' END era, CASE WHEN i.batting_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, AVG(bat.batters) batters, AVG(i.runs) runs, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id JOIN bat ON bat.innings_id = i.innings_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2019 GROUP BY era, side",
+   "validation": {
+    "method": "sample-size floor ≥ 10 innings",
+    "passed": true,
+    "detail": "n = 56"
+   }
+  }
+ },
+ "tables": {
+  "ip-cmp": {
+   "label": "Before and after the impact-player rule (2019–2022 vs 2023–2026)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Average per innings",
+   "sampleSize": {
+    "n": 1090,
+    "unit": "innings"
+   },
+   "query": "WITH bat AS (SELECT d.innings_id, COUNT(DISTINCT d.batter_id) batters FROM deliveries d GROUP BY d.innings_id), bowl AS (SELECT d.innings_id, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d GROUP BY d.innings_id) SELECT CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'impact' ELSE 'before' END era, CASE WHEN i.batting_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, AVG(bat.batters) batters, AVG(i.runs) runs, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id JOIN bat ON bat.innings_id = i.innings_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2019 GROUP BY era, side ;; WITH bowl AS (SELECT d.innings_id, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d GROUP BY d.innings_id) SELECT CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'impact' ELSE 'before' END era, CASE WHEN i.bowling_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, AVG(bowl.bowlers) bowlers, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id JOIN bowl ON bowl.innings_id = i.innings_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2019 GROUP BY era, side",
+   "rows": [
+    {
+     "measure": "Runs per innings",
+     "before": 160.7,
+     "impact": 175,
+     "leagueBefore": 161,
+     "leagueImpact": 182.2
+    },
+    {
+     "measure": "Batters used",
+     "before": 7.52,
+     "impact": 8.39,
+     "leagueBefore": 7.49,
+     "leagueImpact": 7.74
+    },
+    {
+     "measure": "Bowlers used",
+     "before": 5.78,
+     "impact": 5.89,
+     "leagueBefore": 5.78,
+     "leagueImpact": 5.98
+    }
+   ]
+  },
+  "ip-runs": {
+   "label": "Runs per innings before and after the impact-player rule",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Average runs per regulation innings",
+   "sampleSize": {
+    "n": 1090,
+    "unit": "innings"
+   },
+   "query": "WITH bat AS (SELECT d.innings_id, COUNT(DISTINCT d.batter_id) batters FROM deliveries d GROUP BY d.innings_id), bowl AS (SELECT d.innings_id, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d GROUP BY d.innings_id) SELECT CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'impact' ELSE 'before' END era, CASE WHEN i.batting_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, AVG(bat.batters) batters, AVG(i.runs) runs, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id JOIN bat ON bat.innings_id = i.innings_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2019 GROUP BY era, side",
+   "rows": [
+    {
+     "period": "2019–2022",
+     "team": 160.7,
+     "league": 161
+    },
+    {
+     "period": "2023–2026",
+     "team": 175,
+     "league": 182.2
+    }
+   ]
+  }
+ }
+}

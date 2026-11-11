@@ -1,0 +1,192 @@
+{
+ "articleId": "cf-pbks-084",
+ "generatedAt": "2026-10-26T04:25:53.799Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "bs-k": {
+   "value": 49,
+   "display": "49",
+   "label": "Estimated prior strength (balls)",
+   "unit": "balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All IPL batters, 2024–2026",
+   "sampleSize": {
+    "n": 206,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, MAX(CASE WHEN i.batting_team_id IN (7,12) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.is_wide = 0 THEN d.batter_runs * d.batter_runs ELSE 0 END) sq FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name",
+   "validation": {
+    "method": "plausibility range 10–2000 for prior strength",
+    "passed": true,
+    "detail": "value 49.415714373567454"
+   }
+  },
+  "bs-mu": {
+   "value": 153.6,
+   "display": "153.6",
+   "label": "League strike rate, 2024–2026",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All batters",
+   "sampleSize": {
+    "n": 49388,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, MAX(CASE WHEN i.batting_team_id IN (7,12) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.is_wide = 0 THEN d.batter_runs * d.batter_runs ELSE 0 END) sq FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name",
+   "validation": {
+    "method": "plausibility range 100–200 for strike rate",
+    "passed": true,
+    "detail": "value 153.60208957641532"
+   }
+  },
+  "bs-n": {
+   "value": 206,
+   "display": "206",
+   "label": "Batters used to estimate the prior",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. ten balls",
+   "sampleSize": {
+    "n": 206,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, MAX(CASE WHEN i.batting_team_id IN (7,12) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.is_wide = 0 THEN d.batter_runs * d.batter_runs ELSE 0 END) sq FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 100 batters",
+    "passed": true,
+    "detail": "n = 206"
+   }
+  },
+  "bs-mover": {
+   "value": "SM Curran",
+   "display": "SM Curran",
+   "label": "PBKS batter whose strike rate moves most after shrinkage",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Top ten by balls",
+   "sampleSize": {
+    "n": 303,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, MAX(CASE WHEN i.batting_team_id IN (7,12) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.is_wide = 0 THEN d.batter_runs * d.batter_runs ELSE 0 END) sq FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name",
+   "validation": {
+    "method": "max absolute change",
+    "passed": true
+   }
+  },
+  "bs-raw": {
+   "value": 126.7,
+   "display": "126.7",
+   "label": "That batter's raw strike rate",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 303,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, MAX(CASE WHEN i.batting_team_id IN (7,12) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.is_wide = 0 THEN d.batter_runs * d.batter_runs ELSE 0 END) sq FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 10 balls",
+    "passed": true,
+    "detail": "n = 303"
+   }
+  },
+  "bs-shr": {
+   "value": 130.5,
+   "display": "130.5",
+   "label": "That batter's shrunk strike rate",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 303,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, MAX(CASE WHEN i.batting_team_id IN (7,12) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.is_wide = 0 THEN d.batter_runs * d.batter_runs ELSE 0 END) sq FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 10 balls",
+    "passed": true,
+    "detail": "n = 303"
+   }
+  }
+ },
+ "tables": {
+  "bs-table": {
+   "label": "PBKS batters: raw and shrunk strike rate, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Shrunk = (runs + k × league runs per ball) ÷ (balls + k)",
+   "sampleSize": {
+    "n": 10,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, MAX(CASE WHEN i.batting_team_id IN (7,12) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN d.is_wide = 0 THEN d.batter_runs * d.batter_runs ELSE 0 END) sq FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name",
+   "rows": [
+    {
+     "batter": "P Simran Singh",
+     "raw": 163.1,
+     "shrunk": 162.6,
+     "balls": 885
+    },
+    {
+     "batter": "SS Iyer",
+     "raw": 165.3,
+     "shrunk": 164.7,
+     "balls": 879
+    },
+    {
+     "batter": "Shashank Singh",
+     "raw": 163,
+     "shrunk": 162.1,
+     "balls": 513
+    },
+    {
+     "batter": "Priyansh Arya",
+     "raw": 193,
+     "shrunk": 189.3,
+     "balls": 471
+    },
+    {
+     "batter": "MP Stoinis",
+     "raw": 162.9,
+     "shrunk": 162,
+     "balls": 469
+    },
+    {
+     "batter": "N Wadhera",
+     "raw": 137.8,
+     "shrunk": 139.6,
+     "balls": 394
+    },
+    {
+     "batter": "JM Sharma",
+     "raw": 146.5,
+     "shrunk": 147.3,
+     "balls": 385
+    },
+    {
+     "batter": "Ashutosh Sharma",
+     "raw": 168.9,
+     "shrunk": 166.9,
+     "balls": 334
+    },
+    {
+     "batter": "JP Inglis",
+     "raw": 173.2,
+     "shrunk": 170.6,
+     "balls": 314
+    },
+    {
+     "batter": "SM Curran",
+     "raw": 126.7,
+     "shrunk": 130.5,
+     "balls": 303
+    }
+   ]
+  }
+ }
+}

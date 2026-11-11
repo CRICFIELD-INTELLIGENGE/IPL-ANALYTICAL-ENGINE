@@ -1,0 +1,167 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-gt-010",
+ "planId": "cf-gt-010",
+ "franchise": "GT",
+ "aspect": "batting",
+ "title": "The 200-Run Question: Which Conditions Make Gujarat Titans a High-Scoring Side?",
+ "slug": "gt-the-200-run-question-which-conditions-make-gt-a-high-scoring-side",
+ "dek": "Two hundred used to be a winning total. Which conditions make Gujarat Titans a high-scoring side, and how safe is a big total now?",
+ "excerpt": "Gujarat Titans have reached 200 more often since 2024 than before it. Across the league, a 200-plus total batting first still usually wins, but it is no longer a guarantee.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "GT"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "GT have posted {{ev:t200-all}} totals of 200 or more, {{ev:t200-rec}} of them since 2024.",
+  "{{ev:t200-recshare}} of Gujarat Titans' innings since 2024 have reached 200.",
+  "Batting first, GT have won {{ev:t200-twin}} of matches in which they made 200 or more; the league figure is {{ev:t200-lgwin}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "When Two Hundred Became Normal",
+   "body": [
+    "For most of IPL history a score of 200 was a statement. Across the league, {{ev:t200-lg-e1}} of innings reached it between 2008 and 2023; since 2024 the figure is {{ev:t200-lg-e2}}. The question for Gujarat Titans is when and where they get there.",
+    "GT have posted {{ev:t200-all}} totals of 200 or more in all, {{ev:t200-rec}} of them since 2024. In that recent window {{ev:t200-recshare}} of their innings reached the mark."
+   ],
+   "chartIds": [
+    "t200-trend"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Is Two Hundred Still Safe?",
+   "body": [
+    "Across the league, sides that posted 200 or more batting first won {{ev:t200-lgwin}} of the time.",
+    "Gujarat Titans have won {{ev:t200-twin}} of their {{ev:t200-twinn}} such matches. The home-and-away split shows where those totals came from."
+   ],
+   "chartIds": [
+    "t200-where"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Conditions That Produce Big Totals",
+   "body": [
+    "Big totals cluster at certain grounds and in certain seasons, so the home venue matters. The split between home and away 200-plus totals shows how much of Gujarat Titans' high scoring depends on familiar conditions.",
+    "A side that posts big totals only at home has a venue advantage, not necessarily a batting one."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Big Totals Can Hide Bowling Problems",
+   "body": [
+    "A team that regularly needs 200 to win is also a team that concedes a lot. The high-scoring identity can mask a bowling attack that would lose more often at par totals.",
+    "{{hyp:mask}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Plan for Two Hundred, Defend One-Eighty",
+   "body": [
+    "Gujarat Titans should treat 200 as a realistic target in good conditions, not a safety margin. The league data says it still wins most of the time, but not often enough to relax.",
+    "The more useful planning number is the total the bowling can defend on a normal day, which the defending-totals analysis in this series addresses."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "t200-trend",
+   "type": "line",
+   "title": "Share of innings reaching 200",
+   "subtitle": "GT vs IPL, by season",
+   "table": "t200-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "GT"
+    },
+    {
+     "key": "league",
+     "label": "IPL"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of innings",
+   "takeaway": "Two-hundred-run innings have become far more common across the league.",
+   "ariaLabel": "Line chart of the share of innings reaching two hundred by season for GT and the IPL."
+  },
+  {
+   "id": "t200-where",
+   "type": "column",
+   "title": "First-innings totals of 200+: home vs away",
+   "subtitle": "Matches with a result",
+   "table": "t200-where",
+   "xKey": "where",
+   "series": [
+    {
+     "key": "totals",
+     "label": "Totals of 200+"
+    }
+   ],
+   "xLabel": "Venue",
+   "unit": "matches",
+   "takeaway": "The split shows how much big scoring depends on the home ground.",
+   "ariaLabel": "Column chart of first-innings totals of two hundred or more at home and away."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "mask",
+   "statement": "Hypothesis: Gujarat Titans' high-scoring seasons coincide with weaker bowling seasons.",
+   "whyUnverified": "The correlation between season scoring and season economy has not been tested.",
+   "howToTest": "Correlate season run rate with season economy for the franchise and the league."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "200",
+   "reason": "The 200-run threshold named in the title."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Gujarat Titans posting a big total.",
+   "wanted": "Gujarat Titans batter celebrating a big innings."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-gt-025",
+  "cf-gt-003",
+  "cf-gt-006"
+ ],
+ "seo": {
+  "metaTitle": "The 200-run question: when do GT score big?",
+  "metaDescription": "How often Gujarat Titans pass 200, where they do it, and how safely a 200-plus total wins in the IPL."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Run rates use all runs per legal ball times six. Every figure is generated from the CricField warehouse by scripts/editorial/engine. Totals include both innings for frequency; win rates use first-innings totals from matches with a result.",
+ "generator": "engine:v1"
+}

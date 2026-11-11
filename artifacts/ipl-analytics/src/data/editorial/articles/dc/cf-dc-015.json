@@ -1,0 +1,192 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-015",
+ "planId": "cf-dc-015",
+ "franchise": "DC",
+ "aspect": "bowling-fielding",
+ "title": "Death-Overs Risk: The Cost of One Missed Length for Delhi Capitals",
+ "slug": "dc-death-overs-risk-the-cost-of-one-missed-length-for-dc",
+ "dek": "A yorker that slips into a full toss is the costliest single mistake at the death. Ball-by-ball length labels put a price on it for Delhi Capitals.",
+ "excerpt": "Since 2022, each yorker that became a full toss has cost IPL bowlers {{ev:do-miss}} extra runs. Delhi Capitals' death bowling has been more expensive than the league's since 2024.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "DC"
+ ],
+ "players": [
+  "Mukesh Kumar",
+  "Kuldeep Yadav",
+  "L Ngidi",
+  "MA Starc"
+ ],
+ "seasons": [
+  "2008\u20132026",
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "DC conceded {{ev:do-team-e2}} an over at the death since 2024; the league conceded {{ev:do-league-e2}}.",
+  "League-wide, a death yorker cost {{ev:do-ly}} runs per ball and a full toss {{ev:do-lf}}: a miss costs {{ev:do-miss}} runs.",
+  "One missed yorker per over across the last four overs adds {{ev:do-spell}} runs."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Most Expensive Inch",
+   "body": [
+    "Every death bowler aims at the same few centimetres at the base of the stumps. Hit them and the batter scrambles a single at best; miss by a hand's width and the yorker becomes a full toss.",
+    "Delhi Capitals conceded {{ev:do-team-e1}} an over in the last five overs between 2008 and 2023, against {{ev:do-league-e1}} for the league, and {{ev:do-team-e2}} since 2024 against {{ev:do-league-e2}}.",
+    "On this measure their strongest season was 2009, at {{ev:do-x-best-v}}, and their weakest 2024, at {{ev:do-x-worst-v}}."
+   ],
+   "chartIds": [
+    "do-trend"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Pricing the Miss",
+   "body": [
+    "Commentary labels allow each death delivery since 2022 to be priced. Across the rest of the league a yorker cost {{ev:do-ly}} runs per ball and a full toss {{ev:do-lf}}, so each miss costs {{ev:do-miss}} runs.",
+    "For DC the same miss has cost {{ev:do-tmiss}} runs per ball."
+   ],
+   "chartIds": [
+    "do-len"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Who Bowls the Last Five",
+   "body": [
+    "Since 2024 {{ev:dop-lead-name}} has bowled the most death-overs balls for DC, {{ev:dop-lead-balls}} of them, at an economy of {{ev:dop-lead-econ}}.",
+    "A death bowler's value is how rarely his misses become full tosses. Across a four-over spell, one miss an over adds {{ev:do-spell}} runs, roughly the margin of a tight finish."
+   ],
+   "chartIds": [
+    "do-players"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What Commentary Labels Miss",
+   "body": [
+    "Length labels come from text commentary rather than ball-tracking, and expensive deliveries may be described by their result. That would inflate the measured cost of a full toss.",
+    "{{hyp:labels}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Budget for the Miss, Then Shrink It",
+   "body": [
+    "Delhi Capitals' death bowling has been more expensive than the league's since 2024. The measurable skill to recruit for is a low full-toss rate under pressure, not a high yorker attempt rate.",
+    "Plans that mix hard lengths with the yorker cap the downside when execution slips."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "do-trend",
+   "type": "line",
+   "title": "Death-overs economy by season",
+   "subtitle": "DC bowling vs IPL, overs 16\u201320",
+   "table": "do-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "DC"
+    },
+    {
+     "key": "league",
+     "label": "IPL average"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per over",
+   "takeaway": "DC have been more expensive than the league at the death since 2024.",
+   "ariaLabel": "Line chart of DC death-overs economy and the IPL average by season."
+  },
+  {
+   "id": "do-len",
+   "type": "column",
+   "title": "Death-overs cost by length",
+   "subtitle": "Overs 16\u201320, 2022\u20132026, labelled balls",
+   "table": "do-len",
+   "xKey": "length",
+   "series": [
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    },
+    {
+     "key": "team",
+     "label": "DC"
+    }
+   ],
+   "xLabel": "Length",
+   "unit": "runs per ball",
+   "takeaway": "The full toss is the costliest pitched-up delivery at the death.",
+   "ariaLabel": "Column chart of runs per ball by delivery length in the death overs."
+  },
+  {
+   "id": "do-players",
+   "type": "bar",
+   "title": "DC death bowlers since 2024",
+   "subtitle": "Economy, minimum 60 balls",
+   "table": "dop-players",
+   "xKey": "player",
+   "series": [
+    {
+     "key": "economy",
+     "label": "Economy"
+    }
+   ],
+   "unit": "runs per over",
+   "takeaway": "Death economy separates the specialists from the rest.",
+   "ariaLabel": "Horizontal bar chart of death-overs economy for DC bowlers since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "labels",
+   "statement": "Hypothesis: commentary labelling inflates the cost of a full toss because expensive balls are described by their result.",
+   "whyUnverified": "No ball-tracking data is available to check labels against.",
+   "howToTest": "Compare commentary labels with tracking data for a sample of matches."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Delhi Capitals death bowling.",
+   "wanted": "Mukesh Kumar bowling at the death."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-012",
+  "cf-dc-018",
+  "cf-dc-028"
+ ],
+ "seo": {
+  "metaTitle": "Death-overs risk: what a missed yorker costs DC",
+  "metaDescription": "Delhi Capitals' death-overs economy against the IPL, and what a yorker that becomes a full toss costs per ball."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Economy uses runs charged to the bowler (byes and leg-byes excluded) per legal ball times six. Bowler wickets exclude run outs. Generated from the CricField warehouse by scripts/editorial/engine. Death overs = sixteen to twenty. Length labels from ball-by-ball commentary, 2022\u20132026; unlabelled balls excluded.",
+ "generator": "engine:v1"
+}

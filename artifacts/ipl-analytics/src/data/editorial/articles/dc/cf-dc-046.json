@@ -1,0 +1,136 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-046",
+ "planId": "cf-dc-046",
+ "franchise": "DC",
+ "aspect": "business",
+ "title": "The Price of a Rivalry: Why Big Fixtures Matter Commercially for Delhi Capitals",
+ "slug": "dc-the-price-of-a-rivalry-why-big-fixtures-matter-commercially-for-dc",
+ "dek": "Big fixtures sell. Delhi Capitals' most frequent opponent is Mumbai Indians; the question is whether those matches deliver more drama than the rest.",
+ "excerpt": "Delhi Capitals have met Mumbai Indians more than any other side. Those matches have been less close than their other fixtures: the on-field half of a rivalry's commercial value.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "DC"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "DC have played {{ev:pr-rival}} {{ev:pr-n}} times, more than any other opponent.",
+  "{{ev:pr-rc}} of those decided matches were close, against {{ev:pr-oc}} of their other fixtures.",
+  "They have produced {{ev:pr-rr}} runs per match, against {{ev:pr-or}} in other fixtures."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Why Rivalries Matter Commercially",
+   "body": [
+    "Rivalry fixtures are the matches that sell out first, draw the biggest audiences and carry the most social conversation. Their commercial value rests on two things: history and drama.",
+    "Delhi Capitals' most frequent opponent is {{ev:pr-rival}}, with {{ev:pr-n}} meetings."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Do the Big Fixtures Deliver?",
+   "body": [
+    "{{ev:pr-rc}} of decided matches against MI were close, against {{ev:pr-oc}} of Delhi Capitals' other fixtures. Those matches have produced {{ev:pr-rr}} runs per match, against {{ev:pr-or}} elsewhere.",
+    "On this measure, the rivalry fixture has been less tense than the average match; its appeal rests more on history than on finishes."
+   ],
+   "chartIds": [
+    "pr-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Most-Played Is Not Always the Fiercest",
+   "body": [
+    "The most frequent opponent is a measurable stand-in for a rivalry, but the rivalry fans feel may be with a different team, shaped by geography, history or a single final.",
+    "{{hyp:rival}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What the Warehouse Cannot See",
+   "body": [
+    "The CricField warehouse is ball-by-ball cricket data. It contains no ticket demand, audience or social-conversation data, so it cannot measure the commercial side of this question directly.",
+    "Pricing a rivalry would need sell-out speed, secondary-market prices and audience figures for each fixture."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: History Plus Drama",
+   "body": [
+    "Delhi Capitals' meetings with MI have a long history; whether they also bring above-average drama is shown in the comparison above.",
+    "The commercial premium on the fixture needs demand data to measure."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "pr-chart",
+   "type": "column",
+   "title": "Share of close matches",
+   "subtitle": "DC against MI vs other opponents",
+   "table": "pr-cmp",
+   "xKey": "fixture",
+   "series": [
+    {
+     "key": "closePct",
+     "label": "Close matches"
+    }
+   ],
+   "xLabel": "Fixture",
+   "unit": "% of decided matches",
+   "takeaway": "The rivalry fixture has not been markedly closer than the rest.",
+   "ariaLabel": "Column chart comparing the share of close matches against MI and against other opponents."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "rival",
+   "statement": "Hypothesis: matches against MI sell out faster and draw larger audiences than other DC home fixtures.",
+   "whyUnverified": "No ticketing or audience data is available.",
+   "howToTest": "Compare sell-out time and audience for rivalry and non-rivalry fixtures."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Delhi Capitals against Mumbai Indians.",
+   "wanted": "Delhi Capitals v Mumbai Indians match action."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-055",
+  "cf-dc-030",
+  "cf-dc-041"
+ ],
+ "seo": {
+  "metaTitle": "The price of a rivalry: DC v MI",
+  "metaDescription": "How Delhi Capitals' matches against Mumbai Indians compare with other fixtures for closeness and scoring, and what that means commercially."
+ },
+ "methodology": "CricField measures the cricket a franchise puts on the field; it holds no revenue, attendance, audience, merchandise or social-media data. Commercial ideas in this article are labelled hypotheses with the data needed to test them. Generated by scripts/editorial/engine. Rivalry = the franchise's most frequent opponent. Close = decided by ten runs or fewer, six balls or fewer to spare, or a super over.",
+ "generator": "engine:v1"
+}

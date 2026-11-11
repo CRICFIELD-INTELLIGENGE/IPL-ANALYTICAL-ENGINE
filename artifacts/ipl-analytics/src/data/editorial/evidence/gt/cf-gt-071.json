@@ -1,0 +1,191 @@
+{
+ "articleId": "cf-gt-071",
+ "generatedAt": "2026-10-26T04:26:42.744Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "no-mine": {
+   "value": 155,
+   "display": "155.0",
+   "label": "Gujarat Titans' openers' strike rate, 2024–2026",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batting positions 1–2",
+   "sampleSize": {
+    "n": 2330,
+    "unit": "balls"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts), op AS (SELECT innings_id, pid FROM pos WHERE position <= 2) SELECT pl.name, CASE WHEN i.batting_team_id IN (14) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM op JOIN deliveries d ON d.innings_id = op.innings_id AND d.batter_id = op.pid JOIN innings i ON i.innings_id = op.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = op.pid WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 300 balls",
+    "passed": true,
+    "detail": "n = 2330"
+   }
+  },
+  "no-rest": {
+   "value": 161.2,
+   "display": "161.2",
+   "label": "Other IPL openers' strike rate, 2024–2026",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batting positions 1–2",
+   "sampleSize": {
+    "n": 15150,
+    "unit": "balls"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts), op AS (SELECT innings_id, pid FROM pos WHERE position <= 2) SELECT pl.name, CASE WHEN i.batting_team_id IN (14) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM op JOIN deliveries d ON d.innings_id = op.innings_id AND d.batter_id = op.pid JOIN innings i ON i.innings_id = op.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = op.pid WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 3000 balls",
+    "passed": true,
+    "detail": "n = 15150"
+   }
+  },
+  "no-mbpd": {
+   "value": 28.1,
+   "display": "28.1",
+   "label": "Gujarat Titans' openers' balls per dismissal",
+   "unit": "balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 2330,
+    "unit": "balls"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts), op AS (SELECT innings_id, pid FROM pos WHERE position <= 2) SELECT pl.name, CASE WHEN i.batting_team_id IN (14) THEN 1 ELSE 0 END mine, COUNT(*) outs FROM op JOIN dismissals x ON x.player_out_id = op.pid JOIN deliveries d ON d.delivery_id = x.delivery_id AND d.innings_id = op.innings_id JOIN innings i ON i.innings_id = op.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = op.pid WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine",
+   "validation": {
+    "method": "plausibility range 5–60 for balls per dismissal",
+    "passed": true,
+    "detail": "value 28.072289156626507"
+   }
+  },
+  "no-rbpd": {
+   "value": 20.6,
+   "display": "20.6",
+   "label": "Other IPL openers' balls per dismissal",
+   "unit": "balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 15150,
+    "unit": "balls"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts), op AS (SELECT innings_id, pid FROM pos WHERE position <= 2) SELECT pl.name, CASE WHEN i.batting_team_id IN (14) THEN 1 ELSE 0 END mine, COUNT(*) outs FROM op JOIN dismissals x ON x.player_out_id = op.pid JOIN deliveries d ON d.delivery_id = x.delivery_id AND d.innings_id = op.innings_id JOIN innings i ON i.innings_id = op.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = op.pid WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine",
+   "validation": {
+    "method": "plausibility range 5–60 for balls per dismissal",
+    "passed": true,
+    "detail": "value 20.55630936227951"
+   }
+  },
+  "no-q75": {
+   "value": 176,
+   "display": "176",
+   "label": "Top-quarter strike rate among IPL openers (min. 150 balls)",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 28,
+    "unit": "openers"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts), op AS (SELECT innings_id, pid FROM pos WHERE position <= 2) SELECT pl.name, CASE WHEN i.batting_team_id IN (14) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM op JOIN deliveries d ON d.innings_id = op.innings_id AND d.batter_id = op.pid JOIN innings i ON i.innings_id = op.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = op.pid WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 20 openers",
+    "passed": true,
+    "detail": "n = 28"
+   }
+  },
+  "no-bpdmed": {
+   "value": 21,
+   "display": "21",
+   "label": "Median balls per dismissal among those openers",
+   "unit": "balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 28,
+    "unit": "openers"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts), op AS (SELECT innings_id, pid FROM pos WHERE position <= 2) SELECT pl.name, CASE WHEN i.batting_team_id IN (14) THEN 1 ELSE 0 END mine, COUNT(*) outs FROM op JOIN dismissals x ON x.player_out_id = op.pid JOIN deliveries d ON d.delivery_id = x.delivery_id AND d.innings_id = op.innings_id JOIN innings i ON i.innings_id = op.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = op.pid WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 20 openers",
+    "passed": true,
+    "detail": "n = 28"
+   }
+  },
+  "no-both": {
+   "value": 0,
+   "display": "0",
+   "label": "Openers meeting both standards",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 28,
+    "unit": "openers"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts), op AS (SELECT innings_id, pid FROM pos WHERE position <= 2) SELECT pl.name, CASE WHEN i.batting_team_id IN (14) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM op JOIN deliveries d ON d.innings_id = op.innings_id AND d.batter_id = op.pid JOIN innings i ON i.innings_id = op.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = op.pid WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "no-top": {
+   "label": "Fastest IPL openers, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 150 balls as an opener",
+   "sampleSize": {
+    "n": 28,
+    "unit": "openers"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts), op AS (SELECT innings_id, pid FROM pos WHERE position <= 2) SELECT pl.name, CASE WHEN i.batting_team_id IN (14) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM op JOIN deliveries d ON d.innings_id = op.innings_id AND d.batter_id = op.pid JOIN innings i ON i.innings_id = op.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = op.pid WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine",
+   "rows": [
+    {
+     "opener": "V Suryavanshi",
+     "strikeRate": 229,
+     "ballsPerDismissal": 19.5
+    },
+    {
+     "opener": "FH Allen",
+     "strikeRate": 214.1,
+     "ballsPerDismissal": 16.3
+    },
+    {
+     "opener": "Abhishek Sharma",
+     "strikeRate": 200.3,
+     "ballsPerDismissal": 17.4
+    },
+    {
+     "opener": "Priyansh Arya",
+     "strikeRate": 193,
+     "ballsPerDismissal": 15.2
+    },
+    {
+     "opener": "PD Salt",
+     "strikeRate": 176.9,
+     "ballsPerDismissal": 20.3
+    },
+    {
+     "opener": "TM Head",
+     "strikeRate": 176.1,
+     "ballsPerDismissal": 18.7
+    },
+    {
+     "opener": "SP Narine",
+     "strikeRate": 175.9,
+     "ballsPerDismissal": 16.6
+    },
+    {
+     "opener": "RD Rickelton",
+     "strikeRate": 168.2,
+     "ballsPerDismissal": 20.7
+    }
+   ]
+  }
+ }
+}

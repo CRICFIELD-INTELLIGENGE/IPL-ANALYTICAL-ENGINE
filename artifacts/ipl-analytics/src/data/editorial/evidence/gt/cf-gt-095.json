@@ -1,0 +1,149 @@
+{
+ "articleId": "cf-gt-095",
+ "generatedAt": "2026-10-26T04:26:58.995Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "bh-n": {
+   "value": 18515,
+   "display": "18,515",
+   "label": "Deliveries in Gujarat Titans' matches",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 18515,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (14) OR i.bowling_team_id IN (14)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "sample-size floor ≥ 5000 deliveries",
+    "passed": true,
+    "detail": "n = 18515"
+   }
+  },
+  "bh-m": {
+   "value": 77,
+   "display": "77",
+   "label": "GT matches with ball-by-ball data",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 77,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (14) OR i.bowling_team_id IN (14)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "sample-size floor ≥ 30 matches",
+    "passed": true,
+    "detail": "n = 77"
+   }
+  },
+  "bh-shot": {
+   "value": 67,
+   "display": "67%",
+   "label": "Share with the shot recorded",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Commentary tags",
+   "sampleSize": {
+    "n": 18515,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (14) OR i.bowling_team_id IN (14)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "bh-zone": {
+   "value": 67,
+   "display": "67%",
+   "label": "Share with the scoring zone recorded",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Commentary tags",
+   "sampleSize": {
+    "n": 18515,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (14) OR i.bowling_team_id IN (14)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "bh-len": {
+   "value": 75,
+   "display": "75%",
+   "label": "Share with the length recorded",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Commentary tags",
+   "sampleSize": {
+    "n": 18515,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (14) OR i.bowling_team_id IN (14)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "bh-spd": {
+   "value": 5.4,
+   "display": "5.4%",
+   "label": "Share with the speed recorded",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Commentary tags",
+   "sampleSize": {
+    "n": 18515,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (14) OR i.bowling_team_id IN (14)) AND i.innings_number <= 2",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "bh-cover": {
+   "label": "Ball-by-ball fields available for Gujarat Titans' matches",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Share of deliveries with each commentary field",
+   "sampleSize": {
+    "n": 18515,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.shot IS NOT NULL THEN 1 ELSE 0 END) shot, SUM(CASE WHEN c.zone IS NOT NULL THEN 1 ELSE 0 END) zone, SUM(CASE WHEN c.line IS NOT NULL THEN 1 ELSE 0 END) line, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, COUNT(DISTINCT d.match_id) matches FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id WHERE (i.batting_team_id IN (14) OR i.bowling_team_id IN (14)) AND i.innings_number <= 2",
+   "rows": [
+    {
+     "field": "Shot played",
+     "coverage": 67
+    },
+    {
+     "field": "Scoring zone",
+     "coverage": 67.5
+    },
+    {
+     "field": "Line",
+     "coverage": 67.8
+    },
+    {
+     "field": "Length",
+     "coverage": 74.6
+    },
+    {
+     "field": "Speed",
+     "coverage": 5.4
+    }
+   ]
+  }
+ }
+}

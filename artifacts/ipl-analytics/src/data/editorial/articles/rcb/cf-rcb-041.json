@@ -1,0 +1,177 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-041",
+ "planId": "cf-rcb-041",
+ "franchise": "RCB",
+ "aspect": "business",
+ "title": "The Business of Belonging: How Royal Challengers Bengaluru Converts Attention into Revenue",
+ "slug": "rcb-the-business-of-belonging-how-rcb-converts-attention-into-revenue",
+ "dek": "RCB became the IPL's most valuable brand in the same two seasons it finally won the trophy. Independent valuations and CricField's match data suggest the titles accelerated a lead built on something older.",
+ "excerpt": "Houlihan Lokey now values RCB's brand above every other IPL franchise. Set against CricField's results data, the valuations show that trophies move the needle, but that the biggest brands do not depend on this season's form.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-25",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "RCB",
+  "MI",
+  "CSK",
+  "KKR"
+ ],
+ "players": [],
+ "seasons": [
+  "2024",
+  "2025",
+  "2026"
+ ],
+ "keyTakeaways": [
+  "Houlihan Lokey valued RCB's brand at {{ev:rcb-brand-2024}} in its 2024 study, {{ev:rcb-brand-2025}} in 2025 and {{ev:rcb-brand-2026}} in 2026 {{src:hl-2026}}.",
+  "Across the ten franchises, 2026 brand value tracks titles won (correlation {{ev:corr-brand-titles}}) far more closely than 2026 form ({{ev:corr-brand-win2026}}).",
+  "Brand growth, not brand size, is where this season's results show up: growth and 2026 win rate correlate at {{ev:corr-growth-win2026}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Most Valuable Brand in the League",
+   "body": [
+    "For most of its history RCB was the franchise people pointed to when they argued that money and popularity could not buy a trophy. In July 2026 the investment bank Houlihan Lokey ranked it first among IPL franchises by brand value, at {{ev:rcb-brand-2026}}, the first cricket team it had valued above three hundred million dollars {{src:hl-2026}}.",
+    "That figure is not revenue. It is an independent estimate of what the brand itself is worth, and it should be read as one firm's model. But it is published every year by the same firm, which makes the trend more informative than any single number. RCB's estimate rose from {{ev:rcb-brand-2024}} in the 2024 study to {{ev:rcb-brand-2025}} in 2025 {{src:hl-2025}}, growth of {{ev:rcb-brand-growth-2025}}, and by a further {{ev:rcb-brand-growth-2026}} to 2026."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Trophies, Form and the Value Table",
+   "body": [
+    "To see what drives the rankings we set the 2026 brand values for all ten franchises against CricField's results data. Titles are counted from the winner of each season's final in the warehouse.",
+    "The strongest link is history. Brand value and titles won correlate at {{ev:corr-brand-titles}}. The link with the latest season's form is close to nothing: {{ev:corr-brand-win2026}}. Mumbai Indians are the clearest case. They won {{ev:mi-win-2026}} of their 2026 matches and finished {{ev:mi-finish-2026}}, yet their brand was valued at {{ev:mi-brand-2026}}, second only to RCB, on the strength of {{ev:mi-titles}} titles {{src:hl-2026}}.",
+    "Growth behaves differently from size. The year-on-year change in brand value correlates with 2026 win rate at {{ev:corr-growth-win2026}}. Lucknow Super Giants, with no title, a poor season and a brand valued flat at {{ev:lsg-brand-2026}}, sit at the bottom on both measures. With only ten franchises these correlations describe a pattern rather than prove a law."
+   ],
+   "chartIds": [
+    "brand-table"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "How RCB Turned a Long Wait into a Lead",
+   "body": [
+    "RCB's position is unusual because it combines both drivers at once. Before 2025 it had a large, loyal following and no titles. Then it won {{ev:rcb-titles}} in two seasons, including a 2026 campaign in which it won {{ev:rcb-win-2026}} of its matches. On the evidence above, the titles converted an attention advantage the franchise already had into a measurable brand lead, now {{ev:rcb-mi-gap}} over second-placed Mumbai.",
+    "The 2026 study also records the sale of the franchise to a consortium at a reported valuation of {{ev:rcb-transaction}}, the most expensive single IPL franchise transaction to date {{src:hl-2026}}. One of the new co-owners, quoted in the same release, explained the purchase by the intensity of the fan base rather than by recent results.",
+    "{{hyp:attention-first}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What a Brand Valuation Cannot Tell You",
+   "body": [
+    "Brand value is not revenue, and none of the figures here tell us what RCB actually earns from tickets, sponsorship or merchandise. Franchise revenues are not published in a form that would let us check the conversion this article's title asks about. The valuation firm's methods are proprietary, and its year-to-year changes may partly reflect the narrative of the season it is describing.",
+    "The comparison with results is also thin. Ten franchises and one season of form is a small base for any correlation, and the titles measure partly reflects how long each franchise has existed.",
+    "{{hyp:revenue-gap}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Titles Compound, Attention Comes First",
+   "body": [
+    "The evidence supports a two-stage story. Attention built over many seasons made RCB a large brand without trophies; the titles then added growth on top, and growth is the part of brand value that responds to results.",
+    "For the franchise, the commercial risk is no longer being overlooked. It is that a brand built partly on a long wait must now be sustained by success. The MI example suggests that once titles accumulate, the brand becomes resilient to bad seasons. RCB has two; the value of a third, commercially, may be larger than any single season's form."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "brand-table",
+   "type": "bar",
+   "title": "Brand value vs titles, by franchise",
+   "subtitle": "Brand value: Houlihan Lokey 2026 study (US$ million). Titles: CricField, 2008\u20132026",
+   "table": "brand-vs-field",
+   "xKey": "franchise",
+   "series": [
+    {
+     "key": "brand2026",
+     "label": "Brand value 2026 (US$m)"
+    }
+   ],
+   "unit": "US$ million",
+   "takeaway": "The four most valuable brands are the four franchises with the most titles, in a slightly different order.",
+   "ariaLabel": "Horizontal bar chart of 2026 brand value in US dollar millions for the ten IPL franchises, from RCB at the top to Lucknow Super Giants at the bottom."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/"
+  },
+  {
+   "id": "hl-2025",
+   "kind": "external-report",
+   "title": "Houlihan Lokey Launches IPL Valuation Study 2025 (press release)",
+   "publisher": "Houlihan Lokey",
+   "url": "https://hl.com/media/x1kcmcty/houlihan-lokey-ipl-2025-valuation-study.pdf",
+   "published": "2025-07-08",
+   "accessed": "2026-10-25",
+   "note": "Brand values for all ten franchises; RCB US$269m, up from US$227m."
+  },
+  {
+   "id": "hl-2026",
+   "kind": "external-report",
+   "title": "IPL Reaches US$20.6 Billion Valuation Amid Record Franchise Deals (press release)",
+   "publisher": "Houlihan Lokey",
+   "url": "https://hl.com/media/20mp5jrj/hl-ipl-valuation-study-2026-press-release.pdf",
+   "published": "2026-07-29",
+   "accessed": "2026-10-25",
+   "note": "2026 brand values; RCB US$312m; reported US$1.78bn RCB transaction."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "attention-first",
+   "statement": "Hypothesis: RCB's commercial lead was built mainly by audience size and loyalty before 2025, with the titles acting as an accelerant rather than the cause.",
+   "whyUnverified": "We do not have audience, sponsorship or revenue data per franchise before 2025.",
+   "howToTest": "Compare Houlihan Lokey brand values for earlier years (2019\u20132023 editions) with titles and audience metrics, if those reports can be obtained."
+  },
+  {
+   "id": "revenue-gap",
+   "statement": "Hypothesis: brand value overstates the difference in actual revenue between franchises, because central media-rights income is shared equally.",
+   "whyUnverified": "Franchise-level revenue is not published in a comparable form.",
+   "howToTest": "Use statutory filings of franchise-owning companies where available to compare reported revenue with brand value."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "RCB's fan base and celebration after the 2025 title.",
+   "wanted": "RCB players celebrating with the IPL trophy, 2025 or 2026, landscape."
+  },
+  {
+   "slot": "s2",
+   "narrative": "The commercial scale of an RCB home match.",
+   "wanted": "A packed Chinnaswamy crowd at an RCB match."
+  },
+  {
+   "slot": "s4",
+   "narrative": "Fan attention.",
+   "wanted": "RCB supporters in red and gold."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-045",
+  "cf-rcb-046",
+  "cf-rcb-051"
+ ],
+ "seo": {
+  "metaTitle": "The business of belonging: RCB's brand value lead | CricField",
+  "metaDescription": "Houlihan Lokey ranks RCB the IPL's most valuable brand. Against CricField results data, titles explain brand size, while this season's form explains brand growth."
+ },
+ "methodology": "Brand values are transcribed from Houlihan Lokey's 2025 and 2026 press releases (primary source, linked) and checked against the release text. Titles are the winners of each season's final match in the CricField warehouse; win rates exclude no-results. Correlations are Pearson coefficients over ten franchises and are descriptive only. Generated by scripts/editorial/evidence/rcb/cf-rcb-041.ts."
+}

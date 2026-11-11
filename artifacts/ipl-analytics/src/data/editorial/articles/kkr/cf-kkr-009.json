@@ -1,0 +1,172 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-kkr-009",
+ "planId": "cf-kkr-009",
+ "franchise": "KKR",
+ "aspect": "batting",
+ "title": "Dot-Ball Debt: How Kolkata Knight Riders Can Price the Cost of a Quiet Over",
+ "slug": "kkr-dot-ball-debt-how-kkr-can-price-the-cost-of-a-quiet-over",
+ "dek": "Every quiet ball is a debt the rest of the innings has to repay. How much does Kolkata Knight Riders' dot-ball rate cost, and how does it compare with the league?",
+ "excerpt": "Since 2024 Kolkata Knight Riders have played more dot balls than the league average. Across the IPL, innings with fewer dots win markedly more often.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "KKR"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "KKR played dot balls on {{ev:dot-t2}} of legal deliveries since 2024; the league rate is {{ev:dot-l2}}.",
+  "IPL innings with under 30% dot balls won {{ev:dot-wlow}} of the time; with 42% or more, {{ev:dot-whigh}}.",
+  "The difference from the league rate is {{ev:dot-cost}} dot balls per innings, more than average."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Hidden Cost of a Quiet Over",
+   "body": [
+    "A dot ball does not show up in a highlights package, but it shows up in the scorebook. Each one has to be repaid later at a higher risk, usually by a batter swinging at a ball he would rather have nudged for one.",
+    "Since 2024 Kolkata Knight Riders have played dot balls on {{ev:dot-t2}} of legal deliveries, against {{ev:dot-l2}} for the league. That is {{ev:dot-cost}} balls per innings more than average.",
+    "On this measure their most efficient season was 2016, at {{ev:dot-x-best-v}}, and their most dot-heavy 2009, at {{ev:dot-x-worst-v}}."
+   ],
+   "chartIds": [
+    "dot-trend"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What Dots Do to Results",
+   "body": [
+    "Across every IPL innings with a result and at least ten overs batted, those with fewer than 30% dot balls won {{ev:dot-wlow}} of the time; those with 42% or more won {{ev:dot-whigh}}.",
+    "The relationship runs both ways, since a side under pressure plays more dots, but the size of the gap shows how much a scoring-every-ball approach is worth."
+   ],
+   "chartIds": [
+    "dot-win"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Pricing the Quiet Over",
+   "body": [
+    "For KKR, the practical measure is dot rate in the middle overs, where fields spread and singles are available. A batter who turns two dots an over into singles adds runs without adding risk.",
+    "That is why strike rotation deserves a place on the scouting sheet alongside boundary hitting."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Some Dots Are Worth Playing",
+   "body": [
+    "Not every dot ball is a mistake. Against an elite death bowler or on a slow pitch, blocking a good ball can be the right decision, and a raw dot rate cannot tell the difference.",
+    "{{hyp:quality}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Pay Down the Debt Early",
+   "body": [
+    "Kolkata Knight Riders carry more dot-ball debt than the league. The aim should be to reduce dots in the middle overs, where it costs least risk to do so.",
+    "Tracking dot rate by phase each season would show whether the side's approach is changing."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "dot-trend",
+   "type": "line",
+   "title": "Dot-ball rate by season",
+   "subtitle": "KKR batting vs IPL",
+   "table": "dot-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "KKR"
+    },
+    {
+     "key": "league",
+     "label": "IPL"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of legal balls",
+   "takeaway": "KKR have played more dot balls than the league since 2024.",
+   "ariaLabel": "Line chart of dot-ball rate by season for KKR batting and the IPL."
+  },
+  {
+   "id": "dot-win",
+   "type": "column",
+   "title": "Win rate by dot-ball share of an innings",
+   "subtitle": "IPL innings with a result, at least ten overs",
+   "table": "dot-win",
+   "xKey": "band",
+   "series": [
+    {
+     "key": "winPct",
+     "label": "Win rate"
+    }
+   ],
+   "xLabel": "Share of legal balls that were dots",
+   "unit": "% of innings won",
+   "takeaway": "Innings with fewer dot balls win more often.",
+   "ariaLabel": "Column chart of win rate grouped by the share of dot balls in an innings."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "quality",
+   "statement": "Hypothesis: a share of dot balls reflects good bowling rather than passive batting, so dot rate overstates the batting cost.",
+   "whyUnverified": "Ball quality is not recorded; length labels exist for only part of the data.",
+   "howToTest": "Compare dot rates against labelled good-length deliveries with dot rates against other lengths."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "30",
+   "reason": "Band threshold (30% dot balls)."
+  },
+  {
+   "text": "42",
+   "reason": "Band threshold (42% dot balls)."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Kolkata Knight Riders rotating the strike.",
+   "wanted": "Kolkata Knight Riders batters running between the wickets."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-kkr-003",
+  "cf-kkr-004",
+  "cf-kkr-082"
+ ],
+ "seo": {
+  "metaTitle": "Dot-ball debt: what quiet overs cost KKR",
+  "metaDescription": "Kolkata Knight Riders' dot-ball rate against the IPL, and how much dot-heavy innings cost in win rate across the league."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Run rates use all runs per legal ball times six. Every figure is generated from the CricField warehouse by scripts/editorial/engine. A dot ball is a legal delivery with no run of any kind. Innings bands use innings of at least ten overs from matches with a result.",
+ "generator": "engine:v1"
+}

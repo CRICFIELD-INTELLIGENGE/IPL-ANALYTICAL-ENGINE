@@ -1,0 +1,22 @@
+# Day 5.5 — consistent line endings on every machine (the repository is edited on Windows and deployed on Linux).
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+# Binary assets and data: never convert
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.tar binary
+*.xlsx binary
+*.db filter=lfs diff=lfs merge=lfs -text
+*.sqlite binary
+*.woff binary
+*.woff2 binary
+*.mp4 binary
+*.db-wal filter=lfs diff=lfs merge=lfs -text

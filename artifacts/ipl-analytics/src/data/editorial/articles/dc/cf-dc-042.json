@@ -1,0 +1,136 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-042",
+ "planId": "cf-dc-042",
+ "franchise": "DC",
+ "aspect": "business",
+ "title": "The Stadium Economy: What Does Matchday Mean for Delhi Capitals Fans?",
+ "slug": "dc-the-stadium-economy-what-does-matchday-mean-for-dc-fans",
+ "dek": "What does a matchday at Delhi offer the people who pay to be there? The fixture list and the home record are the parts the data can measure.",
+ "excerpt": "Delhi Capitals have played their home matches at Delhi, with a home record the warehouse can measure and a fixture calendar that shapes who can attend.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "DC"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "DC have played {{ev:st-home}} matches at Delhi; since 2023 they have averaged {{ev:st-recent}} home matches a season.",
+  "They have won {{ev:st-home-win}} of decided home matches, against {{ev:st-away-win}} elsewhere.",
+  "{{ev:st-wk}} of their home matches fell on a weekend, against {{ev:st-wkl}} of all IPL matches."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "A Short Home Season",
+   "body": [
+    "A franchise sells a handful of home matches a year. Since 2023, Delhi Capitals have averaged {{ev:st-recent}} home matches a season at Delhi, and across their history there were {{ev:st-none}} seasons with none at all.",
+    "With so few fixtures, each matchday carries a large share of the year's ticketing and hospitality opportunity."
+   ],
+   "chartIds": [
+    "st-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What Fans See at Home",
+   "body": [
+    "Delhi Capitals have won {{ev:st-home-win}} of decided home matches, against {{ev:st-away-win}} elsewhere. Matches at Delhi produce {{ev:st-six-home}} sixes per match on average, against {{ev:st-six-other}} at other IPL venues.",
+    "A winning, high-scoring home ground is the strongest matchday offer a franchise can make."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "When the Matches Fall",
+   "body": [
+    "The fixture calendar decides who can come. {{ev:st-wk}} of Delhi Capitals' home matches were on a Saturday or Sunday, against {{ev:st-wkl}} of all IPL matches.",
+    "{{hyp:weekend}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What the Warehouse Cannot See",
+   "body": [
+    "The CricField warehouse is ball-by-ball cricket data. It contains no attendance, ticket price, hospitality or concession data, so it cannot measure the commercial side of this question directly.",
+    "Measuring the stadium economy would need gate figures and spend per head by match, joined to the fixture and result data here."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Make Every Home Match Count",
+   "body": [
+    "Delhi Capitals have a limited number of home dates each year. The home record and the scoring at Delhi are the cricket side of the matchday offer.",
+    "The commercial side, pricing and experience, needs data this warehouse does not hold."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "st-chart",
+   "type": "column",
+   "title": "Matches at Delhi by season",
+   "subtitle": "Delhi Capitals",
+   "table": "st-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "homeMatches",
+     "label": "Home matches"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "matches",
+   "takeaway": "The number of home dates varies by season, and some seasons had none.",
+   "ariaLabel": "Column chart of DC matches at Delhi by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "weekend",
+   "statement": "Hypothesis: weekend home matches draw larger and more family-heavy crowds than weekday matches.",
+   "whyUnverified": "No attendance data is available.",
+   "howToTest": "Compare gate figures for weekend and weekday home matches, controlling for opponent and league position."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A matchday at Delhi.",
+   "wanted": "Delhi Capitals home crowd at Delhi."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-065",
+  "cf-dc-041",
+  "cf-dc-048"
+ ],
+ "seo": {
+  "metaTitle": "The stadium economy: matchday at Delhi",
+  "metaDescription": "How many home matches Delhi Capitals play, how they fare at Delhi, and when the fixtures fall."
+ },
+ "methodology": "CricField measures the cricket a franchise puts on the field; it holds no revenue, attendance, audience, merchandise or social-media data. Commercial ideas in this article are labelled hypotheses with the data needed to test them. Generated by scripts/editorial/engine. Home = matches at the franchise's principal home venue. Weekend = Saturday or Sunday by match date.",
+ "generator": "engine:v1"
+}

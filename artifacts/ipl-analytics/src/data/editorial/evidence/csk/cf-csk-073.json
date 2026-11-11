@@ -1,0 +1,113 @@
+{
+ "articleId": "cf-csk-073",
+ "generatedAt": "2026-10-26T04:17:59.273Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "rf-both": {
+   "value": 21,
+   "display": "21",
+   "label": "Batters with at least 150 balls both for CSK and for other teams",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 21,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (9) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 8 batters",
+    "passed": true,
+    "detail": "n = 21"
+   }
+  },
+  "rf-drops-n": {
+   "value": 4,
+   "display": "4",
+   "label": "Of those, batters at least ten points slower (relative to season average) for CSK",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 21,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (9) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "rf-lifts": {
+   "value": 5,
+   "display": "5",
+   "label": "Of those, batters at least ten points faster for CSK",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 21,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (9) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "rf-r": {
+   "value": 0,
+   "display": "0.00",
+   "label": "Correlation between relative strike rate elsewhere and for the franchise",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 21,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (9) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 8 batters",
+    "passed": true,
+    "detail": "n = 21"
+   }
+  }
+ },
+ "tables": {
+  "rf-drops": {
+   "label": "Batters who scored more slowly for CSK than elsewhere",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Strike rate relative to the season average (100 = average); min. 150 balls for the franchise and elsewhere",
+   "sampleSize": {
+    "n": 21,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (9) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, mine",
+   "rows": [
+    {
+     "batter": "KM Jadhav",
+     "forFranchise": 72,
+     "elsewhere": 103
+    },
+    {
+     "batter": "R Ashwin",
+     "forFranchise": 74,
+     "elsewhere": 94
+    },
+    {
+     "batter": "PA Patel",
+     "forFranchise": 82,
+     "elsewhere": 97
+    },
+    {
+     "batter": "DR Smith",
+     "forFranchise": 99,
+     "elsewhere": 112
+    }
+   ]
+  }
+ }
+}

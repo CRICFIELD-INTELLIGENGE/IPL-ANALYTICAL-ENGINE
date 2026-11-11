@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-059",
+ "planId": "cf-rr-059",
+ "franchise": "RR",
+ "aspect": "fan-culture",
+ "title": "Social-Media Sentiment: Can Online Noise Predict Rajasthan Royals Fan Mood?",
+ "slug": "rr-social-media-sentiment-can-online-noise-predict-rr-fan-mood",
+ "dek": "Online noise around Rajasthan Royals rises and falls with results. With no social data in the warehouse, the honest place to start is the streaks that set the mood.",
+ "excerpt": "Rajasthan Royals have had winning and losing runs that would set any fan base's mood. Whether online sentiment predicts or merely follows those runs is untested.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RR"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "Rajasthan Royals' longest winning run is {{ev:sm-bw}} matches; their longest losing run is {{ev:sm-bl}}.",
+  "They have had {{ev:sm-runs3}} losing runs of three or more matches within a season.",
+  "No social-media data is in the warehouse, so sentiment itself cannot be measured here."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Can Noise Predict Mood?",
+   "body": [
+    "Social-media sentiment is often treated as a live reading of fan mood. The question is whether it tells a franchise anything the results do not.",
+    "The CricField warehouse holds no survey, sentiment or social-media data, so it cannot measure what fans feel. It can measure what they have watched."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Streaks That Set the Mood",
+   "body": [
+    "Rajasthan Royals' longest winning run is {{ev:sm-bw}} matches and their longest losing run {{ev:sm-bl}}. Within seasons, they have had {{ev:sm-runs3}} losing runs of three or more matches.",
+    "The chart shows the longest winning and losing run in each season."
+   ],
+   "chartIds": [
+    "sm-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Following or Leading?",
+   "body": [
+    "If sentiment simply follows streaks, it adds little to what the scorecard already says. If it moves before results do, it could flag problems early.",
+    "{{hyp:sentiment}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What a Sentiment Study Would Need",
+   "body": [
+    "A proper test would collect posts mentioning the franchise, score them for sentiment, and line them up with the match ledger behind this article.",
+    "It would also need to separate genuine fans from bots and coordinated campaigns."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Start With the Streaks",
+   "body": [
+    "Until sentiment data is joined to results, the streaks are the best available reading of what Rajasthan Royals fans have lived through.",
+    "Sentiment should be tested against them before it is trusted as a signal."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "sm-chart",
+   "type": "column",
+   "title": "Longest runs each season",
+   "subtitle": "Rajasthan Royals",
+   "table": "sm-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "longestWinRun",
+     "label": "Winning run"
+    },
+    {
+     "key": "longestLosingRun",
+     "label": "Losing run"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "matches",
+   "takeaway": "Every season has its runs, good and bad.",
+   "ariaLabel": "Grouped column chart of Rajasthan Royals' longest winning and losing runs in each season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "sentiment",
+   "statement": "Hypothesis: negative online sentiment rises during a losing run and does not lead it, so it adds little predictive information beyond results.",
+   "whyUnverified": "No social-media data is available.",
+   "howToTest": "Score posts about the franchise by day and test whether sentiment changes precede or follow results."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "The mood around Rajasthan Royals.",
+   "wanted": "Rajasthan Royals fans reacting."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rr-054",
+  "cf-rr-045",
+  "cf-rr-051"
+ ],
+ "seo": {
+  "metaTitle": "Can online noise predict RR fan mood?",
+  "metaDescription": "Rajasthan Royals' winning and losing runs, and what a social-media sentiment study would need to test against them."
+ },
+ "methodology": "CricField holds ball-by-ball cricket data and no fan survey, sentiment or social-media data. This article measures the cricket fans have experienced; statements about fans themselves are labelled hypotheses. Generated by scripts/editorial/engine. Runs are consecutive results among matches with a result; no-results are skipped.",
+ "generator": "engine:v1"
+}

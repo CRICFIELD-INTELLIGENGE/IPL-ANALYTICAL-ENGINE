@@ -1,0 +1,255 @@
+{
+ "articleId": "cf-rr-056",
+ "generatedAt": "2026-10-26T04:23:24.839Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "lo-close-n": {
+   "value": 88,
+   "display": "88",
+   "label": "RR close matches",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As defined",
+   "sampleSize": {
+    "n": 88,
+    "unit": "matches"
+   },
+   "query": "WITH r AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.date, m.winner_id, m.team1_id, m.team2_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM matches m JOIN innings i ON i.match_id = m.match_id WHERE m.winner_id IS NOT NULL GROUP BY m.match_id) SELECT *, CASE WHEN so = 1 THEN 1 WHEN winner_id = bat1 AND r1 - r2 <= 10 THEN 1 WHEN winner_id <> bat1 AND b2 >= 114 THEN 1 ELSE 0 END close FROM r",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 88"
+   }
+  },
+  "lo-close-won": {
+   "value": 51,
+   "display": "51",
+   "label": "RR close-match wins",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As defined",
+   "sampleSize": {
+    "n": 88,
+    "unit": "matches"
+   },
+   "query": "WITH r AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.date, m.winner_id, m.team1_id, m.team2_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM matches m JOIN innings i ON i.match_id = m.match_id WHERE m.winner_id IS NOT NULL GROUP BY m.match_id) SELECT *, CASE WHEN so = 1 THEN 1 WHEN winner_id = bat1 AND r1 - r2 <= 10 THEN 1 WHEN winner_id <> bat1 AND b2 >= 114 THEN 1 ELSE 0 END close FROM r",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 88"
+   }
+  },
+  "lo-close-pct": {
+   "value": 58,
+   "display": "58.0%",
+   "label": "RR win rate in close matches",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As defined",
+   "sampleSize": {
+    "n": 88,
+    "unit": "matches"
+   },
+   "query": "WITH r AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.date, m.winner_id, m.team1_id, m.team2_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM matches m JOIN innings i ON i.match_id = m.match_id WHERE m.winner_id IS NOT NULL GROUP BY m.match_id) SELECT *, CASE WHEN so = 1 THEN 1 WHEN winner_id = bat1 AND r1 - r2 <= 10 THEN 1 WHEN winner_id <> bat1 AND b2 >= 114 THEN 1 ELSE 0 END close FROM r",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 88"
+   }
+  },
+  "lo-close-ci": {
+   "value": "48–68%",
+   "display": "48–68%",
+   "label": "95% interval for RR's close-match win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Wilson interval",
+   "sampleSize": {
+    "n": 88,
+    "unit": "matches"
+   },
+   "query": "WITH r AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.date, m.winner_id, m.team1_id, m.team2_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM matches m JOIN innings i ON i.match_id = m.match_id WHERE m.winner_id IS NOT NULL GROUP BY m.match_id) SELECT *, CASE WHEN so = 1 THEN 1 WHEN winner_id = bat1 AND r1 - r2 <= 10 THEN 1 WHEN winner_id <> bat1 AND b2 >= 114 THEN 1 ELSE 0 END close FROM r",
+   "validation": {
+    "method": "interval contains point estimate",
+    "passed": true
+   }
+  },
+  "lo-close-p": {
+   "value": 0.17,
+   "display": "0.17",
+   "label": "Probability of a close-match record at least this far from 50/50 by chance",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Two-sided exact binomial test",
+   "sampleSize": {
+    "n": 88,
+    "unit": "matches"
+   },
+   "query": "WITH r AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.date, m.winner_id, m.team1_id, m.team2_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM matches m JOIN innings i ON i.match_id = m.match_id WHERE m.winner_id IS NOT NULL GROUP BY m.match_id) SELECT *, CASE WHEN so = 1 THEN 1 WHEN winner_id = bat1 AND r1 - r2 <= 10 THEN 1 WHEN winner_id <> bat1 AND b2 >= 114 THEN 1 ELSE 0 END close FROM r",
+   "validation": {
+    "method": "plausibility range 0–1 for p-value",
+    "passed": true,
+    "detail": "value 0.16544093981722394"
+   }
+  },
+  "lo-other-pct": {
+   "value": 46,
+   "display": "46.0%",
+   "label": "RR win rate in matches that were not close",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result, not close",
+   "sampleSize": {
+    "n": 161,
+    "unit": "matches"
+   },
+   "query": "WITH r AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.date, m.winner_id, m.team1_id, m.team2_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM matches m JOIN innings i ON i.match_id = m.match_id WHERE m.winner_id IS NOT NULL GROUP BY m.match_id) SELECT *, CASE WHEN so = 1 THEN 1 WHEN winner_id = bat1 AND r1 - r2 <= 10 THEN 1 WHEN winner_id <> bat1 AND b2 >= 114 THEN 1 ELSE 0 END close FROM r",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 161"
+   }
+  },
+  "lo-close-rank": {
+   "value": "third",
+   "display": "third",
+   "label": "RR's rank among ten franchises by close-match win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "WITH r AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.date, m.winner_id, m.team1_id, m.team2_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM matches m JOIN innings i ON i.match_id = m.match_id WHERE m.winner_id IS NOT NULL GROUP BY m.match_id) SELECT *, CASE WHEN so = 1 THEN 1 WHEN winner_id = bat1 AND r1 - r2 <= 10 THEN 1 WHEN winner_id <> bat1 AND b2 >= 114 THEN 1 ELSE 0 END close FROM r",
+   "validation": {
+    "method": "plausibility range 1–10 for rank",
+    "passed": true,
+    "detail": "value 3"
+   }
+  },
+  "lo-close-sig": {
+   "value": "none",
+   "display": "none",
+   "label": "Franchises whose close-match record differs from 50/50 at p < 0.05",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Exact binomial test per franchise",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "WITH r AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.date, m.winner_id, m.team1_id, m.team2_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM matches m JOIN innings i ON i.match_id = m.match_id WHERE m.winner_id IS NOT NULL GROUP BY m.match_id) SELECT *, CASE WHEN so = 1 THEN 1 WHEN winner_id = bat1 AND r1 - r2 <= 10 THEN 1 WHEN winner_id <> bat1 AND b2 >= 114 THEN 1 ELSE 0 END close FROM r",
+   "validation": {
+    "method": "ten tests",
+    "passed": true
+   }
+  },
+  "lo-lo": {
+   "value": 54,
+   "display": "54",
+   "label": "Rajasthan Royals' matches decided by a chase completed in the final over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Chasing side won with five or fewer legal balls to spare",
+   "sampleSize": {
+    "n": 251,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "lo-lw": {
+   "value": 33,
+   "display": "33",
+   "label": "RR wins in those matches",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 54,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "lo-close-table": {
+   "label": "Win rate in close matches by franchise",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Close = decided by ten runs or fewer, six or fewer balls to spare, or a super over",
+   "sampleSize": {
+    "n": 430,
+    "unit": "close matches"
+   },
+   "query": "WITH r AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.date, m.winner_id, m.team1_id, m.team2_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM matches m JOIN innings i ON i.match_id = m.match_id WHERE m.winner_id IS NOT NULL GROUP BY m.match_id) SELECT *, CASE WHEN so = 1 THEN 1 WHEN winner_id = bat1 AND r1 - r2 <= 10 THEN 1 WHEN winner_id <> bat1 AND b2 >= 114 THEN 1 ELSE 0 END close FROM r",
+   "rows": [
+    {
+     "franchise": "GT",
+     "closeWinPct": 68.8,
+     "closeMatches": 32,
+     "p": 0.05
+    },
+    {
+     "franchise": "LSG",
+     "closeWinPct": 64.3,
+     "closeMatches": 28,
+     "p": 0.185
+    },
+    {
+     "franchise": "RR",
+     "closeWinPct": 58,
+     "closeMatches": 88,
+     "p": 0.165
+    },
+    {
+     "franchise": "MI",
+     "closeWinPct": 54.2,
+     "closeMatches": 96,
+     "p": 0.475
+    },
+    {
+     "franchise": "CSK",
+     "closeWinPct": 52.1,
+     "closeMatches": 96,
+     "p": 0.76
+    },
+    {
+     "franchise": "DC",
+     "closeWinPct": 50,
+     "closeMatches": 92,
+     "p": 1
+    },
+    {
+     "franchise": "RCB",
+     "closeWinPct": 49.5,
+     "closeMatches": 93,
+     "p": 1
+    },
+    {
+     "franchise": "PBKS",
+     "closeWinPct": 44.6,
+     "closeMatches": 101,
+     "p": 0.32
+    },
+    {
+     "franchise": "KKR",
+     "closeWinPct": 44.2,
+     "closeMatches": 95,
+     "p": 0.305
+    },
+    {
+     "franchise": "SRH",
+     "closeWinPct": 43.7,
+     "closeMatches": 71,
+     "p": 0.342
+    }
+   ]
+  }
+ }
+}

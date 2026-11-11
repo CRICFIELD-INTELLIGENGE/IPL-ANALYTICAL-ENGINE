@@ -1,0 +1,1023 @@
+[
+  {
+    "localPhoto": "/milestone-photos/final-2008.jpg",
+    "teams": [
+      "RR"
+    ],
+    "matchDate": "2008-06-01",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2010.jpg",
+    "teams": [
+      "CSK"
+    ],
+    "matchDate": "2010-04-25",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2011.jpg",
+    "teams": [
+      "CSK"
+    ],
+    "matchDate": "2011-05-28",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2012.jpg",
+    "teams": [
+      "KKR"
+    ],
+    "matchDate": "2012-05-27",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2013.jpg",
+    "teams": [
+      "MI"
+    ],
+    "matchDate": "2013-05-26",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2014.jpg",
+    "teams": [
+      "KKR"
+    ],
+    "matchDate": "2014-06-01",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2015.jpg",
+    "teams": [
+      "MI"
+    ],
+    "matchDate": "2015-05-24",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2016.jpg",
+    "teams": [
+      "SRH"
+    ],
+    "matchDate": "2016-05-29",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2017.jpg",
+    "teams": [
+      "MI"
+    ],
+    "matchDate": "2017-05-21",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2019.jpg",
+    "teams": [
+      "MI"
+    ],
+    "matchDate": "2019-05-12",
+    "occasion": "final",
+    "status": "event-candidates",
+    "candidates": [
+      {
+        "assetId": "1148660167",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1148660167",
+        "caption": "HYDERABAD, INDIA - MAY 12: Shane Watson of the Chennai Super Kings celebrates scoring his fifty runs during the Indian Premier League Final match between the the Mumbai Indians and Chennai Super Kings at Rajiv Gandhi International Cricket Stadium on May 12, 2019 in Hyderabad, India.",
+        "photographerCredit": "Photo by Robert Cianflone/Getty Images",
+        "matchDate": "2019-05-12"
+      },
+      {
+        "assetId": "1148650958",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1148650958",
+        "caption": "HYDERABAD, INDIA - MAY 12: Suresh Raina of the Chennai Super Kings bats during the Indian Premier League Final match between the the Mumbai Indians and Chennai Super Kings at Rajiv Gandhi International Cricket Stadium on May 12, 2019 in Hyderabad, India.",
+        "photographerCredit": "Photo by Robert Cianflone/Getty Images",
+        "matchDate": "2019-05-12"
+      },
+      {
+        "assetId": "1148631220",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1148631220",
+        "caption": "HYDERABAD, INDIA - MAY 12: Dwayne Bravo of the Chennai Super Kings bowls during the Indian Premier League Final match between the the Mumbai Indians and Chennai Super Kings at Rajiv Gandhi International Cricket Stadium on May 12, 2019 in Hyderabad, India.",
+        "photographerCredit": "Photo by Robert Cianflone/Getty Images",
+        "matchDate": "2019-05-12"
+      },
+      {
+        "assetId": "1148636816",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1148636816",
+        "caption": "HYDERABAD, INDIA - MAY 12: Kieron Pollard of the Mumbai Indians bats during the Indian Premier League Final match between the the Mumbai Indians and Chennai Super Kings at Rajiv Gandhi International Cricket Stadium on May 12, 2019 in Hyderabad, India.",
+        "photographerCredit": "Photo by Robert Cianflone/Getty Images",
+        "matchDate": "2019-05-12"
+      },
+      {
+        "assetId": "1148666577",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1148666577",
+        "caption": "HYDERABAD, INDIA - MAY 12: Lasith Malinga of the Mumbai Indians celebrates taking the last wicket to give the Mumbai Indians the win during the Indian Premier League Final match between the the Mumbai Indians and Chennai Super Kings at Rajiv Gandhi International Cricket Stadium on May 12, 2019 in Hyderabad, India.",
+        "photographerCredit": "Photo by Robert Cianflone/Getty Images",
+        "matchDate": "2019-05-12"
+      }
+    ]
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2020.jpg",
+    "teams": [
+      "MI"
+    ],
+    "matchDate": "2020-11-10",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2021-csk.jpg",
+    "teams": [
+      "CSK"
+    ],
+    "matchDate": "2021-10-15",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2022-gt.jpg",
+    "teams": [
+      "GT"
+    ],
+    "matchDate": "2022-05-29",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2023-csk.jpg",
+    "teams": [
+      "CSK"
+    ],
+    "matchDate": "2023-05-29",
+    "occasion": "final",
+    "status": "event-candidates",
+    "candidates": [
+      {
+        "assetId": "1494375518",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1494375518",
+        "caption": "AHMEDABAD, INDIA - MAY 29: MS Dhoni and Ravindra Jadeja of the Chennai Super Kings celebrate after winning the 2023 IPL Final match between Chennai Super Kings and Gujarat Titans at Narendra Modi Stadium on May 29, 2023 in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2023-05-29"
+      },
+      {
+        "assetId": "1494366107",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1494366107",
+        "caption": "AHMEDABAD, INDIA - MAY 29: Ajinkya Rahane and Shivam Dube of the Chennai Super Kings run between the wickets as Rashid Khan of the Gujarat Titans looks on during the 2023 IPL Final match between Chennai Super Kings and Gujarat Titans at Narendra Modi Stadium on May 29, 2023 in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2023-05-29"
+      },
+      {
+        "assetId": "1494299809",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1494299809",
+        "caption": "AHMEDABAD, INDIA - MAY 29: Maheesh Theekshana of the Chennai Super Kings bowls during the 2023 IPL Final match between Chennai Super Kings and Gujarat Titans at Narendra Modi Stadium on May 29, 2023 in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2023-05-29"
+      },
+      {
+        "assetId": "1494359601",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1494359601",
+        "caption": "AHMEDABAD, INDIA - MAY 29: Mohammed Shami of the Gujarat Titans bowls during the 2023 IPL Final match between Chennai Super Kings and Gujarat Titans at Narendra Modi Stadium on May 29, 2023 in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2023-05-29"
+      },
+      {
+        "assetId": "1494320658",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1494320658",
+        "caption": "AHMEDABAD, INDIA - MAY 29: Hardik Pandya of the Gujarat Titans bats during the 2023 IPL Final match between Chennai Super Kings and Gujarat Titans at Narendra Modi Stadium on May 29, 2023 in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2023-05-29"
+      }
+    ]
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2024-kkr.jpg",
+    "teams": [
+      "KKR"
+    ],
+    "matchDate": "2024-05-26",
+    "occasion": "final",
+    "status": "event-candidates",
+    "candidates": [
+      {
+        "assetId": "2154269568",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154269568",
+        "caption": "CHENNAI, INDIA - MAY 26: Players of Kolkata Knight Riders celebrate with the trophy after their victory against the Sunrisers Hyderabad in the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154224398",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154224398",
+        "caption": "CHENNAI, INDIA - MAY 26: Heinrich Klaasen of Sunrisers Hyderabad is bowled by Harshit Rana of Kolkata Knight Riders during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154233679",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154233679",
+        "caption": "CHENNAI, INDIA - MAY 26: Pat Cummins (c) of Sunrisers Hyderabad celebrates the wicket of Sunil Narine of Kolkata Knight Riders during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154244782",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154244782",
+        "caption": "CHENNAI, INDIA - MAY 26: Kolkata Knight Rider team members celebrate their team's win over Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154216153",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154216153",
+        "caption": "CHENNAI, INDIA - MAY 26: Nitish Kumar Reddy of Sunrisers Hyderabad plays a shot during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154213660",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154213660",
+        "caption": "CHENNAI, INDIA - MAY 26: Travis Head of Sunrisers Hyderabad makes their way off after being dismissed during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154213519",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154213519",
+        "caption": "CHENNAI, INDIA - MAY 26: Abhishek Sharma of Sunrisers Hyderabad makes their way off after being dismissed during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154220585",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154220585",
+        "caption": "Kolkata Knight Riders' Varun Chakravarthy (C) celebrates with teammates Rahmanullah Gurbaz (L) and Rinku Singh after taking the wicket of Sunrisers Hyderabad's Shahbaz Ahmed during the Indian Premier League (IPL) Twenty20 final cricket match between Sunrisers Hyderabad and Kolkata Knight Riders at the MA Chidambaram Stadium in Chennai on May 26, 2024.",
+        "photographerCredit": "Photo by R.Satish BABU / AFP via Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154220557",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154220557",
+        "caption": "CHENNAI, INDIA - MAY 26: Sunil Narine of Kolkata Knight Riders delivers a ball during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154216313",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154216313",
+        "caption": "CHENNAI, INDIA - MAY 26: Mitchell Starc of Kolkata Knight Riders celebrates the wicket of Rahul Tripathi of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154230613",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154230613",
+        "caption": "CHENNAI, INDIA - MAY 26: Andre Russell of Kolkata Knight Riders celebrates the wicket of Pat Cummins (c) of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154224559",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154224559",
+        "caption": "CHENNAI, INDIA - MAY 26: Andre Russell of Kolkata Knight Riders celebrates the wicket of Abdul Samad of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154220536",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154220536",
+        "caption": "CHENNAI, INDIA - MAY 26: Andre Russell of Kolkata Knight Riders celebrates the wicket of Aiden Markram of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154213922",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154213922",
+        "caption": "CHENNAI, INDIA - MAY 26: Mitchell Starc of Kolkata Knight Riders celebrates the wicket of Abhishek Sharma of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154237855",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154237855",
+        "caption": "CHENNAI, INDIA - MAY 26: Harshit Rana of Kolkata Knight Riders celebrates the wicket of Heinrich Klaasen of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154245066",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154245066",
+        "caption": "Kolkata Knight Riders' Venkatesh Iyer celebrates his team's victory at the end of the Indian Premier League (IPL) Twenty20 final cricket match between Sunrisers Hyderabad and Kolkata Knight Riders at the MA Chidambaram Stadium in Chennai on May 26, 2024.",
+        "photographerCredit": "Photo by R.Satish BABU / AFP via Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154209817",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154209817",
+        "caption": "CHENNAI, INDIA - MAY 26: Rinku Singh of Kolkata Knight Riders looks on before the start of the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154244694",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154244694",
+        "caption": "Kolkata Knight Riders' captain Shreyas Iyer (R) and Venkatesh Iyer celebrate their victory at the end of the Indian Premier League (IPL) Twenty20 final cricket match between Sunrisers Hyderabad and Kolkata Knight Riders at the MA Chidambaram Stadium in Chennai on May 26, 2024.",
+        "photographerCredit": "Photo by R.Satish BABU / AFP via Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154216253",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154216253",
+        "caption": "Kolkata Knight Riders' Ramandeep Singh takes the catch to dismiss Sunrisers Hyderabad's Rahul Tripathi during the Indian Premier League (IPL) Twenty20 final cricket match between Sunrisers Hyderabad and Kolkata Knight Riders at the MA Chidambaram Stadium in Chennai on May 26, 2024.",
+        "photographerCredit": "Photo by R.Satish BABU / AFP via Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154237841",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154237841",
+        "caption": "CHENNAI, INDIA - MAY 26: Harshit Rana of Kolkata Knight Riders celebrates the wicket of Heinrich Klaasen of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      }
+    ]
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2025-rcb.jpg",
+    "teams": [
+      "RCB"
+    ],
+    "matchDate": "2025-06-03",
+    "occasion": "final",
+    "status": "event-candidates",
+    "candidates": [
+      {
+        "assetId": "2218588890",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218588890",
+        "caption": "AHMEDABAD, INDIA - JUNE 3: (Left to right) Chris Gayle, Virat Kohli of Royal Challengers Bengaluru and AB de Villiers celebrate with the IPL Trophy after the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 3, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Surjeet Yadav/MB Media/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218475589",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218475589",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Yash Dayal of Royal Challengers Bengaluru celebrates with teammates after dismissing Azmatullah Omarzai of Punjab Kings during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218427504",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218427504",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: General view of outside Stadium prior to the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218444437",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218444437",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Phil Salt of Royal Challengers Bengaluru bats during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218461149",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218461149",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Bhuvneshwar Kumar of Royal Challengers Bengaluru bowls during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218474363",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218474363",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Bhuvneshwar Kumar of Royal Challengers Bengaluru celebrates with teammate Krunal Pandya after dismissing Nehal Wadhera of Punjab Kings during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2217850406",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2217850406",
+        "caption": "AHMEDABAD, INDIA - JUNE 3: Rajat Patidar of Royal Challengers Bengaluru celebrates with the IPL trophy after the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 3, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Surjeet Yadav/MB Media/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2217847361",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2217847361",
+        "caption": "Fans cheer from stands during the Indian Premier League (IPL) Twenty20 final cricket match between Royal Challengers Bengaluru and Punjab Kings at the Narendra Modi Stadium in Ahmedabad on June 3, 2025. / -- IMAGE RESTRICTED TO EDITORIAL USE - STRICTLY NO COMMERCIAL USE --",
+        "photographerCredit": "Photo by ARUN SANKAR/AFP via Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218489469",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218489469",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Virat Kohli and Rajat Patidar of Royal Challengers Bengaluru lift the IPL trophy alongside teammates following the team's victory in the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218462342",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218462342",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Josh Hazlewood of Royal Challengers Bengaluru bowls during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218476450",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218476450",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Virat Kohli of Royal Challengers Bengaluru celebrates winning with teammates after the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218471174",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218471174",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Krunal Pandya of Royal Challengers Bengaluru celebrates after dismissing Josh Inglis of Punjab Kings during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      }
+    ]
+  },
+  {
+    "localPhoto": "/milestone-photos/debut-2022-lsg.jpg",
+    "teams": [
+      "GT"
+    ],
+    "matchDate": "2022-03-28",
+    "occasion": "debut",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/highest-total-2024-srh.jpg",
+    "teams": [
+      "SRH"
+    ],
+    "matchDate": "2024-04-15",
+    "occasion": "highest-total",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/highest-total-2023-gt.jpg",
+    "teams": [
+      "GT"
+    ],
+    "matchDate": "2023-05-26",
+    "occasion": "highest-total",
+    "status": "event-candidates",
+    "candidates": [
+      {
+        "assetId": "1493540899",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1493540899",
+        "caption": "AHMEDABAD, INDIA - MAY 26: Mohammad Shami of Gujarat Titans celebrates after taking the wicket of Nehal Wadhera of Mumbai Indians during the IPL Qualifier match between Gujarat Titans and Mumbai Indians at Narendra Modi Stadium on May 26, 2023 in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2023-05-26"
+      }
+    ]
+  },
+  {
+    "localPhoto": "/milestone-photos/highest-total-2023-lsg.jpg",
+    "teams": [
+      "LSG"
+    ],
+    "matchDate": "2023-04-28",
+    "occasion": "highest-total",
+    "status": "event-candidates",
+    "candidates": [
+      {
+        "assetId": "1252272689",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1252272689",
+        "caption": "Punjab Kings' Kagiso Rabada (L) celebrates with teammates after taking the wicket of Lucknow Super Giants' KL Rahul during the Indian Premier League (IPL) Twenty20 cricket match between Punjab Kings and Lucknow Super Giants at the Punjab Cricket Association Stadium in Mohali on April 28, 2023.",
+        "photographerCredit": "Photo by Arun SANKAR / AFP via Getty Images",
+        "matchDate": "2023-04-28"
+      }
+    ]
+  },
+  {
+    "localPhoto": "/milestone-photos/highest-total-2024-kkr.jpg",
+    "teams": [
+      "KKR"
+    ],
+    "matchDate": "2024-04-03",
+    "occasion": "highest-total",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2018-csk.jpg",
+    "teams": [
+      "CSK"
+    ],
+    "matchDate": "2018-05-27",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/highest-total-2013-rcb.jpg",
+    "teams": [
+      "RCB"
+    ],
+    "matchDate": "2013-04-23",
+    "occasion": "highest-total",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/first-win-2022-lsg.jpg",
+    "teams": [
+      "LSG"
+    ],
+    "matchDate": "2022-03-31",
+    "occasion": "first-win",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/highest-total-2026-dc.jpg",
+    "teams": [
+      "DC",
+      "PBKS"
+    ],
+    "matchDate": "2026-04-25",
+    "occasion": "highest-total",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/highest-total-2026-rr.jpg",
+    "teams": [
+      "RR"
+    ],
+    "matchDate": "2026-05-27",
+    "occasion": "highest-total",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/debut-2013-srh.jpg",
+    "teams": [
+      "SRH"
+    ],
+    "matchDate": "2013-04-05",
+    "occasion": "debut",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2021-kkr-9.jpg",
+    "teams": [
+      "KKR"
+    ],
+    "matchDate": "2021-10-15",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2021-kkr-0.jpg",
+    "teams": [
+      "KKR"
+    ],
+    "matchDate": "2021-10-15",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2022-rr.jpg",
+    "teams": [
+      "RR"
+    ],
+    "matchDate": "2022-05-29",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2023-gt.jpg",
+    "teams": [
+      "GT"
+    ],
+    "matchDate": "2023-05-29",
+    "occasion": "final",
+    "status": "event-candidates",
+    "candidates": [
+      {
+        "assetId": "1494375518",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1494375518",
+        "caption": "AHMEDABAD, INDIA - MAY 29: MS Dhoni and Ravindra Jadeja of the Chennai Super Kings celebrate after winning the 2023 IPL Final match between Chennai Super Kings and Gujarat Titans at Narendra Modi Stadium on May 29, 2023 in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2023-05-29"
+      },
+      {
+        "assetId": "1494366107",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1494366107",
+        "caption": "AHMEDABAD, INDIA - MAY 29: Ajinkya Rahane and Shivam Dube of the Chennai Super Kings run between the wickets as Rashid Khan of the Gujarat Titans looks on during the 2023 IPL Final match between Chennai Super Kings and Gujarat Titans at Narendra Modi Stadium on May 29, 2023 in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2023-05-29"
+      },
+      {
+        "assetId": "1494299809",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1494299809",
+        "caption": "AHMEDABAD, INDIA - MAY 29: Maheesh Theekshana of the Chennai Super Kings bowls during the 2023 IPL Final match between Chennai Super Kings and Gujarat Titans at Narendra Modi Stadium on May 29, 2023 in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2023-05-29"
+      },
+      {
+        "assetId": "1494359601",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1494359601",
+        "caption": "AHMEDABAD, INDIA - MAY 29: Mohammed Shami of the Gujarat Titans bowls during the 2023 IPL Final match between Chennai Super Kings and Gujarat Titans at Narendra Modi Stadium on May 29, 2023 in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2023-05-29"
+      },
+      {
+        "assetId": "1494320658",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1494320658",
+        "caption": "AHMEDABAD, INDIA - MAY 29: Hardik Pandya of the Gujarat Titans bats during the 2023 IPL Final match between Chennai Super Kings and Gujarat Titans at Narendra Modi Stadium on May 29, 2023 in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2023-05-29"
+      }
+    ]
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2025-pbks.jpg",
+    "teams": [
+      "PBKS"
+    ],
+    "matchDate": "2025-06-03",
+    "occasion": "final",
+    "status": "event-candidates",
+    "candidates": [
+      {
+        "assetId": "2218588890",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218588890",
+        "caption": "AHMEDABAD, INDIA - JUNE 3: (Left to right) Chris Gayle, Virat Kohli of Royal Challengers Bengaluru and AB de Villiers celebrate with the IPL Trophy after the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 3, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Surjeet Yadav/MB Media/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218475589",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218475589",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Yash Dayal of Royal Challengers Bengaluru celebrates with teammates after dismissing Azmatullah Omarzai of Punjab Kings during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218427504",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218427504",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: General view of outside Stadium prior to the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218444437",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218444437",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Phil Salt of Royal Challengers Bengaluru bats during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218461149",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218461149",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Bhuvneshwar Kumar of Royal Challengers Bengaluru bowls during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218474363",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218474363",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Bhuvneshwar Kumar of Royal Challengers Bengaluru celebrates with teammate Krunal Pandya after dismissing Nehal Wadhera of Punjab Kings during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2217850406",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2217850406",
+        "caption": "AHMEDABAD, INDIA - JUNE 3: Rajat Patidar of Royal Challengers Bengaluru celebrates with the IPL trophy after the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 3, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Surjeet Yadav/MB Media/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2217847361",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2217847361",
+        "caption": "Fans cheer from stands during the Indian Premier League (IPL) Twenty20 final cricket match between Royal Challengers Bengaluru and Punjab Kings at the Narendra Modi Stadium in Ahmedabad on June 3, 2025. / -- IMAGE RESTRICTED TO EDITORIAL USE - STRICTLY NO COMMERCIAL USE --",
+        "photographerCredit": "Photo by ARUN SANKAR/AFP via Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218489469",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218489469",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Virat Kohli and Rajat Patidar of Royal Challengers Bengaluru lift the IPL trophy alongside teammates following the team's victory in the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218462342",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218462342",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Josh Hazlewood of Royal Challengers Bengaluru bowls during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218476450",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218476450",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Virat Kohli of Royal Challengers Bengaluru celebrates winning with teammates after the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      },
+      {
+        "assetId": "2218471174",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2218471174",
+        "caption": "AHMEDABAD, INDIA - JUNE 03: Krunal Pandya of Royal Challengers Bengaluru celebrates after dismissing Josh Inglis of Punjab Kings during the 2025 IPL Final match between Royal Challengers Bengaluru and Punjab Kings at Narendra Modi Stadium on June 03, 2025, in Ahmedabad, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2025-06-03"
+      }
+    ]
+  },
+  {
+    "localPhoto": "/milestone-photos/showcase-2016-srh.png",
+    "teams": [
+      "SRH"
+    ],
+    "matchDate": "2016-05-29",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/showcase-2018-srh.png",
+    "teams": [
+      "SRH"
+    ],
+    "matchDate": "2018-05-27",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/showcase-2024-srh.png",
+    "teams": [
+      "SRH"
+    ],
+    "matchDate": "2024-05-26",
+    "occasion": "final",
+    "status": "event-candidates",
+    "candidates": [
+      {
+        "assetId": "2154269568",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154269568",
+        "caption": "CHENNAI, INDIA - MAY 26: Players of Kolkata Knight Riders celebrate with the trophy after their victory against the Sunrisers Hyderabad in the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154224398",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154224398",
+        "caption": "CHENNAI, INDIA - MAY 26: Heinrich Klaasen of Sunrisers Hyderabad is bowled by Harshit Rana of Kolkata Knight Riders during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154233679",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154233679",
+        "caption": "CHENNAI, INDIA - MAY 26: Pat Cummins (c) of Sunrisers Hyderabad celebrates the wicket of Sunil Narine of Kolkata Knight Riders during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154244782",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154244782",
+        "caption": "CHENNAI, INDIA - MAY 26: Kolkata Knight Rider team members celebrate their team's win over Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154216153",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154216153",
+        "caption": "CHENNAI, INDIA - MAY 26: Nitish Kumar Reddy of Sunrisers Hyderabad plays a shot during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154213660",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154213660",
+        "caption": "CHENNAI, INDIA - MAY 26: Travis Head of Sunrisers Hyderabad makes their way off after being dismissed during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154213519",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154213519",
+        "caption": "CHENNAI, INDIA - MAY 26: Abhishek Sharma of Sunrisers Hyderabad makes their way off after being dismissed during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154220585",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154220585",
+        "caption": "Kolkata Knight Riders' Varun Chakravarthy (C) celebrates with teammates Rahmanullah Gurbaz (L) and Rinku Singh after taking the wicket of Sunrisers Hyderabad's Shahbaz Ahmed during the Indian Premier League (IPL) Twenty20 final cricket match between Sunrisers Hyderabad and Kolkata Knight Riders at the MA Chidambaram Stadium in Chennai on May 26, 2024.",
+        "photographerCredit": "Photo by R.Satish BABU / AFP via Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154220557",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154220557",
+        "caption": "CHENNAI, INDIA - MAY 26: Sunil Narine of Kolkata Knight Riders delivers a ball during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154216313",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154216313",
+        "caption": "CHENNAI, INDIA - MAY 26: Mitchell Starc of Kolkata Knight Riders celebrates the wicket of Rahul Tripathi of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154230613",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154230613",
+        "caption": "CHENNAI, INDIA - MAY 26: Andre Russell of Kolkata Knight Riders celebrates the wicket of Pat Cummins (c) of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154224559",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154224559",
+        "caption": "CHENNAI, INDIA - MAY 26: Andre Russell of Kolkata Knight Riders celebrates the wicket of Abdul Samad of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154220536",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154220536",
+        "caption": "CHENNAI, INDIA - MAY 26: Andre Russell of Kolkata Knight Riders celebrates the wicket of Aiden Markram of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154213922",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154213922",
+        "caption": "CHENNAI, INDIA - MAY 26: Mitchell Starc of Kolkata Knight Riders celebrates the wicket of Abhishek Sharma of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154237855",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154237855",
+        "caption": "CHENNAI, INDIA - MAY 26: Harshit Rana of Kolkata Knight Riders celebrates the wicket of Heinrich Klaasen of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154245066",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154245066",
+        "caption": "Kolkata Knight Riders' Venkatesh Iyer celebrates his team's victory at the end of the Indian Premier League (IPL) Twenty20 final cricket match between Sunrisers Hyderabad and Kolkata Knight Riders at the MA Chidambaram Stadium in Chennai on May 26, 2024.",
+        "photographerCredit": "Photo by R.Satish BABU / AFP via Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154209817",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154209817",
+        "caption": "CHENNAI, INDIA - MAY 26: Rinku Singh of Kolkata Knight Riders looks on before the start of the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154244694",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154244694",
+        "caption": "Kolkata Knight Riders' captain Shreyas Iyer (R) and Venkatesh Iyer celebrate their victory at the end of the Indian Premier League (IPL) Twenty20 final cricket match between Sunrisers Hyderabad and Kolkata Knight Riders at the MA Chidambaram Stadium in Chennai on May 26, 2024.",
+        "photographerCredit": "Photo by R.Satish BABU / AFP via Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154216253",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154216253",
+        "caption": "Kolkata Knight Riders' Ramandeep Singh takes the catch to dismiss Sunrisers Hyderabad's Rahul Tripathi during the Indian Premier League (IPL) Twenty20 final cricket match between Sunrisers Hyderabad and Kolkata Knight Riders at the MA Chidambaram Stadium in Chennai on May 26, 2024.",
+        "photographerCredit": "Photo by R.Satish BABU / AFP via Getty Images",
+        "matchDate": "2024-05-26"
+      },
+      {
+        "assetId": "2154237841",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2154237841",
+        "caption": "CHENNAI, INDIA - MAY 26: Harshit Rana of Kolkata Knight Riders celebrates the wicket of Heinrich Klaasen of Sunrisers Hyderabad during the 2024 IPL Final match between the Kolkata Knight Riders and Sunrisers Hyderabad at MA Chidambaram Stadium on May 26, 2024 in Chennai, India.",
+        "photographerCredit": "Photo by Pankaj Nangia/Getty Images",
+        "matchDate": "2024-05-26"
+      }
+    ]
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2019-csk-action.jpg",
+    "teams": [
+      "CSK"
+    ],
+    "matchDate": "2019-05-12",
+    "occasion": "final",
+    "status": "event-candidates",
+    "candidates": [
+      {
+        "assetId": "1148660167",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1148660167",
+        "caption": "HYDERABAD, INDIA - MAY 12: Shane Watson of the Chennai Super Kings celebrates scoring his fifty runs during the Indian Premier League Final match between the the Mumbai Indians and Chennai Super Kings at Rajiv Gandhi International Cricket Stadium on May 12, 2019 in Hyderabad, India.",
+        "photographerCredit": "Photo by Robert Cianflone/Getty Images",
+        "matchDate": "2019-05-12"
+      },
+      {
+        "assetId": "1148650958",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1148650958",
+        "caption": "HYDERABAD, INDIA - MAY 12: Suresh Raina of the Chennai Super Kings bats during the Indian Premier League Final match between the the Mumbai Indians and Chennai Super Kings at Rajiv Gandhi International Cricket Stadium on May 12, 2019 in Hyderabad, India.",
+        "photographerCredit": "Photo by Robert Cianflone/Getty Images",
+        "matchDate": "2019-05-12"
+      },
+      {
+        "assetId": "1148631220",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1148631220",
+        "caption": "HYDERABAD, INDIA - MAY 12: Dwayne Bravo of the Chennai Super Kings bowls during the Indian Premier League Final match between the the Mumbai Indians and Chennai Super Kings at Rajiv Gandhi International Cricket Stadium on May 12, 2019 in Hyderabad, India.",
+        "photographerCredit": "Photo by Robert Cianflone/Getty Images",
+        "matchDate": "2019-05-12"
+      },
+      {
+        "assetId": "1148636816",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1148636816",
+        "caption": "HYDERABAD, INDIA - MAY 12: Kieron Pollard of the Mumbai Indians bats during the Indian Premier League Final match between the the Mumbai Indians and Chennai Super Kings at Rajiv Gandhi International Cricket Stadium on May 12, 2019 in Hyderabad, India.",
+        "photographerCredit": "Photo by Robert Cianflone/Getty Images",
+        "matchDate": "2019-05-12"
+      },
+      {
+        "assetId": "1148666577",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/1148666577",
+        "caption": "HYDERABAD, INDIA - MAY 12: Lasith Malinga of the Mumbai Indians celebrates taking the last wicket to give the Mumbai Indians the win during the Indian Premier League Final match between the the Mumbai Indians and Chennai Super Kings at Rajiv Gandhi International Cricket Stadium on May 12, 2019 in Hyderabad, India.",
+        "photographerCredit": "Photo by Robert Cianflone/Getty Images",
+        "matchDate": "2019-05-12"
+      }
+    ]
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2020-dc-action.jpg",
+    "teams": [
+      "DC"
+    ],
+    "matchDate": "2020-11-10",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2014-pbks.jpg",
+    "teams": [
+      "PBKS"
+    ],
+    "matchDate": "2014-06-01",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/final-2016-rcb-action.jpg",
+    "teams": [
+      "RCB"
+    ],
+    "matchDate": "2016-05-29",
+    "occasion": "final",
+    "status": "needs-discovery",
+    "candidates": []
+  },
+  {
+    "localPhoto": "/milestone-photos/highest-total-2024-mi-action.jpg",
+    "teams": [
+      "MI"
+    ],
+    "matchDate": "2024-04-27",
+    "occasion": "highest-total",
+    "status": "event-candidates",
+    "candidates": [
+      {
+        "assetId": "2149836042",
+        "sourcePageUrl": "https://www.gettyimages.com/detail/2149836042",
+        "caption": "Cricket fans watch the Indian Premier League (IPL) Twenty20 cricket match between Delhi Capitals and Mumbai Indians at the Arun Jaitley Stadium in New Delhi on April 27, 2024.",
+        "photographerCredit": "Photo by Money SHARMA / AFP via Getty Images",
+        "matchDate": "2024-04-27"
+      }
+    ]
+  }
+]

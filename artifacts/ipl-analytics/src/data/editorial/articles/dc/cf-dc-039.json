@@ -1,0 +1,145 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-039",
+ "planId": "cf-dc-039",
+ "franchise": "DC",
+ "aspect": "auction-economics",
+ "title": "Salary Versus Contribution: Designing an Auction ROI Model for Delhi Capitals",
+ "slug": "dc-salary-versus-contribution-designing-an-auction-roi-model-for-dc",
+ "dek": "How closely does Delhi Capitals' salary bill track on-field contribution? A transparent return-on-investment model, and its blind spots.",
+ "excerpt": "Across Delhi Capitals' priced player-seasons since 2018, price and contribution correlate only weakly. A tempo-only model finds real signal and an obvious gap: it does not value wickets.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "DC"
+ ],
+ "players": [
+  "Rishabh Pant",
+  "Tristan Stubbs"
+ ],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "DC recorded {{ev:sc-total}} of squad prices across {{ev:sc-n}} player-seasons since 2018.",
+  "Price and tempo runs above average correlate at {{ev:sc-r}}.",
+  "The largest single-season contribution was {{ev:sc-top}}, at {{ev:sc-top-v}} runs above average."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "What Did the Money Buy?",
+   "body": [
+    "Between 2018 and 2026, Delhi Capitals' squad lists record {{ev:sc-total}} of auction and retention prices across {{ev:sc-n}} player-seasons. The question an auction room should ask is which rupees did the work.",
+    "CricField's tempo runs above average measures each player against an average player in the same season and phase, for batting and bowling."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Price Against Contribution",
+   "body": [
+    "Across the player-seasons in which a priced player batted or bowled, price and contribution correlate at {{ev:sc-r}}. Expensive players contributed more on average, but the spread is wide.",
+    "The biggest single-season contribution was {{ev:sc-top}} at {{ev:sc-top-v}} runs above average; the best return per crore came from {{ev:sc-best}}."
+   ],
+   "chartIds": [
+    "sc-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Using the Model",
+   "body": [
+    "The model's practical use is at the margins: identifying players whose output has run well ahead of or behind their price, and asking why before the next retention window.",
+    "For DC, a mid-season review using the same measure would flag under-used bargains and expensive passengers early."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "The Blind Spot",
+   "body": [
+    "A tempo-only model ignores dismissals. An anchor who scores slightly slower than average but rarely gets out will look poor, even when his survival lets the hitters around him swing freely.",
+    "{{hyp:wickets}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Price Survival, Then Trust the Model",
+   "body": [
+    "Delhi Capitals should add a survival term before using the model for decisions. With it, the model becomes a fair, transparent check on auction spending.",
+    "Without it, it will keep undervaluing exactly the players whose job is not to get out."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "sc-chart",
+   "type": "scatter",
+   "title": "Price vs contribution, 2025\u20132026",
+   "subtitle": "Each dot is a DC player-season",
+   "table": "sc-scatter",
+   "xKey": "priceCr",
+   "series": [
+    {
+     "key": "tRAA",
+     "label": "Tempo runs above average"
+    }
+   ],
+   "xLabel": "Price (\u20b9 crore)",
+   "unit": "runs",
+   "takeaway": "Price explains little of contribution.",
+   "ariaLabel": "Scatter plot of price against tempo runs above average for DC player-seasons in 2025 and 2026."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-squads",
+   "kind": "cricfield-dataset",
+   "title": "CricField squads-by-season dataset",
+   "publisher": "CricField"
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "wickets",
+   "statement": "Hypothesis: adding a survival term would raise the measured value of anchors and change the ranking of the most expensive players.",
+   "whyUnverified": "Wicket values by match state have not been estimated.",
+   "howToTest": "Estimate runs protected per wicket by over and wickets in hand, add to tRAA, and re-rank."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "The value question at Delhi Capitals.",
+   "wanted": "Rishabh Pant playing for Delhi Capitals."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-032",
+  "cf-dc-031",
+  "cf-dc-080"
+ ],
+ "seo": {
+  "metaTitle": "Salary versus contribution: an ROI model for DC",
+  "metaDescription": "A transparent tempo-runs model of Delhi Capitals' spending since 2018: how price tracks contribution, and what the model misses."
+ },
+ "methodology": "Contribution is tempo runs above average (tRAA): batting runs above what an average batter would score from the same balls in the same season and phase, plus bowling runs saved against the average bowler in the same season and phase. Wickets and dismissals are not valued in this version. Prices come from CricField squad lists (\u20b9 crore = 100 lakh). Generated by scripts/editorial/engine.",
+ "generator": "engine:v1"
+}

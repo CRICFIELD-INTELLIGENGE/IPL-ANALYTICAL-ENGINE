@@ -1,0 +1,145 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-csk-097",
+ "planId": "cf-csk-097",
+ "franchise": "CSK",
+ "aspect": "future",
+ "title": "The Academy Question: Should Chennai Super Kings Invest More in Talent Development?",
+ "slug": "csk-the-academy-question-should-csk-invest-more-in-talent-development",
+ "dek": "Should Chennai Super Kings invest more in developing their own talent? How much of their batting already comes from young players is the place to start.",
+ "excerpt": "Since 2018, batters aged twenty-three or under have faced a smaller share of Chennai Super Kings' balls than the league average. That is the baseline any academy investment would aim to change.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "CSK"
+ ],
+ "players": [],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "Batters aged twenty-three or under faced {{ev:ac-m}} of Chennai Super Kings' balls since 2018, against {{ev:ac-o}} for the rest of the IPL.",
+  "Birth dates are known for batters facing {{ev:ac-cover}} of Chennai Super Kings' balls, so the figures rest on part of the data.",
+  "The bench-to-XI article in this series measures how often their debutants become regulars."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Academy Case",
+   "body": [
+    "An academy costs money every year and pays off years later, if at all. The case for one rests on whether young players can win a place, and whether the franchise gives them the chance.",
+    "Since 2018, batters aged twenty-three or under have faced {{ev:ac-m}} of Chennai Super Kings' balls, against {{ev:ac-o}} for the rest of the IPL."
+   ],
+   "chartIds": [
+    "ac-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Who Gets the Chances",
+   "body": [
+    "Chennai Super Kings give young batters less of the strike than most, so an academy would need a change in selection philosophy to pay off.",
+    "The chart tracks the share season by season."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Proposal: What to Invest In",
+   "body": [
+    "Proposal: an academy focused on the roles the auction supplies worst, such as wrist spin and death bowling, rather than on general development.",
+    "{{hyp:academy}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Data Limits",
+   "body": [
+    "Birth dates are known for batters facing {{ev:ac-cover}} of Chennai Super Kings' balls. Bowling is not included because bowlers' birth-date coverage is thinner still.",
+    "Academy spending and graduates are not in the warehouse."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Invest Where the Market Fails",
+   "body": [
+    "Chennai Super Kings should invest in development where the auction is weakest and where their selection policy will give graduates a real chance.",
+    "Measuring the return needs academy records that the franchise holds and this warehouse does not."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ac-chart",
+   "type": "line",
+   "title": "Young batters' share of the strike",
+   "subtitle": "Aged twenty-three or under, CSK vs rest of IPL",
+   "table": "ac-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "CSK"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of balls faced",
+   "takeaway": "Young batters' share of the strike varies by season.",
+   "ariaLabel": "Line chart of the share of balls faced by batters aged twenty-three or under for CSK and the rest of the IPL by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "academy",
+   "statement": "Hypothesis: franchises that give young batters a larger share of the strike convert more debutants into regulars.",
+   "whyUnverified": "The link between young-player share and conversion has not been tested.",
+   "howToTest": "Correlate each franchise's young-batter share with its debutant conversion rate."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "23",
+   "reason": "Age threshold."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Young talent at Chennai Super Kings.",
+   "wanted": "Chennai Super Kings young player."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-csk-079",
+  "cf-csk-072",
+  "cf-csk-074"
+ ],
+ "seo": {
+  "metaTitle": "The academy question: should CSK invest in talent?",
+  "metaDescription": "How much of Chennai Super Kings' batting comes from young players compared with the league, and where academy investment would pay."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Forward-looking proposals are labelled as such. Generated by scripts/editorial/engine. Age = season year minus birth year (CricField player-bio data); batting only.",
+ "generator": "engine:v1"
+}

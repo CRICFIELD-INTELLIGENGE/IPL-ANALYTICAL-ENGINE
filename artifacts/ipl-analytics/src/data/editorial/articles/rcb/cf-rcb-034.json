@@ -1,0 +1,149 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-034",
+ "planId": "cf-rcb-034",
+ "franchise": "RCB",
+ "aspect": "auction-economics",
+ "title": "Overseas Slots as Scarce Assets: How Should Royal Challengers Bengaluru Allocate Four Places?",
+ "slug": "rcb-overseas-slots-as-scarce-assets-how-should-rcb-allocate-four-places",
+ "dek": "Four overseas places, one cap. How should Royal Challengers Bengaluru allocate the scarcest seats in the eleven? Spend and contribution by nationality frame the decision.",
+ "excerpt": "Since 2018, overseas players have taken a share of Royal Challengers Bengaluru's spend that the data can set against their share of the action. The four slots are the most constrained resource in any IPL squad.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "RCB"
+ ],
+ "players": [
+  "AB de Villiers"
+ ],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "Overseas players took {{ev:os-spend}} of Royal Challengers Bengaluru's recorded spend since 2018.",
+  "They faced or bowled {{ev:os-balls}} of the side's balls.",
+  "Total tempo runs above average: {{ev:os-traa}} from overseas players, {{ev:os-itraa}} from Indian players."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Four-Seat Constraint",
+   "body": [
+    "An IPL eleven can include at most four overseas players. That makes each overseas seat a scarce asset: an overseas player who is merely average blocks a place that a match-winner could have filled.",
+    "Since 2018, overseas players have taken {{ev:os-spend}} of Royal Challengers Bengaluru's recorded spend and faced or bowled {{ev:os-balls}} of the side's balls."
+   ],
+   "chartIds": [
+    "os-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What the Seats Produced",
+   "body": [
+    "Measured in tempo runs above average, overseas players contributed {{ev:os-traa}} for RCB over the period and Indian players {{ev:os-itraa}}.",
+    "The strongest overseas season was {{ev:os-top}}."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Allocating the Four",
+   "body": [
+    "The best use of an overseas seat is a role the domestic pool cannot fill: express pace, wrist spin, or a top-order hitter with a proven T20 record. Overseas players who duplicate available Indian skills waste the seat.",
+    "For RCB, each overseas signing should be justified by the role it fills that no available Indian player can."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Nationality Data Is Imperfect",
+   "body": [
+    "Nationality comes from player-bio records where available and from squad lists otherwise; the squad lists contain known errors. A few players may be misclassified.",
+    "{{hyp:roles}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Spend the Seats on Scarcity",
+   "body": [
+    "Royal Challengers Bengaluru should judge overseas seats on the scarce role each fills, not on reputation. Contribution per seat, tracked each season, shows which seats are earning their place.",
+    "The role-scarcity analysis identifies the roles worth an overseas seat."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "os-chart",
+   "type": "column",
+   "title": "Share of spend and of balls: overseas vs Indian",
+   "subtitle": "RCB, 2018\u20132026",
+   "table": "os-cmp",
+   "xKey": "group",
+   "series": [
+    {
+     "key": "shareOfSpend",
+     "label": "Share of spend"
+    },
+    {
+     "key": "shareOfBalls",
+     "label": "Share of balls"
+    }
+   ],
+   "xLabel": "Group",
+   "unit": "% of total",
+   "takeaway": "Comparing spend share with workload share shows how hard the overseas money has worked.",
+   "ariaLabel": "Grouped column chart of share of spend and share of balls for overseas and Indian players."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-squads",
+   "kind": "cricfield-dataset",
+   "title": "CricField squads-by-season and player-bio datasets",
+   "publisher": "CricField",
+   "note": "Nationality from player-bio data first; squad-list nationality as fallback."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "roles",
+   "statement": "Hypothesis: overseas players add most value in roles with thin domestic supply, such as express pace and wrist spin.",
+   "whyUnverified": "Player roles are not reliably labelled in the data.",
+   "howToTest": "Classify roles from playing data and compare overseas and Indian contribution within each role."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Royal Challengers Bengaluru overseas star.",
+   "wanted": "AB de Villiers playing for Royal Challengers Bengaluru."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-038",
+  "cf-rcb-075",
+  "cf-rcb-099"
+ ],
+ "seo": {
+  "metaTitle": "Overseas slots as scarce assets at RCB",
+  "metaDescription": "How much Royal Challengers Bengaluru spend on overseas players since 2018, how much of the action they get, and what they contribute."
+ },
+ "methodology": "Contribution is tempo runs above average (tRAA): batting runs above what an average batter would score from the same balls in the same season and phase, plus bowling runs saved against the average bowler in the same season and phase. Wickets and dismissals are not valued in this version. Prices come from CricField squad lists (\u20b9 crore = 100 lakh). Generated by scripts/editorial/engine. Nationality from player-bio data, with squad lists as fallback.",
+ "generator": "engine:v1"
+}

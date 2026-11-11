@@ -1,0 +1,492 @@
+{
+ "articleId": "cf-rcb-080",
+ "generatedAt": "2026-10-25T16:13:45.786Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "pairs": {
+   "value": 994,
+   "display": "994",
+   "label": "Consecutive batter-season pairs analysed",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "As table",
+   "sampleSize": {
+    "n": 994,
+    "unit": "pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 500 pairs",
+    "passed": true,
+    "detail": "n = 994"
+   }
+  },
+  "retain-10-59": {
+   "value": 6,
+   "display": "6%",
+   "label": "Share of a strike-rate edge retained next season (10–59 balls)",
+   "unit": "%",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "Regression slope, relative SR",
+   "sampleSize": {
+    "n": 128,
+    "unit": "pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 80 pairs",
+    "passed": true,
+    "detail": "n = 128"
+   }
+  },
+  "retain-60-149": {
+   "value": 15,
+   "display": "15%",
+   "label": "Share of a strike-rate edge retained next season (60–149 balls)",
+   "unit": "%",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "Regression slope, relative SR",
+   "sampleSize": {
+    "n": 255,
+    "unit": "pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 80 pairs",
+    "passed": true,
+    "detail": "n = 255"
+   }
+  },
+  "hot-now-60-149": {
+   "value": 48,
+   "display": "+48",
+   "label": "Average SR above league for 'hot' batters (≥ +30) in the first season (60–149 balls)",
+   "unit": "SR points",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "First season ≥ 30 SR points above league",
+   "sampleSize": {
+    "n": 26,
+    "unit": "pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 15 pairs",
+    "passed": true,
+    "detail": "n = 26"
+   }
+  },
+  "hot-next-60-149": {
+   "value": 11,
+   "display": "+11",
+   "label": "Same batters' SR versus league the next season (60–149 balls)",
+   "unit": "SR points",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "Next season ≥ 60 balls",
+   "sampleSize": {
+    "n": 26,
+    "unit": "pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 15 pairs",
+    "passed": true,
+    "detail": "n = 26"
+   }
+  },
+  "retain-150-299": {
+   "value": 35,
+   "display": "35%",
+   "label": "Share of a strike-rate edge retained next season (150–299 balls)",
+   "unit": "%",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "Regression slope, relative SR",
+   "sampleSize": {
+    "n": 416,
+    "unit": "pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 80 pairs",
+    "passed": true,
+    "detail": "n = 416"
+   }
+  },
+  "hot-now-150-299": {
+   "value": 42,
+   "display": "+42",
+   "label": "Average SR above league for 'hot' batters (≥ +30) in the first season (150–299 balls)",
+   "unit": "SR points",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "First season ≥ 30 SR points above league",
+   "sampleSize": {
+    "n": 48,
+    "unit": "pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 15 pairs",
+    "passed": true,
+    "detail": "n = 48"
+   }
+  },
+  "hot-next-150-299": {
+   "value": 16,
+   "display": "+16",
+   "label": "Same batters' SR versus league the next season (150–299 balls)",
+   "unit": "SR points",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "Next season ≥ 60 balls",
+   "sampleSize": {
+    "n": 48,
+    "unit": "pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 15 pairs",
+    "passed": true,
+    "detail": "n = 48"
+   }
+  },
+  "retain-300plus": {
+   "value": 29,
+   "display": "29%",
+   "label": "Share of a strike-rate edge retained next season (300+ balls)",
+   "unit": "%",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "Regression slope, relative SR",
+   "sampleSize": {
+    "n": 195,
+    "unit": "pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 80 pairs",
+    "passed": true,
+    "detail": "n = 195"
+   }
+  },
+  "shrink-k": {
+   "value": 500,
+   "display": "500",
+   "label": "Best-fitting prior weight: balls of league-average performance to blend in",
+   "unit": "balls",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "Grid search k = 0…1500, minimising squared error on next-season relative SR",
+   "sampleSize": {
+    "n": 994,
+    "unit": "pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "plausibility range 20–1400 for prior weight (not at grid edge)",
+    "passed": true,
+    "detail": "value 500"
+   }
+  },
+  "shrink-gain": {
+   "value": 51,
+   "display": "51%",
+   "label": "Reduction in prediction error from shrinking vs taking strike rate at face value",
+   "unit": "%",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "Mean squared error, next-season relative SR",
+   "sampleSize": {
+    "n": 994,
+    "unit": "pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "plausibility range 0–1 for error reduction",
+    "passed": true,
+    "detail": "value 0.5080585348465954"
+   }
+  },
+  "rcb-small-n": {
+   "value": 17,
+   "display": "17",
+   "label": "RCB batter-seasons with 15–99 balls, 2024–2026",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "As table",
+   "sampleSize": {
+    "n": 17,
+    "unit": "batter-seasons"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 5 batter-seasons",
+    "passed": true,
+    "detail": "n = 17"
+   }
+  },
+  "rcb-top-raw-name": {
+   "value": "R Shepherd (2025)",
+   "display": "R Shepherd (2025)",
+   "label": "Highest raw small-sample SR at RCB, 2024–2026",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "15–99 balls",
+   "sampleSize": {
+    "n": 24,
+    "unit": "balls"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "rank",
+    "passed": true
+   }
+  },
+  "rcb-top-raw": {
+   "value": 291.7,
+   "display": "291.7",
+   "label": "Raw strike rate",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 24,
+    "unit": "balls"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "plausibility range 50–400 for SR",
+    "passed": true,
+    "detail": "value 291.7"
+   }
+  },
+  "rcb-top-shrunk": {
+   "value": 158.9,
+   "display": "158.9",
+   "label": "Shrunk strike rate",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 24,
+    "unit": "balls"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "plausibility range 50–400 for SR",
+    "passed": true,
+    "detail": "value 158.9"
+   }
+  },
+  "rcb-top-balls": {
+   "value": 24,
+   "display": "24",
+   "label": "Balls faced",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 24,
+    "unit": "balls"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 15 balls",
+    "passed": true,
+    "detail": "n = 24"
+   }
+  }
+ },
+ "tables": {
+  "retention-by-sample": {
+   "label": "How much of a strike-rate edge survives to the next season",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "IPL batter-seasons 2008–2025 with ≥ 10 balls, followed by a season with ≥ 60 balls; SR measured relative to that season's league SR",
+   "sampleSize": {
+    "n": 994,
+    "unit": "consecutive batter-season pairs"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "rows": [
+    {
+     "sample": "10–59 balls",
+     "pairs": 128,
+     "retainedPct": 6,
+     "r": 0.08,
+     "hotNow": null,
+     "hotNext": null,
+     "hotN": 14
+    },
+    {
+     "sample": "60–149 balls",
+     "pairs": 255,
+     "retainedPct": 15,
+     "r": 0.17,
+     "hotNow": 48,
+     "hotNext": 11,
+     "hotN": 26
+    },
+    {
+     "sample": "150–299 balls",
+     "pairs": 416,
+     "retainedPct": 35,
+     "r": 0.33,
+     "hotNow": 42,
+     "hotNext": 16,
+     "hotN": 48
+    },
+    {
+     "sample": "300+ balls",
+     "pairs": 195,
+     "retainedPct": 29,
+     "r": 0.28,
+     "hotNow": null,
+     "hotNext": null,
+     "hotN": 10
+    }
+   ]
+  },
+  "rcb-small-samples": {
+   "label": "RCB small samples, 2024–2026: raw vs shrunk strike rate (k = 500 balls)",
+   "dataset": "CricField warehouse: deliveries ⨝ innings ⨝ matches ⨝ players (Cricsheet, IPL 2008–2026)",
+   "filters": "RCB batter-seasons with 15–99 balls (a player who also batted for another team that season is pooled)",
+   "sampleSize": {
+    "n": 17,
+    "unit": "batter-seasons"
+   },
+   "query": "SELECT d.batter_id id, p.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, MAX(CASE WHEN i.batting_team_id IN (2,15) THEN 1 ELSE 0 END) rcb FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY d.batter_id, year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(d.batter_runs) * 100.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) sr FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY year",
+   "rows": [
+    {
+     "batter": "R Shepherd",
+     "season": "2025",
+     "balls": 24,
+     "rawSR": 291.7,
+     "shrunkSR": 158.9,
+     "leagueSR": 152.5
+    },
+    {
+     "batter": "KV Sharma",
+     "season": "2024",
+     "balls": 15,
+     "rawSR": 206.7,
+     "shrunkSR": 152.2,
+     "leagueSR": 150.6
+    },
+    {
+     "batter": "MK Lomror",
+     "season": "2024",
+     "balls": 68,
+     "rawSR": 183.8,
+     "shrunkSR": 154.6,
+     "leagueSR": 150.6
+    },
+    {
+     "batter": "Swapnil Singh",
+     "season": "2024",
+     "balls": 21,
+     "rawSR": 176.2,
+     "shrunkSR": 151.6,
+     "leagueSR": 150.6
+    },
+    {
+     "batter": "JG Bethell",
+     "season": "2025",
+     "balls": 39,
+     "rawSR": 171.8,
+     "shrunkSR": 153.9,
+     "leagueSR": 152.5
+    },
+    {
+     "batter": "MA Agarwal",
+     "season": "2025",
+     "balls": 64,
+     "rawSR": 148.4,
+     "shrunkSR": 152.1,
+     "leagueSR": 152.5
+    },
+    {
+     "batter": "LS Livingstone",
+     "season": "2025",
+     "balls": 84,
+     "rawSR": 133.3,
+     "shrunkSR": 149.8,
+     "leagueSR": 152.5
+    },
+    {
+     "batter": "SS Prabhudessai",
+     "season": "2024",
+     "balls": 18,
+     "rawSR": 133.3,
+     "shrunkSR": 150,
+     "leagueSR": 150.6
+    },
+    {
+     "batter": "B Kumar",
+     "season": "2026",
+     "balls": 26,
+     "rawSR": 130.8,
+     "shrunkSR": 155.1,
+     "leagueSR": 156.3
+    },
+    {
+     "batter": "Anuj Rawat",
+     "season": "2024",
+     "balls": 77,
+     "rawSR": 127.3,
+     "shrunkSR": 147.5,
+     "leagueSR": 150.6
+    },
+    {
+     "batter": "KH Pandya",
+     "season": "2025",
+     "balls": 86,
+     "rawSR": 126.7,
+     "shrunkSR": 148.8,
+     "leagueSR": 152.5
+    },
+    {
+     "batter": "R Shepherd",
+     "season": "2026",
+     "balls": 66,
+     "rawSR": 125.8,
+     "shrunkSR": 152.8,
+     "leagueSR": 156.3
+    },
+    {
+     "batter": "JG Bethell",
+     "season": "2026",
+     "balls": 77,
+     "rawSR": 124.7,
+     "shrunkSR": 152.1,
+     "leagueSR": 156.3
+    },
+    {
+     "batter": "JM Sharma",
+     "season": "2026",
+     "balls": 95,
+     "rawSR": 122.1,
+     "shrunkSR": 150.9,
+     "leagueSR": 156.3
+    },
+    {
+     "batter": "GJ Maxwell",
+     "season": "2024",
+     "balls": 43,
+     "rawSR": 120.9,
+     "shrunkSR": 148.2,
+     "leagueSR": 150.6
+    },
+    {
+     "batter": "Saurav Chauhan",
+     "season": "2024",
+     "balls": 15,
+     "rawSR": 120,
+     "shrunkSR": 149.7,
+     "leagueSR": 150.6
+    },
+    {
+     "batter": "B Kumar",
+     "season": "2025",
+     "balls": 25,
+     "rawSR": 56,
+     "shrunkSR": 147.9,
+     "leagueSR": 152.5
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,179 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-006",
+ "planId": "cf-rcb-006",
+ "franchise": "RCB",
+ "aspect": "batting",
+ "title": "Chasing Under Pressure: Does Royal Challengers Bengaluru Bat Differently When the Target Climbs?",
+ "slug": "rcb-the-anatomy-of-a-chase-how-rcb-constructs-successful-run-pursuits",
+ "supersedes": {
+  "legacyId": "art-rcb-02",
+  "legacySlug": "rcb-the-anatomy-of-a-chase-how-rcb-constructs-successful-run-pursuits",
+  "decision": "revise"
+ },
+ "dek": "Does Royal Challengers Bengaluru's batting change as the target climbs? Chasing records by target band and by the required rate at halfway show where pressure bites.",
+ "excerpt": "Royal Challengers Bengaluru have won more of their chases than the league average. The data shows how quickly a chase slips away as the target rises past two hundred.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "RCB"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "RCB have won {{ev:chase-t}} of their chases; the league figure is {{ev:chase-l}}.",
+  "IPL sides chasing under 150 won {{ev:chase-lunder}}; chasing 200 or more, {{ev:chase-l200}}.",
+  "RCB have won {{ev:chase-t200}} of their {{ev:chase-t200n}} chases of 200 or more."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Target Sets the Tone",
+   "body": [
+    "Chasing in T20 is a different sport at different totals. Across every IPL chase with a result, sides set under 150 won {{ev:chase-lunder}} of the time; set 200 or more, {{ev:chase-l200}}.",
+    "Royal Challengers Bengaluru have won {{ev:chase-t}} of their chases overall against a league figure of {{ev:chase-l}}."
+   ],
+   "chartIds": [
+    "chase-bands"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Pressure at Halfway",
+   "body": [
+    "The required run rate after ten overs is a sharper measure of pressure than the target itself. Across the league, sides needing nine to eleven an over at halfway won {{ev:chase-rr-911}} of the time; sides needing eleven to thirteen won {{ev:chase-rr-1113}}.",
+    "Against the biggest targets, RCB have won {{ev:chase-t200}} of {{ev:chase-t200n}} chases of 200 or more."
+   ],
+   "chartIds": [
+    "chase-need"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Batting Differently as the Target Climbs",
+   "body": [
+    "A big target changes the batting order's job: the powerplay has to be bigger and the middle overs cannot be used for consolidation. The other lever is wickets in hand, which decide how hard a side can swing in the last five overs.",
+    "For RCB, the practical plan is to set halfway checkpoints for each target band and promote hitters when the side is behind them."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Dew, Toss and Venue",
+   "body": [
+    "Chasing records carry conditions with them. Dew in evening matches, the toss and the ground all shift the odds, and none of them are controlled in a simple record by target band.",
+    "{{hyp:dew}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Chase the Checkpoint, Not the Total",
+   "body": [
+    "Royal Challengers Bengaluru have been better chasers than the league, and the gap matters most against big targets. The evidence supports chasing to a required-rate checkpoint at halfway rather than to the total.",
+    "If the asking rate at ten overs is manageable, protecting wickets keeps the finish available; if it is not, the hitters have to come in early."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "chase-bands",
+   "type": "column",
+   "title": "Chasing win rate by target",
+   "subtitle": "Matches with a result",
+   "table": "chase-bands",
+   "xKey": "target",
+   "series": [
+    {
+     "key": "league",
+     "label": "IPL"
+    },
+    {
+     "key": "team",
+     "label": "RCB"
+    }
+   ],
+   "xLabel": "First-innings total",
+   "unit": "% of chases won",
+   "takeaway": "Chasing gets steadily harder as the target rises.",
+   "ariaLabel": "Column chart of chasing win rate grouped by target band for the IPL and the franchise."
+  },
+  {
+   "id": "chase-need",
+   "type": "column",
+   "title": "Win rate by required rate at halfway",
+   "subtitle": "Required run rate after ten overs of the chase",
+   "table": "chase-need",
+   "xKey": "required",
+   "series": [
+    {
+     "key": "league",
+     "label": "IPL"
+    },
+    {
+     "key": "team",
+     "label": "RCB"
+    }
+   ],
+   "xLabel": "Required runs per over",
+   "unit": "% of chases won",
+   "takeaway": "Win rates fall as the asking rate at halfway rises.",
+   "ariaLabel": "Column chart of chasing win rate grouped by required run rate after ten overs."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "dew",
+   "statement": "Hypothesis: Royal Challengers Bengaluru's chasing record depends on evening dew more than on batting approach.",
+   "whyUnverified": "Match start times and dew conditions are not recorded in the warehouse.",
+   "howToTest": "Join match start times and compare day and night chasing records."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "150",
+   "reason": "Target band threshold."
+  },
+  {
+   "text": "200",
+   "reason": "Target band threshold."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Royal Challengers Bengaluru chasing a target.",
+   "wanted": "Royal Challengers Bengaluru batters during a run chase."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-010",
+  "cf-rcb-025",
+  "cf-rcb-081"
+ ],
+ "seo": {
+  "metaTitle": "Chasing under pressure: how RCB handle big targets",
+  "metaDescription": "Royal Challengers Bengaluru's chasing record against the IPL by target band and by required rate at halfway."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Run rates use all runs per legal ball times six. Every figure is generated from the CricField warehouse by scripts/editorial/engine. Target bands use the first-innings total. Required rate at halfway = runs needed after ten overs divided by overs remaining. Team bands with fewer than eight chases are not shown.",
+ "generator": "engine:v1"
+}

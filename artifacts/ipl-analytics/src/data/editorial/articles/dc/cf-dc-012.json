@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-012",
+ "planId": "cf-dc-012",
+ "franchise": "DC",
+ "aspect": "bowling-fielding",
+ "title": "The Yorker Premium: Does Delhi Capitals Gain More from Execution or Variation?",
+ "slug": "dc-the-yorker-premium-does-dc-gain-more-from-execution-or-variation",
+ "dek": "At the death, is Delhi Capitals' best weapon the perfectly executed yorker or the well-disguised slower ball? Commentary labels let CricField price both.",
+ "excerpt": "Across the IPL since 2022, the yorker has cost less per ball in the death overs than slower balls and cutters. Here is how Delhi Capitals' delivery mix compares.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "DC"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "IPL death yorkers cost {{ev:yk-rest-yorker}} runs per ball since 2022; slower balls and cutters cost {{ev:yk-rest-slower}}.",
+  "Yorkers make up {{ev:yk-share}} of Delhi Capitals' labelled death balls, against {{ev:yk-lshare}} for the rest of the league.",
+  "DC conceded {{ev:yk-team-yorker}} per yorker and {{ev:yk-team-slower}} per slower ball or cutter."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Execution or Deception",
+   "body": [
+    "Death bowling has two philosophies. One says nail the yorker and the batter cannot score; the other says change pace and the batter cannot time it. Both are skills, and both carry a cost when they go wrong.",
+    "Using commentary-derived labels for deliveries in overs sixteen to twenty since 2022, the league's yorkers cost {{ev:yk-rest-yorker}} runs per ball, slower balls and cutters {{ev:yk-rest-slower}}, and all other labelled deliveries {{ev:yk-rest-other}}."
+   ],
+   "chartIds": [
+    "yk-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Delhi Capitals' Mix",
+   "body": [
+    "Yorkers make up {{ev:yk-share}} of Delhi Capitals' labelled death deliveries, against {{ev:yk-lshare}} for the rest of the IPL.",
+    "When they land it, DC concede {{ev:yk-team-yorker}} per yorker; slower balls and cutters cost them {{ev:yk-team-slower}}."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Building the Death Plan",
+   "body": [
+    "The data favours execution over variation at league level. The practical answer is a mix: a bowler whose yorker is reliable should lead with it, and a bowler whose yorker misses should lean on pace-off deliveries.",
+    "That makes yorker accuracy in practice a measurable selection input, not just a coaching talking point."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What Labels Cannot Capture",
+   "body": [
+    "Commentary labels describe the result as much as the intention: a slower ball that is smashed may be recorded as a full toss. That bias could make either option look better than it is.",
+    "{{hyp:labels}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Execution First, Variation as Cover",
+   "body": [
+    "For Delhi Capitals, the league evidence says the yorker is the cheaper death ball when bowled. The bowling plan should be built around whichever each bowler executes more reliably.",
+    "Tracking each bowler's delivery mix and cost by type each season would turn this from instinct into measurement."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "yk-chart",
+   "type": "column",
+   "title": "Death-overs cost by delivery type",
+   "subtitle": "Overs 16\u201320, 2022\u20132026, labelled balls",
+   "table": "yk-kinds",
+   "xKey": "delivery",
+   "series": [
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    },
+    {
+     "key": "team",
+     "label": "DC"
+    }
+   ],
+   "xLabel": "Delivery",
+   "unit": "runs per ball",
+   "takeaway": "League-wide, the yorker has been the cheaper death delivery.",
+   "ariaLabel": "Column chart of runs per ball in the death overs for yorkers, slower balls and other deliveries."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "labels",
+   "statement": "Hypothesis: commentary labelling inflates the cost of failed variations because expensive balls are described by their result.",
+   "whyUnverified": "No ball-tracking data is available to check labels against.",
+   "howToTest": "Compare commentary labels with tracking data for a sample of matches."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A Delhi Capitals bowler at the death.",
+   "wanted": "Delhi Capitals fast bowler bowling late in an innings."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-015",
+  "cf-dc-018",
+  "cf-dc-028"
+ ],
+ "seo": {
+  "metaTitle": "The yorker premium: execution or variation for DC?",
+  "metaDescription": "What yorkers and slower balls cost in the death overs since 2022, and how Delhi Capitals' delivery mix compares with the IPL."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Economy uses runs charged to the bowler (byes and leg-byes excluded) per legal ball times six. Bowler wickets exclude run outs. Generated from the CricField warehouse by scripts/editorial/engine. Length and variation labels come from ball-by-ball commentary (delivery_commentary), 2022\u20132026; unlabelled balls are excluded. Slower balls include off- and leg-cutters.",
+ "generator": "engine:v1"
+}

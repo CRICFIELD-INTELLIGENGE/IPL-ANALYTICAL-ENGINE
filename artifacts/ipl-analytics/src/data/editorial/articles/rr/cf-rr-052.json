@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-052",
+ "planId": "cf-rr-052",
+ "franchise": "RR",
+ "aspect": "fan-culture",
+ "title": "The Color Code: How Rajasthan Royals\u2019s Identity Shapes Fan Belonging",
+ "slug": "rr-the-color-code-how-rr-identity-shapes-fan-belonging",
+ "dek": "Colours and crest give Rajasthan Royals a look. A consistent way of playing gives them an identity fans can recognise; the data shows whether they have one.",
+ "excerpt": "Across their history, Rajasthan Royals have been starters without a fixed tempo and mixed at the death. A playing identity that lasts is part of what fans belong to.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RR"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "RR have outscored the IPL in the powerplay in {{ev:cc-pp}} of {{ev:cc-ppn}} seasons.",
+  "They have conceded less than the league in the death overs in {{ev:cc-de}} of those seasons.",
+  "On that record they have been starters without a fixed tempo and mixed at the death."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "More Than a Kit",
+   "body": [
+    "A franchise's colours are its most visible identity, but fans also recognise a way of playing: a side that always attacks early, or one that always holds its nerve at the end.",
+    "The CricField warehouse holds no survey, sentiment or social-media data, so it cannot measure what fans feel. It can measure what they have watched."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Batting Signature",
+   "body": [
+    "Rajasthan Royals have scored faster than the league in the powerplay in {{ev:cc-pp}} of {{ev:cc-ppn}} seasons. The chart compares their powerplay run rate with the league's each season.",
+    "On that record they have been starters without a fixed tempo."
+   ],
+   "chartIds": [
+    "cc-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "The Bowling Signature",
+   "body": [
+    "At the other end of the innings, they have conceded less than the league in the death overs in {{ev:cc-de}} of those seasons: mixed at the death.",
+    "A signature that holds across squads and captains is a sign of a lasting club philosophy rather than one generation of players."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Identity and Belonging",
+   "body": [
+    "Whether fans feel more attached to a side with a recognisable style is a question about people, not deliveries.",
+    "{{hyp:style}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: An Identity Still Being Defined",
+   "body": [
+    "Rajasthan Royals have been starters without a fixed tempo and mixed at the death across their history.",
+    "Making that signature deliberate, and explaining it to fans, is a way to give the colours a meaning on the field."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "cc-chart",
+   "type": "line",
+   "title": "Powerplay run rate",
+   "subtitle": "RR vs IPL, by season",
+   "table": "cc-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "RR"
+    },
+    {
+     "key": "league",
+     "label": "IPL"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per over",
+   "takeaway": "RR have outscored the league in the powerplay in some seasons and not others.",
+   "ariaLabel": "Line chart comparing RR and IPL powerplay run rates by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "style",
+   "statement": "Hypothesis: fans of franchises with a consistent playing style report stronger attachment than fans of sides whose style changes season to season.",
+   "whyUnverified": "No fan survey data is available.",
+   "howToTest": "Survey fans of several franchises on attachment and compare with each side's style consistency."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Rajasthan Royals in team colours.",
+   "wanted": "Rajasthan Royals players in team kit."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rr-053",
+  "cf-rr-057",
+  "cf-rr-064"
+ ],
+ "seo": {
+  "metaTitle": "The colour code: Rajasthan Royals' playing identity",
+  "metaDescription": "Whether Rajasthan Royals have a consistent playing style, from powerplay batting to death bowling, and why identity matters to fans."
+ },
+ "methodology": "CricField holds ball-by-ball cricket data and no fan survey, sentiment or social-media data. This article measures the cricket fans have experienced; statements about fans themselves are labelled hypotheses. Generated by scripts/editorial/engine. Powerplay = overs 1\u20136; death = overs 16\u201320; regulation innings.",
+ "generator": "engine:v1"
+}

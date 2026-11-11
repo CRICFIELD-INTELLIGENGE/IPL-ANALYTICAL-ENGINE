@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-gt-079",
+ "planId": "cf-gt-079",
+ "franchise": "GT",
+ "aspect": "scouting",
+ "title": "Bench-to-XI Pipeline: How Gujarat Titans Can Develop Without Sacrificing Results",
+ "slug": "gt-bench-to-xi-pipeline-how-gt-can-develop-without-sacrificing-results",
+ "dek": "Can Gujarat Titans develop players without sacrificing results? The share of their IPL debutants who became regulars measures how well the bench feeds the eleven.",
+ "excerpt": "Gujarat Titans have turned a share of their IPL debutants into regulars that can be ranked against the league. The pipeline from bench to eleven is a measurable habit, not luck.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "GT"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:bx-d}} players made their IPL debut for GT between 2022 and 2024; {{ev:bx-r}} became regulars for the franchise.",
+  "That conversion rate, {{ev:bx-pct}}, ranks {{ev:bx-rank}} of the franchises, against {{ev:bx-lg}} across the league.",
+  "Regular = at least two later seasons with one hundred and twenty balls or more for the same franchise."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Development as a Habit",
+   "body": [
+    "Franchises that develop their own players get cheaper, more loyal regulars. The test is simple: how many of the players a franchise gave an IPL debut went on to become regulars there.",
+    "Between 2022 and 2024, {{ev:bx-d}} players made their IPL debut for Gujarat Titans, and {{ev:bx-r}} of them became regulars for the franchise."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "How They Compare",
+   "body": [
+    "That is a conversion rate of {{ev:bx-pct}}, against {{ev:bx-lg}} across the league, ranking GT {{ev:bx-rank}} among the franchises. The chart compares every franchise.",
+    "The definition is strict: a regular needs at least two later seasons with one hundred and twenty balls or more for the same franchise."
+   ],
+   "chartIds": [
+    "bx-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Developing Without Losing",
+   "body": [
+    "Giving debutants a run costs matches in the short term. The franchises with the best pipelines tend to blood young players in specific roles where the downside is limited.",
+    "{{hyp:pipeline}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Caveats",
+   "body": [
+    "Debutants who were already established elsewhere in cricket, such as overseas internationals, count as debutants here; their conversion reflects retention more than development.",
+    "Defunct franchises are excluded from the comparison."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Measure the Pipeline",
+   "body": [
+    "Gujarat Titans rank {{ev:bx-rank}} for turning debutants into regulars. Tracking this rate each season would show whether development is improving.",
+    "Separating domestic debutants from overseas ones would sharpen the measure."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "bx-chart",
+   "type": "bar",
+   "title": "Debutants who became regulars",
+   "subtitle": "By franchise, debut 2008\u20132024",
+   "table": "bx-table",
+   "xKey": "franchise",
+   "series": [
+    {
+     "key": "conversionPct",
+     "label": "Conversion rate"
+    }
+   ],
+   "unit": "% of debutants",
+   "takeaway": "Franchises differ in how often their debutants become regulars.",
+   "ariaLabel": "Horizontal bar chart of each franchise's rate of turning IPL debutants into regulars."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "pipeline",
+   "statement": "Hypothesis: franchises with higher conversion rates also show smaller drops in win rate in seasons when they give more debuts.",
+   "whyUnverified": "Win rate has not been compared against the number of debuts per season.",
+   "howToTest": "Regress season win rate on debut counts by franchise."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "120",
+   "reason": "Ball threshold defining a regular season, stated in a table label."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A young Gujarat Titans player making his mark.",
+   "wanted": "Gujarat Titans young player celebrating."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-gt-097",
+  "cf-gt-072",
+  "cf-gt-036"
+ ],
+ "seo": {
+  "metaTitle": "Bench-to-XI: how GT develop players",
+  "metaDescription": "How many of the players Gujarat Titans gave an IPL debut became regulars, and how that compares with every other franchise."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Debut franchise = the team for which a player faced or bowled most balls in his first IPL season. Regular = at least two later seasons with 120 or more balls for that franchise.",
+ "generator": "engine:v1"
+}

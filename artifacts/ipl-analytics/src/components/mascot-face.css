@@ -1,0 +1,9 @@
+.cf-face { transform-box: view-box; transform-origin: 50px 50px; }
+.cf-face-upside { transform: rotate(180deg); }
+.cf-face-motion { transform-origin: 50px 50px; animation: cfFaceLively 1.4s ease-in-out infinite; }
+.cf-face-change { transform-origin: 50px 50px; animation: cfFaceChange .24s ease-out both; }
+.cf-face-eyes { transform-box: fill-box; transform-origin: center; animation: cfReactionBlink 1.9s ease-in-out infinite; }
+@keyframes cfFaceLively { 0%,100% { transform: translate(-1px,1px) rotate(-2deg); } 50% { transform: translate(1px,-2px) rotate(2deg); } }
+@keyframes cfFaceChange { 0% { transform: scale(.88); opacity:.65; } 65% { transform: scale(1.06); opacity:1; } 100% { transform: scale(1); opacity:1; } }
+@keyframes cfReactionBlink { 0%,10%,20%,100% { transform: scaleY(1); } 15% { transform: scaleY(.08); } }
+@media(prefers-reduced-motion:reduce) { .cf-face-eyes,.cf-face-motion,.cf-face-change { animation:none; } }

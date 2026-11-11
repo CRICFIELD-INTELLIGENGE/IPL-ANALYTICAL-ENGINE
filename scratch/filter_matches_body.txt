@@ -1,0 +1,60 @@
+L380: // ─────────────────────────────────────────────────────────────────────────────
+L381: 
+L382: function filterMatches(filters: QueryFilters | FieldFilters): string[] {
+L383:   ensureInit();
+L384:   return matchesList
+L385:     .filter(m => {
+L386:       if (filters.season && filters.season !== "All Seasons" && m.season !== filters.season) return false;
+L387:       const t1 = teamShort(m.team1); const t2 = teamShort(m.team2);
+L388:       if ((filters as QueryFilters).team && (filters as QueryFilters).team !== "All Teams") {
+L389:         if (t1 !== (filters as QueryFilters).team && t2 !== (filters as QueryFilters).team) return false;
+L390:       }
+L391:       if ((filters as QueryFilters).opponent && (filters as QueryFilters).opponent !== "All Opponents") {
+L392:         if (t1 !== (filters as QueryFilters).opponent && t2 !== (filters as QueryFilters).opponent) return false;
+L393:       }
+L394:       if (filters.venue && filters.venue !== "All Venues" && filters.venue !== "Venue") {
+L395:         const vN = normalizeVenueName(filters.venue).toLowerCase();
+L396:         const mN = normalizeVenueName(m.venue || "").toLowerCase();
+L397:         if (vN !== mN && !mN.includes(vN) && !vN.includes(mN)) return false;
+L398:       }
+L399:       // Match context: playoff detection via match_type or description
+L400:       const ctx = (filters as QueryFilters).matchContext;
+L401:       if (ctx && ctx !== "All Matches" && ctx !== "All") {
+L402:         const isPlayoff = !!(m.match_type && (m.match_type.toLowerCase().includes("final") || m.match_type.toLowerCase().includes("qualifier") || m.match_type.toLowerCase().includes("eliminator")));
+L403:         if (ctx === "Playoffs" && !isPlayoff) return false;
+L404:         if (ctx === "League" && isPlayoff) return false;
+L405:       }
+L406:       return true;
+L407:     })
+L408:     .map(m => m.id);
+L409: }
+L410: 
+L411: // ─────────────────────────────────────────────────────────────────────────────
+L412: //  PHASE / OVER FILTER — per delivery
+L413: // ─────────────────────────────────────────────────────────────────────────────
+L414: 
+L415: function phaseFromOver(over: number): "powerplay" | "middle" | "death" {
+L416:   if (over < 6) return "powerplay";
+L417:   if (over >= 15) return "death";
+L418:   return "middle";
+L419: }
+L420: 
+L421: function passesPhaseFilter(overNum: number, filters: QueryFilters | FieldFilters): boolean {
+L422:   const phase = (filters as QueryFilters).phase;
+L423:   if (!phase || phase === "All Phases" || phase === "Phase") return true;
+L424:   const fp = phase.toLowerCase();
+L425:   const p = phaseFromOver(overNum);
+L426:   if (fp.includes("powerplay") || fp.includes("pp") || fp.includes("0-6")) return p === "powerplay";
+L427:   if (fp.includes("middle") || fp.includes("7-15")) return p === "middle";
+L428:   if (fp.includes("death") || fp.includes("16-20")) return p === "death";
+L429:   return true;
+L430: }
+L431: 
+L432: function passesOverRangeFilter(overNum: number, overRange?: string): boolean {
+L433:   if (!overRange || overRange === "All Overs" || overRange === "All") return true;
+L434:   // Format: "1-6", "7-15", "16-20", "17-20", "18-20", "1-10"
+L435:   const match = overRange.match(/^(\d+)-(\d+)$/);
+L436:   if (match) {
+L437:     const lo = parseInt(match[1]) - 1; // 0-indexed
+L438:     const hi = parseInt(match[2]) - 1;
+L439:     return overNum >= lo && overNum <= hi;

@@ -1,0 +1,7076 @@
+{
+ "cf-csk-001": {
+  "query": "Chennai Super Kings batting powerplay",
+  "wanted": "Chennai Super Kings opening batter playing an attacking shot, recent season.",
+  "players": [
+   "RD Gaikwad",
+   "R Ravindra",
+   "SV Samson",
+   "A Mhatre"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-002": {
+  "query": "Urvil Patel Chennai Super Kings batting",
+  "wanted": "Urvil Patel batting for Chennai Super Kings.",
+  "players": [
+   "Urvil Patel"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-003": {
+  "query": "Chennai Super Kings six",
+  "wanted": "Chennai Super Kings batter hitting a six.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-004": {
+  "query": "S Dube Chennai Super Kings batting",
+  "wanted": "S Dube batting for Chennai Super Kings.",
+  "players": [
+   "S Dube",
+   "RD Gaikwad",
+   "RA Jadeja",
+   "D Brevis"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-005": {
+  "query": "S Dube Chennai Super Kings",
+  "wanted": "S Dube batting late in an innings.",
+  "players": [
+   "S Dube",
+   "MS Dhoni",
+   "RA Jadeja",
+   "RD Gaikwad"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-006": {
+  "query": "Chennai Super Kings chase win",
+  "wanted": "Chennai Super Kings batters during a run chase.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-007": {
+  "query": "Chennai Super Kings partnership batting",
+  "wanted": "Two Chennai Super Kings batters together in the middle.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-008": {
+  "query": "Chennai Super Kings batting",
+  "wanted": "Chennai Super Kings batter sweeping or driving against spin.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-009": {
+  "query": "Chennai Super Kings batting",
+  "wanted": "Chennai Super Kings batters running between the wickets.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-010": {
+  "query": "Chennai Super Kings fifty celebrates",
+  "wanted": "Chennai Super Kings batter celebrating a big innings.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-001": {
+  "query": "Delhi Capitals batting powerplay",
+  "wanted": "Delhi Capitals opening batter playing an attacking shot, recent season.",
+  "players": [
+   "KL Rahul",
+   "Abishek Porel",
+   "J Fraser-McGurk",
+   "P Nissanka"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-002": {
+  "query": "Abishek Porel Delhi Capitals batting",
+  "wanted": "Abishek Porel batting for Delhi Capitals.",
+  "players": [
+   "Abishek Porel"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-003": {
+  "query": "Delhi Capitals six",
+  "wanted": "Delhi Capitals batter hitting a six.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-004": {
+  "query": "KL Rahul Delhi Capitals batting",
+  "wanted": "KL Rahul batting for Delhi Capitals.",
+  "players": [
+   "KL Rahul",
+   "T Stubbs",
+   "AR Patel",
+   "Abishek Porel"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-005": {
+  "query": "T Stubbs Delhi Capitals",
+  "wanted": "T Stubbs batting late in an innings.",
+  "players": [
+   "T Stubbs",
+   "Ashutosh Sharma",
+   "AR Patel",
+   "KL Rahul"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-006": {
+  "query": "Delhi Capitals chase win",
+  "wanted": "Delhi Capitals batters during a run chase.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-007": {
+  "query": "Delhi Capitals partnership batting",
+  "wanted": "Two Delhi Capitals batters together in the middle.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-008": {
+  "query": "Delhi Capitals batting",
+  "wanted": "Delhi Capitals batter sweeping or driving against spin.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-009": {
+  "query": "Delhi Capitals batting",
+  "wanted": "Delhi Capitals batters running between the wickets.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-010": {
+  "query": "Delhi Capitals fifty celebrates",
+  "wanted": "Delhi Capitals batter celebrating a big innings.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-001": {
+  "query": "Gujarat Titans batting powerplay",
+  "wanted": "Gujarat Titans opening batter playing an attacking shot, recent season.",
+  "players": [
+   "B Sai Sudharsan",
+   "Shubman Gill",
+   "JC Buttler",
+   "WP Saha"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-002": {
+  "query": "JC Buttler Gujarat Titans batting",
+  "wanted": "JC Buttler batting for Gujarat Titans.",
+  "players": [
+   "JC Buttler"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-003": {
+  "query": "Gujarat Titans six",
+  "wanted": "Gujarat Titans batter hitting a six.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-004": {
+  "query": "B Sai Sudharsan Gujarat Titans batting",
+  "wanted": "B Sai Sudharsan batting for Gujarat Titans.",
+  "players": [
+   "B Sai Sudharsan",
+   "Shubman Gill",
+   "JC Buttler",
+   "Washington Sundar"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-005": {
+  "query": "R Tewatia Gujarat Titans",
+  "wanted": "R Tewatia batting late in an innings.",
+  "players": [
+   "R Tewatia",
+   "Washington Sundar",
+   "JC Buttler",
+   "B Sai Sudharsan"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-006": {
+  "query": "Gujarat Titans chase win",
+  "wanted": "Gujarat Titans batters during a run chase.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-007": {
+  "query": "Gujarat Titans partnership batting",
+  "wanted": "Two Gujarat Titans batters together in the middle.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-008": {
+  "query": "Gujarat Titans batting",
+  "wanted": "Gujarat Titans batter sweeping or driving against spin.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-009": {
+  "query": "Gujarat Titans batting",
+  "wanted": "Gujarat Titans batters running between the wickets.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-010": {
+  "query": "Gujarat Titans fifty celebrates",
+  "wanted": "Gujarat Titans batter celebrating a big innings.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-011": {
+  "query": "KK Ahmed Chennai Super Kings bowls",
+  "wanted": "KK Ahmed bowling with the new ball.",
+  "players": [
+   "KK Ahmed",
+   "TU Deshpande",
+   "DL Chahar",
+   "Mukesh Choudhary"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-013": {
+  "query": "MM Ali Chennai Super Kings wicket",
+  "wanted": "MM Ali celebrating a wicket for Chennai Super Kings.",
+  "players": [
+   "MM Ali"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-014": {
+  "query": "RA Jadeja Chennai Super Kings bowls",
+  "wanted": "RA Jadeja bowling spin for Chennai Super Kings.",
+  "players": [
+   "RA Jadeja"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-015": {
+  "query": "M Pathirana Chennai Super Kings bowls",
+  "wanted": "M Pathirana bowling at the death.",
+  "players": [
+   "M Pathirana",
+   "A Kamboj",
+   "Noor Ahmad",
+   "TU Deshpande"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-016": {
+  "query": "Chennai Super Kings catch",
+  "wanted": "Chennai Super Kings fielder diving or taking a catch.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-017": {
+  "query": "Chennai Super Kings takes catch",
+  "wanted": "Chennai Super Kings fielder taking a catch.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-019": {
+  "query": "Chennai Super Kings spinner bowls",
+  "wanted": "Chennai Super Kings spinner bowling.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-011": {
+  "query": "MA Starc Delhi Capitals bowls",
+  "wanted": "MA Starc bowling with the new ball.",
+  "players": [
+   "MA Starc",
+   "KK Ahmed",
+   "Mukesh Kumar",
+   "AR Patel"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-013": {
+  "query": "AR Patel Delhi Capitals wicket",
+  "wanted": "AR Patel celebrating a wicket for Delhi Capitals.",
+  "players": [
+   "AR Patel"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-014": {
+  "query": "Kuldeep Yadav Delhi Capitals bowls",
+  "wanted": "Kuldeep Yadav bowling spin for Delhi Capitals.",
+  "players": [
+   "Kuldeep Yadav"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-015": {
+  "query": "Mukesh Kumar Delhi Capitals bowls",
+  "wanted": "Mukesh Kumar bowling at the death.",
+  "players": [
+   "Mukesh Kumar",
+   "Kuldeep Yadav",
+   "L Ngidi",
+   "MA Starc"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-016": {
+  "query": "Delhi Capitals catch",
+  "wanted": "Delhi Capitals fielder diving or taking a catch.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-017": {
+  "query": "Delhi Capitals takes catch",
+  "wanted": "Delhi Capitals fielder taking a catch.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-019": {
+  "query": "Delhi Capitals spinner bowls",
+  "wanted": "Delhi Capitals spinner bowling.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-011": {
+  "query": "Mohammed Siraj Gujarat Titans bowls",
+  "wanted": "Mohammed Siraj bowling with the new ball.",
+  "players": [
+   "Mohammed Siraj",
+   "K Rabada",
+   "Azmatullah Omarzai",
+   "UT Yadav"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-013": {
+  "query": "Rashid Khan Gujarat Titans wicket",
+  "wanted": "Rashid Khan celebrating a wicket for Gujarat Titans.",
+  "players": [
+   "Rashid Khan"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-014": {
+  "query": "Rashid Khan Gujarat Titans bowls",
+  "wanted": "Rashid Khan bowling spin for Gujarat Titans.",
+  "players": [
+   "Rashid Khan"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-015": {
+  "query": "Rashid Khan Gujarat Titans bowls",
+  "wanted": "Rashid Khan bowling at the death.",
+  "players": [
+   "Rashid Khan",
+   "M Prasidh Krishna",
+   "Mohammed Siraj",
+   "MM Sharma"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-016": {
+  "query": "Gujarat Titans catch",
+  "wanted": "Gujarat Titans fielder diving or taking a catch.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-017": {
+  "query": "Gujarat Titans takes catch",
+  "wanted": "Gujarat Titans fielder taking a catch.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-019": {
+  "query": "Gujarat Titans spinner bowls",
+  "wanted": "Gujarat Titans spinner bowling.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-012": {
+  "query": "Chennai Super Kings bowls death",
+  "wanted": "Chennai Super Kings fast bowler bowling late in an innings.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-018": {
+  "query": "Chennai Super Kings bowls",
+  "wanted": "Chennai Super Kings seam bowler in delivery stride.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-020": {
+  "query": "Chennai Super Kings all-rounder bowls",
+  "wanted": "Chennai Super Kings all-rounder bowling.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-012": {
+  "query": "Delhi Capitals bowls death",
+  "wanted": "Delhi Capitals fast bowler bowling late in an innings.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-018": {
+  "query": "Delhi Capitals bowls",
+  "wanted": "Delhi Capitals seam bowler in delivery stride.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-020": {
+  "query": "Delhi Capitals all-rounder bowls",
+  "wanted": "Delhi Capitals all-rounder bowling.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-012": {
+  "query": "Gujarat Titans bowls death",
+  "wanted": "Gujarat Titans fast bowler bowling late in an innings.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-018": {
+  "query": "Gujarat Titans bowls",
+  "wanted": "Gujarat Titans seam bowler in delivery stride.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-020": {
+  "query": "Gujarat Titans all-rounder bowls",
+  "wanted": "Gujarat Titans all-rounder bowling.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-021": {
+  "query": "Chennai Super Kings captain toss",
+  "wanted": "Chennai Super Kings captain at the toss.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-022": {
+  "query": "Chepauk stadium Chennai Super Kings",
+  "wanted": "Wide view of Chepauk during an Chennai Super Kings IPL match.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-023": {
+  "query": "Chennai Super Kings team huddle",
+  "wanted": "Chennai Super Kings team huddle, recent season.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-024": {
+  "query": "S Dube Chennai Super Kings batting",
+  "wanted": "S Dube walking out to bat.",
+  "players": [
+   "S Dube",
+   "MS Dhoni",
+   "DJ Mitchell"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-025": {
+  "query": "Chennai Super Kings bowler celebrates wicket",
+  "wanted": "Chennai Super Kings bowlers celebrating while defending a total.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-026": {
+  "query": "Chennai Super Kings players huddle",
+  "wanted": "Chennai Super Kings players in a huddle on the field.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-027": {
+  "query": "Chennai Super Kings Mumbai Indians",
+  "wanted": "Chennai Super Kings playing Mumbai Indians.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-028": {
+  "query": "Chennai Super Kings batting death overs",
+  "wanted": "Chennai Super Kings batter hitting late in an innings.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-029": {
+  "query": "Chennai Super Kings batting shot",
+  "wanted": "Chennai Super Kings batter attacking in the middle overs.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-030": {
+  "query": "Ruturaj Gaikwad Chennai Super Kings captain",
+  "wanted": "Ruturaj Gaikwad as Chennai Super Kings captain.",
+  "players": [
+   "Ruturaj Gaikwad",
+   "Ravindra Jadeja"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-021": {
+  "query": "Delhi Capitals captain toss",
+  "wanted": "Delhi Capitals captain at the toss.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-022": {
+  "query": "Delhi stadium Delhi Capitals",
+  "wanted": "Wide view of Delhi during an Delhi Capitals IPL match.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-023": {
+  "query": "Delhi Capitals team huddle",
+  "wanted": "Delhi Capitals team huddle, recent season.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-024": {
+  "query": "Abishek Porel Delhi Capitals batting",
+  "wanted": "Abishek Porel walking out to bat.",
+  "players": [
+   "Abishek Porel",
+   "AR Patel",
+   "DA Miller"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-025": {
+  "query": "Delhi Capitals bowler celebrates wicket",
+  "wanted": "Delhi Capitals bowlers celebrating while defending a total.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-026": {
+  "query": "Delhi Capitals players huddle",
+  "wanted": "Delhi Capitals players in a huddle on the field.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-027": {
+  "query": "Delhi Capitals Mumbai Indians",
+  "wanted": "Delhi Capitals playing Mumbai Indians.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-028": {
+  "query": "Delhi Capitals batting death overs",
+  "wanted": "Delhi Capitals batter hitting late in an innings.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-029": {
+  "query": "Delhi Capitals batting shot",
+  "wanted": "Delhi Capitals batter attacking in the middle overs.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-030": {
+  "query": "Axar Patel Delhi Capitals captain",
+  "wanted": "Axar Patel as Delhi Capitals captain.",
+  "players": [
+   "Axar Patel",
+   "Zaheer Khan",
+   "JP Duminy"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-021": {
+  "query": "Gujarat Titans captain toss",
+  "wanted": "Gujarat Titans captain at the toss.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-022": {
+  "query": "Ahmedabad stadium Gujarat Titans",
+  "wanted": "Wide view of Ahmedabad during an Gujarat Titans IPL match.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-024": {
+  "query": "B Sai Sudharsan Gujarat Titans batting",
+  "wanted": "B Sai Sudharsan walking out to bat.",
+  "players": [
+   "B Sai Sudharsan",
+   "R Tewatia",
+   "M Shahrukh Khan"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-025": {
+  "query": "Gujarat Titans bowler celebrates wicket",
+  "wanted": "Gujarat Titans bowlers celebrating while defending a total.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-026": {
+  "query": "Gujarat Titans players huddle",
+  "wanted": "Gujarat Titans players in a huddle on the field.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-027": {
+  "query": "Gujarat Titans Rajasthan Royals",
+  "wanted": "Gujarat Titans playing Rajasthan Royals.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-028": {
+  "query": "Gujarat Titans batting death overs",
+  "wanted": "Gujarat Titans batter hitting late in an innings.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-029": {
+  "query": "Gujarat Titans batting shot",
+  "wanted": "Gujarat Titans batter attacking in the middle overs.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-030": {
+  "query": "Shubman Gill Gujarat Titans captain",
+  "wanted": "Shubman Gill as Gujarat Titans captain.",
+  "players": [
+   "Shubman Gill"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-023": {
+  "query": "Gujarat Titans team huddle",
+  "wanted": "Gujarat Titans team huddle, recent season.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-031": {
+  "query": "Chennai Super Kings auction",
+  "wanted": "Chennai Super Kings team or auction table.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-032": {
+  "query": "Chennai Super Kings star celebrates",
+  "wanted": "Chennai Super Kings star player celebrating.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-033": {
+  "query": "Imran Tahir Chennai Super Kings",
+  "wanted": "Imran Tahir playing for Chennai Super Kings.",
+  "players": [
+   "Imran Tahir"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-034": {
+  "query": "Imran Tahir Chennai Super Kings",
+  "wanted": "Imran Tahir playing for Chennai Super Kings.",
+  "players": [
+   "Imran Tahir"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-035": {
+  "query": "Imran Tahir Chennai Super Kings",
+  "wanted": "Imran Tahir playing for Chennai Super Kings.",
+  "players": [
+   "Imran Tahir",
+   "Lungisani Ngidi",
+   "Ajinkya Rahane"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-036": {
+  "query": "Chennai Super Kings team",
+  "wanted": "Chennai Super Kings squad training or team photo.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-037": {
+  "query": "Moeen Ali Chennai Super Kings",
+  "wanted": "Moeen Ali playing for Chennai Super Kings.",
+  "players": [
+   "Moeen Ali",
+   "Noor Ahmad",
+   "Deepak Chahar"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-038": {
+  "query": "Chennai Super Kings bowls",
+  "wanted": "Chennai Super Kings death bowler.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-039": {
+  "query": "Imran Tahir Chennai Super Kings",
+  "wanted": "Imran Tahir playing for Chennai Super Kings.",
+  "players": [
+   "Imran Tahir",
+   "Ruturaj Gaikwad"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-040": {
+  "query": "Chennai Super Kings players celebrate",
+  "wanted": "Chennai Super Kings players celebrating together.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-031": {
+  "query": "Delhi Capitals auction",
+  "wanted": "Delhi Capitals team or auction table.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-032": {
+  "query": "Delhi Capitals star celebrates",
+  "wanted": "Delhi Capitals star player celebrating.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-033": {
+  "query": "Rishabh Pant Delhi Capitals",
+  "wanted": "Rishabh Pant playing for Delhi Capitals.",
+  "players": [
+   "Rishabh Pant"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-034": {
+  "query": "J Fraser-McGurk Delhi Capitals",
+  "wanted": "J Fraser-McGurk playing for Delhi Capitals.",
+  "players": [
+   "J Fraser-McGurk"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-035": {
+  "query": "Tristan Stubbs Delhi Capitals",
+  "wanted": "Tristan Stubbs playing for Delhi Capitals.",
+  "players": [
+   "Tristan Stubbs",
+   "Anrich Nortje",
+   "Avesh Khan"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-036": {
+  "query": "Delhi Capitals team",
+  "wanted": "Delhi Capitals squad training or team photo.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-037": {
+  "query": "Rishabh Pant Delhi Capitals",
+  "wanted": "Rishabh Pant playing for Delhi Capitals.",
+  "players": [
+   "Rishabh Pant",
+   "Kuldeep Yadav",
+   "Rishabh Pant"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-038": {
+  "query": "Delhi Capitals bowls",
+  "wanted": "Delhi Capitals death bowler.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-039": {
+  "query": "Rishabh Pant Delhi Capitals",
+  "wanted": "Rishabh Pant playing for Delhi Capitals.",
+  "players": [
+   "Rishabh Pant",
+   "Tristan Stubbs"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-040": {
+  "query": "Delhi Capitals players celebrate",
+  "wanted": "Delhi Capitals players celebrating together.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-031": {
+  "query": "Gujarat Titans auction",
+  "wanted": "Gujarat Titans team or auction table.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-032": {
+  "query": "Gujarat Titans star celebrates",
+  "wanted": "Gujarat Titans star player celebrating.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-033": {
+  "query": "Rashid Khan Gujarat Titans",
+  "wanted": "Rashid Khan playing for Gujarat Titans.",
+  "players": [
+   "Rashid Khan"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-034": {
+  "query": "Rashid Khan Gujarat Titans",
+  "wanted": "Rashid Khan playing for Gujarat Titans.",
+  "players": [
+   "Rashid Khan"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-035": {
+  "query": "Mohit Sharma Gujarat Titans",
+  "wanted": "Mohit Sharma playing for Gujarat Titans.",
+  "players": [
+   "Mohit Sharma",
+   "Noor Ahmad",
+   "Noor Ahmad"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-036": {
+  "query": "Gujarat Titans team",
+  "wanted": "Gujarat Titans squad training or team photo.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-037": {
+  "query": "Rashid Khan Gujarat Titans",
+  "wanted": "Rashid Khan playing for Gujarat Titans.",
+  "players": [
+   "Rashid Khan",
+   "Shubman Gill",
+   "Prasidh Krishna"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-038": {
+  "query": "Gujarat Titans bowls",
+  "wanted": "Gujarat Titans death bowler.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-039": {
+  "query": "Rashid Khan Gujarat Titans",
+  "wanted": "Rashid Khan playing for Gujarat Titans.",
+  "players": [
+   "Rashid Khan",
+   "Noor Ahmad"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-040": {
+  "query": "Gujarat Titans players celebrate",
+  "wanted": "Gujarat Titans players celebrating together.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-041": {
+  "query": "Chennai Super Kings fans",
+  "wanted": "Chennai Super Kings fans in the stadium.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-042": {
+  "query": "Chennai Super Kings Chepauk crowd",
+  "wanted": "Chennai Super Kings home crowd at Chepauk.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-043": {
+  "query": "MS Dhoni Chennai Super Kings",
+  "wanted": "MS Dhoni playing for Chennai Super Kings.",
+  "players": [
+   "MS Dhoni",
+   "RA Jadeja",
+   "SK Raina"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-044": {
+  "query": "Chennai Super Kings six",
+  "wanted": "Chennai Super Kings batter hitting a six.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-045": {
+  "query": "Chennai Super Kings fans cheer",
+  "wanted": "Chennai Super Kings fans cheering.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-046": {
+  "query": "Chennai Super Kings Mumbai Indians",
+  "wanted": "Chennai Super Kings v Mumbai Indians match action.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-047": {
+  "query": "Chennai Super Kings celebrates century",
+  "wanted": "Chennai Super Kings player celebrating a century or wicket.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-048": {
+  "query": "Chennai Super Kings fans crowd",
+  "wanted": "Chennai Super Kings fans, families in the crowd.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-049": {
+  "query": "Chennai Super Kings match",
+  "wanted": "Chennai Super Kings playing an away match.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-050": {
+  "query": "Chennai Super Kings training",
+  "wanted": "Chennai Super Kings squad or training.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-041": {
+  "query": "Delhi Capitals fans",
+  "wanted": "Delhi Capitals fans in the stadium.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-042": {
+  "query": "Delhi Capitals Delhi crowd",
+  "wanted": "Delhi Capitals home crowd at Delhi.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-043": {
+  "query": "A Mishra Delhi Capitals",
+  "wanted": "A Mishra playing for Delhi Capitals.",
+  "players": [
+   "A Mishra",
+   "AR Patel",
+   "DA Warner"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-044": {
+  "query": "Delhi Capitals six",
+  "wanted": "Delhi Capitals batter hitting a six.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-045": {
+  "query": "Delhi Capitals fans cheer",
+  "wanted": "Delhi Capitals fans cheering.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-046": {
+  "query": "Delhi Capitals Mumbai Indians",
+  "wanted": "Delhi Capitals v Mumbai Indians match action.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-047": {
+  "query": "Delhi Capitals celebrates century",
+  "wanted": "Delhi Capitals player celebrating a century or wicket.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-048": {
+  "query": "Delhi Capitals fans crowd",
+  "wanted": "Delhi Capitals fans, families in the crowd.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-049": {
+  "query": "Delhi Capitals match",
+  "wanted": "Delhi Capitals playing an away match.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-050": {
+  "query": "Delhi Capitals training",
+  "wanted": "Delhi Capitals squad or training.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-041": {
+  "query": "Gujarat Titans fans",
+  "wanted": "Gujarat Titans fans in the stadium.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-042": {
+  "query": "Gujarat Titans Ahmedabad crowd",
+  "wanted": "Gujarat Titans home crowd at Ahmedabad.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-043": {
+  "query": "B Sai Sudharsan Gujarat Titans",
+  "wanted": "B Sai Sudharsan playing for Gujarat Titans.",
+  "players": [
+   "B Sai Sudharsan",
+   "R Tewatia",
+   "Rashid Khan"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-044": {
+  "query": "Gujarat Titans six",
+  "wanted": "Gujarat Titans batter hitting a six.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-045": {
+  "query": "Gujarat Titans fans cheer",
+  "wanted": "Gujarat Titans fans cheering.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-046": {
+  "query": "Gujarat Titans Rajasthan Royals",
+  "wanted": "Gujarat Titans v Rajasthan Royals match action.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-047": {
+  "query": "Gujarat Titans celebrates century",
+  "wanted": "Gujarat Titans player celebrating a century or wicket.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-048": {
+  "query": "Gujarat Titans fans crowd",
+  "wanted": "Gujarat Titans fans, families in the crowd.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-049": {
+  "query": "Gujarat Titans match",
+  "wanted": "Gujarat Titans playing an away match.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-050": {
+  "query": "Gujarat Titans training",
+  "wanted": "Gujarat Titans squad or training.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-051": {
+  "query": "Chennai Super Kings supporters",
+  "wanted": "Chennai Super Kings fans in the stands.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-052": {
+  "query": "Chennai Super Kings players",
+  "wanted": "Chennai Super Kings players in team kit.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-053": {
+  "query": "MS Dhoni Chennai Super Kings",
+  "wanted": "MS Dhoni batting for Chennai Super Kings.",
+  "players": [
+   "MS Dhoni",
+   "SK Raina",
+   "RA Jadeja"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-054": {
+  "query": "Chennai Super Kings dejected",
+  "wanted": "Chennai Super Kings players dejected.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-055": {
+  "query": "Chennai Super Kings Mumbai Indians",
+  "wanted": "Chennai Super Kings v Mumbai Indians match action.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-056": {
+  "query": "Chennai Super Kings last over win",
+  "wanted": "Chennai Super Kings last-over finish celebration.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-057": {
+  "query": "Chennai Super Kings young fans",
+  "wanted": "Chennai Super Kings young fans with families.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-059": {
+  "query": "Chennai Super Kings fans react",
+  "wanted": "Chennai Super Kings fans reacting.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-051": {
+  "query": "Delhi Capitals supporters",
+  "wanted": "Delhi Capitals fans in the stands.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-052": {
+  "query": "Delhi Capitals players",
+  "wanted": "Delhi Capitals players in team kit.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-053": {
+  "query": "RR Pant Delhi Capitals",
+  "wanted": "RR Pant batting for Delhi Capitals.",
+  "players": [
+   "RR Pant",
+   "DA Warner",
+   "A Mishra"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-054": {
+  "query": "Delhi Capitals dejected",
+  "wanted": "Delhi Capitals players dejected.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-055": {
+  "query": "Delhi Capitals Mumbai Indians",
+  "wanted": "Delhi Capitals v Mumbai Indians match action.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-056": {
+  "query": "Delhi Capitals last over win",
+  "wanted": "Delhi Capitals last-over finish celebration.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-057": {
+  "query": "Delhi Capitals young fans",
+  "wanted": "Delhi Capitals young fans with families.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-059": {
+  "query": "Delhi Capitals fans react",
+  "wanted": "Delhi Capitals fans reacting.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-051": {
+  "query": "Gujarat Titans supporters",
+  "wanted": "Gujarat Titans fans in the stands.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-052": {
+  "query": "Gujarat Titans players",
+  "wanted": "Gujarat Titans players in team kit.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-053": {
+  "query": "Shubman Gill Gujarat Titans",
+  "wanted": "Shubman Gill batting for Gujarat Titans.",
+  "players": [
+   "Shubman Gill",
+   "B Sai Sudharsan",
+   "Rashid Khan"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-054": {
+  "query": "Gujarat Titans dejected",
+  "wanted": "Gujarat Titans players dejected.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-055": {
+  "query": "Gujarat Titans Rajasthan Royals",
+  "wanted": "Gujarat Titans v Rajasthan Royals match action.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-056": {
+  "query": "Gujarat Titans last over win",
+  "wanted": "Gujarat Titans last-over finish celebration.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-057": {
+  "query": "Gujarat Titans young fans",
+  "wanted": "Gujarat Titans young fans with families.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-058": {
+  "query": "Gujarat Titans team celebrate",
+  "wanted": "Gujarat Titans Indian and overseas players together.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-059": {
+  "query": "Gujarat Titans fans react",
+  "wanted": "Gujarat Titans fans reacting.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-060": {
+  "query": "Chennai Super Kings win celebrate",
+  "wanted": "Chennai Super Kings players celebrating a comeback win.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-060": {
+  "query": "Delhi Capitals win celebrate",
+  "wanted": "Delhi Capitals players celebrating a comeback win.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-060": {
+  "query": "Gujarat Titans win celebrate",
+  "wanted": "Gujarat Titans players celebrating a comeback win.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-058": {
+  "query": "Chennai Super Kings team celebrate",
+  "wanted": "Chennai Super Kings Indian and overseas players together.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-058": {
+  "query": "Delhi Capitals team celebrate",
+  "wanted": "Delhi Capitals Indian and overseas players together.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-csk-061": {
+  "query": "Chennai Super Kings 2008",
+  "wanted": "Chennai Super Kings 2008 team or player.",
+  "players": [
+   "SK Raina",
+   "MS Gony"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-062": {
+  "query": "Chennai Super Kings 2022",
+  "wanted": "Chennai Super Kings 2022 match action.",
+  "players": [
+   "RD Gaikwad",
+   "Mukesh Choudhary"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-063": {
+  "query": "Chennai Super Kings captain",
+  "wanted": "Chennai Super Kings captain setting the field.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-064": {
+  "query": "Ruturaj Gaikwad Chennai Super Kings captain",
+  "wanted": "Ruturaj Gaikwad captaining Chennai Super Kings.",
+  "players": [
+   "Ruturaj Gaikwad"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-065": {
+  "query": "Chepauk stadium Chennai Super Kings",
+  "wanted": "Chepauk stadium during an Chennai Super Kings match.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-066": {
+  "query": "Chennai Super Kings last ball win",
+  "wanted": "Chennai Super Kings players celebrating a last-ball win.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-067": {
+  "query": "Chennai Super Kings huddle",
+  "wanted": "Chennai Super Kings squad photo or huddle.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-068": {
+  "query": "DR Smith Chennai Super Kings",
+  "wanted": "DR Smith batting for Chennai Super Kings.",
+  "players": [
+   "DR Smith",
+   "Noor Ahmad"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-069": {
+  "query": "Chennai Super Kings celebrate win",
+  "wanted": "Chennai Super Kings celebrating a win.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-070": {
+  "query": "M Vijay Chennai Super Kings century",
+  "wanted": "M Vijay batting for Chennai Super Kings.",
+  "players": [
+   "M Vijay",
+   "RA Jadeja"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-061": {
+  "query": "Delhi Capitals 2008",
+  "wanted": "Delhi Capitals 2008 team or player.",
+  "players": [
+   "G Gambhir",
+   "VY Mahesh"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-062": {
+  "query": "Delhi Capitals 2013",
+  "wanted": "Delhi Capitals 2013 match action.",
+  "players": [
+   "DA Warner",
+   "UT Yadav"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-063": {
+  "query": "Delhi Capitals captain",
+  "wanted": "Delhi Capitals captain setting the field.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-064": {
+  "query": "Axar Patel Delhi Capitals captain",
+  "wanted": "Axar Patel captaining Delhi Capitals.",
+  "players": [
+   "Axar Patel"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-065": {
+  "query": "Delhi stadium Delhi Capitals",
+  "wanted": "Delhi stadium during an Delhi Capitals match.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-066": {
+  "query": "Delhi Capitals last ball win",
+  "wanted": "Delhi Capitals players celebrating a last-ball win.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-067": {
+  "query": "Delhi Capitals huddle",
+  "wanted": "Delhi Capitals squad photo or huddle.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-068": {
+  "query": "KL Rahul Delhi Capitals",
+  "wanted": "KL Rahul batting for Delhi Capitals.",
+  "players": [
+   "KL Rahul",
+   "MA Starc"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-069": {
+  "query": "Delhi Capitals celebrate win",
+  "wanted": "Delhi Capitals celebrating a win.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-070": {
+  "query": "KL Rahul Delhi Capitals century",
+  "wanted": "KL Rahul batting for Delhi Capitals.",
+  "players": [
+   "KL Rahul",
+   "A Mishra"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-061": {
+  "query": "Gujarat Titans 2022",
+  "wanted": "Gujarat Titans 2022 team or player.",
+  "players": [
+   "HH Pandya",
+   "Mohammed Shami"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-062": {
+  "query": "Gujarat Titans 2024",
+  "wanted": "Gujarat Titans 2024 match action.",
+  "players": [
+   "B Sai Sudharsan",
+   "MM Sharma"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-063": {
+  "query": "Gujarat Titans captain",
+  "wanted": "Gujarat Titans captain setting the field.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-064": {
+  "query": "Shubman Gill Gujarat Titans captain",
+  "wanted": "Shubman Gill captaining Gujarat Titans.",
+  "players": [
+   "Shubman Gill"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-065": {
+  "query": "Ahmedabad stadium Gujarat Titans",
+  "wanted": "Ahmedabad stadium during an Gujarat Titans match.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-066": {
+  "query": "Gujarat Titans last ball win",
+  "wanted": "Gujarat Titans players celebrating a last-ball win.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-067": {
+  "query": "Gujarat Titans huddle",
+  "wanted": "Gujarat Titans squad photo or huddle.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-068": {
+  "query": "JC Buttler Gujarat Titans",
+  "wanted": "JC Buttler batting for Gujarat Titans.",
+  "players": [
+   "JC Buttler",
+   "Mohammed Shami"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-069": {
+  "query": "Gujarat Titans celebrate win",
+  "wanted": "Gujarat Titans celebrating a win.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-070": {
+  "query": "Shubman Gill Gujarat Titans century",
+  "wanted": "Shubman Gill batting for Gujarat Titans.",
+  "players": [
+   "Shubman Gill",
+   "MM Sharma"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-071": {
+  "query": "Chennai Super Kings opener",
+  "wanted": "Chennai Super Kings opener batting in the powerplay.",
+  "players": [
+   "V Suryavanshi",
+   "FH Allen",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-072": {
+  "query": "Chennai Super Kings young player",
+  "wanted": "Chennai Super Kings young Indian player.",
+  "players": [
+   "Mohsin Khan",
+   "Jaydev Unadkat",
+   "Ajinkya Rahane"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-073": {
+  "query": "Chennai Super Kings batter",
+  "wanted": "Chennai Super Kings batter.",
+  "players": [
+   "KM Jadhav",
+   "R Ashwin",
+   "PA Patel"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-074": {
+  "query": "Chennai Super Kings batting",
+  "wanted": "Chennai Super Kings batter.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-075": {
+  "query": "Chennai Super Kings overseas",
+  "wanted": "Chennai Super Kings overseas batter.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-076": {
+  "query": "Chennai Super Kings finisher six",
+  "wanted": "Chennai Super Kings batter hitting a six at the death.",
+  "players": [
+   "MP Stoinis",
+   "SS Iyer",
+   "KD Karthik"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-077": {
+  "query": "Chennai Super Kings wicketkeeper",
+  "wanted": "Chennai Super Kings wicketkeeper keeping or batting.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-078": {
+  "query": "Chennai Super Kings spinner",
+  "wanted": "Chennai Super Kings spinner bowling.",
+  "players": [
+   "Noor Ahmad",
+   "DS Rathi",
+   "Suyash Sharma"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-079": {
+  "query": "Chennai Super Kings young player",
+  "wanted": "Chennai Super Kings young player celebrating.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-071": {
+  "query": "Delhi Capitals opener",
+  "wanted": "Delhi Capitals opener batting in the powerplay.",
+  "players": [
+   "V Suryavanshi",
+   "FH Allen",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-072": {
+  "query": "Delhi Capitals young player",
+  "wanted": "Delhi Capitals young Indian player.",
+  "players": [
+   "Mohsin Khan",
+   "Jaydev Unadkat",
+   "Ajinkya Rahane"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-073": {
+  "query": "Delhi Capitals batter",
+  "wanted": "Delhi Capitals batter.",
+  "players": [
+   "AB de Villiers",
+   "F du Plessis",
+   "DPMD Jayawardene"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-074": {
+  "query": "Delhi Capitals batting",
+  "wanted": "Delhi Capitals batter.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-075": {
+  "query": "Delhi Capitals overseas",
+  "wanted": "Delhi Capitals overseas batter.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-076": {
+  "query": "Delhi Capitals finisher six",
+  "wanted": "Delhi Capitals batter hitting a six at the death.",
+  "players": [
+   "MP Stoinis",
+   "SS Iyer",
+   "KD Karthik"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-077": {
+  "query": "Delhi Capitals wicketkeeper",
+  "wanted": "Delhi Capitals wicketkeeper keeping or batting.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-078": {
+  "query": "Delhi Capitals spinner",
+  "wanted": "Delhi Capitals spinner bowling.",
+  "players": [
+   "Noor Ahmad",
+   "DS Rathi",
+   "Suyash Sharma"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-079": {
+  "query": "Delhi Capitals young player",
+  "wanted": "Delhi Capitals young player celebrating.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-071": {
+  "query": "Gujarat Titans opener",
+  "wanted": "Gujarat Titans opener batting in the powerplay.",
+  "players": [
+   "V Suryavanshi",
+   "FH Allen",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-072": {
+  "query": "Gujarat Titans young player",
+  "wanted": "Gujarat Titans young Indian player.",
+  "players": [
+   "Mohsin Khan",
+   "Jaydev Unadkat",
+   "Ajinkya Rahane"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-073": {
+  "query": "Gujarat Titans batter",
+  "wanted": "Gujarat Titans batter.",
+  "players": [
+   "HH Pandya",
+   "WP Saha"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-074": {
+  "query": "Gujarat Titans batting",
+  "wanted": "Gujarat Titans batter.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-075": {
+  "query": "Gujarat Titans overseas",
+  "wanted": "Gujarat Titans overseas batter.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-076": {
+  "query": "Gujarat Titans finisher six",
+  "wanted": "Gujarat Titans batter hitting a six at the death.",
+  "players": [
+   "MP Stoinis",
+   "SS Iyer",
+   "KD Karthik"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-077": {
+  "query": "Gujarat Titans wicketkeeper",
+  "wanted": "Gujarat Titans wicketkeeper keeping or batting.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-078": {
+  "query": "Gujarat Titans spinner",
+  "wanted": "Gujarat Titans spinner bowling.",
+  "players": [
+   "Noor Ahmad",
+   "DS Rathi",
+   "Suyash Sharma"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-079": {
+  "query": "Gujarat Titans young player",
+  "wanted": "Gujarat Titans young player celebrating.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-080": {
+  "query": "Chennai Super Kings young batter",
+  "wanted": "Chennai Super Kings young batter.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-080": {
+  "query": "Delhi Capitals young batter",
+  "wanted": "Delhi Capitals young batter.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-080": {
+  "query": "Gujarat Titans young batter",
+  "wanted": "Gujarat Titans young batter.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-081": {
+  "query": "Chennai Super Kings chase",
+  "wanted": "Chennai Super Kings batters chasing a target.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-082": {
+  "query": "Chennai Super Kings batting death overs",
+  "wanted": "Chennai Super Kings batter at the death.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-083": {
+  "query": "A Mhatre Chennai Super Kings",
+  "wanted": "A Mhatre batting for Chennai Super Kings.",
+  "players": [
+   "A Mhatre",
+   "SV Samson",
+   "MS Dhoni"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-084": {
+  "query": "Chennai Super Kings batter",
+  "wanted": "Chennai Super Kings batter.",
+  "players": [
+   "SV Samson",
+   "RD Gaikwad",
+   "AM Rahane"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-085": {
+  "query": "Chennai Super Kings final over",
+  "wanted": "Chennai Super Kings tense finish.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-086": {
+  "query": "Chennai Super Kings match",
+  "wanted": "Chennai Super Kings match action.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-087": {
+  "query": "Chennai Super Kings batter",
+  "wanted": "Chennai Super Kings batter.",
+  "players": [
+   "A Mhatre",
+   "SV Samson",
+   "D Brevis"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-088": {
+  "query": "Chennai Super Kings partnership",
+  "wanted": "DP Conway and RD Gaikwad batting together for Chennai Super Kings.",
+  "players": [
+   "RD Gaikwad",
+   "DP Conway",
+   "RD Gaikwad"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-089": {
+  "query": "Noor Ahmad Chennai Super Kings",
+  "wanted": "Noor Ahmad bowling for Chennai Super Kings.",
+  "players": [
+   "Noor Ahmad",
+   "RA Jadeja",
+   "A Kamboj"
+  ],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-090": {
+  "query": "Chennai Super Kings team",
+  "wanted": "Chennai Super Kings team celebrating.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-081": {
+  "query": "Delhi Capitals chase",
+  "wanted": "Delhi Capitals batters chasing a target.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-082": {
+  "query": "Delhi Capitals batting death overs",
+  "wanted": "Delhi Capitals batter at the death.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-083": {
+  "query": "RR Pant Delhi Capitals",
+  "wanted": "RR Pant batting for Delhi Capitals.",
+  "players": [
+   "RR Pant",
+   "PP Shaw",
+   "Ashutosh Sharma"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-084": {
+  "query": "Delhi Capitals batter",
+  "wanted": "Delhi Capitals batter.",
+  "players": [
+   "KL Rahul",
+   "MR Marsh",
+   "RR Pant"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-085": {
+  "query": "Delhi Capitals final over",
+  "wanted": "Delhi Capitals tense finish.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-086": {
+  "query": "Delhi Capitals match",
+  "wanted": "Delhi Capitals match action.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-087": {
+  "query": "Delhi Capitals batter",
+  "wanted": "Delhi Capitals batter.",
+  "players": [
+   "J Fraser-McGurk",
+   "Ashutosh Sharma",
+   "KL Rahul"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-088": {
+  "query": "Delhi Capitals partnership",
+  "wanted": "DA Warner and PP Shaw batting together for Delhi Capitals.",
+  "players": [
+   "DA Warner",
+   "DA Warner",
+   "PP Shaw"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-089": {
+  "query": "AR Patel Delhi Capitals",
+  "wanted": "AR Patel bowling for Delhi Capitals.",
+  "players": [
+   "Kuldeep Yadav",
+   "AR Patel",
+   "Mukesh Kumar"
+  ],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-090": {
+  "query": "Delhi Capitals team",
+  "wanted": "Delhi Capitals team celebrating.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-081": {
+  "query": "Gujarat Titans chase",
+  "wanted": "Gujarat Titans batters chasing a target.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-082": {
+  "query": "Gujarat Titans batting death overs",
+  "wanted": "Gujarat Titans batter at the death.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-083": {
+  "query": "Rashid Khan Gujarat Titans",
+  "wanted": "Rashid Khan batting for Gujarat Titans.",
+  "players": [
+   "Rashid Khan",
+   "M Shahrukh Khan",
+   "DA Miller"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-084": {
+  "query": "Gujarat Titans batter",
+  "wanted": "Gujarat Titans batter.",
+  "players": [
+   "B Sai Sudharsan",
+   "Shubman Gill",
+   "JC Buttler"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-085": {
+  "query": "Gujarat Titans final over",
+  "wanted": "Gujarat Titans tense finish.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-086": {
+  "query": "Gujarat Titans match",
+  "wanted": "Gujarat Titans match action.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-087": {
+  "query": "Gujarat Titans batter",
+  "wanted": "Gujarat Titans batter.",
+  "players": [
+   "M Shahrukh Khan",
+   "JC Buttler",
+   "SE Rutherford"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-088": {
+  "query": "Gujarat Titans partnership",
+  "wanted": "B Sai Sudharsan and Shubman Gill batting together for Gujarat Titans.",
+  "players": [
+   "Shubman Gill",
+   "B Sai Sudharsan",
+   "Shubman Gill"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-089": {
+  "query": "K Rabada Gujarat Titans",
+  "wanted": "K Rabada bowling for Gujarat Titans.",
+  "players": [
+   "Rashid Khan",
+   "Mohammed Siraj",
+   "M Prasidh Krishna"
+  ],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-090": {
+  "query": "Gujarat Titans team",
+  "wanted": "Gujarat Titans team celebrating.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-csk-091": {
+  "query": "Chennai Super Kings squad",
+  "wanted": "Chennai Super Kings squad.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-092": {
+  "query": "Chennai Super Kings batter",
+  "wanted": "Chennai Super Kings young batter.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-093": {
+  "query": "Chepauk stadium Chennai Super Kings",
+  "wanted": "Chepauk stadium.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-094": {
+  "query": "Chennai Super Kings bowler",
+  "wanted": "Chennai Super Kings bowler delivering.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-095": {
+  "query": "Chennai Super Kings fans",
+  "wanted": "Chennai Super Kings fans with phones.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-096": {
+  "query": "Chennai Super Kings fans stadium",
+  "wanted": "Chennai Super Kings fans at a match.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-097": {
+  "query": "Chennai Super Kings young player",
+  "wanted": "Chennai Super Kings young player.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-098": {
+  "query": "Chennai Super Kings coach",
+  "wanted": "Chennai Super Kings analyst or coaching staff.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-099": {
+  "query": "Chennai Super Kings overseas player",
+  "wanted": "Chennai Super Kings overseas player.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-csk-100": {
+  "query": "Chennai Super Kings team huddle",
+  "wanted": "Chennai Super Kings team huddle.",
+  "players": [],
+  "franchise": "Chennai Super Kings"
+ },
+ "cf-dc-091": {
+  "query": "Delhi Capitals squad",
+  "wanted": "Delhi Capitals squad.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-092": {
+  "query": "Delhi Capitals batter",
+  "wanted": "Delhi Capitals young batter.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-093": {
+  "query": "Delhi stadium Delhi Capitals",
+  "wanted": "Delhi stadium.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-094": {
+  "query": "Delhi Capitals bowler",
+  "wanted": "Delhi Capitals bowler delivering.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-095": {
+  "query": "Delhi Capitals fans",
+  "wanted": "Delhi Capitals fans with phones.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-096": {
+  "query": "Delhi Capitals fans stadium",
+  "wanted": "Delhi Capitals fans at a match.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-097": {
+  "query": "Delhi Capitals young player",
+  "wanted": "Delhi Capitals young player.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-098": {
+  "query": "Delhi Capitals coach",
+  "wanted": "Delhi Capitals analyst or coaching staff.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-099": {
+  "query": "Delhi Capitals overseas player",
+  "wanted": "Delhi Capitals overseas player.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-dc-100": {
+  "query": "Delhi Capitals team huddle",
+  "wanted": "Delhi Capitals team huddle.",
+  "players": [],
+  "franchise": "Delhi Capitals"
+ },
+ "cf-gt-091": {
+  "query": "Gujarat Titans squad",
+  "wanted": "Gujarat Titans squad.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-092": {
+  "query": "Gujarat Titans batter",
+  "wanted": "Gujarat Titans young batter.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-093": {
+  "query": "Ahmedabad stadium Gujarat Titans",
+  "wanted": "Ahmedabad stadium.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-094": {
+  "query": "Gujarat Titans bowler",
+  "wanted": "Gujarat Titans bowler delivering.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-095": {
+  "query": "Gujarat Titans fans",
+  "wanted": "Gujarat Titans fans with phones.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-096": {
+  "query": "Gujarat Titans fans stadium",
+  "wanted": "Gujarat Titans fans at a match.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-097": {
+  "query": "Gujarat Titans young player",
+  "wanted": "Gujarat Titans young player.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-098": {
+  "query": "Gujarat Titans coach",
+  "wanted": "Gujarat Titans analyst or coaching staff.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-099": {
+  "query": "Gujarat Titans overseas player",
+  "wanted": "Gujarat Titans overseas player.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-gt-100": {
+  "query": "Gujarat Titans team huddle",
+  "wanted": "Gujarat Titans team huddle.",
+  "players": [],
+  "franchise": "Gujarat Titans"
+ },
+ "cf-mi-001": {
+  "query": "Mumbai Indians batting powerplay",
+  "wanted": "Mumbai Indians opening batter playing an attacking shot, recent season.",
+  "players": [
+   "RG Sharma",
+   "RD Rickelton",
+   "SA Yadav",
+   "Ishan Kishan"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-002": {
+  "query": "SA Yadav Mumbai Indians batting",
+  "wanted": "SA Yadav batting for Mumbai Indians.",
+  "players": [
+   "SA Yadav"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-003": {
+  "query": "Mumbai Indians six",
+  "wanted": "Mumbai Indians batter hitting a six.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-004": {
+  "query": "SA Yadav Mumbai Indians batting",
+  "wanted": "SA Yadav batting for Mumbai Indians.",
+  "players": [
+   "SA Yadav",
+   "Tilak Varma",
+   "RG Sharma",
+   "HH Pandya"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-005": {
+  "query": "HH Pandya Mumbai Indians",
+  "wanted": "HH Pandya batting late in an innings.",
+  "players": [
+   "HH Pandya",
+   "Naman Dhir",
+   "Tilak Varma",
+   "TH David"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-006": {
+  "query": "Mumbai Indians chase win",
+  "wanted": "Mumbai Indians batters during a run chase.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-007": {
+  "query": "Mumbai Indians partnership batting",
+  "wanted": "Two Mumbai Indians batters together in the middle.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-008": {
+  "query": "Mumbai Indians batting",
+  "wanted": "Mumbai Indians batter sweeping or driving against spin.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-009": {
+  "query": "Mumbai Indians batting",
+  "wanted": "Mumbai Indians batters running between the wickets.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-010": {
+  "query": "Mumbai Indians fifty celebrates",
+  "wanted": "Mumbai Indians batter celebrating a big innings.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-011": {
+  "query": "TA Boult Mumbai Indians bowls",
+  "wanted": "TA Boult bowling with the new ball.",
+  "players": [
+   "TA Boult",
+   "DL Chahar",
+   "JJ Bumrah",
+   "N Thushara"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-012": {
+  "query": "Mumbai Indians bowls death",
+  "wanted": "Mumbai Indians fast bowler bowling late in an innings.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-013": {
+  "query": "JJ Bumrah Mumbai Indians wicket",
+  "wanted": "JJ Bumrah celebrating a wicket for Mumbai Indians.",
+  "players": [
+   "JJ Bumrah"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-014": {
+  "query": "PP Chawla Mumbai Indians bowls",
+  "wanted": "PP Chawla bowling spin for Mumbai Indians.",
+  "players": [
+   "PP Chawla"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-015": {
+  "query": "JJ Bumrah Mumbai Indians bowls",
+  "wanted": "JJ Bumrah bowling at the death.",
+  "players": [
+   "JJ Bumrah",
+   "TA Boult",
+   "HH Pandya",
+   "G Coetzee"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-016": {
+  "query": "Mumbai Indians catch",
+  "wanted": "Mumbai Indians fielder diving or taking a catch.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-017": {
+  "query": "Mumbai Indians takes catch",
+  "wanted": "Mumbai Indians fielder taking a catch.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-018": {
+  "query": "Mumbai Indians bowls",
+  "wanted": "Mumbai Indians seam bowler in delivery stride.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-019": {
+  "query": "Mumbai Indians spinner bowls",
+  "wanted": "Mumbai Indians spinner bowling.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-020": {
+  "query": "Mumbai Indians all-rounder bowls",
+  "wanted": "Mumbai Indians all-rounder bowling.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-021": {
+  "query": "Mumbai Indians captain toss",
+  "wanted": "Mumbai Indians captain at the toss.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-022": {
+  "query": "Wankhede stadium Mumbai Indians",
+  "wanted": "Wide view of Wankhede during an Mumbai Indians IPL match.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-023": {
+  "query": "Mumbai Indians team huddle",
+  "wanted": "Mumbai Indians team huddle, recent season.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-024": {
+  "query": "Naman Dhir Mumbai Indians batting",
+  "wanted": "Naman Dhir walking out to bat.",
+  "players": [
+   "Naman Dhir",
+   "Tilak Varma",
+   "WG Jacks"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-025": {
+  "query": "Mumbai Indians bowler celebrates wicket",
+  "wanted": "Mumbai Indians bowlers celebrating while defending a total.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-026": {
+  "query": "Mumbai Indians players huddle",
+  "wanted": "Mumbai Indians players in a huddle on the field.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-027": {
+  "query": "Mumbai Indians Chennai Super Kings",
+  "wanted": "Mumbai Indians playing Chennai Super Kings.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-028": {
+  "query": "Mumbai Indians batting death overs",
+  "wanted": "Mumbai Indians batter hitting late in an innings.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-029": {
+  "query": "Mumbai Indians batting shot",
+  "wanted": "Mumbai Indians batter attacking in the middle overs.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-030": {
+  "query": "Rohit Sharma Mumbai Indians captain",
+  "wanted": "Rohit Sharma as Mumbai Indians captain.",
+  "players": [
+   "Rohit Sharma",
+   "Sachin Tendulkar",
+   "Harbhajan Singh"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-031": {
+  "query": "Mumbai Indians auction",
+  "wanted": "Mumbai Indians team or auction table.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-032": {
+  "query": "Mumbai Indians star celebrates",
+  "wanted": "Mumbai Indians star player celebrating.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-033": {
+  "query": "Jasprit Bumrah Mumbai Indians",
+  "wanted": "Jasprit Bumrah playing for Mumbai Indians.",
+  "players": [
+   "Jasprit Bumrah"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-034": {
+  "query": "Ryan Rickelton Mumbai Indians",
+  "wanted": "Ryan Rickelton playing for Mumbai Indians.",
+  "players": [
+   "Ryan Rickelton"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-035": {
+  "query": "Ryan Rickelton Mumbai Indians",
+  "wanted": "Ryan Rickelton playing for Mumbai Indians.",
+  "players": [
+   "Ryan Rickelton",
+   "Piyush Chawla",
+   "Karn Sharma"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-036": {
+  "query": "Mumbai Indians team",
+  "wanted": "Mumbai Indians squad training or team photo.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-037": {
+  "query": "Jasprit Bumrah Mumbai Indians",
+  "wanted": "Jasprit Bumrah playing for Mumbai Indians.",
+  "players": [
+   "Jasprit Bumrah",
+   "Jasprit Bumrah",
+   "Suryakumar Yadav"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-038": {
+  "query": "Mumbai Indians bowls",
+  "wanted": "Mumbai Indians death bowler.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-039": {
+  "query": "Jasprit Bumrah Mumbai Indians",
+  "wanted": "Jasprit Bumrah playing for Mumbai Indians.",
+  "players": [
+   "Jasprit Bumrah",
+   "Ryan Rickelton"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-040": {
+  "query": "Mumbai Indians players celebrate",
+  "wanted": "Mumbai Indians players celebrating together.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-041": {
+  "query": "Mumbai Indians fans",
+  "wanted": "Mumbai Indians fans in the stadium.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-042": {
+  "query": "Mumbai Indians Wankhede crowd",
+  "wanted": "Mumbai Indians home crowd at Wankhede.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-043": {
+  "query": "RG Sharma Mumbai Indians",
+  "wanted": "RG Sharma playing for Mumbai Indians.",
+  "players": [
+   "RG Sharma",
+   "JJ Bumrah",
+   "KA Pollard"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-044": {
+  "query": "Mumbai Indians six",
+  "wanted": "Mumbai Indians batter hitting a six.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-045": {
+  "query": "Mumbai Indians fans cheer",
+  "wanted": "Mumbai Indians fans cheering.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-046": {
+  "query": "Mumbai Indians Chennai Super Kings",
+  "wanted": "Mumbai Indians v Chennai Super Kings match action.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-047": {
+  "query": "Mumbai Indians celebrates century",
+  "wanted": "Mumbai Indians player celebrating a century or wicket.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-048": {
+  "query": "Mumbai Indians fans crowd",
+  "wanted": "Mumbai Indians fans, families in the crowd.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-049": {
+  "query": "Mumbai Indians match",
+  "wanted": "Mumbai Indians playing an away match.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-050": {
+  "query": "Mumbai Indians training",
+  "wanted": "Mumbai Indians squad or training.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-051": {
+  "query": "Mumbai Indians supporters",
+  "wanted": "Mumbai Indians fans in the stands.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-052": {
+  "query": "Mumbai Indians players",
+  "wanted": "Mumbai Indians players in team kit.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-053": {
+  "query": "RG Sharma Mumbai Indians",
+  "wanted": "RG Sharma batting for Mumbai Indians.",
+  "players": [
+   "RG Sharma",
+   "SA Yadav",
+   "JJ Bumrah"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-054": {
+  "query": "Mumbai Indians dejected",
+  "wanted": "Mumbai Indians players dejected.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-055": {
+  "query": "Mumbai Indians Chennai Super Kings",
+  "wanted": "Mumbai Indians v Chennai Super Kings match action.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-056": {
+  "query": "Mumbai Indians last over win",
+  "wanted": "Mumbai Indians last-over finish celebration.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-057": {
+  "query": "Mumbai Indians young fans",
+  "wanted": "Mumbai Indians young fans with families.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-058": {
+  "query": "Mumbai Indians team celebrate",
+  "wanted": "Mumbai Indians Indian and overseas players together.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-059": {
+  "query": "Mumbai Indians fans react",
+  "wanted": "Mumbai Indians fans reacting.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-060": {
+  "query": "Mumbai Indians win celebrate",
+  "wanted": "Mumbai Indians players celebrating a comeback win.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-061": {
+  "query": "Mumbai Indians 2008",
+  "wanted": "Mumbai Indians 2008 team or player.",
+  "players": [
+   "ST Jayasuriya",
+   "A Nehra"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-062": {
+  "query": "Mumbai Indians 2010",
+  "wanted": "Mumbai Indians 2010 match action.",
+  "players": [
+   "SR Tendulkar",
+   "Harbhajan Singh"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-063": {
+  "query": "Mumbai Indians captain",
+  "wanted": "Mumbai Indians captain setting the field.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-064": {
+  "query": "Rohit Sharma Mumbai Indians captain",
+  "wanted": "Rohit Sharma captaining Mumbai Indians.",
+  "players": [
+   "Rohit Sharma"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-065": {
+  "query": "Wankhede stadium Mumbai Indians",
+  "wanted": "Wankhede stadium during an Mumbai Indians match.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-066": {
+  "query": "Mumbai Indians last ball win",
+  "wanted": "Mumbai Indians players celebrating a last-ball win.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-067": {
+  "query": "Mumbai Indians huddle",
+  "wanted": "Mumbai Indians squad photo or huddle.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-068": {
+  "query": "RD Rickelton Mumbai Indians",
+  "wanted": "RD Rickelton batting for Mumbai Indians.",
+  "players": [
+   "RD Rickelton",
+   "MG Johnson"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-069": {
+  "query": "Mumbai Indians celebrate win",
+  "wanted": "Mumbai Indians celebrating a win.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-070": {
+  "query": "RD Rickelton Mumbai Indians century",
+  "wanted": "RD Rickelton batting for Mumbai Indians.",
+  "players": [
+   "RD Rickelton",
+   "AS Joseph"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-071": {
+  "query": "Mumbai Indians opener",
+  "wanted": "Mumbai Indians opener batting in the powerplay.",
+  "players": [
+   "V Suryavanshi",
+   "FH Allen",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-072": {
+  "query": "Mumbai Indians young player",
+  "wanted": "Mumbai Indians young Indian player.",
+  "players": [
+   "Mohsin Khan",
+   "Jaydev Unadkat",
+   "Ajinkya Rahane"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-073": {
+  "query": "Mumbai Indians batter",
+  "wanted": "Mumbai Indians batter.",
+  "players": [
+   "RV Uthappa",
+   "MEK Hussey",
+   "S Dhawan"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-074": {
+  "query": "Mumbai Indians batting",
+  "wanted": "Mumbai Indians batter.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-075": {
+  "query": "Mumbai Indians overseas",
+  "wanted": "Mumbai Indians overseas batter.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-076": {
+  "query": "Mumbai Indians finisher six",
+  "wanted": "Mumbai Indians batter hitting a six at the death.",
+  "players": [
+   "MP Stoinis",
+   "SS Iyer",
+   "KD Karthik"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-077": {
+  "query": "Mumbai Indians wicketkeeper",
+  "wanted": "Mumbai Indians wicketkeeper keeping or batting.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-078": {
+  "query": "Mumbai Indians spinner",
+  "wanted": "Mumbai Indians spinner bowling.",
+  "players": [
+   "Noor Ahmad",
+   "DS Rathi",
+   "Suyash Sharma"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-079": {
+  "query": "Mumbai Indians young player",
+  "wanted": "Mumbai Indians young player celebrating.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-080": {
+  "query": "Mumbai Indians young batter",
+  "wanted": "Mumbai Indians young batter.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-081": {
+  "query": "Mumbai Indians chase",
+  "wanted": "Mumbai Indians batters chasing a target.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-082": {
+  "query": "Mumbai Indians batting death overs",
+  "wanted": "Mumbai Indians batter at the death.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-083": {
+  "query": "TH David Mumbai Indians",
+  "wanted": "TH David batting for Mumbai Indians.",
+  "players": [
+   "TH David",
+   "SA Yadav",
+   "C Green"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-084": {
+  "query": "Mumbai Indians batter",
+  "wanted": "Mumbai Indians batter.",
+  "players": [
+   "SA Yadav",
+   "Ishan Kishan",
+   "Tilak Varma"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-085": {
+  "query": "Mumbai Indians final over",
+  "wanted": "Mumbai Indians tense finish.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-086": {
+  "query": "Mumbai Indians match",
+  "wanted": "Mumbai Indians match action.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-087": {
+  "query": "Mumbai Indians batter",
+  "wanted": "Mumbai Indians batter.",
+  "players": [
+   "RD Rickelton",
+   "Naman Dhir",
+   "SA Yadav"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-088": {
+  "query": "Mumbai Indians partnership",
+  "wanted": "Ishan Kishan and RG Sharma batting together for Mumbai Indians.",
+  "players": [
+   "Tilak Varma",
+   "Ishan Kishan",
+   "RG Sharma"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-089": {
+  "query": "JJ Bumrah Mumbai Indians",
+  "wanted": "JJ Bumrah bowling for Mumbai Indians.",
+  "players": [
+   "JJ Bumrah",
+   "HH Pandya",
+   "TA Boult"
+  ],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-090": {
+  "query": "Mumbai Indians team",
+  "wanted": "Mumbai Indians team celebrating.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-091": {
+  "query": "Mumbai Indians squad",
+  "wanted": "Mumbai Indians squad.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-092": {
+  "query": "Mumbai Indians batter",
+  "wanted": "Mumbai Indians young batter.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-093": {
+  "query": "Wankhede stadium Mumbai Indians",
+  "wanted": "Wankhede stadium.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-094": {
+  "query": "Mumbai Indians bowler",
+  "wanted": "Mumbai Indians bowler delivering.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-095": {
+  "query": "Mumbai Indians fans",
+  "wanted": "Mumbai Indians fans with phones.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-096": {
+  "query": "Mumbai Indians fans stadium",
+  "wanted": "Mumbai Indians fans at a match.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-097": {
+  "query": "Mumbai Indians young player",
+  "wanted": "Mumbai Indians young player.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-098": {
+  "query": "Mumbai Indians coach",
+  "wanted": "Mumbai Indians analyst or coaching staff.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-099": {
+  "query": "Mumbai Indians overseas player",
+  "wanted": "Mumbai Indians overseas player.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-mi-100": {
+  "query": "Mumbai Indians team huddle",
+  "wanted": "Mumbai Indians team huddle.",
+  "players": [],
+  "franchise": "Mumbai Indians"
+ },
+ "cf-rcb-002": {
+  "query": "D Padikkal Royal Challengers Bengaluru batting",
+  "wanted": "D Padikkal batting for Royal Challengers Bengaluru.",
+  "players": [
+   "D Padikkal"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-003": {
+  "query": "Royal Challengers Bengaluru six",
+  "wanted": "Royal Challengers Bengaluru batter hitting a six.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-004": {
+  "query": "V Kohli Royal Challengers Bengaluru batting",
+  "wanted": "V Kohli batting for Royal Challengers Bengaluru.",
+  "players": [
+   "V Kohli",
+   "RM Patidar",
+   "D Padikkal",
+   "KH Pandya"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-005": {
+  "query": "TH David Royal Challengers Bengaluru",
+  "wanted": "TH David batting late in an innings.",
+  "players": [
+   "TH David",
+   "JM Sharma",
+   "KD Karthik",
+   "RM Patidar"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-006": {
+  "query": "Royal Challengers Bengaluru chase win",
+  "wanted": "Royal Challengers Bengaluru batters during a run chase.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-007": {
+  "query": "Royal Challengers Bengaluru partnership batting",
+  "wanted": "Two Royal Challengers Bengaluru batters together in the middle.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-008": {
+  "query": "Royal Challengers Bengaluru batting",
+  "wanted": "Royal Challengers Bengaluru batter sweeping or driving against spin.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-009": {
+  "query": "Royal Challengers Bengaluru batting",
+  "wanted": "Royal Challengers Bengaluru batters running between the wickets.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-010": {
+  "query": "Royal Challengers Bengaluru fifty celebrates",
+  "wanted": "Royal Challengers Bengaluru batter celebrating a big innings.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-011": {
+  "query": "B Kumar Royal Challengers Bengaluru bowls",
+  "wanted": "B Kumar bowling with the new ball.",
+  "players": [
+   "B Kumar",
+   "Yash Dayal",
+   "JR Hazlewood",
+   "Mohammed Siraj"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-012": {
+  "query": "Royal Challengers Bengaluru bowls death",
+  "wanted": "Royal Challengers Bengaluru fast bowler bowling late in an innings.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-013": {
+  "query": "GJ Maxwell Royal Challengers Bengaluru wicket",
+  "wanted": "GJ Maxwell celebrating a wicket for Royal Challengers Bengaluru.",
+  "players": [
+   "GJ Maxwell"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-014": {
+  "query": "KH Pandya Royal Challengers Bengaluru bowls",
+  "wanted": "KH Pandya bowling spin for Royal Challengers Bengaluru.",
+  "players": [
+   "KH Pandya"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-016": {
+  "query": "Royal Challengers Bengaluru catch",
+  "wanted": "Royal Challengers Bengaluru fielder diving or taking a catch.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-017": {
+  "query": "Royal Challengers Bengaluru takes catch",
+  "wanted": "Royal Challengers Bengaluru fielder taking a catch.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-018": {
+  "query": "Royal Challengers Bengaluru bowls",
+  "wanted": "Royal Challengers Bengaluru seam bowler in delivery stride.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-019": {
+  "query": "Royal Challengers Bengaluru spinner bowls",
+  "wanted": "Royal Challengers Bengaluru spinner bowling.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-020": {
+  "query": "Royal Challengers Bengaluru all-rounder bowls",
+  "wanted": "Royal Challengers Bengaluru all-rounder bowling.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-021": {
+  "query": "Royal Challengers Bengaluru captain toss",
+  "wanted": "Royal Challengers Bengaluru captain at the toss.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-023": {
+  "query": "Royal Challengers Bengaluru team huddle",
+  "wanted": "Royal Challengers Bengaluru team huddle, recent season.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-024": {
+  "query": "TH David Royal Challengers Bengaluru batting",
+  "wanted": "TH David walking out to bat.",
+  "players": [
+   "TH David",
+   "KH Pandya",
+   "KD Karthik"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-025": {
+  "query": "Royal Challengers Bengaluru bowler celebrates wicket",
+  "wanted": "Royal Challengers Bengaluru bowlers celebrating while defending a total.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-026": {
+  "query": "Royal Challengers Bengaluru players huddle",
+  "wanted": "Royal Challengers Bengaluru players in a huddle on the field.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-027": {
+  "query": "Royal Challengers Bengaluru Punjab Kings",
+  "wanted": "Royal Challengers Bengaluru playing Punjab Kings.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-028": {
+  "query": "Royal Challengers Bengaluru batting death overs",
+  "wanted": "Royal Challengers Bengaluru batter hitting late in an innings.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-029": {
+  "query": "Royal Challengers Bengaluru batting shot",
+  "wanted": "Royal Challengers Bengaluru batter attacking in the middle overs.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-030": {
+  "query": "Virat Kohli Royal Challengers Bengaluru captain",
+  "wanted": "Virat Kohli as Royal Challengers Bengaluru captain.",
+  "players": [
+   "Virat Kohli",
+   "Rajat Patidar",
+   "Anil Kumble"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-031": {
+  "query": "Royal Challengers Bengaluru auction",
+  "wanted": "Royal Challengers Bengaluru team or auction table.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-032": {
+  "query": "Royal Challengers Bengaluru star celebrates",
+  "wanted": "Royal Challengers Bengaluru star player celebrating.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-033": {
+  "query": "Bhuvneshwar Kumar Royal Challengers Bengaluru",
+  "wanted": "Bhuvneshwar Kumar playing for Royal Challengers Bengaluru.",
+  "players": [
+   "Bhuvneshwar Kumar"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-034": {
+  "query": "AB de Villiers Royal Challengers Bengaluru",
+  "wanted": "AB de Villiers playing for Royal Challengers Bengaluru.",
+  "players": [
+   "AB de Villiers"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-035": {
+  "query": "Rajat Patidar Royal Challengers Bengaluru",
+  "wanted": "Rajat Patidar playing for Royal Challengers Bengaluru.",
+  "players": [
+   "Rajat Patidar",
+   "Devdutt Padikkal",
+   "Mahipal Lomror"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-036": {
+  "query": "Royal Challengers Bengaluru team",
+  "wanted": "Royal Challengers Bengaluru squad training or team photo.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-037": {
+  "query": "Bhuvneshwar Kumar Royal Challengers Bengaluru",
+  "wanted": "Bhuvneshwar Kumar playing for Royal Challengers Bengaluru.",
+  "players": [
+   "Bhuvneshwar Kumar",
+   "AB de Villiers",
+   "Rajat Patidar"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-038": {
+  "query": "Royal Challengers Bengaluru bowls",
+  "wanted": "Royal Challengers Bengaluru death bowler.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-040": {
+  "query": "Royal Challengers Bengaluru players celebrate",
+  "wanted": "Royal Challengers Bengaluru players celebrating together.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-042": {
+  "query": "Royal Challengers Bengaluru Chinnaswamy crowd",
+  "wanted": "Royal Challengers Bengaluru home crowd at Chinnaswamy.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-043": {
+  "query": "V Kohli Royal Challengers Bengaluru",
+  "wanted": "V Kohli playing for Royal Challengers Bengaluru.",
+  "players": [
+   "V Kohli",
+   "AB de Villiers",
+   "HV Patel"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-044": {
+  "query": "Royal Challengers Bengaluru six",
+  "wanted": "Royal Challengers Bengaluru batter hitting a six.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-045": {
+  "query": "Royal Challengers Bengaluru fans cheer",
+  "wanted": "Royal Challengers Bengaluru fans cheering.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-046": {
+  "query": "Royal Challengers Bengaluru Kolkata Knight Riders",
+  "wanted": "Royal Challengers Bengaluru v Kolkata Knight Riders match action.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-047": {
+  "query": "Royal Challengers Bengaluru celebrates century",
+  "wanted": "Royal Challengers Bengaluru player celebrating a century or wicket.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-048": {
+  "query": "Royal Challengers Bengaluru fans crowd",
+  "wanted": "Royal Challengers Bengaluru fans, families in the crowd.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-049": {
+  "query": "Royal Challengers Bengaluru match",
+  "wanted": "Royal Challengers Bengaluru playing an away match.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-050": {
+  "query": "Royal Challengers Bengaluru training",
+  "wanted": "Royal Challengers Bengaluru squad or training.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-052": {
+  "query": "Royal Challengers Bengaluru players",
+  "wanted": "Royal Challengers Bengaluru players in team kit.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-053": {
+  "query": "V Kohli Royal Challengers Bengaluru",
+  "wanted": "V Kohli batting for Royal Challengers Bengaluru.",
+  "players": [
+   "V Kohli",
+   "AB de Villiers",
+   "YS Chahal"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-054": {
+  "query": "Royal Challengers Bengaluru dejected",
+  "wanted": "Royal Challengers Bengaluru players dejected.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-055": {
+  "query": "Royal Challengers Bengaluru Kolkata Knight Riders",
+  "wanted": "Royal Challengers Bengaluru v Kolkata Knight Riders match action.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-056": {
+  "query": "Royal Challengers Bengaluru last over win",
+  "wanted": "Royal Challengers Bengaluru last-over finish celebration.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-057": {
+  "query": "Royal Challengers Bengaluru young fans",
+  "wanted": "Royal Challengers Bengaluru young fans with families.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-058": {
+  "query": "Royal Challengers Bengaluru team celebrate",
+  "wanted": "Royal Challengers Bengaluru Indian and overseas players together.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-059": {
+  "query": "Royal Challengers Bengaluru fans react",
+  "wanted": "Royal Challengers Bengaluru fans reacting.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-060": {
+  "query": "Royal Challengers Bengaluru win celebrate",
+  "wanted": "Royal Challengers Bengaluru players celebrating a comeback win.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-061": {
+  "query": "Royal Challengers Bengaluru 2008",
+  "wanted": "Royal Challengers Bengaluru 2008 team or player.",
+  "players": [
+   "R Dravid",
+   "Z Khan"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-063": {
+  "query": "Royal Challengers Bengaluru captain",
+  "wanted": "Royal Challengers Bengaluru captain setting the field.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-064": {
+  "query": "Virat Kohli Royal Challengers Bengaluru captain",
+  "wanted": "Virat Kohli captaining Royal Challengers Bengaluru.",
+  "players": [
+   "Virat Kohli"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-065": {
+  "query": "Chinnaswamy stadium Royal Challengers Bengaluru",
+  "wanted": "Chinnaswamy stadium during an Royal Challengers Bengaluru match.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-066": {
+  "query": "Royal Challengers Bengaluru last ball win",
+  "wanted": "Royal Challengers Bengaluru players celebrating a last-ball win.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-067": {
+  "query": "Royal Challengers Bengaluru huddle",
+  "wanted": "Royal Challengers Bengaluru squad photo or huddle.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-068": {
+  "query": "PD Salt Royal Challengers Bengaluru",
+  "wanted": "PD Salt batting for Royal Challengers Bengaluru.",
+  "players": [
+   "PD Salt",
+   "B Kumar"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-069": {
+  "query": "Royal Challengers Bengaluru celebrate win",
+  "wanted": "Royal Challengers Bengaluru celebrating a win.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-070": {
+  "query": "CH Gayle Royal Challengers Bengaluru century",
+  "wanted": "CH Gayle batting for Royal Challengers Bengaluru.",
+  "players": [
+   "CH Gayle",
+   "A Kumble"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-071": {
+  "query": "Royal Challengers Bengaluru opener",
+  "wanted": "Royal Challengers Bengaluru opener batting in the powerplay.",
+  "players": [
+   "V Suryavanshi",
+   "FH Allen",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-072": {
+  "query": "Royal Challengers Bengaluru young player",
+  "wanted": "Royal Challengers Bengaluru young Indian player.",
+  "players": [
+   "Mohsin Khan",
+   "Jaydev Unadkat",
+   "Ajinkya Rahane"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-073": {
+  "query": "Royal Challengers Bengaluru batter",
+  "wanted": "Royal Challengers Bengaluru batter.",
+  "players": [
+   "SR Watson",
+   "AJ Finch",
+   "Gurkeerat Singh"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-074": {
+  "query": "Royal Challengers Bengaluru batting",
+  "wanted": "Royal Challengers Bengaluru batter.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-075": {
+  "query": "Royal Challengers Bengaluru overseas",
+  "wanted": "Royal Challengers Bengaluru overseas batter.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-076": {
+  "query": "Royal Challengers Bengaluru finisher six",
+  "wanted": "Royal Challengers Bengaluru batter hitting a six at the death.",
+  "players": [
+   "MP Stoinis",
+   "SS Iyer",
+   "KD Karthik"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-077": {
+  "query": "Royal Challengers Bengaluru wicketkeeper",
+  "wanted": "Royal Challengers Bengaluru wicketkeeper keeping or batting.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-078": {
+  "query": "Royal Challengers Bengaluru spinner",
+  "wanted": "Royal Challengers Bengaluru spinner bowling.",
+  "players": [
+   "Noor Ahmad",
+   "DS Rathi",
+   "Suyash Sharma"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-079": {
+  "query": "Royal Challengers Bengaluru young player",
+  "wanted": "Royal Challengers Bengaluru young player celebrating.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-081": {
+  "query": "Royal Challengers Bengaluru chase",
+  "wanted": "Royal Challengers Bengaluru batters chasing a target.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-082": {
+  "query": "Royal Challengers Bengaluru batting death overs",
+  "wanted": "Royal Challengers Bengaluru batter at the death.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-083": {
+  "query": "KD Karthik Royal Challengers Bengaluru",
+  "wanted": "KD Karthik batting for Royal Challengers Bengaluru.",
+  "players": [
+   "KD Karthik",
+   "GJ Maxwell",
+   "TH David"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-084": {
+  "query": "Royal Challengers Bengaluru batter",
+  "wanted": "Royal Challengers Bengaluru batter.",
+  "players": [
+   "V Kohli",
+   "RM Patidar",
+   "PD Salt"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-086": {
+  "query": "Royal Challengers Bengaluru match",
+  "wanted": "Royal Challengers Bengaluru match action.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-087": {
+  "query": "Royal Challengers Bengaluru batter",
+  "wanted": "Royal Challengers Bengaluru batter.",
+  "players": [
+   "TH David",
+   "PD Salt",
+   "RM Patidar"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-088": {
+  "query": "Royal Challengers Bengaluru partnership",
+  "wanted": "F du Plessis and V Kohli batting together for Royal Challengers Bengaluru.",
+  "players": [
+   "V Kohli",
+   "F du Plessis",
+   "V Kohli"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-089": {
+  "query": "Suyash Sharma Royal Challengers Bengaluru",
+  "wanted": "Suyash Sharma bowling for Royal Challengers Bengaluru.",
+  "players": [
+   "B Kumar",
+   "Yash Dayal",
+   "KH Pandya"
+  ],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-090": {
+  "query": "Royal Challengers Bengaluru team",
+  "wanted": "Royal Challengers Bengaluru team celebrating.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-091": {
+  "query": "Royal Challengers Bengaluru squad",
+  "wanted": "Royal Challengers Bengaluru squad.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-092": {
+  "query": "Royal Challengers Bengaluru batter",
+  "wanted": "Royal Challengers Bengaluru young batter.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-093": {
+  "query": "Chinnaswamy stadium Royal Challengers Bengaluru",
+  "wanted": "Chinnaswamy stadium.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-094": {
+  "query": "Royal Challengers Bengaluru bowler",
+  "wanted": "Royal Challengers Bengaluru bowler delivering.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-095": {
+  "query": "Royal Challengers Bengaluru fans",
+  "wanted": "Royal Challengers Bengaluru fans with phones.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-096": {
+  "query": "Royal Challengers Bengaluru fans stadium",
+  "wanted": "Royal Challengers Bengaluru fans at a match.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-097": {
+  "query": "Royal Challengers Bengaluru young player",
+  "wanted": "Royal Challengers Bengaluru young player.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-098": {
+  "query": "Royal Challengers Bengaluru coach",
+  "wanted": "Royal Challengers Bengaluru analyst or coaching staff.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-rcb-099": {
+  "query": "Royal Challengers Bengaluru overseas player",
+  "wanted": "Royal Challengers Bengaluru overseas player.",
+  "players": [],
+  "franchise": "Royal Challengers Bengaluru"
+ },
+ "cf-kkr-001": {
+  "query": "Kolkata Knight Riders batting powerplay",
+  "wanted": "Kolkata Knight Riders opening batter playing an attacking shot, recent season.",
+  "players": [
+   "SP Narine",
+   "AM Rahane",
+   "A Raghuvanshi",
+   "PD Salt"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-002": {
+  "query": "A Raghuvanshi Kolkata Knight Riders batting",
+  "wanted": "A Raghuvanshi batting for Kolkata Knight Riders.",
+  "players": [
+   "A Raghuvanshi"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-003": {
+  "query": "Kolkata Knight Riders six",
+  "wanted": "Kolkata Knight Riders batter hitting a six.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-004": {
+  "query": "A Raghuvanshi Kolkata Knight Riders batting",
+  "wanted": "A Raghuvanshi batting for Kolkata Knight Riders.",
+  "players": [
+   "A Raghuvanshi",
+   "RK Singh",
+   "AM Rahane",
+   "VR Iyer"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-005": {
+  "query": "RK Singh Kolkata Knight Riders",
+  "wanted": "RK Singh batting late in an innings.",
+  "players": [
+   "RK Singh",
+   "AD Russell",
+   "A Raghuvanshi",
+   "Ramandeep Singh"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-006": {
+  "query": "Kolkata Knight Riders chase win",
+  "wanted": "Kolkata Knight Riders batters during a run chase.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-007": {
+  "query": "Kolkata Knight Riders partnership batting",
+  "wanted": "Two Kolkata Knight Riders batters together in the middle.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-008": {
+  "query": "Kolkata Knight Riders batting",
+  "wanted": "Kolkata Knight Riders batter sweeping or driving against spin.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-009": {
+  "query": "Kolkata Knight Riders batting",
+  "wanted": "Kolkata Knight Riders batters running between the wickets.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-010": {
+  "query": "Kolkata Knight Riders fifty celebrates",
+  "wanted": "Kolkata Knight Riders batter celebrating a big innings.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-011": {
+  "query": "VG Arora Kolkata Knight Riders bowls",
+  "wanted": "VG Arora bowling with the new ball.",
+  "players": [
+   "VG Arora",
+   "MA Starc",
+   "AS Roy"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-012": {
+  "query": "Kolkata Knight Riders bowls death",
+  "wanted": "Kolkata Knight Riders fast bowler bowling late in an innings.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-013": {
+  "query": "SP Narine Kolkata Knight Riders wicket",
+  "wanted": "SP Narine celebrating a wicket for Kolkata Knight Riders.",
+  "players": [
+   "SP Narine"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-014": {
+  "query": "SP Narine Kolkata Knight Riders bowls",
+  "wanted": "SP Narine bowling spin for Kolkata Knight Riders.",
+  "players": [
+   "SP Narine"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-015": {
+  "query": "VG Arora Kolkata Knight Riders bowls",
+  "wanted": "VG Arora bowling at the death.",
+  "players": [
+   "VG Arora",
+   "Harshit Rana",
+   "Kartik Tyagi",
+   "AD Russell"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-016": {
+  "query": "Kolkata Knight Riders catch",
+  "wanted": "Kolkata Knight Riders fielder diving or taking a catch.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-017": {
+  "query": "Kolkata Knight Riders takes catch",
+  "wanted": "Kolkata Knight Riders fielder taking a catch.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-018": {
+  "query": "Kolkata Knight Riders bowls",
+  "wanted": "Kolkata Knight Riders seam bowler in delivery stride.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-019": {
+  "query": "Kolkata Knight Riders spinner bowls",
+  "wanted": "Kolkata Knight Riders spinner bowling.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-020": {
+  "query": "Kolkata Knight Riders all-rounder bowls",
+  "wanted": "Kolkata Knight Riders all-rounder bowling.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-021": {
+  "query": "Kolkata Knight Riders captain toss",
+  "wanted": "Kolkata Knight Riders captain at the toss.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-022": {
+  "query": "Eden Gardens stadium Kolkata Knight Riders",
+  "wanted": "Wide view of Eden Gardens during an Kolkata Knight Riders IPL match.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-023": {
+  "query": "Kolkata Knight Riders team huddle",
+  "wanted": "Kolkata Knight Riders team huddle, recent season.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-024": {
+  "query": "RK Singh Kolkata Knight Riders batting",
+  "wanted": "RK Singh walking out to bat.",
+  "players": [
+   "RK Singh",
+   "A Raghuvanshi",
+   "Ramandeep Singh"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-025": {
+  "query": "Kolkata Knight Riders bowler celebrates wicket",
+  "wanted": "Kolkata Knight Riders bowlers celebrating while defending a total.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-026": {
+  "query": "Kolkata Knight Riders players huddle",
+  "wanted": "Kolkata Knight Riders players in a huddle on the field.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-027": {
+  "query": "Kolkata Knight Riders Mumbai Indians",
+  "wanted": "Kolkata Knight Riders playing Mumbai Indians.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-028": {
+  "query": "Kolkata Knight Riders batting death overs",
+  "wanted": "Kolkata Knight Riders batter hitting late in an innings.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-029": {
+  "query": "Kolkata Knight Riders batting shot",
+  "wanted": "Kolkata Knight Riders batter attacking in the middle overs.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-030": {
+  "query": "Eoin Morgan Kolkata Knight Riders captain",
+  "wanted": "Eoin Morgan as Kolkata Knight Riders captain.",
+  "players": [
+   "Eoin Morgan",
+   "Nitish Rana"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-031": {
+  "query": "Kolkata Knight Riders auction",
+  "wanted": "Kolkata Knight Riders team or auction table.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-032": {
+  "query": "Kolkata Knight Riders star celebrates",
+  "wanted": "Kolkata Knight Riders star player celebrating.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-033": {
+  "query": "Sunil Narine Kolkata Knight Riders",
+  "wanted": "Sunil Narine playing for Kolkata Knight Riders.",
+  "players": [
+   "Sunil Narine"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-034": {
+  "query": "Sunil Narine Kolkata Knight Riders",
+  "wanted": "Sunil Narine playing for Kolkata Knight Riders.",
+  "players": [
+   "Sunil Narine"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-035": {
+  "query": "Rahul Tripathi Kolkata Knight Riders",
+  "wanted": "Rahul Tripathi playing for Kolkata Knight Riders.",
+  "players": [
+   "Rahul Tripathi",
+   "Ramandeep Singh",
+   "Venkatesh Iyer"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-036": {
+  "query": "Kolkata Knight Riders team",
+  "wanted": "Kolkata Knight Riders squad training or team photo.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-037": {
+  "query": "Sunil Narine Kolkata Knight Riders",
+  "wanted": "Sunil Narine playing for Kolkata Knight Riders.",
+  "players": [
+   "Sunil Narine",
+   "Sunil Narine",
+   "Sunil Narine"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-038": {
+  "query": "Kolkata Knight Riders bowls",
+  "wanted": "Kolkata Knight Riders death bowler.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-039": {
+  "query": "Sunil Narine Kolkata Knight Riders",
+  "wanted": "Sunil Narine playing for Kolkata Knight Riders.",
+  "players": [
+   "Sunil Narine",
+   "Venkatesh Iyer"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-040": {
+  "query": "Kolkata Knight Riders players celebrate",
+  "wanted": "Kolkata Knight Riders players celebrating together.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-041": {
+  "query": "Kolkata Knight Riders fans",
+  "wanted": "Kolkata Knight Riders fans in the stadium.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-042": {
+  "query": "Kolkata Knight Riders Eden Gardens crowd",
+  "wanted": "Kolkata Knight Riders home crowd at Eden Gardens.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-043": {
+  "query": "SP Narine Kolkata Knight Riders",
+  "wanted": "SP Narine playing for Kolkata Knight Riders.",
+  "players": [
+   "SP Narine",
+   "AD Russell",
+   "RK Singh"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-044": {
+  "query": "Kolkata Knight Riders six",
+  "wanted": "Kolkata Knight Riders batter hitting a six.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-045": {
+  "query": "Kolkata Knight Riders fans cheer",
+  "wanted": "Kolkata Knight Riders fans cheering.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-046": {
+  "query": "Kolkata Knight Riders Mumbai Indians",
+  "wanted": "Kolkata Knight Riders v Mumbai Indians match action.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-047": {
+  "query": "Kolkata Knight Riders celebrates century",
+  "wanted": "Kolkata Knight Riders player celebrating a century or wicket.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-048": {
+  "query": "Kolkata Knight Riders fans crowd",
+  "wanted": "Kolkata Knight Riders fans, families in the crowd.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-049": {
+  "query": "Kolkata Knight Riders match",
+  "wanted": "Kolkata Knight Riders playing an away match.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-050": {
+  "query": "Kolkata Knight Riders training",
+  "wanted": "Kolkata Knight Riders squad or training.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-051": {
+  "query": "Kolkata Knight Riders supporters",
+  "wanted": "Kolkata Knight Riders fans in the stands.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-052": {
+  "query": "Kolkata Knight Riders players",
+  "wanted": "Kolkata Knight Riders players in team kit.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-053": {
+  "query": "G Gambhir Kolkata Knight Riders",
+  "wanted": "G Gambhir batting for Kolkata Knight Riders.",
+  "players": [
+   "G Gambhir",
+   "AD Russell",
+   "SP Narine"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-054": {
+  "query": "Kolkata Knight Riders dejected",
+  "wanted": "Kolkata Knight Riders players dejected.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-055": {
+  "query": "Kolkata Knight Riders Mumbai Indians",
+  "wanted": "Kolkata Knight Riders v Mumbai Indians match action.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-056": {
+  "query": "Kolkata Knight Riders last over win",
+  "wanted": "Kolkata Knight Riders last-over finish celebration.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-057": {
+  "query": "Kolkata Knight Riders young fans",
+  "wanted": "Kolkata Knight Riders young fans with families.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-058": {
+  "query": "Kolkata Knight Riders team celebrate",
+  "wanted": "Kolkata Knight Riders Indian and overseas players together.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-059": {
+  "query": "Kolkata Knight Riders fans react",
+  "wanted": "Kolkata Knight Riders fans reacting.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-060": {
+  "query": "Kolkata Knight Riders win celebrate",
+  "wanted": "Kolkata Knight Riders players celebrating a comeback win.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-061": {
+  "query": "Kolkata Knight Riders 2008",
+  "wanted": "Kolkata Knight Riders 2008 team or player.",
+  "players": [
+   "SC Ganguly",
+   "Umar Gul"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-062": {
+  "query": "Kolkata Knight Riders 2025",
+  "wanted": "Kolkata Knight Riders 2025 match action.",
+  "players": [
+   "AM Rahane",
+   "VG Arora"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-063": {
+  "query": "Kolkata Knight Riders captain",
+  "wanted": "Kolkata Knight Riders captain setting the field.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-064": {
+  "query": "Eoin Morgan Kolkata Knight Riders captain",
+  "wanted": "Eoin Morgan captaining Kolkata Knight Riders.",
+  "players": [
+   "Eoin Morgan"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-065": {
+  "query": "Eden Gardens stadium Kolkata Knight Riders",
+  "wanted": "Eden Gardens stadium during an Kolkata Knight Riders match.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-066": {
+  "query": "Kolkata Knight Riders last ball win",
+  "wanted": "Kolkata Knight Riders players celebrating a last-ball win.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-067": {
+  "query": "Kolkata Knight Riders huddle",
+  "wanted": "Kolkata Knight Riders squad photo or huddle.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-068": {
+  "query": "SS Iyer Kolkata Knight Riders",
+  "wanted": "SS Iyer batting for Kolkata Knight Riders.",
+  "players": [
+   "SS Iyer",
+   "Kartik Tyagi"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-069": {
+  "query": "Kolkata Knight Riders celebrate win",
+  "wanted": "Kolkata Knight Riders celebrating a win.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-070": {
+  "query": "BB McCullum Kolkata Knight Riders century",
+  "wanted": "BB McCullum batting for Kolkata Knight Riders.",
+  "players": [
+   "BB McCullum",
+   "AD Russell"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-071": {
+  "query": "Kolkata Knight Riders opener",
+  "wanted": "Kolkata Knight Riders opener batting in the powerplay.",
+  "players": [
+   "V Suryavanshi",
+   "FH Allen",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-072": {
+  "query": "Kolkata Knight Riders young player",
+  "wanted": "Kolkata Knight Riders young Indian player.",
+  "players": [
+   "Mohsin Khan",
+   "Jaydev Unadkat",
+   "Ajinkya Rahane"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-073": {
+  "query": "Kolkata Knight Riders batter",
+  "wanted": "Kolkata Knight Riders batter.",
+  "players": [
+   "C Green",
+   "BJ Hodge",
+   "Shubman Gill"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-074": {
+  "query": "Kolkata Knight Riders batting",
+  "wanted": "Kolkata Knight Riders batter.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-075": {
+  "query": "Kolkata Knight Riders overseas",
+  "wanted": "Kolkata Knight Riders overseas batter.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-076": {
+  "query": "Kolkata Knight Riders finisher six",
+  "wanted": "Kolkata Knight Riders batter hitting a six at the death.",
+  "players": [
+   "MP Stoinis",
+   "SS Iyer",
+   "KD Karthik"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-077": {
+  "query": "Kolkata Knight Riders wicketkeeper",
+  "wanted": "Kolkata Knight Riders wicketkeeper keeping or batting.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-078": {
+  "query": "Kolkata Knight Riders spinner",
+  "wanted": "Kolkata Knight Riders spinner bowling.",
+  "players": [
+   "Noor Ahmad",
+   "DS Rathi",
+   "Suyash Sharma"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-079": {
+  "query": "Kolkata Knight Riders young player",
+  "wanted": "Kolkata Knight Riders young player celebrating.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-080": {
+  "query": "Kolkata Knight Riders young batter",
+  "wanted": "Kolkata Knight Riders young batter.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-081": {
+  "query": "Kolkata Knight Riders chase",
+  "wanted": "Kolkata Knight Riders batters chasing a target.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-082": {
+  "query": "Kolkata Knight Riders batting death overs",
+  "wanted": "Kolkata Knight Riders batter at the death.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-083": {
+  "query": "AD Russell Kolkata Knight Riders",
+  "wanted": "AD Russell batting for Kolkata Knight Riders.",
+  "players": [
+   "AD Russell",
+   "PD Salt",
+   "SP Narine"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-084": {
+  "query": "Kolkata Knight Riders batter",
+  "wanted": "Kolkata Knight Riders batter.",
+  "players": [
+   "SS Iyer",
+   "AM Rahane",
+   "A Raghuvanshi"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-085": {
+  "query": "Kolkata Knight Riders final over",
+  "wanted": "Kolkata Knight Riders tense finish.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-086": {
+  "query": "Kolkata Knight Riders match",
+  "wanted": "Kolkata Knight Riders match action.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-087": {
+  "query": "Kolkata Knight Riders batter",
+  "wanted": "Kolkata Knight Riders batter.",
+  "players": [
+   "PD Salt",
+   "AD Russell",
+   "SP Narine"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-088": {
+  "query": "Kolkata Knight Riders partnership",
+  "wanted": "PD Salt and SP Narine batting together for Kolkata Knight Riders.",
+  "players": [
+   "RK Singh",
+   "PD Salt",
+   "SP Narine"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-089": {
+  "query": "SP Narine Kolkata Knight Riders",
+  "wanted": "SP Narine bowling for Kolkata Knight Riders.",
+  "players": [
+   "SP Narine",
+   "CV Varun",
+   "VG Arora"
+  ],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-090": {
+  "query": "Kolkata Knight Riders team",
+  "wanted": "Kolkata Knight Riders team celebrating.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-091": {
+  "query": "Kolkata Knight Riders squad",
+  "wanted": "Kolkata Knight Riders squad.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-092": {
+  "query": "Kolkata Knight Riders batter",
+  "wanted": "Kolkata Knight Riders young batter.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-093": {
+  "query": "Eden Gardens stadium Kolkata Knight Riders",
+  "wanted": "Eden Gardens stadium.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-094": {
+  "query": "Kolkata Knight Riders bowler",
+  "wanted": "Kolkata Knight Riders bowler delivering.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-095": {
+  "query": "Kolkata Knight Riders fans",
+  "wanted": "Kolkata Knight Riders fans with phones.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-096": {
+  "query": "Kolkata Knight Riders fans stadium",
+  "wanted": "Kolkata Knight Riders fans at a match.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-097": {
+  "query": "Kolkata Knight Riders young player",
+  "wanted": "Kolkata Knight Riders young player.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-098": {
+  "query": "Kolkata Knight Riders coach",
+  "wanted": "Kolkata Knight Riders analyst or coaching staff.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-099": {
+  "query": "Kolkata Knight Riders overseas player",
+  "wanted": "Kolkata Knight Riders overseas player.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-kkr-100": {
+  "query": "Kolkata Knight Riders team huddle",
+  "wanted": "Kolkata Knight Riders team huddle.",
+  "players": [],
+  "franchise": "Kolkata Knight Riders"
+ },
+ "cf-srh-001": {
+  "query": "Sunrisers Hyderabad batting powerplay",
+  "wanted": "Sunrisers Hyderabad opening batter playing an attacking shot, recent season.",
+  "players": [
+   "TM Head",
+   "Abhishek Sharma",
+   "Ishan Kishan",
+   "Nithish Kumar Reddy"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-002": {
+  "query": "Ishan Kishan Sunrisers Hyderabad batting",
+  "wanted": "Ishan Kishan batting for Sunrisers Hyderabad.",
+  "players": [
+   "Ishan Kishan"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-003": {
+  "query": "Sunrisers Hyderabad six",
+  "wanted": "Sunrisers Hyderabad batter hitting a six.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-004": {
+  "query": "H Klaasen Sunrisers Hyderabad batting",
+  "wanted": "H Klaasen batting for Sunrisers Hyderabad.",
+  "players": [
+   "H Klaasen",
+   "Nithish Kumar Reddy",
+   "Ishan Kishan",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-005": {
+  "query": "H Klaasen Sunrisers Hyderabad",
+  "wanted": "H Klaasen batting late in an innings.",
+  "players": [
+   "H Klaasen",
+   "Nithish Kumar Reddy",
+   "PJ Cummins",
+   "Shahbaz Ahmed"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-006": {
+  "query": "Sunrisers Hyderabad chase win",
+  "wanted": "Sunrisers Hyderabad batters during a run chase.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-007": {
+  "query": "Sunrisers Hyderabad partnership batting",
+  "wanted": "Two Sunrisers Hyderabad batters together in the middle.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-008": {
+  "query": "Sunrisers Hyderabad batting",
+  "wanted": "Sunrisers Hyderabad batter sweeping or driving against spin.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-009": {
+  "query": "Sunrisers Hyderabad batting",
+  "wanted": "Sunrisers Hyderabad batters running between the wickets.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-010": {
+  "query": "Sunrisers Hyderabad fifty celebrates",
+  "wanted": "Sunrisers Hyderabad batter celebrating a big innings.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-011": {
+  "query": "PJ Cummins Sunrisers Hyderabad bowls",
+  "wanted": "PJ Cummins bowling with the new ball.",
+  "players": [
+   "PJ Cummins",
+   "B Kumar",
+   "Mohammed Shami"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-012": {
+  "query": "Sunrisers Hyderabad bowls death",
+  "wanted": "Sunrisers Hyderabad fast bowler bowling late in an innings.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-013": {
+  "query": "B Kumar Sunrisers Hyderabad wicket",
+  "wanted": "B Kumar celebrating a wicket for Sunrisers Hyderabad.",
+  "players": [
+   "B Kumar"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-014": {
+  "query": "Washington Sundar Sunrisers Hyderabad bowls",
+  "wanted": "Washington Sundar bowling spin for Sunrisers Hyderabad.",
+  "players": [
+   "Washington Sundar"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-015": {
+  "query": "PJ Cummins Sunrisers Hyderabad bowls",
+  "wanted": "PJ Cummins bowling at the death.",
+  "players": [
+   "PJ Cummins",
+   "E Malinga",
+   "T Natarajan",
+   "HV Patel"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-016": {
+  "query": "Sunrisers Hyderabad catch",
+  "wanted": "Sunrisers Hyderabad fielder diving or taking a catch.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-017": {
+  "query": "Sunrisers Hyderabad takes catch",
+  "wanted": "Sunrisers Hyderabad fielder taking a catch.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-018": {
+  "query": "Sunrisers Hyderabad bowls",
+  "wanted": "Sunrisers Hyderabad seam bowler in delivery stride.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-019": {
+  "query": "Sunrisers Hyderabad spinner bowls",
+  "wanted": "Sunrisers Hyderabad spinner bowling.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-020": {
+  "query": "Sunrisers Hyderabad all-rounder bowls",
+  "wanted": "Sunrisers Hyderabad all-rounder bowling.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-021": {
+  "query": "Sunrisers Hyderabad captain toss",
+  "wanted": "Sunrisers Hyderabad captain at the toss.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-022": {
+  "query": "Hyderabad stadium Sunrisers Hyderabad",
+  "wanted": "Wide view of Hyderabad during an Sunrisers Hyderabad IPL match.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-023": {
+  "query": "Sunrisers Hyderabad team huddle",
+  "wanted": "Sunrisers Hyderabad team huddle, recent season.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-024": {
+  "query": "Shahbaz Ahmed Sunrisers Hyderabad batting",
+  "wanted": "Shahbaz Ahmed walking out to bat.",
+  "players": [
+   "Shahbaz Ahmed",
+   "H Klaasen",
+   "Nithish Kumar Reddy"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-025": {
+  "query": "Sunrisers Hyderabad bowler celebrates wicket",
+  "wanted": "Sunrisers Hyderabad bowlers celebrating while defending a total.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-026": {
+  "query": "Sunrisers Hyderabad players huddle",
+  "wanted": "Sunrisers Hyderabad players in a huddle on the field.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-027": {
+  "query": "Sunrisers Hyderabad Kolkata Knight Riders",
+  "wanted": "Sunrisers Hyderabad playing Kolkata Knight Riders.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-028": {
+  "query": "Sunrisers Hyderabad batting death overs",
+  "wanted": "Sunrisers Hyderabad batter hitting late in an innings.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-029": {
+  "query": "Sunrisers Hyderabad batting shot",
+  "wanted": "Sunrisers Hyderabad batter attacking in the middle overs.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-030": {
+  "query": "Kane Williamson Sunrisers Hyderabad captain",
+  "wanted": "Kane Williamson as Sunrisers Hyderabad captain.",
+  "players": [
+   "Kane Williamson",
+   "Pat Cummins",
+   "Aiden Markram"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-031": {
+  "query": "Sunrisers Hyderabad auction",
+  "wanted": "Sunrisers Hyderabad team or auction table.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-032": {
+  "query": "Sunrisers Hyderabad star celebrates",
+  "wanted": "Sunrisers Hyderabad star player celebrating.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-033": {
+  "query": "Abhishek Sharma Sunrisers Hyderabad",
+  "wanted": "Abhishek Sharma playing for Sunrisers Hyderabad.",
+  "players": [
+   "Abhishek Sharma"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-034": {
+  "query": "Rashid Khan Sunrisers Hyderabad",
+  "wanted": "Rashid Khan playing for Sunrisers Hyderabad.",
+  "players": [
+   "Rashid Khan"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-035": {
+  "query": "Jaydev Unadkat Sunrisers Hyderabad",
+  "wanted": "Jaydev Unadkat playing for Sunrisers Hyderabad.",
+  "players": [
+   "Jaydev Unadkat",
+   "Mohammad Nabi",
+   "Thangarasu Natarajan"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-036": {
+  "query": "Sunrisers Hyderabad team",
+  "wanted": "Sunrisers Hyderabad squad training or team photo.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-037": {
+  "query": "Rashid Khan Sunrisers Hyderabad",
+  "wanted": "Rashid Khan playing for Sunrisers Hyderabad.",
+  "players": [
+   "Rashid Khan",
+   "Rashid Khan",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-038": {
+  "query": "Sunrisers Hyderabad bowls",
+  "wanted": "Sunrisers Hyderabad death bowler.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-039": {
+  "query": "Abhishek Sharma Sunrisers Hyderabad",
+  "wanted": "Abhishek Sharma playing for Sunrisers Hyderabad.",
+  "players": [
+   "Abhishek Sharma",
+   "Thangarasu Natarajan"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-040": {
+  "query": "Sunrisers Hyderabad players celebrate",
+  "wanted": "Sunrisers Hyderabad players celebrating together.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-041": {
+  "query": "Sunrisers Hyderabad fans",
+  "wanted": "Sunrisers Hyderabad fans in the stadium.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-042": {
+  "query": "Sunrisers Hyderabad Hyderabad crowd",
+  "wanted": "Sunrisers Hyderabad home crowd at Hyderabad.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-043": {
+  "query": "B Kumar Sunrisers Hyderabad",
+  "wanted": "B Kumar playing for Sunrisers Hyderabad.",
+  "players": [
+   "B Kumar",
+   "Abhishek Sharma",
+   "KS Williamson"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-044": {
+  "query": "Sunrisers Hyderabad six",
+  "wanted": "Sunrisers Hyderabad batter hitting a six.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-045": {
+  "query": "Sunrisers Hyderabad fans cheer",
+  "wanted": "Sunrisers Hyderabad fans cheering.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-046": {
+  "query": "Sunrisers Hyderabad Kolkata Knight Riders",
+  "wanted": "Sunrisers Hyderabad v Kolkata Knight Riders match action.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-047": {
+  "query": "Sunrisers Hyderabad celebrates century",
+  "wanted": "Sunrisers Hyderabad player celebrating a century or wicket.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-048": {
+  "query": "Sunrisers Hyderabad fans crowd",
+  "wanted": "Sunrisers Hyderabad fans, families in the crowd.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-049": {
+  "query": "Sunrisers Hyderabad match",
+  "wanted": "Sunrisers Hyderabad playing an away match.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-050": {
+  "query": "Sunrisers Hyderabad training",
+  "wanted": "Sunrisers Hyderabad squad or training.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-051": {
+  "query": "Sunrisers Hyderabad supporters",
+  "wanted": "Sunrisers Hyderabad fans in the stands.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-052": {
+  "query": "Sunrisers Hyderabad players",
+  "wanted": "Sunrisers Hyderabad players in team kit.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-053": {
+  "query": "DA Warner Sunrisers Hyderabad",
+  "wanted": "DA Warner batting for Sunrisers Hyderabad.",
+  "players": [
+   "DA Warner",
+   "S Dhawan",
+   "B Kumar"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-054": {
+  "query": "Sunrisers Hyderabad dejected",
+  "wanted": "Sunrisers Hyderabad players dejected.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-055": {
+  "query": "Sunrisers Hyderabad Kolkata Knight Riders",
+  "wanted": "Sunrisers Hyderabad v Kolkata Knight Riders match action.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-056": {
+  "query": "Sunrisers Hyderabad last over win",
+  "wanted": "Sunrisers Hyderabad last-over finish celebration.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-057": {
+  "query": "Sunrisers Hyderabad young fans",
+  "wanted": "Sunrisers Hyderabad young fans with families.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-058": {
+  "query": "Sunrisers Hyderabad team celebrate",
+  "wanted": "Sunrisers Hyderabad Indian and overseas players together.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-059": {
+  "query": "Sunrisers Hyderabad fans react",
+  "wanted": "Sunrisers Hyderabad fans reacting.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-060": {
+  "query": "Sunrisers Hyderabad win celebrate",
+  "wanted": "Sunrisers Hyderabad players celebrating a comeback win.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-061": {
+  "query": "Sunrisers Hyderabad 2013",
+  "wanted": "Sunrisers Hyderabad 2013 team or player.",
+  "players": [
+   "S Dhawan",
+   "A Mishra"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-062": {
+  "query": "Sunrisers Hyderabad 2021",
+  "wanted": "Sunrisers Hyderabad 2021 match action.",
+  "players": [
+   "MK Pandey",
+   "Rashid Khan"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-063": {
+  "query": "Sunrisers Hyderabad captain",
+  "wanted": "Sunrisers Hyderabad captain setting the field.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-064": {
+  "query": "Kane Williamson Sunrisers Hyderabad captain",
+  "wanted": "Kane Williamson captaining Sunrisers Hyderabad.",
+  "players": [
+   "Kane Williamson"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-065": {
+  "query": "Hyderabad stadium Sunrisers Hyderabad",
+  "wanted": "Hyderabad stadium during an Sunrisers Hyderabad match.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-066": {
+  "query": "Sunrisers Hyderabad last ball win",
+  "wanted": "Sunrisers Hyderabad players celebrating a last-ball win.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-067": {
+  "query": "Sunrisers Hyderabad huddle",
+  "wanted": "Sunrisers Hyderabad squad photo or huddle.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-068": {
+  "query": "Ishan Kishan Sunrisers Hyderabad",
+  "wanted": "Ishan Kishan batting for Sunrisers Hyderabad.",
+  "players": [
+   "Ishan Kishan",
+   "E Malinga"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-069": {
+  "query": "Sunrisers Hyderabad celebrate win",
+  "wanted": "Sunrisers Hyderabad celebrating a win.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-070": {
+  "query": "Abhishek Sharma Sunrisers Hyderabad century",
+  "wanted": "Abhishek Sharma batting for Sunrisers Hyderabad.",
+  "players": [
+   "Abhishek Sharma",
+   "B Kumar"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-071": {
+  "query": "Sunrisers Hyderabad opener",
+  "wanted": "Sunrisers Hyderabad opener batting in the powerplay.",
+  "players": [
+   "V Suryavanshi",
+   "FH Allen",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-072": {
+  "query": "Sunrisers Hyderabad young player",
+  "wanted": "Sunrisers Hyderabad young Indian player.",
+  "players": [
+   "Mohsin Khan",
+   "Jaydev Unadkat",
+   "Ajinkya Rahane"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-073": {
+  "query": "Sunrisers Hyderabad batter",
+  "wanted": "Sunrisers Hyderabad batter.",
+  "players": [
+   "YK Pathan",
+   "KL Rahul",
+   "MA Agarwal"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-074": {
+  "query": "Sunrisers Hyderabad batting",
+  "wanted": "Sunrisers Hyderabad batter.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-075": {
+  "query": "Sunrisers Hyderabad overseas",
+  "wanted": "Sunrisers Hyderabad overseas batter.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-076": {
+  "query": "Sunrisers Hyderabad finisher six",
+  "wanted": "Sunrisers Hyderabad batter hitting a six at the death.",
+  "players": [
+   "MP Stoinis",
+   "SS Iyer",
+   "KD Karthik"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-077": {
+  "query": "Sunrisers Hyderabad wicketkeeper",
+  "wanted": "Sunrisers Hyderabad wicketkeeper keeping or batting.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-078": {
+  "query": "Sunrisers Hyderabad spinner",
+  "wanted": "Sunrisers Hyderabad spinner bowling.",
+  "players": [
+   "Noor Ahmad",
+   "DS Rathi",
+   "Suyash Sharma"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-079": {
+  "query": "Sunrisers Hyderabad young player",
+  "wanted": "Sunrisers Hyderabad young player celebrating.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-080": {
+  "query": "Sunrisers Hyderabad young batter",
+  "wanted": "Sunrisers Hyderabad young batter.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-081": {
+  "query": "Sunrisers Hyderabad chase",
+  "wanted": "Sunrisers Hyderabad batters chasing a target.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-082": {
+  "query": "Sunrisers Hyderabad batting death overs",
+  "wanted": "Sunrisers Hyderabad batter at the death.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-083": {
+  "query": "Abhishek Sharma Sunrisers Hyderabad",
+  "wanted": "Abhishek Sharma batting for Sunrisers Hyderabad.",
+  "players": [
+   "Abhishek Sharma",
+   "N Pooran",
+   "TM Head"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-084": {
+  "query": "Sunrisers Hyderabad batter",
+  "wanted": "Sunrisers Hyderabad batter.",
+  "players": [
+   "H Klaasen",
+   "Ishan Kishan",
+   "TM Head"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-085": {
+  "query": "Sunrisers Hyderabad final over",
+  "wanted": "Sunrisers Hyderabad tense finish.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-086": {
+  "query": "Sunrisers Hyderabad match",
+  "wanted": "Sunrisers Hyderabad match action.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-087": {
+  "query": "Sunrisers Hyderabad batter",
+  "wanted": "Sunrisers Hyderabad batter.",
+  "players": [
+   "Abhishek Sharma",
+   "TM Head",
+   "Ishan Kishan"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-088": {
+  "query": "Sunrisers Hyderabad partnership",
+  "wanted": "Abhishek Sharma and TM Head batting together for Sunrisers Hyderabad.",
+  "players": [
+   "Abhishek Sharma",
+   "Abhishek Sharma",
+   "TM Head"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-089": {
+  "query": "HV Patel Sunrisers Hyderabad",
+  "wanted": "HV Patel bowling for Sunrisers Hyderabad.",
+  "players": [
+   "PJ Cummins",
+   "E Malinga",
+   "JD Unadkat"
+  ],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-090": {
+  "query": "Sunrisers Hyderabad team",
+  "wanted": "Sunrisers Hyderabad team celebrating.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-091": {
+  "query": "Sunrisers Hyderabad squad",
+  "wanted": "Sunrisers Hyderabad squad.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-092": {
+  "query": "Sunrisers Hyderabad batter",
+  "wanted": "Sunrisers Hyderabad young batter.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-093": {
+  "query": "Hyderabad stadium Sunrisers Hyderabad",
+  "wanted": "Hyderabad stadium.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-094": {
+  "query": "Sunrisers Hyderabad bowler",
+  "wanted": "Sunrisers Hyderabad bowler delivering.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-095": {
+  "query": "Sunrisers Hyderabad fans",
+  "wanted": "Sunrisers Hyderabad fans with phones.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-096": {
+  "query": "Sunrisers Hyderabad fans stadium",
+  "wanted": "Sunrisers Hyderabad fans at a match.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-097": {
+  "query": "Sunrisers Hyderabad young player",
+  "wanted": "Sunrisers Hyderabad young player.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-098": {
+  "query": "Sunrisers Hyderabad coach",
+  "wanted": "Sunrisers Hyderabad analyst or coaching staff.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-099": {
+  "query": "Sunrisers Hyderabad overseas player",
+  "wanted": "Sunrisers Hyderabad overseas player.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-srh-100": {
+  "query": "Sunrisers Hyderabad team huddle",
+  "wanted": "Sunrisers Hyderabad team huddle.",
+  "players": [],
+  "franchise": "Sunrisers Hyderabad"
+ },
+ "cf-rr-001": {
+  "query": "Rajasthan Royals batting powerplay",
+  "wanted": "Rajasthan Royals opening batter playing an attacking shot, recent season.",
+  "players": [
+   "YBK Jaiswal",
+   "V Suryavanshi",
+   "SV Samson",
+   "JC Buttler"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-002": {
+  "query": "SV Samson Rajasthan Royals batting",
+  "wanted": "SV Samson batting for Rajasthan Royals.",
+  "players": [
+   "SV Samson"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-003": {
+  "query": "Rajasthan Royals six",
+  "wanted": "Rajasthan Royals batter hitting a six.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-004": {
+  "query": "R Parag Rajasthan Royals batting",
+  "wanted": "R Parag batting for Rajasthan Royals.",
+  "players": [
+   "R Parag",
+   "Dhruv Jurel",
+   "YBK Jaiswal",
+   "SV Samson"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-005": {
+  "query": "Dhruv Jurel Rajasthan Royals",
+  "wanted": "Dhruv Jurel batting late in an innings.",
+  "players": [
+   "Dhruv Jurel",
+   "SO Hetmyer",
+   "R Parag",
+   "D Ferreira"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-006": {
+  "query": "Rajasthan Royals chase win",
+  "wanted": "Rajasthan Royals batters during a run chase.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-007": {
+  "query": "Rajasthan Royals partnership batting",
+  "wanted": "Two Rajasthan Royals batters together in the middle.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-008": {
+  "query": "Rajasthan Royals batting",
+  "wanted": "Rajasthan Royals batter sweeping or driving against spin.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-009": {
+  "query": "Rajasthan Royals batting",
+  "wanted": "Rajasthan Royals batters running between the wickets.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-010": {
+  "query": "Rajasthan Royals fifty celebrates",
+  "wanted": "Rajasthan Royals batter celebrating a big innings.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-011": {
+  "query": "JC Archer Rajasthan Royals bowls",
+  "wanted": "JC Archer bowling with the new ball.",
+  "players": [
+   "JC Archer",
+   "TA Boult",
+   "N Burger"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-012": {
+  "query": "Rajasthan Royals bowls death",
+  "wanted": "Rajasthan Royals fast bowler bowling late in an innings.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-013": {
+  "query": "R Ashwin Rajasthan Royals wicket",
+  "wanted": "R Ashwin celebrating a wicket for Rajasthan Royals.",
+  "players": [
+   "R Ashwin"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-014": {
+  "query": "YS Chahal Rajasthan Royals bowls",
+  "wanted": "YS Chahal bowling spin for Rajasthan Royals.",
+  "players": [
+   "YS Chahal"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-015": {
+  "query": "Sandeep Sharma Rajasthan Royals bowls",
+  "wanted": "Sandeep Sharma bowling at the death.",
+  "players": [
+   "Sandeep Sharma",
+   "JC Archer",
+   "Avesh Khan",
+   "TU Deshpande"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-016": {
+  "query": "Rajasthan Royals catch",
+  "wanted": "Rajasthan Royals fielder diving or taking a catch.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-017": {
+  "query": "Rajasthan Royals takes catch",
+  "wanted": "Rajasthan Royals fielder taking a catch.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-018": {
+  "query": "Rajasthan Royals bowls",
+  "wanted": "Rajasthan Royals seam bowler in delivery stride.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-019": {
+  "query": "Rajasthan Royals spinner bowls",
+  "wanted": "Rajasthan Royals spinner bowling.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-020": {
+  "query": "Rajasthan Royals all-rounder bowls",
+  "wanted": "Rajasthan Royals all-rounder bowling.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-021": {
+  "query": "Rajasthan Royals captain toss",
+  "wanted": "Rajasthan Royals captain at the toss.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-022": {
+  "query": "Jaipur stadium Rajasthan Royals",
+  "wanted": "Wide view of Jaipur during an Rajasthan Royals IPL match.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-023": {
+  "query": "Rajasthan Royals team huddle",
+  "wanted": "Rajasthan Royals team huddle, recent season.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-024": {
+  "query": "Dhruv Jurel Rajasthan Royals batting",
+  "wanted": "Dhruv Jurel walking out to bat.",
+  "players": [
+   "Dhruv Jurel",
+   "SO Hetmyer",
+   "RA Jadeja"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-025": {
+  "query": "Rajasthan Royals bowler celebrates wicket",
+  "wanted": "Rajasthan Royals bowlers celebrating while defending a total.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-026": {
+  "query": "Rajasthan Royals players huddle",
+  "wanted": "Rajasthan Royals players in a huddle on the field.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-027": {
+  "query": "Rajasthan Royals Chennai Super Kings",
+  "wanted": "Rajasthan Royals playing Chennai Super Kings.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-028": {
+  "query": "Rajasthan Royals batting death overs",
+  "wanted": "Rajasthan Royals batter hitting late in an innings.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-029": {
+  "query": "Rajasthan Royals batting shot",
+  "wanted": "Rajasthan Royals batter attacking in the middle overs.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-030": {
+  "query": "Sanju Samson Rajasthan Royals captain",
+  "wanted": "Sanju Samson as Rajasthan Royals captain.",
+  "players": [
+   "Sanju Samson",
+   "Shane Warne",
+   "Riyan Parag"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-031": {
+  "query": "Rajasthan Royals auction",
+  "wanted": "Rajasthan Royals team or auction table.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-032": {
+  "query": "Rajasthan Royals star celebrates",
+  "wanted": "Rajasthan Royals star player celebrating.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-033": {
+  "query": "Jofra Archer Rajasthan Royals",
+  "wanted": "Jofra Archer playing for Rajasthan Royals.",
+  "players": [
+   "Jofra Archer"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-034": {
+  "query": "Jofra Archer Rajasthan Royals",
+  "wanted": "Jofra Archer playing for Rajasthan Royals.",
+  "players": [
+   "Jofra Archer"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-035": {
+  "query": "Sandeep Sharma Rajasthan Royals",
+  "wanted": "Sandeep Sharma playing for Rajasthan Royals.",
+  "players": [
+   "Sandeep Sharma",
+   "Shreyas Gopal",
+   "Donovan Ferreira"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-036": {
+  "query": "Rajasthan Royals team",
+  "wanted": "Rajasthan Royals squad training or team photo.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-037": {
+  "query": "Jos Buttler Rajasthan Royals",
+  "wanted": "Jos Buttler playing for Rajasthan Royals.",
+  "players": [
+   "Jos Buttler",
+   "Sanju Samson",
+   "Riyan Parag"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-038": {
+  "query": "Rajasthan Royals bowls",
+  "wanted": "Rajasthan Royals death bowler.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-039": {
+  "query": "Jofra Archer Rajasthan Royals",
+  "wanted": "Jofra Archer playing for Rajasthan Royals.",
+  "players": [
+   "Jofra Archer",
+   "Shreyas Gopal"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-040": {
+  "query": "Rajasthan Royals players celebrate",
+  "wanted": "Rajasthan Royals players celebrating together.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-041": {
+  "query": "Rajasthan Royals fans",
+  "wanted": "Rajasthan Royals fans in the stadium.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-042": {
+  "query": "Rajasthan Royals Jaipur crowd",
+  "wanted": "Rajasthan Royals home crowd at Jaipur.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-043": {
+  "query": "SV Samson Rajasthan Royals",
+  "wanted": "SV Samson playing for Rajasthan Royals.",
+  "players": [
+   "SV Samson",
+   "R Parag",
+   "AM Rahane"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-044": {
+  "query": "Rajasthan Royals six",
+  "wanted": "Rajasthan Royals batter hitting a six.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-045": {
+  "query": "Rajasthan Royals fans cheer",
+  "wanted": "Rajasthan Royals fans cheering.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-046": {
+  "query": "Rajasthan Royals Chennai Super Kings",
+  "wanted": "Rajasthan Royals v Chennai Super Kings match action.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-047": {
+  "query": "Rajasthan Royals celebrates century",
+  "wanted": "Rajasthan Royals player celebrating a century or wicket.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-048": {
+  "query": "Rajasthan Royals fans crowd",
+  "wanted": "Rajasthan Royals fans, families in the crowd.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-049": {
+  "query": "Rajasthan Royals match",
+  "wanted": "Rajasthan Royals playing an away match.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-050": {
+  "query": "Rajasthan Royals training",
+  "wanted": "Rajasthan Royals squad or training.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-051": {
+  "query": "Rajasthan Royals supporters",
+  "wanted": "Rajasthan Royals fans in the stands.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-052": {
+  "query": "Rajasthan Royals players",
+  "wanted": "Rajasthan Royals players in team kit.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-053": {
+  "query": "SV Samson Rajasthan Royals",
+  "wanted": "SV Samson batting for Rajasthan Royals.",
+  "players": [
+   "SV Samson",
+   "JC Buttler",
+   "JC Archer"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-054": {
+  "query": "Rajasthan Royals dejected",
+  "wanted": "Rajasthan Royals players dejected.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-055": {
+  "query": "Rajasthan Royals Chennai Super Kings",
+  "wanted": "Rajasthan Royals v Chennai Super Kings match action.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-056": {
+  "query": "Rajasthan Royals last over win",
+  "wanted": "Rajasthan Royals last-over finish celebration.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-057": {
+  "query": "Rajasthan Royals young fans",
+  "wanted": "Rajasthan Royals young fans with families.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-058": {
+  "query": "Rajasthan Royals team celebrate",
+  "wanted": "Rajasthan Royals Indian and overseas players together.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-059": {
+  "query": "Rajasthan Royals fans react",
+  "wanted": "Rajasthan Royals fans reacting.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-060": {
+  "query": "Rajasthan Royals win celebrate",
+  "wanted": "Rajasthan Royals players celebrating a comeback win.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-061": {
+  "query": "Rajasthan Royals 2008",
+  "wanted": "Rajasthan Royals 2008 team or player.",
+  "players": [
+   "SR Watson",
+   "Sohail Tanvir"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-062": {
+  "query": "Rajasthan Royals 2009",
+  "wanted": "Rajasthan Royals 2009 match action.",
+  "players": [
+   "RA Jadeja",
+   "MM Patel"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-063": {
+  "query": "Rajasthan Royals captain",
+  "wanted": "Rajasthan Royals captain setting the field.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-064": {
+  "query": "Sanju Samson Rajasthan Royals captain",
+  "wanted": "Sanju Samson captaining Rajasthan Royals.",
+  "players": [
+   "Sanju Samson"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-065": {
+  "query": "Jaipur stadium Rajasthan Royals",
+  "wanted": "Jaipur stadium during an Rajasthan Royals match.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-066": {
+  "query": "Rajasthan Royals last ball win",
+  "wanted": "Rajasthan Royals players celebrating a last-ball win.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-067": {
+  "query": "Rajasthan Royals huddle",
+  "wanted": "Rajasthan Royals squad photo or huddle.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-068": {
+  "query": "V Suryavanshi Rajasthan Royals",
+  "wanted": "V Suryavanshi batting for Rajasthan Royals.",
+  "players": [
+   "V Suryavanshi",
+   "CH Morris"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-069": {
+  "query": "Rajasthan Royals celebrate win",
+  "wanted": "Rajasthan Royals celebrating a win.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-070": {
+  "query": "YBK Jaiswal Rajasthan Royals century",
+  "wanted": "YBK Jaiswal batting for Rajasthan Royals.",
+  "players": [
+   "YBK Jaiswal",
+   "Sohail Tanvir"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-071": {
+  "query": "Rajasthan Royals opener",
+  "wanted": "Rajasthan Royals opener batting in the powerplay.",
+  "players": [
+   "V Suryavanshi",
+   "FH Allen",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-072": {
+  "query": "Rajasthan Royals young player",
+  "wanted": "Rajasthan Royals young Indian player.",
+  "players": [
+   "Mohsin Khan",
+   "Jaydev Unadkat",
+   "Ajinkya Rahane"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-073": {
+  "query": "Rajasthan Royals batter",
+  "wanted": "Rajasthan Royals batter.",
+  "players": [
+   "MK Lomror",
+   "SO Hetmyer",
+   "RV Uthappa"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-074": {
+  "query": "Rajasthan Royals batting",
+  "wanted": "Rajasthan Royals batter.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-075": {
+  "query": "Rajasthan Royals overseas",
+  "wanted": "Rajasthan Royals overseas batter.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-076": {
+  "query": "Rajasthan Royals finisher six",
+  "wanted": "Rajasthan Royals batter hitting a six at the death.",
+  "players": [
+   "MP Stoinis",
+   "SS Iyer",
+   "KD Karthik"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-077": {
+  "query": "Rajasthan Royals wicketkeeper",
+  "wanted": "Rajasthan Royals wicketkeeper keeping or batting.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-078": {
+  "query": "Rajasthan Royals spinner",
+  "wanted": "Rajasthan Royals spinner bowling.",
+  "players": [
+   "Noor Ahmad",
+   "DS Rathi",
+   "Suyash Sharma"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-079": {
+  "query": "Rajasthan Royals young player",
+  "wanted": "Rajasthan Royals young player celebrating.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-080": {
+  "query": "Rajasthan Royals young batter",
+  "wanted": "Rajasthan Royals young batter.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-081": {
+  "query": "Rajasthan Royals chase",
+  "wanted": "Rajasthan Royals batters chasing a target.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-082": {
+  "query": "Rajasthan Royals batting death overs",
+  "wanted": "Rajasthan Royals batter at the death.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-083": {
+  "query": "V Suryavanshi Rajasthan Royals",
+  "wanted": "V Suryavanshi batting for Rajasthan Royals.",
+  "players": [
+   "V Suryavanshi",
+   "JC Buttler",
+   "YBK Jaiswal"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-084": {
+  "query": "Rajasthan Royals batter",
+  "wanted": "Rajasthan Royals batter.",
+  "players": [
+   "JC Buttler",
+   "YBK Jaiswal",
+   "SV Samson"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-085": {
+  "query": "Rajasthan Royals final over",
+  "wanted": "Rajasthan Royals tense finish.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-086": {
+  "query": "Rajasthan Royals match",
+  "wanted": "Rajasthan Royals match action.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-087": {
+  "query": "Rajasthan Royals batter",
+  "wanted": "Rajasthan Royals batter.",
+  "players": [
+   "V Suryavanshi",
+   "YBK Jaiswal",
+   "R Parag"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-088": {
+  "query": "Rajasthan Royals partnership",
+  "wanted": "V Suryavanshi and YBK Jaiswal batting together for Rajasthan Royals.",
+  "players": [
+   "YBK Jaiswal",
+   "V Suryavanshi",
+   "YBK Jaiswal"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-089": {
+  "query": "N Burger Rajasthan Royals",
+  "wanted": "N Burger bowling for Rajasthan Royals.",
+  "players": [
+   "JC Archer",
+   "Sandeep Sharma",
+   "N Burger"
+  ],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-090": {
+  "query": "Rajasthan Royals team",
+  "wanted": "Rajasthan Royals team celebrating.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-091": {
+  "query": "Rajasthan Royals squad",
+  "wanted": "Rajasthan Royals squad.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-092": {
+  "query": "Rajasthan Royals batter",
+  "wanted": "Rajasthan Royals young batter.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-093": {
+  "query": "Jaipur stadium Rajasthan Royals",
+  "wanted": "Jaipur stadium.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-094": {
+  "query": "Rajasthan Royals bowler",
+  "wanted": "Rajasthan Royals bowler delivering.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-095": {
+  "query": "Rajasthan Royals fans",
+  "wanted": "Rajasthan Royals fans with phones.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-096": {
+  "query": "Rajasthan Royals fans stadium",
+  "wanted": "Rajasthan Royals fans at a match.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-097": {
+  "query": "Rajasthan Royals young player",
+  "wanted": "Rajasthan Royals young player.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-098": {
+  "query": "Rajasthan Royals coach",
+  "wanted": "Rajasthan Royals analyst or coaching staff.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-099": {
+  "query": "Rajasthan Royals overseas player",
+  "wanted": "Rajasthan Royals overseas player.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-rr-100": {
+  "query": "Rajasthan Royals team huddle",
+  "wanted": "Rajasthan Royals team huddle.",
+  "players": [],
+  "franchise": "Rajasthan Royals"
+ },
+ "cf-pbks-001": {
+  "query": "Punjab Kings batting powerplay",
+  "wanted": "Punjab Kings opening batter playing an attacking shot, recent season.",
+  "players": [
+   "P Simran Singh",
+   "Priyansh Arya",
+   "JM Bairstow",
+   "SS Iyer"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-002": {
+  "query": "C Connolly Punjab Kings batting",
+  "wanted": "C Connolly batting for Punjab Kings.",
+  "players": [
+   "C Connolly"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-003": {
+  "query": "Punjab Kings six",
+  "wanted": "Punjab Kings batter hitting a six.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-004": {
+  "query": "SS Iyer Punjab Kings batting",
+  "wanted": "SS Iyer batting for Punjab Kings.",
+  "players": [
+   "SS Iyer",
+   "P Simran Singh",
+   "Shashank Singh",
+   "N Wadhera"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-005": {
+  "query": "Shashank Singh Punjab Kings",
+  "wanted": "Shashank Singh batting late in an innings.",
+  "players": [
+   "Shashank Singh",
+   "SS Iyer",
+   "MP Stoinis",
+   "M Jansen"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-006": {
+  "query": "Punjab Kings chase win",
+  "wanted": "Punjab Kings batters during a run chase.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-007": {
+  "query": "Punjab Kings partnership batting",
+  "wanted": "Two Punjab Kings batters together in the middle.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-008": {
+  "query": "Punjab Kings batting",
+  "wanted": "Punjab Kings batter sweeping or driving against spin.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-009": {
+  "query": "Punjab Kings batting",
+  "wanted": "Punjab Kings batters running between the wickets.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-010": {
+  "query": "Punjab Kings fifty celebrates",
+  "wanted": "Punjab Kings batter celebrating a big innings.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-011": {
+  "query": "Arshdeep Singh Punjab Kings bowls",
+  "wanted": "Arshdeep Singh bowling with the new ball.",
+  "players": [
+   "Arshdeep Singh",
+   "M Jansen",
+   "K Rabada",
+   "XC Bartlett"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-012": {
+  "query": "Punjab Kings bowls death",
+  "wanted": "Punjab Kings fast bowler bowling late in an innings.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-013": {
+  "query": "Arshdeep Singh Punjab Kings wicket",
+  "wanted": "Arshdeep Singh celebrating a wicket for Punjab Kings.",
+  "players": [
+   "Arshdeep Singh"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-014": {
+  "query": "Harpreet Brar Punjab Kings bowls",
+  "wanted": "Harpreet Brar bowling spin for Punjab Kings.",
+  "players": [
+   "Harpreet Brar"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-015": {
+  "query": "Arshdeep Singh Punjab Kings bowls",
+  "wanted": "Arshdeep Singh bowling at the death.",
+  "players": [
+   "Arshdeep Singh",
+   "M Jansen",
+   "HV Patel",
+   "Vijaykumar Vyshak"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-016": {
+  "query": "Punjab Kings catch",
+  "wanted": "Punjab Kings fielder diving or taking a catch.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-017": {
+  "query": "Punjab Kings takes catch",
+  "wanted": "Punjab Kings fielder taking a catch.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-018": {
+  "query": "Punjab Kings bowls",
+  "wanted": "Punjab Kings seam bowler in delivery stride.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-019": {
+  "query": "Punjab Kings spinner bowls",
+  "wanted": "Punjab Kings spinner bowling.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-020": {
+  "query": "Punjab Kings all-rounder bowls",
+  "wanted": "Punjab Kings all-rounder bowling.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-021": {
+  "query": "Punjab Kings captain toss",
+  "wanted": "Punjab Kings captain at the toss.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-022": {
+  "query": "Mohali stadium Punjab Kings",
+  "wanted": "Wide view of Mohali during an Punjab Kings IPL match.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-023": {
+  "query": "Punjab Kings team huddle",
+  "wanted": "Punjab Kings team huddle, recent season.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-024": {
+  "query": "Shashank Singh Punjab Kings batting",
+  "wanted": "Shashank Singh walking out to bat.",
+  "players": [
+   "Shashank Singh",
+   "SM Curran",
+   "MP Stoinis"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-025": {
+  "query": "Punjab Kings bowler celebrates wicket",
+  "wanted": "Punjab Kings bowlers celebrating while defending a total.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-026": {
+  "query": "Punjab Kings players huddle",
+  "wanted": "Punjab Kings players in a huddle on the field.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-027": {
+  "query": "Punjab Kings Royal Challengers Bengaluru",
+  "wanted": "Punjab Kings playing Royal Challengers Bengaluru.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-028": {
+  "query": "Punjab Kings batting death overs",
+  "wanted": "Punjab Kings batter hitting late in an innings.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-029": {
+  "query": "Punjab Kings batting shot",
+  "wanted": "Punjab Kings batter attacking in the middle overs.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-030": {
+  "query": "George Bailey Punjab Kings captain",
+  "wanted": "George Bailey as Punjab Kings captain.",
+  "players": [
+   "George Bailey",
+   "Ravichandran Ashwin",
+   "Mayank Agarwal"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-031": {
+  "query": "Punjab Kings auction",
+  "wanted": "Punjab Kings team or auction table.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-032": {
+  "query": "Punjab Kings star celebrates",
+  "wanted": "Punjab Kings star player celebrating.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-033": {
+  "query": "Priyansh Arya Punjab Kings",
+  "wanted": "Priyansh Arya playing for Punjab Kings.",
+  "players": [
+   "Priyansh Arya"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-034": {
+  "query": "Liam Livingstone Punjab Kings",
+  "wanted": "Liam Livingstone playing for Punjab Kings.",
+  "players": [
+   "Liam Livingstone"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-035": {
+  "query": "Mayank Agarwal Punjab Kings",
+  "wanted": "Mayank Agarwal playing for Punjab Kings.",
+  "players": [
+   "Mayank Agarwal",
+   "Mayank Agarwal",
+   "Bhanuka Rajapaksa"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-036": {
+  "query": "Punjab Kings team",
+  "wanted": "Punjab Kings squad training or team photo.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-037": {
+  "query": "Liam Livingstone Punjab Kings",
+  "wanted": "Liam Livingstone playing for Punjab Kings.",
+  "players": [
+   "Liam Livingstone",
+   "KL Rahul",
+   "Shreyas Iyer"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-038": {
+  "query": "Punjab Kings bowls",
+  "wanted": "Punjab Kings death bowler.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-039": {
+  "query": "Liam Livingstone Punjab Kings",
+  "wanted": "Liam Livingstone playing for Punjab Kings.",
+  "players": [
+   "Liam Livingstone",
+   "Jitesh Sharma"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-040": {
+  "query": "Punjab Kings players celebrate",
+  "wanted": "Punjab Kings players celebrating together.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-041": {
+  "query": "Punjab Kings fans",
+  "wanted": "Punjab Kings fans in the stadium.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-042": {
+  "query": "Punjab Kings Mohali crowd",
+  "wanted": "Punjab Kings home crowd at Mohali.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-043": {
+  "query": "SE Marsh Punjab Kings",
+  "wanted": "SE Marsh playing for Punjab Kings.",
+  "players": [
+   "SE Marsh",
+   "Arshdeep Singh",
+   "DA Miller"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-044": {
+  "query": "Punjab Kings six",
+  "wanted": "Punjab Kings batter hitting a six.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-045": {
+  "query": "Punjab Kings fans cheer",
+  "wanted": "Punjab Kings fans cheering.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-046": {
+  "query": "Punjab Kings Kolkata Knight Riders",
+  "wanted": "Punjab Kings v Kolkata Knight Riders match action.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-047": {
+  "query": "Punjab Kings celebrates century",
+  "wanted": "Punjab Kings player celebrating a century or wicket.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-048": {
+  "query": "Punjab Kings fans crowd",
+  "wanted": "Punjab Kings fans, families in the crowd.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-049": {
+  "query": "Punjab Kings match",
+  "wanted": "Punjab Kings playing an away match.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-050": {
+  "query": "Punjab Kings training",
+  "wanted": "Punjab Kings squad or training.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-051": {
+  "query": "Punjab Kings supporters",
+  "wanted": "Punjab Kings fans in the stands.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-052": {
+  "query": "Punjab Kings players",
+  "wanted": "Punjab Kings players in team kit.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-053": {
+  "query": "KL Rahul Punjab Kings",
+  "wanted": "KL Rahul batting for Punjab Kings.",
+  "players": [
+   "KL Rahul",
+   "SE Marsh",
+   "Arshdeep Singh"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-054": {
+  "query": "Punjab Kings dejected",
+  "wanted": "Punjab Kings players dejected.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-055": {
+  "query": "Punjab Kings Kolkata Knight Riders",
+  "wanted": "Punjab Kings v Kolkata Knight Riders match action.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-056": {
+  "query": "Punjab Kings last over win",
+  "wanted": "Punjab Kings last-over finish celebration.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-057": {
+  "query": "Punjab Kings young fans",
+  "wanted": "Punjab Kings young fans with families.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-058": {
+  "query": "Punjab Kings team celebrate",
+  "wanted": "Punjab Kings Indian and overseas players together.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-059": {
+  "query": "Punjab Kings fans react",
+  "wanted": "Punjab Kings fans reacting.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-060": {
+  "query": "Punjab Kings win celebrate",
+  "wanted": "Punjab Kings players celebrating a comeback win.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-061": {
+  "query": "Punjab Kings 2008",
+  "wanted": "Punjab Kings 2008 team or player.",
+  "players": [
+   "SE Marsh",
+   "S Sreesanth"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-062": {
+  "query": "Punjab Kings 2015",
+  "wanted": "Punjab Kings 2015 match action.",
+  "players": [
+   "DA Miller",
+   "Anureet Singh"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-063": {
+  "query": "Punjab Kings captain",
+  "wanted": "Punjab Kings captain setting the field.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-064": {
+  "query": "George Bailey Punjab Kings captain",
+  "wanted": "George Bailey captaining Punjab Kings.",
+  "players": [
+   "George Bailey"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-065": {
+  "query": "Mohali stadium Punjab Kings",
+  "wanted": "Mohali stadium during an Punjab Kings match.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-066": {
+  "query": "Punjab Kings last ball win",
+  "wanted": "Punjab Kings players celebrating a last-ball win.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-067": {
+  "query": "Punjab Kings huddle",
+  "wanted": "Punjab Kings squad photo or huddle.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-068": {
+  "query": "SS Iyer Punjab Kings",
+  "wanted": "SS Iyer batting for Punjab Kings.",
+  "players": [
+   "SS Iyer",
+   "Azhar Mahmood"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-069": {
+  "query": "Punjab Kings celebrate win",
+  "wanted": "Punjab Kings celebrating a win.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-070": {
+  "query": "KL Rahul Punjab Kings century",
+  "wanted": "KL Rahul batting for Punjab Kings.",
+  "players": [
+   "KL Rahul",
+   "AS Rajpoot"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-071": {
+  "query": "Punjab Kings opener",
+  "wanted": "Punjab Kings opener batting in the powerplay.",
+  "players": [
+   "V Suryavanshi",
+   "FH Allen",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-072": {
+  "query": "Punjab Kings young player",
+  "wanted": "Punjab Kings young Indian player.",
+  "players": [
+   "Mohsin Khan",
+   "Jaydev Unadkat",
+   "Ajinkya Rahane"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-073": {
+  "query": "Punjab Kings batter",
+  "wanted": "Punjab Kings batter.",
+  "players": [
+   "V Sehwag",
+   "AC Gilchrist",
+   "CH Gayle"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-074": {
+  "query": "Punjab Kings batting",
+  "wanted": "Punjab Kings batter.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-075": {
+  "query": "Punjab Kings overseas",
+  "wanted": "Punjab Kings overseas batter.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-076": {
+  "query": "Punjab Kings finisher six",
+  "wanted": "Punjab Kings batter hitting a six at the death.",
+  "players": [
+   "MP Stoinis",
+   "SS Iyer",
+   "KD Karthik"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-077": {
+  "query": "Punjab Kings wicketkeeper",
+  "wanted": "Punjab Kings wicketkeeper keeping or batting.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-078": {
+  "query": "Punjab Kings spinner",
+  "wanted": "Punjab Kings spinner bowling.",
+  "players": [
+   "Noor Ahmad",
+   "DS Rathi",
+   "Suyash Sharma"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-079": {
+  "query": "Punjab Kings young player",
+  "wanted": "Punjab Kings young player celebrating.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-080": {
+  "query": "Punjab Kings young batter",
+  "wanted": "Punjab Kings young batter.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-081": {
+  "query": "Punjab Kings chase",
+  "wanted": "Punjab Kings batters chasing a target.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-082": {
+  "query": "Punjab Kings batting death overs",
+  "wanted": "Punjab Kings batter at the death.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-083": {
+  "query": "LS Livingstone Punjab Kings",
+  "wanted": "LS Livingstone batting for Punjab Kings.",
+  "players": [
+   "LS Livingstone",
+   "Priyansh Arya",
+   "MP Stoinis"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-084": {
+  "query": "Punjab Kings batter",
+  "wanted": "Punjab Kings batter.",
+  "players": [
+   "P Simran Singh",
+   "SS Iyer",
+   "Shashank Singh"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-085": {
+  "query": "Punjab Kings final over",
+  "wanted": "Punjab Kings tense finish.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-086": {
+  "query": "Punjab Kings match",
+  "wanted": "Punjab Kings match action.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-087": {
+  "query": "Punjab Kings batter",
+  "wanted": "Punjab Kings batter.",
+  "players": [
+   "Priyansh Arya",
+   "MP Stoinis",
+   "SS Iyer"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-088": {
+  "query": "Punjab Kings partnership",
+  "wanted": "P Simran Singh and Priyansh Arya batting together for Punjab Kings.",
+  "players": [
+   "P Simran Singh",
+   "P Simran Singh",
+   "Priyansh Arya"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-089": {
+  "query": "HV Patel Punjab Kings",
+  "wanted": "HV Patel bowling for Punjab Kings.",
+  "players": [
+   "Arshdeep Singh",
+   "M Jansen",
+   "YS Chahal"
+  ],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-090": {
+  "query": "Punjab Kings team",
+  "wanted": "Punjab Kings team celebrating.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-091": {
+  "query": "Punjab Kings squad",
+  "wanted": "Punjab Kings squad.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-092": {
+  "query": "Punjab Kings batter",
+  "wanted": "Punjab Kings young batter.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-093": {
+  "query": "Mohali stadium Punjab Kings",
+  "wanted": "Mohali stadium.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-094": {
+  "query": "Punjab Kings bowler",
+  "wanted": "Punjab Kings bowler delivering.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-095": {
+  "query": "Punjab Kings fans",
+  "wanted": "Punjab Kings fans with phones.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-096": {
+  "query": "Punjab Kings fans stadium",
+  "wanted": "Punjab Kings fans at a match.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-097": {
+  "query": "Punjab Kings young player",
+  "wanted": "Punjab Kings young player.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-098": {
+  "query": "Punjab Kings coach",
+  "wanted": "Punjab Kings analyst or coaching staff.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-099": {
+  "query": "Punjab Kings overseas player",
+  "wanted": "Punjab Kings overseas player.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-pbks-100": {
+  "query": "Punjab Kings team huddle",
+  "wanted": "Punjab Kings team huddle.",
+  "players": [],
+  "franchise": "Punjab Kings"
+ },
+ "cf-lsg-001": {
+  "query": "Lucknow Super Giants batting powerplay",
+  "wanted": "Lucknow Super Giants opening batter playing an attacking shot, recent season.",
+  "players": [
+   "MR Marsh",
+   "AK Markram",
+   "KL Rahul",
+   "N Pooran"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-002": {
+  "query": "N Pooran Lucknow Super Giants batting",
+  "wanted": "N Pooran batting for Lucknow Super Giants.",
+  "players": [
+   "N Pooran"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-003": {
+  "query": "Lucknow Super Giants six",
+  "wanted": "Lucknow Super Giants batter hitting a six.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-004": {
+  "query": "N Pooran Lucknow Super Giants batting",
+  "wanted": "N Pooran batting for Lucknow Super Giants.",
+  "players": [
+   "N Pooran",
+   "MR Marsh",
+   "A Badoni",
+   "RR Pant"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-005": {
+  "query": "N Pooran Lucknow Super Giants",
+  "wanted": "N Pooran batting late in an innings.",
+  "players": [
+   "N Pooran",
+   "A Badoni",
+   "Abdul Samad",
+   "RR Pant"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-006": {
+  "query": "Lucknow Super Giants chase win",
+  "wanted": "Lucknow Super Giants batters during a run chase.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-007": {
+  "query": "Lucknow Super Giants partnership batting",
+  "wanted": "Two Lucknow Super Giants batters together in the middle.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-008": {
+  "query": "Lucknow Super Giants batting",
+  "wanted": "Lucknow Super Giants batter sweeping or driving against spin.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-009": {
+  "query": "Lucknow Super Giants batting",
+  "wanted": "Lucknow Super Giants batters running between the wickets.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-010": {
+  "query": "Lucknow Super Giants fifty celebrates",
+  "wanted": "Lucknow Super Giants batter celebrating a big innings.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-011": {
+  "query": "Mohammed Shami Lucknow Super Giants bowls",
+  "wanted": "Mohammed Shami bowling with the new ball.",
+  "players": [
+   "Mohammed Shami",
+   "SN Thakur",
+   "Mohsin Khan",
+   "Prince Yadav"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-012": {
+  "query": "Lucknow Super Giants bowls death",
+  "wanted": "Lucknow Super Giants fast bowler bowling late in an innings.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-013": {
+  "query": "Mohsin Khan Lucknow Super Giants wicket",
+  "wanted": "Mohsin Khan celebrating a wicket for Lucknow Super Giants.",
+  "players": [
+   "Mohsin Khan"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-014": {
+  "query": "KH Pandya Lucknow Super Giants bowls",
+  "wanted": "KH Pandya bowling spin for Lucknow Super Giants.",
+  "players": [
+   "KH Pandya"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-015": {
+  "query": "Avesh Khan Lucknow Super Giants bowls",
+  "wanted": "Avesh Khan bowling at the death.",
+  "players": [
+   "Avesh Khan",
+   "Prince Yadav",
+   "Mohsin Khan",
+   "DS Rathi"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-016": {
+  "query": "Lucknow Super Giants catch",
+  "wanted": "Lucknow Super Giants fielder diving or taking a catch.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-017": {
+  "query": "Lucknow Super Giants takes catch",
+  "wanted": "Lucknow Super Giants fielder taking a catch.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-018": {
+  "query": "Lucknow Super Giants bowls",
+  "wanted": "Lucknow Super Giants seam bowler in delivery stride.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-019": {
+  "query": "Lucknow Super Giants spinner bowls",
+  "wanted": "Lucknow Super Giants spinner bowling.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-020": {
+  "query": "Lucknow Super Giants all-rounder bowls",
+  "wanted": "Lucknow Super Giants all-rounder bowling.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-021": {
+  "query": "Lucknow Super Giants captain toss",
+  "wanted": "Lucknow Super Giants captain at the toss.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-022": {
+  "query": "Lucknow stadium Lucknow Super Giants",
+  "wanted": "Wide view of Lucknow during an Lucknow Super Giants IPL match.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-023": {
+  "query": "Lucknow Super Giants team huddle",
+  "wanted": "Lucknow Super Giants team huddle, recent season.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-024": {
+  "query": "A Badoni Lucknow Super Giants batting",
+  "wanted": "A Badoni walking out to bat.",
+  "players": [
+   "A Badoni",
+   "RR Pant",
+   "N Pooran"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-025": {
+  "query": "Lucknow Super Giants bowler celebrates wicket",
+  "wanted": "Lucknow Super Giants bowlers celebrating while defending a total.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-026": {
+  "query": "Lucknow Super Giants players huddle",
+  "wanted": "Lucknow Super Giants players in a huddle on the field.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-027": {
+  "query": "Lucknow Super Giants Mumbai Indians",
+  "wanted": "Lucknow Super Giants playing Mumbai Indians.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-028": {
+  "query": "Lucknow Super Giants batting death overs",
+  "wanted": "Lucknow Super Giants batter hitting late in an innings.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-029": {
+  "query": "Lucknow Super Giants batting shot",
+  "wanted": "Lucknow Super Giants batter attacking in the middle overs.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-030": {
+  "query": "Krunal Pandya Lucknow Super Giants captain",
+  "wanted": "Krunal Pandya as Lucknow Super Giants captain.",
+  "players": [
+   "Krunal Pandya"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-031": {
+  "query": "Lucknow Super Giants auction",
+  "wanted": "Lucknow Super Giants team or auction table.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-032": {
+  "query": "Lucknow Super Giants star celebrates",
+  "wanted": "Lucknow Super Giants star player celebrating.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-033": {
+  "query": "Nicholas Pooran Lucknow Super Giants",
+  "wanted": "Nicholas Pooran playing for Lucknow Super Giants.",
+  "players": [
+   "Nicholas Pooran"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-034": {
+  "query": "Nicholas Pooran Lucknow Super Giants",
+  "wanted": "Nicholas Pooran playing for Lucknow Super Giants.",
+  "players": [
+   "Nicholas Pooran"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-035": {
+  "query": "Mohsin Khan Lucknow Super Giants",
+  "wanted": "Mohsin Khan playing for Lucknow Super Giants.",
+  "players": [
+   "Mohsin Khan",
+   "Prince Yadav",
+   "Naveen-ul-Haq"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-036": {
+  "query": "Lucknow Super Giants team",
+  "wanted": "Lucknow Super Giants squad training or team photo.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-037": {
+  "query": "Nicholas Pooran Lucknow Super Giants",
+  "wanted": "Nicholas Pooran playing for Lucknow Super Giants.",
+  "players": [
+   "Nicholas Pooran",
+   "Nicholas Pooran",
+   "Nicholas Pooran"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-038": {
+  "query": "Lucknow Super Giants bowls",
+  "wanted": "Lucknow Super Giants death bowler.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-039": {
+  "query": "Nicholas Pooran Lucknow Super Giants",
+  "wanted": "Nicholas Pooran playing for Lucknow Super Giants.",
+  "players": [
+   "Nicholas Pooran",
+   "Mohsin Khan"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-040": {
+  "query": "Lucknow Super Giants players celebrate",
+  "wanted": "Lucknow Super Giants players celebrating together.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-041": {
+  "query": "Lucknow Super Giants fans",
+  "wanted": "Lucknow Super Giants fans in the stadium.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-042": {
+  "query": "Lucknow Super Giants Lucknow crowd",
+  "wanted": "Lucknow Super Giants home crowd at Lucknow.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-043": {
+  "query": "A Badoni Lucknow Super Giants",
+  "wanted": "A Badoni playing for Lucknow Super Giants.",
+  "players": [
+   "A Badoni",
+   "Avesh Khan",
+   "Mohsin Khan"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-044": {
+  "query": "Lucknow Super Giants six",
+  "wanted": "Lucknow Super Giants batter hitting a six.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-045": {
+  "query": "Lucknow Super Giants fans cheer",
+  "wanted": "Lucknow Super Giants fans cheering.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-046": {
+  "query": "Lucknow Super Giants Mumbai Indians",
+  "wanted": "Lucknow Super Giants v Mumbai Indians match action.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-047": {
+  "query": "Lucknow Super Giants celebrates century",
+  "wanted": "Lucknow Super Giants player celebrating a century or wicket.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-048": {
+  "query": "Lucknow Super Giants fans crowd",
+  "wanted": "Lucknow Super Giants fans, families in the crowd.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-049": {
+  "query": "Lucknow Super Giants match",
+  "wanted": "Lucknow Super Giants playing an away match.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-050": {
+  "query": "Lucknow Super Giants training",
+  "wanted": "Lucknow Super Giants squad or training.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-051": {
+  "query": "Lucknow Super Giants supporters",
+  "wanted": "Lucknow Super Giants fans in the stands.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-052": {
+  "query": "Lucknow Super Giants players",
+  "wanted": "Lucknow Super Giants players in team kit.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-053": {
+  "query": "N Pooran Lucknow Super Giants",
+  "wanted": "N Pooran batting for Lucknow Super Giants.",
+  "players": [
+   "N Pooran",
+   "KL Rahul",
+   "Ravi Bishnoi"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-054": {
+  "query": "Lucknow Super Giants dejected",
+  "wanted": "Lucknow Super Giants players dejected.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-055": {
+  "query": "Lucknow Super Giants Mumbai Indians",
+  "wanted": "Lucknow Super Giants v Mumbai Indians match action.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-056": {
+  "query": "Lucknow Super Giants last over win",
+  "wanted": "Lucknow Super Giants last-over finish celebration.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-057": {
+  "query": "Lucknow Super Giants young fans",
+  "wanted": "Lucknow Super Giants young fans with families.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-058": {
+  "query": "Lucknow Super Giants team celebrate",
+  "wanted": "Lucknow Super Giants Indian and overseas players together.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-059": {
+  "query": "Lucknow Super Giants fans react",
+  "wanted": "Lucknow Super Giants fans reacting.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-060": {
+  "query": "Lucknow Super Giants win celebrate",
+  "wanted": "Lucknow Super Giants players celebrating a comeback win.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-061": {
+  "query": "Lucknow Super Giants 2022",
+  "wanted": "Lucknow Super Giants 2022 team or player.",
+  "players": [
+   "KL Rahul",
+   "Avesh Khan"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-062": {
+  "query": "Lucknow Super Giants 2026",
+  "wanted": "Lucknow Super Giants 2026 match action.",
+  "players": [
+   "MR Marsh",
+   "Prince Yadav"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-063": {
+  "query": "Lucknow Super Giants captain",
+  "wanted": "Lucknow Super Giants captain setting the field.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-064": {
+  "query": "Krunal Pandya Lucknow Super Giants captain",
+  "wanted": "Krunal Pandya captaining Lucknow Super Giants.",
+  "players": [
+   "Krunal Pandya"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-065": {
+  "query": "Lucknow stadium Lucknow Super Giants",
+  "wanted": "Lucknow stadium during an Lucknow Super Giants match.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-066": {
+  "query": "Lucknow Super Giants last ball win",
+  "wanted": "Lucknow Super Giants players celebrating a last-ball win.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-067": {
+  "query": "Lucknow Super Giants huddle",
+  "wanted": "Lucknow Super Giants squad photo or huddle.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-068": {
+  "query": "MR Marsh Lucknow Super Giants",
+  "wanted": "MR Marsh batting for Lucknow Super Giants.",
+  "players": [
+   "MR Marsh",
+   "Naveen-ul-Haq"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-069": {
+  "query": "Lucknow Super Giants celebrate win",
+  "wanted": "Lucknow Super Giants celebrating a win.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-070": {
+  "query": "Q de Kock Lucknow Super Giants century",
+  "wanted": "Q de Kock batting for Lucknow Super Giants.",
+  "players": [
+   "Q de Kock",
+   "MA Wood"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-071": {
+  "query": "Lucknow Super Giants opener",
+  "wanted": "Lucknow Super Giants opener batting in the powerplay.",
+  "players": [
+   "V Suryavanshi",
+   "FH Allen",
+   "Abhishek Sharma"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-072": {
+  "query": "Lucknow Super Giants young player",
+  "wanted": "Lucknow Super Giants young Indian player.",
+  "players": [
+   "Mohsin Khan",
+   "Jaydev Unadkat",
+   "Ajinkya Rahane"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-073": {
+  "query": "Lucknow Super Giants batter",
+  "wanted": "Lucknow Super Giants batter.",
+  "players": [
+   "RR Pant",
+   "KH Pandya",
+   "KL Rahul"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-074": {
+  "query": "Lucknow Super Giants batting",
+  "wanted": "Lucknow Super Giants batter.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-075": {
+  "query": "Lucknow Super Giants overseas",
+  "wanted": "Lucknow Super Giants overseas batter.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-076": {
+  "query": "Lucknow Super Giants finisher six",
+  "wanted": "Lucknow Super Giants batter hitting a six at the death.",
+  "players": [
+   "MP Stoinis",
+   "SS Iyer",
+   "KD Karthik"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-077": {
+  "query": "Lucknow Super Giants wicketkeeper",
+  "wanted": "Lucknow Super Giants wicketkeeper keeping or batting.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-078": {
+  "query": "Lucknow Super Giants spinner",
+  "wanted": "Lucknow Super Giants spinner bowling.",
+  "players": [
+   "Noor Ahmad",
+   "DS Rathi",
+   "Suyash Sharma"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-080": {
+  "query": "Lucknow Super Giants young batter",
+  "wanted": "Lucknow Super Giants young batter.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-081": {
+  "query": "Lucknow Super Giants chase",
+  "wanted": "Lucknow Super Giants batters chasing a target.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-082": {
+  "query": "Lucknow Super Giants batting death overs",
+  "wanted": "Lucknow Super Giants batter at the death.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-083": {
+  "query": "N Pooran Lucknow Super Giants",
+  "wanted": "N Pooran batting for Lucknow Super Giants.",
+  "players": [
+   "N Pooran",
+   "MR Marsh",
+   "MP Stoinis"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-084": {
+  "query": "Lucknow Super Giants batter",
+  "wanted": "Lucknow Super Giants batter.",
+  "players": [
+   "KL Rahul",
+   "MR Marsh",
+   "N Pooran"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-085": {
+  "query": "Lucknow Super Giants final over",
+  "wanted": "Lucknow Super Giants tense finish.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-086": {
+  "query": "Lucknow Super Giants match",
+  "wanted": "Lucknow Super Giants match action.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-087": {
+  "query": "Lucknow Super Giants batter",
+  "wanted": "Lucknow Super Giants batter.",
+  "players": [
+   "N Pooran",
+   "MR Marsh",
+   "MP Stoinis"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-088": {
+  "query": "Lucknow Super Giants partnership",
+  "wanted": "KL Rahul and Q de Kock batting together for Lucknow Super Giants.",
+  "players": [
+   "KL Rahul",
+   "KL Rahul",
+   "Q de Kock"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-089": {
+  "query": "Avesh Khan Lucknow Super Giants",
+  "wanted": "Avesh Khan bowling for Lucknow Super Giants.",
+  "players": [
+   "DS Rathi",
+   "Ravi Bishnoi",
+   "Prince Yadav"
+  ],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-090": {
+  "query": "Lucknow Super Giants team",
+  "wanted": "Lucknow Super Giants team celebrating.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-091": {
+  "query": "Lucknow Super Giants squad",
+  "wanted": "Lucknow Super Giants squad.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-092": {
+  "query": "Lucknow Super Giants batter",
+  "wanted": "Lucknow Super Giants young batter.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-093": {
+  "query": "Lucknow stadium Lucknow Super Giants",
+  "wanted": "Lucknow stadium.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-094": {
+  "query": "Lucknow Super Giants bowler",
+  "wanted": "Lucknow Super Giants bowler delivering.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-095": {
+  "query": "Lucknow Super Giants fans",
+  "wanted": "Lucknow Super Giants fans with phones.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-096": {
+  "query": "Lucknow Super Giants fans stadium",
+  "wanted": "Lucknow Super Giants fans at a match.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-097": {
+  "query": "Lucknow Super Giants young player",
+  "wanted": "Lucknow Super Giants young player.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-098": {
+  "query": "Lucknow Super Giants coach",
+  "wanted": "Lucknow Super Giants analyst or coaching staff.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-099": {
+  "query": "Lucknow Super Giants overseas player",
+  "wanted": "Lucknow Super Giants overseas player.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-100": {
+  "query": "Lucknow Super Giants team huddle",
+  "wanted": "Lucknow Super Giants team huddle.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ },
+ "cf-lsg-079": {
+  "query": "Lucknow Super Giants young player",
+  "wanted": "Lucknow Super Giants young player celebrating.",
+  "players": [],
+  "franchise": "Lucknow Super Giants"
+ }
+}

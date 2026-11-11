@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RCB 2025 Visual Contact Sheet · Official Verified Roster</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #050914;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      padding: 36px 24px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .header {
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .header-left .pill {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 4px;
+    }
+    .metrics {
+      display: flex;
+      gap: 12px;
+    }
+    .metric-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 8px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .metric-label {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.45);
+    }
+    .metric-value {
+      font-size: 16px;
+      font-weight: 900;
+      color: #fff;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .player-card {
+      background: linear-gradient(180deg, #0B152A 0%, #070D1A 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .player-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+    .card-accent-bar {
+      height: 3px;
+      width: 100%;
+      background: #ef4444;
+    }
+    .card-top {
+      padding: 10px 14px 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+    .player-num {
+      font-size: 11px;
+      font-family: monospace;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .status-badge {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+    .status-badge.exact {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+    }
+    .status-badge.fallback {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .portrait-stage {
+      position: relative;
+      height: 190px;
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .aura-halo {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 40%, rgba(239, 68, 68, 0.35) 0%, rgba(239, 68, 68, 0.08) 50%, transparent 80%);
+      pointer-events: none;
+    }
+    .grid-watermark {
+      position: absolute;
+      top: 6px;
+      font-size: 52px;
+      font-weight: 900;
+      font-family: monospace;
+      color: rgba(255, 255, 255, 0.03);
+      user-select: none;
+      pointer-events: none;
+    }
+    .cutout-wrapper {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .player-cutout {
+      max-height: 175px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.85));
+    }
+    .initial-shield {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.15);
+      border: 2px solid rgba(239, 68, 68, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: #ef4444;
+      font-size: 24px;
+      font-weight: 900;
+      font-family: monospace;
+    }
+    .bottom-blend {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 36px;
+      background: linear-gradient(to top, #050A14, rgba(5, 10, 20, 0.7) 60%, transparent);
+      z-index: 8;
+      pointer-events: none;
+    }
+    .card-details {
+      padding: 12px 14px 14px;
+      background: #050A14;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 10;
+    }
+    .player-name {
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .player-role {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .provenance-tag {
+      font-size: 9px;
+      font-family: monospace;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-left">
+        <div class="pill">IPL 2025 · Royal Challengers Bengaluru</div>
+        <h1>Visual Contact Sheet · Official 2025 Squad</h1>
+        <p class="subtitle">Complete visual verification with chest-up bust crop (~46%) and official franchise aura blending</p>
+      </div>
+      <div class="metrics">
+        <div class="metric-chip">
+          <span class="metric-label">Squad Size</span>
+          <span class="metric-value">23 Players</span>
+        </div>
+        <div class="metric-chip">
+          <span class="metric-label">Exact Verified</span>
+          <span class="metric-value" style="color: #34d399">23 / 23 (100%)</span>
+        </div>
+        <div class="metric-chip">
+          <span class="metric-label">Wrong Jerseys</span>
+          <span class="metric-value" style="color: #ef4444">0 (Zero Pollution)</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="grid">
+      
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#01</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">VIR</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/virat-kohli-rcb-2025.png" alt="Virat Kohli" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Virat Kohli</div>
+        <div class="player-role">Cricketer · India</div>
+        <div class="provenance-tag">Official Royal Challengers Bengaluru Authentic Portrait Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#02</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">JOS</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/josh-hazlewood-rcb-2025.png" alt="Josh Hazlewood" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Josh Hazlewood</div>
+        <div class="player-role">Cricketer · Australia</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#03</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">PHI</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/phil-salt-rcb-2025.png" alt="Phil Salt" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Phil Salt</div>
+        <div class="player-role">Cricketer · England</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#04</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">JIT</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/jitesh-sharma-rcb-2025.png" alt="Jitesh Sharma" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Jitesh Sharma</div>
+        <div class="player-role">Cricketer · India</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#05</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">RAJ</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/rajat-patidar-rcb-2025.png" alt="Rajat Patidar" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Rajat Patidar</div>
+        <div class="player-role">Cricketer · India</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#06</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">BHU</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/bhuvneshwar-kumar-rcb-2025.png" alt="Bhuvneshwar Kumar" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Bhuvneshwar Kumar</div>
+        <div class="player-role">Cricketer · India</div>
+        <div class="provenance-tag">Official Royal Challengers Bengaluru Authentic Portrait Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#07</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">LIA</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/liam-livingstone-rcb-2025.png" alt="Liam Livingstone" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Liam Livingstone</div>
+        <div class="player-role">All-rounder · England</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#08</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">RAS</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/rasikh-salam-rcb-2025.png" alt="Rasikh Salam Dar" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Rasikh Salam Dar</div>
+        <div class="player-role">Cricketer · India</div>
+        <div class="provenance-tag">Official RCB Squad Portrait Bust Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#09</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">KRU</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/krunal-pandya-rcb-2025.png" alt="Krunal Pandya" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Krunal Pandya</div>
+        <div class="player-role">Cricketer · India</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#10</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">YAS</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/yash-dayal-rcb-2025.png" alt="Yash Dayal" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Yash Dayal</div>
+        <div class="player-role">Cricketer · India</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#11</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">TIM</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/tim-david-rcb-2025.png" alt="Tim David" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Tim David</div>
+        <div class="player-role">All-rounder · Australia</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#12</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">JAC</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/jacob-bethell-rcb-2025.png" alt="Jacob Bethell" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Jacob Bethell</div>
+        <div class="player-role">All-rounder · England</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#13</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">SUY</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/suyash-sharma-rcb-2025.png" alt="Suyash Sharma" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Suyash Sharma</div>
+        <div class="player-role">Cricketer · India</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#14</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">DEV</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/devdutt-padikkal-rcb-2025.png" alt="Devdutt Padikkal" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Devdutt Padikkal</div>
+        <div class="player-role">Cricketer · India</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#15</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">NUW</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/nuwan-thushara-rcb-2025.png" alt="Nuwan Thushara" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Nuwan Thushara</div>
+        <div class="player-role">Bowler · Sri Lanka</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#16</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">ROM</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/romario-shepherd-rcb-2025.png" alt="Romario Shepherd" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Romario Shepherd</div>
+        <div class="player-role">All-rounder · West Indies</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#17</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">LUN</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/lungi-ngidi-rcb-2025.png" alt="Lungi Ngidi" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Lungi Ngidi</div>
+        <div class="player-role">Bowler · South Africa</div>
+        <div class="provenance-tag">Official RCB 2025 Squad Portrait Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#18</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">SWA</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/swapnil-singh-rcb-2025.png" alt="Swapnil Singh" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Swapnil Singh</div>
+        <div class="player-role">All-rounder · India</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#19</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">ABH</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/abhinandan-singh-rcb-2025.png" alt="Abhinandan Singh" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Abhinandan Singh</div>
+        <div class="player-role">Bowler · India</div>
+        <div class="provenance-tag">Official IPL & RCB 2025 Kit Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#20</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">MAN</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/manoj-bhandage-rcb-2025.png" alt="Manoj Bhandage" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Manoj Bhandage</div>
+        <div class="player-role">All-rounder · India</div>
+        <div class="provenance-tag">Official RCB 2025 Squad Portrait Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#21</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">MOH</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/mohit-rathee-rcb-2025.png" alt="Mohit Rathee" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Mohit Rathee</div>
+        <div class="player-role">Bowler · India</div>
+        <div class="provenance-tag">Official RCB 2025 Squad Portrait Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#22</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">SWA</div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/swastik-chikara-rcb-2025.png" alt="Swastik Chikara" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">Swastik Chikara</div>
+        <div class="player-role">Batter · India</div>
+        <div class="provenance-tag">Official RCB 2025 Squad Portrait Cutout</div>
+      </div>
+    </div>
+  
+
+    <div class="player-card card-verified">
+      <div class="card-accent-bar"></div>
+      <div class="card-top">
+        <span class="player-num">#23</span>
+        <span class="status-badge exact">Exact 2025 Verified</span>
+      </div>
+      
+      <div class="portrait-stage">
+        <div class="aura-halo"></div>
+        <div class="grid-watermark">MA </div>
+        <div class="cutout-wrapper">
+          
+    <img src="/players/rcb-2025/mayank-agarwal-rcb-2025.png" alt="MA Agarwal" class="player-cutout" />
+  
+        </div>
+        <div class="bottom-blend"></div>
+      </div>
+
+      <div class="card-details">
+        <div class="player-name">MA Agarwal</div>
+        <div class="player-role">Cricketer · India</div>
+        <div class="provenance-tag">Official RCB 2025 Squad Portrait Cutout</div>
+      </div>
+    </div>
+  
+    </main>
+  </div>
+</body>
+</html>

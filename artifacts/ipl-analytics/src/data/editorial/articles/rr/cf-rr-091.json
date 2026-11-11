@@ -1,0 +1,135 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-091",
+ "planId": "cf-rr-091",
+ "franchise": "RR",
+ "aspect": "future",
+ "title": "The 2027 Blueprint: What Should Rajasthan Royals Build for the Next Cycle?",
+ "slug": "rr-the-2027-blueprint-what-should-rr-build-for-the-next-cycle",
+ "dek": "What should Rajasthan Royals build for the next cycle? The latest season's phase-by-phase gaps to the league are the starting point for any blueprint.",
+ "excerpt": "In 2026, Rajasthan Royals' biggest edge over the league came in powerplay batting and their biggest gap in death batting. A blueprint for 2027 should start by closing the gap without giving up the edge.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RR"
+ ],
+ "players": [],
+ "seasons": [
+  "2026"
+ ],
+ "keyTakeaways": [
+  "In {{ev:bp-yr}}, Rajasthan Royals' strongest phase relative to the league was {{ev:bp-best}} ({{ev:bp-ppbat}} runs an over); their weakest was {{ev:bp-worst}} ({{ev:bp-deathbat}}).",
+  "Batting relative to the league: powerplay {{ev:bp-ppbat}}, middle {{ev:bp-midbat}}, death {{ev:bp-deathbat}} runs an over.",
+  "Bowling relative to the league: powerplay {{ev:bp-ppbowl}}, middle {{ev:bp-midbowl}}, death {{ev:bp-deathbowl}} runs an over (positive = conceded less)."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Start From the Gaps",
+   "body": [
+    "A blueprint for the next auction cycle should begin with evidence: where the side gained runs on the league last season and where it lost them.",
+    "In {{ev:bp-yr}}, Rajasthan Royals were strongest relative to the league in {{ev:bp-best}} and weakest in {{ev:bp-worst}}. The chart shows all six phases."
+   ],
+   "chartIds": [
+    "bp-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Six Measures",
+   "body": [
+    "With the bat, RR were {{ev:bp-ppbat}} runs an over against the league in the powerplay, {{ev:bp-midbat}} in the middle overs and {{ev:bp-deathbat}} at the death.",
+    "With the ball, they were {{ev:bp-ppbowl}}, {{ev:bp-midbowl}} and {{ev:bp-deathbowl}} respectively, where positive means they conceded less than the league."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "A Proposed Blueprint",
+   "body": [
+    "Proposal: prioritise the death batting gap at retention and the auction, protect the players driving powerplay batting, and fill the remaining phases at fair value.",
+    "{{hyp:blueprint}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "One Season Is a Snapshot",
+   "body": [
+    "A single season's phase gaps carry noise, and squads change at every auction. The blueprint should be checked against the two previous seasons before it drives spending.",
+    "The turning-point audit in this series shows which phase historically separated Rajasthan Royals' best seasons."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Fix Death batting, Keep Powerplay batting",
+   "body": [
+    "Rajasthan Royals' next cycle should be built around closing the death batting gap.",
+    "That is where the evidence says the most runs are available."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "bp-chart",
+   "type": "bar",
+   "title": "Edge over the league by phase, 2026",
+   "subtitle": "RR, runs per over (positive = better)",
+   "table": "bp-gaps",
+   "xKey": "phase",
+   "series": [
+    {
+     "key": "edge",
+     "label": "Edge"
+    }
+   ],
+   "unit": "runs per over",
+   "takeaway": "Powerplay batting was the strength; death batting the gap.",
+   "ariaLabel": "Horizontal bar chart of Rajasthan Royals' edge over the league in each phase of batting and bowling in 2026."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "blueprint",
+   "statement": "Hypothesis: closing Rajasthan Royals' weakest phase gap would add more expected wins than widening their strongest phase edge by the same amount.",
+   "whyUnverified": "Runs-to-wins conversion by phase has not been modelled.",
+   "howToTest": "Estimate the win value of a run in each phase and compare the two changes."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Rajasthan Royals looking ahead.",
+   "wanted": "Rajasthan Royals squad."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rr-069",
+  "cf-rr-100",
+  "cf-rr-040"
+ ],
+ "seo": {
+  "metaTitle": "The 2027 blueprint: what RR should build next",
+  "metaDescription": "Rajasthan Royals' phase-by-phase gaps to the league in 2026, and a data-led blueprint for the next auction cycle."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Forward-looking proposals are labelled as such. Generated by scripts/editorial/engine. Edge = franchise rate minus league rate in the same season, signed so that positive is better for both batting and bowling.",
+ "generator": "engine:v1"
+}

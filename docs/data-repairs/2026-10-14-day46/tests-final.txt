@@ -1,0 +1,25 @@
+== api tests
+ℹ tests 45
+ℹ pass 45
+ℹ fail 0
+== global
+ℹ tests 23
+ℹ pass 23
+ℹ fail 0
+== step3
+ℹ fail 1
+ℹ pass 26
+ℹ tests 28
+✖ failing tests:
+✖ real bios: no photo-import duplicate of a verified bio remains (dedupe plan has nothing to fold) (1338.7898ms)
+== tc api-server: 0
+== tc scripts: 0
+== tc ipl-analytics: 11
+== api build
+Done in 931ms
+== hashes
+ab897a8ccdc590ca
+79c75f780ebe4d9e
+ℹ fail 0
+ℹ pass 27
+ℹ tests 28

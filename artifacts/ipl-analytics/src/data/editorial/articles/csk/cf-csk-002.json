@@ -1,0 +1,149 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-csk-002",
+ "planId": "cf-csk-002",
+ "franchise": "CSK",
+ "aspect": "batting",
+ "title": "The Anchor Paradox: Does Chennai Super Kings Still Need a Traditional No. 3?",
+ "slug": "csk-the-anchor-paradox-does-csk-still-need-a-traditional-no-3",
+ "dek": "Is the classic No. 3, the batter who steadies the innings, still worth a place in Chennai Super Kings' XI? The position's numbers since 2024 answer it.",
+ "excerpt": "Since 2024 Chennai Super Kings' No. 3 has been faster but shorter-lived than the rest of the league's. That profile decides whether the anchor role is a strength or a luxury.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "CSK"
+ ],
+ "players": [
+  "Urvil Patel"
+ ],
+ "seasons": [
+  "2008\u20132026",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "Chennai Super Kings' No. 3 struck at {{ev:no3-sr-e2}} since 2024 against {{ev:no3-lsr-e2}} for the rest of the IPL.",
+  "Their No. 3 lasted {{ev:no3-bpd-e2}} balls per dismissal, against {{ev:no3-lbpd-e2}} league-wide.",
+  "{{ev:no3-who}} has filled the role most often since 2024, in {{ev:no3-who-n}} innings."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Position That Sets the Tempo",
+   "body": [
+    "No. 3 is the hinge of a T20 innings: in some matches the batter walks in during the first over, in others after the fielding restrictions are gone. The traditional answer was an anchor who could bat through. The modern answer is less settled.",
+    "For Chennai Super Kings the record is measurable. Between 2008 and 2023 their No. 3 struck at {{ev:no3-sr-e1}} against {{ev:no3-lsr-e1}} for the rest of the league.",
+    "On this measure their strongest season was 2026, at {{ev:no3-x-best-v}}, and their weakest 2019, at {{ev:no3-x-worst-v}}."
+   ],
+   "chartIds": [
+    "no3-trend"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Speed Against Survival",
+   "body": [
+    "Since 2024 Chennai Super Kings' No. 3 has struck at {{ev:no3-sr-e2}} while the rest of the league's No. 3s struck at {{ev:no3-lsr-e2}}. On survival, the side's No. 3 lasted {{ev:no3-bpd-e2}} balls per dismissal against {{ev:no3-lbpd-e2}}.",
+    "Put together, Chennai Super Kings' No. 3 has been faster but shorter-lived than the league's. That is the profile any change to the role has to improve on."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "When the Anchor Earns the Place",
+   "body": [
+    "{{ev:no3-who}} batted at three in {{ev:no3-who-n}} innings since 2024, the most of any CSK player. Continuity in the role matters because a No. 3 who also opens or bats at four is hard to plan around.",
+    "The anchor justifies the place when the top order collapses often, because then the No. 3 is effectively an opener. When openers regularly survive the powerplay, a hitter at three adds more."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Why Strike Rate Alone Misleads",
+   "body": [
+    "A No. 3 who walks in at nought for one in the first over faces a different job from one who arrives at a hundred for one in the tenth. The averages here mix both situations, so a slow strike rate may reflect early arrivals rather than caution.",
+    "{{hyp:entry}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Pick the Role by Its Entry Point",
+   "body": [
+    "Chennai Super Kings should decide the No. 3 role by when that batter typically arrives. If the openers survive, the slot should go to a hitter; if they do not, an anchor remains valuable.",
+    "The numbers since 2024 are the benchmark: any replacement has to be as quick without being even shorter-lived."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "no3-trend",
+   "type": "line",
+   "title": "Strike rate at No. 3 by season",
+   "subtitle": "CSK vs rest of IPL",
+   "table": "no3-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "CSK"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per 100 balls",
+   "takeaway": "Chennai Super Kings' No. 3 has been faster but shorter-lived than the league's since 2024.",
+   "ariaLabel": "Line chart of strike rate at number three by season for CSK and the rest of the IPL."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "entry",
+   "statement": "Hypothesis: a No. 3's strike rate depends more on the over in which they arrive than on their style.",
+   "whyUnverified": "Entry-over adjusted strike rates have not been computed for every franchise.",
+   "howToTest": "Group No. 3 innings by arrival over and compare strike rates within each group."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "3",
+   "reason": "Batting position number (No. 3), a definition rather than a finding."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "The No. 3 role at Chennai Super Kings.",
+   "wanted": "Urvil Patel batting for Chennai Super Kings."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-csk-001",
+  "cf-csk-024",
+  "cf-csk-071"
+ ],
+ "seo": {
+  "metaTitle": "The Anchor Paradox: does CSK need a No. 3?",
+  "metaDescription": "Chennai Super Kings' No. 3 against the league on strike rate and survival since 2024, and when the anchor role still pays."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Run rates use all runs per legal ball times six. Every figure is generated from the CricField warehouse by scripts/editorial/engine. Batting position is the order of first appearance at the crease. Strike rate excludes wides from balls faced.",
+ "generator": "engine:v1"
+}

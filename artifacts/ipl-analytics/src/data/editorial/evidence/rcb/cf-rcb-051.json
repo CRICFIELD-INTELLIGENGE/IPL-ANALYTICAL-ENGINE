@@ -1,0 +1,310 @@
+{
+ "articleId": "cf-rcb-051",
+ "generatedAt": "2026-10-25T16:13:39.465Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "wait-seasons": {
+   "value": 17,
+   "display": "17",
+   "label": "Seasons RCB played before their first title",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026) + CricField points-tables.json (league stage)",
+   "filters": "2008–2024",
+   "sampleSize": {
+    "n": 17,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.winner_id IN (2,15) won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (2,15) OR m.team2_id IN (2,15))",
+   "validation": {
+    "method": "points-table league wins never exceed warehouse wins (which add playoffs); playoff result set exactly for top-four finishes",
+    "passed": true,
+    "detail": "0 seasons inconsistent"
+   }
+  },
+  "losing-seasons": {
+   "value": 7,
+   "display": "7",
+   "label": "Seasons with a win rate below 50%, 2008–2024",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026) + CricField points-tables.json (league stage)",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 17,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "plausibility range 0–17 for season count",
+    "passed": true,
+    "detail": "value 7"
+   }
+  },
+  "playoff-seasons": {
+   "value": 9,
+   "display": "9",
+   "label": "Seasons reaching the playoffs, 2008–2024",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026) + CricField points-tables.json (league stage)",
+   "filters": "Points-table playoff result (Q = Qualifier 1, E = Eliminator) or final appearance",
+   "sampleSize": {
+    "n": 17,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.winner_id IN (2,15) won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (2,15) OR m.team2_id IN (2,15))",
+   "validation": {
+    "method": "points-table league wins never exceed warehouse wins (which add playoffs); playoff result set exactly for top-four finishes",
+    "passed": true,
+    "detail": "0 seasons inconsistent"
+   }
+  },
+  "finals-lost": {
+   "value": 3,
+   "display": "3",
+   "label": "Finals lost before the first title",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026) + CricField points-tables.json (league stage)",
+   "filters": "Season's last match involving RCB, lost",
+   "sampleSize": {
+    "n": 5,
+    "unit": "finals played"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.winner_id IN (2,15) won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (2,15) OR m.team2_id IN (2,15))",
+   "validation": {
+    "method": "expected 2009, 2011, 2016",
+    "passed": true,
+    "detail": "2009,2011,2016"
+   }
+  },
+  "finals-lost-years": {
+   "value": "2009, 2011, 2016",
+   "display": "2009, 2011, 2016",
+   "label": "Years of lost finals",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026) + CricField points-tables.json (league stage)",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 3,
+    "unit": "finals"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.winner_id IN (2,15) won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (2,15) OR m.team2_id IN (2,15))",
+   "validation": {
+    "method": "matches known finals",
+    "passed": true
+   }
+  },
+  "pre-title-winpct": {
+   "value": 48.8,
+   "display": "48.8%",
+   "label": "RCB win rate across 2008–2024",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026) + CricField points-tables.json (league stage)",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 252,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "plausibility range 0.3–0.7 for win rate",
+    "passed": true,
+    "detail": "value 0.4880952380952381"
+   }
+  },
+  "pre-title-matches": {
+   "value": 252,
+   "display": "252",
+   "label": "RCB matches with a result, 2008–2024",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026) + CricField points-tables.json (league stage)",
+   "filters": "Warehouse; abandoned-without-a-ball fixtures absent",
+   "sampleSize": {
+    "n": 252,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "plausibility range 200–300 for match count",
+    "passed": true,
+    "detail": "value 252"
+   }
+  },
+  "longest-drought": {
+   "value": 3,
+   "display": "3",
+   "label": "Longest run of consecutive seasons without a playoff place",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026) + CricField points-tables.json (league stage)",
+   "filters": "2008–2024",
+   "sampleSize": {
+    "n": 17,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.winner_id IN (2,15) won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (2,15) OR m.team2_id IN (2,15))",
+   "validation": {
+    "method": "plausibility range 1–10 for run length",
+    "passed": true,
+    "detail": "value 3"
+   }
+  },
+  "longest-drought-end": {
+   "value": "2014",
+   "display": "2014",
+   "label": "Last season of that run",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026) + CricField points-tables.json (league stage)",
+   "filters": "2008–2024",
+   "sampleSize": {
+    "n": 17,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.winner_id IN (2,15) won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (2,15) OR m.team2_id IN (2,15))",
+   "validation": {
+    "method": "derived from season table",
+    "passed": true
+   }
+  },
+  "pos-2024": {
+   "value": 4,
+   "display": "4",
+   "label": "RCB league position, 2024",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026) + CricField points-tables.json (league stage)",
+   "filters": "points-tables.json",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "points-tables.json",
+   "validation": {
+    "method": "points-table league wins never exceed warehouse wins (which add playoffs); playoff result set exactly for top-four finishes",
+    "passed": true,
+    "detail": "0 seasons inconsistent"
+   }
+  }
+ },
+ "tables": {
+  "rcb-seasons": {
+   "label": "RCB season by season: win rate and finish",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026) + CricField points-tables.json (league stage)",
+   "filters": "All matches with a result (league + playoffs); position = league-stage table",
+   "sampleSize": {
+    "n": 283,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, m.winner_id IN (2,15) won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (2,15) OR m.team2_id IN (2,15))",
+   "rows": [
+    {
+     "season": "2008",
+     "winPct": 28.6,
+     "leaguePosition": 7,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2009",
+     "winPct": 56.3,
+     "leaguePosition": 3,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2010",
+     "winPct": 50,
+     "leaguePosition": 4,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2011",
+     "winPct": 62.5,
+     "leaguePosition": 1,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2012",
+     "winPct": 53.3,
+     "leaguePosition": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2013",
+     "winPct": 56.3,
+     "leaguePosition": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2014",
+     "winPct": 35.7,
+     "leaguePosition": 7,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2015",
+     "winPct": 57.1,
+     "leaguePosition": 3,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2016",
+     "winPct": 56.3,
+     "leaguePosition": 2,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2017",
+     "winPct": 23.1,
+     "leaguePosition": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2018",
+     "winPct": 42.9,
+     "leaguePosition": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2019",
+     "winPct": 38.5,
+     "leaguePosition": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2020",
+     "winPct": 46.7,
+     "leaguePosition": 4,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2021",
+     "winPct": 60,
+     "leaguePosition": 3,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2022",
+     "winPct": 56.3,
+     "leaguePosition": 4,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2023",
+     "winPct": 50,
+     "leaguePosition": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2024",
+     "winPct": 46.7,
+     "leaguePosition": 4,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2025",
+     "winPct": 73.3,
+     "leaguePosition": 2,
+     "outcome": "Champions"
+    },
+    {
+     "season": "2026",
+     "winPct": 68.8,
+     "leaguePosition": 1,
+     "outcome": "Champions"
+    }
+   ]
+  }
+ }
+}

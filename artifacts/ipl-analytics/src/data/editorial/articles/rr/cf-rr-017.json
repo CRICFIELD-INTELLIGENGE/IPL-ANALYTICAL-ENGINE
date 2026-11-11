@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-017",
+ "planId": "cf-rr-017",
+ "franchise": "RR",
+ "aspect": "bowling-fielding",
+ "title": "Catch Difficulty Index: How to Evaluate Rajasthan Royals Beyond Raw Drop Counts",
+ "slug": "rr-catch-difficulty-index-how-to-evaluate-rr-beyond-raw-drop-counts",
+ "dek": "Dropped-catch counts are a blunt way to judge fielders: they ignore how hard each chance was. What would a catch-difficulty index for Rajasthan Royals need, and what can be measured now?",
+ "excerpt": "Catches account for {{ev:ct-l}} of the rest of the IPL's bowler wickets and {{ev:ct-t}} of Rajasthan Royals'. Without data on drops and difficulty, a fair fielding grade remains out of reach.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RR"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:ct-t}} of Rajasthan Royals' bowler wickets have been catches, against {{ev:ct-l}} for the rest of the IPL.",
+  "RR have {{ev:ct-n}} catches on record in the CricField warehouse.",
+  "Drops and catch difficulty are not recorded in public ball-by-ball data."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Problem With Drop Counts",
+   "body": [
+    "A dropped skier at long-on and a missed half-chance at slip both count as one drop. A fielder who stands in the hardest positions will drop more chances and still be the most valuable catcher in the side.",
+    "A catch-difficulty index would weight each chance by how hard it was: reaction time, distance covered, ball speed. Public data does not provide those inputs."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What the Scorebook Does Show",
+   "body": [
+    "{{ev:ct-t}} of Rajasthan Royals' bowler-credited wickets have been catches, against {{ev:ct-l}} for the rest of the league, from {{ev:ct-n}} catches on record.",
+    "On this measure their highest season was 2025, at {{ev:ct-x-best-v}}, and their lowest 2009, at {{ev:ct-x-worst-v}}."
+   ],
+   "chartIds": [
+    "ct-trend"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Building an Index In-House",
+   "body": [
+    "The inputs for a fair index are achievable with video: the fielder's starting position, distance to the ball and time available. Each chance can then be graded and every fielder rated on catches taken above expectation.",
+    "For RR, that would turn fielding selection from reputation into evidence, and highlight which positions need specialists."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Catch Share Is Not Catching Quality",
+   "body": [
+    "A high share of caught wickets can reflect bowlers inducing false shots rather than fielders taking hard chances. It says nothing about the chances that went down.",
+    "{{hyp:drops}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Grade the Chance, Not the Fielder's Tally",
+   "body": [
+    "Raw catch and drop counts should not drive Rajasthan Royals' fielding decisions. A graded-chance index, built from video, is the only fair measure.",
+    "Until it exists, the honest position is that catching quality cannot be compared between franchises from public data."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ct-trend",
+   "type": "line",
+   "title": "Catches as a share of bowler wickets",
+   "subtitle": "RR vs IPL, by season",
+   "table": "ct-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "RR"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of wickets",
+   "takeaway": "Catch share alone cannot grade fielding quality.",
+   "ariaLabel": "Line chart of catches as a share of bowler wickets by season for RR and the rest of the IPL."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "drops",
+   "statement": "Hypothesis: Rajasthan Royals' catching efficiency on difficult chances differs from the league average by more than raw catch counts suggest.",
+   "whyUnverified": "Dropped catches and chance difficulty are not recorded in public data.",
+   "howToTest": "Grade every chance from video for a season and compare catches taken against expected catches."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A Rajasthan Royals catch.",
+   "wanted": "Rajasthan Royals fielder taking a catch."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rr-016",
+  "cf-rr-077",
+  "cf-rr-087"
+ ],
+ "seo": {
+  "metaTitle": "Catch difficulty: judging RR beyond drop counts",
+  "metaDescription": "Catches as a share of Rajasthan Royals' wickets against the IPL, and why a fair fielding grade needs chance difficulty that public data lacks."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Economy uses runs charged to the bowler (byes and leg-byes excluded) per legal ball times six. Bowler wickets exclude run outs. Generated from the CricField warehouse by scripts/editorial/engine. Catches include caught and caught-and-bowled. Dropped catches are not recorded in Cricsheet data.",
+ "generator": "engine:v1"
+}

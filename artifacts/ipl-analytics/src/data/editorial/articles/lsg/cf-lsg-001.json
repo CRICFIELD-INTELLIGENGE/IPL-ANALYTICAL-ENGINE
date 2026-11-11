@@ -1,0 +1,192 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-lsg-001",
+ "planId": "cf-lsg-001",
+ "franchise": "LSG",
+ "aspect": "batting",
+ "title": "The Powerplay Equation: When Lucknow Super Giants Should Attack the First Six Overs",
+ "slug": "lsg-the-powerplay-equation-when-lsg-should-attack-the-first-six-overs",
+ "dek": "How fast should Lucknow Super Giants start? Ball-by-ball data shows the first six overs reward runs, but punish lost wickets even more.",
+ "excerpt": "Lucknow Super Giants have been behind the league's powerplay scoring rate since 2024. Across every IPL innings, an early wicket costs more win probability than a quick start earns.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "LSG"
+ ],
+ "players": [
+  "MR Marsh",
+  "AK Markram",
+  "KL Rahul",
+  "N Pooran"
+ ],
+ "seasons": [
+  "2022\u20132026",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "LSG's powerplay run rate was {{ev:pp-team-e1}} across 2022\u20132023 (league {{ev:pp-league-e1}}) and {{ev:pp-team-e2}} across 2024\u20132026 (league {{ev:pp-league-e2}}).",
+  "IPL sides that lost no powerplay wickets won {{ev:ppw-l0}} of the time; three or more wickets down, {{ev:ppw-l3}}.",
+  "LSG out-scored the league in the powerplay in {{ev:pp-good-seasons}} of {{ev:pp-season-count}} seasons."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The First Six Overs, Measured",
+   "body": [
+    "Every T20 innings starts with the same bargain: two fielders outside the circle, a new ball, and a choice about risk. For Lucknow Super Giants the record shows how that bargain has been struck. Between 2022 and 2023 the side scored at {{ev:pp-team-e1}} runs per over in the powerplay while the league scored at {{ev:pp-league-e1}}, which put them behind the average.",
+    "Since 2024 the scoring environment has changed for everyone. LSG have scored at {{ev:pp-team-e2}} in the powerplay against a league figure of {{ev:pp-league-e2}}, behind the pace of the competition. Across the seasons in the CricField warehouse they finished above the league's powerplay rate in {{ev:pp-good-seasons}} of {{ev:pp-season-count}}.",
+    "On this measure their strongest season was 2026, at {{ev:pp-x-best-v}}, and their weakest 2022, at {{ev:pp-x-worst-v}}."
+   ],
+   "chartIds": [
+    "pp-trend"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What a Powerplay Wicket Costs",
+   "body": [
+    "Runs are only half of the equation. Grouping every IPL innings with a result by wickets lost in the first six overs gives a steep staircase: sides that kept all ten wickets won {{ev:ppw-l0}} of the time, sides two down won {{ev:ppw-l2}}, and sides three or more down won {{ev:ppw-l3}}. The steepest single step is worth {{ev:ppw-stepmax}} percentage points of win rate.",
+    "Lucknow Super Giants' own {{ev:ppw-tinn}} innings with a result follow the same pattern: {{ev:ppw-t0}} with no powerplay wickets lost, {{ev:ppw-t3}} with three or more."
+   ],
+   "chartIds": [
+    "pp-wkts"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Who Carries the Risk",
+   "body": [
+    "Among LSG's recent openers, {{ev:ppb-lead-name}} faced the most powerplay balls since 2024, {{ev:ppb-lead-balls}} of them, at a strike rate of {{ev:ppb-lead-sr}}.",
+    "The useful question for selectors is not whether to attack but who absorbs the risk. The player table shows each recent powerplay batter's strike rate beside how many balls they survive per dismissal; a pairing works when at least one of the two keeps the wicket count low while the other accelerates."
+   ],
+   "chartIds": [
+    "pp-players"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "The Case for Swinging Harder",
+   "body": [
+    "The league has sped up, and deeper batting line-ups since the impact-player rule may make an early wicket cheaper than the long-run averages suggest. The full-history staircase mixes eras in which a collapse was harder to absorb.",
+    "{{hyp:depth}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Price the Wicket First",
+   "body": [
+    "Lucknow Super Giants should keep pace with a faster league, but the evidence says the binding constraint in the powerplay is wickets. Across the IPL, a start of fifty-odd for one or fewer has won {{ev:pp-steady}} of the time, while sixty-plus for two or more has won {{ev:pp-reckless}}: the steadier start wins more often.",
+    "The practical rule is one licensed attacker and one risk-absorber at the top, chosen on balls per dismissal as much as on strike rate."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "pp-trend",
+   "type": "line",
+   "title": "Powerplay run rate by season",
+   "subtitle": "LSG batting vs IPL average, overs 1\u20136",
+   "table": "pp-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "LSG"
+    },
+    {
+     "key": "league",
+     "label": "IPL average"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per over",
+   "takeaway": "LSG have been behind the league's powerplay rate since 2024.",
+   "ariaLabel": "Line chart of LSG powerplay run rate and the IPL average by season."
+  },
+  {
+   "id": "pp-wkts",
+   "type": "column",
+   "title": "Win rate by powerplay wickets lost",
+   "subtitle": "All IPL innings with a result",
+   "table": "ppw-wkts-win",
+   "xKey": "wickets",
+   "series": [
+    {
+     "key": "team",
+     "label": "LSG"
+    },
+    {
+     "key": "league",
+     "label": "IPL"
+    }
+   ],
+   "xLabel": "Wickets lost in overs 1\u20136",
+   "unit": "% of innings won",
+   "takeaway": "Each extra powerplay wicket cuts the chance of winning sharply.",
+   "ariaLabel": "Grouped column chart of win rate by powerplay wickets lost for LSG and the IPL."
+  },
+  {
+   "id": "pp-players",
+   "type": "bar",
+   "title": "LSG powerplay batters since 2024",
+   "subtitle": "Balls per dismissal, minimum 60 balls",
+   "table": "ppb-players",
+   "xKey": "player",
+   "series": [
+    {
+     "key": "ballsPerDismissal",
+     "label": "Balls per dismissal"
+    }
+   ],
+   "unit": "balls per dismissal",
+   "takeaway": "Survival varies far more than strike rate between powerplay batters.",
+   "ariaLabel": "Horizontal bar chart of balls per dismissal for LSG powerplay batters since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "depth",
+   "statement": "Hypothesis: the impact-player rule has made an early wicket cheaper than the 2008\u20132026 averages imply.",
+   "whyUnverified": "The recent sample is too small to estimate the wicket penalty by era with precision.",
+   "howToTest": "Re-run the wickets-lost analysis on 2023 onwards with an era interaction term."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Lucknow Super Giants openers attacking the powerplay.",
+   "wanted": "Lucknow Super Giants opening batter playing an attacking shot, recent season."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-lsg-002",
+  "cf-lsg-009",
+  "cf-lsg-029"
+ ],
+ "seo": {
+  "metaTitle": "The Powerplay Equation: when should LSG attack?",
+  "metaDescription": "Lucknow Super Giants powerplay run rate against the league, and why IPL data says an early wicket costs more than a quick start earns."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Run rates use all runs per legal ball times six. Every figure is generated from the CricField warehouse by scripts/editorial/engine. Powerplay = overs one to six. Wickets exclude retired hurt. Player table: balls faced exclude wides.",
+ "generator": "engine:v1"
+}

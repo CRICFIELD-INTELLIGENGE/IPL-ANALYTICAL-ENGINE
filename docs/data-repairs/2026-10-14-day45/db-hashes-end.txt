@@ -1,0 +1,8 @@
+ab897a8ccdc590ca64b0512fd3c787a48dbd763779a6aeda76ef677b424309ac *sqlite.db
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 *sqlite.db-wal
+eb6a4ceddb4d7e035b16b6f918c0f55a725a75338eae9db39942f5d4d13a606a *../day45-backups/sqlite.pre-day45.db
+944b2c92046611a10a1642554e44df372e630f1962386c0ea854600e87346149 *../day45-backups/replaced-live-files/sqlite.db
+910a8256569f124b999c097c4275cf98a5c1ab24e1248bb09573c8fff0663a85 *../day45-backups/replaced-live-files/sqlite.db-shm
+e918c707553f11b20c71169d9d5e520a798c59b403567ac1bfae63d0353ed620 *../day45-backups/replaced-live-files/sqlite.db-wal
+ab897a8ccdc590ca64b0512fd3c787a48dbd763779a6aeda76ef677b424309ac *../day45-work/sqlite.final.db
+d82b78e1cf1373d17d1b16e53205cdcc6202196da64da253683c9d931cfb240a *../day45-work/sqlite.corrected.db

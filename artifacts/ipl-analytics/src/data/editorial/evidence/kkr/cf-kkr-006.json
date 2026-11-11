@@ -1,0 +1,225 @@
+{
+ "articleId": "cf-kkr-006",
+ "generatedAt": "2026-10-26T04:20:50.228Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "chase-t": {
+   "value": 58.3,
+   "display": "58.3%",
+   "label": "KKR chasing win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Second innings, matches with a result",
+   "sampleSize": {
+    "n": 144,
+    "unit": "chases"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 150 THEN 'under 150' WHEN i1.runs < 175 THEN '150–174' WHEN i1.runs < 200 THEN '175–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i2.batting_team_id IN (6) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i2.batting_team_id IN (6) AND m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 JOIN innings i2 ON i2.match_id = m.match_id AND i2.innings_number = 2 WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 20 chases",
+    "passed": true,
+    "detail": "n = 144"
+   }
+  },
+  "chase-l": {
+   "value": 54.5,
+   "display": "54.5%",
+   "label": "IPL chasing win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Second innings, matches with a result",
+   "sampleSize": {
+    "n": 1234,
+    "unit": "chases"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 150 THEN 'under 150' WHEN i1.runs < 175 THEN '150–174' WHEN i1.runs < 200 THEN '175–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i2.batting_team_id IN (6) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i2.batting_team_id IN (6) AND m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 JOIN innings i2 ON i2.match_id = m.match_id AND i2.innings_number = 2 WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 500 chases",
+    "passed": true,
+    "detail": "n = 1234"
+   }
+  },
+  "chase-l200": {
+   "value": 24.1,
+   "display": "24.1%",
+   "label": "IPL win rate chasing 200 or more",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First-innings total of 200+",
+   "sampleSize": {
+    "n": 216,
+    "unit": "chases"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 150 THEN 'under 150' WHEN i1.runs < 175 THEN '150–174' WHEN i1.runs < 200 THEN '175–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i2.batting_team_id IN (6) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i2.batting_team_id IN (6) AND m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 JOIN innings i2 ON i2.match_id = m.match_id AND i2.innings_number = 2 WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 30 chases",
+    "passed": true,
+    "detail": "n = 216"
+   }
+  },
+  "chase-lunder": {
+   "value": 80.4,
+   "display": "80.4%",
+   "label": "IPL win rate chasing under 150",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First-innings total under 150",
+   "sampleSize": {
+    "n": 331,
+    "unit": "chases"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 150 THEN 'under 150' WHEN i1.runs < 175 THEN '150–174' WHEN i1.runs < 200 THEN '175–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i2.batting_team_id IN (6) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i2.batting_team_id IN (6) AND m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 JOIN innings i2 ON i2.match_id = m.match_id AND i2.innings_number = 2 WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 30 chases",
+    "passed": true,
+    "detail": "n = 331"
+   }
+  },
+  "chase-t200": {
+   "value": 10.5,
+   "display": "10.5%",
+   "label": "KKR win rate chasing 200 or more",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First-innings total of 200+",
+   "sampleSize": {
+    "n": 19,
+    "unit": "chases"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 150 THEN 'under 150' WHEN i1.runs < 175 THEN '150–174' WHEN i1.runs < 200 THEN '175–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i2.batting_team_id IN (6) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i2.batting_team_id IN (6) AND m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 JOIN innings i2 ON i2.match_id = m.match_id AND i2.innings_number = 2 WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 5 chases",
+    "passed": true,
+    "detail": "n = 19"
+   }
+  },
+  "chase-t200n": {
+   "value": 19,
+   "display": "19",
+   "label": "KKR chases of 200 or more",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First-innings total of 200+",
+   "sampleSize": {
+    "n": 19,
+    "unit": "chases"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 150 THEN 'under 150' WHEN i1.runs < 175 THEN '150–174' WHEN i1.runs < 200 THEN '175–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i2.batting_team_id IN (6) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i2.batting_team_id IN (6) AND m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 JOIN innings i2 ON i2.match_id = m.match_id AND i2.innings_number = 2 WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "chase-rr-911": {
+   "value": 44.2,
+   "display": "44.2%",
+   "label": "IPL win rate when needing 9–11 an over at halfway",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Chases after ten overs",
+   "sampleSize": {
+    "n": 319,
+    "unit": "chases"
+   },
+   "query": "SELECT CASE WHEN rr_need < 9 THEN 'under 9' WHEN rr_need < 11 THEN '9–11' WHEN rr_need < 13 THEN '11–13' ELSE '13+' END band, COUNT(*) n, SUM(won) won, SUM(is_t) tn, SUM(is_t * won) tw FROM ( SELECT i2.batting_team_id IN (6) is_t, CASE WHEN m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END won, (i1.runs + 1 - SUM(d.total_runs)) * 6.0 / (120 - SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END)) rr_need FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 JOIN innings i2 ON i2.match_id = m.match_id AND i2.innings_number = 2 JOIN deliveries d ON d.innings_id = i2.innings_id AND d.over_num < 10 WHERE m.winner_id IS NOT NULL GROUP BY m.match_id HAVING SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) >= 60) GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 50 chases",
+    "passed": true,
+    "detail": "n = 319"
+   }
+  },
+  "chase-rr-1113": {
+   "value": 23,
+   "display": "23.0%",
+   "label": "IPL win rate when needing 11–13 an over at halfway",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Chases after ten overs",
+   "sampleSize": {
+    "n": 213,
+    "unit": "chases"
+   },
+   "query": "SELECT CASE WHEN rr_need < 9 THEN 'under 9' WHEN rr_need < 11 THEN '9–11' WHEN rr_need < 13 THEN '11–13' ELSE '13+' END band, COUNT(*) n, SUM(won) won, SUM(is_t) tn, SUM(is_t * won) tw FROM ( SELECT i2.batting_team_id IN (6) is_t, CASE WHEN m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END won, (i1.runs + 1 - SUM(d.total_runs)) * 6.0 / (120 - SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END)) rr_need FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 JOIN innings i2 ON i2.match_id = m.match_id AND i2.innings_number = 2 JOIN deliveries d ON d.innings_id = i2.innings_id AND d.over_num < 10 WHERE m.winner_id IS NOT NULL GROUP BY m.match_id HAVING SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) >= 60) GROUP BY band",
+   "validation": {
+    "method": "sample-size floor ≥ 50 chases",
+    "passed": true,
+    "detail": "n = 213"
+   }
+  }
+ },
+ "tables": {
+  "chase-bands": {
+   "label": "Chasing win rate by target band",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result; target band = first-innings total",
+   "sampleSize": {
+    "n": 1234,
+    "unit": "chases"
+   },
+   "query": "SELECT CASE WHEN i1.runs < 150 THEN 'under 150' WHEN i1.runs < 175 THEN '150–174' WHEN i1.runs < 200 THEN '175–199' ELSE '200+' END band, COUNT(*) n, SUM(CASE WHEN m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) won, SUM(CASE WHEN i2.batting_team_id IN (6) THEN 1 ELSE 0 END) tn, SUM(CASE WHEN i2.batting_team_id IN (6) AND m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END) tw FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 JOIN innings i2 ON i2.match_id = m.match_id AND i2.innings_number = 2 WHERE m.winner_id IS NOT NULL GROUP BY band",
+   "rows": [
+    {
+     "target": "under 150",
+     "league": 80.4,
+     "team": 84,
+     "teamChases": 50
+    },
+    {
+     "target": "150–174",
+     "league": 57.4,
+     "team": 59.1,
+     "teamChases": 44
+    },
+    {
+     "target": "175–199",
+     "league": 44,
+     "team": 45.2,
+     "teamChases": 31
+    },
+    {
+     "target": "200+",
+     "league": 24.1,
+     "team": 10.5,
+     "teamChases": 19
+    }
+   ]
+  },
+  "chase-need": {
+   "label": "Chasing win rate by required rate at halfway",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Second innings, required run rate after ten overs",
+   "sampleSize": {
+    "n": 1212,
+    "unit": "chases"
+   },
+   "query": "SELECT CASE WHEN rr_need < 9 THEN 'under 9' WHEN rr_need < 11 THEN '9–11' WHEN rr_need < 13 THEN '11–13' ELSE '13+' END band, COUNT(*) n, SUM(won) won, SUM(is_t) tn, SUM(is_t * won) tw FROM ( SELECT i2.batting_team_id IN (6) is_t, CASE WHEN m.winner_id = i2.batting_team_id THEN 1 ELSE 0 END won, (i1.runs + 1 - SUM(d.total_runs)) * 6.0 / (120 - SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END)) rr_need FROM matches m JOIN innings i1 ON i1.match_id = m.match_id AND i1.innings_number = 1 JOIN innings i2 ON i2.match_id = m.match_id AND i2.innings_number = 2 JOIN deliveries d ON d.innings_id = i2.innings_id AND d.over_num < 10 WHERE m.winner_id IS NOT NULL GROUP BY m.match_id HAVING SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) >= 60) GROUP BY band",
+   "rows": [
+    {
+     "required": "under 9",
+     "league": 80.4,
+     "team": 82.9
+    },
+    {
+     "required": "9–11",
+     "league": 44.2,
+     "team": 25.9
+    },
+    {
+     "required": "11–13",
+     "league": 23,
+     "team": 26.1
+    },
+    {
+     "required": "13+",
+     "league": 2.8,
+     "team": 0
+    }
+   ]
+  }
+ }
+}

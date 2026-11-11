@@ -1,0 +1,170 @@
+{
+ "articleId": "cf-rr-099",
+ "generatedAt": "2026-10-26T04:23:50.081Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "ml-n": {
+   "value": 10,
+   "display": "10",
+   "label": "Countries supplying overseas players to the IPL, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Nationality known",
+   "sampleSize": {
+    "n": 115,
+    "unit": "player records"
+   },
+   "query": "SELECT name, mine side, SUM(balls) balls FROM ( SELECT pl.name, CASE WHEN i.batting_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine UNION ALL SELECT pl.name, CASE WHEN i.bowling_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine) GROUP BY name, mine",
+   "validation": {
+    "method": "plausibility range 3–20 for countries",
+    "passed": true,
+    "detail": "value 10"
+   }
+  },
+  "ml-top": {
+   "value": "South Africa",
+   "display": "South Africa",
+   "label": "Country supplying the largest share of overseas action",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 33330,
+    "unit": "balls"
+   },
+   "query": "SELECT name, mine side, SUM(balls) balls FROM ( SELECT pl.name, CASE WHEN i.batting_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine UNION ALL SELECT pl.name, CASE WHEN i.bowling_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine) GROUP BY name, mine",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "ml-top-s": {
+   "value": 23,
+   "display": "23%",
+   "label": "That country's share of overseas balls",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 33330,
+    "unit": "balls"
+   },
+   "query": "SELECT name, mine side, SUM(balls) balls FROM ( SELECT pl.name, CASE WHEN i.batting_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine UNION ALL SELECT pl.name, CASE WHEN i.bowling_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine) GROUP BY name, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 5000 balls",
+    "passed": true,
+    "detail": "n = 33330"
+   }
+  },
+  "ml-me": {
+   "value": "West Indies",
+   "display": "West Indies",
+   "label": "Rajasthan Royals' largest overseas source",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 2952,
+    "unit": "balls"
+   },
+   "query": "SELECT name, mine side, SUM(balls) balls FROM ( SELECT pl.name, CASE WHEN i.batting_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine UNION ALL SELECT pl.name, CASE WHEN i.bowling_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine) GROUP BY name, mine",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "ml-me-s": {
+   "value": 37,
+   "display": "37%",
+   "label": "That country's share of Rajasthan Royals' overseas balls",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 2952,
+    "unit": "balls"
+   },
+   "query": "SELECT name, mine side, SUM(balls) balls FROM ( SELECT pl.name, CASE WHEN i.batting_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine UNION ALL SELECT pl.name, CASE WHEN i.bowling_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine) GROUP BY name, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 300 balls",
+    "passed": true,
+    "detail": "n = 2952"
+   }
+  },
+  "ml-cover": {
+   "value": 97,
+   "display": "97%",
+   "label": "Share of IPL balls with a known player nationality",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 99147,
+    "unit": "balls"
+   },
+   "query": "SELECT name, mine side, SUM(balls) balls FROM ( SELECT pl.name, CASE WHEN i.batting_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine UNION ALL SELECT pl.name, CASE WHEN i.bowling_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine) GROUP BY name, mine",
+   "validation": {
+    "method": "plausibility range 20–100 for coverage",
+    "passed": true,
+    "detail": "value 96.77549497211211"
+   }
+  }
+ },
+ "tables": {
+  "ml-cty": {
+   "label": "Overseas players' share of IPL action by country, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Share of overseas balls faced and bowled; nationality from player-bio data and squad lists",
+   "sampleSize": {
+    "n": 33330,
+    "unit": "balls"
+   },
+   "query": "SELECT name, mine side, SUM(balls) balls FROM ( SELECT pl.name, CASE WHEN i.batting_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine UNION ALL SELECT pl.name, CASE WHEN i.bowling_team_id IN (10) THEN 1 ELSE 0 END mine, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name, mine) GROUP BY name, mine",
+   "rows": [
+    {
+     "country": "South Africa",
+     "league": 23.3,
+     "franchise": 22.2
+    },
+    {
+     "country": "Australia",
+     "league": 23,
+     "franchise": 0
+    },
+    {
+     "country": "West Indies",
+     "league": 15.4,
+     "franchise": 37.3
+    },
+    {
+     "country": "England",
+     "league": 11.9,
+     "franchise": 10.5
+    },
+    {
+     "country": "Afghanistan",
+     "league": 9.6,
+     "franchise": 3.5
+    },
+    {
+     "country": "New Zealand",
+     "league": 8.9,
+     "franchise": 12.1
+    },
+    {
+     "country": "Sri Lanka",
+     "league": 5.8,
+     "franchise": 9.5
+    },
+    {
+     "country": "Bangladesh",
+     "league": 1.9,
+     "franchise": 4.9
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,150 @@
+{
+ "articleId": "cf-csk-096",
+ "generatedAt": "2026-10-26T04:18:31.474Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "pm-n": {
+   "value": 42,
+   "display": "42",
+   "label": "CSK matches since 2024",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 42,
+    "unit": "matches"
+   },
+   "query": "SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 4 THEN 1 ELSE 0 END) fours, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, (SELECT COUNT(*) FROM dismissals x JOIN deliveries d2 ON d2.delivery_id = x.delivery_id WHERE d2.match_id = d.match_id) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 AND d.match_id IN (1422119,1422125,1422131,1422136,1426260,1426267,1426272,1426277,1426284,1426287,1426291,1426297,1426299,1426306,1473440,1473445,1473448,1473454,1473459,1473462,1473467,1473475,1473480,1473486,1473489,1473494,1473500,1473504,1527676,1527680,1527684,1527691,1529265,1529270,1529276,1529280,1529287,1529291,1529296,1529302,1529306,1529309) GROUP BY d.match_id",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 42"
+   }
+  },
+  "pm-four": {
+   "value": 29,
+   "display": "29.0",
+   "label": "Fours per match",
+   "unit": "per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Both sides",
+   "sampleSize": {
+    "n": 42,
+    "unit": "matches"
+   },
+   "query": "SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 4 THEN 1 ELSE 0 END) fours, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, (SELECT COUNT(*) FROM dismissals x JOIN deliveries d2 ON d2.delivery_id = x.delivery_id WHERE d2.match_id = d.match_id) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 AND d.match_id IN (1422119,1422125,1422131,1422136,1426260,1426267,1426272,1426277,1426284,1426287,1426291,1426297,1426299,1426306,1473440,1473445,1473448,1473454,1473459,1473462,1473467,1473475,1473480,1473486,1473489,1473494,1473500,1473504,1527676,1527680,1527684,1527691,1529265,1529270,1529276,1529280,1529287,1529291,1529296,1529302,1529306,1529309) GROUP BY d.match_id",
+   "validation": {
+    "method": "plausibility range 10–60 for fours",
+    "passed": true,
+    "detail": "value 29.023809523809526"
+   }
+  },
+  "pm-six": {
+   "value": 16.8,
+   "display": "16.8",
+   "label": "Sixes per match",
+   "unit": "per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Both sides",
+   "sampleSize": {
+    "n": 42,
+    "unit": "matches"
+   },
+   "query": "SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 4 THEN 1 ELSE 0 END) fours, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, (SELECT COUNT(*) FROM dismissals x JOIN deliveries d2 ON d2.delivery_id = x.delivery_id WHERE d2.match_id = d.match_id) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 AND d.match_id IN (1422119,1422125,1422131,1422136,1426260,1426267,1426272,1426277,1426284,1426287,1426291,1426297,1426299,1426306,1473440,1473445,1473448,1473454,1473459,1473462,1473467,1473475,1473480,1473486,1473489,1473494,1473500,1473504,1527676,1527680,1527684,1527691,1529265,1529270,1529276,1529280,1529287,1529291,1529296,1529302,1529306,1529309) GROUP BY d.match_id",
+   "validation": {
+    "method": "plausibility range 5–50 for sixes",
+    "passed": true,
+    "detail": "value 16.785714285714285"
+   }
+  },
+  "pm-wk": {
+   "value": 11.9,
+   "display": "11.9",
+   "label": "Wickets per match",
+   "unit": "per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Both sides",
+   "sampleSize": {
+    "n": 42,
+    "unit": "matches"
+   },
+   "query": "SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 4 THEN 1 ELSE 0 END) fours, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, (SELECT COUNT(*) FROM dismissals x JOIN deliveries d2 ON d2.delivery_id = x.delivery_id WHERE d2.match_id = d.match_id) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 AND d.match_id IN (1422119,1422125,1422131,1422136,1426260,1426267,1426272,1426277,1426284,1426287,1426291,1426297,1426299,1426306,1473440,1473445,1473448,1473454,1473459,1473462,1473467,1473475,1473480,1473486,1473489,1473494,1473500,1473504,1527676,1527680,1527684,1527691,1529265,1529270,1529276,1529280,1529287,1529291,1529296,1529302,1529306,1529309) GROUP BY d.match_id",
+   "validation": {
+    "method": "plausibility range 5–20 for wickets",
+    "passed": true,
+    "detail": "value 11.904761904761905"
+   }
+  },
+  "pm-fif": {
+   "value": 1.81,
+   "display": "1.81",
+   "label": "Fifties per match",
+   "unit": "per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Both sides",
+   "sampleSize": {
+    "n": 42,
+    "unit": "matches"
+   },
+   "query": "SELECT f.innings_id FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id WHERE i.innings_number <= 2 AND i.match_id IN (1422119,1422125,1422131,1422136,1426260,1426267,1426272,1426277,1426284,1426287,1426291,1426297,1426299,1426306,1473440,1473445,1473448,1473454,1473459,1473462,1473467,1473475,1473480,1473486,1473489,1473494,1473500,1473504,1527676,1527680,1527684,1527691,1529265,1529270,1529276,1529280,1529287,1529291,1529296,1529302,1529306,1529309) AND f.runs >= 50",
+   "validation": {
+    "method": "plausibility range 0–6 for fifties",
+    "passed": true,
+    "detail": "value 1.8095238095238095"
+   }
+  },
+  "pm-close": {
+   "value": 26,
+   "display": "26%",
+   "label": "Share of decided matches that were close",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 42,
+    "unit": "matches"
+   },
+   "query": "SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 4 THEN 1 ELSE 0 END) fours, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, (SELECT COUNT(*) FROM dismissals x JOIN deliveries d2 ON d2.delivery_id = x.delivery_id WHERE d2.match_id = d.match_id) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 AND d.match_id IN (1422119,1422125,1422131,1422136,1426260,1426267,1426272,1426277,1426284,1426287,1426291,1426297,1426299,1426306,1473440,1473445,1473448,1473454,1473459,1473462,1473467,1473475,1473480,1473486,1473489,1473494,1473500,1473504,1527676,1527680,1527684,1527691,1529265,1529270,1529276,1529280,1529287,1529291,1529296,1529302,1529306,1529309) GROUP BY d.match_id",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 42"
+   }
+  }
+ },
+ "tables": {
+  "pm-events": {
+   "label": "Events per CSK match, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Both sides combined",
+   "sampleSize": {
+    "n": 42,
+    "unit": "matches"
+   },
+   "query": "SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 4 THEN 1 ELSE 0 END) fours, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, (SELECT COUNT(*) FROM dismissals x JOIN deliveries d2 ON d2.delivery_id = x.delivery_id WHERE d2.match_id = d.match_id) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 AND d.match_id IN (1422119,1422125,1422131,1422136,1426260,1426267,1426272,1426277,1426284,1426287,1426291,1426297,1426299,1426306,1473440,1473445,1473448,1473454,1473459,1473462,1473467,1473475,1473480,1473486,1473489,1473494,1473500,1473504,1527676,1527680,1527684,1527691,1529265,1529270,1529276,1529280,1529287,1529291,1529296,1529302,1529306,1529309) GROUP BY d.match_id",
+   "rows": [
+    {
+     "event": "Fours",
+     "perMatch": 29
+    },
+    {
+     "event": "Sixes",
+     "perMatch": 16.8
+    },
+    {
+     "event": "Wickets",
+     "perMatch": 11.9
+    },
+    {
+     "event": "Fifties",
+     "perMatch": 1.81
+    }
+   ]
+  }
+ }
+}
