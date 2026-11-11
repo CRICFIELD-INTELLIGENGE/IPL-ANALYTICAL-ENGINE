@@ -1,0 +1,137 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-pbks-064",
+ "planId": "cf-pbks-064",
+ "franchise": "PBKS",
+ "aspect": "history",
+ "title": "The Captaincy Eras: How Leadership Changed Punjab Kings\u2019s Playing Identity",
+ "slug": "pbks-the-captaincy-eras-how-leadership-changed-pbks-playing-identity",
+ "dek": "Punjab Kings have been led by a sequence of captains, and each era has its own results. Mapping captaincy spans onto the season record shows where leadership changed the story.",
+ "excerpt": "Lining up Punjab Kings' captaincy records against the season record separates clear eras from shared ones. Records that combine franchises, including Shreyas Iyer, Adam Gilchrist and K. L. Rahul, cannot be placed season by season.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "archive",
+ "teams": [
+  "PBKS"
+ ],
+ "players": [
+  "George Bailey"
+ ],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:ce-n}} captains are listed for PBKS; {{ev:ce-exact}} have franchise-only records, and among them {{ev:ce-longest}} has led in the most matches, {{ev:ce-capn}}, across {{ev:ce-span}}.",
+  "Franchise-only records cover {{ev:ce-single}} seasons with a single captain; {{ev:ce-unattr}} seasons cannot be attributed from the records.",
+  "The era table shows the average season win rate under each captain in single-captain seasons."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Leadership in Eras",
+   "body": [
+    "A captain sets the field, the bowling order and the mood. Over several seasons, a captain can give a franchise a recognisable identity.",
+    "{{ev:ce-n}} captains are listed for Punjab Kings, {{ev:ce-exact}} of them with records covering this franchise alone. Among those, {{ev:ce-longest}} has led in the most matches, {{ev:ce-capn}}, across {{ev:ce-span}}."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Mapping the Eras",
+   "body": [
+    "Franchise-only records place a single captain in {{ev:ce-single}} of Punjab Kings' seasons and more than one in {{ev:ce-shared}}. {{ev:ce-unattr}} seasons fall outside every franchise-only record, mostly the eras of captains such as Shreyas Iyer, Adam Gilchrist and K. L. Rahul, whose records combine franchises.",
+    "The chart shows the average season win rate in each captain's single-captain seasons."
+   ],
+   "chartIds": [
+    "ce-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Captain or Squad?",
+   "body": [
+    "A captain's results depend on the squad he leads. An era's win rate measures the whole team in those seasons, not the captain alone.",
+    "{{hyp:captain}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Limits of the Record",
+   "body": [
+    "The captaincy data gives each captain's first and last season, not the captain of each match. Eras are therefore defined by season, and shared seasons are left out of the era averages.",
+    "Records that combine franchises list first and last seasons across every team the captain led, so they are left out of the era mapping rather than misattributed."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: George Bailey Leads the Franchise-Only Record",
+   "body": [
+    "George Bailey has captained PBKS in the most matches among franchise-only records; captains with combined records are not compared.",
+    "Separating a captain's influence from the squad's quality needs match-by-match captaincy data."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ce-chart",
+   "type": "bar",
+   "title": "Average season win rate by captain",
+   "subtitle": "PBKS, single-captain seasons only",
+   "table": "ce-eras",
+   "xKey": "captain",
+   "series": [
+    {
+     "key": "winPct",
+     "label": "Average win rate"
+    }
+   ],
+   "unit": "% of decided matches",
+   "takeaway": "Results varied between captaincy eras.",
+   "ariaLabel": "Horizontal bar chart of Punjab Kings' average season win rate under each captain, in seasons with a single listed captain."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "captain",
+   "statement": "Hypothesis: captaincy changes at the franchise were followed by changes in powerplay tempo larger than in seasons without a change.",
+   "whyUnverified": "Match-level captaincy is not in the data.",
+   "howToTest": "Add the captain of each match and compare tempo before and after each change."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "George Bailey captaining Punjab Kings.",
+   "wanted": "George Bailey captaining Punjab Kings."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-pbks-022",
+  "cf-pbks-063",
+  "cf-pbks-062"
+ ],
+ "seo": {
+  "metaTitle": "The captaincy eras of PBKS",
+  "metaDescription": "Punjab Kings' captains mapped onto the season record: the longest spans, the shared seasons and results in each era."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Captaincy spans from CricField captains.json, franchise-only records only; a season is assigned to a captain only when exactly one such span covers it.",
+ "generator": "engine:v1"
+}

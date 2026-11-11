@@ -1,3 +1,4 @@
+import { CricFieldMascot } from "@/components/CricFieldMascot";
 /**
  * ASK THE IPL DATABASE — Decision Intelligence OS, Phase 1 (Foundation)
  * ─────────────────────────────────────────────────────────────────────────────
@@ -23,7 +24,7 @@ import {
   type AskResponse, type Chip, type HistoryOverview, type StatColumn, type StatResult,
 } from "@/lib/ask-api";
 import { MOCK_ANSWER, MOCK_OVERVIEW, MOCK_QUESTION } from "@/components/decision/ask-mock";
-import { askGeminiAnalyst, getGeminiApiKey, setGeminiApiKey, hasGeminiApiKey, type GeminiAnalysisResult } from "@/lib/gemini-client";
+import { askGeminiAnalyst, type GeminiAnalysisResult } from "@/lib/gemini-client";
 import { AdVessel } from "@/components/ad-vessel";
 import { Key, Bot } from "lucide-react";
 
@@ -63,12 +64,10 @@ export default function AskPage() {
   const [input, setInput] = useState("");
   const [entries, setEntries] = useState<Entry[]>([]);
 
-  // Gemini LLM State
+  // CricField AI State
   const [geminiInput, setGeminiInput] = useState("");
   const [geminiLoading, setGeminiLoading] = useState(false);
   const [geminiResult, setGeminiResult] = useState<GeminiAnalysisResult | null>(null);
-  const [geminiKeyInput, setGeminiKeyInput] = useState(getGeminiApiKey());
-  const [showKeyModal, setShowKeyModal] = useState(false);
 
   const overviewQ = useQuery({ queryKey: ["history-overview"], queryFn: fetchHistoryOverview, retry: 1, staleTime: 30 * 60_000 });
   const overview: HistoryOverview = overviewQ.data ?? MOCK_OVERVIEW;
@@ -147,15 +146,15 @@ export default function AskPage() {
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <div className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">Phase 1 · Foundation</div>
-              <h1 className="font-display font-black text-2xl sm:text-3xl text-white">Ask the IPL Database & Gemini LLM</h1>
+              <h1 className="font-display font-black text-2xl sm:text-3xl text-white">Ask CricField</h1>
               <p className="text-sm text-muted-foreground mt-1">
-                Plain-English database stats queries · Google Gemini 1.5 Flash tactical reasoning · IPL {c.firstSeason}–{c.lastSeason}
+                Plain-English database stats queries · Evidence-backed AI analysis · IPL {c.firstSeason}–{c.lastSeason}
               </p>
             </div>
             <div className="flex rounded-xl border border-white/10 bg-white/5 p-1 text-xs font-semibold" role="tablist">
               {([
                 ["ask", "SQL Database", MessageSquareText],
-                ["gemini", "Gemini LLM", Sparkles],
+                ["gemini", "CricField AI", Sparkles],
                 ["database", "Warehouse Summary", Database],
               ] as const).map(([key, label, Icon]) => (
                 <button
@@ -223,57 +222,23 @@ export default function AskPage() {
             <div className="p-4 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center shrink-0">
-                  <Bot className="w-5 h-5 text-cyan-400" />
+                  <CricFieldMascot activity="analyst" size={28} />
                 </div>
                 <div>
                   <div className="text-sm font-bold text-white flex items-center gap-2">
-                    <span>Google Gemini 1.5 Flash Cricket Intelligence</span>
+                    <span>CricField AI</span>
                     <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                      LIVE LLM
+                      OPTIONAL AI
                     </span>
                   </div>
                   <p className="text-xs text-white/60 mt-0.5">
-                    Synthesizes tactical coach reasoning, bowler selection critiques, and situation plans.
+                    Free-text reasoning from an external language model. Its answers are not computed from CricField's data and may contain wrong numbers — use the SQL Database tab for statistics.
                   </p>
                 </div>
               </div>
 
-              <button
-                onClick={() => setShowKeyModal(!showKeyModal)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border border-white/10 text-xs font-mono transition-colors"
-              >
-                <Key className="w-3.5 h-3.5 text-cyan-400" />
-                <span>{hasGeminiApiKey() ? "API Key Configured" : "Add Gemini API Key"}</span>
-              </button>
+              <span className="text-xs text-white/60">Available when enabled by CricField</span>
             </div>
-
-            {/* Key configuration panel */}
-            {showKeyModal && (
-              <div className="p-4 rounded-2xl bg-black/60 border border-white/10 space-y-3">
-                <div className="text-xs font-bold text-white">Google Gemini API Key</div>
-                <div className="flex gap-2">
-                  <input
-                    type="password"
-                    value={geminiKeyInput}
-                    onChange={(e) => setGeminiKeyInput(e.target.value)}
-                    placeholder="AIzaSy..."
-                    className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs font-mono text-white outline-none focus:border-cyan-400"
-                  />
-                  <button
-                    onClick={() => {
-                      setGeminiApiKey(geminiKeyInput);
-                      setShowKeyModal(false);
-                    }}
-                    className="px-4 py-2 rounded-xl bg-cyan-500 text-black font-bold text-xs hover:bg-cyan-400 transition-colors"
-                  >
-                    Save Key
-                  </button>
-                </div>
-                <p className="text-[11px] text-white/40">
-                  Saved securely to your local browser storage. You can also provide <code className="text-cyan-300">VITE_GEMINI_API_KEY</code> in <code className="text-cyan-300">.env</code>.
-                </p>
-              </div>
-            )}
 
             {/* Input Form */}
             <form onSubmit={onGeminiSubmit} className="rounded-2xl border border-cyan-500/30 bg-white/[0.04] focus-within:border-cyan-400 transition-colors p-2 flex items-center gap-2">
@@ -281,7 +246,8 @@ export default function AskPage() {
               <input
                 value={geminiInput}
                 onChange={(e) => setGeminiInput(e.target.value)}
-                placeholder="Ask Gemini: e.g. How to defend 20 in 2 overs at Wankhede against Russell?"
+                maxLength={2000}
+                placeholder="Ask CricField: e.g. Who scored the most runs in IPL 2025?"
                 className="flex-1 bg-transparent outline-none text-base py-2 placeholder:text-muted-foreground min-w-0"
               />
               <button
@@ -311,7 +277,13 @@ export default function AskPage() {
             </div>
 
             {/* Gemini Output Card */}
-            {geminiResult && (
+            {geminiResult && geminiResult.source === "unavailable" && (
+              <div role="status" className="rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+                {geminiResult.error ?? "AI Analyst is unavailable."}
+              </div>
+            )}
+
+            {geminiResult && geminiResult.source === "live_api" && (
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -321,7 +293,7 @@ export default function AskPage() {
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-cyan-400" />
                     <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">
-                      Gemini Tactical Assessment
+                      Gemini response — unverified AI text
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-[10px] font-mono text-white/50">
@@ -335,6 +307,8 @@ export default function AskPage() {
                 <div className="text-sm text-white/85 leading-relaxed whitespace-pre-line font-sans space-y-2">
                   {geminiResult.text}
                 </div>
+                <p className="text-xs text-slate-400">AI interpretation may contain errors. Inspect the retrieved records below.</p>
+                {geminiResult.evidence?.map(item => <details key={item.id} className="text-xs border border-white/10 rounded p-3"><summary>[{item.id}] {item.tool} � {item.source}</summary><pre className="overflow-auto max-h-80 whitespace-pre-wrap mt-3">{JSON.stringify(item.data, null, 2)}</pre></details>)}
               </motion.div>
             )}
           </div>
@@ -350,7 +324,7 @@ export default function AskPage() {
           <AdVessel
             slot="2938475610"
             format="horizontal"
-            label="Sponsored Tactical Intel · Official Analytics Partner"
+            label="Advertisement"
           />
         </div>
       </div>
@@ -368,10 +342,10 @@ function AnswerCard({ entry, onRemoveChip, onAsk }: { entry: Entry; onRemoveChip
         <MessageSquareText className="w-3.5 h-3.5" />
         <span className="truncate">{entry.question}</span>
         {entry.edited && <span className="ml-auto shrink-0 text-[10px] text-violet-300">edited</span>}
-        {entry.status === "loading" && <Loader2 className="w-3.5 h-3.5 animate-spin ml-auto shrink-0" />}
+        {entry.status === "loading" && <CricFieldMascot activity="analyzing" size={26} className="ml-auto" />}
       </div>
 
-      {entry.status === "loading" && !r && <div className="p-6 text-sm text-muted-foreground">Querying the database…</div>}
+      {entry.status === "loading" && !r && <div className="p-6 text-sm text-muted-foreground"><CricFieldMascot activity="analyzing" size={40} className="mr-3 align-middle" />Querying the database…</div>}
 
       {entry.demo && (
         <div className="mx-4 mt-3 flex items-start gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">

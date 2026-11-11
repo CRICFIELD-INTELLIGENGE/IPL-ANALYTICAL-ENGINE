@@ -1,0 +1,135 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-098",
+ "planId": "cf-dc-098",
+ "franchise": "DC",
+ "aspect": "future",
+ "title": "Data Governance in Cricket: How Delhi Capitals Could Use Analytics Responsibly",
+ "slug": "dc-data-governance-in-cricket-how-dc-could-use-analytics-responsibly",
+ "dek": "Analytics is only as good as the data under it. An audit of the warehouse behind this series shows what Delhi Capitals, or anyone, can and cannot responsibly claim from it.",
+ "excerpt": "The CricField warehouse is strong on the essentials and has clear gaps: some fields are empty, some are sparse, and some live only in side files. Responsible analytics starts by publishing that audit.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "DC"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:dg-len}} of deliveries carry a length tag, but only {{ev:dg-spd}} carry a speed.",
+  "The stored required-run-rate field is non-zero for {{ev:dg-rrr}} of deliveries and player of the match is recorded for {{ev:dg-potm}} of matches; both are recomputed or avoided in this series.",
+  "Nationality is known for {{ev:dg-cty}} of players in the players table; birth dates cover batters facing {{ev:dg-bd}} of Delhi Capitals' balls since 2024."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Why Governance Comes First",
+   "body": [
+    "A club using analytics makes decisions about players' careers. That carries a duty to know what the data can support, to say what it cannot, and to protect any personal data it holds.",
+    "This audit covers the warehouse behind every article in this series."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What the Audit Found",
+   "body": [
+    "{{ev:dg-len}} of deliveries carry a length tag, but only {{ev:dg-spd}} carry a speed. The stored required-run-rate field is non-zero for {{ev:dg-rrr}} of deliveries, player of the match is recorded for {{ev:dg-potm}} of matches, and the partnerships table has {{ev:dg-part}} rows.",
+    "Nationality is known for {{ev:dg-cty}} of players in the players table. The chart summarises coverage field by field."
+   ],
+   "chartIds": [
+    "dg-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "How This Series Handles the Gaps",
+   "body": [
+    "Where a stored field is empty, the series recomputes it from ball-by-ball data (required rates, partnerships) or avoids it (player of the match). Nationality and birth dates come from separate player-bio files, with coverage stated in every article that uses them.",
+    "{{hyp:governance}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Proposal: Principles for a Franchise",
+   "body": [
+    "Proposal: publish a coverage audit with every analysis, recompute rather than trust derived fields, state sample sizes, keep personal data such as medical and fitness records separate and access-controlled, and give players sight of the metrics used to judge them.",
+    "These are standard data-governance practices applied to cricket."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Show the Gaps",
+   "body": [
+    "Delhi Capitals, and every analyst, should publish what their data does not contain alongside what it shows.",
+    "An honest audit is the cheapest guard against confident mistakes."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "dg-chart",
+   "type": "bar",
+   "title": "Warehouse field coverage",
+   "subtitle": "Share of records with each field populated",
+   "table": "dg-audit",
+   "xKey": "field",
+   "series": [
+    {
+     "key": "coverage",
+     "label": "Coverage"
+    }
+   ],
+   "unit": "% of records",
+   "takeaway": "Core fields are complete; several derived and side fields are sparse or empty.",
+   "ariaLabel": "Horizontal bar chart of the share of records with each audited field populated in the CricField warehouse."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "governance",
+   "statement": "Hypothesis: articles that state data coverage are trusted more by readers than articles that do not.",
+   "whyUnverified": "No reader-trust data is available.",
+   "howToTest": "Survey readers on trust after showing versions of an article with and without coverage notes."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Delhi Capitals and the data behind the game.",
+   "wanted": "Delhi Capitals analyst or coaching staff."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-092",
+  "cf-dc-095",
+  "cf-dc-087"
+ ],
+ "seo": {
+  "metaTitle": "Data governance: how DC could use analytics responsibly",
+  "metaDescription": "A coverage audit of the data behind this series, what it cannot support, and principles for responsible analytics at Delhi Capitals."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Forward-looking proposals are labelled as such. Generated by scripts/editorial/engine. Coverage = share of records where each field is populated.",
+ "generator": "engine:v1"
+}

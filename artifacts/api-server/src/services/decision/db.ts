@@ -26,13 +26,21 @@ export function getProjectRoot(): string {
   return projectRoot;
 }
 
+/**
+ * The IPL warehouse file. CRICFIELD_DB_PATH (also honoured by @workspace/db) points the whole API at a copy,
+ * e.g. to verify a corrected database in isolation; unset, it is <project root>/sqlite.db as before.
+ */
+export function warehousePath(): string {
+  return process.env.CRICFIELD_DB_PATH ? path.resolve(process.env.CRICFIELD_DB_PATH) : path.join(getProjectRoot(), "sqlite.db");
+}
+
 let db: DatabaseSync | null = null;
 let dbError: string | null = null;
 
 /** Lazily opened read-only connection. Returns null when the warehouse is missing. */
 export function getDecisionDb(): DatabaseSync | null {
   if (db || dbError) return db;
-  const fp = path.join(getProjectRoot(), "sqlite.db");
+  const fp = warehousePath();
   if (!fs.existsSync(fp)) {
     dbError = `sqlite.db not found at ${fp}`;
     return null;
@@ -73,6 +81,26 @@ export function seasonToDbLabel(year: string): string {
   const hit = Object.entries(SEASON_ALIASES).find(([, y]) => y === year);
   return hit ? hit[0] : year;
 }
+
+/**
+ * Runs charged to the bowler for delivery `d`: off the bat, plus wides, plus no-ball extras. Byes, leg-byes and
+ * penalty runs are not charged.
+ *
+ * The warehouse stores one extra_runs total per delivery; the components come from is_bye / is_legbye /
+ * is_penalty, populated from the Cricsheet source by the Day 4.5 correction (745 / 4,406 / 2 deliveries). A
+ * penalty is always 5 runs; a no-ball with byes or leg-byes carries a 1-run no-ball extra (every such IPL
+ * delivery, all after the 2017 Laws); before 2017, runs off a no-ball were scored as no-ball extras and are
+ * charged. Equals the Cricsheet recount (batter + wides + no-balls) on all 295,732 IPL deliveries
+ * (scripts/src/step3/tests/warehouse-reconcile.test.ts). The same expression is used by
+ * scripts/src/compute_analytics.ts and inline in services/stats-aggregator.ts.
+ *
+ * Requires the populated flags: on a warehouse without them (all 0) it would charge byes run off a no-ball.
+ */
+export const RUNS_CONCEDED_SQL =
+  "(d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END)";
+
+/** Alias kept for references written before the switch. */
+export const RUNS_CONCEDED_EXACT_SQL = RUNS_CONCEDED_SQL;
 
 /** Minimal RFC-4180 CSV parser (quoted fields, embedded commas/newlines). */
 export function parseCsv(text: string): string[][] {

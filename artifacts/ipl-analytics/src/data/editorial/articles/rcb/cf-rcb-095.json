@@ -1,0 +1,135 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-095",
+ "planId": "cf-rcb-095",
+ "franchise": "RCB",
+ "aspect": "future",
+ "title": "Beyond Highlights: How Royal Challengers Bengaluru Could Build an Interactive Fan Experience",
+ "slug": "rcb-beyond-highlights-how-rcb-could-build-an-interactive-fan-experience",
+ "dek": "Highlights show a few moments. An interactive Royal Challengers Bengaluru experience could let fans explore every ball, and the data to power it largely exists already.",
+ "excerpt": "Royal Challengers Bengaluru's matches are recorded ball by ball, and most deliveries carry tags for the shot, the scoring zone and the length. That is the raw material for fan experiences that go far beyond highlights.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RCB"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "The warehouse holds {{ev:bh-n}} deliveries from {{ev:bh-m}} RCB matches.",
+  "{{ev:bh-shot}} carry the shot played, {{ev:bh-zone}} the scoring zone and {{ev:bh-len}} the length.",
+  "Only {{ev:bh-spd}} carry a speed, so pace-based features would need another source."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "From Highlights to Exploration",
+   "body": [
+    "Highlights packages choose the moments for fans. An interactive experience would let fans choose: every boundary a favourite batter hit through cover, every yorker at the death in a final.",
+    "The CricField warehouse already holds {{ev:bh-n}} deliveries from {{ev:bh-m}} Royal Challengers Bengaluru matches."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What Each Ball Carries",
+   "body": [
+    "{{ev:bh-shot}} of those deliveries carry the shot played, {{ev:bh-zone}} the scoring zone and {{ev:bh-len}} the length. Only {{ev:bh-spd}} carry a speed.",
+    "The chart shows coverage for each field."
+   ],
+   "chartIds": [
+    "bh-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Proposal: What Fans Could Do",
+   "body": [
+    "Proposal: wagon wheels filtered by bowler type and phase, a \"replay the chase\" mode that steps through each ball with the win-probability model from this series, and personal stat cards for any player.",
+    "{{hyp:interactive}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Rights and Gaps",
+   "body": [
+    "Video rights sit with the broadcaster and the league, so an interactive product would pair data with licensed clips or use data visuals alone. Speed data is too sparse for pace-based features.",
+    "Commentary tags are human-entered, so fan-facing tools should show coverage honestly."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: The Data Is Ready Before the Product",
+   "body": [
+    "For Royal Challengers Bengaluru, the ball-by-ball data needed for an interactive fan experience is largely in place.",
+    "The constraint is rights and design, not data."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "bh-chart",
+   "type": "bar",
+   "title": "What each ball carries",
+   "subtitle": "RCB matches, share of deliveries with each field",
+   "table": "bh-cover",
+   "xKey": "field",
+   "series": [
+    {
+     "key": "coverage",
+     "label": "Coverage"
+    }
+   ],
+   "unit": "% of deliveries",
+   "takeaway": "Shot, zone and length are well covered; speed is not.",
+   "ariaLabel": "Horizontal bar chart of the share of deliveries in Royal Challengers Bengaluru's matches with each commentary field recorded."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "interactive",
+   "statement": "Hypothesis: fans spend longer with interactive ball-by-ball tools than with highlights packages of the same match.",
+   "whyUnverified": "No engagement data is available.",
+   "howToTest": "Run an A/B test of interactive and highlights pages for the same matches."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Royal Challengers Bengaluru fans and the game.",
+   "wanted": "Royal Challengers Bengaluru fans with phones."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-047",
+  "cf-rcb-096",
+  "cf-rcb-098"
+ ],
+ "seo": {
+  "metaTitle": "Beyond highlights: an interactive RCB fan experience",
+  "metaDescription": "What ball-by-ball data exists for Royal Challengers Bengaluru's matches, and the interactive fan experiences it could power."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Forward-looking proposals are labelled as such. Generated by scripts/editorial/engine. Coverage = share of deliveries with each commentary field present.",
+ "generator": "engine:v1"
+}

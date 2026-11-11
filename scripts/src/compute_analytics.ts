@@ -1,7 +1,19 @@
-import { db } from "@workspace/db";
+import { db, isProductionDb } from "@workspace/db";
 import { sql } from "drizzle-orm";
 
+// Runs conceded by the bowler = runs off the bat + wides + no-ball extras; byes, leg-byes and penalty runs
+// are not the bowler's. The warehouse stores one extra_runs total per delivery, so the components come from
+// the is_bye / is_legbye / is_penalty flags (a penalty is always 5; a no-ball with byes or leg-byes carries a
+// 1-run no-ball extra, as in every such IPL delivery since the 2017 Laws). With the flags unpopulated (all 0)
+// this reduces to the previous expression. Must stay equal to RUNS_CONCEDED_EXACT_SQL in
+// artifacts/api-server/src/services/decision/db.ts.
 async function main() {
+  // This script DELETEs and rebuilds every derived analytics table. Point it at a copy with
+  // CRICFIELD_DB_PATH=<copy.db>; the live warehouse needs an explicit, reviewed --allow-production.
+  if (isProductionDb() && !process.argv.includes("--allow-production")) {
+    console.error("Refusing to rebuild analytics tables in the production sqlite.db. Set CRICFIELD_DB_PATH to a copy, or pass --allow-production after review.");
+    process.exit(1);
+  }
   console.log("=== STARTING ANALYTICS PRECOMPUTATION ===");
 
   try {
@@ -61,11 +73,11 @@ async function main() {
               d.match_id, 
               d.bowler_id, 
               COUNT(*) FILTER (WHERE NOT d.is_wide AND NOT d.is_noball) as balls,
-              SUM(d.batter_runs + CASE WHEN d.is_wide OR d.is_noball THEN d.extra_runs ELSE 0 END) as runs,
+              SUM(d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END) as runs,
               COUNT(dis.dismissal_id) as wickets
           FROM deliveries d
           LEFT JOIN dismissals dis ON d.delivery_id = dis.delivery_id 
-              AND dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field')
+              AND dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'retired not out', 'obstructing the field', 'handled the ball', 'timed out')
           GROUP BY d.match_id, d.bowler_id
       ),
       bowler_best AS (
@@ -158,12 +170,12 @@ async function main() {
               i.bowling_team_id as team_id,
               COUNT(DISTINCT d.match_id) as matches,
               COUNT(*) FILTER (WHERE NOT d.is_wide AND NOT d.is_noball) as balls,
-              SUM(d.batter_runs + CASE WHEN d.is_wide OR d.is_noball THEN d.extra_runs ELSE 0 END) as runs,
+              SUM(d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END) as runs,
               COUNT(dis.dismissal_id) as wickets
           FROM deliveries d
           INNER JOIN innings i ON d.innings_id = i.innings_id
           LEFT JOIN dismissals dis ON d.delivery_id = dis.delivery_id 
-              AND dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field')
+              AND dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'retired not out', 'obstructing the field', 'handled the ball', 'timed out')
           GROUP BY d.bowler_id, i.bowling_team_id
       ),
       all_pt AS (
@@ -222,12 +234,12 @@ async function main() {
               m.season_id,
               COUNT(DISTINCT d.match_id) as matches,
               COUNT(*) FILTER (WHERE NOT d.is_wide AND NOT d.is_noball) as balls,
-              SUM(d.batter_runs + CASE WHEN d.is_wide OR d.is_noball THEN d.extra_runs ELSE 0 END) as runs,
+              SUM(d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END) as runs,
               COUNT(dis.dismissal_id) as wickets
           FROM deliveries d
           INNER JOIN matches m ON d.match_id = m.match_id
           LEFT JOIN dismissals dis ON d.delivery_id = dis.delivery_id 
-              AND dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field')
+              AND dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'retired not out', 'obstructing the field', 'handled the ball', 'timed out')
           GROUP BY d.bowler_id, m.season_id
       ),
       all_ps AS (
@@ -280,11 +292,11 @@ async function main() {
                   ELSE 'middle'
               END as phase,
               COUNT(*) FILTER (WHERE NOT d.is_wide AND NOT d.is_noball) as balls,
-              SUM(d.batter_runs + CASE WHEN d.is_wide OR d.is_noball THEN d.extra_runs ELSE 0 END) as runs,
+              SUM(d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END) as runs,
               COUNT(dis.dismissal_id) as wickets
           FROM deliveries d
           LEFT JOIN dismissals dis ON d.delivery_id = dis.delivery_id 
-              AND dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field')
+              AND dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'retired not out', 'obstructing the field', 'handled the ball', 'timed out')
           GROUP BY d.bowler_id, phase
       ),
       all_pp AS (
@@ -389,7 +401,10 @@ async function main() {
       team_econ AS (
           SELECT 
               i.bowling_team_id as team_id,
-              ROUND(CAST(SUM(i.runs) AS REAL) / NULLIF(SUM(i.overs), 0), 2) as avg_economy
+              -- innings.overs is cricket notation (19.4 = 19 overs 4 balls), not a decimal: convert to balls first.
+              -- Day 6: the old SUM(runs) / SUM(overs) overstated every team by 0.02-0.05 rpo; the ball form equals a
+              -- recount from deliveries (total runs over legal balls) for all 19 teams.
+              ROUND(CAST(SUM(i.runs) AS REAL) * 6 / NULLIF(SUM(CAST(i.overs AS INTEGER) * 6 + CAST(ROUND((i.overs - CAST(i.overs AS INTEGER)) * 10) AS INTEGER)), 0), 2) as avg_economy
           FROM innings i
           GROUP BY i.bowling_team_id
       )

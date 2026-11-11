@@ -18,7 +18,8 @@ const TOC = [
   { id: "playing-xi", label: "Playing XI optimizer" },
   { id: "squad-dna", label: "Squad DNA" },
   { id: "similarity", label: "Player similarity" },
-  { id: "auction", label: "Auction valuation" },
+  { id: "intelligence", label: "Player Intelligence" },
+  { id: "auction", label: "2026 auction backtest" },
   { id: "validation", label: "How the models are checked" },
 ];
 
@@ -222,8 +223,25 @@ similarity  = e^−(0.45 × role + 0.55 × output)                   (100% = ide
         <Field label="Limitations"><Bullets items={["Similarity describes how players played, not how good they are overall.", "Players with very unusual profiles have no close neighbours; the scores say so rather than forcing a match."]} /></Field>
       </Panel>
 
-      <Panel id="auction" kicker="Auction War Room" title="Auction valuation: expected price, value, signal and max bid">
-        <Field label="Definition">What a player is likely to cost at auction (from comparable sales), what their output is worth at the market's going rate, and whether the gap is big enough to act on.</Field>
+      <Panel id="intelligence" kicker="Shared by every page" title="Player Intelligence: four separate questions">
+        <Field label="Definition">Performance, market price, franchise-specific value and retention outlook are calculated apart and never blended into one score. All pages read one published, versioned snapshot, so a player reads the same everywhere. Live figures, including the live War Room board, come from here.</Field>
+        <Field label="Performance">
+          <Formula>{`run value      = runs + RE(next state) − RE(state)     RE from legal balls × wickets, seasons s−2 to s only
+adjusted value = run value − context (season, phase, innings) − venue − opposition
+rating         = (Σ decay^age × value + k × prior) ÷ (Σ decay^age × balls + k)     decay 0.5
+k              = per-ball variance ÷ talent variance     talent variance = year-to-year covariance of a player's rate
+Runs Above Replacement = (rating − replacement) × usual balls per match
+replacement    = median rating of role peers who played 5 or fewer matches in a season`}</Formula>
+        </Field>
+        <Field label="Market price">Average of a ridge regression and gradient-boosted trees on the log of the sale price, trained on rupee auction sales from 2014. Every feature is cut off before the auction it predicts. The figure is the expected price if sold, with an 80% range from out-of-time errors. Tested season by season on auctions the model had not seen, with the live numbers on the <a className="underline" href="/ai-analyst/squad-builder">model record</a>.</Field>
+        <Field label="Value read">Performance percentile minus price percentile, within the role. Undervalued at +20, overvalued at −20. Two rankings are compared because no validated conversion from runs to rupees exists, so no rupee value of output is published.</Field>
+        <Field label="Franchise value">The change in a team's best XII: twelve players under the overseas limit, seven batting slots with at most three each for top order, middle order and finishers, and a 20-over bowling plan by phase. Overs nobody in the squad can bowl count against the side, which is why the same player is worth more to some teams. This measures composition. Pre-season strength has not been shown to predict results.</Field>
+        <Field label="Retention">A model of whether a franchise keeps a player between mini-auctions. It failed its calibration test on the latest holdout season, so it appears as a provisional rank and not a percentage. Season simulation is off for the same reason of evidence: no playoff or title odds are published.</Field>
+        <Field label="Not included"><Chips items={["Fielding runs saved", "Unsold players before 2026", "2027 retentions and purses", "Injury and availability", "Wins Above Replacement"]} /></Field>
+      </Panel>
+
+      <Panel id="auction" kicker="2026 backtest board" title="Comparable-sales benchmark: expected price, value, signal and max bid">
+        <Field label="Definition">The earlier benchmark, kept only for the 2026 backtest board. What a player was likely to cost from comparable sales, and what their output was worth at the market's going rate. The live board uses Player Intelligence above.</Field>
         <Field label="Formula">
           <Formula>{`IAR            = impact − replacement level      (20th-percentile impact among players with 5+ matches that season)
 expected price = weighted geometric mean of the 15 most similar sales in the last five auctions

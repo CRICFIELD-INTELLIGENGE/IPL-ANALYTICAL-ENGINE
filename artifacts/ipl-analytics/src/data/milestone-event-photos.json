@@ -1,0 +1,683 @@
+[
+  {
+    "season": "2008",
+    "teams": [
+      "RR"
+    ],
+    "src": "/milestone-photos/final-2008.jpg",
+    "sourceUrl": "https://indianexpress.com/photos/sports-gallery/ipl-final-a-look-back-at-previous-nine-ipl-finals-see-pics-4665170/",
+    "originalUrl": "https://images.indianexpress.com/2017/05/rajasthan-2008.jpg",
+    "credit": "Express archive",
+    "caption": "Rajasthan Royals at the 2008 IPL final.",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 820,
+    "height": 559,
+    "matchDate": "2008-06-01"
+  },
+  {
+    "season": "2010",
+    "teams": [
+      "CSK"
+    ],
+    "src": "/milestone-photos/final-2010.jpg",
+    "sourceUrl": "https://indianexpress.com/photos/sports-gallery/ipl-final-a-look-back-at-previous-nine-ipl-finals-see-pics-4665170/",
+    "originalUrl": "https://images.indianexpress.com/2017/05/csk-2010.jpg",
+    "credit": "Express archive",
+    "caption": "Chennai Super Kings: the 2010 IPL final.",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 820,
+    "height": 456,
+    "matchDate": "2010-04-25"
+  },
+  {
+    "season": "2011",
+    "teams": [
+      "CSK"
+    ],
+    "src": "/milestone-photos/final-2011.jpg",
+    "sourceUrl": "https://indianexpress.com/photos/sports-gallery/ipl-final-a-look-back-at-previous-nine-ipl-finals-see-pics-4665170/",
+    "originalUrl": "https://images.indianexpress.com/2017/05/murali.jpg",
+    "credit": "PTI / The Indian Express",
+    "caption": "Murali Vijay during the 2011 IPL final.",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 820,
+    "height": 497,
+    "matchDate": "2011-05-28"
+  },
+  {
+    "season": "2012",
+    "teams": [
+      "KKR"
+    ],
+    "src": "/milestone-photos/final-2012.jpg",
+    "sourceUrl": "https://indianexpress.com/photos/sports-gallery/ipl-final-a-look-back-at-previous-nine-ipl-finals-see-pics-4665170/",
+    "originalUrl": "https://images.indianexpress.com/2017/05/kkr-2012.jpg",
+    "credit": "Express archive",
+    "caption": "Kolkata Knight Riders: the 2012 IPL final.",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 820,
+    "height": 514,
+    "matchDate": "2012-05-27"
+  },
+  {
+    "season": "2013",
+    "teams": [
+      "MI"
+    ],
+    "src": "/milestone-photos/final-2013.jpg",
+    "sourceUrl": "https://www.mumbaiindians.com/history",
+    "originalUrl": "https://www.mumbaiindians.com/static-assets/images/cssimages/2013-IPL.jpg",
+    "credit": "Mumbai Indians",
+    "caption": "Mumbai Indians celebrate their first IPL title in 2013.",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 1920,
+    "height": 823,
+    "matchDate": "2013-05-26"
+  },
+  {
+    "season": "2014",
+    "teams": [
+      "KKR"
+    ],
+    "src": "/milestone-photos/final-2014.jpg",
+    "sourceUrl": "https://indianexpress.com/photos/sports-gallery/ipl-final-a-look-back-at-previous-nine-ipl-finals-see-pics-4665170/",
+    "originalUrl": "https://images.indianexpress.com/2017/05/kkr-2014.jpg",
+    "credit": "Express archive",
+    "caption": "Kolkata Knight Riders at the 2014 IPL final.",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "portrait",
+    "width": 3570,
+    "height": 4452,
+    "matchDate": "2014-06-01"
+  },
+  {
+    "season": "2015",
+    "teams": [
+      "MI"
+    ],
+    "src": "/milestone-photos/final-2015.jpg",
+    "sourceUrl": "https://www.mumbaiindians.com/history",
+    "originalUrl": "https://www.mumbaiindians.com/static-assets/images/cssimages/2015-IPL.jpg",
+    "credit": "Mumbai Indians",
+    "caption": "Mumbai Indians: the 2015 IPL title celebration.",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 1920,
+    "height": 823,
+    "matchDate": "2015-05-24"
+  },
+  {
+    "season": "2016",
+    "teams": [
+      "SRH"
+    ],
+    "src": "/milestone-photos/final-2016.jpg",
+    "sourceUrl": "https://indianexpress.com/photos/sports-gallery/ipl-final-a-look-back-at-previous-nine-ipl-finals-see-pics-4665170/",
+    "originalUrl": "https://images.indianexpress.com/2017/05/srh-2016.jpg",
+    "credit": "PTI / The Indian Express",
+    "caption": "Sunrisers Hyderabad at the 2016 IPL final.",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 820,
+    "height": 456,
+    "matchDate": "2016-05-29"
+  },
+  {
+    "season": "2017",
+    "teams": [
+      "MI"
+    ],
+    "src": "/milestone-photos/final-2017.jpg",
+    "sourceUrl": "https://www.mumbaiindians.com/history",
+    "originalUrl": "https://www.mumbaiindians.com/static-assets/images/cssimages/2017-IPL.jpg",
+    "credit": "Mumbai Indians",
+    "caption": "Mumbai Indians: the 2017 IPL title celebration.",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 1920,
+    "height": 823,
+    "matchDate": "2017-05-21"
+  },
+  {
+    "season": "2019",
+    "teams": [
+      "MI"
+    ],
+    "src": "/milestone-photos/final-2019.jpg",
+    "sourceUrl": "https://www.mumbaiindians.com/history",
+    "originalUrl": "https://www.mumbaiindians.com/static-assets/images/cssimages/2019-IPL.jpg",
+    "credit": "Mumbai Indians",
+    "caption": "Mumbai Indians: the 2019 IPL title celebration.",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 1920,
+    "height": 823,
+    "matchDate": "2019-05-12"
+  },
+  {
+    "season": "2020",
+    "teams": [
+      "MI"
+    ],
+    "src": "/milestone-photos/final-2020.jpg",
+    "sourceUrl": "https://www.mumbaiindians.com/history",
+    "originalUrl": "https://www.mumbaiindians.com/static-assets/images/cssimages/champions_2020.jpg",
+    "credit": "Mumbai Indians",
+    "caption": "Mumbai Indians: the 2020 IPL title celebration.",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 1920,
+    "height": 823,
+    "matchDate": "2020-11-10"
+  },
+  {
+    "season": "2021",
+    "teams": [
+      "CSK"
+    ],
+    "src": "/milestone-photos/final-2021-csk.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/vivo-ipl-2021-final-csk-vs-kkr-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/1eAOBW7qgcXrNJUiHpl2cN/31231ce9e67e71675693e97715d89df3/RON_4513.JPG",
+    "credit": "IPL / BCCI",
+    "caption": "VIVO IPL 2021, Final CSK vs KKR – Match Report",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 3389,
+    "height": 2259,
+    "matchDate": "2021-10-15"
+  },
+  {
+    "season": "2022",
+    "teams": [
+      "GT"
+    ],
+    "src": "/milestone-photos/final-2022-gt.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2022men-final-gt-vs-rr-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/6vbsEh6mT0v8vAJd3XcNbL/0309dc71c30c9845fa28cd89abbba263/1653857538_SPCS2105.JPG",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2022,Men Final GT Vs RR – Match Report",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 1200,
+    "height": 675,
+    "matchDate": "2022-05-29"
+  },
+  {
+    "season": "2023",
+    "teams": [
+      "CSK"
+    ],
+    "src": "/milestone-photos/final-2023-csk.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2023-final-csk-vs-gt-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/2BnPTLkkLs4BDGTDpu9Wa/b2407475e01241f31d139e969a4135ff/1685393592_RON_1181.jpg",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2023, Final CSK Vs GT - Match Report",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 2351,
+    "height": 1322,
+    "matchDate": "2023-05-29"
+  },
+  {
+    "season": "2024",
+    "teams": [
+      "KKR"
+    ],
+    "src": "/milestone-photos/final-2024-kkr.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2024-final-kkr-vs-srh-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/7H9u7lVbtzBCfYkpvX1NZ8/99a82ee7986c423e215d0e31ab5b95e6/1716744068_KKR_win_for_report.jpeg",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2024 , Final , KKR Vs SRH - Match Report",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 1090,
+    "height": 613,
+    "matchDate": "2024-05-26"
+  },
+  {
+    "season": "2025",
+    "teams": [
+      "RCB"
+    ],
+    "src": "/milestone-photos/final-2025-rcb.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2025-final-rcb-vs-pbks-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/3G9L59S1CCCmXgOPYQm2x6/ea5e445a17d09cc9232576b1ea6f3cbd/4241.jpg",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2025, Final, RCB vs PBKS - Match Report",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 4096,
+    "height": 2304,
+    "matchDate": "2025-06-03"
+  },
+  {
+    "season": "2022",
+    "teams": [
+      "GT"
+    ],
+    "src": "/milestone-photos/debut-2022-lsg.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2022-match-04-gt-vs-lsg-match-report-4rhcdhky",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/2jmUR8lSFgJqDFu9mYc4eW/a3a6a23a0313dd9787b5a68933156f5e/1648496890__AI_1171.jpg",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2022, Match 04: GT Vs LSG – Match Report",
+    "occasion": "debut",
+    "depiction": "match-action",
+    "presentation": "landscape",
+    "width": 1200,
+    "height": 675,
+    "matchDate": "2022-03-28"
+  },
+  {
+    "season": "2024",
+    "teams": [
+      "SRH"
+    ],
+    "src": "/milestone-photos/highest-total-2024-srh.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2024-match-30-rcb-vs-srh-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/7yWBea4Vh9xzS6HUOb4mu/8699dde17b343be826972c8b8f2cd7f6/1713203909_Head_50_1.jpeg",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2024 Match 30 , RCB Vs SRH - Match Report",
+    "occasion": "highest-total",
+    "depiction": "match-action",
+    "presentation": "landscape",
+    "width": 872,
+    "height": 490,
+    "matchDate": "2024-04-15"
+  },
+  {
+    "season": "2023",
+    "teams": [
+      "GT"
+    ],
+    "src": "/milestone-photos/highest-total-2023-gt.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2023-qualifier-2-gt-vs-mi-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/1jysLrxjbOk5HfdyOEDvSR/3123966f180f88f1a1c2b84af0c7c2a4/1685126661__AI_1586.jpg",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2023, Qualifier 2 GT Vs MI - Match Report",
+    "occasion": "highest-total",
+    "depiction": "match-action",
+    "presentation": "landscape",
+    "width": 1175,
+    "height": 661,
+    "matchDate": "2023-05-26"
+  },
+  {
+    "season": "2023",
+    "teams": [
+      "LSG"
+    ],
+    "src": "/milestone-photos/highest-total-2023-lsg.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2023-match-38-pbks-vs-lsg-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/4SD9BqDX138Fdsn8LgQFmg/fb9e141255321e2cf6b29397abc4969e/1682707709_Arjun294_1970.jpg",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2023, Match 38 PBKS vs LSG - Match Report",
+    "occasion": "highest-total",
+    "depiction": "match-action",
+    "presentation": "landscape",
+    "width": 3574,
+    "height": 2010,
+    "matchDate": "2023-04-28"
+  },
+  {
+    "season": "2024",
+    "teams": [
+      "KKR"
+    ],
+    "src": "/milestone-photos/highest-total-2024-kkr.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2024-match-16-dc-vs-kkr-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/5F7CYlYA4qjKYKRhxFrR6M/5afed5ad415fa5cb1428987d39fe63f3/1712167363_Narine_26-run_over.jpeg",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2024 Match 16 , DC Vs KKR - Match Report",
+    "occasion": "highest-total",
+    "depiction": "match-action",
+    "presentation": "landscape",
+    "width": 960,
+    "height": 540,
+    "matchDate": "2024-04-03"
+  },
+  {
+    "season": "2018",
+    "teams": [
+      "CSK"
+    ],
+    "src": "/milestone-photos/final-2018-csk.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/report-final-csk-vs-srh",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/17DK1xEUGZFV7PBfsG1hdn/5aa7dc610ab0ee7c2d95120f6a1e8df1/RON_3496.JPG",
+    "credit": "IPL / BCCI",
+    "caption": "Report: Final - CSK vs SRH",
+    "occasion": "final",
+    "depiction": "championship",
+    "presentation": "landscape",
+    "width": 4838,
+    "height": 3225,
+    "matchDate": "2018-05-27"
+  },
+  {
+    "season": "2013",
+    "teams": [
+      "RCB"
+    ],
+    "src": "/milestone-photos/highest-total-2013-rcb.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/report-match-31-rcb-vs-pwi",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/3W6P9Di464LcmKqWUdmNPQ/fd96edcf69e0421b6106acf6d76c17e7/40334.jpg",
+    "credit": "IPL / BCCI",
+    "caption": "Report : Match 31 - RCB vs PWI",
+    "occasion": "highest-total",
+    "depiction": "match-action",
+    "presentation": "landscape",
+    "width": 1280,
+    "height": 853,
+    "matchDate": "2013-04-23"
+  },
+  {
+    "season": "2022",
+    "teams": [
+      "LSG"
+    ],
+    "src": "/milestone-photos/first-win-2022-lsg.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2022-match-07-lsg-vs-csk-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/1IjKOogncFJZFf4benOF3Z/275bba04555bde35cc40e232ab77fb30/1648753173__AI_3467.jpg",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2022, Match 07: LSG Vs CSK – Match Report",
+    "occasion": "first-win",
+    "depiction": "match-action",
+    "presentation": "landscape",
+    "width": 1200,
+    "height": 675,
+    "matchDate": "2022-03-31"
+  },
+  {
+    "season": "2026",
+    "teams": [
+      "DC",
+      "PBKS"
+    ],
+    "src": "/milestone-photos/highest-total-2026-dc.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2026-match-35-dc-v-pbks-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/N9LCjhz4QMYP6lmzzWC2q/09eda53215951bf74787e23ce71fb6f2/4313.jpg",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2026, Match 35: DC v PBKS – Match Report",
+    "occasion": "highest-total",
+    "depiction": "match-action",
+    "presentation": "landscape",
+    "width": 3854,
+    "height": 2168,
+    "matchDate": "2026-04-25"
+  },
+  {
+    "season": "2026",
+    "teams": [
+      "RR"
+    ],
+    "src": "/milestone-photos/highest-total-2026-rr.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2026-eliminator-srh-v-rr-match-report",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/2VwxB4AZWdMYgwmH6jU2Ws/1f8d0b9f18caeab047c3dad920e87179/4375.jpg",
+    "credit": "IPL / BCCI",
+    "caption": "TATA IPL 2026, Eliminator: SRH v RR – Match Report",
+    "occasion": "highest-total",
+    "depiction": "match-action",
+    "presentation": "landscape",
+    "width": 3272,
+    "height": 1840,
+    "matchDate": "2026-05-27"
+  },
+  {
+    "season": "2013",
+    "teams": [
+      "SRH"
+    ],
+    "src": "/milestone-photos/debut-2013-srh.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/report-match-3-srh-vs-pwi",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/3g8GBE2BUSjU1nhrz8lxk9/b10aafd736333b588bb2fc399406fe17/11157.jpg",
+    "credit": "IPL / BCCI",
+    "caption": "Report: Match 3 - SRH vs PWI",
+    "occasion": "debut",
+    "depiction": "match-action",
+    "presentation": "landscape",
+    "width": 900,
+    "height": 600,
+    "matchDate": "2013-04-05"
+  },
+  {
+    "season": "2021",
+    "teams": [
+      "KKR"
+    ],
+    "src": "/milestone-photos/final-2021-kkr-9.jpg",
+    "sourceUrl": "https://www.kkr.in/photos/kkr-vs-csk-final-6601",
+    "originalUrl": "https://www.kkr.in/static-assets/waf-images/75/a9/86/1-1/9HDlKPmvnZ.jpg?v=110.19&w=400",
+    "credit": "Kolkata Knight Riders / IPL",
+    "caption": "Shubman Gill and Venkatesh Iyer during KKR’s opening stand in the 2021 IPL final.",
+    "occasion": "final",
+    "presentation": "landscape",
+    "width": 1400,
+    "height": 788,
+    "depiction": "match-action",
+    "matchDate": "2021-10-15"
+  },
+  {
+    "season": "2021",
+    "teams": [
+      "KKR"
+    ],
+    "src": "/milestone-photos/final-2021-kkr-0.jpg",
+    "sourceUrl": "https://www.kkr.in/photos/kkr-vs-csk-final-6601",
+    "originalUrl": "https://www.kkr.in/static-assets/waf-images/ee/06/52/4-3/4m7SZvjTwo.jpg?v=110.19&w=400",
+    "credit": "Kolkata Knight Riders / IPL",
+    "caption": "Kolkata Knight Riders at the 2021 IPL final in Dubai.",
+    "occasion": "final",
+    "presentation": "landscape",
+    "width": 1400,
+    "height": 788,
+    "depiction": "match-action",
+    "matchDate": "2021-10-15"
+  },
+  {
+    "season": "2022",
+    "teams": [
+      "RR"
+    ],
+    "src": "/milestone-photos/final-2022-rr.jpg",
+    "sourceUrl": "https://www.rajasthanroyals.com/latest-news/ipl-2022-final-gt-vs-rr-match-report-royals-fall-short-as-eventful-season-comes-to-an-end",
+    "originalUrl": "https://www.rajasthanroyals.com/static-assets/waf-images/65/56/44/16-9/jwpl90p5rkpzgr2c4lxcdxe4axern6wg.jpg",
+    "credit": "Rajasthan Royals",
+    "caption": "Rajasthan Royals together during the 2022 IPL final.",
+    "occasion": "final",
+    "presentation": "landscape",
+    "width": 1024,
+    "height": 576,
+    "depiction": "match-action",
+    "matchDate": "2022-05-29"
+  },
+  {
+    "season": "2023",
+    "teams": [
+      "GT"
+    ],
+    "src": "/milestone-photos/final-2023-gt.jpg",
+    "sourceUrl": "https://www.gujarattitansipl.com/news/exceptional-season-but-not-the-ideal-finish-csk-clinch-a-thriller-in-tata-ipl-2023-final",
+    "originalUrl": "https://www.gujarattitansipl.com/static-assets/waf-images/80/53/01/16-9/UBYRB2Zk5P.JPG",
+    "credit": "Gujarat Titans",
+    "caption": "Gujarat Titans in a team huddle during the 2023 IPL final.",
+    "occasion": "final",
+    "presentation": "landscape",
+    "width": 1024,
+    "height": 576,
+    "depiction": "match-action",
+    "matchDate": "2023-05-29"
+  },
+  {
+    "season": "2025",
+    "teams": [
+      "PBKS"
+    ],
+    "src": "/milestone-photos/final-2025-pbks.jpg",
+    "sourceUrl": "https://www.punjabkingsipl.in/photos/final-rcb-vs-pbks",
+    "originalUrl": "https://www.punjabkingsipl.in/static-assets/waf-images/98/3f/e2/16-9/dw6Hs326WI.png?v=1.19&w=1000",
+    "credit": "Punjab Kings / IPL",
+    "caption": "Punjab Kings batters during their chase in the 2025 IPL final.",
+    "occasion": "final",
+    "presentation": "landscape",
+    "width": 1000,
+    "height": 563,
+    "depiction": "match-action",
+    "matchDate": "2025-06-03"
+  },
+  {
+    "season": "2016",
+    "teams": [
+      "SRH"
+    ],
+    "src": "/milestone-photos/showcase-2016-srh.png",
+    "sourceUrl": "https://sunrisershyderabad.in/",
+    "originalUrl": "https://sunrisershyderabad.in/assets/players/2016.png",
+    "credit": "Sunrisers Hyderabad",
+    "caption": "Sunrisers Hyderabad’s title-winning side with the trophy in 2016.",
+    "occasion": "final",
+    "presentation": "cutout",
+    "width": 1456,
+    "height": 843,
+    "depiction": "championship",
+    "matchDate": "2016-05-29"
+  },
+  {
+    "season": "2018",
+    "teams": [
+      "SRH"
+    ],
+    "src": "/milestone-photos/showcase-2018-srh.png",
+    "sourceUrl": "https://sunrisershyderabad.in/",
+    "originalUrl": "https://sunrisershyderabad.in/assets/players/2018.png",
+    "credit": "Sunrisers Hyderabad",
+    "caption": "Sunrisers Hyderabad players during their 2018 campaign.",
+    "occasion": "final",
+    "presentation": "cutout",
+    "width": 1278,
+    "height": 925,
+    "depiction": "finalist",
+    "matchDate": "2018-05-27"
+  },
+  {
+    "season": "2024",
+    "teams": [
+      "SRH"
+    ],
+    "src": "/milestone-photos/showcase-2024-srh.png",
+    "sourceUrl": "https://sunrisershyderabad.in/",
+    "originalUrl": "https://sunrisershyderabad.in/assets/players/2024.png",
+    "credit": "Sunrisers Hyderabad",
+    "caption": "Pat Cummins with the runners-up award after the 2024 IPL final.",
+    "occasion": "final",
+    "presentation": "cutout",
+    "width": 572,
+    "height": 866,
+    "depiction": "finalist",
+    "matchDate": "2024-05-26"
+  },
+  {
+    "season": "2019",
+    "teams": [
+      "CSK"
+    ],
+    "src": "/milestone-photos/final-2019-csk-action.jpg",
+    "sourceUrl": "https://www.cricbuzz.com/cricket-gallery/4593/mi-vs-csk-ipl-2019-final",
+    "originalUrl": "https://static.cricbuzz.com/a/img/v1/i1/c169640/shane-watson-stroked-his-18th-ipl-fifty-enroute-his-80.jpg?d=high&p=det",
+    "credit": "Cricbuzz match gallery",
+    "caption": "Shane Watson during his innings of 80 in the 2019 final.",
+    "occasion": "final",
+    "presentation": "landscape",
+    "width": 540,
+    "height": 303,
+    "depiction": "match-action",
+    "matchDate": "2019-05-12"
+  },
+  {
+    "season": "2020",
+    "teams": [
+      "DC"
+    ],
+    "src": "/milestone-photos/final-2020-dc-action.jpg",
+    "sourceUrl": "https://www.cricbuzz.com/cricket-gallery/4929/mi-vs-dc-ipl-2020-final",
+    "originalUrl": "https://static.cricbuzz.com/a/img/v1/i1/c197936/rishabh-pant-and-shreyas-iyer-consolidated-after-the-early-loss-of-wickets-before-cutting-loose-slowly.jpg?d=high&p=det",
+    "credit": "Cricbuzz match gallery",
+    "caption": "Rishabh Pant and Shreyas Iyer rebuild Delhi’s innings in the 2020 final.",
+    "occasion": "final",
+    "presentation": "landscape",
+    "width": 540,
+    "height": 303,
+    "depiction": "match-action",
+    "matchDate": "2020-11-10"
+  },
+  {
+    "season": "2014",
+    "teams": [
+      "PBKS"
+    ],
+    "src": "/milestone-photos/final-2014-pbks.jpg",
+    "sourceUrl": "https://www.iplt20.com/news/article/we-tried-but-kkr-played-well-today-saha",
+    "originalUrl": "https://www.iplt20.com/cms/images/jot2qw8s50z1/7t8xuzphZMhVrfx13xFud4/a229e6cc613bb68bc7c35ba75f71bf77/39573.jpg",
+    "credit": "IPL / BCCI",
+    "caption": "Wriddhiman Saha acknowledges his century in the 2014 IPL final.",
+    "occasion": "final",
+    "presentation": "landscape",
+    "width": 1280,
+    "height": 853,
+    "depiction": "match-action",
+    "matchDate": "2014-06-01"
+  },
+  {
+    "season": "2016",
+    "teams": [
+      "RCB"
+    ],
+    "src": "/milestone-photos/final-2016-rcb-action.jpg",
+    "sourceUrl": "https://www.cricbuzz.com/cricket-gallery/2952/rcb-vs-srh-final-ipl-2016",
+    "originalUrl": "https://static.cricbuzz.com/a/img/v1/i1/c111220/kohli-and-gayle-put-on-more-than-100-before-the-left-hander-was-dismissed-for-76.jpg?d=high&p=det",
+    "credit": "Cricbuzz match gallery",
+    "caption": "Virat Kohli and Chris Gayle during their opening partnership in the 2016 final.",
+    "occasion": "final",
+    "presentation": "landscape",
+    "width": 540,
+    "height": 303,
+    "depiction": "match-action",
+    "matchDate": "2016-05-29"
+  },
+  {
+    "season": "2024",
+    "teams": [
+      "MI"
+    ],
+    "src": "/milestone-photos/highest-total-2024-mi-action.jpg",
+    "sourceUrl": "https://www.hindustantimes.com/photos/sports/ipl-2024-dc-vs-mi-catch-all-the-action-in-images-101714217032021.html",
+    "originalUrl": "https://www.hindustantimes.com/ht-img/img/2024/04/27/400x225/PTI04-27-2024-000192A-0_1714225583681_1714225997550.jpg",
+    "credit": "PTI / Hindustan Times",
+    "caption": "Mumbai Indians batting during their 247/9 chase in Delhi on 27 April 2024.",
+    "occasion": "highest-total",
+    "presentation": "landscape",
+    "width": 400,
+    "height": 225,
+    "depiction": "match-action",
+    "matchDate": "2024-04-27"
+  }
+]

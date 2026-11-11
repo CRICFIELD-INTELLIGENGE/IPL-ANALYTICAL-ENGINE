@@ -1,0 +1,127 @@
+{
+ "articleId": "cf-gt-034",
+ "generatedAt": "2026-10-26T04:26:30.736Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "os-balls": {
+   "value": 36,
+   "display": "36%",
+   "label": "Share of Gujarat Titans' balls faced and bowled by overseas players",
+   "unit": "%",
+   "dataset": "CricField warehouse + CricField squads-by-season.json (auction and retention prices)",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 17526,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, d.phase, SUM(d.batter_runs) * 1.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) bat, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 1.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowl FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase",
+   "validation": {
+    "method": "plausibility range 5–70 for share",
+    "passed": true,
+    "detail": "value 35.56430446194226"
+   }
+  },
+  "os-spend": {
+   "value": 39,
+   "display": "39%",
+   "label": "Share of Gujarat Titans' recorded spend on overseas players",
+   "unit": "%",
+   "dataset": "CricField warehouse + CricField squads-by-season.json (auction and retention prices)",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 133,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, d.phase, SUM(d.batter_runs) * 1.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) bat, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 1.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowl FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase",
+   "validation": {
+    "method": "plausibility range 5–80 for share",
+    "passed": true,
+    "detail": "value 38.83637072410096"
+   }
+  },
+  "os-traa": {
+   "value": 196,
+   "display": "196",
+   "label": "Overseas players' total tRAA for GT, 2018–2026",
+   "unit": "runs",
+   "dataset": "CricField warehouse + CricField squads-by-season.json (auction and retention prices)",
+   "filters": "Tempo runs above average",
+   "sampleSize": {
+    "n": 30,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, d.phase, SUM(d.batter_runs) * 1.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) bat, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 1.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowl FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase",
+   "validation": {
+    "method": "sample-size floor ≥ 10 player-seasons",
+    "passed": true,
+    "detail": "n = 30"
+   }
+  },
+  "os-itraa": {
+   "value": -21,
+   "display": "-21",
+   "label": "Indian players' total tRAA for GT, 2018–2026",
+   "unit": "runs",
+   "dataset": "CricField warehouse + CricField squads-by-season.json (auction and retention prices)",
+   "filters": "Tempo runs above average",
+   "sampleSize": {
+    "n": 103,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, d.phase, SUM(d.batter_runs) * 1.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) bat, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 1.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowl FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase",
+   "validation": {
+    "method": "sample-size floor ≥ 10 player-seasons",
+    "passed": true,
+    "detail": "n = 103"
+   }
+  },
+  "os-top": {
+   "value": "Rashid Khan (2022)",
+   "display": "Rashid Khan (2022)",
+   "label": "Gujarat Titans' highest-contributing overseas player-season",
+   "dataset": "CricField warehouse + CricField squads-by-season.json (auction and retention prices)",
+   "filters": "Min. 120 balls",
+   "sampleSize": {
+    "n": 427,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, d.phase, SUM(d.batter_runs) * 1.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) bat, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 1.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowl FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase",
+   "validation": {
+    "method": "rank by tRAA",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "os-cmp": {
+   "label": "GT overseas vs Indian players, 2018–2026",
+   "dataset": "CricField warehouse + CricField squads-by-season.json (auction and retention prices)",
+   "filters": "Nationality from player-bio data, squad list as fallback",
+   "sampleSize": {
+    "n": 133,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, d.phase, SUM(d.batter_runs) * 1.0 / SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) bat, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 1.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowl FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, d.phase, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year, pl.name, d.phase",
+   "rows": [
+    {
+     "group": "Overseas",
+     "shareOfBalls": 35.6,
+     "shareOfSpend": 38.8,
+     "tRAA": 196
+    },
+    {
+     "group": "Indian",
+     "shareOfBalls": 64.4,
+     "shareOfSpend": 61.2,
+     "tRAA": -21
+    }
+   ]
+  }
+ }
+}

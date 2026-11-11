@@ -1,6 +1,9 @@
 import fs from "fs";
 import { getBallInfo, overOffsets, deliveryLabel, hasBallCommentary, ballCommentaryVocab, ballCommentaryMatchCount, type BallInfo } from "./ball-commentary.js";
 import path from "path";
+import { buildBioLookup, lookupBioKey, type BioLookup } from "./player-bio-lookup.js";
+import { getPlayerMeta } from "./decision/player-profiles.js";
+import { queryAll } from "./decision/db.js";
 import {
   db,
   hasDb,
@@ -300,7 +303,7 @@ const wantsNationalityFilter = (nationality?: string): boolean =>
 const nationalityWantsIndian = (nationality: string): boolean =>
   nationality.toLowerCase() === "indian";
 
-type BowlerType = "Pacer" | "Spinner";
+type BowlerType = "Pacer" | "Spinner" | "Unknown";
 type BattingHand = "LHB" | "RHB" | "Unknown";
 type HandSplit = { runs: number; balls: number; wickets: number };
 
@@ -346,26 +349,42 @@ async function resolvePlayerDbName(name: string): Promise<string> {
   return name;
 }
 
-function getPlayerBio(playerName: string): any | undefined {
-  const scorecardName = normalizePlayerName(playerName);
-  if (playerBioLookupCache.has(scorecardName)) {
-    return playerBioLookupCache.get(scorecardName) ?? undefined;
+let bioLookup: BioLookup | null = null;
+function getBioLookup(): BioLookup {
+  if (bioLookup) return bioLookup;
+  ensureInit();
+  const root = getProjectRoot();
+  const dataDir = path.resolve(root, "artifacts", "ipl-analytics", "public", "data");
+  const readJson = (fp: string) => (fs.existsSync(fp) ? JSON.parse(fs.readFileSync(fp, "utf8")) : undefined);
+  const identityKeys = readJson(path.join(dataDir, "player-recent-matches", "index.json"))?.keys ?? {};
+  const squads = readJson(path.join(dataDir, "squads-by-season.json")) ?? {};
+  const rawDir = path.resolve(root, "lib", "cricket-data", "raw");
+  const registries: Record<string, string>[] = [];
+  if (fs.existsSync(rawDir)) {
+    for (const f of fs.readdirSync(rawDir)) {
+      if (!f.endsWith(".json")) continue;
+      const people = getMatchData(f.slice(0, -5))?.info?.registry?.people;
+      if (people) registries.push(people);
+    }
   }
-  const scoreParts = scorecardName.split(" ").filter(Boolean);
-  const scoreFirstInitial = scoreParts[0]?.charAt(0);
-  const scoreLastName = scoreParts[scoreParts.length - 1];
+  bioLookup = buildBioLookup(playerBios, identityKeys, registries, squads);
+  return bioLookup;
+}
 
-  const bio = Object.values(playerBios).find((candidateBio: any) => {
-    const bioName = normalizePlayerName(candidateBio.playerName || candidateBio.fullName || "");
-    if (bioName === scorecardName) return true;
-
-    const bioParts = bioName.split(" ").filter(Boolean);
-    return bioParts.length > 0 &&
-      !!scoreFirstInitial &&
-      bioParts[0].charAt(0) === scoreFirstInitial &&
-      bioParts[bioParts.length - 1] === scoreLastName;
-  });
-  playerBioLookupCache.set(scorecardName, bio ?? null);
+/**
+ * The bio of the player a scorecard's written name denotes, resolved through the Cricsheet registry and the
+ * identity index (services/player-bio-lookup.ts). Unknown — a written name shared by several players, or a player
+ * with no bio — returns undefined, and callers fall back as before. It no longer matches on initial + surname,
+ * which returned another player's bio for 57 IPL written names (e.g. "Kuldeep Yadav" → K Yadav, "RK Singh" →
+ * RP Singh, "Navdeep Saini" → Nitin Saini); see DAY-04.6-REPORT.md.
+ */
+function getPlayerBio(playerName: string): any | undefined {
+  if (playerBioLookupCache.has(playerName)) {
+    return playerBioLookupCache.get(playerName) ?? undefined;
+  }
+  const { key } = lookupBioKey(playerName, getBioLookup());
+  const bio = key ? playerBios[key] : undefined;
+  playerBioLookupCache.set(playerName, bio ?? null);
   return bio;
 }
 
@@ -506,25 +525,98 @@ function passesRepresentationFilter(playerName: string, filters: QueryFilters, r
   return true;
 }
 
-function getBowlerType(bowlerName: string): BowlerType {
+/**
+ * Pacer / Spinner / Unknown from a bowling-style string. Day 6: a missing or unrecognised style is Unknown; it used
+ * to be Pacer, which put every unclassified bowler into the pace totals and the "Pacer" filter.
+ */
+export function classifyBowlStyle(style: unknown): BowlerType {
+  const s = typeof style === "string" ? style.trim().toLowerCase() : "";
+  if (!s || s === "null") return "Unknown";
+  if (/(spin|break|orthodox|googly|chinaman|slow left|left[- ]arm slow|unorthodox)/.test(s)) return "Spinner";
+  if (/(fast|medium|seam|pace)/.test(s)) return "Pacer";
+  return "Unknown";
+}
+
+const bowlerTypeByIdCache = new Map<string, BowlerType>();
+let decisionTypeByCid: Map<string, BowlerType> | null = null;
+
+/** Registry id → bowling type from the decision layer (identity-resolved styles, then recorded ball speeds). */
+function decisionTypeFor(cid: string): BowlerType {
+  if (!decisionTypeByCid) {
+    decisionTypeByCid = new Map();
+    const meta = getPlayerMeta();
+    for (const r of queryAll<{ player_id: number; cricsheet_id: string | null }>("SELECT player_id, cricsheet_id FROM players")) {
+      const t = r.cricsheet_id ? meta.get(r.player_id)?.bowlingType : undefined;
+      if (t === "pace" || t === "spin") decisionTypeByCid.set(r.cricsheet_id!, t === "spin" ? "Spinner" : "Pacer");
+    }
+  }
+  return decisionTypeByCid.get(cid) ?? "Unknown";
+}
+
+/** Bowling type of one registered person: their verified bio's style, else the decision layer's evidence, else Unknown. */
+function bowlerTypeById(cid: string, writtenName: string): BowlerType {
+  const cached = bowlerTypeByIdCache.get(cid);
+  if (cached) return cached;
+  const idx = getBioLookup();
+  let key = idx.idToKey.get(cid);
+  if (!key && idx.nameToIds.get(writtenName)?.size === 1) {
+    const viaSquad = [...(idx.squadKeys.get(writtenName) ?? [])];
+    if (viaSquad.length === 1) key = viaSquad[0];
+  }
+  let t = classifyBowlStyle(key ? playerBios[key]?.bowlStyle : undefined);
+  if (t === "Unknown") t = decisionTypeFor(cid);
+  bowlerTypeByIdCache.set(cid, t);
+  return t;
+}
+
+let cidByPlayerId: Map<number, string> | null = null;
+
+/**
+ * Bowling type of a warehouse player row. Registered players resolve by registry id, so the label and the Bowler
+ * Type filter (getBowlerTypeIdSets) always agree; squad stubs ("json:N") fall back to their name.
+ */
+function bowlerTypeForPlayer(playerId: number, name: string): BowlerType {
+  if (!cidByPlayerId) {
+    cidByPlayerId = new Map(
+      queryAll<{ player_id: number; cricsheet_id: string | null }>("SELECT player_id, cricsheet_id FROM players")
+        .filter((r) => r.cricsheet_id && !r.cricsheet_id.startsWith("json:"))
+        .map((r) => [r.player_id, r.cricsheet_id!]),
+    );
+  }
+  const cid = cidByPlayerId.get(playerId);
+  return cid ? bowlerTypeById(cid, name) : getBowlerType(name);
+}
+
+/**
+ * Bowling type for a scorecard's written name. With the match's registry block (`info.registry.people`) the name is
+ * resolved to the person who bowled in that match, so the two players written "Harmeet Singh" are told apart.
+ * Without it, a written name shared by several people is Unknown, and a name that is not an IPL written name falls
+ * back to its bio by exact name. Nothing is inferred from the name itself (Day 6 removed a substring list that made
+ * any name containing "ahmed" or "ali" a spinner).
+ */
+/**
+ * Share of a batter's runs scored in fours and sixes, in % (0–100, rounded). This is the meaning of a BATTER's (and a
+ * matchup's) `boundaryPct` in the legacy stats endpoints, also exposed as `boundaryRunPct`. A BOWLER's
+ * `boundaryPct`, a scoring zone's, and the decision / team endpoints' are boundaries per 100 legal balls instead
+ * (Day 6 documented both and kept the values; DAY-06-REPORT.md §C).
+ */
+function boundaryRunPct(fours: number, sixes: number, runs: number): number {
+  return runs > 0 ? Math.round(((fours * 4 + sixes * 6) / runs) * 100) : 0;
+}
+
+function getBowlerType(bowlerName: string, people?: Record<string, string>): BowlerType {
+  const cid = people?.[bowlerName];
+  if (cid) return bowlerTypeById(cid, bowlerName);
   const nameLower = bowlerName.toLowerCase().trim();
   const cached = bowlerTypeCache.get(nameLower);
   if (cached) return cached;
-  const bio = getPlayerBio(bowlerName);
-  if (bio) {
-    const s = (bio.bowlStyle || "").toLowerCase();
-    const bioType = s.includes("spin") || s.includes("legbreak") || s.includes("offbreak") ||
-        s.includes("orthodox") || s.includes("chinaman") || s.includes("slow left") ? "Spinner" : "Pacer";
-    bowlerTypeCache.set(nameLower, bioType);
-    return bioType;
-  }
-  const spinners = ["chahal","narine","ashwin","rashid","chawla","mishra","harbhajan","jadeja",
-    "chakravarthy","axar","krunal","brar","tahir","zampa","markande","bishnoi","kuldeep","shakib",
-    "ali","moeen","sundar","gopal","suchith","ahmed","kartik","kuldeep","yuzvendra","varun",
-    "rohit sharma b","ravi bishnoi","theekshana","noor","hasaranga"];
-  const fallbackType = spinners.some(s => nameLower.includes(s)) ? "Spinner" : "Pacer";
-  bowlerTypeCache.set(nameLower, fallbackType);
-  return fallbackType;
+  const ids = getBioLookup().nameToIds.get(bowlerName);
+  let t: BowlerType;
+  if (ids && ids.size === 1) t = bowlerTypeById([...ids][0], bowlerName);
+  else if (ids && ids.size > 1) t = "Unknown";
+  else t = classifyBowlStyle(getPlayerBio(bowlerName)?.bowlStyle);
+  bowlerTypeCache.set(nameLower, t);
+  return t;
 }
 
 /**
@@ -700,7 +792,32 @@ function passesPressureFilter(overNum: number, inningIndex: number, wicketsFalle
 //  MAIN QUERY AGGREGATOR
 // ─────────────────────────────────────────────────────────────────────────────
 
+/**
+ * Day 8: the result is a pure function of the filters and the warehouse, which is read-only while the server runs
+ * (deployed with CRICFIELD_DB_READONLY=1; every other derived cache in this module already lives for the process).
+ * The unfiltered all-time query took ~5 s warm and returned 2.4 MB on every request. The most recent results are
+ * kept (bounded: QUERY_CACHE_MAX entries); each caller gets a shallow copy, because aggregateScenarioStats reassigns
+ * result.batters / result.bowlers. A failed computation is not cached.
+ */
+const QUERY_CACHE_MAX = 12;
+const queryStatsCache = new Map<string, Promise<any>>();
+
 export async function aggregateQueryStats(filters: QueryFilters) {
+  const key = JSON.stringify(Object.entries(filters ?? {}).filter(([, v]) => v !== undefined && v !== null && v !== "").sort(([a], [b]) => a.localeCompare(b)));
+  let pending = queryStatsCache.get(key);
+  if (pending) {
+    queryStatsCache.delete(key); // refresh recency
+  } else {
+    pending = aggregateQueryStatsUncached(filters);
+    pending.catch(() => queryStatsCache.delete(key));
+  }
+  queryStatsCache.set(key, pending);
+  while (queryStatsCache.size > QUERY_CACHE_MAX) queryStatsCache.delete(queryStatsCache.keys().next().value!);
+  const result = await pending;
+  return result && typeof result === "object" ? { ...result } : result;
+}
+
+async function aggregateQueryStatsUncached(filters: QueryFilters) {
   const resolvedFilters = { ...filters };
   if (filters.batter && hasDb()) {
     resolvedFilters.batter = await resolvePlayerDbName(filters.batter);
@@ -739,7 +856,7 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
     ppRuns: number; ppBalls: number; middleRuns: number; middleBalls: number;
     deathRuns: number; deathBalls: number;
     dismissals: { kind: string; bowler: string; over: number }[];
-    deliveryStats: Map<string, { runs: number; balls: number; dismissals: number }>;
+    deliveryStats: Map<string, { runs: number; balls: number; dismissals: number; dots: number }>;
     scoringZones: Map<string, { runs: number; balls: number; boundaries: number }>;
   }>();
 
@@ -803,7 +920,7 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
           if (!passesPhaseFilter(overNum, filters)) return;
 
           // Bowler type filter
-          const bType = getBowlerType(d.bowler);
+          const bType = getBowlerType(d.bowler, matchData.info?.registry?.people);
           const bowlerTypeF = filters.bowlerType;
           if (bowlerTypeF && bowlerTypeF !== "All Bowlers") {
             const isSpinSel = bowlerTypeF.toLowerCase().includes("spin");
@@ -879,8 +996,9 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
 
             // Delivery breakdown — only for balls the commentary described.
             if (delivType) {
-              const ds = bs.deliveryStats.get(delivType) || { runs: 0, balls: 0, dismissals: 0 };
+              const ds = bs.deliveryStats.get(delivType) || { runs: 0, balls: 0, dismissals: 0, dots: 0 };
               ds.runs += br; if (legalBall) ds.balls++;
+              if (legalBall && (d.runs?.total || 0) === 0) ds.dots++;
               bs.deliveryStats.set(delivType, ds);
             }
 
@@ -1001,14 +1119,16 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
     const deliveryBreakdown = Array.from(stat.deliveryStats.entries()).map(([type, s]) => ({
       type, runs: s.runs, balls: s.balls, dismissals: s.dismissals,
       sr: s.balls > 0 ? Math.round((s.runs / s.balls) * 1000) / 10 : 0,
-      dotPct: s.balls > 0 ? Math.round(((s.balls - (s.runs > 0 ? s.runs : 0)) / s.balls) * 100) : 0
+      // Dot balls (legal, no runs) per 100 balls. Was (balls − runs) ÷ balls, which is not a dot rate.
+      dotPct: s.balls > 0 ? Math.round((s.dots / s.balls) * 100) : 0
     })).filter(d => d.balls >= 1).sort((a, b) => b.runs - a.runs);
 
     // Scoring zones
     const scoringZones = Array.from(stat.scoringZones.entries()).map(([zone, s]) => ({
       zone, runs: s.runs, balls: s.balls, boundaries: s.boundaries,
       sr: s.balls > 0 ? Math.round((s.runs / s.balls) * 1000) / 10 : 0,
-      boundaryPct: s.runs > 0 ? Math.round((s.boundaries / s.runs) * 100) : 0
+      // Boundaries per 100 balls in the zone. (Was boundaries ÷ runs: a count over runs, not a percentage.)
+      boundaryPct: s.balls > 0 ? Math.round((s.boundaries / s.balls) * 100) : 0
     })).filter(z => z.balls >= 1).sort((a, b) => b.runs - a.runs);
 
     return {
@@ -1023,7 +1143,8 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
       runs: stat.runs,
       balls: stat.balls,
       avg, sr, fours: stat.fours, sixes: stat.sixes, fifties, hundreds, highest,
-      boundaryPct: stat.runs > 0 ? Math.round(((stat.fours * 4 + stat.sixes * 6) / stat.runs) * 100) : 0,
+      boundaryPct: boundaryRunPct(stat.fours, stat.sixes, stat.runs),
+      boundaryRunPct: boundaryRunPct(stat.fours, stat.sixes, stat.runs),
       isIndian: isIndianPlayer(player),
       // Phase breakdown
       ppRuns: stat.ppRuns, ppBalls: stat.ppBalls, ppSR,
@@ -1188,7 +1309,7 @@ async function aggregateMatchupStatsJson(batter: string, bowler: string, filters
           const isWide = !!ext.wides; const isNoball = !!ext.noballs;
           const legal = !isWide && !isNoball;
           const br = d.runs?.batter || 0;
-          const bType = getBowlerType(d.bowler);
+          const bType = getBowlerType(d.bowler, matchData.info?.registry?.people);
           const phase = phaseFromOver(overNum);
           const ballInfo = ballDetail(matchId, inningIndex, inn, overNum, ballIndex);
           const delivType = deliveryLabel(ballInfo);
@@ -1250,13 +1371,13 @@ async function aggregateMatchupStatsJson(batter: string, bowler: string, filters
 
   const sr   = stats.balls > 0 ? Math.round((stats.runs / stats.balls) * 1000) / 10 : 0;
   const dotPct = stats.balls > 0 ? Math.round((stats.dots / stats.balls) * 100) : 0;
-  const boundaryPct = stats.runs > 0 ? Math.round(((stats.fours * 4 + stats.sixes * 6) / stats.runs) * 100) : 0;
+  const boundaryPct = boundaryRunPct(stats.fours, stats.sixes, stats.runs);
   const dismissalRate = stats.balls > 0 ? Math.round((stats.dismissals / stats.balls) * 1000) / 10 : 0;
   const dominanceIndex = Math.max(0, Math.min(100, Math.round(50 + (sr - 130) * 0.25 - dismissalRate * 2 + boundaryPct * 0.15)));
 
   return {
     batter, bowler, runs: stats.runs, balls: stats.balls, dismissals: stats.dismissals,
-    sr, dotPct, boundaryPct, dominanceIndex, fours: stats.fours, sixes: stats.sixes,
+    sr, dotPct, boundaryPct, boundaryRunPct: boundaryPct, dominanceIndex, fours: stats.fours, sixes: stats.sixes,
     battingHand: getBattingHand(batter),
     bowlerType: getBowlerType(bowler),
     phaseSplit: {
@@ -1415,7 +1536,7 @@ async function aggregateDrilldownJson(player: string, dimension: "phase" | "deli
           const ext = d.extras ?? {};
           const legal = !ext.wides && !ext.noballs;
           const br = d.runs?.batter || 0;
-          const bType = getBowlerType(d.bowler);
+          const bType = getBowlerType(d.bowler, matchData.info?.registry?.people);
 
           // A null label means the commentary did not describe this ball on
           // the requested dimension; the ball is left out of the drilldown
@@ -1547,7 +1668,7 @@ async function aggregateFieldStatsJson(filters: FieldFilters) {
           if (!passesRepresentationFilter(d.batter, filters as QueryFilters, btShort)) return;
           if (!passesRepresentationFilter(d.bowler, filters as QueryFilters, blShort)) return;
 
-          const bType = getBowlerType(d.bowler);
+          const bType = getBowlerType(d.bowler, mData.info?.registry?.people);
           if (filters.bowlerType && filters.bowlerType !== "All Bowlers") {
             const isSpin = filters.bowlerType.toLowerCase().includes("spin");
             if (isSpin && bType !== "Spinner") return;
@@ -1673,8 +1794,11 @@ async function getBowlerTypeIdSets(): Promise<{ pacerIds: number[]; spinnerIds: 
   const rows = await db.select({ id: playersTable.playerId, name: playersTable.name }).from(playersTable);
   const pacerIds: number[] = [];
   const spinnerIds: number[] = [];
+  // Unknown-type players are in neither list (Day 6); they used to be added to pacerIds by default.
   for (const r of rows as any[]) {
-    (getBowlerType(r.name) === "Spinner" ? spinnerIds : pacerIds).push(r.id);
+    const t = bowlerTypeForPlayer(r.id, r.name);
+    if (t === "Spinner") spinnerIds.push(r.id);
+    else if (t === "Pacer") pacerIds.push(r.id);
   }
   bowlerTypeIdCache = { pacerIds, spinnerIds };
   return bowlerTypeIdCache;
@@ -1961,7 +2085,8 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
       balls,
       boundaries,
       sr: balls > 0 ? Math.round((runs / balls) * 1000) / 10 : 0,
-      boundaryPct: runs > 0 ? Math.round((boundaries / runs) * 100) : 0
+      // Boundaries per 100 balls in the zone. (Was boundaries ÷ runs: a count over runs, not a percentage.)
+      boundaryPct: balls > 0 ? Math.round((boundaries / balls) * 100) : 0
     });
     zoneMap.set(bId, list);
   }
@@ -1989,7 +2114,7 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
 
     const fours = Number(row.fours || 0);
     const sixes = Number(row.sixes || 0);
-    const boundaryPct = runs > 0 ? Math.round(((fours * 4 + sixes * 6) / runs) * 100) : 0;
+    const boundaryPct = boundaryRunPct(fours, sixes, runs);
 
     const bId = Number(row.batter_id);
 
@@ -2007,6 +2132,7 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
       hundreds: Number(row.hundreds || 0),
       highest: Number(row.highest || 0),
       boundaryPct,
+      boundaryRunPct: boundaryPct,
       isIndian: isIndianPlayer(player, row.country as string | null),
       ppRuns,
       ppBalls,
@@ -2038,17 +2164,17 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
       p_bowl.bowling_style as bowler_type,
       count(distinct d.match_id) as matches,
       count(distinct d.innings_id) as innings,
-      sum(case when d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as conceded_runs,
+      sum((d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END)) as conceded_runs,
       count(case when d.is_wide = false and d.is_noball = false then 1 end) as balls,
       count(case when d.total_runs = 0 and d.is_wide = false and d.is_noball = false then 1 end) as dots,
       count(case when dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as wickets,
-      sum(case when d.over_num < 6 and d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as pp_runs,
+      sum(case when d.over_num < 6 then (d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END) else 0 end) as pp_runs,
       count(case when d.over_num < 6 and d.is_wide = false and d.is_noball = false then 1 end) as pp_balls,
       count(case when d.over_num < 6 and dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as pp_wickets,
-      sum(case when d.over_num >= 6 and d.over_num < 15 and d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as mid_runs,
+      sum(case when d.over_num >= 6 and d.over_num < 15 then (d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END) else 0 end) as mid_runs,
       count(case when d.over_num >= 6 and d.over_num < 15 and d.is_wide = false and d.is_noball = false then 1 end) as mid_balls,
       count(case when d.over_num >= 6 and d.over_num < 15 and dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as mid_wickets,
-      sum(case when d.over_num >= 15 and d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as death_runs,
+      sum(case when d.over_num >= 15 then (d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END) else 0 end) as death_runs,
       count(case when d.over_num >= 15 and d.is_wide = false and d.is_noball = false then 1 end) as death_balls,
       count(case when d.over_num >= 15 and dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as death_wickets,
       count(case when d.is_boundary = true and d.is_wide = false and d.is_noball = false then 1 end) as boundaries
@@ -2069,7 +2195,7 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
     SELECT
       d.bowler_id,
       d.delivery_type as type,
-      sum(case when d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as runs,
+      sum((d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END)) as runs,
       count(case when d.is_wide = false and d.is_noball = false then 1 end) as balls,
       count(case when dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as wickets
     FROM deliveries d
@@ -2089,7 +2215,7 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
     SELECT
       d.bowler_id,
       p_bat.batting_style,
-      sum(case when d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as runs,
+      sum((d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END)) as runs,
       count(case when d.is_wide = false and d.is_noball = false then 1 end) as balls,
       count(case when dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as wickets
     FROM deliveries d
@@ -2110,7 +2236,7 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
       SELECT
         d.bowler_id,
         d.match_id,
-        sum(case when d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as conceded_runs,
+        sum((d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs - 5 * d.is_penalty WHEN d.is_noball = 1 THEN (CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN 1 ELSE d.extra_runs - 5 * d.is_penalty END) ELSE 0 END)) as conceded_runs,
         count(case when dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as wickets
       FROM deliveries d
       JOIN matches m ON d.match_id = m.match_id
@@ -2135,12 +2261,40 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
     SELECT bowler_id, wickets, conceded_runs FROM ranked_performances WHERE rn = 1
   `;
 
-  const [bowlerRes, bowlerDelivRes, bowlerHandRes, bowlerBestRes] = await Promise.all([
+  // True Economy baseline, as defined in scripts/src/aggregate-ipl.ts and the JSON path above: the average,
+  // over the matches a bowler bowled in (within the same filters), of each match's economy (all runs per six
+  // legal balls, rounded to 2 dp). Previously a fixed 8.2 was used here, so the same metric differed by path.
+  const bowlerBaselineQuery = sql`
+    WITH bm AS (
+      SELECT DISTINCT d.bowler_id, d.match_id
+      FROM deliveries d
+      JOIN players p_bowl ON d.bowler_id = p_bowl.player_id
+      JOIN matches m ON d.match_id = m.match_id
+      JOIN innings i ON d.innings_id = i.innings_id
+      JOIN teams bt ON i.batting_team_id = bt.team_id
+      JOIN teams bl ON i.bowling_team_id = bl.team_id
+      LEFT JOIN venues v ON m.venue_id = v.venue_id
+      LEFT JOIN dismissals dis ON d.delivery_id = dis.delivery_id
+      LEFT JOIN players p_bat ON d.batter_id = p_bat.player_id
+      WHERE ${bowlerWhere}
+    ),
+    mb AS (
+      SELECT match_id, ROUND(SUM(total_runs) * 6.0 / NULLIF(SUM(CASE WHEN is_wide = 0 AND is_noball = 0 THEN 1 ELSE 0 END), 0), 2) AS econ
+      FROM deliveries WHERE match_id IN (SELECT match_id FROM bm) GROUP BY match_id
+    )
+    SELECT bm.bowler_id, AVG(mb.econ) AS baseline FROM bm JOIN mb ON mb.match_id = bm.match_id
+    WHERE mb.econ IS NOT NULL GROUP BY bm.bowler_id
+  `;
+
+  const [bowlerRes, bowlerDelivRes, bowlerHandRes, bowlerBestRes, bowlerBaselineRes] = await Promise.all([
     db.execute(bowlerQuery),
     db.execute(bowlerDelivQuery),
     db.execute(bowlerHandQuery),
-    db.execute(bowlerBestQuery)
+    db.execute(bowlerBestQuery),
+    db.execute(bowlerBaselineQuery)
   ]);
+  const baselineMap = new Map<number, number>();
+  for (const row of bowlerBaselineRes.rows) baselineMap.set(Number(row.bowler_id), Number(row.baseline));
 
   const bowlerDelivMap = new Map<number, any[]>();
   for (const row of bowlerDelivRes.rows) {
@@ -2177,9 +2331,11 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
       wickets,
       strikeRate: wickets > 0 ? Math.round((balls / wickets) * 10) / 10 : 0
     };
+    // players.batting_style is empty on every row, so handedness is unknown here: unknown is not
+    // "right-handed". Only a stated style is classified; otherwise the split is omitted below.
     if (style.includes("left")) {
       bowlerLhbMap.set(bId, record);
-    } else {
+    } else if (style.includes("right")) {
       bowlerRhbMap.set(bId, record);
     }
   }
@@ -2206,8 +2362,9 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
     const boundaryPct = balls > 0 ? Math.round((boundaries / balls) * 1000) / 10 : 0;
     const ballsPerBoundary = boundaries > 0 ? Math.round((balls / boundaries) * 10) / 10 : balls;
 
-    const trueEconomy = Math.round((econ - 8.2) * 100) / 100;
     const bId = Number(row.bowler_id);
+    const baseline = baselineMap.get(bId);
+    const trueEconomy = baseline === undefined || balls === 0 ? null : Math.round((econ - baseline) * 100) / 100;
     const player = row.player || "";
 
     return {
@@ -2230,11 +2387,11 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
       ballsPerBoundary,
       trueEconomy,
       // row.bowler_type comes from players.bowling_style, which is never
-      // populated (see getBowlerTypeIdSets()) — classify from the same
-      // bio/heuristic source the filter itself uses instead.
-      bowlerType: getBowlerType(player),
-      vsLhb: bowlerLhbMap.get(bId) || { runs: 0, balls: 0, wickets: 0, strikeRate: 0 },
-      vsRhb: bowlerRhbMap.get(bId) || { runs: 0, balls: 0, wickets: 0, strikeRate: 0 },
+      // populated (see getBowlerTypeIdSets()) — classify by the same
+      // per-player rule the filter itself uses instead.
+      bowlerType: bowlerTypeForPlayer(bId, player),
+      vsLhb: bowlerLhbMap.get(bId),
+      vsRhb: bowlerRhbMap.get(bId),
       unmatchedBatterBalls: 0,
       best: bestMap.get(bId) || "0/0"
     };
@@ -2581,7 +2738,7 @@ async function aggregateMatchupStatsSql(batter: string, bowler: string, filters:
 
   const sr = balls > 0 ? Math.round((runs / balls) * 1000) / 10 : 0;
   const dotPct = balls > 0 ? Math.round((dots / balls) * 100) : 0;
-  const boundaryPct = runs > 0 ? Math.round(((fours * 4 + sixes * 6) / runs) * 100) : 0;
+  const boundaryPct = boundaryRunPct(fours, sixes, runs);
   const dismissalRate = balls > 0 ? Math.round((dismissals / balls) * 1000) / 10 : 0;
   const dominanceIndex = Math.max(0, Math.min(100, Math.round(50 + (sr - 130) * 0.25 - dismissalRate * 2 + boundaryPct * 0.15)));
 
@@ -2594,6 +2751,7 @@ async function aggregateMatchupStatsSql(batter: string, bowler: string, filters:
     sr,
     dotPct,
     boundaryPct,
+    boundaryRunPct: boundaryPct,
     dominanceIndex,
     fours,
     sixes,
@@ -2687,7 +2845,9 @@ export function readDataJson(filename: string): any {
   return null;
 }
 
+let overviewMemo: any = null;
 export async function getOverview() {
+  if (overviewMemo) return overviewMemo; // Day 8: league-wide summary, fixed for a read-only warehouse
   if (hasDb()) {
     try {
       const matchCount = await db.select({ count: sql`count(*)` }).from(matchesTable);
@@ -2704,8 +2864,27 @@ export async function getOverview() {
         const foursCount = await db.select({ count: sql`count(*)` }).from(deliveriesTable).where(eq(deliveriesTable.batterRuns, 4));
         const seasonsCount = await db.select({ count: sql`count(*)` }).from(seasonsTable);
         const avgFirstInn = await db.select({ avg: sql`avg(runs)` }).from(inningsTable).where(eq(inningsTable.inningsNumber, 1));
+        // Day 6: these were literals (second innings 150, batting first 43.2%, dot 34.43%, boundary 16.62%, 59 venues,
+        // 703 batters, 550 bowlers). Rates are over legal balls; win shares are over matches with a winner (super-over
+        // results included, no-results excluded); boundaryPct is boundaries per 100 legal balls, as elsewhere.
+        const live = (await db.execute(sql.raw(`
+          SELECT
+            (SELECT avg(runs) FROM innings WHERE innings_number = 2) AS avg_second,
+            (SELECT sum(CASE WHEN is_wide = 0 AND is_noball = 0 THEN 1 ELSE 0 END) FROM deliveries) AS legal_balls,
+            (SELECT sum(CASE WHEN is_wide = 0 AND is_noball = 0 AND is_dot_ball = 1 THEN 1 ELSE 0 END) FROM deliveries) AS legal_dots,
+            (SELECT count(*) FROM matches m JOIN innings i ON i.match_id = m.match_id AND i.innings_number = 1 WHERE m.winner_id IS NOT NULL) AS decided,
+            (SELECT count(*) FROM matches m JOIN innings i ON i.match_id = m.match_id AND i.innings_number = 1 WHERE m.winner_id = i.batting_team_id) AS bat_first_wins,
+            (SELECT count(*) FROM teams) AS teams,
+            (SELECT count(*) FROM venues) AS venues,
+            (SELECT count(DISTINCT batter_id) FROM deliveries) AS batters,
+            (SELECT count(DISTINCT bowler_id) FROM deliveries) AS bowlers
+        `))).rows[0] as any;
+        const legalBalls = Number(live.legal_balls || 0);
+        const decided = Number(live.decided || 0);
+        const pct2 = (num: number, den: number) => (den > 0 ? Math.round((num / den) * 10000) / 100 : null);
+        const battingFirstWinPct = decided > 0 ? Math.round((Number(live.bat_first_wins) / decided) * 1000) / 10 : null;
         
-        return {
+        return (overviewMemo = {
           totalMatches: Number(matchCount[0].count),
           totalSeasons: Number(seasonsCount[0]?.count || 19),
           seasons: Number(seasonsCount[0]?.count || 19),
@@ -2716,34 +2895,34 @@ export async function getOverview() {
           totalSixes: Number(sixesCount[0]?.count || 34063),
           totalFours: Number(foursCount[0]?.count || 22507),
           avgFirstInningsScore: Math.round(Number(avgFirstInn[0]?.avg || 168.7)),
-          avgSecondInningsScore: 150,
+          avgSecondInningsScore: live.avg_second == null ? null : Math.round(Number(live.avg_second)),
           avg1stInnings: Math.round(Number(avgFirstInn[0]?.avg || 168.7) * 10) / 10,
-          battingFirstWinPct: 43.2,
-          chasingWinPct: 56.8,
-          dotBallPct: 34.43,
-          boundaryPct: 16.62,
+          avgSecondInnings: live.avg_second == null ? null : Math.round(Number(live.avg_second) * 10) / 10,
+          battingFirstWinPct,
+          chasingWinPct: battingFirstWinPct == null ? null : Math.round((100 - battingFirstWinPct) * 10) / 10,
+          decidedMatches: decided,
+          dotBallPct: pct2(Number(live.legal_dots || 0), legalBalls),
+          boundaryPct: pct2(Number(boundaryCount[0]?.count || 0), legalBalls),
+          legalBalls,
           firstSeason: firstSeasonRow[0]?.season || "2008",
           lastSeason: lastSeasonRow[0]?.season || "2026",
           dateRange: `${firstSeasonRow[0]?.season || "2008"}–${lastSeasonRow[0]?.season || "2026"}`,
-          totalTeams: 19,
-          totalVenues: 59,
-          totalBatsmen: 703,
-          totalBowlers: 550,
-        };
+          totalTeams: Number(live.teams || 0),
+          totalVenues: Number(live.venues || 0),
+          totalBatsmen: Number(live.batters || 0),
+          totalBowlers: Number(live.bowlers || 0),
+        });
       }
     } catch (err) {
       console.warn("SQL Overview failed, falling back to JSON:", err);
     }
   }
+  // Last resort without the warehouse or overview.json: only counts verified against the 2008–2026 source
+  // (= overview.json). Day 6 removed invented rates and a swapped fours/sixes pair (34063 / 22507).
   return readDataJson("overview.json") || {
     totalMatches: 1243, totalSeasons: 19, seasons: 19, totalRuns: 401738, totalWickets: 14705,
-    totalBalls: 280776, totalBoundaries: 56570, totalSixes: 34063, totalFours: 22507,
-    avgFirstInningsScore: 169, avgSecondInningsScore: 150, avg1stInnings: 168.7,
-    battingFirstWinPct: 43.2, chasingWinPct: 56.8,
-    dotBallPct: 34.43, boundaryPct: 16.62,
-    firstSeason: "2008", lastSeason: "2026",
-    dateRange: "2008–2026", totalTeams: 19, totalVenues: 59,
-    totalBatsmen: 703, totalBowlers: 550,
+    totalSixes: 15779, totalFours: 34447, avg1stInnings: 168.6,
+    firstSeason: "2008", lastSeason: "2026", dateRange: "2008–2026",
   };
 }
 
@@ -2759,19 +2938,106 @@ export async function getSeasons() {
   return readDataJson("seasons.json");
 }
 
+// Day 6: both used to return hardcoded literals (toss-analysis.json / phase-analysis.json do not exist), e.g. a
+// powerplay dot-ball rate of 31.8% where the record says 46.3%. They are now computed from the warehouse; without
+// it, the JSON file or nulls are returned, never invented figures.
+const pctOrNull = (num: number, den: number, dp = 1) => (den > 0 ? Math.round((num / den) * 100 * 10 ** dp) / 10 ** dp : null);
+
+let tossMemo: any = null;
 export async function getTossAnalysis() {
+  if (tossMemo) return tossMemo;
+  if (hasDb()) {
+    try {
+      const r = (await db.execute(sql.raw(`
+        SELECT
+          (SELECT count(*) FROM matches WHERE toss_decision IS NOT NULL) AS tosses,
+          (SELECT count(*) FROM matches WHERE toss_decision = 'bat') AS toss_bat,
+          (SELECT count(*) FROM matches WHERE toss_decision = 'field') AS toss_field,
+          (SELECT count(*) FROM matches WHERE winner_id IS NOT NULL AND toss_winner_id IS NOT NULL) AS decided_toss,
+          (SELECT count(*) FROM matches WHERE winner_id IS NOT NULL AND winner_id = toss_winner_id) AS toss_winner_won,
+          (SELECT count(*) FROM matches m JOIN innings i ON i.match_id = m.match_id AND i.innings_number = 1 WHERE m.winner_id IS NOT NULL) AS decided,
+          (SELECT count(*) FROM matches m JOIN innings i ON i.match_id = m.match_id AND i.innings_number = 1 WHERE m.winner_id = i.batting_team_id) AS bat_first_wins
+      `))).rows[0] as any;
+      const venueRows = (await db.execute(sql.raw(`
+        SELECT v.name AS venue, count(*) AS matches,
+          sum(CASE WHEN m.winner_id = i.batting_team_id THEN 1 ELSE 0 END) AS bat_first_wins
+        FROM matches m JOIN innings i ON i.match_id = m.match_id AND i.innings_number = 1 JOIN venues v ON v.venue_id = m.venue_id
+        WHERE m.winner_id IS NOT NULL GROUP BY v.venue_id
+      `))).rows as any[];
+      // One ground can appear under several names ("Wankhede Stadium" / "Wankhede Stadium, Mumbai"): merge by the
+      // canonical venue name the rest of the API uses.
+      const byVenue = new Map<string, { venue: string; matches: number; bat_first_wins: number }>();
+      for (const v of venueRows) {
+        const name = normalizeVenueName(String(v.venue));
+        const cur = byVenue.get(name) ?? { venue: name, matches: 0, bat_first_wins: 0 };
+        cur.matches += Number(v.matches); cur.bat_first_wins += Number(v.bat_first_wins);
+        byVenue.set(name, cur);
+      }
+      const venues = [...byVenue.values()].filter((v) => v.matches >= 20).sort((a, b) => b.matches - a.matches);
+      const decided = Number(r.decided || 0), batFirst = pctOrNull(Number(r.bat_first_wins || 0), decided);
+      return (tossMemo = {
+        batFirstWinPct: batFirst,
+        fieldFirstWinPct: batFirst == null ? null : Math.round((100 - batFirst) * 10) / 10,
+        decidedMatches: decided,
+        tossBatDecisionPct: pctOrNull(Number(r.toss_bat || 0), Number(r.tosses || 0)),
+        tossFieldDecisionPct: pctOrNull(Number(r.toss_field || 0), Number(r.tosses || 0)),
+        tossWinMatchWinPct: pctOrNull(Number(r.toss_winner_won || 0), Number(r.decided_toss || 0)),
+        venueBreakdown: venues.map((v) => ({
+          venue: v.venue, matches: Number(v.matches), batFirstWinPct: pctOrNull(Number(v.bat_first_wins), Number(v.matches)),
+        })),
+        note: "Win shares over matches with a winner (super-over results included, no-results excluded); venues with 20+ such matches.",
+      });
+    } catch (err) {
+      console.warn("SQL toss analysis failed, falling back to JSON:", err);
+    }
+  }
   return readDataJson("toss-analysis.json") || {
-    batFirstWinPct: 43.2, fieldFirstWinPct: 56.8,
-    tossBatDecisionPct: 38.5, tossFieldDecisionPct: 61.5, tossWinMatchWinPct: 51.8,
-    venueBreakdown: []
+    batFirstWinPct: null, fieldFirstWinPct: null, tossBatDecisionPct: null, tossFieldDecisionPct: null, tossWinMatchWinPct: null,
+    venueBreakdown: [],
   };
 }
 
+let phaseMemo: any = null;
 export async function getPhaseAnalysis() {
+  if (phaseMemo) return phaseMemo;
+  if (hasDb()) {
+    try {
+      const rows = (await db.execute(sql.raw(`
+        SELECT CASE WHEN d.over_num < 6 THEN 'powerplay' WHEN d.over_num < 15 THEN 'middleOvers' ELSE 'deathOvers' END AS phase,
+          sum(d.total_runs) AS runs,
+          sum(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) AS legal,
+          sum(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 AND d.is_dot_ball = 1 THEN 1 ELSE 0 END) AS dots,
+          sum(d.is_boundary) AS boundaries,
+          sum(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('retired hurt', 'retired not out') THEN 1 ELSE 0 END) AS wickets
+        FROM deliveries d
+        JOIN innings i ON i.innings_id = d.innings_id
+        LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id
+        WHERE i.innings_number IN (1, 2)
+        GROUP BY 1
+      `))).rows as any[];
+      const matches = Number(((await db.execute(sql.raw("SELECT count(*) AS n FROM matches"))).rows[0] as any).n || 0);
+      const labels: Record<string, string> = { powerplay: "Powerplay (overs 1-6)", middleOvers: "Middle Overs (7-15)", deathOvers: "Death Overs (16-20)" };
+      const out: Record<string, unknown> = {};
+      for (const key of ["powerplay", "middleOvers", "deathOvers"]) {
+        const r = rows.find((x) => x.phase === key) ?? {};
+        const legal = Number(r.legal || 0);
+        out[key] = {
+          label: labels[key],
+          avgRunRate: legal > 0 ? Math.round((Number(r.runs || 0) * 6 / legal) * 100) / 100 : null,
+          avgWicketsPerMatch: matches > 0 ? Math.round((Number(r.wickets || 0) / matches) * 100) / 100 : null,
+          boundaryPct: pctOrNull(Number(r.boundaries || 0), legal),
+          dotBallPct: pctOrNull(Number(r.dots || 0), legal),
+        };
+      }
+      return (phaseMemo = { ...out, note: "Main innings only (super overs excluded); rates over legal balls; boundaryPct = boundaries per 100 legal balls; wickets exclude retired hurt / not out; per match = over all matches." });
+    } catch (err) {
+      console.warn("SQL phase analysis failed, falling back to JSON:", err);
+    }
+  }
   return readDataJson("phase-analysis.json") || {
-    powerplay:   { label: "Powerplay (0-6)",     avgRunRate: 8.12, avgWicketsPerMatch: 2.1, boundaryPct: 22.4, dotBallPct: 31.8 },
-    middleOvers: { label: "Middle Overs (7-15)", avgRunRate: 7.84, avgWicketsPerMatch: 3.4, boundaryPct: 15.2, dotBallPct: 38.6 },
-    deathOvers:  { label: "Death Overs (16-20)", avgRunRate: 10.23,avgWicketsPerMatch: 3.8, boundaryPct: 21.1, dotBallPct: 25.3 }
+    powerplay: { label: "Powerplay (overs 1-6)", avgRunRate: null, avgWicketsPerMatch: null, boundaryPct: null, dotBallPct: null },
+    middleOvers: { label: "Middle Overs (7-15)", avgRunRate: null, avgWicketsPerMatch: null, boundaryPct: null, dotBallPct: null },
+    deathOvers: { label: "Death Overs (16-20)", avgRunRate: null, avgWicketsPerMatch: null, boundaryPct: null, dotBallPct: null },
   };
 }
 

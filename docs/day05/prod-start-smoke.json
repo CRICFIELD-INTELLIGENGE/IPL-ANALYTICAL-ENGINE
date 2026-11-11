@@ -1,0 +1,72 @@
+[
+  {
+    "name": "built server starts and /api/healthz answers",
+    "ok": true,
+    "detail": "port 62298"
+  },
+  {
+    "name": "SQL-backed stats route (ESM bundle, lib/db via CRICFIELD_DB_PATH)",
+    "ok": true,
+    "detail": "status 200, bowlers 128"
+  },
+  {
+    "name": "decision DB route reads the corrected warehouse",
+    "ok": true,
+    "detail": "bowling-reconcile: Exact match"
+  },
+  {
+    "name": "player summary route",
+    "ok": true,
+    "detail": "status 200"
+  },
+  {
+    "name": "match card route (raw Cricsheet JSON on disk)",
+    "ok": true,
+    "detail": "status 200"
+  },
+  {
+    "name": "SPA fallback serves index.html for a client route",
+    "ok": true,
+    "detail": "status 200"
+  },
+  {
+    "name": "served /data/player-bio.json equals the corrected source",
+    "ok": true,
+    "detail": "408442 vs 408442 bytes"
+  },
+  {
+    "name": "admin route hidden when ADMIN_API_TOKEN is unset",
+    "ok": true,
+    "detail": "status 404"
+  },
+  {
+    "name": "server stays up without AI keys",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "no stale-frontend warning at startup",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "no unhandled errors in the server log",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "name": "invalid PORT exits with a clear message",
+    "ok": true,
+    "detail": "Invalid PORT value: \"${rawPort}\"`);\r"
+  },
+  {
+    "name": "missing warehouse file: 503 with a clear message, no server path in the response",
+    "ok": true,
+    "detail": "status 503: {\"error\":\"warehouse_unavailable\",\"detail\":\"The IPL data warehouse is not available on this server.\"}"
+  },
+  {
+    "name": "missing warehouse file: full error is in the server log",
+    "ok": true,
+    "detail": ""
+  }
+]

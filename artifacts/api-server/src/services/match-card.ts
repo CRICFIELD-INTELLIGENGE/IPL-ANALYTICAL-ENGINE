@@ -23,6 +23,7 @@
 import fs from "fs";
 import path from "path";
 import { DatabaseSync } from "node:sqlite";
+import { warehousePath } from "./decision/db";
 
 let projectRoot: string | null = null;
 function getRoot(): string {
@@ -268,7 +269,7 @@ let dbTried = false;
 function getDb(): DatabaseSync | null {
   if (dbTried) return db;
   dbTried = true;
-  const fp = path.join(getRoot(), "sqlite.db");
+  const fp = warehousePath();
   if (!fs.existsSync(fp)) return null;
   try {
     db = new DatabaseSync(fp, { readOnly: true });

@@ -1,0 +1,150 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-pbks-037",
+ "planId": "cf-pbks-037",
+ "franchise": "PBKS",
+ "aspect": "auction-economics",
+ "title": "Replacement Value: When Should Punjab Kings Walk Away from a Bidding War?",
+ "slug": "pbks-replacement-value-when-should-pbks-walk-away-from-a-bidding-war",
+ "dek": "When should Punjab Kings walk away from a bidding war? Measuring stars against a cheap replacement shows what the premium actually buys.",
+ "excerpt": "A star is only worth what he adds over the player who would replace him. For Punjab Kings, comparing premium signings with low-cost regulars shows how often the premium has paid.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "PBKS"
+ ],
+ "players": [
+  "Liam Livingstone",
+  "KL Rahul",
+  "Shreyas Iyer"
+ ],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "Punjab Kings' replacement level, the median low-cost regular, is {{ev:rv-repl}} tempo runs above average per hundred balls.",
+  "{{ev:rv-pos}} of {{ev:rv-ntop}} premium player-seasons (\u20b98 Cr or more) finished above that level.",
+  "The largest surplus was {{ev:rv-best}}, at {{ev:rv-best-v}} runs over replacement."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Value Over the Next Man In",
+   "body": [
+    "A player's real value is what he adds over the player who would take his place. If a bidding war pushes the price far above that surplus, walking away is the better decision.",
+    "CricField sets Punjab Kings' replacement level as the median low-cost regular: {{ev:rv-repl}} tempo runs above average per hundred balls."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What Premium Players Added",
+   "body": [
+    "{{ev:rv-pos}} of {{ev:rv-ntop}} premium player-seasons, priced \u20b98 Cr or more with a full workload, finished above replacement level.",
+    "The biggest surplus was {{ev:rv-best}}, at {{ev:rv-best-v}} runs over replacement; the chart ranks the rest."
+   ],
+   "chartIds": [
+    "rv-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "The Walk-Away Price",
+   "body": [
+    "A sensible walk-away price is the expected surplus over replacement, converted to money at the franchise's own cost per run. Above it, the next-best target or a cheap regular is the better buy.",
+    "For PBKS, that turns a bidding-war decision into a number agreed before the auction."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Replacement Is Not Always Available",
+   "body": [
+    "Replacement level assumes a comparable cheap player exists for every role. For scarce roles, such as an elite death bowler, the true replacement may be much worse than the median.",
+    "{{hyp:scarce}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Set the Walk-Away Price in Advance",
+   "body": [
+    "Punjab Kings should fix a walk-away price for each target based on surplus over replacement, adjusted upwards for scarce roles.",
+    "That discipline is how a franchise avoids paying star prices for average output."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "rv-chart",
+   "type": "bar",
+   "title": "Surplus over replacement",
+   "subtitle": "PBKS premium player-seasons, 2018\u20132026",
+   "table": "rv-top",
+   "xKey": "player",
+   "series": [
+    {
+     "key": "surplus",
+     "label": "Runs over replacement"
+    }
+   ],
+   "unit": "runs",
+   "takeaway": "Some premium seasons added a large surplus; others barely beat a cheap regular.",
+   "ariaLabel": "Horizontal bar chart of surplus over replacement for PBKS premium player-seasons."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-squads",
+   "kind": "cricfield-dataset",
+   "title": "CricField squads-by-season dataset",
+   "publisher": "CricField"
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "scarce",
+   "statement": "Hypothesis: replacement level for death bowling is far below the overall median, so death specialists are worth more than this model suggests.",
+   "whyUnverified": "Role-specific replacement levels have not been estimated.",
+   "howToTest": "Compute replacement level separately for each role and phase."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "8",
+   "reason": "Premium price threshold (\u20b98 Cr)."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Punjab Kings marquee signing.",
+   "wanted": "Liam Livingstone playing for Punjab Kings."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-pbks-032",
+  "cf-pbks-039",
+  "cf-pbks-038"
+ ],
+ "seo": {
+  "metaTitle": "Replacement value: when PBKS should walk away",
+  "metaDescription": "How much Punjab Kings' premium signings added over a low-cost replacement since 2018, and how to set a walk-away price."
+ },
+ "methodology": "Contribution is tempo runs above average (tRAA): batting runs above what an average batter would score from the same balls in the same season and phase, plus bowling runs saved against the average bowler in the same season and phase. Wickets and dismissals are not valued in this version. Prices come from CricField squad lists (\u20b9 crore = 100 lakh). Generated by scripts/editorial/engine. Replacement level = median tRAA per hundred balls of players priced \u20b91 Cr or less with at least sixty balls.",
+ "generator": "engine:v1"
+}

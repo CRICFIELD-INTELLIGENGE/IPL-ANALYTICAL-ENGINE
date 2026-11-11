@@ -1,0 +1,145 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-mi-082",
+ "planId": "cf-mi-082",
+ "franchise": "MI",
+ "aspect": "data-science",
+ "title": "Expected Runs Versus Actual Runs: Where Does Mumbai Indians Overperform?",
+ "slug": "mi-expected-runs-versus-actual-runs-where-does-mi-overperform",
+ "dek": "Do Mumbai Indians finish innings better than their halfway position deserves? An expected-runs model, built from every other side's innings, measures the back ten overs.",
+ "excerpt": "Across their first innings, Mumbai Indians have scored more runs in the back ten overs than the league would expect from the same position. The gap is within the range chance could produce.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "MI"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "Across {{ev:xr-n}} first innings, MI averaged {{ev:xr-res}} runs against expectation in overs eleven to twenty (ninety-five per cent interval plus or minus {{ev:xr-se}}).",
+  "They beat expectation on average in {{ev:xr-pos}} of {{ev:xr-yrs}} seasons.",
+  "The gap is within the range chance could produce."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "What Should a Side Score From Here?",
+   "body": [
+    "After ten overs, a side's runs and wickets set a range of likely totals. An expected-runs model turns that into a single number: what the rest of the league added from the same position in the same season.",
+    "CricField's model groups every other side's first innings by season and wickets lost at halfway, and averages the runs added in overs eleven to twenty."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "MI Against Expectation",
+   "body": [
+    "Across {{ev:xr-n}} first innings, Mumbai Indians averaged {{ev:xr-res}} runs against expectation in the back ten overs, with a ninety-five per cent interval of plus or minus {{ev:xr-se}}.",
+    "They beat expectation on average in {{ev:xr-pos}} of {{ev:xr-yrs}} seasons. The chart shows each season's average."
+   ],
+   "chartIds": [
+    "xr-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Where the Difference Comes From",
+   "body": [
+    "Over-performance in the back half usually comes from finishing power and wickets kept in hand for the last five overs.",
+    "{{hyp:finish}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Model Limits",
+   "body": [
+    "The model ignores venue and the quality of the bowling still to come. A side that often plays at high-scoring grounds will look like an over-performer.",
+    "It also uses first innings only, because chasing sides stop when they reach the target."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: No Clear Edge",
+   "body": [
+    "Mumbai Indians' back-half scoring has not differed from expectation by more than chance.",
+    "Adding venue to the model is the next step before drawing firmer conclusions."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "xr-chart",
+   "type": "column",
+   "title": "Runs above expectation, overs 11\u201320",
+   "subtitle": "MI first innings, average by season",
+   "table": "xr-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "residual",
+     "label": "Runs above expectation"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per innings",
+   "takeaway": "Seasons above zero beat the league from the same halfway position.",
+   "ariaLabel": "Column chart of Mumbai Indians' average first-innings runs above expectation in the back ten overs, by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "finish",
+   "statement": "Hypothesis: Mumbai Indians' residual is explained mostly by the death overs rather than overs eleven to fifteen.",
+   "whyUnverified": "The residual has not been split by phase.",
+   "howToTest": "Split expected and actual runs into overs 11\u201315 and 16\u201320 and compare."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "11\u201320",
+   "reason": "Over range in the chart title."
+  },
+  {
+   "text": "95%",
+   "reason": "Standard interval level."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Mumbai Indians finishing an innings.",
+   "wanted": "Mumbai Indians batter at the death."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-mi-005",
+  "cf-mi-076",
+  "cf-mi-081"
+ ],
+ "seo": {
+  "metaTitle": "Expected runs vs actual: where MI overperform",
+  "metaDescription": "An expected-runs model for the back ten overs, and whether Mumbai Indians beat the league from the same halfway position."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Models are fitted on the warehouse itself and described in full here. Generated by scripts/editorial/engine. Expected total = runs after ten overs + rest-of-league average runs added in overs 11\u201320 for the same season and wickets band (0\u20131, 2\u20133, 4+); cells need five innings.",
+ "generator": "engine:v1"
+}

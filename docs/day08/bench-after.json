@@ -1,0 +1,191 @@
+[
+ {
+  "endpoint": "/api/healthz",
+  "status": 200,
+  "coldMs": 73,
+  "warmMs": 3,
+  "kb": 0
+ },
+ {
+  "endpoint": "/api/ipl/overview",
+  "status": 200,
+  "coldMs": 290,
+  "warmMs": 1,
+  "kb": 0.5
+ },
+ {
+  "endpoint": "/api/ipl/matches",
+  "status": 200,
+  "coldMs": 9,
+  "warmMs": 7,
+  "kb": 329.7
+ },
+ {
+  "endpoint": "/api/ipl/match/1473469/scorecard",
+  "status": 200,
+  "coldMs": 8,
+  "warmMs": 2,
+  "kb": 6.8
+ },
+ {
+  "endpoint": "/api/ipl/player-career-stats",
+  "status": 200,
+  "coldMs": 15,
+  "warmMs": 13,
+  "kb": 427.9
+ },
+ {
+  "endpoint": "/api/ipl/player-season-stats",
+  "status": 200,
+  "coldMs": 37,
+  "warmMs": 30,
+  "kb": 1675.1
+ },
+ {
+  "endpoint": "/api/ipl/top-batters",
+  "status": 200,
+  "coldMs": 23,
+  "warmMs": 24,
+  "kb": 1226.6
+ },
+ {
+  "endpoint": "/api/ipl/squads-by-season",
+  "status": 200,
+  "coldMs": 20,
+  "warmMs": 20,
+  "kb": 715.8
+ },
+ {
+  "endpoint": "/api/ipl/player-images",
+  "status": 200,
+  "coldMs": 10,
+  "warmMs": 8,
+  "kb": 343.3
+ },
+ {
+  "endpoint": "/api/ipl/stats/query",
+  "status": 200,
+  "coldMs": 5748,
+  "warmMs": 27,
+  "kb": 2382.7
+ },
+ {
+  "endpoint": "/api/ipl/stats/query?season=2025",
+  "status": 200,
+  "coldMs": 2289,
+  "warmMs": 5,
+  "kb": 481.4
+ },
+ {
+  "endpoint": "/api/ipl/team-analytics?team=Mumbai%20Indians",
+  "status": 200,
+  "coldMs": 136,
+  "warmMs": 129,
+  "kb": 6.4
+ },
+ {
+  "endpoint": "/api/ipl/venue-analytics?venue=Wankhede%20Stadium",
+  "status": 200,
+  "coldMs": 113,
+  "warmMs": 119,
+  "kb": 2.1
+ },
+ {
+  "endpoint": "/api/ipl/toss-analysis",
+  "status": 200,
+  "coldMs": 7,
+  "warmMs": 1,
+  "kb": 1.4
+ },
+ {
+  "endpoint": "/api/ipl/phase-analysis",
+  "status": 200,
+  "coldMs": 237,
+  "warmMs": 1,
+  "kb": 0.6
+ },
+ {
+  "endpoint": "/api/scout/rankings?discipline=batting",
+  "status": 200,
+  "coldMs": 272,
+  "warmMs": 5,
+  "kb": 38.9
+ },
+ {
+  "endpoint": "/api/scout/player/456",
+  "status": 200,
+  "coldMs": 193,
+  "warmMs": 25,
+  "kb": 9.8
+ },
+ {
+  "endpoint": "/api/players/135/summary",
+  "status": 200,
+  "coldMs": 1245,
+  "warmMs": 2,
+  "kb": 7.3
+ },
+ {
+  "endpoint": "/api/intel/player/V%20Kohli",
+  "status": 200,
+  "coldMs": 2881,
+  "warmMs": 44,
+  "kb": 2.2
+ },
+ {
+  "endpoint": "/api/weakness/39",
+  "status": 200,
+  "coldMs": 11,
+  "warmMs": 12,
+  "kb": 5.8
+ },
+ {
+  "endpoint": "/api/pressure/leaders",
+  "status": 200,
+  "coldMs": 9,
+  "warmMs": 7,
+  "kb": 2.5
+ },
+ {
+  "endpoint": "/api/history/overview",
+  "status": 200,
+  "coldMs": 889,
+  "warmMs": 1,
+  "kb": 7.4
+ },
+ {
+  "endpoint": "/api/insights/daily",
+  "status": 200,
+  "coldMs": 1275,
+  "warmMs": 1,
+  "kb": 3.8
+ },
+ {
+  "endpoint": "/api/opposition?team=MI&opponent=CSK",
+  "status": 200,
+  "coldMs": 387,
+  "warmMs": 247,
+  "kb": 6.3
+ },
+ {
+  "endpoint": "/api/squad-dna/profile?team=CSK",
+  "status": 200,
+  "coldMs": 4,
+  "warmMs": 3,
+  "kb": 11.2
+ },
+ {
+  "endpoint": "/api/pool/135",
+  "status": 200,
+  "coldMs": 2,
+  "warmMs": 1,
+  "kb": 9.1
+ },
+ {
+  "endpoint": "/api/war-room/board",
+  "status": 200,
+  "coldMs": 2,
+  "warmMs": 2,
+  "kb": 94.6
+ }
+]

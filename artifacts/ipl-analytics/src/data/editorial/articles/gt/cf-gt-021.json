@@ -1,0 +1,137 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-gt-021",
+ "planId": "cf-gt-021",
+ "franchise": "GT",
+ "aspect": "tactical",
+ "title": "The Toss Illusion: How Much Should Gujarat Titans Change Its Plan After the Coin Flip?",
+ "slug": "gt-the-toss-illusion-how-much-should-gt-change-its-plan-after-the-coin-flip",
+ "dek": "How much should Gujarat Titans change their plan after the coin flip? Their record after winning and losing the toss puts a number on the illusion.",
+ "excerpt": "Across the IPL, toss winners have won close to half the time. Gujarat Titans' own record after winning and losing the toss shows only a small gap.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "GT"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026",
+  "2023\u20132026"
+ ],
+ "keyTakeaways": [
+  "IPL toss winners have won {{ev:toss-lg}} of matches with a result.",
+  "GT have won {{ev:toss-won}} after winning the toss and {{ev:toss-lost}} after losing it.",
+  "Since 2023, GT have chosen to bowl first in {{ev:toss-field}} of the tosses they won."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Coin Flip and the Plan",
+   "body": [
+    "Captains talk about the toss as if it decides matches. Across every IPL match with a result, the toss winner has won {{ev:toss-lg}} of the time.",
+    "Gujarat Titans have won {{ev:toss-won}} of their matches after winning the toss and {{ev:toss-lost}} after losing it."
+   ],
+   "chartIds": [
+    "toss-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Bat or Bowl",
+   "body": [
+    "The choice after the toss is where plans change. Since 2023 GT have chosen to bowl first in {{ev:toss-field}} of the tosses they won.",
+    "The table splits Gujarat Titans' record by toss outcome and choice, which is the comparison a captain actually faces."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Plans That Survive the Toss",
+   "body": [
+    "A side whose results barely move with the toss has a plan that works either way. Gujarat Titans' small gap suggests a plan that works whichever way the coin falls.",
+    "The practical aim is two prepared game plans, one for batting first and one for chasing, so the toss changes the order of execution rather than the strategy."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Why the Toss Can Still Matter",
+   "body": [
+    "League-wide averages hide venues and seasons where dew or pitch wear made chasing much easier. In those conditions the toss genuinely matters, even if it washes out across all matches.",
+    "{{hyp:venue}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Prepare Two Plans, Then Ignore the Coin",
+   "body": [
+    "The evidence says the toss is a small edge across the league. Gujarat Titans should treat it as a choice of plan, not a change of plan.",
+    "Where conditions make chasing clearly easier, the choice is simple; elsewhere the side's strengths should decide it."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "toss-chart",
+   "type": "column",
+   "title": "Win rate by toss outcome and choice",
+   "subtitle": "GT, matches with a result",
+   "table": "toss-tab",
+   "xKey": "situation",
+   "series": [
+    {
+     "key": "winPct",
+     "label": "Win rate"
+    }
+   ],
+   "xLabel": "Toss",
+   "unit": "% of matches won",
+   "takeaway": "The toss outcome moves the franchise's results only a little.",
+   "ariaLabel": "Column chart of win rate after winning the toss and choosing to bowl or bat, and after losing the toss."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "venue",
+   "statement": "Hypothesis: the toss is decisive at a small number of dew-affected venues and irrelevant elsewhere.",
+   "whyUnverified": "Venue-by-venue toss effects have not been estimated for every ground.",
+   "howToTest": "Compute toss-winner win rates by venue and season with intervals."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "The toss before a Gujarat Titans match.",
+   "wanted": "Gujarat Titans captain at the toss."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-gt-022",
+  "cf-gt-030",
+  "cf-gt-006"
+ ],
+ "seo": {
+  "metaTitle": "The toss illusion: how much should GT care?",
+  "metaDescription": "Gujarat Titans' record after winning and losing the toss, their bat-or-bowl choices since 2023, and the league toss effect."
+ },
+ "methodology": "Regulation innings only (super overs excluded); win rates use matches with a result. Generated from the CricField warehouse by scripts/editorial/engine. Toss data from match records; no-results excluded.",
+ "generator": "engine:v1"
+}

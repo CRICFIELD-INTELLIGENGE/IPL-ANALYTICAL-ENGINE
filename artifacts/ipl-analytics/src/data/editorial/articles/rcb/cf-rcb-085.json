@@ -1,0 +1,172 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-085",
+ "planId": "cf-rcb-085",
+ "franchise": "RCB",
+ "aspect": "data-science",
+ "title": "Clutch or Coincidence? Testing Royal Challengers Bengaluru\u2019s Pressure-Performance Narratives",
+ "slug": "rcb-the-weight-of-expectation-rcbs-performance-in-high-pressure-matches",
+ "supersedes": {
+  "legacyId": "art-rcb-04",
+  "legacySlug": "rcb-the-weight-of-expectation-rcbs-performance-in-high-pressure-matches",
+  "decision": "revise"
+ },
+ "dek": "RCB have been called chokers and, lately, champions of the close finish. Ninety-odd tight matches say both labels are stories laid over what looks statistically like a coin toss.",
+ "excerpt": "Across every close IPL match since 2008, RCB's record is almost exactly even, and no franchise's close-game record is clearly better than chance. Even the celebrated 2024 winning streak contained no close finishes at all.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-25",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "RCB"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026",
+  "2024",
+  "2025\u20132026"
+ ],
+ "keyTakeaways": [
+  "RCB have won {{ev:rcb-close-won}} of {{ev:rcb-close-n}} close matches ({{ev:rcb-close-pct}}); the ninety-five per cent interval is {{ev:rcb-close-ci}}.",
+  "None of the ten franchises has a close-match record that differs from fifty-fifty at conventional significance ({{ev:franchises-significant}} of ten).",
+  "RCB's famous {{ev:streak-2024}}-match winning run in 2024 contained {{ev:streak-2024-close}} close finishes."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Two Labels, One Record",
+   "body": [
+    "For years RCB carried a reputation for buckling when matches tightened. Since the 2024 revival and the titles that followed, the opposite story has taken hold: a side that has learned to win under pressure. The earlier Dugout article at this address told the second story. This revision tests both.",
+    "To do that we need a definition that does not depend on memory. We call a match close if it was decided by ten runs or fewer, by a chase completed with six balls or fewer to spare, or in a super over. By that definition {{ev:close-share}} of all IPL results since 2008 have been close."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Coin-Toss Test",
+   "body": [
+    "RCB have played {{ev:rcb-close-n}} close matches and won {{ev:rcb-close-won}} of them, a rate of {{ev:rcb-close-pct}}. In matches that were not close they won {{ev:rcb-other-pct}}. If every close match were a fair coin toss, a record at least this far from even would turn up with probability {{ev:rcb-close-p}}, which is to say that RCB's record is what pure chance would produce.",
+    "The ninety-five per cent interval around RCB's close-match win rate runs from {{ev:rcb-close-ci}}. That range is wide enough to include a mildly clutch team and a mildly brittle one; the data cannot tell them apart. RCB rank {{ev:rcb-close-rank}} of ten franchises on this measure.",
+    "The league-wide picture is the same. Testing every franchise in turn, {{ev:franchises-significant}} of the ten have a close-match record that differs from fifty-fifty at the usual five per cent threshold. Gujarat Titans come nearest, on a small sample."
+   ],
+   "chartIds": [
+    "close-franchises"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "What Pressure Stories Get Wrong",
+   "body": [
+    "The pressure narrative also misreads the era it celebrates. RCB's record in close matches from 2008 to 2024 was {{ev:rcb-close-pre}}; in the two title seasons it was {{ev:rcb-close-title}}, too few matches to read anything into. Close finishes were a small part of those seasons; the titles were built on winning comfortably more often.",
+    "The 2024 run that the original version of this article celebrated is the clearest example. RCB won {{ev:streak-2024}} consecutive matches to reach the playoffs, and {{ev:streak-2024-close}} of those wins were close. It was a run of dominance, not of nerve.",
+    "For a coach, the useful lesson is that the levers that matter are the ones that keep a match from becoming close in the first place: a stronger powerplay, a cheaper death-over attack, deeper batting. Late-game composure is real for individual players, but at team level it washes out."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "In Defence of Clutch",
+   "body": [
+    "Defining close by the final margin misses matches that were tense for most of the evening and only drifted apart at the end. A broader definition based on ball-by-ball win probability could find a real effect that a margin-based test hides.",
+    "And a team-level null result does not rule out individual clutch players. A franchise could have one genuinely composed finisher whose effect is diluted across a decade of different squads.",
+    "{{hyp:player-clutch}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Coincidence, Until Proven Otherwise",
+   "body": [
+    "On the evidence available, RCB are neither chokers nor clutch specialists. Their close-match record is indistinguishable from a coin toss, as is every other franchise's.",
+    "That is good news for planning. It means the outcomes RCB can control, the margins built over twenty overs, matter far more than the mythology of the last over. Narratives about temperament should be treated as hypotheses to test, not explanations to accept."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "close-franchises",
+   "type": "bar",
+   "title": "Close-match win rate by franchise",
+   "subtitle": "2008\u20132026; close = \u2264 10 runs, \u2264 6 balls to spare, or super over",
+   "table": "close-by-franchise",
+   "xKey": "franchise",
+   "series": [
+    {
+     "key": "closeWinPct",
+     "label": "Close-match win rate"
+    }
+   ],
+   "unit": "% of close matches won",
+   "referenceLine": {
+    "metric": "rcb-close-pct",
+    "label": "RCB"
+   },
+   "takeaway": "Every franchise sits within the range that chance alone would produce; RCB are in the middle of the pack.",
+   "ariaLabel": "Horizontal bar chart of close-match win percentage for the ten IPL franchises from 2008 to 2026, from Gujarat Titans highest to Sunrisers Hyderabad lowest, with RCB near the middle."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/"
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "player-clutch",
+   "statement": "Hypothesis: individual RCB players perform measurably better than their norms in high-leverage moments, even though the team-level record is even.",
+   "whyUnverified": "Requires a ball-by-ball win-probability model to identify high-leverage deliveries; CricField's model is not yet validated.",
+   "howToTest": "Build and validate a win-probability model, then compare each player's output in high-leverage balls with their output elsewhere, with shrinkage for small samples."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "10",
+   "reason": "Part of the close-match definition (\u2264 10 runs), a definition rather than a finding."
+  },
+  {
+   "text": "6",
+   "reason": "Part of the close-match definition (\u2264 6 balls), a definition rather than a finding."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A tight finish involving RCB.",
+   "wanted": "RCB players celebrating a narrow win, 2025, landscape."
+  },
+  {
+   "slot": "s2",
+   "narrative": "Tension in the field.",
+   "wanted": "RCB fielders or bowler in a tense late-innings moment."
+  },
+  {
+   "slot": "s4",
+   "narrative": "The 2024 run.",
+   "wanted": "RCB celebrating during the 2024 winning streak."
+  }
+ ],
+ "videos": [
+  {
+   "catalogueId": "JH-1540040332",
+   "afterSection": "s2",
+   "why": "RCB's 2025 home win over CSK by two runs, one of the close matches counted in this analysis."
+  }
+ ],
+ "related": [
+  "cf-rcb-066",
+  "cf-rcb-081",
+  "cf-rcb-056"
+ ],
+ "seo": {
+  "metaTitle": "Clutch or coincidence? Testing RCB under pressure | CricField",
+  "metaDescription": "RCB's record in close IPL matches is statistically a coin toss, like every franchise's. Even the 2024 winning streak had no close finishes. The data behind the myths."
+ },
+ "methodology": "A close match is decided by ten runs or fewer, by a chase with six or fewer legal balls to spare, or in a super over; matches without a result are excluded. Intervals are Wilson score intervals; probabilities are two-sided exact binomial tests against fifty per cent. Current franchises include former names. Generated by scripts/editorial/evidence/rcb/cf-rcb-085.ts."
+}

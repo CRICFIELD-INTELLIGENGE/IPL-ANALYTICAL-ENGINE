@@ -190,7 +190,7 @@ export function simulateStrategy(req: StrategyRequest): StrategyResult {
       const m = meta.get(b);
       return {
         playerId: b, name: playerName(b),
-        type: (m ? bowlingSubtype(m) : null) ?? (bowlerType(b) ? "Spin" : "Pace"),
+        type: (m ? bowlingSubtype(m) : null) ?? (bowlerType(b) === 1 ? "Spin" : bowlerType(b) === 0 ? "Pace" : "Unknown"),
         oversUsed: used.get(b) ?? 0, oversLeft: Math.max(0, 4 - (used.get(b) ?? 0)),
         deathEconomy: round1(bowlerPhaseLine(p, b, 2).economy),
         economyThisPhase: round1(bowlerPhaseLine(p, b, phase).economy),

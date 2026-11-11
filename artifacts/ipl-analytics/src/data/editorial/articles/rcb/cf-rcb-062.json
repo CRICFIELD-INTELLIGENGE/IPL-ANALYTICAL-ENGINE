@@ -1,0 +1,192 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-062",
+ "planId": "cf-rcb-062",
+ "franchise": "RCB",
+ "aspect": "history",
+ "title": "The Season That Changed the Conversation Around Royal Challengers Bengaluru",
+ "slug": "rcb-the-season-that-changed-the-conversation-around-rcb",
+ "dek": "In 2025 RCB stopped being the team that scored big and lost. They won on the road, bowled tighter than the league for the first time in years, and finally lifted the trophy. Then they did it again.",
+ "excerpt": "The 2025 title did not come from Chinnaswamy fireworks. It came from an away record no RCB side had come close to, and a bowling attack that conceded fewer runs than the league. A data-led history of the turning point.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-25",
+ "status": "review",
+ "featured": true,
+ "storyType": "archive",
+ "teams": [
+  "RCB",
+  "PBKS"
+ ],
+ "players": [
+  "Virat Kohli",
+  "Josh Hazlewood",
+  "Rajat Patidar"
+ ],
+ "seasons": [
+  "2025",
+  "2026",
+  "2008\u20132024"
+ ],
+ "keyTakeaways": [
+  "RCB won {{ev:away-2025-won}} of {{ev:away-2025-n}} decided matches away from Chinnaswamy in 2025 ({{ev:away-2025-pct}}), against {{ev:away-pre-pct}} across 2008\u20132024.",
+  "Their bowlers conceded {{ev:econ-gap-2025}} runs per over fewer than the league in 2025, after conceding more than the league across the previous seventeen seasons ({{ev:econ-rcb-pre}} vs {{ev:econ-league-pre}}).",
+  "The final was won by {{ev:final-margin}} runs, defending {{ev:final-rcb-score}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Seventeen Years of the Same Sentence",
+   "body": [
+    "For seventeen seasons, conversations about RCB tended to end in the same place: brilliant batters, a famous ground, a fragile bowling attack, no trophy. The 2025 season ended that sentence. RCB finished with {{ev:record-2025}} across league and playoffs, then beat Punjab Kings in the final by {{ev:final-margin}} runs after posting {{ev:final-rcb-score}}.",
+    "What makes 2025 a turning point rather than simply a good year is how the title was won. The two things the old sentence said RCB could not do, win away from home and bowl teams out of games, were the two things the 2025 side did best."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "A Road Record Without Precedent",
+   "body": [
+    "Away from Chinnaswamy, including neutral and playoff venues, RCB won {{ev:away-2025-won}} of their {{ev:away-2025-n}} decided matches in 2025, a rate of {{ev:away-2025-pct}}. Across the seventeen seasons before it, their away win rate was {{ev:away-pre-pct}}, and their best single away season had been {{ev:away-best-pre}} in {{ev:away-best-pre-year}}.",
+    "At home the story was almost the reverse: RCB won {{ev:home-2025-won}} of {{ev:home-2025-n}} decided matches at Chinnaswamy. The title was built on the road.",
+    "The bowling numbers tell the same story of a changed identity. Over 2008\u20132024 RCB's attack conceded {{ev:econ-rcb-pre}} runs per over against a league figure of {{ev:econ-league-pre}}. In 2025 it conceded {{ev:econ-rcb-2025}} while the league conceded {{ev:econ-league-2025}}. With the bat, RCB scored at {{ev:rr-rcb-2025}} runs per over, barely above the league's {{ev:rr-league-2025}}: the batting was good, but it was the bowling that separated them."
+   ],
+   "chartIds": [
+    "away-trend",
+    "economy-compare"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "The Architecture of a Title Side",
+   "body": [
+    "Two players carried the familiar and the new. Virat Kohli was RCB's leading run-scorer again, with {{ev:top-bat-runs}} runs at a strike rate of {{ev:top-bat-sr}}. Josh Hazlewood led the wicket-takers with {{ev:top-bowl-wkts}}, giving RCB an overseas fast bowler at the head of the attack.",
+    "The away record suggests the side was built to travel. A squad designed around one ground's short boundaries gains less elsewhere; a squad built around bowling control carries its strength to every venue. The 2025 attack's economy advantage was a portable asset in a way that Chinnaswamy never had been.",
+    "The following season confirmed it was not a one-off. RCB finished 2026 with {{ev:record-2026}} and won a second consecutive title."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Was It the Team, or the Season?",
+   "body": [
+    "One season's away record rests on a small number of matches, and a run like this needs some luck: tosses, close finishes and opponents' injuries all play a part. A sceptic would also point out that the bowling advantage over the league, while real, was a fraction of a run per over.",
+    "The second title is the strongest answer to the sceptic, but it does not settle which ingredient mattered most. The data cannot isolate the contribution of the captaincy change, the coaching set-up or the auction strategy from the players' own form.",
+    "{{hyp:portable-strength}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: The Year RCB Became Portable",
+   "body": [
+    "The 2025 season changed the conversation because it inverted the old RCB identity. A franchise famous for home-ground batting won a title away from home on the strength of its bowling. The 2026 repeat shows the change was structural.",
+    "For historians of the franchise the turning point is less the final itself than the away record that made it possible. For RCB's planners, the lesson is to keep building strengths that travel."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "away-trend",
+   "type": "column",
+   "title": "RCB win rate away from Chinnaswamy, by season",
+   "subtitle": "Matches with a result at all other venues, including neutral and playoff grounds",
+   "table": "away-by-season",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "awayWinPct",
+     "label": "Away win rate"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of matches won",
+   "referenceLine": {
+    "metric": "away-pre-pct",
+    "label": "2008\u20132024 average"
+   },
+   "takeaway": "2025 stands far above every earlier season, and 2026 also sits among RCB's best away seasons.",
+   "ariaLabel": "Column chart of RCB's away win percentage for each season from 2008 to 2026 with a reference line at the 2008 to 2024 average. The 2025 column is the tallest by a wide margin."
+  },
+  {
+   "id": "economy-compare",
+   "type": "column",
+   "title": "RCB bowling economy vs the league",
+   "subtitle": "Runs charged to bowlers per over, regulation innings",
+   "table": "economy-compare",
+   "xKey": "period",
+   "series": [
+    {
+     "key": "rcbEconomy",
+     "label": "RCB"
+    },
+    {
+     "key": "leagueEconomy",
+     "label": "IPL"
+    }
+   ],
+   "xLabel": "Period",
+   "unit": "runs per over",
+   "takeaway": "RCB conceded more than the league over 2008\u20132024 and less than it in 2025.",
+   "ariaLabel": "Grouped column chart comparing RCB and IPL bowling economy for 2008 to 2024 and for 2025. RCB is above the league in the first period and below it in 2025."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/"
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "portable-strength",
+   "statement": "Hypothesis: bowling-led squads perform more consistently across venues than batting-led squads, which would explain why RCB's title sides travelled well.",
+   "whyUnverified": "We have not yet tested venue-to-venue variance against squad profile across all franchises.",
+   "howToTest": "For every franchise-season, compare the spread of results across venues with the side's batting and bowling ratings relative to the league."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "The moment the wait ended.",
+   "wanted": "RCB celebrating the 2025 IPL title at Narendra Modi Stadium, landscape."
+  },
+  {
+   "slot": "s2",
+   "narrative": "Winning on the road.",
+   "wanted": "RCB celebrating an away win in 2025."
+  },
+  {
+   "slot": "s4",
+   "narrative": "Hazlewood and the bowling identity.",
+   "wanted": "Josh Hazlewood bowling for RCB in 2025."
+  }
+ ],
+ "videos": [
+  {
+   "catalogueId": "JH-1540040389",
+   "afterSection": "s2",
+   "why": "Qualifier 1 in 2025, the away playoff win that sent RCB to the final."
+  },
+  {
+   "catalogueId": "JH-1540040398",
+   "afterSection": "s5",
+   "why": "The 2025 final against Punjab Kings in Ahmedabad."
+  }
+ ],
+ "related": [
+  "cf-rcb-069",
+  "cf-rcb-066",
+  "cf-rcb-051"
+ ],
+ "seo": {
+  "metaTitle": "2025: the season that changed the RCB conversation | CricField",
+  "metaDescription": "RCB's 2025 title was built away from Chinnaswamy and on bowling that beat the league. A data-led history of the turning point and the 2026 repeat."
+ },
+ "methodology": "Away = any venue other than the three Chinnaswamy names in the source, including neutral and playoff grounds. Economy uses runs charged to bowlers per legal ball times six. Kohli's runs reconcile exactly between ball-by-ball and innings tables; wickets come from the dismissals table, excluding run outs. Generated by scripts/editorial/evidence/rcb/cf-rcb-062.ts."
+}

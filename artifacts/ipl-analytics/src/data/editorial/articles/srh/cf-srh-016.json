@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-srh-016",
+ "planId": "cf-srh-016",
+ "franchise": "SRH",
+ "aspect": "bowling-fielding",
+ "title": "Fielding as Run Prevention: Measuring the Hidden Value of Sunrisers Hyderabad\u2019s Saves",
+ "slug": "srh-fielding-as-run-prevention-measuring-the-hidden-value-of-srh-saves",
+ "dek": "How many runs do Sunrisers Hyderabad's fielders save? The scorebook records run outs, catches and byes; it does not record the dive on the boundary. Here is what can and cannot be measured.",
+ "excerpt": "Sunrisers Hyderabad have effected more run outs per innings than the league since 2022. The most valuable fielding, the boundary save, is still invisible in public data.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "SRH"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "SRH have effected {{ev:fld-tro}} run outs per bowling innings since 2022, against {{ev:fld-lro}} for the rest of the IPL.",
+  "They have held {{ev:fld-tct}} catches per innings, against {{ev:fld-lct}} league-wide.",
+  "Byes and leg-byes conceded: {{ev:fld-tby}} per innings, against {{ev:fld-lby}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Invisible Discipline",
+   "body": [
+    "Fielding is the part of T20 cricket that public data measures worst. The scorebook records a run out and a catch; it does not record the single that was not taken because of a fast pick-up, or the four that became a two after a dive.",
+    "What can be measured is still useful. Across {{ev:fld-inns}} SRH bowling innings since 2022, the side has effected {{ev:fld-tro}} run outs per innings against {{ev:fld-lro}} for the rest of the league."
+   ],
+   "chartIds": [
+    "fld-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Catches, Run Outs and Leakage",
+   "body": [
+    "Sunrisers Hyderabad have held {{ev:fld-tct}} catches per bowling innings against {{ev:fld-lct}} elsewhere. Catches depend on chances created, so the figure mixes fielding with bowling.",
+    "Byes and leg-byes, a rough measure of wicketkeeping and line discipline, run at {{ev:fld-tby}} per innings against {{ev:fld-lby}} for the league."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Where Fielding Value Hides",
+   "body": [
+    "The largest fielding contribution is runs not conceded: boundaries cut off and singles denied. Those require event-level fielding data that Cricsheet does not provide.",
+    "For SRH, a practical step is to log boundary saves and misfields in-house each match, turning coaching impressions into a run-prevention number."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Why Raw Counts Mislead",
+   "body": [
+    "Run outs depend on how often opponents take risky singles, and catches on how many chances bowlers create. A side facing aggressive running sides will record more run outs without fielding any better.",
+    "{{hyp:saves}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Measure What the Scorebook Misses",
+   "body": [
+    "The available counts put Sunrisers Hyderabad ahead of the league on run outs since 2022. The bigger prize is the unmeasured one: runs saved in the field.",
+    "A franchise that tracks fielding events itself will have an advantage in selection that public data cannot match."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "fld-chart",
+   "type": "column",
+   "title": "Fielding events per bowling innings",
+   "subtitle": "2022\u20132026",
+   "table": "fld-cmp",
+   "xKey": "measure",
+   "series": [
+    {
+     "key": "team",
+     "label": "SRH"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Measure",
+   "unit": "per innings",
+   "takeaway": "Recorded fielding events capture only part of a side's fielding value.",
+   "ariaLabel": "Grouped column chart of run outs, catches and byes per bowling innings."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "saves",
+   "statement": "Hypothesis: boundary saves and denied singles are worth more runs per match than run outs and catches combined.",
+   "whyUnverified": "Fielding events other than dismissals are not recorded in Cricsheet data.",
+   "howToTest": "Log fielding events from video for a sample of matches and value each in runs."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Sunrisers Hyderabad in the field.",
+   "wanted": "Sunrisers Hyderabad fielder diving or taking a catch."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-srh-017",
+  "cf-srh-077",
+  "cf-srh-013"
+ ],
+ "seo": {
+  "metaTitle": "Fielding as run prevention: what SRH can measure",
+  "metaDescription": "Sunrisers Hyderabad's run outs, catches and byes per innings since 2022 against the IPL, and the fielding value that public data cannot see."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Economy uses runs charged to the bowler (byes and leg-byes excluded) per legal ball times six. Bowler wickets exclude run outs. Generated from the CricField warehouse by scripts/editorial/engine. Fielding counts use the fielding side's bowling innings since 2022. Cricsheet data does not identify fielders, so individual fielding is not assessed.",
+ "generator": "engine:v1"
+}

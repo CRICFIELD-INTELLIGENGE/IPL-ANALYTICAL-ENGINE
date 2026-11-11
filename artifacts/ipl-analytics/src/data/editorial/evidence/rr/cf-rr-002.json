@@ -1,0 +1,304 @@
+{
+ "articleId": "cf-rr-002",
+ "generatedAt": "2026-10-26T04:23:05.036Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "no3-sr-e1": {
+   "value": 135.8,
+   "display": "135.8",
+   "label": "RR No. 3 strike rate, 2008–2023",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batter arriving third at the crease, regulation innings",
+   "sampleSize": {
+    "n": 3933,
+    "unit": "balls"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (10) THEN 'team' ELSE 'rest' END side, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.player_out_id = d.batter_id THEN 1 ELSE 0 END) outs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN pos ON pos.innings_id = d.innings_id AND pos.pid = d.batter_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND pos.position = 3 GROUP BY year, side ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 150 balls",
+    "passed": true,
+    "detail": "n = 3933"
+   }
+  },
+  "no3-lsr-e1": {
+   "value": 129.4,
+   "display": "129.4",
+   "label": "Rest of IPL No. 3 strike rate, 2008–2023",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batter arriving third at the crease, regulation innings",
+   "sampleSize": {
+    "n": 36089,
+    "unit": "balls"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (10) THEN 'team' ELSE 'rest' END side, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.player_out_id = d.batter_id THEN 1 ELSE 0 END) outs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN pos ON pos.innings_id = d.innings_id AND pos.pid = d.batter_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND pos.position = 3 GROUP BY year, side ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 balls",
+    "passed": true,
+    "detail": "n = 36089"
+   }
+  },
+  "no3-sr-e2": {
+   "value": 152,
+   "display": "152.0",
+   "label": "RR No. 3 strike rate, 2024–2026",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batter arriving third at the crease, regulation innings",
+   "sampleSize": {
+    "n": 887,
+    "unit": "balls"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (10) THEN 'team' ELSE 'rest' END side, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.player_out_id = d.batter_id THEN 1 ELSE 0 END) outs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN pos ON pos.innings_id = d.innings_id AND pos.pid = d.batter_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND pos.position = 3 GROUP BY year, side ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 150 balls",
+    "passed": true,
+    "detail": "n = 887"
+   }
+  },
+  "no3-lsr-e2": {
+   "value": 159.6,
+   "display": "159.6",
+   "label": "Rest of IPL No. 3 strike rate, 2024–2026",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batter arriving third at the crease, regulation innings",
+   "sampleSize": {
+    "n": 6993,
+    "unit": "balls"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (10) THEN 'team' ELSE 'rest' END side, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.player_out_id = d.batter_id THEN 1 ELSE 0 END) outs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN pos ON pos.innings_id = d.innings_id AND pos.pid = d.batter_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND pos.position = 3 GROUP BY year, side ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 balls",
+    "passed": true,
+    "detail": "n = 6993"
+   }
+  },
+  "no3-bpd-e2": {
+   "value": 23.3,
+   "display": "23.3",
+   "label": "RR No. 3 balls per dismissal, 2024–2026",
+   "unit": "balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batter arriving third at the crease, regulation innings",
+   "sampleSize": {
+    "n": 887,
+    "unit": "balls"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (10) THEN 'team' ELSE 'rest' END side, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.player_out_id = d.batter_id THEN 1 ELSE 0 END) outs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN pos ON pos.innings_id = d.innings_id AND pos.pid = d.batter_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND pos.position = 3 GROUP BY year, side ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 5 dismissals",
+    "passed": true,
+    "detail": "n = 38"
+   }
+  },
+  "no3-lbpd-e2": {
+   "value": 20.5,
+   "display": "20.5",
+   "label": "Rest of IPL No. 3 balls per dismissal, 2024–2026",
+   "unit": "balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batter arriving third at the crease, regulation innings",
+   "sampleSize": {
+    "n": 6993,
+    "unit": "balls"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (10) THEN 'team' ELSE 'rest' END side, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.player_out_id = d.batter_id THEN 1 ELSE 0 END) outs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN pos ON pos.innings_id = d.innings_id AND pos.pid = d.batter_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND pos.position = 3 GROUP BY year, side ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 50 dismissals",
+    "passed": true,
+    "detail": "n = 341"
+   }
+  },
+  "no3-who": {
+   "value": "SV Samson",
+   "display": "SV Samson",
+   "label": "RR's most frequent No. 3 since 2024",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Innings batting at No. 3",
+   "sampleSize": {
+    "n": 17,
+    "unit": "innings"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT pl.name, COUNT(DISTINCT pos.innings_id) inns FROM pos JOIN innings i ON i.innings_id = pos.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = pos.pid WHERE pos.position = 3 AND i.batting_team_id IN (10) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND i.innings_number <= 2 GROUP BY pos.pid ORDER BY inns DESC LIMIT 1",
+   "validation": {
+    "method": "rank by innings",
+    "passed": true
+   }
+  },
+  "no3-who-n": {
+   "value": 17,
+   "display": "17",
+   "label": "Innings SV Samson batted at No. 3 since 2024",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "RR, 2024–2026",
+   "sampleSize": {
+    "n": 17,
+    "unit": "innings"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT pl.name, COUNT(DISTINCT pos.innings_id) inns FROM pos JOIN innings i ON i.innings_id = pos.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = pos.pid WHERE pos.position = 3 AND i.batting_team_id IN (10) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND i.innings_number <= 2 GROUP BY pos.pid ORDER BY inns DESC LIMIT 1",
+   "validation": {
+    "method": "sample-size floor ≥ 1 innings",
+    "passed": true,
+    "detail": "n = 17"
+   }
+  },
+  "no3-x-best-v": {
+   "value": 164.1,
+   "display": "164.1",
+   "label": "RR No. 3 strike rate in 2020",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "RR, 2020",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (10) THEN 'team' ELSE 'rest' END side, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.player_out_id = d.batter_id THEN 1 ELSE 0 END) outs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN pos ON pos.innings_id = d.innings_id AND pos.pid = d.batter_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND pos.position = 3 GROUP BY year, side ORDER BY year",
+   "validation": {
+    "method": "taken from the season table",
+    "passed": true
+   }
+  },
+  "no3-x-worst-v": {
+   "value": 100,
+   "display": "100.0",
+   "label": "RR No. 3 strike rate in 2009",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "RR, 2009",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (10) THEN 'team' ELSE 'rest' END side, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.player_out_id = d.batter_id THEN 1 ELSE 0 END) outs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN pos ON pos.innings_id = d.innings_id AND pos.pid = d.batter_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND pos.position = 3 GROUP BY year, side ORDER BY year",
+   "validation": {
+    "method": "taken from the season table",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "no3-series": {
+   "label": "Strike rate of the No. 3 batter by season: RR vs rest of IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Position = order of arrival at the crease; balls faced exclude wides",
+   "sampleSize": {
+    "n": 4820,
+    "unit": "RR balls at No. 3"
+   },
+   "query": "WITH appear AS ( SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (10) THEN 'team' ELSE 'rest' END side, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.player_out_id = d.batter_id THEN 1 ELSE 0 END) outs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN pos ON pos.innings_id = d.innings_id AND pos.pid = d.batter_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND pos.position = 3 GROUP BY year, side ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "team": 149,
+     "league": 127.3,
+     "teamBalls": 192
+    },
+    {
+     "season": "2009",
+     "team": 100,
+     "league": 122.9,
+     "teamBalls": 162
+    },
+    {
+     "season": "2010",
+     "team": 128.2,
+     "league": 131.3,
+     "teamBalls": 234
+    },
+    {
+     "season": "2011",
+     "team": 128.3,
+     "league": 120.2,
+     "teamBalls": 251
+    },
+    {
+     "season": "2012",
+     "team": 139.9,
+     "league": 121.4,
+     "teamBalls": 318
+    },
+    {
+     "season": "2013",
+     "team": 127.2,
+     "league": 119.1,
+     "teamBalls": 394
+    },
+    {
+     "season": "2014",
+     "team": 121.3,
+     "league": 132.4,
+     "teamBalls": 249
+    },
+    {
+     "season": "2015",
+     "team": 145.5,
+     "league": 132.3,
+     "teamBalls": 288
+    },
+    {
+     "season": "2018",
+     "team": 129,
+     "league": 137.1,
+     "teamBalls": 317
+    },
+    {
+     "season": "2019",
+     "team": 133.4,
+     "league": 129.8,
+     "teamBalls": 359
+    },
+    {
+     "season": "2020",
+     "team": 164.1,
+     "league": 128.9,
+     "teamBalls": 192
+    },
+    {
+     "season": "2021",
+     "team": 136.7,
+     "league": 123.7,
+     "teamBalls": 354
+    },
+    {
+     "season": "2022",
+     "team": 146.4,
+     "league": 136.2,
+     "teamBalls": 338
+    },
+    {
+     "season": "2023",
+     "team": 148.1,
+     "league": 145,
+     "teamBalls": 285
+    },
+    {
+     "season": "2024",
+     "team": 153.5,
+     "league": 152.3,
+     "teamBalls": 346
+    },
+    {
+     "season": "2025",
+     "team": 145.2,
+     "league": 164.3,
+     "teamBalls": 208
+    },
+    {
+     "season": "2026",
+     "team": 154.7,
+     "league": 161.2,
+     "teamBalls": 333
+    }
+   ]
+  }
+ }
+}

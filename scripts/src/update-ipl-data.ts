@@ -2,11 +2,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { DatabaseSync } from "node:sqlite";
+import { guardWarehouseWrite } from "./lib/warehouse-guard";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, "..", "..");
 const IPL_DIR = path.resolve(REPO, "ipl_csv");
 const dbPath = path.resolve(REPO, "sqlite.db");
+guardWarehouseWrite("update-ipl-data.ts", { target: dbPath, deprecated: "superseded by update-ipl-data-v3.ts, which applies the 2017+ dismissal rules (this script credits retired out, handled the ball and timed out to the bowler and counts retired hurt as a wicket) and refuses production without --allow-production" });
 
 console.log("=== STARTING IPL 1243-MATCH PIPELINE ===");
 console.log(`Scanning directory: ${IPL_DIR}`);

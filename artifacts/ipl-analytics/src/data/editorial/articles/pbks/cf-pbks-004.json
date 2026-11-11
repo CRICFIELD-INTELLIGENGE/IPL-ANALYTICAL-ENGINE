@@ -1,0 +1,192 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-pbks-004",
+ "planId": "cf-pbks-004",
+ "franchise": "PBKS",
+ "aspect": "batting",
+ "title": "Middle-Overs Momentum: Where Punjab Kings Gains or Loses Run Rate",
+ "slug": "pbks-middle-overs-momentum-where-pbks-gains-or-loses-run-rate",
+ "dek": "Overs seven to fifteen decide more T20 matches than they get credit for. Where does Punjab Kings' run rate rise or stall in that stretch?",
+ "excerpt": "Punjab Kings have scored faster than the league in the middle overs since 2024. The data shows why the quiet phase is where totals are really set.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "PBKS"
+ ],
+ "players": [
+  "SS Iyer",
+  "P Simran Singh",
+  "Shashank Singh",
+  "N Wadhera"
+ ],
+ "seasons": [
+  "2008\u20132026",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "Punjab Kings' middle-overs run rate: {{ev:mid-team-e2}} since 2024, against a league figure of {{ev:mid-league-e2}}.",
+  "In 2008\u20132023 the comparison was {{ev:mid-team-e1}} against {{ev:mid-league-e1}}.",
+  "Sides that lost three or more wickets in overs seven to fifteen won {{ev:midw-l3}} of the time."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Overs Nobody Remembers",
+   "body": [
+    "Highlights packages favour the first six overs and the last five. The middle nine overs, between the fielding restrictions and the death, are where an innings either keeps its momentum or loses it.",
+    "For Punjab Kings the middle-overs run rate was {{ev:mid-team-e1}} between 2008 and 2023, with the league at {{ev:mid-league-e1}}. Since 2024 it has been {{ev:mid-team-e2}} against {{ev:mid-league-e2}}.",
+    "On this measure their strongest season was 2026, at {{ev:mid-x-best-v}}, and their weakest 2009, at {{ev:mid-x-worst-v}}."
+   ],
+   "chartIds": [
+    "mid-trend"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Momentum and Wickets",
+   "body": [
+    "The middle overs carry their own wicket penalty. Across every IPL innings with a result, sides that lost no wickets between overs seven and fifteen won {{ev:midw-l0}} of the time, while those losing three or more won {{ev:midw-l3}}.",
+    "PBKS finished above the league's middle-overs rate in {{ev:mid-good-seasons}} of {{ev:mid-season-count}} seasons."
+   ],
+   "chartIds": [
+    "mid-wkts"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Who Drives the Middle",
+   "body": [
+    "Since 2024 {{ev:midb-lead-name}} has faced the most middle-overs balls for PBKS, {{ev:midb-lead-balls}} of them, striking at {{ev:midb-lead-sr}}.",
+    "The middle overs reward batters who can hit spin and rotate strike against defensive fields. The player table shows strike rate and dot-ball rate side by side, the two levers that decide whether the run rate climbs."
+   ],
+   "chartIds": [
+    "mid-players"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Consolidation Is Not Always a Mistake",
+   "body": [
+    "A slow middle phase is sometimes deliberate: a side that lost early wickets may be rebuilding to give its finishers a platform. Comparing raw run rates mixes those rebuilding innings with innings that simply stalled.",
+    "{{hyp:rebuild}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Win the Quiet Overs",
+   "body": [
+    "Punjab Kings have been faster than the league in the middle overs recently. The target for the phase should be a run rate at or above the league without giving up the wickets that make the death overs productive.",
+    "Selection should value middle-order batters on dot-ball rate against spin as much as on strike rate."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "mid-trend",
+   "type": "line",
+   "title": "Middle-overs run rate by season",
+   "subtitle": "PBKS batting vs IPL, overs 7\u201315",
+   "table": "mid-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "PBKS"
+    },
+    {
+     "key": "league",
+     "label": "IPL average"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "runs per over",
+   "takeaway": "PBKS have scored faster than the league in the middle overs since 2024.",
+   "ariaLabel": "Line chart of PBKS middle-overs run rate and the IPL average by season."
+  },
+  {
+   "id": "mid-wkts",
+   "type": "column",
+   "title": "Win rate by middle-overs wickets lost",
+   "subtitle": "All IPL innings with a result",
+   "table": "midw-wkts-win",
+   "xKey": "wickets",
+   "series": [
+    {
+     "key": "team",
+     "label": "PBKS"
+    },
+    {
+     "key": "league",
+     "label": "IPL"
+    }
+   ],
+   "xLabel": "Wickets lost in overs 7\u201315",
+   "unit": "% of innings won",
+   "takeaway": "Losing wickets in the middle overs costs heavily.",
+   "ariaLabel": "Column chart of win rate by wickets lost in overs seven to fifteen."
+  },
+  {
+   "id": "mid-players",
+   "type": "bar",
+   "title": "PBKS middle-overs batters since 2024",
+   "subtitle": "Strike rate, minimum 80 balls",
+   "table": "midb-players",
+   "xKey": "player",
+   "series": [
+    {
+     "key": "strikeRate",
+     "label": "Strike rate"
+    }
+   ],
+   "unit": "runs per 100 balls",
+   "takeaway": "Middle-overs strike rates vary widely within the same squad.",
+   "ariaLabel": "Horizontal bar chart of middle-overs strike rate for PBKS batters since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "rebuild",
+   "statement": "Hypothesis: a slow middle phase after early wickets is a deliberate rebuild rather than a failure, and costs less than the raw run rate suggests.",
+   "whyUnverified": "Middle-overs run rates have not been split by wickets lost in the powerplay.",
+   "howToTest": "Compare middle-overs run rates and match outcomes grouped by powerplay wickets lost."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Punjab Kings batting through the middle overs.",
+   "wanted": "SS Iyer batting for Punjab Kings."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-pbks-001",
+  "cf-pbks-014",
+  "cf-pbks-009"
+ ],
+ "seo": {
+  "metaTitle": "Middle-overs momentum: where PBKS gain or lose",
+  "metaDescription": "Punjab Kings' run rate in overs seven to fifteen against the IPL, and what wickets lost in the middle phase cost."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Run rates use all runs per legal ball times six. Every figure is generated from the CricField warehouse by scripts/editorial/engine. Middle overs = overs seven to fifteen. Wickets exclude retired hurt.",
+ "generator": "engine:v1"
+}

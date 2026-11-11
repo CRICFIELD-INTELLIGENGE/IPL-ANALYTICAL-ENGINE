@@ -1,0 +1,369 @@
+{
+ "articleId": "cf-rr-022",
+ "generatedAt": "2026-10-26T11:34:07.445Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "hg-home-matches": {
+   "value": 68,
+   "display": "68",
+   "label": "Matches at Jaipur in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams, regulation innings",
+   "sampleSize": {
+    "n": 68,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 68"
+   }
+  },
+  "hg-rr-home": {
+   "value": 8.52,
+   "display": "8.52",
+   "label": "Run rate at Jaipur",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 15566,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "plausibility range 6–12 for run rate",
+    "passed": true,
+    "detail": "value 8.515867917255557"
+   }
+  },
+  "hg-rr-other": {
+   "value": 8.46,
+   "display": "8.46",
+   "label": "Run rate at all other IPL venues",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All other venues",
+   "sampleSize": {
+    "n": 268899,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "plausibility range 6–12 for run rate",
+    "passed": true,
+    "detail": "value 8.464070152733926"
+   }
+  },
+  "hg-six-home": {
+   "value": 10.8,
+   "display": "10.8",
+   "label": "Sixes per match at Jaipur",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 68,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 68"
+   }
+  },
+  "hg-six-other": {
+   "value": 12.8,
+   "display": "12.8",
+   "label": "Sixes per match at other venues",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All other venues",
+   "sampleSize": {
+    "n": 1175,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 matches",
+    "passed": true,
+    "detail": "n = 1175"
+   }
+  },
+  "hg-first-home": {
+   "value": 169,
+   "display": "169",
+   "label": "Average first-innings score at Jaipur",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings",
+   "sampleSize": {
+    "n": 68,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 innings",
+    "passed": true,
+    "detail": "n = 68"
+   }
+  },
+  "hg-first-other": {
+   "value": 169,
+   "display": "169",
+   "label": "Average first-innings score at other venues",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings",
+   "sampleSize": {
+    "n": 1175,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 innings",
+    "passed": true,
+    "detail": "n = 1175"
+   }
+  },
+  "hg-chase-home": {
+   "value": 64.7,
+   "display": "64.7%",
+   "label": "Chasing side's win rate at Jaipur",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 68,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 68"
+   }
+  },
+  "hg-chase-other": {
+   "value": 53.9,
+   "display": "53.9%",
+   "label": "Chasing side's win rate at other venues",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 1166,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 matches",
+    "passed": true,
+    "detail": "n = 1166"
+   }
+  },
+  "hg-home-win": {
+   "value": 59.1,
+   "display": "59.1%",
+   "label": "RR win rate at Jaipur",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "RR matches with a result at the ground",
+   "sampleSize": {
+    "n": 66,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (10) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (10) OR m.team2_id IN (10)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 66"
+   }
+  },
+  "hg-away-win": {
+   "value": 47,
+   "display": "47.0%",
+   "label": "RR win rate elsewhere",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "RR matches with a result at other venues",
+   "sampleSize": {
+    "n": 183,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (10) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (10) OR m.team2_id IN (10)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 183"
+   }
+  },
+  "hg-home-n": {
+   "value": 66,
+   "display": "66",
+   "label": "RR decided matches at Jaipur",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 66,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (10) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (10) OR m.team2_id IN (10)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 66"
+   }
+  },
+  "hg-home-ci": {
+   "value": "47–70%",
+   "display": "47–70%",
+   "label": "95% interval for RR's home win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Wilson score interval",
+   "sampleSize": {
+    "n": 66,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (10) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (10) OR m.team2_id IN (10)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "interval contains point estimate",
+    "passed": true
+   }
+  },
+  "hg-home-p": {
+   "value": 0.18,
+   "display": "0.18",
+   "label": "Probability of a home record at least this far from 50/50 if each match were a coin toss",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Two-sided exact binomial test",
+   "sampleSize": {
+    "n": 66,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (10) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (10) OR m.team2_id IN (10)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "plausibility range 0–1 for p-value",
+    "passed": true,
+    "detail": "value 0.17528627737194716"
+   }
+  },
+  "hg-toss-field": {
+   "value": 59,
+   "display": "59%",
+   "label": "Toss winners choosing to bowl first at Jaipur",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 68,
+    "unit": "matches"
+   },
+   "query": "SELECT SUM(CASE WHEN toss_decision = 'field' THEN 1 ELSE 0 END) field, COUNT(*) n FROM matches m WHERE m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%')",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 68"
+   }
+  }
+ },
+ "tables": {
+  "hg-home-away": {
+   "label": "RR win rate at Jaipur vs elsewhere",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 249,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (10) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (10) OR m.team2_id IN (10)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "rows": [
+    {
+     "where": "Jaipur",
+     "winPct": 59.1,
+     "matches": 66
+    },
+    {
+     "where": "Elsewhere",
+     "winPct": 47,
+     "matches": 183
+    }
+   ]
+  },
+  "hg-series": {
+   "label": "Average first-innings score: Jaipur vs IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings; seasons in which the ground hosted",
+   "sampleSize": {
+    "n": 68,
+    "unit": "innings at the ground"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, AVG(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN i.runs END) home, AVG(i.runs) league, SUM(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Sawai Mansingh%') THEN 1 ELSE 0 END) n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY year HAVING n > 0 ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "ground": 158,
+     "league": 161
+    },
+    {
+     "season": "2010",
+     "ground": 152,
+     "league": 165
+    },
+    {
+     "season": "2011",
+     "ground": 143,
+     "league": 152
+    },
+    {
+     "season": "2012",
+     "ground": 167,
+     "league": 158
+    },
+    {
+     "season": "2013",
+     "ground": 154,
+     "league": 156
+    },
+    {
+     "season": "2018",
+     "ground": 161,
+     "league": 172
+    },
+    {
+     "season": "2019",
+     "ground": 163,
+     "league": 167
+    },
+    {
+     "season": "2023",
+     "ground": 172,
+     "league": 183
+    },
+    {
+     "season": "2024",
+     "ground": 187,
+     "league": 190
+    },
+    {
+     "season": "2025",
+     "ground": 198,
+     "league": 189
+    },
+    {
+     "season": "2026",
+     "ground": 226,
+     "league": 193
+    }
+   ]
+  }
+ }
+}

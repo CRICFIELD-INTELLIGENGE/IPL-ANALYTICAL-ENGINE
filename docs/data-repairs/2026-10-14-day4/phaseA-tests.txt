@@ -1,0 +1,18 @@
+== api
+ℹ tests 43
+ℹ pass 43
+ℹ fail 0
+== global
+ℹ tests 23
+ℹ pass 23
+ℹ fail 0
+== step3
+ℹ tests 24
+ℹ pass 24
+ℹ fail 0
+== tc api-server
+0
+== tc scripts
+0
+== tc ipl-analytics
+11

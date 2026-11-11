@@ -1,0 +1,160 @@
+{
+ "articleId": "cf-dc-100",
+ "generatedAt": "2026-10-26T04:24:54.348Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "fx-bm": {
+   "value": 5.89,
+   "display": "5.89",
+   "label": "Bowlers used per innings by DC, 2022–2026",
+   "unit": "bowlers",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 70,
+    "unit": "innings"
+   },
+   "query": "SELECT i.innings_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.bowling_team_id IN (8,11) THEN 1 ELSE 0 END mine, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY i.innings_id",
+   "validation": {
+    "method": "plausibility range 3–9 for bowlers",
+    "passed": true,
+    "detail": "value 5.885714285714286"
+   }
+  },
+  "fx-bo": {
+   "value": 5.94,
+   "display": "5.94",
+   "label": "Bowlers used per innings, rest of IPL",
+   "unit": "bowlers",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 660,
+    "unit": "innings"
+   },
+   "query": "SELECT i.innings_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.bowling_team_id IN (8,11) THEN 1 ELSE 0 END mine, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY i.innings_id",
+   "validation": {
+    "method": "plausibility range 3–9 for bowlers",
+    "passed": true,
+    "detail": "value 5.942424242424242"
+   }
+  },
+  "fx-tm": {
+   "value": 8.24,
+   "display": "8.24",
+   "label": "Batters used per innings by DC",
+   "unit": "batters",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 70,
+    "unit": "innings"
+   },
+   "query": "SELECT i.innings_id, CASE WHEN i.batting_team_id IN (8,11) THEN 1 ELSE 0 END mine, COUNT(DISTINCT d.batter_id) batters FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY i.innings_id",
+   "validation": {
+    "method": "plausibility range 3–11 for batters",
+    "passed": true,
+    "detail": "value 8.242857142857142"
+   }
+  },
+  "fx-to": {
+   "value": 7.76,
+   "display": "7.76",
+   "label": "Batters used per innings, rest of IPL",
+   "unit": "batters",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 660,
+    "unit": "innings"
+   },
+   "query": "SELECT i.innings_id, CASE WHEN i.batting_team_id IN (8,11) THEN 1 ELSE 0 END mine, COUNT(DISTINCT d.batter_id) batters FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY i.innings_id",
+   "validation": {
+    "method": "plausibility range 3–11 for batters",
+    "passed": true,
+    "detail": "value 7.757575757575758"
+   }
+  },
+  "fx-sm": {
+   "value": 44,
+   "display": "44%",
+   "label": "Spin share of Delhi Capitals' overs, 2022–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowlers with a known style",
+   "sampleSize": {
+    "n": 31,
+    "unit": "bowlers"
+   },
+   "query": "SELECT pl.name, CASE WHEN i.bowling_team_id IN (8,11) THEN 1 ELSE 0 END mine, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY pl.name, mine",
+   "validation": {
+    "method": "plausibility range 50–100 for coverage",
+    "passed": true,
+    "detail": "value 81.44673497099123"
+   }
+  },
+  "fx-so": {
+   "value": 35,
+   "display": "35%",
+   "label": "Spin share of overs, rest of IPL",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowlers with a known style",
+   "sampleSize": {
+    "n": 245,
+    "unit": "bowlers"
+   },
+   "query": "SELECT pl.name, CASE WHEN i.bowling_team_id IN (8,11) THEN 1 ELSE 0 END mine, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY pl.name, mine",
+   "validation": {
+    "method": "plausibility range 50–100 for coverage",
+    "passed": true,
+    "detail": "value 72.04272645550209"
+   }
+  }
+ },
+ "tables": {
+  "fx-series": {
+   "label": "Bowlers used per innings, DC vs rest of IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, 2022–2026",
+   "sampleSize": {
+    "n": 730,
+    "unit": "innings"
+   },
+   "query": "SELECT i.innings_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.bowling_team_id IN (8,11) THEN 1 ELSE 0 END mine, COUNT(DISTINCT d.bowler_id) bowlers FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2022 AND 2026 GROUP BY i.innings_id",
+   "rows": [
+    {
+     "season": "2022",
+     "team": 5.86,
+     "league": 5.78
+    },
+    {
+     "season": "2023",
+     "team": 5.86,
+     "league": 6.14
+    },
+    {
+     "season": "2024",
+     "team": 6.07,
+     "league": 6.03
+    },
+    {
+     "season": "2025",
+     "team": 6,
+     "league": 5.94
+    },
+    {
+     "season": "2026",
+     "team": 5.64,
+     "league": 5.83
+    }
+   ]
+  }
+ }
+}

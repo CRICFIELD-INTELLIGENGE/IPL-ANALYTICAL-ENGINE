@@ -1,0 +1,164 @@
+{
+ "articleId": "cf-csk-048",
+ "generatedAt": "2026-10-26T04:17:36.486Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "wf-wk": {
+   "value": 41,
+   "display": "41%",
+   "label": "Share of Chennai Super Kings' matches on a Saturday or Sunday",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 266,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "sample-size floor ≥ 30 matches",
+    "passed": true,
+    "detail": "n = 266"
+   }
+  },
+  "wf-dh": {
+   "value": 47,
+   "display": "47%",
+   "label": "Share of Chennai Super Kings' matches on double-header days",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Two IPL matches on the same date",
+   "sampleSize": {
+    "n": 266,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "sample-size floor ≥ 30 matches",
+    "passed": true,
+    "detail": "n = 266"
+   }
+  },
+  "wf-hwk": {
+   "value": 33,
+   "display": "33",
+   "label": "Chennai Super Kings' weekend matches at Chepauk",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 84,
+    "unit": "home matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "wf-series": {
+   "label": "CSK matches on weekends and double-header days by season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Weekend = Saturday or Sunday; double-header = two IPL matches that day",
+   "sampleSize": {
+    "n": 266,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "rows": [
+    {
+     "season": "2008",
+     "weekendPct": 50,
+     "doubleHeaderPct": 43.8
+    },
+    {
+     "season": "2009",
+     "weekendPct": 35.7,
+     "doubleHeaderPct": 71.4
+    },
+    {
+     "season": "2010",
+     "weekendPct": 43.8,
+     "doubleHeaderPct": 68.8
+    },
+    {
+     "season": "2011",
+     "weekendPct": 31.3,
+     "doubleHeaderPct": 50
+    },
+    {
+     "season": "2012",
+     "weekendPct": 38.9,
+     "doubleHeaderPct": 61.1
+    },
+    {
+     "season": "2013",
+     "weekendPct": 44.4,
+     "doubleHeaderPct": 50
+    },
+    {
+     "season": "2014",
+     "weekendPct": 25,
+     "doubleHeaderPct": 75
+    },
+    {
+     "season": "2015",
+     "weekendPct": 41.2,
+     "doubleHeaderPct": 47.1
+    },
+    {
+     "season": "2018",
+     "weekendPct": 50,
+     "doubleHeaderPct": 31.3
+    },
+    {
+     "season": "2019",
+     "weekendPct": 41.2,
+     "doubleHeaderPct": 29.4
+    },
+    {
+     "season": "2020",
+     "weekendPct": 42.9,
+     "doubleHeaderPct": 35.7
+    },
+    {
+     "season": "2021",
+     "weekendPct": 43.8,
+     "doubleHeaderPct": 31.3
+    },
+    {
+     "season": "2022",
+     "weekendPct": 50,
+     "doubleHeaderPct": 35.7
+    },
+    {
+     "season": "2023",
+     "weekendPct": 37.5,
+     "doubleHeaderPct": 43.8
+    },
+    {
+     "season": "2024",
+     "weekendPct": 42.9,
+     "doubleHeaderPct": 35.7
+    },
+    {
+     "season": "2025",
+     "weekendPct": 42.9,
+     "doubleHeaderPct": 42.9
+    },
+    {
+     "season": "2026",
+     "weekendPct": 42.9,
+     "doubleHeaderPct": 35.7
+    }
+   ]
+  }
+ }
+}

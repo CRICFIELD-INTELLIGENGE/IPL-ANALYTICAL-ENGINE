@@ -1,3 +1,5 @@
+import platformRouter from "./platform";
+import aiAnalystRouter from "./ai-analyst";
 import { Router, type IRouter } from "express";
 import healthRouter from "./health";
 import iplRouter from "./ipl";
@@ -7,16 +9,32 @@ import csvSyncRouter from "./csv-sync-route.js";
 import decisionRouter from "./decision";
 import decisionIntelRouter from "./decision-intel";
 import clipRouter from "./clip-router";
+import scoutRouter from "./scout";
+import videoRouter from "./video";
+import arcadeRouter from "./arcade";
+import auction2027Router from "./auction-2027";
+import aiCommentaryRouter from "./ai-commentary";
+import intelligenceRouter from "./intelligence";
+import retentionRouter from "./retention";
 
 const router: IRouter = Router();
 
 router.use(healthRouter);
+router.use(platformRouter);
 router.use(clipRouter);
 router.use(decisionRouter);
 router.use(decisionIntelRouter);
 router.use(iplRouter);
 router.use(liveRouter);
 router.use("/auction", auctionRouter);
+router.use("/scout", scoutRouter);
+router.use("/video", videoRouter);
+router.use("/arcade", arcadeRouter);
 router.use(csvSyncRouter);
+router.use(auction2027Router);
+router.use(intelligenceRouter);
+router.use(retentionRouter);
+router.use(aiCommentaryRouter);
+router.use(aiAnalystRouter);
 
 export default router;

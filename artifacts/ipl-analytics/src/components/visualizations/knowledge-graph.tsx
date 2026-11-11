@@ -255,7 +255,7 @@ export function KnowledgeGraphSimple() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [filterType, setFilterType] = useState<NodeType | "all">("all");
   const [frame, setFrame] = useState(0);
-  const [dims, setDims] = useState({ w: 800, h: 520 });
+  const [dims, setDims] = useState({ w: 800, h: 400 });
 
   const edges = RAW_EDGES;
 

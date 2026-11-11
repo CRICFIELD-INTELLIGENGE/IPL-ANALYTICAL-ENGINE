@@ -1,0 +1,22 @@
+.mobile-dock { display:none; }
+@media (max-width:767px) {
+  .editorial-shell > aside { display:none !important; }
+  .editorial-shell > main { padding-left:0 !important; padding-right:0 !important; padding-bottom:calc(84px + env(safe-area-inset-bottom)); }
+  .editorial-shell > header { height:64px; padding:0 16px; opacity:1 !important; transform:none !important; background:#06111bf2; }
+  .editorial-shell > header > div { min-width:0; }
+  .editorial-shell > main > div { min-width:0; }
+  .mobile-dock { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); position:fixed; bottom:0; left:0; right:0; z-index:40; padding:8px 8px calc(8px + env(safe-area-inset-bottom)); background:#07141ef5; border-top:1px solid #29404e; backdrop-filter:blur(24px); box-shadow:0 -12px 40px #02080d66; }
+  .mobile-dock a,.mobile-dock button { display:flex; align-items:center; justify-content:center; flex-direction:column; gap:5px; min-height:52px; border-radius:16px; color:#8ca0b0; font-size:10px; font-weight:650; text-decoration:none; background:transparent; border:0; -webkit-tap-highlight-color:transparent; }
+  .mobile-dock [aria-current="page"],.mobile-dock [data-active="true"] { color:#b9d8ff; background:#20384d; }
+  .mobile-dock a:active,.mobile-dock button:active { background:#294559; }
+  .mobile-dock :focus-visible { outline:2px solid #b9d8ff; outline-offset:1px; }
+  .mobile-explore { border-radius:28px 28px 0 0; border-color:#29404e; background:#091722; padding:16px 20px calc(24px + env(safe-area-inset-bottom)); max-height:86dvh; overflow-y:auto; }
+  .mobile-sheet-handle { height:4px; width:36px; border-radius:8px; background:#49606e; margin:0 auto 22px; }
+  .mobile-explore-grid { display:grid; gap:8px; margin-top:24px; }
+  .mobile-explore-grid a { display:flex; align-items:center; gap:14px; padding:14px; min-height:68px; border:1px solid #203644; border-radius:16px; color:#a6c8e5; background:#0d202e; }
+  .mobile-explore-grid a[aria-current="page"] { border-color:#84baf0; background:#18364b; }
+  .mobile-explore-grid a > span { flex:1; min-width:0; }
+  .mobile-explore-grid strong { display:block; font-size:14px; color:#f0f5fa; }
+  .mobile-explore-grid small { display:block; margin-top:3px; font-size:11px; color:#9bb0bf; }
+  .editorial-shell table { white-space:nowrap; }
+}

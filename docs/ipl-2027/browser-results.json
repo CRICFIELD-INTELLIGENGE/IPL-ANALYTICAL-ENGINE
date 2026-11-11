@@ -1,0 +1,21 @@
+{
+  "errors": [],
+  "mobileOverflow": false,
+  "tests": [
+    "ten franchises",
+    "Feed entry",
+    "save/reload",
+    "team isolation",
+    "reset",
+    "empty search",
+    "role targets",
+    "shareable brief",
+    "backend unavailable",
+    "mobile rendering",
+    "Navigator expansion and contextual links",
+    "existing header franchise switcher",
+    "all ten franchise briefs",
+    "print brief",
+    "empty squad data"
+  ]
+}

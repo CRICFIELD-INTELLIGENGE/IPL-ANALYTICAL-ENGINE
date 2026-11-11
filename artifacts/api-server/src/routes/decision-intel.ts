@@ -22,6 +22,7 @@
 //   GET  /api/intel/match/:id                  panels for /match/:id
 
 import { Router, type Request, type Response } from "express";
+import { logger } from "../lib/logger";
 import { z } from "zod";
 import { getDecisionDbError } from "../services/decision/db";
 import { bowlingSubtype, getPlayerMeta, getRoster, getSeasonLines, getSeasons, isWarehouseReady } from "../services/decision/player-profiles";
@@ -43,9 +44,18 @@ import { franchiseRecord, franchiseSquad } from "../services/decision/dugout-dat
 
 const router = Router();
 
+let warehouseErrorLogged = false;
+function logWarehouseErrorOnce(detail: string | null) {
+  if (warehouseErrorLogged) return;
+  warehouseErrorLogged = true;
+  logger.error({ detail }, "IPL warehouse unavailable");
+}
+
 function requireWarehouse(res: Response): boolean {
   if (isWarehouseReady()) return true;
-  res.status(503).json({ error: "warehouse_unavailable", detail: getDecisionDbError() });
+  // The internal error names the server's file path; it is logged, never returned to the client.
+  logWarehouseErrorOnce(getDecisionDbError());
+  res.status(503).json({ error: "warehouse_unavailable", detail: "The IPL data warehouse is not available on this server." });
   return false;
 }
 
@@ -60,7 +70,8 @@ function fail(res: Response, err: unknown): void {
     unknown_team: 404, same_team: 400, squad_unavailable: 422, innings_not_found: 404,
     innings_already_over: 422, unknown_bowling_type: 400,
   };
-  res.status(known[msg] ?? 500).json({ error: known[msg] ? msg : "internal_error", detail: known[msg] ? undefined : msg });
+  if (!known[msg]) logger.error({ errorType: err instanceof Error ? err.name : "Error" }, "Decision request failed");
+  res.status(known[msg] ?? 500).json({ error: known[msg] ? msg : "internal_error" });
 }
 
 const latest = () => Number(getSeasons().at(-1) ?? 2026);

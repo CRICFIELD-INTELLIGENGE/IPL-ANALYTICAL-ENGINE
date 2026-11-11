@@ -1,0 +1,169 @@
+{
+ "articleId": "cf-csk-098",
+ "generatedAt": "2026-10-26T04:18:32.924Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "dg-len": {
+   "value": 59,
+   "display": "59%",
+   "label": "Deliveries with a length tag",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All deliveries",
+   "sampleSize": {
+    "n": 295732,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, SUM(CASE WHEN d.required_rr <> 0 THEN 1 ELSE 0 END) rrr FROM deliveries d LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "dg-spd": {
+   "value": 2.4,
+   "display": "2.4%",
+   "label": "Deliveries with a speed",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All deliveries",
+   "sampleSize": {
+    "n": 295732,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, SUM(CASE WHEN d.required_rr <> 0 THEN 1 ELSE 0 END) rrr FROM deliveries d LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "dg-rrr": {
+   "value": 0,
+   "display": "0%",
+   "label": "Deliveries with a non-zero stored required run rate",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All deliveries",
+   "sampleSize": {
+    "n": 295732,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, SUM(CASE WHEN d.required_rr <> 0 THEN 1 ELSE 0 END) rrr FROM deliveries d LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "dg-potm": {
+   "value": 0,
+   "display": "0%",
+   "label": "Matches with a player of the match recorded",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches",
+   "sampleSize": {
+    "n": 1243,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN player_of_match_id IS NOT NULL THEN 1 ELSE 0 END) potm, SUM(CASE WHEN margin_type IS NOT NULL THEN 1 ELSE 0 END) margin FROM matches",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "dg-cty": {
+   "value": 30,
+   "display": "30%",
+   "label": "Players with a known nationality in the players table",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All players",
+   "sampleSize": {
+    "n": 1141,
+    "unit": "players"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN country IS NOT NULL AND country <> 'Unknown' THEN 1 ELSE 0 END) cty, SUM(CASE WHEN batting_style IS NOT NULL THEN 1 ELSE 0 END) bat FROM players",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "dg-bd": {
+   "value": 35,
+   "display": "35%",
+   "label": "Chennai Super Kings' balls since 2024 faced by batters with a known birth date",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Player-bio data",
+   "sampleSize": {
+    "n": 4944,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.batting_team_id IN (9) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pl.name",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "dg-part": {
+   "value": 0,
+   "display": "0",
+   "label": "Rows in the partnerships table",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Warehouse table",
+   "sampleSize": {
+    "n": 0,
+    "unit": "rows"
+   },
+   "query": "SELECT COUNT(*) n FROM partnerships",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "dg-audit": {
+   "label": "Field coverage audit of the CricField warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Share of records where the field is populated",
+   "sampleSize": {
+    "n": 295732,
+    "unit": "deliveries"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN c.length IS NOT NULL THEN 1 ELSE 0 END) len, SUM(CASE WHEN c.speed_kph IS NOT NULL THEN 1 ELSE 0 END) spd, SUM(CASE WHEN d.required_rr <> 0 THEN 1 ELSE 0 END) rrr FROM deliveries d LEFT JOIN delivery_commentary c ON c.delivery_id = d.delivery_id ;; SELECT COUNT(*) n, SUM(CASE WHEN player_of_match_id IS NOT NULL THEN 1 ELSE 0 END) potm, SUM(CASE WHEN margin_type IS NOT NULL THEN 1 ELSE 0 END) margin FROM matches ;; SELECT COUNT(*) n, SUM(CASE WHEN country IS NOT NULL AND country <> 'Unknown' THEN 1 ELSE 0 END) cty, SUM(CASE WHEN batting_style IS NOT NULL THEN 1 ELSE 0 END) bat FROM players",
+   "rows": [
+    {
+     "field": "Delivery length tag",
+     "coverage": 59.4
+    },
+    {
+     "field": "Delivery speed",
+     "coverage": 2.4
+    },
+    {
+     "field": "Required run rate (stored)",
+     "coverage": 0
+    },
+    {
+     "field": "Player of the match",
+     "coverage": 0
+    },
+    {
+     "field": "Player nationality (players table)",
+     "coverage": 30.5
+    },
+    {
+     "field": "Birth date, CSK batters 2024–26",
+     "coverage": 35
+    }
+   ]
+  }
+ }
+}

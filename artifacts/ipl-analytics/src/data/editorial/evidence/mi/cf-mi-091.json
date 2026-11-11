@@ -1,0 +1,207 @@
+{
+ "articleId": "cf-mi-091",
+ "generatedAt": "2026-10-26T04:20:04.762Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "bp-yr": {
+   "value": "2026",
+   "display": "2026",
+   "label": "Latest season in the data",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season series",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "max year",
+    "passed": true
+   }
+  },
+  "bp-best": {
+   "value": "middle-overs batting",
+   "display": "middle-overs batting",
+   "label": "Mumbai Indians' strongest phase relative to the league in 2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Six phase measures",
+   "sampleSize": {
+    "n": 6,
+    "unit": "measures"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "bp-worst": {
+   "value": "powerplay batting",
+   "display": "powerplay batting",
+   "label": "Mumbai Indians' weakest phase relative to the league in 2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Six phase measures",
+   "sampleSize": {
+    "n": 6,
+    "unit": "measures"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "min",
+    "passed": true
+   }
+  },
+  "bp-ppbat": {
+   "value": -0.83,
+   "display": "−0.83",
+   "label": "Powerplay batting relative to the league, 2026",
+   "unit": "runs per over (positive = better)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2026",
+   "sampleSize": {
+    "n": 504,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 200 legal balls",
+    "passed": true,
+    "detail": "n = 504"
+   }
+  },
+  "bp-midbat": {
+   "value": 0.04,
+   "display": "+0.04",
+   "label": "Middle-overs batting relative to the league, 2026",
+   "unit": "runs per over (positive = better)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2026",
+   "sampleSize": {
+    "n": 732,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 200 legal balls",
+    "passed": true,
+    "detail": "n = 732"
+   }
+  },
+  "bp-deathbat": {
+   "value": -0.52,
+   "display": "−0.52",
+   "label": "Death batting relative to the league, 2026",
+   "unit": "runs per over (positive = better)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2026",
+   "sampleSize": {
+    "n": 370,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 200 legal balls",
+    "passed": true,
+    "detail": "n = 370"
+   }
+  },
+  "bp-ppbowl": {
+   "value": -0.74,
+   "display": "−0.74",
+   "label": "Powerplay bowling relative to the league, 2026",
+   "unit": "runs per over (positive = better)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2026",
+   "sampleSize": {
+    "n": 504,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (4) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 200 legal balls",
+    "passed": true,
+    "detail": "n = 504"
+   }
+  },
+  "bp-midbowl": {
+   "value": -0.2,
+   "display": "−0.20",
+   "label": "Middle-overs bowling relative to the league, 2026",
+   "unit": "runs per over (positive = better)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2026",
+   "sampleSize": {
+    "n": 732,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (4) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 200 legal balls",
+    "passed": true,
+    "detail": "n = 732"
+   }
+  },
+  "bp-deathbowl": {
+   "value": -0.45,
+   "display": "−0.45",
+   "label": "Death bowling relative to the league, 2026",
+   "unit": "runs per over (positive = better)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2026",
+   "sampleSize": {
+    "n": 307,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (4) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 200 legal balls",
+    "passed": true,
+    "detail": "n = 307"
+   }
+  }
+ },
+ "tables": {
+  "bp-gaps": {
+   "label": "MI against the IPL by phase, 2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Runs per over relative to the league, signed so that positive = better",
+   "sampleSize": {
+    "n": 3149,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (4) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (4) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "rows": [
+    {
+     "phase": "Powerplay batting",
+     "edge": -0.83
+    },
+    {
+     "phase": "Middle-overs batting",
+     "edge": 0.04
+    },
+    {
+     "phase": "Death batting",
+     "edge": -0.52
+    },
+    {
+     "phase": "Powerplay bowling",
+     "edge": -0.74
+    },
+    {
+     "phase": "Middle-overs bowling",
+     "edge": -0.2
+    },
+    {
+     "phase": "Death bowling",
+     "edge": -0.45
+    }
+   ]
+  }
+ }
+}

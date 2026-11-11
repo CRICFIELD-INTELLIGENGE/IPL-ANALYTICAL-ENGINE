@@ -1,0 +1,151 @@
+{
+ "articleId": "cf-srh-043",
+ "generatedAt": "2026-10-26T04:22:23.393Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "je-name": {
+   "value": "B Kumar",
+   "display": "B Kumar",
+   "label": "Sunrisers Hyderabad's longest-serving player",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons batting or bowling for the franchise",
+   "sampleSize": {
+    "n": 125,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(DISTINCT x.y) seasons, MIN(x.y) first, MAX(x.y) last FROM ( SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) UNION SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.bowler_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (1)) x JOIN players pl ON pl.player_id = x.pid GROUP BY pl.name ORDER BY seasons DESC, pl.name",
+   "validation": {
+    "method": "max over players",
+    "passed": true
+   }
+  },
+  "je-seasons": {
+   "value": 11,
+   "display": "11",
+   "label": "Seasons played for SRH by that player",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 11,
+    "unit": "seasons"
+   },
+   "query": "SELECT pl.name, COUNT(DISTINCT x.y) seasons, MIN(x.y) first, MAX(x.y) last FROM ( SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) UNION SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.bowler_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (1)) x JOIN players pl ON pl.player_id = x.pid GROUP BY pl.name ORDER BY seasons DESC, pl.name",
+   "validation": {
+    "method": "plausibility range 1–19 for seasons",
+    "passed": true,
+    "detail": "value 11"
+   }
+  },
+  "je-long": {
+   "value": 10,
+   "display": "10",
+   "label": "Players with five or more seasons for SRH",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 125,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(DISTINCT x.y) seasons, MIN(x.y) first, MAX(x.y) last FROM ( SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) UNION SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.bowler_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (1)) x JOIN players pl ON pl.player_id = x.pid GROUP BY pl.name ORDER BY seasons DESC, pl.name",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "je-share": {
+   "value": 37,
+   "display": "37%",
+   "label": "Share of Sunrisers Hyderabad's runs scored by those players",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 32885,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) GROUP BY pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 32885"
+   }
+  },
+  "je-used": {
+   "value": 125,
+   "display": "125",
+   "label": "Players who have batted or bowled for SRH",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2013–2026",
+   "sampleSize": {
+    "n": 125,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(DISTINCT x.y) seasons, MIN(x.y) first, MAX(x.y) last FROM ( SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) UNION SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.bowler_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (1)) x JOIN players pl ON pl.player_id = x.pid GROUP BY pl.name ORDER BY seasons DESC, pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 20 players",
+    "passed": true,
+    "detail": "n = 125"
+   }
+  }
+ },
+ "tables": {
+  "je-top": {
+   "label": "SRH longest-serving players",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons in which the player batted or bowled for the franchise",
+   "sampleSize": {
+    "n": 125,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(DISTINCT x.y) seasons, MIN(x.y) first, MAX(x.y) last FROM ( SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) UNION SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.bowler_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (1)) x JOIN players pl ON pl.player_id = x.pid GROUP BY pl.name ORDER BY seasons DESC, pl.name",
+   "rows": [
+    {
+     "player": "B Kumar",
+     "seasons": 11,
+     "span": "2014–2024"
+    },
+    {
+     "player": "Abhishek Sharma",
+     "seasons": 8,
+     "span": "2019–2026"
+    },
+    {
+     "player": "KS Williamson",
+     "seasons": 8,
+     "span": "2015–2022"
+    },
+    {
+     "player": "DA Warner",
+     "seasons": 7,
+     "span": "2014–2021"
+    },
+    {
+     "player": "S Dhawan",
+     "seasons": 6,
+     "span": "2013–2018"
+    },
+    {
+     "player": "Abdul Samad",
+     "seasons": 5,
+     "span": "2020–2024"
+    },
+    {
+     "player": "Mohammad Nabi",
+     "seasons": 5,
+     "span": "2017–2021"
+    },
+    {
+     "player": "Rashid Khan",
+     "seasons": 5,
+     "span": "2017–2021"
+    }
+   ]
+  }
+ }
+}

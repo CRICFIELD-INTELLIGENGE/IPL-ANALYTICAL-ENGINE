@@ -12,6 +12,7 @@ import {
   matchesTable,
 } from "@workspace/db";
 import { eq, and } from "drizzle-orm";
+import { guardWarehouseWrite } from "./lib/warehouse-guard";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, "..", "..");
@@ -130,6 +131,7 @@ function classifyPressureState(overNum: number, inningIndex: number, wicketsFall
 }
 
 async function main() {
+  guardWarehouseWrite("migrate_deliveries.ts"); // @workspace/db target: CRICFIELD_DB_PATH or the production sqlite.db
   console.log("=== STARTING DELIVERIES MIGRATION ===");
   if (!fs.existsSync(RAW_DIR)) {
     console.error(`Raw dir not found at ${RAW_DIR}`);
@@ -258,6 +260,7 @@ async function main() {
               inningsId,
               overNum,
               ballNum: ballIdx + 1,
+              deliverySeq: ballIdx + 1,
               batterId,
               bowlerId,
               nonStrikerId,

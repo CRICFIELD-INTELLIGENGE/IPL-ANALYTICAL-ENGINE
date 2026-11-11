@@ -6,7 +6,25 @@ import { DatabaseSync } from "node:sqlite";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, "..", "..");
 const IPL_DIR = path.resolve(REPO, "ipl_csv");
-const dbPath = path.resolve(REPO, "sqlite.db");
+// Target database. This script DROPs and rebuilds every table, so it refuses to touch the live
+// warehouse (sqlite.db) unless explicitly told to: build into a copy and swap it in after review.
+//   tsx src/update-ipl-data-v3.ts --db /path/to/rebuild.db
+//   tsx src/update-ipl-data-v3.ts --db ../sqlite.db --allow-production   (deliberate, reviewed rebuild only)
+const argv = process.argv.slice(2);
+const dbArg = argv.indexOf("--db") !== -1 ? argv[argv.indexOf("--db") + 1] : undefined;
+if (!dbArg) {
+  console.error("Refusing to run without --db <path>. This script drops and rebuilds every table; build into a copy, not sqlite.db.");
+  process.exit(1);
+}
+const dbPath = path.resolve(dbArg);
+if (dbPath === path.resolve(REPO, "sqlite.db") && !argv.includes("--allow-production")) {
+  console.error("Refusing to rebuild the production sqlite.db without --allow-production. Build into a copy and review it first.");
+  process.exit(1);
+}
+// Dismissal kinds that are not credited to the bowler (Laws of Cricket 2017+; "retired out" was
+// previously credited, inflating 6 IPL spells by one wicket each).
+const NOT_BOWLER_WICKET = new Set(["run out", "retired hurt", "retired out", "retired not out", "obstructing the field", "handled the ball", "timed out"]);
+const NOT_A_WICKET = new Set(["retired hurt", "retired not out"]);
 const PLAYERS_JSON_PATH = path.resolve(REPO, "artifacts/api-server/data/players.json");
 
 console.log("=== STARTING IPL 1243-MATCH PIPELINE (v3, identity-resolved) ===");
@@ -162,7 +180,8 @@ CREATE TABLE deliveries (
   wickets_left INTEGER DEFAULT 10 NOT NULL,
   wicket_seq INTEGER,
   wickets_remaining INTEGER,
-  required_run_rate REAL
+  required_run_rate REAL,
+  delivery_seq INTEGER
 );
 
 CREATE TABLE dismissals (
@@ -577,8 +596,8 @@ function parseCSVLineWrap(line: string): string[] { return parseCSVLine(line); }
 
 const matchInsert = db.prepare("INSERT INTO matches (match_id, season_id, date, venue_id, team1_id, team2_id, toss_winner_id, toss_decision, winner_id, match_type, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Finished')");
 const inningsInsert = db.prepare("INSERT INTO innings (match_id, innings_number, batting_team_id, bowling_team_id, runs, wickets, overs, total_legal_balls, is_completed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING innings_id");
-const deliveryInsert = db.prepare("INSERT INTO deliveries (match_id, innings_id, over_num, ball_num, batter_id, bowler_id, non_striker_id, batter_runs, extra_runs, total_runs, is_wide, is_noball, is_boundary, delivery_type, scoring_area, pressure_state, phase, is_dot_ball, is_death_over, is_powerplay) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING delivery_id");
-const dismissalInsert = db.prepare("INSERT INTO dismissals (delivery_id, player_out_id, kind) VALUES (?, ?, ?)");
+const deliveryInsert = db.prepare("INSERT INTO deliveries (match_id, innings_id, over_num, ball_num, delivery_seq, batter_id, bowler_id, non_striker_id, batter_runs, extra_runs, total_runs, is_wide, is_noball, is_bye, is_legbye, is_penalty, is_boundary, delivery_type, scoring_area, pressure_state, phase, is_dot_ball, is_death_over, is_powerplay) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING delivery_id");
+const dismissalInsert = db.prepare("INSERT INTO dismissals (delivery_id, player_out_id, kind, fielder_id) VALUES (?, ?, ?, ?)");
 const batFactInsert = db.prepare("INSERT INTO fact_batting_innings (match_id, innings_id, striker_id, runs, balls_faced, fours, sixes, was_dismissed, strike_rate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 const bowlFactInsert = db.prepare("INSERT INTO fact_bowling_spells (match_id, innings_id, bowler_id, wickets, runs_conceded, balls, economy_rate, bowling_strike_rate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -604,6 +623,8 @@ function processFile(filePath: string) {
       else if (key === "toss_winner") matchInfo.toss_winner = parts[2];
       else if (key === "toss_decision") matchInfo.toss_decision = parts[2];
       else if (key === "winner") matchInfo.winner = parts[2];
+      // A tie decided by a super over records the winner as "eliminator" (16 IPL files), not "winner".
+      else if (key === "eliminator") matchInfo.winner = matchInfo.winner || parts[2];
       else if (key === "match_type") matchInfo.match_type = parts[2];
       else if (key === "overs") matchInfo.scheduled_overs = parseInt(parts[2]);
       else if (key === "registry" && parts[2] === "people") {
@@ -656,9 +677,12 @@ function processFile(filePath: string) {
       const inningsId = inningsRes.innings_id;
 
       for (const b of balls) {
-        const overBall = parseFloat(b[2]);
-        const overNum = Math.floor(overBall);
-        const ballNum = Math.round((overBall - overNum) * 10);
+        // Parse "over.ball" as two integers. parseFloat("19.10") === 19.1 turned the 10th delivery of a long
+        // over into ball 1; Cricsheet numbers every delivery (wides and no-balls included) 1..N within an over.
+        const overBallMatch = /^(\d+)\.(\d+)$/.exec(String(b[2]).trim());
+        if (!overBallMatch) throw new Error(`Match ${matchInfo.match_id}: unrecognised over.ball "${b[2]}"`);
+        const overNum = Number(overBallMatch[1]);
+        const ballNum = Number(overBallMatch[2]);
         const strikerName = b[4];
         const nonStrikerName = b[5];
         const bowlerName = b[6];
@@ -667,6 +691,9 @@ function processFile(filePath: string) {
         const totalBallRuns = runsOffBat + extras;
         const isWide = parseInt(b[9]) > 0 ? 1 : 0; // index 9 is wides, sometimes it's empty string so parseInt gives NaN, > 0 is false
         const isNoball = parseInt(b[10]) > 0 ? 1 : 0;
+        const byes = parseInt(b[11]) || 0;
+        const legbyes = parseInt(b[12]) || 0;
+        const penalty = parseInt(b[13]) || 0;
         const wicketType = b[14];
         const isWicket = wicketType && wicketType.trim() !== "" ? 1 : 0;
 
@@ -675,10 +702,10 @@ function processFile(filePath: string) {
         const bowlerDbId = getOrCreatePlayer(matchInfo.playerRegistry.get(bowlerName), bowlerName);
 
         const isBoundary = runsOffBat === 4 || runsOffBat === 6 ? 1 : 0;
-        const types = ["Length", "Length", "Full", "Short", "Yorker", "Bouncer"];
-        const deliveryType = types[Math.floor(Math.random() * types.length)];
-        const areas = ["Cover", "Midwicket", "Square Leg", "Point", "Long On", "Long Off", "Third Man", "Fine Leg"];
-        const scoringArea = runsOffBat > 0 ? areas[Math.floor(Math.random() * areas.length)] : "None";
+        // Cricsheet records neither delivery length nor scoring area. These were previously filled with
+        // Math.random() values; they stay NULL here and are populated only from sourced commentary data.
+        const deliveryType: string | null = null;
+        const scoringArea: string | null = null;
         const pressureState = "Standard";
         let phase = "Middle";
         if (overNum < 6) phase = "Powerplay";
@@ -687,16 +714,20 @@ function processFile(filePath: string) {
         const isDeathOver = overNum >= 15 ? 1 : 0;
         const isPowerplay = overNum < 6 ? 1 : 0;
 
-        const delivRes = deliveryInsert.get(matchInfo.match_id, inningsId, overNum, ballNum, strikerDbId, bowlerDbId, nonStrikerDbId, runsOffBat, extras, totalBallRuns, isWide, isNoball, isBoundary, deliveryType, scoringArea, pressureState, phase, isDotBall, isDeathOver, isPowerplay) as any;
+        const delivRes = deliveryInsert.get(matchInfo.match_id, inningsId, overNum, ballNum, ballNum, strikerDbId, bowlerDbId, nonStrikerDbId, runsOffBat, extras, totalBallRuns, isWide, isNoball, byes > 0 ? 1 : 0, legbyes > 0 ? 1 : 0, penalty > 0 ? 1 : 0, isBoundary, deliveryType, scoringArea, pressureState, phase, isDotBall, isDeathOver, isPowerplay) as any;
         const deliveryId = delivRes.delivery_id;
 
         if (isWicket) {
           const playerOutDbId = getOrCreatePlayer(matchInfo.playerRegistry.get(b[15]), b[15]);
-          dismissalInsert.run(deliveryId, playerOutDbId, wicketType);
+          // Field 18 names the (first) fielder for caught / stumped / run out; it was previously ignored.
+          const fielderName = (b[18] ?? "").trim();
+          const fielderDbId = fielderName ? getOrCreatePlayer(matchInfo.playerRegistry.get(fielderName), fielderName) : null;
+          dismissalInsert.run(deliveryId, playerOutDbId, wicketType, fielderDbId);
         }
 
         totalRuns += totalBallRuns;
-        if (isWicket) totalWickets += 1;
+        // "retired hurt" / "retired not out" leave the batter able to return: not a fall of wicket.
+        if (isWicket && !NOT_A_WICKET.has(wicketType)) totalWickets += 1;
         if (!isWide && !isNoball) totalLegalBalls += 1;
 
         // Aggregate Batting Fact (keyed by resolved player_id, not the raw name string,
@@ -707,14 +738,20 @@ function processFile(filePath: string) {
         if (!isWide) bs.balls += 1; // Wides don't count as ball faced
         if (runsOffBat === 4) bs.fours += 1;
         if (runsOffBat === 6) bs.sixes += 1;
-        if (isWicket && b[15] === strikerName) bs.dismissed = 1; // player_out
+        // The batter out is player_out, who may be the non-striker (run out, retired out). A batter can be out
+        // without facing a ball, so the row is created if needed. Retired hurt / not out is not a dismissal.
+        if (isWicket && !NOT_A_WICKET.has(wicketType)) {
+          const outId = getOrCreatePlayer(matchInfo.playerRegistry.get(b[15]), b[15]);
+          if (!batStats.has(outId)) batStats.set(outId, { id: outId, runs: 0, balls: 0, fours: 0, sixes: 0, dismissed: 0 });
+          batStats.get(outId).dismissed = 1;
+        }
 
         // Aggregate Bowling Fact
         if (!bowlStats.has(bowlerDbId)) bowlStats.set(bowlerDbId, { id: bowlerDbId, runs: 0, balls: 0, wickets: 0 });
         const bows = bowlStats.get(bowlerDbId);
-        bows.runs += totalBallRuns - (parseInt(b[11]) || 0) - (parseInt(b[12]) || 0); // byes and legbyes don't count against bowler
+        bows.runs += totalBallRuns - byes - legbyes - penalty; // byes, leg-byes and penalty runs are not charged to the bowler
         if (!isWide && !isNoball) bows.balls += 1;
-        if (isWicket && !["run out", "retired hurt", "obstructing the field"].includes(wicketType)) bows.wickets += 1;
+        if (isWicket && !NOT_BOWLER_WICKET.has(wicketType)) bows.wickets += 1;
       }
 
       // Update innings table

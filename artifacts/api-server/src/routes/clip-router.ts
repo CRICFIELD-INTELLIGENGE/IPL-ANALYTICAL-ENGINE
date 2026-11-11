@@ -121,14 +121,23 @@ export function matchClipLocally(query: string): ClipRouteResult {
 }
 
 /**
+ * Turn the model's JSON into a result using only catalogue data. The model may
+ * only choose a clip id; the title and URL always come from CLIP_CATALOG, so a
+ * hallucinated or injected URL can never reach the user.
+ */
+export function resolveModelClipChoice(parsed: unknown): ClipRouteResult {
+  const p = (parsed ?? {}) as Record<string, unknown>;
+  const id = typeof p["clip_id"] === "string" ? p["clip_id"] : typeof p["clipId"] === "string" ? p["clipId"] : null;
+  const clip = p["matched"] && id ? CLIP_CATALOG.find((c) => c.id === id) : undefined;
+  if (!clip) return { matched: false, clip_id: null, title: null, url: null };
+  return { matched: true, clip_id: clip.id, title: clip.title, url: clip.url };
+}
+
+/**
  * Route a user query using Gemini LLM if key is present, with automatic fallback.
  */
 export async function routeClipWithLLM(userInput: string): Promise<ClipRouteResult> {
-  const apiKey =
-    process.env["GEMINI_API_KEY"] ||
-    process.env["VITE_GEMINI_API_KEY"] ||
-    process.env["GOOGLE_API_KEY"] ||
-    "";
+  const apiKey = process.env["GEMINI_API_KEY"] || process.env["GOOGLE_API_KEY"] || "";
 
   if (!apiKey || apiKey.length < 5) {
     // No API key configured on server: use deterministic matching
@@ -141,11 +150,11 @@ export async function routeClipWithLLM(userInput: string): Promise<ClipRouteResu
       userInput.replace(/"/g, '\\"')
     );
 
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
 
     const res = await fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
       body: JSON.stringify({
         contents: [
           {
@@ -173,14 +182,7 @@ export async function routeClipWithLLM(userInput: string): Promise<ClipRouteResu
 
     // Clean any accidental markdown fence if present
     const cleaned = rawText.replace(/```json\n?|\n?```/g, "").trim();
-    const parsed = JSON.parse(cleaned);
-
-    return {
-      matched: Boolean(parsed.matched && parsed.url),
-      clip_id: parsed.clip_id ?? parsed.clipId ?? null,
-      title: parsed.title ?? null,
-      url: parsed.url ?? null,
-    };
+    return resolveModelClipChoice(JSON.parse(cleaned));
   } catch (_err) {
     return matchClipLocally(userInput);
   }
@@ -194,6 +196,11 @@ const clipRouter = Router();
  */
 clipRouter.post("/get-clip-route", async (req: Request, res: Response) => {
   const query = req.body?.query ?? req.query?.query;
+
+  if (typeof query === "string" && query.length > 200) {
+    res.status(400).json({ error: "invalid_request", detail: "query must be at most 200 characters" });
+    return;
+  }
 
   if (typeof query !== "string" || !query.trim()) {
     res.json({

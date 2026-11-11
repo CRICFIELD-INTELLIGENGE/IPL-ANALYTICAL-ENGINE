@@ -1,0 +1,288 @@
+{
+ "articleId": "cf-kkr-075",
+ "generatedAt": "2026-10-26T04:21:09.773Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "cl-n": {
+   "value": 35,
+   "display": "35",
+   "label": "Overseas batters with sixty or more balls in their IPL debut season and later",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Debut from 2009",
+   "sampleSize": {
+    "n": 35,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 20 batters",
+    "passed": true,
+    "detail": "n = 35"
+   }
+  },
+  "cl-r": {
+   "value": 0.19,
+   "display": "0.19",
+   "label": "Correlation between debut-season and later relative strike rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 35,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 20 batters",
+    "passed": true,
+    "detail": "n = 35"
+   }
+  },
+  "cl-d": {
+   "value": 106,
+   "display": "106",
+   "label": "Average relative strike rate in the debut season",
+   "unit": "index",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 35,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "plausibility range 60–160 for index",
+    "passed": true,
+    "detail": "value 106.46793059238264"
+   }
+  },
+  "cl-l": {
+   "value": 100,
+   "display": "100",
+   "label": "Average relative strike rate in later seasons",
+   "unit": "index",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 35,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "plausibility range 60–160 for index",
+    "passed": true,
+    "detail": "value 100.06579591279309"
+   }
+  },
+  "cl-mine": {
+   "value": 4,
+   "display": "4",
+   "label": "Of those, batters who debuted for KKR",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 35,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "cl-scatter": {
+   "label": "Overseas batters: IPL debut season vs later seasons",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Relative strike rate (100 = season average); min. 60 balls in each",
+   "sampleSize": {
+    "n": 35,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year, mine",
+   "rows": [
+    {
+     "batter": "AK Markram (2021)",
+     "debut": 97,
+     "later": 94
+    },
+    {
+     "batter": "BA Stokes (2017)",
+     "debut": 107,
+     "later": 97
+    },
+    {
+     "batter": "C Green (2023)",
+     "debut": 113,
+     "later": 94
+    },
+    {
+     "batter": "C de Grandhomme (2017)",
+     "debut": 103,
+     "later": 98
+    },
+    {
+     "batter": "CH Gayle (2009)",
+     "debut": 103,
+     "later": 117
+    },
+    {
+     "batter": "CJ Anderson (2014)",
+     "debut": 113,
+     "later": 85
+    },
+    {
+     "batter": "D Brevis (2022)",
+     "debut": 106,
+     "later": 96
+    },
+    {
+     "batter": "DA Miller (2012)",
+     "debut": 106,
+     "later": 103
+    },
+    {
+     "batter": "DA Warner (2009)",
+     "debut": 106,
+     "later": 107
+    },
+    {
+     "batter": "DJG Sammy (2013)",
+     "debut": 109,
+     "later": 86
+    },
+    {
+     "batter": "DP Conway (2022)",
+     "debut": 109,
+     "later": 96
+    },
+    {
+     "batter": "DT Christian (2011)",
+     "debut": 99,
+     "later": 88
+    },
+    {
+     "batter": "E Lewis (2018)",
+     "debut": 100,
+     "later": 104
+    },
+    {
+     "batter": "F du Plessis (2012)",
+     "debut": 106,
+     "later": 100
+    },
+    {
+     "batter": "JC Buttler (2016)",
+     "debut": 105,
+     "later": 107
+    },
+    {
+     "batter": "JM Bairstow (2019)",
+     "debut": 118,
+     "later": 104
+    },
+    {
+     "batter": "JP Duminy (2009)",
+     "debut": 98,
+     "later": 99
+    },
+    {
+     "batter": "JP Inglis (2025)",
+     "debut": 107,
+     "later": 119
+    },
+    {
+     "batter": "K Rabada (2017)",
+     "debut": 64,
+     "later": 84
+    },
+    {
+     "batter": "KA Pollard (2010)",
+     "debut": 147,
+     "later": 112
+    },
+    {
+     "batter": "KP Pietersen (2009)",
+     "debut": 94,
+     "later": 109
+    },
+    {
+     "batter": "MP Stoinis (2016)",
+     "debut": 103,
+     "later": 105
+    },
+    {
+     "batter": "N Pooran (2019)",
+     "debut": 117,
+     "later": 114
+    },
+    {
+     "batter": "N Rana (2016)",
+     "debut": 106,
+     "later": 101
+    },
+    {
+     "batter": "PBB Rajapaksa (2022)",
+     "debut": 119,
+     "later": 81
+    },
+    {
+     "batter": "PD Salt (2023)",
+     "debut": 116,
+     "later": 116
+    },
+    {
+     "batter": "R Powell (2022)",
+     "debut": 112,
+     "later": 89
+    },
+    {
+     "batter": "R Ravindra (2024)",
+     "debut": 107,
+     "later": 84
+    },
+    {
+     "batter": "RD Rickelton (2025)",
+     "debut": 99,
+     "later": 119
+    },
+    {
+     "batter": "RN ten Doeschate (2011)",
+     "debut": 121,
+     "later": 107
+    },
+    {
+     "batter": "Rahmanullah Gurbaz (2023)",
+     "debut": 94,
+     "later": 91
+    },
+    {
+     "batter": "SO Hetmyer (2019)",
+     "debut": 92,
+     "later": 108
+    },
+    {
+     "batter": "SPD Smith (2012)",
+     "debut": 110,
+     "later": 97
+    },
+    {
+     "batter": "SW Billings (2016)",
+     "debut": 105,
+     "later": 95
+    },
+    {
+     "batter": "WG Jacks (2024)",
+     "debut": 117,
+     "later": 98
+    }
+   ]
+  }
+ }
+}

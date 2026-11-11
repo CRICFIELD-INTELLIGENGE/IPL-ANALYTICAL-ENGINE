@@ -1,0 +1,62 @@
+[
+  {
+    "team": "CSK",
+    "listed": 30,
+    "matchedHistory": 25,
+    "unknownCountry": 0
+  },
+  {
+    "team": "MI",
+    "listed": 29,
+    "matchedHistory": 21,
+    "unknownCountry": 0
+  },
+  {
+    "team": "RCB",
+    "listed": 26,
+    "matchedHistory": 19,
+    "unknownCountry": 0
+  },
+  {
+    "team": "KKR",
+    "listed": 29,
+    "matchedHistory": 20,
+    "unknownCountry": 0
+  },
+  {
+    "team": "SRH",
+    "listed": 29,
+    "matchedHistory": 20,
+    "unknownCountry": 0
+  },
+  {
+    "team": "RR",
+    "listed": 27,
+    "matchedHistory": 19,
+    "unknownCountry": 0
+  },
+  {
+    "team": "DC",
+    "listed": 26,
+    "matchedHistory": 21,
+    "unknownCountry": 0
+  },
+  {
+    "team": "PBKS",
+    "listed": 25,
+    "matchedHistory": 21,
+    "unknownCountry": 0
+  },
+  {
+    "team": "GT",
+    "listed": 27,
+    "matchedHistory": 23,
+    "unknownCountry": 0
+  },
+  {
+    "team": "LSG",
+    "listed": 26,
+    "matchedHistory": 21,
+    "unknownCountry": 0
+  }
+]

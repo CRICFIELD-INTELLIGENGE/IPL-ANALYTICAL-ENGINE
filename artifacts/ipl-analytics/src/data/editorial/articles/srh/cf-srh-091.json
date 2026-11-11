@@ -1,0 +1,135 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-srh-091",
+ "planId": "cf-srh-091",
+ "franchise": "SRH",
+ "aspect": "future",
+ "title": "The 2027 Blueprint: What Should Sunrisers Hyderabad Build for the Next Cycle?",
+ "slug": "srh-the-2027-blueprint-what-should-srh-build-for-the-next-cycle",
+ "dek": "What should Sunrisers Hyderabad build for the next cycle? The latest season's phase-by-phase gaps to the league are the starting point for any blueprint.",
+ "excerpt": "In 2026, Sunrisers Hyderabad's biggest edge over the league came in powerplay batting and their biggest gap in powerplay bowling. A blueprint for 2027 should start by closing the gap without giving up the edge.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "SRH"
+ ],
+ "players": [],
+ "seasons": [
+  "2026"
+ ],
+ "keyTakeaways": [
+  "In {{ev:bp-yr}}, Sunrisers Hyderabad's strongest phase relative to the league was {{ev:bp-best}} ({{ev:bp-ppbat}} runs an over); their weakest was {{ev:bp-worst}} ({{ev:bp-ppbowl}}).",
+  "Batting relative to the league: powerplay {{ev:bp-ppbat}}, middle {{ev:bp-midbat}}, death {{ev:bp-deathbat}} runs an over.",
+  "Bowling relative to the league: powerplay {{ev:bp-ppbowl}}, middle {{ev:bp-midbowl}}, death {{ev:bp-deathbowl}} runs an over (positive = conceded less)."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Start From the Gaps",
+   "body": [
+    "A blueprint for the next auction cycle should begin with evidence: where the side gained runs on the league last season and where it lost them.",
+    "In {{ev:bp-yr}}, Sunrisers Hyderabad were strongest relative to the league in {{ev:bp-best}} and weakest in {{ev:bp-worst}}. The chart shows all six phases."
+   ],
+   "chartIds": [
+    "bp-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Six Measures",
+   "body": [
+    "With the bat, SRH were {{ev:bp-ppbat}} runs an over against the league in the powerplay, {{ev:bp-midbat}} in the middle overs and {{ev:bp-deathbat}} at the death.",
+    "With the ball, they were {{ev:bp-ppbowl}}, {{ev:bp-midbowl}} and {{ev:bp-deathbowl}} respectively, where positive means they conceded less than the league."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "A Proposed Blueprint",
+   "body": [
+    "Proposal: prioritise the powerplay bowling gap at retention and the auction, protect the players driving powerplay batting, and fill the remaining phases at fair value.",
+    "{{hyp:blueprint}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "One Season Is a Snapshot",
+   "body": [
+    "A single season's phase gaps carry noise, and squads change at every auction. The blueprint should be checked against the two previous seasons before it drives spending.",
+    "The turning-point audit in this series shows which phase historically separated Sunrisers Hyderabad's best seasons."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Fix Powerplay bowling, Keep Powerplay batting",
+   "body": [
+    "Sunrisers Hyderabad's next cycle should be built around closing the powerplay bowling gap.",
+    "That is where the evidence says the most runs are available."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "bp-chart",
+   "type": "bar",
+   "title": "Edge over the league by phase, 2026",
+   "subtitle": "SRH, runs per over (positive = better)",
+   "table": "bp-gaps",
+   "xKey": "phase",
+   "series": [
+    {
+     "key": "edge",
+     "label": "Edge"
+    }
+   ],
+   "unit": "runs per over",
+   "takeaway": "Powerplay batting was the strength; powerplay bowling the gap.",
+   "ariaLabel": "Horizontal bar chart of Sunrisers Hyderabad's edge over the league in each phase of batting and bowling in 2026."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "blueprint",
+   "statement": "Hypothesis: closing Sunrisers Hyderabad's weakest phase gap would add more expected wins than widening their strongest phase edge by the same amount.",
+   "whyUnverified": "Runs-to-wins conversion by phase has not been modelled.",
+   "howToTest": "Estimate the win value of a run in each phase and compare the two changes."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Sunrisers Hyderabad looking ahead.",
+   "wanted": "Sunrisers Hyderabad squad."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-srh-069",
+  "cf-srh-100",
+  "cf-srh-040"
+ ],
+ "seo": {
+  "metaTitle": "The 2027 blueprint: what SRH should build next",
+  "metaDescription": "Sunrisers Hyderabad's phase-by-phase gaps to the league in 2026, and a data-led blueprint for the next auction cycle."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Forward-looking proposals are labelled as such. Generated by scripts/editorial/engine. Edge = franchise rate minus league rate in the same season, signed so that positive is better for both batting and bowling.",
+ "generator": "engine:v1"
+}

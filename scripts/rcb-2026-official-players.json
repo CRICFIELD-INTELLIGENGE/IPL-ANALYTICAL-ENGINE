@@ -1,0 +1,198 @@
+[
+  {
+    "name": "Rajat Patidar",
+    "role": "BATTER",
+    "alt": "Rajat Patidar RCB",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/rajat.png?itok=1rBGxE2K",
+    "isStaff": false
+  },
+  {
+    "name": "Virat Kohli",
+    "role": "BATTER",
+    "alt": "Virat Kohli rcb",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/virat.png?itok=gLKCBlX6",
+    "isStaff": false
+  },
+  {
+    "name": "Tim David",
+    "role": "All-Rounder",
+    "alt": "Tim David",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2823%29_0.png?itok=RKdqmGUG",
+    "isStaff": false
+  },
+  {
+    "name": "Jacob Bethell",
+    "role": "All-Rounder",
+    "alt": "Jacob Bethell RCB",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/Jacob_0.png?itok=72L3DtC1",
+    "isStaff": false
+  },
+  {
+    "name": "Romario Shepherd",
+    "role": "All-Rounder",
+    "alt": "Romario Shepherd",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2819%29_0.png?itok=aKU5v_qs",
+    "isStaff": false
+  },
+  {
+    "name": "Josh Hazlewood",
+    "role": "Bowler",
+    "alt": "Josh Hazlewood",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2813%29.png?itok=uhbV_nly",
+    "isStaff": false
+  },
+  {
+    "name": "Nuwan Thushara",
+    "role": "Bowler",
+    "alt": "Nuwan Thushara",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2025-03/nuwan.png?itok=bY1cyFxY",
+    "isStaff": false
+  },
+  {
+    "name": "Devdutt Padikkal",
+    "role": "BATTER",
+    "alt": "ddp",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2810%29_0.png?itok=Pu527Xhs",
+    "isStaff": false
+  },
+  {
+    "name": "Jitesh Sharma",
+    "role": "Wicket Keeper",
+    "alt": "Jitesh Sharma RCB",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/Jitesh%203_0.png?itok=pXhtj1iv",
+    "isStaff": false
+  },
+  {
+    "name": "Rasikh Dar",
+    "role": "Bowler",
+    "alt": "Rasik",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2818%29.png?itok=rdu9xeUk",
+    "isStaff": false
+  },
+  {
+    "name": "Krunal Pandya",
+    "role": "All-Rounder",
+    "alt": "KP",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2815%29.png?itok=k1ZPQiz0",
+    "isStaff": false
+  },
+  {
+    "name": "Yash Dayal",
+    "role": "Bowler",
+    "alt": "Yash Dayal",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2025-03/dayal.png?itok=q5MQrKXB",
+    "isStaff": false
+  },
+  {
+    "name": "Bhuvneshwar Kumar",
+    "role": "Bowler",
+    "alt": "Bhuvneshwar Kumar RCB",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/bhuvi_0.png?itok=ktTs4_Xt",
+    "isStaff": false
+  },
+  {
+    "name": "Jordan Cox",
+    "role": "Wicket Keeper",
+    "alt": "JC",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/3%20%287%29_0.png?itok=NWD7pG1d",
+    "isStaff": false
+  },
+  {
+    "name": "Suyash Sharma",
+    "role": "Bowler",
+    "alt": "Suyash Sharma",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2821%29.png?itok=YC0AKGQ1",
+    "isStaff": false
+  },
+  {
+    "name": "Venkatesh Iyer",
+    "role": "All-Rounder",
+    "alt": "Venkatesh Iyer",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/3%20%289%29_0.png?itok=krB1-g7g",
+    "isStaff": false
+  },
+  {
+    "name": "Swapnil Singh",
+    "role": "Bowler",
+    "alt": "Swapnil Singh",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2822%29.png?itok=dA5vhYMn",
+    "isStaff": false
+  },
+  {
+    "name": "Jacob Duffy",
+    "role": "Bowler",
+    "alt": "JD",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2812%29.png?itok=opBHeP-8",
+    "isStaff": false
+  },
+  {
+    "name": "Kanishk Chouhan",
+    "role": "All-Rounder",
+    "alt": "KC",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2814%29.png?itok=Qs3A3Ozn",
+    "isStaff": false
+  },
+  {
+    "name": "Abhinandan Singh",
+    "role": "Bowler",
+    "alt": "Abhinandan",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2811%29.png?itok=Zu9VlTmn",
+    "isStaff": false
+  },
+  {
+    "name": "Mangesh Yadav",
+    "role": "All-Rounder",
+    "alt": "Mangesh Yadav",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2816%29_0.png?itok=nqmnKefk",
+    "isStaff": false
+  },
+  {
+    "name": "Phil Salt",
+    "role": "Wicket Keeper",
+    "alt": "Phil Salt",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2817%29.png?itok=E0qAh-YH",
+    "isStaff": false
+  },
+  {
+    "name": "Satvik Deswal",
+    "role": "All-Rounder",
+    "alt": "SD",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2820%29_0.png?itok=pWgooicZ",
+    "isStaff": false
+  },
+  {
+    "name": "Vicky Ostwal",
+    "role": "All-Rounder",
+    "alt": "Vicky Ostwal",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2824%29.png?itok=XUlGoagC",
+    "isStaff": false
+  },
+  {
+    "name": "Vihaan Malhotra",
+    "role": "All-Rounder",
+    "alt": "Vihaan Malhotra",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2825%29_0.png?itok=0SK-XQU0",
+    "isStaff": false
+  },
+  {
+    "name": "Richard Gleeson",
+    "role": "Bowler",
+    "alt": "Gleeson",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-05/Richard%20Gleeson.png?itok=CS6XhiBX",
+    "isStaff": false
+  },
+  {
+    "name": "Ajith  Ramamurthy",
+    "role": "Player",
+    "alt": "Ajith",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2836%29.png?itok=3HXDgtF6",
+    "isStaff": false
+  },
+  {
+    "name": "Ramesh  Mane",
+    "role": "Player",
+    "alt": "Ramesh Mane",
+    "imageUrl": "https://www.royalchallengers.com/PRRCB01/public/styles/s/public/2026-03/2%20%2837%29.png?itok=rVmViQYU",
+    "isStaff": false
+  }
+]

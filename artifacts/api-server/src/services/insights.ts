@@ -18,6 +18,7 @@
 import fs from "fs";
 import path from "path";
 import { DatabaseSync } from "node:sqlite";
+import { warehousePath } from "./decision/db";
 
 let projectRoot: string | null = null;
 function getRoot(): string {
@@ -36,9 +37,15 @@ let dbTried = false;
 function getDb(): DatabaseSync | null {
   if (dbTried) return db;
   dbTried = true;
-  const fp = path.join(getRoot(), "sqlite.db");
+  const fp = warehousePath();
   if (!fs.existsSync(fp)) return null;
   try {
+    // CRICFIELD_DB_READONLY=1 (deployed API, tests): read the counts, never write the warehouse; recording a
+    // click then fails quietly (see resolveAndCount), which never blocks the redirect.
+    if (process.env.CRICFIELD_DB_READONLY === "1") {
+      db = new DatabaseSync(fp, { readOnly: true });
+      return db;
+    }
     db = new DatabaseSync(fp);
     db.exec(`CREATE TABLE IF NOT EXISTS insight_clicks (
       slug TEXT PRIMARY KEY,

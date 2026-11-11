@@ -1,0 +1,169 @@
+{
+ "articleId": "cf-srh-058",
+ "generatedAt": "2026-10-26T04:22:24.915Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "lp-countries": {
+   "value": 9,
+   "display": "9",
+   "label": "Countries represented among Sunrisers Hyderabad's players",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Players with known nationality",
+   "sampleSize": {
+    "n": 261,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (1) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (1) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "plausibility range 2–15 for countries",
+    "passed": true,
+    "detail": "value 9"
+   }
+  },
+  "lp-os": {
+   "value": 42,
+   "display": "42%",
+   "label": "Share of Sunrisers Hyderabad's balls faced and bowled by overseas players",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2013–2026",
+   "sampleSize": {
+    "n": 47312,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (1) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (1) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "plausibility range 5–70 for share",
+    "passed": true,
+    "detail": "value 41.769529928982074"
+   }
+  },
+  "lp-cover": {
+   "value": 97,
+   "display": "97%",
+   "label": "Share of balls covered by known nationality, in the seasons analysed",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons with at least 80% coverage",
+   "sampleSize": {
+    "n": 48682,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (1) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (1) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "plausibility range 80–100 for coverage",
+    "passed": true,
+    "detail": "value 97.18581816687892"
+   }
+  },
+  "lp-yrs": {
+   "value": 14,
+   "display": "14",
+   "label": "Seasons with reliable nationality data",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "At least 80% of balls covered",
+   "sampleSize": {
+    "n": 14,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (1) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (1) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 3 seasons",
+    "passed": true,
+    "detail": "n = 14"
+   }
+  },
+  "lp-all": {
+   "value": 14,
+   "display": "14",
+   "label": "SRH seasons in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2013–2026",
+   "sampleSize": {
+    "n": 14,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (1) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (1) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "lp-series": {
+   "label": "Share of Sunrisers Hyderabad's balls faced and bowled by overseas players",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Nationality from CricField player-bio data, squad lists as fallback; seasons with at least 80% coverage",
+   "sampleSize": {
+    "n": 47312,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (1) AND d.is_wide = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN i.bowling_team_id IN (1) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (1) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (1) OR i.bowling_team_id IN (1)) GROUP BY year, pl.name",
+   "rows": [
+    {
+     "season": "2013",
+     "overseasPct": 44.8
+    },
+    {
+     "season": "2014",
+     "overseasPct": 39.9
+    },
+    {
+     "season": "2015",
+     "overseasPct": 46.5
+    },
+    {
+     "season": "2016",
+     "overseasPct": 45.3
+    },
+    {
+     "season": "2017",
+     "overseasPct": 46.6
+    },
+    {
+     "season": "2018",
+     "overseasPct": 45.4
+    },
+    {
+     "season": "2019",
+     "overseasPct": 47.3
+    },
+    {
+     "season": "2020",
+     "overseasPct": 42.8
+    },
+    {
+     "season": "2021",
+     "overseasPct": 44.3
+    },
+    {
+     "season": "2022",
+     "overseasPct": 36.1
+    },
+    {
+     "season": "2023",
+     "overseasPct": 33.2
+    },
+    {
+     "season": "2024",
+     "overseasPct": 36.7
+    },
+    {
+     "season": "2025",
+     "overseasPct": 39.1
+    },
+    {
+     "season": "2026",
+     "overseasPct": 36
+    }
+   ]
+  }
+ }
+}

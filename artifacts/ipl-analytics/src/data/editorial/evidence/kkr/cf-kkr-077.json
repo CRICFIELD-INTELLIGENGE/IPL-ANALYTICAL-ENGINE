@@ -1,0 +1,196 @@
+{
+ "articleId": "cf-kkr-077",
+ "generatedAt": "2026-10-26T04:21:10.434Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "wk-msr": {
+   "value": 138.6,
+   "display": "138.6",
+   "label": "Kolkata Knight Riders' keepers' batting strike rate, 2018–2026",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Keepers as defined",
+   "sampleSize": {
+    "n": 977,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id team, d.batter_id pid, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, COUNT(DISTINCT d.innings_id) inns FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018 GROUP BY year, team, pid",
+   "validation": {
+    "method": "sample-size floor ≥ 300 balls",
+    "passed": true,
+    "detail": "n = 977"
+   }
+  },
+  "wk-rsr": {
+   "value": 150.1,
+   "display": "150.1",
+   "label": "Other IPL keepers' batting strike rate",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Keepers as defined",
+   "sampleSize": {
+    "n": 15839,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id team, d.batter_id pid, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, COUNT(DISTINCT d.innings_id) inns FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018 GROUP BY year, team, pid",
+   "validation": {
+    "method": "sample-size floor ≥ 3000 balls",
+    "passed": true,
+    "detail": "n = 15839"
+   }
+  },
+  "wk-mrpi": {
+   "value": 22.9,
+   "display": "22.9",
+   "label": "Kolkata Knight Riders' keepers' runs per innings",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Keepers as defined",
+   "sampleSize": {
+    "n": 59,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id team, d.batter_id pid, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, COUNT(DISTINCT d.innings_id) inns FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018 GROUP BY year, team, pid",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 59"
+   }
+  },
+  "wk-rrpi": {
+   "value": 29.1,
+   "display": "29.1",
+   "label": "Other IPL keepers' runs per innings",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Keepers as defined",
+   "sampleSize": {
+    "n": 817,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id team, d.batter_id pid, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, COUNT(DISTINCT d.innings_id) inns FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018 GROUP BY year, team, pid",
+   "validation": {
+    "method": "sample-size floor ≥ 200 innings",
+    "passed": true,
+    "detail": "n = 817"
+   }
+  },
+  "wk-mct": {
+   "value": 48,
+   "display": "48",
+   "label": "Catches and stumpings by Kolkata Knight Riders' keepers, 2018–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Keepers as defined",
+   "sampleSize": {
+    "n": 6,
+    "unit": "keeper-seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.bowling_team_id team, x.fielder_id pid, SUM(CASE WHEN x.kind = 'caught' THEN 1 ELSE 0 END) ct, SUM(CASE WHEN x.kind = 'stumped' THEN 1 ELSE 0 END) st, COUNT(DISTINCT d.match_id) m FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018 GROUP BY year, team, pid",
+   "validation": {
+    "method": "sum",
+    "passed": true
+   }
+  },
+  "wk-share": {
+   "value": 23,
+   "display": "23%",
+   "label": "Stumpings as a share of Kolkata Knight Riders' keepers' dismissals",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Keepers as defined",
+   "sampleSize": {
+    "n": 48,
+    "unit": "dismissals"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.bowling_team_id team, x.fielder_id pid, SUM(CASE WHEN x.kind = 'caught' THEN 1 ELSE 0 END) ct, SUM(CASE WHEN x.kind = 'stumped' THEN 1 ELSE 0 END) st, COUNT(DISTINCT d.match_id) m FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018 GROUP BY year, team, pid",
+   "validation": {
+    "method": "sample-size floor ≥ 20 dismissals",
+    "passed": true,
+    "detail": "n = 48"
+   }
+  },
+  "wk-lshare": {
+   "value": 20,
+   "display": "20%",
+   "label": "Stumpings as a share of other keepers' dismissals",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Keepers as defined",
+   "sampleSize": {
+    "n": 682,
+    "unit": "dismissals"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.bowling_team_id team, x.fielder_id pid, SUM(CASE WHEN x.kind = 'caught' THEN 1 ELSE 0 END) ct, SUM(CASE WHEN x.kind = 'stumped' THEN 1 ELSE 0 END) st, COUNT(DISTINCT d.match_id) m FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018 GROUP BY year, team, pid",
+   "validation": {
+    "method": "sample-size floor ≥ 200 dismissals",
+    "passed": true,
+    "detail": "n = 682"
+   }
+  }
+ },
+ "tables": {
+  "wk-series": {
+   "label": "Keepers' batting strike rate: KKR vs rest of IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Keepers = fielders with a stumping for that side in that season; 2018–2026",
+   "sampleSize": {
+    "n": 16816,
+    "unit": "balls"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, i.batting_team_id team, d.batter_id pid, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls, COUNT(DISTINCT d.innings_id) inns FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2018 GROUP BY year, team, pid",
+   "rows": [
+    {
+     "season": "2018",
+     "team": 147.8,
+     "league": 153.1
+    },
+    {
+     "season": "2019",
+     "team": null,
+     "league": 145.5
+    },
+    {
+     "season": "2020",
+     "team": null,
+     "league": 141.6
+    },
+    {
+     "season": "2021",
+     "team": 131.2,
+     "league": 129.4
+    },
+    {
+     "season": "2022",
+     "team": 117.1,
+     "league": 146.5
+    },
+    {
+     "season": "2023",
+     "team": null,
+     "league": 152.6
+    },
+    {
+     "season": "2024",
+     "team": null,
+     "league": 153.9
+    },
+    {
+     "season": "2025",
+     "team": null,
+     "league": 153.8
+    },
+    {
+     "season": "2026",
+     "team": 144.1,
+     "league": 164.2
+    }
+   ]
+  }
+ }
+}

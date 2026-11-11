@@ -1,0 +1,141 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-csk-063",
+ "planId": "cf-csk-063",
+ "franchise": "CSK",
+ "aspect": "history",
+ "title": "Five Defining Tactical Decisions in Chennai Super Kings\u2019s IPL Story",
+ "slug": "csk-five-defining-tactical-decisions-in-csk-ipl-story",
+ "dek": "Strategy leaves fingerprints in the data. Five measurable shifts in how Chennai Super Kings play, before and since 2024, show which decisions have defined them.",
+ "excerpt": "From the toss to the death overs, Chennai Super Kings' approach has shifted between 2008\u20132023 and the seasons since 2024. Five measures, each set against the rest of the league, trace the decisions behind those shifts.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "CSK"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132023",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "After winning the toss, CSK chose to bowl first {{ev:ts-toss1}} of the time in 2008\u20132023 and {{ev:ts-toss2}} since 2024.",
+  "Their powerplay batting moved from {{ev:ts-pp1}} to {{ev:ts-pp2}} runs an over relative to the rest of the IPL.",
+  "Boundaries supplied {{ev:ts-b1}} of their batting runs in 2008\u20132023 and {{ev:ts-b2}} since 2024."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Decisions You Can See in the Data",
+   "body": [
+    "Tactical decisions are made in team rooms, but their effects show up in the numbers: what a side chooses at the toss, how hard it attacks early, how it bowls at the end.",
+    "CricField compared Chennai Super Kings in 2008\u20132023 with the seasons since 2024, each time against the rest of the league in the same seasons."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "One: The Toss",
+   "body": [
+    "After winning the toss, CSK chose to bowl first {{ev:ts-toss1}} of the time in 2008\u20132023 and {{ev:ts-toss2}} since 2024.",
+    "Two: the powerplay. Their powerplay run rate relative to the rest of the league moved from {{ev:ts-pp1}} to {{ev:ts-pp2}} runs an over."
+   ],
+   "chartIds": [
+    "ts-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Three to Five: Middle, Death and Boundaries",
+   "body": [
+    "Three: in the middle overs, their batting went from {{ev:ts-mid1}} to {{ev:ts-mid2}} runs an over against the league. Four: at the death, their bowling went from {{ev:ts-death1}} to {{ev:ts-death2}} runs an over conceded relative to the league, where lower is better.",
+    "Five: boundaries supplied {{ev:ts-b1}} of their batting runs in 2008\u20132023 and {{ev:ts-b2}} since 2024."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Shifts Are Not Always Choices",
+   "body": [
+    "Some of these shifts follow the league rather than lead it, and some follow the players available rather than a plan. The measures are set against the rest of the league to reduce the first problem, not the second.",
+    "{{hyp:choice}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Five Fingerprints",
+   "body": [
+    "The five measures show how Chennai Super Kings' approach has moved since 2024, relative to the league.",
+    "Which of them were deliberate decisions, and which were the squad changing around a plan, is a question for the people in the room."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ts-chart",
+   "type": "column",
+   "title": "Relative to the rest of the IPL",
+   "subtitle": "CSK, 2008\u20132023 vs 2024\u20132026",
+   "table": "ts-shifts",
+   "xKey": "measure",
+   "series": [
+    {
+     "key": "before",
+     "label": "2008\u20132023"
+    },
+    {
+     "key": "since2024",
+     "label": "2024\u20132026"
+    }
+   ],
+   "xLabel": "Measure",
+   "unit": "runs per over vs league",
+   "takeaway": "Each bar shows the gap to the rest of the league in that era.",
+   "ariaLabel": "Grouped column chart of CSK batting and bowling rates relative to the rest of the IPL in two eras."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "choice",
+   "statement": "Hypothesis: Chennai Super Kings' shift in powerplay tempo since 2024 reflects a deliberate instruction rather than a change in personnel.",
+   "whyUnverified": "Team instructions are not recorded in the data.",
+   "howToTest": "Compare the same batters' powerplay strike rates before and after 2024."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Chennai Super Kings tactics in action.",
+   "wanted": "Chennai Super Kings captain setting the field."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-csk-064",
+  "cf-csk-021",
+  "cf-csk-069"
+ ],
+ "seo": {
+  "metaTitle": "Five defining tactical shifts in Chennai Super Kings' IPL story",
+  "metaDescription": "How Chennai Super Kings changed at the toss, in the powerplay, the middle overs, the death and in boundary hitting, measured against the league."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Each measure is the franchise's rate minus the rest of the IPL's rate in the same seasons. Powerplay = overs 1\u20136, middle = overs 7\u201315, death = overs 16\u201320.",
+ "generator": "engine:v1"
+}

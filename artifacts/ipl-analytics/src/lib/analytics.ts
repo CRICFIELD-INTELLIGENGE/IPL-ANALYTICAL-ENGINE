@@ -1,185 +1,67 @@
-// Google Analytics 4 and AdSense loading, gated on configuration and consent.
-//
-// Nothing here fires unless two things are true:
-//   1. the relevant ID is configured (VITE_GA_MEASUREMENT_ID / VITE_ADSENSE_CLIENT)
-//   2. the visitor has accepted analytics/ads cookies
-//
-// Both gates matter. Without (1) a build with no IDs would ship a broken
-// tracker; without (2) the site would set third-party cookies before asking,
-// which is what actually gets a site in trouble under GDPR/UK-GDPR and is also
-// grounds for AdSense to decline an application.
-//
-// Consent is stored in localStorage and mirrored into Google Consent Mode v2,
-// so gtag knows the state rather than merely being withheld.
-
-const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined;
-const rawAdsenseClient = (import.meta.env.VITE_ADSENSE_CLIENT as string | undefined)?.trim();
-const ADSENSE_CLIENT = rawAdsenseClient
-  ? rawAdsenseClient.startsWith("ca-pub-")
-    ? rawAdsenseClient
-    : rawAdsenseClient.startsWith("pub-")
-    ? `ca-${rawAdsenseClient}`
-    : `ca-pub-${rawAdsenseClient}`
-  : undefined;
-
-export const hasAnalytics = Boolean(GA_ID);
-export const hasAds = Boolean(ADSENSE_CLIENT);
-export const adsenseClient = ADSENSE_CLIENT;
-
-const CONSENT_KEY = "iae:consent:v1";
-
-export type ConsentChoice = "granted" | "denied";
-
-export function readConsent(): ConsentChoice | null {
-  try {
-    const v = localStorage.getItem(CONSENT_KEY);
-    return v === "granted" || v === "denied" ? v : null;
-  } catch {
-    // Private mode or a blocked storage API: treat as undecided rather than
-    // assuming permission.
-    return null;
-  }
+import { useSyncExternalStore } from 'react';
+const rawClient=(import.meta.env.VITE_ADSENSE_CLIENT || '').trim().replace(/^(ca-)?pub-/, '');
+export const adsenseClient=/^\d{16}$/.test(rawClient) ? 'ca-pub-'+rawClient : undefined;
+const GA_ID=/^G-[A-Z0-9]+$/.test(import.meta.env.VITE_GA_MEASUREMENT_ID || '') ? import.meta.env.VITE_GA_MEASUREMENT_ID : undefined;
+export const hasAnalytics=Boolean(GA_ID);
+// This is an operator switch, not evidence of approval. Default is off.
+export const hasAds=Boolean(adsenseClient)&&import.meta.env.VITE_ADSENSE_ENABLED==='true';
+const KEY='iae:consent:v1';
+export type ConsentChoice='granted'|'denied';
+declare global {interface Window {
+ dataLayer?:unknown[];gtag?:(...args:unknown[])=>void;adsbygoogle?:unknown[];
+ __tcfapi?:(command:string,version:number,callback:(data:any,success:boolean)=>void,parameter?:unknown)=>void;
+}}
+export function readConsent():ConsentChoice|null {try{const v=localStorage.getItem(KEY);return v==='granted'||v==='denied'?v:null;}catch{return null;}}
+function emit(){window.dispatchEvent(new Event('cf:ads-consent'));}
+function writeConsent(choice:ConsentChoice){try{localStorage.setItem(KEY,choice);}catch{}emit();}
+function stub(){window.dataLayer ||= [];window.gtag ||= function(){window.dataLayer!.push(arguments);};}
+export function initConsentDefaults(){stub();window.gtag!('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});}
+// The existing banner cannot replace a certified CMP. Fail closed until its TCF API
+// reports a completed choice; deploy the CMP independently of the ad script.
+let cmpAllowed=false,cmpStarted=false;
+function startCmp(){if(cmpStarted||!hasAds)return;cmpStarted=true;
+ const attach=()=>{if(!window.__tcfapi)return false;
+ window.__tcfapi('addEventListener',2,(data,success)=>{
+   // Opening the preference dialog is not a withdrawal; wait for a choice.
+   if(success&&data?.cmpStatus==='loaded'&&data.eventStatus==='cmpuishown')return;
+   const ready=success&&data?.cmpStatus==='loaded'&&['tcloaded','useractioncomplete'].includes(data.eventStatus);
+   const previouslyAllowed=cmpAllowed;
+   cmpAllowed=Boolean(ready&&(data.gdprApplies===false || (data.gdprApplies===true&&data.tcString&&data.vendor?.consents?.[755]&&[1,2,3,4,7,9,10].every(id=>data.purpose?.consents?.[id]))));
+   emit();
+   if(previouslyAllowed&&!cmpAllowed&&scripts.size)window.location.reload();
+ });return true;};
+ if(!attach()){const timer=setInterval(()=>{if(attach())clearInterval(timer);},1000);}
 }
-
-function writeConsent(choice: ConsentChoice) {
-  try { localStorage.setItem(CONSENT_KEY, choice); } catch { /* nothing to do */ }
+function subscribe(notify:()=>void){window.addEventListener('cf:ads-consent',notify);window.addEventListener('storage',notify);startCmp();return()=>{window.removeEventListener('cf:ads-consent',notify);window.removeEventListener('storage',notify);};}
+function adAllowed(){return hasAds&&cmpAllowed&&readConsent()==='granted';}
+export function useAdConsent(){return useSyncExternalStore(subscribe,()=>adAllowed()?'granted':'denied',()=> 'denied');}
+const scripts=new Map<string,Promise<void>>();
+function loadScript(src:string,attrs:Record<string,string>={}){let pending=scripts.get(src);if(pending)return pending;
+ pending=new Promise<void>((resolve,reject)=>{const el=document.createElement('script');el.src=src;el.async=true;Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));el.onload=()=>resolve();el.onerror=()=>{scripts.delete(src);el.remove();reject(new Error('Optional service unavailable'));};document.head.append(el);});scripts.set(src,pending);return pending;
 }
-
-/* ────────────────────────────── gtag plumbing ────────────────────────────── */
-
-declare global {
-  interface Window {
-    dataLayer?: unknown[];
-    gtag?: (...args: unknown[]) => void;
-    adsbygoogle?: unknown[];
-  }
+let gaReady=false,gaPending:Promise<void>|undefined;
+export async function resumeIfConsented(){if(readConsent()!=='granted'||!GA_ID)return;stub();window.gtag!('consent','update',{analytics_storage:'granted'});
+ if(gaReady)return;
+ return gaPending ??= loadScript('https://www.googletagmanager.com/gtag/js?id='+GA_ID).then(()=>{
+ if(readConsent()!=='granted')return;
+ window.gtag!('js',new Date());window.gtag!('config',GA_ID,{send_page_view:false,page_location:window.location.origin+window.location.pathname,page_referrer:''});gaReady=true;pageview(window.location.pathname);
+ }).catch(()=>{}).finally(()=>{gaPending=undefined;});
 }
-
-function ensureGtagStub() {
-  if (typeof window === "undefined") return;
-  window.dataLayer = window.dataLayer || [];
-  if (!window.gtag) {
-    window.gtag = function gtag() {
-      // eslint-disable-next-line prefer-rest-params
-      window.dataLayer!.push(arguments);
-    };
-  }
+export async function grantConsent(){writeConsent('granted');await resumeIfConsented();}
+export function denyConsent(){writeConsent('denied');stub();window.gtag!('consent','update',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+ // Previously loaded third-party code cannot reliably be unloaded. Reload after
+ // persisting refusal so no tag starts again, including in other open tabs.
+ if(gaReady||scripts.size)window.location.reload();
 }
-
-function loadScript(src: string, attrs: Record<string, string> = {}): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (document.querySelector(`script[src="${src}"]`)) return resolve();
-    const el = document.createElement("script");
-    el.src = src;
-    el.async = true;
-    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
-    el.onload = () => resolve();
-    el.onerror = () => reject(new Error(`failed to load ${src}`));
-    document.head.appendChild(el);
-  });
-}
-
-let gaLoaded = false;
-let adsLoaded = false;
-
-/**
- * Declares the default consent state before any Google tag runs. Consent Mode
- * expects this to be set first, so it must happen even when the visitor has not
- * decided yet.
- */
-export function initConsentDefaults() {
-  if (typeof window === "undefined") return;
-  ensureGtagStub();
-  const decided = readConsent();
-  const state = decided === "granted" ? "granted" : "denied";
-  window.gtag!("consent", "default", {
-    ad_storage: state,
-    ad_user_data: state,
-    ad_personalization: state,
-    analytics_storage: state,
-    wait_for_update: 500,
-  });
-}
-
-async function startGoogleAnalytics() {
-  if (gaLoaded || !GA_ID) return;
-  gaLoaded = true;
-  ensureGtagStub();
-  await loadScript(`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`);
-  window.gtag!("js", new Date());
-  // Page views are sent manually: this is a single-page app, so GA's automatic
-  // pageview would fire once on load and never again as the reader navigates.
-  window.gtag!("config", GA_ID, { send_page_view: false });
-  pageview(window.location.pathname + window.location.search);
-}
-
-async function startAdSense() {
-  if (adsLoaded || !ADSENSE_CLIENT) return;
-  adsLoaded = true;
-  await loadScript(
-    `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`,
-    { crossorigin: "anonymous" },
-  );
-}
-
-/** Called once the visitor accepts. Updates Consent Mode, then loads the tags. */
-export async function grantConsent() {
-  writeConsent("granted");
-  ensureGtagStub();
-  window.gtag!("consent", "update", {
-    ad_storage: "granted",
-    ad_user_data: "granted",
-    ad_personalization: "granted",
-    analytics_storage: "granted",
-  });
-  await Promise.allSettled([startGoogleAnalytics(), startAdSense()]);
-}
-
-export function denyConsent() {
-  writeConsent("denied");
-  ensureGtagStub();
-  window.gtag!("consent", "update", {
-    ad_storage: "denied",
-    ad_user_data: "denied",
-    ad_personalization: "denied",
-    analytics_storage: "denied",
-  });
-}
-
-/** Loads the tags on a return visit where consent was previously granted. */
-export async function resumeIfConsented() {
-  if (readConsent() !== "granted") return;
-  await Promise.allSettled([startGoogleAnalytics(), startAdSense()]);
-}
-
-/* ──────────────────────────────── reporting ──────────────────────────────── */
-
-export function pageview(path: string) {
-  if (!GA_ID || !window.gtag || readConsent() !== "granted") return;
-  window.gtag("event", "page_view", {
-    page_path: path,
-    page_location: window.location.href,
-    page_title: document.title,
-  });
-}
-
-export function trackEvent(name: string, params: Record<string, unknown> = {}) {
-  if (!GA_ID || !window.gtag || readConsent() !== "granted") return;
-  window.gtag("event", name, params);
-}
-
-/**
- * An outbound click on a published article.
- *
- * The server already counts these at /api/ipl/insights/go/<slug>, which works
- * even for a reader who declined cookies. This adds the GA side — audience,
- * source, device — for those who accepted. The two are complementary: the
- * server count is complete, the GA count is richer.
- */
-export function trackOutbound(slug: string, title: string, platform?: string) {
-  trackEvent("outbound_article_click", {
-    article_slug: slug,
-    article_title: title,
-    platform: platform ?? "unknown",
-  });
+if(typeof window!=='undefined')window.addEventListener('storage',event=>{if(event.key===KEY&&event.newValue!=='granted'&&scripts.size)window.location.reload();});
+export function pageview(path:string){if(!gaReady||!GA_ID||readConsent()!=='granted')return;const clean=path.split(/[?#]/)[0];window.gtag?.('event','page_view',{page_path:clean,page_location:window.location.origin+clean,page_referrer:'',page_title:'CricField'});}
+export function trackEvent(name:string,params:Record<string,unknown>={}){if(gaReady&&readConsent()==='granted')window.gtag?.('event',name,params);}
+export function trackOutbound(slug:string,title:string,platform?:string){trackEvent('outbound_article_click',{article_slug:slug,platform:platform??'unknown'});}
+const requested=new WeakSet<HTMLElement>();
+export function mountAd(element:HTMLElement){let cancelled=false;let observer:ResizeObserver|undefined;
+ if(!adAllowed())return()=>{};
+ void loadScript('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client='+adsenseClient,{crossorigin:'anonymous'}).then(()=>{
+ const request=()=>{if(cancelled||!adAllowed()||!element.isConnected||requested.has(element)||element.hasAttribute('data-adsbygoogle-status')||element.getBoundingClientRect().width<=0)return;requested.add(element);observer?.disconnect();try{(window.adsbygoogle ||= []).push({});}catch{}};
+ if(cancelled)return;observer=new ResizeObserver(request);observer.observe(element);request();
+ }).catch(()=>{});return()=>{cancelled=true;observer?.disconnect();};
 }

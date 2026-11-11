@@ -1,0 +1,7 @@
+typecheck exit=0
+api-build exit=0
+web-build exit=0
+api-test exit=0
+global-test exit=0
+step3-test exit=0
+db hashes unchanged

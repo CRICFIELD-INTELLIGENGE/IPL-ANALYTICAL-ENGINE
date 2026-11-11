@@ -14,9 +14,13 @@ type Filters = {
 
 const DEFAULT: Filters = { season:'', team:'', phase:'', venue:'', innings:'', opposition:'', playoff:'', chaseDefend:'' };
 
-interface Props { onApply: (f: Filters) => void; }
+interface Props {
+  onApply: (f: Filters) => void;
+  /** Dimensions to offer; show only those the caller's data can actually slice by. */
+  fields?: ("season" | "team" | "phase" | "venue")[];
+}
 
-export function SmartFilters({ onApply }: Props) {
+export function SmartFilters({ onApply, fields = ["season", "team", "phase", "venue"] }: Props) {
   const [draft, setDraft] = useState<Filters>(DEFAULT);
   const [applied, setApplied] = useState<Filters>(DEFAULT);
   const [isRecalculating, setIsRecalculating] = useState(false);
@@ -76,25 +80,35 @@ export function SmartFilters({ onApply }: Props) {
       </div>
 
       {/* Filter Grid */}
-      <div className="grid grid-cols-4 gap-2">
-        <FilterSel label="Season" icon={Calendar} val={draft.season} opts={SEASONS} onChange={v=>set('season',v)} />
-        <FilterSel label="Team" icon={Users} val={draft.team} opts={TEAMS_OPT} onChange={v=>set('team',v)} />
-        <FilterSel label="Phase" icon={Activity} val={draft.phase} opts={PHASES} onChange={v=>set('phase',v)} />
-        <FilterSel label="Venue" icon={MapPin} val={draft.venue} opts={VENUES_OPT} onChange={v=>set('venue',v)} />
+      <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${fields.length}, minmax(0, 1fr))` }}>
+        {fields.includes('season') && <FilterSel label="Season" icon={Calendar} val={draft.season} opts={SEASONS} onChange={v=>set('season',v)} />}
+        {fields.includes('team') && <FilterSel label="Team" icon={Users} val={draft.team} opts={TEAMS_OPT} onChange={v=>set('team',v)} />}
+        {fields.includes('phase') && <FilterSel label="Phase" icon={Activity} val={draft.phase} opts={PHASES} onChange={v=>set('phase',v)} />}
+        {fields.includes('venue') && <FilterSel label="Venue" icon={MapPin} val={draft.venue} opts={VENUES_OPT} onChange={v=>set('venue',v)} />}
       </div>
     </div>
   );
 }
 
+// A native <select> sits invisibly over the pill: its option list is drawn by the browser, so it can't be
+// clipped by overflow-hidden ancestors (the old in-DOM dropdown was cut off inside the home page cards).
 function FilterSel({ label, icon: Icon, val, opts, onChange }: { label: string; icon: any; val: string; opts: string[]; onChange: (v: string) => void }) {
-  const [isOpen, setIsOpen] = useState(false);
   const active = !!val;
 
   return (
     <div className="relative">
-      <button 
-        onClick={() => setIsOpen(!isOpen)}
-        className={`w-full flex items-center justify-between gap-2 px-2.5 py-1.5 bg-white/[0.02] border border-white/5 rounded-xl hover:bg-white/5 transition-all group ${isOpen ? 'border-primary/40 bg-white/5' : ''} ${active ? 'border-primary/20 bg-primary/5' : ''}`}
+      <select
+        aria-label={label}
+        value={val || 'all'}
+        onChange={e => onChange(e.target.value)}
+        className="peer absolute inset-0 z-10 w-full h-full opacity-0 cursor-pointer"
+      >
+        <option value="all" className="bg-[#0B1020]">All</option>
+        {opts.map(o => <option key={o} value={o} className="bg-[#0B1020]">{o}</option>)}
+      </select>
+      <div
+        aria-hidden="true"
+        className={`w-full flex items-center justify-between gap-2 px-2.5 py-1.5 bg-white/[0.02] border border-white/5 rounded-xl peer-hover:bg-white/5 peer-focus-visible:border-primary/60 transition-all group ${active ? 'border-primary/20 bg-primary/5' : ''}`}
       >
         <div className="flex items-center gap-1.5 overflow-hidden">
           <Icon className={`w-3 h-3 shrink-0 ${active ? 'text-primary' : 'text-white/20 group-hover:text-primary'}`} />
@@ -103,31 +117,8 @@ function FilterSel({ label, icon: Icon, val, opts, onChange }: { label: string; 
             <span className={`text-[9px] font-bold truncate ${active ? 'text-white' : 'text-white/40'}`}>{val || 'All'}</span>
           </div>
         </div>
-        <ChevronDown className={`w-2 h-2 text-white/10 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-      </button>
-
-      {isOpen && (
-        <>
-          <div className="fixed inset-0 z-[60]" onClick={() => setIsOpen(false)} />
-          <div className="absolute top-full left-0 mt-1 w-32 bg-[#0B1020] border border-white/10 rounded-xl shadow-2xl z-[70] py-1 max-h-48 overflow-y-auto no-scrollbar animate-in fade-in slide-in-from-top-1">
-            <button
-              onClick={() => { onChange('all'); setIsOpen(false); }}
-              className={`w-full text-left px-3 py-1.5 text-[9px] font-bold transition-colors ${!val ? 'bg-primary/20 text-primary' : 'text-white/40 hover:bg-white/5 hover:text-white'}`}
-            >
-              All
-            </button>
-            {opts.map(o => (
-              <button
-                key={o}
-                onClick={() => { onChange(o); setIsOpen(false); }}
-                className={`w-full text-left px-3 py-1.5 text-[9px] font-bold transition-colors ${val === o ? 'bg-primary/20 text-primary' : 'text-white/40 hover:bg-white/5 hover:text-white'}`}
-              >
-                {o}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
+        <ChevronDown className="w-2 h-2 text-white/30 shrink-0" />
+      </div>
     </div>
   );
 }

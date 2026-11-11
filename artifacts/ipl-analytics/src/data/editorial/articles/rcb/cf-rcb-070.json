@@ -1,0 +1,138 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-070",
+ "planId": "cf-rcb-070",
+ "franchise": "RCB",
+ "aspect": "history",
+ "title": "Legacy Versus Recency: How Should We Rank Royal Challengers Bengaluru\u2019s Greatest Performances?",
+ "slug": "rcb-legacy-versus-recency-how-should-we-rank-rcb-greatest-performances",
+ "dek": "Ranking Royal Challengers Bengaluru's greatest performances means weighing old classics against recent fireworks. Scoring has risen, so raw numbers favour the present.",
+ "excerpt": "Royal Challengers Bengaluru's highest innings is {{ev:lr-best}}. Seasons since 2024 are not over-represented among their top ten innings, a test of how much recency bias raw rankings carry.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "RCB"
+ ],
+ "players": [
+  "CH Gayle",
+  "A Kumble"
+ ],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "Royal Challengers Bengaluru's highest individual innings is {{ev:lr-best}}; their best bowling figures are {{ev:lr-bowl}}.",
+  "Of their top ten innings, {{ev:lr-top-recent}} came in 2024\u20132026, seasons that account for {{ev:lr-all-recent}} of all their innings.",
+  "Of their top ten bowling spells, {{ev:lr-bowl-recent}} came in 2024\u20132026, against {{ev:lr-allb-recent}} of all spells."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Legacy and Recency",
+   "body": [
+    "Every list of a franchise's greatest performances has to decide how to weigh old and new. Recent performances are vivid; older ones carry history.",
+    "By raw numbers, Royal Challengers Bengaluru's highest individual innings is {{ev:lr-best}} and their best bowling figures are {{ev:lr-bowl}}."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Raw Ranking",
+   "body": [
+    "The chart lists Royal Challengers Bengaluru's ten highest individual innings. {{ev:lr-top-recent}} of them came in 2024\u20132026, seasons that account for {{ev:lr-all-recent}} of all the franchise's innings.",
+    "Recent seasons are not over-represented in the top ten, despite the league-wide rise in scoring."
+   ],
+   "chartIds": [
+    "lr-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Bowling Runs the Other Way",
+   "body": [
+    "With the ball, {{ev:lr-bowl-recent}} of the top ten spells by wickets came in 2024\u20132026, against {{ev:lr-allb-recent}} of all spells. Higher scoring makes great bowling figures harder to achieve.",
+    "{{hyp:adjust}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "A Fairer Ranking",
+   "body": [
+    "A fairer ranking would express each performance relative to the scoring in its season, so that a century in a low-scoring year counts for more than one in a high-scoring year.",
+    "The venue-adjusted rating elsewhere in this series applies that idea to players."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Adjust Before You Rank",
+   "body": [
+    "Raw rankings of Royal Challengers Bengaluru's greatest innings do not lean heavily towards recent seasons.",
+    "Any definitive list should adjust for each season's scoring before comparing eras."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "lr-chart",
+   "type": "bar",
+   "title": "Highest individual innings",
+   "subtitle": "RCB, all seasons",
+   "table": "lr-top",
+   "xKey": "innings",
+   "series": [
+    {
+     "key": "runs",
+     "label": "Runs"
+    }
+   ],
+   "unit": "runs",
+   "takeaway": "The raw ranking mixes eras with very different scoring levels.",
+   "ariaLabel": "Horizontal bar chart of the ten highest individual innings for RCB."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "adjust",
+   "statement": "Hypothesis: ranking Royal Challengers Bengaluru's innings relative to each season's average strike rate would move several pre-2018 innings into the top ten.",
+   "whyUnverified": "Season-adjusted rankings have not been computed.",
+   "howToTest": "Divide each innings' runs and strike rate by the season average and re-rank."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "CH Gayle's great innings for Royal Challengers Bengaluru.",
+   "wanted": "CH Gayle batting for Royal Challengers Bengaluru."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-083",
+  "cf-rcb-068",
+  "cf-rcb-062"
+ ],
+ "seo": {
+  "metaTitle": "Legacy versus recency: ranking Royal Challengers Bengaluru's | CF",
+  "metaDescription": "Royal Challengers Bengaluru's highest innings and best bowling figures, and how much recency bias raw rankings carry."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Innings and spells from the warehouse fact tables. Recent = 2024\u20132026.",
+ "generator": "engine:v1"
+}

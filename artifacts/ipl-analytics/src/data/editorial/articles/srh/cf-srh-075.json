@@ -1,0 +1,149 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-srh-075",
+ "planId": "cf-srh-075",
+ "franchise": "SRH",
+ "aspect": "scouting",
+ "title": "Cross-League Translation: Which Overseas Performances Matter for Sunrisers Hyderabad?",
+ "slug": "srh-cross-league-translation-which-overseas-performances-matter-for-srh",
+ "dek": "Which overseas performances should Sunrisers Hyderabad trust? Without other leagues' data, the next-best test is how well an overseas batter's first IPL season predicts the rest of his IPL career.",
+ "excerpt": "Among overseas batters, debut-season form in the IPL correlates with later form only moderately. It is a real signal, but a noisy one, which is the core problem of cross-league scouting.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "SRH"
+ ],
+ "players": [],
+ "seasons": [
+  "2009\u20132026"
+ ],
+ "keyTakeaways": [
+  "For {{ev:cl-n}} overseas batters, IPL debut-season and later relative strike rates correlate at {{ev:cl-r}}.",
+  "They averaged {{ev:cl-d}} in their debut season and {{ev:cl-l}} afterwards (season average = one hundred).",
+  "{{ev:cl-mine}} of them debuted for SRH."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Translation Problem",
+   "body": [
+    "Scouts watch overseas players in the Big Bash, the SA20, the Caribbean Premier League and international cricket. The question is how much of that form carries into the IPL.",
+    "The CricField warehouse holds IPL data only, so it cannot test other leagues directly. It can test the next step: how well a first IPL season predicts what follows."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Debut Versus Later",
+   "body": [
+    "For {{ev:cl-n}} overseas batters with at least sixty balls in their debut season and later, relative strike rates in the two periods correlate at {{ev:cl-r}}.",
+    "On average they scored at {{ev:cl-d}} in their debut season and {{ev:cl-l}} afterwards, on a scale where the season average is one hundred. The chart plots each batter."
+   ],
+   "chartIds": [
+    "cl-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "What It Means for Scouting",
+   "body": [
+    "If even IPL form only partly predicts IPL form, form in another league will predict it less. Scouts should treat a strong overseas record as a prior to be updated quickly, not a guarantee.",
+    "{{hyp:translate}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Caveats",
+   "body": [
+    "Players who fail in their debut season often get few later chances, which removes them from the comparison. Nationality comes from player-bio data and squad lists, which contain known errors.",
+    "{{ev:cl-mine}} of the batters analysed debuted for SRH, too few to judge the franchise's own record."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Trust Form, but Update Fast",
+   "body": [
+    "Sunrisers Hyderabad should use overseas form as a starting estimate and revise it quickly with IPL evidence.",
+    "Adding other leagues' ball-by-ball data would allow a direct translation model."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "cl-chart",
+   "type": "scatter",
+   "title": "Debut season vs later seasons",
+   "subtitle": "Overseas batters, relative strike rate (100 = season average)",
+   "table": "cl-scatter",
+   "xKey": "debut",
+   "series": [
+    {
+     "key": "later",
+     "label": "Later seasons"
+    }
+   ],
+   "xLabel": "Debut season",
+   "unit": "index",
+   "takeaway": "Debut form predicts later form only partly.",
+   "ariaLabel": "Scatter plot of overseas batters' relative strike rate in their IPL debut season against later seasons."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "translate",
+   "statement": "Hypothesis: overseas batters' strike rates in the Big Bash and SA20 predict their IPL strike rates less well than their first IPL season does.",
+   "whyUnverified": "Other leagues' data is not in the warehouse.",
+   "howToTest": "Add Cricsheet ball-by-ball data for other T20 leagues and compare predictive power."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "60",
+   "reason": "Minimum balls stated in a table label."
+  },
+  {
+   "text": "100",
+   "reason": "Index baseline (season average = 100)."
+  },
+  {
+   "text": "20",
+   "reason": "Part of the league name SA20."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An overseas batter at Sunrisers Hyderabad.",
+   "wanted": "Sunrisers Hyderabad overseas batter."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-srh-034",
+  "cf-srh-099",
+  "cf-srh-080"
+ ],
+ "seo": {
+  "metaTitle": "Cross-league translation: which overseas form matters for SRH",
+  "metaDescription": "How well overseas batters' first IPL seasons predict the rest of their IPL careers, and what that means for Sunrisers Hyderabad's scouting."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Relative strike rate = runs \u00f7 (balls \u00d7 season-average runs per ball) \u00d7 100. Nationality from player-bio data with squad lists as fallback.",
+ "generator": "engine:v1"
+}

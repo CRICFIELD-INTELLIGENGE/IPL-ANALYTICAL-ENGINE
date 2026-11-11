@@ -1,0 +1,141 @@
+{
+ "articleId": "cf-rcb-030",
+ "generatedAt": "2026-10-26T04:20:28.974Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "cap-n": {
+   "value": 9,
+   "display": "9",
+   "label": "RCB captains listed",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "captains.json",
+   "sampleSize": {
+    "n": 9,
+    "unit": "captains"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "plausibility range 1–30 for captain count",
+    "passed": true,
+    "detail": "value 9"
+   }
+  },
+  "cap-top": {
+   "value": "Virat Kohli",
+   "display": "Virat Kohli",
+   "label": "RCB's longest-serving captain with a franchise-only record",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact records only",
+   "sampleSize": {
+    "n": 143,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "rank by matches",
+    "passed": true
+   }
+  },
+  "cap-top-pct": {
+   "value": 46.2,
+   "display": "46.2%",
+   "label": "Virat Kohli win rate as RCB captain",
+   "unit": "%",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "2011–2023",
+   "sampleSize": {
+    "n": 143,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 143"
+   }
+  },
+  "cap-top-n": {
+   "value": 143,
+   "display": "143",
+   "label": "Matches with Virat Kohli as RCB captain",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact record",
+   "sampleSize": {
+    "n": 143,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 143"
+   }
+  },
+  "cap-team": {
+   "value": 51.2,
+   "display": "51.2%",
+   "label": "RCB win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 283,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 283"
+   }
+  }
+ },
+ "tables": {
+  "cap-tab": {
+   "label": "RCB captains with franchise-only records",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Captains whose record covers this franchise alone (min. five matches)",
+   "sampleSize": {
+    "n": 219,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "rows": [
+    {
+     "captain": "Virat Kohli",
+     "seasons": "2011–2023",
+     "matches": 143,
+     "winPct": 46.2,
+     "titles": 0
+    },
+    {
+     "captain": "Rajat Patidar",
+     "seasons": "2025–2026",
+     "matches": 28,
+     "winPct": 71.4,
+     "titles": 2
+    },
+    {
+     "captain": "Anil Kumble",
+     "seasons": "2009–2010",
+     "matches": 26,
+     "winPct": 57.7,
+     "titles": 0
+    },
+    {
+     "captain": "Daniel Vettori",
+     "seasons": "2011–2012",
+     "matches": 22,
+     "winPct": 54.5,
+     "titles": 0
+    }
+   ]
+  }
+ }
+}

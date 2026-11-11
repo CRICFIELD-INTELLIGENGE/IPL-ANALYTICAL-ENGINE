@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { db, playersTable, teamsTable, seasonsTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
+import { guardWarehouseWrite } from "./lib/warehouse-guard";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, "..", "..");
@@ -88,6 +89,7 @@ const TEAM_SHORTS: Record<string, string> = {
 };
 
 async function main() {
+  guardWarehouseWrite("migrate_players.ts"); // @workspace/db target: CRICFIELD_DB_PATH or the production sqlite.db
   console.log("=== STARTING PLAYERS & TEAMS MIGRATION ===");
 
   try {

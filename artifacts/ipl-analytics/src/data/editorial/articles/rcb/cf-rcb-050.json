@@ -1,0 +1,136 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-050",
+ "planId": "cf-rcb-050",
+ "franchise": "RCB",
+ "aspect": "business",
+ "title": "The Off-Season Revenue Problem: How Royal Challengers Bengaluru Can Stay Relevant Year-Round",
+ "slug": "rcb-the-off-season-revenue-problem-how-rcb-can-stay-relevant-year-round",
+ "dek": "Royal Challengers Bengaluru play for a couple of months and then go quiet. The calendar shows how long the off-season is, and why staying relevant is a year-round job.",
+ "excerpt": "On average Royal Challengers Bengaluru go most of the year between matches. Every revenue line has to survive that gap.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RCB"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "Royal Challengers Bengaluru's season has lasted {{ev:os-active}} days on average, first match to last.",
+  "The gap to the next season's first match has averaged {{ev:os-gap}} days.",
+  "That leaves {{ev:os-share}} of each cycle without a RCB match."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "A Short Season, a Long Silence",
+   "body": [
+    "From Royal Challengers Bengaluru's first match to their last, a season has lasted {{ev:os-active}} days on average. The wait for the next season's first match has averaged {{ev:os-gap}} days.",
+    "That leaves {{ev:os-share}} of each cycle with no RCB cricket at all: the off-season revenue problem in one number."
+   ],
+   "chartIds": [
+    "os-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What Fills the Gap",
+   "body": [
+    "Off-season attention comes from retention decisions, the auction, players' international and domestic cricket, and the franchise's own content.",
+    "Each of those is a chance to keep fans engaged, but only the auction is guaranteed every year."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Revenue Without Matches",
+   "body": [
+    "Year-round revenue ideas include academies, membership programmes, archive content and events.",
+    "{{hyp:offseason}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What the Warehouse Cannot See",
+   "body": [
+    "The CricField warehouse is ball-by-ball cricket data. It contains no off-season revenue, engagement or membership data, so it cannot measure the commercial side of this question directly.",
+    "Measuring the problem directly would need monthly revenue and engagement figures across a full year."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Plan for the Silence",
+   "body": [
+    "Royal Challengers Bengaluru spend most of each year without matches. Off-season planning should be as deliberate as squad planning.",
+    "The archive of moments and the auction are the most dependable off-season stories."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "os-chart",
+   "type": "column",
+   "title": "Season length",
+   "subtitle": "RCB, days from first to last match",
+   "table": "os-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "daysActive",
+     "label": "Days"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "days",
+   "takeaway": "Seasons last a couple of months; the rest of the year has no matches.",
+   "ariaLabel": "Column chart of the number of days from Royal Challengers Bengaluru's first to last match in each season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "offseason",
+   "statement": "Hypothesis: franchise engagement in the off-season peaks around retention and auction announcements and falls sharply between them.",
+   "whyUnverified": "No engagement data by month is available.",
+   "howToTest": "Plot monthly engagement across a full year against the retention and auction dates."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Royal Challengers Bengaluru between seasons.",
+   "wanted": "Royal Challengers Bengaluru squad or training."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-047",
+  "cf-rcb-095",
+  "cf-rcb-097"
+ ],
+ "seo": {
+  "metaTitle": "The off-season revenue problem at RCB",
+  "metaDescription": "How long Royal Challengers Bengaluru's season lasts, how long the off-season is, and what keeps a franchise relevant year-round."
+ },
+ "methodology": "CricField measures the cricket a franchise puts on the field; it holds no revenue, attendance, audience, merchandise or social-media data. Commercial ideas in this article are labelled hypotheses with the data needed to test them. Generated by scripts/editorial/engine. Season length = days from the franchise's first to last match; off-season = days to the next season's first match.",
+ "generator": "engine:v1"
+}

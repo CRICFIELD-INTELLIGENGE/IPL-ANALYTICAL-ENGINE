@@ -1,0 +1,144 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-076",
+ "planId": "cf-rcb-076",
+ "franchise": "RCB",
+ "aspect": "scouting",
+ "title": "The Finisher Search: How Royal Challengers Bengaluru Can Identify Genuine Death-Overs Hitters",
+ "slug": "rcb-the-finisher-search-how-rcb-can-identify-genuine-death-overs-hitters",
+ "dek": "Genuine finishers are rare. Since 2024, the IPL's best death-overs hitters show what Royal Challengers Bengaluru should look for, and which numbers actually identify one.",
+ "excerpt": "Royal Challengers Bengaluru have scored faster than the rest of the league at the death since 2024. Boundary rate, more than avoiding dots, separates the genuine finishers.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "player-story",
+ "teams": [
+  "RCB"
+ ],
+ "players": [
+  "MP Stoinis",
+  "SS Iyer",
+  "KD Karthik"
+ ],
+ "seasons": [
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "RCB have scored {{ev:fs-t}} an over in overs sixteen to twenty since 2024; the rest of the IPL {{ev:fs-l}}.",
+  "Among {{ev:fs-n}} qualifying death hitters, boundary percentage correlates with strike rate at {{ev:fs-r}}; dot-ball percentage at {{ev:fs-rd}}.",
+  "Royal Challengers Bengaluru's fastest qualifying finisher is {{ev:fs-best}}, at {{ev:fs-best-sr}}; the league median is {{ev:fs-med}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "What Makes a Finisher",
+   "body": [
+    "A finisher's job is to score as fast as possible in the last five overs, often from a standing start. Few players can do it consistently.",
+    "Royal Challengers Bengaluru have scored {{ev:fs-t}} an over at the death since 2024, against {{ev:fs-l}} for the rest of the IPL."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Market's Best",
+   "body": [
+    "The chart lists the fastest IPL death hitters since 2024 with at least ninety balls in overs sixteen to twenty. The median among {{ev:fs-n}} qualifiers is {{ev:fs-med}}.",
+    "Royal Challengers Bengaluru's fastest qualifier is {{ev:fs-best}}, at {{ev:fs-best-sr}}."
+   ],
+   "chartIds": [
+    "fs-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Which Numbers Identify One",
+   "body": [
+    "Among qualifying death hitters, boundary percentage correlates with strike rate at {{ev:fs-r}}, while dot-ball percentage correlates at {{ev:fs-rd}}.",
+    "{{hyp:finisher}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Small Samples at the Death",
+   "body": [
+    "Even the busiest finishers face few balls at the death in a season, so strike rates there swing widely. Two or three seasons of data is the minimum for a judgement.",
+    "The small-sample article in this series shows how far short-run numbers regress."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Scout the Boundary Rate",
+   "body": [
+    "Royal Challengers Bengaluru should scout finishers by boundary rate at the death over several seasons, and treat dot-ball avoidance as a secondary skill.",
+    "The fastest qualifiers in the chart set the standard to aim for."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "fs-chart",
+   "type": "bar",
+   "title": "Fastest death-overs hitters",
+   "subtitle": "IPL, 2024\u20132026, min. 90 balls in overs 16\u201320",
+   "table": "fs-top",
+   "xKey": "batter",
+   "series": [
+    {
+     "key": "strikeRate",
+     "label": "Strike rate"
+    }
+   ],
+   "unit": "runs per 100 balls",
+   "takeaway": "A handful of finishers score far faster than the median.",
+   "ariaLabel": "Horizontal bar chart of the fastest IPL death-overs hitters since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "finisher",
+   "statement": "Hypothesis: boundary percentage at the death is more stable from season to season than dot-ball percentage, making it the better scouting measure.",
+   "whyUnverified": "Year-to-year stability has not been measured.",
+   "howToTest": "Correlate each finisher's boundary and dot percentages across consecutive seasons."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "90",
+   "reason": "Minimum balls at the death, stated in a table label."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Royal Challengers Bengaluru finisher at work.",
+   "wanted": "Royal Challengers Bengaluru batter hitting a six at the death."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-005",
+  "cf-rcb-071",
+  "cf-rcb-080"
+ ],
+ "seo": {
+  "metaTitle": "The finisher search: genuine death hitters for RCB",
+  "metaDescription": "The IPL's best death-overs hitters since 2024, how Royal Challengers Bengaluru compare, and which numbers identify a finisher."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Death overs = overs 16\u201320. Strike rate = runs per 100 balls faced (wides excluded).",
+ "generator": "engine:v1"
+}

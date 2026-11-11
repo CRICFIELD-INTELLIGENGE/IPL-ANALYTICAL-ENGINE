@@ -1,0 +1,146 @@
+{
+ "articleId": "cf-rcb-024",
+ "generatedAt": "2026-10-26T04:20:27.514Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "bo-t": {
+   "value": 2.59,
+   "display": "2.59",
+   "label": "Average batting positions used per regular RCB batter, 2024–2026",
+   "unit": "positions",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batters with at least eight innings",
+   "sampleSize": {
+    "n": 17,
+    "unit": "batters"
+   },
+   "query": "WITH appear AS (SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT bt, AVG(np) avgPositions, COUNT(*) players FROM ( SELECT i.batting_team_id bt, pos.pid, COUNT(DISTINCT pos.position) np, COUNT(*) inns FROM pos JOIN innings i ON i.innings_id = pos.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY i.batting_team_id, pos.pid HAVING inns >= 8) GROUP BY bt",
+   "validation": {
+    "method": "sample-size floor ≥ 4 batters",
+    "passed": true,
+    "detail": "n = 17"
+   }
+  },
+  "bo-l": {
+   "value": 3.14,
+   "display": "3.14",
+   "label": "Average batting positions used per regular batter, rest of IPL",
+   "unit": "positions",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batters with at least eight innings",
+   "sampleSize": {
+    "n": 123,
+    "unit": "batters"
+   },
+   "query": "WITH appear AS (SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT bt, AVG(np) avgPositions, COUNT(*) players FROM ( SELECT i.batting_team_id bt, pos.pid, COUNT(DISTINCT pos.position) np, COUNT(*) inns FROM pos JOIN innings i ON i.innings_id = pos.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY i.batting_team_id, pos.pid HAVING inns >= 8) GROUP BY bt",
+   "validation": {
+    "method": "sample-size floor ≥ 40 batters",
+    "passed": true,
+    "detail": "n = 123"
+   }
+  },
+  "bo-most": {
+   "value": "TH David",
+   "display": "TH David",
+   "label": "RCB's most-moved batter, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Distinct positions",
+   "sampleSize": {
+    "n": 24,
+    "unit": "innings"
+   },
+   "query": "WITH appear AS (SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT pl.name, COUNT(*) inns, COUNT(DISTINCT pos.position) positions, MIN(pos.position) top, MAX(pos.position) low FROM pos JOIN innings i ON i.innings_id = pos.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = pos.pid WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pos.pid HAVING inns >= 8 ORDER BY positions DESC, inns DESC",
+   "validation": {
+    "method": "rank by positions",
+    "passed": true
+   }
+  },
+  "bo-most-n": {
+   "value": 5,
+   "display": "5",
+   "label": "Distinct positions used by TH David",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 24,
+    "unit": "innings"
+   },
+   "query": "WITH appear AS (SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT pl.name, COUNT(*) inns, COUNT(DISTINCT pos.position) positions, MIN(pos.position) top, MAX(pos.position) low FROM pos JOIN innings i ON i.innings_id = pos.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = pos.pid WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pos.pid HAVING inns >= 8 ORDER BY positions DESC, inns DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 8 innings",
+    "passed": true,
+    "detail": "n = 24"
+   }
+  }
+ },
+ "tables": {
+  "bo-flex": {
+   "label": "RCB batters by number of batting positions used, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batters with at least eight innings; position = order of arrival",
+   "sampleSize": {
+    "n": 298,
+    "unit": "innings"
+   },
+   "query": "WITH appear AS (SELECT d.innings_id, d.batter_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.batter_id UNION ALL SELECT d.innings_id, d.non_striker_id pid, MIN(d.delivery_id) first FROM deliveries d GROUP BY d.innings_id, d.non_striker_id), firsts AS (SELECT innings_id, pid, MIN(first) first FROM appear GROUP BY innings_id, pid), pos AS (SELECT innings_id, pid, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY first, pid) position FROM firsts) SELECT pl.name, COUNT(*) inns, COUNT(DISTINCT pos.position) positions, MIN(pos.position) top, MAX(pos.position) low FROM pos JOIN innings i ON i.innings_id = pos.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = pos.pid WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY pos.pid HAVING inns >= 8 ORDER BY positions DESC, inns DESC",
+   "rows": [
+    {
+     "batter": "TH David",
+     "positions": 5,
+     "innings": 24
+    },
+    {
+     "batter": "KH Pandya",
+     "positions": 4,
+     "innings": 16
+    },
+    {
+     "batter": "KD Karthik",
+     "positions": 4,
+     "innings": 13
+    },
+    {
+     "batter": "C Green",
+     "positions": 4,
+     "innings": 12
+    },
+    {
+     "batter": "GJ Maxwell",
+     "positions": 4,
+     "innings": 9
+    },
+    {
+     "batter": "RM Patidar",
+     "positions": 3,
+     "innings": 41
+    },
+    {
+     "batter": "JM Sharma",
+     "positions": 3,
+     "innings": 23
+    },
+    {
+     "batter": "MK Lomror",
+     "positions": 3,
+     "innings": 10
+    },
+    {
+     "batter": "R Shepherd",
+     "positions": 3,
+     "innings": 10
+    },
+    {
+     "batter": "V Kohli",
+     "positions": 2,
+     "innings": 46
+    }
+   ]
+  }
+ }
+}

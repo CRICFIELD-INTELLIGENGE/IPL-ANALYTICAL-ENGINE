@@ -1,0 +1,144 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-kkr-071",
+ "planId": "cf-kkr-071",
+ "franchise": "KKR",
+ "aspect": "scouting",
+ "title": "The Next Opener: What Profile Should Kolkata Knight Riders Scout?",
+ "slug": "kkr-the-next-opener-what-profile-should-kkr-scout",
+ "dek": "What should Kolkata Knight Riders look for in their next opener? The current IPL market sets the bar: how fast the best openers score and how long they survive.",
+ "excerpt": "Since 2024, no IPL opener has combined a top-quarter strike rate with above-median survival. Kolkata Knight Riders have to choose which of the two to prioritise.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "player-story",
+ "teams": [
+  "KKR"
+ ],
+ "players": [
+  "V Suryavanshi",
+  "FH Allen",
+  "Abhishek Sharma"
+ ],
+ "seasons": [
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "Kolkata Knight Riders' openers have scored at {{ev:no-mine}} since 2024, against {{ev:no-rest}} for other IPL openers.",
+  "They have lasted {{ev:no-mbpd}} balls per dismissal, against {{ev:no-rbpd}} for the rest.",
+  "No IPL opener (min. one hundred and fifty balls) combined a strike rate of at least {{ev:no-q75}} with at least {{ev:no-bpdmed}} balls per dismissal."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Where the Bar Is Now",
+   "body": [
+    "Opening in the IPL has changed: the powerplay is now attacked from the first ball. A scout needs to know both how fast the best openers score and how long they last.",
+    "Since 2024, the top quarter of IPL openers by strike rate scored at {{ev:no-q75}} or faster, and the median opener lasted {{ev:no-bpdmed}} balls per dismissal (min. one hundred and fifty balls)."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "How KKR Compare",
+   "body": [
+    "Kolkata Knight Riders' openers have scored at {{ev:no-mine}} since 2024, against {{ev:no-rest}} for other IPL openers. They have lasted {{ev:no-mbpd}} balls per dismissal, against {{ev:no-rbpd}}.",
+    "That comparison sets how much of an upgrade a new opener would need to be."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "The Profile to Scout",
+   "body": [
+    "No opener met both standards, which shows how rarely tempo and survival come together. The chart lists the fastest qualifying openers instead.",
+    "A scout should look for players already close to both lines, not just the fastest scorers."
+   ],
+   "chartIds": [
+    "no-chart"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Speed Versus Survival",
+   "body": [
+    "Strike rate and survival trade off: the fastest openers often get out sooner. The right balance depends on the batting depth behind them.",
+    "{{hyp:depth}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Fast and Durable, or Fast With Depth Behind",
+   "body": [
+    "Kolkata Knight Riders should scout openers who meet both standards, or accept a faster but less durable opener only if the middle order is deep enough to absorb early wickets.",
+    "The batting-depth articles in this series measure that cushion."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "no-chart",
+   "type": "bar",
+   "title": "Fastest openers",
+   "subtitle": "IPL openers, 2024\u20132026, min. 150 balls",
+   "table": "no-top",
+   "xKey": "opener",
+   "series": [
+    {
+     "key": "strikeRate",
+     "label": "Strike rate"
+    }
+   ],
+   "unit": "runs per 100 balls",
+   "takeaway": "Few openers combine top-quarter tempo with above-median survival.",
+   "ariaLabel": "Horizontal bar chart of strike rates of IPL openers who were both fast and hard to dismiss since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "depth",
+   "statement": "Hypothesis: sides with deeper batting gain more from a fast, less durable opener than sides with a shallow middle order.",
+   "whyUnverified": "Batting depth and opener style have not been modelled together.",
+   "howToTest": "Regress team totals on opener strike rate, opener survival and a depth measure."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "150",
+   "reason": "Minimum balls as an opener, stated in a table label."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Kolkata Knight Riders opening the batting.",
+   "wanted": "Kolkata Knight Riders opener batting in the powerplay."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-kkr-001",
+  "cf-kkr-076",
+  "cf-kkr-073"
+ ],
+ "seo": {
+  "metaTitle": "The next opener: the profile KKR should scout",
+  "metaDescription": "How fast and how durable the best IPL openers have been since 2024, how Kolkata Knight Riders' openers compare, and the profile to scout."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Opener = batting position 1 or 2 by order of arrival. Strike rate = runs per 100 balls faced (wides excluded).",
+ "generator": "engine:v1"
+}

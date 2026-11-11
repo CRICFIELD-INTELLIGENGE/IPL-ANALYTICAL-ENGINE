@@ -1,0 +1,143 @@
+{
+ "articleId": "cf-pbks-068",
+ "generatedAt": "2026-10-26T04:25:36.327Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "fc-r1": {
+   "value": "SS Iyer",
+   "display": "SS Iyer",
+   "label": "Leading PBKS run-scorer with two seasons or fewer at the franchise",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 102,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) GROUP BY pl.name",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "fc-r1n": {
+   "value": 1102,
+   "display": "1,102",
+   "label": "Runs by that player for the franchise",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 640,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) GROUP BY pl.name",
+   "validation": {
+    "method": "plausibility range 100–1500 for runs",
+    "passed": true,
+    "detail": "value 1102"
+   }
+  },
+  "fc-w1": {
+   "value": "Azhar Mahmood",
+   "display": "Azhar Mahmood",
+   "label": "Leading PBKS wicket-taker with two seasons or fewer at the franchise",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-credited",
+   "sampleSize": {
+    "n": 63,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "fc-w1n": {
+   "value": 29,
+   "display": "29",
+   "label": "Wickets by that player for the franchise",
+   "unit": "wickets",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-credited",
+   "sampleSize": {
+    "n": 29,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name",
+   "validation": {
+    "method": "plausibility range 5–60 for wickets",
+    "passed": true,
+    "detail": "value 29"
+   }
+  },
+  "fc-n": {
+   "value": 119,
+   "display": "119",
+   "label": "Players with two seasons or fewer at PBKS",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 174,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(DISTINCT x.y) seasons, MIN(x.y) first, MAX(x.y) last FROM ( SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) UNION SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.bowler_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12)) x JOIN players pl ON pl.player_id = x.pid GROUP BY pl.name ORDER BY seasons DESC, pl.name",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "fc-runs": {
+   "label": "PBKS leading run-scorers who played two seasons or fewer",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 102,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) GROUP BY pl.name",
+   "rows": [
+    {
+     "player": "SS Iyer (2025–2026)",
+     "runs": 1102
+    },
+    {
+     "player": "Priyansh Arya (2025–2026)",
+     "runs": 909
+    },
+    {
+     "player": "M Vijay (2015–2016)",
+     "runs": 704
+    },
+    {
+     "player": "HM Amla (2016–2017)",
+     "runs": 577
+    },
+    {
+     "player": "V Sehwag (2014–2015)",
+     "runs": 554
+    },
+    {
+     "player": "JM Bairstow (2022–2024)",
+     "runs": 551
+    },
+    {
+     "player": "GJ Bailey (2014–2015)",
+     "runs": 516
+    },
+    {
+     "player": "C Connolly (2026)",
+     "runs": 491
+    }
+   ]
+  }
+ }
+}

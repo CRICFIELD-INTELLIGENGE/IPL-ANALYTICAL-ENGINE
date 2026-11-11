@@ -1,0 +1,126 @@
+{
+ "articleId": "cf-csk-097",
+ "generatedAt": "2026-10-26T04:18:32.404Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "ac-m": {
+   "value": 6,
+   "display": "6%",
+   "label": "Share of Chennai Super Kings' balls faced by batters aged twenty-three or under, 2018–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Known birth dates",
+   "sampleSize": {
+    "n": 5599,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (9) OR i.bowling_team_id IN (9) THEN 1 ELSE 0 END x, i.batting_team_id bt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, bt",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 balls",
+    "passed": true,
+    "detail": "n = 5599"
+   }
+  },
+  "ac-o": {
+   "value": 10,
+   "display": "10%",
+   "label": "Same share for the rest of the IPL",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Known birth dates",
+   "sampleSize": {
+    "n": 83687,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (9) OR i.bowling_team_id IN (9) THEN 1 ELSE 0 END x, i.batting_team_id bt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, bt",
+   "validation": {
+    "method": "sample-size floor ≥ 10000 balls",
+    "passed": true,
+    "detail": "n = 83687"
+   }
+  },
+  "ac-cover": {
+   "value": 36,
+   "display": "36%",
+   "label": "Share of Chennai Super Kings' balls faced by batters with a known birth date",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 15765,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (9) OR i.bowling_team_id IN (9) THEN 1 ELSE 0 END x, i.batting_team_id bt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, bt",
+   "validation": {
+    "method": "plausibility range 10–100 for coverage",
+    "passed": true,
+    "detail": "value 35.51538217570568"
+   }
+  }
+ },
+ "tables": {
+  "ac-series": {
+   "label": "Share of balls faced by batters aged 23 or under",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batters with a known birth date",
+   "sampleSize": {
+    "n": 89286,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (9) OR i.bowling_team_id IN (9) THEN 1 ELSE 0 END x, i.batting_team_id bt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, bt",
+   "rows": [
+    {
+     "season": "2018",
+     "team": 0,
+     "league": 12.8
+    },
+    {
+     "season": "2019",
+     "team": 0,
+     "league": 9.1
+    },
+    {
+     "season": "2020",
+     "team": 0,
+     "league": 15.6
+    },
+    {
+     "season": "2021",
+     "team": 0,
+     "league": 11.4
+    },
+    {
+     "season": "2022",
+     "team": 0,
+     "league": 12.9
+    },
+    {
+     "season": "2023",
+     "team": 0,
+     "league": 11.5
+    },
+    {
+     "season": "2024",
+     "team": 7,
+     "league": 12.5
+    },
+    {
+     "season": "2025",
+     "team": 21.2,
+     "league": 5.9
+    },
+    {
+     "season": "2026",
+     "team": 31.9,
+     "league": 2.7
+    }
+   ]
+  }
+ }
+}

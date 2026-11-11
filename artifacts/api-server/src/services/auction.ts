@@ -388,7 +388,8 @@ class AuctionEngine extends EventEmitter {
 
     // 3. Official IPL Bidding Slabs
     const basePriceLakhs = p.basePrice || 200;
-    const increment = customIncrement || getOfficialIplIncrement(this.state.currentBid || basePriceLakhs);
+    // A raise must be positive (Day 7: a negative custom increment used to lower the live bid).
+    const increment = customIncrement !== undefined && customIncrement > 0 ? customIncrement : getOfficialIplIncrement(this.state.currentBid || basePriceLakhs);
     const newBidLakhs = this.state.currentBid === 0 ? basePriceLakhs : this.state.currentBid + increment;
     const newBidCr = newBidLakhs / 100;
 

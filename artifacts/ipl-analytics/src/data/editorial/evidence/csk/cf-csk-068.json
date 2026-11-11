@@ -1,0 +1,143 @@
+{
+ "articleId": "cf-csk-068",
+ "generatedAt": "2026-10-26T04:17:41.481Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "fc-r1": {
+   "value": "DR Smith",
+   "display": "DR Smith",
+   "label": "Leading CSK run-scorer with two seasons or fewer at the franchise",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 59,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (9) GROUP BY pl.name",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "fc-r1n": {
+   "value": 965,
+   "display": "965",
+   "label": "Runs by that player for the franchise",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 751,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (9) GROUP BY pl.name",
+   "validation": {
+    "method": "plausibility range 100–1500 for runs",
+    "passed": true,
+    "detail": "value 965"
+   }
+  },
+  "fc-w1": {
+   "value": "Noor Ahmad",
+   "display": "Noor Ahmad",
+   "label": "Leading CSK wicket-taker with two seasons or fewer at the franchise",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-credited",
+   "sampleSize": {
+    "n": 52,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (9) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "fc-w1n": {
+   "value": 37,
+   "display": "37",
+   "label": "Wickets by that player for the franchise",
+   "unit": "wickets",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-credited",
+   "sampleSize": {
+    "n": 37,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (9) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name",
+   "validation": {
+    "method": "plausibility range 5–60 for wickets",
+    "passed": true,
+    "detail": "value 37"
+   }
+  },
+  "fc-n": {
+   "value": 86,
+   "display": "86",
+   "label": "Players with two seasons or fewer at CSK",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 125,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(DISTINCT x.y) seasons, MIN(x.y) first, MAX(x.y) last FROM ( SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (9) UNION SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.bowler_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (9)) x JOIN players pl ON pl.player_id = x.pid GROUP BY pl.name ORDER BY seasons DESC, pl.name",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "fc-runs": {
+   "label": "CSK leading run-scorers who played two seasons or fewer",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 59,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (9) GROUP BY pl.name",
+   "rows": [
+    {
+     "player": "DR Smith (2014–2015)",
+     "runs": 965
+    },
+    {
+     "player": "BB McCullum (2014–2015)",
+     "runs": 841
+    },
+    {
+     "player": "AM Rahane (2023–2024)",
+     "runs": 568
+    },
+    {
+     "player": "SV Samson (2026)",
+     "runs": 477
+    },
+    {
+     "player": "A Mhatre (2025–2026)",
+     "runs": 441
+    },
+    {
+     "player": "R Ravindra (2024–2025)",
+     "runs": 413
+    },
+    {
+     "player": "D Brevis (2025–2026)",
+     "runs": 376
+    },
+    {
+     "player": "RV Uthappa (2021–2022)",
+     "runs": 345
+    }
+   ]
+  }
+ }
+}

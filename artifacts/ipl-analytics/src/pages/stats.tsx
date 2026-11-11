@@ -1,3 +1,8 @@
+import { MobileStatsPresentation } from "@/mobile/screens/stats-presentation";
+import {ScoringRing} from '@/components/visualizations/scoring-ring';
+import { Scale } from "lucide-react";
+import { LeagueValuePanel } from "@/components/intelligence/intel-components";
+import { FeatureSaveButton } from "@/components/feature-save-button";
 import React, { useEffect, useMemo, useState } from "react";
 import { Layout } from "@/components/layout";
 import { TeamLogo } from "@/components/team-logo";
@@ -9,7 +14,7 @@ import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent }
 import {
   BarChart2, Trophy, Target, Zap, Flame, Activity, ArrowRight, MapPin,
   Users, TrendingUp, Cpu, ArrowUpRight, Shield, Eye, Filter, Calendar,
-  ChevronDown, Search, Crosshair, BarChart, Layers, Globe, X, Award, RotateCcw
+  ChevronDown, Search, Crosshair, BarChart, Layers, Globe, X, Award, RotateCcw, Compass
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "wouter";
@@ -19,7 +24,7 @@ import {
   usePlayerSeasonStats, usePlayerCareerStats, usePlayerLatestTeams,
   usePlayerLatestTeamResolver, usePlayerTeamsMap, playerSlug,
   teamColor, teamShort, resolvePlayerImage, isMatchingTeam,
-  normalizeVenueName, usePlayerDisplayNames, displayPlayerName, venueImage, venueHue
+  normalizeVenueName, usePlayerDisplayNames, displayPlayerName, venueImage, venueHue, venueHref
 } from "@/lib/aggregates";
 import { useTeamTheme } from "@/lib/team-context";
 import {
@@ -44,7 +49,6 @@ const TABS = [
   { id: "teams", label: "Teams", Icon: Users },
   { id: "records", label: "Record Book", Icon: Trophy },
   { id: "head2head", label: "Head to Head", Icon: Crosshair },
-  { id: "matchup-lab", label: "Matchup Lab", Icon: Crosshair },
   { id: "stat-builder", label: "Stat Builder", Icon: Filter },
   { id: "scenario-intelligence", label: "Scenario Intelligence", Icon: Cpu },
   { id: "ask", label: "Ask AI", Icon: Cpu },
@@ -57,7 +61,7 @@ const getVenueCity = (v: any): string => String(v?.city || (v?.venue || "").spli
 const normalizePlayerName = (name: string): string =>
   (name || "").toLowerCase().replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim();
 
-export default function StatsPage() {
+export default function StatsPage({ mobilePresentation = false }: { mobilePresentation?: boolean } = {}) {
   const [, setLocation] = useLocation();
   const { scrollYProgress } = useScroll();
   const [activeTab, setActiveTab] = useState<Tab>("batters");
@@ -813,158 +817,7 @@ export default function StatsPage() {
     return Array.from(new Set(venues.data?.map(v => getVenueName(v)) || ["Wankhede Stadium", "Eden Gardens", "MA Chidambaram Stadium"]));
   }, [headToHeadVenues, venues.data]);
 
-  return (
-    <Layout hideHeaderProgress={scrollYProgress}>
-      {/* HERO SCROLL */}
-      <div className="h-[260vh]">
-        <motion.div
-          style={{ scale: masterScale }}
-          className="sticky top-0 w-full h-screen flex flex-col gap-2.5 overflow-hidden bg-[#050816] p-2.5 pb-0 origin-top"
-        >
-          {/* ROW 1: HERO + KPI PANEL */}
-          <motion.div className="flex gap-2.5 shrink-0" style={{ height: heroH }}>
-            <motion.div style={{ width: heroW }} className="relative bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden shrink-0 group">
-              <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-[#050816] to-indigo-900/20" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-[#050816]/70 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/80 to-transparent" />
-                <div className="absolute inset-0 opacity-[0.03] bg-grid-40" />
-              </div>
-              <motion.div style={{ paddingTop: padTop, paddingLeft: padLeft, opacity: titleOp }} className="relative z-10 h-full flex flex-col hero-header-bg">
-                <div className="absolute inset-0 bg-black/5" />
-                <div className="relative z-10 flex flex-col items-start">
-                  <motion.h1 style={{ fontSize: titleSz, lineHeight: '0.9', marginBottom: '8px' }} className="font-black leading-[0.82] text-white uppercase tracking-tighter mb-4 scale-x-105 origin-left">
-                    {scrollCaption === "STATS CENTER." ? (<><div className="mb-1">ADVANCED</div><span className="text-[#3B82F6] block">STATS.</span></>) :
-                      scrollCaption === "BATTER INTEL." ? (<><div className="mb-1">BATTER</div><span className="text-[#F9CD05] block">INTEL.</span></>) :
-                        scrollCaption === "BOWLER ARSENAL." ? (<><div className="mb-1">BOWLER</div><span className="text-[#8B5CF6] block">ARSENAL.</span></>) :
-                          (<><div className="mb-1">VENUE</div><span className="text-[#10B981] block">ORACLE.</span></>)}
-                  </motion.h1>
-                  <motion.p className="text-white/50 text-[13px] max-w-[420px] font-medium tracking-tight">
-                    <span className="text-white/80 font-black mr-2 uppercase tracking-widest">Statsguru Depth:</span>
-                    Dimensional slicing across {overview.data?.totalMatches ?? "—"} matches and {overview.data?.seasons ?? "—"} seasons of high-fidelity IPL telemetry.
-                  </motion.p>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* KPI STRIP CARD */}
-            <motion.div style={{ width: col2W, opacity: r1Op, x: r1X }} className="bg-[#0B1020] rounded-[24px] border border-white/10 flex flex-col overflow-hidden shadow-2xl min-w-0">
-              <div className="p-3 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
-                <div className="flex items-center gap-2">
-                  <Cpu className="w-3.5 h-3.5 text-blue-400" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-white/60">Analytical KPI Strip</span>
-                </div>
-                <span className="text-[8px] font-mono text-white/20">TELEMETRY_v4.2</span>
-              </div>
-              <div className="flex-1 p-3 grid grid-cols-4 gap-2 content-center">
-                {kpis.map(k => (
-                  <div key={k.label} className="flex flex-col items-center gap-1 py-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all group">
-                    <k.Icon className="w-4 h-4 transition-transform group-hover:scale-110 text-[var(--kpi-color)]" style={{ "--kpi-color": k.accent } as React.CSSProperties} />
-                    <motion.span className="text-[13px] font-black text-white [text-shadow:0_0_12px_var(--kpi-shadow)]" style={{ "--kpi-shadow": `${k.accent}33` } as React.CSSProperties}>{k.value}</motion.span>
-                    <motion.span className="text-[7px] font-black text-white/30 uppercase tracking-tighter text-center">{k.label}</motion.span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* ROW 2: SEASON CHART + TOP PERFORMERS PREVIEW */}
-          <motion.div style={{ opacity: r2Op, y: r2Y }} className="flex gap-2.5 flex-1 min-h-0">
-            <div className="flex-1 bg-[#0B1020] rounded-[20px] border border-white/10 p-4 flex flex-col min-h-0 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
-              <div className="flex items-center justify-between mb-4 shrink-0 relative z-10">
-                <div className="flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-primary animate-pulse" />
-                  <span className="text-[11px] font-black uppercase tracking-widest text-white/60">Tournament Telemetry Pulse</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-primary/40" /><span className="text-[8px] font-black text-white/40 uppercase">Volume</span></div>
-                  <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-accent" /><span className="text-[8px] font-black text-white/40 uppercase">Intensity</span></div>
-                </div>
-              </div>
-              <div className="flex-1 min-h-0 relative z-10">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={seasonChart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid stroke="hsl(250 30% 18%)" strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="season" tick={{ fontSize: 9, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fontSize: 9, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
-                    <Tooltip
-                      contentStyle={tooltipStyle}
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length) {
-                          const data = payload[0].payload;
-                          return (
-                            <div className="bg-[#0B1020] border border-white/10 rounded-xl p-3 shadow-2xl backdrop-blur-md">
-                              <p className="text-[10px] font-black text-white/40 uppercase mb-2">Season 20{data.season} Analysis</p>
-                              <div className="flex flex-col gap-1.5">
-                                <div className="flex justify-between items-center gap-6">
-                                  <span className="text-[9px] font-black text-white/60 uppercase">Run Volume</span>
-                                  <span className="text-[12px] font-black text-white">{fmt(data.runs)}</span>
-                                </div>
-                                <div className="flex justify-between items-center gap-6">
-                                  <span className="text-[9px] font-black text-accent uppercase">Six Intensity</span>
-                                  <span className="text-[12px] font-black text-accent">{data.sixes}</span>
-                                </div>
-                                <div className="mt-2 pt-2 border-t border-white/5 flex flex-col">
-                                  <span className="text-[8px] font-black text-primary uppercase">League Health Index</span>
-                                  <div className="w-full h-1 bg-white/5 rounded-full mt-1 overflow-hidden">
-                                    <motion.div style={{ "--progress-w": `${Math.min(100, (data.runs / 200))}%` } as React.CSSProperties} className="h-full bg-primary w-[var(--progress-w)]" />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="runs"
-                      stroke="hsl(var(--primary))"
-                      strokeWidth={3}
-                      dot={{ r: 0 }}
-                      activeDot={{ r: 4, stroke: "white", strokeWidth: 2 }}
-                    />
-                    <Line
-                      type="stepAfter"
-                      dataKey="sixes"
-                      stroke="hsl(var(--accent))"
-                      strokeWidth={2}
-                      strokeDasharray="5 5"
-                      dot={{ r: 0 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            <div className="w-[280px] bg-[#0B1020] rounded-[20px] border border-white/10 p-4 flex flex-col gap-2 overflow-y-auto no-scrollbar">
-              <div className="flex items-center gap-2 shrink-0">
-                <Trophy className="w-4 h-4 text-amber-400" />
-                <span className="text-[11px] font-black uppercase tracking-widest text-white/60">Top Performers</span>
-              </div>
-              {(activeData.batters).slice(0, 5).map((b, i) => {
-                const displayName = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Batter #${i + 1}`);
-                return (
-                <div key={displayName + i} className="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.02] border border-white/5 hover:border-primary/20 transition-colors">
-                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-white/10 shrink-0 relative">
-                    <PlayerAvatar name={displayName} playerImages={playerImages.data} bio={getBioFor(displayName)} imgClassName="w-full h-full object-cover select-none" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[11px] font-bold truncate">{displayPlayerName(displayName, displayNames)}</div>
-                    <div className="text-[9px] text-white/30">{fmt(b.runs)} runs · SR {b.sr}</div>
-                  </div>
-                </div>
-                );
-              })}
-            </div>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* STATIC DATA SECTION */}
-      <div className="space-y-4 px-2.5 pb-6 mt-4">
+  const filterControls = (<>
         {/* SMART FILTER BAR */}
         <div className="bg-[#0B1020] rounded-2xl border border-white/10 p-2 flex flex-wrap items-center gap-2 relative z-50">
 
@@ -1103,6 +956,186 @@ export default function StatsPage() {
             />
           </div>
         </div>
+
+  </>);
+
+  const desktopContent = (
+    <Layout hideHeaderProgress={scrollYProgress}><FeatureSaveButton feature="stats"/>
+      {/* HERO SCROLL */}
+      <div className="h-[260vh]">
+        <motion.div
+          style={{ scale: masterScale }}
+          className="team-analytics-page sticky top-0 w-full h-screen flex flex-col gap-2.5 overflow-hidden bg-[#050816] p-2.5 pb-0 origin-top"
+        >
+          {/* ROW 1: HERO + KPI PANEL */}
+          <motion.div className="flex gap-2.5 shrink-0" style={{ height: heroH }}>
+            <motion.div style={{ width: heroW }} className="relative bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden shrink-0 group">
+              <div className="absolute inset-0">
+                <img src="/advance stats title image.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-70" />
+                <div className="absolute inset-0 bg-gradient-to-br stats-team-overlay" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-[#050816]/70 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/80 to-transparent" />
+                <div className="absolute inset-0 opacity-[0.03] bg-grid-40" />
+              </div>
+              <motion.div style={{ paddingTop: padTop, paddingLeft: padLeft, opacity: titleOp }} className="relative z-10 h-full flex flex-col">
+                <div className="absolute inset-0 bg-black/5" />
+                <div className="relative z-10 flex flex-col items-start">
+                  <motion.h1 style={{ fontSize: titleSz, lineHeight: '0.9', marginBottom: '8px' }} className="font-black leading-[0.82] text-white uppercase tracking-tighter mb-4 scale-x-105 origin-left">
+                    {scrollCaption === "STATS CENTER." ? (<><div className="mb-1">ADVANCED</div><span className="text-[#3B82F6] block">STATS.</span></>) :
+                      scrollCaption === "BATTER INTEL." ? (<><div className="mb-1">BATTER</div><span className="text-[#F9CD05] block">INTEL.</span></>) :
+                        scrollCaption === "BOWLER ARSENAL." ? (<><div className="mb-1">BOWLER</div><span className="text-[#8B5CF6] block">ARSENAL.</span></>) :
+                          (<><div className="mb-1">VENUE</div><span className="text-[#10B981] block">ORACLE.</span></>)}
+                  </motion.h1>
+                  <motion.p className="text-white/50 text-[13px] max-w-[420px] font-medium tracking-tight">
+                    <span className="text-white/80 font-black mr-2 uppercase tracking-widest">Statsguru Depth:</span>
+                    Dimensional slicing across {overview.data?.totalMatches ?? "—"} matches and {overview.data?.seasons ?? "—"} seasons of high-fidelity IPL telemetry.
+                  </motion.p>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* KPI STRIP CARD */}
+            <motion.div style={{ width: col2W, opacity: r1Op, x: r1X }} className="bg-[#0B1020] rounded-[24px] border border-white/10 flex flex-col overflow-hidden shadow-2xl min-w-0">
+              <div className="p-3 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
+                <div className="flex items-center gap-2">
+                  <Cpu className="w-3.5 h-3.5 text-blue-400" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white/60">Analytical KPI Strip</span>
+                </div>
+                <span className="text-[8px] font-mono text-white/20">TELEMETRY_v4.2</span>
+              </div>
+              <div className="flex-1 p-3 grid grid-cols-4 gap-2 content-center">
+                {kpis.map(k => (
+                  <div key={k.label} className="flex flex-col items-center gap-1 py-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all group">
+                    <k.Icon className="w-4 h-4 transition-transform group-hover:scale-110 text-[var(--kpi-color)]" style={{ "--kpi-color": k.accent } as React.CSSProperties} />
+                    <motion.span className="text-[13px] font-black text-white [text-shadow:0_0_12px_var(--kpi-shadow)]" style={{ "--kpi-shadow": `${k.accent}33` } as React.CSSProperties}>{k.value}</motion.span>
+                    <motion.span className="text-[7px] font-black text-white/30 uppercase tracking-tighter text-center">{k.label}</motion.span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* ROW 2: SEASON CHART + TOP PERFORMERS PREVIEW */}
+          <motion.div style={{ opacity: r2Op, y: r2Y }} className="flex gap-2.5 flex-1 min-h-0">
+            <div className="flex-1 bg-[#0B1020] rounded-[20px] border border-white/10 p-4 flex flex-col min-h-0 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
+              <div className="flex items-center justify-between mb-4 shrink-0 relative z-10">
+                <div className="flex items-center gap-2">
+                  <Activity className="w-4 h-4 text-primary animate-pulse" />
+                  <span className="text-[11px] font-black uppercase tracking-widest text-white/60">Tournament Telemetry Pulse</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-primary/40" /><span className="text-[8px] font-black text-white/40 uppercase">Volume</span></div>
+                  <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-accent" /><span className="text-[8px] font-black text-white/40 uppercase">Intensity</span></div>
+                </div>
+              </div>
+              <div className="flex-1 min-h-0 relative z-10">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={seasonChart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid stroke="hsl(250 30% 18%)" strokeDasharray="3 3" vertical={false} />
+                    <XAxis dataKey="season" tick={{ fontSize: 9, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
+                    <YAxis tick={{ fontSize: 9, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
+                    <Tooltip
+                      contentStyle={tooltipStyle}
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          const data = payload[0].payload;
+                          return (
+                            <div className="bg-[#0B1020] border border-white/10 rounded-xl p-3 shadow-2xl backdrop-blur-md">
+                              <p className="text-[10px] font-black text-white/40 uppercase mb-2">Season 20{data.season} Analysis</p>
+                              <div className="flex flex-col gap-1.5">
+                                <div className="flex justify-between items-center gap-6">
+                                  <span className="text-[9px] font-black text-white/60 uppercase">Run Volume</span>
+                                  <span className="text-[12px] font-black text-white">{fmt(data.runs)}</span>
+                                </div>
+                                <div className="flex justify-between items-center gap-6">
+                                  <span className="text-[9px] font-black text-accent uppercase">Six Intensity</span>
+                                  <span className="text-[12px] font-black text-accent">{data.sixes}</span>
+                                </div>
+                                <div className="mt-2 pt-2 border-t border-white/5 flex flex-col">
+                                  <span className="text-[8px] font-black text-primary uppercase">League Health Index</span>
+                                  <div className="w-full h-1 bg-white/5 rounded-full mt-1 overflow-hidden">
+                                    <motion.div style={{ "--progress-w": `${Math.min(100, (data.runs / 200))}%` } as React.CSSProperties} className="h-full bg-primary w-[var(--progress-w)]" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="runs"
+                      stroke="hsl(var(--primary))"
+                      strokeWidth={3}
+                      dot={{ r: 0 }}
+                      activeDot={{ r: 4, stroke: "white", strokeWidth: 2 }}
+                    />
+                    <Line
+                      type="stepAfter"
+                      dataKey="sixes"
+                      stroke="hsl(var(--accent))"
+                      strokeWidth={2}
+                      strokeDasharray="5 5"
+                      dot={{ r: 0 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div className="w-[280px] bg-[#0B1020] rounded-[20px] border border-white/10 p-4 flex flex-col gap-2 overflow-y-auto no-scrollbar">
+              <div className="flex items-center gap-2 shrink-0">
+                <Trophy className="w-4 h-4 text-amber-400" />
+                <span className="text-[11px] font-black uppercase tracking-widest text-white/60">Top Performers</span>
+              </div>
+              {(activeData.batters).slice(0, 5).map((b, i) => {
+                const displayName = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Batter #${i + 1}`);
+                return (
+                <div key={displayName + i} className="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.02] border border-white/5 hover:border-primary/20 transition-colors">
+                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-white/10 shrink-0 relative">
+                    <PlayerAvatar name={displayName} playerImages={playerImages.data} bio={getBioFor(displayName)} imgClassName="w-full h-full object-cover select-none" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[11px] font-bold truncate">{displayPlayerName(displayName, displayNames)}</div>
+                    <div className="text-[9px] text-white/30">{fmt(b.runs)} runs · SR {b.sr}</div>
+                  </div>
+                </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* STATIC DATA SECTION */}
+      <div className="space-y-4 px-2.5 pb-6 mt-4">
+        {/* CROSS-LINK TO GLOBAL SCOUT LAB */}
+        <div className="rounded-2xl bg-gradient-to-r from-primary/10 via-purple-500/10 to-white/[0.02] border border-primary/20 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center text-primary shrink-0">
+              <Compass className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="text-xs font-bold text-white block">
+                Looking for multi-league scouting across domestic and overseas tournaments?
+              </span>
+              <span className="text-[10px] text-white/50">
+                Compare players across IPL, SMAT, BBL, SA20, CPL, and ILT20 with league-adjusted ratings.
+              </span>
+            </div>
+          </div>
+          <Link href="/scout">
+            <button className="px-3.5 py-1.5 rounded-xl bg-primary text-[#0B1020] text-xs font-black shadow transition-all hover:bg-primary/90 flex items-center gap-1.5 shrink-0">
+              <span>Open Scout Lab</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </Link>
+        </div>
+
+        {filterControls}
 
         {/* Telemetry Summary Banner */}
         <div className="mb-6 bg-gradient-to-r from-primary/15 via-blue-900/20 to-slate-950 p-4 rounded-2xl border border-white/10 flex flex-wrap items-center justify-between gap-4 animate-fade-in relative overflow-hidden group">
@@ -1245,7 +1278,7 @@ export default function StatsPage() {
                           <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("highest")}>HS {batterSortField === "highest" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
                           <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("avg")}>Avg {batterSortField === "avg" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
                           <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("sr")}>SR {batterSortField === "sr" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("boundaryPct")}>Bdry% {batterSortField === "boundaryPct" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("boundaryPct")} title="Share of the batter's runs scored in fours and sixes">Bdry% {batterSortField === "boundaryPct" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
                           <th className="px-4 py-4 text-[9px] font-black text-blue-400/60 uppercase tracking-[0.2em] text-center bg-blue-500/5 cursor-pointer hover:text-blue-300 transition-colors" onClick={() => handleBatterSort("fours")}>4s {batterSortField === "fours" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
                           <th className="px-4 py-4 text-[9px] font-black text-purple-400/60 uppercase tracking-[0.2em] text-center bg-purple-500/5 cursor-pointer hover:text-purple-300 transition-colors" onClick={() => handleBatterSort("sixes")}>6s {batterSortField === "sixes" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
                           <th className="px-4 py-4 text-[9px] font-black text-red-400/60 uppercase tracking-[0.2em] text-center bg-red-500/5 cursor-pointer hover:text-red-300 transition-colors" onClick={() => handleBatterSort("hundreds")}>100s {batterSortField === "hundreds" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
@@ -1320,7 +1353,7 @@ export default function StatsPage() {
                           <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("avg")}>Avg {bowlerSortField === "avg" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
                           <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("sr")}>SR {bowlerSortField === "sr" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
                           <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("dotPct")}>Dot% {bowlerSortField === "dotPct" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                           <th className="px-4 py-4 text-[9px] font-black text-blue-400/60 uppercase tracking-[0.2em] text-center bg-blue-500/5 cursor-pointer hover:text-blue-300 transition-colors" onClick={() => handleBowlerSort("boundaryPct")}>BND% {bowlerSortField === "boundaryPct" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                           <th className="px-4 py-4 text-[9px] font-black text-blue-400/60 uppercase tracking-[0.2em] text-center bg-blue-500/5 cursor-pointer hover:text-blue-300 transition-colors" onClick={() => handleBowlerSort("boundaryPct")} title="Boundaries conceded per 100 legal balls">BND% {bowlerSortField === "boundaryPct" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
                            <th className="px-4 py-4 text-[9px] font-black text-purple-400/60 uppercase tracking-[0.2em] text-center bg-purple-500/5 cursor-pointer hover:text-purple-300 transition-colors" onClick={() => handleBowlerSort("ballsPerBoundary")}>BPB {bowlerSortField === "ballsPerBoundary" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
                            <th className="px-4 py-4 text-[9px] font-black text-red-400/60 uppercase tracking-[0.2em] text-center bg-red-500/5 cursor-pointer hover:text-red-300 transition-colors" onClick={() => handleBowlerSort("trueEconomy")}>True Econ {bowlerSortField === "trueEconomy" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
                         </tr>
@@ -1520,237 +1553,6 @@ export default function StatsPage() {
                 </div>
               )}
 
-              {/* Matchup Lab */}
-              {activeTab === "matchup-lab" && (
-                <div className="flex flex-col gap-6 animate-fade-in">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-1 h-8 bg-gradient-to-b from-primary to-blue-500 rounded-full" />
-                    <div>
-                      <div className="text-sm font-black uppercase tracking-widest text-white">Matchup Lab</div>
-                      <div className="text-[10px] text-white/40 font-bold">Deep interrogation: Batter vs Bowler</div>
-                    </div>
-                  </div>
-
-                  {/* Selector Row */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="relative">
-                      <div className="text-[9px] font-black uppercase tracking-[0.2em] text-primary/60 mb-2">Batter</div>
-                      <input
-                        value={matchupSearchBatter}
-                        onChange={e => setMatchupSearchBatter(e.target.value)}
-                        placeholder="Search batter (e.g. Kohli)"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-white/30 focus:outline-none focus:border-primary/40 font-mono"
-                      />
-                      {matchupSearchBatter.length >= 2 && (
-                        <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-[#0A1329] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
-                          {(activeData.batters || []).filter(b => b.player.toLowerCase().includes(matchupSearchBatter.toLowerCase())).slice(0, 8).map(b => (
-                            <button key={b.player} onClick={() => { setMatchupBatter(b.player); setMatchupSearchBatter(b.player); }}
-                              className="w-full text-left px-4 py-2.5 text-[12px] font-bold text-white/80 hover:bg-primary/10 hover:text-white transition-colors">
-                              {b.player}
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    <div className="relative">
-                      <div className="text-[9px] font-black uppercase tracking-[0.2em] text-amber-400/60 mb-2">Bowler</div>
-                      <input
-                        value={matchupSearchBowler}
-                        onChange={e => setMatchupSearchBowler(e.target.value)}
-                        placeholder="Search bowler (e.g. Bumrah)"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-white/30 focus:outline-none focus:border-amber-400/40 font-mono"
-                      />
-                      {matchupSearchBowler.length >= 2 && (
-                        <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-[#0A1329] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
-                          {(activeData.bowlers || []).filter(b => b.player.toLowerCase().includes(matchupSearchBowler.toLowerCase())).slice(0, 8).map(b => (
-                            <button key={b.player} onClick={() => { setMatchupBowler(b.player); setMatchupSearchBowler(b.player); }}
-                              className="w-full text-left px-4 py-2.5 text-[12px] font-bold text-white/80 hover:bg-amber-500/10 hover:text-amber-300 transition-colors">
-                              {b.player}
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Matchup Results */}
-                  {matchupBatter && matchupBowler && (
-                    <div className="flex flex-col gap-4">
-                      {matchupQuery.isLoading ? (
-                        <div className="text-center py-12 text-white/40 font-mono text-sm">Loading matchup data...</div>
-                      ) : matchupQuery.data ? (
-                        <>
-                          {/* Hero Stats */}
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                            {[
-                              { label: "Runs", value: matchupQuery.data.runs, accent: "text-primary" },
-                              { label: "Balls", value: matchupQuery.data.balls, accent: "text-white/80" },
-                              { label: "Strike Rate", value: matchupQuery.data.sr?.toFixed(1) || "—", accent: "text-amber-400" },
-                              { label: "Dismissals", value: matchupQuery.data.dismissals, accent: "text-red-400" },
-                              { label: "Dot %", value: `${matchupQuery.data.dotPct}%`, accent: "text-purple-400" },
-                              { label: "Boundary %", value: `${matchupQuery.data.boundaryPct}%`, accent: "text-emerald-400" },
-                              { label: "Fours", value: matchupQuery.data.fours, accent: "text-blue-400" },
-                              { label: "Sixes", value: matchupQuery.data.sixes, accent: "text-orange-400" },
-                            ].map(s => (
-                              <div key={s.label} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
-                                <div className="text-[8px] font-black uppercase tracking-widest text-white/30 mb-1">{s.label}</div>
-                                <div className={`text-2xl font-black ${s.accent}`}>{s.value}</div>
-                              </div>
-                            ))}
-                          </div>
-
-                          {/* Drill tabs */}
-                          <div className="flex gap-2">
-                            {(["phase", "delivery", "zone", "history"] as const).map(t => (
-                              <button key={t} onClick={() => setMatchupDrillTab(t)}
-                                className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${
-                                  matchupDrillTab === t ? "bg-primary/20 text-primary border border-primary/30" : "bg-white/5 text-white/40 border border-white/10 hover:text-white"
-                                }`}>
-                                {t === "zone" ? "Scoring Zone" : t.charAt(0).toUpperCase() + t.slice(1)}
-                              </button>
-                            ))}
-                          </div>
-
-                          {/* Phase split */}
-                          {matchupDrillTab === "phase" && matchupQuery.data.phaseSplit && (
-                            <div className="grid grid-cols-3 gap-3">
-                              {Object.entries(matchupQuery.data.phaseSplit).map(([phase, data]: [string, any]) => (
-                                <div key={phase} className="bg-white/5 border border-white/10 rounded-xl p-4">
-                                  <div className="text-[9px] font-black uppercase tracking-widest text-white/40 mb-3">{phase}</div>
-                                  <div className="flex flex-col gap-2">
-                                    <div className="flex justify-between">
-                                      <span className="text-[10px] text-white/40">Runs</span>
-                                      <span className="font-black text-white text-sm">{data.runs}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                      <span className="text-[10px] text-white/40">Balls</span>
-                                      <span className="font-black text-white/60 text-sm">{data.balls}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                      <span className="text-[10px] text-white/40">SR</span>
-                                      <span className="font-black text-amber-400 text-sm">{data.sr?.toFixed(1) || "—"}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                      <span className="text-[10px] text-white/40">Wkts</span>
-                                      <span className="font-black text-red-400 text-sm">{data.wkts}</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-
-                          {/* How much of this matchup the commentary describes. The
-                              breakdowns below cover only these balls, while the runs and
-                              balls above cover every one — without this line a thin table
-                              reads as a complete picture. */}
-                          {(matchupDrillTab === "delivery" || matchupDrillTab === "zone") && matchupQuery.data.detail && (
-                            <div className="flex items-center gap-2 text-[10px] text-white/40 font-mono">
-                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/60" />
-                              Read from ball-by-ball commentary · describes{" "}
-                              <span className="text-white/70 font-bold">
-                                {matchupQuery.data.detail.describedBalls} of {matchupQuery.data.detail.totalBalls}
-                              </span>{" "}
-                              balls in this matchup ({matchupQuery.data.detail.coveragePct}%)
-                            </div>
-                          )}
-
-                          {/* Delivery breakdown */}
-                          {matchupDrillTab === "delivery" && (matchupQuery.data.deliveries || []).length === 0 && (
-                            <div className="rounded-xl border border-white/10 bg-white/5 p-6 text-center text-white/40 text-xs font-mono">
-                              The commentary for these deliveries did not describe what was bowled.
-                            </div>
-                          )}
-                          {matchupDrillTab === "delivery" && (matchupQuery.data.deliveries || []).length > 0 && (
-                            <div className="overflow-x-auto rounded-xl border border-white/10">
-                              <table className="w-full text-sm">
-                                <thead className="bg-white/5 border-b border-white/10">
-                                  <tr>
-                                    {["Delivery","Runs","Balls","SR","Dot%","Wkts"].map(h => (
-                                      <th key={h} className="px-4 py-3 text-[9px] font-black text-white/40 uppercase tracking-wider text-left">{h}</th>
-                                    ))}
-                                  </tr>
-                                </thead>
-                                <tbody className="divide-y divide-white/5">
-                                  {(matchupQuery.data.deliveries || []).slice(0, 12).map((d: any) => (
-                                    <tr key={d.type} className="hover:bg-white/5">
-                                      <td className="px-4 py-3 font-bold text-white/80 text-[12px]">{d.type}</td>
-                                      <td className="px-4 py-3 font-black text-primary text-[12px]">{d.runs}</td>
-                                      <td className="px-4 py-3 text-white/60 text-[12px]">{d.balls}</td>
-                                      <td className="px-4 py-3 font-bold text-amber-400 text-[12px]">{d.sr?.toFixed(1)}</td>
-                                      <td className="px-4 py-3 text-white/40 text-[12px]">{d.dotPct}%</td>
-                                      <td className="px-4 py-3 font-bold text-red-400 text-[12px]">{d.dismissals}</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            </div>
-                          )}
-
-                          {/* Scoring zones */}
-                          {matchupDrillTab === "zone" && (matchupQuery.data.scoringZones || []).length === 0 && (
-                            <div className="rounded-xl border border-white/10 bg-white/5 p-6 text-center text-white/40 text-xs font-mono">
-                              The commentary for these deliveries did not say where the ball went.
-                            </div>
-                          )}
-                          {matchupDrillTab === "zone" && (
-                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                              {(matchupQuery.data.scoringZones || []).slice(0, 12).map((z: any) => (
-                                <div key={z.zone} className="bg-white/5 border border-white/10 rounded-xl p-3">
-                                  <div className="text-[9px] font-black text-white/40 uppercase mb-2">{z.zone}</div>
-                                  <div className="text-xl font-black text-primary">{z.runs}</div>
-                                  <div className="text-[10px] text-white/40">SR {z.sr} · {z.boundaryPct}% bdry</div>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-
-                          {/* Match history */}
-                          {matchupDrillTab === "history" && (
-                            <div className="overflow-x-auto rounded-xl border border-white/10">
-                              <table className="w-full text-sm">
-                                <thead className="bg-white/5 border-b border-white/10">
-                                  <tr>
-                                    {["Season","Venue","Runs","Balls","Dismissed"].map(h => (
-                                      <th key={h} className="px-4 py-3 text-[9px] font-black text-white/40 uppercase tracking-wider text-left">{h}</th>
-                                    ))}
-                                  </tr>
-                                </thead>
-                                <tbody className="divide-y divide-white/5">
-                                  {(matchupQuery.data.matchHistory || []).slice(0, 15).map((h: any, i: number) => (
-                                    <tr key={i} className="hover:bg-white/5">
-                                      <td className="px-4 py-3 font-bold text-white/80 text-[12px]">{h.season}</td>
-                                      <td className="px-4 py-3 text-white/60 text-[11px]">{h.venue}</td>
-                                      <td className="px-4 py-3 font-black text-primary text-[13px]">{h.runs}</td>
-                                      <td className="px-4 py-3 text-white/60 text-[12px]">{h.balls}</td>
-                                      <td className="px-4 py-3">
-                                        {h.dismissed
-                                          ? <span className="px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 text-[9px] font-black uppercase">Out</span>
-                                          : <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[9px] font-black uppercase">Not Out</span>
-                                        }
-                                      </td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <div className="text-center py-8 text-white/30 text-sm">No matchup data found</div>
-                      )}
-                    </div>
-                  )}
-
-                  {!matchupBatter && !matchupBowler && (
-                    <div className="text-center py-16 text-white/20 font-mono">
-                      <Crosshair className="w-10 h-10 mx-auto mb-3 opacity-30" />
-                      <div className="text-sm">Select a batter and bowler to explore their matchup history</div>
-                    </div>
-                  )}
-                </div>
-              )}
-
               {/* Scenario Intelligence */}
               {activeTab === "scenario-intelligence" && (
                 <div className="flex flex-col gap-6 animate-fade-in">
@@ -1879,6 +1681,7 @@ export default function StatsPage() {
                 </div>
               )}
 
+              
               {activeTab === "records" && (
                 <RecordBookView activeData={activeData} playerImages={playerImages.data ?? {}} matches={matches} />
               )}
@@ -1904,19 +1707,18 @@ export default function StatsPage() {
           <ArrowRight className="w-4 h-4 text-primary" />
           <span className="text-[11px] font-black uppercase tracking-[0.2em] text-white/60">Intelligence Ecosystem</span>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
-            { label: "Live Feed", href: "/feed", icon: Zap, color: "from-red-500/20 to-pink-500/10" },
-            { label: "Intel Engine", href: "/intelligence", icon: Cpu, color: "from-amber-500/20 to-orange-500/10" },
-            { label: "Match Pulse", href: "/pulse", icon: Activity, color: "from-purple-500/20 to-blue-500/10" },
-            { label: "AI Analyst", href: "/ai-analyst", icon: Eye, color: "from-emerald-500/20 to-teal-500/10" },
+            { label: "Cricket Feed", href: "/feed", icon: Zap, color: "from-red-500/20 to-pink-500/10" },
+            { label: "Franchise Intelligence", href: "/intelligence", icon: Cpu, color: "from-amber-500/20 to-orange-500/10" },
+            { label: "Auction Pulse", href: "/pulse", icon: Activity, color: "from-purple-500/20 to-blue-500/10" },
           ].map(lnk => (
             <Link key={lnk.label} href={lnk.href}>
               <GlassCard className={`p-4 bg-gradient-to-br ${lnk.color} cursor-pointer hover:scale-[1.02] transition-transform group`}>
                 <lnk.icon className="w-5 h-5 text-white/60 mb-2 group-hover:text-white transition-colors" />
                 <div className="text-[12px] font-black uppercase tracking-wider">{lnk.label}</div>
                 <div className="flex items-center gap-1 mt-1 text-[9px] text-white/30 font-bold">
-                  <span>Explore</span><ArrowRight className="w-3 h-3" />
+                  <span>{lnk.href==='/feed'?'Open feed':lnk.href==='/intelligence'?'Read intelligence':'Open Auction Pulse'}</span><ArrowRight className="w-3 h-3" />
                 </div>
               </GlassCard>
             </Link>
@@ -2063,7 +1865,7 @@ export default function StatsPage() {
                     </div>
                   </div>
 
-                  <Link href={`/venues/${venueName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+                  <Link href={venueHref(venueName)}>
                     <button className="w-full py-2.5 px-4 rounded-xl bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-all mt-2">
                       <span>Open Dedicated Venue Profile</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -2314,6 +2116,17 @@ export default function StatsPage() {
       </AnimatePresence>
     </Layout>
   );
+  return mobilePresentation ? <MobileStatsPresentation
+    filters={filters} setFilter={setFilter} seasons={seasons.data?.map(s => s.season) ?? []} teams={teamOptions}
+    activeTab={activeTab} setActiveTab={setActiveTab} search={searchQuery} setSearch={setSearchQuery}
+    rows={activeTab === "bowlers" ? activeData.bowlers : activeData.batters}
+    images={playerImages.data} getBio={getBioFor} getTeam={getPlayerTeam}
+    displayName={name => displayPlayerName(name, displayNames)} filterControls={filterControls}
+    tools={desktopContent} trend={seasons.data ?? []}
+    loading={isDefaultCareerView ? playerCareerStats.isLoading : dynamicStatsQuery.isLoading}
+    slicedUnavailable={!isDefaultCareerView && !dynamicStatsQuery.isLoading && !dynamicStatsQuery.data?.batters?.length && !dynamicStatsQuery.data?.bowlers?.length}
+    onSort={(field) => activeTab === "bowlers" ? handleBowlerSort(field as typeof bowlerSortField) : handleBatterSort(field as typeof batterSortField)}
+  /> : desktopContent;
 }
 
 // fmt helper declared safely at top of module
@@ -3215,6 +3028,8 @@ function PhaseSpecialistsView({ activeData, playerImages }: { activeData: any, p
 
   return (
     <div className="flex flex-col gap-6">
+<ScoringRing/>
+
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Target className="w-4 h-4 text-primary" />
@@ -3459,6 +3274,8 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
 
   return (
     <div className="flex flex-col gap-6">
+
+
       <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-[#0B1020] rounded-[24px] border border-white/10 shadow-xl">
         <div className="flex items-center gap-2">
           <Crosshair className="w-5 h-5 text-primary" />
@@ -3767,6 +3584,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
           </div>
         </div>
       )}
+      {mode==='players'&&player1&&player2&&<ScoringRing player={player1} bowler={player2}/>}
     </div>
   );
 }

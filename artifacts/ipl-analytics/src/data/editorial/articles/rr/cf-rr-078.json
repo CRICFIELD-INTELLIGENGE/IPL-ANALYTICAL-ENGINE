@@ -1,0 +1,144 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-078",
+ "planId": "cf-rr-078",
+ "franchise": "RR",
+ "aspect": "scouting",
+ "title": "Spin Talent Radar: What Separates a Prospect from a Starter for Rajasthan Royals?",
+ "slug": "rr-spin-talent-radar-what-separates-a-prospect-from-a-starter-for-rr",
+ "dek": "What separates a spin prospect from a starter? Comparing newer IPL spinners with established ones in the middle overs shows where the gap really lies.",
+ "excerpt": "Since 2024, newer IPL spinners have conceded more per over in the middle overs than established ones. The gap between prospect and starter is smaller, or larger, than reputations suggest, and the data shows which.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RR"
+ ],
+ "players": [
+  "Noor Ahmad",
+  "DS Rathi",
+  "Suyash Sharma"
+ ],
+ "seasons": [
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "In the middle overs since 2024, spinners who debuted in 2023 or later conceded {{ev:sr-pe}} an over; those who debuted by 2020, {{ev:sr-ee}}.",
+  "Newer spinners took a wicket every {{ev:sr-pw}} balls; established spinners every {{ev:sr-ew}}.",
+  "Rajasthan Royals' spinners have conceded {{ev:sr-me}} an over in the middle overs, against {{ev:sr-le}} for all IPL spinners."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Prospect or Starter?",
+   "body": [
+    "Spin is the skill where youth is most often doubted: captains trust experienced spinners to bowl in the middle overs. The question is whether the data supports that caution.",
+    "CricField compared spinners who debuted in 2023 or later with those who debuted by 2020, in overs seven to fifteen since 2024 (min. one hundred and twenty balls)."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Gap",
+   "body": [
+    "Newer spinners conceded {{ev:sr-pe}} an over and took a wicket every {{ev:sr-pw}} balls. Established spinners conceded {{ev:sr-ee}} and took a wicket every {{ev:sr-ew}} balls.",
+    "The chart lists the most economical of the {{ev:sr-pn}} newer spinners who qualified."
+   ],
+   "chartIds": [
+    "sr-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "RR's Spin",
+   "body": [
+    "Rajasthan Royals' spinners have conceded {{ev:sr-me}} an over in the middle overs since 2024, against {{ev:sr-le}} for all IPL spinners.",
+    "{{hyp:spin}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Limits",
+   "body": [
+    "Spinners are identified from player-bio bowling styles, which cover bowlers delivering {{ev:sr-cover}} of middle-overs balls. Newer spinners who qualify have already earned chances, so the comparison flatters them.",
+    "Domestic data would be needed to judge prospects before they reach the IPL."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Judge Spinners on Output, Not Age",
+   "body": [
+    "Rajasthan Royals should judge spinners on middle-overs economy and wicket rate, not on years in the league.",
+    "Newer spinners who already match established ones on both measures are starters, whatever their experience."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "sr-chart",
+   "type": "bar",
+   "title": "Most economical newer spinners",
+   "subtitle": "IPL middle overs, 2024\u20132026, debut 2023 or later",
+   "table": "sr-prospects",
+   "xKey": "spinner",
+   "series": [
+    {
+     "key": "economy",
+     "label": "Economy"
+    }
+   ],
+   "unit": "runs per over",
+   "takeaway": "Several newer spinners already concede as little as established ones.",
+   "ariaLabel": "Horizontal bar chart of middle-overs economy for the most economical newer IPL spinners since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "spin",
+   "statement": "Hypothesis: newer spinners' middle-overs economy converges with established spinners' within two seasons of debut.",
+   "whyUnverified": "Spinners have not been tracked season by season from debut.",
+   "howToTest": "Track each spinner's middle-overs economy by season since debut and fit a learning curve."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "120",
+   "reason": "Minimum balls, stated in a table label."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Rajasthan Royals spinner.",
+   "wanted": "Rajasthan Royals spinner bowling."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rr-014",
+  "cf-rr-072",
+  "cf-rr-087"
+ ],
+ "seo": {
+  "metaTitle": "Spin talent radar: prospect or starter for RR?",
+  "metaDescription": "How newer IPL spinners compare with established ones in the middle overs since 2024, and how Rajasthan Royals' spin measures up."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Spinners identified from CricField player-bio bowling styles. Middle overs = overs 7\u201315. Debut = first IPL season bowling.",
+ "generator": "engine:v1"
+}

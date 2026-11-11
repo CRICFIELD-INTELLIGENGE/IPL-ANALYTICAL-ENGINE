@@ -10,7 +10,8 @@
  * Fully mapped to /teams/:slug and resilient to API server or static fallbacks.
  */
 
-import { useEffect, useMemo, useState } from "react";
+import { RetentionFranchisePreview } from "@/components/retention/retention-widgets";
+import { useEffect, useMemo, useState, lazy, Suspense } from "react";
 import { useRoute, useLocation, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Layout } from "@/components/layout";
@@ -20,20 +21,49 @@ import {
 } from "@/lib/team-context";
 import { useSquadsBySeason, useTeams, useMatches } from "@/lib/aggregates";
 import { fetchFranchiseRecord, type FranchiseRecord } from "@/lib/dugout-api";
-import { BroadcasterLink } from "@/components/broadcaster-link";
-import { getFranchiseCelebratedHighlight } from "@/lib/broadcaster-registry";
 import { AdVessel } from "@/components/ad-vessel";
-import { VideoShelf } from "@/components/video-shelf";
-import { VideoArchiveModal } from "@/components/video-archive-modal";
-import { getVideosByTeam } from "@/lib/video-registry";
-import { ExternalLink, Play, Sparkles, ArrowRight, Activity, Shield } from "lucide-react";
+import { ExternalLink, Sparkles, ArrowRight, Activity, Shield } from "lucide-react";
 import { FranchiseHero, FranchiseSwitcher } from "@/components/dugout/franchise-hero";
-import { TeamNewsroom } from "@/components/dugout/team-newsroom";
-import { TeamSquad } from "@/components/team-squad";
-import { FranchiseIntelligence } from "@/components/dugout/franchise-intelligence";
-import { SeasonTimeline } from "@/components/dugout/season-timeline";
-import { FanParliamentCard } from "@/components/dugout/fan-parliament-card";
-import { RivalrySpotlight } from "@/components/dugout/rivalry-spotlight";
+
+// Below-the-fold modules are code-split with lazy() so FranchiseHero paints immediately
+const FranchiseLibrary = lazy(() => import("@/components/dugout/franchise-library").then((m) => ({ default: m.FranchiseLibrary })));
+const TeamSquad = lazy(() => import("@/components/team-squad").then((m) => ({ default: m.TeamSquad })));
+const FranchiseIntelligence = lazy(() => import("@/components/dugout/franchise-intelligence").then((m) => ({ default: m.FranchiseIntelligence })));
+const SeasonTimeline = lazy(() => import("@/components/dugout/season-timeline").then((m) => ({ default: m.SeasonTimeline })));
+const FranchiseMilestones = lazy(() => import("@/components/dugout/franchise-milestones").then((m) => ({ default: m.FranchiseMilestones })));
+const FanParliamentCard = lazy(() => import("@/components/dugout/fan-parliament-card").then((m) => ({ default: m.FanParliamentCard })));
+const RivalrySpotlight = lazy(() => import("@/components/dugout/rivalry-spotlight").then((m) => ({ default: m.RivalrySpotlight })));
+
+function LibrarySkeleton() {
+  return (
+    <div className="space-y-5 rounded-2xl border border-white/5 bg-white/[0.02] p-4 sm:p-6 animate-pulse">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="h-6 w-52 rounded bg-white/10" />
+        <div className="h-8 w-60 rounded-xl bg-white/5" />
+      </div>
+      <div className="flex gap-2 overflow-x-auto pb-1">
+        {[1, 2, 3, 4, 5, 6].map((n) => (
+          <div key={n} className="h-7 w-24 shrink-0 rounded-xl bg-white/5" />
+        ))}
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {[1, 2, 3, 4, 5, 6].map((n) => (
+          <div key={n} className="rounded-2xl border border-white/5 bg-white/[0.03] p-4 space-y-3">
+            <div className="aspect-video w-full rounded-xl bg-white/5" />
+            <div className="h-4 w-4/5 rounded bg-white/10" />
+            <div className="h-3 w-2/3 rounded bg-white/5" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SectionSkeleton({ height = "h-64" }: { height?: string }) {
+  return (
+    <div className={`w-full ${height} rounded-2xl border border-white/5 bg-white/[0.02] animate-pulse p-6`} />
+  );
+}
 
 export default function DugoutPage() {
   const [, params] = useRoute("/dugout/:team");
@@ -48,12 +78,14 @@ export default function DugoutPage() {
   const rival = currentTeam.archRival ? TEAM_REGISTRY[currentTeam.archRival] : undefined;
   const teamSlug = TEAM_CODE_TO_SLUG[activeTeamCode] ?? "sunrisers-hyderabad";
 
-  // Sync state if route code is valid
+  // Sync state if route code is valid; redirect bare /dugout to active franchise
   useEffect(() => {
     if (resolvedCode && selectedTeam !== resolvedCode) {
       setSelectedTeam(resolvedCode);
+    } else if (!routeParam) {
+      setLocation(`/dugout/${teamSlug}`, { replace: true });
     }
-  }, [resolvedCode]);
+  }, [resolvedCode, routeParam, teamSlug, selectedTeam, setSelectedTeam, setLocation]);
 
   const teams = useTeams();
   const matches = useMatches();
@@ -88,10 +120,11 @@ export default function DugoutPage() {
     return ["2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008"];
   }, [record.data, squadFile.data, currentTeam.name, activeTeamCode]);
 
-  const allSeasons = useMemo(
-    () => Object.keys(squadFile.data ?? {}).sort((a, b) => Number(a) - Number(b)),
-    [squadFile.data],
-  );
+  const allSeasons = useMemo(() => {
+    const fromSquad = Object.keys(squadFile.data ?? {}).sort((a, b) => Number(a) - Number(b));
+    if (fromSquad.length > 0) return fromSquad;
+    return ["2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"];
+  }, [squadFile.data]);
 
   const [chosenSeason, setChosenSeason] = useState<string | null>(null);
   const season = (chosenSeason && playedSeasons.includes(chosenSeason) ? chosenSeason : null) ?? playedSeasons[0] ?? null;
@@ -136,10 +169,6 @@ export default function DugoutPage() {
     setLocation(`/dugout/${slug}`);
   };
 
-  const teamVideos = useMemo(() => getVideosByTeam(activeTeamCode), [activeTeamCode]);
-  const [isArchiveOpen, setIsArchiveOpen] = useState(false);
-  const celebrated = getFranchiseCelebratedHighlight(currentTeam.id);
-
   return (
     <Layout>
       <div className="w-full max-w-7xl mx-auto px-4 py-6 space-y-8 min-w-0">
@@ -155,35 +184,29 @@ export default function DugoutPage() {
           switcher={<FranchiseSwitcher activeCode={activeTeamCode} onPick={handlePickFranchise} />}
         />
 
-        {/* ── QUICK NAV BANNER: LINK TO INDIVIDUAL TEAM PAGE ── */}
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-white/[0.03] to-white/[0.01] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center border" style={{ backgroundColor: `${currentTeam.accent}20`, borderColor: `${currentTeam.accent}40` }}>
-              <Shield className="w-5 h-5" style={{ color: currentTeam.accent }} />
-            </div>
-            <div>
-              <div className="text-xs font-black uppercase text-white tracking-wide">
-                Looking for Detailed Performance Analytics?
-              </div>
-              <div className="text-[11px] text-white/50">
-                Inspect ball-by-ball phase breakdowns, toss splits, venue heatmaps and complete match history for {currentTeam.name}.
-              </div>
-            </div>
-          </div>
+        <Suspense fallback={<SectionSkeleton height="h-96" />}>
+          <FranchiseMilestones
+            key={activeTeamCode}
+            team={currentTeam}
+            record={record.data}
+            matches={matches.data ?? []}
+            loading={record.isLoading || matches.isLoading}
+            onSeason={setChosenSeason}
+          />
+        </Suspense>
 
-          <Link href={`/teams/${teamSlug}`}>
-            <button 
-              className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center gap-2 border cursor-pointer hover:scale-105 shrink-0 shadow-lg"
-              style={{ backgroundColor: `${currentTeam.accent}20`, borderColor: `${currentTeam.accent}60`, color: currentTeam.accent }}
-            >
-              <span>Open {currentTeam.shortName} Team Profile</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </Link>
-        </div>
+        {/* ── GOOGLE ADSENSE / SPONSORED AD CARD ── */}
+        <AdVessel
+          slot="1029384770"
+          format="horizontal"
+          label="Advertisement · Google AdSense · Official Partner"
+          className="my-2"
+        />
 
-        {/* ── TEAM NEWSROOM ── */}
-        <TeamNewsroom code={activeTeamCode} teamName={currentTeam.name} accent={currentTeam.accent} />
+        {/* ── FRANCHISE STORIES: a 10-article preview; the full 100 live on the Intelligence hub ── */}
+        <Suspense fallback={<LibrarySkeleton />}>
+          <FranchiseLibrary code={activeTeamCode} teamName={currentTeam.name} accent={currentTeam.accent} preview={10} />
+        </Suspense>
 
         {/* ── NATIVE AD VESSEL ── */}
         <AdVessel slot="1029384760" format="horizontal" label="Franchise Partner Briefing · Official Dugout Telemetry" />
@@ -201,86 +224,51 @@ export default function DugoutPage() {
               </span>
             </Link>
           </div>
-          <TeamSquad
-            franchise={currentTeam.name}
-            accent={currentTeam.accent}
-            season={season ?? undefined}
-            onSeasonChange={setChosenSeason}
-          />
+          <Suspense fallback={<SectionSkeleton height="h-72" />}>
+            <TeamSquad
+              franchise={currentTeam.name}
+              accent={currentTeam.accent}
+              season={season ?? undefined}
+              onSeasonChange={setChosenSeason}
+            />
+          </Suspense>
         </section>
 
         {/* ── FRANCHISE INTELLIGENCE ── */}
         {season && (
-          <FranchiseIntelligence teamName={currentTeam.name} code={activeTeamCode} season={season} accent={currentTeam.accent} />
+          <Suspense fallback={<SectionSkeleton height="h-80" />}>
+            <RetentionFranchisePreview team={activeTeamCode} />
+            <FranchiseIntelligence teamName={currentTeam.name} code={activeTeamCode} season={season} accent={currentTeam.accent} />
+          </Suspense>
         )}
 
         {/* ── SEASON TIMELINE ── */}
-        <SeasonTimeline
-          record={effectiveRecord}
-          allSeasons={allSeasons}
-          season={season}
-          onSeason={setChosenSeason}
-          accent={currentTeam.accent}
-          franchiseName={currentTeam.name}
-        />
-
-        {/* ── BROADCASTER REPLAY ── */}
-        {celebrated && (
-          <BroadcasterLink highlight={celebrated} variant="banner" label="Watch Landmark Final" />
-        )}
-
-        {/* ── VIDEO VAULT ── */}
-        {teamVideos.length > 0 && (
-          <section id="videos" className="scroll-mt-24 space-y-4 min-w-0">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <div className="flex items-center gap-2">
-                <Play className="w-4 h-4" style={{ color: currentTeam.accent }} />
-                <h3 className="text-sm font-black uppercase text-white tracking-wide">
-                  {currentTeam.shortName} video vault · official JioHotstar highlights
-                </h3>
-              </div>
-              <button
-                onClick={() => setIsArchiveOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-mono text-white/70 hover:text-white transition-all cursor-pointer"
-              >
-                <span>Full archive</span>
-                <ExternalLink className="w-3 h-3" />
-              </button>
-            </div>
-            <VideoShelf
-              title={`${currentTeam.name} highlights & moments`}
-              subtitle={`Official replays, top innings and milestone clips featuring ${currentTeam.shortName}`}
-              badge={`${teamVideos.length} videos`}
-              videos={teamVideos}
-              onOpenArchive={() => setIsArchiveOpen(true)}
-            />
-            <AdVessel
-              slot="dugout-video-vault-sponsor"
-              format="in-feed"
-              label={`Sponsored Partner Briefing · ${currentTeam.shortName} video vault`}
-              className="my-3"
-            />
-          </section>
-        )}
+        <Suspense fallback={<SectionSkeleton height="h-44" />}>
+          <SeasonTimeline
+            record={effectiveRecord}
+            allSeasons={allSeasons}
+            season={season}
+            onSeason={setChosenSeason}
+            accent={currentTeam.accent}
+            franchiseName={currentTeam.name}
+          />
+        </Suspense>
 
         {/* ── FAN ZONE & RIVALRY ── */}
-        <div id="fan-zone" className="scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-6 min-w-0">
-          <FanParliamentCard code={activeTeamCode} teamName={currentTeam.name} accent={currentTeam.accent} />
-          {rival && (
-            <RivalrySpotlight
-              team={currentTeam}
-              rival={rival}
-              record={effectiveRecord}
-            />
-          )}
-        </div>
+        <Suspense fallback={<SectionSkeleton height="h-64" />}>
+          <div id="fan-zone" className="scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-6 min-w-0">
+            <FanParliamentCard code={activeTeamCode} teamName={currentTeam.name} accent={currentTeam.accent} />
+            {rival && (
+              <RivalrySpotlight
+                team={currentTeam}
+                rival={rival}
+                record={effectiveRecord}
+              />
+            )}
+          </div>
+        </Suspense>
 
       </div>
-
-      <VideoArchiveModal
-        isOpen={isArchiveOpen}
-        onClose={() => setIsArchiveOpen(false)}
-      />
     </Layout>
   );
 }

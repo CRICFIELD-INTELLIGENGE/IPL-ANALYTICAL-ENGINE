@@ -4,7 +4,7 @@ import { Link } from "wouter";
 import { TeamLogo } from "@/components/team-logo";
 import {
   teamShort,
-  venueSlug,
+  venueHref,
   normalizeVenueName,
   playerSlug,
   type MatchSummary,
@@ -60,7 +60,6 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
 
   const t1Slug = teamSlug(match.team1);
   const t2Slug = teamSlug(match.team2);
-  const vSlug = venueSlug(match.venue);
   const canonicalVenue = normalizeVenueName(match.venue);
 
   const matchDate = new Date(match.date);
@@ -298,7 +297,7 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
 
             {/* Venue */}
             <Link
-              href={`/venues/${vSlug}`}
+              href={venueHref(match.venue)}
               className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 hover:text-cyan-300 transition-colors max-w-full group/vlink text-center"
               title={`View Venue Profile: ${canonicalVenue}`}
             >

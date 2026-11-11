@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr" prefix="og: https://ogp.me/ns#">
+<head>
+    <script>
+   
+    // Helper function to get cookie value by name
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+    
+    function loadOneTrustScript(country) {
+      if (country != 'IN') {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        if (window.location.hostname == 'www.royalchallengers.com' || window.location.hostname == 'royalchallengers.com') {
+          script.src = 'https://cdn-ukwest.onetrust.com/consent/de407ae9-9b17-4926-9d2e-1eb38bb72ae4/OtAutoBlock.js';
+        }
+        else {
+          script.src = 'https://cdn-ukwest.onetrust.com/consent/de407ae9-9b17-4926-9d2e-1eb38bb72ae4-test/OtAutoBlock.js';
+        }
+        var head = document.head;
+        if (head.firstChild) {
+          head.insertBefore(script, head.firstChild);
+        } else {
+          head.appendChild(script);
+        }
+        var script1 = document.createElement('script');
+        script1.type = 'text/javascript';
+        script1.src = 'https://cdn-ukwest.onetrust.com/scripttemplates/otSDKStub.js';
+        if (window.location.hostname == 'www.royalchallengers.com' || window.location.hostname == 'royalchallengers.com') {
+          script1.setAttribute('data-domain-script', 'de407ae9-9b17-4926-9d2e-1eb38bb72ae4');
+        }
+        else {
+          script1.setAttribute('data-domain-script', 'de407ae9-9b17-4926-9d2e-1eb38bb72ae4-test');
+        }
+        script1.setAttribute('charset', 'UTF-8');
+        var scriptInserted = false;
+        head.childNodes.forEach(function (node) {
+          if (node === script) {
+            head.insertBefore(script1, node.nextSibling);
+            scriptInserted = true;
+          }
+        });
+        if (!scriptInserted) {
+          head.appendChild(script1);
+        }
+      }
+    }
+    
+    // Get country from cookie
+    var userCountry = getCookie('user_country');
+    
+    if (userCountry) {
+      // Use country data from cookie
+      loadOneTrustScript(userCountry);
+    } else {
+      // Fetch country data from response header
+      fetch(window.location.href, { method: 'HEAD' })
+        .then(response => {
+          // Get country from x-user-country header
+          var country = response.headers.get('x-user-country');
+          if (country) {
+            // Store country in localStorage for future use
+            localStorage.setItem('viewer_country', country);
+            loadOneTrustScript(country);
+          } else {
+            console.error('x-user-country header not found');
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching country data:', error);
+        });
+    }
+  </script>
+
+  <meta charset="utf-8" />
+<link rel="canonical" href="https://www.royalchallengers.com/rcb-squad-men" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="icon" href="/PRRCB01/public/rcb-logo-new_1.png" type="image/png" />
+<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};a2a_config.icon_color = "#8be3e4";
+<!--<script type='text/javascript'>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'http';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://static1.twitcount.com/js/twitcount.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitcount_plugins');</script>--></script>
+
+        <title>Team | Royal Challengers Bengaluru</title>
+        <link rel="stylesheet" media="all" href="//cdn.jsdelivr.net/npm/entreprise7pro-bootstrap@3.4.5/dist/css/bootstrap.css" integrity="sha256-ELMm3N0LFs70wt2mEb6CfdACbbJQfLmVHKLV/edLhNY=" crossorigin="anonymous" />
+<link rel="stylesheet" media="all" href="//cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.1.1/7.x-3.x/drupal-bootstrap.css" integrity="sha512-ys0R7vWvMqi0PjJvf7827YdAhjeAfzLA3DHX0gE/sPUYqbN/sxO6JFzZLvc/wazhj5utAy7rECg1qXQKIEZOfA==" crossorigin="anonymous" />
+<link rel="stylesheet" media="all" href="//cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.1.1/8.x-3.x/drupal-bootstrap.css" integrity="sha512-ixuOBF5SPFLXivQ0U4/J9sQbZ7ZjmBzciWMBNUEudf6sUJ6ph2zwkpFkoUrB0oUy37lxP4byyHasSpA4rZJSKg==" crossorigin="anonymous" />
+<link rel="stylesheet" media="all" href="//cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.2.0/7.x-3.x/drupal-bootstrap.css" integrity="sha512-MiCziWBODHzeWsTWg4TMsfyWWoMltpBKnf5Pf5QUH9CXKIVeGpEsHZZ4NiWaJdgqpDzU/ahNWaW80U1ZX99eKw==" crossorigin="anonymous" />
+<link rel="stylesheet" media="all" href="//cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.2.0/8.x-3.x/drupal-bootstrap.css" integrity="sha512-US+XMOdYSqB2lE8RSbDjBb/r6eTTAv7ydpztf8B7hIWSlwvzQDdaAGun5M4a6GRjCz+BIZ6G43l+UolR+gfLFQ==" crossorigin="anonymous" />
+<link rel="stylesheet" media="all" href="//cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.3.1/7.x-3.x/drupal-bootstrap.css" integrity="sha512-3gQUt+MI1o8v7eEveRmZzYx6fsIUJ6bRfBLMaUTzdmNQ/1vTWLpNPf13Tcrf7gQ9iHy9A9QjXKxRGoXEeiQnPA==" crossorigin="anonymous" />
+<link rel="stylesheet" media="all" href="//cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.3.1/8.x-3.x/drupal-bootstrap.css" integrity="sha512-AwNfHm/YKv4l+2rhi0JPat+4xVObtH6WDxFpUnGXkkNEds3OSnCNBSL9Ygd/jQj1QkmHgod9F5seqLErhbQ6/Q==" crossorigin="anonymous" />
+<link rel="stylesheet" media="all" href="//cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.4.0/8.x-3.x/drupal-bootstrap.css" integrity="sha512-j4mdyNbQqqp+6Q/HtootpbGoc2ZX0C/ktbXnauPFEz7A457PB6le79qasOBVcrSrOBtGAm0aVU2SOKFzBl6RhA==" crossorigin="anonymous" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_xnDYBl4OD9snX7Sf9EyJ9VkzRg71lff1OegyGLU8z1w.DC46eXDXNqd7nAabBNwZ9u8wUQRe9Ua37dH_hzHCrN4.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_gfUtLDXi72df47AexuJ-vm_wJb2QkME0vEvBnJxO6dA.BNkKNp68EbDUOqVxDKuKG3tFjrUVQO2lvnrY2ws-ozs.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_CYXnyo1qFoxHAoBBNsSqN8PVNbP8sxeQ_LtauZ50Wgs.zL94vjZU6WBHfpDiaNcFc6GySFhRdcficK1hYxjWP5o.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_QF7anExUIQ9m7lRlQYpqk7QebuejK_k7Tyzw3UgZ-hg.dUoS3YriKBjPqKvjKLwLYFu5L_9UAnCwYsqwQSM8Lxc.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_7QllbjqoprdCwoIdo3V7DWqJKkTBOzMJn-xZmsutiww.XIGqNnGjyNUqVKK6kYAtCYQBGlkH_cAEYeDKyotbqXU.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_hnJTGN1fzih_ZZssV428NML2NhpFxXlJrqaLNgE8CHo.9Wc67ZOkMRBZhjmdKwi3A-H493K38psJTOnYfrKO76o.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css__13fw7LchbE-h7zw4b3GPIwiFWcaKaefv7L39uOe9so.BUEjdj2hCBDLvQJqPxHjZbJG2JuXAdB6h3avyHpGdc0.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_0jPT-BWLonFoD1a1XPcxcniBn9WgukRnniaE-xYrMIs.GuPe412NhYE65xxzl1tEJAD26168tfggOKmG0S5BQ0Q.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_wcTRp4Ty5SGu4F6Mj_Src4xCVH1pAn1ZKdFhbgibbUI.pdlB5Z6TL4zGhLNll7U6Ppgf_GjatJhK__Ij2YXNUHw.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_XYJeCymlgeYq2fA8gUC7CjnYFGGkur-vgRftab7u22k.oYn54AOkSGp1k5qXsADMn5oA4Eolu41COpweO_04W20.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_GbvmbJJu3etNuvRxzgpArn9FbrGIPob5sKfVZm03KVw.L-4W2LZuoqtQxm090IWHMFNIVPGmYaH_4on7y3JWhfw.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_Q6hS9heFRWwmGWvo9WsD_D6nDHdUaUnYt6sC6_oX9L8.QxgPyTPPKBSYmDDvnNT-cz-TddLSk4M6lxN0SH0xyDA.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_41w6dBZ448pJSogyLgoToui9MDm8KnZHhhxIUFUonds.NOa2tGRc3wmCeS3l3GMlYDuHMMuXFSMdLBVUufp1S1I.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_JCU_zSqQm3rvBIXWevl-Uch6AS6Fms27h_AxAbdSM2A.FC3ToWqr35debD0yfNCJICHXA_YU6U2wbMi8FaPtUno.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css__7a65Qsn2GbI6R4HiSGaSbf2n93vUm8S71hKr7aus8Y.R4NDpApz56_t3h00oFMfPVJZZ-OeLqu0BdtL9vgSxnk.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_PRpLCpZQr4zTfafBQvuU6Ai1fdWr3UHToA3uiawHjkM.QNevDk323nUXpNghXoDKRp30BndLhJSwcFeP7sksekA.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_D7LKAoFWUfpEwMBsHgRmva-_V1H32BDw42bMDS7MXUk.FYmonRe7WzlYjLuqjUaLKglemDBVeTRv6jLkTO8-qr8.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_BmLhRcaaqxHxDok9do7fvT7y0A4VGK_nT2JFboHrukM._prNH8bxJAfhRmGUubz7Tu_sDJg2DJCjRHgdu3SWZRw.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_AbaeiYRn19HwODDMKvcGkhfkd7689mPEnpH-G957UH4.S__KM8dPqr5o1U2kakGNAhup9ieXtE0GeMOMN2a983Y.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_ccGpg1TE5gnw-QmWilkeIXD9a1VkOPl1oNltTi8xJtQ.OPjwFbADCvL9vAPfhL9K_lC9ofQVhaIPsX_Ldb8-Qq0.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_Q7zLgQvyD3dkOHXnT2wFwjtThfQupYWs-a29sqLPi4I.0LCOIDODj83LBD47weDZWP44ueBb_9cpeiWifvH7JGY.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_uY-6t5QdAL3XAXZDd2MnsDHv7hlVdopgBLmb2Fw8MM0.IQ6nUCPSWyyS2Q3BgilF2OJb6jB04c6w09d7Gvz2Flc.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_zHi3dbHiaBJpJ_yNQ9M2Npjv_kdDZgsnOJhTzF806NQ.TafrPeiObdHrqVMcrZPju3wiKI85WBHrya7VFXxj-ng.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_fKgp39oRXjWCa3OoVSuBVxKhj0STBpMDeh3U8l59tLc.6QHK9YPJ3ZDIPKZRlPMI5DHGEBM7eeDC-Zvg5IBOqE4.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_aSy9OTHcnPLNrzrxrdW4CaJIAjfiTBI_Gs7jFJ-0PDs.Ehg9-oBDLucz59aUkCInnWeAjqm9A-6UtAJpY6DBRCg.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_uZLDaY8PGIDJioMvXu6oBSPxcAs9xT1QjAW5JucoXWY.IQYXZSN8ZsELSOI2Bjo0l8ItM2KemPhlTRo7hg-khwA.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_F6icCoE_BY5XKiKissGfb56lqPIfLix0Xxa3hs17S3o.fehWLPbXB5ry4_KT8183CFyBDKIRPw3JstMduih9WBI.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_sde1kVR1rPh1lD-NEU0ESC8w-_pwwgKR1gtud2ZOxVc.AhpLqqNwTQGtRsDTdTNBOnxWjkYdGQM6zBlYemRnK6E.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_nSHG70pzy8JLuSqaQ4PYEEjneDK31TL-nSh0etJKg1A.W8X9bbWfjLhUc_k8Ze29sVcjFOANmGdtggqNAaPPWqA.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_wg0ufucEiRMLjNPXSmqlnOKJllJSP1XhKysys5_4WsU.7rgRFdCcKsi1KbpUgbJ_7WTHkTiXGzu8q7-tdvuiXKQ.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_-o4iaxA1POCQwsWSfHiJeks_kM3AAvlQQinauxpKu8U.E99EJ32xqdwwzhVwZfLvr_GawtYf0m65oQHgxXqaqd8.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_Lq2NFYv8KObZCHfnw03aKHdrT_ZDNLeGBHATAnsGZhA.gkPPPNeGpOIut9IHbe1L5kM9TPCrSExdnveb3UQxN7M.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_G5CqgLc2EHeFFhmxAeoT2og9PiQk4EG1j-ACn2L7lDY.X8qvnStQHFoAnCwRD6MBC_G2j4HsCZcv8cosjC5qaGE.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_2clD2x6t9wW2RLutM54oVlu1KKkTZrsaNlVxvrokq7Y.v9VFirsqNTfQsGlU98Ot_uCVAxF1LtUUvpk9hhnZnbg.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_rKZqdv-9Kpd2OVlcPdJbDdrfn0rKmQ4MGg9Kqvif1VU.YpjXvxhYIHzJltOcpOgs7LMzOG8F7qPJhlcrRjxq-RU.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_7M1apQ0LDRvZ35j4_1wGZ9Ckzj4vMTZx8icyX9IqGnE.lwWgSyBpU66vZLZ6kbSG_ARnZ7C_NdF7ArLMYh5IdLU.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_6huu_CTKT_yL3o3QNvzPM0AvoYQWmxcs46dWLr1sVHQ.Knarhw4vnVBJOGO5xPZ33oZs8VNYZVJCt3yU6R-8Gm0.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_nCc4o-Gxpqhv_DFkREyER98MSuyrN1xAHFHe4bEmkX0.wZDzIMQMDGU1EBPVjjJdINkY5V3ItyxccYyJ56VA6tg.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_vx9QDuh2tMpKJUPA2-BL6mXisZw49-AItGKkKVdkEww.fGtQd_DEKNb99kOb-VGkZU5OM85jaTh4LTME8PqGjHM.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_BxzrAzDxBaaQcM-Z32kHFLXZInIn2yJSKrfIHYUEp7o.ju-yth22IhwRZ4blJzEhY8BWbjVO2TtAypRfnD1Sn6U.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_g60tHPEKMsDi0Ow75tnzWL7sY_qWfftxgwnq9Ie-AfQ.oajXS65BYCF_ECcxQKqMOaLVORAroS17keYau96_XOI.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_lmlrgoGOZY1KST9D0yYwJWRf8T_-SnJHDWW50fC8e-8.gqGbsF-Ay_FQ5z0orqbpYEeMlJbEimpxrnktC3IwS-k.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_gXgil6KvUncZEA355hNQTFMyRW4gF_jcBxPlIePTk4o.XaAPZBtQcu8XzlzhEZ-9lk7CxLs3vTc6f447MlxdHsw.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_ZWXl2UPxNijZ-bOZcTurFIcvik-FaaMlJE6QSV23buc.eNrQxcZNlP-swWnRDNNXEwVsjHl14jr7R7jntAjC0Ys.css?tm9zh8" />
+<link rel="stylesheet" media="all" href="/PRRCB01/public/css/optimized/css_M8-JyB2w5ZvlfRV57f65NkkC4VWeMwRQ483DYW7jWv8.io8UNoaX5PcYzFb-vK0IZvo35um1C7u9RGAdXIW6nVo.css?tm9zh8" />
+
+      
+        
+
+                                                
+                    
+                                        
+                    
+</head>
+<body class="page-node-rcb-squad path-node page-node-type-landing-page has-glyphicons">
+  <a href="#main-content" class="visually-hidden focusable skip-link">
+    Skip to main content
+  </a>
+  
+    <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    <div class="container bg-wht bdy-wrp">
+
+<header class="new-headset">
+		        		            <div class="region region-header-top">
+    <section id="block-followicons" class="hdr-flw sicons-hd block block-block-content block-block-contente26831f6-87a7-47dc-b556-73a0b62f8a60 clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div>
+
+
+
+
+      <div class="media-wrapper media-wrapper--blazy">            <div class="media media--blazy media--image is-b-loading"><img class="media__image media__element b-lazy img-responsive" decoding="async" data-src="/themes/custom/rcbbase/images/header/profile.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201%201'%2F%3E" alt>
+        </div>
+      </div>  
+  
+ 
+
+
+
+
+      <div class="media-wrapper media-wrapper--blazy">            <div class="media media--blazy media--image is-b-loading"><img class="media__image media__element b-lazy img-responsive" decoding="async" data-src="/themes/custom/rcbbase/images/header/cart.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201%201'%2F%3E" alt>
+        </div>
+      </div>  
+  
+ 
+
+
+
+
+      <div class="media-wrapper media-wrapper--blazy">            <div class="media media--blazy media--image is-b-loading"><img class="media__image media__element b-lazy img-responsive" decoding="async" data-src="/themes/custom/rcbbase/images/header/fb.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201%201'%2F%3E" alt>
+        </div>
+      </div>  
+  
+ 
+
+
+
+
+      <div class="media-wrapper media-wrapper--blazy">            <div class="media media--blazy media--image is-b-loading"><img class="media__image media__element b-lazy img-responsive" decoding="async" data-src="/themes/custom/rcbbase/images/header/twitter.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201%201'%2F%3E" alt>
+        </div>
+      </div>  
+  
+ 
+
+
+
+
+      <div class="media-wrapper media-wrapper--blazy">            <div class="media media--blazy media--image is-b-loading"><img class="media__image media__element b-lazy img-responsive" decoding="async" data-src="/themes/custom/rcbbase/images/header/ins.jpg" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201%201'%2F%3E" alt>
+        </div>
+      </div>  
+  
+
+
+
+
+
+      <div class="media-wrapper media-wrapper--blazy">            <div class="media media--blazy media--image is-b-loading"><img class="media__image media__element b-lazy img-responsive" decoding="async" data-src="/themes/custom/rcbbase/images/header/youtube.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201%201'%2F%3E" alt>
+        </div>
+      </div>  
+  
+</div>
+</div>
+      
+  </section>
+
+<section id="block-downloadapp" class="hdr-dwn-app appstore-hd block block-block-content block-block-contenteaae3766-51bc-4d09-8f86-46c9460f5a7c clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div>
+<h3>Download Our App</h3>
+
+
+
+
+
+      <div class="media-wrapper media-wrapper--blazy">            <div class="media media--blazy media--image is-b-loading"><img class="media__image media__element b-lazy img-responsive" decoding="async" data-src="/themes/custom/rcbbase/images/header/playstore.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201%201'%2F%3E" alt>
+        </div>
+      </div>  
+  
+ 
+
+
+
+
+      <div class="media-wrapper media-wrapper--blazy">            <div class="media media--blazy media--image is-b-loading"><img class="media__image media__element b-lazy img-responsive" decoding="async" data-src="/themes/custom/rcbbase/images/header/apple.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201%201'%2F%3E" alt>
+        </div>
+      </div>  
+  
+</div>
+</div>
+      
+  </section>
+
+
+  </div>
+
+		        		      </header>
+
+
+<header class="navbar navbar-default container" id="navbar">
+    			<div class=" container pn hdr-container">
+			<div class="top-head" role="heading">
+			    <div class="region region-header">
+    <section id="block-header" class="hdr-blk block block-block-content block-block-contentab4b892b-4e7e-4c59-9f70-07fa9e98b740 clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div id="rcb-menu">
+<div id="rcb-toggle" onclick="myFunction(this)">
+<div class="bar1">&nbsp;</div>
+
+<div class="bar2">&nbsp;</div>
+
+<div class="bar3">&nbsp;</div>
+</div>
+</div>
+
+<div class="head-innerwarp">
+<div class="row">
+<div class="col-md-1 lg-left">
+<div class="hdr-logo" style="position:relative;z-index:200;"><a href="/"><img src="/themes/custom/rcbbase/images/rcb-logo-new.png"></a>
+
+<h4>#Playbold</h4>
+</div>
+<!-- logo --></div>
+<!-- 3 -->
+
+<div class="col-md-4 lg-right">
+<div class="hdr-flw topset">
+<ul class="clearfix left">
+	<li class="cs-crt"><a href="https://shop.royalchallengers.com/merchandise" target="_blank"><img src="/themes/custom/rcbbase/images/header/top/shopping-bag.svg"></a><span class="crtbg">0</span></li>
+</ul>
+
+<ul class="clearfix right">
+	<li><a href="https://www.facebook.com/RoyalChallengersBangalore/" target="_blank"><img src="/themes/custom/rcbbase/images/header/top/facebook-1.svg"></a></li>
+	<li><a href="https://twitter.com/rcbtweets?lang=en" target="_blank"><img src="/themes/custom/rcbbase/images/header/top/twitter-1.svg"></a></li>
+	<li><a href="https://www.instagram.com/royalchallengers.bengaluru" target="_blank"><img src="/themes/custom/rcbbase/images/header/bold/instagram-6.svg"></a></li>
+	<li><a href="https://www.youtube.com/channel/UCCq1xDJMBRF61kiOgU90_kw" target="_blank"><img src="/themes/custom/rcbbase/images/header/top/youtube-1.svg"></a></li>
+</ul>
+</div>
+
+<div class="hdr-dwn-app btm-set">
+<ul class="clearfix">
+	<li>
+	<h3>Download Our App</h3>
+	</li>
+	<li><a href="https://play.google.com/store/apps/details?id=com.interactech.rcb&amp;hl=en_IN" target="_blank"><img src="/themes/custom/rcbbase/images/header/playstore.png"></a></li>
+	<li><a href="https://apps.apple.com/in/app/rcb-official-app/id516455943" target="_blank"><img src="/themes/custom/rcbbase/images/header/applebold.png"></a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- row --></div>
+<!-- 9 --><!-- row --><script>
+function myFunction() {
+document.getElementById("block-rcbbase-main-menu").classList.toggle("opened");
+document.getElementById("rcb-toggle").classList.toggle("rcb-menu-opened");
+document.body.classList.toggle("rcb-bdy-opened");
+}
+</script>
+<style type="text/css">.bar1, .bar2, .bar3 {
+   width: 25px;
+   height: 5px;
+   background-color: rgb(255, 255, 255);
+   margin: 6px 0px;
+   transition: all 0.4s ease 0s;
+}
+.opened {
+display:block;
+}
+.rcb-menu-opened .bar1 {
+-webkit-transform: rotate(-45deg) translate(-8px,6px);
+/* transform: rotate(-45deg) translate(-8px,6px); */
+}
+.rcb-menu-opened .bar2 {
+opacity: 0;
+}
+.rcb-menu-opened .bar3 {
+-webkit-transform: rotate(45deg) translate(-9px,-8px);
+transform: rotate(45deg) translate(-9px,-8px);
+}
+</style>
+</div>
+      
+  </section>
+
+<section class="views-element-container hdr-scr score-hd block block-views block-views-blockgeneral-block-5 clearfix" id="block-views-block-general-block-5">
+  
+    
+
+      <div class="form-group"><div class="view view-general view-id-general view-display-id-block_5 js-view-dom-id-f25c1533a837389b0d8a03811079f7f90fdec242b2d0f70f2c6255cfa0a9cd67">
+  
+    
+      
+  
+          </div>
+</div>
+
+  </section>
+
+<section id="block-googlesearch" class="hidden rcb-srch block block-block-content block-block-content224b65b6-fc33-4d02-a124-551ee99e9bad clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><form accept-charset="UTF-8" action="/search/page" class="google-cse-search-box-form" data-drupal-form-fields="edit-query,edit-sa" data-drupal-selector="google-cse-search-box-form" id="google-cse-search-box-form" method="get" autocomplete="off">
+<div class="form-item js-form-item form-type-textfield js-form-type-textfield form-item-query js-form-item-query form-group"><label class="control-label" for="edit-query">Enter your keywords</label> <input class="form-text form-control" data-drupal-selector="edit-query" id="edit-query" maxlength="128" name="keys" placeholder="Search" size="100" type="text" value></div>
+<button class="button js-form-submit form-submit btn-primary btn icon-before" data-drupal-selector="edit-sa" id="edit-sa" type="submit"><span aria-hidden="true" class="icon glyphicon glyphicon-search">Test</span></button></form>
+</div>
+      
+  </section>
+
+<section id="block-sitebranding" class="mble-logo block block-block-content block-block-contentb7f4c477-7d51-49e1-9466-5f0c599f40f7 clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div class="hdr-logo-mob"><a href="/">
+
+
+
+
+      <div class="media-wrapper media-wrapper--blazy">            <div class="media media--blazy media--image is-b-loading"><img class="media__image media__element b-lazy img-responsive" decoding="async" data-src="/themes/custom/rcbbase/images/header/RCB-NewLOGO.png" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201%201'%2F%3E" alt>
+        </div>
+      </div>  
+  
+</a>
+<h4>#Playbold</h4>
+</div>
+</div>
+      
+  </section>
+
+<nav role="navigation" aria-labelledby="block-rcbbase-main-menu-menu" id="block-rcbbase-main-menu" class="hdr-mnu menu-hd">
+            
+  <h2 class="visually-hidden" id="block-rcbbase-main-menu-menu">Main navigation</h2>
+  
+
+        
+      <ul class="menu menu--main nav navbar-nav">
+                      <li class="first">
+                                        <a href="/" data-drupal-link-system-path="&lt;front&gt;">Home</a>
+              </li>
+                      <li>
+                                        <a href="/rcb-cricket-news" data-drupal-link-system-path="node/36">News</a>
+              </li>
+                      <li>
+                                        <a href="/videos/rcb-tv" data-drupal-link-system-path="node/37">Rcb Tv</a>
+              </li>
+                      <li class="active active-trail">
+                                        <a href="/rcb-squad-men" class="active-trail" data-drupal-link-system-path="node/86">Team</a>
+              </li>
+                      <li>
+                                        <a href="/fixtures" data-drupal-link-system-path="fixtures">Fixtures</a>
+              </li>
+                      <li>
+                                        <a href="/rcb-bar-cafe" data-drupal-link-system-path="node/2032">RCB BAR &amp; CAFE</a>
+              </li>
+                      <li>
+                                        <a href="https://shop.royalchallengers.com/ticket">TICKETS</a>
+              </li>
+                      <li>
+                                        <a href="https://shop.royalchallengers.com/merchandise">Shop</a>
+              </li>
+                      <li class="expanded dropdown last">
+                                                                    <a href="/" class="dropdown-toggle" data-toggle="dropdown" data-drupal-link-system-path="&lt;front&gt;">More <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                      <li class="first">
+                                        <a href="/digital" data-drupal-link-system-path="node/6963">DIGITAL DAY</a>
+              </li>
+                      <li>
+                                        <a href="/sportsreport" data-drupal-link-system-path="node/7640">Sports Report</a>
+              </li>
+                      <li class="expanded dropdown">
+                                        <span class="navbar-text">INVESTORS</span>
+                        <ul class="dropdown-menu">
+                      <li class="first">
+                                        <a href="/resignation-letter-shilpa-vaid" data-drupal-link-system-path="node/9013">Resignation Letter- Shilpa Vaid</a>
+              </li>
+                      <li>
+                                        <a href="/resignation-letter-vk-viswanathan" data-drupal-link-system-path="node/9012">Resignation Letter- VK Viswanathan</a>
+              </li>
+                      <li>
+                                        <a href="/annual-return-fy2025-26" data-drupal-link-system-path="node/9373">Annual Return FY2025-26</a>
+              </li>
+                      <li>
+                                        <a href="/csr-project-approved-by-board-for-2026-27" data-drupal-link-system-path="node/9372">CSR Project approved by Board for 2026-27</a>
+              </li>
+                      <li>
+                                        <a href="/annual-return-fy-2024-2025" data-drupal-link-system-path="node/9009">Annual Return FY 2024-2025</a>
+              </li>
+                      <li>
+                                        <a href="/csr-project-approved-by-board-for-2025-26" data-drupal-link-system-path="node/9010">CSR Project approved by Board for 2025-26</a>
+              </li>
+                      <li>
+                                        <a href="/csr-policy" data-drupal-link-system-path="node/4149">CSR POLICY</a>
+              </li>
+                      <li>
+                                        <a href="/resignation-letter-prathmesh" data-drupal-link-system-path="node/9011">Resignation Letter – Prathmesh</a>
+              </li>
+                      <li>
+                                        <a href="/annual-return-fy2023-2024" data-drupal-link-system-path="node/7095">Annual Return FY2023-2024</a>
+              </li>
+                      <li>
+                                        <a href="/annual-return-fy2022-2023" data-drupal-link-system-path="node/5722">Annual Return FY2022-2023</a>
+              </li>
+                      <li class="last">
+                                        <a href="/annual-return" data-drupal-link-system-path="node/4150">Annual Return FY2021-2022</a>
+              </li>
+        </ul>
+  
+              </li>
+                      <li>
+                                        <a href="/green-initiatives" data-drupal-link-system-path="node/5190">Go Green</a>
+              </li>
+                      <li>
+                                        <a href="/rcb-cricket-photos" data-drupal-link-system-path="node/825">Photos</a>
+              </li>
+                      <li>
+                                        <a href="/about-us" data-drupal-link-system-path="node/181">About Us</a>
+              </li>
+                      <li>
+                                        <a href="/privacy-policy" data-drupal-link-system-path="node/101">Privacy Policy</a>
+              </li>
+                      <li>
+                                        <a href="/terms-conditions" data-drupal-link-system-path="node/121">Terms &amp; Conditions</a>
+              </li>
+                      <li>
+                                        <a href="/shop-terms-conditions" data-drupal-link-system-path="node/1045">Shop T&amp;C</a>
+              </li>
+                      <li class="last">
+                                        <a href="/contact-us" data-drupal-link-system-path="node/140">Contact Us</a>
+              </li>
+        </ul>
+  
+              </li>
+        </ul>
+  
+
+  </nav>
+<section id="block-mobileheader" class="mobhd-wrap block block-block-content block-block-content5950a0a8-183f-46c9-8034-472bbd11c1c5 clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div class="mobhd-scicons">
+<ul class="clearfix">
+	<li><a href="https://www.facebook.com/RoyalChallengersBangalore/" target="_blank"><img src="/themes/custom/rcbbase/images/header/top/facebook-1.svg"></a></li>
+	<li><a href="https://twitter.com/rcbtweets?lang=en" target="_blank"><img src="/themes/custom/rcbbase/images/header/top/twitter-1.svg"></a></li>
+	<li><a href="https://www.instagram.com/royalchallengers.bengaluru" target="_blank"><img src="/themes/custom/rcbbase/images/header/bold/instagram-6.svg"></a></li>
+	<li><a href="https://www.youtube.com/channel/UCCq1xDJMBRF61kiOgU90_kw" target="_blank"><img src="/themes/custom/rcbbase/images/header/top/youtube-1.svg"></a></li>
+</ul>
+
+<ul class="clearfix sec-wp">
+	<li>
+	<h3>Connect with RCB Players on the RCB App. Download Now</h3>
+	</li>
+	<li class="cus-ml"><a href="https://play.google.com/store/apps/details?id=com.interactech.rcb&amp;hl=en_IN" target="_blank"><img src="/themes/custom/rcbbase/images/header/playstore.png"></a></li>
+	<li><a href="https://apps.apple.com/in/app/rcb-official-app/id516455943" target="_blank"><img src="/themes/custom/rcbbase/images/header/applebold.png"></a></li>
+</ul>
+</div>
+</div>
+      
+  </section>
+
+
+  </div>
+
+				<span class="fa src-icon" aria-hidden="true"></span>	
+				<span class="lang-swt"><i class="fa fa-language" aria-hidden="true"></i></span>
+			</div>
+		  </div>
+	  </header>
+
+<div class="navigation mobile-menu">
+	<div class="navbar-header">
+		
+					</div>
+
+		</div>
+
+
+	<div class="main-wrapper">
+		<div role="main" class="js-quickedit-main-content">
+		  <div class="row tbl-wrp">
+
+		    		    
+		    		    		    <section class="col-sm-12">
+
+		      		      		        		          <div class="highlighted">
+		            <div class="region region-highlighted">
+    <div data-drupal-messages-fallback class="hidden"></div>
+
+  </div>
+</div>
+		        		      
+		      		      
+		      		      
+		      		      		      
+		      		        		            <div class="region region-content-top">
+    <section class="views-element-container mbl-hdr-scr block block-views block-views-blockgeneral-block-5 clearfix" id="block-views-block-general-block-5-2">
+  
+    
+
+      <div class="form-group"><div class="view view-general view-id-general view-display-id-block_5 js-view-dom-id-77f03f57f7683a9af23a9b915154ddd5e9aba52cebc2dd723a50fa32ef4828cf">
+  
+    
+      
+  
+          </div>
+</div>
+
+  </section>
+
+
+  </div>
+
+		        		      
+		      		      		        <a id="main-content"></a>
+		          <div class="region region-content">
+      <article data-history-node-id="86" class="landing-page full clearfix">
+
+  
+    
+
+      <footer>
+      <article>
+  </article>
+
+      <div class="author">
+        Submitted by 
+<span><span>Asheef</span></span>
+ on 
+<span><time datetime="2020-01-25T13:11:55+05:30" title="Saturday, January 25, 2020 - 13:11">Sat, 01/25/2020 - 13:11</time>
+</span>
+        
+      </div>
+    </footer>
+  
+  <div class="content">
+              <div class="layout layout--onecol">
+    <div  class="layout__region layout__region--content">
+      <section class="views-element-container block block-views block-views-blocklanding-pages-block-19 clearfix">
+  
+    
+
+      <div class="form-group"><div class="tm-lst-exp-btn view view-landing-pages view-id-landing_pages view-display-id-block_19 js-view-dom-id-04f2eb5faf1bf3af3c0f5b3969981f686eddb63b477dbc02a1f75c4cda8e26e7">
+  
+    
+      <div class="view-header">
+      <div class="btn-flex">
+  <div class="btn-headsec">
+      <h4><a href="/rcb-squad-men">MEN</a></h4>
+  </div>
+  <div class="btn-headone">
+   <h4><a href="/rcb-squad-women">WOMEN</a></h4>
+   </div>
+</div>
+<h1 class="tm-sq-stf clearfix">SQUAD</h1>
+    </div>
+      
+      <div class="view-content">
+          <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/rajat-patidar">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Rajat Patidar RCB" title="Rajat Patidar RCB" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/rajat.png?itok=1rBGxE2K" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/rajat-patidar">Rajat Patidar</a></span>
+</span>
+
+<span class="rcb-pyr-tye">BATTER</span>
+<div class="rcb-nly-dsn rcb-nly-dsn-ctn">
+<img src="/themes/custom/rcbbase/images/captain.png">
+<span class="rcb-captn-in">C</span>
+</div>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/virat-kohli">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Virat Kohli rcb" title="Virat Kohli rcb" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/virat.png?itok=gLKCBlX6" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/virat-kohli">Virat Kohli</a></span>
+</span>
+
+<span class="rcb-pyr-tye">BATTER</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/tim-david-0">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Tim David" title="Tim David" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2823%29_0.png?itok=RKdqmGUG" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/tim-david-0">Tim David</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye">All-Rounder</span>
+ <img src="/themes/custom/rcbbase/images/player.png">
+</div>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/jacob-bethell">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Jacob Bethell RCB" title="Jacob Bethell" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/Jacob_0.png?itok=72L3DtC1" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/jacob-bethell">Jacob Bethell</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye">All-Rounder</span>
+ <img src="/themes/custom/rcbbase/images/player.png">
+</div>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/romario-shepherd">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Romario Shepherd" title="Romario Shepherd" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2819%29_0.png?itok=aKU5v_qs" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/romario-shepherd">Romario Shepherd</a></span>
+</span>
+
+<span class="rcb-pyr-tye">All-Rounder</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/josh-hazlewood-0">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Josh Hazlewood" title="Josh Hazlewood" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2813%29.png?itok=uhbV_nly" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/josh-hazlewood-0">Josh Hazlewood</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye">Bowler</span>
+ <img src="/themes/custom/rcbbase/images/player.png">
+</div>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/nuwan-thushara">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Nuwan Thushara" title="Nuwan Thushara" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2025-03/nuwan.png?itok=bY1cyFxY" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/nuwan-thushara">Nuwan Thushara</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye">Bowler</span>
+ <img src="/themes/custom/rcbbase/images/player.png">
+</div>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/devdutt-padikkal-0">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="ddp" title="ddp" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2810%29_0.png?itok=Pu527Xhs" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/devdutt-padikkal-0">Devdutt Padikkal</a></span>
+</span>
+
+<span class="rcb-pyr-tye">BATTER</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/jitesh-sharma">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Jitesh Sharma RCB" title="Jitesh Sharma RCB" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/Jitesh%203_0.png?itok=pXhtj1iv" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/jitesh-sharma">Jitesh Sharma</a></span>
+</span>
+
+<span class="rcb-pyr-tye">Wicket Keeper</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/rasikh-dar">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Rasik" title="Rasik" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2818%29.png?itok=rdu9xeUk" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/rasikh-dar">Rasikh Dar</a></span>
+</span>
+
+<span class="rcb-pyr-tye">Bowler</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/krunal-pandya">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="KP" title="KP" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2815%29.png?itok=k1ZPQiz0" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/krunal-pandya">Krunal Pandya</a></span>
+</span>
+
+<span class="rcb-pyr-tye">All-Rounder</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/yash-dayal">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Yash Dayal" title="Yash Dayal" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2025-03/dayal.png?itok=q5MQrKXB" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/yash-dayal">Yash Dayal</a></span>
+</span>
+
+<span class="rcb-pyr-tye">Bowler</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/bhuvneshwar-kumar">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Bhuvneshwar Kumar RCB" title="Bhuvneshwar Kumar RCB" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/bhuvi_0.png?itok=ktTs4_Xt" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/bhuvneshwar-kumar">Bhuvneshwar Kumar</a></span>
+</span>
+
+<span class="rcb-pyr-tye">Bowler</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/jordan-cox">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="JC" title="JC" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/3%20%287%29_0.png?itok=NWD7pG1d" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/jordan-cox">Jordan Cox</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye">Wicket Keeper</span>
+ <img src="/themes/custom/rcbbase/images/player.png">
+</div>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/suyash-sharma">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Suyash Sharma" title="Suyash Sharma" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2821%29.png?itok=YC0AKGQ1" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/suyash-sharma">Suyash Sharma</a></span>
+</span>
+
+<span class="rcb-pyr-tye">Bowler</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/venkatesh-iyer">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Venkatesh Iyer" title="Venkatesh Iyer" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/3%20%289%29_0.png?itok=krB1-g7g" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/venkatesh-iyer">Venkatesh Iyer</a></span>
+</span>
+
+<span class="rcb-pyr-tye">All-Rounder</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/swapnil-singh">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Swapnil Singh" title="Swapnil Singh" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2822%29.png?itok=dA5vhYMn" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/swapnil-singh">Swapnil Singh</a></span>
+</span>
+
+<span class="rcb-pyr-tye">Bowler</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/jacob-duffy">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="JD" title="JD" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2812%29.png?itok=opBHeP-8" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/jacob-duffy">Jacob Duffy</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye">Bowler</span>
+ <img src="/themes/custom/rcbbase/images/player.png">
+</div>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/kanishk-chouhan">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="KC" title="KC" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2814%29.png?itok=Qs3A3Ozn" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/kanishk-chouhan">Kanishk Chouhan</a></span>
+</span>
+
+<span class="rcb-pyr-tye">All-Rounder</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/abhinandan-singh">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Abhinandan" title="Abhinandan" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2811%29.png?itok=Zu9VlTmn" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/abhinandan-singh">Abhinandan Singh</a></span>
+</span>
+
+<span class="rcb-pyr-tye">Bowler</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/mangesh-yadav">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Mangesh Yadav" title="Mangesh Yadav" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2816%29_0.png?itok=nqmnKefk" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/mangesh-yadav">Mangesh Yadav</a></span>
+</span>
+
+<span class="rcb-pyr-tye">All-Rounder</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/phil-salt">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Phil Salt" title="Phil Salt" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2817%29.png?itok=E0qAh-YH" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/phil-salt">Phil Salt</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye">Wicket Keeper</span>
+ <img src="/themes/custom/rcbbase/images/player.png">
+</div>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/satvik-deswal">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="SD" title="SD" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2820%29_0.png?itok=pWgooicZ" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/satvik-deswal">Satvik Deswal</a></span>
+</span>
+
+<span class="rcb-pyr-tye">All-Rounder</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/vicky-ostwal">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Vicky Ostwal" title="Vicky Ostwal" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2824%29.png?itok=XUlGoagC" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/vicky-ostwal">Vicky Ostwal</a></span>
+</span>
+
+<span class="rcb-pyr-tye">All-Rounder</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/vihaan-malhotra">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Vihaan Malhotra" title="Vihaan Malhotra" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2825%29_0.png?itok=0SK-XQU0" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/vihaan-malhotra">Vihaan Malhotra</a></span>
+</span>
+
+<span class="rcb-pyr-tye">All-Rounder</span>
+
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/richard-gleeson">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Gleeson" title="Gleeson" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-05/Richard%20Gleeson.png?itok=CS6XhiBX" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/richard-gleeson">Richard Gleeson</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye">Bowler</span>
+ <img src="/themes/custom/rcbbase/images/player.png">
+</div>
+
+
+
+</span></div></div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </section>
+
+
+    </div>
+  </div>
+  <div class="layout layout--onecol">
+    <div  class="layout__region layout__region--content">
+      <section class="views-element-container block block-views block-views-blocklanding-pages-block-22 clearfix">
+  
+    
+
+      <div class="form-group"><div class="tm-lst-exp-btn view view-landing-pages view-id-landing_pages view-display-id-block_22 js-view-dom-id-da0c413af2770417759a23a91dd66f94db59e070f3532690017cb4aae6e9566f">
+  
+    
+      <div class="view-header">
+      <h1 class="tm-sq-stf clearfix">SUPPORT STAFF</h1>
+    </div>
+      
+      <div class="view-content">
+          <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/mo-bobat">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Mo Bobat" title="Mo Bobat" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2826%29.png?itok=kmEFC-rl" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/mo-bobat">Mo Bobat</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye"></span>
+</div>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/andy-flower">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Andy Flower" title="Andy Flower" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2828%29.png?itok=M-WvhMi5" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/andy-flower">Andy Flower</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye"></span>
+</div>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/dinesh-karthik-0">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="DK" title="DK" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2025-03/12.png?itok=VASCd6MW" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/dinesh-karthik-0">Dinesh Karthik</a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/omkar-salvi">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Omkar Salvi" title="Omkar Salvi" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2829%29.png?itok=KdUoHg6x" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/omkar-salvi">Omkar Salvi</a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/malolan-rangarajan">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Malo" title="Malo" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2830%29.png?itok=F93KmLn4" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/malolan-rangarajan">Malolan Rangarajan</a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/basu-shanker">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Basu Shanker" title="Basu Shanker" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/1%20%2810%29.png?itok=0lFHh7F0" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/basu-shanker">Basu Shanker</a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/richard-halsall">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Richard Halsall" title="Richard Halsall" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2831%29.png?itok=zwL4mThz" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/richard-halsall">Richard Halsall </a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye"></span>
+</div>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/tamara-zweck">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Tamara" title="Tamara" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-04/Tamara.png?itok=2eGmevnm" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/tamara-zweck">Tamara Zweck</a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/james-pipe">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="James Pipe" title="James Pipe" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2832%29.png?itok=FosT3Vco" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/james-pipe">James Pipe</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye"></span>
+</div>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/navnita-gautam">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Navnita Gautam" title="Navnita Gautam" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2833%29.png?itok=OppKW9N0" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/navnita-gautam">Navnita Gautam</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye"></span>
+</div>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/major-shaminder-singh-sidhu">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Major" title="Major" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2834%29.png?itok=8EVjsvrM" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/major-shaminder-singh-sidhu">Major Shaminder Singh Sidhu</a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/arihant-jain">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Arihant" title="Arihant" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2835%29.png?itok=g3nOn_Da" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/arihant-jain">Arihant Jain</a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/rajesh-menon">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="RAJESH MENON" title="RAJESH MENON" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2023-03/rajesh.png?itok=o5BtDymO" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/rajesh-menon">Rajesh Menon</a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/nikhil-sosale">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="NIKHIL SOSALE" title="NIKHIL SOSALE" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2023-03/Nikhil%20%202%20800_1200.png?itok=cB74dWl1" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/nikhil-sosale">Nikhil Sosale</a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/ajith-ramamurthy">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Ajith" title="Ajith" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2836%29.png?itok=3HXDgtF6" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/ajith-ramamurthy">Ajith  Ramamurthy</a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/ramesh-mane">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Ramesh Mane" title="Ramesh Mane" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2837%29.png?itok=rVmViQYU" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/ramesh-mane">Ramesh  Mane </a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/rohit-singh">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Rohit Singh" title="Rohit Singh" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2838%29.png?itok=7Eu3Qufn" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/rohit-singh">Rohit Singh </a></span>
+</span>
+
+<span class="rcb-pyr-tye"></span>
+
+
+</span></div></div>
+    <div class="views-row"><div class="views-field views-field-field-featured-image"><div class="field-content">
+
+
+
+
+                    <a href="http://www.royalchallengers.com/rcb-squad/freddie-wilde">      <div class="media media--blazy media--switch media--switch--content media--bundle--image media--image is-b-loading"><img alt="Freddie Wilde" title="Freddie Wilde" class="media__image media__element b-lazy img-responsive" decoding="async" loading="lazy" data-src="/PRRCB01/public/styles/s/public/2026-03/2%20%2839%29.png?itok=2XfDS8rK" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D&#039;http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&#039;%20viewBox%3D&#039;0%200%201%201&#039;%2F%3E" width="393" height="266" />
+        </div>
+  </a>
+
+                
+            
+  
+</div></div><div class="views-field views-field-nothing"><span class="field-content"><span class="tm-lis-fln">
+<span class="tm-lis-fn"><a href="/rcb-squad/freddie-wilde">Freddie Wilde</a></span>
+</span>
+
+<div class="rcb-nly-dsn">
+ <span class="rcb-pyr-tye"></span>
+</div>
+
+
+</span></div></div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </section>
+
+
+    </div>
+  </div>
+
+  </div>
+
+</article>
+
+
+  </div>
+
+		      		    </section>
+
+		    		    		  </div>
+		</div>
+	</div>
+
+</div>
+
+      <footer class="footer text-center" role="contentinfo">
+    	<div class="footer-inr  container">
+      	  <div class="region region-footer">
+          <a class="logo navbar-btn pull-left" href="/" title="Home" rel="home">
+      <img src="/PRRCB01/public/rcb-logo-new_0.png" alt="Home" />
+    </a>
+      <nav role="navigation" aria-labelledby="block-rcbbase-footer-menu" id="block-rcbbase-footer" class="ftr-mnu">
+            
+  <h2 class="visually-hidden" id="block-rcbbase-footer-menu">Footer menu</h2>
+  
+
+        
+      <ul class="menu menu--footer nav">
+                      <li class="first">
+                                        <a href="/" data-drupal-link-system-path="&lt;front&gt;">Home</a>
+              </li>
+                      <li>
+                                        <a href="/about-us" data-drupal-link-system-path="node/181">About Us</a>
+              </li>
+                      <li>
+                                        <a href="/rcb-cricket-news" data-drupal-link-system-path="node/36">News</a>
+              </li>
+                      <li>
+                                        <a href="/fixtures" data-drupal-link-system-path="fixtures">Fixtures</a>
+              </li>
+                      <li>
+                                        <a href="/privacy-policy" data-drupal-link-system-path="node/101">PRIVACY AND COOKIE NOTICE</a>
+              </li>
+                      <li>
+                                        <a href="/videos/rcb-tv" data-drupal-link-system-path="node/37">Rcb Tv</a>
+              </li>
+                      <li>
+                                        <a href="/rcb-squad">Team</a>
+              </li>
+                      <li>
+                                        <a href="/terms-conditions" data-drupal-link-system-path="node/121">Terms &amp; Conditions</a>
+              </li>
+                      <li>
+                                        <a href="/shop-terms-conditions" data-drupal-link-system-path="node/1045">Shop T&amp;C</a>
+              </li>
+                      <li>
+                                        <a href="/rcb-cricket-photos" data-drupal-link-system-path="node/825">Photos</a>
+              </li>
+                      <li>
+                                        <a href="https://shop.royalchallengers.com/merchandise">Shop</a>
+              </li>
+                      <li class="last">
+                                        <a href="/contact-us" data-drupal-link-system-path="node/140">Contact Us</a>
+              </li>
+        </ul>
+  
+
+  </nav>
+<section id="block-mobileheader-2" class="block block-block-content block-block-content5950a0a8-183f-46c9-8034-472bbd11c1c5 clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div class="mobhd-scicons">
+<ul class="clearfix">
+	<li><a href="https://www.facebook.com/RoyalChallengersBangalore/" target="_blank"><img src="/themes/custom/rcbbase/images/header/top/facebook-1.svg"></a></li>
+	<li><a href="https://twitter.com/rcbtweets?lang=en" target="_blank"><img src="/themes/custom/rcbbase/images/header/top/twitter-1.svg"></a></li>
+	<li><a href="https://www.instagram.com/royalchallengers.bengaluru" target="_blank"><img src="/themes/custom/rcbbase/images/header/bold/instagram-6.svg"></a></li>
+	<li><a href="https://www.youtube.com/channel/UCCq1xDJMBRF61kiOgU90_kw" target="_blank"><img src="/themes/custom/rcbbase/images/header/top/youtube-1.svg"></a></li>
+</ul>
+
+<ul class="clearfix sec-wp">
+	<li>
+	<h3>Connect with RCB Players on the RCB App. Download Now</h3>
+	</li>
+	<li class="cus-ml"><a href="https://play.google.com/store/apps/details?id=com.interactech.rcb&amp;hl=en_IN" target="_blank"><img src="/themes/custom/rcbbase/images/header/playstore.png"></a></li>
+	<li><a href="https://apps.apple.com/in/app/rcb-official-app/id516455943" target="_blank"><img src="/themes/custom/rcbbase/images/header/applebold.png"></a></li>
+</ul>
+</div>
+</div>
+      
+  </section>
+
+<section id="block-footer" class="ftr-dsn block block-block-content block-block-content4d1cad81-5bef-4a33-af4e-58aa0bb60560 clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div class="footer-copyright">
+<h4>Copyright Royal Challengers Sports Pvt. Ltd.</h4>
+</div>
+</div>
+      
+  </section>
+
+
+  </div>
+
+      </div>
+    </footer>
+  
+  </div>
+
+  
+  <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"node\/86","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en","currentQuery":{"_wrapper_format":"html"}},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"bootstrap":{"forms_has_error_value_toggle":1,"modal_animation":1,"modal_backdrop":"true","modal_focus_input":1,"modal_keyboard":1,"modal_select_text":1,"modal_show":1,"modal_size":"","popover_enabled":1,"popover_animation":1,"popover_auto_close":1,"popover_container":"body","popover_content":"","popover_delay":"0","popover_html":0,"popover_placement":"right","popover_selector":"","popover_title":"","popover_trigger":"click","tooltip_enabled":1,"tooltip_animation":1,"tooltip_container":"body","tooltip_delay":"0","tooltip_html":0,"tooltip_placement":"auto left","tooltip_selector":"","tooltip_trigger":"hover"},"blazy":{"loadInvisible":false,"offset":100,"saveViewportOffsetDelay":50,"validateDelay":25,"loader":true,"unblazy":false,"compat":true},"blazyIo":{"disconnect":false,"rootMargin":"0px","threshold":[0,0.25,0.5,0.75,1]},"user":{"uid":0,"permissionsHash":"82249532b9aaaef95055db417f6bd979250782b67acfa94451b6067541e1ea73"}}</script>
+<script src="/PRRCB01/public/js/optimized/js_PVpCBx-NSvKJDwYwHV1eUcnIBZz6WC5BE8gUFaeudYs.MZIdfh-CuOsCOjkbQ4UzQ_piE5uTDH-gbo-DNt-1Oa0.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_u6bXrZWkTmcTSo6k4N9T8Rfz34HA0pizGiL3drwbHP0.__7J_5vFtfQD5GO3esTZIki0aeCE5YN9bxmhor1eDxY.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_Ypvh-Y5QPLloEccQlCGXbB7OnkP-18Oi_5XKxfUtI7Y.NouP2nRlcKXMb1If7baKa-pFzesQW9DZTFwz-Eb2XTQ.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_HyYVhxfttWNTlXiNRHRJzhJJXKO0pJvYdIADIbdgwfE.FFAjeYpoxNGMgJQu4K1wimEH4mEBzzotfkE-UUjccUU.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_1ybgK47CCmkTwNzLqdAZDFqK374kHsBO-W3cFtX0rI0._xUj-3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej_m4.js?v=3.6.0"></script>
+<script src="/PRRCB01/public/js/optimized/js_QbYvqPKD53Dt6UJYMdvz4LLFCFMR1TrPp0_77XzvCv4.iemZmd-oPun7iOWL63gglh2_zzkc7i82H_1KNIkwnGk.js?v=1.13.8"></script>
+<script src="/PRRCB01/public/js/optimized/js_Hpe5jrMuKXrV4HSTMApXJsNBxraAgcHUrTjxkwWKqy8.9H1W9OQqD9V27idEVOJMCFAQtGS4Scq-gAQciKr0U2M.js?v=10.6.10"></script>
+<script src="/PRRCB01/public/js/optimized/js_V1oRQ-kJlXBZaEklOtPUe_1t8-l0RS94HJ3gsqxKikc.LMtm7OsF5tFcpxpmBexOddu30l-Xz-FUCSBPovfiEt8.js?v=10.6.10"></script>
+<script src="/PRRCB01/public/js/optimized/js_KRjtvzl6UujB23-j_sF6dqOcbqg2z8ej98A8RU9bGsg.kjk12BMQYgWzHTlTsh40oAfzJ1jsDD0rpt092h-M9uk.js?v=10.6.10"></script>
+<script src="/PRRCB01/public/js/optimized/js_mjv4qhOv2_1-EQeYpZwvWqHcMokP3Cu36uHh9tRNXFY.CJF84Dv0PjH3KPaqgwzS-NJS45qPbXaVePB7UAw-uH8.js?v=10.6.10"></script>
+<script src="/PRRCB01/public/js/optimized/js_1cu7UIH-Agsc-mrJV-ut0AyAOCtWBjC4JpAPWhSeFoA.QdvBduH5FXJZpErt3Weactam2WThzUXj0LBId8EAkcg.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_78RhY7Axui2Ijge_oLjmOZOuSNkG_9UC3sdwe2hWPtU.MZLyKqCVUPQrpBaAjNd-nNpjGuokuqnRHZ79WXy0Jlw.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_GuEEUz5_wdBcpuSd7p0i3TY9E8BJ_9OIkBmRNflPNMA.KhDpFQCWXJ2VI8T8zukcR45U2K58VJ4UyW_GBVttibA.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_u9mI0LLTxeaqLkALVAVlwWoJZs0UI4f4kcKA6nUfL6Y.MxE_w3FJoJgun7EpUH_lzvZ6wqXfLcz3q7qc5fgKPvA.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_yNSL7CdjNP55YOSF7nwPqZbl00G_ZWJz2QuC-vbRT1s.xO3AFdfiShK1Z3n95-ykaAoZAFDP9BnTxHZCxSN0yPI.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_ZtdbQ0KixOXvDE-3gWdwxrK-EA4txgCgmL91b1xDDIE.ftX5-razqJoSErGW_kmy7ePznyokd0Ftp3rdY_x4-6w.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_Hq_c2_VQfF0HYn7tEx0al8ramz5FEWtgsPX1XDvfn2E.xRd0s171AJnntBctzNMk45NjegTY7aLwKSAfO5ZgGC4.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_y2SVrhxV150dbm8p_HwzLuJWcUq40Hv98RmdC7SoLO0.U84m095BZ1M3LYfZqMGSqzSXPyl4zGEC_ygJPgPfKF0.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_dzy5s3zYMymEV57B7HO5yHYVNyVkZGq06novDv7eV-Y.lVJAkCC1dvG4pc7bSZqEOC4YNlmDCCe9951UhbAu5Tg.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_rfPiJkNSTKJr03Pewjoz8GUIadYWby7PUqFm6xbZLko.QghRqUWwsRIvmOBUdYrEUVusHPd04FoUA2PKAbLZLiE.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_NQ18SR5zs4AsKemRB1CMRPg1yZu1oKL3CMK2mAigmG4.TjRCbkdnMSPg5RL5p-dHchRzE_J930vU2QwJ_cdsmxk.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_72hQDD0GsTvzhbDtPTRmHRPQ6IDzqiyYnYIpdT-g3MQ.Vrp3J2hUN5pguo5Py91RKcSv09zU0jzzB4MFt1ttEcM.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_gOvjATqQ7GrkPxvg0tszZ5xuej1dqlMKNtqL6Ipwhvc.OLcQHlgXVJh7qW0op86c5wkCEfBuRv4SyndGWSg8jz0.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_2YV1u7bNWnfUVxDt5S20CR86C6ifgzPtiLFvRfme_fE.qzLm5kpb880U0GVwqWReASR6NZ2TET8unDhBGwUeIuE.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_F4nOyquNp_5aOXmCFOaY93aXDei98I_EVQQLsmq7Irw.raSrjodMIp6DTrs6RD5qtu1jcZOH-O3veSvZzaI6p28.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_n2TMc47T_VeoZ_VSHs8sFe98QLj6ero3ljSctmSyuaE.ZkWO7FcpF-R_J7NQQd2Hoxf9Kb9Jcx1xvJ_XD_YlUZY.js?tm9zh8"></script>
+<script src="//static.addtoany.com/menu/page.js" defer></script>
+<script src="/PRRCB01/public/js/optimized/js_ykLxvKp5rvcarVrf36wQkum3dKR3rl-G_-w1QumySTw.ikup2Su_4IByHFAHX4rmMY3BfaDu_RDNTQ5xXSrcX2c.js?v=10.6.10"></script>
+<script src="/PRRCB01/public/js/optimized/js_g2mz6oyd9m9JoUZIVRgm0ACcxwU1xcYb_sHPtofqjF8.CLdL1XMsRLNXHdOIv41rkOitwnkjifSzUpEwWLLgy6k.js?tm9zh8"></script>
+<script src="//cdn.jsdelivr.net/npm/entreprise7pro-bootstrap@3.4.5/dist/js/bootstrap.js" integrity="sha256-LOiXoKZ2wysQPuIK+KrFj0/gFFms8dpu21l//MOukmw=" crossorigin="anonymous"></script>
+<script src="/PRRCB01/public/js/optimized/js_CBmj-NGYY74fyp5FkTWtfilgxNpzBEmlCM8EXc8vW3k.Xaa6GuDtfwKf5VN2w4goKRZY1A0ukAiA8m-9Vbb8vO0.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_J9cOXtTJwnh88kFlTO96yA-_jgYfmOpszKFolYhQ6s0.ywDyyWUlbUyip0lVHQKl_m7VbX66a2UXyHblCrL0qAA.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_dOBpxi7GjmCLEEHbsC_wSM1qf1mYfpGaREpMkbvQCfg.WRMfSjfAOTxG7nsfpRRzBxqvRZaINXfpHyl4W-sO734.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_amaGp-sA9N9JGWrBP4KrAYQQbkHxs2sUOEoW2Q83pBs.2AHNQk2vGlrfnKJESsdYHFHEVF9jyJdtNforY4eOpGo.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_jWde1TJZOHRhb6oek7b8MkTqrPvQ8J3jA8z4m6sJGIM.GwKeVa9k6neU1VoJoMM4-HcOqn956smeels-P9yaDcg.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_XVOJML8rxvASLm8vGHdKo0LcPECFAUMUP_8oUSjnP8s.QaOcdIY0HhngbpFn7PWoXnri6kH_t7Q_LoJK9lOI3nk.js?v=1.x"></script>
+<script src="/PRRCB01/public/js/optimized/js_7PHZQg8im7YZPfhAhibLJD9W5ZTmyG89JhYzE1uIhqg.CLTgCnsvi8JoG1Q-csjG5hYR4msLxzVfmjiiwHtFYdA.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_glluYptwFXSNhhCZSN3LLcAqzWF3jJsWDSnzi-Yi8JE.DHF4zGyjT7GOMPBwpeehwoey18z8uiz98G4PRu2lV0A.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_WAPp3eiFZF0DLBrsjzNcBLuB_4j_w1j51kJ876sfjps.Nn1q_fx0H7SNLZMQ5Hw5JLaTRZp0yILA_FRexe19VdI.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_pv4DSa5w1SIHPDucnd4571kK7ncg1sGhhZLo6A6nQ6E.q7W9FRlOks1wzdmJVI5KmfsYIDQGcdAvkBTkOFnA3nY.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_tRj3eseTvqAHAGhVgOjIqcxOx4sno1KlZJKh8vDVm-w.scsfXfT9_sy2HiYA5B3hv7GfgX46BemaW4ZwqvqjI_M.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_R3EXAK4Zo-vEo70m2K_V5KZVazmsjqrdwk9i1qmQ0tc.HC39zhvnUumpVZGngw4R4fU-La50z6DJK_NgiqhN-4k.js?tm9zh8"></script>
+<script src="/PRRCB01/public/js/optimized/js_itIFek_6Lh3Itcs2ffSrGc5mgTRsVAzEjvdLTmY_yeU.PGfFFGjrgIBP4XZ0odUiIa1ULZ3y6kLzhErnlgNLZlE.js?tm9zh8"></script>
+
+    </body>
+    <footer>
+      <div id="footer"></div>
+    </footer>
+
+</html>

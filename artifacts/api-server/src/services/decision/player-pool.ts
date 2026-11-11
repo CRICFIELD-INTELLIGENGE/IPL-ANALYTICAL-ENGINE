@@ -90,12 +90,13 @@ export function getPoolSpace(side: PoolSide, window: PoolWindow, asOfIn?: number
   const from = window === "recent" ? asOf - 2 : 0;
   // Pressure value is computed on all seasons, so it is left out of past snapshots.
   const withPressure = asOf === latest;
-  // acc[ph][ty]: balls, runs, outs, bnd, dots ; plus season-weighted sums
+  // acc[ph][ty]: balls, runs, outs, bnd, dots ; plus season-weighted sums.
+  // ty: 0 pace, 1 spin, 2 bowling type unknown (Day 6: unknown is no longer counted as pace).
   const NF = 5;
   const acc = new Map<number, { a: Float64Array; seasonSum: number; first: number; last: number }>();
-  const lg = new Float64Array(3 * 2 * NF);
-  const ix = (ph: number, ty: number, f: number) => (ph * 2 + ty) * NF + f;
-  const typeOf = (b: number) => (meta.get(b)?.bowlingType === "spin" ? 1 : 0);
+  const lg = new Float64Array(3 * 3 * NF);
+  const ix = (ph: number, ty: number, f: number) => (ph * 3 + ty) * NF + f;
+  const typeOf = (b: number) => { const t = meta.get(b)?.bowlingType; return t === "pace" ? 0 : t === "spin" ? 1 : 2; };
   for (let i = 0; i < c.n; i++) {
     const s = c.season[i];
     if (s < from || s > asOf) continue;
@@ -109,7 +110,7 @@ export function getPoolSpace(side: PoolSide, window: PoolWindow, asOfIn?: number
       pid = c.bowler[i]; runs = c.conceded[i]; out = f & F_BOWLER_WICKET ? 1 : 0; counts = Boolean(f & F_LEGAL); ty = 0;
     }
     let e = acc.get(pid);
-    if (!e) { e = { a: new Float64Array(3 * 2 * NF), seasonSum: 0, first: s, last: s }; acc.set(pid, e); }
+    if (!e) { e = { a: new Float64Array(3 * 3 * NF), seasonSum: 0, first: s, last: s }; acc.set(pid, e); }
     const bnd = c.batterRuns[i] === 4 || c.batterRuns[i] === 6 ? 1 : 0;
     for (const arr of [e.a, lg]) {
       if (counts) arr[ix(ph, ty, 0)]++;
@@ -121,7 +122,7 @@ export function getPoolSpace(side: PoolSide, window: PoolWindow, asOfIn?: number
     if (counts) { e.seasonSum += s; e.first = Math.min(e.first, s); e.last = Math.max(e.last, s); }
   }
 
-  const sumPh = (a: Float64Array, ph: number, f: number) => a[ix(ph, 0, f)] + a[ix(ph, 1, f)];
+  const sumPh = (a: Float64Array, ph: number, f: number) => a[ix(ph, 0, f)] + a[ix(ph, 1, f)] + a[ix(ph, 2, f)];
   const sumTy = (a: Float64Array, ty: number, f: number) => a[ix(0, ty, f)] + a[ix(1, ty, f)] + a[ix(2, ty, f)];
   const total = (a: Float64Array, f: number) => [0, 1, 2].reduce((s, ph) => s + sumPh(a, ph, f), 0);
   const rate = (num: number, den: number) => (den > 0 ? num / den : 0);
@@ -138,7 +139,7 @@ export function getPoolSpace(side: PoolSide, window: PoolWindow, asOfIn?: number
     const raw: Record<string, number> = {};
     // Expected rates given this player's own mix of phases (and types, for batters).
     let expRuns = 0, expOuts = 0, expBnd = 0, expDots = 0;
-    for (let ph = 0; ph < 3; ph++) for (let ty = 0; ty < 2; ty++) {
+    for (let ph = 0; ph < 3; ph++) for (let ty = 0; ty < 3; ty++) {
       const b = a[ix(ph, ty, 0)];
       const lb = lg[ix(ph, ty, 0)];
       if (!b || !lb) continue;
@@ -182,7 +183,8 @@ export function getPoolSpace(side: PoolSide, window: PoolWindow, asOfIn?: number
         return (shrunk(sumPh(a, ph, 1), sumPh(a, ph, 0), l) - l) * 6;
       };
       raw.ppEcon = phEcon(0); raw.midEcon = phEcon(1); raw.deathEcon = phEcon(2);
-      raw.spin = m?.bowlingType === "spin" ? 1 : 0;
+      // 1 spin, 0 pace; 0.5 when the bowling type is unknown, so it sits midway in similarity instead of posing as pace.
+      raw.spin = m?.bowlingType === "spin" ? 1 : m?.bowlingType === "pace" ? 0 : 0.5;
       raw.pressure = withPressure ? pressureValuePer100(pid, "bowling", window).per100 : 0;
       raw.ballsPerWicket = outs ? balls / outs : balls;
     }
@@ -224,6 +226,12 @@ function archetypeOf(side: PoolSide, r: Record<string, number>, subtype: string 
     if (r.midShare >= 50) return r.srRel >= 8 ? "Middle-overs enforcer" : "Middle-order accumulator";
     return r.srRel >= 8 ? "Flexible hitter" : "Flexible batter";
   }
+  if (r.spin !== 0 && r.spin !== 1) {
+    const t = "bowling type unknown";
+    if (r.ppShare >= 40) return `Powerplay bowler (${t})`;
+    if (r.deathShare >= 38) return `Death-overs bowler (${t})`;
+    return r.bpwRel < -0.1 ? `Wicket-taking bowler (${t})` : `Holding bowler (${t})`;
+  }
   const kind = subtype && !/unknown/.test(subtype) ? subtype : r.spin ? "Spinner" : "Pacer";
   if (r.spin) {
     if (r.ppShare >= 30) return `Powerplay spinner (${kind})`;
@@ -264,7 +272,7 @@ function sim(space: Space, a: PoolPlayer, b: PoolPlayer) {
 }
 
 function fmtRaw(f: Feature, v: number): string {
-  if (f.key === "spin") return v ? "Spin" : "Pace";
+  if (f.key === "spin") return v === 1 ? "Spin" : v === 0 ? "Pace" : "Unknown";
   if (f.key === "avgRel" || f.key === "bpwRel") return `${Math.exp(v).toFixed(2)}×`;
   if (f.unit === "%") return `${v.toFixed(0)}%`;
   return signed(v, f.dp);

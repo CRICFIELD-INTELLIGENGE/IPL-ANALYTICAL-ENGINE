@@ -75,7 +75,8 @@ function batterSplits(batters: number[], fromSeason: number) {
     if (s) { const l = e.bySub.get(s) ?? emptyLine(); add(l); e.bySub.set(s, l); }
     if (c.over[i] >= 15) {
       add(e.death);
-      add(meta.get(c.bowler[i])?.bowlingType === "spin" ? e.deathSpin : e.deathPace);
+      const t = meta.get(c.bowler[i])?.bowlingType; // unknown types count in death totals only
+      if (t === "spin") add(e.deathSpin); else if (t === "pace") add(e.deathPace);
     }
     out.set(c.batter[i], e);
   }

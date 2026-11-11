@@ -5,7 +5,7 @@ import {
   getMatchScoreLine, getMatchStateColor, startTime, type LiveMatch 
 } from "@/lib/live";
 import { useMatches, useSeasons, teamShort, useTeams, teamColor,
-  useMatchScorecard, useMatchCommentary, venueSlug, normalizeVenueName, playerSlug,
+  useMatchScorecard, useMatchCommentary, venueHref, normalizeVenueName, playerSlug,
   type MatchScorecard, type MatchCommentary } from "@/lib/aggregates";
 import { Link, useRoute } from "wouter";
 import { 
@@ -17,9 +17,7 @@ import {
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { TeamLogo } from "@/components/team-logo";
 import { MatchIntelPanel } from "@/components/decision/intel-panels";
-import { BroadcasterLink } from "@/components/broadcaster-link";
 import { MatchCinematicHero } from "@/components/match/match-cinematic-hero";
-import { MatchMediaStrip } from "@/components/match/match-media-strip";
 import { MatchMomentumPanel } from "@/components/match/match-momentum-panel";
 import { InningsScorecardView } from "@/components/match/innings-scorecard-view";
 import { MatchGraphConsole } from "@/components/match/match-graph-console";
@@ -131,16 +129,7 @@ export default function MatchDetailPage() {
           </div>
 
           <div className="flex items-center gap-4">
-            <BroadcasterLink
-              lookupParams={{
-                matchId: match?.matchInfo?.matchId,
-                season: match?.matchInfo?.seriesName ? parseInt(match.matchInfo.seriesName.replace(/\D/g, ""), 10) : undefined,
-                team1: match?.matchInfo?.team1?.teamSName,
-                team2: match?.matchInfo?.team2?.teamSName,
-              }}
-              variant="pill"
-            />
-            <div className="flex flex-col items-end">
+                        <div className="flex flex-col items-end">
               <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em]">Telemetry Channel</span>
               <span className="text-[11px] font-bold text-white tracking-tight">MATCH_INTEL_v2.0 // {matchId}</span>
             </div>
@@ -205,29 +194,14 @@ function MatchIntelligenceView({ match, activeTab }: { match: import("@/lib/live
             {/* CINEMATIC MATCH SHOWDOWN HERO */}
             <MatchCinematicHero match={match} card={card.data} />
 
-            {/* MATCH MEDIA STRIP (JIOHOTSTAR VERIFIED INTEGRATIONS) */}
-            <MatchMediaStrip
-              team1={info.team1.teamName}
-              team2={info.team2.teamName}
-              featuredPlayer1={card.data?.innings?.[0]?.batting?.[0]?.name}
-              featuredPlayer2={card.data?.playerOfMatch?.[0] || card.data?.innings?.[1]?.batting?.[0]?.name}
-            />
-
+            
+            {/* OFFICIAL VERIFIED MATCH VIDEO HIGHLIGHTS */}
+            
             {/* MATCH MOMENTUM TELEMETRY HUD */}
             <MatchMomentumPanel card={card.data} matchId={info.matchId} />
 
             {/* OFFICIAL BROADCASTER HIGHLIGHT LINK (IF VERIFIED DESTINATION EXISTS) */}
-            <BroadcasterLink
-              lookupParams={{
-                matchId: info.matchId,
-                season: info.seriesName ? parseInt(info.seriesName.replace(/\D/g, ""), 10) : undefined,
-                team1: info.team1?.teamSName || info.team1?.teamName,
-                team2: info.team2?.teamSName || info.team2?.teamName,
-              }}
-              variant="banner"
-              label="Watch Match Replay on JioHotstar"
-            />
-
+            
             {/* TELEMETRY GRID */}
             <div className="grid grid-cols-12 gap-6">
               <motion.div className="col-span-12 lg:col-span-4 bg-[#0B1020] rounded-[24px] border border-white/10 p-6 flex flex-col gap-6 shadow-xl relative overflow-hidden">
@@ -430,7 +404,7 @@ function FullScorecard({ match, card, isLoading }: { match: LiveMatch; card?: Ma
                 <MapPin className="w-3 h-3 text-cyan-400" /> Venue
               </div>
               <Link
-                href={`/venues/${venueSlug(card.venue)}`}
+                href={venueHref(card.venue)}
                 className="text-[13px] font-bold text-cyan-300 hover:underline flex items-center gap-1"
               >
                 <span>{[card.venue, card.city].filter(Boolean).join(", ")}</span>

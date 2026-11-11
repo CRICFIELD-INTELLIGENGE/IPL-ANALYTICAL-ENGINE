@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { parseCsv } from './decision/db';
 
 export interface CricsheetRow {
   match_id: string;
@@ -6,8 +7,13 @@ export interface CricsheetRow {
   start_date: string;
   venue: string;
   innings: number;
+  /** Numeric over.ball kept for the over-range filters (floor() is the 0-based over). */
   ball: number;
   overStr: string;
+  /** 0-based over, parsed as an integer from the label (never parseFloat: "19.10" is ball 10, not 1). */
+  over: number;
+  /** Delivery number within the over as written by Cricsheet. */
+  ballInOver: number;
   batting_team: string;
   bowling_team: string;
   striker: string;
@@ -34,77 +40,116 @@ export interface SyncFilters {
   overRange?: string[];
 }
 
+export type CricsheetCsvFormat = 'cricsheet-legacy' | 'cricsheet-csv2';
+
+export interface ParsedMatch {
+  format: CricsheetCsvFormat;
+  info: Record<string, string[]>;
+  rows: CricsheetRow[];
+}
+
+/** Thrown when a file is not a Cricsheet match CSV we understand, or parses to an impossible match. */
+export class CricsheetCsvError extends Error {}
+
+const int = (s: string | undefined) => {
+  const n = parseInt(s ?? '', 10);
+  return Number.isFinite(n) ? n : 0;
+};
+
+/** "19.10" → { over: 19, ballInOver: 10 }: integer parsing of each part, never parseFloat. */
+export function parseOverBall(label: string): { over: number; ballInOver: number } {
+  const m = /^(\d+)\.(\d+)$/.exec((label ?? '').trim());
+  if (!m) throw new CricsheetCsvError(`unrecognised over.ball label "${label}"`);
+  return { over: Number(m[1]), ballInOver: Number(m[2]) };
+}
+
 export class CricsheetCSVParser {
+  /** Parse and validate a file. Throws (never returns zero-filled rows) when the file is not importable. */
   static parse(filePath: string): CricsheetRow[] {
     if (!fs.existsSync(filePath)) {
-      throw new Error(`Cricsheet CSV file not found at path: ${filePath}`);
+      throw new CricsheetCsvError('Cricsheet CSV file not found');
     }
+    const parsed = CricsheetCSVParser.parseText(fs.readFileSync(filePath, 'utf-8'));
+    const issues = validateParsedMatch(parsed);
+    if (issues.length) throw new CricsheetCsvError(`refusing to import: ${issues.join('; ')}`);
+    return parsed.rows;
+  }
 
-    const rawData = fs.readFileSync(filePath, 'utf-8');
-    const lines = rawData.split(/\r?\n/).filter((line) => line.trim().length > 0);
-    const headers = lines[0].split(',').map((h) => h.trim());
-    
-    const rows: CricsheetRow[] = [];
-    
-    const hIdx = (name: string) => headers.indexOf(name);
-    
-    const idxMatchId = hIdx('match_id');
-    const idxSeason = hIdx('season');
-    const idxDate = hIdx('start_date');
-    const idxVenue = hIdx('venue');
-    const idxInnings = hIdx('innings');
-    const idxBall = hIdx('ball');
-    const idxBattingTeam = hIdx('batting_team');
-    const idxBowlingTeam = hIdx('bowling_team');
-    const idxStriker = hIdx('striker');
-    const idxNonStriker = hIdx('non_striker');
-    const idxBowler = hIdx('bowler');
-    const idxBatRuns = hIdx('runs_off_bat') !== -1 ? hIdx('runs_off_bat') : hIdx('batter_runs');
-    const idxExtras = hIdx('extras') !== -1 ? hIdx('extras') : hIdx('extra_runs');
-    const idxWides = hIdx('wides');
-    const idxNoballs = hIdx('noballs');
-    const idxByes = hIdx('byes');
-    const idxLegByes = hIdx('legbyes');
-    const idxPenalty = hIdx('penalty');
-    const idxWicketType = hIdx('wicket_type') !== -1 ? hIdx('wicket_type') : hIdx('kind');
-    const idxPlayerDismissed = hIdx('player_dismissed') !== -1 ? hIdx('player_dismissed') : hIdx('player_out');
-    
-    for (let i = 1; i < lines.length; i++) {
-      const cols = lines[i].split(',').map(c => c.trim());
-      if (cols.length < headers.length) continue;
+  /**
+   * Two Cricsheet formats are recognised:
+   *   - legacy ("version,…", then "info,…" and "ball,…" rows): what ipl_csv/ contains;
+   *   - CSV2 (a header row with match_id, innings, ball, …): the *_csv2 downloads.
+   * Anything else throws. Quoted fields (venue names contain commas) are handled by an RFC-4180 reader.
+   */
+  static parseText(text: string): ParsedMatch {
+    const records = parseCsv(text.replace(/^﻿/, '')).filter((r) => r.some((f) => f.trim() !== ''));
+    if (!records.length) throw new CricsheetCsvError('empty file');
+    const first = records[0].map((f) => f.trim());
+    if (first[0] === 'version') return CricsheetCSVParser.parseLegacy(records);
+    if (first.includes('match_id') && first.includes('ball') && first.includes('innings')) return CricsheetCSVParser.parseCsv2(records);
+    throw new CricsheetCsvError(`unrecognised CSV format (first row starts "${first.slice(0, 3).join(',')}")`);
+  }
 
-      const overStr = cols[idxBall] || "0.1";
-      
-      const row: CricsheetRow = {
-        match_id: cols[idxMatchId],
-        season: cols[idxSeason],
-        start_date: cols[idxDate],
-        venue: cols[idxVenue],
-        innings: parseInt(cols[idxInnings], 10) || 1,
-        ball: parseFloat(overStr),
-        overStr: overStr,
-        batting_team: cols[idxBattingTeam],
-        bowling_team: cols[idxBowlingTeam],
-        striker: cols[idxStriker],
-        non_striker: cols[idxNonStriker],
-        bowler: cols[idxBowler],
-        runs_off_bat: parseInt(cols[idxBatRuns], 10) || 0,
-        extras: parseInt(cols[idxExtras], 10) || 0,
-        wides: idxWides !== -1 ? parseInt(cols[idxWides], 10) || 0 : 0,
-        noballs: idxNoballs !== -1 ? parseInt(cols[idxNoballs], 10) || 0 : 0,
-        byes: idxByes !== -1 ? parseInt(cols[idxByes], 10) || 0 : 0,
-        legbyes: idxLegByes !== -1 ? parseInt(cols[idxLegByes], 10) || 0 : 0,
-        penalty: idxPenalty !== -1 ? parseInt(cols[idxPenalty], 10) || 0 : 0,
-        wicket_type: cols[idxWicketType] || "",
-        player_dismissed: cols[idxPlayerDismissed] || "",
-        other_wicket_type: "",
-        other_player_dismissed: ""
+  private static parseLegacy(records: string[][]): ParsedMatch {
+    const info: Record<string, string[]> = {};
+    const balls: string[][] = [];
+    for (const r of records) {
+      if (r[0] === 'info') (info[r[1]] ??= []).push(r.slice(2).join(','));
+      else if (r[0] === 'ball') balls.push(r);
+    }
+    const teams = info['team'] ?? [];
+    if (teams.length !== 2) throw new CricsheetCsvError(`expected 2 teams in info rows, found ${teams.length}`);
+    const one = (k: string) => (info[k] ?? [''])[0];
+    // ball, innings, over.ball, batting team, striker, non-striker, bowler, runs off bat, extras,
+    // wides, no-balls, byes, leg-byes, penalty, wicket kind, player out, …
+    const rows: CricsheetRow[] = balls.map((b) => {
+      const label = b[2];
+      const { over, ballInOver } = parseOverBall(label);
+      const battingTeam = b[3];
+      return {
+        match_id: one('match_id'), season: one('season'), start_date: one('date'), venue: one('venue'),
+        innings: int(b[1]) || 1, ball: over + ballInOver / 10, overStr: label, over, ballInOver,
+        batting_team: battingTeam, bowling_team: teams.find((t) => t !== battingTeam) ?? '',
+        striker: b[4], non_striker: b[5], bowler: b[6],
+        runs_off_bat: int(b[7]), extras: int(b[8]), wides: int(b[9]), noballs: int(b[10]), byes: int(b[11]),
+        legbyes: int(b[12]), penalty: int(b[13]), wicket_type: (b[14] ?? '').trim(), player_dismissed: (b[15] ?? '').trim(),
+        other_wicket_type: '', other_player_dismissed: '',
       };
-      
-      rows.push(row);
-    }
-    
-    return rows;
+    });
+    return { format: 'cricsheet-legacy', info, rows };
+  }
+
+  private static parseCsv2(records: string[][]): ParsedMatch {
+    const headers = records[0].map((h) => h.trim());
+    const col = (...names: string[]) => names.map((n) => headers.indexOf(n)).find((i) => i !== -1) ?? -1;
+    const need = {
+      match_id: col('match_id'), innings: col('innings'), ball: col('ball'), batting_team: col('batting_team'),
+      striker: col('striker'), bowler: col('bowler'), runs_off_bat: col('runs_off_bat', 'batter_runs'), extras: col('extras', 'extra_runs'),
+    };
+    const missing = Object.entries(need).filter(([, i]) => i === -1).map(([k]) => k);
+    if (missing.length) throw new CricsheetCsvError(`CSV2 header lacks: ${missing.join(', ')}`);
+    const ix = {
+      season: col('season'), date: col('start_date'), venue: col('venue'), bowling_team: col('bowling_team'), non_striker: col('non_striker'),
+      wides: col('wides'), noballs: col('noballs'), byes: col('byes'), legbyes: col('legbyes'), penalty: col('penalty'),
+      wicket_type: col('wicket_type', 'kind'), player_dismissed: col('player_dismissed', 'player_out'),
+      other_wicket_type: col('other_wicket_type'), other_player_dismissed: col('other_player_dismissed'),
+    };
+    const get = (r: string[], i: number) => (i === -1 ? '' : (r[i] ?? '').trim());
+    const rows: CricsheetRow[] = records.slice(1).map((r) => {
+      const label = get(r, need.ball);
+      const { over, ballInOver } = parseOverBall(label);
+      return {
+        match_id: get(r, need.match_id), season: get(r, ix.season), start_date: get(r, ix.date), venue: get(r, ix.venue),
+        innings: int(get(r, need.innings)) || 1, ball: over + ballInOver / 10, overStr: label, over, ballInOver,
+        batting_team: get(r, need.batting_team), bowling_team: get(r, ix.bowling_team), striker: get(r, need.striker),
+        non_striker: get(r, ix.non_striker), bowler: get(r, need.bowler), runs_off_bat: int(get(r, need.runs_off_bat)),
+        extras: int(get(r, need.extras)), wides: int(get(r, ix.wides)), noballs: int(get(r, ix.noballs)), byes: int(get(r, ix.byes)),
+        legbyes: int(get(r, ix.legbyes)), penalty: int(get(r, ix.penalty)), wicket_type: get(r, ix.wicket_type),
+        player_dismissed: get(r, ix.player_dismissed), other_wicket_type: get(r, ix.other_wicket_type),
+        other_player_dismissed: get(r, ix.other_player_dismissed),
+      };
+    });
+    return { format: 'cricsheet-csv2', info: {}, rows };
   }
 
   static enrichRow(row: CricsheetRow) {
@@ -129,6 +174,34 @@ export class CricsheetCSVParser {
     
     return row as any;
   }
+}
+
+/**
+ * Consistency checks run before any import. A parsed match is rejected (never imported as zeros) when:
+ *   - it has no deliveries, or every delivery scored zero runs (a format/column mismatch, not cricket);
+ *   - any delivery's extras differ from wides + no-balls + byes + leg-byes + penalty;
+ *   - legacy files: the first-innings total + 1 differs from the recorded chase target
+ *     (skipped for rain-revised targets: a `method` row, or target overs below the scheduled overs).
+ */
+export function validateParsedMatch(m: ParsedMatch): string[] {
+  const issues: string[] = [];
+  const rows = m.rows;
+  if (!rows.length) return ['no deliveries parsed'];
+  const total = rows.reduce((s, r) => s + r.runs_off_bat + r.extras, 0);
+  if (total === 0) issues.push(`${rows.length} deliveries parsed but every one scored 0 runs — a column mismatch, not a real match`);
+  const badExtras = rows.filter((r) => r.extras !== r.wides + r.noballs + r.byes + r.legbyes + r.penalty).length;
+  if (badExtras) issues.push(`${badExtras} deliveries whose extras do not equal the sum of extra types`);
+  if (m.format === 'cricsheet-legacy') {
+    const target = (m.info['target_runs'] ?? []).map((v) => v.split(',')).find((p) => p[0] === '2');
+    const scheduled = Number((m.info['overs'] ?? ['20'])[0]);
+    const revised = (m.info['method'] ?? []).length > 0 ||
+      (m.info['target_overs'] ?? []).some((v) => { const [inn, ov] = v.split(','); return inn === '2' && Number(ov) !== scheduled; });
+    if (target && !revised) {
+      const first = rows.filter((r) => r.innings === 1).reduce((s, r) => s + r.runs_off_bat + r.extras, 0);
+      if (first + 1 !== Number(target[1])) issues.push(`first-innings total ${first} + 1 does not equal the recorded target ${target[1]}`);
+    }
+  }
+  return issues;
 }
 
 export class SyncEngine {
@@ -173,6 +246,13 @@ export class SyncEngine {
     return false;
   }
 
+  /**
+   * Field meanings (names kept for compatibility; they differ from same-named metrics elsewhere):
+   *   - boundaryPct      = % of all runs scored in 4s and 6s (elsewhere boundaryPct is boundaries per 100 balls);
+   *   - ballsPerBoundary = deliveries (wides and no-balls included) per boundary;
+   *   - trueEconomy      = runs NOT scored in boundaries per 6 deliveries (wides and no-balls included). It is not
+   *                        the "True Economy" of the stats pages (bowler economy minus match-baseline economy).
+   */
   static aggregateData(filteredRows: any[]) {
     const pipeline = {
       total_runs: 0,

@@ -1,0 +1,165 @@
+{
+ "articleId": "cf-rr-050",
+ "generatedAt": "2026-10-26T04:23:24.478Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "os-active": {
+   "value": 54,
+   "display": "54",
+   "label": "Average days from Rajasthan Royals' first to last match of a season",
+   "unit": "days",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 17,
+    "unit": "seasons"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "plausibility range 20–90 for days",
+    "passed": true,
+    "detail": "value 54.470588235294116"
+   }
+  },
+  "os-gap": {
+   "value": 295,
+   "display": "295",
+   "label": "Average days between Rajasthan Royals' last match of one season and first of the next",
+   "unit": "days",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Consecutive seasons",
+   "sampleSize": {
+    "n": 14,
+    "unit": "gaps"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "plausibility range 200–400 for days",
+    "passed": true,
+    "detail": "value 294.92857142857144"
+   }
+  },
+  "os-share": {
+   "value": 84,
+   "display": "84%",
+   "label": "Share of the cycle with no RR matches",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Derived from the two averages",
+   "sampleSize": {
+    "n": 14,
+    "unit": "gaps"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "gap ÷ (gap + season)",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "os-series": {
+   "label": "RR season length by year",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Days from the franchise's first to last match of the season",
+   "sampleSize": {
+    "n": 251,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "rows": [
+    {
+     "season": "2008",
+     "daysActive": 44,
+     "matches": 16
+    },
+    {
+     "season": "2009",
+     "daysActive": 33,
+     "matches": 13
+    },
+    {
+     "season": "2010",
+     "daysActive": 36,
+     "matches": 14
+    },
+    {
+     "season": "2011",
+     "daysActive": 42,
+     "matches": 13
+    },
+    {
+     "season": "2012",
+     "daysActive": 45,
+     "matches": 16
+    },
+    {
+     "season": "2013",
+     "daysActive": 49,
+     "matches": 18
+    },
+    {
+     "season": "2014",
+     "daysActive": 38,
+     "matches": 14
+    },
+    {
+     "season": "2015",
+     "daysActive": 41,
+     "matches": 14
+    },
+    {
+     "season": "2018",
+     "daysActive": 45,
+     "matches": 15
+    },
+    {
+     "season": "2019",
+     "daysActive": 41,
+     "matches": 14
+    },
+    {
+     "season": "2020",
+     "daysActive": 41,
+     "matches": 14
+    },
+    {
+     "season": "2021",
+     "daysActive": 179,
+     "matches": 14
+    },
+    {
+     "season": "2022",
+     "daysActive": 62,
+     "matches": 17
+    },
+    {
+     "season": "2023",
+     "daysActive": 48,
+     "matches": 14
+    },
+    {
+     "season": "2024",
+     "daysActive": 62,
+     "matches": 15
+    },
+    {
+     "season": "2025",
+     "daysActive": 59,
+     "matches": 14
+    },
+    {
+     "season": "2026",
+     "daysActive": 61,
+     "matches": 16
+    }
+   ]
+  }
+ }
+}

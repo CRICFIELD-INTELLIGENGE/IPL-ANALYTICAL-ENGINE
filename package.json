@@ -9,6 +9,11 @@
     "update-ipl-data": "pnpm --filter @workspace/scripts run update-ipl-data"
   },
   "private": true,
+  "packageManager": "pnpm@11.1.2",
+  "engines": {
+    "node": ">=24 <25",
+    "pnpm": "11.1.2"
+  },
   "workspaces": [
     "artifacts/*",
     "lib/*",

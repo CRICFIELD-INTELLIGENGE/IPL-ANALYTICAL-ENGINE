@@ -160,20 +160,6 @@ const TOOLS_CATALOGUE: ToolItem[] = [
     evidence: "9 Autonomous bot bidding strategies"
   },
   {
-    id: "cardverse",
-    name: "Cardverse",
-    category: "play",
-    badge: "LIVE",
-    subtitle: "Collect & Compare",
-    description: "Collect data-backed digital cards of IPL stars. Build strategic playing XIs, challenge rivals, and compare stat radars.",
-    icon: Layers,
-    iconColor: "text-rose-400",
-    bgGlow: "group-hover:border-rose-500/40 bg-rose-500/5",
-    href: "/shop",
-    metric: "250+ Dynamic Cards",
-    evidence: "Live stat attribute updates based on match form"
-  },
-  {
     id: "time-machine",
     name: "Time Machine",
     category: "discover",
@@ -435,54 +421,6 @@ export default function FanArenaPage() {
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════
-            SECTION 02: BROADCASTER LEADERBOARD AD BANNER (JioHotstar)
-           ═══════════════════════════════════════════════════════════════════ */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="relative rounded-2xl bg-gradient-to-r from-[#071329] via-[#0A1A3A] to-[#120F2B] border border-white/10 p-3.5 sm:p-4 overflow-hidden shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
-            
-            {/* Ambient glow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#00D9FF]/5 to-[#9B35FF]/10 pointer-events-none" />
-
-            {/* Left Content */}
-            <div className="flex items-center gap-4 relative z-10">
-              <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest px-1.5 py-0.5 rounded border border-white/5 bg-black/40">
-                ADVERTISEMENT
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-400 to-yellow-200 flex items-center justify-center text-slate-950 font-black text-xs shadow-sm">
-                  ★
-                </div>
-                <div className="font-bold text-white text-sm">
-                  JioHotstar
-                </div>
-              </div>
-              <div className="hidden sm:block h-6 w-px bg-white/10" />
-              <div>
-                <div className="text-xs sm:text-sm font-bold text-white">
-                  Experience every match on JioHotstar
-                </div>
-                <div className="text-[10px] text-slate-400 font-mono">
-                  Live sports. Highlights. Replays.
-                </div>
-              </div>
-            </div>
-
-            {/* Right Action */}
-            <div className="relative z-10 flex items-center gap-3">
-              <a
-                href="https://www.hotstar.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] hover:from-[#7C3AED] hover:to-[#9333EA] text-white text-xs font-bold transition-all shadow-md shadow-purple-500/20 flex items-center gap-1.5 cursor-pointer"
-              >
-                <span>Watch Now</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════════════════════════════════════════
             SECTION 03: THREE PARTICIPATORY IDENTITIES ("Three Modes")
            ═══════════════════════════════════════════════════════════════════ */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
@@ -653,7 +591,7 @@ export default function FanArenaPage() {
                   {[
                     "Auction War Room",
                     "Time Machine & Simulations",
-                    "Cardverse & Strategy Decks"
+                    "Strategy Games"
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-center gap-2.5 text-xs text-slate-300">
                       <div className="w-4 h-4 rounded-full bg-[#9B35FF]/20 border border-[#9B35FF]/40 flex items-center justify-center shrink-0">

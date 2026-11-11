@@ -1,0 +1,153 @@
+{
+ "articleId": "cf-gt-053",
+ "generatedAt": "2026-10-26T04:26:37.200Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "hw-r1": {
+   "value": "Shubman Gill",
+   "display": "Shubman Gill",
+   "label": "Gujarat Titans' leading run-scorer",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 13058,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "hw-r1s": {
+   "value": 24,
+   "display": "24%",
+   "label": "Share of Gujarat Titans' runs scored by that player",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 13058,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 13058"
+   }
+  },
+  "hw-top3": {
+   "value": 52,
+   "display": "52%",
+   "label": "Share of Gujarat Titans' runs scored by the top three run-scorers",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 13058,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 13058"
+   }
+  },
+  "hw-w1": {
+   "value": "Rashid Khan",
+   "display": "Rashid Khan",
+   "label": "Gujarat Titans' leading wicket-taker",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-credited dismissals",
+   "sampleSize": {
+    "n": 480,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "hw-w1s": {
+   "value": 18,
+   "display": "18%",
+   "label": "Share of Gujarat Titans' bowler wickets taken by that player",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 480,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 100 wickets",
+    "passed": true,
+    "detail": "n = 480"
+   }
+  }
+ },
+ "tables": {
+  "hw-top": {
+   "label": "GT leading run-scorers",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, all seasons",
+   "sampleSize": {
+    "n": 13058,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) GROUP BY pl.name ORDER BY runs DESC",
+   "rows": [
+    {
+     "player": "Shubman Gill",
+     "runs": 3181,
+     "share": 24.4
+    },
+    {
+     "player": "B Sai Sudharsan",
+     "runs": 2515,
+     "share": 19.3
+    },
+    {
+     "player": "JC Buttler",
+     "runs": 1064,
+     "share": 8.1
+    },
+    {
+     "player": "DA Miller",
+     "runs": 950,
+     "share": 7.3
+    },
+    {
+     "player": "HH Pandya",
+     "runs": 833,
+     "share": 6.4
+    },
+    {
+     "player": "WP Saha",
+     "runs": 824,
+     "share": 6.3
+    },
+    {
+     "player": "R Tewatia",
+     "runs": 781,
+     "share": 6
+    },
+    {
+     "player": "Washington Sundar",
+     "runs": 510,
+     "share": 3.9
+    }
+   ]
+  }
+ }
+}

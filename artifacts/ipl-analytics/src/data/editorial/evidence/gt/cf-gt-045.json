@@ -1,0 +1,265 @@
+{
+ "articleId": "cf-gt-045",
+ "generatedAt": "2026-10-26T04:29:52.542Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "dr-n-seasons": {
+   "value": 5,
+   "display": "5",
+   "label": "GT seasons in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons with matches",
+   "sampleSize": {
+    "n": 5,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "plausibility range 1–19 for seasons",
+    "passed": true,
+    "detail": "value 5"
+   }
+  },
+  "dr-titles": {
+   "value": 1,
+   "display": "1",
+   "label": "GT titles, as winner of the season's final",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Final = last match of each season",
+   "sampleSize": {
+    "n": 3,
+    "unit": "finals"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (14) OR m.team2_id IN (14))",
+   "validation": {
+    "method": "plausibility range 0–6 for titles",
+    "passed": true,
+    "detail": "value 1"
+   }
+  },
+  "dr-playoffs": {
+   "value": 5,
+   "display": "5",
+   "label": "GT seasons with a playoff place",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Points-table playoff result or a final",
+   "sampleSize": {
+    "n": 5,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (14) OR m.team2_id IN (14))",
+   "validation": {
+    "method": "count over season table",
+    "passed": true
+   }
+  },
+  "dr-win-all": {
+   "value": 61,
+   "display": "61.0%",
+   "label": "GT win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 77,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 77"
+   }
+  },
+  "dr-matches": {
+   "value": 77,
+   "display": "77",
+   "label": "GT matches with a result",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 77,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 77"
+   }
+  },
+  "dr-best-year": {
+   "value": "2022",
+   "display": "2022",
+   "label": "GT's best season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 5,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "max over season table",
+    "passed": true
+   }
+  },
+  "dr-best-pct": {
+   "value": 75,
+   "display": "75.0%",
+   "label": "GT win rate in 2022",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022",
+   "sampleSize": {
+    "n": 16,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 16"
+   }
+  },
+  "dr-worst-year": {
+   "value": "2024",
+   "display": "2024",
+   "label": "GT's weakest season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 5,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "min over season table",
+    "passed": true
+   }
+  },
+  "dr-worst-pct": {
+   "value": 41.7,
+   "display": "41.7%",
+   "label": "GT win rate in 2024",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024",
+   "sampleSize": {
+    "n": 12,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 12"
+   }
+  },
+  "dr-above": {
+   "value": 4,
+   "display": "4",
+   "label": "GT seasons winning at least half their decided matches",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 5,
+    "unit": "seasons"
+   },
+   "query": "season table",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "dr-sd": {
+   "value": 10.8,
+   "display": "10.8",
+   "label": "Spread (standard deviation) of Gujarat Titans' season win rates",
+   "unit": "percentage points",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 5,
+    "unit": "seasons"
+   },
+   "query": "season table",
+   "validation": {
+    "method": "sample-size floor ≥ 3 seasons",
+    "passed": true,
+    "detail": "n = 5"
+   }
+  },
+  "dr-drought": {
+   "value": "none",
+   "display": "none",
+   "label": "Gujarat Titans' longest run of consecutive seasons without a playoff place",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 5,
+    "unit": "seasons"
+   },
+   "query": "season table",
+   "validation": {
+    "method": "max run",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "dr-seasons": {
+   "label": "GT season by season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches with a result; position from the league-stage table",
+   "sampleSize": {
+    "n": 77,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (14) OR m.team2_id IN (14))",
+   "rows": [
+    {
+     "season": "2022",
+     "winPct": 75,
+     "matches": 16,
+     "position": 1,
+     "outcome": "Champions"
+    },
+    {
+     "season": "2023",
+     "winPct": 64.7,
+     "matches": 17,
+     "position": 1,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2024",
+     "winPct": 41.7,
+     "matches": 12,
+     "position": 8,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2025",
+     "winPct": 60,
+     "matches": 15,
+     "position": 3,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2026",
+     "winPct": 58.8,
+     "matches": 17,
+     "position": 2,
+     "outcome": "Runners-up"
+    }
+   ]
+  }
+ }
+}

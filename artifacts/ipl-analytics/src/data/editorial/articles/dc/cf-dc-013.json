@@ -1,0 +1,139 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-013",
+ "planId": "cf-dc-013",
+ "franchise": "DC",
+ "aspect": "bowling-fielding",
+ "title": "Wickets Versus Economy: How Delhi Capitals Should Judge Its Bowlers",
+ "slug": "dc-wickets-versus-economy-how-dc-should-judge-its-bowlers",
+ "dek": "Should Delhi Capitals judge bowlers by wickets or by runs conceded? Across thousands of IPL bowling innings, one measure tracks winning more closely.",
+ "excerpt": "In IPL bowling innings, wickets tracks the result more closely than economy. That should shape how Delhi Capitals rate their attack.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "DC"
+ ],
+ "players": [
+  "AR Patel"
+ ],
+ "seasons": [
+  "2008\u20132026",
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "Across IPL bowling innings, economy correlates with winning at {{ev:we-c-econ}} and wickets at {{ev:we-c-wk}}.",
+  "The weaker link is economy, by absolute size.",
+  "Delhi Capitals' most economical bowler-season since 2022 (five or more wickets): {{ev:we-best-name}} at {{ev:we-best-econ}} an over."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Two Ways to Rate a Bowler",
+   "body": [
+    "Wicket-takers make headlines; economical bowlers win quiet arguments in analytics departments. The two measures overlap, because wickets slow scoring, but they are not the same thing.",
+    "CricField took every IPL bowling innings of at least ten overs from matches with a result and correlated the side's economy and wickets with whether it won. Economy correlates at {{ev:we-c-econ}} (lower economy, more wins) and wickets at {{ev:we-c-wk}}."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What the Correlations Say",
+   "body": [
+    "By absolute size, the link between wickets and winning is the stronger one. Neither measure explains most of the outcome, because batting decides the other half of the match.",
+    "The scatter chart places each DC bowler-season since 2022 on both axes, which makes the trade-off visible: some bowlers buy wickets with runs, others save runs without striking."
+   ],
+   "chartIds": [
+    "we-scatter"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Rating the Attack",
+   "body": [
+    "{{ev:we-best-name}} was Delhi Capitals' most economical bowler-season since 2022 among those with five or more wickets, at {{ev:we-best-econ}} an over.",
+    "A balanced attack needs both types. The practical rating combines runs saved against the phase average with a value for each wicket, rather than reading either column on its own."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Why Correlation Is Not the Whole Story",
+   "body": [
+    "Team-level correlations mix bowlers, and wickets late in an innings are worth less than wickets early. A bowler who takes the tenth wicket and one who removes a set opener get the same credit here.",
+    "{{hyp:timing}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Price Both, Weight by Phase",
+   "body": [
+    "Delhi Capitals should judge bowlers on runs saved against the phase average and on wickets weighted by when they fall. The league evidence says wickets carries more of the signal, but not all of it.",
+    "That dual measure would make auction and selection decisions about bowlers far less dependent on headline wicket counts."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "we-scatter",
+   "type": "scatter",
+   "title": "Economy against strike rate",
+   "subtitle": "DC bowler-seasons since 2022, min. 120 balls",
+   "table": "we-scatter",
+   "xKey": "economy",
+   "series": [
+    {
+     "key": "ballsPerWicket",
+     "label": "Balls per wicket"
+    }
+   ],
+   "xLabel": "Economy (runs per over)",
+   "unit": "balls per wicket",
+   "takeaway": "The best bowler-seasons sit low on both axes: cheap and penetrative.",
+   "ariaLabel": "Scatter plot of economy against balls per wicket for DC bowler-seasons since 2022."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "timing",
+   "statement": "Hypothesis: wickets in the first half of an innings are worth several times more than wickets in the last five overs.",
+   "whyUnverified": "A wicket-value model by over and wickets in hand has not been fitted.",
+   "howToTest": "Estimate runs saved per wicket by over from historical innings and re-rank bowlers."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A Delhi Capitals bowler taking a wicket.",
+   "wanted": "AR Patel celebrating a wicket for Delhi Capitals."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-011",
+  "cf-dc-039",
+  "cf-dc-087"
+ ],
+ "seo": {
+  "metaTitle": "Wickets versus economy: how DC should judge bowlers",
+  "metaDescription": "Which tracks IPL wins more closely, wickets or economy, and where Delhi Capitals' bowlers sit on both since 2022."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Economy uses runs charged to the bowler (byes and leg-byes excluded) per legal ball times six. Bowler wickets exclude run outs. Generated from the CricField warehouse by scripts/editorial/engine. Correlations are Pearson coefficients across bowling innings of at least ten overs; economy is negatively related to winning.",
+ "generator": "engine:v1"
+}

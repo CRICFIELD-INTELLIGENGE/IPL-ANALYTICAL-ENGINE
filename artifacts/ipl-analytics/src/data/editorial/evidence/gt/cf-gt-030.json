@@ -1,0 +1,120 @@
+{
+ "articleId": "cf-gt-030",
+ "generatedAt": "2026-10-26T04:26:28.493Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "cap-n": {
+   "value": 3,
+   "display": "3",
+   "label": "GT captains listed",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "captains.json",
+   "sampleSize": {
+    "n": 3,
+    "unit": "captains"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "plausibility range 1–30 for captain count",
+    "passed": true,
+    "detail": "value 3"
+   }
+  },
+  "cap-top": {
+   "value": "Shubman Gill",
+   "display": "Shubman Gill",
+   "label": "GT's longest-serving captain with a franchise-only record",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact records only",
+   "sampleSize": {
+    "n": 43,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "rank by matches",
+    "passed": true
+   }
+  },
+  "cap-top-pct": {
+   "value": 55.8,
+   "display": "55.8%",
+   "label": "Shubman Gill win rate as GT captain",
+   "unit": "%",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 43,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 43"
+   }
+  },
+  "cap-top-n": {
+   "value": 43,
+   "display": "43",
+   "label": "Matches with Shubman Gill as GT captain",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact record",
+   "sampleSize": {
+    "n": 43,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 43"
+   }
+  },
+  "cap-team": {
+   "value": 61,
+   "display": "61.0%",
+   "label": "GT win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 77,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (14) OR m.team2_id IN (14)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 77"
+   }
+  }
+ },
+ "tables": {
+  "cap-tab": {
+   "label": "GT captains with franchise-only records",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Captains whose record covers this franchise alone (min. five matches)",
+   "sampleSize": {
+    "n": 43,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "rows": [
+    {
+     "captain": "Shubman Gill",
+     "seasons": "2024–2026",
+     "matches": 43,
+     "winPct": 55.8,
+     "titles": 0
+    }
+   ]
+  }
+ }
+}

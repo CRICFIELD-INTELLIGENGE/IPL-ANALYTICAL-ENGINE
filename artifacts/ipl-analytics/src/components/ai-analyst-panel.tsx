@@ -1,6 +1,7 @@
+import { CricFieldMascot } from "@/components/CricFieldMascot";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Send } from "lucide-react";
+import { Send } from "lucide-react";
 
 const SUGGESTED = [
   "Why CSK wins more while chasing?",
@@ -9,20 +10,10 @@ const SUGGESTED = [
   "Compare MI vs CSK in playoffs",
 ];
 
-const CANNED: Record<string, string> = {
-  csk: "CSK's chase success rate (62%) is driven by Dhoni-era stable middle order and disciplined death bowling. Average successful chase: 168 runs. Spin-friendly Chepauk inflates this further.",
-  death: "Top death-over batsmen by SR (16-20 overs, last 5 seasons): 1) Suryakumar Yadav 196.3, 2) Glenn Maxwell 188.7, 3) Andre Russell 184.2, 4) Dinesh Karthik 181.5, 5) Hardik Pandya 178.9.",
-  spin: "Best spin venues by economy: Chepauk (6.84), Eden Gardens (7.12), Wankhede (7.45). Worst: M. Chinnaswamy (8.91), Narendra Modi Stadium (8.62).",
-  mi: "MI vs CSK in playoffs: 12 matches, MI leads 8-4. MI averages 178 vs CSK averages 165 in knockouts. Both have 4 of last 14 titles between them.",
-};
-
-function answer(q: string) {
-  const k = q.toLowerCase();
-  if (k.includes("csk") && k.includes("chas")) return CANNED.csk;
-  if (k.includes("death")) return CANNED.death;
-  if (k.includes("spin") || k.includes("venue")) return CANNED.spin;
-  if (k.includes("mi") && k.includes("csk")) return CANNED.mi;
-  return "I've routed your query to the analytics engine. In production this taps the IPL data warehouse and an LLM analyst — try one of the suggested prompts to see a sample response.";
+// This panel has no data connection. It previously returned pre-written answers containing
+// invented statistics; it now only points to the warehouse-backed Ask page.
+function answer(_q: string) {
+  return "This panel isn't connected to the data. Ask the question on the AI Analyst → Ask page (/ai-analyst/ask), which answers from the IPL warehouse.";
 }
 
 export function AIAnalystPanel() {
@@ -46,14 +37,13 @@ export function AIAnalystPanel() {
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <div className="relative w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-            <Sparkles className="w-4 h-4" />
+            <CricFieldMascot activity="analyst" size={30} />
             <span className="absolute inset-0 rounded-xl ring-1 ring-primary/40 animate-pulse" />
           </div>
           <div className="font-display font-semibold">AI ANALYST</div>
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-emerald-400">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]" />
-          Online
+        <div className="flex items-center gap-1.5 text-xs text-white/60">
+          Not connected
         </div>
       </div>
 

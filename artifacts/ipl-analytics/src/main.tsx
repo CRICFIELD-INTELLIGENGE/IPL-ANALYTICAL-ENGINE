@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import { RouteErrorBoundary } from "./components/route-error-boundary";
 import "./index.css";
 
 // Polyfill legacy MediaQueryList.addListener/removeListener for libs that still call them.
@@ -49,4 +50,5 @@ if (typeof window !== "undefined") {
   );
 }
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(<RouteErrorBoundary><App /></RouteErrorBoundary>);
+

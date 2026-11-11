@@ -250,7 +250,7 @@ export function ReportsPage() { return <InsightsPage />; }
 export function BlogsPage() { return <InsightsPage />; }
 
 /* ─────────────────────────────── AI Analyst ─────────────────────────────────── */
-/** Full IPL Decision Intelligence OS — delegated to its own dedicated page file. */
+/** Full CricField Intelligence OS — delegated to its own dedicated page file. */
 export { default as AIAnalystPage } from "@/pages/ai-analyst";
 
 /* ─────────────────────────────── Shared Primitives ─────────────────────────── */

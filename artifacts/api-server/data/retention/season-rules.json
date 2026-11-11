@@ -1,0 +1,96 @@
+{
+  "seasons": [
+    {
+      "season": 2027,
+      "cycle": "mini",
+      "live": true,
+      "rulesStatus": "reported",
+      "squadSeason": 2026,
+      "maxSquad": 25,
+      "maxOverseas": 8,
+      "maxRetained": null,
+      "maxCappedRetained": null,
+      "maxUncappedRetained": null,
+      "retainedCostBasis": "contract",
+      "cappedSlabsLakh": null,
+      "uncappedSlabLakh": null,
+      "rtm": false,
+      "auctionPurseLakh": null,
+      "purseStatus": "unverified",
+      "salaryCapLakh": 15700,
+      "retentionDeadline": { "date": "2026-11-17", "status": "reported", "sourceUrl": "https://www.cricinfo.com/story/ipl-2027-retention-deadline-moved-to-november-17-1561149" },
+      "auction": { "date": "2026-12-16", "venue": "Goa", "status": "reported", "sourceUrl": "https://www.business-standard.com/amp/sports/business/ipl-2027-auction-december-16-goa-retention-deadline-november-15-126102601223_1.html" },
+      "votingLocksAt": "2026-11-16T18:30:00.000Z",
+      "assumptions": [
+        "Deadline and auction dates are press reports citing IPL communication to franchises; no public IPL notice was located.",
+        "Reports in late October gave 15 November as the deadline. ESPNcricinfo later reported it moved to 17 November; CricField could not open that article and uses its headline.",
+        "The 25-player and 8-overseas limits are carried from the 2026 auction and have not been confirmed for 2027.",
+        "The ₹157 Cr figure is a total salary cap, including performance pay and match fees. It is not the auction purse.",
+        "No verified 2027 auction purse has been found, so purse results stay unavailable until season-rules.json carries one.",
+        "Right to Match is treated as unavailable because 2027 is a mini-auction; confirm against the 2027 regulations."
+      ],
+      "sources": [
+        { "label": "ESPNcricinfo: retention deadline moved to 17 November", "url": "https://www.cricinfo.com/story/ipl-2027-retention-deadline-moved-to-november-17-1561149" },
+        { "label": "CricTracker, 26 Oct 2026: earlier 15 November report", "url": "https://www.crictracker.com/cricket-news/bcci-sets-november-15-as-ipl-2027-retention-deadline-ahead-of-auction-3582/" },
+        { "label": "Business Standard: auction and deadline dates", "url": "https://www.business-standard.com/amp/sports/business/ipl-2027-auction-december-16-goa-retention-deadline-november-15-126102601223_1.html" },
+        { "label": "ESPNcricinfo: 2025–27 regulations", "url": "https://www.espncricinfo.com/ci/content/story/1452396.html" }
+      ],
+      "contractGapsLakh": { "CSK": 200, "DC": 345, "KKR": 600, "RR": 400 }
+    },
+    {
+      "season": 2026,
+      "cycle": "mini",
+      "live": false,
+      "rulesStatus": "confirmed",
+      "squadSeason": 2025,
+      "maxSquad": 25,
+      "maxOverseas": 8,
+      "maxRetained": null,
+      "maxCappedRetained": null,
+      "maxUncappedRetained": null,
+      "retainedCostBasis": "contract",
+      "cappedSlabsLakh": null,
+      "uncappedSlabLakh": null,
+      "rtm": false,
+      "auctionPurseLakh": 12500,
+      "purseStatus": "verified",
+      "salaryCapLakh": 15100,
+      "retentionDeadline": { "date": null, "status": "unavailable", "sourceUrl": null },
+      "auction": { "date": "2025-12-16", "venue": "Abu Dhabi", "status": "confirmed", "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2026-player-retentions-announced" },
+      "votingLocksAt": null,
+      "assumptions": [
+        "The ₹125 Cr purse is derived: retained contracts plus the official starting purse equal exactly ₹125 Cr for six franchises on file."
+      ],
+      "sources": [{ "label": "IPL: 2026 player retentions", "url": "https://www.iplt20.com/news/article/tata-ipl-2026-player-retentions-announced" }],
+      "contractGapsLakh": {}
+    },
+    {
+      "season": 2025,
+      "cycle": "mega",
+      "live": false,
+      "rulesStatus": "confirmed",
+      "squadSeason": 2024,
+      "maxSquad": 25,
+      "maxOverseas": 8,
+      "maxRetained": 6,
+      "maxCappedRetained": 5,
+      "maxUncappedRetained": 2,
+      "retainedCostBasis": "slab",
+      "cappedSlabsLakh": [1800, 1400, 1100, 1800, 1400],
+      "uncappedSlabLakh": 400,
+      "rtm": true,
+      "auctionPurseLakh": 12000,
+      "purseStatus": "verified",
+      "salaryCapLakh": 14600,
+      "retentionDeadline": { "date": "2024-10-31", "status": "confirmed", "sourceUrl": "https://www.espncricinfo.com/ci/content/story/1452396.html" },
+      "auction": { "date": "2024-11-24", "venue": "Jeddah", "status": "confirmed", "sourceUrl": null },
+      "votingLocksAt": null,
+      "assumptions": [],
+      "sources": [
+        { "label": "ESPNcricinfo: six retentions, RTM back", "url": "https://www.espncricinfo.com/ci/content/story/1452396.html" },
+        { "label": "Mumbai Indians: retention rules", "url": "https://www.mumbaiindians.com/news/announced-the-retention-rules-for-ipl-2025" }
+      ],
+      "contractGapsLakh": {}
+    }
+  ]
+}

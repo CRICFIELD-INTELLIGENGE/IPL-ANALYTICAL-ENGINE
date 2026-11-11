@@ -15,7 +15,7 @@
 
 import fs from "fs";
 import path from "path";
-import { getProjectRoot, getDecisionDb, normalizeSeason, queryAll } from "./db";
+import { getProjectRoot, getDecisionDb, normalizeSeason, queryAll, RUNS_CONCEDED_SQL } from "./db";
 import { getMatchStages } from "./stats-engine";
 
 export interface BallState {
@@ -131,7 +131,7 @@ export function getTargets(): Map<string, { runs: number; balls: number }> {
 interface Row {
   id: number; inn: number; num: number; mid: string; ov: number;
   bat: number; ns: number; bowl: number; bt: number; wt: number;
-  br: number; tr: number; w: number; nb: number; extra: number; kind: string | null; out: number | null;
+  br: number; tr: number; w: number; nb: number; charged: number; kind: string | null; out: number | null;
 }
 
 let columns: BallColumns | null = null;
@@ -191,7 +191,7 @@ export function getBallColumns(): BallColumns {
     SELECT d.delivery_id id, d.innings_id inn, i.innings_number num, d.match_id mid, d.over_num ov,
       d.batter_id bat, d.non_striker_id ns, d.bowler_id bowl, i.batting_team_id bt, i.bowling_team_id wt,
       d.batter_runs br, d.total_runs tr, d.is_wide w, d.is_noball nb,
-      CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 OR d.is_penalty = 1 THEN d.extra_runs ELSE 0 END extra,
+      ${RUNS_CONCEDED_SQL} charged,
       x.kind kind, x.player_out_id out
     FROM deliveries d
     JOIN innings i ON i.innings_id = d.innings_id
@@ -235,7 +235,7 @@ export function getBallColumns(): BallColumns {
     c.venue[k] = m?.venue ?? -1;
     c.batterRuns[k] = r.br;
     c.totalRuns[k] = r.tr;
-    c.conceded[k] = r.tr - r.extra;
+    c.conceded[k] = r.charged;
     let f = 0;
     if (!r.w && !r.nb) f |= F_LEGAL;
     if (!r.w) f |= F_FACED;

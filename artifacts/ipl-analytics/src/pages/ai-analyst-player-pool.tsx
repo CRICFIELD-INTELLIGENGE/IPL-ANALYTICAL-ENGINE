@@ -1,3 +1,4 @@
+import {PreseasonRecruitment} from "@/components/scout/preseason-recruitment";
 /**
  * PLAYER POOL GRAPH — Decision Intelligence OS, Phase 4 (Intelligence)
  * ─────────────────────────────────────────────────────────────────────────────
@@ -37,6 +38,7 @@ export default function PlayerPoolPage() {
               options={(["batting", "bowling"] as Side[]).map((s) => ({ value: s, label: s === "batting" ? "Batting" : "Bowling", disabled: q.data ? !q.data.sidesAvailable.includes(s) : false }))} />
           </div>
         </ModuleHeader>
+        <PreseasonRecruitment team={p.get("team")??undefined} player={player}/>
         <PlayerPicker onPick={choose} quickPicks={QUICK} />
         {q.isError && <ErrorBanner error={q.error} />}
         {q.isLoading && <Loading label="Building the feature space…" />}

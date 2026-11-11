@@ -1,0 +1,177 @@
+{
+ "articleId": "cf-srh-070",
+ "generatedAt": "2026-10-26T04:22:30.490Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "lr-best": {
+   "value": "Abhishek Sharma's 141 in 2025",
+   "display": "Abhishek Sharma's 141 in 2025",
+   "label": "Sunrisers Hyderabad's highest individual innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 1589,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "lr-bowl": {
+   "value": "B Kumar's 5 for 19 in 2017",
+   "display": "B Kumar's 5 for 19 in 2017",
+   "label": "Sunrisers Hyderabad's best bowling figures",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 1250,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (1) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "max wickets, then fewest runs",
+    "passed": true
+   }
+  },
+  "lr-top-recent": {
+   "value": "five",
+   "display": "five",
+   "label": "Top-ten innings from 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 10,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "lr-all-recent": {
+   "value": 23,
+   "display": "23%",
+   "label": "Share of all SRH innings played in 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 1589,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "sample-size floor ≥ 100 innings",
+    "passed": true,
+    "detail": "n = 1589"
+   }
+  },
+  "lr-bowl-recent": {
+   "value": "two",
+   "display": "two",
+   "label": "Top-ten bowling spells from 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 10,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (1) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "lr-allb-recent": {
+   "value": 22,
+   "display": "22%",
+   "label": "Share of all SRH bowling spells in 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 1250,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (1) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "sample-size floor ≥ 100 spells",
+    "passed": true,
+    "detail": "n = 1250"
+   }
+  }
+ },
+ "tables": {
+  "lr-top": {
+   "label": "Sunrisers Hyderabad's highest individual innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 1589,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (1) ORDER BY f.runs DESC, f.balls_faced",
+   "rows": [
+    {
+     "innings": "Abhishek Sharma, 2025",
+     "runs": 141,
+     "balls": 55
+    },
+    {
+     "innings": "Abhishek Sharma, 2026",
+     "runs": 135,
+     "balls": 68
+    },
+    {
+     "innings": "DA Warner, 2017",
+     "runs": 126,
+     "balls": 59
+    },
+    {
+     "innings": "JM Bairstow, 2019",
+     "runs": 114,
+     "balls": 56
+    },
+    {
+     "innings": "Ishan Kishan, 2025",
+     "runs": 106,
+     "balls": 47
+    },
+    {
+     "innings": "H Klaasen, 2025",
+     "runs": 105,
+     "balls": 39
+    },
+    {
+     "innings": "H Klaasen, 2023",
+     "runs": 104,
+     "balls": 51
+    },
+    {
+     "innings": "TM Head, 2024",
+     "runs": 102,
+     "balls": 41
+    },
+    {
+     "innings": "DA Warner, 2019",
+     "runs": 100,
+     "balls": 55
+    },
+    {
+     "innings": "HC Brook, 2023",
+     "runs": 100,
+     "balls": 55
+    }
+   ]
+  }
+ }
+}

@@ -51,7 +51,7 @@ export function PlatformInfoSheet({ children }: PlatformInfoSheetProps) {
             <span className="text-[10px] font-mono text-white/50">v2.4 TELEMETRY</span>
           </div>
           <SheetTitle className="text-xl font-black uppercase text-white tracking-tight">
-            IPL Intelligence OS × Beyond XI
+            CricField Intelligence OS × Beyond XI
           </SheetTitle>
           <SheetDescription className="text-xs text-white/60">
             Official methodology documentation, data lineage, broadcasting rights notice, and privacy guidelines.
@@ -110,7 +110,7 @@ export function PlatformInfoSheet({ children }: PlatformInfoSheetProps) {
                     2. Beyond XI Fan Ecosystem
                   </div>
                   <p className="text-[11px] text-white/70">
-                    Fan identity and community: franchise-personalized Dugouts, Fan Parliament voting with data evidence drawers, Auction War Room purse simulations, and Cardverse digital decks.
+                    Fan identity and community: franchise-personalized Dugouts, Fan Parliament voting with data evidence drawers, Auction War Room purse simulations.
                   </p>
                 </div>
 

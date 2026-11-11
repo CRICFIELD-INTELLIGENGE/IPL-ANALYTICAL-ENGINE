@@ -99,6 +99,7 @@ export const deliveriesTable = sqliteTable("deliveries", {
   inningsId: integer("innings_id").references(() => inningsTable.inningsId, { onDelete: "cascade" }),
   overNum: integer("over_num").notNull(),
   ballNum: integer("ball_num").notNull(),
+  deliverySeq: integer("delivery_seq"),
   batterId: integer("batter_id").references(() => playersTable.playerId),
   bowlerId: integer("bowler_id").references(() => playersTable.playerId),
   nonStrikerId: integer("non_striker_id").references(() => playersTable.playerId),

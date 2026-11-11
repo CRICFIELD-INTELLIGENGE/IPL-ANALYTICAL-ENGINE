@@ -1,0 +1,188 @@
+{
+ "articleId": "cf-rr-040",
+ "generatedAt": "2026-10-26T04:23:23.999Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "cont-avg": {
+   "value": 64,
+   "display": "64%",
+   "label": "Rajasthan Royals' average season-to-season continuity",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Share of runs plus balls from returning players",
+   "sampleSize": {
+    "n": 15,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.batter_runs ELSE 0 END) runs, SUM(CASE WHEN i.bowling_team_id IN (10) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowled FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (10) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (10) OR i.bowling_team_id IN (10)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 2 seasons",
+    "passed": true,
+    "detail": "n = 15"
+   }
+  },
+  "cont-last": {
+   "value": 61,
+   "display": "61%",
+   "label": "RR continuity in 2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2026",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.batter_runs ELSE 0 END) runs, SUM(CASE WHEN i.bowling_team_id IN (10) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowled FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (10) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (10) OR i.bowling_team_id IN (10)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "taken from the season table",
+    "passed": true
+   }
+  },
+  "cont-hi": {
+   "value": "2024",
+   "display": "2024",
+   "label": "Rajasthan Royals' most continuous season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 15,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.batter_runs ELSE 0 END) runs, SUM(CASE WHEN i.bowling_team_id IN (10) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowled FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (10) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (10) OR i.bowling_team_id IN (10)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "cont-mega": {
+   "value": 49,
+   "display": "49%",
+   "label": "Rajasthan Royals' average continuity in mega-auction seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons after a mega-auction: 2011, 2014, 2018, 2022, 2025",
+   "sampleSize": {
+    "n": 4,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.batter_runs ELSE 0 END) runs, SUM(CASE WHEN i.bowling_team_id IN (10) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowled FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (10) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (10) OR i.bowling_team_id IN (10)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "mean of season table",
+    "passed": true
+   }
+  },
+  "cont-other": {
+   "value": 70,
+   "display": "70%",
+   "label": "Rajasthan Royals' average continuity in other seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All other seasons",
+   "sampleSize": {
+    "n": 11,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.batter_runs ELSE 0 END) runs, SUM(CASE WHEN i.bowling_team_id IN (10) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowled FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (10) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (10) OR i.bowling_team_id IN (10)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "mean of season table",
+    "passed": true
+   }
+  },
+  "cont-lo": {
+   "value": "2022",
+   "display": "2022",
+   "label": "Rajasthan Royals' least continuous season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 15,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.batter_runs ELSE 0 END) runs, SUM(CASE WHEN i.bowling_team_id IN (10) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowled FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (10) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (10) OR i.bowling_team_id IN (10)) GROUP BY year, pl.name",
+   "validation": {
+    "method": "min",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "cont-series": {
+   "label": "RR squad continuity by season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Share of runs scored plus balls bowled by players who also played the previous season",
+   "sampleSize": {
+    "n": 15,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, SUM(CASE WHEN i.batting_team_id IN (10) THEN d.batter_runs ELSE 0 END) runs, SUM(CASE WHEN i.bowling_team_id IN (10) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) bowled FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = CASE WHEN i.batting_team_id IN (10) THEN d.batter_id ELSE d.bowler_id END WHERE i.innings_number <= 2 AND (i.batting_team_id IN (10) OR i.bowling_team_id IN (10)) GROUP BY year, pl.name",
+   "rows": [
+    {
+     "season": "2009",
+     "continuity": 69
+    },
+    {
+     "season": "2010",
+     "continuity": 49.4
+    },
+    {
+     "season": "2011",
+     "continuity": 42.9
+    },
+    {
+     "season": "2012",
+     "continuity": 72.6
+    },
+    {
+     "season": "2013",
+     "continuity": 78.2
+    },
+    {
+     "season": "2014",
+     "continuity": 60.8
+    },
+    {
+     "season": "2015",
+     "continuity": 83.4
+    },
+    {
+     "season": "2019",
+     "continuity": 78.2
+    },
+    {
+     "season": "2020",
+     "continuity": 65.5
+    },
+    {
+     "season": "2021",
+     "continuity": 53.4
+    },
+    {
+     "season": "2022",
+     "continuity": 37.2
+    },
+    {
+     "season": "2023",
+     "continuity": 76.4
+    },
+    {
+     "season": "2024",
+     "continuity": 83.9
+    },
+    {
+     "season": "2025",
+     "continuity": 54.5
+    },
+    {
+     "season": "2026",
+     "continuity": 61.1
+    }
+   ]
+  }
+ }
+}

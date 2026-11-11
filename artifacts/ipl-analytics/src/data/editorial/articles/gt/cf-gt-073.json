@@ -1,0 +1,151 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-gt-073",
+ "planId": "cf-gt-073",
+ "franchise": "GT",
+ "aspect": "scouting",
+ "title": "The Role-Fit Test: Why Good Players Can Be Wrong Signings for Gujarat Titans",
+ "slug": "gt-the-role-fit-test-why-good-players-can-be-wrong-signings-for-gt",
+ "dek": "A good player is not always a good signing. Batters who scored more slowly for Gujarat Titans than for other teams show how often role and fit change output.",
+ "excerpt": "Of the batters who have played substantially for Gujarat Titans and for other sides, some scored notably slower for GT, and some notably faster. Fit, not only ability, decided which.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "GT"
+ ],
+ "players": [
+  "HH Pandya",
+  "WP Saha"
+ ],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:rf-both}} batters have at least one hundred and fifty balls both for GT and for other teams.",
+  "{{ev:rf-drops-n}} of them scored at least ten points slower relative to the season average for GT; {{ev:rf-lifts}} scored at least ten points faster.",
+  "Relative strike rate elsewhere and for GT correlate at {{ev:rf-r}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Ability Is Not Fit",
+   "body": [
+    "A batter's output depends on role: batting position, the phase he enters, the partners around him and the instructions he is given. A strong player in the wrong role can look ordinary.",
+    "CricField compared every batter with at least one hundred and fifty balls both for Gujarat Titans and for other teams, using strike rate relative to the season average so that eras compare fairly."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Who Changed",
+   "body": [
+    "Of {{ev:rf-both}} such batters, {{ev:rf-drops-n}} scored at least ten points slower relative to the season average for GT, and {{ev:rf-lifts}} scored at least ten points faster.",
+    "The chart lists the largest drops. Their output elsewhere was a poor guide to what they gave GT."
+   ],
+   "chartIds": [
+    "rf-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "How Predictive Is Past Output?",
+   "body": [
+    "Relative strike rate elsewhere and for GT correlate at {{ev:rf-r}}. Past output carries information, but role and context account for much of the rest.",
+    "{{hyp:fit}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Caveats",
+   "body": [
+    "Players move between teams at different stages of their careers, so some drops are ageing rather than fit. Strike rate also ignores dismissals.",
+    "The comparison is a screening tool, not a verdict on any player."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Sign for the Role",
+   "body": [
+    "Gujarat Titans should sign batters for a defined role and check whether their past output came in a similar one.",
+    "A player's record in the same batting position and phase is a better guide than his overall numbers."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "rf-chart",
+   "type": "bar",
+   "title": "Slower for GT than elsewhere",
+   "subtitle": "Strike rate relative to season average (100 = average)",
+   "table": "rf-drops",
+   "xKey": "batter",
+   "series": [
+    {
+     "key": "forFranchise",
+     "label": "For GT"
+    },
+    {
+     "key": "elsewhere",
+     "label": "Elsewhere"
+    }
+   ],
+   "unit": "index (100 = season average)",
+   "takeaway": "Some batters scored notably slower in this franchise's colours.",
+   "ariaLabel": "Horizontal grouped bar chart comparing batters' relative strike rates for GT and for other teams."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "fit",
+   "statement": "Hypothesis: most of the strike-rate drop for batters who moved to the franchise is explained by a change in batting position.",
+   "whyUnverified": "Batting position by team has not been compared for these players.",
+   "howToTest": "Compare each batter's position distribution for the franchise and elsewhere and re-test within positions."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "150",
+   "reason": "Minimum balls stated in a table label."
+  },
+  {
+   "text": "100",
+   "reason": "Index baseline (season average = 100)."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A new signing finding his role at Gujarat Titans.",
+   "wanted": "Gujarat Titans batter."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-gt-076",
+  "cf-gt-071",
+  "cf-gt-039"
+ ],
+ "seo": {
+  "metaTitle": "The role-fit test: why good players can be wrong signings for GT",
+  "metaDescription": "Batters who scored more slowly for Gujarat Titans than for other teams, and what that says about signing for a role."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Relative strike rate = runs \u00f7 (balls \u00d7 season-average runs per ball) \u00d7 100, combined across seasons.",
+ "generator": "engine:v1"
+}

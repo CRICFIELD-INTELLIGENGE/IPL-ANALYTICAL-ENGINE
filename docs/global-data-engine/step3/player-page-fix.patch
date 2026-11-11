@@ -1,0 +1,279 @@
+diff --git a/artifacts/ipl-analytics/src/pages/player.tsx b/artifacts/ipl-analytics/src/pages/player.tsx
+index f8de341..5cdca00 100644
+--- a/artifacts/ipl-analytics/src/pages/player.tsx
++++ b/artifacts/ipl-analytics/src/pages/player.tsx
+@@ -15,6 +15,7 @@ import {
+ import { CricketStadium3D } from "@/components/cricket3d/CricketStadium3D";
+ import { GroundScoringWagonWheel, BowlingHeatmap, DeliveryTypeBreakdown, ShotZoneMap, DismissalZonesMap } from "@/components/visualizations/spatial-analytics";
+ import { PlayerIntelPanel } from "@/components/decision/intel-panels";
++import { usePlayerRecentMatches } from "@/lib/player-recent-matches";
+ import {
+   useTopBatters, useTopBowlers, usePlayerImages, useSeasons,
+   usePlayerSeasonStats, useSquadsBySeason, usePlayerDisplayNames, useCaptains, usePlayerLatestTeams,
+@@ -111,16 +112,6 @@ export default function PlayerProfilePage() {
+     staleTime: 1000 * 60 * 60,
+   });
+ 
+-  const playerRecentMatchesQuery = useQuery<Record<string, any[]>>({
+-    queryKey: ["player-recent-matches"],
+-    queryFn: async () => {
+-      const res = await fetch(`${import.meta.env.BASE_URL}data/player-recent-matches.json`);
+-      if (!res.ok) return {};
+-      return res.json();
+-    },
+-    staleTime: 1000 * 60 * 60,
+-  });
+-
+   const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "recent" | "matchups" | "card">("overview");
+ 
+   // Exact-only comparison. The previous version also accepted "same first
+@@ -397,6 +388,9 @@ export default function PlayerProfilePage() {
+     return "IPL";
+   };
+ 
++  // Declared before primaryTeam, which reads it (it used to be declared after, which threw on every render).
++  const playerRecentMatches = usePlayerRecentMatches(slug, bio);
++
+   const primaryTeam = useMemo(() => {
+     // RULE B (General Player Bio / DP): Lead with latest actual played IPL match appearance
+     if (playerRecentMatches && playerRecentMatches.length > 0) {
+@@ -428,53 +422,6 @@ export default function PlayerProfilePage() {
+     return fallbackNum && fallbackNum < 100 ? String(fallbackNum).padStart(2, "0") : "04";
+   }, [playerJerseysQuery.data, bio, slug]);
+ 
+-  const playerRecentMatches = useMemo(() => {
+-    if (!playerRecentMatchesQuery.data) return [];
+-    const map = playerRecentMatchesQuery.data;
+-    const mapKeys = Object.keys(map);
+-    const s = slug?.toLowerCase()?.trim() || "";
+-    const nameSlug = bio?.playerName?.toLowerCase()?.replace(/[^a-z0-9]+/g, "-") || "";
+-    const fullSlug = bio?.fullName?.toLowerCase()?.replace(/[^a-z0-9]+/g, "-") || "";
+-
+-    // 1. Direct match by slug or names
+-    if (map[s] && map[s].length > 0) return map[s];
+-    if (map[nameSlug] && map[nameSlug].length > 0) return map[nameSlug];
+-    if (map[fullSlug] && map[fullSlug].length > 0) return map[fullSlug];
+-
+-    // 2. Initial + surname matching (e.g. "virat-kohli" -> "v-kohli", "tm-head", "jj-bumrah")
+-    const parts = s.split("-").filter(Boolean);
+-    if (parts.length >= 2) {
+-      const initial = parts[0][0];
+-      const surname = parts[parts.length - 1];
+-      const candidate1 = `${initial}-${surname}`;
+-      if (map[candidate1] && map[candidate1].length > 0) return map[candidate1];
+-
+-      const candidate2 = mapKeys.find(k => {
+-        const kp = k.split("-");
+-        return kp.length >= 2 && kp[kp.length - 1] === surname && kp[0].startsWith(initial);
+-      });
+-      if (candidate2 && map[candidate2] && map[candidate2].length > 0) return map[candidate2];
+-    }
+-
+-    // 3. Surname match if distinct
+-    if (parts.length > 0) {
+-      const surname = parts[parts.length - 1];
+-      if (surname.length >= 4) {
+-        const candidate3 = mapKeys.find(k => k.endsWith(`-${surname}`) || k === surname);
+-        if (candidate3 && map[candidate3] && map[candidate3].length > 0) return map[candidate3];
+-      }
+-    }
+-
+-    // 4. Clean fuzzy search
+-    const cleanS = s.replace(/[^a-z0-9]/g, "");
+-    const cleanN = nameSlug.replace(/[^a-z0-9]/g, "");
+-    const matchedKey = mapKeys.find(k => {
+-      const cleanK = k.replace(/[^a-z0-9]/g, "");
+-      return cleanK === cleanS || cleanK === cleanN || (cleanS.length > 4 && cleanK.includes(cleanS)) || (cleanK.length > 4 && cleanS.includes(cleanK));
+-    });
+-    return matchedKey ? map[matchedKey] : [];
+-  }, [playerRecentMatchesQuery.data, slug, bio]);
+-
+   // Matchup filter states
+   const [vsPlayerName, setVsPlayerName] = useState<string>("");
+   const [searchQuery, setSearchQuery] = useState<string>("");
+diff --git a/artifacts/ipl-analytics/src/lib/player-recent-matches.ts b/artifacts/ipl-analytics/src/lib/player-recent-matches.ts
+new file mode 100644
+index 0000000..0c3f18a
+--- /dev/null
++++ b/artifacts/ipl-analytics/src/lib/player-recent-matches.ts
+@@ -0,0 +1,111 @@
++// Recent matches for the player page, loaded per player instead of as one 34 MB file.
++//
++// scripts/split-player-recent-matches.mjs writes, next to the full file:
++//   data/player-recent-matches/index.json     { keys: { [key]: [shard, matchCount] } }
++//   data/player-recent-matches/<shard>.json   one player's match log (alias keys share a shard)
++// The page downloads the index and one shard. If the index is missing (split not generated or not
++// deployed) it falls back to the full file, so the page never depends on the split existing.
++
++import { useMemo } from "react";
++import { useQuery } from "@tanstack/react-query";
++
++// eslint-disable-next-line @typescript-eslint/no-explicit-any
++export type RecentMatch = any;
++type BioNames = { playerName?: string; fullName?: string } | null | undefined;
++interface RecentMatchesIndex { keys: Record<string, [string, number]> }
++
++const EMPTY: RecentMatch[] = [];
++const HOUR = 1000 * 60 * 60;
++
++/**
++ * Finds the key for a player. The steps and their order are exactly those the player page used when it
++ * held the whole map (exact slug/name keys, then initial + surname, then surname, then a loose match);
++ * `lengths` maps every key to its match count, in the file's key order.
++ */
++export function resolveRecentMatchesKey(lengths: Record<string, number>, slug: string | undefined, bio: BioNames): string | null {
++  const has = (k: string | undefined): boolean => !!k && (lengths[k] ?? 0) > 0;
++  const mapKeys = Object.keys(lengths);
++  const s = slug?.toLowerCase()?.trim() || "";
++  const nameSlug = bio?.playerName?.toLowerCase()?.replace(/[^a-z0-9]+/g, "-") || "";
++  const fullSlug = bio?.fullName?.toLowerCase()?.replace(/[^a-z0-9]+/g, "-") || "";
++
++  // 1. Direct match by slug or names
++  if (has(s)) return s;
++  if (has(nameSlug)) return nameSlug;
++  if (has(fullSlug)) return fullSlug;
++
++  // 2. Initial + surname matching (e.g. "virat-kohli" -> "v-kohli", "tm-head", "jj-bumrah")
++  const parts = s.split("-").filter(Boolean);
++  if (parts.length >= 2) {
++    const initial = parts[0][0];
++    const surname = parts[parts.length - 1];
++    const candidate1 = `${initial}-${surname}`;
++    if (has(candidate1)) return candidate1;
++
++    const candidate2 = mapKeys.find((k) => {
++      const kp = k.split("-");
++      return kp.length >= 2 && kp[kp.length - 1] === surname && kp[0].startsWith(initial);
++    });
++    if (candidate2 && has(candidate2)) return candidate2;
++  }
++
++  // 3. Surname match if distinct
++  if (parts.length > 0) {
++    const surname = parts[parts.length - 1];
++    if (surname.length >= 4) {
++      const candidate3 = mapKeys.find((k) => k.endsWith(`-${surname}`) || k === surname);
++      if (candidate3 && has(candidate3)) return candidate3;
++    }
++  }
++
++  // 4. Clean fuzzy search (returned even when that key's log is empty, as before)
++  const cleanS = s.replace(/[^a-z0-9]/g, "");
++  const cleanN = nameSlug.replace(/[^a-z0-9]/g, "");
++  const matchedKey = mapKeys.find((k) => {
++    const cleanK = k.replace(/[^a-z0-9]/g, "");
++    return cleanK === cleanS || cleanK === cleanN || (cleanS.length > 4 && cleanK.includes(cleanS)) || (cleanK.length > 4 && cleanS.includes(cleanK));
++  });
++  return matchedKey ?? null;
++}
++
++/** The player's recent matches, newest first (same array the page previously took from the full map). */
++export function usePlayerRecentMatches(slug: string | undefined, bio: BioNames): RecentMatch[] {
++  const base = import.meta.env.BASE_URL;
++  const index = useQuery<RecentMatchesIndex | null>({
++    queryKey: ["player-recent-matches-index"],
++    queryFn: async () => {
++      const res = await fetch(`${base}data/player-recent-matches/index.json`);
++      return res.ok ? res.json() : null;
++    },
++    staleTime: HOUR,
++  });
++  // Fallback: the full file, only when the index is unavailable.
++  const full = useQuery<Record<string, RecentMatch[]>>({
++    queryKey: ["player-recent-matches"],
++    queryFn: async () => {
++      const res = await fetch(`${base}data/player-recent-matches.json`);
++      return res.ok ? res.json() : {};
++    },
++    enabled: index.isFetched && !index.data,
++    staleTime: HOUR,
++  });
++  const lengths = useMemo(() => {
++    if (index.data) return Object.fromEntries(Object.entries(index.data.keys).map(([k, v]) => [k, v[1]]));
++    if (full.data) return Object.fromEntries(Object.entries(full.data).map(([k, v]) => [k, v?.length ?? 0]));
++    return null;
++  }, [index.data, full.data]);
++  const key = useMemo(() => (lengths ? resolveRecentMatchesKey(lengths, slug, bio) : null), [lengths, slug, bio]);
++  const shardId = key && index.data ? index.data.keys[key]?.[0] ?? null : null;
++  const shard = useQuery<RecentMatch[]>({
++    queryKey: ["player-recent-matches-shard", shardId],
++    queryFn: async () => {
++      const res = await fetch(`${base}data/player-recent-matches/${shardId}.json`);
++      return res.ok ? res.json() : [];
++    },
++    enabled: !!shardId,
++    staleTime: HOUR,
++  });
++  if (!key) return EMPTY;
++  if (index.data) return shard.data ?? EMPTY;
++  return full.data?.[key] ?? EMPTY;
++}
+diff --git a/scripts/generate-player-recent-matches.mjs b/scripts/generate-player-recent-matches.mjs
+index dc0b866..a5940cb 100644
+--- a/scripts/generate-player-recent-matches.mjs
++++ b/scripts/generate-player-recent-matches.mjs
+@@ -1,5 +1,6 @@
+ import fs from 'fs';
+ import path from 'path';
++import { splitPlayerRecentMatches } from './split-player-recent-matches.mjs';
+ 
+ const rawDir = './lib/cricket-data/raw';
+ const matchesPath = './artifacts/ipl-analytics/public/data/matches.json';
+@@ -271,3 +272,10 @@ if (fs.existsSync('./artifacts/ipl-analytics/dist/public/data')) {
+   fs.writeFileSync(distOutputPath, JSON.stringify(playerLogs, null, 2));
+   console.log(`Wrote player match database to ${distOutputPath}`);
+ }
++
++// Per-player shards and an index: the player page loads these instead of the full file.
++for (const dir of ['./artifacts/ipl-analytics/public/data', './artifacts/ipl-analytics/dist/public/data']) {
++  if (!fs.existsSync(path.join(dir, 'player-recent-matches.json'))) continue;
++  const split = splitPlayerRecentMatches(dir);
++  console.log(`Split ${split.keys} keys into ${split.shards} shards in ${split.outDir}`);
++}
+diff --git a/scripts/split-player-recent-matches.mjs b/scripts/split-player-recent-matches.mjs
+new file mode 100644
+index 0000000..e355aa9
+--- /dev/null
++++ b/scripts/split-player-recent-matches.mjs
+@@ -0,0 +1,41 @@
++// Splits player-recent-matches.json into one small file per player plus an index, so the player page
++// downloads a few kilobytes instead of the whole map.
++//
++//   node scripts/split-player-recent-matches.mjs [dataDir]
++//
++// dataDir defaults to artifacts/ipl-analytics/public/data. The full file is read, never changed. Output:
++//   <dataDir>/player-recent-matches/index.json   { source, generatedAt, keys: { [key]: [shard, matchCount] } }
++//   <dataDir>/player-recent-matches/<shard>.json  compact JSON array; keys that alias the same log share it
++// Keys keep the full file's order, so the page's key resolution behaves exactly as before.
++
++import fs from 'fs';
++import path from 'path';
++import crypto from 'crypto';
++import { pathToFileURL } from 'url';
++
++export function splitPlayerRecentMatches(dataDir = './artifacts/ipl-analytics/public/data') {
++  const map = JSON.parse(fs.readFileSync(path.join(dataDir, 'player-recent-matches.json'), 'utf8'));
++  const outDir = path.join(dataDir, 'player-recent-matches');
++  fs.mkdirSync(outDir, { recursive: true });
++
++  const keys = {};
++  const shards = new Map();
++  for (const [key, matches] of Object.entries(map)) {
++    const json = JSON.stringify(matches ?? []);
++    const id = crypto.createHash('sha1').update(json).digest('hex').slice(0, 12);
++    shards.set(id, json);
++    keys[key] = [id, Array.isArray(matches) ? matches.length : 0];
++  }
++  for (const [id, json] of shards) fs.writeFileSync(path.join(outDir, `${id}.json`), json);
++  // Shards from an earlier run that no key points to any more (this directory holds generated files only).
++  for (const f of fs.readdirSync(outDir)) {
++    if (f.endsWith('.json') && f !== 'index.json' && !shards.has(f.slice(0, -5))) fs.rmSync(path.join(outDir, f));
++  }
++  fs.writeFileSync(path.join(outDir, 'index.json'), JSON.stringify({ source: 'player-recent-matches.json', generatedAt: new Date().toISOString(), keys }));
++  return { keys: Object.keys(keys).length, shards: shards.size, outDir };
++}
++
++if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
++  const r = splitPlayerRecentMatches(process.argv[2]);
++  console.log(`Split ${r.keys} keys into ${r.shards} shards in ${r.outDir}`);
++}

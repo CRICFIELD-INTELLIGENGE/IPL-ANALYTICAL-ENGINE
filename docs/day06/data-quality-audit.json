@@ -1,0 +1,66 @@
+{
+ "playersWhoBatted": 736,
+ "country": {
+  "players": "544/736 (73.9%)",
+  "ballsWeighted": "92.41%"
+ },
+ "battingHand": {
+  "players": "728/736 (98.9%)",
+  "ballsWeighted": "99.96%"
+ },
+ "bowlingStyle": {
+  "players": "563/576 (97.7%)",
+  "ballsWeighted": "99.78%"
+ },
+ "bowlingTypeKnown": {
+  "players": "563/576 (97.7%)",
+  "ballsWeighted": "99.78%"
+ },
+ "playersTable": {
+  "n": 1141,
+  "unk": 793,
+  "placeholder_role": 793,
+  "no_bat": 1141,
+  "no_bowl": 1141
+ },
+ "commentary": {
+  "rows": "293652 (99.3% of 295732 deliveries)",
+  "length": "175640 (59.4% of 295732 deliveries)",
+  "line": "170317 (57.6% of 295732 deliveries)",
+  "zone": "195281 (66.0% of 295732 deliveries)",
+  "shot": "190231 (64.3% of 295732 deliveries)",
+  "speed": "7173 (2.4% of 295732 deliveries)"
+ },
+ "commentaryBySeason": [
+  "2008: commentary 98%, length 47%, speed 1%",
+  "2009: commentary 98%, length 44%, speed 0%",
+  "2010: commentary 98%, length 41%, speed 1%",
+  "2011: commentary 99%, length 40%, speed 1%",
+  "2012: commentary 99%, length 38%, speed 1%",
+  "2013: commentary 99%, length 51%, speed 1%",
+  "2014: commentary 99%, length 42%, speed 2%",
+  "2015: commentary 100%, length 54%, speed 1%",
+  "2016: commentary 100%, length 48%, speed 3%",
+  "2017: commentary 100%, length 64%, speed 2%",
+  "2018: commentary 100%, length 63%, speed 2%",
+  "2019: commentary 99%, length 67%, speed 2%",
+  "2020: commentary 99%, length 77%, speed 1%",
+  "2021: commentary 100%, length 78%, speed 1%",
+  "2022: commentary 100%, length 75%, speed 7%",
+  "2023: commentary 100%, length 76%, speed 7%",
+  "2024: commentary 100%, length 70%, speed 4%",
+  "2025: commentary 100%, length 71%, speed 3%",
+  "2026: commentary 100%, length 75%, speed 3%"
+ ],
+ "deliveriesColumns": {
+  "no_type": 95511,
+  "no_area": 100451,
+  "n": 295732
+ },
+ "duplicateStubs": [
+  "Wanindu Hasaranga (966) = PWH de Silva (331)",
+  "Kumar Kartikeya Singh (978) = K Kartikeya (384)",
+  "Kusal Mendis (985) = BKG Mendis (546)",
+  "Naveen Ul Haq (1013) = Naveen-ul-Haq (431)"
+ ]
+}

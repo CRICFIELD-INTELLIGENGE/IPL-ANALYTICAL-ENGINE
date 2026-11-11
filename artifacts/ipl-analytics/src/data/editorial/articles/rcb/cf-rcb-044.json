@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-044",
+ "planId": "cf-rcb-044",
+ "franchise": "RCB",
+ "aspect": "business",
+ "title": "Sponsor Fit: Which Brand Categories Align with Royal Challengers Bengaluru\u2019s Audience?",
+ "slug": "rcb-sponsor-fit-which-brand-categories-align-with-rcb-audience",
+ "dek": "Which brands belong alongside Royal Challengers Bengaluru? Audience fit needs audience data, but the cricket defines the moments a sponsor can attach to.",
+ "excerpt": "Since 2024, Royal Challengers Bengaluru's matches have averaged more sixes than in earlier seasons, and big totals: a growing inventory of moments for partners. Who is watching those moments is a separate question the data cannot answer.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RCB"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "Royal Challengers Bengaluru's matches averaged {{ev:sf-s1}} sixes in 2008\u20132023 and {{ev:sf-s2}} since 2024.",
+  "Since 2024 their matches have produced {{ev:sf-r2}} runs on average, both sides combined.",
+  "Audience composition, the basis of sponsor fit, is not in the CricField warehouse."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Fit Starts With the Audience",
+   "body": [
+    "Sponsor fit depends on who watches, where they live and what they buy. A brand category belongs with a franchise when its customers overlap with the franchise's fans.",
+    "The CricField warehouse is ball-by-ball cricket data. It contains no audience demographics, brand-tracking or sponsorship data, so it cannot measure the commercial side of this question directly."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Moments a Sponsor Buys",
+   "body": [
+    "What the cricket does define is inventory: the moments a partner can attach a name to. Royal Challengers Bengaluru's matches averaged {{ev:sf-s1}} sixes in 2008\u20132023 and {{ev:sf-s2}} since 2024.",
+    "Since 2024 those matches have produced {{ev:sf-r2}} runs on average, both sides combined. The chart compares six-hitting in their games with the league by season."
+   ],
+   "chartIds": [
+    "sf-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Matching Categories to Moments",
+   "body": [
+    "Different moments suit different partners: a six suits a brand built on energy and celebration; a death-over defence suits one built on composure and reliability.",
+    "{{hyp:fit}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What a Fit Study Would Need",
+   "body": [
+    "A proper sponsor-fit study would combine fan survey data, regional audience shares and category purchase data with the match moments recorded here.",
+    "Until then, any claim that a category fits Royal Challengers Bengaluru's audience is an assumption, not a finding."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Sell the Moments, Research the Fans",
+   "body": [
+    "Royal Challengers Bengaluru can offer partners a measurable inventory of on-field moments across {{ev:sf-n}} matches of history.",
+    "Choosing which categories to pursue needs audience research that sits outside this dataset."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "sf-chart",
+   "type": "line",
+   "title": "Sixes per match",
+   "subtitle": "RCB games vs all IPL matches",
+   "table": "sf-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "RCB games"
+    },
+    {
+     "key": "league",
+     "label": "IPL"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "sixes per match",
+   "takeaway": "Six-hitting has risen across the league, and in their games with it.",
+   "ariaLabel": "Line chart of sixes per match in RCB games and in all IPL matches by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "fit",
+   "statement": "Hypothesis: sponsor recall is higher when a brand is tied to a recurring on-field moment, such as sixes, than to static branding.",
+   "whyUnverified": "No sponsor recall or brand-tracking data is available.",
+   "howToTest": "Run a brand-recall survey comparing moment-linked and static partners across a season."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Royal Challengers Bengaluru on the field.",
+   "wanted": "Royal Challengers Bengaluru batter hitting a six."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-041",
+  "cf-rcb-047",
+  "cf-rcb-045"
+ ],
+ "seo": {
+  "metaTitle": "Sponsor fit: what RCB can offer partners",
+  "metaDescription": "The on-field moments Royal Challengers Bengaluru can offer sponsors, measured from ball-by-ball data, and why audience fit needs different data."
+ },
+ "methodology": "CricField measures the cricket a franchise puts on the field; it holds no revenue, attendance, audience, merchandise or social-media data. Commercial ideas in this article are labelled hypotheses with the data needed to test them. Generated by scripts/editorial/engine.",
+ "generator": "engine:v1"
+}

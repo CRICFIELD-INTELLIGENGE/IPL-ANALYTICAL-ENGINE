@@ -2,15 +2,15 @@
  * AUCTION WAR ROOM — Decision Intelligence OS, Phase 4 (Intelligence)
  * ─────────────────────────────────────────────────────────────────────────────
  * Two boards, each built only from data available at the time:
- *   • Next auction — every player active in 2026, valued on data to 2026,
- *     with a retain / release read on their last contract.
+ *   • Next auction — the shared Player Intelligence model: expected price with
+ *     an 80% range, a performance-against-price rank read and franchise fit.
+ *     These are the same numbers shown on player profiles and in Scout Lab.
  *   • 2026 auction backtest — the real 369-player list valued on data to
- *     2025, checked against what each player sold for and delivered.
- * Market price comes from comparable sales; value from output above
- * replacement at the market's going rate. Pick a franchise to rank players
- * by how well they fill that squad's Squad DNA gaps.
+ *     2025, checked against what each player sold for and delivered, using the
+ *     earlier comparable-sales benchmark.
  */
 
+import { RetentionFeedCard } from "@/components/retention/retention-widgets";
 import { Fragment, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
@@ -19,14 +19,22 @@ import { Layout } from "@/components/layout";
 import { Card, ErrorBanner, Loading, ModuleHeader, Pill, SectionTitle, Segmented, Select, Tile, signed } from "@/components/decision/module-shell";
 import { LineChart } from "@/components/decision/sim-widgets";
 import { readParams, writeParams } from "@/lib/discovery-api";
+import { fetchModelStatus } from "@/lib/intelligence-api";
+import { ModelConfidenceIndicator } from "@/components/intelligence/intel-components";
 import { fetchAuctionPlayer, fetchBoard, money, type AuctionBoard, type AuctionRole, type AuctionRow, type AuctionView, type BoardQuery, type Signal } from "@/lib/sim-api";
 
 const SIGNAL_TONE: Record<Signal, "good" | "neutral" | "bad" | "info"> = { BUY: "good", HOLD: "neutral", AVOID: "bad", SCOUT: "info" };
 const SIGNAL_HELP: Record<Signal, string> = {
-  BUY: "Value at least 1.25× the expected price and at least ₹1 Cr above it",
-  HOLD: "Fairly priced — bid up to the max bid",
-  AVOID: "Below replacement level, or the market will pay well over the output's worth",
-  SCOUT: "Fewer than 5 IPL matches — no basis for a value; judge on scouting",
+  BUY: "Performance ranks at least 20 percentile points above expected price, within the role",
+  HOLD: "Performance and expected price rank about level, within the role",
+  AVOID: "Expected price ranks at least 20 percentile points above performance, within the role",
+  SCOUT: "Too little IPL play to compare; judge on scouting",
+};
+const LEGACY_SIGNAL_HELP: Record<Signal, string> = {
+  BUY: "Value at least 1.25× the benchmark price and at least ₹1 Cr above it",
+  HOLD: "Fairly priced on the benchmark",
+  AVOID: "Below replacement level, or priced well over the output's worth on the benchmark",
+  SCOUT: "Fewer than 5 IPL matches",
 };
 
 export default function AuctionWarRoomPage() {
@@ -54,10 +62,11 @@ export default function AuctionWarRoomPage() {
   return (
     <Layout hideRightPanel>
       <div className="space-y-6 pb-16 max-w-7xl mx-auto w-full min-w-0">
-        <ModuleHeader phase="Phase 4 · Intelligence" title="Auction War Room" tagline="Buy · Hold · Avoid, a max bid, comparable sales and franchise fit — valued on output, not name recognition." icon={<Gavel className="w-5 h-5 text-green-400" />}>
+        <ModuleHeader phase="Phase 4 · Intelligence" title="Auction War Room" tagline="Expected price, performance against price, comparable sales and franchise fit, kept as separate questions." icon={<Gavel className="w-5 h-5 text-green-400" />}>
           <Segmented label="Board" value={view} onChange={(v) => { setView(v); setOpen(null); }} options={[{ value: "live", label: `Next auction` }, { value: "backtest", label: "2026 auction backtest" }]} />
         </ModuleHeader>
 
+        <RetentionFeedCard />
         <Card>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 items-end">
             <Select label="Fit for franchise" value={team} onChange={setTeam} options={[{ value: "", label: "No franchise" }, ...(b?.teams ?? []).map((t) => ({ value: t.short, label: `${t.short} · ${t.name}` }))]} />
@@ -90,7 +99,7 @@ export default function AuctionWarRoomPage() {
         {b && (
           <>
             <div className="grid lg:grid-cols-2 gap-5">
-              <ModelCard b={b} />
+              {view === "live" ? <LiveModelCard /> : <ModelCard b={b} />}
               {b.backtest ? <BacktestCard b={b} /> : b.team ? <NeedsCard b={b} /> : <HowToCard />}
             </div>
             {b.backtest && b.team && <NeedsCard b={b} />}
@@ -98,12 +107,12 @@ export default function AuctionWarRoomPage() {
               <Standalone k={open} view={view} onClose={() => { setOpen(null); writeParams({ player: null }); }} />
             )}
             <Card className={board.isFetching ? "opacity-70" : ""}>
-              <SectionTitle icon={<Scale className="w-4 h-4 text-green-400" />} title={`${b.total} players`} sub={b.team ? `sorted by fit for ${b.team.short}, then value for money` : "sorted by value for money (value ÷ expected price)"} />
+              <SectionTitle icon={<Scale className="w-4 h-4 text-green-400" />} title={`${b.total} players`} sub={view === "live" ? (b.team ? `sorted by runs per match added to ${b.team.short}'s best XII` : "sorted by performance rank against price rank") : b.team ? `sorted by fit for ${b.team.short}, then value for money` : "sorted by value for money (value ÷ expected price)"} />
               <div className="overflow-x-auto mt-3 -mx-4 px-4">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/10 text-[11px] uppercase tracking-wider text-muted-foreground">
-                      {["", "Player", "Role", "IPL M", "Above repl.", "Expected price", "Value", "Signal", "Max bid", ...(b.team ? ["Fit"] : []), ...(view === "backtest" ? ["Actually"] : ["Contract"])].map((h, i) => (
+                      {["", "Player", "Role", "IPL M", "Above repl.", "Expected price", view === "live" ? "Rank gap" : "Value", "Signal", view === "live" ? "80% range" : "Max bid", ...(b.team ? [view === "live" ? "Fit (runs/match)" : "Fit"] : []), ...(view === "backtest" ? ["Actually"] : ["Last sale · outlook"])].map((h, i) => (
                         <th key={i} className={`py-2 px-2 font-semibold whitespace-nowrap ${[3, 4, 5, 6, 8].includes(i) ? "text-right" : "text-left"}`}>{h}</th>
                       ))}
                     </tr>
@@ -144,10 +153,10 @@ function Row({ r, view, withFit, open, onToggle }: { r: AuctionRow; view: Auctio
       <td className="py-2 px-2 text-right">{r.iplMatches}</td>
       <td className="py-2 px-2 text-right" title="Runs per match above a replacement-level player">{r.iar === null ? "—" : signed(r.iar)}<div className="text-[10px] text-muted-foreground">{r.confidence}</div></td>
       <td className="py-2 px-2 text-right">{money(r.market)}{r.marketBasis > 0 && r.marketBasis < 3 && <div className="text-[10px] text-amber-300" title="Few comparable sales behind this estimate">thin data</div>}{r.reserve !== null && <div className="text-[10px] text-muted-foreground">reserve {money(r.reserve)}</div>}</td>
-      <td className="py-2 px-2 text-right">{money(r.value)}</td>
-      <td className="py-2 px-2"><Pill tone={SIGNAL_TONE[r.signal]} title={SIGNAL_HELP[r.signal]}>{r.signal}</Pill></td>
-      <td className="py-2 px-2 text-right">{money(r.maxBid)}</td>
-      {withFit && <td className="py-2 px-2 text-xs min-w-[150px]">{r.fit ? <><b className="tabular-nums">{r.fit.score}</b>{r.fit.reasons[0] && <div className="text-[11px] text-muted-foreground leading-snug">{r.fit.reasons[0]}</div>}</> : <span className="text-muted-foreground">—</span>}</td>}
+      <td className="py-2 px-2 text-right" title={view === "live" ? "Performance percentile minus price percentile, within the role" : undefined}>{view === "live" ? (r.valueGap === null || r.valueGap === undefined ? "—" : signed(r.valueGap, 0)) : money(r.value)}</td>
+      <td className="py-2 px-2"><Pill tone={SIGNAL_TONE[r.signal]} title={view === "live" ? SIGNAL_HELP[r.signal] : LEGACY_SIGNAL_HELP[r.signal]}>{r.signal}</Pill></td>
+      <td className="py-2 px-2 text-right whitespace-nowrap">{view === "live" ? (r.marketRange ? `${money(r.marketRange.low)}–${money(r.marketRange.high)}` : "—") : money(r.maxBid)}</td>
+      {withFit && <td className="py-2 px-2 text-xs min-w-[150px]">{r.fit ? <><b className="tabular-nums">{view === "live" ? signed(r.fit.score) : r.fit.score}</b>{r.fit.reasons[0] && <div className="text-[11px] text-muted-foreground leading-snug">{r.fit.reasons[0]}</div>}</> : <span className="text-muted-foreground">—</span>}</td>}
       {view === "backtest" ? (
         <td className="py-2 px-2 text-xs min-w-[150px]">
           {r.actual?.price ? <div>{r.actual.soldTo} · <b>{money(r.actual.price)}</b></div> : <div className="text-muted-foreground">Unsold</div>}
@@ -156,7 +165,8 @@ function Row({ r, view, withFit, open, onToggle }: { r: AuctionRow; view: Auctio
       ) : (
         <td className="py-2 px-2 text-xs min-w-[150px]">
           {r.lastSale ? <div>{r.lastSale.season} {r.lastSale.team} · {money(r.lastSale.price)}</div> : <div className="text-muted-foreground">No auction fee on record</div>}
-          {r.contract && <div className={`text-[11px] ${/retain/.test(r.contract) ? "text-emerald-300" : /release/.test(r.contract) ? "text-rose-300" : "text-muted-foreground"}`}>{r.contract}</div>}
+          {r.contract && <div className={`text-[11px] ${/kept/i.test(r.contract) ? "text-emerald-300" : /risk/i.test(r.contract) ? "text-rose-300" : "text-amber-200"}`} title="Provisional retention index, not a probability">{r.contract}</div>}
+          {r.retentionPick && <div className="text-[11px] text-muted-foreground">CRICFIELD Pick {r.retentionPick.index.toFixed(0)}/100 · {r.retentionPick.category}</div>}
         </td>
       )}
     </tr>
@@ -186,11 +196,11 @@ function Detail({ k, view }: { k: string; view: AuctionView }) {
       </div>
       <div className="space-y-2 min-w-0">
         <div className="font-semibold text-sm">Best franchise fits</div>
-        <p className="text-muted-foreground">Ranked by how well the player covers each squad's weakest winning-linked dimensions (Squad DNA).</p>
+        <p className="text-muted-foreground">{view === "live" ? "Runs per match added to each franchise's best XII." : "Ranked by how well the player covers each squad's weakest winning-linked dimensions (Squad DNA)."}</p>
         <ul className="space-y-1.5">
           {x.bestFits.map((f) => (
             <li key={f.short}>
-              <div className="flex justify-between"><Link href={`/ai-analyst/squad-dna?team=${f.short}`} className="font-semibold hover:underline">{f.name}</Link><b className="tabular-nums">{f.score}</b></div>
+              <div className="flex justify-between"><Link href={`/ai-analyst/squad-dna?team=${f.short}`} className="font-semibold hover:underline">{f.name}</Link><b className="tabular-nums">{view === "live" ? signed(f.score) : f.score}</b></div>
               {f.reasons.map((r) => <div key={r} className="text-muted-foreground">{r}</div>)}
             </li>
           ))}
@@ -224,10 +234,29 @@ function Standalone({ k, view, onClose }: { k: string; view: AuctionView; onClos
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <h2 className="font-display font-black text-lg">{r?.name ?? "Player"}</h2>
         {r && <><Pill tone={SIGNAL_TONE[r.signal]} title={SIGNAL_HELP[r.signal]}>{r.signal}</Pill>
-          <span className="text-xs text-muted-foreground tabular-nums">expected {money(r.market)} · value {money(r.value)} · max bid {money(r.maxBid)} · {r.iar === null ? "—" : signed(r.iar)} runs/match above replacement{r.contract ? ` · ${r.contract}` : ""}</span></>}
+          <span className="text-xs text-muted-foreground tabular-nums">expected {money(r.market)}{r.marketRange ? ` (${money(r.marketRange.low)}–${money(r.marketRange.high)})` : ""}{view === "backtest" ? ` · value ${money(r.value)} · max bid ${money(r.maxBid)}` : ""} · {r.iar === null ? "—" : signed(r.iar)} runs/match above replacement{r.contract ? ` · ${r.contract}` : ""}</span></>}
         <button onClick={onClose} className="ml-auto text-xs text-muted-foreground hover:text-white">Close</button>
       </div>
       <div className="-mx-4 mt-3"><Detail k={k} view={view} /></div>
+    </Card>
+  );
+}
+
+function LiveModelCard() {
+  const q = useQuery({ queryKey: ["intel-models"], queryFn: fetchModelStatus, retry: 1, staleTime: 5 * 60_000 });
+  const a = q.data?.models.auction;
+  if (!a) return <Card><p className="text-xs text-muted-foreground">Reading the model record…</p></Card>;
+  const h = a.validation.holdout;
+  return (
+    <Card>
+      <SectionTitle icon={<Scale className="w-4 h-4 text-green-400" />} title="How prices are set" sub={`${a.method}, tested on ${h.n} sales from ${h.seasons.join(", ")}`} />
+      <div className="flex flex-wrap gap-3 mt-3">
+        <Tile label="Mean miss" value={`₹${h.maeCr.toFixed(2)} Cr`} sub={`role median ₹${a.validation.benchmarks.roleMedian.maeCr.toFixed(2)} Cr`} />
+        <Tile label="Median miss" value={`₹${h.medianAeCr.toFixed(2)} Cr`} sub={`typical ×${h.typicalMultiple.toFixed(2)}`} />
+        <Tile label="Range coverage" value={`${Math.round(a.validation.intervalCoverage.measured * 100)}%`} sub="of real prices in the 80% range" />
+      </div>
+      <div className="flex items-center gap-2 mt-3"><ModelConfidenceIndicator status={a.status} /><Link href="/ai-analyst/squad-builder" className="text-xs text-green-300 hover:underline">Full model record</Link></div>
+      <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">Expected price if sold, tested season by season on auctions the model had not seen. Above ₹5 Cr the mean miss rises to ₹{(a.validation.byBand.find((x) => x.band.startsWith("over"))?.maeCr ?? 0).toFixed(2)} Cr, so read top-end prices as a range. CricField estimate, not an official valuation. Runs are not converted to rupees: no validated conversion exists.</p>
     </Card>
   );
 }
@@ -303,11 +332,11 @@ function HowToCard() {
     <Card>
       <SectionTitle icon={<Gavel className="w-4 h-4 text-green-400" />} title="Reading the board" sub="What each column means" />
       <ul className="mt-3 space-y-1.5 text-xs text-muted-foreground">
-        <li><b className="text-white">Above repl.</b> — runs per match the player adds over a replacement-level regular (impact model, recency-weighted).</li>
-        <li><b className="text-white">Expected price</b> — what comparable players have sold for. <b className="text-white">Value</b> — what their output is worth at the going rate.</li>
+        <li><b className="text-white">Above repl.</b> — CricField Runs Above Replacement per match.</li>
+        <li><b className="text-white">Expected price</b> — what the auction is likely to pay if the player sells, with an 80% range.</li>
+        <li><b className="text-white">Rank gap</b> — performance percentile minus price percentile, within the role.</li>
         {(["BUY", "HOLD", "AVOID", "SCOUT"] as Signal[]).map((s) => <li key={s}><Pill tone={SIGNAL_TONE[s]}>{s}</Pill> {SIGNAL_HELP[s]}.</li>)}
-        <li><b className="text-white">Max bid</b> — value rounded down to the bid increment: above it, you are paying for more than the output.</li>
-        <li>Pick a franchise above to rank players by how well they fill that squad's gaps.</li>
+        <li>Pick a franchise above to rank players by the runs per match they add to that team's best XII.</li>
       </ul>
     </Card>
   );

@@ -1,0 +1,577 @@
+{
+ "articleId": "cf-rcb-062",
+ "generatedAt": "2026-10-25T16:13:41.465Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "away-2025-won": {
+   "value": 9,
+   "display": "9",
+   "label": "RCB wins away from Chinnaswamy, 2025",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025, matches with a result",
+   "sampleSize": {
+    "n": 10,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND m.venue_id NOT IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 10"
+   }
+  },
+  "away-2025-n": {
+   "value": 10,
+   "display": "10",
+   "label": "RCB matches away from Chinnaswamy, 2025",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025, matches with a result",
+   "sampleSize": {
+    "n": 10,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND m.venue_id NOT IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 10"
+   }
+  },
+  "away-2025-pct": {
+   "value": 90,
+   "display": "90.0%",
+   "label": "RCB away win rate, 2025",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025",
+   "sampleSize": {
+    "n": 10,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND m.venue_id NOT IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 10"
+   }
+  },
+  "away-pre-pct": {
+   "value": 47.9,
+   "display": "47.9%",
+   "label": "RCB away win rate, 2008–2024",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2008–2024",
+   "sampleSize": {
+    "n": 165,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND m.venue_id NOT IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 100 matches",
+    "passed": true,
+    "detail": "n = 165"
+   }
+  },
+  "away-best-pre": {
+   "value": 66.7,
+   "display": "66.7%",
+   "label": "Best pre-2025 away season (2015)",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2008–2024",
+   "sampleSize": {
+    "n": 9,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND m.venue_id NOT IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "max over season table",
+    "passed": true
+   }
+  },
+  "away-best-pre-year": {
+   "value": 2015,
+   "display": "2015",
+   "label": "Year of best pre-2025 away season",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2008–2024",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND m.venue_id NOT IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "max over season table",
+    "passed": true
+   }
+  },
+  "home-2025-won": {
+   "value": 2,
+   "display": "2",
+   "label": "RCB wins at Chinnaswamy, 2025",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025, matches with a result",
+   "sampleSize": {
+    "n": 5,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) = 2025",
+   "validation": {
+    "method": "plausibility range 1–8 for home matches",
+    "passed": true,
+    "detail": "value 5"
+   }
+  },
+  "home-2025-n": {
+   "value": 5,
+   "display": "5",
+   "label": "RCB decided matches at Chinnaswamy, 2025",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025",
+   "sampleSize": {
+    "n": 5,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) = 2025",
+   "validation": {
+    "method": "plausibility range 1–8 for home matches",
+    "passed": true,
+    "detail": "value 5"
+   }
+  },
+  "record-2025": {
+   "value": "11-4",
+   "display": "11 wins, 4 defeats",
+   "label": "RCB record, 2025 (league + playoffs)",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025, matches with a result",
+   "sampleSize": {
+    "n": 15,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) IN (2025, 2026) GROUP BY year",
+   "validation": {
+    "method": "plausibility range 14–17 for season matches",
+    "passed": true,
+    "detail": "value 15"
+   }
+  },
+  "record-2026": {
+   "value": "11-5",
+   "display": "11 wins, 5 defeats",
+   "label": "RCB record, 2026 (league + playoffs)",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2026, matches with a result",
+   "sampleSize": {
+    "n": 16,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) IN (2025, 2026) GROUP BY year",
+   "validation": {
+    "method": "plausibility range 14–17 for season matches",
+    "passed": true,
+    "detail": "value 16"
+   }
+  },
+  "econ-rcb-2025": {
+   "value": 9.09,
+   "display": "9.09",
+   "label": "RCB bowling economy, 2025",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "Runs charged to bowlers ÷ legal balls × 6, regulation innings",
+   "sampleSize": {
+    "n": 1692,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2025 AND 2025 AND i.bowling_team_id IN (2,15)",
+   "validation": {
+    "method": "plausibility range 7–11 for run rate",
+    "passed": true,
+    "detail": "value 9.092198581560284"
+   }
+  },
+  "econ-league-2025": {
+   "value": 9.51,
+   "display": "9.51",
+   "label": "IPL bowling economy, 2025",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "Runs charged to bowlers ÷ legal balls × 6, regulation innings",
+   "sampleSize": {
+    "n": 16507,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2025 AND 2025",
+   "validation": {
+    "method": "plausibility range 7–11 for run rate",
+    "passed": true,
+    "detail": "value 9.512328103228933"
+   }
+  },
+  "econ-rcb-pre": {
+   "value": 8.28,
+   "display": "8.28",
+   "label": "RCB bowling economy, 2008–2024",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "Runs charged to bowlers ÷ legal balls × 6, regulation innings",
+   "sampleSize": {
+    "n": 28968,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2024 AND i.bowling_team_id IN (2,15)",
+   "validation": {
+    "method": "plausibility range 7–11 for run rate",
+    "passed": true,
+    "detail": "value 8.277340513670257"
+   }
+  },
+  "econ-league-pre": {
+   "value": 8.14,
+   "display": "8.14",
+   "label": "IPL bowling economy, 2008–2024",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "Runs charged to bowlers ÷ legal balls × 6, regulation innings",
+   "sampleSize": {
+    "n": 251294,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2024",
+   "validation": {
+    "method": "plausibility range 7–11 for run rate",
+    "passed": true,
+    "detail": "value 8.141117575429577"
+   }
+  },
+  "rr-rcb-2025": {
+   "value": 9.69,
+   "display": "9.69",
+   "label": "RCB batting run rate, 2025",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "All runs ÷ legal balls × 6, regulation innings",
+   "sampleSize": {
+    "n": 1642,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2025 AND 2025 AND i.batting_team_id IN (2,15)",
+   "validation": {
+    "method": "plausibility range 7–11 for run rate",
+    "passed": true,
+    "detail": "value 9.694275274056029"
+   }
+  },
+  "rr-league-2025": {
+   "value": 9.63,
+   "display": "9.63",
+   "label": "IPL batting run rate, 2025",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "All runs ÷ legal balls × 6, regulation innings",
+   "sampleSize": {
+    "n": 16507,
+    "unit": "legal balls"
+   },
+   "query": "SELECT SUM(d.total_runs) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2025 AND 2025",
+   "validation": {
+    "method": "plausibility range 7–11 for run rate",
+    "passed": true,
+    "detail": "value 9.633367662203913"
+   }
+  },
+  "econ-gap-2025": {
+   "value": 0.42,
+   "display": "0.42",
+   "label": "Runs per over RCB conceded below the league, 2025",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "Derived",
+   "sampleSize": {
+    "n": 2,
+    "unit": "rates"
+   },
+   "query": "derived",
+   "validation": {
+    "method": "difference of validated rates",
+    "passed": true
+   }
+  },
+  "econ-gap-pre": {
+   "value": -0.14,
+   "display": "-0.14",
+   "label": "Runs per over RCB conceded below (+) or above (−) the league, 2008–2024",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "Derived",
+   "sampleSize": {
+    "n": 2,
+    "unit": "rates"
+   },
+   "query": "derived",
+   "validation": {
+    "method": "difference of validated rates",
+    "passed": true
+   }
+  },
+  "top-bat-name": {
+   "value": "V Kohli",
+   "display": "Virat Kohli",
+   "label": "RCB's leading run-scorer, 2025",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025",
+   "sampleSize": {
+    "n": 454,
+    "unit": "balls"
+   },
+   "query": "SELECT p.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) = 2025 GROUP BY d.batter_id ORDER BY runs DESC LIMIT 3",
+   "validation": {
+    "method": "rank by runs",
+    "passed": true
+   }
+  },
+  "top-bat-runs": {
+   "value": 657,
+   "display": "657",
+   "label": "V Kohli runs for RCB, 2025",
+   "unit": "runs",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025, regulation innings",
+   "sampleSize": {
+    "n": 454,
+    "unit": "balls"
+   },
+   "query": "SELECT p.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) = 2025 GROUP BY d.batter_id ORDER BY runs DESC LIMIT 3",
+   "validation": {
+    "method": "cross-check: deliveries vs fact_batting_innings",
+    "passed": true,
+    "detail": "657 vs 657 (Δ 0.00%)"
+   }
+  },
+  "top-bat-sr": {
+   "value": 144.7,
+   "display": "144.7",
+   "label": "V Kohli strike rate, 2025",
+   "unit": "runs per 100 balls",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025",
+   "sampleSize": {
+    "n": 454,
+    "unit": "balls"
+   },
+   "query": "SELECT p.name, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (2,15) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) = 2025 GROUP BY d.batter_id ORDER BY runs DESC LIMIT 3",
+   "validation": {
+    "method": "sample-size floor ≥ 200 balls",
+    "passed": true,
+    "detail": "n = 454"
+   }
+  },
+  "top-bowl-name": {
+   "value": "JR Hazlewood",
+   "display": "Josh Hazlewood",
+   "label": "RCB's leading wicket-taker, 2025",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025; bowler-credited dismissals only",
+   "sampleSize": {
+    "n": 22,
+    "unit": "wickets"
+   },
+   "query": "SELECT p.name, COUNT(*) wkts FROM dismissals dm JOIN deliveries d ON d.delivery_id = dm.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (2,15) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) = 2025 AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') GROUP BY d.bowler_id ORDER BY wkts DESC LIMIT 3",
+   "validation": {
+    "method": "rank by wickets from dismissals table (not fact_bowling_spells, which credits retired out)",
+    "passed": true
+   }
+  },
+  "top-bowl-wkts": {
+   "value": 22,
+   "display": "22",
+   "label": "JR Hazlewood wickets for RCB, 2025",
+   "unit": "wickets",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025",
+   "sampleSize": {
+    "n": 22,
+    "unit": "wickets"
+   },
+   "query": "SELECT p.name, COUNT(*) wkts FROM dismissals dm JOIN deliveries d ON d.delivery_id = dm.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (2,15) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) = 2025 AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') GROUP BY d.bowler_id ORDER BY wkts DESC LIMIT 3",
+   "validation": {
+    "method": "plausibility range 10–35 for season wickets",
+    "passed": true,
+    "detail": "value 22"
+   }
+  },
+  "final-rcb-score": {
+   "value": "190/9",
+   "display": "190/9",
+   "label": "RCB's total in the 2025 final",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025 final",
+   "sampleSize": {
+    "n": 1,
+    "unit": "innings"
+   },
+   "query": "SELECT i.innings_number, t.name team, i.runs, i.wickets FROM matches m JOIN innings i ON i.match_id = m.match_id JOIN teams t ON t.team_id = i.batting_team_id WHERE m.date = '2025/06/03' AND i.innings_number <= 2 ORDER BY i.innings_number",
+   "validation": {
+    "method": "RCB batted first in the final",
+    "passed": true
+   }
+  },
+  "final-margin": {
+   "value": 6,
+   "display": "6",
+   "label": "Winning margin in the 2025 final",
+   "unit": "runs",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "2025 final",
+   "sampleSize": {
+    "n": 2,
+    "unit": "innings"
+   },
+   "query": "SELECT i.innings_number, t.name team, i.runs, i.wickets FROM matches m JOIN innings i ON i.match_id = m.match_id JOIN teams t ON t.team_id = i.batting_team_id WHERE m.date = '2025/06/03' AND i.innings_number <= 2 ORDER BY i.innings_number",
+   "validation": {
+    "method": "plausibility range 1–100 for margin",
+    "passed": true,
+    "detail": "value 6"
+   }
+  }
+ },
+ "tables": {
+  "away-by-season": {
+   "label": "RCB win rate away from Chinnaswamy, by season",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "RCB matches with a result at any venue other than Chinnaswamy (includes neutral and playoff venues)",
+   "sampleSize": {
+    "n": 186,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND m.venue_id NOT IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') GROUP BY year ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "awayWinPct": 42.9,
+     "matches": 7
+    },
+    {
+     "season": "2009",
+     "awayWinPct": 56.3,
+     "matches": 16
+    },
+    {
+     "season": "2010",
+     "awayWinPct": 44.4,
+     "matches": 9
+    },
+    {
+     "season": "2011",
+     "awayWinPct": 50,
+     "matches": 10
+    },
+    {
+     "season": "2012",
+     "awayWinPct": 62.5,
+     "matches": 8
+    },
+    {
+     "season": "2013",
+     "awayWinPct": 25,
+     "matches": 8
+    },
+    {
+     "season": "2014",
+     "awayWinPct": 33.3,
+     "matches": 9
+    },
+    {
+     "season": "2015",
+     "awayWinPct": 66.7,
+     "matches": 9
+    },
+    {
+     "season": "2016",
+     "awayWinPct": 57.1,
+     "matches": 7
+    },
+    {
+     "season": "2017",
+     "awayWinPct": 28.6,
+     "matches": 7
+    },
+    {
+     "season": "2018",
+     "awayWinPct": 28.6,
+     "matches": 7
+    },
+    {
+     "season": "2019",
+     "awayWinPct": 28.6,
+     "matches": 7
+    },
+    {
+     "season": "2020",
+     "awayWinPct": 46.7,
+     "matches": 15
+    },
+    {
+     "season": "2021",
+     "awayWinPct": 60,
+     "matches": 15
+    },
+    {
+     "season": "2022",
+     "awayWinPct": 56.3,
+     "matches": 16
+    },
+    {
+     "season": "2023",
+     "awayWinPct": 57.1,
+     "matches": 7
+    },
+    {
+     "season": "2024",
+     "awayWinPct": 37.5,
+     "matches": 8
+    },
+    {
+     "season": "2025",
+     "awayWinPct": 90,
+     "matches": 10
+    },
+    {
+     "season": "2026",
+     "awayWinPct": 63.6,
+     "matches": 11
+    }
+   ]
+  },
+  "economy-compare": {
+   "label": "RCB bowling economy vs the league",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ dismissals (Cricsheet, IPL 2008–2026)",
+   "filters": "Regulation innings; runs charged to bowlers",
+   "sampleSize": {
+    "n": 2,
+    "unit": "periods"
+   },
+   "query": "SELECT SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2025 AND 2025 AND i.bowling_team_id IN (2,15)",
+   "rows": [
+    {
+     "period": "2008–2024",
+     "rcbEconomy": 8.28,
+     "leagueEconomy": 8.14
+    },
+    {
+     "period": "2025",
+     "rcbEconomy": 9.09,
+     "leagueEconomy": 9.51
+    }
+   ]
+  }
+ }
+}

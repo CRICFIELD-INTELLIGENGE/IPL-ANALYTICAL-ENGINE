@@ -26,11 +26,11 @@ export function RivalrySpotlight({ team, rival, record }: { team: TeamTheme; riv
         <RivalSide team={rival} won={h2h?.lost} />
       </div>
 
-      {h2h && h2h.recent.length > 0 && (
+      {Boolean(h2h?.recent?.length) && (
         <div className="space-y-1.5">
           <div className="text-[10px] font-black uppercase tracking-widest text-white/40">Most recent</div>
           <ul className="space-y-1.5 text-xs">
-            {h2h.recent.map((m) => (
+            {h2h!.recent.map((m) => (
               <li key={m.matchId} className="flex flex-wrap gap-x-3 gap-y-0.5 text-white/75">
                 <span className="tabular-nums text-white/45">{m.date}</span>
                 <span className="truncate min-w-0 flex-1">{m.venue}</span>

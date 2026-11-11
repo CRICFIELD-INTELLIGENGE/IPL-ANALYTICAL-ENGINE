@@ -1,0 +1,176 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-csk-003",
+ "planId": "cf-csk-003",
+ "franchise": "CSK",
+ "aspect": "batting",
+ "title": "Boundary Dependency: How Much of Chennai Super Kings\u2019s Scoring Comes in Fours and Sixes?",
+ "slug": "csk-boundary-dependency-how-much-of-csk-scoring-comes-in-fours-and-sixes",
+ "dek": "How much of Chennai Super Kings' scoring comes in fours and sixes, and is a boundary-heavy innings a winning one? The data separates power from dependency.",
+ "excerpt": "Since 2024 Chennai Super Kings have taken less of their runs in boundaries than the league. Across the IPL, boundary-heavy innings win more often, but the reasons are not as simple as hitting harder.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "CSK"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026",
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:bnd-t2}} of Chennai Super Kings' runs since 2024 came in fours and sixes; the league figure is {{ev:bnd-l2}}.",
+  "IPL innings built on boundaries for 65% or more of their runs won {{ev:bnd-whigh}} of the time; under 55%, {{ev:bnd-wlow}}.",
+  "Across all seasons, {{ev:bnd-tall}} of Chennai Super Kings' runs have come from boundaries."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Counting the Ropes",
+   "body": [
+    "Boundary dependency is easy to talk about and rarely measured. For Chennai Super Kings the measurement is simple: since 2024, {{ev:bnd-t2}} of their runs have come in fours and sixes off the bat, against {{ev:bnd-l2}} for the league as a whole.",
+    "Over their full history the figure is {{ev:bnd-tall}}. The season chart shows how far the whole league has moved towards boundary hitting, which is the backdrop any team-level comparison has to sit against.",
+    "On this measure their most boundary-reliant season was 2026, at {{ev:bnd-x-best-v}}, and their least boundary-reliant 2013, at {{ev:bnd-x-worst-v}}."
+   ],
+   "chartIds": [
+    "bnd-trend"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Do Boundaries Win Matches?",
+   "body": [
+    "Across every IPL innings with a result, those that took 65% or more of their runs in boundaries won {{ev:bnd-whigh}} of the time, while those under 55% won {{ev:bnd-wlow}}.",
+    "Part of that link is cause and part is effect: an innings with many boundaries is usually a big total, and big totals win. A high boundary share also means fewer runs from running, which is exactly the skill that keeps an innings moving when boundaries dry up."
+   ],
+   "chartIds": [
+    "bnd-win"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Dependency Versus Firepower",
+   "body": [
+    "The tactical risk is not a high boundary share; it is the absence of a fallback. A side that leans less on boundaries more than the league needs batters who can rotate strike on the days the ball is not coming onto the bat.",
+    "For CSK, that means judging middle-order batters partly on singles and twos per ball, not only on sixes per innings."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "The Conditions Caveat",
+   "body": [
+    "Boundary share depends on where a side plays. Home grounds with short boundaries inflate it, and a season spent at big grounds deflates it, regardless of approach.",
+    "{{hyp:venue}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Power With a Plan B",
+   "body": [
+    "Chennai Super Kings should not fear boundary dependency; the league-wide data says boundary-heavy innings win. What they should guard against is a batting order with no way of scoring when the boundaries stop.",
+    "The measurable test is simple: runs from non-boundary balls per over in the middle overs, tracked alongside the boundary share."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "bnd-trend",
+   "type": "line",
+   "title": "Share of runs from boundaries by season",
+   "subtitle": "CSK vs IPL",
+   "table": "bnd-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "team",
+     "label": "CSK"
+    },
+    {
+     "key": "league",
+     "label": "IPL"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of runs",
+   "takeaway": "The league's reliance on boundaries has risen; CSK sit below it since 2024.",
+   "ariaLabel": "Line chart of the share of runs from boundaries by season for CSK and the IPL."
+  },
+  {
+   "id": "bnd-win",
+   "type": "column",
+   "title": "Win rate by boundary share of an innings",
+   "subtitle": "All IPL innings with a result",
+   "table": "bnd-win",
+   "xKey": "band",
+   "series": [
+    {
+     "key": "league",
+     "label": "IPL"
+    },
+    {
+     "key": "team",
+     "label": "CSK"
+    }
+   ],
+   "xLabel": "Share of runs from boundaries",
+   "unit": "% of innings won",
+   "takeaway": "Boundary-heavy innings win more often across the league.",
+   "ariaLabel": "Column chart of win rate by the share of an innings' runs that came from boundaries."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "venue",
+   "statement": "Hypothesis: Chennai Super Kings' boundary share is driven more by home conditions than by batting approach.",
+   "whyUnverified": "Venue-adjusted boundary shares have not been computed.",
+   "howToTest": "Compare home and away boundary shares season by season."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "65",
+   "reason": "Band threshold (65% of runs from boundaries)."
+  },
+  {
+   "text": "55",
+   "reason": "Band threshold (55% of runs from boundaries)."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Boundary hitting at Chennai Super Kings.",
+   "wanted": "Chennai Super Kings batter hitting a six."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-csk-009",
+  "cf-csk-010",
+  "cf-csk-004"
+ ],
+ "seo": {
+  "metaTitle": "Boundary dependency: how CSK score their runs",
+  "metaDescription": "How much of Chennai Super Kings' scoring comes in fours and sixes compared with the IPL, and whether boundary-heavy innings win."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Run rates use all runs per legal ball times six. Every figure is generated from the CricField warehouse by scripts/editorial/engine. Boundary runs are fours and sixes off the bat. Win-rate bands use innings from matches with a result.",
+ "generator": "engine:v1"
+}

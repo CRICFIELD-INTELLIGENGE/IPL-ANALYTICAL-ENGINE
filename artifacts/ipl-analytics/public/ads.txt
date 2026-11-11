@@ -1,1 +1,2 @@
-google.com, pub-1235565260844429, DIRECT, f08c47fec0942fa0
+# Generated during the Vite build from VITE_ADSENSE_CLIENT.
+# No publisher is configured in this source file.

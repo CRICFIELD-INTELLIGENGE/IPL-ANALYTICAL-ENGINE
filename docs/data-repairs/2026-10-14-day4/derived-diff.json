@@ -1,0 +1,241 @@
+{
+  "player_career_stats": {
+    "rowsA": 804,
+    "rowsB": 804,
+    "onlyA": 0,
+    "onlyB": 0,
+    "changedRows": 23,
+    "byColumn": {
+      "economy": 19,
+      "bowling_average": 22,
+      "best_figures": 4
+    },
+    "examples": [
+      {
+        "k": "119",
+        "economy": "9.24 → 9.23",
+        "bowling_average": "33.96 → 33.92"
+      },
+      {
+        "k": "123",
+        "economy": "7.15 → 7.14",
+        "bowling_average": "19.83 → 19.8"
+      },
+      {
+        "k": "129",
+        "economy": "8.14 → 8.13",
+        "bowling_average": "28.46 → 28.45"
+      },
+      {
+        "k": "133",
+        "bowling_average": "30.1 → 30.08"
+      },
+      {
+        "k": "136",
+        "economy": "8.62 → 8.59",
+        "bowling_average": "23.4 → 23.31"
+      }
+    ]
+  },
+  "player_team_stats": {
+    "rowsA": 1631,
+    "rowsB": 1631,
+    "onlyA": 0,
+    "onlyB": 0,
+    "changedRows": 23,
+    "byColumn": {
+      "economy": 23
+    },
+    "examples": [
+      {
+        "k": "119:10",
+        "economy": "11.76 → 11.71"
+      },
+      {
+        "k": "123:4",
+        "economy": "7.15 → 7.14"
+      },
+      {
+        "k": "129:9",
+        "economy": "9.29 → 9.26"
+      },
+      {
+        "k": "133:2",
+        "economy": "8.92 → 8.9"
+      },
+      {
+        "k": "136:10",
+        "economy": "13.5 → 12.5"
+      }
+    ]
+  },
+  "player_season_stats": {
+    "rowsA": 3337,
+    "rowsB": 3337,
+    "onlyA": 0,
+    "onlyB": 0,
+    "changedRows": 28,
+    "byColumn": {
+      "economy": 28
+    },
+    "examples": [
+      {
+        "k": "119:2020/21",
+        "economy": "11.76 → 11.71"
+      },
+      {
+        "k": "123:2014",
+        "economy": "6.59 → 6.46"
+      },
+      {
+        "k": "129:2024",
+        "economy": "9.29 → 9.26"
+      },
+      {
+        "k": "133:2020/21",
+        "economy": "12.14 → 11.86"
+      },
+      {
+        "k": "136:2020/21",
+        "economy": "13.5 → 12.5"
+      }
+    ]
+  },
+  "player_phase_stats": {
+    "rowsA": 2193,
+    "rowsB": 2193,
+    "onlyA": 0,
+    "onlyB": 0,
+    "changedRows": 24,
+    "byColumn": {
+      "bowling_runs": 24,
+      "bowling_economy": 23
+    },
+    "examples": [
+      {
+        "k": "119:powerplay",
+        "bowling_runs": "401 → 400",
+        "bowling_economy": "8.91 → 8.89"
+      },
+      {
+        "k": "123:powerplay",
+        "bowling_runs": "1166 → 1161",
+        "bowling_economy": "6.3 → 6.28"
+      },
+      {
+        "k": "129:powerplay",
+        "bowling_runs": "550 → 549",
+        "bowling_economy": "7.14 → 7.13"
+      },
+      {
+        "k": "133:middle",
+        "bowling_runs": "1180 → 1178",
+        "bowling_economy": "8.12 → 8.11"
+      },
+      {
+        "k": "136:death",
+        "bowling_runs": "455 → 451",
+        "bowling_economy": "9.48 → 9.4"
+      }
+    ]
+  },
+  "player_matchups": {
+    "rowsA": 31370,
+    "rowsB": 31370,
+    "onlyA": 0,
+    "onlyB": 0,
+    "changedRows": 0,
+    "byColumn": {},
+    "examples": []
+  },
+  "venue_intelligence": {
+    "rowsA": 60,
+    "rowsB": 60,
+    "onlyA": 0,
+    "onlyB": 0,
+    "changedRows": 13,
+    "byColumn": {
+      "batting_first_win_pct": 13,
+      "chasing_win_pct": 13
+    },
+    "examples": [
+      {
+        "k": "1",
+        "batting_first_win_pct": "39.58 → 38.78",
+        "chasing_win_pct": "60.42 → 61.22"
+      },
+      {
+        "k": "3",
+        "batting_first_win_pct": "33.33 → 30",
+        "chasing_win_pct": "66.67 → 70"
+      },
+      {
+        "k": "6",
+        "batting_first_win_pct": "48.61 → 49.32",
+        "chasing_win_pct": "51.39 → 50.68"
+      },
+      {
+        "k": "8",
+        "batting_first_win_pct": "41.94 → 41.27",
+        "chasing_win_pct": "58.06 → 58.73"
+      },
+      {
+        "k": "16",
+        "batting_first_win_pct": "53.85 → 50",
+        "chasing_win_pct": "46.15 → 50"
+      }
+    ]
+  },
+  "team_intelligence": {
+    "rowsA": 19,
+    "rowsB": 19,
+    "onlyA": 0,
+    "onlyB": 0,
+    "changedRows": 11,
+    "byColumn": {
+      "wins": 7,
+      "losses": 10,
+      "win_pct": 10
+    },
+    "examples": [
+      {
+        "k": "1",
+        "wins": "102 → 104",
+        "losses": "104 → 110",
+        "win_pct": "49.51 → 48.6"
+      },
+      {
+        "k": "2",
+        "wins": "114 → 118",
+        "losses": "120 → 122",
+        "win_pct": "48.72 → 49.17"
+      },
+      {
+        "k": "4",
+        "wins": "155 → 159",
+        "losses": "132 → 137",
+        "win_pct": "54.01 → 53.72"
+      },
+      {
+        "k": "5",
+        "losses": "16 → 18",
+        "win_pct": "44.83 → 41.94"
+      },
+      {
+        "k": "6",
+        "wins": "140 → 144",
+        "losses": "131 → 137",
+        "win_pct": "51.66 → 51.25"
+      }
+    ]
+  },
+  "auction_roi": {
+    "rowsA": 0,
+    "rowsB": 0,
+    "onlyA": 0,
+    "onlyB": 0,
+    "changedRows": 0,
+    "byColumn": {},
+    "examples": []
+  }
+}

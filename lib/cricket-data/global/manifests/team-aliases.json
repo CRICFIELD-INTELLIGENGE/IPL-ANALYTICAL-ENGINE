@@ -1,0 +1,9 @@
+{
+  "$comment": "Explicit franchise-continuity aliases. Only mappings with a stated source are allowed; nothing is inferred from name similarity. Team rows keep the name exactly as Cricsheet writes it; these aliases let queries group a franchise across renames.",
+  "aliases": [
+    { "competition": "ipl", "alias": "Delhi Daredevils", "canonical": "Delhi Capitals", "source": "Existing project mapping: scripts/src/migrate_deliveries.ts TEAM_ALIASES" },
+    { "competition": "ipl", "alias": "Kings XI Punjab", "canonical": "Punjab Kings", "source": "Existing project mapping: scripts/src/migrate_deliveries.ts TEAM_ALIASES" },
+    { "competition": "ipl", "alias": "Rising Pune Supergiants", "canonical": "Rising Pune Supergiant", "source": "Existing project mapping: scripts/src/migrate_deliveries.ts TEAM_ALIASES" },
+    { "competition": "ipl", "alias": "Royal Challengers Bangalore", "canonical": "Royal Challengers Bengaluru", "source": "Existing project mapping: scripts/src/migrate_deliveries.ts TEAM_ALIASES" }
+  ]
+}

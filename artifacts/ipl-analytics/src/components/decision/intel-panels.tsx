@@ -60,11 +60,10 @@ export function PlayerIntelPanel({ player, className }: { player: string | numbe
         ))}
         {a && (
           <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 space-y-2 text-xs min-w-0">
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold flex items-center gap-2">Auction value <Pill tone={a.signal === "BUY" ? "good" : a.signal === "AVOID" ? "bad" : a.signal === "SCOUT" ? "info" : "neutral"}>{a.signal}</Pill></div>
-            <div className="grid grid-cols-3 gap-2 tabular-nums">
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold flex items-center gap-2">Auction read <Pill tone={a.signal === "BUY" ? "good" : a.signal === "AVOID" ? "bad" : a.signal === "SCOUT" ? "info" : "neutral"}>{a.verdict ?? a.signal}</Pill></div>
+            <div className="grid grid-cols-2 gap-2 tabular-nums">
               <div><div className="text-white font-bold text-sm">{money(a.market)}</div><div className="text-muted-foreground">expected price</div></div>
-              <div><div className="text-white font-bold text-sm">{money(a.value)}</div><div className="text-muted-foreground">output value</div></div>
-              <div><div className="text-white font-bold text-sm">{money(a.maxBid)}</div><div className="text-muted-foreground">max bid</div></div>
+              {a.marketRange && <div><div className="text-white font-bold text-sm">{money(a.marketRange.low)}–{money(a.marketRange.high)}</div><div className="text-muted-foreground">80% range</div></div>}
             </div>
             <div className="text-muted-foreground">
               {a.iar !== null && <>{signed(a.iar)} runs/match above replacement (data to {a.asOf}). </>}

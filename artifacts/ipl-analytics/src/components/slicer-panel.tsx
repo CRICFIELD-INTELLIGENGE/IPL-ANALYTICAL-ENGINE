@@ -63,7 +63,7 @@ export function SlicerPanel({
         )}
       </div>
 
-      <div className="space-y-3 max-h-[calc(100vh-220px)] overflow-y-auto pr-1">
+      <div className="dimension-slicing-scroll space-y-3 max-h-[calc(100vh-220px)] overflow-y-auto pr-2">
         <Select label="Season" value={state.season} onChange={(v) => set("season", v)}
           options={[{ value: "all", label: "All seasons" }, ...seasons.map((s) => ({ value: s.season, label: s.season }))]} />
 

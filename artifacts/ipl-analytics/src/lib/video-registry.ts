@@ -22,6 +22,12 @@ export interface VideoCatalogueItem {
   keywords: string[];
   source?: "gemini_catalogue" | "sitemap_discovery";
   hotstarContentId?: string;
+  thumbnailUrl?: string | null;
+  matchId?: string | null;
+  thumbnailSource?: string;
+  thumbnailUsagePermission?: string;
+  lastVerifiedDate?: string;
+  verificationStatus?: "verified_active" | "review_needed" | "unavailable";
 }
 
 export const OFFICIAL_IPL_2026_HUB =

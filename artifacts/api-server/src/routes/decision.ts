@@ -14,6 +14,7 @@
 //   GET  /api/insights/pool/:category      Phase 2 — every candidate in a feed category
 
 import { Router, type Request, type Response } from "express";
+import { logger } from "../lib/logger";
 import { z } from "zod";
 import { getDecisionDbError } from "../services/decision/db";
 import { getSeasons, isWarehouseReady } from "../services/decision/player-profiles";
@@ -28,9 +29,18 @@ import { METRICS, runStatQuery, type MetricId } from "../services/decision/stats
 
 const router = Router();
 
+let warehouseErrorLogged = false;
+function logWarehouseErrorOnce(detail: string | null) {
+  if (warehouseErrorLogged) return;
+  warehouseErrorLogged = true;
+  logger.error({ detail }, "IPL warehouse unavailable");
+}
+
 function requireWarehouse(res: Response): boolean {
   if (isWarehouseReady()) return true;
-  res.status(503).json({ error: "warehouse_unavailable", detail: getDecisionDbError() });
+  // The internal error names the server's file path; it is logged, never returned to the client.
+  logWarehouseErrorOnce(getDecisionDbError());
+  res.status(503).json({ error: "warehouse_unavailable", detail: "The IPL data warehouse is not available on this server." });
   return false;
 }
 

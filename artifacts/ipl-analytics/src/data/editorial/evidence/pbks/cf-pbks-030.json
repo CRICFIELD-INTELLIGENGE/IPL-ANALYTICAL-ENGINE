@@ -1,0 +1,169 @@
+{
+ "articleId": "cf-pbks-030",
+ "generatedAt": "2026-10-26T04:25:21.091Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "cap-n": {
+   "value": 17,
+   "display": "17",
+   "label": "PBKS captains listed",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "captains.json",
+   "sampleSize": {
+    "n": 17,
+    "unit": "captains"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "plausibility range 1–30 for captain count",
+    "passed": true,
+    "detail": "value 17"
+   }
+  },
+  "cap-top": {
+   "value": "George Bailey",
+   "display": "George Bailey",
+   "label": "PBKS's longest-serving captain with a franchise-only record",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact records only",
+   "sampleSize": {
+    "n": 30,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "rank by matches",
+    "passed": true
+   }
+  },
+  "cap-top-pct": {
+   "value": 46.7,
+   "display": "46.7%",
+   "label": "George Bailey win rate as PBKS captain",
+   "unit": "%",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "2014–2015",
+   "sampleSize": {
+    "n": 30,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 30"
+   }
+  },
+  "cap-top-n": {
+   "value": 30,
+   "display": "30",
+   "label": "Matches with George Bailey as PBKS captain",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact record",
+   "sampleSize": {
+    "n": 30,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 30"
+   }
+  },
+  "cap-team": {
+   "value": 46.9,
+   "display": "46.9%",
+   "label": "PBKS win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 275,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 275"
+   }
+  }
+ },
+ "tables": {
+  "cap-tab": {
+   "label": "PBKS captains with franchise-only records",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Captains whose record covers this franchise alone (min. five matches)",
+   "sampleSize": {
+    "n": 123,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "rows": [
+    {
+     "captain": "George Bailey",
+     "seasons": "2014–2015",
+     "matches": 30,
+     "winPct": 46.7,
+     "titles": 0
+    },
+    {
+     "captain": "Ravichandran Ashwin",
+     "seasons": "2018–2019",
+     "matches": 28,
+     "winPct": 42.9,
+     "titles": 0
+    },
+    {
+     "captain": "Mayank Agarwal",
+     "seasons": "2021–2022",
+     "matches": 14,
+     "winPct": 50,
+     "titles": 0
+    },
+    {
+     "captain": "Glenn Maxwell",
+     "seasons": "2017–2017",
+     "matches": 14,
+     "winPct": 50,
+     "titles": 0
+    },
+    {
+     "captain": "David Hussey",
+     "seasons": "2012–2013",
+     "matches": 12,
+     "winPct": 50,
+     "titles": 0
+    },
+    {
+     "captain": "Sam Curran",
+     "seasons": "2023–2024",
+     "matches": 11,
+     "winPct": 45.5,
+     "titles": 0
+    },
+    {
+     "captain": "Murali Vijay",
+     "seasons": "2016–2016",
+     "matches": 8,
+     "winPct": 37.5,
+     "titles": 0
+    },
+    {
+     "captain": "David Miller",
+     "seasons": "2016–2016",
+     "matches": 6,
+     "winPct": 16.7,
+     "titles": 0
+    }
+   ]
+  }
+ }
+}

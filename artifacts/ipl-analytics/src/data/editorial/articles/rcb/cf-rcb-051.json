@@ -1,0 +1,176 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-051",
+ "planId": "cf-rcb-051",
+ "franchise": "RCB",
+ "aspect": "fan-culture",
+ "title": "Why Fans Stay: The Psychology of Supporting Royal Challengers Bengaluru Through Losing Seasons",
+ "slug": "rcb-why-fans-stay-the-psychology-of-supporting-rcb-through-losing-seasons",
+ "dek": "Seventeen seasons, three lost finals and a reputation as the IPL's great nearly-team. RCB's supporters stayed anyway. The scoreboard tells us what they lived through; social psychology offers reasons they stayed.",
+ "excerpt": "RCB's record before 2025 was neither a disaster nor a triumph, which may be the most loyalty-building record of all. Here is the data on the wait, and what research on sports fans suggests about why it bound supporters closer.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-25",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RCB"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132024",
+  "2025",
+  "2026"
+ ],
+ "keyTakeaways": [
+  "RCB played {{ev:wait-seasons}} seasons before their first title, reaching the playoffs in {{ev:playoff-seasons}} of them and losing {{ev:finals-lost}} finals.",
+  "Their win rate across that wait was {{ev:pre-title-winpct}}: close to average, which kept hope alive almost every year.",
+  "Research on fan identification suggests that strongly identified fans do not distance themselves from losing teams {{src:wann-1990}}; whether that explains RCB's following is a hypothesis CricField cannot test with match data."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Long Wait, Measured",
+   "body": [
+    "Every RCB supporter can recite the near-misses. The scoreboard makes them precise. Between 2008 and 2024 RCB played {{ev:wait-seasons}} seasons without a title. They reached the playoffs in {{ev:playoff-seasons}} of them and lost finals in {{ev:finals-lost-years}}. Across {{ev:pre-title-matches}} decided matches they won {{ev:pre-title-winpct}}.",
+    "That record matters for understanding the fan base, because it is not the record of a bad team. RCB were below fifty per cent for the season in {{ev:losing-seasons}} of those seasons, and they never went more than {{ev:longest-drought}} consecutive seasons without a playoff place. Hope was rarely more than a season away."
+   ],
+   "chartIds": [
+    "season-record"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What the Research Says About Staying",
+   "body": [
+    "Sports psychology has studied this question for half a century. In a famous set of field studies, Robert Cialdini and colleagues found that university students were more likely to wear their school's colours and to say \"we\" after their football team won, a tendency they called basking in reflected glory {{src:cialdini-1976}}.",
+    "Later work by Daniel Wann and Nyla Branscombe distinguished between fans by how strongly they identify with a team. Weakly identified fans tended to distance themselves after defeats; strongly identified fans did not, and continued to associate themselves with the team when it was unsuccessful {{src:wann-1990}}.",
+    "Neither study was about cricket or about Bengaluru. They describe general tendencies in sports fans, and what follows applies them to RCB as reasoned interpretation, not as measured fact."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Why a Near-Miss Record Binds Supporters",
+   "body": [
+    "Put the research beside the record and a plausible picture emerges. A team that wins just under half its matches and reaches the playoffs in about half its seasons gives supporters a reason to believe almost every year. A fan who has invested in that belief season after season has made the team part of their identity, which is exactly the condition under which the research finds fans stop distancing themselves from defeat.",
+    "{{hyp:near-miss}}",
+    "The finals record adds a second layer. Lost finals in {{ev:finals-lost-years}} were public, shared disappointments, and shared disappointment is the kind of experience that builds group identity among those who went through it. When the title finally came, it was celebrated as a collective payoff rather than an individual win."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "The Simpler Explanation",
+   "body": [
+    "There is a less romantic account. RCB has employed some of the most famous cricketers of the era, and many supporters may have followed the stars rather than the franchise. A city as large and as cricket-mad as Bengaluru would supply a big audience to almost any team that carried its name.",
+    "CricField's data cannot separate these explanations. We have no survey data, attendance series or social-media panel that would let us measure loyalty directly, and we do not present any figure for it.",
+    "{{hyp:star-following}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: A Record Built for Hope",
+   "body": [
+    "The scoreboard establishes the shape of RCB's long wait: near-average results, frequent playoff appearances, three lost finals and no prolonged collapse. Research on sports fans offers a credible reason why that shape would deepen rather than erode loyalty.",
+    "What remains open is how much of RCB's following is identification with the franchise and how much is attachment to its stars. That question will get a natural experiment when the last stars of the waiting years retire, now that the titles have arrived. How the support holds through that transition will answer it better than any model."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "season-record",
+   "type": "column",
+   "title": "RCB win rate by season",
+   "subtitle": "League and playoff matches with a result; finish shown in the table view",
+   "table": "rcb-seasons",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "winPct",
+     "label": "Win rate"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of matches won",
+   "referenceLine": {
+    "metric": "pre-title-winpct",
+    "label": "2008\u20132024 average"
+   },
+   "takeaway": "Most seasons hovered near the fifty per cent line, with deep troughs in 2008 and 2017 and the title seasons standing clear at the end.",
+   "ariaLabel": "Column chart of RCB's win percentage for each season from 2008 to 2026, with a reference line at the 2008 to 2024 average. Most seasons sit between thirty-five and sixty per cent; 2025 and 2026 are the highest."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse and points tables (IPL 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/"
+  },
+  {
+   "id": "cialdini-1976",
+   "kind": "academic",
+   "title": "Basking in reflected glory: Three (football) field studies. Journal of Personality and Social Psychology, 34(3), 366\u2013375",
+   "publisher": "Cialdini, R. B., Borden, R. J., Thorne, A., Walker, M. R., Freeman, S., & Sloan, L. R. (1976)",
+   "url": "https://www.bisp-surf.de/Record/PU201908005577",
+   "accessed": "2026-10-25",
+   "note": "Bibliographic record checked; DOI not cited because it could not be verified."
+  },
+  {
+   "id": "wann-1990",
+   "kind": "academic",
+   "title": "Die-hard and fair-weather fans: Effects of identification on BIRGing and CORFing tendencies. Journal of Sport and Social Issues, 14(2), 103\u2013117",
+   "publisher": "Wann, D. L., & Branscombe, N. R. (1990)",
+   "accessed": "2026-10-25",
+   "note": "Citation details confirmed across several bibliographies; DOI not cited because it could not be verified."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "near-miss",
+   "statement": "Hypothesis: a record of near-average results with frequent playoff appearances builds stronger fan identification than either sustained success or sustained failure.",
+   "whyUnverified": "Requires fan-identification survey data across franchises with different records; CricField holds none.",
+   "howToTest": "A survey using a validated team-identification scale across fans of several franchises, compared with each franchise's record."
+  },
+  {
+   "id": "star-following",
+   "statement": "Hypothesis: a meaningful share of RCB's following attaches to individual star players rather than to the franchise.",
+   "whyUnverified": "No data on follower behaviour around player departures is available to CricField.",
+   "howToTest": "Track RCB audience and social metrics around the departure of a long-serving star and compare with franchises that lost no stars."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "RCB supporters, the long wait and its end.",
+   "wanted": "RCB fans celebrating, ideally the 2025 title, landscape."
+  },
+  {
+   "slot": "s2",
+   "narrative": "Disappointment shared: a lost final.",
+   "wanted": "RCB players after the 2016 final, or a dejected RCB moment."
+  },
+  {
+   "slot": "s4",
+   "narrative": "The stars of the waiting years.",
+   "wanted": "Virat Kohli, AB de Villiers or Chris Gayle in RCB colours."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-060",
+  "cf-rcb-057",
+  "cf-rcb-062"
+ ],
+ "seo": {
+  "metaTitle": "Why RCB fans stay: the psychology of the long wait | CricField",
+  "metaDescription": "Seventeen seasons, three lost finals, near-average results. CricField measures RCB's long wait and weighs what sports-fan research says about why supporters stayed."
+ },
+ "methodology": "Season win rates use all RCB matches with a result (league and playoffs). Playoff appearances come from CricField points tables (a playoff result of Qualifier or Eliminator) and are cross-checked so that only top-four finishes carry one. Finals are the last match of each season. The psychological claims are cited studies or labelled hypotheses; CricField holds no fan data. Generated by scripts/editorial/evidence/rcb/cf-rcb-051.ts."
+}

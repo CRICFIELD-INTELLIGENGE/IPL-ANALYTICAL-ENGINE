@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { db, matchesTable, venuesTable, teamsTable, playersTable } from "@workspace/db";
 import { eq, or } from "drizzle-orm";
+import { guardWarehouseWrite } from "./lib/warehouse-guard";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, "..", "..");
@@ -156,6 +157,7 @@ async function getOrCreatePlayer(playerName: string): Promise<number> {
 }
 
 async function main() {
+  guardWarehouseWrite("migrate_matches.ts"); // @workspace/db target: CRICFIELD_DB_PATH or the production sqlite.db
   console.log("=== STARTING MATCHES MIGRATION ===");
   if (!fs.existsSync(RAW_DIR)) {
     console.error(`Raw dir not found at ${RAW_DIR}`);

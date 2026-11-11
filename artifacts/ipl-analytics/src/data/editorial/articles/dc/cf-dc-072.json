@@ -1,0 +1,148 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-072",
+ "planId": "cf-dc-072",
+ "franchise": "DC",
+ "aspect": "scouting",
+ "title": "Domestic Pathways: Where Could Delhi Capitals Find Undervalued Talent?",
+ "slug": "dc-domestic-pathways-where-could-dc-find-undervalued-talent",
+ "dek": "Where is undervalued Indian talent hiding? Low-priced domestic players who became regulars across the IPL show where the market under-priced ability.",
+ "excerpt": "Across the IPL since 2022, a share of Indian players bought for \u20b91 Cr or less became regulars and beat the league average. Delhi Capitals have given more such players a regular role than the average franchise.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "DC"
+ ],
+ "players": [
+  "Mohsin Khan",
+  "Jaydev Unadkat",
+  "Ajinkya Rahane"
+ ],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "Across the IPL there were {{ev:dp-n}} low-cost Indian regular seasons in 2022\u20132026; {{ev:dp-pos}} of them beat the league average on tempo runs.",
+  "DC account for {{ev:dp-mine}}, against an average of {{ev:dp-avg}} per franchise.",
+  "The most productive per ball was {{ev:dp-best}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Domestic Market's Blind Spots",
+   "body": [
+    "Every auction leaves capable Indian players at or near their base price. The ones who become regulars and beat the league average are the market's clearest mistakes.",
+    "Across the IPL there were {{ev:dp-n}} low-cost Indian regular seasons in 2022\u20132026 (priced \u20b91 Cr or less, at least one hundred and twenty balls). {{ev:dp-pos}} of them finished above the league average on tempo runs."
+   ],
+   "chartIds": [
+    "dp-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Where DC Stand",
+   "body": [
+    "Delhi Capitals account for {{ev:dp-mine}} of those seasons, against an average of {{ev:dp-avg}} per franchise.",
+    "They have leaned on low-cost domestic talent more than most."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Where to Look",
+   "body": [
+    "The chart lists the most productive low-cost Indian regulars per ball across the league. Their common thread is a defined role, usually as a specialist in one phase.",
+    "{{hyp:domestic}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What This Cannot See",
+   "body": [
+    "The warehouse holds IPL data only, so domestic-competition performance, the usual scouting signal, is not measured here. The list shows who succeeded after being bought, not who was available.",
+    "Players who were bought cheaply and never played are counted in the denominator only when they appear in squad lists."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Buy Roles, Not Reputations",
+   "body": [
+    "Delhi Capitals should target low-cost domestic players with a clear specialist role and give them enough balls to prove it.",
+    "Adding domestic-competition data would turn this from a record of hits into a scouting tool."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "dp-chart",
+   "type": "bar",
+   "title": "Most productive low-cost Indian regulars",
+   "subtitle": "IPL, 2022\u20132026, priced \u20b91 Cr or less",
+   "table": "dp-top",
+   "xKey": "player",
+   "series": [
+    {
+     "key": "perHundred",
+     "label": "Tempo runs above average per 100 balls"
+    }
+   ],
+   "unit": "runs per 100 balls",
+   "takeaway": "Several low-cost Indian players outperformed the league average by a wide margin.",
+   "ariaLabel": "Horizontal bar chart of the most productive low-cost Indian regulars in the IPL since 2022."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "domestic",
+   "statement": "Hypothesis: low-cost Indian players with a strong record in a single phase in domestic T20 cricket are more likely to beat the IPL average than all-round domestic performers.",
+   "whyUnverified": "Domestic-competition data is not in the warehouse.",
+   "howToTest": "Join Syed Mushtaq Ali Trophy phase data to IPL outcomes for low-cost signings."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "1",
+   "reason": "Price threshold (\u20b91 Cr) defining the group."
+  },
+  {
+   "text": "120",
+   "reason": "Minimum balls stated in a table label."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Delhi Capitals domestic find.",
+   "wanted": "Delhi Capitals young Indian player."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-035",
+  "cf-dc-079",
+  "cf-dc-092"
+ ],
+ "seo": {
+  "metaTitle": "Domestic pathways: undervalued talent for DC",
+  "metaDescription": "Which low-priced Indian players became productive IPL regulars since 2022, and how Delhi Capitals have used that market."
+ },
+ "methodology": "Tempo runs above average (batting and bowling against the same season and phase), priced players from CricField squad lists, Indian nationality from player-bio data with squad lists as fallback. Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine.",
+ "generator": "engine:v1"
+}

@@ -1,0 +1,142 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-pbks-036",
+ "planId": "cf-pbks-036",
+ "franchise": "PBKS",
+ "aspect": "auction-economics",
+ "title": "Injury Insurance: What Does a Backup Specialist Cost Punjab Kings?",
+ "slug": "pbks-injury-insurance-what-does-a-backup-specialist-cost-pbks",
+ "dek": "What does a backup specialist cost Punjab Kings? Squad members who never get a game are the premium on the franchise's injury insurance.",
+ "excerpt": "Since 2018, a measurable share of Punjab Kings' squad never batted or bowled in a season. That idle depth is the price of cover against injuries and loss of form.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "PBKS"
+ ],
+ "players": [],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:ins-unused}} of Punjab Kings' squad members did not bat or bowl in their season, 2018\u20132026.",
+  "Their recorded prices total {{ev:ins-spend}}.",
+  "The squad lists record {{ev:ins-repl}} replacement signings over the period."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Paying for Players Who Do Not Play",
+   "body": [
+    "A squad of twenty-plus is built for a tournament of fourteen or more matches with injuries, form slumps and condition changes. Some players will never be needed; their salaries are an insurance premium.",
+    "Since 2018, {{ev:ins-unused}} of Punjab Kings' squad members did not bat or bowl in their season, with recorded prices totalling {{ev:ins-spend}}."
+   ],
+   "chartIds": [
+    "ins-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "When the Policy Pays Out",
+   "body": [
+    "The squad lists record {{ev:ins-repl}} replacement signings for PBKS over the period: moments when the cover in the squad was not enough and the franchise had to go to the market mid-season.",
+    "The best insurance is a backup who fills the role of the player most likely to be missing, not a generic extra."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Designing the Bench",
+   "body": [
+    "Backups should mirror the hardest roles to replace: a second death bowler, a second wicketkeeper who can bat, a spinner who can bowl in the powerplay. Duplicating easy-to-find skills wastes the premium.",
+    "For PBKS, the bench should be designed role by role at the auction, not filled with whoever is left."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Unused Is Not Useless",
+   "body": [
+    "A player who never plays may still have been the right signing if the role he covered never fell vacant. Insurance that is not claimed is not wasted by definition.",
+    "{{hyp:cover}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Insure the Scarce Roles",
+   "body": [
+    "Punjab Kings should spend the insurance budget on cover for scarce roles and keep it small elsewhere.",
+    "Tracking which roles were vacated each season and how they were filled would show whether the cover matched the risk."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ins-chart",
+   "type": "column",
+   "title": "Squad members who did not bat or bowl",
+   "subtitle": "PBKS, by season",
+   "table": "ins-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "unused",
+     "label": "Did not play"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "players",
+   "takeaway": "Every season carries a block of players who never get a game.",
+   "ariaLabel": "Column chart of the number of PBKS squad members who did not bat or bowl in each season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-squads",
+   "kind": "cricfield-dataset",
+   "title": "CricField squads-by-season dataset",
+   "publisher": "CricField"
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "cover",
+   "statement": "Hypothesis: unused squad members concentrated in scarce roles reduce mid-season replacement signings.",
+   "whyUnverified": "Squad roles are not reliably labelled.",
+   "howToTest": "Classify squad roles and compare replacement signings with the roles covered on the bench."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Punjab Kings squad depth.",
+   "wanted": "Punjab Kings squad training or team photo."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-pbks-037",
+  "cf-pbks-033",
+  "cf-pbks-079"
+ ],
+ "seo": {
+  "metaTitle": "Injury insurance: what backups cost PBKS",
+  "metaDescription": "How many Punjab Kings squad members never got a game since 2018, what they cost, and how to design the bench."
+ },
+ "methodology": "Contribution is tempo runs above average (tRAA): batting runs above what an average batter would score from the same balls in the same season and phase, plus bowling runs saved against the average bowler in the same season and phase. Wickets and dismissals are not valued in this version. Prices come from CricField squad lists (\u20b9 crore = 100 lakh). Generated by scripts/editorial/engine. A squad member did not play if he faced and bowled no balls for the franchise that season.",
+ "generator": "engine:v1"
+}

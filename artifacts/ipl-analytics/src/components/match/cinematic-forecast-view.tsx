@@ -1,5 +1,5 @@
 import React from "react";
-import { type MatchScorecard, normalizeVenueName, venueSlug } from "@/lib/aggregates";
+import { type MatchScorecard, normalizeVenueName, venueHref } from "@/lib/aggregates";
 import { Cloud, Wind, Droplets, Sun, MapPin, Gauge, Shield, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 
@@ -12,7 +12,6 @@ export function CinematicForecastView({ card, match }: CinematicForecastViewProp
   const ground = match.matchInfo.venueInfo?.ground || card?.venue || "IPL Stadium";
   const city = match.matchInfo.venueInfo?.city || card?.city || "India";
   const canonicalVenue = normalizeVenueName(ground);
-  const vSlug = venueSlug(ground);
 
   return (
     <div className="w-full flex flex-col gap-6">
@@ -38,7 +37,7 @@ export function CinematicForecastView({ card, match }: CinematicForecastViewProp
           </p>
 
           <Link
-            href={`/venues/${vSlug}`}
+            href={venueHref(ground)}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-bold uppercase tracking-wider transition-all"
           >
             <MapPin className="w-4 h-4 text-cyan-400" />

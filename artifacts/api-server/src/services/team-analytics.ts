@@ -182,6 +182,7 @@ export async function getTeamAnalytics(params: TeamAnalyticsParams) {
   // The alias is bowler_kind, not kind: dismissals has its own `kind` column,
   // and GROUP BY kind bound to that instead — grouping by dismissal type and
   // reporting pace with zero wickets and spin at a 100% dot rate.
+  // Bowlers of unknown type land in an 'Unknown' bucket that the response leaves out (Day 6: they used to be 'Pace').
   const { pacerIds, spinnerIds } = await bowlerTypeIdSets();
   const paceList = idList(pacerIds);
   const spinList = idList(spinnerIds);
@@ -189,7 +190,7 @@ export async function getTeamAnalytics(params: TeamAnalyticsParams) {
   const bowlerSplit = paceList && spinList
     ? (await db.execute(sql.raw(`
         SELECT
-          CASE WHEN d.bowler_id IN (${spinList}) THEN 'Spin' ELSE 'Pace' END AS bowler_kind,
+          CASE WHEN d.bowler_id IN (${spinList}) THEN 'Spin' WHEN d.bowler_id IN (${paceList}) THEN 'Pace' ELSE 'Unknown' END AS bowler_kind,
           sum(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) AS balls,
           sum(d.total_runs) AS runs,
           count(dm.dismissal_id) AS wickets,
@@ -578,11 +579,13 @@ export async function getVenueAnalytics(params: {
     };
   };
 
-  const { spinnerIds } = await bowlerTypeIdSets();
+  // Bowlers of unknown type fall in an 'Unknown' bucket that the response leaves out (Day 6: they used to count as pace).
+  const { pacerIds: venuePacerIds, spinnerIds } = await bowlerTypeIdSets();
   const spinList = idList(spinnerIds);
-  const surfaceRows = spinList
+  const venuePaceList = idList(venuePacerIds);
+  const surfaceRows = spinList && venuePaceList
     ? (await db.execute(sql.raw(`
-        SELECT CASE WHEN d.bowler_id IN (${spinList}) THEN 'Spin' ELSE 'Pace' END AS bowler_kind,
+        SELECT CASE WHEN d.bowler_id IN (${spinList}) THEN 'Spin' WHEN d.bowler_id IN (${venuePaceList}) THEN 'Pace' ELSE 'Unknown' END AS bowler_kind,
           sum(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) AS balls,
           sum(d.total_runs) AS runs,
           count(dm.dismissal_id) AS wickets,

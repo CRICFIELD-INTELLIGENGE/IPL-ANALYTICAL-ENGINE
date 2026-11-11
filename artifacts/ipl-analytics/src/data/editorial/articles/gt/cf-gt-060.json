@@ -1,0 +1,136 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-gt-060",
+ "planId": "cf-gt-060",
+ "franchise": "GT",
+ "aspect": "fan-culture",
+ "title": "The Comeback Narrative: Why Hope Is Gujarat Titans\u2019s Most Renewable Asset",
+ "slug": "gt-the-comeback-narrative-why-hope-is-gt-most-renewable-asset",
+ "dek": "Hope keeps fans watching when the game looks lost. Gujarat Titans' comebacks, from steep chases and from bad starts to seasons, show how often that hope has paid.",
+ "excerpt": "Gujarat Titans have won more often than the rest of the league from chases needing ten an over at halfway. Comebacks are rare, which is exactly why fans remember them.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "GT"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "GT have won {{ev:cb-w}} of {{ev:cb-n}} chases that needed ten or more an over at halfway ({{ev:cb-pct}}); the rest of the IPL won {{ev:cb-lg}}.",
+  "Seasons in which GT lost three or more of their first five decided matches: {{ev:cb-early}}.",
+  "Of those, seasons that still ended in a playoff place: {{ev:cb-early-po}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Hope as an Asset",
+   "body": [
+    "A fan who believes a comeback is possible keeps watching, keeps buying and keeps talking. Hope is renewable in a way that a single result is not.",
+    "The CricField warehouse holds no survey, sentiment or social-media data, so it cannot measure what fans feel. It can measure what they have watched."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Comebacks Within a Match",
+   "body": [
+    "Gujarat Titans have faced {{ev:cb-n}} chases that needed ten or more an over at the halfway mark, and won {{ev:cb-w}}: {{ev:cb-pct}}. The rest of the league won {{ev:cb-lg}} from the same position.",
+    "On this measure GT have turned lost causes around more often than most."
+   ],
+   "chartIds": [
+    "cb-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Comebacks Within a Season",
+   "body": [
+    "GT lost three or more of their first five decided matches in {{ev:cb-early}} of {{ev:cb-n-seasons}} seasons, and still reached the playoffs in {{ev:cb-early-po}} of those.",
+    "Those seasons are the clearest test of whether a bad start ends a fan's hope."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Why Comebacks Matter More Than Their Number",
+   "body": [
+    "Comebacks are rare by definition, but fans remember them far longer than routine wins.",
+    "{{hyp:hope}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Hope Has Been Rewarded",
+   "body": [
+    "Gujarat Titans have come back from difficult chases more often than the league. That record gives fans a real reason to keep believing.",
+    "How much those moments matter to fans needs data the scorecard does not hold."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "cb-chart",
+   "type": "column",
+   "title": "Win rate from steep chases",
+   "subtitle": "Needing ten or more an over at halfway",
+   "table": "cb-cmp",
+   "xKey": "side",
+   "series": [
+    {
+     "key": "winPct",
+     "label": "Win rate"
+    }
+   ],
+   "xLabel": "Side",
+   "unit": "% of chases",
+   "takeaway": "GT have won steep chases more often than the league.",
+   "ariaLabel": "Column chart comparing GT and the rest of the IPL in chases needing ten or more an over at halfway."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "hope",
+   "statement": "Hypothesis: matches won from a steep chase produce larger and longer-lasting spikes in fan engagement than routine wins.",
+   "whyUnverified": "No engagement data is available.",
+   "howToTest": "Compare engagement after comeback wins and routine wins over the following week."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Gujarat Titans comeback.",
+   "wanted": "Gujarat Titans players celebrating a comeback win."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-gt-051",
+  "cf-gt-056",
+  "cf-gt-066"
+ ],
+ "seo": {
+  "metaTitle": "The comeback narrative: Gujarat Titans' most renewable asset",
+  "metaDescription": "How often Gujarat Titans have won steep chases and recovered from bad starts to seasons, and why hope matters to fans."
+ },
+ "methodology": "CricField holds ball-by-ball cricket data and no fan survey, sentiment or social-media data. This article measures the cricket fans have experienced; statements about fans themselves are labelled hypotheses. Generated by scripts/editorial/engine. Steep chase = required rate of ten or more after ten overs, from target, runs scored and legal balls used (full twenty-over chases assumed, so a few rain-shortened matches may be misclassified). Bad start = three or more defeats in the first five decided matches.",
+ "generator": "engine:v1"
+}

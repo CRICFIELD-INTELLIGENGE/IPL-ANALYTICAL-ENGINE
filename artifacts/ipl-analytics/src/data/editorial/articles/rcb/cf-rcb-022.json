@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 2,
+  "id": "cf-rcb-022",
+  "planId": "cf-rcb-022",
+  "franchise": "RCB",
+  "aspect": "tactical",
+  "title": "The Chinnaswamy Effect: What Makes M. Chinnaswamy Different for Royal Challengers Bengaluru",
+  "slug": "rcb-the-chinnaswamy-effect-how-much-does-the-ground-change-cricket",
+  "supersedes": {
+    "legacyId": "art-rcb-05",
+    "legacySlug": "rcb-the-chinnaswamy-effect-how-much-does-the-ground-change-cricket",
+    "decision": "revise"
+  },
+  "dek": "Chinnaswamy changes the cricket played on it more than almost any IPL ground. What it has never done is give RCB a meaningful home advantage. The data explains the paradox.",
+  "excerpt": "More sixes, bigger first-innings totals and a toss decision so predictable it is almost automatic. Yet RCB win at home about as often as they win anywhere else.",
+  "author": "CricField Editorial Desk",
+  "publishedDate": "2026-10-26",
+  "status": "published",
+  "featured": true,
+  "storyType": "investigation",
+  "teams": [
+    "RCB"
+  ],
+  "players": [],
+  "seasons": [
+    "2008–2026",
+    "2023–2026"
+  ],
+  "keyTakeaways": [
+    "Chinnaswamy has produced {{ev:sixes-chin-all}} sixes per match against {{ev:sixes-other-all}} at other IPL venues, and a first-innings average of {{ev:first-chin-all}} against {{ev:first-other-all}}.",
+    "RCB's win rate at home is {{ev:rcb-home-all}}, statistically indistinguishable from their {{ev:rcb-away-all}} away from it.",
+    "Every toss winner at Chinnaswamy from 2023 to 2026 chose to bowl first ({{ev:toss-field-recent}})."
+  ],
+  "sections": [
+    {
+      "id": "s1",
+      "role": "hook",
+      "heading": "A Ground Everyone Recognises, a Record Nobody Expects",
+      "body": [
+        "Ask any IPL viewer to describe the M. Chinnaswamy Stadium and the answers converge: short boundaries, fast outfield, runs everywhere. The franchise's earlier Dugout piece on this ground leaned on that reputation. This revision replaces reputation with measurement.",
+        "The measurement confirms the first half of the story. Across {{ev:matches-chin-all}} matches in the CricField warehouse, Chinnaswamy has seen {{ev:sixes-chin-all}} sixes per match against {{ev:sixes-other-all}} elsewhere, a run rate of {{ev:rr-chin-all}} against {{ev:rr-other-all}}, and an average first-innings score of {{ev:first-chin-all}} against {{ev:first-other-all}}.",
+        "The second half is where the story turns. A ground this distinctive should hand its home side an edge, because RCB play there more than anyone and can build a squad around it. The results say it has not."
+      ]
+    },
+    {
+      "id": "s2",
+      "role": "evidence",
+      "heading": "The Numbers Behind the Noise",
+      "body": [
+        "RCB have won {{ev:rcb-home-all}} of their {{ev:rcb-home-n-all}} decided matches at Chinnaswamy and {{ev:rcb-away-all}} of their matches everywhere else. The ninety-five per cent interval around the home figure runs from {{ev:rcb-home-ci}}, which comfortably contains a coin flip; if every home match were a coin flip, a record at least this far from even would turn up with probability {{ev:rcb-home-p}}.",
+        "The split by era sharpens the point. Before 2023 RCB won {{ev:rcb-home-early}} at home and {{ev:rcb-away-early}} away. Since 2023 they have won {{ev:rcb-home-recent}} at home across {{ev:rcb-home-n-recent}} matches and {{ev:rcb-away-recent}} away. The recent sides, including both title winners, were better travellers than hosts.",
+        "Season by season, the ground's first-innings average beat the league's in {{ev:seasons-above}} of the {{ev:seasons-hosted}} seasons it hosted. The inflation is real but not uniform: in the recent era Chinnaswamy averaged {{ev:first-chin-recent}} in the first innings against {{ev:first-other-recent}} elsewhere, a much narrower gap than in the 2010s, because the rest of the league has caught up."
+      ],
+      "chartIds": [
+        "home-away",
+        "first-innings"
+      ]
+    },
+    {
+      "id": "s3",
+      "role": "tactical",
+      "heading": "Why a Run-Friendly Ground Neutralises Itself",
+      "body": [
+        "The reason is structural. A ground that inflates scoring inflates it for both sides. Visiting batters enjoy the same short boundaries, and a big total offers less protection when the chasing side also expects to score freely. Chasing sides have won {{ev:chase-chin-all}} of decided matches at Chinnaswamy against {{ev:chase-other-all}} at other grounds.",
+        "Captains have drawn the obvious conclusion. From 2023 to 2026 the toss winner chose to bowl first in {{ev:toss-field-recent}} of Chinnaswamy matches. When every visitor makes the same correct call, the home side's familiarity with the conditions is worth less, because the most important decision of the match has been taken out of its hands.",
+        "A genuine home edge would have to come from something visitors cannot copy: a bowling plan built for the ground's dimensions, or a batting order tuned to chasing there. That is a squad-design question, and it is where RCB's opportunity lies."
+      ]
+    },
+    {
+      "id": "s4",
+      "role": "counterargument",
+      "heading": "The Case That Home Still Matters",
+      "body": [
+        "A home-and-away win rate is a blunt instrument. RCB's away figure includes neutral venues, playoff grounds and the seasons played entirely away from Bengaluru, and their home record has been dragged down by eras in which the whole squad was weak. Matching each home match with a comparable away fixture could reveal an edge that the raw split hides.",
+        "The recent samples are also small. With {{ev:rcb-home-n-recent}} home matches since 2023, a couple of results either way move the percentage substantially.",
+        "{{hyp:crowd-effect}}"
+      ]
+    },
+    {
+      "id": "s5",
+      "role": "verdict",
+      "heading": "CricField Verdict: Distinctive Is Not the Same as Decisive",
+      "body": [
+        "Chinnaswamy is one of the most distinctive grounds in the IPL, and the evidence for that is strong. The evidence for a resulting RCB home advantage is not: across nineteen seasons the franchise has won at home almost exactly as often as it has won away.",
+        "The practical takeaway for RCB is to stop treating the ground as an asset that pays out automatically. A home edge has to be engineered, most plausibly through bowling depth that keeps chasing teams below the par the ground suggests, and through a chasing method that turns the toss everyone wins into a toss RCB win more often."
+      ]
+    }
+  ],
+  "charts": [
+    {
+      "id": "home-away",
+      "type": "column",
+      "title": "RCB win rate: Chinnaswamy vs elsewhere",
+      "subtitle": "Matches with a result",
+      "table": "rcb-home-away",
+      "xKey": "period",
+      "series": [
+        {
+          "key": "home",
+          "label": "At Chinnaswamy"
+        },
+        {
+          "key": "away",
+          "label": "Elsewhere"
+        }
+      ],
+      "xLabel": "Period",
+      "unit": "% of matches won",
+      "takeaway": "Over the full history RCB win about as often at home as away; since 2023 they have won more often away.",
+      "ariaLabel": "Grouped column chart of RCB's win rate at Chinnaswamy and at other venues for 2008 to 2026, 2008 to 2022 and 2023 to 2026."
+    },
+    {
+      "id": "first-innings",
+      "type": "line",
+      "title": "Average first-innings score by season",
+      "subtitle": "Chinnaswamy vs IPL average (seasons in which Chinnaswamy hosted)",
+      "table": "first-innings-by-season",
+      "xKey": "season",
+      "series": [
+        {
+          "key": "chinnaswamy",
+          "label": "Chinnaswamy"
+        },
+        {
+          "key": "league",
+          "label": "IPL average"
+        }
+      ],
+      "xLabel": "Season",
+      "unit": "runs",
+      "takeaway": "Chinnaswamy usually sits above the league line, but the gap has narrowed as scoring has risen everywhere.",
+      "ariaLabel": "Line chart of average first-innings score by season at Chinnaswamy and across the IPL for the seasons the ground hosted, from 2008 to 2026."
+    }
+  ],
+  "sources": [
+    {
+      "id": "cf-warehouse",
+      "kind": "cricfield-dataset",
+      "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008–2026)",
+      "publisher": "CricField / Cricsheet",
+      "url": "https://cricsheet.org/downloads/",
+      "note": "Chinnaswamy appears under three venue names in the source; all three are combined."
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "crowd-effect",
+      "statement": "Hypothesis: crowd support at Chinnaswamy helps RCB in ways a win-rate split cannot detect, for example in close finishes.",
+      "whyUnverified": "No crowd or attendance data is in the warehouse, and close home matches are too few to test alone.",
+      "howToTest": "Compare RCB's close-match record at home and away with a matched-fixture design once more seasons accumulate."
+    }
+  ],
+  "literalNumbers": [],
+  "imageBriefs": [
+    {
+      "slot": "hero",
+      "narrative": "The Chinnaswamy stadium full on an RCB match night.",
+      "wanted": "Wide view of M. Chinnaswamy Stadium during an RCB IPL match, landscape."
+    },
+    {
+      "slot": "s2",
+      "narrative": "Six-hitting at Chinnaswamy.",
+      "wanted": "An RCB batter hitting a six at Chinnaswamy, 2023–2026."
+    },
+    {
+      "slot": "s4",
+      "narrative": "The home crowd.",
+      "wanted": "RCB fans in the stands at Chinnaswamy."
+    }
+  ],
+  "videos": [
+    {
+      "catalogueId": "JH-1540065714",
+      "afterSection": "s3",
+      "why": "RCB's 2026 home win over CSK, a match in which RCB batted first at Chinnaswamy and still won comfortably."
+    }
+  ],
+  "related": [
+    "cf-rcb-065",
+    "cf-rcb-093",
+    "cf-rcb-021"
+  ],
+  "seo": {
+    "metaTitle": "The Chinnaswamy Effect: Home Ground Dynamics for RCB",
+    "metaDescription": "Chinnaswamy changes the cricket played on it more than almost any IPL ground. Data reveals why a distinctive ground is not the same thing as a home edge."
+  },
+  "methodology": "Chinnaswamy combines three venue names in the source. Run rate uses all runs per legal ball times six; sixes per match count all sixes in regulation innings. Win rates use matches with a result. The interval is a Wilson score interval; the probability is a two-sided exact binomial test against fifty per cent. Generated by scripts/editorial/evidence/rcb/cf-rcb-022.ts.",
+  "editorialReview": {
+    "reviewedBy": "CricField Editorial Board",
+    "reviewedAt": "2026-10-26",
+    "approved": true
+  }
+}

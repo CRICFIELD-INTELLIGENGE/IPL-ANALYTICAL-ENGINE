@@ -1,0 +1,217 @@
+{
+ "articleId": "cf-kkr-027",
+ "generatedAt": "2026-10-26T04:20:58.334Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "opp-most-opp": {
+   "value": "Mumbai Indians",
+   "display": "Mumbai Indians",
+   "label": "KKR's most-played opponent",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 37,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "max over opponents",
+    "passed": true
+   }
+  },
+  "opp-most-n": {
+   "value": 37,
+   "display": "37",
+   "label": "Matches against MI",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 37,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 3 matches",
+    "passed": true,
+    "detail": "n = 37"
+   }
+  },
+  "opp-most-pct": {
+   "value": 32.4,
+   "display": "32.4%",
+   "label": "KKR win rate against MI",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 37,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 3 matches",
+    "passed": true,
+    "detail": "n = 37"
+   }
+  },
+  "opp-best-opp": {
+   "value": "Sunrisers Hyderabad",
+   "display": "Sunrisers Hyderabad",
+   "label": "Opponent KKR beat most often (min. six matches)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. six matches",
+   "sampleSize": {
+    "n": 32,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "max over opponents",
+    "passed": true
+   }
+  },
+  "opp-best-pct": {
+   "value": 65.6,
+   "display": "65.6%",
+   "label": "KKR win rate against SRH",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. six matches",
+   "sampleSize": {
+    "n": 32,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 6 matches",
+    "passed": true,
+    "detail": "n = 32"
+   }
+  },
+  "opp-worst-opp": {
+   "value": "Mumbai Indians",
+   "display": "Mumbai Indians",
+   "label": "Opponent KKR beat least often (min. six matches)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. six matches",
+   "sampleSize": {
+    "n": 37,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "min over opponents",
+    "passed": true
+   }
+  },
+  "opp-worst-pct": {
+   "value": 32.4,
+   "display": "32.4%",
+   "label": "KKR win rate against MI",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. six matches",
+   "sampleSize": {
+    "n": 37,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 6 matches",
+    "passed": true,
+    "detail": "n = 37"
+   }
+  },
+  "opp-spread": {
+   "value": 33,
+   "display": "33",
+   "label": "Gap between Kolkata Knight Riders' best and worst head-to-head win rates (min. six matches)",
+   "unit": "percentage points",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Current franchises",
+   "sampleSize": {
+    "n": 9,
+    "unit": "opponents"
+   },
+   "query": "head-to-head table",
+   "validation": {
+    "method": "max − min over opponents",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "opp-h2h": {
+   "label": "KKR head-to-head record by opponent",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result; opponents under their current franchise names",
+   "sampleSize": {
+    "n": 252,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND (m.team1_id IN (13) OR m.team2_id IN (13)) AND m.winner_id IS NOT NULL",
+   "rows": [
+    {
+     "opponent": "MI",
+     "winPct": 32.4,
+     "matches": 37,
+     "won": 12
+    },
+    {
+     "opponent": "RCB",
+     "winPct": 55.6,
+     "matches": 36,
+     "won": 20
+    },
+    {
+     "opponent": "DC",
+     "winPct": 55.6,
+     "matches": 36,
+     "won": 20
+    },
+    {
+     "opponent": "PBKS",
+     "winPct": 61.8,
+     "matches": 34,
+     "won": 21
+    },
+    {
+     "opponent": "CSK",
+     "winPct": 34.4,
+     "matches": 32,
+     "won": 11
+    },
+    {
+     "opponent": "SRH",
+     "winPct": 65.6,
+     "matches": 32,
+     "won": 21
+    },
+    {
+     "opponent": "RR",
+     "winPct": 54.8,
+     "matches": 31,
+     "won": 17
+    },
+    {
+     "opponent": "LSG",
+     "winPct": 37.5,
+     "matches": 8,
+     "won": 3
+    },
+    {
+     "opponent": "GT",
+     "winPct": 33.3,
+     "matches": 6,
+     "won": 2
+    }
+   ]
+  }
+ }
+}

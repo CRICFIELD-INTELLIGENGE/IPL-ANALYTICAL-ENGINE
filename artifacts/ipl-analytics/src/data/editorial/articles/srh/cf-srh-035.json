@@ -1,0 +1,150 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-srh-035",
+ "planId": "cf-srh-035",
+ "franchise": "SRH",
+ "aspect": "auction-economics",
+ "title": "The Uncapped Advantage: Finding Low-Cost Impact for Sunrisers Hyderabad",
+ "slug": "srh-the-uncapped-advantage-finding-low-cost-impact-for-srh",
+ "dek": "Where can Sunrisers Hyderabad find impact for a fraction of the purse? Players bought for \u20b91 Cr or less since 2018 show how often the bargain bin delivers.",
+ "excerpt": "Sunrisers Hyderabad have carried a stream of low-cost players since 2018. Only some got a real chance, and fewer still beat the league average, but the ones who did are the cheapest contribution in the squad.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "player-story",
+ "teams": [
+  "SRH"
+ ],
+ "players": [
+  "Jaydev Unadkat",
+  "Mohammad Nabi",
+  "Thangarasu Natarajan"
+ ],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "SRH have had {{ev:lc-n}} player-seasons priced \u20b91 Cr or less since 2018.",
+  "{{ev:lc-played}} of them faced or bowled at least sixty balls; {{ev:lc-pos}} of those finished above average on tempo runs.",
+  "The most productive was {{ev:lc-best-name}}, at {{ev:lc-best-v}} tempo runs above average."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Bargain Bin",
+   "body": [
+    "Every squad carries players bought near their base price. Most are cover; a few become regulars and produce far more than their price suggests. Finding them is the cheapest edge in the auction.",
+    "Since 2018, Sunrisers Hyderabad have had {{ev:lc-n}} player-seasons priced \u20b91 Cr or less. {{ev:lc-played}} of them faced or bowled at least sixty balls."
+   ],
+   "chartIds": [
+    "lc-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Who Delivered",
+   "body": [
+    "{{ev:lc-pos}} of the low-cost players with a real workload finished above the league average on tempo runs.",
+    "The best was {{ev:lc-best-name}}, at {{ev:lc-best-v}} tempo runs above average; the chart lists the most productive low-cost seasons."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Finding the Next One",
+   "body": [
+    "Low-cost success usually follows a pattern: a domestic player with a strong record in one role, given a defined job. The risk is in giving cheap players undefined roles or no opportunities at all.",
+    "For SRH, each low-cost signing should come with a planned role and a minimum number of chances."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Opportunity Bias",
+   "body": [
+    "Low-cost players who play are those whom coaches already trusted, so their record overstates what an untested cheap signing would deliver.",
+    "{{hyp:opportunity}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Fewer Bargains, Clearer Roles",
+   "body": [
+    "Sunrisers Hyderabad should carry fewer low-cost players but give each a defined role. The data shows the bargain bin delivers when players get chances.",
+    "Domestic performance in the specific role is the scouting signal to weight most."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "lc-chart",
+   "type": "bar",
+   "title": "Best low-cost seasons",
+   "subtitle": "SRH, priced \u20b91 Cr or less, 2018\u20132026",
+   "table": "lc-best",
+   "xKey": "player",
+   "series": [
+    {
+     "key": "tRAA",
+     "label": "Tempo runs above average"
+    }
+   ],
+   "unit": "runs",
+   "takeaway": "A handful of low-cost seasons produced well above their price.",
+   "ariaLabel": "Horizontal bar chart of the best low-cost player-seasons for SRH."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-squads",
+   "kind": "cricfield-dataset",
+   "title": "CricField squads-by-season dataset",
+   "publisher": "CricField"
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "opportunity",
+   "statement": "Hypothesis: low-cost players given at least ten matches perform as well as mid-priced players in the same role.",
+   "whyUnverified": "Selection decisions confound the comparison.",
+   "howToTest": "Compare low-cost and mid-priced players' per-ball output within the same roles and phases."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "1",
+   "reason": "Price threshold (\u20b91 Cr) defining the group."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Sunrisers Hyderabad bargain signing.",
+   "wanted": "Jaydev Unadkat playing for Sunrisers Hyderabad."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-srh-072",
+  "cf-srh-037",
+  "cf-srh-080"
+ ],
+ "seo": {
+  "metaTitle": "The low-cost advantage: cheap impact for SRH",
+  "metaDescription": "How often Sunrisers Hyderabad's players bought for \u20b91 Cr or less since 2018 got chances, and which ones beat the league average."
+ },
+ "methodology": "Contribution is tempo runs above average (tRAA): batting runs above what an average batter would score from the same balls in the same season and phase, plus bowling runs saved against the average bowler in the same season and phase. Wickets and dismissals are not valued in this version. Prices come from CricField squad lists (\u20b9 crore = 100 lakh). Generated by scripts/editorial/engine. Low cost = recorded price of \u20b91 Cr or less.",
+ "generator": "engine:v1"
+}

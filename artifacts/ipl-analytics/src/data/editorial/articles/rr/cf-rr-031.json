@@ -1,0 +1,143 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-031",
+ "planId": "cf-rr-031",
+ "franchise": "RR",
+ "aspect": "auction-economics",
+ "title": "The Auction Price Puzzle: What Is a Win Worth to Rajasthan Royals?",
+ "slug": "rr-the-auction-price-puzzle-what-is-a-win-worth-to-rr",
+ "dek": "What does a win cost Rajasthan Royals at the auction table? Dividing recorded squad spend by wins gives a blunt but revealing price.",
+ "excerpt": "Since 2018, Rajasthan Royals have spent about the league average per win. Across the league, recorded spend and wins are barely related.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "RR"
+ ],
+ "players": [],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "RR spent {{ev:wc-per}} of recorded squad prices per win across 2018\u20132026; the league average was {{ev:wc-lg}}.",
+  "That ranks RR {{ev:wc-rank}} of ten franchises for the cheapest wins.",
+  "Across all franchise-seasons, recorded spend and wins correlate at {{ev:wc-r}}."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Price of a Win",
+   "body": [
+    "Every auction is a bet that money turns into wins. The simplest test divides what a franchise spent on its squad by the matches it won. It ignores prize money and brand value, but it shows how efficiently the money has been converted.",
+    "Across 2018\u20132026, Rajasthan Royals spent {{ev:wc-per}} of recorded squad prices per win, against a league average of {{ev:wc-lg}}. That places them {{ev:wc-rank}} of ten for the cheapest wins."
+   ],
+   "chartIds": [
+    "wc-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Money and Wins, League-Wide",
+   "body": [
+    "Across every franchise-season with recorded prices, total spend and wins correlate at {{ev:wc-r}}: they are barely related. Spending more has not reliably bought more wins, which points to how the money is spent rather than how much.",
+    "The season chart shows Rajasthan Royals' cost per win year by year; spikes mark seasons where the money bought few results."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Where the Efficiency Comes From",
+   "body": [
+    "Cheap wins usually come from players who outperform their price: retained players bought young, low-priced domestic picks who become regulars, and overseas players chosen to fill a specific role.",
+    "The other articles in this aspect break Rajasthan Royals' spending down by tier, retention and nationality to find where that surplus comes from."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Why Spend per Win Is Crude",
+   "body": [
+    "Recorded prices miss some players, and a win in a playoff counts the same as a dead rubber. Spending also buys things that do not show up as wins, from brand value to future seasons.",
+    "{{hyp:future}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: League-Average Value",
+   "body": [
+    "Rajasthan Royals have converted spend into wins at roughly the league-average price since 2018.",
+    "The useful next step is to price each player's contribution, not just the squad's, which the salary-versus-contribution model in this series does."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "wc-chart",
+   "type": "column",
+   "title": "Recorded squad spend per win",
+   "subtitle": "RR, by season",
+   "table": "win-cost",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "crorePerWin",
+     "label": "\u20b9 crore per win"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "\u20b9 crore per win",
+   "takeaway": "RR have spent about the league average per win since 2018.",
+   "ariaLabel": "Column chart of RR recorded squad spend per win by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-squads",
+   "kind": "cricfield-dataset",
+   "title": "CricField squads-by-season dataset (auction and retention prices)",
+   "publisher": "CricField",
+   "note": "Players without a recorded price are excluded from spend."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "future",
+   "statement": "Hypothesis: part of each season's spend buys future seasons (young players, retentions), so spend per win overstates the cost of current wins.",
+   "whyUnverified": "Multi-season player value has not been allocated across seasons.",
+   "howToTest": "Spread each player's price over the seasons they were retained and recompute cost per win."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Rajasthan Royals at the auction.",
+   "wanted": "Rajasthan Royals team or auction table."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rr-039",
+  "cf-rr-032",
+  "cf-rr-033"
+ ],
+ "seo": {
+  "metaTitle": "What is a win worth to RR at auction?",
+  "metaDescription": "Rajasthan Royals' recorded squad spend per win since 2018, against every IPL franchise, and why spend and wins are only loosely linked."
+ },
+ "methodology": "Contribution is tempo runs above average (tRAA): batting runs above what an average batter would score from the same balls in the same season and phase, plus bowling runs saved against the average bowler in the same season and phase. Wickets and dismissals are not valued in this version. Prices come from CricField squad lists (\u20b9 crore = 100 lakh). Generated by scripts/editorial/engine. Spend per win = sum of recorded season prices \u00f7 wins in matches with a result.",
+ "generator": "engine:v1"
+}

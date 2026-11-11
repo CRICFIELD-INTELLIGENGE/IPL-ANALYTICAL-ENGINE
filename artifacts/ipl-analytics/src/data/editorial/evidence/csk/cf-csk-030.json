@@ -1,0 +1,127 @@
+{
+ "articleId": "cf-csk-030",
+ "generatedAt": "2026-10-26T04:17:20.235Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "cap-n": {
+   "value": 4,
+   "display": "4",
+   "label": "CSK captains listed",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "captains.json",
+   "sampleSize": {
+    "n": 4,
+    "unit": "captains"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "plausibility range 1–30 for captain count",
+    "passed": true,
+    "detail": "value 4"
+   }
+  },
+  "cap-top": {
+   "value": "Ruturaj Gaikwad",
+   "display": "Ruturaj Gaikwad",
+   "label": "CSK's longest-serving captain with a franchise-only record",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact records only",
+   "sampleSize": {
+    "n": 33,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "rank by matches",
+    "passed": true
+   }
+  },
+  "cap-top-pct": {
+   "value": 42.4,
+   "display": "42.4%",
+   "label": "Ruturaj Gaikwad win rate as CSK captain",
+   "unit": "%",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 33,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 33"
+   }
+  },
+  "cap-top-n": {
+   "value": 33,
+   "display": "33",
+   "label": "Matches with Ruturaj Gaikwad as CSK captain",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact record",
+   "sampleSize": {
+    "n": 33,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 33"
+   }
+  },
+  "cap-team": {
+   "value": 55.8,
+   "display": "55.8%",
+   "label": "CSK win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 265,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (9) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (9) OR m.team2_id IN (9)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 265"
+   }
+  }
+ },
+ "tables": {
+  "cap-tab": {
+   "label": "CSK captains with franchise-only records",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Captains whose record covers this franchise alone (min. five matches)",
+   "sampleSize": {
+    "n": 41,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "rows": [
+    {
+     "captain": "Ruturaj Gaikwad",
+     "seasons": "2024–2026",
+     "matches": 33,
+     "winPct": 42.4,
+     "titles": 0
+    },
+    {
+     "captain": "Ravindra Jadeja",
+     "seasons": "2022–2022",
+     "matches": 8,
+     "winPct": 25,
+     "titles": 0
+    }
+   ]
+  }
+ }
+}

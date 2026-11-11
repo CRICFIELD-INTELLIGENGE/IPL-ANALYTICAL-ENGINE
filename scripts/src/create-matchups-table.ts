@@ -1,9 +1,11 @@
 import { DatabaseSync } from "node:sqlite";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { guardWarehouseWrite } from "./lib/warehouse-guard";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dbPath = path.resolve(__dirname, "..", "..", "sqlite.db");
+guardWarehouseWrite("create-matchups-table.ts", { target: dbPath });
 const db = new DatabaseSync(dbPath);
 
 console.log("Creating batter_bowler_matchup_stats table...");

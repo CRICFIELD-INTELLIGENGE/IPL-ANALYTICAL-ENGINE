@@ -1,5 +1,5 @@
 /**
- * IPL DECISION INTELLIGENCE OS
+ * CRICFIELD INTELLIGENCE OS
  * ─────────────────────────────────────────────────────────────────────────────
  * Tactical Command Center: Asymmetric Bento Matrix with Live Interactive Spotlight
  * Zero carousel friction. 100% visible, interactive, and high-impact.
@@ -25,7 +25,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout";
 import { GlassCard } from "@/components/glass-card";
-import { PlayingXiDrawer } from "@/components/decision/playing-xi-drawer";
 import { DewImpactModal } from "@/components/decision/dew-impact-modal";
 import { MOCK_OVERVIEW } from "@/components/decision/ask-mock";
 import { fetchHistoryOverview } from "@/lib/ask-api";
@@ -35,8 +34,8 @@ import {
   Swords, GitBranch, Dna, Eye, Map, Gavel, Network,
   HeartPulse, Rewind, Sparkles, Trophy, Users, Zap,
   Brain, ArrowRight, Activity, Globe, Search,
-  SlidersHorizontal, Check, Shield, Target, ChevronRight,
-  BarChart3, RotateCcw, Play, CheckCircle2, Flame, Layers, Droplets
+  Check, Shield, Target, ChevronRight,
+  BarChart3, RotateCcw, CheckCircle2, Flame, Layers, Droplets
 } from "lucide-react";
 import { GpuMeshShader } from "@/components/scrolltide/gpu-mesh-shader";
 import { AdVessel } from "@/components/ad-vessel";
@@ -228,6 +227,7 @@ const ENGINES: DecisionEngine[] = [
     glowColor: "rgba(59, 130, 246, 0.45)",
     gradient: "from-blue-950/60 via-slate-900/80 to-indigo-950/60",
     cta: "Open Squad Builder",
+    href: "/ai-analyst/playing-xi",
     phase: 1,
     metrics: [
       { label: "Composition", value: "11 + Impact" },
@@ -431,13 +431,7 @@ function StatsBar() {
 
 export default function AIAnalystPage() {
   const [activeCategory, setActiveCategory] = useState<EngineCategory>("all");
-  const [spotlightId, setSpotlightId] = useState<string>("strategy-sim");
-  const [activeModal, setActiveModal] = useState<"playing-xi" | "dew-impact" | null>(null);
-
-  // Simulation Lab preview slider state
-  const [targetRuns, setTargetRuns] = useState<number>(24);
-  const [ballsRemaining, setBallsRemaining] = useState<number>(12);
-  const [venueChoke, setVenueChoke] = useState<"chepauk" | "wankhede" | "eden">("chepauk");
+  const [activeModal, setActiveModal] = useState<"dew-impact" | null>(null);
 
   const [, navigate] = useLocation();
 
@@ -446,13 +440,7 @@ export default function AIAnalystPage() {
     return e.category === activeCategory;
   });
 
-  const spotlightEngine = ENGINES.find((e) => e.id === spotlightId) || ENGINES[0];
-
   function handleAction(id: string) {
-    if (id === "playing-xi") {
-      setActiveModal("playing-xi");
-      return;
-    }
     if (id === "dew-impact-matrix") {
       setActiveModal("dew-impact");
       return;
@@ -463,13 +451,6 @@ export default function AIAnalystPage() {
       return;
     }
   }
-
-  // Calculated dynamic win prob for spotlight interactive lab
-  const rrr = (targetRuns / ballsRemaining) * 6;
-  const baseDefendProb = venueChoke === "chepauk" ? 64 : venueChoke === "wankhede" ? 42 : 53;
-  const planAProb = Math.min(92, Math.max(12, Math.round(baseDefendProb + (rrr - 10) * 3.5)));
-  const planBProb = Math.min(88, Math.max(15, Math.round(planAProb - 12)));
-  const planCProb = Math.min(84, Math.max(18, Math.round(planAProb - 7)));
 
   return (
     <Layout hideRightPanel>
@@ -492,7 +473,7 @@ export default function AIAnalystPage() {
           >
             <Brain className="w-3.5 h-3.5 text-cyan-400" />
             <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-cyan-300">
-              IPL DECISION INTELLIGENCE OS · QUANT COMMAND CENTER
+              CRICFIELD · QUANT COMMAND CENTER
             </span>
           </motion.div>
 
@@ -524,218 +505,7 @@ export default function AIAnalystPage() {
           <StatsBar />
         </div>
 
-        {/* ── 3. Interactive Mission Control Spotlight (Flagship Interactive Lab) ── */}
-        <section className="relative z-10">
-          <div className="relative rounded-3xl p-6 sm:p-8 bg-gradient-to-br from-[#0B1226]/95 via-[#070B18]/95 to-[#100D28]/95 border border-cyan-500/30 shadow-[0_0_50px_rgba(6,182,212,0.15)] overflow-hidden">
-            {/* Ambient top highlight */}
-            <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
-
-            {/* Spotlight Header Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/10">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-cyan-500/15 border border-cyan-500/40 flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.3)]">
-                  <spotlightEngine.icon className="w-6 h-6 text-cyan-400" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono font-bold tracking-widest text-cyan-400 uppercase px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-                      LIVE QUANT LAB
-                    </span>
-                    <span className="text-[10px] font-mono text-white/40">
-                      PHASE {spotlightEngine.phase} · {spotlightEngine.badge}
-                    </span>
-                  </div>
-                  <h2 className="font-display font-black text-2xl text-white tracking-tight mt-0.5">
-                    {spotlightEngine.name}
-                  </h2>
-                </div>
-              </div>
-
-              {/* Fast Switcher between the 4 Phase 3 Flagships */}
-              <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-xl">
-                {[
-                  { id: "strategy-sim", label: "Strategy Sim", icon: Swords },
-                  { id: "alt-universe", label: "Multiverse", icon: GitBranch },
-                  { id: "opposition-map", label: "Exploit Map", icon: Map },
-                  { id: "decision-replay", label: "Decision Replay", icon: Rewind },
-                ].map((tab) => {
-                  const Icon = tab.icon;
-                  const active = spotlightId === tab.id;
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => setSpotlightId(tab.id)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                        active
-                          ? "bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.25)]"
-                          : "text-white/50 hover:text-white hover:bg-white/5 border border-transparent"
-                      }`}
-                    >
-                      <Icon className="w-3.5 h-3.5" />
-                      <span className="hidden md:inline">{tab.label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Spotlight Interactive Body */}
-            <div className="grid lg:grid-cols-12 gap-8 pt-6 items-center">
-              {/* Left Column: Mission Description & Quant Output */}
-              <div className="lg:col-span-7 space-y-4">
-                <p className="text-sm text-white/80 leading-relaxed">
-                  {spotlightEngine.description}
-                </p>
-
-                {/* Key Metrics Chips */}
-                <div className="grid grid-cols-3 gap-2 py-3 px-4 rounded-2xl bg-black/40 border border-white/10">
-                  {spotlightEngine.metrics.map((m) => (
-                    <div key={m.label} className="text-center">
-                      <div className="text-[9px] uppercase tracking-wider text-white/40 font-mono">
-                        {m.label}
-                      </div>
-                      <div className="text-xs font-black text-cyan-300 mt-0.5">
-                        {m.value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-1.5">
-                  {spotlightEngine.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="text-[10px] font-mono px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-white/70"
-                    >
-                      #{t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    onClick={() => handleAction(spotlightEngine.id)}
-                    className="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-[0_0_25px_rgba(6,182,212,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    <span>{spotlightEngine.cta}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Right Column: Live Interactive Sandbox / Scenario Preview */}
-              <div className="lg:col-span-5 p-5 rounded-2xl bg-black/60 border border-cyan-500/20 backdrop-blur-xl space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <SlidersHorizontal className="w-4 h-4 text-cyan-400" />
-                    <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
-                      Interactive Parameter Lab
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                    REAL-TIME CALC
-                  </span>
-                </div>
-
-                {/* Scenario Slider: Target Runs */}
-                <div className="space-y-1.5">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-white/60">Target Needed:</span>
-                    <span className="font-mono font-bold text-cyan-300">{targetRuns} runs ({ballsRemaining} balls)</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="10"
-                    max="45"
-                    value={targetRuns}
-                    onChange={(e) => setTargetRuns(Number(e.target.value))}
-                    className="w-full accent-cyan-400 cursor-pointer"
-                  />
-                </div>
-
-                {/* Venue Toggle */}
-                <div className="space-y-1.5">
-                  <div className="text-xs text-white/60">Venue Bias Calibration:</div>
-                  <div className="grid grid-cols-3 gap-1.5">
-                    {[
-                      { id: "chepauk", label: "Chepauk (Spin Choke)" },
-                      { id: "wankhede", label: "Wankhede (High Bounce)" },
-                      { id: "eden", label: "Eden (Dew Pace)" },
-                    ].map((v) => (
-                      <button
-                        key={v.id}
-                        onClick={() => setVenueChoke(v.id as any)}
-                        className={`py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold transition-all ${
-                          venueChoke === v.id
-                            ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40"
-                            : "bg-white/5 text-white/40 border border-white/5 hover:text-white"
-                        }`}
-                      >
-                        {v.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Live Win Prob Gauges */}
-                <div className="pt-2 border-t border-white/10 space-y-2">
-                  <div className="text-[11px] font-mono text-white/50 flex justify-between">
-                    <span>AI PLAN PROJECTIONS</span>
-                    <span>DEFEND PROBABILITY</span>
-                  </div>
-
-                  {/* Plan A */}
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-xs font-semibold">
-                      <span className="text-white">Plan A (Yorker Lockdown)</span>
-                      <span className="font-mono text-cyan-400 font-bold">{planAProb}%</span>
-                    </div>
-                    <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
-                      <motion.div
-                        className="h-full bg-cyan-400"
-                        animate={{ width: `${planAProb}%` }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Plan B */}
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-xs font-semibold">
-                      <span className="text-white">Plan B (Hard-Length Ribs)</span>
-                      <span className="font-mono text-violet-400 font-bold">{planBProb}%</span>
-                    </div>
-                    <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
-                      <motion.div
-                        className="h-full bg-violet-400"
-                        animate={{ width: `${planBProb}%` }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Plan C */}
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-xs font-semibold">
-                      <span className="text-white">Plan C (Phase Matchup)</span>
-                      <span className="font-mono text-emerald-400 font-bold">{planCProb}%</span>
-                    </div>
-                    <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
-                      <motion.div
-                        className="h-full bg-emerald-400"
-                        animate={{ width: `${planCProb}%` }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── 4. Asymmetric Bento Matrix (All 12 Decision Engines) ── */}
+        {/* ── 3. Asymmetric Bento Matrix (All 12 Decision Engines) ── */}
         <section className="relative z-10 space-y-6">
           {/* Header & Filter Tabs */}
           <div className="flex flex-wrap items-center justify-between gap-4">
@@ -848,24 +618,11 @@ export default function AIAnalystPage() {
                     <div className="mt-5 pt-3 border-t border-white/10 flex items-center gap-2">
                       <button
                         onClick={() => handleAction(engine.id)}
-                        className="flex-1 py-2.5 px-3 rounded-2xl flex items-center justify-center gap-2 text-xs font-bold bg-white/10 hover:bg-cyan-500/20 text-white hover:text-cyan-300 border border-white/15 hover:border-cyan-400/40 transition-all shadow-sm"
+                        className="w-full py-2.5 px-3 rounded-2xl flex items-center justify-center gap-2 text-xs font-bold bg-white/10 hover:bg-cyan-500/20 text-white hover:text-cyan-300 border border-white/15 hover:border-cyan-400/40 transition-all shadow-sm"
                       >
                         <span>{engine.cta}</span>
                         <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                       </button>
-
-                      {engine.spotlightPreview && (
-                        <button
-                          onClick={() => {
-                            setSpotlightId(engine.id);
-                            window.scrollTo({ top: 320, behavior: "smooth" });
-                          }}
-                          className="p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/60 hover:text-white transition-all"
-                          title="Preview in Mission Control Lab"
-                        >
-                          <Play className="w-3.5 h-3.5 text-cyan-400" />
-                        </button>
-                      )}
                     </div>
                   </GlassCard>
                 </motion.div>
@@ -923,7 +680,6 @@ export default function AIAnalystPage() {
         </section>
 
         {/* Playing XI Modal Drawer */}
-        <PlayingXiDrawer open={activeModal === "playing-xi"} onOpenChange={(o) => setActiveModal(o ? "playing-xi" : null)} />
 
         {/* Dew & Ball Wear Impact Matrix Modal */}
         <DewImpactModal open={activeModal === "dew-impact"} onOpenChange={(o) => setActiveModal(o ? "dew-impact" : null)} />

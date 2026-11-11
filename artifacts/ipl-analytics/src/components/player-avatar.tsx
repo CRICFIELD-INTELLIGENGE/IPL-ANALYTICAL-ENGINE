@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { 
   getPlayerImageCandidates, usePlayerImages, usePlayerBios, 
-  usePlayerDisplayNames, displayPlayerName, playerSlug, usePlayerPhotoRegistry 
+  usePlayerDisplayNames, displayPlayerName, playerSlug, usePlayerPhotoRegistry, teamColor 
 } from "@/lib/aggregates";
 import { resolvePlayerPhotoFromRegistry, normalizePlayerSlug } from "@/lib/player-photo-registry";
 
@@ -11,9 +11,11 @@ interface PlayerAvatarProps {
   season?: number | string | null;
   strictHistoricalJersey?: boolean;
   playerImages?: Record<string, string>;
-  bio?: { image?: string; fullName?: string; playerName?: string } | null;
+  bio?: { image?: string; fullName?: string; playerName?: string; team?: string; currentTeam?: string } | null;
   className?: string;
   imgClassName?: string;
+  disableHover?: boolean;
+  framing?: "avatar" | "chest";
 }
 
 /** "V Kohli" -> "VK", "Noor Ahmad" -> "NA", "Sachin" -> "S" */
@@ -33,6 +35,7 @@ function hueOf(name: string): number {
 
 /**
  * Self-healing player headshot powered by the centralized Player Photo Registry.
+ * Features universal cinematic pop-out hover effect with franchise-colored halo.
  *
  * Fallback Hierarchy:
  * 1. Approved exact player + franchise + season photo
@@ -50,7 +53,9 @@ export function PlayerAvatar({
   playerImages: propImages, 
   bio: propBio, 
   className, 
-  imgClassName = "w-full h-full object-cover" 
+  imgClassName = "w-full h-full object-cover",
+  framing = "avatar",
+  disableHover = false
 }: PlayerAvatarProps) {
   const fetchedImages = usePlayerImages();
   const fetchedBios = usePlayerBios();
@@ -79,6 +84,21 @@ export function PlayerAvatar({
     }
     return null;
   }, [propBio, fetchedBios.data, name, displayName]);
+
+  // Dynamic franchise accent color for cinematic hover glow
+  const franchiseColor = useMemo(() => {
+    if (teamId) return teamColor(teamId);
+    const candidateTeam = bio?.team || bio?.currentTeam;
+    if (candidateTeam) return teamColor(candidateTeam);
+    const n = (displayName || name).toLowerCase();
+    if (n.includes("sharma") && n.includes("abhishek")) return "#f97316";
+    if (n.includes("kishan")) return "#f97316";
+    if (n.includes("klaasen")) return "#f97316";
+    if (n.includes("kohli")) return "#ef4444";
+    if (n.includes("dhoni")) return "#eab308";
+    if (n.includes("bumrah") || n.includes("rohit")) return "#0ea5e9";
+    return "#8b5cf6";
+  }, [teamId, bio, displayName, name]);
 
   // Registry resolution (Hierarchy Level 1, 2, 3)
   const registryResolution = useMemo(() => {
@@ -109,6 +129,7 @@ export function PlayerAvatar({
       list.push(registryResolution.url);
     }
 
+    // Fallback candidates: populate from playerImages and bio if list is empty or for extra resilience
     const setA = getPlayerImageCandidates(name, playerImages, bio);
     const setB = displayName && displayName !== name ? getPlayerImageCandidates(displayName, playerImages, bio) : [];
     const legacyCandidates = Array.from(new Set([...setA, ...setB])).filter(url => !url.includes("ui-avatars.com"));
@@ -118,7 +139,8 @@ export function PlayerAvatar({
     }
 
     return list;
-  }, [name, displayName, playerImages, bio, registryResolution]);
+  }, [name, displayName, playerImages, bio, registryResolution, teamId, strictHistoricalJersey, photoRegistry.data]);
+
   const [index, setIndex] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
@@ -139,10 +161,29 @@ export function PlayerAvatar({
   const labelName = displayName || name;
 
   const content = (
-    <div className="relative w-full h-full overflow-hidden">
-      <div
+    <div 
+      className={`relative w-full h-full overflow-hidden ${!disableHover ? "player-dp-frame" : ""}`}
+      style={{
+        ["--dp-accent-color" as any]: franchiseColor,
+        ["--dp-accent-glow" as any]: `${franchiseColor}80`,
+      }}
+    >
+      {/* Franchise Aura Halo Glow (active on hover) */}
+      {!disableHover && (
+        <>
+          <div 
+            className="player-dp-glow" 
+            style={{ background: `radial-gradient(circle, ${franchiseColor} 0%, transparent 70%)` }} 
+          />
+          <div className="player-dp-ring" />
+        </>
+      )}
+
+      {/* Fallback Initials: only while no photo is showing, so transparent cut-outs
+          sit on the page background instead of a per-player tint. */}
+      {!loaded && <div
         aria-hidden="true"
-        className="absolute inset-0 flex items-center justify-center font-black select-none"
+        className="absolute inset-0 flex items-center justify-center font-black select-none z-0"
         style={{
           background: `linear-gradient(135deg, hsl(${hueOf(labelName)} 45% 22%), hsl(${hueOf(labelName)} 40% 12%))`,
           color: `hsl(${hueOf(labelName)} 70% 72%)`,
@@ -151,12 +192,16 @@ export function PlayerAvatar({
         }}
       >
         {initialsOf(labelName)}
-      </div>
+      </div>}
+
+      {/* Player Photo with Pop-Out Elevation */}
       {!exhausted && (
         <img
+          key={src}
           src={src}
+          style={{ objectFit: framing === "chest" ? "contain" : "cover", objectPosition: framing === "chest" ? "center bottom" : "center top", width: "100%", height: "100%" }}
           alt={labelName || "Player"}
-          className={`${imgClassName} absolute inset-0 transition-opacity duration-200 ${loaded ? "opacity-100" : "opacity-0"}`}
+          className={`${imgClassName} ${!disableHover && framing !== "chest" ? "player-dp-img" : ""} absolute inset-0 z-[1] transition-opacity duration-200 ${loaded ? "opacity-100" : "opacity-0"}`}
           onLoad={() => setLoaded(true)}
           onError={handleError}
           loading="lazy"
@@ -167,3 +212,4 @@ export function PlayerAvatar({
 
   return className ? <div className={className}>{content}</div> : content;
 }
+

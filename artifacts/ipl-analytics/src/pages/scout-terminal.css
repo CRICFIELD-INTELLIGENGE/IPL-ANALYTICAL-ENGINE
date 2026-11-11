@@ -1,0 +1,353 @@
+/* CricField Scout Lab — The Scouting Room & Terminal Styling */
+:root {
+  --scout-accent: var(--team-accent, #B8F36B);
+  --scout-secondary: var(--team-secondary, #4CC9C0);
+  --scout-glow: var(--team-glow, rgba(184, 243, 107, 0.35));
+  --scout-tint: var(--team-surface-tint, rgba(20, 33, 42, 0.6));
+}
+
+.scout-terminal,
+.scout-notebook {
+  --scout-accent: var(--team-accent, #B8F36B);
+  --scout-secondary: var(--team-secondary, #4CC9C0);
+  --scout-glow: var(--team-glow, rgba(184, 243, 107, 0.35));
+  --scout-tint: var(--team-surface-tint, rgba(20, 33, 42, 0.6));
+  background: #050B11;
+  color: #EFF5F7;
+}
+
+.scout-cinematic-wrapper {
+  background: #050B11;
+  color: #EFF5F7;
+}
+
+.scout-terminal-header {
+  border: 1px solid #1C2D3B;
+  background: #08131E;
+}
+
+.scout-terminal-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 24px;
+  border-bottom: 1px solid #1C2D3B;
+  color: #81969E;
+  font: 10px monospace;
+  letter-spacing: .1em;
+}
+
+.scout-terminal-intro {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  padding: 32px;
+  gap: 30px;
+}
+
+.scout-terminal-eyebrow {
+  color: var(--scout-accent);
+  font: 11px monospace;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  margin-bottom: 16px;
+}
+
+.scout-terminal-intro h1 {
+  font-size: clamp(32px, 4vw, 60px);
+  letter-spacing: -.05em;
+  font-weight: 700;
+  line-height: 1.04;
+  color: #EFF5F7;
+}
+
+.scout-terminal-intro h1 em {
+  color: var(--scout-accent);
+  font-style: normal;
+}
+
+.scout-terminal-dek {
+  color: #8EA5AF;
+  font-size: 13px;
+  max-width: 490px;
+  line-height: 1.7;
+  margin-top: 20px;
+}
+
+.scout-terminal-notebook {
+  background: #0D1924;
+  border-left: 1px solid #1E3140;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.scout-terminal-notebook > span {
+  font: 9px monospace;
+  color: #91A6AC;
+  letter-spacing: .12em;
+}
+
+.scout-terminal-notebook strong {
+  display: block;
+  font: 44px monospace;
+  color: var(--scout-accent);
+  margin-top: 8px;
+}
+
+.scout-terminal-notebook p {
+  color: #8EA5AF;
+  font-size: 11px;
+  margin-bottom: 16px;
+}
+
+.scout-terminal-notebook a {
+  display: block;
+  padding: 8px 0;
+  color: var(--scout-accent);
+  font-size: 11px;
+  border-top: 1px solid #1E3140;
+}
+
+.scout-league-passport {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid #1C2D3B;
+}
+
+.scout-league-passport button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  padding: 12px 16px;
+  font: 11px monospace;
+  border-right: 1px solid #1C2D3B;
+  color: #8E9FA9;
+  white-space: nowrap;
+  background: transparent;
+  transition: all 0.2s;
+}
+
+.scout-league-passport button:hover {
+  color: #FFF;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.scout-league-passport button[aria-pressed=true] {
+  background: var(--scout-accent);
+  color: #050B11;
+  font-weight: bold;
+}
+
+.scout-league-passport button span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.scout-assignment-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.scout-assignment-strip > span {
+  font: 9px monospace;
+  color: #8DA3AC;
+  margin-right: 8px;
+}
+
+.scout-assignment-strip button {
+  border: 1px solid #1E3140;
+  padding: 8px 14px;
+  font-size: 11px;
+  background: #0B1722;
+  color: #C5D6E2;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.scout-assignment-strip button:hover {
+  border-color: var(--scout-accent);
+  color: #FFF;
+}
+
+.scout-assignment-strip button span {
+  margin-left: 8px;
+  color: var(--scout-accent);
+}
+
+.scout-connections {
+  border-top: 1px solid #1C2D3B;
+  padding-top: 28px;
+}
+
+.scout-connections-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+
+.scout-connections-heading p {
+  font: 10px monospace;
+  color: var(--scout-accent);
+  letter-spacing: .13em;
+}
+
+.scout-connections-heading h2 {
+  font-size: 24px;
+  letter-spacing: -.03em;
+  margin: 9px 0;
+  color: #EFF5F7;
+}
+
+.scout-connections-heading span {
+  font-size: 12px;
+  color: #8EA5AF;
+}
+
+.scout-connections-heading a,
+.scout-player-context a {
+  color: var(--scout-accent);
+  font-size: 11px;
+}
+
+.scout-player-context {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11px;
+  background: #0B1722;
+  border: 1px solid #1C2D3B;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 16px;
+  color: #9EB6C0;
+}
+
+.scout-connection-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.scout-connection-controls button {
+  padding: 10px 20px;
+  border-bottom: 2px solid transparent;
+  font-size: 12px;
+  color: #8EA5AF;
+  transition: all 0.2s;
+}
+
+.scout-connection-controls button[aria-pressed=true] {
+  border-color: var(--scout-accent);
+  color: var(--scout-accent);
+  font-weight: bold;
+}
+
+.scout-connection-controls input {
+  background: #0B1722;
+  border: 1px solid #1C2D3B;
+  color: #EFF5F7;
+  padding: 10px 14px;
+  font-size: 12px;
+  min-width: 0;
+  border-radius: 8px;
+}
+
+.scout-entity-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.scout-entity-card {
+  background: #0B1722;
+  border: 1px solid #1C2D3B;
+  border-radius: 10px;
+  padding: 16px;
+  min-width: 0;
+  transition: all 0.2s;
+}
+
+.scout-entity-card:hover {
+  border-color: var(--scout-accent);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.scout-entity-card h3 {
+  font-size: 13px;
+  margin: 14px 0 8px;
+  font-weight: 650;
+  color: #EFF5F7;
+}
+
+.scout-entity-card p {
+  font-size: 11px;
+  color: #8EA5AF;
+  line-height: 1.6;
+}
+
+.scout-entity-card > span {
+  display: block;
+  color: var(--scout-accent);
+  font-size: 10px;
+  margin-top: 16px;
+  font-family: monospace;
+}
+
+.scout-entity-card > img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+@media (max-width: 760px) {
+  .scout-terminal-intro {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  .scout-terminal-notebook {
+    border-left: 0;
+    border-top: 1px solid #1E3140;
+    padding: 16px 0 0;
+  }
+  .scout-entity-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .scout-connections-heading {
+    align-items: start;
+  }
+  .scout-connection-controls {
+    flex-wrap: wrap;
+  }
+  .scout-terminal-topline {
+    padding: 12px;
+    font-size: 8px;
+  }
+}
+
+@keyframes scoutGlobeSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.scout-globe-spinning {
+  animation: scoutGlobeSpin 35s linear infinite;
+  transform-origin: 150px 150px;
+}
+
+.scout-globe-orbit {
+  animation: scoutGlobeSpin 25s linear infinite reverse;
+  transform-origin: 150px 150px;
+}
+
+.scout-eye-ball{position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;color:var(--team-accent)}.scout-eye-ball:before{content:"";position:absolute;inset:0;border:2px dashed var(--team-accent);border-radius:50%;animation:scout-eye-orbit 1.2s linear infinite}@keyframes scout-eye-orbit{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.scout-eye-ball:before{animation:none}}

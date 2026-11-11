@@ -1,29 +1,38 @@
 /**
- * Centralized Player Photo Registry & Fallback Resolution Service
- * Covers IPL 2008–2026 with strict player identity, franchise, and season matching.
- * 
- * Hierarchy:
- * 1. Approved exact player + franchise + season photo
- * 2. Approved player + franchise portrait
- * 3. Approved generic player portrait
- * 4. Initials / silhouette fallback
- * 
- * Never substitutes another player's photograph.
+ * Shared player portraits for squads and biographies, covering IPL 2008–2026.
+ * By default the latest approved official profile follows the player across seasons.
+ * Historical franchise kit selection remains available through explicit opt-in.
  */
+
+export type VerificationStatus =
+  | "exact_verified"
+  | "same_franchise_different_season"
+  | "neutral_portrait"
+  | "incorrect_jersey"
+  | "missing"
+  | "rights_pending";
 
 export type LicenseStatus = "approved" | "pending" | "rejected";
 
 export interface PlayerPhoto {
-  playerId: string;              // Canonical normalized slug, e.g. "pj-cummins", "v-kohli"
-  teamId: string | null;          // Franchise abbreviation, e.g. "SRH", "CSK", "RCB"
-  season: number | null;          // Season year, e.g. 2024
-  imageUrl: string;               // Local path or approved remote URL
-  sourcePageUrl: string;          // Source provenance URL
-  licenseStatus: LicenseStatus;   // "approved" | "pending" | "rejected"
-  attribution?: string;           // E.g. "Wikimedia Commons / CC-BY-SA 4.0", "Official Media Kit"
-  matchConfidence: number;        // 0.0 to 1.0 confidence score
-  isCutout?: boolean;             // Transparent background portrait cutout
-  notes?: string;                 // Provenance or disambiguation remarks
+  playerId: string;                 // Canonical normalized slug, e.g. "pj-cummins", "v-kohli"
+  franchiseId: string | null;        // Intended franchise code (e.g. "RCB", "SRH", "MI")
+  season: number | null;             // Intended season year (e.g. 2024)
+  imageUrl: string;                  // Image asset path or approved URL
+  sourceUrl: string;                 // Provenance source URL
+  kitTeamId: string | null;          // Actual franchise jersey shown in photo ("RCB", "SRH", "MI", or "NEUTRAL"/null)
+  kitSeason: number | null;          // Actual season of the jersey shown in photo
+  verificationStatus: VerificationStatus;
+  licenseStatus: LicenseStatus;      // "approved" | "pending" | "rejected"
+  expiryDate?: string;
+  lastVerifiedAt?: string;
+  licenseReference?: string;
+  allowedUsage?: string[];
+  attribution?: string;              // License and attribution details
+  matchConfidence: number;           // 0.0 to 1.0 confidence score
+  aliases?: string[];                // All valid name variations and scorecard spellings
+  isCutout?: boolean;                // Transparent background cutout
+  notes?: string;                    // Verification or disambiguation notes
 }
 
 export interface PlayerPhotoRegistryData {
@@ -35,17 +44,21 @@ export interface PlayerPhotoRegistryData {
 }
 
 export interface ResolvePhotoOptions {
-  franchise?: string | null;           // Team name or code ("Sunrisers Hyderabad", "SRH")
-  season?: number | string | null;     // Season year ("2024", 2024)
-  strictHistoricalJersey?: boolean;    // If true, will NOT display a modern franchise jersey for an older franchise
+  franchise?: string | null;           // Currently selected team ("Royal Challengers Bengaluru", "RCB")
+  season?: number | string | null;     // Currently selected season ("2026", 2026)
+  strictHistoricalJersey?: boolean;    // Opt in to franchise-specific historical kit
 }
 
 export interface ResolvedPhotoResult {
   url: string | null;
-  matchType: "exact_season_team" | "team_portrait" | "generic_portrait" | "initials_fallback";
+  matchType: VerificationStatus;
+  statusLabel: string;
   attribution?: string;
   licenseStatus: LicenseStatus;
+  kitTeamId: string | null;
+  kitSeason: number | null;
   photoRecord: PlayerPhoto | null;
+  isSameFranchiseNonSeasonSpecific?: boolean;
 }
 
 /** Normalized slug conversion matching cricsheet and bio registries */
@@ -58,7 +71,7 @@ export function normalizePlayerSlug(name: string): string {
 }
 
 /** Standard franchise code mapping */
-const FRANCHISE_NAME_TO_CODE: Record<string, string> = {
+export const FRANCHISE_NAME_TO_CODE: Record<string, string> = {
   "sunrisers hyderabad": "SRH",
   "chennai super kings": "CSK",
   "royal challengers bengaluru": "RCB",
@@ -98,7 +111,15 @@ export function initialSurnameKey(name?: string | null): string | null {
 }
 
 /**
- * Resolves a player photograph using the strict 4-level fallback hierarchy.
+ * Resolves the latest identity-matched portrait, or historical kit when explicitly requested.
+ * 
+ * Rules:
+ * 1. Prefer verified exact-season, exact-franchise portrait.
+ * 2. If unavailable, use verified same-franchise portrait (marked non-season-specific).
+ * 3. Otherwise use approved neutral portrait.
+ * 4. Otherwise use initials/silhouette.
+ * 
+ * NEVER displays another franchise's jersey as if it were the selected franchise's kit.
  */
 export function resolvePlayerPhotoFromRegistry(
   playerNameOrSlug: string,
@@ -111,83 +132,101 @@ export function resolvePlayerPhotoFromRegistry(
   const targetSeason = options?.season ? Number(options.season) : null;
   const strictHistorical = options?.strictHistoricalJersey ?? false;
 
-  // Filter approved candidates for this specific player (matching slug, aliases, or initial+surname)
-  const playerCandidates = photos.filter((p) => {
-    if (p.licenseStatus !== "approved") return false;
-    if (p.playerId === targetSlug) return true;
-    if ((p as any).aliases && ((p as any).aliases as string[]).some((a) => normalizePlayerSlug(a) === targetSlug)) return true;
-    if (targetKey) {
-      const pKey = initialSurnameKey(p.playerId);
-      if (pKey && pKey === targetKey) return true;
-      if ((p as any).aliases) {
-        for (const a of ((p as any).aliases as string[])) {
-          const aKey = initialSurnameKey(a);
-          if (aKey && aKey === targetKey) return true;
-        }
-      }
-    }
-    return false;
-  });
+  // Prefer explicit identity aliases; a surname initial is only safe when unique.
+  const approved = photos.filter(p => p.licenseStatus === "approved" && (!p.expiryDate || (Number.isFinite(Date.parse(p.expiryDate)) && Date.parse(p.expiryDate + "T23:59:59Z") >= Date.now())) &&
+    !["incorrect_jersey", "missing", "rights_pending"].includes(p.verificationStatus));
+  const exact = approved.filter(p => normalizePlayerSlug(p.playerId) === targetSlug ||
+    p.aliases?.some(a => normalizePlayerSlug(a) === targetSlug));
+  const abbreviated = targetKey ? approved.filter(p =>
+    initialSurnameKey(p.playerId) === targetKey || p.aliases?.some(a => initialSurnameKey(a) === targetKey)) : [];
+  const identities = new Set(abbreviated.map(p => p.playerId));
+  const playerCandidates = (exact.length ? exact : identities.size === 1 ? abbreviated : [])
+    .sort((a, b) => (b.kitSeason ?? b.season ?? 0) - (a.kitSeason ?? a.season ?? 0) ||
+      Number(b.imageUrl.includes("/profiles-2026/")) - Number(a.imageUrl.includes("/profiles-2026/")) ||
+      Number(Boolean(b.isCutout)) - Number(Boolean(a.isCutout)) || b.matchConfidence - a.matchConfidence);
 
   if (playerCandidates.length === 0) {
     return {
       url: null,
-      matchType: "initials_fallback",
+      matchType: "missing",
+      statusLabel: "Missing portrait",
       licenseStatus: "rejected",
+      kitTeamId: null,
+      kitSeason: null,
       photoRecord: null,
     };
   }
 
-  // 1. Exact match: Player + Franchise + Season
-  if (targetFranchise && targetSeason) {
-    const exact = playerCandidates.find(
-      (p) => p.teamId === targetFranchise && p.season === targetSeason
+  // When a target franchise is specified (e.g. Dugout, Squad, Match Center)
+  if (targetFranchise && strictHistorical) {
+    // 1. Exact verified: kitTeamId matches franchise AND kitSeason matches season
+    if (targetSeason) {
+      const exactMatch = playerCandidates.find(
+        (p) => p.kitTeamId === targetFranchise && p.kitSeason === targetSeason
+      );
+      if (exactMatch) {
+        return {
+          url: exactMatch.imageUrl,
+          matchType: "exact_verified",
+          statusLabel: `Exact verified (${targetFranchise} ${targetSeason})`,
+          attribution: exactMatch.attribution,
+          licenseStatus: exactMatch.licenseStatus,
+          kitTeamId: exactMatch.kitTeamId,
+          kitSeason: exactMatch.kitSeason,
+          photoRecord: exactMatch,
+          isSameFranchiseNonSeasonSpecific: false,
+        };
+      }
+    }
+
+    // 2. Same franchise, different season kit
+    const sameFranchiseMatch = playerCandidates.find((p) => p.kitTeamId === targetFranchise);
+    if (sameFranchiseMatch) {
+      return {
+        url: sameFranchiseMatch.imageUrl,
+        matchType: "same_franchise_different_season",
+        statusLabel: `Same franchise (${targetFranchise} kit)`,
+        attribution: sameFranchiseMatch.attribution,
+        licenseStatus: sameFranchiseMatch.licenseStatus,
+        kitTeamId: sameFranchiseMatch.kitTeamId,
+        kitSeason: sameFranchiseMatch.kitSeason,
+        photoRecord: sameFranchiseMatch,
+        isSameFranchiseNonSeasonSpecific: true,
+      };
+    }
+
+    // 3. Neutral portrait (national team, studio neutral without franchise kit)
+    const neutralMatch = playerCandidates.find(
+      (p) => p.kitTeamId === "NEUTRAL" || p.kitTeamId === null
     );
-    if (exact) {
+    if (neutralMatch) {
       return {
-        url: exact.imageUrl,
-        matchType: "exact_season_team",
-        attribution: exact.attribution,
-        licenseStatus: exact.licenseStatus,
-        photoRecord: exact,
+        url: neutralMatch.imageUrl,
+        matchType: "neutral_portrait",
+        statusLabel: "Neutral portrait",
+        attribution: neutralMatch.attribution,
+        licenseStatus: neutralMatch.licenseStatus,
+        kitTeamId: null,
+        kitSeason: null,
+        photoRecord: neutralMatch,
+        isSameFranchiseNonSeasonSpecific: false,
       };
     }
+
+    return { url: null, matchType: "missing", statusLabel: "Missing portrait for this franchise",
+      licenseStatus: "rejected", kitTeamId: null, kitSeason: null, photoRecord: null };
   }
 
-  // 2. Franchise portrait: Player + Franchise (different or unspecified season)
-  if (targetFranchise) {
-    const franchiseMatch = playerCandidates.find((p) => p.teamId === targetFranchise);
-    if (franchiseMatch) {
-      return {
-        url: franchiseMatch.imageUrl,
-        matchType: "team_portrait",
-        attribution: franchiseMatch.attribution,
-        licenseStatus: franchiseMatch.licenseStatus,
-        photoRecord: franchiseMatch,
-      };
-    }
-  }
-
-  // 3. Generic player portrait (only if not restricted by strict historical jersey)
-  if (!strictHistorical) {
-    // Prefer cutout or higher confidence
-    const generic = [...playerCandidates].sort((a, b) => b.matchConfidence - a.matchConfidence)[0];
-    if (generic) {
-      return {
-        url: generic.imageUrl,
-        matchType: "generic_portrait",
-        attribution: generic.attribution,
-        licenseStatus: generic.licenseStatus,
-        photoRecord: generic,
-      };
-    }
-  }
-
-  // 4. Initials fallback (Never substitute another player's face)
+  // If no franchise context requested, return best approved photo
+  const generic = playerCandidates[0];
   return {
-    url: null,
-    matchType: "initials_fallback",
-    licenseStatus: "rejected",
-    photoRecord: null,
+    url: generic.imageUrl,
+    matchType: generic.kitTeamId ? "same_franchise_different_season" : "neutral_portrait",
+    statusLabel: generic.kitTeamId ? `${generic.kitTeamId} portrait` : "Neutral portrait",
+    attribution: generic.attribution,
+    licenseStatus: generic.licenseStatus,
+    kitTeamId: generic.kitTeamId,
+    kitSeason: generic.kitSeason,
+    photoRecord: generic,
   };
 }

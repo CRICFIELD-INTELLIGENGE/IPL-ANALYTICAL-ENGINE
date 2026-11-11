@@ -1,3 +1,5 @@
+import { CricFieldMascot } from "@/components/CricFieldMascot";
+import { reactionForDelivery } from "@/lib/mascot-reactions";
 import React, { useState } from "react";
 import { Link } from "wouter";
 import { type MatchScorecard, type MatchCommentary, playerSlug } from "@/lib/aggregates";
@@ -25,7 +27,7 @@ export function CinematicCommentaryView({
   if (isLoading) {
     return (
       <div className="p-16 text-center text-white/40 font-mono text-sm border border-white/10 rounded-[28px] bg-white/[0.02]">
-        Synchronizing live delivery commentary feed…
+        <CricFieldMascot activity="loading" size={52} className="mr-3 align-middle" />Synchronizing live delivery commentary feed…
       </div>
     );
   }
@@ -33,7 +35,7 @@ export function CinematicCommentaryView({
   if (!current) {
     return (
       <div className="p-16 text-center text-white/40 font-mono text-sm border border-white/10 rounded-[28px] bg-white/[0.02]">
-        No ball-by-ball commentary recorded for this match.
+        <CricFieldMascot activity="empty" size={52} className="mr-3 align-middle" />No ball-by-ball commentary recorded for this match.
       </div>
     );
   }
@@ -54,7 +56,7 @@ export function CinematicCommentaryView({
       <div className="p-5 bg-[#080d1a] rounded-[24px] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
-            <MessageSquare className="w-5 h-5" />
+            <CricFieldMascot activity="commentary" size={36} />
           </div>
           <div>
             <span className="font-mono font-black uppercase text-sm text-white tracking-wider block">
@@ -138,6 +140,7 @@ export function CinematicCommentaryView({
                 </span>
               </div>
 
+              <CricFieldMascot activity={reactionForDelivery(c)} size={32} className="hidden sm:inline-flex" />
               {/* Delivery Narrative & Telemetry */}
               <div className="flex-1 min-w-0">
                 {(c.bowler || c.batter) && (

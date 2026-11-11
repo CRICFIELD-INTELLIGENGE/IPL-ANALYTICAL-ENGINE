@@ -1,0 +1,151 @@
+{
+ "articleId": "cf-dc-072",
+ "generatedAt": "2026-10-26T04:24:31.759Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "dp-n": {
+   "value": 66,
+   "display": "66",
+   "label": "Low-cost Indian regular player-seasons across the IPL, 2022–2026",
+   "dataset": "CricField warehouse + CricField squads-by-season.json",
+   "filters": "Priced ₹1 Cr or less, min. 120 balls",
+   "sampleSize": {
+    "n": 233,
+    "unit": "player-seasons"
+   },
+   "query": "traa (all franchises)",
+   "validation": {
+    "method": "sample-size floor ≥ 20 player-seasons",
+    "passed": true,
+    "detail": "n = 66"
+   }
+  },
+  "dp-pos": {
+   "value": 47,
+   "display": "47%",
+   "label": "Share of them above the league average on tempo runs",
+   "unit": "%",
+   "dataset": "CricField warehouse + CricField squads-by-season.json",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 66,
+    "unit": "player-seasons"
+   },
+   "query": "traa (all franchises)",
+   "validation": {
+    "method": "sample-size floor ≥ 20 player-seasons",
+    "passed": true,
+    "detail": "n = 66"
+   }
+  },
+  "dp-mine": {
+   "value": 8,
+   "display": "8",
+   "label": "Delhi Capitals' low-cost Indian regular player-seasons",
+   "dataset": "CricField warehouse + CricField squads-by-season.json",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 8,
+    "unit": "player-seasons"
+   },
+   "query": "traa (all franchises)",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "dp-avg": {
+   "value": 6.6,
+   "display": "6.6",
+   "label": "Average per franchise",
+   "unit": "player-seasons",
+   "dataset": "CricField warehouse + CricField squads-by-season.json",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "traa (all franchises)",
+   "validation": {
+    "method": "total ÷ 10",
+    "passed": true
+   }
+  },
+  "dp-best": {
+   "value": "Mohsin Khan (LSG, 2022)",
+   "display": "Mohsin Khan (LSG, 2022)",
+   "label": "Most productive low-cost Indian regular per ball",
+   "dataset": "CricField warehouse + CricField squads-by-season.json",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 214,
+    "unit": "balls"
+   },
+   "query": "traa (all franchises)",
+   "validation": {
+    "method": "rank",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "dp-top": {
+   "label": "Most productive low-cost Indian regulars in the IPL, 2022–2026",
+   "dataset": "CricField warehouse + CricField squads-by-season.json",
+   "filters": "Priced ₹1 Cr or less, min. 120 balls; tempo runs above average per 100 balls",
+   "sampleSize": {
+    "n": 66,
+    "unit": "player-seasons"
+   },
+   "query": "traa (all franchises)",
+   "rows": [
+    {
+     "player": "Mohsin Khan (LSG 2022)",
+     "priceCr": 0.2,
+     "perHundred": 36.2
+    },
+    {
+     "player": "Jaydev Unadkat (SRH 2025)",
+     "priceCr": 1,
+     "perHundred": 36
+    },
+    {
+     "player": "Ajinkya Rahane (CSK 2023)",
+     "priceCr": 0.5,
+     "perHundred": 35.7
+    },
+    {
+     "player": "Rajat Patidar (RCB 2024)",
+     "priceCr": 0.2,
+     "perHundred": 33.2
+    },
+    {
+     "player": "Sandeep Sharma (RR 2024)",
+     "priceCr": 0.5,
+     "perHundred": 26.8
+    },
+    {
+     "player": "Jitesh Sharma (PBKS 2022)",
+     "priceCr": 0.2,
+     "perHundred": 25.7
+    },
+    {
+     "player": "Prince Yadav (LSG 2026)",
+     "priceCr": 0.3,
+     "perHundred": 18.3
+    },
+    {
+     "player": "Krishnappa Gowtham (LSG 2023)",
+     "priceCr": 0.9,
+     "perHundred": 18
+    }
+   ]
+  }
+ }
+}

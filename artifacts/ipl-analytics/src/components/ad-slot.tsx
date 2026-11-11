@@ -11,7 +11,8 @@
 // account exists.
 
 import { useEffect, useRef } from "react";
-import { adsenseClient, hasAds, readConsent } from "@/lib/analytics";
+import { adsenseClient, hasAds, useAdConsent, mountAd } from "@/lib/analytics";
+import { CommercialZone } from "@/components/photo-policy";
 
 interface AdSlotProps {
   /** The ad unit id from AdSense (data-ad-slot). */
@@ -23,7 +24,16 @@ interface AdSlotProps {
   label?: boolean;
 }
 
-export function AdSlot({
+/** Ad units are commercial zones: editorial (Getty-sourced) photos never render inside them. */
+export function AdSlot(props: AdSlotProps) {
+  return (
+    <CommercialZone reason="advertising">
+      <AdSlotUnit {...props} />
+    </CommercialZone>
+  );
+}
+
+function AdSlotUnit({
   slot,
   format = "auto",
   minHeight = 90,
@@ -31,20 +41,14 @@ export function AdSlot({
   label = true,
 }: AdSlotProps) {
   const ref = useRef<HTMLModElement | null>(null);
-  const pushed = useRef(false);
 
-  const active = hasAds && Boolean(slot) && readConsent() === "granted";
+  const consent = useAdConsent();
+  const active = hasAds && /^\d{10}$/.test(slot ?? "") && consent === "granted";
 
   useEffect(() => {
-    if (!active || pushed.current) return;
-    pushed.current = true;
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (err) {
-      // A blocked or failed ad must never take the page down with it.
-      console.warn("[ads] slot push failed:", (err as Error).message);
-    }
-  }, [active]);
+    if (!active || !ref.current) return;
+    return mountAd(ref.current);
+  }, [active, slot, format]);
 
   if (!active) return null;
 

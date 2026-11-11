@@ -1,0 +1,144 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-047",
+ "planId": "cf-rr-047",
+ "franchise": "RR",
+ "aspect": "business",
+ "title": "Content as an Asset: How Rajasthan Royals Can Build an Always-On Media Brand",
+ "slug": "rr-content-as-an-asset-how-rr-can-build-an-always-on-media-brand",
+ "dek": "Every season leaves Rajasthan Royals with a library of moments. Counting them shows how much raw material an always-on media brand has to work with.",
+ "excerpt": "Rajasthan Royals have produced centuries, four-wicket hauls and close finishes across their history. That archive is a content asset; how to monetise it is a media question.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RR"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "RR batters have scored {{ev:ca-c}} centuries and their bowlers have taken {{ev:ca-w}} four-wicket hauls.",
+  "Their matches have produced {{ev:ca-cl}} close finishes and {{ev:ca-so}} super overs.",
+  "That is {{ev:ca-per}} highlight moments a season on these three measures."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "An Archive of Moments",
+   "body": [
+    "Media brands need a steady supply of stories. For a franchise, the richest supply is its own cricket: the hundreds, the spells and the finishes that fans remember.",
+    "Rajasthan Royals batters have scored {{ev:ca-c}} centuries and their bowlers have taken {{ev:ca-w}} four-wicket hauls. Their matches have produced {{ev:ca-cl}} close finishes and {{ev:ca-so}} super overs."
+   ],
+   "chartIds": [
+    "ca-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Always-On, Not Only In-Season",
+   "body": [
+    "That is {{ev:ca-per}} highlight moments a season on these three measures alone. An archive that size can feed anniversary posts, retrospectives and player stories in the months without matches.",
+    "The data here identifies the moments; rights to the footage sit with the broadcaster and the league."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Turning Moments Into Media",
+   "body": [
+    "The commercial value of an archive depends on rights, formats and distribution, none of which are in the match data.",
+    "{{hyp:archive}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What the Warehouse Cannot See",
+   "body": [
+    "The CricField warehouse is ball-by-ball cricket data. It contains no video rights, content performance or audience-engagement data, so it cannot measure the commercial side of this question directly.",
+    "Measuring content value would need views, watch time and engagement by post, linked to the moments in this archive."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Index the Archive",
+   "body": [
+    "Rajasthan Royals have a substantial archive of measurable moments. The first step towards an always-on media brand is to index it by player, opponent and date.",
+    "Whether it pays depends on rights and audience data held elsewhere."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ca-chart",
+   "type": "column",
+   "title": "Highlight moments by season",
+   "subtitle": "Rajasthan Royals",
+   "table": "ca-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "centuries",
+     "label": "Centuries"
+    },
+    {
+     "key": "fourWickets",
+     "label": "Four-wicket hauls"
+    },
+    {
+     "key": "closeFinishes",
+     "label": "Close finishes"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "count",
+   "takeaway": "Every season adds to the archive of moments.",
+   "ariaLabel": "Grouped column chart of RR centuries, four-wicket hauls and close finishes by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "archive",
+   "statement": "Hypothesis: off-season posts built on archive moments hold engagement closer to in-season levels than generic content.",
+   "whyUnverified": "No content-performance data is available.",
+   "howToTest": "Compare off-season engagement for archive-based and generic posts."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A memorable Rajasthan Royals moment.",
+   "wanted": "Rajasthan Royals player celebrating a century or wicket."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rr-050",
+  "cf-rr-095",
+  "cf-rr-054"
+ ],
+ "seo": {
+  "metaTitle": "Content as an asset: Rajasthan Royals' archive of moments",
+  "metaDescription": "How many centuries, four-wicket hauls and close finishes Rajasthan Royals have produced, and what that archive means for an always-on media brand."
+ },
+ "methodology": "CricField measures the cricket a franchise puts on the field; it holds no revenue, attendance, audience, merchandise or social-media data. Commercial ideas in this article are labelled hypotheses with the data needed to test them. Generated by scripts/editorial/engine. Moments: centuries and four-wicket hauls by franchise players, and close finishes in the franchise's matches.",
+ "generator": "engine:v1"
+}

@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS deliveries (
     innings_id INT REFERENCES innings(innings_id) ON DELETE CASCADE,
     over_num INT NOT NULL, -- 0 to 19
     ball_num INT NOT NULL, -- 1-indexed ball in the over
+    delivery_seq INT, -- sequential delivery order in the over (1-indexed)
     batter_id INT REFERENCES players(player_id),
     bowler_id INT REFERENCES players(player_id),
     non_striker_id INT REFERENCES players(player_id),

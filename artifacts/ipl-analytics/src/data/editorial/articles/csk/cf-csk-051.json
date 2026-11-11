@@ -1,0 +1,136 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-csk-051",
+ "planId": "cf-csk-051",
+ "franchise": "CSK",
+ "aspect": "fan-culture",
+ "title": "Why Fans Stay: The Psychology of Supporting Chennai Super Kings Through Losing Seasons",
+ "slug": "csk-why-fans-stay-the-psychology-of-supporting-csk-through-losing-seasons",
+ "dek": "Supporting Chennai Super Kings has meant living through losing seasons as well as good ones. The record shows how often a bad year has been followed by a better one.",
+ "excerpt": "Chennai Super Kings have had losing seasons, and most were followed by something better. That pattern of recovery is the most measurable reason a fan stays.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "CSK"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "CSK have won fewer than half their decided matches in {{ev:ws-losing}} of {{ev:ws-n-seasons}} seasons.",
+  "{{ev:ws-improved}} of {{ev:ws-after}} losing seasons with a following season in the data were followed by a better one.",
+  "{{ev:ws-po-after}} were followed by a playoff place."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Staying Through the Bad Years",
+   "body": [
+    "Fans do not choose their team by its results, and most do not leave because of them. The psychology of loyalty involves identity, family and place far more than the points table.",
+    "The CricField warehouse holds no survey, sentiment or social-media data, so it cannot measure what fans feel. It can measure what they have watched."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "How Often the Bad Years Come",
+   "body": [
+    "Chennai Super Kings have won fewer than half their decided matches in {{ev:ws-losing}} of {{ev:ws-n-seasons}} seasons. The chart shows every season's win rate.",
+    "Those are the seasons in which loyalty is tested hardest."
+   ],
+   "chartIds": [
+    "ws-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "What Followed",
+   "body": [
+    "{{ev:ws-improved}} of the {{ev:ws-after}} losing seasons that have a following season in the data were followed by a better one, and {{ev:ws-po-after}} by a playoff place.",
+    "Some of that recovery is the ordinary pull of results back towards average, not only planning."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Hope as a Habit",
+   "body": [
+    "If bad seasons are usually followed by better ones, a fan who stays is rarely kept waiting long. That record may be part of why loyalty survives.",
+    "{{hyp:stay}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Recovery Keeps the Faith",
+   "body": [
+    "Chennai Super Kings' losing seasons have mostly been followed by better ones. The record gives fans a reason to stay that does not depend on any single season.",
+    "Measuring loyalty itself would need attendance and membership data through those years."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ws-chart",
+   "type": "column",
+   "title": "Win rate by season",
+   "subtitle": "Chennai Super Kings",
+   "table": "ws-seasons",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "winPct",
+     "label": "Win rate"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "% of decided matches",
+   "takeaway": "Losing seasons have usually been followed by better ones.",
+   "ariaLabel": "Column chart of CSK win rate in each season, as a share of decided matches."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "stay",
+   "statement": "Hypothesis: attendance and membership fall less after a losing season for franchises whose losing seasons are usually followed by recoveries.",
+   "whyUnverified": "No attendance or membership data is available.",
+   "howToTest": "Compare attendance changes after losing seasons across franchises with different recovery records."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Chennai Super Kings fans through thick and thin.",
+   "wanted": "Chennai Super Kings fans in the stands."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-csk-060",
+  "cf-csk-045",
+  "cf-csk-069"
+ ],
+ "seo": {
+  "metaTitle": "Why fans stay with CSK through losing seasons",
+  "metaDescription": "How often Chennai Super Kings have had losing seasons, and how often a better one followed."
+ },
+ "methodology": "CricField holds ball-by-ball cricket data and no fan survey, sentiment or social-media data. This article measures the cricket fans have experienced; statements about fans themselves are labelled hypotheses. Generated by scripts/editorial/engine. Losing season = fewer than half of decided matches won.",
+ "generator": "engine:v1"
+}

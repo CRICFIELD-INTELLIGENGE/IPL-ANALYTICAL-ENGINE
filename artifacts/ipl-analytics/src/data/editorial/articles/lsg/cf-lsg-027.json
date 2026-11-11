@@ -1,0 +1,135 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-lsg-027",
+ "planId": "cf-lsg-027",
+ "franchise": "LSG",
+ "aspect": "tactical",
+ "title": "Opponent-Specific Plans: Should Lucknow Super Giants Build a New XI for Every Match?",
+ "slug": "lsg-opponent-specific-plans-should-lsg-build-a-new-xi-for-every-match",
+ "dek": "Should Lucknow Super Giants rebuild their eleven for every opponent? Head-to-head records show how much results really vary from one rival to the next.",
+ "excerpt": "Lucknow Super Giants' head-to-head win rates span a wide range across their opponents. Some of that is genuine match-up, some is the noise of small samples.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "LSG"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "LSG have played {{ev:opp-most-opp}} most often ({{ev:opp-most-n}} decided matches), winning {{ev:opp-most-pct}}.",
+  "Their best record is against {{ev:opp-best-opp}} ({{ev:opp-best-pct}}); their weakest against {{ev:opp-worst-opp}} ({{ev:opp-worst-pct}}).",
+  "The gap between best and worst head-to-head records is {{ev:opp-spread}} percentage points."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "One Eleven or Ten",
+   "body": [
+    "Every opponent has a different shape: some bat deep, some rely on spin, some have a single destructive opener. The question is whether Lucknow Super Giants should pick a different eleven for each, or keep a stable side and adjust tactics.",
+    "The head-to-head record is the starting point. LSG have met {{ev:opp-most-opp}} most often, winning {{ev:opp-most-pct}} of {{ev:opp-most-n}} decided matches."
+   ],
+   "chartIds": [
+    "opp-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "How Much Results Vary",
+   "body": [
+    "Lucknow Super Giants' best record, among opponents met at least six times, is against {{ev:opp-best-opp}} at {{ev:opp-best-pct}}; their weakest is against {{ev:opp-worst-opp}} at {{ev:opp-worst-pct}}.",
+    "The spread between those records is {{ev:opp-spread}} percentage points. Part of that spread is real, part is what any team would see by chance over a dozen or so matches per opponent."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Where Specific Plans Pay",
+   "body": [
+    "Opponent-specific selection pays when an opponent has a structural weakness that one player in the squad exploits, such as a left-arm wrist spinner against a right-hand-heavy top order.",
+    "It does not pay when it unsettles a stable core. For LSG, one or two match-up changes per game is a sensible ceiling."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Small Samples, Big Stories",
+   "body": [
+    "Head-to-head records are built from few matches over many seasons, with different squads each time. A poor record against one rival can be history rather than a current weakness.",
+    "{{hyp:era}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Stable Core, Targeted Changes",
+   "body": [
+    "Lucknow Super Giants should keep a stable core and make targeted changes where an opponent's structure creates a clear match-up.",
+    "Recent head-to-head results, weighted towards the last three seasons, are a better guide than the all-time record."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "opp-chart",
+   "type": "bar",
+   "title": "LSG head-to-head win rate",
+   "subtitle": "Matches with a result, current franchises",
+   "table": "opp-h2h",
+   "xKey": "opponent",
+   "series": [
+    {
+     "key": "winPct",
+     "label": "Win rate"
+    }
+   ],
+   "unit": "% of matches won",
+   "takeaway": "Head-to-head records vary, but small samples exaggerate the differences.",
+   "ariaLabel": "Horizontal bar chart of LSG win rate against each current franchise."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "era",
+   "statement": "Hypothesis: head-to-head records from more than three seasons ago do not predict current results.",
+   "whyUnverified": "Recency-weighted head-to-head records have not been tested for predictive power.",
+   "howToTest": "Compare all-time and last-three-season head-to-head records as predictors of the next season's results."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Lucknow Super Giants against a rival.",
+   "wanted": "Lucknow Super Giants playing Mumbai Indians."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-lsg-055",
+  "cf-lsg-086",
+  "cf-lsg-019"
+ ],
+ "seo": {
+  "metaTitle": "Opponent-specific plans: should LSG change the XI?",
+  "metaDescription": "Lucknow Super Giants' head-to-head records against every current IPL franchise, and when opponent-specific selection pays."
+ },
+ "methodology": "Regulation innings only (super overs excluded); win rates use matches with a result. Generated from the CricField warehouse by scripts/editorial/engine. Opponents are grouped under their current franchise names.",
+ "generator": "engine:v1"
+}

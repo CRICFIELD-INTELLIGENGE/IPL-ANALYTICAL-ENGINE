@@ -1,0 +1,34 @@
+{
+  "profiles_fetched": 49,
+  "profiles_cached": 0,
+  "profiles_failed": [
+    {
+      "player_key": 4800,
+      "source_id": "13177",
+      "error": "profile_identity_missing"
+    }
+  ],
+  "profile_attributes": 235,
+  "auction_rows": 369,
+  "auction_linked": 174,
+  "auction_pending": 195,
+  "coverage": {
+    "auction_country": 101,
+    "auction_specialism": 101,
+    "batting_hand": 904,
+    "bowling_style": 816,
+    "capped_status_2026": 101,
+    "date_of_birth": 174,
+    "declared_role": 221,
+    "nationality": 223,
+    "playing_country": 222
+  },
+  "total_players": 18623,
+  "limitations": [
+    "Unknown attributes are not filled with guesses.",
+    "No international retirement inferred as franchise retirement.",
+    "No 2027 registration or retention fabricated.",
+    "Only 50 players currently have mapped Cricbuzz IDs; others require identity-linked source acquisition.",
+    "Cached PDF transcription is marked unreviewed; raw source snapshots preserve provenance."
+  ]
+}

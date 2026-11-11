@@ -1,0 +1,177 @@
+{
+ "articleId": "cf-gt-070",
+ "generatedAt": "2026-10-26T04:26:41.106Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "lr-best": {
+   "value": "Shubman Gill's 129 in 2023",
+   "display": "Shubman Gill's 129 in 2023",
+   "label": "Gujarat Titans' highest individual innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 546,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "lr-bowl": {
+   "value": "MM Sharma's 5 for 10 in 2023",
+   "display": "MM Sharma's 5 for 10 in 2023",
+   "label": "Gujarat Titans' best bowling figures",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 449,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "max wickets, then fewest runs",
+    "passed": true
+   }
+  },
+  "lr-top-recent": {
+   "value": "six",
+   "display": "six",
+   "label": "Top-ten innings from 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 10,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "lr-all-recent": {
+   "value": 58,
+   "display": "58%",
+   "label": "Share of all GT innings played in 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 546,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) ORDER BY f.runs DESC, f.balls_faced",
+   "validation": {
+    "method": "sample-size floor ≥ 100 innings",
+    "passed": true,
+    "detail": "n = 546"
+   }
+  },
+  "lr-bowl-recent": {
+   "value": "three",
+   "display": "three",
+   "label": "Top-ten bowling spells from 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 10,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "lr-allb-recent": {
+   "value": 58,
+   "display": "58%",
+   "label": "Share of all GT bowling spells in 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 449,
+    "unit": "spells"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.wickets, f.runs_conceded runs FROM fact_bowling_spells f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) ORDER BY f.wickets DESC, f.runs_conceded",
+   "validation": {
+    "method": "sample-size floor ≥ 100 spells",
+    "passed": true,
+    "detail": "n = 449"
+   }
+  }
+ },
+ "tables": {
+  "lr-top": {
+   "label": "Gujarat Titans' highest individual innings",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings",
+   "sampleSize": {
+    "n": 546,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (14) ORDER BY f.runs DESC, f.balls_faced",
+   "rows": [
+    {
+     "innings": "Shubman Gill, 2023",
+     "runs": 129,
+     "balls": 60
+    },
+    {
+     "innings": "B Sai Sudharsan, 2025",
+     "runs": 108,
+     "balls": 61
+    },
+    {
+     "innings": "Shubman Gill, 2023",
+     "runs": 104,
+     "balls": 52
+    },
+    {
+     "innings": "Shubman Gill, 2026",
+     "runs": 104,
+     "balls": 53
+    },
+    {
+     "innings": "Shubman Gill, 2024",
+     "runs": 104,
+     "balls": 55
+    },
+    {
+     "innings": "B Sai Sudharsan, 2024",
+     "runs": 103,
+     "balls": 51
+    },
+    {
+     "innings": "Shubman Gill, 2023",
+     "runs": 101,
+     "balls": 58
+    },
+    {
+     "innings": "B Sai Sudharsan, 2026",
+     "runs": 100,
+     "balls": 58
+    },
+    {
+     "innings": "JC Buttler, 2025",
+     "runs": 97,
+     "balls": 54
+    },
+    {
+     "innings": "B Sai Sudharsan, 2023",
+     "runs": 96,
+     "balls": 47
+    }
+   ]
+  }
+ }
+}

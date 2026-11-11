@@ -1,0 +1,519 @@
+{
+ "articleId": "cf-pbks-069",
+ "generatedAt": "2026-10-26T04:25:38.086Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "tp-n-seasons": {
+   "value": 19,
+   "display": "19",
+   "label": "PBKS seasons in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons with matches",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "plausibility range 1–19 for seasons",
+    "passed": true,
+    "detail": "value 19"
+   }
+  },
+  "tp-titles": {
+   "value": 0,
+   "display": "0",
+   "label": "PBKS titles, as winner of the season's final",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Final = last match of each season",
+   "sampleSize": {
+    "n": 2,
+    "unit": "finals"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (7,12) OR m.team2_id IN (7,12))",
+   "validation": {
+    "method": "plausibility range 0–6 for titles",
+    "passed": true,
+    "detail": "value 0"
+   }
+  },
+  "tp-playoffs": {
+   "value": 5,
+   "display": "5",
+   "label": "PBKS seasons with a playoff place",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Points-table playoff result or a final",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (7,12) OR m.team2_id IN (7,12))",
+   "validation": {
+    "method": "count over season table",
+    "passed": true
+   }
+  },
+  "tp-win-all": {
+   "value": 46.9,
+   "display": "46.9%",
+   "label": "PBKS win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 275,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 275"
+   }
+  },
+  "tp-matches": {
+   "value": 275,
+   "display": "275",
+   "label": "PBKS matches with a result",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 275,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 275"
+   }
+  },
+  "tp-best-year": {
+   "value": "2014",
+   "display": "2014",
+   "label": "PBKS's best season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "max over season table",
+    "passed": true
+   }
+  },
+  "tp-best-pct": {
+   "value": 70.6,
+   "display": "70.6%",
+   "label": "PBKS win rate in 2014",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2014",
+   "sampleSize": {
+    "n": 17,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 17"
+   }
+  },
+  "tp-worst-year": {
+   "value": "2015",
+   "display": "2015",
+   "label": "PBKS's weakest season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "min over season table",
+    "passed": true
+   }
+  },
+  "tp-worst-pct": {
+   "value": 21.4,
+   "display": "21.4%",
+   "label": "PBKS win rate in 2015",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2015",
+   "sampleSize": {
+    "n": 14,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 14"
+   }
+  },
+  "tp-best": {
+   "value": "2008, 2014, 2025",
+   "display": "2008, 2014, 2025",
+   "label": "Punjab Kings' three best seasons by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "season table",
+   "validation": {
+    "method": "top three",
+    "passed": true
+   }
+  },
+  "tp-top": {
+   "value": "powerplay batting",
+   "display": "powerplay batting",
+   "label": "Measure with the largest advantage in the best seasons",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Relative to league, best minus other seasons",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (7,12) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "max over six measures",
+    "passed": true
+   }
+  },
+  "tp-gain": {
+   "value": 0.67,
+   "display": "0.67",
+   "label": "Size of that advantage",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (7,12) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range -5–5 for runs per over",
+    "passed": true,
+    "detail": "value 0.6670015811117673"
+   }
+  },
+  "tp-g-ppbat": {
+   "value": 0.67,
+   "display": "0.67",
+   "label": "Powerplay batting: advantage in the best seasons over the rest",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Relative to league",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (7,12) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range -5–5 for runs per over",
+    "passed": true,
+    "detail": "value 0.6670015811117673"
+   }
+  },
+  "tp-g-midbat": {
+   "value": 0.52,
+   "display": "0.52",
+   "label": "Middle-overs batting: advantage in the best seasons over the rest",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Relative to league",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (7,12) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range -5–5 for runs per over",
+    "passed": true,
+    "detail": "value 0.5227566385715087"
+   }
+  },
+  "tp-g-deathbat": {
+   "value": 0.51,
+   "display": "0.51",
+   "label": "Death batting: advantage in the best seasons over the rest",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Relative to league",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (7,12) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range -5–5 for runs per over",
+    "passed": true,
+    "detail": "value 0.5124521908910733"
+   }
+  },
+  "tp-g-ppbowl": {
+   "value": -0.23,
+   "display": "-0.23",
+   "label": "Powerplay bowling: advantage in the best seasons over the rest",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Relative to league",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (7,12) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range -5–5 for runs per over",
+    "passed": true,
+    "detail": "value -0.23418656526846487"
+   }
+  },
+  "tp-g-midbowl": {
+   "value": 0.13,
+   "display": "0.13",
+   "label": "Middle-overs bowling: advantage in the best seasons over the rest",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Relative to league",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (7,12) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range -5–5 for runs per over",
+    "passed": true,
+    "detail": "value 0.13063593680742974"
+   }
+  },
+  "tp-g-deathbowl": {
+   "value": 0.27,
+   "display": "0.27",
+   "label": "Death bowling: advantage in the best seasons over the rest",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Relative to league",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.bowling_team_id IN (7,12) THEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) END) * 6.0 / SUM(CASE WHEN i.bowling_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.bowling_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range -5–5 for runs per over",
+    "passed": true,
+    "detail": "value 0.2739857294613207"
+   }
+  }
+ },
+ "tables": {
+  "tp-seasons": {
+   "label": "PBKS season by season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches with a result; position from the league-stage table",
+   "sampleSize": {
+    "n": 275,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (7,12) OR m.team2_id IN (7,12))",
+   "rows": [
+    {
+     "season": "2008",
+     "winPct": 66.7,
+     "matches": 15,
+     "position": 2,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2009",
+     "winPct": 50,
+     "matches": 14,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2010",
+     "winPct": 28.6,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2011",
+     "winPct": 50,
+     "matches": 14,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2012",
+     "winPct": 50,
+     "matches": 16,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2013",
+     "winPct": 50,
+     "matches": 16,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2014",
+     "winPct": 70.6,
+     "matches": 17,
+     "position": 1,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2015",
+     "winPct": 21.4,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2016",
+     "winPct": 28.6,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2017",
+     "winPct": 50,
+     "matches": 14,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2018",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 7,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2019",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2020",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2021",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2022",
+     "winPct": 50,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2023",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2024",
+     "winPct": 35.7,
+     "matches": 14,
+     "position": 9,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2025",
+     "winPct": 62.5,
+     "matches": 16,
+     "position": 1,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2026",
+     "winPct": 53.8,
+     "matches": 13,
+     "position": 5,
+     "outcome": "Playoffs"
+    }
+   ]
+  },
+  "tp-cmp": {
+   "label": "PBKS best three seasons vs the rest, relative to the league",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Runs per over relative to the league; best seasons: 2014, 2008, 2025",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN i.batting_team_id IN (7,12) THEN d.total_runs END) * 6.0 / SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) team, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) league, SUM(CASE WHEN i.batting_team_id IN (7,12) AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 0 AND 5 GROUP BY year HAVING balls > 0 ORDER BY year",
+   "rows": [
+    {
+     "measure": "Powerplay batting",
+     "bestSeasons": 0.73,
+     "otherSeasons": 0.06,
+     "advantage": 0.67
+    },
+    {
+     "measure": "Middle-overs batting",
+     "bestSeasons": 0.63,
+     "otherSeasons": 0.11,
+     "advantage": 0.52
+    },
+    {
+     "measure": "Death batting",
+     "bestSeasons": 0.36,
+     "otherSeasons": -0.15,
+     "advantage": 0.51
+    },
+    {
+     "measure": "Powerplay bowling",
+     "bestSeasons": 0.42,
+     "otherSeasons": 0.19,
+     "advantage": -0.23
+    },
+    {
+     "measure": "Middle-overs bowling",
+     "bestSeasons": 0.14,
+     "otherSeasons": 0.27,
+     "advantage": 0.13
+    },
+    {
+     "measure": "Death bowling",
+     "bestSeasons": 0.13,
+     "otherSeasons": 0.4,
+     "advantage": 0.27
+    }
+   ]
+  }
+ }
+}

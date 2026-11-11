@@ -1,0 +1,178 @@
+{
+ "articleId": "cf-lsg-080",
+ "generatedAt": "2026-10-26T04:27:52.239Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "bs-hn": {
+   "value": 30,
+   "display": "30",
+   "label": "Small-sample hot seasons with a following season of at least 60 balls",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "30–99 balls, relative strike rate 120+",
+   "sampleSize": {
+    "n": 30,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (13) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "sample-size floor ≥ 20 player-seasons",
+    "passed": true,
+    "detail": "n = 30"
+   }
+  },
+  "bs-hb": {
+   "value": 133,
+   "display": "133",
+   "label": "Average relative strike rate in those hot seasons",
+   "unit": "index",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 30,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (13) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "sample-size floor ≥ 20 player-seasons",
+    "passed": true,
+    "detail": "n = 30"
+   }
+  },
+  "bs-ha": {
+   "value": 107,
+   "display": "107",
+   "label": "Average relative strike rate the following season",
+   "unit": "index",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 30,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (13) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "sample-size floor ≥ 20 player-seasons",
+    "passed": true,
+    "detail": "n = 30"
+   }
+  },
+  "bs-bb": {
+   "value": 128,
+   "display": "128",
+   "label": "Average relative strike rate in large-sample hot seasons",
+   "unit": "index",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "250+ balls, relative strike rate 120+",
+   "sampleSize": {
+    "n": 29,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (13) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "sample-size floor ≥ 5 player-seasons",
+    "passed": true,
+    "detail": "n = 29"
+   }
+  },
+  "bs-ba": {
+   "value": 108,
+   "display": "108",
+   "label": "Average relative strike rate the following season",
+   "unit": "index",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 29,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (13) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "sample-size floor ≥ 5 player-seasons",
+    "passed": true,
+    "detail": "n = 29"
+   }
+  },
+  "bs-mine": {
+   "value": 0,
+   "display": "0",
+   "label": "Of the small-sample hot seasons, those for LSG",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 30,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (13) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "bs-keep": {
+   "value": 21,
+   "display": "21%",
+   "label": "Share of the small-sample advantage over average kept the next season",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Derived from the averages",
+   "sampleSize": {
+    "n": 30,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (13) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "(after − 100) ÷ (before − 100)",
+    "passed": true
+   }
+  },
+  "bs-keep-big": {
+   "value": 29,
+   "display": "29%",
+   "label": "Share of the large-sample advantage kept the next season",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Derived from the averages",
+   "sampleSize": {
+    "n": 29,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (13) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "validation": {
+    "method": "(after − 100) ÷ (before − 100)",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "bs-cmp": {
+   "label": "Hot seasons and the season after",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Relative strike rate (100 = season average); hot = 120 or more",
+   "sampleSize": {
+    "n": 59,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, MAX(CASE WHEN i.batting_team_id IN (13) THEN 1 ELSE 0 END) mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 GROUP BY pl.name, year",
+   "rows": [
+    {
+     "sample": "Small sample (30–99 balls)",
+     "hotSeason": 133,
+     "nextSeason": 107,
+     "players": 30
+    },
+    {
+     "sample": "Large sample (250+ balls)",
+     "hotSeason": 128,
+     "nextSeason": 108,
+     "players": 29
+    }
+   ]
+  }
+ }
+}

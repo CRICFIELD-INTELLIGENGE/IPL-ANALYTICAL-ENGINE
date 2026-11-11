@@ -11,8 +11,8 @@ export const DUGOUT_SECTIONS = [
   { id: "squad", label: "Squad" },
   { id: "intelligence", label: "Intelligence" },
   { id: "newsroom", label: "Articles" },
-  { id: "history", label: "History" },
-  { id: "videos", label: "Videos" },
+    { id: "milestones", label: "Milestones" },
+    { id: "history", label: "History" },
 ] as const;
 
 function goTo(id: string) {
@@ -22,14 +22,195 @@ function goTo(id: string) {
 const KNOWN_CAPTAINS: Record<string, { name: string; era: string; titles?: number }> = {
   SRH: { name: "Pat Cummins", era: "2024–2026 · Finalist & Leader", titles: 0 },
   CSK: { name: "Ruturaj Gaikwad", era: "2024–2026 · Succeeding MS Dhoni", titles: 5 },
-  RCB: { name: "Faf du Plessis", era: "2022–2026 · Play Bold Leader", titles: 2 },
+  RCB: { name: "Rajat Patidar", era: "2025–2026 · Champion Captain", titles: 2 },
   MI: { name: "Hardik Pandya", era: "2024–2026 · Succeeding Rohit Sharma", titles: 5 },
-  KKR: { name: "Shreyas Iyer", era: "2022–2024 · 2024 Champion Captain", titles: 3 },
-  RR: { name: "Sanju Samson", era: "2021–2026 · Franchise Star", titles: 1 },
-  DC: { name: "Rishabh Pant", era: "2021–2026 · Wicketkeeper Leader", titles: 0 },
-  PBKS: { name: "Sam Curran", era: "2023–2026 · All-Round Skipper", titles: 0 },
+  KKR: { name: "Ajinkya Rahane", era: "2025–2026 · Franchise Captain", titles: 3 },
+  RR: { name: "Riyan Parag", era: "2026 · Franchise Captain", titles: 1 },
+  DC: { name: "Axar Patel", era: "2025–2026 · Franchise Captain", titles: 0 },
+  PBKS: { name: "Shreyas Iyer", era: "2025–2026 · Franchise Captain", titles: 0 },
   GT: { name: "Shubman Gill", era: "2024–2026 · Emerging Captain", titles: 1 },
-  LSG: { name: "KL Rahul", era: "2022–2026 · Top-Order Leader", titles: 0 },
+  LSG: { name: "Rishabh Pant", era: "2025–2026 · Franchise Captain", titles: 0 },
+};
+
+export interface SeasonCaptainInfo {
+  name: string;
+  sub: string;
+}
+
+export const FRANCHISE_SEASON_CAPTAINS: Record<string, Record<string, SeasonCaptainInfo>> = {
+  RCB: {
+    "2026": { name: "Rajat Patidar", sub: "2026 Title Defending Skipper" },
+    "2025": { name: "Rajat Patidar", sub: "2025 IPL Champion Captain" },
+    "2024": { name: "Faf du Plessis", sub: "Playoffs Eliminator Leader" },
+    "2023": { name: "Faf du Plessis", sub: "Orange Cap Contender & Skipper" },
+    "2022": { name: "Faf du Plessis", sub: "Playoffs Qualifier 2 Leader" },
+    "2021": { name: "Virat Kohli", sub: "Playoffs Eliminator Skipper" },
+    "2020": { name: "Virat Kohli", sub: "Playoffs Eliminator Skipper" },
+    "2019": { name: "Virat Kohli", sub: "Franchise Icon & Skipper" },
+    "2018": { name: "Virat Kohli", sub: "Franchise Icon & Skipper" },
+    "2017": { name: "Virat Kohli", sub: "Franchise Icon & Skipper" },
+    "2016": { name: "Virat Kohli", sub: "973 Runs Record & Finalist Skipper" },
+    "2015": { name: "Virat Kohli", sub: "Playoffs Qualifier 2 Leader" },
+    "2014": { name: "Virat Kohli", sub: "Full-time Franchise Captain" },
+    "2013": { name: "Virat Kohli", sub: "Full-time Captaincy Debut" },
+    "2012": { name: "Daniel Vettori", sub: "Led alongside Virat Kohli" },
+    "2011": { name: "Daniel Vettori", sub: "Runners-up Finalist Skipper" },
+    "2010": { name: "Anil Kumble", sub: "Semi-finalist 3rd Place" },
+    "2009": { name: "Anil Kumble", sub: "Finalist & Turnaround Leader" },
+    "2008": { name: "Rahul Dravid", sub: "Inaugural Icon Captain" },
+  },
+  CSK: {
+    "2026": { name: "Ruturaj Gaikwad", sub: "Franchise Captain" },
+    "2025": { name: "Ruturaj Gaikwad", sub: "Franchise Captain" },
+    "2024": { name: "Ruturaj Gaikwad", sub: "New Era Franchise Captain" },
+    "2023": { name: "MS Dhoni", sub: "5th Title Champion Captain" },
+    "2022": { name: "MS Dhoni", sub: "Led alongside Ravindra Jadeja" },
+    "2021": { name: "MS Dhoni", sub: "4th Title Champion Captain" },
+    "2020": { name: "MS Dhoni", sub: "Franchise Icon Captain" },
+    "2019": { name: "MS Dhoni", sub: "Finalist Skipper" },
+    "2018": { name: "MS Dhoni", sub: "3rd Title Champion Captain" },
+    "2015": { name: "MS Dhoni", sub: "Finalist Skipper" },
+    "2014": { name: "MS Dhoni", sub: "Playoffs Qualifier 2" },
+    "2013": { name: "MS Dhoni", sub: "Finalist Skipper" },
+    "2012": { name: "MS Dhoni", sub: "Finalist Skipper" },
+    "2011": { name: "MS Dhoni", sub: "2nd Title Champion Captain" },
+    "2010": { name: "MS Dhoni", sub: "Maiden Title Champion Captain" },
+    "2009": { name: "MS Dhoni", sub: "Semi-Finalist Leader" },
+    "2008": { name: "MS Dhoni", sub: "Inaugural Finalist Skipper" },
+  },
+  MI: {
+    "2026": { name: "Hardik Pandya", sub: "Franchise Captain" },
+    "2025": { name: "Hardik Pandya", sub: "Franchise Captain" },
+    "2024": { name: "Hardik Pandya", sub: "Franchise Captain" },
+    "2023": { name: "Rohit Sharma", sub: "Playoffs Qualifier 2" },
+    "2022": { name: "Rohit Sharma", sub: "Franchise Icon Skipper" },
+    "2021": { name: "Rohit Sharma", sub: "Franchise Icon Skipper" },
+    "2020": { name: "Rohit Sharma", sub: "5th Title Champion Captain" },
+    "2019": { name: "Rohit Sharma", sub: "4th Title Champion Captain" },
+    "2018": { name: "Rohit Sharma", sub: "Franchise Icon Skipper" },
+    "2017": { name: "Rohit Sharma", sub: "3rd Title Champion Captain" },
+    "2016": { name: "Rohit Sharma", sub: "Franchise Icon Skipper" },
+    "2015": { name: "Rohit Sharma", sub: "2nd Title Champion Captain" },
+    "2014": { name: "Rohit Sharma", sub: "Playoffs Eliminator" },
+    "2013": { name: "Rohit Sharma", sub: "Maiden Title Champion Captain" },
+    "2012": { name: "Harbhajan Singh", sub: "Playoffs Eliminator" },
+    "2011": { name: "Sachin Tendulkar", sub: "Playoffs Qualifier 2" },
+    "2010": { name: "Sachin Tendulkar", sub: "Finalist Skipper & Orange Cap" },
+    "2009": { name: "Sachin Tendulkar", sub: "Franchise Icon Captain" },
+    "2008": { name: "Sachin Tendulkar", sub: "Inaugural Icon Captain" },
+  },
+  SRH: {
+    "2026": { name: "Pat Cummins", sub: "Franchise Captain" },
+    "2025": { name: "Pat Cummins", sub: "Franchise Captain" },
+    "2024": { name: "Pat Cummins", sub: "Finalist Captain" },
+    "2023": { name: "Aiden Markram", sub: "Franchise Captain" },
+    "2022": { name: "Kane Williamson", sub: "Franchise Captain" },
+    "2021": { name: "Kane Williamson", sub: "Led alongside David Warner" },
+    "2020": { name: "David Warner", sub: "Playoffs Qualifier 2" },
+    "2019": { name: "Kane Williamson", sub: "Playoffs Eliminator" },
+    "2018": { name: "Kane Williamson", sub: "Finalist Skipper & Orange Cap" },
+    "2017": { name: "David Warner", sub: "Playoffs Eliminator" },
+    "2016": { name: "David Warner", sub: "Maiden Title Champion Captain" },
+    "2015": { name: "David Warner", sub: "Orange Cap & Captain" },
+    "2014": { name: "Shikhar Dhawan", sub: "Led alongside Daren Sammy" },
+    "2013": { name: "Kumar Sangakkara", sub: "Led alongside Cameron White" },
+  },
+  KKR: {
+    "2026": { name: "Ajinkya Rahane", sub: "Franchise Captain" },
+    "2025": { name: "Ajinkya Rahane", sub: "Franchise Captain" },
+    "2024": { name: "Shreyas Iyer", sub: "3rd Title Champion Captain" },
+    "2023": { name: "Nitish Rana", sub: "Stand-in Franchise Skipper" },
+    "2022": { name: "Shreyas Iyer", sub: "Franchise Captain" },
+    "2021": { name: "Eoin Morgan", sub: "Finalist Skipper" },
+    "2020": { name: "Eoin Morgan", sub: "Led alongside Dinesh Karthik" },
+    "2019": { name: "Dinesh Karthik", sub: "Franchise Captain" },
+    "2018": { name: "Dinesh Karthik", sub: "Playoffs Qualifier 2" },
+    "2017": { name: "Gautam Gambhir", sub: "Playoffs Qualifier 2" },
+    "2016": { name: "Gautam Gambhir", sub: "Playoffs Eliminator" },
+    "2015": { name: "Gautam Gambhir", sub: "Franchise Leader" },
+    "2014": { name: "Gautam Gambhir", sub: "2nd Title Champion Captain" },
+    "2013": { name: "Gautam Gambhir", sub: "Franchise Leader" },
+    "2012": { name: "Gautam Gambhir", sub: "Maiden Title Champion Captain" },
+    "2011": { name: "Gautam Gambhir", sub: "Playoffs Eliminator" },
+    "2010": { name: "Sourav Ganguly", sub: "Franchise Icon Captain" },
+    "2009": { name: "Brendon McCullum", sub: "Franchise Captain" },
+    "2008": { name: "Sourav Ganguly", sub: "Inaugural Icon Captain" },
+  },
+  RR: {
+    "2026": { name: "Riyan Parag", sub: "Franchise Captain" },
+    "2025": { name: "Sanju Samson", sub: "Led alongside Riyan Parag" },
+    "2024": { name: "Sanju Samson", sub: "Playoffs Qualifier 2" },
+    "2023": { name: "Sanju Samson", sub: "Franchise Captain" },
+    "2022": { name: "Sanju Samson", sub: "Finalist Skipper" },
+    "2021": { name: "Sanju Samson", sub: "Franchise Captain" },
+    "2020": { name: "Steve Smith", sub: "Franchise Captain" },
+    "2019": { name: "Steve Smith", sub: "Led alongside Ajinkya Rahane" },
+    "2018": { name: "Ajinkya Rahane", sub: "Playoffs Eliminator" },
+    "2015": { name: "Shane Watson", sub: "Playoffs Eliminator" },
+    "2014": { name: "Shane Watson", sub: "Franchise Captain" },
+    "2013": { name: "Rahul Dravid", sub: "Playoffs Qualifier 2" },
+    "2012": { name: "Rahul Dravid", sub: "Franchise Leader" },
+    "2011": { name: "Shane Warne", sub: "Final Season as Captain" },
+    "2010": { name: "Shane Warne", sub: "Franchise Icon Captain" },
+    "2009": { name: "Shane Warne", sub: "Franchise Icon Captain" },
+    "2008": { name: "Shane Warne", sub: "Inaugural Champion Captain" },
+  },
+  DC: {
+    "2026": { name: "Axar Patel", sub: "Franchise Captain" },
+    "2025": { name: "Axar Patel", sub: "Franchise Captain" },
+    "2024": { name: "Rishabh Pant", sub: "Franchise Captain" },
+    "2023": { name: "David Warner", sub: "Stand-in Captain" },
+    "2022": { name: "Rishabh Pant", sub: "Franchise Captain" },
+    "2021": { name: "Rishabh Pant", sub: "Playoffs Qualifier 2" },
+    "2020": { name: "Shreyas Iyer", sub: "Finalist Skipper" },
+    "2019": { name: "Shreyas Iyer", sub: "Playoffs Qualifier 2" },
+    "2018": { name: "Shreyas Iyer", sub: "Took over from Gautam Gambhir" },
+    "2017": { name: "Zaheer Khan", sub: "Franchise Captain" },
+    "2016": { name: "Zaheer Khan", sub: "Franchise Captain" },
+    "2015": { name: "JP Duminy", sub: "Franchise Captain" },
+    "2014": { name: "Kevin Pietersen", sub: "Franchise Captain" },
+    "2013": { name: "Mahela Jayawardene", sub: "Franchise Captain" },
+    "2012": { name: "Virender Sehwag", sub: "Playoffs Qualifier 2" },
+    "2011": { name: "Virender Sehwag", sub: "Franchise Icon Captain" },
+    "2010": { name: "Gautam Gambhir", sub: "Led alongside Dinesh Karthik" },
+    "2009": { name: "Gautam Gambhir", sub: "Semi-finalist Leader" },
+    "2008": { name: "Virender Sehwag", sub: "Inaugural Semi-finalist Captain" },
+  },
+  PBKS: {
+    "2026": { name: "Shreyas Iyer", sub: "Franchise Captain" },
+    "2025": { name: "Shreyas Iyer", sub: "Franchise Captain" },
+    "2024": { name: "Sam Curran", sub: "Led alongside Shikhar Dhawan" },
+    "2023": { name: "Shikhar Dhawan", sub: "Franchise Captain" },
+    "2022": { name: "Mayank Agarwal", sub: "Franchise Captain" },
+    "2021": { name: "KL Rahul", sub: "Franchise Captain" },
+    "2020": { name: "KL Rahul", sub: "Orange Cap & Captain" },
+    "2019": { name: "Ravichandran Ashwin", sub: "Franchise Captain" },
+    "2018": { name: "Ravichandran Ashwin", sub: "Franchise Captain" },
+    "2017": { name: "Glenn Maxwell", sub: "Franchise Captain" },
+    "2016": { name: "Murali Vijay", sub: "Led alongside David Miller" },
+    "2015": { name: "George Bailey", sub: "Franchise Captain" },
+    "2014": { name: "George Bailey", sub: "Finalist Skipper" },
+    "2013": { name: "Adam Gilchrist", sub: "Franchise Captain" },
+    "2012": { name: "Adam Gilchrist", sub: "Franchise Captain" },
+    "2011": { name: "Adam Gilchrist", sub: "Franchise Captain" },
+    "2010": { name: "Kumar Sangakkara", sub: "Franchise Captain" },
+    "2009": { name: "Yuvraj Singh", sub: "Franchise Icon Captain" },
+    "2008": { name: "Yuvraj Singh", sub: "Inaugural Semi-finalist Captain" },
+  },
+  GT: {
+    "2026": { name: "Shubman Gill", sub: "Franchise Captain" },
+    "2025": { name: "Shubman Gill", sub: "Franchise Captain" },
+    "2024": { name: "Shubman Gill", sub: "Franchise Captain" },
+    "2023": { name: "Hardik Pandya", sub: "Finalist Skipper" },
+    "2022": { name: "Hardik Pandya", sub: "Debut Season Champion Captain" },
+  },
+  LSG: {
+    "2026": { name: "Rishabh Pant", sub: "Franchise Captain" },
+    "2025": { name: "Rishabh Pant", sub: "Franchise Captain" },
+    "2024": { name: "KL Rahul", sub: "Franchise Captain" },
+    "2023": { name: "KL Rahul", sub: "Playoffs Eliminator Leader" },
+    "2022": { name: "KL Rahul", sub: "Debut Season Playoffs Leader" },
+  },
 };
 
 export function FranchiseHero({ team, record, loading, seasons, season, onSeason, switcher }: {
@@ -46,15 +227,47 @@ export function FranchiseHero({ team, record, loading, seasons, season, onSeason
   const teamSlug = TEAM_CODE_TO_SLUG[team.id] ?? team.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   const fallbackCaptain = KNOWN_CAPTAINS[team.id] ?? { name: "Pat Cummins", era: "IPL Captain" };
 
-  const captainName = record?.latestCaptain?.name ?? fallbackCaptain.name;
-  const captainSub = record?.latestCaptain 
-    ? `Led ${record.latestCaptain.firstSeason}–${record.latestCaptain.lastSeason}`
-    : fallbackCaptain.era;
+  // Context-aware seasonal captain lookup
+  const seasonalCaptain = (season && FRANCHISE_SEASON_CAPTAINS[team.id]?.[season])
+    ? FRANCHISE_SEASON_CAPTAINS[team.id][season]
+    : null;
+
+  const captainName = seasonalCaptain?.name ?? record?.latestCaptain?.name ?? fallbackCaptain.name;
+  const captainSub = seasonalCaptain?.sub 
+    ?? (record?.latestCaptain 
+        ? `Led ${record.latestCaptain.firstSeason}–${record.latestCaptain.lastSeason}`
+        : fallbackCaptain.era);
 
   const titlesCount = record?.titles?.count ?? team.titles;
   const titlesYears = (record?.titles?.years && record.titles.years.length > 0) 
     ? record.titles.years 
     : team.titleYears;
+
+  // Context-aware seasonal win percentage & record lookup
+  const selectedSeasonStat = season
+    ? record?.seasons?.find((s) => String(s.season) === String(season))
+    : null;
+
+  const winRateLabel = season ? `${season} Win rate` : "Win rate";
+  const winRateValue = selectedSeasonStat
+    ? selectedSeasonStat.played > 0
+      ? `${((selectedSeasonStat.won / selectedSeasonStat.played) * 100).toFixed(1)}%`
+      : "0.0%"
+    : record?.overall.winPct != null
+    ? `${record.overall.winPct.toFixed(1)}%`
+    : "48.5%";
+
+  const winRateSub = selectedSeasonStat
+    ? selectedSeasonStat.champion
+      ? `${selectedSeasonStat.won}W · ${selectedSeasonStat.lost}L · Champions 🏆`
+      : selectedSeasonStat.runnerUp
+      ? `${selectedSeasonStat.won}W · ${selectedSeasonStat.lost}L · Runners-up 🥈`
+      : selectedSeasonStat.madePlayoffs
+      ? `${selectedSeasonStat.won}W · ${selectedSeasonStat.lost}L · Playoffs Qualified`
+      : `${selectedSeasonStat.won}W · ${selectedSeasonStat.lost}L${selectedSeasonStat.noResult > 0 ? ` · ${selectedSeasonStat.noResult}NR` : ""} (${season} Season)`
+    : record
+    ? `${record.overall.won}W · ${record.overall.lost}L`
+    : "All-time IPL matches";
 
   const metrics = [
     {
@@ -68,12 +281,12 @@ export function FranchiseHero({ team, record, loading, seasons, season, onSeason
       sub: record?.firstSeason && record.lastSeason ? `${record.firstSeason}–${record.lastSeason}` : "2013–2026",
     },
     {
-      label: "Win rate",
-      value: record?.overall.winPct != null ? `${record.overall.winPct.toFixed(1)}%` : "48.5%",
-      sub: record ? `${record.overall.won}W · ${record.overall.lost}L` : "All-time IPL matches",
+      label: winRateLabel,
+      value: winRateValue,
+      sub: winRateSub,
     },
     {
-      label: "Franchise Captain",
+      label: season ? `${season} Captain` : "Franchise Captain",
       value: captainName,
       sub: captainSub,
     },
@@ -94,16 +307,23 @@ export function FranchiseHero({ team, record, loading, seasons, season, onSeason
               <img src={team.logoImg} alt={team.name} className="w-full h-full object-contain" />
             </div>
             <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-widest" style={{ color: team.accent }}>
-                  MY DUGOUT · OFFICIAL SANCTUARY
+              <div className="flex items-center gap-2 mb-1">
+                <span 
+                  className="text-[9.5px] font-mono font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full border shadow-sm"
+                  style={{ 
+                    backgroundColor: `${team.accent}22`, 
+                    borderColor: `${team.accent}55`,
+                    color: team.accent 
+                  }}
+                >
+                  FRANCHISE SANCTUARY
                 </span>
-                <span className="text-[10px] text-white/40 font-mono">({team.shortName})</span>
+                <span className="text-[10px] text-white/50 font-mono font-bold">({team.shortName})</span>
               </div>
-              <h1 className="font-display font-black text-2xl sm:text-3xl uppercase tracking-tight text-white leading-tight">
+              <h1 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl uppercase tracking-tight text-white leading-tight">
                 {team.name}
               </h1>
-              <p className="text-xs text-white/60 mt-1">{team.motto}</p>
+              <p className="text-xs text-white/70 font-medium mt-1">{team.motto}</p>
             </div>
           </div>
 
@@ -111,29 +331,13 @@ export function FranchiseHero({ team, record, loading, seasons, season, onSeason
             {switcher}
             
             <div className="flex items-center gap-2 flex-wrap">
-              {/* Direct link to individual team page */}
-              <Link href={`/teams/${teamSlug}`}>
-                <button 
-                  className="px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center gap-1.5 border shadow-md cursor-pointer hover:scale-105"
-                  style={{ 
-                    backgroundColor: `${team.accent}20`, 
-                    borderColor: `${team.accent}60`, 
-                    color: team.accent 
-                  }}
-                >
-                  <Activity className="w-3.5 h-3.5" />
-                  <span>Team Dossier ({team.shortName})</span>
-                  <ArrowRight className="w-3 h-3" />
-                </button>
-              </Link>
-
               {seasons.length > 0 && season && (
                 <label className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/50">
                   Season
                   <select
                     value={season}
                     onChange={(e) => onSeason(e.target.value)}
-                    className="rounded-lg border border-white/15 bg-[#0B1020] px-2.5 py-1.5 text-xs font-bold normal-case tracking-normal text-white outline-none focus:border-white/40 cursor-pointer"
+                    className="rounded-lg border border-white/20 bg-[#0B1020] px-3 py-1.5 text-xs font-bold normal-case tracking-normal text-white outline-none focus:border-white/50 cursor-pointer shadow-inner"
                   >
                     {seasons.map((s) => <option key={s} value={s}>{s}</option>)}
                   </select>
@@ -146,29 +350,32 @@ export function FranchiseHero({ team, record, loading, seasons, season, onSeason
         {/* 4 Quantitative Franchise Pillars */}
         <dl className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {metrics.map((m) => (
-            <div key={m.label} className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 min-w-0">
-              <dt className="text-[10px] uppercase tracking-wider text-white/40 font-mono font-bold">{m.label}</dt>
-              <dd className="font-display font-black text-lg text-white tabular-nums truncate mt-0.5" style={{ color: m.label.includes("Titles") ? "#FBBF24" : undefined }}>
+            <div 
+              key={m.label} 
+              className="rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/20 transition-all px-4 py-3 min-w-0 shadow-sm"
+            >
+              <dt className="text-[10px] uppercase tracking-wider text-white/50 font-mono font-bold">{m.label}</dt>
+              <dd className="font-display font-black text-lg sm:text-xl text-white tabular-nums truncate mt-0.5" style={{ color: m.label.includes("Titles") ? "#FBBF24" : undefined }}>
                 {loading && !record ? "…" : m.value}
               </dd>
-              {m.sub && <div className="text-[10px] text-white/45 mt-0.5 truncate">{m.sub}</div>}
+              {m.sub && <div className="text-[10.5px] text-white/60 font-medium mt-0.5 truncate">{m.sub}</div>}
             </div>
           ))}
         </dl>
 
         {/* Dugout Navigation Pills */}
-        <nav aria-label="Dugout sections" className="flex flex-wrap items-center gap-2 pt-1 border-t border-white/5">
+        <nav aria-label="Dugout sections" className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/10">
           {DUGOUT_SECTIONS.map((s) => (
             <button
               key={s.id}
               onClick={() => goTo(s.id)}
-              className="px-3.5 py-1.5 rounded-full border border-white/12 bg-white/[0.04] text-xs font-bold text-white/75 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-xs font-bold text-white/80 hover:text-white hover:bg-white/10 hover:border-white/30 transition-all cursor-pointer active:scale-95 shadow-sm"
             >
               {s.label}
             </button>
           ))}
           <Link href={`/teams/${teamSlug}`} className="ml-auto">
-            <span className="text-xs font-mono font-bold text-white/50 hover:text-white transition-colors flex items-center gap-1">
+            <span className="text-xs font-mono font-bold text-white/60 hover:text-white transition-colors flex items-center gap-1.5 hover:underline">
               <span>Full Historical Records</span>
               <ExternalLink className="w-3 h-3" />
             </span>

@@ -1,0 +1,126 @@
+{
+ "articleId": "cf-kkr-097",
+ "generatedAt": "2026-10-26T04:21:26.763Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "ac-m": {
+   "value": 17,
+   "display": "17%",
+   "label": "Share of Kolkata Knight Riders' balls faced by batters aged twenty-three or under, 2018–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Known birth dates",
+   "sampleSize": {
+    "n": 8726,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) OR i.bowling_team_id IN (6) THEN 1 ELSE 0 END x, i.batting_team_id bt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, bt",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 balls",
+    "passed": true,
+    "detail": "n = 8726"
+   }
+  },
+  "ac-o": {
+   "value": 9,
+   "display": "9%",
+   "label": "Same share for the rest of the IPL",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Known birth dates",
+   "sampleSize": {
+    "n": 80560,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) OR i.bowling_team_id IN (6) THEN 1 ELSE 0 END x, i.batting_team_id bt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, bt",
+   "validation": {
+    "method": "sample-size floor ≥ 10000 balls",
+    "passed": true,
+    "detail": "n = 80560"
+   }
+  },
+  "ac-cover": {
+   "value": 60,
+   "display": "60%",
+   "label": "Share of Kolkata Knight Riders' balls faced by batters with a known birth date",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 14643,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) OR i.bowling_team_id IN (6) THEN 1 ELSE 0 END x, i.batting_team_id bt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, bt",
+   "validation": {
+    "method": "plausibility range 10–100 for coverage",
+    "passed": true,
+    "detail": "value 59.59161374035376"
+   }
+  }
+ },
+ "tables": {
+  "ac-series": {
+   "label": "Share of balls faced by batters aged 23 or under",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batters with a known birth date",
+   "sampleSize": {
+    "n": 89286,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) OR i.bowling_team_id IN (6) THEN 1 ELSE 0 END x, i.batting_team_id bt, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, bt",
+   "rows": [
+    {
+     "season": "2018",
+     "team": 16.2,
+     "league": 11.2
+    },
+    {
+     "season": "2019",
+     "team": 23.3,
+     "league": 6.2
+    },
+    {
+     "season": "2020",
+     "team": 34.4,
+     "league": 11.6
+    },
+    {
+     "season": "2021",
+     "team": 36.9,
+     "league": 6.4
+    },
+    {
+     "season": "2022",
+     "team": 0.8,
+     "league": 13.4
+    },
+    {
+     "season": "2023",
+     "team": 18.4,
+     "league": 10.3
+    },
+    {
+     "season": "2024",
+     "team": 4.4,
+     "league": 13
+    },
+    {
+     "season": "2025",
+     "team": 0,
+     "league": 7.5
+    },
+    {
+     "season": "2026",
+     "team": 0,
+     "league": 4.2
+    }
+   ]
+  }
+ }
+}

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { FRANCHISE_THEMES } from "@/lib/franchiseColors";
 import { PAGE_BG, FALLBACK_ACCENT, franchisePalette, mixHex, withAlpha } from "@/lib/team-palette";
 
 export type TeamCode = "RCB" | "CSK" | "MI" | "KKR" | "SRH" | "RR" | "DC" | "PBKS" | "GT" | "LSG";
@@ -43,7 +44,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     shortName: "RCB",
     city: "Bengaluru",
     ...colours("Royal Challengers Bengaluru"),
-    bannerImg: "/rcb winner 2026.jpg",
+    bannerImg: "/rcb-winner-2026.jpg",
     logoImg: "/rcb logo.png",
     titles: 2,
     titleYears: ["2025", "2026"],
@@ -69,7 +70,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     shortName: "MI",
     city: "Mumbai",
     ...colours("Mumbai Indians"),
-    bannerImg: "/wankhede stadium.webp",
+    bannerImg: "/venue-images/wankhede stadium.webp",
     logoImg: "/mi logo.jpg",
     titles: 5,
     titleYears: ["2013", "2015", "2017", "2019", "2020"],
@@ -82,7 +83,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     shortName: "KKR",
     city: "Kolkata",
     ...colours("Kolkata Knight Riders"),
-    bannerImg: "/eden gardens stadium.webp",
+    bannerImg: "/venue-images/eden gardens stadium.webp",
     logoImg: "/kkr logo.png",
     titles: 3,
     titleYears: ["2012", "2014", "2024"],
@@ -95,7 +96,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     shortName: "SRH",
     city: "Hyderabad",
     ...colours("Sunrisers Hyderabad"),
-    bannerImg: "/rajiv gandhi hyderabad stadium.webp",
+    bannerImg: "/venue-images/rajiv gandhi hyderabad stadium.webp",
     logoImg: "/srh logo.jpg",
     titles: 2,
     titleYears: ["2009", "2016"],
@@ -108,7 +109,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     shortName: "RR",
     city: "Jaipur",
     ...colours("Rajasthan Royals"),
-    bannerImg: "/sawai mansingh jaipur stadium.webp",
+    bannerImg: "/venue-images/sawai mansingh jaipur stadium.webp",
     logoImg: "/rr logo.png",
     titles: 1,
     titleYears: ["2008"],
@@ -121,7 +122,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     shortName: "DC",
     city: "Delhi",
     ...colours("Delhi Capitals"),
-    bannerImg: "/arun jaitely stadium.webp",
+    bannerImg: "/venue-images/arun jaitely stadium.webp",
     logoImg: "/dc logo.jpg",
     titles: 0,
     titleYears: [],
@@ -134,7 +135,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     shortName: "PBKS",
     city: "Mohali",
     ...colours("Punjab Kings"),
-    bannerImg: "/mullanpur stadium.webp",
+    bannerImg: "/venue-images/mullanpur stadium.webp",
     logoImg: "/pbks logo.png",
     titles: 0,
     titleYears: [],
@@ -147,7 +148,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     shortName: "GT",
     city: "Ahmedabad",
     ...colours("Gujarat Titans"),
-    bannerImg: "/narendra modi stadium.webp",
+    bannerImg: "/venue-images/narendra modi stadium.webp",
     logoImg: "/gt logo.png",
     titles: 1,
     titleYears: ["2022"],
@@ -160,7 +161,7 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
     shortName: "LSG",
     city: "Lucknow",
     ...colours("Lucknow Super Giants"),
-    bannerImg: "/lucknow stadium.webp",
+    bannerImg: "/venue-images/lucknow stadium.webp",
     logoImg: "/lsg logo.jpg",
     titles: 0,
     titleYears: [],
@@ -234,10 +235,10 @@ export function resolveTeamCode(input?: string | null): TeamCode | null {
 }
 
 export const NEUTRAL_THEME = {
-  accent: "#8B5CF6",
-  secondary: "#06B6D4",
-  glow: "rgba(139, 92, 246, 0.25)",
-  surfaceTint: "rgba(19, 24, 38, 0.4)"
+  accent: "#A8B7C7",
+  secondary: "#8C9AAA",
+  glow: "rgba(168, 183, 199, 0.08)",
+  surfaceTint: "rgba(12, 17, 23, 0.4)"
 };
 
 interface TeamContextType {
@@ -288,14 +289,24 @@ export function TeamProvider({ children }: { children: React.ReactNode }) {
       root.dataset.team = selectedTeam;
       root.style.setProperty("--team-accent", t.accent);
       root.style.setProperty("--team-secondary", t.secondary);
-      root.style.setProperty("--team-glow", t.glow);
-      root.style.setProperty("--team-surface-tint", t.surfaceTint);
+      root.style.setProperty("--team-glow", `color-mix(in srgb, ${t.accent} 8%, transparent)`);
+      root.style.setProperty("--team-surface-tint", "#070e17");
+      const ft = FRANCHISE_THEMES[selectedTeam.toLowerCase()] || FRANCHISE_THEMES.default;
+      root.style.setProperty("--accent-primary", ft.primary || t.accent);
+      root.style.setProperty("--accent-secondary", ft.secondary || t.secondary);
+      root.style.setProperty("--accent-glow", ft.glow);
+      root.style.setProperty("--font-sports", '"Teko", "Impact", sans-serif');
     } else {
       delete root.dataset.team;
       root.style.setProperty("--team-accent", NEUTRAL_THEME.accent);
       root.style.setProperty("--team-secondary", NEUTRAL_THEME.secondary);
       root.style.setProperty("--team-glow", NEUTRAL_THEME.glow);
-      root.style.setProperty("--team-surface-tint", NEUTRAL_THEME.surfaceTint);
+      root.style.setProperty("--team-surface-tint", "#070e17");
+      const ft = FRANCHISE_THEMES.default;
+      root.style.setProperty("--accent-primary", ft.primary);
+      root.style.setProperty("--accent-secondary", ft.secondary);
+      root.style.setProperty("--accent-glow", ft.glow);
+      root.style.setProperty("--font-sports", '"Teko", "Impact", sans-serif');
     }
   }, [selectedTeam]);
 

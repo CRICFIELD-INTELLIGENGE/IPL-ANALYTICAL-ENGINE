@@ -17,6 +17,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { AdVessel } from "@/components/ad-vessel";
 import { FixtureTicketCard } from "@/components/fixture-ticket-card";
+import { CricFieldMascot } from "@/components/CricFieldMascot";
 
 /** Helper to generate standard URL slug for a team */
 const teamSlug = (team?: string | null): string =>
@@ -48,11 +49,11 @@ export default function ScoresPage() {
         <div className="bg-[#0B1020]/90 rounded-[28px] border border-white/10 p-6 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-2xl sticky top-4 z-[100] backdrop-blur-xl">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary shadow-lg shadow-primary/20">
-              <Filter className="w-6 h-6 text-primary" />
+              <CricFieldMascot team={leaderTeam || "default"} mood="fire" size={38} interactive />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-1">
+                <span className="text-[10px] font-black uppercase tracking-widest franchise-eyebrow flex items-center gap-1">
                   <Sparkles className="w-3 h-3" /> OFFICIAL TOURNAMENT ARCHIVE
                 </span>
                 <span className="text-[10px] font-mono text-white/40">2008–2026</span>
@@ -115,19 +116,7 @@ export default function ScoresPage() {
             </div>
           </div>
 
-          <Link href="/shop" className="bg-[#0B1020]/80 rounded-2xl border border-white/10 p-4 flex items-center justify-between hover:border-primary/40 transition-all group cursor-pointer">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                <ShoppingBag className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[9px] font-black uppercase tracking-widest text-primary/80 block">Collector Lab</span>
-                <span className="text-xs font-black text-white flex items-center gap-1">
-                  Physical Cards <ArrowUpRight className="w-3 h-3 text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </span>
-              </div>
-            </div>
-          </Link>
+          
         </div>
 
         {/* ─── TAB NAVIGATION ─── */}
@@ -421,7 +410,7 @@ function PointsView({ season, standings }: { season: string; standings: any[] })
                       <div className="flex flex-col">
                         <span className="text-[13px] font-black text-white group-hover/teamlink:text-primary transition-colors flex items-center gap-1.5">
                           {r.team}
-                          {isFirst && <Star className="w-3.5 h-3.5 text-primary fill-primary" />}
+                          {isFirst && <CricFieldMascot team={r.team} mood="laughing" size={22} interactive />}
                         </span>
                         <span className="text-[9px] font-mono text-white/40 uppercase">
                           {teamShort(r.team)} · Franchise Hub ➔
@@ -883,14 +872,7 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
                                 <span>Dossier</span>
                                 <ArrowUpRight className="w-2.5 h-2.5" />
                               </Link>
-                              <Link
-                                href="/shop"
-                                className="py-1 px-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-white/70 hover:text-white border border-white/10 text-[8px] font-bold uppercase tracking-wider text-center transition-all flex items-center justify-center gap-0.5"
-                                title="Shop Collector Card"
-                              >
-                                <ShoppingBag className="w-2.5 h-2.5" />
-                                <span>Card</span>
-                              </Link>
+                              
                             </div>
                           </div>
                         </div>

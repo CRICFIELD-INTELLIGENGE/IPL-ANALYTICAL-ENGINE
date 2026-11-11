@@ -1,0 +1,153 @@
+{
+ "articleId": "cf-kkr-053",
+ "generatedAt": "2026-10-26T04:21:04.084Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "hw-r1": {
+   "value": "G Gambhir",
+   "display": "G Gambhir",
+   "label": "Kolkata Knight Riders' leading run-scorer",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 41212,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (6) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "hw-r1s": {
+   "value": 7,
+   "display": "7%",
+   "label": "Share of Kolkata Knight Riders' runs scored by that player",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 41212,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (6) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 41212"
+   }
+  },
+  "hw-top3": {
+   "value": 20,
+   "display": "20%",
+   "label": "Share of Kolkata Knight Riders' runs scored by the top three run-scorers",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 41212,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (6) GROUP BY pl.name ORDER BY runs DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 runs",
+    "passed": true,
+    "detail": "n = 41212"
+   }
+  },
+  "hw-w1": {
+   "value": "SP Narine",
+   "display": "SP Narine",
+   "label": "Kolkata Knight Riders' leading wicket-taker",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-credited dismissals",
+   "sampleSize": {
+    "n": 1489,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "hw-w1s": {
+   "value": 14,
+   "display": "14%",
+   "label": "Share of Kolkata Knight Riders' bowler wickets taken by that player",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 1489,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (6) AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC",
+   "validation": {
+    "method": "sample-size floor ≥ 100 wickets",
+    "passed": true,
+    "detail": "n = 1489"
+   }
+  }
+ },
+ "tables": {
+  "hw-top": {
+   "label": "KKR leading run-scorers",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Regulation innings, all seasons",
+   "sampleSize": {
+    "n": 41212,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (6) GROUP BY pl.name ORDER BY runs DESC",
+   "rows": [
+    {
+     "player": "G Gambhir",
+     "runs": 3035,
+     "share": 7.4
+    },
+    {
+     "player": "AD Russell",
+     "runs": 2593,
+     "share": 6.3
+    },
+    {
+     "player": "RV Uthappa",
+     "runs": 2439,
+     "share": 5.9
+    },
+    {
+     "player": "N Rana",
+     "runs": 2199,
+     "share": 5.3
+    },
+    {
+     "player": "YK Pathan",
+     "runs": 1893,
+     "share": 4.6
+    },
+    {
+     "player": "SP Narine",
+     "runs": 1820,
+     "share": 4.4
+    },
+    {
+     "player": "MK Pandey",
+     "runs": 1474,
+     "share": 3.6
+    },
+    {
+     "player": "VR Iyer",
+     "runs": 1468,
+     "share": 3.6
+    }
+   ]
+  }
+ }
+}

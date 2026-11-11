@@ -1,0 +1,135 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-csk-069",
+ "planId": "cf-csk-069",
+ "franchise": "CSK",
+ "aspect": "history",
+ "title": "The Turning-Point Audit: What Really Changed in Chennai Super Kings\u2019s Best Seasons?",
+ "slug": "csk-the-turning-point-audit-what-really-changed-in-csk-best-seasons",
+ "dek": "What actually changed when Chennai Super Kings were at their best? Comparing their three best seasons with the rest, phase by phase, finds the turning points.",
+ "excerpt": "In Chennai Super Kings' best seasons, the biggest improvement relative to the league came in death batting. That is where the turning points in their history were made.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "CSK"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "Chennai Super Kings' three best seasons by win rate were {{ev:tp-best}}.",
+  "The largest advantage in those seasons, relative to the league, came in {{ev:tp-top}}: {{ev:tp-gain}} runs an over better than in other seasons.",
+  "Each of the six phase measures is compared in the chart."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "What Separates the Best Seasons",
+   "body": [
+    "Good seasons are remembered for players and moments. An audit asks a narrower question: in which part of the game were Chennai Super Kings most improved, relative to the league, when they were at their best?",
+    "Their three best seasons by win rate were {{ev:tp-best}}. CricField compared them with all other seasons across six phases of batting and bowling."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Turning Point",
+   "body": [
+    "The largest advantage came in {{ev:tp-top}}: {{ev:tp-gain}} runs an over better, relative to the league, than in other seasons.",
+    "For the other phases: powerplay batting {{ev:tp-g-ppbat}}, middle-overs batting {{ev:tp-g-midbat}}, death batting {{ev:tp-g-deathbat}}, powerplay bowling {{ev:tp-g-ppbowl}}, middle-overs bowling {{ev:tp-g-midbowl}} and death bowling {{ev:tp-g-deathbowl}} runs an over (positive = better in the best seasons)."
+   ],
+   "chartIds": [
+    "tp-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Why It Matters",
+   "body": [
+    "The phase that separated the best seasons is the phase most worth protecting in squad building.",
+    "{{hyp:turning}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Three Seasons Is a Small Sample",
+   "body": [
+    "Comparing three seasons with the rest is a small-sample exercise; a single exceptional player can drive a whole phase. The finding is a pointer, not a law.",
+    "Repeating the audit with the best five seasons would test whether it holds."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Death batting Made the Difference",
+   "body": [
+    "Chennai Super Kings' best seasons were defined most by death batting.",
+    "Future squads should treat that phase as the franchise's proven route to success."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "tp-chart",
+   "type": "bar",
+   "title": "Advantage in the best seasons",
+   "subtitle": "CSK: best three seasons minus the rest, relative to the league",
+   "table": "tp-cmp",
+   "xKey": "measure",
+   "series": [
+    {
+     "key": "advantage",
+     "label": "Advantage"
+    }
+   ],
+   "unit": "runs per over",
+   "takeaway": "Death batting improved most in the best seasons.",
+   "ariaLabel": "Horizontal bar chart of how much better CSK were in each phase in their best three seasons than in other seasons."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "turning",
+   "statement": "Hypothesis: death batting also separates Chennai Super Kings' playoff seasons from non-playoff seasons, not only the best three.",
+   "whyUnverified": "Only the best three seasons were compared.",
+   "howToTest": "Repeat the comparison for playoff and non-playoff seasons."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Chennai Super Kings at their best.",
+   "wanted": "Chennai Super Kings celebrating a win."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-csk-062",
+  "cf-csk-063",
+  "cf-csk-091"
+ ],
+ "seo": {
+  "metaTitle": "The turning-point audit: what changed in Chennai Super Kings' | CF",
+  "metaDescription": "Chennai Super Kings' three best seasons compared with the rest, phase by phase, to find what really changed."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Each phase is measured as runs per over relative to the league in the same season; advantage = best-season average minus other-season average, signed so that positive is better.",
+ "generator": "engine:v1"
+}

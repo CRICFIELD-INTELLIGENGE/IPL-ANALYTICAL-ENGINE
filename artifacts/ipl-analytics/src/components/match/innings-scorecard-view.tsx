@@ -74,6 +74,7 @@ function SingleInningsPanel({
   const team = innings.team;
   const teamCode = teamShort(team);
   const tColor = teamColor(team);
+  const bowlingTeam = card?.teams?.find(t => t !== team) || null;
 
   const extras = innings.extras;
   const extrasBreakdown = [
@@ -194,7 +195,13 @@ function SingleInningsPanel({
                     {/* Batter Identity & Portrait */}
                     <div className="flex items-center gap-2.5 min-w-0 pr-2">
                       <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 shrink-0 shadow-sm">
-                        <PlayerAvatar name={batter.name} className="w-full h-full object-cover" />
+                        <PlayerAvatar 
+                          name={batter.name} 
+                          teamId={team}
+                          season={card?.season}
+                          strictHistoricalJersey={true}
+                          className="w-full h-full object-cover" 
+                        />
                       </div>
                       <div className="min-w-0 flex flex-col">
                         <div className="flex items-center gap-1.5 flex-wrap">
@@ -344,7 +351,13 @@ function SingleInningsPanel({
                 >
                   <div className="flex items-center gap-2.5 min-w-0 pr-2">
                     <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 shrink-0 shadow-sm">
-                      <PlayerAvatar name={bowler.name} className="w-full h-full object-cover" />
+                      <PlayerAvatar 
+                        name={bowler.name} 
+                        teamId={bowlingTeam}
+                        season={card?.season}
+                        strictHistoricalJersey={true}
+                        className="w-full h-full object-cover" 
+                      />
                     </div>
                     <div className="min-w-0 flex flex-col">
                       <Link

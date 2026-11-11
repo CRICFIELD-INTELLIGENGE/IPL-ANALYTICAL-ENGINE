@@ -1,0 +1,146 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-030",
+ "planId": "cf-rcb-030",
+ "franchise": "RCB",
+ "aspect": "tactical",
+ "title": "Captaincy Under Uncertainty: Which Decisions Matter Most for Royal Challengers Bengaluru?",
+ "slug": "rcb-captaincy-under-uncertainty-which-decisions-matter-most-for-rcb",
+ "dek": "Which decisions matter most for an Royal Challengers Bengaluru captain? The franchise's captaincy record shows how leadership and results have moved together.",
+ "excerpt": "Royal Challengers Bengaluru have had a series of captains. The records that can be credited to this franchise alone show how much results have varied from one leader to the next.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "archive",
+ "teams": [
+  "RCB"
+ ],
+ "players": [
+  "Virat Kohli",
+  "Rajat Patidar",
+  "Anil Kumble"
+ ],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "CricField lists {{ev:cap-n}} captains for RCB.",
+  "{{ev:cap-top}} has the longest franchise-only record: {{ev:cap-top-n}} matches at a win rate of {{ev:cap-top-pct}}.",
+  "Across all seasons RCB have won {{ev:cap-team}} of matches with a result."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Decisions Under Uncertainty",
+   "body": [
+    "A T20 captain makes a handful of decisions that move win probability: the toss choice, the bowling order, the use of the impact substitute and when to change the field. Most are made with incomplete information.",
+    "CricField's captaincy records list {{ev:cap-n}} captains for Royal Challengers Bengaluru. The franchise has won {{ev:cap-team}} of its matches with a result across all seasons."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Records",
+   "body": [
+    "Among captains whose records cover RCB alone, {{ev:cap-top}} led in {{ev:cap-top-n}} matches at a win rate of {{ev:cap-top-pct}}. The table lists every captain with a franchise-only record of five or more matches.",
+    "Some captains, including Rahul Dravid, Faf du Plessis and Shane Watson, also led other franchises; their records in the dataset combine teams, so they are not compared here."
+   ],
+   "chartIds": [
+    "cap-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Which Decisions Matter Most",
+   "body": [
+    "Elsewhere in this series, wickets in hand and death bowling show large measurable effects on results, while the toss is a small edge across the league. Those are the decisions most worth a captain's attention.",
+    "For RCB, captaincy can be judged on those decisions rather than on the win rate alone, which depends heavily on the squad."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Captains Inherit Their Squads",
+   "body": [
+    "A captain's win rate is mostly a measure of the squad he was given. Separating leadership from talent needs decision-level data, such as bowling changes and field settings, that public records do not contain.",
+    "{{hyp:decisions}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Judge the Decisions, Not the Record",
+   "body": [
+    "Royal Challengers Bengaluru should evaluate captains on a short list of measurable decisions, reviewed after each match, rather than on win rate.",
+    "Over a season, that review would show which captaincy habits are worth keeping."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "cap-chart",
+   "type": "bar",
+   "title": "RCB captains: win rate",
+   "subtitle": "Franchise-only records, minimum five matches",
+   "table": "cap-tab",
+   "xKey": "captain",
+   "series": [
+    {
+     "key": "winPct",
+     "label": "Win rate"
+    }
+   ],
+   "unit": "% of matches won",
+   "takeaway": "Captains' records differ, but each reflects the squad he led as much as his decisions.",
+   "ariaLabel": "Horizontal bar chart of win rate for each RCB captain with a franchise-only record."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-captains",
+   "kind": "cricfield-dataset",
+   "title": "CricField captaincy records (captains.json)",
+   "publisher": "CricField",
+   "note": "Franchise-only records used; combined multi-team records are not compared."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "decisions",
+   "statement": "Hypothesis: captains differ measurably in how well they deploy their best death bowler, independent of squad strength.",
+   "whyUnverified": "Over-by-over captaincy decisions have not been reconstructed for every captain.",
+   "howToTest": "Measure, for each captain, how often the best death bowler bowls the highest-leverage overs."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Royal Challengers Bengaluru captaincy.",
+   "wanted": "Virat Kohli as Royal Challengers Bengaluru captain."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-064",
+  "cf-rcb-021",
+  "cf-rcb-026"
+ ],
+ "seo": {
+  "metaTitle": "Captaincy under uncertainty at RCB",
+  "metaDescription": "Royal Challengers Bengaluru's captains and their franchise-only records, and which captaincy decisions can actually be measured."
+ },
+ "methodology": "Regulation innings only (super overs excluded); win rates use matches with a result. Generated from the CricField warehouse by scripts/editorial/engine. Captaincy records from CricField captains.json; only records marked as franchise-only are compared.",
+ "generator": "engine:v1"
+}

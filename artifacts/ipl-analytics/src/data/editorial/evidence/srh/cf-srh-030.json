@@ -1,0 +1,148 @@
+{
+ "articleId": "cf-srh-030",
+ "generatedAt": "2026-10-26T04:22:09.995Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "cap-n": {
+   "value": 11,
+   "display": "11",
+   "label": "SRH captains listed",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "captains.json",
+   "sampleSize": {
+    "n": 11,
+    "unit": "captains"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "plausibility range 1–30 for captain count",
+    "passed": true,
+    "detail": "value 11"
+   }
+  },
+  "cap-top": {
+   "value": "Kane Williamson",
+   "display": "Kane Williamson",
+   "label": "SRH's longest-serving captain with a franchise-only record",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact records only",
+   "sampleSize": {
+    "n": 46,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "rank by matches",
+    "passed": true
+   }
+  },
+  "cap-top-pct": {
+   "value": 47.8,
+   "display": "47.8%",
+   "label": "Kane Williamson win rate as SRH captain",
+   "unit": "%",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "2018–2022",
+   "sampleSize": {
+    "n": 46,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 46"
+   }
+  },
+  "cap-top-n": {
+   "value": 46,
+   "display": "46",
+   "label": "Matches with Kane Williamson as SRH captain",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact record",
+   "sampleSize": {
+    "n": 46,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 46"
+   }
+  },
+  "cap-team": {
+   "value": 49,
+   "display": "49.0%",
+   "label": "SRH win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 210,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (1) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (1) OR m.team2_id IN (1)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 210"
+   }
+  }
+ },
+ "tables": {
+  "cap-tab": {
+   "label": "SRH captains with franchise-only records",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Captains whose record covers this franchise alone (min. five matches)",
+   "sampleSize": {
+    "n": 112,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "rows": [
+    {
+     "captain": "Kane Williamson",
+     "seasons": "2018–2022",
+     "matches": 46,
+     "winPct": 47.8,
+     "titles": 0
+    },
+    {
+     "captain": "Pat Cummins",
+     "seasons": "2024–2026",
+     "matches": 38,
+     "winPct": 52.6,
+     "titles": 0
+    },
+    {
+     "captain": "Aiden Markram",
+     "seasons": "2023–2023",
+     "matches": 13,
+     "winPct": 30.8,
+     "titles": 0
+    },
+    {
+     "captain": "Bhuvneshwar Kumar",
+     "seasons": "2019–2023",
+     "matches": 8,
+     "winPct": 25,
+     "titles": 0
+    },
+    {
+     "captain": "Ishan Kishan",
+     "seasons": "2026–2026",
+     "matches": 7,
+     "winPct": 57.1,
+     "titles": 0
+    }
+   ]
+  }
+ }
+}

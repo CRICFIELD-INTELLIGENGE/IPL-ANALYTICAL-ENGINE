@@ -1,0 +1,157 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-dc-080",
+ "planId": "cf-dc-080",
+ "franchise": "DC",
+ "aspect": "scouting",
+ "title": "The Scout\u2019s Blind Spot: Which Small-Sample Stars Might Mislead Delhi Capitals?",
+ "slug": "dc-the-scouts-blind-spot-which-small-sample-stars-might-mislead-dc",
+ "dek": "A batter who scores at a blistering rate from a handful of balls is the easiest player to over-rate. The IPL's history shows how far those small-sample stars fall back.",
+ "excerpt": "Batters who scored far faster than average from fewer than a hundred balls kept only part of that edge the next season. Batters who did it over a full season kept somewhat more. Hot seasons of any size regress, and small ones are the easiest to over-read.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "DC"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:bs-hn}} small-sample hot seasons (thirty to ninety-nine balls) averaged {{ev:bs-hb}} relative strike rate, then {{ev:bs-ha}} the next season: {{ev:bs-keep}} of the edge kept.",
+  "Large-sample hot seasons (two hundred and fifty balls or more) averaged {{ev:bs-bb}}, then {{ev:bs-ba}}: {{ev:bs-keep-big}} kept.",
+  "{{ev:bs-mine}} of the small-sample hot seasons were for DC."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Small-Sample Star",
+   "body": [
+    "A few explosive innings can make a batter look like a star. Scouts know the numbers are noisy, but the pull of a strike rate far above average is strong.",
+    "CricField took every IPL batter season with thirty to ninety-nine balls and a strike rate at least twenty per cent above the season average, and looked at the next season."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "How Far They Fall",
+   "body": [
+    "{{ev:bs-hn}} such small-sample hot seasons averaged {{ev:bs-hb}} on a scale where the season average is one hundred. The following season they averaged {{ev:bs-ha}}: only {{ev:bs-keep}} of the edge over average was kept.",
+    "Batters with an equally hot season over two hundred and fifty balls or more averaged {{ev:bs-bb}} and then {{ev:bs-ba}}, keeping {{ev:bs-keep-big}} of their edge."
+   ],
+   "chartIds": [
+    "bs-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "At DC",
+   "body": [
+    "{{ev:bs-mine}} of the small-sample hot seasons were for Delhi Capitals. Each is a case where the numbers looked better than the evidence behind them.",
+    "{{hyp:shrink}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Why This Happens",
+   "body": [
+    "Large-sample hot seasons kept somewhat more of their edge than small-sample ones. Volume of evidence matters, but even full seasons regress.",
+    "Over a few dozen balls, luck in which deliveries go for six and which go to fielders dominates; over hundreds of balls, skill matters more. Some of the fall-back is bowlers adjusting to a new player. The Bayesian-shrinkage article in this series shows how to correct for it."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Shrink Before You Spend",
+   "body": [
+    "Delhi Capitals should discount small-sample strike rates heavily towards the average before bidding.",
+    "A full season of evidence is worth far more than a hot month."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "bs-chart",
+   "type": "column",
+   "title": "Hot season vs next season",
+   "subtitle": "Relative strike rate (100 = season average)",
+   "table": "bs-cmp",
+   "xKey": "sample",
+   "series": [
+    {
+     "key": "hotSeason",
+     "label": "Hot season"
+    },
+    {
+     "key": "nextSeason",
+     "label": "Next season"
+    }
+   ],
+   "xLabel": "Sample size",
+   "unit": "index",
+   "takeaway": "Small-sample stars fall back further than full-season ones.",
+   "ariaLabel": "Grouped column chart comparing relative strike rate in hot seasons and the following season for small and large samples."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "shrink",
+   "statement": "Hypothesis: shrinking each batter's strike rate towards the average in proportion to balls faced predicts next-season strike rate better than the raw figure.",
+   "whyUnverified": "No shrinkage model has been fitted here.",
+   "howToTest": "Fit an empirical-Bayes shrinkage and compare prediction errors for raw and shrunk strike rates."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "120",
+   "reason": "Hot-season threshold stated in a table label."
+  },
+  {
+   "text": "100",
+   "reason": "Index baseline (season average = 100)."
+  },
+  {
+   "text": "30\u201399",
+   "reason": "Small-sample band stated in a table label."
+  },
+  {
+   "text": "250",
+   "reason": "Large-sample threshold stated in a table label."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A breakout Delhi Capitals batter.",
+   "wanted": "Delhi Capitals young batter."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-dc-084",
+  "cf-dc-087",
+  "cf-dc-075"
+ ],
+ "seo": {
+  "metaTitle": "The scout's blind spot: small-sample stars at DC",
+  "metaDescription": "How far IPL batters who scored blisteringly from few balls fell back the next season, and what it means for Delhi Capitals' scouting."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Generated by scripts/editorial/engine. Relative strike rate = runs \u00f7 (balls \u00d7 season-average runs per ball) \u00d7 100. Hot = 120 or more; next season requires at least 60 balls.",
+ "generator": "engine:v1"
+}

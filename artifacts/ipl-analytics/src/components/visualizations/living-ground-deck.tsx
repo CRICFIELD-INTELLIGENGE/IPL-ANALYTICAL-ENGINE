@@ -1,3 +1,4 @@
+import {ScoringRing} from './scoring-ring';
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -119,7 +120,6 @@ export function StackingDeckCard({
   title,
   badge,
   Icon,
-  onExpand,
   children,
 }: {
   index: number;
@@ -127,20 +127,22 @@ export function StackingDeckCard({
   title: string;
   badge: string;
   Icon: React.ElementType;
-  onExpand?: () => void;
   children: React.ReactNode;
 }) {
   return (
     <div
       id={id}
       style={{
-        top: "8px",
+        top: "12px",
         zIndex: 10 + index * 5,
+        scrollSnapAlign: "start",
+        scrollSnapStop: "always",
+        scrollMarginTop: "12px",
       }}
-      className="sticky h-[calc(100vh-66px)] min-h-[580px] rounded-[24px] border border-slate-800/80 bg-[#070B16]/98 backdrop-blur-2xl shadow-2xl shadow-black/90 flex flex-col overflow-hidden transition-all duration-300 will-change-transform"
+      className="sticky h-[calc(100vh-76px)] max-h-[820px] min-h-[540px] rounded-[24px] border border-slate-800/80 bg-[#070B16]/98 backdrop-blur-2xl shadow-2xl shadow-black/90 flex flex-col overflow-hidden transition-all duration-300 will-change-transform mb-6"
     >
       {/* 1. MODULE HEADER STRIP (AT TOP OF MODULE) */}
-      <div className="h-[54px] px-4 md:px-6 border-b border-white/10 flex items-center justify-between bg-[#080D1F]/90 shrink-0">
+      <div className="h-[48px] px-4 md:px-6 border-b border-white/10 flex items-center justify-between bg-[#080D1F]/90 shrink-0">
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="p-1.5 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/30 shrink-0">
             <Icon className="w-4 h-4" />
@@ -155,20 +157,17 @@ export function StackingDeckCard({
           </div>
         </div>
 
-        {onExpand && (
-          <button
-            onClick={onExpand}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 border border-purple-500/40 text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer shrink-0 shadow-md hover:scale-105"
-          >
-            <Maximize2 className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Full Analysis</span>
-            <span>↗</span>
-          </button>
-        )}
+        {/* Live Engine Telemetry Badge */}
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[9px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            LIVE ENGINE
+          </span>
+        </div>
       </div>
 
-      {/* 2. WHOLE MODULE INFO IN BETWEEN (VISIBLE AT ONE GLANCE) */}
-      <div className="flex-1 overflow-y-auto no-scrollbar p-3 md:p-5 flex flex-col justify-between">
+      {/* 2. COMPLETE VISUAL OF DATA FROM THAT MODEL — Neatly visible with zero edge cutting */}
+      <div className="flex-1 overflow-hidden p-3 md:p-4 flex flex-col justify-between min-h-0">
         {children}
       </div>
     </div>
@@ -358,566 +357,220 @@ export function unpackSectorDeliveries(sectorName: string, foursCount: number, s
 }
 
 export function Card01MergedScoringRadar() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<string>("Virat Kohli");
-  const [selectedSeason, setSelectedSeason] = useState<string>("2026");
-  const [cameraMode, setCameraMode] = useState<"broadcast" | "overhead" | "pov">("broadcast");
-  const [floodlightsOn, setFloodlightsOn] = useState<boolean>(true);
-  const [prompt, setPrompt] = useState<string>("");
-  
-  // Interactive Simulation State
-  const [activeSector, setActiveSector] = useState<string>("Long-Off");
-  const [activeShot, setActiveShot] = useState<UnpackedShot | null>(null);
-  const [flightProgress, setFlightProgress] = useState<number>(1.0);
-  const [isSimulating, setIsSimulating] = useState<boolean>(false);
-  const [crowdExcitement, setCrowdExcitement] = useState<number>(0.2); // 0.0 to 1.0 cheer wave
+  const [activeSector, setActiveSector] = useState<string | null>(null);
 
-  const activeData = PLAYER_RADAR_DATA[selectedPlayer] || PLAYER_RADAR_DATA["Virat Kohli"];
-  const currentSectorData = activeData.sectors.find(s => s.name === activeSector) || activeData.sectors[0];
-
-  // Unpack all actual Fours and Sixes for the active sector into fan-out trajectory paths
-  const currentDeliveries = useMemo(() => {
-    return unpackSectorDeliveries(currentSectorData.name, currentSectorData.fours, currentSectorData.sixes);
-  }, [currentSectorData]);
-
-  // Set default active shot on sector change
-  useEffect(() => {
-    if (currentDeliveries.length > 0) {
-      setActiveShot(currentDeliveries[0]);
-    }
-  }, [currentDeliveries]);
-
-  // Trigger flight simulation for a specific shot or whole sector
-  const triggerSimulation = (shot?: UnpackedShot) => {
-    if (shot) {
-      setActiveShot(shot);
-    }
-    setIsSimulating(true);
-    setFlightProgress(0);
-    setCrowdExcitement(1.0); // Trigger stadium crowd cheer reaction
-  };
-
-  // Flight progress animation loop & crowd cheer decay
-  useEffect(() => {
-    let animId: number;
-    if (isSimulating) {
-      const startTime = performance.now();
-      const duration = 1200; // 1.2s rapid broadcast flight
-
-      const step = (now: number) => {
-        const elapsed = now - startTime;
-        const p = Math.min(elapsed / duration, 1.0);
-        setFlightProgress(p);
-        if (p < 1.0) {
-          animId = requestAnimationFrame(step);
-        } else {
-          setIsSimulating(false);
-          // Gently ease crowd cheer back down after hit
-          setTimeout(() => setCrowdExcitement(0.35), 600);
-        }
-      };
-      animId = requestAnimationFrame(step);
-    }
-    return () => cancelAnimationFrame(animId);
-  }, [isSimulating]);
-
-  // 3D Holistic Stadium & Crowd Canvas Render Loop
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const width = canvas.width;
-    const height = canvas.height;
-    ctx.clearRect(0, 0, width, height);
-
-    const centerX = width / 2;
-    const centerY = height * 0.52;
-    const groundRadius = width * 0.36; // Grass field radius
-    const stadiumOuterRadius = width * 0.48; // Outer stadium rim radius
-
-    // Camera perspective vertical squash
-    const pitchScaleY = cameraMode === "overhead" ? 1.0 : cameraMode === "broadcast" ? 0.60 : 0.38;
-
-    ctx.save();
-    ctx.translate(centerX, centerY);
-
-    // ─── 1. TIERED STADIUM STANDS (VECTEEZY & DREAMSTIME STYLE) ──────
-    // Outer stadium architectural ring
-    ctx.save();
-    ctx.scale(1, pitchScaleY);
-
-    // Upper Stand Tier (Tier 2 - Deep Seating)
-    ctx.beginPath();
-    ctx.arc(0, 0, stadiumOuterRadius, 0, Math.PI * 2);
-    ctx.fillStyle = "#0c1b33";
-    ctx.fill();
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = "#1e3a5f";
-    ctx.stroke();
-
-    // Stadium Canopy / Roof Arch
-    ctx.beginPath();
-    ctx.arc(0, -stadiumOuterRadius * 0.15, stadiumOuterRadius * 1.02, Math.PI * 0.8, Math.PI * 2.2);
-    ctx.strokeStyle = "#38bdf8";
-    ctx.lineWidth = 4;
-    ctx.stroke();
-
-    // Lower Stand Tier (Tier 1 - Club & Pavilion)
-    ctx.beginPath();
-    ctx.arc(0, 0, groundRadius * 1.18, 0, Math.PI * 2);
-    ctx.fillStyle = "#0f2342";
-    ctx.fill();
-    ctx.strokeStyle = "#254877";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // ─── 2. DYNAMIC CHEERING CROWD SILHOUETTES & COLORFUL FLAGS ───
-    const numCrowdBars = 60;
-    for (let i = 0; i < numCrowdBars; i++) {
-      const angle = (i / numCrowdBars) * Math.PI * 2;
-      const r = groundRadius * 1.15;
-      const cx = Math.cos(angle) * r;
-      const cy = Math.sin(angle) * r;
-
-      // Crowd excitement waving height
-      const bounce = Math.sin(i * 3 + (crowdExcitement > 0.5 ? Date.now() * 0.015 : 0)) * 6 * crowdExcitement;
-      const personH = 8 + (i % 3) * 3 + bounce;
-
-      ctx.fillStyle = (i % 4 === 0) ? "rgba(56, 189, 248, 0.45)" : (i % 3 === 0) ? "rgba(245, 158, 11, 0.45)" : "rgba(255, 255, 255, 0.25)";
-      ctx.beginPath();
-      ctx.arc(cx, cy - personH, 2.5, 0, Math.PI * 2); // Head
-      ctx.fill();
-
-      // Cheering arms & team flags raised during excitement
-      if (crowdExcitement > 0.5 && i % 5 === 0) {
-        ctx.strokeStyle = (i % 2 === 0) ? "#ef4444" : "#eab308";
-        ctx.lineWidth = 1.8;
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.lineTo(cx + 4, cy - personH - 7);
-        ctx.lineTo(cx + 10, cy - personH - 5);
-        ctx.stroke();
-      }
-    }
-
-    // ─── 3. DIGITAL LED ADVERTISING BOARDS ─────────────────────────
-    ctx.beginPath();
-    ctx.arc(0, 0, groundRadius * 1.04, 0, Math.PI * 2);
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = "#0ea5e9";
-    ctx.shadowColor = "#0ea5e9";
-    ctx.shadowBlur = 8;
-    ctx.stroke();
-    ctx.shadowBlur = 0; // reset shadow
-
-    // ─── 4. LUSH MOWED CRICKET TURF FIELD ──────────────────────────
-    const turfGrad = ctx.createRadialGradient(0, 0, 10, 0, 0, groundRadius);
-    turfGrad.addColorStop(0, "#16a34a");
-    turfGrad.addColorStop(0.55, "#15803d");
-    turfGrad.addColorStop(0.85, "#14532d");
-    turfGrad.addColorStop(1, "#052e16");
-    ctx.fillStyle = turfGrad;
-    ctx.beginPath();
-    ctx.arc(0, 0, groundRadius, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Mower Crosshatch / Concentric Radial Cut Patterns
-    for (let r = 30; r < groundRadius; r += 24) {
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
-      ctx.lineWidth = 12;
-      ctx.beginPath();
-      ctx.arc(0, 0, r, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-
-    // White Boundary Rope Ring
-    ctx.strokeStyle = "#ffffff";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.arc(0, 0, groundRadius * 0.96, 0, Math.PI * 2);
-    ctx.stroke();
-
-    // 30-Yard Infield White Oval Ring
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
-    ctx.lineWidth = 2;
-    ctx.setLineDash([7, 5]);
-    ctx.beginPath();
-    ctx.arc(0, 0, groundRadius * 0.52, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Central Pitch Clay Strip with Stumps
-    ctx.fillStyle = "#ca8a04";
-    ctx.fillRect(-6, -26, 12, 52);
-    ctx.strokeStyle = "#eab308";
-    ctx.lineWidth = 1;
-    ctx.strokeRect(-6, -26, 12, 52);
-
-    // Wickets Stumps (Top & Bottom ends)
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(-3, -27, 6, 2);
-    ctx.fillRect(-3, 25, 6, 2);
-
-    ctx.restore(); // restore ground transform
-
-    // ─── 5. EIGHT BROADCAST VOLUMETRIC FLOODLIGHT TOWERS ──────────
-    if (floodlightsOn) {
-      const numTowers = 8;
-      for (let t = 0; t < numTowers; t++) {
-        const tAngle = (t / numTowers) * Math.PI * 2;
-        const towerX = Math.cos(tAngle) * (stadiumOuterRadius * 1.04);
-        const towerY = Math.sin(tAngle) * (stadiumOuterRadius * 1.04 * pitchScaleY);
-
-        // Tower Lattice Mast
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(towerX, towerY);
-        ctx.lineTo(towerX, towerY - 26);
-        ctx.stroke();
-
-        // Tower Lamp Bank
-        ctx.fillStyle = "#38bdf8";
-        ctx.fillRect(towerX - 6, towerY - 30, 12, 5);
-
-        // Volumetric Cone Light Inward toward Pitch
-        const beamGrad = ctx.createRadialGradient(towerX, towerY - 28, 4, 0, 0, groundRadius * 0.85);
-        beamGrad.addColorStop(0, "rgba(56, 189, 248, 0.35)");
-        beamGrad.addColorStop(0.3, "rgba(56, 189, 248, 0.08)");
-        beamGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-        ctx.fillStyle = beamGrad;
-        ctx.beginPath();
-        ctx.moveTo(towerX, towerY - 28);
-        ctx.lineTo(-40, -10);
-        ctx.lineTo(40, 10);
-        ctx.closePath();
-        ctx.fill();
-      }
-    }
-
-    // ─── 6. FAN-OUT TRAJECTORY RAYS FOR ALL FOURS & SIXES ─────────
-    currentDeliveries.forEach((shot) => {
-      const isSelected = activeShot?.id === shot.id;
-      const angle = shot.angle;
-      // Scale reach: 4s reach rope (~0.96R), 6s scale up into stands (1.05R to 1.22R)
-      const reachR = groundRadius * (shot.type === "SIX" ? (shot.distance / 70) * 0.95 : 0.96);
-      const targetX = Math.cos(angle) * reachR;
-      const targetY = Math.sin(angle) * reachR * pitchScaleY;
-
-      // Draw subtle stationary trajectory beam
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(targetX, targetY);
-      ctx.strokeStyle = isSelected
-        ? (shot.type === "SIX" ? "#f59e0b" : "#00f2fe")
-        : (shot.type === "SIX" ? "rgba(245, 158, 11, 0.35)" : "rgba(0, 242, 254, 0.28)");
-      ctx.lineWidth = isSelected ? 3 : 1.2;
-      ctx.stroke();
-
-      // Landing Beacon in the stands or on the rope
-      ctx.beginPath();
-      ctx.arc(targetX, targetY, isSelected ? 4.5 : 2.2, 0, Math.PI * 2);
-      ctx.fillStyle = shot.color;
-      ctx.shadowColor = shot.color;
-      ctx.shadowBlur = isSelected ? 12 : 4;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-      ctx.restore();
+  const playerData = PLAYER_RADAR_DATA[selectedPlayer] || PLAYER_RADAR_DATA["Virat Kohli"];
+  const playerDeliveries = useMemo(() => {
+    let shots: UnpackedShot[] = [];
+    playerData.sectors.forEach((sec) => {
+      shots = shots.concat(unpackSectorDeliveries(sec.name, sec.fours, sec.sixes));
     });
+    return shots;
+  }, [selectedPlayer, playerData]);
 
-    // ─── 7. ANIMATED HAWKEYE BALL TRACER & PARABOLIC STAND HIT ────
-    if (activeShot) {
-      const angle = activeShot.angle;
-      const reachR = groundRadius * (activeShot.type === "SIX" ? (activeShot.distance / 70) * 0.95 : 0.96);
-      const targetX = Math.cos(angle) * reachR;
-      const targetY = Math.sin(angle) * reachR * pitchScaleY;
-
-      const maxApex = activeShot.type === "SIX" ? 95 : 22;
-      const totalSteps = 45;
-      const currentSteps = Math.floor(totalSteps * (isSimulating ? flightProgress : 1.0));
-
-      const points: { x: number; y: number }[] = [];
-      for (let i = 0; i <= currentSteps; i++) {
-        const t = i / totalSteps;
-        const curX = targetX * t;
-        const baseY = targetY * t;
-        // 3D Parabolic flight elevation
-        const curApex = 4 * maxApex * t * (1 - t);
-        points.push({ x: curX, y: baseY - curApex });
-      }
-
-      if (points.length > 1) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(points[0].x, points[0].y);
-        for (let i = 1; i < points.length; i++) {
-          ctx.lineTo(points[i].x, points[i].y);
-        }
-        ctx.strokeStyle = activeShot.type === "SIX" ? "#f59e0b" : "#00f2fe";
-        ctx.lineWidth = 3.5;
-        ctx.shadowColor = activeShot.type === "SIX" ? "rgba(245, 158, 11, 0.9)" : "rgba(0, 242, 254, 0.9)";
-        ctx.shadowBlur = 14;
-        ctx.stroke();
-
-        // White Glowing Ball Head
-        const head = points[points.length - 1];
-        ctx.fillStyle = "#ffffff";
-        ctx.beginPath();
-        ctx.arc(head.x, head.y, activeShot.type === "SIX" ? 5 : 4, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Energy Shockwave when hitting stand seating / boundary boards
-        if (!isSimulating && points.length >= totalSteps) {
-          ctx.strokeStyle = activeShot.color;
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.arc(head.x, head.y, 8, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-        ctx.restore();
-      }
-    }
-
-    ctx.restore(); // Restore root translation
-  }, [activeSector, activeShot, currentDeliveries, cameraMode, flightProgress, isSimulating, floodlightsOn, crowdExcitement]);
+  const maxSectorRuns = Math.max(...playerData.sectors.map((s) => s.runs), 1);
 
   return (
-    <div className="flex flex-col gap-3 h-full justify-between">
-      {/* 1. TOP BROADCAST TELEMETRY STRIP */}
-      <div className="flex flex-wrap items-center justify-between gap-2 bg-[#040817] border border-cyan-500/20 rounded-xl p-2 shrink-0 backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.08)]">
-        <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] font-bold uppercase tracking-wider">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-            Hawkeye 3D Stadium
-          </div>
-
-          <span className="text-[10px] font-mono font-bold text-white/50 uppercase pl-1">Batter:</span>
-          <select
-            value={selectedPlayer}
-            onChange={(e) => {
-              setSelectedPlayer(e.target.value);
-              setActiveSector("Long-Off");
-            }}
-            className="bg-slate-900 border border-cyan-500/40 text-amber-300 font-bold text-xs rounded-lg px-2.5 py-1 outline-none cursor-pointer hover:border-cyan-400"
-          >
-            {Object.keys(PLAYER_RADAR_DATA).map((p) => (
-              <option key={p} value={p} className="bg-slate-950 text-white font-mono">
-                {p} ({PLAYER_RADAR_DATA[p].team} • {PLAYER_RADAR_DATA[p].runs} Runs)
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={selectedSeason}
-            onChange={(e) => setSelectedSeason(e.target.value)}
-            className="bg-slate-900 border border-white/10 text-white font-mono text-xs rounded-lg px-2 py-1 outline-none cursor-pointer"
-          >
-            {["2026", "2025", "2024", "2023", "2022", "All Seasons"].map((s) => (
-              <option key={s} value={s} className="bg-slate-950 text-white">
-                {s} Season
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Camera Views & Floodlight Switch */}
-        <div className="flex items-center gap-1 bg-black/50 p-1 rounded-lg border border-white/10">
-          {[
-            { id: "broadcast", label: "45° Orbit" },
-            { id: "overhead", label: "Overhead" },
-            { id: "pov", label: "Pitch POV" },
-          ].map((mode) => (
+    <div className="flex flex-col gap-2.5 h-full justify-between min-h-0">
+      {/* 1. TOP PLAYER SELECTOR CHIPS */}
+      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar shrink-0 pb-1">
+        {Object.keys(PLAYER_RADAR_DATA).map((name) => {
+          const p = PLAYER_RADAR_DATA[name];
+          const isSelected = selectedPlayer === name;
+          return (
             <button
-              key={mode.id}
-              onClick={() => setCameraMode(mode.id as any)}
-              className={`px-2.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                cameraMode === mode.id
-                  ? "bg-cyan-500 text-black shadow-md shadow-cyan-500/25 font-black"
-                  : "text-white/50 hover:text-white"
+              key={name}
+              onClick={() => {
+                setSelectedPlayer(name);
+                setActiveSector(null);
+              }}
+              className={`px-2.5 py-1 rounded-xl border text-[11px] font-mono font-bold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer ${
+                isSelected
+                  ? "bg-amber-500/20 border-amber-400 text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.25)] scale-102"
+                  : "bg-white/[0.03] border-white/10 text-white/60 hover:text-white hover:bg-white/[0.08]"
               }`}
             >
-              {mode.label}
+              <span className="text-[9px] font-black px-1.5 py-0.2 rounded bg-black/50 text-amber-400">
+                {p.team}
+              </span>
+              <span>{name}</span>
+              <span className="text-[10px] text-white/40">({p.runs}r)</span>
             </button>
-          ))}
-          <button
-            onClick={() => setFloodlightsOn(!floodlightsOn)}
-            className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold transition-all ml-1 cursor-pointer ${
-              floodlightsOn ? "bg-amber-500/20 text-amber-300 border border-amber-500/30" : "bg-white/5 text-white/40 border border-transparent"
-            }`}
-          >
-            Lights: {floodlightsOn ? "ON" : "OFF"}
-          </button>
-        </div>
+          );
+        })}
       </div>
 
-      {/* 2. MAIN STAGE: 3D STADIUM CANVAS (LEFT) + EXPANDED FAN-OUT ROWS (RIGHT) */}
+      {/* 2. MAIN STAGE: 360 FIELD SVG (LEFT) + SECTOR DOMINANCE METRICS (RIGHT) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center flex-1 min-h-0">
-        {/* LEFT: 3D STADIUM WITH SEATING TIERS & CHEERING CROWD */}
-        <div className="lg:col-span-6 flex flex-col items-center justify-between p-3 bg-[#030611] border border-cyan-500/20 rounded-2xl relative h-full min-h-[330px] overflow-hidden shadow-[inset_0_0_30px_rgba(6,182,212,0.06)]">
-          {/* Top Live Legend with Crowd Intensity */}
-          <div className="flex items-center justify-between w-full text-[10px] font-mono font-bold px-2 z-10">
-            <span className="flex items-center gap-1.5 text-amber-400">
-              <span className="w-2 h-2 rounded-full bg-amber-400" />
-              Sixes ({currentSectorData.sixes} Fan-Out)
+        {/* LEFT: 360° CIRCULAR GROUND RADAR */}
+        <div className="lg:col-span-7 flex flex-col items-center justify-between p-3 bg-[#030611] border border-amber-500/20 rounded-2xl relative h-full min-h-[280px] shadow-[inset_0_0_30px_rgba(245,158,11,0.06)]">
+          <div className="text-[9px] font-mono font-bold text-white/60 w-full flex items-center justify-between px-2 shrink-0">
+            <span className="text-amber-400 flex items-center gap-1.5">
+              <Compass className="w-3.5 h-3.5 text-amber-400" />
+              360° GROUND RADIAL VELOCITY
             </span>
-            <span className="flex items-center gap-1.5 text-cyan-400">
-              <span className="w-2 h-2 rounded-full bg-cyan-400" />
-              Fours ({currentSectorData.fours} Fan-Out)
-            </span>
-            <span className="text-purple-300 flex items-center gap-1">
-              <span className={`w-1.5 h-1.5 rounded-full ${crowdExcitement > 0.5 ? "bg-green-400 animate-ping" : "bg-slate-400"}`} />
-              Crowd: {crowdExcitement > 0.5 ? "ROARING" : "ACTIVE"}
-            </span>
-          </div>
-
-          {/* 3D Canvas Stage */}
-          <div className="relative w-full aspect-square max-w-[290px] md:max-w-[320px] flex items-center justify-center my-auto">
-            <canvas
-              ref={canvasRef}
-              width={540}
-              height={450}
-              className="w-full h-full object-contain drop-shadow-2xl cursor-crosshair"
-            />
-          </div>
-
-          {/* Live Flight Telemetry Floating Lower-Third */}
-          {activeShot && (
-            <div className="w-full bg-[#070e1c]/95 backdrop-blur-md border border-cyan-500/30 rounded-xl p-2.5 flex items-center justify-between text-xs font-mono z-10 shadow-lg">
-              <div>
-                <div className="text-[9px] uppercase tracking-wider text-cyan-400 font-bold flex items-center gap-1">
-                  <span>Hawkeye Flight Track</span>
-                  <span className="text-slate-500">•</span>
-                  <span className="text-white">{activeShot.destination}</span>
-                </div>
-                <div className="text-white font-extrabold text-xs mt-0.5 flex items-center gap-2">
-                  <span className={activeShot.type === "SIX" ? "text-amber-400" : "text-cyan-300"}>
-                    {activeShot.type === "SIX" ? "AERIAL MAXIMUM (6)" : "GROUND BOUNDARY (4)"}
-                  </span>
-                  <span className="text-slate-600">|</span>
-                  <span className="text-amber-400 font-mono">{activeShot.distance.toFixed(1)}m Distance</span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 text-right">
-                <div>
-                  <span className="text-[8px] text-slate-400 block uppercase">Speed</span>
-                  <span className="text-cyan-300 font-bold text-xs">{activeShot.launchSpeed} km/h</span>
-                </div>
-                <div>
-                  <span className="text-[8px] text-slate-400 block uppercase">Apex</span>
-                  <span className="text-amber-300 font-bold text-xs">{activeShot.apex.toFixed(1)}m</span>
-                </div>
-                <button
-                  onClick={() => triggerSimulation(activeShot)}
-                  className="p-1.5 rounded-lg bg-cyan-500 text-black hover:bg-cyan-400 transition-all font-bold cursor-pointer"
-                  title="Replay Trajectory"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                </button>
-              </div>
+            <div className="flex items-center gap-3">
+              <span className="text-cyan-400 flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-cyan-400" />
+                4s Turf
+              </span>
+              <span className="text-amber-400 flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-amber-400" />
+                6s Stands
+              </span>
             </div>
-          )}
+          </div>
+
+          <div className="relative w-full aspect-square max-w-[310px] flex items-center justify-center my-auto">
+            <svg viewBox="-200 -200 400 400" className="w-full h-full drop-shadow-2xl">
+              <defs>
+                <radialGradient id="fieldGrassGrad" cx="0" cy="0" r="190" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#0a2a1a" />
+                  <stop offset="60%" stopColor="#061a12" />
+                  <stop offset="100%" stopColor="#030c08" />
+                </radialGradient>
+              </defs>
+
+              {/* Outer Stadium Ground */}
+              <circle cx="0" cy="0" r="190" fill="url(#fieldGrassGrad)" stroke="#143e26" strokeWidth="2" />
+              <circle cx="0" cy="0" r="175" fill="none" stroke="#f59e0b" strokeWidth="1.8" strokeDasharray="5 3" opacity="0.8" />
+              <text x="0" y="-178" fill="#f59e0b" fontSize="7" fontWeight="bold" textAnchor="middle" fontFamily="monospace">75m BOUNDARY ROPE</text>
+
+              {/* 30 Yard Circle */}
+              <circle cx="0" cy="0" r="105" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.2" strokeDasharray="4 4" />
+              <text x="0" y="-108" fill="rgba(255,255,255,0.4)" fontSize="6.5" fontWeight="bold" textAnchor="middle" fontFamily="monospace">30-YD CIRCLE</text>
+
+              {/* Pitch Rectangle at center */}
+              <rect x="-9" y="-32" width="18" height="64" rx="2" fill="#6d4c1b" stroke="#a16207" strokeWidth="1" />
+              <line x1="-9" y1="20" x2="9" y2="20" stroke="#ffffff" strokeWidth="1.2" />
+              <line x1="-9" y1="-20" x2="9" y2="-20" stroke="#ffffff" strokeWidth="1.2" />
+
+              {/* Compass Axis Crosshairs */}
+              <line x1="0" y1="-175" x2="0" y2="175" stroke="rgba(255,255,255,0.07)" strokeWidth="1" strokeDasharray="3 3" />
+              <line x1="-175" y1="0" x2="175" y2="0" stroke="rgba(255,255,255,0.07)" strokeWidth="1" strokeDasharray="3 3" />
+
+              {/* Sector Wedges */}
+              {playerData.sectors.map((sec) => {
+                const range = CRICKET_SECTORS_MAP[sec.name.toUpperCase()] || { start: 0, end: 1 };
+                const isHovered = activeSector === sec.name;
+                const ratio = sec.runs / maxSectorRuns;
+                const r = 50 + ratio * 120;
+                const p1x = Math.sin(range.start) * r;
+                const p1y = -Math.cos(range.start) * r;
+                const p2x = Math.sin(range.end) * r;
+                const p2y = -Math.cos(range.end) * r;
+                const pathD = `M 0 0 L ${p1x} ${p1y} A ${r} ${r} 0 0 1 ${p2x} ${p2y} Z`;
+
+                return (
+                  <path
+                    key={sec.name}
+                    d={pathD}
+                    fill={isHovered ? "rgba(245, 158, 11, 0.45)" : "rgba(245, 158, 11, 0.16)"}
+                    stroke={isHovered ? "#fbbf24" : "rgba(245, 158, 11, 0.4)"}
+                    strokeWidth={isHovered ? 2 : 1}
+                    className="cursor-pointer transition-all duration-200"
+                    onMouseEnter={() => setActiveSector(sec.name)}
+                    onMouseLeave={() => setActiveSector(null)}
+                  />
+                );
+              })}
+
+              {/* Shot Trajectory Tracers */}
+              {playerDeliveries.map((shot) => {
+                const destR = shot.type === "SIX" ? 170 + (shot.distance % 18) : 155;
+                const endX = Math.sin(shot.angle) * destR;
+                const endY = -Math.cos(shot.angle) * destR;
+                const isSecActive = !activeSector || activeSector === shot.sector;
+                if (!isSecActive) return null;
+
+                return (
+                  <g key={shot.id} opacity={activeSector === shot.sector ? 1 : 0.65}>
+                    <line
+                      x1="0"
+                      y1="0"
+                      x2={endX}
+                      y2={endY}
+                      stroke={shot.type === "SIX" ? "#f59e0b" : "#00f2fe"}
+                      strokeWidth={shot.type === "SIX" ? 1.5 : 1}
+                      strokeDasharray={shot.type === "SIX" ? "none" : "3 2"}
+                    />
+                    <circle
+                      cx={endX}
+                      cy={endY}
+                      r={shot.type === "SIX" ? 2.5 : 1.8}
+                      fill={shot.type === "SIX" ? "#fbbf24" : "#38bdf8"}
+                    />
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+
+          <div className="w-full text-center text-[9px] font-mono text-white/40 shrink-0">
+            Hover over any sector to inspect directional velocity vectors
+          </div>
         </div>
 
-        {/* RIGHT: SECTOR SELECTORS & ALL UNPACKED SHOT RAYS */}
-        <div className="lg:col-span-6 flex flex-col justify-between h-full gap-2">
-          {/* 6 Macro Sector Selector Buttons */}
-          <div className="flex items-center justify-between border-b border-white/5 pb-1">
-            <span className="text-xs font-black uppercase text-white tracking-wider flex items-center gap-1.5">
-              <span>{selectedPlayer}</span>
-              <span className="text-cyan-400 font-mono text-[10px]">({currentSectorData.name} • {currentDeliveries.length} Exploded Shots)</span>
-            </span>
-            <span className="text-[10px] font-mono text-amber-400 font-bold">
-              {currentSectorData.runs} Runs • {currentSectorData.sr} SR
-            </span>
-          </div>
-
-          {/* Quick Sector Selector Tabs */}
-          <div className="grid grid-cols-3 gap-1.5">
-            {activeData.sectors.map((sec) => (
-              <button
-                key={sec.name}
-                onClick={() => {
-                  setActiveSector(sec.name);
-                  setCrowdExcitement(0.8);
-                }}
-                className={`px-2 py-1.5 rounded-lg border text-left transition-all cursor-pointer font-mono text-[10px] ${
-                  activeSector === sec.name
-                    ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 font-bold shadow-md shadow-cyan-500/10"
-                    : "bg-white/[0.02] border-white/5 text-slate-400 hover:text-white hover:bg-white/[0.05]"
-                }`}
-              >
-                <div className="truncate font-sans font-bold">{sec.name}</div>
-                <div className="text-[9px] text-amber-400">{sec.fours + sec.sixes} Hits ({sec.pct}%)</div>
-              </button>
-            ))}
-          </div>
-
-          {/* Unpacked Individual Shot Ray Cards (Scrollable Fan-Out) */}
-          <div className="flex-1 max-h-[145px] overflow-y-auto no-scrollbar border border-white/5 rounded-xl p-1.5 bg-black/40 flex flex-col gap-1">
-            <div className="text-[9px] font-mono uppercase text-slate-400 px-1 pb-0.5 flex items-center justify-between">
-              <span>Click individual shot ray to simulate:</span>
-              <span className="text-cyan-400">{currentDeliveries.length} trajectory lines</span>
+        {/* RIGHT: SECTOR DOMINANCE METRICS LIST */}
+        <div className="lg:col-span-5 flex flex-col justify-between h-full gap-2 min-h-0">
+          <div className="p-3 rounded-xl bg-gradient-to-r from-amber-950/40 via-[#0a0f1d] to-purple-950/30 border border-amber-500/20 flex items-center justify-between shrink-0">
+            <div>
+              <span className="text-[10px] font-mono uppercase text-amber-400 font-bold block">
+                {selectedPlayer} ({playerData.team})
+              </span>
+              <div className="text-xl font-black text-white font-mono leading-tight">
+                {playerData.runs} <span className="text-xs text-white/50 font-normal">Runs • {playerData.sr} SR</span>
+              </div>
             </div>
-            {currentDeliveries.map((shot, idx) => {
-              const isSelected = activeShot?.id === shot.id;
+            <div className="text-right font-mono text-[10px]">
+              <span className="text-cyan-400 font-bold">{playerData.fours} Fours</span>
+              <span className="text-white/30 mx-1">/</span>
+              <span className="text-amber-400 font-bold">{playerData.sixes} Sixes</span>
+            </div>
+          </div>
+
+          {/* Sector Breakdown List */}
+          <div className="grid grid-cols-1 gap-1.5 flex-1 overflow-y-auto no-scrollbar max-h-[250px]">
+            {playerData.sectors.map((sec) => {
+              const isHovered = activeSector === sec.name;
               return (
-                <button
-                  key={shot.id}
-                  onClick={() => triggerSimulation(shot)}
-                  className={`px-2 py-1 rounded-md text-left transition-all cursor-pointer flex items-center justify-between font-mono text-[10px] border ${
-                    isSelected
-                      ? "bg-cyan-500/20 border-cyan-400 text-white font-bold"
-                      : "bg-white/[0.02] border-white/5 hover:bg-white/[0.06] text-slate-300"
+                <div
+                  key={sec.name}
+                  onMouseEnter={() => setActiveSector(sec.name)}
+                  onMouseLeave={() => setActiveSector(null)}
+                  className={`p-2 rounded-xl border transition-all cursor-pointer flex flex-col gap-1 ${
+                    isHovered
+                      ? "bg-amber-500/20 border-amber-400 shadow-md"
+                      : "bg-white/[0.02] border-white/10 hover:border-white/20"
                   }`}
                 >
-                  <div className="flex items-center gap-2">
-                    <span className={`px-1 py-0.2 rounded text-[8px] font-bold ${shot.type === "SIX" ? "bg-amber-500/20 text-amber-300" : "bg-cyan-500/20 text-cyan-300"}`}>
-                      {shot.type}
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-white flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                      {sec.name}
                     </span>
-                    <span className="truncate max-w-[130px]">{shot.destination}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[9px]">
-                    <span className="text-slate-400">{shot.launchSpeed} km/h</span>
-                    <span className={shot.type === "SIX" ? "text-amber-400" : "text-cyan-400"}>
-                      {shot.distance.toFixed(0)}m
+                    <span className="font-mono text-amber-300 font-bold">
+                      {sec.runs}r <span className="text-[10px] text-white/50">({sec.pct}%)</span>
                     </span>
                   </div>
-                </button>
+                  <div className="flex items-center justify-between text-[10px] text-white/50 font-mono">
+                    <span>SR: <strong className="text-white">{sec.sr}</strong></span>
+                    <span>{sec.fours} 4s • {sec.sixes} 6s</span>
+                  </div>
+                  <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-amber-500 to-yellow-300"
+                      style={{ width: `${sec.pct * 2.5}%` }}
+                    />
+                  </div>
+                </div>
               );
             })}
           </div>
 
-          {/* AI Command Input Bar */}
-          <div className="w-full bg-[#0B1226]/90 border border-cyan-500/25 rounded-xl p-1.5 flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <input
-              type="text"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder={`Ask Hawkeye Radar for ${selectedPlayer}...`}
-              className="flex-1 bg-transparent text-white text-xs outline-none placeholder:text-white/40 font-mono"
-            />
-            <button
-              onClick={() => {
-                setPrompt("Zone trajectories synced");
-                triggerSimulation();
-              }}
-              className="px-2.5 py-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-extrabold text-[10px] uppercase rounded-lg cursor-pointer transition-all"
-            >
-              Scan
-            </button>
-          </div>
-
-          {/* Telemetry Summary Banner */}
-          <div className="p-2 rounded-xl bg-gradient-to-r from-blue-950/40 via-[#0a0f1d] to-cyan-950/30 border border-cyan-500/20 text-[10px] text-white/70 flex items-center justify-between">
-            <span>
-              <strong className="text-cyan-300">Hawkeye Analysis:</strong> Fanned out <strong>{currentDeliveries.length}</strong> shots in {currentSectorData.name} ({currentSectorData.fours} Fours, {currentSectorData.sixes} Sixes).
-            </span>
-            <Award className="w-3.5 h-3.5 text-amber-400 shrink-0 ml-2" />
+          <div className="p-2 rounded-xl bg-black/40 border border-white/5 text-[10px] text-white/60 font-mono text-center shrink-0">
+            Real-time radial velocity vectors mapped to ball trajectories
           </div>
         </div>
       </div>
@@ -925,9 +578,6 @@ export function Card01MergedScoringRadar() {
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// CARD 02: 3D PITCH MAP & BOWLER EXECUTION MATRIX
-// ─────────────────────────────────────────────────────────────────────────────
 export function Card02BowlerTelemetry() {
   const executionDeliveries = [
     { type: "Yorker", balls: 412, econ: 6.23, wkts: 38, dotPct: 52.4, color: "text-red-400", border: "border-red-500/40" },
@@ -1230,11 +880,11 @@ export function Card03TheDuel() {
   return (
     <div className="flex flex-col gap-4 h-full justify-between">
       {/* 1. COMBAT CLASH VERSUS ENERGY HEADER */}
-      <div className="relative flex flex-col md:flex-row items-center justify-between p-5 md:p-6 bg-gradient-to-r from-red-950/40 via-slate-900/90 to-blue-950/40 rounded-2xl border border-white/10 backdrop-blur-xl shadow-2xl shrink-0 gap-4">
+      <div className="relative flex flex-col md:flex-row items-center justify-between p-3 md:p-4 bg-gradient-to-r from-red-950/40 via-slate-900/90 to-blue-950/40 rounded-2xl border border-white/10 backdrop-blur-xl shadow-2xl shrink-0 gap-2">
         {/* Left: Batter (Kohli / RCB Crimson Glow) */}
         <div className="flex items-center gap-4">
           <div className="relative">
-            <div className="w-16 h-16 rounded-full border-2 border-red-500 bg-red-950/60 flex items-center justify-center font-black text-xl text-red-100 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+            <div className="w-12 h-12 rounded-full border-2 border-red-500 bg-red-950/60 flex items-center justify-center font-black text-xl text-red-100 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
               VK
             </div>
             <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 bg-red-600 text-[10px] font-mono font-bold rounded text-white">
@@ -1272,7 +922,7 @@ export function Card03TheDuel() {
         {/* Right: Bowler (Bumrah / MI Electric Blue Glow) */}
         <div className="flex items-center gap-4 flex-row-reverse text-right">
           <div className="relative">
-            <div className="w-16 h-16 rounded-full border-2 border-cyan-400 bg-blue-950/60 flex items-center justify-center font-black text-xl text-cyan-100 shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+            <div className="w-12 h-12 rounded-full border-2 border-cyan-400 bg-blue-950/60 flex items-center justify-center font-black text-xl text-cyan-100 shadow-[0_0_20px_rgba(6,182,212,0.4)]">
               JB
             </div>
             <span className="absolute -bottom-1 -left-1 px-1.5 py-0.5 bg-cyan-600 text-[10px] font-mono font-bold rounded text-white">
@@ -1305,11 +955,11 @@ export function Card03TheDuel() {
           </div>
 
           {/* 3D Duel Hologram Canvas */}
-          <div className="relative w-full aspect-[4/3] max-w-[340px] flex items-center justify-center my-auto">
+          <div className="relative w-full aspect-[4/3] max-w-[280px] flex items-center justify-center my-auto">
             <canvas
               ref={canvasRef}
               width={500}
-              height={380}
+              height={280}
               className="w-full h-full object-contain drop-shadow-2xl"
             />
           </div>
@@ -1603,7 +1253,7 @@ export function LivingGroundDeck() {
         ))}
       </div>
 
-      {/* 10 STACKING MODULE CARDS */}
+      {/* 10 STACKING MODULE CARDS — As you scroll down, each cleanly replaces the previous card with complete visual data */}
       {/* CARD 01 */}
       <StackingDeckCard
         index={0}
@@ -1611,7 +1261,6 @@ export function LivingGroundDeck() {
         badge="MODULE 01 • SPATIAL RADAR & COMMAND"
         title="360° Scoring Radar & Radial Velocity Vectors"
         Icon={Compass}
-        onExpand={() => setExpandedCardId("card-scoring-radar")}
       >
         <Card01MergedScoringRadar />
       </StackingDeckCard>
@@ -1623,7 +1272,6 @@ export function LivingGroundDeck() {
         badge="MODULE 02 • BOWLING TELEMETRY"
         title="3D Pitch Map & Delivery Execution Matrix"
         Icon={Target}
-        onExpand={() => setExpandedCardId("card-bowler-telemetry")}
       >
         <Card02BowlerTelemetry />
       </StackingDeckCard>
@@ -1635,43 +1283,39 @@ export function LivingGroundDeck() {
         badge="MODULE 03 • HEAD-TO-HEAD"
         title="The Duel: Batter × Bowler Faceoff Matrix"
         Icon={Flame}
-        onExpand={() => setExpandedCardId("card-the-duel")}
       >
         <Card03TheDuel />
       </StackingDeckCard>
 
-      {/* CARD 04 */}
+      {/* CARD 04 — Mapped to ShotFlowSankey (5x5 Length vs Shot Type Matrix) */}
       <StackingDeckCard
         index={3}
         id="card-length-to-shot"
         badge="MODULE 04 • LENGTH MATRIX"
         title="Delivery Length to Shot Type Analysis (2008 – 2026)"
         Icon={BarChart2}
-        onExpand={() => setExpandedCardId("card-length-to-shot")}
       >
-        <RunFlowSankey />
+        <ShotFlowSankey />
       </StackingDeckCard>
 
-      {/* CARD 05 */}
+      {/* CARD 05 — Mapped to RunFlowSankey (Sunburst Radial Hierarchy Execution Flow) */}
       <StackingDeckCard
         index={4}
         id="card-shot-execution-flow"
         badge="MODULE 05 • EXECUTION FLOW"
         title="Delivery Type to Shot Execution Flow (2008 – 2026)"
         Icon={Zap}
-        onExpand={() => setExpandedCardId("card-shot-execution-flow")}
       >
-        <ShotFlowSankey />
+        <RunFlowSankey />
       </StackingDeckCard>
 
-      {/* CARD 06 */}
+      {/* CARD 06 — 3D Holographic Player Transfers */}
       <StackingDeckCard
         index={5}
         id="card-player-transfers"
         badge="MODULE 06 • AUCTION DYNAMICS"
-        title="3D Holographic Player Transfers (2008 – 2026) — Multi-Dimensional Transfer Constellation"
+        title="3D Holographic Player Transfers (2008 – 2026)"
         Icon={Shuffle}
-        onExpand={() => setExpandedCardId("card-player-transfers")}
       >
         <TransferFlowSankey />
       </StackingDeckCard>
@@ -1683,7 +1327,6 @@ export function LivingGroundDeck() {
         badge="MODULE 07 • TELEMETRY ENGINE"
         title="Continuous Ball-by-Ball Momentum Stream & Live Telemetry"
         Icon={Activity}
-        onExpand={() => setExpandedCardId("card-momentum-stream")}
       >
         <MomentumStream title="Database: 1,243 Total IPL Matches (2008 – 2026)" />
       </StackingDeckCard>
@@ -1695,7 +1338,6 @@ export function LivingGroundDeck() {
         badge="MODULE 08 • WIN ENGINE"
         title="Win Probability Dynamic Stream & Live Shift Engine"
         Icon={TrendingUp}
-        onExpand={() => setExpandedCardId("card-win-probability")}
       >
         <WinProbabilityStream team1="RCB" team2="CSK" />
       </StackingDeckCard>
@@ -1707,7 +1349,6 @@ export function LivingGroundDeck() {
         badge="MODULE 09 • VENUE GEOMETRY"
         title="Venue Geometry Dimensions & Tactical AI"
         Icon={Layers}
-        onExpand={() => setExpandedCardId("card-venue-dna")}
       >
         <Card09VenueDna />
       </StackingDeckCard>
@@ -1719,18 +1360,11 @@ export function LivingGroundDeck() {
         badge="MODULE 10 • KNOWLEDGE GRAPH"
         title="Knowledge Graph Entity Map"
         Icon={Network}
-        onExpand={() => setExpandedCardId("card-knowledge-graph")}
       >
         <KnowledgeGraphSimple />
       </StackingDeckCard>
 
-      {/* FULL-SCREEN SUB-PAGE DOSSIER VIEW (ESC / BACK TO DECK) */}
-      {expandedCardId && (
-        <FullAnalysisModal
-          cardId={expandedCardId}
-          onClose={() => setExpandedCardId(null)}
-        />
-      )}
+
     </div>
   );
 }

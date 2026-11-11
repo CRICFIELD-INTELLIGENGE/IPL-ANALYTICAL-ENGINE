@@ -217,7 +217,8 @@ export interface AuctionRow {
   key: string; playerId: number | null; name: string; country: string; overseas: boolean; role: AuctionRole;
   age: number | null; reserve: number | null; capped: boolean | null; iplMatches: number;
   impact: number | null; iar: number | null; confidence: string; archetype: string | null;
-  market: number; marketBasis: number; value: number | null; signal: Signal; maxBid: number; team: string | null;
+  market: number; marketBasis: number; value: number | null; signal: Signal; maxBid: number | null; team: string | null;
+  marketRange?: { low: number; high: number } | null; valueGap?: number | null; verdict?: string | null; retentionPick?: { index: number; category: string } | null;
   actual?: { soldTo: string | null; price: number | null; matches: number; impact: number | null; valueDelivered: number | null; verdict: string };
   lastSale?: { season: number; team: string; price: number } | null;
   contract?: string | null;
@@ -273,7 +274,7 @@ export interface PlayerIntel {
   playerId: number; name: string;
   batting: PlayerIntelSide | null; bowling: PlayerIntelSide | null;
   auction: {
-    asOf: number; signal: Signal; market: number; value: number | null; maxBid: number; iar: number | null; archetype: string | null;
+    asOf: number; signal: Signal; market: number; marketRange?: { low: number; high: number } | null; verdict?: string | null; value: number | null; maxBid: number | null; iar: number | null; archetype: string | null;
     contract: string | null; lastSale: { season: number; team: string; price: number } | null;
     comparables: AuctionPlayerDetail["comparables"]; bestFits: AuctionPlayerDetail["bestFits"];
   } | null;

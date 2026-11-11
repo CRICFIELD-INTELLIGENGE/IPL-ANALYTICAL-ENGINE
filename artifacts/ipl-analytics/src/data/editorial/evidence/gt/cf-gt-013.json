@@ -1,0 +1,240 @@
+{
+ "articleId": "cf-gt-013",
+ "generatedAt": "2026-10-26T04:26:17.646Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "we-c-econ": {
+   "value": -0.36,
+   "display": "-0.36",
+   "label": "Correlation between a bowling innings' economy and winning (IPL)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowling innings of at least ten overs, matches with a result",
+   "sampleSize": {
+    "n": 2446,
+    "unit": "innings"
+   },
+   "query": "SELECT m.match_id, i.bowling_team_id bo, CASE WHEN m.winner_id = i.bowling_team_id THEN 1 ELSE 0 END won, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND m.winner_id IS NOT NULL GROUP BY m.match_id, i.innings_id",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 innings",
+    "passed": true,
+    "detail": "n = 2446"
+   }
+  },
+  "we-c-wk": {
+   "value": 0.52,
+   "display": "0.52",
+   "label": "Correlation between wickets taken in a bowling innings and winning (IPL)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 2446,
+    "unit": "innings"
+   },
+   "query": "SELECT m.match_id, i.bowling_team_id bo, CASE WHEN m.winner_id = i.bowling_team_id THEN 1 ELSE 0 END won, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND m.winner_id IS NOT NULL GROUP BY m.match_id, i.innings_id",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 innings",
+    "passed": true,
+    "detail": "n = 2446"
+   }
+  },
+  "we-best-name": {
+   "value": "Rashid Khan (2022)",
+   "display": "Rashid Khan (2022)",
+   "label": "GT's most economical bowler-season since 2022 (min. five wickets)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 120 balls and five wickets",
+   "sampleSize": {
+    "n": 383,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY pl.name, year HAVING balls >= 120",
+   "validation": {
+    "method": "rank by economy",
+    "passed": true
+   }
+  },
+  "we-best-econ": {
+   "value": 6.6,
+   "display": "6.60",
+   "label": "Rashid Khan economy in 2022",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "GT, 2022",
+   "sampleSize": {
+    "n": 383,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY pl.name, year HAVING balls >= 120",
+   "validation": {
+    "method": "sample-size floor ≥ 120 balls",
+    "passed": true,
+    "detail": "n = 383"
+   }
+  }
+ },
+ "tables": {
+  "we-scatter": {
+   "label": "GT bowler-seasons since 2022: economy vs strike rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-seasons with at least 120 legal balls",
+   "sampleSize": {
+    "n": 7483,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (14) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY pl.name, year HAVING balls >= 120",
+   "rows": [
+    {
+     "bowler": "AS Joseph (2022)",
+     "economy": 8.8,
+     "ballsPerWicket": 25.7
+    },
+    {
+     "bowler": "AS Joseph (2023)",
+     "economy": 9.38,
+     "ballsPerWicket": 20.6
+    },
+    {
+     "bowler": "Arshad Khan (2025)",
+     "economy": 10.33,
+     "ballsPerWicket": 21
+    },
+    {
+     "bowler": "Ashok Sharma (2026)",
+     "economy": 10.86,
+     "ballsPerWicket": 21
+    },
+    {
+     "bowler": "Azmatullah Omarzai (2024)",
+     "economy": 8.86,
+     "ballsPerWicket": 31.5
+    },
+    {
+     "bowler": "HH Pandya (2022)",
+     "economy": 7.28,
+     "ballsPerWicket": 22.9
+    },
+    {
+     "bowler": "HH Pandya (2023)",
+     "economy": 9.12,
+     "ballsPerWicket": 50
+    },
+    {
+     "bowler": "J Little (2023)",
+     "economy": 8.65,
+     "ballsPerWicket": 29.1
+    },
+    {
+     "bowler": "JO Holder (2026)",
+     "economy": 7.57,
+     "ballsPerWicket": 13.5
+    },
+    {
+     "bowler": "K Rabada (2026)",
+     "economy": 9.68,
+     "ballsPerWicket": 13.4
+    },
+    {
+     "bowler": "LH Ferguson (2022)",
+     "economy": 8.96,
+     "ballsPerWicket": 23.8
+    },
+    {
+     "bowler": "M Prasidh Krishna (2025)",
+     "economy": 8.27,
+     "ballsPerWicket": 14.2
+    },
+    {
+     "bowler": "M Prasidh Krishna (2026)",
+     "economy": 10.44,
+     "ballsPerWicket": 14.6
+    },
+    {
+     "bowler": "MM Sharma (2023)",
+     "economy": 8.17,
+     "ballsPerWicket": 9.8
+    },
+    {
+     "bowler": "MM Sharma (2024)",
+     "economy": 10.9,
+     "ballsPerWicket": 18
+    },
+    {
+     "bowler": "Mohammed Shami (2022)",
+     "economy": 8,
+     "ballsPerWicket": 18.3
+    },
+    {
+     "bowler": "Mohammed Shami (2023)",
+     "economy": 8.02,
+     "ballsPerWicket": 13.9
+    },
+    {
+     "bowler": "Mohammed Siraj (2025)",
+     "economy": 9.25,
+     "ballsPerWicket": 21.4
+    },
+    {
+     "bowler": "Mohammed Siraj (2026)",
+     "economy": 9.06,
+     "ballsPerWicket": 19.6
+    },
+    {
+     "bowler": "Noor Ahmad (2023)",
+     "economy": 7.82,
+     "ballsPerWicket": 17.7
+    },
+    {
+     "bowler": "Noor Ahmad (2024)",
+     "economy": 8.33,
+     "ballsPerWicket": 26.1
+    },
+    {
+     "bowler": "R Sai Kishore (2025)",
+     "economy": 9.25,
+     "ballsPerWicket": 13.4
+    },
+    {
+     "bowler": "Rashid Khan (2022)",
+     "economy": 6.6,
+     "ballsPerWicket": 20.2
+    },
+    {
+     "bowler": "Rashid Khan (2023)",
+     "economy": 8.24,
+     "ballsPerWicket": 14.9
+    },
+    {
+     "bowler": "Rashid Khan (2024)",
+     "economy": 8.4,
+     "ballsPerWicket": 26.2
+    },
+    {
+     "bowler": "Rashid Khan (2025)",
+     "economy": 9.35,
+     "ballsPerWicket": 36.7
+    },
+    {
+     "bowler": "Rashid Khan (2026)",
+     "economy": 9.08,
+     "ballsPerWicket": 16.2
+    },
+    {
+     "bowler": "UT Yadav (2024)",
+     "economy": 10,
+     "ballsPerWicket": 15.8
+    },
+    {
+     "bowler": "Yash Dayal (2022)",
+     "economy": 9.25,
+     "ballsPerWicket": 17.5
+    }
+   ]
+  }
+ }
+}

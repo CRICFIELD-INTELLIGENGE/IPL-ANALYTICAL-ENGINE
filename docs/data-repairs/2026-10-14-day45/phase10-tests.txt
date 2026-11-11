@@ -1,0 +1,24 @@
+== api tests
+ℹ tests 43
+ℹ pass 43
+ℹ fail 0
+== global
+ℹ tests 23
+ℹ pass 23
+ℹ fail 0
+== step3
+ℹ fail 1
+ℹ pass 26
+ℹ tests 28
+✖ failing tests:
+✖ real bios: no photo-import duplicate of a verified bio remains (dedupe plan has nothing to fold) (2208.1355ms)
+== tc api-server: 0
+== tc scripts: 0
+== tc ipl-analytics: 11
+== api build
+Done in 792ms
+== web build (scratch outDir)
+[33msrc/components/ui/tooltip.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.[39m
+[33msrc/components/ui/sheet.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.[39m
+[32m✓[39m 2964 modules transformed.
+[32m✓ built in 39.44s[39m

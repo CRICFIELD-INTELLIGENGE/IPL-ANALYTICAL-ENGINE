@@ -1,0 +1,134 @@
+{
+ "articleId": "cf-dc-030",
+ "generatedAt": "2026-10-26T04:24:15.556Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "cap-n": {
+   "value": 14,
+   "display": "14",
+   "label": "DC captains listed",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "captains.json",
+   "sampleSize": {
+    "n": 14,
+    "unit": "captains"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "plausibility range 1–30 for captain count",
+    "passed": true,
+    "detail": "value 14"
+   }
+  },
+  "cap-top": {
+   "value": "Axar Patel",
+   "display": "Axar Patel",
+   "label": "DC's longest-serving captain with a franchise-only record",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact records only",
+   "sampleSize": {
+    "n": 27,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "rank by matches",
+    "passed": true
+   }
+  },
+  "cap-top-pct": {
+   "value": 44.4,
+   "display": "44.4%",
+   "label": "Axar Patel win rate as DC captain",
+   "unit": "%",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 27,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 27"
+   }
+  },
+  "cap-top-n": {
+   "value": 27,
+   "display": "27",
+   "label": "Matches with Axar Patel as DC captain",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "exact record",
+   "sampleSize": {
+    "n": 27,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 27"
+   }
+  },
+  "cap-team": {
+   "value": 46.6,
+   "display": "46.6%",
+   "label": "DC win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 277,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (8,11) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (8,11) OR m.team2_id IN (8,11)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 277"
+   }
+  }
+ },
+ "tables": {
+  "cap-tab": {
+   "label": "DC captains with franchise-only records",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Captains whose record covers this franchise alone (min. five matches)",
+   "sampleSize": {
+    "n": 66,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "rows": [
+    {
+     "captain": "Axar Patel",
+     "seasons": "2024–2026",
+     "matches": 27,
+     "winPct": 44.4,
+     "titles": 0
+    },
+    {
+     "captain": "Zaheer Khan",
+     "seasons": "2016–2017",
+     "matches": 23,
+     "winPct": 43.5,
+     "titles": 0
+    },
+    {
+     "captain": "JP Duminy",
+     "seasons": "2015–2016",
+     "matches": 16,
+     "winPct": 37.5,
+     "titles": 0
+    }
+   ]
+  }
+ }
+}

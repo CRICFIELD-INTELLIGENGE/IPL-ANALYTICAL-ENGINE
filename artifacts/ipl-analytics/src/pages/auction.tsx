@@ -20,6 +20,7 @@ import {
 } from "@/lib/live";
 import { displayPlayerName, usePlayerDisplayNames } from "@/lib/aggregates";
 import { useTeamTheme } from "@/lib/team-context";
+import { CricFieldMascot } from "@/components/CricFieldMascot";
 import { FALLBACK_ACCENT, paletteForCode, withAlpha } from "@/lib/team-palette";
 
 function formatMoney(amountInLakhs: number): { value: string; unit: string } {
@@ -135,6 +136,7 @@ export default function AuctionPage() {
               
               {/* LOBBY HEADER HERO */}
               <div className="text-center flex flex-col items-center">
+                 <CricFieldMascot team={preferredTeam || "default"} mood="cool" size={64} interactive className="mb-3 hover:scale-110 transition-transform" />
                  <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 border border-amber-500/30 rounded-full mb-4 shadow-xl shadow-amber-500/10">
                     <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
                     <span className="text-[11px] font-black text-amber-400 uppercase tracking-[0.3em]">Official IPL Mega Auction 2026 Command Center</span>
@@ -394,7 +396,7 @@ export default function AuctionPage() {
                  <Gavel className="w-5 h-5 text-amber-400" />
                  <div>
                    <span className="text-xs font-black uppercase tracking-wider text-white">
-                     IPL Mega Auction Arena
+                     <span className="inline-flex items-center gap-1.5"><CricFieldMascot team={userTeam?.name || preferredTeam || "default"} mood="cool" size={20} /> IPL Mega Auction Arena</span>
                    </span>
                    {userTeam && (
                      <div className="text-[10px] text-white/50 font-bold flex items-center gap-1.5">

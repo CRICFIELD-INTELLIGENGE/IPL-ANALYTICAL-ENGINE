@@ -1,3 +1,6 @@
+import { PlayerRetentionCard } from "@/components/retention/retention-widgets";
+import {ScoringRing} from '@/components/visualizations/scoring-ring';
+import {PlayerCareerMilestones} from '@/components/player-career-milestones';
 import React, { useState, useMemo } from "react";
 import { useRoute, Link } from "wouter";
 import { motion } from "framer-motion";
@@ -12,8 +15,12 @@ import {
   CalendarDays, Share2, AwardIcon, Crosshair, Search, SlidersHorizontal,
   Filter, Layers, Compass, HelpCircle, UserCheck, Crown, RotateCw, ShoppingBag, ArrowUpRight
 } from "lucide-react";
+import { CricketStadium3D } from "@/components/cricket3d/CricketStadium3D";
 import { GroundScoringWagonWheel, BowlingHeatmap, DeliveryTypeBreakdown, ShotZoneMap, DismissalZonesMap } from "@/components/visualizations/spatial-analytics";
 import { PlayerIntelPanel } from "@/components/decision/intel-panels";
+import { PlayerIntelligenceSection } from "@/components/intelligence/intel-components";
+import { usePlayerIdentityIndex, usePlayerRecentMatches } from "@/lib/player-recent-matches";
+import { resolvePlayerKey, resolveProfileName } from "@/lib/player-key";
 import {
   useTopBatters, useTopBowlers, usePlayerImages, useSeasons,
   usePlayerSeasonStats, useSquadsBySeason, usePlayerDisplayNames, useCaptains, usePlayerLatestTeams,
@@ -47,7 +54,7 @@ interface RecordedMatchupStats {
   batter: string;
   bowler: string;
   battingHand: "LHB" | "RHB" | "Unknown";
-  bowlerType: "Pacer" | "Spinner";
+  bowlerType: "Pacer" | "Spinner" | "Unknown";
   runs: number;
   balls: number;
   dismissals: number;
@@ -77,9 +84,15 @@ const usePlayerBios = () => useQuery<Record<string, PlayerBio>>({
 
 export default function PlayerProfilePage() {
   const [, params] = useRoute("/players/:slug");
-  const slug = params?.slug || "";
+  const [, scoutParams] = useRoute("/scout/player/:id");
+  const [returnPath] = useState(() => {
+    const from = new URLSearchParams(window.location.search).get("from") || sessionStorage.getItem('cricfield-player-return') || '';
+    return /^\/(stats|scout|dugout|teams)(?:[/?#]|$)/i.test(from) && !from.startsWith('//') && !/^\/scout\/player\//.test(from) ? from : '/stats';
+  });
+  const slug = params?.slug || scoutParams?.id || "";
 
   const playerBios = usePlayerBios();
+  const identityIndex = usePlayerIdentityIndex();
   const playerImages = usePlayerImages();
   const topBatters = useTopBatters();
   const topBowlers = useTopBowlers();
@@ -100,7 +113,17 @@ export default function PlayerProfilePage() {
     staleTime: 1000 * 60 * 60,
   });
 
-  const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "matchups" | "card">("overview");
+  const playerJerseysQuery = useQuery<Record<string, string>>({
+    queryKey: ["player-jerseys"],
+    queryFn: async () => {
+      const res = await fetch(`${import.meta.env.BASE_URL}data/player-jerseys.json`);
+      if (!res.ok) return {};
+      return res.json();
+    },
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "recent" | "matchups">("overview");
 
   // Exact-only comparison. The previous version also accepted "same first
   // initial + same surname", which merged distinct careers: Rahul Sharma's
@@ -109,59 +132,24 @@ export default function PlayerProfilePage() {
   const matchPlayerName = (leftName: string, rightName: string): boolean =>
     isSamePlayerName(leftName, rightName);
 
-  /**
-   * Resolves the URL slug to a bio key.
-   *
-   * Every step must identify one player unambiguously. The old resolver ended
-   * with `Object.keys(bios)[0]`, so any slug it could not place silently
-   * rendered whichever player happened to be first in the file — complete with
-   * their photo — instead of reporting that the player was not found.
-   */
-  const playerKey = useMemo(() => {
-    if (!playerBios.data || !slug) return null;
-    const s = slug.toLowerCase().trim();
-    const keys = Object.keys(playerBios.data);
-
-    if (playerBios.data[s]) return s;
-
-    const exactKey = keys.find(k => k.toLowerCase() === s);
-    if (exactKey) return exactKey;
-
-    // Match the slug against the names themselves ("v-kohli" -> "V Kohli").
-    const slugAsName = normalizePlayerName(s.replace(/-/g, " "));
-    const byName = keys.filter(k => {
-      const b = playerBios.data![k];
-      return normalizePlayerName(b.playerName) === slugAsName ||
-        normalizePlayerName(b.fullName) === slugAsName;
-    });
-    if (byName.length === 1) return byName[0];
-
-    // Initial + surname, accepted only when exactly one player can match.
-    const parts = s.split("-").filter(Boolean);
-    if (parts.length >= 2) {
-      const initial = parts[0][0];
-      const surname = parts[parts.length - 1];
-      const near = keys.filter(k => {
-        const kp = k.toLowerCase().split("-").filter(Boolean);
-        return kp.length >= 2 && kp[0][0] === initial && kp[kp.length - 1] === surname;
-      });
-      if (near.length === 1) return near[0];
-    }
-
-    return null;
-  }, [playerBios.data, slug]);
+  /** Resolves the URL slug to a bio key (see resolvePlayerKey), once the identity index has settled. */
+  const playerKey = useMemo(
+    () => (playerBios.data && slug && !identityIndex.isLoading ? resolvePlayerKey(playerBios.data, slug, identityIndex.data) : null),
+    [playerBios.data, slug, identityIndex.isLoading, identityIndex.data],
+  );
   
   const bio = useMemo(() => {
     if (!playerBios.data || !playerKey) return null;
     return playerBios.data[playerKey];
   }, [playerBios.data, playerKey]);
 
+
   const NOT_AVAILABLE = "Not available";
 
   // Readable name for headings; falls back to the scorecard name when no
   // friendlier form is known.
   const displayNames = usePlayerDisplayNames();
-  const profileName = bio ? displayPlayerName(bio.playerName, displayNames) : "";
+  const profileName = bio ? resolveProfileName(bio, playerKey, displayNames, identityIndex.data) : "";
 
   /**
    * This player's captaincy record, if they ever led a side.
@@ -211,9 +199,8 @@ export default function PlayerProfilePage() {
     for (const [season, teams] of Object.entries(squadsBySeason.data)) {
       for (const [team, players] of Object.entries(teams)) {
         for (const p of players) {
-          const isMatch = p.cricsheetName
-            ? p.cricsheetName === bio.playerName
-            : matchPlayerName(p.name, bio.playerName);
+          const isMatch = [p.cricsheetName,p.name].filter(Boolean).some(name =>
+            [bio.playerName,bio.fullName].filter(Boolean).some(known => matchPlayerName(name!,known!)));
           if (!isMatch) continue;
           rows.push({
             season, team,
@@ -376,16 +363,39 @@ export default function PlayerProfilePage() {
     return "IPL";
   };
 
+  // Declared before primaryTeam, which reads it (it used to be declared after, which threw on every render).
+  const playerRecentMatches = usePlayerRecentMatches(playerKey);
+
   const primaryTeam = useMemo(() => {
-    if (!bio) return "Mumbai Indians";
-    if ((bio as any).team || (bio as any).currentTeam) return (bio as any).team || (bio as any).currentTeam;
-    if (latestTeams.data && latestTeams.data[bio.playerName]) return latestTeams.data[bio.playerName];
+    // RULE B (General Player Bio / DP): Lead with latest actual played IPL match appearance
+    if (playerRecentMatches && playerRecentMatches.length > 0) {
+      const latestMatch = playerRecentMatches[0];
+      if (latestMatch?.team) return latestMatch.team;
+    }
     if (squadHistory.length > 0) return squadHistory[squadHistory.length - 1].team;
-    return getPlayerTeam(bio.playerName);
-  }, [bio, latestTeams.data, squadHistory]);
+    if (bio && ((bio as any).team || (bio as any).currentTeam)) return (bio as any).team || (bio as any).currentTeam;
+    if (bio && latestTeams.data && latestTeams.data[bio.playerName]) return latestTeams.data[bio.playerName];
+    if (bio) return getPlayerTeam(bio.playerName);
+    return "Mumbai Indians";
+  }, [playerRecentMatches, squadHistory, bio, latestTeams.data]);
 
   const pColor = useMemo(() => teamColor(primaryTeam), [primaryTeam]);
   const pShort = useMemo(() => teamShort(primaryTeam), [primaryTeam]);
+
+  const jerseyNo = useMemo(() => {
+    const jMap = playerJerseysQuery.data || {};
+    const nKey = bio?.playerName?.toLowerCase()?.trim() || "";
+    const fKey = bio?.fullName?.toLowerCase()?.trim() || "";
+    const sKey = slug?.toLowerCase()?.trim() || "";
+    if (jMap[nKey]) return jMap[nKey];
+    if (jMap[fKey]) return jMap[fKey];
+    if (jMap[sKey]) return jMap[sKey];
+    for (const [k, v] of Object.entries(jMap)) {
+      if (nKey.includes(k) || k.includes(nKey)) return v;
+    }
+    const fallbackNum = parseInt(String(bio?.playerId || "").replace(/\D/g, ""), 10);
+    return fallbackNum && fallbackNum < 100 ? String(fallbackNum).padStart(2, "0") : "04";
+  }, [playerJerseysQuery.data, bio, slug]);
 
   // Matchup filter states
   const [vsPlayerName, setVsPlayerName] = useState<string>("");
@@ -564,7 +574,8 @@ export default function PlayerProfilePage() {
     if (bowlerStats) {
       return [
         { subject: "Boundary Conceded %", value: bowlerStats.boundaryPct || 0 },
-        { subject: "Spin Profile", value: bowlerStats.bowlerType === "Spinner" ? 100 : 0 },
+        // Unknown bowling type: no Spin Profile axis rather than a 0 that reads as pace (Day 6).
+        ...(bowlerStats.bowlerType === "Unknown" ? [] : [{ subject: "Spin Profile", value: bowlerStats.bowlerType === "Spinner" ? 100 : 0 }]),
         { subject: "True Economy Delta", value: bowlerStats.trueEconomy || 0 },
         { subject: "Dot Ball Ratio", value: bowlerStats.dotPct || 0 },
         { subject: "Clutch Wickets", value: bowlerStats.clutch || 0 },
@@ -575,7 +586,7 @@ export default function PlayerProfilePage() {
     return [];
   }, [bio, batterStats, bowlerStats]);
 
-  if (playerBios.isLoading) {
+  if (playerBios.isLoading || identityIndex.isLoading) {
     return (
       <Layout>
         <div className="flex flex-col items-center justify-center min-h-[70vh]">
@@ -608,21 +619,6 @@ export default function PlayerProfilePage() {
     <Layout>
       <div className="space-y-6 pb-12 px-4 max-w-7xl mx-auto">
         
-        {/* HEADER NAVIGATION */}
-        <div className="flex items-center justify-between shrink-0">
-          <Link href="/stats">
-            <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/5 hover:border-primary/20 hover:bg-white/10 text-[11px] font-black uppercase tracking-widest text-white transition-all">
-              <ArrowLeft className="w-4 h-4 text-primary" />
-              Back to stats center
-            </button>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <span className="text-[10px] font-black uppercase tracking-widest text-white/40">F1 Analytics Profile</span>
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-          </div>
-        </div>
-
         {/* HERO CINEMATIC HEADER WITH VOLUMETRIC STADIUM LIGHTING & WATERMARK */}
         <div className="rounded-[28px] overflow-hidden relative shadow-2xl" style={{ borderLeft: `5px solid ${pColor}` }}>
           <div className="bg-gradient-to-br from-[#0d1326] via-[#080c18] to-[#03050a] border border-white/10 p-6 sm:p-8 md:p-9 relative overflow-hidden">
@@ -657,34 +653,50 @@ export default function PlayerProfilePage() {
                 />
 
                 {/* Showcase Framing Pedestal */}
-                <div className="relative w-48 h-56 sm:w-56 sm:h-64 md:w-60 md:h-72 rounded-3xl overflow-hidden border border-white/20 bg-gradient-to-b from-white/[0.08] via-black/40 to-black/90 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl group/hero">
+                <div 
+                  className="relative w-48 h-56 sm:w-56 sm:h-64 md:w-60 md:h-72 rounded-3xl overflow-hidden border border-white/20 bg-gradient-to-b from-white/[0.08] via-black/40 to-black/90 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl group/hero cursor-pointer transition-all duration-500 hover:border-white/40 hover:shadow-[0_25px_60px_rgba(0,0,0,0.9)] hover:-translate-y-1.5"
+                  style={{
+                    ["--hero-accent" as any]: pColor,
+                  }}
+                >
+                  {/* Interactive Dynamic Background Sweep */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover/hero:opacity-40 transition-opacity duration-700 pointer-events-none z-[1]"
+                    style={{
+                      background: `radial-gradient(circle at 50% 30%, ${pColor} 0%, transparent 75%)`,
+                    }}
+                  />
+
                   {/* Top Left Team Badge */}
-                  <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/70 backdrop-blur-md border border-white/15 shadow-md">
+                  <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/70 backdrop-blur-md border border-white/15 shadow-md group-hover/hero:border-white/30 transition-colors">
                     <TeamLogo team={primaryTeam} size="w-4 h-4" />
                     <span className="text-[9px] font-black uppercase tracking-wider text-white font-mono">{pShort}</span>
                   </div>
 
                   {/* Top Right Jersey / ID Tag */}
-                  <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
+                  <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 group-hover/hero:border-white/30 transition-colors">
                     <span className="text-[10px] font-mono font-black text-white/90">
-                      #{String(parseInt(String(bio.playerId).replace(/\D/g, ""), 10) || 18).padStart(2, "0")}
+                      {jerseyNo ? `#${jerseyNo}` : "—"}
                     </span>
                   </div>
 
-                  {/* High-res Player Portrait */}
+                  {/* High-res Player Portrait with Cinematic Pop-Out */}
                   <div className="w-full h-full relative overflow-hidden flex items-center justify-center">
-                    <PlayerAvatar
+                    <PlayerAvatar framing="chest"
                       name={bio.playerName}
+                      teamId={primaryTeam}
+                      season={playerRecentMatches?.[0]?.season ?? (squadHistory?.[squadHistory.length - 1]?.season)}
+                      strictHistoricalJersey={false}
                       playerImages={playerImages.data}
                       bio={bio}
-                      imgClassName="w-full h-full object-cover object-top filter contrast-[1.06] group-hover/hero:scale-105 transition-transform duration-700"
+                      imgClassName="w-full h-full object-cover object-top filter contrast-[1.06]"
                     />
                     {/* Seamless Bottom Vignette */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#080c18] via-[#080c18]/25 to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080c18] via-[#080c18]/25 to-transparent pointer-events-none z-[2]" />
                   </div>
 
                   {/* Lower Plate Holographic Telemetry Tag */}
-                  <div className="absolute bottom-2.5 inset-x-2.5 z-20 flex items-center justify-between px-2.5 py-1.5 bg-black/80 backdrop-blur-md rounded-xl border border-white/15 shadow-lg">
+                  <div className="absolute bottom-2.5 inset-x-2.5 z-20 flex items-center justify-between px-2.5 py-1.5 bg-black/85 backdrop-blur-md rounded-xl border border-white/15 group-hover/hero:border-white/30 shadow-lg transition-colors">
                     <span className="text-[8px] font-black uppercase tracking-widest text-cyan-300 flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                       {bio.role || "Elite Athlete"}
@@ -715,13 +727,6 @@ export default function PlayerProfilePage() {
                       <Sparkles className="w-3 h-3 text-emerald-400" />
                       Elite Tier
                     </span>
-                    <button
-                      onClick={() => setActiveSubTab("card")}
-                      className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-primary/15 border border-primary/40 text-primary flex items-center gap-1.5 hover:bg-primary/25 transition-all shadow-sm cursor-pointer"
-                    >
-                      <Trophy className="w-3 h-3" />
-                      <span>3D Card Lab</span>
-                    </button>
                   </div>
 
                   {/* Player Name Headlines */}
@@ -1048,6 +1053,17 @@ export default function PlayerProfilePage() {
               <span>Vector Metrics</span>
             </button>
             <button
+              onClick={() => setActiveSubTab("recent")}
+              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
+                activeSubTab === "recent"
+                  ? "bg-primary text-white shadow-[0_0_20px_-3px_hsl(var(--primary))]"
+                  : "text-white/50 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <CalendarDays className="w-3.5 h-3.5" />
+              <span>Recent Performances</span>
+            </button>
+            <button
               onClick={() => setActiveSubTab("matchups")}
               className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
                 activeSubTab === "matchups"
@@ -1058,27 +1074,9 @@ export default function PlayerProfilePage() {
               <Crosshair className="w-3.5 h-3.5" />
               <span>Head To Head Matchups</span>
             </button>
-            <button
-              onClick={() => setActiveSubTab("card")}
-              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
-                activeSubTab === "card"
-                  ? "bg-gradient-to-r from-primary to-cyan-500 text-white shadow-[0_0_20px_-3px_hsl(var(--primary))]"
-                  : "text-white/50 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
-              <span>Signature Collector Card</span>
-            </button>
           </div>
 
-          <div className="hidden lg:flex items-center gap-3 text-[10px] font-mono text-white/40 pr-3">
-            <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-white/60">Live Hawkeye Ball Sync</span>
-            </span>
-            <span className="text-white/20">|</span>
-            <span>2008–2024 IPL History</span>
-          </div>
+
         </div>
 
         {/* PROFILE CONTENT AREA */}
@@ -1098,10 +1096,13 @@ export default function PlayerProfilePage() {
             {activeSubTab === "overview" && (
               <>
                 {/* Decision Intelligence: pressure, weakness, similar players, auction value */}
-                <PlayerIntelPanel player={bio.playerName} className="lg:col-span-3" />
+                <PlayerIntelligenceSection player={bio.playerName} className="lg:col-span-3" />
+                  <PlayerRetentionCard player={bio.playerName} className="lg:col-span-3" />
+                  <PlayerIntelPanel player={bio.playerName} className="lg:col-span-3" />
 
+                <PlayerCareerMilestones key={`${bio.playerName}-${showAsBatter}`} name={bio.fullName || bio.playerName} aliases={[bio.playerName]} seasons={seasonalStats} batting={showAsBatter} accent={pColor} history={squadHistory} captaincy={captaincy} matches={playerRecentMatches}/>
                 {/* Career Seasonal Trend Chart */}
-                <GlassCard className="lg:col-span-2 p-5 flex flex-col justify-between">
+                <GlassCard className="lg:col-span-2 p-5 flex flex-col self-start">
                   <div className="mb-4 flex items-start justify-between gap-4 flex-wrap">
                     <div>
                       <h3 className="text-sm font-black uppercase tracking-widest text-white/80 flex items-center gap-2">
@@ -1196,7 +1197,7 @@ export default function PlayerProfilePage() {
                 {/* Player Information — sits in the third column alongside the
                     progression chart. Rows stack label over value rather than
                     justifying left/right, which wraps badly in a narrow column. */}
-                <GlassCard className="p-5 flex flex-col">
+                <GlassCard className="p-5 flex flex-col self-start">
                   <h3 className="text-sm font-black uppercase tracking-widest text-white/80 mb-1 flex items-center gap-2">
                     <Award className="w-4 h-4 text-primary" />
                     Player Information
@@ -1238,6 +1239,7 @@ export default function PlayerProfilePage() {
                     ))}
                   </div>
 
+                  
                   {/* SCORING ZONE & DELIVERY TYPE PROFILE BREAKDOWN */}
                   <div className="mt-4 pt-3 border-t border-white/10 flex flex-col gap-2">
                      <div className="text-[10px] font-black uppercase tracking-wider text-amber-400">Scoring & Delivery Profile</div>
@@ -1451,13 +1453,10 @@ export default function PlayerProfilePage() {
                               <td className="py-2 pr-4 text-[12px] font-black text-white/80 tabular-nums">{r.season}</td>
                               <td className="py-2 pr-4">
                                 <div className="flex items-center gap-2">
-                                  <span
-                                    className="w-5 h-5 rounded-md flex items-center justify-center text-[8px] font-black shrink-0"
-                                    style={{ backgroundColor: teamColor(r.team), color: "#fff" }}
-                                  >
-                                    {teamShort(r.team)}
-                                  </span>
-                                  <span className="text-[11px] font-bold text-white/60 truncate">{r.team}</span>
+                                  <div className="w-6 h-6 rounded-md bg-white/5 p-0.5 border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
+                                    <TeamLogo team={r.team} size="w-5 h-5" />
+                                  </div>
+                                  <span className="text-[11px] font-bold text-white/70 truncate">{r.team}</span>
                                 </div>
                               </td>
                               <td className="py-2 pr-4">
@@ -1479,7 +1478,6 @@ export default function PlayerProfilePage() {
                     </div>
                   )}
                 </GlassCard>
-
               </>
             )}
 
@@ -1573,7 +1571,7 @@ export default function PlayerProfilePage() {
                 {/* SPATIAL HEATMAP & VECTOR METRICS BREAKDOWN */}
                 <div className="lg:col-span-3">
                   {showAsBatter ? (
-                     <GroundScoringWagonWheel player={bio.playerName} />
+                     <ScoringRing player={bio.playerName} />
                   ) : (
                      <BowlingHeatmap
                        player={bio.playerName}
@@ -1586,6 +1584,17 @@ export default function PlayerProfilePage() {
                   )}
                 </div>
               </>
+            )}
+
+            {/* RECENT MATCH PERFORMANCES SUB-TAB */}
+            {activeSubTab === "recent" && (
+              <div className="lg:col-span-3 space-y-6">
+                <PlayerRecentMatchesCard
+                  matches={playerRecentMatches}
+                  playerName={profileName}
+                  pColor={pColor}
+                />
+              </div>
             )}
 
             {/* MATCHUPS SUB-TAB */}
@@ -1864,7 +1873,7 @@ export default function PlayerProfilePage() {
                       <h3 className="text-xs font-black uppercase tracking-widest text-white/60">Recorded Matchup Stats</h3>
                       <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mt-1 mb-4">
                         {recordedMatchupQuery.data
-                          ? `${recordedMatchupQuery.data.battingHand} batter vs ${recordedMatchupQuery.data.bowlerType}`
+                          ? `${recordedMatchupQuery.data.battingHand} batter vs ${recordedMatchupQuery.data.bowlerType === "Unknown" ? "bowler of unknown type" : recordedMatchupQuery.data.bowlerType}`
                           : "Ball-by-ball head to head"}
                       </p>
                     </div>
@@ -1945,361 +1954,620 @@ export default function PlayerProfilePage() {
 
               </div>
             )}
-
-            {activeSubTab === "card" && (
-              <PlayerCollectorCardView
-                bio={bio}
-                profileName={profileName}
-                primaryTeam={primaryTeam}
-                pColor={pColor}
-                pShort={pShort}
-                batterStats={batterStats}
-                bowlerStats={bowlerStats}
-                country={resolvedCountry}
-                iplDebut={resolvedIplDebut}
-                squadHistory={squadHistory}
-                playerImages={playerImages.data}
-                slug={slug}
-              />
-            )}
         </motion.div>
       </div>
     </Layout>
   );
 }
 
-function PlayerCollectorCardView({
-  bio,
-  profileName,
-  primaryTeam,
+function PlayerRecentMatchesCard({
+  matches,
+  playerName,
   pColor,
-  pShort,
-  batterStats,
-  bowlerStats,
-  country,
-  iplDebut,
-  squadHistory,
-  playerImages,
-  slug,
 }: {
-  bio: PlayerBio;
-  profileName: string;
-  primaryTeam: string;
+  matches: any[];
+  playerName: string;
   pColor: string;
-  pShort: string;
-  batterStats: any;
-  bowlerStats: any;
-  country: string | null;
-  iplDebut: string | null;
-  squadHistory: any[];
-  playerImages?: Record<string, string>;
-  slug: string;
 }) {
-  const [cardFlipped, setCardFlipped] = useState(false);
-  const number = parseInt(String(bio.playerId).replace(/\D/g, ""), 10) || 18;
-  const matches = (batterStats?.innings || bowlerStats?.innings || squadHistory.length * 14) || 50;
-  const formatNum = (v: number) => new Intl.NumberFormat("en-IN").format(v);
-  const runs = batterStats?.runs != null ? formatNum(batterStats.runs) : "—";
-  const sr = batterStats?.sr != null ? batterStats.sr.toFixed(1) : "—";
-  const wkts = bowlerStats?.wickets != null ? bowlerStats.wickets : "—";
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedFranchise, setSelectedFranchise] = useState("all");
+  const [selectedSeason, setSelectedSeason] = useState("all");
+  const [selectedResult, setSelectedResult] = useState<"all" | "won" | "lost">("all");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [visibleCount, setVisibleCount] = useState(12);
 
-  const tSlug = (team?: string | null): string =>
-    (team || "").toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  // Distinct Opponent Franchises
+  const availableFranchises = useMemo(() => {
+    const set = new Set<string>();
+    matches.forEach(m => { if (m.vsTeam) set.add(m.vsTeam); });
+    return Array.from(set).sort();
+  }, [matches]);
+
+  // Distinct Seasons
+  const availableSeasons = useMemo(() => {
+    const set = new Set<string>();
+    matches.forEach(m => { if (m.season) set.add(String(m.season)); });
+    return Array.from(set).sort((a, b) => Number(b) - Number(a));
+  }, [matches]);
+
+  // Season Statistical Summary Map for Top Dimension
+  const seasonSummaryMap = useMemo(() => {
+    const map: Record<string, { count: number; won: number; lost: number; runs: number; wkts: number }> = {};
+    matches.forEach(m => {
+      const s = String(m.season);
+      if (!map[s]) map[s] = { count: 0, won: 0, lost: 0, runs: 0, wkts: 0 };
+      map[s].count++;
+      if (m.result === "Won") map[s].won++;
+      if (m.result === "Lost") map[s].lost++;
+      if (m.batting?.runs) map[s].runs += m.batting.runs;
+      if (m.bowling?.wickets) map[s].wkts += m.bowling.wickets;
+    });
+    return map;
+  }, [matches]);
+
+  // Filtered Matches
+  const filteredMatches = useMemo(() => {
+    return matches.filter(m => {
+      if (selectedFranchise !== "all" && m.vsTeam !== selectedFranchise) return false;
+      if (selectedSeason !== "all" && String(m.season) !== selectedSeason) return false;
+      if (selectedResult === "won" && m.result !== "Won") return false;
+      if (selectedResult === "lost" && m.result !== "Lost") return false;
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        const vs = (m.vsTeam || "").toLowerCase();
+        const ven = (m.venue || "").toLowerCase();
+        const dt = (m.date || "").toLowerCase();
+        if (!vs.includes(q) && !ven.includes(q) && !dt.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [matches, selectedFranchise, selectedSeason, selectedResult, searchQuery]);
+
+  const displayMatches = filteredMatches.slice(0, visibleCount);
+  const formStreak = matches.slice(0, 5).map(m => m.result === "Won" ? "W" : m.result === "Lost" ? "L" : "T");
+  const hasActiveFilters = searchQuery !== "" || selectedFranchise !== "all" || selectedSeason !== "all" || selectedResult !== "all";
+
+  const handleSelectSeason = (season: string) => {
+    setSelectedSeason(season);
+    // When a specific season is chosen, expand to show all season matches in the sub-scroll list
+    setVisibleCount(50);
+  };
+
+  const resetFilters = () => {
+    setSearchQuery("");
+    setSelectedFranchise("all");
+    setSelectedSeason("all");
+    setSelectedResult("all");
+    setVisibleCount(8);
+  };
 
   return (
-    <div className="bg-[#0B1020] rounded-[32px] border border-white/10 p-6 md:p-8 flex flex-col gap-8 shadow-2xl relative overflow-hidden">
-      {/* Background foil ambient dynamically keyed to player franchise color */}
-      <div
-        className="absolute top-0 right-0 w-96 h-96 rounded-full blur-[140px] pointer-events-none opacity-20"
-        style={{ backgroundColor: pColor || "#8B5CF6" }}
-      />
-      <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
-
+    <GlassCard className="p-5 flex flex-col gap-5">
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-6 relative z-10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full bg-primary/15 text-primary border border-primary/30 text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shadow-sm">
-              <Sparkles className="w-3 h-3 text-primary" />
-              Official Phygital Collectible Spec
+            <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shadow-sm">
+              <Award className="w-3 h-3 text-cyan-400" />
+              Official Match Performance Tickets
             </span>
-            <span className="text-[10px] font-mono text-white/40">350 GSM Velvet Matte</span>
+            <span className="text-[10px] font-mono text-white/40">Verified Cricsheet Telemetry</span>
           </div>
-          <h2 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white flex items-center gap-2">
-            {profileName} · Signature Collector Card
-          </h2>
+          <h3 className="text-base md:text-lg font-black uppercase tracking-tight text-white flex items-center gap-2">
+            Match Performance Dossier · {playerName}
+          </h3>
         </div>
 
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setCardFlipped(!cardFlipped)}
-            className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg transition-all cursor-pointer"
-          >
-            <RotateCw className="w-4 h-4 text-cyan-400" />
-            <span>Flip Card ({cardFlipped ? "Showing Back" : "Showing Front"})</span>
-          </button>
-
-          <Link
-            href="/shop"
-            className="px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-white font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-lg shadow-primary/20 transition-all"
-          >
-            <ShoppingBag className="w-4 h-4" />
-            <span>Card Lab</span>
-            <ArrowUpRight className="w-3.5 h-3.5 opacity-80" />
-          </Link>
-        </div>
+        {formStreak.length > 0 && (
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-white/40">Recent Form:</span>
+            <div className="flex items-center gap-1">
+              {formStreak.map((f, i) => (
+                <span
+                  key={i}
+                  className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-black font-mono shadow-sm ${
+                    f === "W"
+                      ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                      : f === "L"
+                      ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
+                      : "bg-white/10 text-white/60 border border-white/15"
+                  }`}
+                >
+                  {f}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Main Grid: Card Showcase (Left) + Spec & Telemetry Panel (Right) */}
-      <div className="grid lg:grid-cols-[440px_1fr] gap-8 items-start relative z-10">
-        {/* 3D Flippable Velvet-Matte Card Container */}
-        <div className="flex flex-col items-center justify-center p-6 bg-black/40 rounded-3xl border border-white/10 shadow-2xl relative">
-          <div
-            className="relative w-full max-w-[380px] aspect-[1/1.55] cursor-pointer select-none group"
-            style={{ perspective: "1200px" }}
-            onClick={() => setCardFlipped(!cardFlipped)}
-            title="Click card to flip"
-          >
-            <motion.div
-              className="w-full h-full relative"
-              animate={{ rotateY: cardFlipped ? 180 : 0 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              {/* FRONT SIDE */}
-              <div
-                className="absolute inset-0 rounded-[28px] overflow-hidden border border-white/20 shadow-2xl p-5 flex flex-col justify-between"
-                style={{
-                  backfaceVisibility: "hidden",
-                  background: `linear-gradient(145deg, #0e1428 0%, #070a14 50%, #03050a 100%)`,
-                  boxShadow: `0 0 30px -5px ${pColor ? `${pColor}30` : 'rgba(139,92,246,0.25)'}`,
-                }}
-              >
-                {/* Holographic Prismatic Foil Sheen Overlay */}
-                <div
-                  className="absolute inset-0 pointer-events-none opacity-40 mix-blend-overlay"
-                  style={{
-                    background: `radial-gradient(circle at 75% 20%, ${pColor || '#8B5CF6'}40 0%, transparent 60%), linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(255,255,255,0.05) 100%)`,
-                  }}
-                />
-
-                {/* Top Bar: Jersey # & Team Crest */}
-                <div className="flex items-start justify-between z-10">
-                  <div className="flex flex-col">
-                    <span className="text-5xl font-black text-white leading-none tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] font-mono">
-                      #{number}
-                    </span>
-                    <span
-                      className="text-[9px] font-black uppercase tracking-widest mt-1.5 px-2 py-0.5 rounded bg-white/10 border border-white/15 w-fit"
-                      style={{ color: pColor || "#38BDF8" }}
-                    >
-                      {pShort} · TITAN EDITION
-                    </span>
-                  </div>
-                  <div className="w-13 h-13 rounded-2xl bg-black/60 backdrop-blur-md border border-white/20 p-2 flex items-center justify-center shadow-xl">
-                    <TeamLogo team={primaryTeam} size="w-9 h-9" />
-                  </div>
-                </div>
-
-                {/* Player Photo Center */}
-                <div className="absolute inset-x-0 top-12 bottom-24 flex items-center justify-center overflow-hidden">
-                  <PlayerAvatar
-                    name={bio.playerName}
-                    playerImages={playerImages}
-                    bio={bio}
-                    imgClassName="w-full h-full object-cover object-top opacity-95 transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Subtle lower gradient fade into the bottom plate */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#070a14] via-transparent to-transparent pointer-events-none" />
-                </div>
-
-                {/* Signature Traits Pills */}
-                <div className="absolute right-4 top-24 flex flex-col items-end gap-1.5 z-10 text-[8px] font-black uppercase tracking-widest text-white/90">
-                  <span className="bg-black/75 px-2.5 py-0.5 rounded backdrop-blur-md border border-white/15 shadow">INTENT</span>
-                  <span className="bg-black/75 px-2.5 py-0.5 rounded backdrop-blur-md border border-white/15 shadow">POWER</span>
-                  <span className="bg-black/75 px-2.5 py-0.5 rounded backdrop-blur-md border border-white/15 shadow">CONSISTENCY</span>
-                  <span className="bg-black/75 px-2.5 py-0.5 rounded backdrop-blur-md border border-white/15 shadow">CLUTCH</span>
-                </div>
-
-                {/* Bottom Banner Identity Plaque */}
-                <div className="relative z-10 bg-gradient-to-r from-black/90 via-slate-900/90 to-black/90 p-4 rounded-2xl border border-white/15 backdrop-blur-xl shadow-2xl">
-                  <div className="text-[10px] font-mono uppercase tracking-[0.25em] text-cyan-400 font-bold">
-                    {bio.role} · {pShort}
-                  </div>
-                  <h3 className="text-2xl font-black text-white tracking-tight uppercase leading-none mt-1">
-                    {profileName}
-                  </h3>
-                  <div className="text-[10px] font-medium text-white/60 mt-1.5 uppercase tracking-wider flex items-center justify-between">
-                    <span>{bio.batStyle || bio.bowlStyle || "Official Licensed Card"}</span>
-                    <span className="text-[9px] font-mono text-cyan-300 flex items-center gap-1">
-                      FLIP CARD ↷
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* BACK SIDE */}
-              <div
-                className="absolute inset-0 rounded-[28px] overflow-hidden border border-white/20 shadow-2xl bg-gradient-to-b from-[#0e1428] via-[#090d1c] to-[#04060e] p-5 flex flex-col justify-between text-white"
-                style={{
-                  backfaceVisibility: "hidden",
-                  transform: "rotateY(180deg)",
-                  boxShadow: `0 0 30px -5px ${pColor ? `${pColor}30` : 'rgba(139,92,246,0.25)'}`,
-                }}
-              >
-                {/* Header */}
-                <div className="border-b border-white/10 pb-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-3xl font-black text-white font-mono leading-none">
-                        #{number}
-                      </span>
-                      <div>
-                        <div className="text-sm font-black uppercase text-white leading-none">
-                          {profileName}
-                        </div>
-                        <div className="text-[9px] font-mono text-cyan-300 uppercase mt-0.5">
-                          {bio.role}
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-[9px] font-black px-2.5 py-1 rounded-lg bg-white/10 border border-white/15 text-white">
-                      {country || "INDIA"}
-                    </span>
-                  </div>
-
-                  {/* Bio Quick Line */}
-                  <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-[8px] font-mono text-white/70 mt-2.5 bg-black/40 p-2.5 rounded-xl border border-white/10">
-                    <div><span className="text-white/40">BORN:</span> {bio.birthDate || "—"}</div>
-                    <div><span className="text-white/40">DEBUT:</span> {iplDebut || "2008"}</div>
-                    <div><span className="text-white/40">TEAM:</span> {pShort}</div>
-                    <div><span className="text-white/40">STYLE:</span> {bio.batStyle || bio.bowlStyle || "Core"}</div>
-                  </div>
-                </div>
-
-                {/* Technical Archetype */}
-                <div className="bg-white/[0.04] border border-white/10 p-3 rounded-xl text-[9px] leading-relaxed">
-                  <div className="font-black text-cyan-400 uppercase tracking-widest text-[8px] mb-1">
-                    TECHNICAL ARCHETYPE
-                  </div>
-                  <p className="text-white/80 line-clamp-3">{bio.bio}</p>
-                </div>
-
-                {/* Career Metrics Grid */}
-                <div className="bg-black/50 border border-white/10 rounded-xl p-3">
-                  <div className="text-[8px] font-black text-white/40 uppercase tracking-widest mb-1.5">
-                    TOURNAMENT CAREER METRICS
-                  </div>
-                  <div className="grid grid-cols-4 gap-1.5 text-center">
-                    <div className="bg-white/5 p-2 rounded-lg border border-white/5">
-                      <div className="text-xs font-black text-white font-mono">{matches}</div>
-                      <div className="text-[7px] text-white/40 uppercase tracking-wider">MATCHES</div>
-                    </div>
-                    <div className="bg-white/5 p-2 rounded-lg border border-white/5">
-                      <div className="text-xs font-black text-cyan-400 font-mono">{runs}</div>
-                      <div className="text-[7px] text-white/40 uppercase tracking-wider">RUNS</div>
-                    </div>
-                    <div className="bg-white/5 p-2 rounded-lg border border-white/5">
-                      <div className="text-xs font-black text-emerald-400 font-mono">{sr}</div>
-                      <div className="text-[7px] text-white/40 uppercase tracking-wider">STR RATE</div>
-                    </div>
-                    <div className="bg-white/5 p-2 rounded-lg border border-white/5">
-                      <div className="text-xs font-black text-primary font-mono">{wkts}</div>
-                      <div className="text-[7px] text-white/40 uppercase tracking-wider">WKTS</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* NFC Verification Footer */}
-                <div className="bg-black/40 p-2.5 rounded-xl border border-white/10 flex items-center justify-between text-[8px] font-mono text-white/50">
-                  <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> NTAG213 Certified
-                  </span>
-                  <span>/players/{slug}</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-          <span className="text-[10px] font-mono text-white/40 mt-3.5 flex items-center gap-1.5">
-            <RotateCw className="w-3 h-3 text-cyan-400" /> Tap anywhere on the card to flip
+      {/* TOP DIMENSION: SEASON SELECTOR & SUMMARY HORIZONTAL STRIP */}
+      <div className="flex flex-col gap-2 bg-slate-950/60 border border-white/5 rounded-2xl p-3">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-mono font-bold text-white/50 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-amber-400" />
+            Season Dimension Strip (Choose Season to Filter All Performances)
+          </span>
+          <span className="text-[9px] font-mono text-white/40">
+            {availableSeasons.length} IPL Editions Available
           </span>
         </div>
 
-        {/* Right Column: Physical & Phygital Merch Details */}
-        <div className="flex flex-col gap-6">
-          <div className="bg-gradient-to-br from-[#121729] to-[#0A0D18] rounded-2xl border border-white/10 p-6 flex flex-col gap-4 shadow-xl">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-black uppercase tracking-widest text-primary">
-                Collector Specification
-              </span>
-              <span className="text-xs font-mono font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-lg border border-emerald-500/20">
-                In Stock · Official Run
-              </span>
-            </div>
+        {/* Horizontal Carousel of Season Dimension Cards */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 scrollbar-thin scrollbar-thumb-white/15 scrollbar-track-transparent">
+          {/* All Seasons Pill */}
+          <button
+            onClick={() => handleSelectSeason("all")}
+            className={`px-3 py-2 rounded-xl text-left shrink-0 transition-all cursor-pointer border ${
+              selectedSeason === "all"
+                ? "bg-primary/20 border-primary text-white shadow-lg shadow-primary/20"
+                : "bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10"
+            }`}
+          >
+            <div className="text-xs font-black uppercase">All Seasons</div>
+            <div className="text-[9px] font-mono text-white/40 mt-0.5">{matches.length} Total Matches</div>
+          </button>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-black/40 border border-white/5 p-3 rounded-xl">
-                <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Card Stock</span>
-                <span className="text-xs font-black text-white">350 GSM Velvet Matte</span>
-              </div>
-              <div className="bg-black/40 border border-white/5 p-3 rounded-xl">
-                <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Finish</span>
-                <span className="text-xs font-black text-cyan-300">Prismatic Foil Stamped</span>
-              </div>
-              <div className="bg-black/40 border border-white/5 p-3 rounded-xl">
-                <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Hardware</span>
-                <span className="text-xs font-black text-emerald-300">NFC Chip Embedded</span>
-              </div>
-              <div className="bg-black/40 border border-white/5 p-3 rounded-xl">
-                <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Digital Link</span>
-                <span className="text-xs font-black text-primary">Live Web Sync</span>
-              </div>
-            </div>
-
-            <p className="text-xs text-white/60 leading-relaxed font-medium">
-              Every card is precision printed on archival European board, hot-stamped with prismatic foil accents, and equipped with a programmable NTAG213 microchip that launches {profileName}&apos;s live telemetry dossier when tapped with any modern smartphone.
-            </p>
-
-            <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
-              <Link
-                href="/shop"
-                className="w-full sm:w-auto flex-1 py-3 px-6 rounded-xl bg-primary hover:bg-primary/90 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-primary/20 transition-all cursor-pointer"
+          {/* Individual Season Dimension Pills */}
+          {availableSeasons.map(season => {
+            const sum = seasonSummaryMap[season] || { count: 0, won: 0, lost: 0, runs: 0, wkts: 0 };
+            const isSelected = selectedSeason === season;
+            return (
+              <button
+                key={season}
+                onClick={() => handleSelectSeason(season)}
+                className={`px-3 py-2 rounded-xl text-left shrink-0 transition-all cursor-pointer border min-w-[120px] ${
+                  isSelected
+                    ? "bg-gradient-to-r from-amber-500/20 to-orange-500/20 border-amber-400 text-white shadow-lg shadow-amber-500/20 scale-[1.02]"
+                    : "bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10"
+                }`}
               >
-                <ShoppingBag className="w-4 h-4" />
-                <span>Order Physical Card in Shop (₹299)</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/shop"
-                className="w-full sm:w-auto py-3 px-5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-white font-black text-xs uppercase tracking-wider text-center transition-all"
-              >
-                View 100-Card Deck
-              </Link>
-            </div>
-          </div>
-
-          {/* Franchise Heritage Strip */}
-          <div className="bg-black/40 rounded-2xl border border-white/5 p-5 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <TeamLogo team={primaryTeam} size="w-10 h-10" />
-              <div>
-                <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Franchise Heritage</span>
-                <span className="text-sm font-black text-white">{primaryTeam}</span>
-              </div>
-            </div>
-            <Link
-              href={`/teams/${tSlug(primaryTeam)}`}
-              className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline flex items-center gap-1"
-            >
-              <span>Explore Team Hub</span>
-              <ArrowUpRight className="w-3 h-3" />
-            </Link>
-          </div>
+                <div className="flex items-center justify-between gap-2">
+                  <span className={`text-xs font-black font-mono ${isSelected ? "text-amber-300" : "text-white"}`}>
+                    IPL {season}
+                  </span>
+                  <span className="text-[9px] font-mono text-emerald-400 font-bold">
+                    {sum.won}W
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-[9px] font-mono text-white/40 mt-0.5">
+                  <span>{sum.count} Matches</span>
+                  {sum.runs > 0 ? (
+                    <span className="text-cyan-300">{sum.runs} runs</span>
+                  ) : sum.wkts > 0 ? (
+                    <span className="text-purple-300">{sum.wkts} wkts</span>
+                  ) : (
+                    <span>{sum.lost}L</span>
+                  )}
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
-    </div>
+
+      {/* Sub-Filter Controls for Franchise, Season, and Search */}
+      <div className="bg-black/40 border border-white/5 rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        {/* Search Query Input */}
+        <div className="relative flex-1 min-w-[180px]">
+          <Search className="w-3.5 h-3.5 text-white/40 absolute left-3 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            placeholder="Search opponent franchise or stadium..."
+            className="w-full bg-white/5 border border-white/10 rounded-xl pl-8 pr-3 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-cyan-400 transition-colors"
+          />
+        </div>
+
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* Franchise Filter Select */}
+          <div className="relative">
+            <select
+              value={selectedFranchise}
+              onChange={e => setSelectedFranchise(e.target.value)}
+              className="bg-[#090d16] border border-white/10 rounded-xl px-3 py-2 text-xs text-white/80 focus:outline-none focus:border-cyan-400 cursor-pointer"
+            >
+              <option value="all">All Franchises</option>
+              {availableFranchises.map(team => (
+                <option key={team} value={team}>{team}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Year / Season Filter Select */}
+          <div className="relative">
+            <select
+              value={selectedSeason}
+              onChange={e => handleSelectSeason(e.target.value)}
+              className="bg-[#090d16] border border-white/10 rounded-xl px-3 py-2 text-xs text-white/80 focus:outline-none focus:border-cyan-400 cursor-pointer"
+            >
+              <option value="all">All Seasons</option>
+              {availableSeasons.map(season => (
+                <option key={season} value={season}>IPL {season}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Result Filter Tabs */}
+          <div className="flex items-center bg-white/5 rounded-xl p-0.5 border border-white/10">
+            {(["all", "won", "lost"] as const).map(res => (
+              <button
+                key={res}
+                onClick={() => setSelectedResult(res)}
+                className={`px-2.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                  selectedResult === res
+                    ? "bg-primary text-white shadow-sm"
+                    : "text-white/40 hover:text-white"
+                }`}
+              >
+                {res}
+              </button>
+            ))}
+          </div>
+
+          {/* Grid vs List View Mode Toggle */}
+          <div className="flex items-center bg-white/5 rounded-xl p-0.5 border border-white/10">
+            <button
+              onClick={() => setViewMode("grid")}
+              className={`px-2.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                viewMode === "grid"
+                  ? "bg-primary text-white shadow-sm"
+                  : "text-white/40 hover:text-white"
+              }`}
+              title="2-Column Grid View"
+            >
+              ⊞ Grid
+            </button>
+            <button
+              onClick={() => setViewMode("list")}
+              className={`px-2.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                viewMode === "list"
+                  ? "bg-primary text-white shadow-sm"
+                  : "text-white/40 hover:text-white"
+              }`}
+              title="Single-Column Ticket View"
+            >
+              ☰ List
+            </button>
+          </div>
+
+          {hasActiveFilters && (
+            <button
+              onClick={resetFilters}
+              className="px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-[10px] font-mono text-cyan-300 uppercase tracking-wider transition-all cursor-pointer"
+            >
+              Reset
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Match Performance Cards inside dedicated Season Sub-Scroll Container */}
+      {filteredMatches.length === 0 ? (
+        <div className="py-12 text-center text-[11px] font-black uppercase tracking-widest text-white/30 bg-black/30 rounded-2xl border border-white/5">
+          {matches.length === 0
+            ? "No match scorecards recorded for this player"
+            : "No match records match the selected franchise or season filters"}
+        </div>
+      ) : (
+        <>
+          <div
+            className={`${
+              viewMode === "grid"
+              ? "grid grid-cols-1 md:grid-cols-2 gap-4"
+              : "flex flex-col gap-3"
+          } max-h-[720px] overflow-y-auto pr-1.5 scrollbar-thin scrollbar-thumb-white/20 hover:scrollbar-thumb-white/40 scrollbar-track-transparent`}
+        >
+          {displayMatches.map((m, idx) => {
+            const isWon = m.result === "Won";
+            const isLost = m.result === "Lost";
+            const matchDate = new Date(m.date);
+            const day = matchDate.getDate() || "—";
+            const month = matchDate.toLocaleDateString("en-GB", { month: "short" }).toUpperCase();
+            const year = matchDate.getFullYear() || m.season;
+            
+            // REFINED DARK-SHADE COLOR PALETTE:
+            // Won matches: Deep burnt bronze / dark amber (#9a3412) with dark slate base
+            // Lost matches: Deep muted burgundy / dark ruby (#881337)
+            // Tie/NR: Deep slate (#334155)
+            const darkThemeColor = isWon ? "#9a3412" : isLost ? "#881337" : "#334155";
+            const darkBorderColor = isWon ? "rgba(180, 83, 9, 0.4)" : isLost ? "rgba(136, 19, 55, 0.4)" : "rgba(255, 255, 255, 0.12)";
+            const darkBadgeBg = isWon ? "rgba(180, 83, 9, 0.25)" : isLost ? "rgba(136, 19, 55, 0.25)" : "rgba(255, 255, 255, 0.05)";
+            const darkTextColor = isWon ? "#fbbf24" : isLost ? "#fb7185" : "#94a3b8";
+            const darkButtonBg = isWon ? "#9a3412" : isLost ? "#881337" : "#334155";
+
+            if (viewMode === "grid") {
+              // ─── 2-COLUMN PERFECT GRID CARD LAYOUT ───
+              return (
+                <div
+                  key={`${m.matchId}-${idx}`}
+                  className="relative w-full rounded-2xl bg-[#090d16]/95 border backdrop-blur-xl shadow-xl p-4 sm:p-5 flex flex-col justify-between gap-3.5 transition-all duration-300 hover:border-white/25 hover:shadow-2xl group overflow-hidden"
+                  style={{
+                    boxShadow: `0 8px 30px -8px rgba(0,0,0,0.85), 0 0 16px -4px ${darkBorderColor}`,
+                    borderColor: darkBorderColor,
+                  }}
+                >
+                  {/* Subtle dark ambient glow keyed to victor's palette */}
+                  <div
+                    className="absolute -inset-0.5 rounded-2xl blur-md opacity-0 group-hover:opacity-20 pointer-events-none transition-opacity duration-300"
+                    style={{ backgroundColor: darkThemeColor }}
+                  />
+
+                  {/* Clean Ticket Perforation Crimp at Side Edges */}
+                  <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-6 rounded-r-full bg-[#050816] border-r border-y border-white/15 z-20 pointer-events-none" />
+                  <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-3.5 h-6 rounded-l-full bg-[#050816] border-l border-y border-white/15 z-20 pointer-events-none" />
+
+                  {/* 1. Header: Date Stub, Season, Result Badge */}
+                  <div className="flex items-center justify-between border-b border-dashed border-white/15 pb-2.5">
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/[0.04] border text-[11px] font-mono font-bold"
+                        style={{ borderColor: darkBorderColor }}
+                      >
+                        <span style={{ color: darkTextColor }}>{day} {month}</span>
+                        <span className="text-white/40">{year}</span>
+                      </div>
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-white/5 border border-white/10 text-white/60">
+                        IPL {m.season}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1 border shadow-sm"
+                        style={{
+                          backgroundColor: darkBadgeBg,
+                          color: darkTextColor,
+                          borderColor: darkBorderColor,
+                        }}
+                      >
+                        {isWon ? "✓" : isLost ? "✕" : "•"} {m.result} {m.margin ? `· ${m.margin}` : ""}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 2. Opponent Matchup Strip */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl bg-black/60 border border-white/10 p-1 flex items-center justify-center shrink-0 shadow">
+                      <TeamLogo team={m.vsTeam} size="w-8 h-8" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-[9px] font-mono text-white/40 uppercase tracking-widest">vs Opponent</div>
+                      <div className="text-sm sm:text-base font-black text-white truncate">{m.vsTeam}</div>
+                      <div className="text-[10px] text-white/50 truncate max-w-full">{m.venue?.split(",")[0]}</div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="text-[9px] font-mono text-cyan-400/80 bg-cyan-950/40 px-2 py-1 rounded border border-cyan-800/40 block">
+                        #{m.matchId}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 3. Performance Telemetry Split (Batting & Bowling) */}
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    {/* Batting Box */}
+                    <div className="bg-black/50 border border-white/5 rounded-xl p-2.5 flex flex-col justify-between min-w-0">
+                      <div className="flex items-center justify-between text-[8px] font-mono uppercase text-white/40 mb-1">
+                        <span>Batting</span>
+                        {m.batting?.notOut && <span className="text-emerald-400 font-bold uppercase">Not Out</span>}
+                      </div>
+                      {m.batting ? (
+                        <div>
+                          <div className="font-mono font-black text-white flex items-baseline gap-1.5">
+                            <span className="text-lg text-cyan-300">{m.batting.runs}</span>
+                            <span className="text-[11px] text-white/50">({m.batting.balls}b)</span>
+                            {m.batting.notOut && <span className="text-emerald-400 font-bold text-sm">*</span>}
+                          </div>
+                          <div className="text-[9px] font-mono text-white/60 mt-0.5 truncate">
+                            {m.batting.fours}×4 · {m.batting.sixes}×6 · SR {m.batting.sr?.toFixed(1)}
+                          </div>
+                          <div className="text-[8px] font-medium text-white/50 truncate mt-1">
+                            {m.batting.dismissal || (m.batting.notOut ? "Not out" : "Out")}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="py-2 text-[10px] font-mono text-white/30 uppercase italic">
+                          Did Not Bat
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Bowling Box */}
+                    <div className="bg-black/50 border border-white/5 rounded-xl p-2.5 flex flex-col justify-between min-w-0">
+                      <div className="text-[8px] font-mono uppercase text-white/40 mb-1">
+                        <span>Bowling</span>
+                      </div>
+                      {m.bowling ? (
+                        <div>
+                          <div className="font-mono font-black text-white flex items-baseline gap-1.5">
+                            <span className="text-lg text-amber-300">{m.bowling.wickets}/{m.bowling.runs}</span>
+                            <span className="text-[11px] text-white/50">({m.bowling.overs} ov)</span>
+                          </div>
+                          <div className="text-[9px] font-mono text-white/60 mt-0.5 truncate">
+                            Econ {m.bowling.econ?.toFixed(1)} · {m.bowling.dots ?? 0} dots
+                          </div>
+                          <div className="text-[8px] font-mono text-white/40 truncate mt-1">
+                            Wkt SR {m.bowling.wickets > 0 ? (m.bowling.overs * 6 / m.bowling.wickets).toFixed(1) : "—"}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="py-2 text-[10px] font-mono text-white/30 uppercase italic">
+                          Did Not Bowl
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 4. Footer: Action Buttons */}
+                  <div className="flex items-center justify-between pt-2 border-t border-dashed border-white/10 gap-2">
+                    <Link
+                      href={m.matchId ? `/scores?matchId=${m.matchId}` : "/scores"}
+                      className="text-[10px] font-mono text-cyan-300/80 hover:text-cyan-300 hover:underline flex items-center gap-1"
+                    >
+                      <span>Scores Tab</span>
+                      <span>➔</span>
+                    </Link>
+
+                    <Link
+                      href={m.matchId ? `/match/${m.matchId}` : "/scores"}
+                      style={{ backgroundColor: darkButtonBg }}
+                      className="px-3.5 py-1.5 rounded-xl text-white/95 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md transition-all cursor-pointer hover:opacity-90"
+                      title="Open full match scorecard"
+                    >
+                      <span>Match Scorecard</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              );
+            }
+
+            // ─── FULL-WIDTH TICKET LIST VIEW ───
+            return (
+              <div key={`${m.matchId}-${idx}`} className="relative w-full group">
+                <div
+                  className="absolute -inset-0.5 rounded-2xl blur-md opacity-0 group-hover:opacity-20 pointer-events-none transition-opacity duration-300"
+                  style={{ backgroundColor: darkThemeColor }}
+                />
+
+                <div
+                  className="relative w-full rounded-2xl bg-[#090d16]/95 border backdrop-blur-xl shadow-xl p-4 sm:p-5 grid grid-cols-1 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.8fr)_minmax(0,1fr)] gap-4 md:gap-0 items-center transition-all duration-300 hover:border-white/25 overflow-hidden"
+                  style={{
+                    boxShadow: `0 8px 30px -8px rgba(0,0,0,0.85), 0 0 16px -4px ${darkBorderColor}`,
+                    borderColor: darkBorderColor,
+                  }}
+                >
+                  {/* Left & Right Edge Ticket Crimp */}
+                  <div className="hidden md:block absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-6 rounded-r-full bg-[#050816] border-r border-y border-white/15 z-20 pointer-events-none" />
+                  <div className="hidden md:block absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-3.5 h-6 rounded-l-full bg-[#050816] border-l border-y border-white/15 z-20 pointer-events-none" />
+
+                  {/* LEFT: Date Stub & Opponent */}
+                  <div className="flex items-center gap-3.5 pr-0 md:pr-4 md:border-r border-dashed border-white/15 min-w-0">
+                    <div
+                      className="flex flex-col items-center justify-center w-12 h-12 rounded-xl bg-white/[0.03] border shrink-0 shadow-inner"
+                      style={{ borderColor: darkBorderColor }}
+                    >
+                      <span className="text-[9px] font-mono font-bold leading-none" style={{ color: darkTextColor }}>{month}</span>
+                      <span className="text-xl font-black text-white font-mono leading-tight">{day}</span>
+                      <span className="text-[8px] font-mono text-white/40 leading-none">{year}</span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-10 h-10 rounded-xl bg-black/50 border border-white/10 p-1 flex items-center justify-center shrink-0 shadow">
+                        <TeamLogo team={m.vsTeam} size="w-7 h-7" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[10px] font-mono text-white/40 uppercase tracking-wider">vs Opponent</div>
+                        <div className="text-sm font-black text-white truncate">{m.vsTeam}</div>
+                        <div className="text-[9px] text-white/45 truncate max-w-[170px] mt-0.5">{m.venue?.split(",")[0]}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CENTER: Telemetry */}
+                  <div className="flex flex-col px-0 md:px-5 md:border-r border-dashed border-white/15 min-w-0 gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span
+                        className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider flex items-center gap-1 border"
+                        style={{
+                          backgroundColor: darkBadgeBg,
+                          color: darkTextColor,
+                          borderColor: darkBorderColor,
+                        }}
+                      >
+                        {m.result} {m.margin ? `· ${m.margin}` : ""}
+                      </span>
+                      <span className="text-[9px] font-mono text-white/40">IPL {m.season} Season</span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div className="bg-black/40 border border-white/5 rounded-xl p-2 min-w-0">
+                        <span className="text-[8px] font-mono uppercase text-white/40 block leading-none mb-1">Batting</span>
+                        {m.batting ? (
+                          <div>
+                            <div className="font-mono font-black text-white flex items-baseline gap-1">
+                              <span className="text-base text-cyan-300">{m.batting.runs}</span>
+                              <span className="text-[10px] text-white/50">({m.batting.balls}b)</span>
+                              {m.batting.notOut && <span className="text-emerald-400 font-bold text-xs">*</span>}
+                            </div>
+                            <div className="text-[8px] font-mono text-white/50 mt-0.5 truncate">
+                              {m.batting.fours}×4 · {m.batting.sixes}×6 · SR {m.batting.sr?.toFixed(1)}
+                            </div>
+                          </div>
+                        ) : (
+                          <span className="text-[10px] font-mono text-white/30 uppercase">Did Not Bat</span>
+                        )}
+                      </div>
+
+                      <div className="bg-black/40 border border-white/5 rounded-xl p-2 min-w-0">
+                        <span className="text-[8px] font-mono uppercase text-white/40 block leading-none mb-1">Bowling</span>
+                        {m.bowling ? (
+                          <div>
+                            <div className="font-mono font-black text-white flex items-baseline gap-1">
+                              <span className="text-base text-amber-300">{m.bowling.wickets}/{m.bowling.runs}</span>
+                              <span className="text-[10px] text-white/50">({m.bowling.overs} ov)</span>
+                            </div>
+                            <div className="text-[8px] font-mono text-white/50 mt-0.5 truncate">
+                              Econ {m.bowling.econ?.toFixed(1)} · {m.bowling.dots ?? 0} dots
+                            </div>
+                          </div>
+                        ) : (
+                          <span className="text-[10px] font-mono text-white/30 uppercase">Did Not Bowl</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* RIGHT: Actions */}
+                  <div className="flex flex-col items-start md:items-end justify-center pl-0 md:pl-5 min-w-0 gap-2">
+                    <div className="text-[9px] font-mono text-white/40 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                      <span>TICKET #{m.matchId}</span>
+                    </div>
+
+                    <Link
+                      href={m.matchId ? `/match/${m.matchId}` : "/scores"}
+                      style={{ backgroundColor: darkButtonBg }}
+                      className="w-full sm:w-auto px-4 py-2 rounded-xl text-white/95 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md transition-all cursor-pointer hover:opacity-90"
+                      title="Open full match scorecard"
+                    >
+                      <span>Match Scorecard</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </Link>
+
+                    <Link
+                      href={m.matchId ? `/scores?matchId=${m.matchId}` : "/scores"}
+                      className="text-[9px] font-mono text-cyan-300/80 hover:text-cyan-300 hover:underline flex items-center gap-1"
+                    >
+                      <span>Open in Scores Tab</span>
+                      <span>➔</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+      {/* Ticket Count & Pagination Controls */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 text-[10px] font-mono text-white/50 border-t border-white/5">
+            <span>Showing {displayMatches.length} of {filteredMatches.length} match performance tickets</span>
+            {filteredMatches.length > visibleCount && (
+              <button
+                onClick={() => setVisibleCount(filteredMatches.length)}
+                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-black uppercase tracking-wider text-cyan-300 transition-all cursor-pointer"
+              >
+                View All {filteredMatches.length} Match Tickets
+              </button>
+            )}
+          </div>
+        </>
+      )}
+    </GlassCard>
   );
 }
+
 const tooltipStyle = {
   background: "hsl(232 35% 8%)",
   border: "1px solid rgba(255,255,255,0.08)",

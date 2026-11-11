@@ -1,0 +1,201 @@
+{
+ "articleId": "cf-srh-065",
+ "generatedAt": "2026-10-26T04:22:27.608Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "he-early": {
+   "value": 163,
+   "display": "163",
+   "label": "Average first-innings score at Hyderabad, first three seasons in the data",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008, 2011, 2012",
+   "sampleSize": {
+    "n": 18,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, AVG(i.runs) avg1, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Rajiv Gandhi%') GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 9 innings",
+    "passed": true,
+    "detail": "n = 18"
+   }
+  },
+  "he-late": {
+   "value": 202,
+   "display": "202",
+   "label": "Average first-innings score at Hyderabad, last three seasons in the data",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024, 2025, 2026",
+   "sampleSize": {
+    "n": 19,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, AVG(i.runs) avg1, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Rajiv Gandhi%') GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 9 innings",
+    "passed": true,
+    "detail": "n = 19"
+   }
+  },
+  "he-early-y": {
+   "value": "2008–2012",
+   "display": "2008–2012",
+   "label": "First three seasons",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 3,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, AVG(i.runs) avg1, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Rajiv Gandhi%') GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "taken from the table",
+    "passed": true
+   }
+  },
+  "he-late-y": {
+   "value": "2024–2026",
+   "display": "2024–2026",
+   "label": "Last three seasons",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season table",
+   "sampleSize": {
+    "n": 3,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, AVG(i.runs) avg1, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Rajiv Gandhi%') GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "taken from the table",
+    "passed": true
+   }
+  },
+  "he-w1": {
+   "value": 61,
+   "display": "61%",
+   "label": "SRH home win rate, 2013–2023",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Decided home matches",
+   "sampleSize": {
+    "n": 51,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 51"
+   }
+  },
+  "he-w2": {
+   "value": 67,
+   "display": "67%",
+   "label": "SRH home win rate, 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Decided home matches",
+   "sampleSize": {
+    "n": 18,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "sample-size floor ≥ 5 matches",
+    "passed": true,
+    "detail": "n = 18"
+   }
+  }
+ },
+ "tables": {
+  "he-series": {
+   "label": "Average first-innings score at Hyderabad by season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams, seasons with at least three matches at the ground",
+   "sampleSize": {
+    "n": 90,
+    "unit": "innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, AVG(i.runs) avg1, COUNT(*) n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Rajiv Gandhi%') GROUP BY year ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "avgFirstInnings": 173,
+     "matches": 7
+    },
+    {
+     "season": "2011",
+     "avgFirstInnings": 161,
+     "matches": 7
+    },
+    {
+     "season": "2012",
+     "avgFirstInnings": 154,
+     "matches": 4
+    },
+    {
+     "season": "2013",
+     "avgFirstInnings": 135,
+     "matches": 8
+    },
+    {
+     "season": "2014",
+     "avgFirstInnings": 166,
+     "matches": 4
+    },
+    {
+     "season": "2015",
+     "avgFirstInnings": 156,
+     "matches": 4
+    },
+    {
+     "season": "2016",
+     "avgFirstInnings": 144,
+     "matches": 7
+    },
+    {
+     "season": "2017",
+     "avgFirstInnings": 165,
+     "matches": 8
+    },
+    {
+     "season": "2018",
+     "avgFirstInnings": 152,
+     "matches": 7
+    },
+    {
+     "season": "2019",
+     "avgFirstInnings": 172,
+     "matches": 8
+    },
+    {
+     "season": "2023",
+     "avgFirstInnings": 174,
+     "matches": 7
+    },
+    {
+     "season": "2024",
+     "avgFirstInnings": 205,
+     "matches": 6
+    },
+    {
+     "season": "2025",
+     "avgFirstInnings": 192,
+     "matches": 6
+    },
+    {
+     "season": "2026",
+     "avgFirstInnings": 209,
+     "matches": 7
+    }
+   ]
+  }
+ }
+}

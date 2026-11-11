@@ -1,0 +1,166 @@
+{
+ "articleId": "cf-lsg-087",
+ "generatedAt": "2026-10-26T04:27:54.430Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "un-n": {
+   "value": 8,
+   "display": "8",
+   "label": "LSG batters ranked",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Eight busiest, 2024–2026",
+   "sampleSize": {
+    "n": 8,
+    "unit": "batters"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (13) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "validation": {
+    "method": "sample-size floor ≥ 4 batters",
+    "passed": true,
+    "detail": "n = 8"
+   }
+  },
+  "un-ov": {
+   "value": 7,
+   "display": "7",
+   "label": "Adjacent pairs in the ranking whose intervals overlap",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bootstrap intervals",
+   "sampleSize": {
+    "n": 7,
+    "unit": "pairs"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (13) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "un-pairs": {
+   "value": 7,
+   "display": "7",
+   "label": "Adjacent pairs in the ranking",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Ranking",
+   "sampleSize": {
+    "n": 7,
+    "unit": "pairs"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (13) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "un-wide": {
+   "value": "MP Stoinis",
+   "display": "MP Stoinis",
+   "label": "Batter with the widest interval",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bootstrap intervals",
+   "sampleSize": {
+    "n": 14,
+    "unit": "innings"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (13) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "validation": {
+    "method": "max width",
+    "passed": true
+   }
+  },
+  "un-wide-w": {
+   "value": 51,
+   "display": "51",
+   "label": "Width of that interval",
+   "unit": "strike-rate points",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "95% bootstrap",
+   "sampleSize": {
+    "n": 14,
+    "unit": "innings"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (13) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "validation": {
+    "method": "plausibility range 0–300 for width",
+    "passed": true,
+    "detail": "value 51.20955989507432"
+   }
+  }
+ },
+ "tables": {
+  "un-table": {
+   "label": "LSG batters' strike rates with 95% bootstrap intervals, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Eight busiest batters; innings resampled 2,000 times",
+   "sampleSize": {
+    "n": 190,
+    "unit": "innings"
+   },
+   "query": "SELECT pl.name, f.runs, f.balls_faced balls FROM fact_batting_innings f JOIN innings i ON i.innings_id = f.innings_id JOIN matches m ON m.match_id = i.match_id JOIN players pl ON pl.player_id = f.striker_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (13) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 AND f.balls_faced > 0",
+   "rows": [
+    {
+     "batter": "N Pooran",
+     "strikeRate": 172.2,
+     "low": 151.6,
+     "high": 190.7,
+     "innings": 42
+    },
+    {
+     "batter": "MR Marsh",
+     "strikeRate": 163.5,
+     "low": 148.5,
+     "high": 176.6,
+     "innings": 26
+    },
+    {
+     "batter": "MP Stoinis",
+     "strikeRate": 147.5,
+     "low": 119.7,
+     "high": 170.9,
+     "innings": 14
+    },
+    {
+     "batter": "A Badoni",
+     "strikeRate": 145.9,
+     "low": 131.3,
+     "high": 157.9,
+     "innings": 33
+    },
+    {
+     "batter": "AK Markram",
+     "strikeRate": 145.1,
+     "low": 133.1,
+     "high": 155.2,
+     "innings": 24
+    },
+    {
+     "batter": "KL Rahul",
+     "strikeRate": 136.1,
+     "low": 122.6,
+     "high": 148.5,
+     "innings": 14
+    },
+    {
+     "batter": "RR Pant",
+     "strikeRate": 135.7,
+     "low": 113.1,
+     "high": 158.6,
+     "innings": 26
+    },
+    {
+     "batter": "Q de Kock",
+     "strikeRate": 134.4,
+     "low": 116.7,
+     "high": 145.4,
+     "innings": 11
+    }
+   ]
+  }
+ }
+}

@@ -2,30 +2,39 @@
 // and Dugout pages, stats, scores, player and match pages, charts and logos.
 // Change a franchise here and it changes everywhere.
 //
-// Each accent clears WCAG AA text contrast (4.5:1) on the dark page background,
-// so it reads as text as well as a fill. Historical names are included so that
-// old seasons get the same colour as the franchise they belong to.
+// Background synced with the CricField stadium brand image (#020814).
+// Accents pinpoint-matched with the official franchise crest logos.
 
-export const PAGE_BG = "#0B1020";
-export const FALLBACK_ACCENT = "#A78BFA";
+export const PAGE_BG = "#020814";
+export const FALLBACK_ACCENT = "#8BA7FF";
 
 export interface FranchisePalette {
-  /** Main colour: text, borders, bars, lines. */
+  /** Main colour: text, borders, bars, lines, logo accents. */
   accent: string;
-  /** Second colour for gradients and highlights. */
+  /** Second colour for gradients, highlights and secondary emblems. */
   secondary: string;
 }
 
 const PALETTE: Record<string, FranchisePalette> = {
-  "Chennai Super Kings": { accent: "#FFD11A", secondary: "#86B4D8" },
-  "Mumbai Indians": { accent: "#3377FF", secondary: "#D4AF37" },
-  "Royal Challengers Bengaluru": { accent: "#F03C3C", secondary: "#D9B47A" },
-  "Kolkata Knight Riders": { accent: "#B56BEF", secondary: "#F59E0B" },
+  // CSK: Canary Yellow & Lion Royal Blue from official crest
+  "Chennai Super Kings": { accent: "#FFD11A", secondary: "#155BA6" },
+  // MI: Mumbai Indians Royal Blue & Championship Gold
+  "Mumbai Indians": { accent: "#004BA0", secondary: "#D4AF37" },
+  // RCB: Challengers Crimson Red & Royal Gold from lion crest
+  "Royal Challengers Bengaluru": { accent: "#EC1C24", secondary: "#E2A838" },
+  // KKR: Knight Imperial Purple & Championship Gold
+  "Kolkata Knight Riders": { accent: "#B56BEF", secondary: "#F2A900" },
+  // SRH: Sunrisers Blazing Orange & Rising Gold
   "Sunrisers Hyderabad": { accent: "#FF661A", secondary: "#EAB308" },
-  "Rajasthan Royals": { accent: "#E8308C", secondary: "#3B82F6" },
-  "Delhi Capitals": { accent: "#38BDF8", secondary: "#EF4444" },
-  "Punjab Kings": { accent: "#FF5A6E", secondary: "#FBBF24" },
-  "Gujarat Titans": { accent: "#34D399", secondary: "#D97706" },
+  // RR: Royal Pink & Majestic Blue from royal shield
+  "Rajasthan Royals": { accent: "#EA1A85", secondary: "#254AA5" },
+  // DC: Delhi Capitals Imperial Blue & Roaring Crimson
+  "Delhi Capitals": { accent: "#004C97", secondary: "#D71920" },
+  // PBKS: Punjab Kings Sadda Crimson & Golden Shield
+  "Punjab Kings": { accent: "#ED1B24", secondary: "#D4AF37" },
+  // GT: Gujarat Titans Mint Teal & Championship Gold
+  "Gujarat Titans": { accent: "#34D399", secondary: "#E5C465" },
+  // LSG: Lucknow Super Giants Express Cyan & Flame Orange
   "Lucknow Super Giants": { accent: "#22D3EE", secondary: "#F97316" },
   // Former franchises
   "Deccan Chargers": { accent: "#818CF8", secondary: "#C4B5FD" },

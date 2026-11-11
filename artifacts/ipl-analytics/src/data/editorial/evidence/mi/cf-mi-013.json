@@ -1,0 +1,240 @@
+{
+ "articleId": "cf-mi-013",
+ "generatedAt": "2026-10-26T04:18:55.037Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "we-c-econ": {
+   "value": -0.36,
+   "display": "-0.36",
+   "label": "Correlation between a bowling innings' economy and winning (IPL)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowling innings of at least ten overs, matches with a result",
+   "sampleSize": {
+    "n": 2446,
+    "unit": "innings"
+   },
+   "query": "SELECT m.match_id, i.bowling_team_id bo, CASE WHEN m.winner_id = i.bowling_team_id THEN 1 ELSE 0 END won, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND m.winner_id IS NOT NULL GROUP BY m.match_id, i.innings_id",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 innings",
+    "passed": true,
+    "detail": "n = 2446"
+   }
+  },
+  "we-c-wk": {
+   "value": 0.52,
+   "display": "0.52",
+   "label": "Correlation between wickets taken in a bowling innings and winning (IPL)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "As above",
+   "sampleSize": {
+    "n": 2446,
+    "unit": "innings"
+   },
+   "query": "SELECT m.match_id, i.bowling_team_id bo, CASE WHEN m.winner_id = i.bowling_team_id THEN 1 ELSE 0 END won, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND m.winner_id IS NOT NULL GROUP BY m.match_id, i.innings_id",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 innings",
+    "passed": true,
+    "detail": "n = 2446"
+   }
+  },
+  "we-best-name": {
+   "value": "JJ Bumrah (2024)",
+   "display": "JJ Bumrah (2024)",
+   "label": "MI's most economical bowler-season since 2022 (min. five wickets)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 120 balls and five wickets",
+   "sampleSize": {
+    "n": 311,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (4) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY pl.name, year HAVING balls >= 120",
+   "validation": {
+    "method": "rank by economy",
+    "passed": true
+   }
+  },
+  "we-best-econ": {
+   "value": 6.48,
+   "display": "6.48",
+   "label": "JJ Bumrah economy in 2024",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "MI, 2024",
+   "sampleSize": {
+    "n": 311,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (4) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY pl.name, year HAVING balls >= 120",
+   "validation": {
+    "method": "sample-size floor ≥ 120 balls",
+    "passed": true,
+    "detail": "n = 311"
+   }
+  }
+ },
+ "tables": {
+  "we-scatter": {
+   "label": "MI bowler-seasons since 2022: economy vs strike rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Bowler-seasons with at least 120 legal balls",
+   "sampleSize": {
+    "n": 6050,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (4) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY pl.name, year HAVING balls >= 120",
+   "rows": [
+    {
+     "bowler": "AM Ghazanfar (2026)",
+     "economy": 10.02,
+     "ballsPerWicket": 15.5
+    },
+    {
+     "bowler": "Akash Madhwal (2023)",
+     "economy": 8.59,
+     "ballsPerWicket": 10.9
+    },
+    {
+     "bowler": "Ashwani Kumar (2025)",
+     "economy": 11.32,
+     "ballsPerWicket": 11.2
+    },
+    {
+     "bowler": "C Bosch (2026)",
+     "economy": 9.67,
+     "ballsPerWicket": 10.1
+    },
+    {
+     "bowler": "C Green (2023)",
+     "economy": 9.5,
+     "ballsPerWicket": 38
+    },
+    {
+     "bowler": "CJ Jordan (2023)",
+     "economy": 10.77,
+     "ballsPerWicket": 44
+    },
+    {
+     "bowler": "DL Chahar (2025)",
+     "economy": 9.17,
+     "ballsPerWicket": 22.4
+    },
+    {
+     "bowler": "DL Chahar (2026)",
+     "economy": 10.39,
+     "ballsPerWicket": 19.1
+    },
+    {
+     "bowler": "DR Sams (2022)",
+     "economy": 8.81,
+     "ballsPerWicket": 19.4
+    },
+    {
+     "bowler": "G Coetzee (2024)",
+     "economy": 10.18,
+     "ballsPerWicket": 15.5
+    },
+    {
+     "bowler": "HH Pandya (2024)",
+     "economy": 10.75,
+     "ballsPerWicket": 19.6
+    },
+    {
+     "bowler": "HH Pandya (2025)",
+     "economy": 9.77,
+     "ballsPerWicket": 15
+    },
+    {
+     "bowler": "HH Pandya (2026)",
+     "economy": 11.43,
+     "ballsPerWicket": 34
+    },
+    {
+     "bowler": "JC Archer (2023)",
+     "economy": 9.5,
+     "ballsPerWicket": 60
+    },
+    {
+     "bowler": "JD Unadkat (2022)",
+     "economy": 9.5,
+     "ballsPerWicket": 20
+    },
+    {
+     "bowler": "JJ Bumrah (2022)",
+     "economy": 7.18,
+     "ballsPerWicket": 21.3
+    },
+    {
+     "bowler": "JJ Bumrah (2024)",
+     "economy": 6.48,
+     "ballsPerWicket": 15.6
+    },
+    {
+     "bowler": "JJ Bumrah (2025)",
+     "economy": 6.68,
+     "ballsPerWicket": 15.8
+    },
+    {
+     "bowler": "JJ Bumrah (2026)",
+     "economy": 8.37,
+     "ballsPerWicket": 73.5
+    },
+    {
+     "bowler": "JP Behrendorff (2023)",
+     "economy": 9.21,
+     "ballsPerWicket": 18
+    },
+    {
+     "bowler": "K Kartikeya (2023)",
+     "economy": 8.73,
+     "ballsPerWicket": 31.2
+    },
+    {
+     "bowler": "M Ashwin (2022)",
+     "economy": 7.86,
+     "ballsPerWicket": 19.3
+    },
+    {
+     "bowler": "MJ Santner (2025)",
+     "economy": 7.92,
+     "ballsPerWicket": 23.7
+    },
+    {
+     "bowler": "N Thushara (2024)",
+     "economy": 9.88,
+     "ballsPerWicket": 19.5
+    },
+    {
+     "bowler": "PP Chawla (2023)",
+     "economy": 8.11,
+     "ballsPerWicket": 16.6
+    },
+    {
+     "bowler": "PP Chawla (2024)",
+     "economy": 8.91,
+     "ballsPerWicket": 16.2
+    },
+    {
+     "bowler": "RP Meredith (2022)",
+     "economy": 8.43,
+     "ballsPerWicket": 21
+    },
+    {
+     "bowler": "SN Thakur (2026)",
+     "economy": 12.27,
+     "ballsPerWicket": 11
+    },
+    {
+     "bowler": "TA Boult (2025)",
+     "economy": 8.97,
+     "ballsPerWicket": 15.7
+    }
+   ]
+  }
+ }
+}

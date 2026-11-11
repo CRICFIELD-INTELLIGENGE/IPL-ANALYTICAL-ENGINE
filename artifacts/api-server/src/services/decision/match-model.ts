@@ -143,8 +143,10 @@ interface Profiles {
 const profileCache = new Map<number, Profiles>();
 const RECENCY = 0.6;
 
-export function bowlerType(pid: number): 0 | 1 {
-  return getPlayerMeta().get(pid)?.bowlingType === "spin" ? 1 : 0;
+/** 0 pace, 1 spin, null when the bowler's type is unknown (Day 6: no longer assumed to be pace). */
+export function bowlerType(pid: number): 0 | 1 | null {
+  const t = getPlayerMeta().get(pid)?.bowlingType;
+  return t === "spin" ? 1 : t === "pace" ? 0 : null;
 }
 
 /** Recency-weighted counts using seasons ≤ asOf only. */
@@ -158,7 +160,7 @@ export function getProfiles(asOfSeason?: number): Profiles {
   const bowl = new Map<number, Float64Array>();
   const leagueBat = new Float64Array(3 * 2 * BF);
   const leagueBowl = new Float64Array(3 * WF);
-  const typeCache = new Map<number, 0 | 1>();
+  const typeCache = new Map<number, 0 | 1 | null>();
   const typeOf = (pid: number) => { let t = typeCache.get(pid); if (t === undefined) { t = bowlerType(pid); typeCache.set(pid, t); } return t; };
   for (let i = 0; i < c.n; i++) {
     const s = c.season[i];
@@ -168,8 +170,9 @@ export function getProfiles(asOfSeason?: number): Profiles {
     const f = c.flags[i];
     const runs = c.batterRuns[i];
     const bnd = runs === 4 || runs === 6 ? 1 : 0;
-    if (f & F_FACED) {
-      const ty = typeOf(c.bowler[i]);
+    const ty = f & F_FACED ? typeOf(c.bowler[i]) : null;
+    // Batter profiles are split by bowler type; a ball from a bowler of unknown type has no side to go to.
+    if (ty !== null) {
       let a = bat.get(c.batter[i]);
       if (!a) { a = new Float64Array(3 * 2 * BF); bat.set(c.batter[i], a); }
       const out = c.outPlayer[i] === c.batter[i] ? 1 : 0;
@@ -239,8 +242,13 @@ const ratio = (num: number, den: number, lgNum: number, lgDen: number) => {
  * Batter multipliers against a bowler type in a phase. `null` is a league-average
  * batter; a player with no batting record bats like the pooled tail.
  */
-export function batterMult(p: Profiles, pid: number | null, phase: number, type: 0 | 1): BatMult {
+export function batterMult(p: Profiles, pid: number | null, phase: number, type: 0 | 1 | null): BatMult {
   if (pid === null) return { out: 1, bnd: 1, dot: 1 };
+  if (type === null) {
+    // Unknown bowling type: the batter's pace and spin multipliers weighted equally, not the pace one alone.
+    const a = batterMult(p, pid, phase, 0), b = batterMult(p, pid, phase, 1);
+    return { out: (a.out + b.out) / 2, bnd: (a.bnd + b.bnd) / 2, dot: (a.dot + b.dot) / 2 };
+  }
   const a = p.bat.get(pid) ?? p.tailBat;
   const L = p.leagueBat;
   const balls = a[bIdx(phase, type, 0)], lb = L[bIdx(phase, type, 0)];

@@ -1,0 +1,139 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-gt-024",
+ "planId": "cf-gt-024",
+ "franchise": "GT",
+ "aspect": "tactical",
+ "title": "Batting Order as a Decision Tree: Who Should Gujarat Titans Promote and Why?",
+ "slug": "gt-batting-order-as-a-decision-tree-who-should-gt-promote-and-why",
+ "dek": "Should Gujarat Titans write their batting order in ink or in pencil? How often their batters move positions shows how far they already treat it as a decision tree.",
+ "excerpt": "Since 2024 Gujarat Titans' batting order has been more fixed than the rest of the league's. The case for a flexible order rests on matching batters to the match situation.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "GT"
+ ],
+ "players": [
+  "B Sai Sudharsan",
+  "R Tewatia",
+  "M Shahrukh Khan"
+ ],
+ "seasons": [
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "Regular GT batters used {{ev:bo-t}} batting positions each on average since 2024; across the rest of the IPL the figure is {{ev:bo-l}}.",
+  "{{ev:bo-most}} moved the most, batting in {{ev:bo-most-n}} different positions.",
+  "The order is more fixed than the league norm."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Ink or Pencil",
+   "body": [
+    "A traditional batting order is fixed: each batter has a number. A decision-tree order uses triggers instead: if a wicket falls before the sixth over, send the anchor; if the platform is strong at the twelfth, send the hitter.",
+    "Since 2024 regular GT batters have each batted in {{ev:bo-t}} positions on average, against {{ev:bo-l}} for the rest of the league. Gujarat Titans' order has been more fixed than the league's."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Who Moves",
+   "body": [
+    "{{ev:bo-most}} has been the most mobile, batting in {{ev:bo-most-n}} positions. The table lists every regular batter by positions used.",
+    "Movement on its own is neither good nor bad: what matters is whether each move follows a rule the batters understand."
+   ],
+   "chartIds": [
+    "bo-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Building the Tree",
+   "body": [
+    "The decision tree needs a few branches: wickets lost at the end of the powerplay, run rate at halfway, and the bowling still to come. Each branch names the next batter.",
+    "For GT, writing those triggers down before the season makes flexibility a plan rather than an improvisation."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "The Cost of Uncertainty",
+   "body": [
+    "Batters who do not know when they will bat can find it harder to prepare. Some evidence of that would show up as lower strike rates for batters who move often, but this analysis has not tested it.",
+    "{{hyp:certainty}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: A Tree With Few Branches",
+   "body": [
+    "Gujarat Titans should use a small number of clear triggers rather than a fixed order or constant improvisation.",
+    "Tracking each batter's output by position and by trigger would show which branches pay."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "bo-chart",
+   "type": "bar",
+   "title": "GT batters by positions used",
+   "subtitle": "2024\u20132026, minimum eight innings",
+   "table": "bo-flex",
+   "xKey": "batter",
+   "series": [
+    {
+     "key": "positions",
+     "label": "Distinct positions"
+    }
+   ],
+   "unit": "positions",
+   "takeaway": "Gujarat Titans' order has been more fixed than the league's.",
+   "ariaLabel": "Horizontal bar chart of the number of batting positions used by each regular GT batter since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "certainty",
+   "statement": "Hypothesis: batters who move positions often score more slowly than when they bat in a fixed position.",
+   "whyUnverified": "Within-batter comparisons by position stability have not been run.",
+   "howToTest": "Compare each batter's strike rate in his most common position with his strike rate elsewhere."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "An Gujarat Titans batter walking out to bat.",
+   "wanted": "B Sai Sudharsan walking out to bat."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-gt-002",
+  "cf-gt-005",
+  "cf-gt-029"
+ ],
+ "seo": {
+  "metaTitle": "Batting order as a decision tree for GT",
+  "metaDescription": "How often Gujarat Titans' batters change positions compared with the IPL since 2024, and how to turn flexibility into rules."
+ },
+ "methodology": "Regulation innings only (super overs excluded); win rates use matches with a result. Generated from the CricField warehouse by scripts/editorial/engine. Position is the order of first arrival at the crease; batters with at least eight innings, 2024\u20132026.",
+ "generator": "engine:v1"
+}

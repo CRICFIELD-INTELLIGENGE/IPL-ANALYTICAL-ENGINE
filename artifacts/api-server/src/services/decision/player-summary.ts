@@ -9,6 +9,7 @@ import { queryAll } from "./db";
 import { estimateImpact, round, type ImpactEstimate } from "./impact-model";
 import {
   getPlayerMeta,
+  registryIdForBio,
   getSeasonLines,
   getSeasons,
   type PlayerMeta,
@@ -105,11 +106,22 @@ export function resolvePlayerId(key: string): number | null {
     key,
   )[0];
   if (row) return row.player_id;
+  // A profile page's bio key or bio display name ("PW Hasaranga" for PWH de Silva), through the verified identity index.
+  const cid = registryIdForBio(key);
+  if (cid) {
+    const viaBio = queryAll<{ player_id: number }>("SELECT player_id FROM players WHERE cricsheet_id = ? LIMIT 1", cid)[0];
+    if (viaBio) return viaBio.player_id;
+  }
   if (!key.includes("-")) return null;
   const flat = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
   const want = flat(key);
   const hits = [...getPlayerMeta().values()].filter((m) => flat(m.name) === want || (m.fullName !== null && flat(m.fullName) === want));
-  return hits.length === 1 ? hits[0].playerId : null;
+  if (hits.length === 1) return hits[0].playerId;
+  // A 2026 squad stub (cricsheet_id "json:N", no IPL appearance) can carry the full name of a registered player it
+  // duplicates ("Wanindu Hasaranga" = PWH de Silva). One registered hit plus stubs resolves to the registered player.
+  const stubs = new Set(queryAll<{ player_id: number }>("SELECT player_id FROM players WHERE cricsheet_id LIKE 'json:%'").map((r) => r.player_id));
+  const registered = hits.filter((m) => !stubs.has(m.playerId));
+  return hits.length > 1 && registered.length === 1 ? registered[0].playerId : null;
 }
 
 export interface PlayerSearchHit {

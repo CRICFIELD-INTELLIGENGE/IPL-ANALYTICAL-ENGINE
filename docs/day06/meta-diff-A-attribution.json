@@ -1,0 +1,389 @@
+[
+ {
+  "id": 48,
+  "name": "Navdeep Singh",
+  "f": "bowlingStyle",
+  "old": "Right arm Medium",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "NB Singh / Nathu Bharat Singh"
+ },
+ {
+  "id": 48,
+  "name": "Navdeep Singh",
+  "f": "battingHand",
+  "old": "R",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "NB Singh / Nathu Bharat Singh"
+ },
+ {
+  "id": 55,
+  "name": "VK Sharma",
+  "f": "bowlingStyle",
+  "old": "Legbreak Googly",
+  "new": null,
+  "kind": "bio exact",
+  "matched": "VK Sharma / Vivrant Sharma"
+ },
+ {
+  "id": 55,
+  "name": "VK Sharma",
+  "f": "battingHand",
+  "old": "L",
+  "new": null,
+  "kind": "bio exact",
+  "matched": "VK Sharma / Vivrant Sharma"
+ },
+ {
+  "id": 114,
+  "name": "Vishnu Vinod",
+  "f": "bowlingStyle",
+  "old": "Legbreak Googly",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "CV Varun / Varun Chakravarthy Vinod"
+ },
+ {
+  "id": 366,
+  "name": "JM Sharma",
+  "f": "bowlingStyle",
+  "old": "Right arm Fast medium",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "Joginder Sharma / Joginder Sharma"
+ },
+ {
+  "id": 423,
+  "name": "Amit Sharma",
+  "f": "bowlingStyle",
+  "old": "RIGHT ARM Fast",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "Ankit Sharma / Ankit Nagendra Sharma"
+ },
+ {
+  "id": 423,
+  "name": "Amit Sharma",
+  "f": "battingHand",
+  "old": "R",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "Ankit Sharma / Ankit Nagendra Sharma"
+ },
+ {
+  "id": 445,
+  "name": "Sonu Yadav",
+  "f": "bowlingStyle",
+  "old": "Right arm Medium, Right arm Offbreak",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "SA Yadav / Suryakumar Ashok Yadav"
+ },
+ {
+  "id": 445,
+  "name": "Sonu Yadav",
+  "f": "battingHand",
+  "old": "R",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "SA Yadav / Suryakumar Ashok Yadav"
+ },
+ {
+  "id": 465,
+  "name": "Tanay Thyagarajan",
+  "f": "bowlingStyle",
+  "old": "Slow left-arm orthodox",
+  "new": null,
+  "kind": "bio exact",
+  "matched": "T Thyagarajan / Tanay Thyagarajan"
+ },
+ {
+  "id": 465,
+  "name": "Tanay Thyagarajan",
+  "f": "battingHand",
+  "old": "L",
+  "new": null,
+  "kind": "bio exact",
+  "matched": "T Thyagarajan / Tanay Thyagarajan"
+ },
+ {
+  "id": 479,
+  "name": "Ashutosh Sharma",
+  "f": "bowlingStyle",
+  "old": "RIGHT ARM Fast",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "Ankit Sharma / Ankit Nagendra Sharma"
+ },
+ {
+  "id": 532,
+  "name": "Amit Rana",
+  "f": "bowlingStyle",
+  "old": "RIGHT ARM Off Spin",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / Arpit Rana"
+ },
+ {
+  "id": 532,
+  "name": "Amit Rana",
+  "f": "battingHand",
+  "old": "L",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / Arpit Rana"
+ },
+ {
+  "id": 553,
+  "name": "B Muzarabani",
+  "f": "bowlingStyle",
+  "old": "RIGHT ARM Fast",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / Blessing Muzarabani"
+ },
+ {
+  "id": 553,
+  "name": "B Muzarabani",
+  "f": "battingHand",
+  "old": "R",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / Blessing Muzarabani"
+ },
+ {
+  "id": 554,
+  "name": "FH Allen",
+  "f": "bowlingStyle",
+  "old": "Slow Left arm Orthodox",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "FA Allen / Fabian Anthony Allen"
+ },
+ {
+  "id": 555,
+  "name": "Brijesh Sharma",
+  "f": "bowlingStyle",
+  "old": "Slow Left arm Orthodox",
+  "new": "RIGHT ARM Fast",
+  "kind": "bio initial+surname",
+  "matched": "Bipul Sharma / Bipul Sharma"
+ },
+ {
+  "id": 558,
+  "name": "MD Choudhary",
+  "f": "bowlingStyle",
+  "old": "Left arm Medium",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "Mukesh Choudhary / Mukesh Choudhary"
+ },
+ {
+  "id": 560,
+  "name": "Shivang Kumar",
+  "f": "bowlingStyle",
+  "old": "Right arm Medium fast",
+  "new": "LEFT ARM Slow Unorthodox",
+  "kind": "bio initial+surname",
+  "matched": "Sumit Kumar / Sumit Kumar"
+ },
+ {
+  "id": 564,
+  "name": "GF Linde",
+  "f": "bowlingStyle",
+  "old": "LEFT ARM Slow Orthodox",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / George Linde"
+ },
+ {
+  "id": 564,
+  "name": "GF Linde",
+  "f": "battingHand",
+  "old": "L",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / George Linde"
+ },
+ {
+  "id": 575,
+  "name": "SU Parakh",
+  "f": "bowlingStyle",
+  "old": "RIGHT ARM Off Spin",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / Sahil Parakh"
+ },
+ {
+  "id": 575,
+  "name": "SU Parakh",
+  "f": "battingHand",
+  "old": "L",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / Sahil Parakh"
+ },
+ {
+  "id": 583,
+  "name": "SR Dubey",
+  "f": "bowlingStyle",
+  "old": "Right arm Offbreak",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "SB Dubey / Shubham Badriprasad Dubey"
+ },
+ {
+  "id": 586,
+  "name": "JM Cox",
+  "f": "battingHand",
+  "old": "R",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / Jordan Cox"
+ },
+ {
+  "id": 625,
+  "name": "Aleem Dar",
+  "f": "bowlingStyle",
+  "old": "RIGHT ARM Fast Medium",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / Auqib Dar"
+ },
+ {
+  "id": 625,
+  "name": "Aleem Dar",
+  "f": "battingHand",
+  "old": "R",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / Auqib Dar"
+ },
+ {
+  "id": 636,
+  "name": "M Rawat",
+  "f": "bowlingStyle",
+  "old": "RIGHT ARM Off Spin",
+  "new": null,
+  "kind": "auction initial+surname",
+  "matched": " / Mayank Rawat"
+ },
+ {
+  "id": 728,
+  "name": "Jasbir Singh",
+  "f": "bowlingStyle",
+  "old": "Right arm Medium",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "Jaskaran Singh / Jaskaran Singh Buttar"
+ },
+ {
+  "id": 728,
+  "name": "Jasbir Singh",
+  "f": "battingHand",
+  "old": "R",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "Jaskaran Singh / Jaskaran Singh Buttar"
+ },
+ {
+  "id": 743,
+  "name": "MR Singh",
+  "f": "bowlingStyle",
+  "old": "RIGHT ARM Fast Medium",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "Monu Kumar / Monu Kumar Singh"
+ },
+ {
+  "id": 743,
+  "name": "MR Singh",
+  "f": "battingHand",
+  "old": "L",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "Monu Kumar / Monu Kumar Singh"
+ },
+ {
+  "id": 762,
+  "name": "R Bishnoi",
+  "f": "bowlingStyle",
+  "old": "Legbreak Googly",
+  "new": "Right arm Medium fast",
+  "kind": "bio exact",
+  "matched": "R Bishnoi / Ravi Bishnoi"
+ },
+ {
+  "id": 897,
+  "name": "RR Jadeja",
+  "f": "bowlingStyle",
+  "old": "Slow Left arm Orthodox",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "RA Jadeja / Ravindrasinh Anirudhsinh Jadeja"
+ },
+ {
+  "id": 897,
+  "name": "RR Jadeja",
+  "f": "battingHand",
+  "old": "L",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "RA Jadeja / Ravindrasinh Anirudhsinh Jadeja"
+ },
+ {
+  "id": 912,
+  "name": "N Saini",
+  "f": "bowlingStyle",
+  "old": "RIGHT ARM Fast",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "Navdeep Saini / Navdeep Saini"
+ },
+ {
+  "id": 928,
+  "name": "MDKJ Perera",
+  "f": "bowlingStyle",
+  "old": "Right arm Offbreak, Legbreak",
+  "new": null,
+  "kind": "bio initial+surname",
+  "matched": "A Dananjaya / Mahamarakkala Kurukulasooriya Patabendige Akila Dananjaya Perera"
+ },
+ {
+  "id": 930,
+  "name": "Harmeet Singh (2)",
+  "f": "bowlingStyle",
+  "old": "Right arm Medium",
+  "new": null,
+  "kind": "bio exact",
+  "matched": "Harmeet Singh / Harmeet Singh Bansal"
+ },
+ {
+  "id": 930,
+  "name": "Harmeet Singh (2)",
+  "f": "battingHand",
+  "old": "R",
+  "new": null,
+  "kind": "bio exact",
+  "matched": "Harmeet Singh / Harmeet Singh Bansal"
+ },
+ {
+  "id": 1004,
+  "name": "Prithviraj Yarra",
+  "f": "bowlingStyle",
+  "old": "Left arm Medium",
+  "new": "LEFT ARM Fast",
+  "kind": "bio initial+surname",
+  "matched": "Y Prithvi Raj / Prithvi Raj Yarra"
+ },
+ {
+  "id": 1083,
+  "name": "Atif Mushtaq",
+  "f": "bowlingStyle",
+  "old": "Slow left-arm orthodox",
+  "new": "RIGHT ARM Fast Medium",
+  "kind": "bio initial+surname",
+  "matched": "Abid Mushtaq / Abid Mushtaq"
+ }
+]

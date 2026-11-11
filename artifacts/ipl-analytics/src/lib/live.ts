@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAccurateMatchDetailsFrontend } from "./onlineDb";
 
 const API_BASE = `${import.meta.env.BASE_URL}api`.replace(/\/+$/, "");
@@ -196,110 +196,147 @@ export function startTime(ms: number): string {
   });
 }
 
+const AUCTION_STATE_KEY = ["live", "auction", "state"] as const;
+
+/**
+ * Day 8: polled every second only while a lot is live (the 12 s clock and AI bids move); otherwise every 5 s.
+ * It used to poll every second in every state, i.e. 3,600 requests an hour per open tab even with nothing happening.
+ * Every auction action below refreshes the state at once, so an idle tab never waits for the slower poll.
+ */
 export function useLiveAuctionState() {
   return useQuery({
-    queryKey: ["live", "auction", "state"],
+    queryKey: AUCTION_STATE_KEY,
     queryFn: () => fetchJson<any>("/auction/state"),
-    refetchInterval: 1000, 
+    refetchInterval: (query) => ((query.state.data as any)?.status === "ACTIVE" ? 1000 : 5000),
   });
 }
 
 export function useAuctionBid() {
+  const qc = useQueryClient();
   return async (teamId: number, increment?: number) => {
     const res = await fetch(`${API_BASE}/auction/bid`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ teamId, increment }),
     });
-    return res.json();
+    const data = await res.json();
+    qc.invalidateQueries({ queryKey: AUCTION_STATE_KEY });
+    return data;
   };
 }
 
 export function useAuctionStart() {
+  const qc = useQueryClient();
   return async () => {
     const res = await fetch(`${API_BASE}/auction/start`, {
       method: "POST",
     });
-    return res.json();
+    const data = await res.json();
+    qc.invalidateQueries({ queryKey: AUCTION_STATE_KEY });
+    return data;
   };
 }
 
 export function useAuctionSelectTeam() {
+  const qc = useQueryClient();
   return async (teamId: number) => {
     const res = await fetch(`${API_BASE}/auction/select-team`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ teamId }),
     });
-    return res.json();
+    const data = await res.json();
+    qc.invalidateQueries({ queryKey: AUCTION_STATE_KEY });
+    return data;
   };
 }
 
 export function useAuctionPause() {
+  const qc = useQueryClient();
   return async () => {
     const res = await fetch(`${API_BASE}/auction/pause`, {
       method: "POST",
     });
-    return res.json();
+    const data = await res.json();
+    qc.invalidateQueries({ queryKey: AUCTION_STATE_KEY });
+    return data;
   };
 }
 
 export function useAuctionResume() {
+  const qc = useQueryClient();
   return async () => {
     const res = await fetch(`${API_BASE}/auction/resume`, {
       method: "POST",
     });
-    return res.json();
+    const data = await res.json();
+    qc.invalidateQueries({ queryKey: AUCTION_STATE_KEY });
+    return data;
   };
 }
 
 export function useAuctionReset() {
+  const qc = useQueryClient();
   return async () => {
     const res = await fetch(`${API_BASE}/auction/reset`, {
       method: "POST",
     });
-    return res.json();
+    const data = await res.json();
+    qc.invalidateQueries({ queryKey: AUCTION_STATE_KEY });
+    return data;
   };
 }
 
 export function useAuctionCreateRoom() {
+  const qc = useQueryClient();
   return async () => {
     const res = await fetch(`${API_BASE}/auction/create-room`, {
       method: "POST",
     });
-    return res.json();
+    const data = await res.json();
+    qc.invalidateQueries({ queryKey: AUCTION_STATE_KEY });
+    return data;
   };
 }
 
 export function useAuctionJoinRoom() {
+  const qc = useQueryClient();
   return async (code: string, teamId?: number) => {
     const res = await fetch(`${API_BASE}/auction/join-room`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ code, teamId }),
     });
-    return res.json();
+    const data = await res.json();
+    qc.invalidateQueries({ queryKey: AUCTION_STATE_KEY });
+    return data;
   };
 }
 
 export function useAuctionSetSpeed() {
+  const qc = useQueryClient();
   return async (speed: number) => {
     const res = await fetch(`${API_BASE}/auction/set-speed`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ speed }),
     });
-    return res.json();
+    const data = await res.json();
+    qc.invalidateQueries({ queryKey: AUCTION_STATE_KEY });
+    return data;
   };
 }
 
 export function useAuctionChat() {
+  const qc = useQueryClient();
   return async (user: string, team: string, msg: string) => {
     const res = await fetch(`${API_BASE}/auction/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user, team, msg }),
     });
-    return res.json();
+    const data = await res.json();
+    qc.invalidateQueries({ queryKey: AUCTION_STATE_KEY });
+    return data;
   };
 }

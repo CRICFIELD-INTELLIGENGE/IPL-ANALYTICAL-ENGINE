@@ -1,0 +1,2260 @@
+[
+ {
+  "id": 48,
+  "name": "Navdeep Singh",
+  "ch": {
+   "battingHand": [
+    "R",
+    null
+   ],
+   "bowlingStyle": [
+    "Right arm Medium",
+    null
+   ],
+   "bowlingType": [
+    "pace",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 55,
+  "name": "VK Sharma",
+  "ch": {
+   "fullName": [
+    "Vivrant Sharma",
+    null
+   ],
+   "battingHand": [
+    "L",
+    null
+   ],
+   "bowlingStyle": [
+    "Legbreak Googly",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 114,
+  "name": "Vishnu Vinod",
+  "ch": {
+   "bowlingStyle": [
+    "Legbreak Googly",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 331,
+  "name": "PWH de Silva",
+  "ch": {
+   "fullName": [
+    "Pinnaduwage Wanindu Hasaranga de Silva",
+    "Wanindu Hasaranga"
+   ],
+   "country": [
+    null,
+    "Sri Lanka"
+   ],
+   "overseas": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 366,
+  "name": "JM Sharma",
+  "ch": {
+   "bowlingStyle": [
+    "Right arm Fast medium",
+    null
+   ],
+   "bowlingType": [
+    "pace",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 408,
+  "name": "Arshad Khan",
+  "ch": {
+   "battingHand": [
+    null,
+    "L"
+   ],
+   "bowlingStyle": [
+    null,
+    "Left arm Medium"
+   ]
+  }
+ },
+ {
+  "id": 423,
+  "name": "Amit Sharma",
+  "ch": {
+   "battingHand": [
+    "R",
+    null
+   ],
+   "bowlingStyle": [
+    "RIGHT ARM Fast",
+    null
+   ],
+   "bowlingType": [
+    "pace",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 445,
+  "name": "Sonu Yadav",
+  "ch": {
+   "battingHand": [
+    "R",
+    null
+   ],
+   "bowlingStyle": [
+    "Right arm Medium, Right arm Offbreak",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 465,
+  "name": "Tanay Thyagarajan",
+  "ch": {
+   "battingHand": [
+    "L",
+    null
+   ],
+   "bowlingStyle": [
+    "Slow left-arm orthodox",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 479,
+  "name": "Ashutosh Sharma",
+  "ch": {
+   "bowlingStyle": [
+    "RIGHT ARM Fast",
+    null
+   ],
+   "bowlingType": [
+    "pace",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 513,
+  "name": "T Vijay",
+  "ch": {
+   "fullName": [
+    null,
+    "Tripurana Vijay"
+   ]
+  }
+ },
+ {
+  "id": 532,
+  "name": "Amit Rana",
+  "ch": {
+   "battingHand": [
+    "L",
+    null
+   ],
+   "bowlingStyle": [
+    "RIGHT ARM Off Spin",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 550,
+  "name": "JA Duffy",
+  "ch": {
+   "fullName": [
+    null,
+    "Jacob Duffy"
+   ]
+  }
+ },
+ {
+  "id": 551,
+  "name": "S Arora",
+  "ch": {
+   "fullName": [
+    null,
+    "Salil Arora"
+   ]
+  }
+ },
+ {
+  "id": 553,
+  "name": "B Muzarabani",
+  "ch": {
+   "battingHand": [
+    "R",
+    null
+   ],
+   "bowlingStyle": [
+    "RIGHT ARM Fast",
+    null
+   ],
+   "bowlingType": [
+    "pace",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 554,
+  "name": "FH Allen",
+  "ch": {
+   "fullName": [
+    null,
+    "Finn Allen"
+   ],
+   "bowlingStyle": [
+    "Slow Left arm Orthodox",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 555,
+  "name": "Brijesh Sharma",
+  "ch": {
+   "bowlingStyle": [
+    "Slow Left arm Orthodox",
+    "RIGHT ARM Fast"
+   ]
+  }
+ },
+ {
+  "id": 557,
+  "name": "C Connolly",
+  "ch": {
+   "fullName": [
+    null,
+    "Cooper Connolly"
+   ]
+  }
+ },
+ {
+  "id": 558,
+  "name": "MD Choudhary",
+  "ch": {
+   "fullName": [
+    null,
+    "Mukul Choudhary"
+   ],
+   "bowlingStyle": [
+    "Left arm Medium",
+    null
+   ],
+   "bowlingType": [
+    "pace",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 559,
+  "name": "P Nissanka",
+  "ch": {
+   "fullName": [
+    null,
+    "Pathum Nissanka"
+   ]
+  }
+ },
+ {
+  "id": 560,
+  "name": "Shivang Kumar",
+  "ch": {
+   "bowlingStyle": [
+    "Right arm Medium fast",
+    "LEFT ARM Slow Unorthodox"
+   ],
+   "bowlingType": [
+    "pace",
+    "spin"
+   ]
+  }
+ },
+ {
+  "id": 561,
+  "name": "PR Veer",
+  "ch": {
+   "fullName": [
+    null,
+    "Prashant Veer"
+   ]
+  }
+ },
+ {
+  "id": 564,
+  "name": "GF Linde",
+  "ch": {
+   "battingHand": [
+    "L",
+    null
+   ],
+   "bowlingStyle": [
+    "LEFT ARM Slow Orthodox",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 565,
+  "name": "LG Pretorius",
+  "ch": {
+   "fullName": [
+    null,
+    "Lhuan-dre Pretorius"
+   ]
+  }
+ },
+ {
+  "id": 566,
+  "name": "PP Hinge",
+  "ch": {
+   "fullName": [
+    null,
+    "Praful Hinge"
+   ]
+  }
+ },
+ {
+  "id": 570,
+  "name": "DV Malewar",
+  "ch": {
+   "fullName": [
+    null,
+    "Danish Malewar"
+   ]
+  }
+ },
+ {
+  "id": 575,
+  "name": "SU Parakh",
+  "ch": {
+   "battingHand": [
+    "L",
+    null
+   ],
+   "bowlingStyle": [
+    "RIGHT ARM Off Spin",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 576,
+  "name": "RS Ghosh",
+  "ch": {
+   "fullName": [
+    null,
+    "Ramakrishna Ghosh"
+   ]
+  }
+ },
+ {
+  "id": 582,
+  "name": "BJ Dwarshuis",
+  "ch": {
+   "fullName": [
+    null,
+    "Ben Dwarshuis"
+   ]
+  }
+ },
+ {
+  "id": 583,
+  "name": "SR Dubey",
+  "ch": {
+   "bowlingStyle": [
+    "Right arm Offbreak",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 586,
+  "name": "JM Cox",
+  "ch": {
+   "battingHand": [
+    "R",
+    null
+   ]
+  }
+ },
+ {
+  "id": 625,
+  "name": "Aleem Dar",
+  "ch": {
+   "battingHand": [
+    "R",
+    null
+   ],
+   "bowlingStyle": [
+    "RIGHT ARM Fast Medium",
+    null
+   ],
+   "bowlingType": [
+    "pace",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 636,
+  "name": "M Rawat",
+  "ch": {
+   "bowlingStyle": [
+    "RIGHT ARM Off Spin",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 728,
+  "name": "Jasbir Singh",
+  "ch": {
+   "battingHand": [
+    "R",
+    null
+   ],
+   "bowlingStyle": [
+    "Right arm Medium",
+    null
+   ],
+   "bowlingType": [
+    "pace",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 743,
+  "name": "MR Singh",
+  "ch": {
+   "battingHand": [
+    "L",
+    null
+   ],
+   "bowlingStyle": [
+    "RIGHT ARM Fast Medium",
+    null
+   ],
+   "bowlingType": [
+    "pace",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 762,
+  "name": "R Bishnoi",
+  "ch": {
+   "fullName": [
+    "Ravi Bishnoi",
+    "Rajesh Bishnoi"
+   ],
+   "bowlingStyle": [
+    "Legbreak Googly",
+    "Right arm Medium fast"
+   ],
+   "bowlingType": [
+    "spin",
+    "pace"
+   ]
+  }
+ },
+ {
+  "id": 897,
+  "name": "RR Jadeja",
+  "ch": {
+   "battingHand": [
+    "L",
+    null
+   ],
+   "bowlingStyle": [
+    "Slow Left arm Orthodox",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 912,
+  "name": "N Saini",
+  "ch": {
+   "bowlingStyle": [
+    "RIGHT ARM Fast",
+    null
+   ],
+   "bowlingType": [
+    "pace",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 928,
+  "name": "MDKJ Perera",
+  "ch": {
+   "bowlingStyle": [
+    "Right arm Offbreak, Legbreak",
+    null
+   ],
+   "bowlingType": [
+    "spin",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 930,
+  "name": "Harmeet Singh (2)",
+  "ch": {
+   "fullName": [
+    "Harmeet Singh Bansal",
+    null
+   ],
+   "battingHand": [
+    "R",
+    null
+   ],
+   "bowlingStyle": [
+    "Right arm Medium",
+    null
+   ],
+   "bowlingType": [
+    "pace",
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": 965,
+  "name": "Gus Atkinson",
+  "ch": {
+   "fullName": [
+    null,
+    "Gus Atkinson"
+   ]
+  }
+ },
+ {
+  "id": 966,
+  "name": "Wanindu Hasaranga",
+  "ch": {
+   "fullName": [
+    null,
+    "Wanindu Hasaranga"
+   ]
+  }
+ },
+ {
+  "id": 968,
+  "name": "Jamie Smith",
+  "ch": {
+   "fullName": [
+    null,
+    "Jamie Smith"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 969,
+  "name": "Aarya Desai",
+  "ch": {
+   "fullName": [
+    null,
+    "Aarya Desai"
+   ]
+  }
+ },
+ {
+  "id": 970,
+  "name": "Abhinav Tejrana",
+  "ch": {
+   "fullName": [
+    null,
+    "Abhinav Tejrana"
+   ]
+  }
+ },
+ {
+  "id": 971,
+  "name": "Edhen Tom",
+  "ch": {
+   "fullName": [
+    null,
+    "Edhen Tom"
+   ]
+  }
+ },
+ {
+  "id": 973,
+  "name": "Vansh Bedi",
+  "ch": {
+   "fullName": [
+    null,
+    "Vansh Bedi"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 974,
+  "name": "Tushar Raheja",
+  "ch": {
+   "fullName": [
+    null,
+    "Tushar Raheja"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 975,
+  "name": "Tejasvi Singh",
+  "ch": {
+   "fullName": [
+    null,
+    "Tejasvi Singh"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 976,
+  "name": "Raj Limbani",
+  "ch": {
+   "fullName": [
+    null,
+    "Raj Limbani"
+   ]
+  }
+ },
+ {
+  "id": 977,
+  "name": "Shivam Shukla",
+  "ch": {
+   "fullName": [
+    null,
+    "Shivam Shukla"
+   ]
+  }
+ },
+ {
+  "id": 978,
+  "name": "Kumar Kartikeya Singh",
+  "ch": {
+   "fullName": [
+    null,
+    "Kumar Kartikeya Singh"
+   ]
+  }
+ },
+ {
+  "id": 979,
+  "name": "Wahidullah Zadran",
+  "ch": {
+   "fullName": [
+    null,
+    "Wahidullah Zadran"
+   ]
+  }
+ },
+ {
+  "id": 980,
+  "name": "Mayank Agarawal",
+  "ch": {
+   "fullName": [
+    null,
+    "Mayank Agarawal"
+   ]
+  }
+ },
+ {
+  "id": 981,
+  "name": "Ackeem Auguste",
+  "ch": {
+   "fullName": [
+    null,
+    "Ackeem Auguste"
+   ]
+  }
+ },
+ {
+  "id": 982,
+  "name": "Tim Robinson",
+  "ch": {
+   "fullName": [
+    null,
+    "Tim Robinson"
+   ]
+  }
+ },
+ {
+  "id": 984,
+  "name": "Benjamin McDermott",
+  "ch": {
+   "fullName": [
+    null,
+    "Benjamin McDermott"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 985,
+  "name": "Kusal Mendis",
+  "ch": {
+   "fullName": [
+    null,
+    "Kusal Mendis"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 986,
+  "name": "Kusal Perera",
+  "ch": {
+   "fullName": [
+    null,
+    "Kusal Perera"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 987,
+  "name": "William Orourke",
+  "ch": {
+   "fullName": [
+    null,
+    "William Orourke"
+   ]
+  }
+ },
+ {
+  "id": 988,
+  "name": "Rishad Hossain",
+  "ch": {
+   "fullName": [
+    null,
+    "Rishad Hossain"
+   ]
+  }
+ },
+ {
+  "id": 989,
+  "name": "Mohammad Waqar Salamkheil",
+  "ch": {
+   "fullName": [
+    null,
+    "Mohammad Waqar Salamkheil"
+   ]
+  }
+ },
+ {
+  "id": 990,
+  "name": "Viyaskanth Vijayakanth",
+  "ch": {
+   "fullName": [
+    null,
+    "Viyaskanth Vijayakanth"
+   ]
+  }
+ },
+ {
+  "id": 991,
+  "name": "Rohan Kunnummal",
+  "ch": {
+   "fullName": [
+    null,
+    "Rohan Kunnummal"
+   ]
+  }
+ },
+ {
+  "id": 992,
+  "name": "Pukhraj Mann",
+  "ch": {
+   "fullName": [
+    null,
+    "Pukhraj Mann"
+   ]
+  }
+ },
+ {
+  "id": 993,
+  "name": "Salman Nizar",
+  "ch": {
+   "fullName": [
+    null,
+    "Salman Nizar"
+   ]
+  }
+ },
+ {
+  "id": 994,
+  "name": "Aman Rao Perala",
+  "ch": {
+   "fullName": [
+    null,
+    "Aman Rao Perala"
+   ]
+  }
+ },
+ {
+  "id": 996,
+  "name": "Vicky Ostwal",
+  "ch": {
+   "fullName": [
+    null,
+    "Vicky Ostwal"
+   ]
+  }
+ },
+ {
+  "id": 997,
+  "name": "Harsh Tyagi",
+  "ch": {
+   "fullName": [
+    null,
+    "Harsh Tyagi"
+   ]
+  }
+ },
+ {
+  "id": 998,
+  "name": "Rahul Buddhi",
+  "ch": {
+   "fullName": [
+    null,
+    "Rahul Buddhi"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 999,
+  "name": "Saurav Chuahan",
+  "ch": {
+   "fullName": [
+    null,
+    "Saurav Chuahan"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 1000,
+  "name": "Yashvardhan Dalal",
+  "ch": {
+   "fullName": [
+    null,
+    "Yashvardhan Dalal"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 1002,
+  "name": "Vijay Kumar",
+  "ch": {
+   "fullName": [
+    null,
+    "Vijay Kumar"
+   ]
+  }
+ },
+ {
+  "id": 1004,
+  "name": "Prithviraj Yarra",
+  "ch": {
+   "fullName": [
+    null,
+    "Prithviraj Yarra"
+   ],
+   "bowlingStyle": [
+    "Left arm Medium",
+    "LEFT ARM Fast"
+   ]
+  }
+ },
+ {
+  "id": 1005,
+  "name": "Shubham Agrawal",
+  "ch": {
+   "fullName": [
+    null,
+    "Shubham Agrawal"
+   ]
+  }
+ },
+ {
+  "id": 1006,
+  "name": "Kartik Chadha",
+  "ch": {
+   "fullName": [
+    null,
+    "Kartik Chadha"
+   ]
+  }
+ },
+ {
+  "id": 1007,
+  "name": "Bailapudi Yeswanth",
+  "ch": {
+   "fullName": [
+    null,
+    "Bailapudi Yeswanth"
+   ]
+  }
+ },
+ {
+  "id": 1009,
+  "name": "Daniel Lawrence",
+  "ch": {
+   "fullName": [
+    null,
+    "Daniel Lawrence"
+   ]
+  }
+ },
+ {
+  "id": 1010,
+  "name": "William Sutherland",
+  "ch": {
+   "fullName": [
+    null,
+    "William Sutherland"
+   ]
+  }
+ },
+ {
+  "id": 1011,
+  "name": "Beau Webster",
+  "ch": {
+   "fullName": [
+    null,
+    "Beau Webster"
+   ]
+  }
+ },
+ {
+  "id": 1012,
+  "name": "Taskin Ahmed",
+  "ch": {
+   "fullName": [
+    null,
+    "Taskin Ahmed"
+   ]
+  }
+ },
+ {
+  "id": 1014,
+  "name": "Kunal Chandela",
+  "ch": {
+   "fullName": [
+    null,
+    "Kunal Chandela"
+   ]
+  }
+ },
+ {
+  "id": 1015,
+  "name": "Ayush Doseja",
+  "ch": {
+   "fullName": [
+    null,
+    "Ayush Doseja"
+   ]
+  }
+ },
+ {
+  "id": 1016,
+  "name": "Qamran Iqbal",
+  "ch": {
+   "fullName": [
+    null,
+    "Qamran Iqbal"
+   ]
+  }
+ },
+ {
+  "id": 1017,
+  "name": "M.Dheeraj Kumar",
+  "ch": {
+   "fullName": [
+    null,
+    "M.Dheeraj Kumar"
+   ]
+  }
+ },
+ {
+  "id": 1018,
+  "name": "Bhanu Pania",
+  "ch": {
+   "fullName": [
+    null,
+    "Bhanu Pania"
+   ]
+  }
+ },
+ {
+  "id": 1019,
+  "name": "Arsh Kabir Ranga",
+  "ch": {
+   "fullName": [
+    null,
+    "Arsh Kabir Ranga"
+   ]
+  }
+ },
+ {
+  "id": 1021,
+  "name": "Atit Sheth",
+  "ch": {
+   "fullName": [
+    null,
+    "Atit Sheth"
+   ]
+  }
+ },
+ {
+  "id": 1022,
+  "name": "Tanay Thyagarajann",
+  "ch": {
+   "fullName": [
+    null,
+    "Tanay Thyagarajann"
+   ]
+  }
+ },
+ {
+  "id": 1024,
+  "name": "Ajitesh Guruswamy",
+  "ch": {
+   "fullName": [
+    null,
+    "Ajitesh Guruswamy"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 1025,
+  "name": "Siddharth Joon",
+  "ch": {
+   "fullName": [
+    null,
+    "Siddharth Joon"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 1026,
+  "name": "Tom Moores",
+  "ch": {
+   "fullName": [
+    null,
+    "Tom Moores"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 1027,
+  "name": "Bipin Saurabh",
+  "ch": {
+   "fullName": [
+    null,
+    "Bipin Saurabh"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 1028,
+  "name": "Hardik Tamore",
+  "ch": {
+   "fullName": [
+    null,
+    "Hardik Tamore"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 1029,
+  "name": "Sayan Ghosh",
+  "ch": {
+   "fullName": [
+    null,
+    "Sayan Ghosh"
+   ]
+  }
+ },
+ {
+  "id": 1030,
+  "name": "Money Grewal",
+  "ch": {
+   "fullName": [
+    null,
+    "Money Grewal"
+   ]
+  }
+ },
+ {
+  "id": 1031,
+  "name": "Arpit Guleria",
+  "ch": {
+   "fullName": [
+    null,
+    "Arpit Guleria"
+   ]
+  }
+ },
+ {
+  "id": 1032,
+  "name": "Tristan Luus",
+  "ch": {
+   "fullName": [
+    null,
+    "Tristan Luus"
+   ]
+  }
+ },
+ {
+  "id": 1033,
+  "name": "Divesh Sharma",
+  "ch": {
+   "fullName": [
+    null,
+    "Divesh Sharma"
+   ]
+  }
+ },
+ {
+  "id": 1034,
+  "name": "Abhilash Shetty",
+  "ch": {
+   "fullName": [
+    null,
+    "Abhilash Shetty"
+   ]
+  }
+ },
+ {
+  "id": 1035,
+  "name": "Irfan Umair",
+  "ch": {
+   "fullName": [
+    null,
+    "Irfan Umair"
+   ]
+  }
+ },
+ {
+  "id": 1036,
+  "name": "Manan Bhardwaj",
+  "ch": {
+   "fullName": [
+    null,
+    "Manan Bhardwaj"
+   ]
+  }
+ },
+ {
+  "id": 1037,
+  "name": "Parikshit Dhanak",
+  "ch": {
+   "fullName": [
+    null,
+    "Parikshit Dhanak"
+   ]
+  }
+ },
+ {
+  "id": 1038,
+  "name": "Dharmendrasinh Jadeja",
+  "ch": {
+   "fullName": [
+    null,
+    "Dharmendrasinh Jadeja"
+   ]
+  }
+ },
+ {
+  "id": 1040,
+  "name": "Saumy Pandey",
+  "ch": {
+   "fullName": [
+    null,
+    "Saumy Pandey"
+   ]
+  }
+ },
+ {
+  "id": 1041,
+  "name": "Jhathavedh Subramanyan",
+  "ch": {
+   "fullName": [
+    null,
+    "Jhathavedh Subramanyan"
+   ]
+  }
+ },
+ {
+  "id": 1042,
+  "name": "Muhammad Abbas",
+  "ch": {
+   "fullName": [
+    null,
+    "Muhammad Abbas"
+   ]
+  }
+ },
+ {
+  "id": 1043,
+  "name": "Charith Asalanka",
+  "ch": {
+   "fullName": [
+    null,
+    "Charith Asalanka"
+   ]
+  }
+ },
+ {
+  "id": 1044,
+  "name": "Roston Chase",
+  "ch": {
+   "fullName": [
+    null,
+    "Roston Chase"
+   ]
+  }
+ },
+ {
+  "id": 1045,
+  "name": "Liam Dawson",
+  "ch": {
+   "fullName": [
+    null,
+    "Liam Dawson"
+   ]
+  }
+ },
+ {
+  "id": 1046,
+  "name": "Nathan Smith",
+  "ch": {
+   "fullName": [
+    null,
+    "Nathan Smith"
+   ]
+  }
+ },
+ {
+  "id": 1047,
+  "name": "Dunith Wellalage",
+  "ch": {
+   "fullName": [
+    null,
+    "Dunith Wellalage"
+   ]
+  }
+ },
+ {
+  "id": 1048,
+  "name": "Tanzim Hasan Sakib",
+  "ch": {
+   "fullName": [
+    null,
+    "Tanzim Hasan Sakib"
+   ]
+  }
+ },
+ {
+  "id": 1049,
+  "name": "Matthew Potts",
+  "ch": {
+   "fullName": [
+    null,
+    "Matthew Potts"
+   ]
+  }
+ },
+ {
+  "id": 1050,
+  "name": "Olly Stone",
+  "ch": {
+   "fullName": [
+    null,
+    "Olly Stone"
+   ]
+  }
+ },
+ {
+  "id": 1051,
+  "name": "Joshua Tongue",
+  "ch": {
+   "fullName": [
+    null,
+    "Joshua Tongue"
+   ]
+  }
+ },
+ {
+  "id": 1052,
+  "name": "Sachin Dhas",
+  "ch": {
+   "fullName": [
+    null,
+    "Sachin Dhas"
+   ]
+  }
+ },
+ {
+  "id": 1053,
+  "name": "Miles Hammond",
+  "ch": {
+   "fullName": [
+    null,
+    "Miles Hammond"
+   ]
+  }
+ },
+ {
+  "id": 1054,
+  "name": "Ahammed Imran",
+  "ch": {
+   "fullName": [
+    null,
+    "Ahammed Imran"
+   ]
+  }
+ },
+ {
+  "id": 1055,
+  "name": "Vishvarajsinh Jadeja",
+  "ch": {
+   "fullName": [
+    null,
+    "Vishvarajsinh Jadeja"
+   ]
+  }
+ },
+ {
+  "id": 1056,
+  "name": "Daniel Lategan",
+  "ch": {
+   "fullName": [
+    null,
+    "Daniel Lategan"
+   ]
+  }
+ },
+ {
+  "id": 1057,
+  "name": "Aaron Varghese",
+  "ch": {
+   "fullName": [
+    null,
+    "Aaron Varghese"
+   ]
+  }
+ },
+ {
+  "id": 1059,
+  "name": "Abdul Bazith",
+  "ch": {
+   "fullName": [
+    null,
+    "Abdul Bazith"
+   ]
+  }
+ },
+ {
+  "id": 1060,
+  "name": "Karan Lal",
+  "ch": {
+   "fullName": [
+    null,
+    "Karan Lal"
+   ]
+  }
+ },
+ {
+  "id": 1061,
+  "name": "Prince Rai",
+  "ch": {
+   "fullName": [
+    null,
+    "Prince Rai"
+   ]
+  }
+ },
+ {
+  "id": 1062,
+  "name": "Utkarsh Singh",
+  "ch": {
+   "fullName": [
+    null,
+    "Utkarsh Singh"
+   ]
+  }
+ },
+ {
+  "id": 1063,
+  "name": "Ayush Vartak",
+  "ch": {
+   "fullName": [
+    null,
+    "Ayush Vartak"
+   ]
+  }
+ },
+ {
+  "id": 1064,
+  "name": "Sayed Irfan Aftab",
+  "ch": {
+   "fullName": [
+    null,
+    "Sayed Irfan Aftab"
+   ]
+  }
+ },
+ {
+  "id": 1065,
+  "name": "Esakkimuthu Ayyakutti",
+  "ch": {
+   "fullName": [
+    null,
+    "Esakkimuthu Ayyakutti"
+   ]
+  }
+ },
+ {
+  "id": 1066,
+  "name": "Pankaj Jaswal",
+  "ch": {
+   "fullName": [
+    null,
+    "Pankaj Jaswal"
+   ]
+  }
+ },
+ {
+  "id": 1067,
+  "name": "Safvan Patel",
+  "ch": {
+   "fullName": [
+    null,
+    "Safvan Patel"
+   ]
+  }
+ },
+ {
+  "id": 1068,
+  "name": "Purav Agarwal",
+  "ch": {
+   "fullName": [
+    null,
+    "Purav Agarwal"
+   ]
+  }
+ },
+ {
+  "id": 1069,
+  "name": "Jikku Bright",
+  "ch": {
+   "fullName": [
+    null,
+    "Jikku Bright"
+   ]
+  }
+ },
+ {
+  "id": 1070,
+  "name": "Yash Dicholkar",
+  "ch": {
+   "fullName": [
+    null,
+    "Yash Dicholkar"
+   ]
+  }
+ },
+ {
+  "id": 1071,
+  "name": "Traveen Mathew",
+  "ch": {
+   "fullName": [
+    null,
+    "Traveen Mathew"
+   ]
+  }
+ },
+ {
+  "id": 1072,
+  "name": "Naman Pushpak",
+  "ch": {
+   "fullName": [
+    null,
+    "Naman Pushpak"
+   ]
+  }
+ },
+ {
+  "id": 1073,
+  "name": "Izaz Sawariya",
+  "ch": {
+   "fullName": [
+    null,
+    "Izaz Sawariya"
+   ]
+  }
+ },
+ {
+  "id": 1074,
+  "name": "Roshan Wagshare",
+  "ch": {
+   "fullName": [
+    null,
+    "Roshan Wagshare"
+   ]
+  }
+ },
+ {
+  "id": 1075,
+  "name": "Wesley Agar",
+  "ch": {
+   "fullName": [
+    null,
+    "Wesley Agar"
+   ]
+  }
+ },
+ {
+  "id": 1076,
+  "name": "Md Shoriful Islam",
+  "ch": {
+   "fullName": [
+    null,
+    "Md Shoriful Islam"
+   ]
+  }
+ },
+ {
+  "id": 1077,
+  "name": "R.S Ambrish",
+  "ch": {
+   "fullName": [
+    null,
+    "R.S Ambrish"
+   ]
+  }
+ },
+ {
+  "id": 1080,
+  "name": "R Rajkumar",
+  "ch": {
+   "fullName": [
+    null,
+    "R Rajkumar"
+   ]
+  }
+ },
+ {
+  "id": 1081,
+  "name": "Ninad Rathva",
+  "ch": {
+   "fullName": [
+    null,
+    "Ninad Rathva"
+   ]
+  }
+ },
+ {
+  "id": 1082,
+  "name": "Waseem Khanday",
+  "ch": {
+   "fullName": [
+    null,
+    "Waseem Khanday"
+   ]
+  }
+ },
+ {
+  "id": 1083,
+  "name": "Atif Mushtaq",
+  "ch": {
+   "fullName": [
+    null,
+    "Atif Mushtaq"
+   ],
+   "bowlingStyle": [
+    "Slow left-arm orthodox",
+    "RIGHT ARM Fast Medium"
+   ],
+   "bowlingType": [
+    "spin",
+    "pace"
+   ]
+  }
+ },
+ {
+  "id": 1084,
+  "name": "Atal Rai",
+  "ch": {
+   "fullName": [
+    null,
+    "Atal Rai"
+   ]
+  }
+ },
+ {
+  "id": 1085,
+  "name": "C.Rakshann Readdi",
+  "ch": {
+   "fullName": [
+    null,
+    "C.Rakshann Readdi"
+   ]
+  }
+ },
+ {
+  "id": 1086,
+  "name": "Manish Reddy",
+  "ch": {
+   "fullName": [
+    null,
+    "Manish Reddy"
+   ]
+  }
+ },
+ {
+  "id": 1087,
+  "name": "Nishanth Saranu",
+  "ch": {
+   "fullName": [
+    null,
+    "Nishanth Saranu"
+   ]
+  }
+ },
+ {
+  "id": 1088,
+  "name": "Deependra Singh",
+  "ch": {
+   "fullName": [
+    null,
+    "Deependra Singh"
+   ]
+  }
+ },
+ {
+  "id": 1089,
+  "name": "Rajat Verma",
+  "ch": {
+   "fullName": [
+    null,
+    "Rajat Verma"
+   ]
+  }
+ },
+ {
+  "id": 1090,
+  "name": "Shubhang Hegde",
+  "ch": {
+   "fullName": [
+    null,
+    "Shubhang Hegde"
+   ]
+  }
+ },
+ {
+  "id": 1091,
+  "name": "Khilan Patel",
+  "ch": {
+   "fullName": [
+    null,
+    "Khilan Patel"
+   ]
+  }
+ },
+ {
+  "id": 1092,
+  "name": "Delano Potgieter",
+  "ch": {
+   "fullName": [
+    null,
+    "Delano Potgieter"
+   ]
+  }
+ },
+ {
+  "id": 1094,
+  "name": "Parth Rekhade",
+  "ch": {
+   "fullName": [
+    null,
+    "Parth Rekhade"
+   ]
+  }
+ },
+ {
+  "id": 1095,
+  "name": "Tiaan Van Vuuren",
+  "ch": {
+   "fullName": [
+    null,
+    "Tiaan Van Vuuren"
+   ]
+  }
+ },
+ {
+  "id": 1096,
+  "name": "Shreevatsha Acharya",
+  "ch": {
+   "fullName": [
+    null,
+    "Shreevatsha Acharya"
+   ]
+  }
+ },
+ {
+  "id": 1097,
+  "name": "Shubham Kapse",
+  "ch": {
+   "fullName": [
+    null,
+    "Shubham Kapse"
+   ]
+  }
+ },
+ {
+  "id": 1098,
+  "name": "Bayanda Majola",
+  "ch": {
+   "fullName": [
+    null,
+    "Bayanda Majola"
+   ]
+  }
+ },
+ {
+  "id": 1099,
+  "name": "Aman Shekhawat",
+  "ch": {
+   "fullName": [
+    null,
+    "Aman Shekhawat"
+   ]
+  }
+ },
+ {
+  "id": 1100,
+  "name": "Himanshu Bisht",
+  "ch": {
+   "fullName": [
+    null,
+    "Himanshu Bisht"
+   ]
+  }
+ },
+ {
+  "id": 1101,
+  "name": "Shreyan Chakraborty",
+  "ch": {
+   "fullName": [
+    null,
+    "Shreyan Chakraborty"
+   ]
+  }
+ },
+ {
+  "id": 1103,
+  "name": "Mayank Gusain",
+  "ch": {
+   "fullName": [
+    null,
+    "Mayank Gusain"
+   ]
+  }
+ },
+ {
+  "id": 1104,
+  "name": "Akash Pugazhanthi",
+  "ch": {
+   "fullName": [
+    null,
+    "Akash Pugazhanthi"
+   ]
+  }
+ },
+ {
+  "id": 1105,
+  "name": "Abhimanyusingh Rajput",
+  "ch": {
+   "fullName": [
+    null,
+    "Abhimanyusingh Rajput"
+   ]
+  }
+ },
+ {
+  "id": 1106,
+  "name": "Maramreddy Reddy",
+  "ch": {
+   "fullName": [
+    null,
+    "Maramreddy Reddy"
+   ]
+  }
+ },
+ {
+  "id": 1107,
+  "name": "Aryaman Singh Dhaliwal",
+  "ch": {
+   "fullName": [
+    null,
+    "Aryaman Singh Dhaliwal"
+   ]
+  }
+ },
+ {
+  "id": 1109,
+  "name": "Vishal Mandwal",
+  "ch": {
+   "fullName": [
+    null,
+    "Vishal Mandwal"
+   ]
+  }
+ },
+ {
+  "id": 1110,
+  "name": "Mridul Surroch",
+  "ch": {
+   "fullName": [
+    null,
+    "Mridul Surroch"
+   ]
+  }
+ },
+ {
+  "id": 1111,
+  "name": "Anuj Thakral",
+  "ch": {
+   "fullName": [
+    null,
+    "Anuj Thakral"
+   ]
+  }
+ },
+ {
+  "id": 1112,
+  "name": "Parth Vats",
+  "ch": {
+   "fullName": [
+    null,
+    "Parth Vats"
+   ]
+  }
+ },
+ {
+  "id": 1113,
+  "name": "Nitin Sai Yadav",
+  "ch": {
+   "fullName": [
+    null,
+    "Nitin Sai Yadav"
+   ]
+  }
+ },
+ {
+  "id": 1114,
+  "name": "Prerit Dutta",
+  "ch": {
+   "fullName": [
+    null,
+    "Prerit Dutta"
+   ]
+  }
+ },
+ {
+  "id": 1115,
+  "name": "Sammar Gajjar",
+  "ch": {
+   "fullName": [
+    null,
+    "Sammar Gajjar"
+   ]
+  }
+ },
+ {
+  "id": 1116,
+  "name": "Nasir Lone",
+  "ch": {
+   "fullName": [
+    null,
+    "Nasir Lone"
+   ]
+  }
+ },
+ {
+  "id": 1117,
+  "name": "Ishan Mulchandani",
+  "ch": {
+   "fullName": [
+    null,
+    "Ishan Mulchandani"
+   ]
+  }
+ },
+ {
+  "id": 1118,
+  "name": "Akhil Scaria",
+  "ch": {
+   "fullName": [
+    null,
+    "Akhil Scaria"
+   ]
+  }
+ },
+ {
+  "id": 1119,
+  "name": "Muhammed Sharafuddeen",
+  "ch": {
+   "fullName": [
+    null,
+    "Muhammed Sharafuddeen"
+   ]
+  }
+ },
+ {
+  "id": 1120,
+  "name": "Ritik Tada",
+  "ch": {
+   "fullName": [
+    null,
+    "Ritik Tada"
+   ]
+  }
+ },
+ {
+  "id": 1121,
+  "name": "Luckyrajsinh Vaghela",
+  "ch": {
+   "fullName": [
+    null,
+    "Luckyrajsinh Vaghela"
+   ]
+  }
+ },
+ {
+  "id": 1122,
+  "name": "Madhav Bajaj",
+  "ch": {
+   "fullName": [
+    null,
+    "Madhav Bajaj"
+   ]
+  }
+ },
+ {
+  "id": 1123,
+  "name": "Akshu Bajwa",
+  "ch": {
+   "fullName": [
+    null,
+    "Akshu Bajwa"
+   ]
+  }
+ },
+ {
+  "id": 1124,
+  "name": "Varun Raj Singh Bisht",
+  "ch": {
+   "fullName": [
+    null,
+    "Varun Raj Singh Bisht"
+   ]
+  }
+ },
+ {
+  "id": 1126,
+  "name": "Dhurmil Matkar",
+  "ch": {
+   "fullName": [
+    null,
+    "Dhurmil Matkar"
+   ]
+  }
+ },
+ {
+  "id": 1127,
+  "name": "Parikshit Valsangkar",
+  "ch": {
+   "fullName": [
+    null,
+    "Parikshit Valsangkar"
+   ]
+  }
+ },
+ {
+  "id": 1128,
+  "name": "Mani Sankar Mura Singh",
+  "ch": {
+   "fullName": [
+    null,
+    "Mani Sankar Mura Singh"
+   ]
+  }
+ },
+ {
+  "id": 1129,
+  "name": "Chama Milind",
+  "ch": {
+   "fullName": [
+    null,
+    "Chama Milind"
+   ]
+  }
+ },
+ {
+  "id": 1130,
+  "name": "K.L. Shrijith",
+  "ch": {
+   "fullName": [
+    null,
+    "K.L. Shrijith"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 1131,
+  "name": "Swastik Chikara",
+  "ch": {
+   "fullName": [
+    null,
+    "Swastik Chikara"
+   ]
+  }
+ },
+ {
+  "id": 1132,
+  "name": "Rahul Raj Namala",
+  "ch": {
+   "fullName": [
+    null,
+    "Rahul Raj Namala"
+   ]
+  }
+ },
+ {
+  "id": 1133,
+  "name": "Abhimanyu Easwaran",
+  "ch": {
+   "fullName": [
+    null,
+    "Abhimanyu Easwaran"
+   ]
+  }
+ },
+ {
+  "id": 1134,
+  "name": "Tripuresh Singh",
+  "ch": {
+   "fullName": [
+    null,
+    "Tripuresh Singh"
+   ]
+  }
+ },
+ {
+  "id": 1135,
+  "name": "Kyle Verreynne",
+  "ch": {
+   "fullName": [
+    null,
+    "Kyle Verreynne"
+   ],
+   "keeper": [
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "id": 1136,
+  "name": "Ben Sears",
+  "ch": {
+   "fullName": [
+    null,
+    "Ben Sears"
+   ]
+  }
+ },
+ {
+  "id": 1137,
+  "name": "Rajesh Mohanty",
+  "ch": {
+   "fullName": [
+    null,
+    "Rajesh Mohanty"
+   ]
+  }
+ },
+ {
+  "id": 1138,
+  "name": "Swastik Samal",
+  "ch": {
+   "fullName": [
+    null,
+    "Swastik Samal"
+   ]
+  }
+ },
+ {
+  "id": 1139,
+  "name": "Saransh Jain",
+  "ch": {
+   "fullName": [
+    null,
+    "Saransh Jain"
+   ]
+  }
+ },
+ {
+  "id": 1140,
+  "name": "Sooraj Sangaraju",
+  "ch": {
+   "fullName": [
+    null,
+    "Sooraj Sangaraju"
+   ]
+  }
+ },
+ {
+  "id": 1141,
+  "name": "Tanmay Agarwal",
+  "ch": {
+   "fullName": [
+    null,
+    "Tanmay Agarwal"
+   ]
+  }
+ }
+]

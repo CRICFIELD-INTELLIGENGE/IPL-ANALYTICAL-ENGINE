@@ -1,0 +1,1728 @@
+[
+ {
+  "name": "Abhinandan Singh",
+  "ids": [
+   "82c10dac"
+  ],
+  "old": "a-singh",
+  "oldId": "5b040b81",
+  "new": "abhinandan-singh",
+  "newId": "82c10dac",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Abhishek Sharma",
+  "ids": [
+   "f29185a1"
+  ],
+  "old": "ankit-sharma",
+  "oldId": "24d94623",
+  "new": "abhishek-sharma",
+  "newId": "f29185a1",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [],
+  "attr": {
+   "hand": [
+    "LHB",
+    "LHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Spinner"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Akash Singh",
+  "ids": [
+   "b483905d"
+  ],
+  "old": "a-singh",
+  "oldId": "5b040b81",
+  "new": "akash-singh",
+  "newId": "b483905d",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Aman Hakim Khan",
+  "ids": [
+   "378daa89"
+  ],
+  "old": "avesh-khan",
+  "oldId": "eef2536f",
+  "new": "aman-hakim-khan",
+  "newId": "378daa89",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Anirudh Singh",
+  "ids": [
+   "7bb62642"
+  ],
+  "old": "a-singh",
+  "oldId": "5b040b81",
+  "new": "anirudh-singh",
+  "newId": "7bb62642",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "LHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Anmolpreet Singh",
+  "ids": [
+   "1399b39c"
+  ],
+  "old": "a-singh",
+  "oldId": "5b040b81",
+  "new": "anmolpreet-singh",
+  "newId": "1399b39c",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Spinner"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Anureet Singh",
+  "ids": [
+   "69be866a"
+  ],
+  "old": "a-singh",
+  "oldId": "5b040b81",
+  "new": "anureet-singh",
+  "newId": "69be866a",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Arshad Khan",
+  "ids": [
+   "12314277"
+  ],
+  "old": "avesh-khan",
+  "oldId": "eef2536f",
+  "new": "arshad-khan",
+  "newId": "12314277",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "LHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Arshad Khan (2)",
+  "ids": [
+   "12314277"
+  ],
+  "old": null,
+  "oldId": null,
+  "new": "arshad-khan",
+  "newId": "12314277",
+  "method": "registry",
+  "cls": "old found none, new found the player",
+  "attrChanged": [
+   "hand",
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "Unknown",
+    "LHB"
+   ],
+   "bowlerType": [
+    "(fallback)",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Arshdeep Singh",
+  "ids": [
+   "244048f6"
+  ],
+  "old": "a-singh",
+  "oldId": "5b040b81",
+  "new": "arshdeep-singh",
+  "newId": "244048f6",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "LHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Ashok Sharma",
+  "ids": [
+   "50c09020"
+  ],
+  "old": "ankit-sharma",
+  "oldId": "24d94623",
+  "new": "ashok-sharma",
+  "newId": "50c09020",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Ashutosh Sharma",
+  "ids": [
+   "84d9c311"
+  ],
+  "old": "ankit-sharma",
+  "oldId": "24d94623",
+  "new": "ashutosh-sharma",
+  "newId": "84d9c311",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "BKG Mendis",
+  "ids": [
+   "5d1e7582"
+  ],
+  "old": "baw-mendis",
+  "oldId": "ea0cdc12",
+  "new": "bkg-mendis",
+  "newId": "5d1e7582",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Spinner"
+   ],
+   "country": [
+    "(none)",
+    "Sri Lanka"
+   ]
+  }
+ },
+ {
+  "name": "BMAJ Mendis",
+  "ids": [
+   "9868bc75"
+  ],
+  "old": "baw-mendis",
+  "oldId": "ea0cdc12",
+  "new": "bmaj-mendis",
+  "newId": "9868bc75",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "LHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Spinner"
+   ],
+   "country": [
+    "(none)",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Brijesh Sharma",
+  "ids": [
+   "133bbd61"
+  ],
+  "old": "bipul-sharma",
+  "oldId": "c18496e1",
+  "new": "brijesh-sharma",
+  "newId": "133bbd61",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "CJ Green",
+  "ids": [
+   "19b9f399"
+  ],
+  "old": "c-green",
+  "oldId": "eaa76d3c",
+  "new": "cj-green",
+  "newId": "19b9f399",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Spinner"
+   ],
+   "country": [
+    "Australia",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "DM Bravo",
+  "ids": [
+   "14b14cd8"
+  ],
+  "old": "dj-bravo",
+  "oldId": "87e562a9",
+  "new": "dm-bravo",
+  "newId": "14b14cd8",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "LHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "FH Allen",
+  "ids": [
+   "bf74b130"
+  ],
+  "old": "fa-allen",
+  "oldId": "b52ffbbd",
+  "new": "finn-allen",
+  "newId": null,
+  "method": "squad mapping (unverified bio)",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "New Zealand",
+    "New Zealand"
+   ]
+  }
+ },
+ {
+  "name": "Gagandeep Singh",
+  "ids": [
+   "890de8cb"
+  ],
+  "old": "gurkeerat-singh",
+  "oldId": "6eb146d2",
+  "new": "gagandeep-singh",
+  "newId": "890de8cb",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Gurjapneet Singh",
+  "ids": [
+   "cc61ee8f"
+  ],
+  "old": "gurkeerat-singh",
+  "oldId": "6eb146d2",
+  "new": "gurjapneet-singh",
+  "newId": "cc61ee8f",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Harbhajan Singh",
+  "ids": [
+   "8b5b6769"
+  ],
+  "old": "himmat-singh",
+  "oldId": "ebcfef83",
+  "new": "harbhajan-singh",
+  "newId": "8b5b6769",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Spinner"
+   ],
+   "country": [
+    "India",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Harmeet Singh",
+  "ids": [
+   "2a72fd4f",
+   "0bf15e52"
+  ],
+  "old": "himmat-singh",
+  "oldId": "ebcfef83",
+  "new": null,
+  "newId": null,
+  "method": "written name shared by several players",
+  "cls": "new: unknown (written name shared by several players)",
+  "attrChanged": [
+   "hand",
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "(fallback)"
+   ],
+   "country": [
+    "India",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Harpreet Singh",
+  "ids": [
+   "28c78fb3"
+  ],
+  "old": "himmat-singh",
+  "oldId": "ebcfef83",
+  "new": "harpreet-singh",
+  "newId": "28c78fb3",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "LHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "JM Sharma",
+  "ids": [
+   "800d2d97"
+  ],
+  "old": "joginder-sharma",
+  "oldId": "9f961c14",
+  "new": "jm-sharma",
+  "newId": "800d2d97",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "KB Arun Karthik",
+  "ids": [
+   "7daedf2f"
+  ],
+  "old": "kd-karthik",
+  "oldId": "c03f1114",
+  "new": "kb-arun-karthik",
+  "newId": "7daedf2f",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Spinner"
+   ],
+   "country": [
+    "(none)",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "KS Sharma",
+  "ids": [
+   "39ed0d2f"
+  ],
+  "old": "kv-sharma",
+  "oldId": "119678fd",
+  "new": "ks-sharma",
+  "newId": "39ed0d2f",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Spinner"
+   ],
+   "country": [
+    "(none)",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Kartik Sharma",
+  "ids": [
+   "7b679de5"
+  ],
+  "old": "kv-sharma",
+  "oldId": "119678fd",
+  "new": "kartik-sharma",
+  "newId": "7b679de5",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Kuldeep Yadav",
+  "ids": [
+   "8d2c70ad"
+  ],
+  "old": "k-yadav",
+  "oldId": "030f3089",
+  "new": "kuldeep-yadav",
+  "newId": "8d2c70ad",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "LHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Spinner"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "M Shahrukh Khan",
+  "ids": [
+   "7dcb9bc9"
+  ],
+  "old": "mohsin-khan",
+  "oldId": "c33d8116",
+  "new": "m-shahrukh-khan",
+  "newId": "7dcb9bc9",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Spinner"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "MD Choudhary",
+  "ids": [
+   "1c84109e"
+  ],
+  "old": "mukesh-choudhary",
+  "oldId": "765a4731",
+  "new": "mukul-choudhary",
+  "newId": null,
+  "method": "squad mapping (unverified bio)",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Mayank Rawat",
+  "ids": [
+   "2b801189"
+  ],
+  "old": "m-rawat",
+  "oldId": "de8d3876",
+  "new": "mayank-rawat",
+  "newId": "2b801189",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Monu Kumar",
+  "ids": [
+   "fb24e76c"
+  ],
+  "old": "mukesh-kumar",
+  "oldId": "2cffab74",
+  "new": "monu-kumar",
+  "newId": "fb24e76c",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Mujeeb Ur Rahman",
+  "ids": [
+   "7d92277a"
+  ],
+  "old": "mustafizur-rahman",
+  "oldId": "0a8fce53",
+  "new": "mujeeb-ur-rahman",
+  "newId": "7d92277a",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Spinner"
+   ],
+   "country": [
+    "Bangladesh",
+    "Bangladesh"
+   ]
+  }
+ },
+ {
+  "name": "Musheer Khan",
+  "ids": [
+   "d621b427"
+  ],
+  "old": "mohsin-khan",
+  "oldId": "c33d8116",
+  "new": "musheer-khan",
+  "newId": "d621b427",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Spinner"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "NA Saini",
+  "ids": [
+   "21d4e29b"
+  ],
+  "old": "n-saini",
+  "oldId": "addbde6c",
+  "new": "navdeep-saini",
+  "newId": "21d4e29b",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Navdeep Saini",
+  "ids": [
+   "21d4e29b"
+  ],
+  "old": "n-saini",
+  "oldId": "addbde6c",
+  "new": "navdeep-saini",
+  "newId": "21d4e29b",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "PM Sarvesh Kumar",
+  "ids": [
+   "4b4d1957"
+  ],
+  "old": "p-kumar",
+  "oldId": "e938e1bc",
+  "new": "pm-sarvesh-kumar",
+  "newId": "4b4d1957",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Pankaj Singh",
+  "ids": [
+   "e32d22f6"
+  ],
+  "old": "p-simran-singh",
+  "oldId": "9418198b",
+  "new": "pankaj-singh",
+  "newId": "e32d22f6",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "R Bishnoi",
+  "ids": [
+   "4d5a1617"
+  ],
+  "old": "ravi-bishnoi",
+  "oldId": "df064e1a",
+  "new": "r-bishnoi",
+  "newId": "4d5a1617",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "RG Sharma",
+  "ids": [
+   "740742ef"
+  ],
+  "old": "r-sharma",
+  "oldId": "5d9a1a73",
+  "new": "rg-sharma",
+  "newId": "740742ef",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Spinner"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "RK Singh",
+  "ids": [
+   "0a509d6b"
+  ],
+  "old": "rp-singh",
+  "oldId": "c3d1402f",
+  "new": "rk-singh",
+  "newId": "0a509d6b",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "LHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Spinner"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Raghu Sharma",
+  "ids": [
+   "5b615e7c"
+  ],
+  "old": "r-sharma",
+  "oldId": "5d9a1a73",
+  "new": "raghu-sharma",
+  "newId": "5b615e7c",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Ramandeep Singh",
+  "ids": [
+   "be24ead0"
+  ],
+  "old": "rp-singh",
+  "oldId": "c3d1402f",
+  "new": "ramandeep-singh",
+  "newId": "be24ead0",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Ravi Singh",
+  "ids": [
+   "548516a6"
+  ],
+  "old": "rp-singh",
+  "oldId": "c3d1402f",
+  "new": "ravi-singh",
+  "newId": "548516a6",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "SR Dubey",
+  "ids": [
+   "11061889"
+  ],
+  "old": "sb-dubey",
+  "oldId": "6b2ff18f",
+  "new": "sr-dubey",
+  "newId": "11061889",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Sandeep Sharma",
+  "ids": [
+   "ce820073"
+  ],
+  "old": "suyash-sharma",
+  "oldId": "9440ef41",
+  "new": "sandeep-sharma",
+  "newId": "ce820073",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Sanvir Singh",
+  "ids": [
+   "b0f2baf4"
+  ],
+  "old": "swapnil-singh",
+  "oldId": "983f2f61",
+  "new": "sanvir-singh",
+  "newId": "b0f2baf4",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Shashank Singh",
+  "ids": [
+   "26989d80"
+  ],
+  "old": "swapnil-singh",
+  "oldId": "983f2f61",
+  "new": "shashank-singh",
+  "newId": "26989d80",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Spinner"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Shivam Sharma",
+  "ids": [
+   "6f49cc6e"
+  ],
+  "old": "suyash-sharma",
+  "oldId": "9440ef41",
+  "new": "shivam-sharma",
+  "newId": "6f49cc6e",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Spinner"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Shivam Singh",
+  "ids": [
+   "e1d9ae9c"
+  ],
+  "old": "swapnil-singh",
+  "oldId": "983f2f61",
+  "new": "shivam-singh",
+  "newId": "e1d9ae9c",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Spinner"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Shivang Kumar",
+  "ids": [
+   "7b44eb3e"
+  ],
+  "old": "sumit-kumar",
+  "oldId": "8998a68f",
+  "new": "shivang-kumar",
+  "newId": "7b44eb3e",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "Unknown"
+   ],
+   "bowlerType": [
+    "Pacer",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Shoaib Ahmed",
+  "ids": [
+   "8a668774"
+  ],
+  "old": "shahbaz-ahmed",
+  "oldId": "f9e6e7ef",
+  "new": "shoaib-ahmed",
+  "newId": "8a668774",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Simarjeet Singh",
+  "ids": [
+   "30df8c66"
+  ],
+  "old": "swapnil-singh",
+  "oldId": "983f2f61",
+  "new": "simarjeet-singh",
+  "newId": "30df8c66",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Sunny Singh",
+  "ids": [
+   "30e37810"
+  ],
+  "old": "swapnil-singh",
+  "oldId": "983f2f61",
+  "new": "sunny-singh",
+  "newId": "30e37810",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "V Pratap Singh",
+  "ids": [
+   "d718440b"
+  ],
+  "old": "virat-singh",
+  "oldId": "26d76ad9",
+  "new": "v-pratap-singh",
+  "newId": "d718440b",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "VRV Singh",
+  "ids": [
+   "034b4b7d"
+  ],
+  "old": "virat-singh",
+  "oldId": "26d76ad9",
+  "new": "vrv-singh",
+  "newId": "034b4b7d",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "India",
+    "India"
+   ]
+  }
+ },
+ {
+  "name": "Y Gnaneswara Rao",
+  "ids": [
+   "bae11797"
+  ],
+  "old": "y-venugopal-rao",
+  "oldId": "fe763256",
+  "new": "y-gnaneswara-rao",
+  "newId": "bae11797",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "RHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Yashpal Singh",
+  "ids": [
+   "297b26da"
+  ],
+  "old": "yuvraj-singh",
+  "oldId": "1c914163",
+  "new": "yashpal-singh",
+  "newId": "297b26da",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "(none)"
+   ]
+  }
+ },
+ {
+  "name": "Yudhvir Singh",
+  "ids": [
+   "4885bbe6"
+  ],
+  "old": "yuvraj-singh",
+  "oldId": "1c914163",
+  "new": "yudhvir-singh",
+  "newId": "4885bbe6",
+  "method": "registry",
+  "cls": "old returned ANOTHER player's bio",
+  "attrChanged": [
+   "hand",
+   "bowlerType",
+   "country"
+  ],
+  "attr": {
+   "hand": [
+    "LHB",
+    "RHB"
+   ],
+   "bowlerType": [
+    "Spinner",
+    "Pacer"
+   ],
+   "country": [
+    "(none)",
+    "India"
+   ]
+  }
+ }
+]

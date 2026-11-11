@@ -1,0 +1,440 @@
+A  .gitattributes
+M  .gitignore
+ M artifacts/api-server/data/player-bio.json
+ M artifacts/api-server/data/player-images.json
+ M artifacts/api-server/data/squads-by-season.json
+ M artifacts/api-server/package.json
+ M artifacts/api-server/src/app.ts
+ M artifacts/api-server/src/routes/auction.ts
+ M artifacts/api-server/src/routes/clip-router.ts
+ M artifacts/api-server/src/routes/csv-sync-route.ts
+ M artifacts/api-server/src/routes/decision-intel.ts
+ M artifacts/api-server/src/routes/decision.ts
+ M artifacts/api-server/src/routes/index.ts
+ M artifacts/api-server/src/routes/ipl.ts
+ M artifacts/api-server/src/routes/live.ts
+ M artifacts/api-server/src/services/auction.ts
+ M artifacts/api-server/src/services/cricsheet-csv-sync.ts
+ M artifacts/api-server/src/services/decision/ball-context.ts
+ M artifacts/api-server/src/services/decision/db.ts
+ M artifacts/api-server/src/services/decision/match-model.ts
+ M artifacts/api-server/src/services/decision/opposition-map.ts
+ M artifacts/api-server/src/services/decision/player-pool.ts
+ M artifacts/api-server/src/services/decision/player-profiles.ts
+ M artifacts/api-server/src/services/decision/player-summary.ts
+ M artifacts/api-server/src/services/decision/squad-dna.ts
+ M artifacts/api-server/src/services/decision/stats-engine.ts
+ M artifacts/api-server/src/services/decision/strategy-sim.ts
+ M artifacts/api-server/src/services/decision/weakness-detector.ts
+ M artifacts/api-server/src/services/insights.ts
+ M artifacts/api-server/src/services/match-card.ts
+ M artifacts/api-server/src/services/stats-aggregator.ts
+ M artifacts/api-server/src/services/team-analytics.ts
+D  artifacts/ipl-analytics/.env
+ M artifacts/ipl-analytics/index.html
+ M artifacts/ipl-analytics/package.json
+ M artifacts/ipl-analytics/public/data/player-bio.json
+ M artifacts/ipl-analytics/public/data/player-images.json
+ M artifacts/ipl-analytics/public/data/player-photo-registry.json
+ M artifacts/ipl-analytics/public/data/squads-by-season.json
+ M artifacts/ipl-analytics/public/robots.txt
+ M artifacts/ipl-analytics/src/App.tsx
+ M artifacts/ipl-analytics/src/components/ad-slot.tsx
+ M artifacts/ipl-analytics/src/components/ad-vessel.tsx
+ M artifacts/ipl-analytics/src/components/ai-analyst-panel.tsx
+ M artifacts/ipl-analytics/src/components/ai-mascot-guide.tsx
+ M artifacts/ipl-analytics/src/components/consent-banner.tsx
+ M artifacts/ipl-analytics/src/components/dugout/franchise-hero.tsx
+ M artifacts/ipl-analytics/src/components/dugout/franchise-intelligence.tsx
+ M artifacts/ipl-analytics/src/components/dugout/rivalry-spotlight.tsx
+ M artifacts/ipl-analytics/src/components/dugout/season-timeline.tsx
+ M artifacts/ipl-analytics/src/components/fixture-ticket-card.tsx
+ M artifacts/ipl-analytics/src/components/layout.tsx
+ M artifacts/ipl-analytics/src/components/match/cinematic-forecast-view.tsx
+ M artifacts/ipl-analytics/src/components/match/innings-scorecard-view.tsx
+ M artifacts/ipl-analytics/src/components/match/match-cinematic-hero.tsx
+ M artifacts/ipl-analytics/src/components/platform-info-sheet.tsx
+ M artifacts/ipl-analytics/src/components/player-avatar.tsx
+ M artifacts/ipl-analytics/src/components/team-squad.tsx
+ M artifacts/ipl-analytics/src/components/video-card.tsx
+ M artifacts/ipl-analytics/src/components/video-shelf.tsx
+ M artifacts/ipl-analytics/src/components/visualizations/spatial-analytics.tsx
+ M artifacts/ipl-analytics/src/index.css
+ M artifacts/ipl-analytics/src/lib/aggregates.ts
+ M artifacts/ipl-analytics/src/lib/analytics.ts
+ M artifacts/ipl-analytics/src/lib/gemini-client.ts
+ M artifacts/ipl-analytics/src/lib/live.ts
+ M artifacts/ipl-analytics/src/lib/player-photo-registry.ts
+ M artifacts/ipl-analytics/src/lib/site-profile.ts
+ M artifacts/ipl-analytics/src/lib/team-context.tsx
+ M artifacts/ipl-analytics/src/lib/video-registry.ts
+ M artifacts/ipl-analytics/src/pages/ai-analyst-ask.tsx
+ M artifacts/ipl-analytics/src/pages/ai-analyst-strategy-sim.tsx
+ M artifacts/ipl-analytics/src/pages/ai-analyst.tsx
+ M artifacts/ipl-analytics/src/pages/dugout.tsx
+ M artifacts/ipl-analytics/src/pages/fan-arena.tsx
+ M artifacts/ipl-analytics/src/pages/feed.tsx
+ M artifacts/ipl-analytics/src/pages/home.tsx
+ M artifacts/ipl-analytics/src/pages/intelligence.tsx
+ M artifacts/ipl-analytics/src/pages/match-detail.tsx
+ M artifacts/ipl-analytics/src/pages/player.tsx
+ M artifacts/ipl-analytics/src/pages/privacy.tsx
+ M artifacts/ipl-analytics/src/pages/pulse.tsx
+ M artifacts/ipl-analytics/src/pages/section-pages.tsx
+ M artifacts/ipl-analytics/src/pages/stats.tsx
+ M artifacts/ipl-analytics/src/pages/venue.tsx
+ M artifacts/ipl-analytics/vite.config.ts
+M  lib/db/drizzle.config.ts
+ M lib/db/src/index.ts
+ M lib/db/src/schema/index.ts
+M  package.json
+ M pnpm-lock.yaml
+M  pnpm-workspace.yaml
+ M schema.sql
+A  scripts/data-release.mjs
+ M scripts/package.json
+M  scripts/post-merge.sh
+ M scripts/src/compute_analytics.ts
+ M scripts/src/create-matchups-table.ts
+ M scripts/src/ingest-kaggle-data.ts
+ M scripts/src/migrate_deliveries.ts
+ M scripts/src/migrate_matches.ts
+ M scripts/src/migrate_players.ts
+ M scripts/src/populate-current-squad.ts
+ M scripts/src/schema-setup.ts
+ M scripts/src/update-ipl-data-v3.ts
+ M scripts/src/update-ipl-data.ts
+D  sqlite.db
+D  sqlite.db-shm
+D  sqlite.db-wal
+?? CRICFIELD-ARCADE-REPORT.md
+?? DAY-01-REPORT.md
+?? DAY-02-REPORT.md
+?? DAY-03-REPORT.md
+?? DAY-04-REPORT.md
+?? DAY-04.5-REPORT.md
+?? DAY-04.6-REPORT.md
+?? DAY-05-REPORT.md
+?? DAY-05.5-VERIFICATION.md
+?? DAY-06-REPORT.md
+?? DAY-07-REPORT.md
+?? DAY-08-REPORT.md
+?? ENGINEERING-SPRINT-SUMMARY.md
+?? SCOUT-LAB-REDESIGN-REPORT.md
+?? VIDEO-INTELLIGENCE-REPORT.md
+?? WATCH-AND-ANALYZE-REPORT.md
+?? artifacts/api-server/src/lib/admin-auth.ts
+?? artifacts/api-server/src/lib/rate-limit.ts
+?? artifacts/api-server/src/routes/arcade.ts
+?? artifacts/api-server/src/routes/auction-2027.ts
+?? artifacts/api-server/src/routes/scout.ts
+?? artifacts/api-server/src/routes/video.ts
+?? artifacts/api-server/src/scripts/csv-sync-cli.ts
+?? artifacts/api-server/src/scripts/day6-meta-snapshot.ts
+?? artifacts/api-server/src/scripts/day6-toss-phase.ts
+?? artifacts/api-server/src/scripts/day6-unknown-share.ts
+?? artifacts/api-server/src/scripts/day8-bench.ts
+?? artifacts/api-server/src/scripts/day8-concurrency.ts
+?? artifacts/api-server/src/scripts/smoke-db.ts
+?? artifacts/api-server/src/services/arcade/
+?? artifacts/api-server/src/services/csv-dataset.ts
+?? artifacts/api-server/src/services/player-bio-lookup.ts
+?? artifacts/api-server/src/services/scout/
+?? artifacts/api-server/src/services/video/
+?? artifacts/api-server/test/
+?? artifacts/ipl-analytics/auction-desktop-check.png
+?? artifacts/ipl-analytics/auction-mobile-check.png
+?? artifacts/ipl-analytics/docs/
+?? artifacts/ipl-analytics/dugout-milestones-desktop.png
+?? artifacts/ipl-analytics/dugout-milestones-mobile.png
+?? artifacts/ipl-analytics/e2e/
+?? artifacts/ipl-analytics/feed-crop-before.png
+?? artifacts/ipl-analytics/feed-fit-fixed.png
+?? artifacts/ipl-analytics/home-check.png
+?? artifacts/ipl-analytics/home-mobile-fixed.png
+?? artifacts/ipl-analytics/home-scroll-fixed.png
+?? artifacts/ipl-analytics/home-scroll.png
+?? artifacts/ipl-analytics/milestone-build-check.log
+?? artifacts/ipl-analytics/milestone-kkr-2021-fixed.png
+?? artifacts/ipl-analytics/milestone-srh-showcase.png
+?? artifacts/ipl-analytics/milestones-occasion-2011.png
+?? artifacts/ipl-analytics/milestones-standing-desktop.png
+?? artifacts/ipl-analytics/milestones-standing-mobile.png
+?? artifacts/ipl-analytics/profiles-list.json
+?? artifacts/ipl-analytics/public/assets/
+?? artifacts/ipl-analytics/public/contact-sheet-rcb-2024.html
+?? artifacts/ipl-analytics/public/contact-sheet-rcb-2025.html
+?? artifacts/ipl-analytics/public/contact-sheet-rcb-2026.html
+?? artifacts/ipl-analytics/public/data/ipl-jersey-verification-report.md
+?? artifacts/ipl-analytics/public/data/official-squads.json
+?? artifacts/ipl-analytics/public/data/player-jerseys.json
+?? artifacts/ipl-analytics/public/data/player-recent-matches.json
+?? artifacts/ipl-analytics/public/data/player-recent-matches/
+?? artifacts/ipl-analytics/public/milestone-photos/
+?? artifacts/ipl-analytics/public/scout-screenshots/
+?? artifacts/ipl-analytics/public/sitemap-dugout.xml
+?? artifacts/ipl-analytics/scripts/
+?? artifacts/ipl-analytics/src/components/analyst-navigator.tsx
+?? artifacts/ipl-analytics/src/components/cricket3d/
+?? artifacts/ipl-analytics/src/components/dugout/article-v2/
+?? artifacts/ipl-analytics/src/components/dugout/editorial-article-reader.tsx
+?? artifacts/ipl-analytics/src/components/dugout/editorial-cover-canvas.tsx
+?? artifacts/ipl-analytics/src/components/dugout/editorial-image-figure.tsx
+?? artifacts/ipl-analytics/src/components/dugout/editorial-magazine.tsx
+?? artifacts/ipl-analytics/src/components/dugout/franchise-library.tsx
+?? artifacts/ipl-analytics/src/components/dugout/franchise-milestones.css
+?? artifacts/ipl-analytics/src/components/dugout/franchise-milestones.tsx
+?? artifacts/ipl-analytics/src/components/dugout/getty-photo-notice.tsx
+?? artifacts/ipl-analytics/src/components/dugout/milestone-photo.tsx
+?? artifacts/ipl-analytics/src/components/feed-newsroom.tsx
+?? artifacts/ipl-analytics/src/components/match/match-official-videos.tsx
+?? artifacts/ipl-analytics/src/components/photo-policy.tsx
+?? artifacts/ipl-analytics/src/components/player/
+?? artifacts/ipl-analytics/src/components/replay-tools.tsx
+?? artifacts/ipl-analytics/src/components/retention-room.tsx
+?? artifacts/ipl-analytics/src/components/scout/
+?? artifacts/ipl-analytics/src/components/venue-directory.tsx
+?? artifacts/ipl-analytics/src/components/venue-stadium-dashboard.css
+?? artifacts/ipl-analytics/src/components/venue-stadium-dashboard.tsx
+?? artifacts/ipl-analytics/src/data/auction-2026-foundation.json
+?? artifacts/ipl-analytics/src/data/auction-2026-lots.json
+?? artifacts/ipl-analytics/src/data/dugout-squads-2026.json
+?? artifacts/ipl-analytics/src/data/editorial-images/
+?? artifacts/ipl-analytics/src/data/editorial-magazine-data.ts
+?? artifacts/ipl-analytics/src/data/editorial/
+?? artifacts/ipl-analytics/src/data/milestone-event-photos.json
+?? artifacts/ipl-analytics/src/lib/arcade-api.ts
+?? artifacts/ipl-analytics/src/lib/arcade-client-engine.ts
+?? artifacts/ipl-analytics/src/lib/auction-plan.ts
+?? artifacts/ipl-analytics/src/lib/cricket3d/
+?? artifacts/ipl-analytics/src/lib/editorial-image-plan.ts
+?? artifacts/ipl-analytics/src/lib/editorial-images.ts
+?? artifacts/ipl-analytics/src/lib/editorial-v2.ts
+?? artifacts/ipl-analytics/src/lib/embed-consent.ts
+?? artifacts/ipl-analytics/src/lib/franchise-milestones.ts
+?? artifacts/ipl-analytics/src/lib/ipl-2027-desk.ts
+?? artifacts/ipl-analytics/src/lib/ipl-2027.ts
+?? artifacts/ipl-analytics/src/lib/milestone-photography.ts
+?? artifacts/ipl-analytics/src/lib/player-key.ts
+?? artifacts/ipl-analytics/src/lib/player-recent-matches.ts
+?? artifacts/ipl-analytics/src/lib/pulse-auction.ts
+?? artifacts/ipl-analytics/src/lib/replay.ts
+?? artifacts/ipl-analytics/src/lib/scout-api.ts
+?? artifacts/ipl-analytics/src/lib/scout-shortlist.ts
+?? artifacts/ipl-analytics/src/lib/use-ipl-2027.ts
+?? artifacts/ipl-analytics/src/lib/video-api.ts
+?? artifacts/ipl-analytics/src/pages/arcade/
+?? artifacts/ipl-analytics/src/pages/article-detail.tsx
+?? artifacts/ipl-analytics/src/pages/editorial-image-review.tsx
+?? artifacts/ipl-analytics/src/pages/feed-auction.css
+?? artifacts/ipl-analytics/src/pages/feed-auction.tsx
+?? artifacts/ipl-analytics/src/pages/feed-category.tsx
+?? artifacts/ipl-analytics/src/pages/feed-stars.css
+?? artifacts/ipl-analytics/src/pages/feed-stars.tsx
+?? artifacts/ipl-analytics/src/pages/feed-storylines.css
+?? artifacts/ipl-analytics/src/pages/feed-storylines.tsx
+?? artifacts/ipl-analytics/src/pages/feed-tactics.css
+?? artifacts/ipl-analytics/src/pages/feed-tactics.tsx
+?? artifacts/ipl-analytics/src/pages/feed-venues.css
+?? artifacts/ipl-analytics/src/pages/feed-venues.tsx
+?? artifacts/ipl-analytics/src/pages/ipl-2027-retentions.tsx
+?? artifacts/ipl-analytics/src/pages/ipl-2027.css
+?? artifacts/ipl-analytics/src/pages/ipl-2027.tsx
+?? artifacts/ipl-analytics/src/pages/photo-pipeline-dashboard.tsx
+?? artifacts/ipl-analytics/src/pages/scout-compare.tsx
+?? artifacts/ipl-analytics/src/pages/scout-home.tsx
+?? artifacts/ipl-analytics/src/pages/scout-player.tsx
+?? artifacts/ipl-analytics/src/pages/scout-roles.tsx
+?? artifacts/ipl-analytics/src/pages/watch-and-analyze.tsx
+?? artifacts/ipl-analytics/srh-reference.png
+?? artifacts/ipl-analytics/star-watch-build-check.log
+?? artifacts/ipl-analytics/star-watch-desktop.png
+?? artifacts/ipl-analytics/star-watch-mobile.png
+?? artifacts/ipl-analytics/storylines-build-check.log
+?? artifacts/ipl-analytics/tactics-build-check.log
+?? artifacts/ipl-analytics/tactics-desktop-check.png
+?? artifacts/ipl-analytics/tactics-mobile-check.png
+?? artifacts/ipl-analytics/venue-build-check.log
+?? artifacts/ipl-analytics/venue-dashboard-desktop.png
+?? artifacts/ipl-analytics/venue-dashboard-mobile.png
+?? artifacts/ipl-analytics/venue-hub-build-check.log
+?? artifacts/ipl-analytics/venue-hub-desktop.png
+?? artifacts/ipl-analytics/venue-hub-mobile.png
+?? artifacts/ipl-analytics/venue-links-check.png
+?? docs/architecture-handbook/
+?? docs/data-repairs/
+?? docs/day05/
+?? docs/day055/
+?? docs/day055v/
+?? docs/day06/
+?? docs/day07/
+?? docs/day08/
+?? docs/editorial-drafts/
+?? docs/editorial-images/
+?? docs/editorial/
+?? docs/final/
+?? docs/global-data-engine/
+?? docs/ipl-2027/
+?? docs/launch-evidence/
+?? lib/cricket-data/global/
+?? scratch/analyze_images.py
+?? scratch/audit_10_summary.json
+?? scratch/check_sportskeeda_avatar.py
+?? scratch/check_sportskeeda_swastik.py
+?? scratch/clean_swastik.py
+?? scratch/deploy_perfect_photos.py
+?? scratch/fetch_target_photos.py
+?? scratch/finalize_all_perfect.py
+?? scratch/finalize_both.py
+?? scratch/fuzzy_test.py
+?? scratch/inspect_photos.py
+?? scratch/inspect_uploads.py
+?? scratch/map_config.py
+?? scratch/match_2026_players.py
+?? scratch/perfect_matting.py
+?? scratch/precision_hair.py
+?? scratch/print_2026_squads.py
+?? scratch/recalc_results.json
+?? scratch/refine_cutouts.py
+?? scratch/render_mockup_cards.py
+?? scratch/round_hair.py
+?? scratch/run_benchmarks.mjs
+?? scratch/run_photo_mapping.py
+?? scratch/search_unmatched.py
+?? scratch/smooth_swastik_hair.py
+?? scratch/sync_roles_and_photos.py
+?? scratch/test_adaptive_hair.py
+?? scratch/test_both_perfect.py
+?? scratch/test_endpoints.mjs
+?? scratch/test_full_mapping.py
+?? scratch/test_mayank.py
+?? scratch/test_pure_floodfill.py
+?? scratch/test_role_coverage.py
+?? scratch/test_scout_api.mjs
+?? scratch/test_segmentation.py
+?? scratch/test_smooth_dome.py
+?? scratch/test_swastik_flawless.py
+?? scratch/test_thresholds.py
+?? scratch/verify-getty-original-id.mjs
+?? scratch/verify-portrait-sync.mjs
+?? scratch/verify_all_squads_2026.py
+?? scripts/acquire_additional_rcb_2025.mjs
+?? scripts/add-manual-clip.mjs
+?? scripts/check-all-iplt20-sources.mjs
+?? scripts/check-ipl-2027-browser.mjs
+?? scripts/check-ipl-2027.mjs
+?? scripts/check-iplt20-ids.mjs
+?? scripts/check-rcb-official.mjs
+?? scripts/check-urls.mjs
+?? scripts/clean_tom_and_alzarri.py
+?? scripts/create_review_strip.py
+?? scripts/create_review_strip_refined.py
+?? scripts/crop_all_rcb_to_chest.py
+?? scripts/crop_rcb_2025_to_chest.py
+?? scripts/data/
+?? scripts/day5-prod-start-smoke.mjs
+?? scripts/deploy_rcb_2024_complete.py
+?? scripts/download-rcb-photos.mjs
+?? scripts/download-srh-photos.mjs
+?? scripts/download-test-iplt20.mjs
+?? scripts/download_user_urls.py
+?? scripts/extract-all-25-players.mjs
+?? scripts/extract-iplt20-squad.mjs
+?? scripts/extract-rcb-iplt20-players.mjs
+?? scripts/fetch-match-squads.mjs
+?? scripts/fetch-mayank-rcb.mjs
+?? scripts/fetch-rcb-nextdata.mjs
+?? scripts/fetch-toi-photos.mjs
+?? scripts/fetch_rcb_men.mjs
+?? scripts/find-0ftpx-endpoints.mjs
+?? scripts/find-bff-endpoints.mjs
+?? scripts/find-chunk-apis.mjs
+?? scripts/find-crictracker-mayank.mjs
+?? scripts/find-iplt20-apis.mjs
+?? scripts/find-mayank-photos.mjs
+?? scripts/find-patidar.mjs
+?? scripts/find-rcb-players-iplt20.mjs
+?? scripts/find-squad-json.mjs
+?? scripts/find-tabs.mjs
+?? scripts/fix-rcb-2025-photos.mjs
+?? scripts/fix_abhinandan.py
+?? scripts/generate-editorial-draft.mjs
+?? scripts/generate-player-recent-matches.mjs
+?? scripts/generate-verification-report.mjs
+?? scripts/generate_contact_sheet_rcb_2024.mjs
+?? scripts/generate_contact_sheet_rcb_2025.mjs
+?? scripts/inspect-bff.mjs
+?? scripts/inspect-match-squad.mjs
+?? scripts/inspect-official-row.mjs
+?? scripts/inspect-official-squad.mjs
+?? scripts/inspect-players-query.mjs
+?? scripts/inspect-rcb-markup.mjs
+?? scripts/inspect-rsc-2024.mjs
+?? scripts/inspect-rsc.mjs
+?? scripts/inspect_5_user_images.py
+?? scripts/iplt20_players_rcb.html
+?? scripts/iplt20_rcb_parsed_squad.json
+?? scripts/iplt20_rcb_squad.html
+?? scripts/iplt20_rcb_squad_rsc.txt
+?? scripts/lib/
+?? scripts/list-rcb-2024-api.mjs
+?? scripts/match_squads_237141.html
+?? scripts/parse-iplt20-rcb.mjs
+?? scripts/parse-rcb-2024-squad.mjs
+?? scripts/parse-rcb-2026-squad.mjs
+?? scripts/parse-rcb-official.mjs
+?? scripts/parse-rcb-tags.mjs
+?? scripts/parse-srh-squad.mjs
+?? scripts/parse_men_page.mjs
+?? scripts/probe-bff-squad.mjs
+?? scripts/probe-rcb-2025.mjs
+?? scripts/probe-rcb-master-images.mjs
+?? scripts/probe-sources.mjs
+?? scripts/probe_missing_5.py
+?? scripts/process-rcb-2025-pipeline.mjs
+?? scripts/process-user-photos.py
+?? scripts/process_all_5_standardized.py
+?? scripts/process_missing_5.py
+?? scripts/rcb-2025-downloaded.json
+?? scripts/rcb-2025-resolved.json
+?? scripts/rcb-2026-downloaded-manifest.json
+?? scripts/rcb-2026-official-players.json
+?? scripts/rcb_extracted_matches.json
+?? scripts/rcb_official_men.html
+?? scripts/rcb_official_squad.html
+?? scripts/rcb_page.html
+?? scripts/refine_segmentation.py
+?? scripts/resolve-rcb-2025.mjs
+?? scripts/scrape-and-save-2024-photos.mjs
+?? scripts/scrape-iplt20-2024-puppeteer.mjs
+?? scripts/search-official-html.mjs
+?? scripts/src/day4/
+?? scripts/src/global/
+?? scripts/src/lib/
+?? scripts/src/scout/
+?? scripts/src/step3/
+?? scripts/src/step3_5/
+?? scripts/src/step3_6/
+?? scripts/src/test-readonly-env.mjs
+?? scripts/srh-2026-downloaded-manifest.json
+?? scripts/srh-2026-extracted-players.json
+?? scripts/standardize_all_6.py
+?? scripts/standardize_rcb_2024.py
+?? scripts/sync-hotstar-clips.mjs
+?? scripts/test-direct-assets.mjs
+?? scripts/test-ipl-search.mjs
+?? scripts/test-players-tag.mjs
+?? scripts/test-rcb-2025-context.mjs
+?? scripts/test-rcb-contexts.mjs
+?? scripts/test-rsc-squad.mjs
+?? scripts/test-scout-frontend-live.mjs
+?? scripts/test_grabcut_alzarri_lomror_tom.py
+?? scripts/test_keys.json
+?? scripts/test_perfect_cutouts.py
+?? scripts/unique_cricsheet_players.json
+?? scripts/update-rcb-2024-registry.mjs
+?? scripts/update-rcb-2025-registry.mjs
+?? scripts/update-rcb-registry.mjs
+?? scripts/update-registry-all-fixed.mjs
+?? scripts/update-srh-registry.mjs
+?? scripts/verify-rcb-2025-registry.mjs

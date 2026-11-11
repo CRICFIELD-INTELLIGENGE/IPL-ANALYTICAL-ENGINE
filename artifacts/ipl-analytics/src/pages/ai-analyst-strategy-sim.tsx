@@ -154,6 +154,7 @@ function Results({ r }: { r: StrategyResult }) {
 
   const [coachAdvice, setCoachAdvice] = useState<string | null>(null);
   const [isCoachLoading, setIsCoachLoading] = useState(false);
+  const [coachUnavailable, setCoachUnavailable] = useState<string | null>(null);
 
   const requestCoachBriefing = async () => {
     setIsCoachLoading(true);
@@ -171,9 +172,16 @@ Provide a tactical dugout briefing for the captain:
 3. Risk analysis (how this total could be leaked).`;
 
       const response = await askGeminiAnalyst(prompt, { context: "Live Strategy Simulation Dugout Briefing" });
-      setCoachAdvice(response.text);
-    } catch {
-      setCoachAdvice("Tactical link timeout. Please verify your Gemini API key in AI Analyst settings or try again.");
+      if (response.source === "live_api") {
+        setCoachAdvice(response.text);
+        setCoachUnavailable(null);
+      } else {
+        setCoachAdvice(null);
+        setCoachUnavailable(response.error ?? "Gemini is unavailable.");
+      }
+    } catch (err) {
+      setCoachAdvice(null);
+      setCoachUnavailable(`Gemini is unavailable: ${(err as Error).message}`);
     } finally {
       setIsCoachLoading(false);
     }
@@ -207,19 +215,29 @@ Provide a tactical dugout briefing for the captain:
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 text-xs font-semibold text-cyan-300 transition-colors shadow-sm disabled:opacity-50"
           >
             <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            {isCoachLoading ? "Consulting Gemini Coach…" : "Ask Gemini Tactical Coach"}
+            {isCoachLoading ? "Consulting Gemini…" : "Ask Gemini (optional, your key)"}
           </button>
         </div>
+
+        {coachUnavailable && (
+          <div role="status" className="mb-4 flex items-start justify-between gap-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">
+            <span>{coachUnavailable} The simulation results below are unaffected.</span>
+            <button onClick={() => setCoachUnavailable(null)} className="text-amber-200/80 hover:text-white shrink-0">Dismiss</button>
+          </div>
+        )}
 
         {coachAdvice && (
           <div className="mb-4 rounded-2xl border border-cyan-500/30 bg-[#070B18]/90 backdrop-blur-md p-4 space-y-2 relative overflow-hidden">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-cyan-400">
                 <Sparkles className="w-4 h-4 text-cyan-400" />
-                Gemini 1.5 Dugout Tactical Briefing
+                Gemini briefing — unverified AI text
               </div>
               <button onClick={() => setCoachAdvice(null)} className="text-xs text-muted-foreground hover:text-white">Dismiss</button>
             </div>
+            <p className="text-[11px] text-amber-200/90">
+              Written by an external language model from the figures above. It is not computed from CricField's data; check any number it adds against the simulation.
+            </p>
             <div className="text-xs text-slate-200 leading-relaxed whitespace-pre-line border-t border-cyan-500/15 pt-2">
               {coachAdvice}
             </div>

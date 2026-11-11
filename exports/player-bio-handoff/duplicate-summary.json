@@ -1,0 +1,15 @@
+{
+  "player_count": 18623,
+  "distinct_player_keys": 18623,
+  "distinct_cricsheet_ids": 18623,
+  "duplicate_group_counts": {
+    "same_cricsheet_id": 0,
+    "same_display_name_normalized": 7,
+    "same_raw_name_normalized": 282,
+    "shared_external_source_id": 0
+  },
+  "duplicate_review_rows": 621,
+  "bio_batches": 75,
+  "database_modified": false,
+  "note": "Name collisions are not confirmed duplicate people. No identities merged or removed."
+}

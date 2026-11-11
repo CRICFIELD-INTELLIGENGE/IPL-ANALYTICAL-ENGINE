@@ -1,0 +1,192 @@
+diff --git a/artifacts/api-server/src/services/decision/db.ts b/artifacts/api-server/src/services/decision/db.ts
+index 567a4fc..f6cad24 100644
+--- a/artifacts/api-server/src/services/decision/db.ts
++++ b/artifacts/api-server/src/services/decision/db.ts
+@@ -74,6 +74,20 @@ export function seasonToDbLabel(year: string): string {
+   return hit ? hit[0] : year;
+ }
+ 
++/**
++ * Runs charged to the bowler for delivery `d`: off the bat, plus wides, plus one run per no-ball.
++ * Byes, leg-byes and penalty runs are not charged.
++ *
++ * The warehouse's is_bye / is_legbye / is_penalty flags are 0 on every row (the ingest never set them),
++ * so the earlier `total_runs - extras-when-flagged` expression charged every bye and leg-bye to the
++ * bowler: 7,142 runs across IPL history. This uses only populated columns. It equals the Cricsheet
++ * definition (batter + wides + no-balls) except on 17 deliveries the source records as multi-run
++ * no-balls or as a wide with penalty runs, where the warehouse cannot tell the components apart
++ * (30 runs net, 2008–2026).
++ */
++export const RUNS_CONCEDED_SQL =
++  "(d.batter_runs + CASE WHEN d.is_wide = 1 THEN d.extra_runs ELSE 0 END + CASE WHEN d.is_noball = 1 THEN 1 ELSE 0 END)";
++
+ /** Minimal RFC-4180 CSV parser (quoted fields, embedded commas/newlines). */
+ export function parseCsv(text: string): string[][] {
+   const rows: string[][] = [];
+diff --git a/artifacts/api-server/src/services/decision/ball-context.ts b/artifacts/api-server/src/services/decision/ball-context.ts
+index 8d128d6..8493634 100644
+--- a/artifacts/api-server/src/services/decision/ball-context.ts
++++ b/artifacts/api-server/src/services/decision/ball-context.ts
+@@ -15,7 +15,7 @@
+ 
+ import fs from "fs";
+ import path from "path";
+-import { getProjectRoot, getDecisionDb, normalizeSeason, queryAll } from "./db";
++import { getProjectRoot, getDecisionDb, normalizeSeason, queryAll, RUNS_CONCEDED_SQL } from "./db";
+ import { getMatchStages } from "./stats-engine";
+ 
+ export interface BallState {
+@@ -131,7 +131,7 @@ export function getTargets(): Map<string, { runs: number; balls: number }> {
+ interface Row {
+   id: number; inn: number; num: number; mid: string; ov: number;
+   bat: number; ns: number; bowl: number; bt: number; wt: number;
+-  br: number; tr: number; w: number; nb: number; extra: number; kind: string | null; out: number | null;
++  br: number; tr: number; w: number; nb: number; charged: number; kind: string | null; out: number | null;
+ }
+ 
+ let columns: BallColumns | null = null;
+@@ -191,7 +191,7 @@ export function getBallColumns(): BallColumns {
+     SELECT d.delivery_id id, d.innings_id inn, i.innings_number num, d.match_id mid, d.over_num ov,
+       d.batter_id bat, d.non_striker_id ns, d.bowler_id bowl, i.batting_team_id bt, i.bowling_team_id wt,
+       d.batter_runs br, d.total_runs tr, d.is_wide w, d.is_noball nb,
+-      CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 OR d.is_penalty = 1 THEN d.extra_runs ELSE 0 END extra,
++      ${RUNS_CONCEDED_SQL} charged,
+       x.kind kind, x.player_out_id out
+     FROM deliveries d
+     JOIN innings i ON i.innings_id = d.innings_id
+@@ -235,7 +235,7 @@ export function getBallColumns(): BallColumns {
+     c.venue[k] = m?.venue ?? -1;
+     c.batterRuns[k] = r.br;
+     c.totalRuns[k] = r.tr;
+-    c.conceded[k] = r.tr - r.extra;
++    c.conceded[k] = r.charged;
+     let f = 0;
+     if (!r.w && !r.nb) f |= F_LEGAL;
+     if (!r.w) f |= F_FACED;
+diff --git a/artifacts/api-server/src/services/decision/player-profiles.ts b/artifacts/api-server/src/services/decision/player-profiles.ts
+index 78d0998..ed04803 100644
+--- a/artifacts/api-server/src/services/decision/player-profiles.ts
++++ b/artifacts/api-server/src/services/decision/player-profiles.ts
+@@ -20,6 +20,7 @@ import {
+   parseCsv,
+   queryAll,
+   readTextLoose,
++  RUNS_CONCEDED_SQL,
+ } from "./db";
+ 
+ /* ─── Types ──────────────────────────────────────────────────────────────── */
+@@ -425,7 +426,7 @@ function buildSeasonData(): void {
+   for (const r of queryAll<{ pid: number; season: string; balls: number; runs: number }>(`
+     SELECT d.bowler_id pid, m.season_id season,
+            SUM(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) balls,
+-           SUM(d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 OR d.is_penalty = 1 THEN d.extra_runs ELSE 0 END) runs
++           SUM(${RUNS_CONCEDED_SQL}) runs
+     FROM deliveries d JOIN matches m ON m.match_id = d.match_id
+     GROUP BY 1, 2`)) {
+     const l = line(r.pid, r.season);
+diff --git a/artifacts/api-server/src/services/decision/stats-engine.ts b/artifacts/api-server/src/services/decision/stats-engine.ts
+index 5b1d44e..bfbf7ff 100644
+--- a/artifacts/api-server/src/services/decision/stats-engine.ts
++++ b/artifacts/api-server/src/services/decision/stats-engine.ts
+@@ -13,7 +13,7 @@
+ 
+ import fs from "fs";
+ import path from "path";
+-import { getProjectRoot, normalizeSeason, queryAll, seasonToDbLabel } from "./db";
++import { getProjectRoot, normalizeSeason, queryAll, seasonToDbLabel, RUNS_CONCEDED_SQL } from "./db";
+ import { round } from "./impact-model";
+ import { getPlayerMeta, getSeasons } from "./player-profiles";
+ 
+@@ -631,7 +631,7 @@ function runBowling(q: StatQuery): Computed {
+   const groups = new Map<string, Group<BowlRaw>>();
+   const w = ballWhere(q, { batter: "d.batter_id", bowler: "d.bowler_id" });
+   const key = keyExpr(q, "d.bowler_id");
+-  const conceded = "d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 OR d.is_penalty = 1 THEN d.extra_runs ELSE 0 END";
++  const conceded = RUNS_CONCEDED_SQL;
+ 
+   for (const r of queryAll<{ k: string | number; balls: number; runs: number; dots: number; fours: number; sixes: number; inns: number }>(`
+     SELECT ${key} k,
+@@ -836,7 +836,7 @@ function runInningsRecords(q: StatQuery): Computed {
+ 
+   if (q.perspective === "bowling") {
+     const w = ballWhere(q, { batter: "d.batter_id", bowler: "d.bowler_id" });
+-    const conceded = "d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 OR d.is_penalty = 1 THEN d.extra_runs ELSE 0 END";
++    const conceded = RUNS_CONCEDED_SQL;
+     const spells = queryAll<{ pid: number; inn: number; balls: number; runs: number }>(`
+       SELECT d.bowler_id pid, d.innings_id inn,
+         SUM(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) balls, SUM(${conceded}) runs
+diff --git a/artifacts/api-server/src/services/decision/weakness-detector.ts b/artifacts/api-server/src/services/decision/weakness-detector.ts
+index 9fa7cf5..8ee7898 100644
+--- a/artifacts/api-server/src/services/decision/weakness-detector.ts
++++ b/artifacts/api-server/src/services/decision/weakness-detector.ts
+@@ -14,7 +14,7 @@
+ // effect is large enough to matter on the field; otherwise the weakest cells
+ // are shown as a watch list, clearly labelled as not significant.
+ 
+-import { normalizeSeason, queryAll, seasonToDbLabel } from "./db";
++import { normalizeSeason, queryAll, seasonToDbLabel, RUNS_CONCEDED_SQL } from "./db";
+ import { round } from "./impact-model";
+ import { bowlingSubtype, getBaselines, getPlayerMeta, getSeasons, type BowlingSubtype } from "./player-profiles";
+ import { getFranchiseRefs } from "./stats-engine";
+@@ -140,7 +140,7 @@ function loadBalls(playerId: number, side: Side, seasons: string[] | null): Ball
+     : "CASE WHEN x.kind IN ('bowled','caught','caught and bowled','lbw','stumped','hit wicket') THEN x.kind END";
+   const runs = side === "batting"
+     ? "d.batter_runs"
+-    : "d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 OR d.is_penalty = 1 THEN d.extra_runs ELSE 0 END";
++    : RUNS_CONCEDED_SQL;
+   const legal = side === "batting" ? "d.is_wide = 0" : "d.is_wide = 0 AND d.is_noball = 0";
+   const seasonSql = seasons ? `AND m.season_id IN (${seasons.map(() => "?").join(",")})` : "";
+   const rows = queryAll<{ id: number; mid: string; season: string; date: string; ov: number; bn: number; opp: number; num: number; cp: number; runs: number; legal: number; kind: string | null }>(`
+diff --git a/artifacts/api-server/src/services/stats-aggregator.ts b/artifacts/api-server/src/services/stats-aggregator.ts
+index d2857a6..5512429 100644
+--- a/artifacts/api-server/src/services/stats-aggregator.ts
++++ b/artifacts/api-server/src/services/stats-aggregator.ts
+@@ -2038,17 +2038,17 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
+       p_bowl.bowling_style as bowler_type,
+       count(distinct d.match_id) as matches,
+       count(distinct d.innings_id) as innings,
+-      sum(case when d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as conceded_runs,
++      sum((d.batter_runs + case when d.is_wide = true then d.extra_runs else 0 end + case when d.is_noball = true then 1 else 0 end)) as conceded_runs,
+       count(case when d.is_wide = false and d.is_noball = false then 1 end) as balls,
+       count(case when d.total_runs = 0 and d.is_wide = false and d.is_noball = false then 1 end) as dots,
+       count(case when dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as wickets,
+-      sum(case when d.over_num < 6 and d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as pp_runs,
++      sum(case when d.over_num < 6 then (d.batter_runs + case when d.is_wide = true then d.extra_runs else 0 end + case when d.is_noball = true then 1 else 0 end) else 0 end) as pp_runs,
+       count(case when d.over_num < 6 and d.is_wide = false and d.is_noball = false then 1 end) as pp_balls,
+       count(case when d.over_num < 6 and dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as pp_wickets,
+-      sum(case when d.over_num >= 6 and d.over_num < 15 and d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as mid_runs,
++      sum(case when d.over_num >= 6 and d.over_num < 15 then (d.batter_runs + case when d.is_wide = true then d.extra_runs else 0 end + case when d.is_noball = true then 1 else 0 end) else 0 end) as mid_runs,
+       count(case when d.over_num >= 6 and d.over_num < 15 and d.is_wide = false and d.is_noball = false then 1 end) as mid_balls,
+       count(case when d.over_num >= 6 and d.over_num < 15 and dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as mid_wickets,
+-      sum(case when d.over_num >= 15 and d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as death_runs,
++      sum(case when d.over_num >= 15 then (d.batter_runs + case when d.is_wide = true then d.extra_runs else 0 end + case when d.is_noball = true then 1 else 0 end) else 0 end) as death_runs,
+       count(case when d.over_num >= 15 and d.is_wide = false and d.is_noball = false then 1 end) as death_balls,
+       count(case when d.over_num >= 15 and dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as death_wickets,
+       count(case when d.is_boundary = true and d.is_wide = false and d.is_noball = false then 1 end) as boundaries
+@@ -2069,7 +2069,7 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
+     SELECT
+       d.bowler_id,
+       d.delivery_type as type,
+-      sum(case when d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as runs,
++      sum((d.batter_runs + case when d.is_wide = true then d.extra_runs else 0 end + case when d.is_noball = true then 1 else 0 end)) as runs,
+       count(case when d.is_wide = false and d.is_noball = false then 1 end) as balls,
+       count(case when dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as wickets
+     FROM deliveries d
+@@ -2089,7 +2089,7 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
+     SELECT
+       d.bowler_id,
+       p_bat.batting_style,
+-      sum(case when d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as runs,
++      sum((d.batter_runs + case when d.is_wide = true then d.extra_runs else 0 end + case when d.is_noball = true then 1 else 0 end)) as runs,
+       count(case when d.is_wide = false and d.is_noball = false then 1 end) as balls,
+       count(case when dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as wickets
+     FROM deliveries d
+@@ -2110,7 +2110,7 @@ async function aggregateQueryStatsSql(filters: QueryFilters) {
+       SELECT
+         d.bowler_id,
+         d.match_id,
+-        sum(case when d.is_bye = false and d.is_legbye = false and d.is_penalty = false then d.total_runs else 0 end) as conceded_runs,
++        sum((d.batter_runs + case when d.is_wide = true then d.extra_runs else 0 end + case when d.is_noball = true then 1 else 0 end)) as conceded_runs,
+         count(case when dis.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') then 1 end) as wickets
+       FROM deliveries d
+       JOIN matches m ON d.match_id = m.match_id

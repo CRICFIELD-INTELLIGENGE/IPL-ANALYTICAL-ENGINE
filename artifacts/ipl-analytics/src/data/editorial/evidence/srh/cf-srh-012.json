@@ -1,0 +1,171 @@
+{
+ "articleId": "cf-srh-012",
+ "generatedAt": "2026-10-26T04:21:46.343Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "yk-rest-yorker": {
+   "value": 1.4,
+   "display": "1.40",
+   "label": "IPL runs per yorker in the death, 2022–2026",
+   "unit": "runs per ball",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs 16–20, 2022–2026",
+   "sampleSize": {
+    "n": 2082,
+    "unit": "labelled balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, CASE WHEN c.length = 'Yorker' THEN 'Yorker' WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'Slower ball / cutter' WHEN c.length IS NOT NULL THEN 'Other labelled ball' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side, dkind HAVING dkind IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 300 balls",
+    "passed": true,
+    "detail": "n = 2082"
+   }
+  },
+  "yk-rest-slower": {
+   "value": 1.76,
+   "display": "1.76",
+   "label": "IPL runs per slower ball or cutter in the death, 2022–2026",
+   "unit": "runs per ball",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs 16–20, 2022–2026",
+   "sampleSize": {
+    "n": 1388,
+    "unit": "labelled balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, CASE WHEN c.length = 'Yorker' THEN 'Yorker' WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'Slower ball / cutter' WHEN c.length IS NOT NULL THEN 'Other labelled ball' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side, dkind HAVING dkind IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 300 balls",
+    "passed": true,
+    "detail": "n = 1388"
+   }
+  },
+  "yk-rest-other": {
+   "value": 1.79,
+   "display": "1.79",
+   "label": "IPL runs per other labelled ball in the death, 2022–2026",
+   "unit": "runs per ball",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs 16–20, 2022–2026",
+   "sampleSize": {
+    "n": 10278,
+    "unit": "labelled balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, CASE WHEN c.length = 'Yorker' THEN 'Yorker' WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'Slower ball / cutter' WHEN c.length IS NOT NULL THEN 'Other labelled ball' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side, dkind HAVING dkind IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 300 balls",
+    "passed": true,
+    "detail": "n = 10278"
+   }
+  },
+  "yk-team-yorker": {
+   "value": 1.31,
+   "display": "1.31",
+   "label": "SRH runs per yorker in the death, 2022–2026",
+   "unit": "runs per ball",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs 16–20, 2022–2026",
+   "sampleSize": {
+    "n": 281,
+    "unit": "labelled balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, CASE WHEN c.length = 'Yorker' THEN 'Yorker' WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'Slower ball / cutter' WHEN c.length IS NOT NULL THEN 'Other labelled ball' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side, dkind HAVING dkind IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 30 balls",
+    "passed": true,
+    "detail": "n = 281"
+   }
+  },
+  "yk-team-slower": {
+   "value": 1.59,
+   "display": "1.59",
+   "label": "SRH runs per slower ball or cutter in the death, 2022–2026",
+   "unit": "runs per ball",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs 16–20, 2022–2026",
+   "sampleSize": {
+    "n": 149,
+    "unit": "labelled balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, CASE WHEN c.length = 'Yorker' THEN 'Yorker' WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'Slower ball / cutter' WHEN c.length IS NOT NULL THEN 'Other labelled ball' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side, dkind HAVING dkind IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 30 balls",
+    "passed": true,
+    "detail": "n = 149"
+   }
+  },
+  "yk-share": {
+   "value": 18.7,
+   "display": "18.7%",
+   "label": "Yorkers as a share of SRH's labelled death balls",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 1506,
+    "unit": "labelled balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, CASE WHEN c.length = 'Yorker' THEN 'Yorker' WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'Slower ball / cutter' WHEN c.length IS NOT NULL THEN 'Other labelled ball' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side, dkind HAVING dkind IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 100 balls",
+    "passed": true,
+    "detail": "n = 1506"
+   }
+  },
+  "yk-lshare": {
+   "value": 15.1,
+   "display": "15.1%",
+   "label": "Yorkers as a share of the rest of the IPL's labelled death balls",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 13748,
+    "unit": "labelled balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, CASE WHEN c.length = 'Yorker' THEN 'Yorker' WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'Slower ball / cutter' WHEN c.length IS NOT NULL THEN 'Other labelled ball' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side, dkind HAVING dkind IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 balls",
+    "passed": true,
+    "detail": "n = 13748"
+   }
+  }
+ },
+ "tables": {
+  "yk-kinds": {
+   "label": "Death-overs cost by delivery type, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Overs 16–20; commentary-derived length and variation labels",
+   "sampleSize": {
+    "n": 15254,
+    "unit": "labelled balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, CASE WHEN c.length = 'Yorker' THEN 'Yorker' WHEN c.variation IN ('Slower ball','Off-cutter','Leg-cutter') THEN 'Slower ball / cutter' WHEN c.length IS NOT NULL THEN 'Other labelled ball' END dkind, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM(CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END) wk FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN delivery_commentary c ON c.delivery_id = d.delivery_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 15 AND 19 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 GROUP BY side, dkind HAVING dkind IS NOT NULL",
+   "rows": [
+    {
+     "delivery": "Yorker",
+     "team": 1.31,
+     "league": 1.4,
+     "teamBalls": 281
+    },
+    {
+     "delivery": "Slower ball / cutter",
+     "team": 1.59,
+     "league": 1.76,
+     "teamBalls": 149
+    },
+    {
+     "delivery": "Other labelled ball",
+     "team": 1.86,
+     "league": 1.79,
+     "teamBalls": 1076
+    }
+   ]
+  }
+ }
+}

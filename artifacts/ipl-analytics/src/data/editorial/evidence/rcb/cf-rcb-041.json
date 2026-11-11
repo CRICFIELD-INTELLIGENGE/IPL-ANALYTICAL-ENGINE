@@ -1,0 +1,458 @@
+{
+ "articleId": "cf-rcb-041",
+ "generatedAt": "2026-10-25T16:13:39.290Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "rcb-brand-2024": {
+   "value": 227,
+   "display": "US$227m",
+   "label": "RCB brand value, 2024 study",
+   "unit": "US$ million",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "https://hl.com/media/x1kcmcty/houlihan-lokey-ipl-2025-valuation-study.pdf",
+   "sampleSize": {
+    "n": 1,
+    "unit": "published estimate"
+   },
+   "query": "external",
+   "validation": {
+    "method": "transcribed from primary source; re-read against the release text on 2026-10-25",
+    "passed": true,
+    "detail": "2025 release, p.1"
+   }
+  },
+  "rcb-brand-2025": {
+   "value": 269,
+   "display": "US$269m",
+   "label": "RCB brand value, 2025 study",
+   "unit": "US$ million",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "https://hl.com/media/x1kcmcty/houlihan-lokey-ipl-2025-valuation-study.pdf",
+   "sampleSize": {
+    "n": 1,
+    "unit": "published estimate"
+   },
+   "query": "external",
+   "validation": {
+    "method": "transcribed from primary source; re-read against the release text on 2026-10-25",
+    "passed": true,
+    "detail": "2025 release, p.1–2"
+   }
+  },
+  "rcb-brand-2026": {
+   "value": 312,
+   "display": "US$312m",
+   "label": "RCB brand value, 2026 study",
+   "unit": "US$ million",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "https://hl.com/media/20mp5jrj/hl-ipl-valuation-study-2026-press-release.pdf",
+   "sampleSize": {
+    "n": 1,
+    "unit": "published estimate"
+   },
+   "query": "external",
+   "validation": {
+    "method": "transcribed from primary source; re-read against the release text on 2026-10-25",
+    "passed": true,
+    "detail": "2026 release, p.3"
+   }
+  },
+  "rcb-brand-growth-2025": {
+   "value": 18.5,
+   "display": "18.5%",
+   "label": "RCB brand value growth, 2024→2025 study",
+   "unit": "%",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "Derived from the two published values",
+   "sampleSize": {
+    "n": 2,
+    "unit": "published estimates"
+   },
+   "query": "external",
+   "validation": {
+    "method": "plausibility range 0–50 for growth",
+    "passed": true,
+    "detail": "value 18.502202643171817"
+   }
+  },
+  "rcb-brand-growth-2026": {
+   "value": 16,
+   "display": "16.0%",
+   "label": "RCB brand value growth, 2025→2026 study",
+   "unit": "%",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "Derived; the 2026 release itself states 16.0%",
+   "sampleSize": {
+    "n": 2,
+    "unit": "published estimates"
+   },
+   "query": "external",
+   "validation": {
+    "method": "matches the release's own stated growth (16.0%)",
+    "passed": true,
+    "detail": "15.99"
+   }
+  },
+  "rcb-transaction": {
+   "value": 1.78,
+   "display": "US$1.78bn",
+   "label": "Reported valuation of the 2026 RCB ownership transaction",
+   "unit": "US$ billion",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "https://hl.com/media/20mp5jrj/hl-ipl-valuation-study-2026-press-release.pdf",
+   "sampleSize": {
+    "n": 1,
+    "unit": "reported figure"
+   },
+   "query": "external",
+   "validation": {
+    "method": "transcribed from primary source; re-read against the release text on 2026-10-25",
+    "passed": true,
+    "detail": "2026 release, p.1 ('reported valuation')"
+   }
+  },
+  "ipl-business-2026": {
+   "value": 20.6,
+   "display": "US$20.6bn",
+   "label": "IPL business value, 2026 study",
+   "unit": "US$ billion",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "https://hl.com/media/20mp5jrj/hl-ipl-valuation-study-2026-press-release.pdf",
+   "sampleSize": {
+    "n": 1,
+    "unit": "published estimate"
+   },
+   "query": "external",
+   "validation": {
+    "method": "transcribed from primary source; re-read against the release text on 2026-10-25",
+    "passed": true,
+    "detail": "2026 release, p.1"
+   }
+  },
+  "ipl-brand-2026": {
+   "value": 4.3,
+   "display": "US$4.3bn",
+   "label": "IPL stand-alone brand value, 2026 study",
+   "unit": "US$ billion",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "https://hl.com/media/20mp5jrj/hl-ipl-valuation-study-2026-press-release.pdf",
+   "sampleSize": {
+    "n": 1,
+    "unit": "published estimate"
+   },
+   "query": "external",
+   "validation": {
+    "method": "transcribed from primary source; re-read against the release text on 2026-10-25",
+    "passed": true,
+    "detail": "2026 release, p.1"
+   }
+  },
+  "mi-finish-2026": {
+   "value": "ninth",
+   "display": "ninth",
+   "label": "MI's 2026 league finish as stated in the 2026 study",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "https://hl.com/media/20mp5jrj/hl-ipl-valuation-study-2026-press-release.pdf",
+   "sampleSize": {
+    "n": 1,
+    "unit": "statement"
+   },
+   "query": "external",
+   "validation": {
+    "method": "transcribed from primary source; re-read against the release text on 2026-10-25",
+    "passed": true,
+    "detail": "2026 release, p.3"
+   }
+  },
+  "corr-brand-titles": {
+   "value": 0.75,
+   "display": "0.75",
+   "label": "Correlation: 2026 brand value vs titles won",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026); CricField warehouse: matches (Cricsheet, IPL 2008–2026)",
+   "filters": "Ten current franchises",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "SELECT m.season_id, m.winner_id FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id)",
+   "validation": {
+    "method": "n = 10 franchises; descriptive only, no significance claimed",
+    "passed": true
+   }
+  },
+  "corr-brand-win2026": {
+   "value": 0.11,
+   "display": "0.11",
+   "label": "Correlation: 2026 brand value vs 2026 win rate",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026); CricField warehouse: matches (Cricsheet, IPL 2008–2026)",
+   "filters": "Ten current franchises",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "SELECT SUM(CASE WHEN m.winner_id IN (0) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (0) OR m.team2_id IN (0)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2026 AND 2026",
+   "validation": {
+    "method": "n = 10 franchises; descriptive only",
+    "passed": true
+   }
+  },
+  "corr-growth-win2026": {
+   "value": 0.69,
+   "display": "0.69",
+   "label": "Correlation: 2025→2026 brand growth vs 2026 win rate",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026); CricField warehouse: matches (Cricsheet, IPL 2008–2026)",
+   "filters": "Ten current franchises",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "SELECT SUM(CASE WHEN m.winner_id IN (0) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (0) OR m.team2_id IN (0)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2026 AND 2026",
+   "validation": {
+    "method": "n = 10 franchises; descriptive only",
+    "passed": true
+   }
+  },
+  "rcb-titles": {
+   "value": 2,
+   "display": "2",
+   "label": "RCB IPL titles, 2008–2026",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026)",
+   "filters": "Winner of each season's final match",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT m.season_id, m.winner_id FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id)",
+   "validation": {
+    "method": "finals 2025 and 2026 won by team_id 15",
+    "passed": true
+   }
+  },
+  "rcb-win-2026": {
+   "value": 68.8,
+   "display": "68.8%",
+   "label": "RCB win rate, 2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026)",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 16,
+    "unit": "matches"
+   },
+   "query": "SELECT SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2026 AND 2026",
+   "validation": {
+    "method": "plausibility range 0–100 for win rate",
+    "passed": true,
+    "detail": "value 68.8"
+   }
+  },
+  "mi-titles": {
+   "value": 5,
+   "display": "5",
+   "label": "MI IPL titles, 2008–2026",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026)",
+   "filters": "Winner of each season's final match",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT m.season_id, m.winner_id FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id)",
+   "validation": {
+    "method": "five titles per the 2026 release",
+    "passed": true
+   }
+  },
+  "mi-win-2026": {
+   "value": 28.6,
+   "display": "28.6%",
+   "label": "MI win rate, 2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches (Cricsheet, IPL 2008–2026)",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 14,
+    "unit": "matches"
+   },
+   "query": "SELECT SUM(CASE WHEN m.winner_id IN (4) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (4) OR m.team2_id IN (4)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2026 AND 2026",
+   "validation": {
+    "method": "plausibility range 0–100 for win rate",
+    "passed": true,
+    "detail": "value 28.6"
+   }
+  },
+  "mi-brand-2026": {
+   "value": 264,
+   "display": "US$264m",
+   "label": "MI brand value, 2026 study",
+   "unit": "US$ million",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "https://hl.com/media/20mp5jrj/hl-ipl-valuation-study-2026-press-release.pdf",
+   "sampleSize": {
+    "n": 1,
+    "unit": "published estimate"
+   },
+   "query": "external",
+   "validation": {
+    "method": "transcribed from primary source; re-read against the release text on 2026-10-25",
+    "passed": true,
+    "detail": "2026 release, p.3"
+   }
+  },
+  "lsg-brand-2026": {
+   "value": 122,
+   "display": "US$122m",
+   "label": "LSG brand value, 2026 study (flat on 2025)",
+   "unit": "US$ million",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "https://hl.com/media/20mp5jrj/hl-ipl-valuation-study-2026-press-release.pdf",
+   "sampleSize": {
+    "n": 1,
+    "unit": "published estimate"
+   },
+   "query": "external",
+   "validation": {
+    "method": "transcribed from primary source; re-read against the release text on 2026-10-25",
+    "passed": true,
+    "detail": "2026 release, p.3"
+   }
+  },
+  "rcb-mi-gap": {
+   "value": 48,
+   "display": "US$48m",
+   "label": "RCB's brand-value lead over second-placed MI, 2026",
+   "unit": "US$ million",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026)",
+   "filters": "Derived",
+   "sampleSize": {
+    "n": 2,
+    "unit": "published estimates"
+   },
+   "query": "external",
+   "validation": {
+    "method": "plausibility range 0–200 for gap",
+    "passed": true,
+    "detail": "value 48"
+   }
+  }
+ },
+ "tables": {
+  "brand-vs-field": {
+   "label": "Brand value (Houlihan Lokey) vs on-field record (CricField)",
+   "dataset": "Houlihan Lokey IPL Brand Valuation Study press releases (2025, 2026); CricField warehouse: matches (Cricsheet, IPL 2008–2026)",
+   "filters": "Titles = winner of each season's final match 2008–2026; win rates exclude no-results",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "SELECT m.season_id, m.winner_id FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) ;; SELECT SUM(CASE WHEN m.winner_id IN (0) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (0) OR m.team2_id IN (0)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2026 AND 2026",
+   "rows": [
+    {
+     "franchise": "RCB",
+     "brand2026": 312,
+     "brand2025": 269,
+     "growthPct": 16,
+     "titles": 2,
+     "win2026": 68.8,
+     "matches2026": 16,
+     "winAllTime": 51.2
+    },
+    {
+     "franchise": "MI",
+     "brand2026": 264,
+     "brand2025": 242,
+     "growthPct": 9.1,
+     "titles": 5,
+     "win2026": 28.6,
+     "matches2026": 14,
+     "winAllTime": 54
+    },
+    {
+     "franchise": "KKR",
+     "brand2026": 245,
+     "brand2025": 227,
+     "growthPct": 7.9,
+     "titles": 3,
+     "win2026": 46.2,
+     "matches2026": 13,
+     "winAllTime": 51.4
+    },
+    {
+     "franchise": "CSK",
+     "brand2026": 244,
+     "brand2025": 235,
+     "growthPct": 3.8,
+     "titles": 5,
+     "win2026": 42.9,
+     "matches2026": 14,
+     "winAllTime": 55.8
+    },
+    {
+     "franchise": "SRH",
+     "brand2026": 168,
+     "brand2025": 154,
+     "growthPct": 9.1,
+     "titles": 1,
+     "win2026": 60,
+     "matches2026": 15,
+     "winAllTime": 49
+    },
+    {
+     "franchise": "RR",
+     "brand2026": 161,
+     "brand2025": 146,
+     "growthPct": 10.3,
+     "titles": 1,
+     "win2026": 56.3,
+     "matches2026": 16,
+     "winAllTime": 50.2
+    },
+    {
+     "franchise": "PBKS",
+     "brand2026": 158,
+     "brand2025": 141,
+     "growthPct": 12.1,
+     "titles": 0,
+     "win2026": 53.8,
+     "matches2026": 13,
+     "winAllTime": 46.9
+    },
+    {
+     "franchise": "GT",
+     "brand2026": 157,
+     "brand2025": 142,
+     "growthPct": 10.6,
+     "titles": 1,
+     "win2026": 58.8,
+     "matches2026": 17,
+     "winAllTime": 61
+    },
+    {
+     "franchise": "DC",
+     "brand2026": 156,
+     "brand2025": 152,
+     "growthPct": 2.6,
+     "titles": 0,
+     "win2026": 50,
+     "matches2026": 14,
+     "winAllTime": 46.6
+    },
+    {
+     "franchise": "LSG",
+     "brand2026": 122,
+     "brand2025": 122,
+     "growthPct": 0,
+     "titles": 0,
+     "win2026": 28.6,
+     "matches2026": 14,
+     "winAllTime": 47.9
+    }
+   ]
+  }
+ }
+}

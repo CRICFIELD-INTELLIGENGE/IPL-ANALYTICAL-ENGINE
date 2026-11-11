@@ -1,0 +1,394 @@
+{
+ "articleId": "cf-kkr-022",
+ "generatedAt": "2026-10-26T11:34:06.807Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "hg-home-matches": {
+   "value": 107,
+   "display": "107",
+   "label": "Matches at Eden Gardens in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All teams, regulation innings",
+   "sampleSize": {
+    "n": 107,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 107"
+   }
+  },
+  "hg-rr-home": {
+   "value": 8.6,
+   "display": "8.60",
+   "label": "Run rate at Eden Gardens",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 24036,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "plausibility range 6–12 for run rate",
+    "passed": true,
+    "detail": "value 8.59735396904643"
+   }
+  },
+  "hg-rr-other": {
+   "value": 8.45,
+   "display": "8.45",
+   "label": "Run rate at all other IPL venues",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All other venues",
+   "sampleSize": {
+    "n": 260429,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "plausibility range 6–12 for run rate",
+    "passed": true,
+    "detail": "value 8.454864857600343"
+   }
+  },
+  "hg-six-home": {
+   "value": 13.2,
+   "display": "13.2",
+   "label": "Sixes per match at Eden Gardens",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 107,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 107"
+   }
+  },
+  "hg-six-other": {
+   "value": 12.6,
+   "display": "12.6",
+   "label": "Sixes per match at other venues",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All other venues",
+   "sampleSize": {
+    "n": 1136,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'other' END v, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 matches",
+    "passed": true,
+    "detail": "n = 1136"
+   }
+  },
+  "hg-first-home": {
+   "value": 169,
+   "display": "169",
+   "label": "Average first-innings score at Eden Gardens",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings",
+   "sampleSize": {
+    "n": 107,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 innings",
+    "passed": true,
+    "detail": "n = 107"
+   }
+  },
+  "hg-first-other": {
+   "value": 169,
+   "display": "169",
+   "label": "Average first-innings score at other venues",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings",
+   "sampleSize": {
+    "n": 1136,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 innings",
+    "passed": true,
+    "detail": "n = 1136"
+   }
+  },
+  "hg-chase-home": {
+   "value": 57.1,
+   "display": "57.1%",
+   "label": "Chasing side's win rate at Eden Gardens",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 105,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 105"
+   }
+  },
+  "hg-chase-other": {
+   "value": 54.2,
+   "display": "54.2%",
+   "label": "Chasing side's win rate at other venues",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 1129,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'other' END v, AVG(i.runs) avg1, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) cw, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) dec FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY v",
+   "validation": {
+    "method": "sample-size floor ≥ 100 matches",
+    "passed": true,
+    "detail": "n = 1129"
+   }
+  },
+  "hg-home-win": {
+   "value": 57,
+   "display": "57.0%",
+   "label": "KKR win rate at Eden Gardens",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "KKR matches with a result at the ground",
+   "sampleSize": {
+    "n": 100,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 100"
+   }
+  },
+  "hg-away-win": {
+   "value": 48.3,
+   "display": "48.3%",
+   "label": "KKR win rate elsewhere",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "KKR matches with a result at other venues",
+   "sampleSize": {
+    "n": 176,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 176"
+   }
+  },
+  "hg-home-n": {
+   "value": 100,
+   "display": "100",
+   "label": "KKR decided matches at Eden Gardens",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 100,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 100"
+   }
+  },
+  "hg-home-ci": {
+   "value": "47–66%",
+   "display": "47–66%",
+   "label": "95% interval for KKR's home win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Wilson score interval",
+   "sampleSize": {
+    "n": 100,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "interval contains point estimate",
+    "passed": true
+   }
+  },
+  "hg-home-p": {
+   "value": 0.19,
+   "display": "0.19",
+   "label": "Probability of a home record at least this far from 50/50 if each match were a coin toss",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Two-sided exact binomial test",
+   "sampleSize": {
+    "n": 100,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "validation": {
+    "method": "plausibility range 0–1 for p-value",
+    "passed": true,
+    "detail": "value 0.19334838032765966"
+   }
+  },
+  "hg-toss-field": {
+   "value": 67,
+   "display": "67%",
+   "label": "Toss winners choosing to bowl first at Eden Gardens",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches at the ground",
+   "sampleSize": {
+    "n": 107,
+    "unit": "matches"
+   },
+   "query": "SELECT SUM(CASE WHEN toss_decision = 'field' THEN 1 ELSE 0 END) field, COUNT(*) n FROM matches m WHERE m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%')",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 107"
+   }
+  }
+ },
+ "tables": {
+  "hg-home-away": {
+   "label": "KKR win rate at Eden Gardens vs elsewhere",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 276,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 'home' ELSE 'away' END loc, SUM(CASE WHEN m.winner_id IN (6) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (6) OR m.team2_id IN (6)) AND m.winner_id IS NOT NULL GROUP BY loc",
+   "rows": [
+    {
+     "where": "Eden Gardens",
+     "winPct": 57,
+     "matches": 100
+    },
+    {
+     "where": "Elsewhere",
+     "winPct": 48.3,
+     "matches": 176
+    }
+   ]
+  },
+  "hg-series": {
+   "label": "Average first-innings score: Eden Gardens vs IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "First innings; seasons in which the ground hosted",
+   "sampleSize": {
+    "n": 107,
+    "unit": "innings at the ground"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, AVG(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN i.runs END) home, AVG(i.runs) league, SUM(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Eden Gardens%') THEN 1 ELSE 0 END) n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY year HAVING n > 0 ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "ground": 140,
+     "league": 161
+    },
+    {
+     "season": "2010",
+     "ground": 161,
+     "league": 165
+    },
+    {
+     "season": "2011",
+     "ground": 136,
+     "league": 152
+    },
+    {
+     "season": "2012",
+     "ground": 149,
+     "league": 158
+    },
+    {
+     "season": "2013",
+     "ground": 148,
+     "league": 156
+    },
+    {
+     "season": "2014",
+     "ground": 168,
+     "league": 163
+    },
+    {
+     "season": "2015",
+     "ground": 176,
+     "league": 166
+    },
+    {
+     "season": "2016",
+     "ground": 152,
+     "league": 163
+    },
+    {
+     "season": "2017",
+     "ground": 164,
+     "league": 166
+    },
+    {
+     "season": "2018",
+     "ground": 175,
+     "league": 172
+    },
+    {
+     "season": "2019",
+     "ground": 194,
+     "league": 167
+    },
+    {
+     "season": "2022",
+     "ground": 198,
+     "league": 171
+    },
+    {
+     "season": "2023",
+     "ground": 193,
+     "league": 183
+    },
+    {
+     "season": "2024",
+     "ground": 198,
+     "league": 190
+    },
+    {
+     "season": "2025",
+     "ground": 199,
+     "league": 189
+    },
+    {
+     "season": "2026",
+     "ground": 169,
+     "league": 193
+    }
+   ]
+  }
+ }
+}

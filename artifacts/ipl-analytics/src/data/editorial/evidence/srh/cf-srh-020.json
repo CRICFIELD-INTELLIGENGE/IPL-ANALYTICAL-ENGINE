@@ -1,0 +1,145 @@
+{
+ "articleId": "cf-srh-020",
+ "generatedAt": "2026-10-26T04:21:57.246Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "sb-tused": {
+   "value": 90,
+   "display": "90%",
+   "label": "SRH bowling innings using six or more bowlers, 2022–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Innings with a result",
+   "sampleSize": {
+    "n": 72,
+    "unit": "innings"
+   },
+   "query": "WITH b AS (SELECT d.innings_id, d.bowler_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs FROM deliveries d GROUP BY d.innings_id, d.bowler_id), r AS (SELECT b.*, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY balls DESC, bowler_id) rk FROM b) SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, i.innings_id, SUM(CASE WHEN r.rk > 5 THEN r.balls ELSE 0 END) extraBalls, SUM(CASE WHEN r.rk > 5 THEN r.runs ELSE 0 END) extraRuns, SUM(CASE WHEN r.rk <= 5 THEN r.balls ELSE 0 END) coreBalls, SUM(CASE WHEN r.rk <= 5 THEN r.runs ELSE 0 END) coreRuns, MAX(r.rk) used, CASE WHEN m.winner_id = i.bowling_team_id THEN 1 ELSE 0 END won FROM r JOIN innings i ON i.innings_id = r.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND m.winner_id IS NOT NULL GROUP BY i.innings_id",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 72"
+   }
+  },
+  "sb-lused": {
+   "value": 78,
+   "display": "78%",
+   "label": "Rest of IPL bowling innings using six or more bowlers",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Innings with a result",
+   "sampleSize": {
+    "n": 652,
+    "unit": "innings"
+   },
+   "query": "WITH b AS (SELECT d.innings_id, d.bowler_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs FROM deliveries d GROUP BY d.innings_id, d.bowler_id), r AS (SELECT b.*, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY balls DESC, bowler_id) rk FROM b) SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, i.innings_id, SUM(CASE WHEN r.rk > 5 THEN r.balls ELSE 0 END) extraBalls, SUM(CASE WHEN r.rk > 5 THEN r.runs ELSE 0 END) extraRuns, SUM(CASE WHEN r.rk <= 5 THEN r.balls ELSE 0 END) coreBalls, SUM(CASE WHEN r.rk <= 5 THEN r.runs ELSE 0 END) coreRuns, MAX(r.rk) used, CASE WHEN m.winner_id = i.bowling_team_id THEN 1 ELSE 0 END won FROM r JOIN innings i ON i.innings_id = r.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND m.winner_id IS NOT NULL GROUP BY i.innings_id",
+   "validation": {
+    "method": "sample-size floor ≥ 200 innings",
+    "passed": true,
+    "detail": "n = 652"
+   }
+  },
+  "sb-lcore": {
+   "value": 8.99,
+   "display": "8.99",
+   "label": "Rest of IPL economy of the core five bowlers",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 69754,
+    "unit": "balls"
+   },
+   "query": "WITH b AS (SELECT d.innings_id, d.bowler_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs FROM deliveries d GROUP BY d.innings_id, d.bowler_id), r AS (SELECT b.*, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY balls DESC, bowler_id) rk FROM b) SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, i.innings_id, SUM(CASE WHEN r.rk > 5 THEN r.balls ELSE 0 END) extraBalls, SUM(CASE WHEN r.rk > 5 THEN r.runs ELSE 0 END) extraRuns, SUM(CASE WHEN r.rk <= 5 THEN r.balls ELSE 0 END) coreBalls, SUM(CASE WHEN r.rk <= 5 THEN r.runs ELSE 0 END) coreRuns, MAX(r.rk) used, CASE WHEN m.winner_id = i.bowling_team_id THEN 1 ELSE 0 END won FROM r JOIN innings i ON i.innings_id = r.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND m.winner_id IS NOT NULL GROUP BY i.innings_id",
+   "validation": {
+    "method": "sample-size floor ≥ 5000 balls",
+    "passed": true,
+    "detail": "n = 69754"
+   }
+  },
+  "sb-lextra": {
+   "value": 11.2,
+   "display": "11.20",
+   "label": "Rest of IPL economy of the sixth bowler and beyond",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 5319,
+    "unit": "balls"
+   },
+   "query": "WITH b AS (SELECT d.innings_id, d.bowler_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs FROM deliveries d GROUP BY d.innings_id, d.bowler_id), r AS (SELECT b.*, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY balls DESC, bowler_id) rk FROM b) SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, i.innings_id, SUM(CASE WHEN r.rk > 5 THEN r.balls ELSE 0 END) extraBalls, SUM(CASE WHEN r.rk > 5 THEN r.runs ELSE 0 END) extraRuns, SUM(CASE WHEN r.rk <= 5 THEN r.balls ELSE 0 END) coreBalls, SUM(CASE WHEN r.rk <= 5 THEN r.runs ELSE 0 END) coreRuns, MAX(r.rk) used, CASE WHEN m.winner_id = i.bowling_team_id THEN 1 ELSE 0 END won FROM r JOIN innings i ON i.innings_id = r.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND m.winner_id IS NOT NULL GROUP BY i.innings_id",
+   "validation": {
+    "method": "sample-size floor ≥ 1000 balls",
+    "passed": true,
+    "detail": "n = 5319"
+   }
+  },
+  "sb-textra": {
+   "value": 11.49,
+   "display": "11.49",
+   "label": "SRH economy of the sixth bowler and beyond",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 686,
+    "unit": "balls"
+   },
+   "query": "WITH b AS (SELECT d.innings_id, d.bowler_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs FROM deliveries d GROUP BY d.innings_id, d.bowler_id), r AS (SELECT b.*, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY balls DESC, bowler_id) rk FROM b) SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, i.innings_id, SUM(CASE WHEN r.rk > 5 THEN r.balls ELSE 0 END) extraBalls, SUM(CASE WHEN r.rk > 5 THEN r.runs ELSE 0 END) extraRuns, SUM(CASE WHEN r.rk <= 5 THEN r.balls ELSE 0 END) coreBalls, SUM(CASE WHEN r.rk <= 5 THEN r.runs ELSE 0 END) coreRuns, MAX(r.rk) used, CASE WHEN m.winner_id = i.bowling_team_id THEN 1 ELSE 0 END won FROM r JOIN innings i ON i.innings_id = r.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND m.winner_id IS NOT NULL GROUP BY i.innings_id",
+   "validation": {
+    "method": "sample-size floor ≥ 60 balls",
+    "passed": true,
+    "detail": "n = 686"
+   }
+  },
+  "sb-tshare": {
+   "value": 8.3,
+   "display": "8.3%",
+   "label": "Share of Sunrisers Hyderabad's legal balls bowled by the sixth bowler and beyond",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 8227,
+    "unit": "balls"
+   },
+   "query": "WITH b AS (SELECT d.innings_id, d.bowler_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs FROM deliveries d GROUP BY d.innings_id, d.bowler_id), r AS (SELECT b.*, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY balls DESC, bowler_id) rk FROM b) SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, i.innings_id, SUM(CASE WHEN r.rk > 5 THEN r.balls ELSE 0 END) extraBalls, SUM(CASE WHEN r.rk > 5 THEN r.runs ELSE 0 END) extraRuns, SUM(CASE WHEN r.rk <= 5 THEN r.balls ELSE 0 END) coreBalls, SUM(CASE WHEN r.rk <= 5 THEN r.runs ELSE 0 END) coreRuns, MAX(r.rk) used, CASE WHEN m.winner_id = i.bowling_team_id THEN 1 ELSE 0 END won FROM r JOIN innings i ON i.innings_id = r.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND m.winner_id IS NOT NULL GROUP BY i.innings_id",
+   "validation": {
+    "method": "sample-size floor ≥ 600 balls",
+    "passed": true,
+    "detail": "n = 8227"
+   }
+  }
+ },
+ "tables": {
+  "sb-cmp": {
+   "label": "Five-bowler core vs extra bowlers, 2022–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Core = the five bowlers who bowled most in each innings",
+   "sampleSize": {
+    "n": 724,
+    "unit": "bowling innings"
+   },
+   "query": "WITH b AS (SELECT d.innings_id, d.bowler_id, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs FROM deliveries d GROUP BY d.innings_id, d.bowler_id), r AS (SELECT b.*, ROW_NUMBER() OVER (PARTITION BY innings_id ORDER BY balls DESC, bowler_id) rk FROM b) SELECT CASE WHEN i.bowling_team_id IN (1) THEN 'team' ELSE 'rest' END side, i.innings_id, SUM(CASE WHEN r.rk > 5 THEN r.balls ELSE 0 END) extraBalls, SUM(CASE WHEN r.rk > 5 THEN r.runs ELSE 0 END) extraRuns, SUM(CASE WHEN r.rk <= 5 THEN r.balls ELSE 0 END) coreBalls, SUM(CASE WHEN r.rk <= 5 THEN r.runs ELSE 0 END) coreRuns, MAX(r.rk) used, CASE WHEN m.winner_id = i.bowling_team_id THEN 1 ELSE 0 END won FROM r JOIN innings i ON i.innings_id = r.innings_id JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022 AND m.winner_id IS NOT NULL GROUP BY i.innings_id",
+   "rows": [
+    {
+     "group": "Core five",
+     "team": 9.39,
+     "league": 8.99
+    },
+    {
+     "group": "Sixth bowler and beyond",
+     "team": 11.49,
+     "league": 11.2
+    }
+   ]
+  }
+ }
+}

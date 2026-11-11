@@ -1,0 +1,56 @@
+/* Scoped print support only; existing Feed and shared navigation styles are untouched. */
+@media print {
+  body:has(.ipl-2027-page) {
+    background: white !important;
+    color: #111 !important;
+  }
+  body:has(.ipl-2027-page) .min-h-screen {
+    background: white !important;
+    color: #111 !important;
+  }
+  .ipl-2027-page * {
+    color: #111 !important;
+    background-color: transparent !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  .ipl-2027-page svg text {
+    fill: #334155 !important;
+  }
+  body:has(.ipl-2027-page) aside,
+  body:has(.ipl-2027-page) nav,
+  body:has(.ipl-2027-page) footer,
+  body:has(.ipl-2027-page) .fixed,
+  body:has(.ipl-2027-page) [data-consent-banner] {
+    display: none !important;
+  }
+  body:has(.ipl-2027-page) .min-h-screen > header {
+    display: none !important;
+  }
+  body:has(.ipl-2027-page) main {
+    padding: 0 !important;
+  }
+  .ipl-2027-page {
+    padding: 0;
+    max-width: none;
+    color: #111;
+  }
+  .ipl-2027-page header,
+  .ipl-2027-page [role="tabpanel"] > div {
+    background: white !important;
+    box-shadow: none;
+  }
+  .ipl-2027-page p,
+  .ipl-2027-page h1,
+  .ipl-2027-page h2,
+  .ipl-2027-page h3 {
+    color: #111 !important;
+  }
+  .ipl-2027-page a {
+    color: #334155 !important;
+  }
+  .ipl-2027-page .recharts-wrapper {
+    break-inside: avoid;
+  }
+}

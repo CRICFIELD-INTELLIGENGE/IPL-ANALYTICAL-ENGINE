@@ -1,0 +1,493 @@
+{
+ "articleId": "cf-pbks-061",
+ "generatedAt": "2026-10-26T04:25:34.645Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "fi-n-seasons": {
+   "value": 19,
+   "display": "19",
+   "label": "PBKS seasons in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons with matches",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "plausibility range 1–19 for seasons",
+    "passed": true,
+    "detail": "value 19"
+   }
+  },
+  "fi-titles": {
+   "value": 0,
+   "display": "0",
+   "label": "PBKS titles, as winner of the season's final",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Final = last match of each season",
+   "sampleSize": {
+    "n": 2,
+    "unit": "finals"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (7,12) OR m.team2_id IN (7,12))",
+   "validation": {
+    "method": "plausibility range 0–6 for titles",
+    "passed": true,
+    "detail": "value 0"
+   }
+  },
+  "fi-playoffs": {
+   "value": 5,
+   "display": "5",
+   "label": "PBKS seasons with a playoff place",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Points-table playoff result or a final",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (7,12) OR m.team2_id IN (7,12))",
+   "validation": {
+    "method": "count over season table",
+    "passed": true
+   }
+  },
+  "fi-win-all": {
+   "value": 46.9,
+   "display": "46.9%",
+   "label": "PBKS win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 275,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 275"
+   }
+  },
+  "fi-matches": {
+   "value": 275,
+   "display": "275",
+   "label": "PBKS matches with a result",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 275,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 275"
+   }
+  },
+  "fi-best-year": {
+   "value": "2014",
+   "display": "2014",
+   "label": "PBKS's best season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "max over season table",
+    "passed": true
+   }
+  },
+  "fi-best-pct": {
+   "value": 70.6,
+   "display": "70.6%",
+   "label": "PBKS win rate in 2014",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2014",
+   "sampleSize": {
+    "n": 17,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 17"
+   }
+  },
+  "fi-worst-year": {
+   "value": "2015",
+   "display": "2015",
+   "label": "PBKS's weakest season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "min over season table",
+    "passed": true
+   }
+  },
+  "fi-worst-pct": {
+   "value": 21.4,
+   "display": "21.4%",
+   "label": "PBKS win rate in 2015",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2015",
+   "sampleSize": {
+    "n": 14,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 14"
+   }
+  },
+  "fi-pct": {
+   "value": 67,
+   "display": "67%",
+   "label": "PBKS win rate in 2008",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008",
+   "sampleSize": {
+    "n": 15,
+    "unit": "matches"
+   },
+   "query": "season table",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 15"
+   }
+  },
+  "fi-pos": {
+   "value": "second",
+   "display": "second",
+   "label": "PBKS league-stage position in 2008",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Points table",
+   "sampleSize": {
+    "n": 1,
+    "unit": "season"
+   },
+   "query": "points-tables.json",
+   "validation": {
+    "method": "plausibility range 1–10 for position",
+    "passed": true,
+    "detail": "value 2"
+   }
+  },
+  "fi-runner": {
+   "value": "SE Marsh",
+   "display": "SE Marsh",
+   "label": "Punjab Kings' leading run-scorer in 2008",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008",
+   "sampleSize": {
+    "n": 616,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) = 2008 GROUP BY pl.name ORDER BY runs DESC LIMIT 1",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "fi-runs": {
+   "value": 616,
+   "display": "616",
+   "label": "Runs by that player in 2008",
+   "unit": "runs",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008",
+   "sampleSize": {
+    "n": 616,
+    "unit": "runs"
+   },
+   "query": "SELECT pl.name, SUM(d.batter_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) = 2008 GROUP BY pl.name ORDER BY runs DESC LIMIT 1",
+   "validation": {
+    "method": "plausibility range 100–1000 for runs",
+    "passed": true,
+    "detail": "value 616"
+   }
+  },
+  "fi-bowler": {
+   "value": "S Sreesanth",
+   "display": "S Sreesanth",
+   "label": "Punjab Kings' leading wicket-taker in 2008",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008",
+   "sampleSize": {
+    "n": 19,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) = 2008 AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC LIMIT 1",
+   "validation": {
+    "method": "max",
+    "passed": true
+   }
+  },
+  "fi-wk": {
+   "value": 19,
+   "display": "19",
+   "label": "Wickets by that player in 2008",
+   "unit": "wickets",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008",
+   "sampleSize": {
+    "n": 19,
+    "unit": "wickets"
+   },
+   "query": "SELECT pl.name, COUNT(*) wk FROM dismissals x JOIN deliveries d ON d.delivery_id = x.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.bowler_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12) AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) = 2008 AND x.kind NOT IN ('run out', 'retired hurt', 'retired out', 'obstructing the field') GROUP BY pl.name ORDER BY wk DESC LIMIT 1",
+   "validation": {
+    "method": "plausibility range 5–40 for wickets",
+    "passed": true,
+    "detail": "value 19"
+   }
+  },
+  "fi-founders": {
+   "value": 20,
+   "display": "20",
+   "label": "Players who batted or bowled for PBKS in 2008",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008",
+   "sampleSize": {
+    "n": 20,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(DISTINCT x.y) seasons, MIN(x.y) first, MAX(x.y) last FROM ( SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) UNION SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.bowler_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12)) x JOIN players pl ON pl.player_id = x.pid GROUP BY pl.name ORDER BY seasons DESC, pl.name",
+   "validation": {
+    "method": "sample-size floor ≥ 11 players",
+    "passed": true,
+    "detail": "n = 20"
+   }
+  },
+  "fi-stayed": {
+   "value": 2,
+   "display": "2",
+   "label": "Of those, players who went on to play five or more seasons for PBKS",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 20,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(DISTINCT x.y) seasons, MIN(x.y) first, MAX(x.y) last FROM ( SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) UNION SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.bowler_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12)) x JOIN players pl ON pl.player_id = x.pid GROUP BY pl.name ORDER BY seasons DESC, pl.name",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "fi-seasons": {
+   "label": "PBKS season by season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches with a result; position from the league-stage table",
+   "sampleSize": {
+    "n": 275,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (7,12) OR m.team2_id IN (7,12))",
+   "rows": [
+    {
+     "season": "2008",
+     "winPct": 66.7,
+     "matches": 15,
+     "position": 2,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2009",
+     "winPct": 50,
+     "matches": 14,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2010",
+     "winPct": 28.6,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2011",
+     "winPct": 50,
+     "matches": 14,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2012",
+     "winPct": 50,
+     "matches": 16,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2013",
+     "winPct": 50,
+     "matches": 16,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2014",
+     "winPct": 70.6,
+     "matches": 17,
+     "position": 1,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2015",
+     "winPct": 21.4,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2016",
+     "winPct": 28.6,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2017",
+     "winPct": 50,
+     "matches": 14,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2018",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 7,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2019",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2020",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2021",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2022",
+     "winPct": 50,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2023",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2024",
+     "winPct": 35.7,
+     "matches": 14,
+     "position": 9,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2025",
+     "winPct": 62.5,
+     "matches": 16,
+     "position": 1,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2026",
+     "winPct": 53.8,
+     "matches": 13,
+     "position": 5,
+     "outcome": "Playoffs"
+    }
+   ]
+  },
+  "fi-founders": {
+   "label": "PBKS players from 2008 by seasons played for the franchise",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Players who batted or bowled in 2008",
+   "sampleSize": {
+    "n": 20,
+    "unit": "players"
+   },
+   "query": "SELECT pl.name, COUNT(DISTINCT x.y) seasons, MIN(x.y) first, MAX(x.y) last FROM ( SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.batter_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.batting_team_id IN (7,12) UNION SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) y, d.bowler_id pid FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND i.bowling_team_id IN (7,12)) x JOIN players pl ON pl.player_id = x.pid GROUP BY pl.name ORDER BY seasons DESC, pl.name",
+   "rows": [
+    {
+     "player": "SE Marsh",
+     "seasons": 9
+    },
+    {
+     "player": "PP Chawla",
+     "seasons": 6
+    },
+    {
+     "player": "RR Powar",
+     "seasons": 4
+    },
+    {
+     "player": "Yuvraj Singh",
+     "seasons": 4
+    },
+    {
+     "player": "B Lee",
+     "seasons": 3
+    },
+    {
+     "player": "DPMD Jayawardene",
+     "seasons": 3
+    },
+    {
+     "player": "IK Pathan",
+     "seasons": 3
+    },
+    {
+     "player": "K Goel",
+     "seasons": 3
+    }
+   ]
+  }
+ }
+}

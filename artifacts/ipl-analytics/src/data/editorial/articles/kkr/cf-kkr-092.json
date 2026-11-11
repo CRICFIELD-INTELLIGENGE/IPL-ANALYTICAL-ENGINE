@@ -1,0 +1,141 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-kkr-092",
+ "planId": "cf-kkr-092",
+ "franchise": "KKR",
+ "aspect": "future",
+ "title": "AI-Assisted Scouting: Where Algorithms Could Help Kolkata Knight Riders Recruit",
+ "slug": "kkr-ai-assisted-scouting-where-algorithms-could-help-kkr-recruit",
+ "dek": "Where could algorithms genuinely help Kolkata Knight Riders recruit? A small, honest model shows how much of next season's batting can be predicted, and how much cannot.",
+ "excerpt": "Trained on IPL seasons up to 2019 and tested on later ones, a four-feature model predicts next season's relative strike rate better than simple rules of thumb. Its errors are the real lesson for AI-assisted scouting.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "KKR"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "Tested on {{ev:ai-test}} batter-season pairs since 2020, the model's average error was {{ev:ai-model}} index points.",
+  "Predicting the same as last season erred by {{ev:ai-pers}}; predicting the league average by {{ev:ai-mean}}.",
+  "The model beats both rules of thumb, but most of the variation in next season's form remains unpredictable."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "What an Algorithm Can Do",
+   "body": [
+    "AI-assisted scouting promises to find patterns humans miss. The honest first question is how predictable player performance actually is.",
+    "CricField trained a small model on {{ev:ai-train}} batter-season pairs up to 2019, using four features of one season (relative strike rate, boundary rate, dot-ball rate and balls faced) to predict the next season's relative strike rate."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "How It Did",
+   "body": [
+    "On {{ev:ai-test}} pairs from 2020 onwards, the model's average error was {{ev:ai-model}} index points. Predicting the same as last season erred by {{ev:ai-pers}}, and predicting the league average by {{ev:ai-mean}}.",
+    "The chart compares the three."
+   ],
+   "chartIds": [
+    "ai-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Where Algorithms Help",
+   "body": [
+    "Even a modest edge helps when applied across hundreds of candidates: models are good at screening and at correcting for small samples, venue and era. They are weak at role fit, temperament and injury risk.",
+    "{{hyp:ai}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What This Model Is Not",
+   "body": [
+    "It is deliberately simple and uses IPL data only. Richer inputs, such as ball-tracking, domestic cricket and other leagues, would improve it, at the cost of transparency.",
+    "Any production model should report its error against these baselines."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Use Models to Screen, People to Decide",
+   "body": [
+    "Kolkata Knight Riders should use algorithms to screen and rank candidates and to flag small-sample traps, and leave final decisions to scouts who can judge role and character.",
+    "The model's error is the measure of how much human judgement is still needed."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "ai-chart",
+   "type": "column",
+   "title": "Prediction error by method",
+   "subtitle": "Next-season relative strike rate, test seasons 2020\u20132025",
+   "table": "ai-cmp",
+   "xKey": "method",
+   "series": [
+    {
+     "key": "mae",
+     "label": "Mean absolute error"
+    }
+   ],
+   "xLabel": "Method",
+   "unit": "index points",
+   "takeaway": "The model edges out simple rules, but errors stay large.",
+   "ariaLabel": "Column chart of mean absolute prediction error for three methods of forecasting next-season batting."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "ai",
+   "statement": "Hypothesis: adding batting position and phase mix as features reduces the model's error more than adding any single performance statistic.",
+   "whyUnverified": "Those features have not been added.",
+   "howToTest": "Retrain with position and phase-mix features and compare test error."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "100",
+   "reason": "Index baseline and minimum balls."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Kolkata Knight Riders scouting the next star.",
+   "wanted": "Kolkata Knight Riders young batter."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-kkr-080",
+  "cf-kkr-084",
+  "cf-kkr-099"
+ ],
+ "seo": {
+  "metaTitle": "AI-assisted scouting: where algorithms could help KKR",
+  "metaDescription": "A transparent model of next-season batting, tested against simple rules, and what it means for Kolkata Knight Riders' recruitment."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Forward-looking proposals are labelled as such. Generated by scripts/editorial/engine. Ordinary least squares on relative strike rate, boundary rate, dot-ball rate and log balls; trained on seasons up to 2019, tested on 2020\u20132025.",
+ "generator": "engine:v1"
+}

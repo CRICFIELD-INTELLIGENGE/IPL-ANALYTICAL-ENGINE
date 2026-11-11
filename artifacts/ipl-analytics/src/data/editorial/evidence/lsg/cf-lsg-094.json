@@ -1,0 +1,189 @@
+{
+ "articleId": "cf-lsg-094",
+ "generatedAt": "2026-10-26T04:28:00.941Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "te-cover": {
+   "value": 68,
+   "display": "68%",
+   "label": "Share of Lucknow Super Giants' deliveries with a length tag, 2024–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Commentary coverage",
+   "sampleSize": {
+    "n": 4777,
+    "unit": "legal balls"
+   },
+   "query": "SELECT c.length, CASE WHEN i.bowling_team_id IN (13) THEN 1 ELSE 0 END mine, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM delivery_commentary c JOIN deliveries d ON d.delivery_id = c.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY c.length, mine",
+   "validation": {
+    "method": "plausibility range 20–100 for coverage",
+    "passed": true,
+    "detail": "value 68.34833577559138"
+   }
+  },
+  "te-best": {
+   "value": "short of a length",
+   "display": "short of a length",
+   "label": "Length where the franchise most out-performs the league",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 60 balls",
+   "sampleSize": {
+    "n": 561,
+    "unit": "legal balls"
+   },
+   "query": "SELECT c.length, CASE WHEN i.bowling_team_id IN (13) THEN 1 ELSE 0 END mine, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM delivery_commentary c JOIN deliveries d ON d.delivery_id = c.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY c.length, mine",
+   "validation": {
+    "method": "min difference",
+    "passed": true
+   }
+  },
+  "te-best-d": {
+   "value": -0.33,
+   "display": "−0.33",
+   "label": "Economy difference at that length (negative = conceded less)",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Franchise minus rest of IPL",
+   "sampleSize": {
+    "n": 561,
+    "unit": "legal balls"
+   },
+   "query": "SELECT c.length, CASE WHEN i.bowling_team_id IN (13) THEN 1 ELSE 0 END mine, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM delivery_commentary c JOIN deliveries d ON d.delivery_id = c.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY c.length, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 60 legal balls",
+    "passed": true,
+    "detail": "n = 561"
+   }
+  },
+  "te-worst": {
+   "value": "full toss",
+   "display": "full toss",
+   "label": "Length where the franchise most under-performs the league",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Min. 60 balls",
+   "sampleSize": {
+    "n": 185,
+    "unit": "legal balls"
+   },
+   "query": "SELECT c.length, CASE WHEN i.bowling_team_id IN (13) THEN 1 ELSE 0 END mine, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM delivery_commentary c JOIN deliveries d ON d.delivery_id = c.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY c.length, mine",
+   "validation": {
+    "method": "max difference",
+    "passed": true
+   }
+  },
+  "te-worst-d": {
+   "value": 1.17,
+   "display": "+1.17",
+   "label": "Economy difference at that length",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Franchise minus rest of IPL",
+   "sampleSize": {
+    "n": 185,
+    "unit": "legal balls"
+   },
+   "query": "SELECT c.length, CASE WHEN i.bowling_team_id IN (13) THEN 1 ELSE 0 END mine, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM delivery_commentary c JOIN deliveries d ON d.delivery_id = c.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY c.length, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 60 legal balls",
+    "passed": true,
+    "detail": "n = 185"
+   }
+  },
+  "te-yshare": {
+   "value": 7,
+   "display": "7%",
+   "label": "Yorkers as a share of Lucknow Super Giants' tagged deliveries",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 3265,
+    "unit": "legal balls"
+   },
+   "query": "SELECT c.length, CASE WHEN i.bowling_team_id IN (13) THEN 1 ELSE 0 END mine, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM delivery_commentary c JOIN deliveries d ON d.delivery_id = c.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY c.length, mine",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  },
+  "te-ylg": {
+   "value": 7,
+   "display": "7%",
+   "label": "Yorkers as a share of the rest of the league's tagged deliveries",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 4777,
+    "unit": "legal balls"
+   },
+   "query": "SELECT c.length, CASE WHEN i.bowling_team_id IN (13) THEN 1 ELSE 0 END mine, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM delivery_commentary c JOIN deliveries d ON d.delivery_id = c.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY c.length, mine",
+   "validation": {
+    "method": "share",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "te-len": {
+   "label": "LSG economy by length vs rest of IPL, 2024–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Deliveries with a length tag in ball-by-ball commentary",
+   "sampleSize": {
+    "n": 3133,
+    "unit": "legal balls"
+   },
+   "query": "SELECT c.length, CASE WHEN i.bowling_team_id IN (13) THEN 1 ELSE 0 END mine, SUM((d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END)) runs, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM delivery_commentary c JOIN deliveries d ON d.delivery_id = c.delivery_id JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2024 AND 2026 GROUP BY c.length, mine",
+   "rows": [
+    {
+     "length": "Yorker",
+     "team": 7.59,
+     "league": 7.44,
+     "balls": 211
+    },
+    {
+     "length": "Full",
+     "team": 9.93,
+     "league": 9.52,
+     "balls": 749
+    },
+    {
+     "length": "Good length",
+     "team": 6.66,
+     "league": 6.71,
+     "balls": 429
+    },
+    {
+     "length": "Length ball",
+     "team": 8.74,
+     "league": 8.26,
+     "balls": 597
+    },
+    {
+     "length": "Short of a length",
+     "team": 7.11,
+     "league": 7.44,
+     "balls": 561
+    },
+    {
+     "length": "Short",
+     "team": 13.96,
+     "league": 14,
+     "balls": 401
+    },
+    {
+     "length": "Full toss",
+     "team": 13.91,
+     "league": 12.74,
+     "balls": 185
+    }
+   ]
+  }
+ }
+}

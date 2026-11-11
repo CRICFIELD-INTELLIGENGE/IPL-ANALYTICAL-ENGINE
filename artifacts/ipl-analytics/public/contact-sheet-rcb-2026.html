@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RCB 2026 Visual Contact Sheet · IPL Intelligence OS</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #060913;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 32px 24px;
+    }
+    .header {
+      max-width: 1400px;
+      margin: 0 auto 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: gap;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+    .sub {
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    .stats {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .stat-pill {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+    .grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(236, 28, 36, 0.5);
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 12px 30px rgba(236, 28, 36, 0.15);
+    }
+    .num {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      font-family: monospace;
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      font-weight: 700;
+    }
+    .tag {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 10px;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+    .img-box {
+      width: 150px;
+      height: 200px;
+      margin: 12px 0 8px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    .img-box::before {
+      content: '';
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(236, 28, 36, 0.45) 0%, rgba(236, 28, 36, 0.15) 50%, transparent 75%);
+      filter: blur(14px);
+    }
+    .img-fade {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background: linear-gradient(to top, rgba(6, 9, 19, 0.95) 0%, transparent 100%);
+      z-index: 5;
+      pointer-events: none;
+    }
+    .img-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: bottom center;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.8));
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .card:hover .img-box img {
+      transform: scale(1.1) translateY(-4px);
+    }
+    .name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 4px;
+    }
+    .role {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 2px;
+    }
+    .meta {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      width: 100%;
+      font-size: 10px;
+      font-family: monospace;
+      color: rgba(255,255,255,0.4);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="badge">Official RCB 2026 Squad · 25/25 Exact Verified</div>
+      <h1>Royal Challengers Bengaluru · 2026 Contact Sheet</h1>
+      <div class="sub">Authentic Transparent Cutouts from Royal Challengers Bengaluru CMS Photoshoot (2026-03)</div>
+      <div class="stats">
+        <div class="stat-pill"><strong>25</strong> Players Downloaded</div>
+        <div class="stat-pill"><strong>100%</strong> Exact 2026 Kit Verified</div>
+        <div class="stat-pill"><strong>0</strong> Missing</div>
+        <div class="stat-pill"><strong>Composite Key:</strong> ${playerId}_RCB_2026</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" id="player-grid"></div>
+
+  <script>
+    const players = [
+      { name: "Virat Kohli", role: "Batter", file: "virat-kohli-rcb-2026.png", size: "64 KB", cKey: "v-kohli" },
+      { name: "Rajat Patidar", role: "Batter (Captain)", file: "rajat-patidar-rcb-2026.png", size: "68 KB", cKey: "rm-patidar" },
+      { name: "Josh Hazlewood", role: "Bowler", file: "josh-hazlewood-rcb-2026.png", size: "45 KB", cKey: "jr-hazlewood" },
+      { name: "Phil Salt", role: "Wicketkeeper Batter", file: "phil-salt-rcb-2026.png", size: "61 KB", cKey: "pd-salt" },
+      { name: "Jitesh Sharma", role: "Wicketkeeper Batter", file: "jitesh-sharma-rcb-2026.png", size: "65 KB", cKey: "jm-sharma" },
+      { name: "Bhuvneshwar Kumar", role: "Bowler", file: "bhuvneshwar-kumar-rcb-2026.png", size: "71 KB", cKey: "b-kumar" },
+      { name: "Venkatesh Iyer", role: "All-Rounder", file: "venkatesh-iyer-rcb-2026.png", size: "53 KB", cKey: "vr-iyer" },
+      { name: "Rasikh Salam", role: "Bowler", file: "rasikh-salam-rcb-2026.png", size: "46 KB", cKey: "rasikh-salam" },
+      { name: "Krunal Pandya", role: "All-Rounder", file: "krunal-pandya-rcb-2026.png", size: "67 KB", cKey: "kh-pandya" },
+      { name: "Mangesh Yadav", role: "All-Rounder", file: "mangesh-yadav-rcb-2026.png", size: "50 KB", cKey: "mangesh-yadav" },
+      { name: "Yash Dayal", role: "Bowler", file: "yash-dayal-rcb-2026.png", size: "55 KB", cKey: "yash-dayal" },
+      { name: "Tim David", role: "All-Rounder", file: "tim-david-rcb-2026.png", size: "57 KB", cKey: "th-david" },
+      { name: "Jacob Bethell", role: "All-Rounder", file: "jacob-bethell-rcb-2026.png", size: "62 KB", cKey: "jg-bethell" },
+      { name: "Suyash Sharma", role: "Bowler", file: "suyash-sharma-rcb-2026.png", size: "43 KB", cKey: "suyash-sharma" },
+      { name: "Devdutt Padikkal", role: "Batter", file: "devdutt-padikkal-rcb-2026.png", size: "52 KB", cKey: "d-padikkal" },
+      { name: "Jacob Duffy", role: "Bowler", file: "jacob-duffy-rcb-2026.png", size: "50 KB", cKey: "ja-duffy" },
+      { name: "Nuwan Thushara", role: "Bowler", file: "nuwan-thushara-rcb-2026.png", size: "59 KB", cKey: "nuwan-thushara" },
+      { name: "Romario Shepherd", role: "All-Rounder", file: "romario-shepherd-rcb-2026.png", size: "48 KB", cKey: "r-shepherd" },
+      { name: "Jordan Cox", role: "Wicketkeeper Batter", file: "jordan-cox-rcb-2026.png", size: "45 KB", cKey: "jordan-cox" },
+      { name: "Swapnil Singh", role: "All-Rounder", file: "swapnil-singh-rcb-2026.png", size: "50 KB", cKey: "swapnil-singh" },
+      { name: "Abhinandan Singh", role: "Bowler", file: "abhinandan-singh-rcb-2026.png", size: "54 KB", cKey: "abhinandan-singh" },
+      { name: "Kanishk Chouhan", role: "All-Rounder", file: "kanishk-chouhan-rcb-2026.png", size: "50 KB", cKey: "kanishk-chouhan" },
+      { name: "Satvik Deswal", role: "All-Rounder", file: "satvik-deswal-rcb-2026.png", size: "48 KB", cKey: "satvik-deswal" },
+      { name: "Vicky Ostwal", role: "All-Rounder", file: "vicky-ostwal-rcb-2026.png", size: "65 KB", cKey: "vicky-ostwal" },
+      { name: "Vihaan Malhotra", role: "All-Rounder", file: "vihaan-malhotra-rcb-2026.png", size: "45 KB", cKey: "vihaan-malhotra" }
+    ];
+
+    const grid = document.getElementById("player-grid");
+    players.forEach((p, idx) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="num">#${idx + 1}</div>
+        <div class="tag">VERIFIED 2026</div>
+        <div class="img-box">
+          <img src="/players/rcb-2026/${p.file}" alt="${p.name}" />
+          <div class="img-fade"></div>
+        </div>
+        <div class="name">${p.name}</div>
+        <div class="role">${p.role}</div>
+        <div class="meta">
+          <span>${p.cKey}</span>
+          <span>${p.size}</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>

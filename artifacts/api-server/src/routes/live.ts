@@ -4,11 +4,14 @@ import { getAccurateMatchDetails } from "../services/onlineDb";
 import { isWarehouseReady } from "../services/decision/player-profiles";
 import { overWinProbability } from "../services/decision/decision-replay";
 
+import { isAdminRequest } from "../lib/admin-auth";
+
 const router: IRouter = Router();
 
 router.get("/live/matches", async (req, res) => {
   try {
-    const bypassCache = req.query.refresh === "true" || req.query.bypassCache === "true";
+    // Cache bypass triggers fresh scraping of third-party sites, so only admins may force it.
+    const bypassCache = (req.query.refresh === "true" || req.query.bypassCache === "true") && isAdminRequest(req);
     const matches = await getCricbuzzMatches(bypassCache);
     res.json({ count: matches.length, matches, fetchedAt: new Date().toISOString() });
   } catch (err) {
@@ -19,7 +22,8 @@ router.get("/live/matches", async (req, res) => {
 
 router.get("/live/ipl/matches", async (req, res) => {
   try {
-    const bypassCache = req.query.refresh === "true" || req.query.bypassCache === "true";
+    // Cache bypass triggers fresh scraping of third-party sites, so only admins may force it.
+    const bypassCache = (req.query.refresh === "true" || req.query.bypassCache === "true") && isAdminRequest(req);
     const matches = await getIplMatches(bypassCache);
     res.json({ count: matches.length, matches, fetchedAt: new Date().toISOString() });
   } catch (err) {
@@ -32,7 +36,8 @@ router.get("/live/news", async (req, res) => {
   try {
     const raw = typeof req.query.category === "string" ? req.query.category : "general";
     const category = isValidNewsCategory(raw) ? raw : "general";
-    const bypassCache = req.query.refresh === "true" || req.query.bypassCache === "true";
+    // Cache bypass triggers fresh scraping of third-party sites, so only admins may force it.
+    const bypassCache = (req.query.refresh === "true" || req.query.bypassCache === "true") && isAdminRequest(req);
     const news = await getEspnNews(category, bypassCache);
     res.json({ count: news.length, items: news, fetchedAt: new Date().toISOString() });
   } catch (err) {

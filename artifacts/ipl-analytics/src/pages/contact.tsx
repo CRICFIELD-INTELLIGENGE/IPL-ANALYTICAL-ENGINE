@@ -42,7 +42,7 @@ export default function ContactPage() {
         {cards.map((c) => <Card key={c.label} {...c} />)}
       </div>
 
-      <Section title="Reporting a data issue">
+      <div id="corrections" className="scroll-mt-20" /><Section title="Reporting a data issue">
         <p>If a number looks wrong, it helps to include the page link, the player, team or match, and the figure you expected. Many issues trace back to the source scorecards; see <InLink href="/data-sources">Data Sources</InLink> for where each figure comes from and <InLink href="/methodology">Methodology</InLink> for how it is calculated.</p>
       </Section>
     </InfoPage>

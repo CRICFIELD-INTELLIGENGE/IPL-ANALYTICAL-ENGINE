@@ -5,7 +5,7 @@ import { PlayerAvatar } from "@/components/player-avatar";
 import {
   teamShort,
   teamColor,
-  venueSlug,
+  venueHref,
   normalizeVenueName,
   playerSlug,
   type MatchScorecard,
@@ -112,7 +112,6 @@ export function MatchCinematicHero({ match, card }: MatchCinematicHeroProps) {
   const venueGround = info.venueInfo?.ground || card?.venue || "IPL Venue";
   const venueCity = info.venueInfo?.city || card?.city || "";
   const canonicalVenue = normalizeVenueName(venueGround);
-  const vSlug = venueSlug(venueGround);
 
   const t1ScoreStr = inn1 ? `${inn1.runs}/${inn1.wickets}` : `${match.matchScore?.team1Score?.inngs1?.runs ?? 0}/${match.matchScore?.team1Score?.inngs1?.wickets ?? 0}`;
   const t1OversStr = inn1 ? `(${inn1.overs} OV)` : `(${match.matchScore?.team1Score?.inngs1?.overs ?? 0} OV)`;
@@ -159,7 +158,13 @@ export function MatchCinematicHero({ match, card }: MatchCinematicHeroProps) {
               />
             ) : t1TopPerformer ? (
               <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden border-2 shadow-2xl" style={{ borderColor: t1Color }}>
-                <PlayerAvatar name={t1TopPerformer.name} className="w-full h-full object-cover" />
+                <PlayerAvatar 
+                  name={t1TopPerformer.name} 
+                  teamId={team1Name}
+                  season={card?.season}
+                  strictHistoricalJersey={true}
+                  className="w-full h-full object-cover" 
+                />
               </div>
             ) : (
               <div className="w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
@@ -269,7 +274,7 @@ export function MatchCinematicHero({ match, card }: MatchCinematicHeroProps) {
 
           {/* Venue Profile Link */}
           <Link
-            href={`/venues/${vSlug}`}
+            href={venueHref(venueGround)}
             className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-400 hover:text-cyan-300 transition-colors mt-2 max-w-full truncate group/vlink"
             title={`Explore Venue: ${canonicalVenue}`}
           >
@@ -341,7 +346,13 @@ export function MatchCinematicHero({ match, card }: MatchCinematicHeroProps) {
               />
             ) : t2TopPerformer ? (
               <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden border-2 shadow-2xl" style={{ borderColor: t2Color }}>
-                <PlayerAvatar name={t2TopPerformer.name} className="w-full h-full object-cover" />
+                <PlayerAvatar 
+                  name={t2TopPerformer.name} 
+                  teamId={team2Name}
+                  season={card?.season}
+                  strictHistoricalJersey={true}
+                  className="w-full h-full object-cover" 
+                />
               </div>
             ) : (
               <div className="w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">

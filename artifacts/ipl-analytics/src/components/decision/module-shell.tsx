@@ -10,15 +10,15 @@ import { errorText, searchPlayers, type PlayerSearchHit } from "@/lib/discovery-
 
 export function ModuleHeader({ phase, title, tagline, icon, children }: { phase: string; title: string; tagline: string; icon: ReactNode; children?: ReactNode }) {
   return (
-    <div className="space-y-3">
+    <div className="analyst-module-header space-y-3">
       <Link href="/ai-analyst" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-white">
         <ArrowLeft className="w-3.5 h-3.5" /> AI Analyst
       </Link>
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="flex items-start gap-3 min-w-0">
-          <div className="w-10 h-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center shrink-0">{icon}</div>
+          <div className="analyst-module-icon w-10 h-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center shrink-0">{icon}</div>
           <div className="min-w-0">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-amber-400">{phase}</div>
+            <div className="analyst-phase text-[10px] font-bold uppercase tracking-widest">{phase}</div>
             <h1 className="font-display font-black text-2xl sm:text-3xl leading-tight">{title}</h1>
             <p className="text-sm text-muted-foreground mt-0.5">{tagline}</p>
           </div>
@@ -31,7 +31,7 @@ export function ModuleHeader({ phase, title, tagline, icon, children }: { phase:
 
 export function Segmented<T extends string>({ value, options, onChange, label }: { value: T; options: { value: NoInfer<T>; label: string; disabled?: boolean }[]; onChange: (v: NoInfer<T>) => void; label: string }) {
   return (
-    <div role="radiogroup" aria-label={label} className="inline-flex rounded-xl border border-white/10 bg-white/5 p-1 text-xs font-semibold">
+    <div role="radiogroup" aria-label={label} className="analyst-segmented inline-flex rounded-xl border border-white/10 bg-white/5 p-1 text-xs font-semibold">
       {options.map((o) => (
         <button
           key={o.value}
@@ -61,7 +61,7 @@ export function SectionTitle({ icon, title, sub }: { icon: ReactNode; title: str
 /** Stat tile: proportional figures for the value, small caps label under it. */
 export function Tile({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 min-w-[96px]">
+    <div className="analyst-stat-tile rounded-xl border border-white/10 bg-white/5 px-3 py-2 min-w-[96px]">
       <div className="font-display font-bold text-lg leading-none">{value}</div>
       <div className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">{label}</div>
       {sub && <div className="text-[10px] text-muted-foreground mt-0.5">{sub}</div>}
@@ -253,7 +253,7 @@ export function NumberField({ label, value, onChange, min, max, step = 1 }: { la
 }
 
 export const Card = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
-  <section className={`rounded-2xl border border-white/10 bg-white/[0.03] p-4 min-w-0 ${className}`}>{children}</section>
+  <section className={`analyst-card rounded-2xl border border-white/10 bg-white/[0.03] p-4 min-w-0 ${className}`}>{children}</section>
 );
 
 /** Signals and verdicts share one palette across modules. */

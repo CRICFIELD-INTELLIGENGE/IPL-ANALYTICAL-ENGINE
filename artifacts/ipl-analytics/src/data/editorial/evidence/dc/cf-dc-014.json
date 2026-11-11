@@ -1,0 +1,183 @@
+{
+ "articleId": "cf-dc-014",
+ "generatedAt": "2026-10-26T04:24:03.392Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "mos-te": {
+   "value": 7.99,
+   "display": "7.99",
+   "label": "DC spin economy in the middle overs",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "Overs 7–15, 2022–2026",
+   "sampleSize": {
+    "n": 2190,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, bw.name bowler, (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END dot, CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players bw ON bw.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022",
+   "validation": {
+    "method": "sample-size floor ≥ 300 balls",
+    "passed": true,
+    "detail": "n = 2190"
+   }
+  },
+  "mos-le": {
+   "value": 8.16,
+   "display": "8.16",
+   "label": "Rest of IPL spin economy in the middle overs",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "Overs 7–15, 2022–2026",
+   "sampleSize": {
+    "n": 14235,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, bw.name bowler, (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END dot, CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players bw ON bw.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022",
+   "validation": {
+    "method": "sample-size floor ≥ 3000 balls",
+    "passed": true,
+    "detail": "n = 14235"
+   }
+  },
+  "mos-td": {
+   "value": 30.9,
+   "display": "30.9",
+   "label": "DC spin dot-ball rate in the middle overs",
+   "unit": "% of balls",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "Overs 7–15, 2022–2026",
+   "sampleSize": {
+    "n": 2190,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, bw.name bowler, (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END dot, CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players bw ON bw.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022",
+   "validation": {
+    "method": "sample-size floor ≥ 300 balls",
+    "passed": true,
+    "detail": "n = 2190"
+   }
+  },
+  "mos-ld": {
+   "value": 31.1,
+   "display": "31.1",
+   "label": "Rest of IPL spin dot-ball rate in the middle overs",
+   "unit": "% of balls",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "Overs 7–15, 2022–2026",
+   "sampleSize": {
+    "n": 14235,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, bw.name bowler, (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END dot, CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players bw ON bw.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022",
+   "validation": {
+    "method": "sample-size floor ≥ 3000 balls",
+    "passed": true,
+    "detail": "n = 14235"
+   }
+  },
+  "mos-share": {
+   "value": 68,
+   "display": "68%",
+   "label": "Share of Delhi Capitals' middle-overs balls bowled by spinners",
+   "unit": "%",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "Overs 7–15, 2022–2026, typed bowlers",
+   "sampleSize": {
+    "n": 3216,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, bw.name bowler, (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END dot, CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players bw ON bw.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022",
+   "validation": {
+    "method": "sample-size floor ≥ 500 balls",
+    "passed": true,
+    "detail": "n = 3216"
+   }
+  },
+  "mos-lshare": {
+   "value": 56,
+   "display": "56%",
+   "label": "Share of the rest of the IPL's middle-overs balls bowled by spinners",
+   "unit": "%",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "Overs 7–15, 2022–2026, typed bowlers",
+   "sampleSize": {
+    "n": 25249,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, bw.name bowler, (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END dot, CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players bw ON bw.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022",
+   "validation": {
+    "method": "sample-size floor ≥ 5000 balls",
+    "passed": true,
+    "detail": "n = 25249"
+   }
+  },
+  "mos-lead": {
+   "value": "Kuldeep Yadav",
+   "display": "Kuldeep Yadav",
+   "label": "Delhi Capitals' most-used middle-overs spinner since 2022",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "Ranked by balls",
+   "sampleSize": {
+    "n": 1158,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, bw.name bowler, (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END dot, CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players bw ON bw.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022",
+   "validation": {
+    "method": "rank by balls",
+    "passed": true
+   }
+  },
+  "mos-lead-econ": {
+   "value": 8.19,
+   "display": "8.19",
+   "label": "Kuldeep Yadav middle-overs economy since 2022",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "Overs 7–15",
+   "sampleSize": {
+    "n": 1158,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, bw.name bowler, (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END dot, CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players bw ON bw.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022",
+   "validation": {
+    "method": "sample-size floor ≥ 120 balls",
+    "passed": true,
+    "detail": "n = 1158"
+   }
+  }
+ },
+ "tables": {
+  "mos-cmp": {
+   "label": "Middle-overs bowling by type, 2022–2026",
+   "dataset": "CricField warehouse + player-bio.json",
+   "filters": "Overs 7–15; bowling type from player-bio.json",
+   "sampleSize": {
+    "n": 28465,
+    "unit": "balls"
+   },
+   "query": "SELECT CASE WHEN i.bowling_team_id IN (8,11) THEN 'team' ELSE 'rest' END side, bw.name bowler, (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) r, CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END b, CASE WHEN (d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 THEN d.extra_runs ELSE 0 END) = 0 AND (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END dot, CASE WHEN dm.dismissal_id IS NOT NULL AND dm.kind NOT IN ('run out','retired hurt','retired out','obstructing the field') THEN 1 ELSE 0 END w FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players bw ON bw.player_id = d.bowler_id LEFT JOIN dismissals dm ON dm.delivery_id = d.delivery_id WHERE i.innings_number <= 2 AND d.over_num BETWEEN 6 AND 14 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2022",
+   "rows": [
+    {
+     "bowling": "Spin",
+     "teamEconomy": 7.99,
+     "leagueEconomy": 8.16,
+     "teamDotPct": 30.9,
+     "leagueDotPct": 31.1
+    },
+    {
+     "bowling": "Pace",
+     "teamEconomy": 9.4,
+     "leagueEconomy": 8.92,
+     "teamDotPct": 28.3,
+     "leagueDotPct": 32.1
+    }
+   ]
+  }
+ }
+}

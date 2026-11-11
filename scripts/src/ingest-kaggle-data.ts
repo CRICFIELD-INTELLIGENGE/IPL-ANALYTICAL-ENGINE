@@ -13,6 +13,7 @@ import {
   dismissalsTable,
 } from "@workspace/db";
 import { eq } from "drizzle-orm";
+import { guardWarehouseWrite } from "./lib/warehouse-guard";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, "..", "..");
@@ -222,6 +223,7 @@ async function getOrCreatePlayer(name: string): Promise<number> {
 }
 
 async function main() {
+  guardWarehouseWrite("ingest-kaggle-data.ts"); // @workspace/db target: CRICFIELD_DB_PATH or the production sqlite.db
   console.log("=== STARTING KAGGLE DATA INGESTION ===");
   if (!fs.existsSync(KAGGLE_CSV_PATH)) {
     console.error(`Kaggle CSV file not found at: ${KAGGLE_CSV_PATH}`);

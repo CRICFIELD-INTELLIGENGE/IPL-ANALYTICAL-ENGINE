@@ -4,10 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm run build && pnpm run start",
+    "dev": "node --watch --import tsx src/index.ts",
     "build": "node ./build.mjs",
     "start": "node --enable-source-maps ./dist/index.mjs",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "intelligence:features": "tsx scripts/intelligence/01-build-features.ts",
+    "intelligence:fit": "python scripts/intelligence/train.py",
+    "intelligence:publish": "tsx scripts/intelligence/02-publish.ts",
+    "intelligence:train": "pnpm run intelligence:features && pnpm run intelligence:fit && pnpm run intelligence:publish",
+    "test": "tsx --import ./test/test-readonly-env.mjs --test test/*.test.ts"
   },
   "dependencies": {
     "@workspace/api-zod": "workspace:*",
@@ -20,7 +25,8 @@
     "javascript-lp-solver": "0.4.24",
     "pino": "^9",
     "pino-http": "^10",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "@workspace/arcade-rules": "workspace:*"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

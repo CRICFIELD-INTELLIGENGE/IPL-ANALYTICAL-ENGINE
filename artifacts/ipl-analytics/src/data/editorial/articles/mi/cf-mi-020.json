@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-mi-020",
+ "planId": "cf-mi-020",
+ "franchise": "MI",
+ "aspect": "bowling-fielding",
+ "title": "The Sixth-Bowler Insurance Policy: How Much Flexibility Does Mumbai Indians Need?",
+ "slug": "mi-the-sixth-bowler-insurance-policy-how-much-flexibility-does-mi-need",
+ "dek": "How much flexibility do Mumbai Indians need from a sixth bowling option? Workload and economy beyond the core five measure the insurance policy's cost.",
+ "excerpt": "Mumbai Indians have used six or more bowlers in {{ev:sb-tused}} of their bowling innings since 2022. League-wide, overs from beyond the core five have cost more than the core's.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "MI"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "MI used six or more bowlers in {{ev:sb-tused}} of bowling innings since 2022; the rest of the IPL did so in {{ev:sb-lused}}.",
+  "League-wide, the core five conceded {{ev:sb-lcore}} an over and the extra bowlers {{ev:sb-lextra}}.",
+  "{{ev:sb-tshare}} of Mumbai Indians' balls came from beyond the core five."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Insurance Question",
+   "body": [
+    "A sixth bowling option is insurance: if a frontline bowler is being hit, or injured, someone else can take the overs. The premium is paid in batting depth, because the sixth bowler usually displaces a specialist batter.",
+    "Since 2022 Mumbai Indians have used six or more bowlers in {{ev:sb-tused}} of their bowling innings, against {{ev:sb-lused}} for the rest of the league."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What the Extra Overs Cost",
+   "body": [
+    "Across the rest of the IPL, the five bowlers who bowl most in each innings conceded {{ev:sb-lcore}} an over; everyone else conceded {{ev:sb-lextra}}.",
+    "For MI, bowlers beyond the core five conceded {{ev:sb-textra}} an over and bowled {{ev:sb-tshare}} of the side's balls."
+   ],
+   "chartIds": [
+    "sb-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Designing the Policy",
+   "body": [
+    "The right amount of insurance depends on how reliable the core five are. A side with five frontline bowlers who rarely go for big overs needs little cover; a side with a volatile bowler needs a sixth option in every match.",
+    "For MI, an all-rounder whose bowling is close to frontline standard is worth more than a part-timer who only bowls in emergencies."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "The Impact-Player Complication",
+   "body": [
+    "Since 2023 the impact-player rule lets sides add a bowler or a batter during the match, which changes the value of a sixth option in the starting eleven. The pre-2023 and post-2023 numbers are not strictly comparable.",
+    "{{hyp:impact}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Buy the Policy Only If the Core Is Volatile",
+   "body": [
+    "League-wide, overs beyond the core five have cost more than the core's. Mumbai Indians should carry a sixth bowler when a frontline bowler's form is uncertain, not as a default.",
+    "Tracking how often the sixth option is actually used would show whether the policy is paying out."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "sb-chart",
+   "type": "column",
+   "title": "Economy: core five vs extra bowlers",
+   "subtitle": "2022\u20132026",
+   "table": "sb-cmp",
+   "xKey": "group",
+   "series": [
+    {
+     "key": "team",
+     "label": "MI"
+    },
+    {
+     "key": "league",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Bowler group",
+   "unit": "runs per over",
+   "takeaway": "Extra bowlers have been more expensive than the core five league-wide.",
+   "ariaLabel": "Grouped column chart of economy for the core five bowlers and the sixth bowler and beyond."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "impact",
+   "statement": "Hypothesis: the impact-player rule has reduced the value of a sixth bowling option in the starting eleven.",
+   "whyUnverified": "Impact-player substitutions are not recorded in the warehouse.",
+   "howToTest": "Join substitution records and compare bowling usage before and after 2023."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "A Mumbai Indians all-rounder bowling.",
+   "wanted": "Mumbai Indians all-rounder bowling."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-mi-100",
+  "cf-mi-089",
+  "cf-mi-013"
+ ],
+ "seo": {
+  "metaTitle": "The sixth-bowler insurance policy at MI",
+  "metaDescription": "How often Mumbai Indians use six or more bowlers and what overs beyond the core five cost, compared with the IPL since 2022."
+ },
+ "methodology": "Regulation innings only (super overs excluded). Economy uses runs charged to the bowler (byes and leg-byes excluded) per legal ball times six. Bowler wickets exclude run outs. Generated from the CricField warehouse by scripts/editorial/engine. Core five = the five bowlers with the most legal balls in each bowling innings. 2022\u20132026, matches with a result.",
+ "generator": "engine:v1"
+}

@@ -94,15 +94,22 @@ export function MomentumStream({ data: propData, title: propTitle }: { data?: Te
     <div className="w-full bg-[#0B1020] border border-white/10 rounded-2xl p-5 shadow-xl relative overflow-hidden">
       
       {/* HEADER & 1,243 MATCHES (2008-2026) CONTROLS */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 pb-3 mb-4">
-        <div className="flex items-center gap-2">
-          <Activity className="w-5 h-5 text-purple-400 animate-pulse" />
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3 mb-4">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border border-purple-400/30 flex items-center justify-center shadow-lg shadow-purple-500/10">
+            <Activity className="w-4 h-4 text-purple-400 animate-pulse" />
+          </div>
           <div>
-            <span className="text-sm font-black text-white uppercase tracking-wider block">
-              Continuous Ball-by-Ball Momentum Stream & Live Telemetry
-            </span>
-            <span className="text-[10px] text-amber-400 font-mono font-bold">
-              Database: {allMatches.length || 1243} Total IPL Matches (2008 – 2026)
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-black text-white uppercase tracking-wider">
+                Real-Time Over-by-Over Pressure & Momentum Monitor
+              </span>
+              <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                PULSE
+              </span>
+            </div>
+            <span className="text-[10px] text-amber-400/90 font-mono font-bold">
+              Database: {allMatches.length || 1243} Total Matches Indexed (2008 – 2026)
             </span>
           </div>
         </div>
@@ -378,15 +385,22 @@ export function WinProbabilityStream({ data: propData, team1: propTeam1, team2: 
     <div className="w-full bg-[#0B1020] border border-white/10 rounded-2xl p-5 shadow-xl relative overflow-hidden">
       
       {/* HEADER & MULTI-MATCH SELECTOR */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 pb-3 mb-4">
-        <div className="flex items-center gap-2">
-          <Zap className="w-5 h-5 text-amber-400 animate-pulse" />
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3 mb-4">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400/20 to-purple-500/20 border border-amber-400/30 flex items-center justify-center shadow-lg shadow-amber-400/10">
+            <Zap className="w-4 h-4 text-amber-400 animate-pulse" />
+          </div>
           <div>
-            <span className="text-sm font-black text-white uppercase tracking-wider block">
-              Win Probability Dynamic Stream & Live Shift Engine
-            </span>
-            <span className="text-[10px] text-purple-400 font-mono font-bold">
-              Database: {allMatches.length || 1243} Total IPL Matches (2008 – 2026)
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-black text-white uppercase tracking-wider">
+                Live Match Telemetry & Odds Shift Simulator
+              </span>
+              <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                LIVE HUD
+              </span>
+            </div>
+            <span className="text-[10px] text-purple-400/90 font-mono font-bold">
+              Database: {allMatches.length || 1243} Historical & Active Matches (2008 – 2026)
             </span>
           </div>
         </div>
@@ -454,126 +468,220 @@ export function WinProbabilityStream({ data: propData, team1: propTeam1, team2: 
         </div>
       </div>
 
-      {/* DUAL TEAM WIN PROBABILITY LIVE GAUGE BANNER */}
-      <div className="bg-black/50 border border-white/10 rounded-2xl p-4 mb-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        
-        {/* Team 1 Win % */}
-        <div className="flex items-center gap-3 w-full md:w-auto">
-          <div className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center font-black text-purple-400 text-sm">
-            {team1Name.slice(0, 3).toUpperCase()}
+      {/* GRANDEUR DUAL TEAM WIN PROBABILITY BROADCAST GAUGE */}
+      <div className="bg-gradient-to-r from-slate-950 via-[#0a0f24] to-slate-950 border border-white/15 rounded-2xl p-5 mb-5 shadow-2xl relative overflow-hidden backdrop-blur-xl">
+        {/* Subtle Ambient Glow Backgrounds */}
+        <div className="absolute top-0 left-0 w-64 h-full bg-purple-600/10 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-64 h-full bg-rose-600/10 blur-3xl pointer-events-none" />
+
+        <div className="flex flex-col md:flex-row items-center justify-between gap-5 relative z-10">
+          {/* Team 1 Win Card */}
+          <div className="flex items-center gap-3.5 w-full md:w-auto bg-black/40 p-2.5 px-4 rounded-xl border border-purple-500/20 shadow-md">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/30 to-indigo-600/30 border border-purple-400/50 flex flex-col items-center justify-center shadow-lg shadow-purple-500/20">
+              <span className="font-black text-purple-300 text-xs tracking-wider">{team1Name.slice(0, 3).toUpperCase()}</span>
+              <span className="text-[8px] font-mono text-purple-400/70 font-bold">TEAM 1</span>
+            </div>
+            <div>
+              <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider block">{team1Name} Odds</span>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-2xl font-black text-purple-300 font-mono tracking-tight drop-shadow-md">{currentWp}%</span>
+                {currentWp >= 50 && (
+                  <span className="text-[10px] font-bold text-emerald-400 font-mono bg-emerald-500/20 px-1 rounded">▲ ADV</span>
+                )}
+              </div>
+            </div>
           </div>
-          <div>
-            <span className="text-[10px] font-bold text-white/50 uppercase block">{team1Name} Win Probability</span>
-            <span className="text-xl font-black text-purple-400 font-mono">{currentWp}%</span>
+
+          {/* Dynamic Laser Progress Track */}
+          <div className="flex-1 w-full flex flex-col gap-2">
+            <div className="flex items-center justify-between text-[10px] font-mono font-bold tracking-wider">
+              <span className="text-purple-400 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+                {team1Name} {currentWp}%
+              </span>
+              <span className="text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/20 shadow-sm">
+                BALL {activePointer} OF {wpPoints.length} · OVER {Math.floor((activePointer - 1) / 6) + 1}.{((activePointer - 1) % 6) + 1}
+              </span>
+              <span className="text-rose-400 flex items-center gap-1">
+                {team2Name} {team2Wp}%
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse" />
+              </span>
+            </div>
+
+            {/* Glowing Bi-Directional Dual Laser Bar */}
+            <div className="w-full h-5 rounded-full bg-black/60 p-0.5 border border-white/20 overflow-hidden flex relative shadow-inner">
+              <div
+                style={{ width: `${currentWp}%` }}
+                className="h-full rounded-l-full bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-400 transition-all duration-500 relative flex items-center justify-end shadow-lg shadow-purple-500/50"
+              >
+                <div className="w-1.5 h-full bg-white opacity-90 blur-[1px]" />
+              </div>
+              <div
+                style={{ width: `${team2Wp}%` }}
+                className="h-full rounded-r-full bg-gradient-to-r from-amber-500 via-rose-500 to-red-600 transition-all duration-500 relative shadow-lg shadow-rose-500/50"
+              />
+              {/* 50% Center Marker */}
+              <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-white/60 -translate-x-1/2 pointer-events-none" />
+            </div>
+
+            <div className="flex items-center justify-between text-[9px] font-mono text-white/40">
+              <span>POWERPLAY / MIDDLE</span>
+              <span className="text-white/60 font-bold uppercase tracking-widest">50% EQUILIBRIUM</span>
+              <span>DEATH PHASE FINISH</span>
+            </div>
+          </div>
+
+          {/* Team 2 Win Card */}
+          <div className="flex items-center gap-3.5 w-full md:w-auto justify-end bg-black/40 p-2.5 px-4 rounded-xl border border-rose-500/20 shadow-md">
+            <div className="text-right">
+              <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider block">{team2Name} Odds</span>
+              <div className="flex items-baseline gap-1.5 justify-end">
+                {team2Wp >= 50 && (
+                  <span className="text-[10px] font-bold text-rose-400 font-mono bg-rose-500/20 px-1 rounded">▲ ADV</span>
+                )}
+                <span className="text-2xl font-black text-rose-300 font-mono tracking-tight drop-shadow-md">{team2Wp}%</span>
+              </div>
+            </div>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500/30 to-red-600/30 border border-rose-400/50 flex flex-col items-center justify-center shadow-lg shadow-rose-500/20">
+              <span className="font-black text-rose-300 text-xs tracking-wider">{team2Name.slice(0, 3).toUpperCase()}</span>
+              <span className="text-[8px] font-mono text-rose-400/70 font-bold">TEAM 2</span>
+            </div>
           </div>
         </div>
-
-        {/* Dynamic Bi-Directional Win Bar */}
-        <div className="flex-1 w-full flex flex-col gap-1">
-          <div className="w-full h-3.5 rounded-full bg-white/10 overflow-hidden flex relative shadow-inner">
-            <div
-              style={{ width: `${currentWp}%` }}
-              className="h-full bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-400 transition-all duration-500"
-            />
-            <div
-              style={{ width: `${team2Wp}%` }}
-              className="h-full bg-gradient-to-r from-amber-500 via-rose-500 to-red-600 transition-all duration-500"
-            />
-          </div>
-          <div className="flex items-center justify-between text-[9px] font-mono font-bold text-white/40">
-            <span>50% EQUAL CHANCE BASELINE</span>
-            <span className="text-amber-400">BALL {activePointer} / {wpPoints.length}</span>
-          </div>
-        </div>
-
-        {/* Team 2 Win % */}
-        <div className="flex items-center gap-3 w-full md:w-auto justify-end">
-          <div className="text-right">
-            <span className="text-[10px] font-bold text-white/50 uppercase block">{team2Name} Win Probability</span>
-            <span className="text-xl font-black text-rose-400 font-mono">{team2Wp}%</span>
-          </div>
-          <div className="w-10 h-10 rounded-xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center font-black text-rose-400 text-sm">
-            {team2Name.slice(0, 3).toUpperCase()}
-          </div>
-        </div>
-
       </div>
 
-      {/* AESTHETIC SPLINE PROBABILITY STREAM SVG GRAPHIC */}
-      <div className="bg-black/40 border border-white/10 rounded-2xl p-4 relative overflow-hidden h-[240px]">
-        <svg viewBox={`0 0 ${wpPoints.length * 35} 200`} className="w-full h-full">
-          <defs>
-            <linearGradient id="wpNeonArea" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#a855f7" stopOpacity="0.5" />
-              <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.2" />
-              <stop offset="100%" stopColor="#0f172a" stopOpacity="0.0" />
-            </linearGradient>
-            <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-          </defs>
+      {/* GRANDEUR BROADCAST-GRADE SPLINE PROBABILITY STREAM GRAPHIC */}
+      <div className="bg-gradient-to-b from-[#070b19] via-[#09112a] to-[#040814] border border-white/15 rounded-2xl p-5 relative overflow-hidden shadow-2xl min-h-[310px]">
+        
+        {/* Subtle High-Tech Coordinate Grid Background */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
-          {/* 50% Baseline */}
-          <line x1="0" y1="100" x2={wpPoints.length * 35} y2="100" stroke="#ffffff" strokeWidth="1" strokeDasharray="6 4" opacity="0.25" />
-
-          {/* Area Fill */}
-          <path
-            d={`M 0 200 ${wpPoints.map((d, i) => `L ${i * 35 + 17} ${200 - (d.prob / 100) * 180}`).join(" ")} L ${(wpPoints.length - 1) * 35 + 17} 200 Z`}
-            fill="url(#wpNeonArea)"
-          />
-
-          {/* Glowing Line */}
-          <path
-            d={`M 0 200 ${wpPoints.map((d, i) => `L ${i * 35 + 17} ${200 - (d.prob / 100) * 180}`).join(" ")}`}
-            fill="none"
-            stroke="#a855f7"
-            strokeWidth="3"
-            filter="url(#neonGlow)"
-          />
-
-          {/* Point Markers & Wickets */}
-          {wpPoints.map((d, i) => {
-            const isActive = i + 1 === activePointer;
-            const x = i * 35 + 17;
-            const y = 200 - (d.prob / 100) * 180;
-
-            return (
-              <g key={i}>
-                {isActive && (
-                  <line x1={x} y1="0" x2={x} y2="200" stroke="#fbbf24" strokeWidth="2" strokeDasharray="3 3" className="animate-pulse" />
-                )}
-
-                <circle cx={x} cy={y} r={isActive ? 6 : 3.5} fill={isActive ? "#fbbf24" : "#06b6d4"} stroke="#ffffff" strokeWidth="1.5" />
-
-                {d.wicket && (
-                  <g>
-                    <line x1={x} y1={y} x2={x} y2="190" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="2 2" />
-                    <circle cx={x} cy={y - 10} r="4" fill="#ef4444" />
-                  </g>
-                )}
-
-                {d.boundary && (
-                  <circle cx={x} cy={y - 8} r="3" fill="#eab308" />
-                )}
-              </g>
-            );
-          })}
-        </svg>
-
-        {/* Legend Banner Overlay */}
-        <div className="absolute bottom-3 left-4 flex items-center gap-4 text-[10px] bg-black/80 px-3 py-1.5 rounded-xl border border-white/10">
-          <div className="flex items-center gap-1.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-purple-500" />
-            <span className="text-white/80 font-bold">{team1Name} Favored</span>
+        {/* Phase Zone Overlays */}
+        <div className="absolute inset-x-0 top-0 h-7 flex border-b border-white/5 pointer-events-none text-[9px] font-mono font-bold uppercase tracking-wider text-white/30">
+          <div className="w-1/4 border-r border-white/5 flex items-center justify-center bg-cyan-500/[0.02]">
+            Overs 1-6 (Powerplay)
           </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-rose-500" />
-            <span className="text-white/80 font-bold">{team2Name} Favored</span>
+          <div className="w-1/2 border-r border-white/5 flex items-center justify-center bg-indigo-500/[0.02]">
+            Overs 7-15 (Middle Acceleration)
           </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-            <span className="text-white/80 font-bold">Boundary / Wicket Event</span>
+          <div className="w-1/4 flex items-center justify-center bg-rose-500/[0.02]">
+            Overs 16-20 (Death Siege)
+          </div>
+        </div>
+
+        <div className="mt-8 relative h-[220px]">
+          <svg viewBox={`0 0 ${wpPoints.length * 38} 220`} preserveAspectRatio="none" className="w-full h-full overflow-visible">
+            <defs>
+              <linearGradient id="wpGrandeurArea" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.55" />
+                <stop offset="40%" stopColor="#06b6d4" stopOpacity="0.25" />
+                <stop offset="80%" stopColor="#3b82f6" stopOpacity="0.08" />
+                <stop offset="100%" stopColor="#020617" stopOpacity="0.0" />
+              </linearGradient>
+              <linearGradient id="wpSplineStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#a855f7" />
+                <stop offset="35%" stopColor="#06b6d4" />
+                <stop offset="70%" stopColor="#f59e0b" />
+                <stop offset="100%" stopColor="#ec4899" />
+              </linearGradient>
+              <filter id="grandeurGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            {/* 50% Baseline */}
+            <line x1="0" y1="110" x2={wpPoints.length * 38} y2="110" stroke="#ffffff" strokeWidth="1.2" strokeDasharray="6 4" opacity="0.3" />
+            <text x="8" y="105" fill="#ffffff" opacity="0.4" fontSize="9" fontFamily="monospace" fontWeight="bold">50% PAR LINE</text>
+
+            {/* Area Fill */}
+            <path
+              d={`M 0 220 ${wpPoints.map((d, i) => `L ${i * 38 + 19} ${220 - (d.prob / 100) * 200}`).join(" ")} L ${(wpPoints.length - 1) * 38 + 19} 220 Z`}
+              fill="url(#wpGrandeurArea)"
+            />
+
+            {/* Grandeur Spline Stroke */}
+            <path
+              d={`M 0 220 ${wpPoints.map((d, i) => `L ${i * 38 + 19} ${220 - (d.prob / 100) * 200}`).join(" ")}`}
+              fill="none"
+              stroke="url(#wpSplineStroke)"
+              strokeWidth="3.5"
+              filter="url(#grandeurGlow)"
+            />
+
+            {/* Point Markers, Wickets, Boundaries */}
+            {wpPoints.map((d, i) => {
+              const isActive = i + 1 === activePointer;
+              const x = i * 38 + 19;
+              const y = 220 - (d.prob / 100) * 200;
+
+              return (
+                <g key={i}>
+                  {isActive && (
+                    <g>
+                      <line x1={x} y1="0" x2={x} y2="220" stroke="#f59e0b" strokeWidth="2.5" strokeDasharray="4 3" opacity="0.9" />
+                      <circle cx={x} cy={y} r="9" fill="#f59e0b" opacity="0.25" className="animate-ping" />
+                    </g>
+                  )}
+
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r={isActive ? 6.5 : 4}
+                    fill={isActive ? "#fbbf24" : d.wicket ? "#ef4444" : d.boundary ? "#10b981" : "#38bdf8"}
+                    stroke="#ffffff"
+                    strokeWidth={isActive ? "2.5" : "1.5"}
+                    className="transition-all duration-300"
+                  />
+
+                  {/* Wicket Beacon */}
+                  {d.wicket && (
+                    <g>
+                      <line x1={x} y1={y} x2={x} y2="205" stroke="#ef4444" strokeWidth="2" strokeDasharray="2 2" opacity="0.75" />
+                      <rect x={x - 12} y={y - 20} width="24" height="13" rx="3" fill="#ef4444" />
+                      <text x={x} y={y - 11} fill="#ffffff" fontSize="8" fontWeight="900" textAnchor="middle" fontFamily="sans-serif">WKT</text>
+                    </g>
+                  )}
+
+                  {/* Boundary Beacon */}
+                  {d.boundary && (
+                    <g>
+                      <rect x={x - 10} y={y - 18} width="20" height="12" rx="3" fill="#10b981" />
+                      <text x={x} y={y - 9} fill="#ffffff" fontSize="8" fontWeight="900" textAnchor="middle" fontFamily="sans-serif">4/6</text>
+                    </g>
+                  )}
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+
+        {/* High-Tech Grandeur Telemetry Ribbon Footer */}
+        <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="flex flex-wrap items-center gap-4 text-[10px] bg-black/70 px-3.5 py-2 rounded-xl border border-white/10 backdrop-blur-md">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-sm shadow-purple-500/50" />
+              <span className="text-white/80 font-bold">{team1Name} Momentum</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm shadow-rose-500/50" />
+              <span className="text-white/80 font-bold">{team2Name} Momentum</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+              <span className="text-rose-300 font-bold">WKT (Disruption)</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+              <span className="text-emerald-300 font-bold">4/6 (Boundary Spike)</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-white/70 bg-white/[0.04] px-3 py-1.5 rounded-xl border border-white/5">
+            <span className="text-amber-400 font-bold">ACTIVE SCANNER:</span>
+            <span>BALL {activePointer}</span>
+            <span className="text-white/30">|</span>
+            <span>PROBABILITY: <b className="text-white">{currentWp}%</b></span>
           </div>
         </div>
       </div>

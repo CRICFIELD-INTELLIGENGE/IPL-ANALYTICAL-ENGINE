@@ -1,0 +1,123 @@
+{
+ "articleId": "cf-lsg-044",
+ "generatedAt": "2026-10-26T04:27:34.300Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "sf-s1": {
+   "value": 14.2,
+   "display": "14.2",
+   "label": "Sixes per match in Lucknow Super Giants' games, 2022–2023",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Both sides",
+   "sampleSize": {
+    "n": 30,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 30"
+   }
+  },
+  "sf-s2": {
+   "value": 18.5,
+   "display": "18.5",
+   "label": "Sixes per match in Lucknow Super Giants' games, 2024–2026",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Both sides",
+   "sampleSize": {
+    "n": 42,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "sample-size floor ≥ 10 matches",
+    "passed": true,
+    "detail": "n = 42"
+   }
+  },
+  "sf-r2": {
+   "value": 372,
+   "display": "372",
+   "label": "Runs per match in Lucknow Super Giants' games, 2024–2026",
+   "unit": "runs per match",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Both sides",
+   "sampleSize": {
+    "n": 42,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "plausibility range 250–500 for runs per match",
+    "passed": true,
+    "detail": "value 372.42857142857144"
+   }
+  },
+  "sf-n": {
+   "value": 72,
+   "display": "72",
+   "label": "LSG matches in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2022–2026",
+   "sampleSize": {
+    "n": 72,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "validation": {
+    "method": "sample-size floor ≥ 30 matches",
+    "passed": true,
+    "detail": "n = 72"
+   }
+  }
+ },
+ "tables": {
+  "sf-series": {
+   "label": "Sixes per match: LSG games vs IPL",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Both sides combined",
+   "sampleSize": {
+    "n": 72,
+    "unit": "matches"
+   },
+   "query": "WITH ms AS (SELECT m.match_id, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, replace(m.date, '/', '-') dt, m.venue_id, v.city, m.team1_id t1, m.team2_id t2, m.winner_id w FROM matches m LEFT JOIN venues v ON v.venue_id = m.venue_id), inn AS (SELECT i.match_id, MAX(CASE WHEN i.innings_number = 1 THEN i.batting_team_id END) bat1, MAX(CASE WHEN i.innings_number = 1 THEN i.runs END) r1, MAX(CASE WHEN i.innings_number = 2 THEN i.runs END) r2, MAX(CASE WHEN i.innings_number = 2 THEN i.total_legal_balls END) b2, MAX(CASE WHEN i.innings_number > 2 THEN 1 ELSE 0 END) so FROM innings i GROUP BY i.match_id), dl AS (SELECT d.match_id, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) sixes, SUM(d.total_runs) runs FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id WHERE i.innings_number <= 2 GROUP BY d.match_id) SELECT ms.*, CAST(strftime('%w', ms.dt) AS INTEGER) wd, inn.bat1, inn.r1, inn.r2, inn.b2, inn.so, COALESCE(dl.sixes, 0) sixes, COALESCE(dl.runs, 0) runs FROM ms JOIN inn ON inn.match_id = ms.match_id LEFT JOIN dl ON dl.match_id = ms.match_id ORDER BY ms.dt",
+   "rows": [
+    {
+     "season": "2022",
+     "team": 13.9,
+     "league": 14.4
+    },
+    {
+     "season": "2023",
+     "team": 14.4,
+     "league": 15.2
+    },
+    {
+     "season": "2024",
+     "team": 16.1,
+     "league": 17.8
+    },
+    {
+     "season": "2025",
+     "team": 20.1,
+     "league": 17.6
+    },
+    {
+     "season": "2026",
+     "team": 19.1,
+     "league": 19.3
+    }
+   ]
+  }
+ }
+}

@@ -71,14 +71,7 @@ export default function PortalPage() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Link
-            href="/shop"
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-500/20 to-primary/20 border border-amber-400/40 text-sm font-semibold hover:border-amber-400 text-amber-300 transition-all"
-          >
-            <ShoppingBag className="w-4 h-4 text-amber-400" />
-            Intelligence Cards &amp; Shop
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
+          
           <Link
             href="/intelligence"
             className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-primary/30 to-accent/20 border border-primary/40 text-sm font-semibold hover:shadow-[0_0_20px_-4px_hsl(var(--primary))] transition-all"
@@ -108,13 +101,7 @@ export default function PortalPage() {
               {t.label}
             </button>
           ))}
-          <Link
-            href="/shop"
-            className="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 text-amber-400 hover:text-amber-300 hover:bg-amber-400/10 transition-all border border-amber-400/20"
-          >
-            <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />
-            Shop
-          </Link>
+          
         </div>
         <div className="flex items-center gap-2 text-xs">
           <Filter className="w-3.5 h-3.5 text-muted-foreground" />

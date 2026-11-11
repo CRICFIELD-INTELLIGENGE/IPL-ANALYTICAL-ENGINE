@@ -1,0 +1,611 @@
+{
+ "articleId": "cf-pbks-064",
+ "generatedAt": "2026-10-26T04:25:36.039Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "ce-n-seasons": {
+   "value": 19,
+   "display": "19",
+   "label": "PBKS seasons in the warehouse",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Seasons with matches",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "plausibility range 1–19 for seasons",
+    "passed": true,
+    "detail": "value 19"
+   }
+  },
+  "ce-titles": {
+   "value": 0,
+   "display": "0",
+   "label": "PBKS titles, as winner of the season's final",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Final = last match of each season",
+   "sampleSize": {
+    "n": 2,
+    "unit": "finals"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (7,12) OR m.team2_id IN (7,12))",
+   "validation": {
+    "method": "plausibility range 0–6 for titles",
+    "passed": true,
+    "detail": "value 0"
+   }
+  },
+  "ce-playoffs": {
+   "value": 5,
+   "display": "5",
+   "label": "PBKS seasons with a playoff place",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Points-table playoff result or a final",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (7,12) OR m.team2_id IN (7,12))",
+   "validation": {
+    "method": "count over season table",
+    "passed": true
+   }
+  },
+  "ce-win-all": {
+   "value": 46.9,
+   "display": "46.9%",
+   "label": "PBKS win rate, all seasons",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 275,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 275"
+   }
+  },
+  "ce-matches": {
+   "value": 275,
+   "display": "275",
+   "label": "PBKS matches with a result",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All seasons",
+   "sampleSize": {
+    "n": 275,
+    "unit": "matches"
+   },
+   "query": "SELECT COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2008 AND 2026",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 275"
+   }
+  },
+  "ce-best-year": {
+   "value": "2014",
+   "display": "2014",
+   "label": "PBKS's best season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "max over season table",
+    "passed": true
+   }
+  },
+  "ce-best-pct": {
+   "value": 70.6,
+   "display": "70.6%",
+   "label": "PBKS win rate in 2014",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2014",
+   "sampleSize": {
+    "n": 17,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 17"
+   }
+  },
+  "ce-worst-year": {
+   "value": "2015",
+   "display": "2015",
+   "label": "PBKS's weakest season by win rate",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Season win rate",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "min over season table",
+    "passed": true
+   }
+  },
+  "ce-worst-pct": {
+   "value": 21.4,
+   "display": "21.4%",
+   "label": "PBKS win rate in 2015",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2015",
+   "sampleSize": {
+    "n": 14,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 8 matches",
+    "passed": true,
+    "detail": "n = 14"
+   }
+  },
+  "ce-n": {
+   "value": 17,
+   "display": "17",
+   "label": "Captains listed for PBKS",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "captains.json",
+   "sampleSize": {
+    "n": 17,
+    "unit": "captains"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "plausibility range 1–30 for captains",
+    "passed": true,
+    "detail": "value 17"
+   }
+  },
+  "ce-exact": {
+   "value": 8,
+   "display": "8",
+   "label": "Captains with a franchise-only record for PBKS",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "captains.json, exact records",
+   "sampleSize": {
+    "n": 17,
+    "unit": "captains"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "ce-unattr": {
+   "value": 7,
+   "display": "7",
+   "label": "Seasons not covered by any franchise-only captaincy record",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Season table + captains.json",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "season table + captains.json",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "ce-longest": {
+   "value": "George Bailey",
+   "display": "George Bailey",
+   "label": "Punjab Kings' captain with the most matches among franchise-only records",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "First to last season as captain",
+   "sampleSize": {
+    "n": 8,
+    "unit": "captains"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "max span",
+    "passed": true
+   }
+  },
+  "ce-capn": {
+   "value": 30,
+   "display": "30",
+   "label": "Matches as captain in that record",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "captains.json, exact record",
+   "sampleSize": {
+    "n": 30,
+    "unit": "matches"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "plausibility range 1–300 for matches",
+    "passed": true,
+    "detail": "value 30"
+   }
+  },
+  "ce-span": {
+   "value": "2014–2015",
+   "display": "2014–2015",
+   "label": "That captain's first to last season as captain",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "captains.json",
+   "sampleSize": {
+    "n": 1,
+    "unit": "captain"
+   },
+   "query": "captains.json byFranchise",
+   "validation": {
+    "method": "taken from the record",
+    "passed": true
+   }
+  },
+  "ce-single": {
+   "value": 11,
+   "display": "11",
+   "label": "Seasons with exactly one listed captain",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Season table + captains.json",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "season table + captains.json",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  },
+  "ce-shared": {
+   "value": 1,
+   "display": "1",
+   "label": "Seasons in which more than one listed captain's span applies",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Season table + captains.json",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "season table + captains.json",
+   "validation": {
+    "method": "count",
+    "passed": true
+   }
+  }
+ },
+ "tables": {
+  "ce-seasons": {
+   "label": "PBKS season by season",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches with a result; position from the league-stage table",
+   "sampleSize": {
+    "n": 275,
+    "unit": "matches"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, COUNT(*) n, SUM(CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END) won FROM matches m WHERE (m.team1_id IN (7,12) OR m.team2_id IN (7,12)) AND m.winner_id IS NOT NULL GROUP BY year ORDER BY year ;; SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN m.winner_id IN (7,12) THEN 1 ELSE 0 END won FROM matches m WHERE m.date = (SELECT MAX(x.date) FROM matches x WHERE x.season_id = m.season_id) AND (m.team1_id IN (7,12) OR m.team2_id IN (7,12))",
+   "rows": [
+    {
+     "season": "2008",
+     "winPct": 66.7,
+     "matches": 15,
+     "position": 2,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2009",
+     "winPct": 50,
+     "matches": 14,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2010",
+     "winPct": 28.6,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2011",
+     "winPct": 50,
+     "matches": 14,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2012",
+     "winPct": 50,
+     "matches": 16,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2013",
+     "winPct": 50,
+     "matches": 16,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2014",
+     "winPct": 70.6,
+     "matches": 17,
+     "position": 1,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2015",
+     "winPct": 21.4,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2016",
+     "winPct": 28.6,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2017",
+     "winPct": 50,
+     "matches": 14,
+     "position": 5,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2018",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 7,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2019",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2020",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2021",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2022",
+     "winPct": 50,
+     "matches": 14,
+     "position": 6,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2023",
+     "winPct": 42.9,
+     "matches": 14,
+     "position": 8,
+     "outcome": "League stage"
+    },
+    {
+     "season": "2024",
+     "winPct": 35.7,
+     "matches": 14,
+     "position": 9,
+     "outcome": "Playoffs"
+    },
+    {
+     "season": "2025",
+     "winPct": 62.5,
+     "matches": 16,
+     "position": 1,
+     "outcome": "Runners-up"
+    },
+    {
+     "season": "2026",
+     "winPct": 53.8,
+     "matches": 13,
+     "position": 5,
+     "outcome": "Playoffs"
+    }
+   ]
+  },
+  "ce-series": {
+   "label": "PBKS season win rate with listed captains",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Franchise-only captaincy records whose span covers the season",
+   "sampleSize": {
+    "n": 19,
+    "unit": "seasons"
+   },
+   "query": "season table + captains.json",
+   "rows": [
+    {
+     "season": "2008",
+     "winPct": 66.7,
+     "captains": 0,
+     "captain": "Not attributable"
+    },
+    {
+     "season": "2009",
+     "winPct": 50,
+     "captains": 0,
+     "captain": "Not attributable"
+    },
+    {
+     "season": "2010",
+     "winPct": 28.6,
+     "captains": 0,
+     "captain": "Not attributable"
+    },
+    {
+     "season": "2011",
+     "winPct": 50,
+     "captains": 0,
+     "captain": "Not attributable"
+    },
+    {
+     "season": "2012",
+     "winPct": 50,
+     "captains": 1,
+     "captain": "David Hussey"
+    },
+    {
+     "season": "2013",
+     "winPct": 50,
+     "captains": 1,
+     "captain": "David Hussey"
+    },
+    {
+     "season": "2014",
+     "winPct": 70.6,
+     "captains": 1,
+     "captain": "George Bailey"
+    },
+    {
+     "season": "2015",
+     "winPct": 21.4,
+     "captains": 1,
+     "captain": "George Bailey"
+    },
+    {
+     "season": "2016",
+     "winPct": 28.6,
+     "captains": 2,
+     "captain": "Shared"
+    },
+    {
+     "season": "2017",
+     "winPct": 50,
+     "captains": 1,
+     "captain": "Glenn Maxwell"
+    },
+    {
+     "season": "2018",
+     "winPct": 42.9,
+     "captains": 1,
+     "captain": "Ravichandran Ashwin"
+    },
+    {
+     "season": "2019",
+     "winPct": 42.9,
+     "captains": 1,
+     "captain": "Ravichandran Ashwin"
+    },
+    {
+     "season": "2020",
+     "winPct": 42.9,
+     "captains": 0,
+     "captain": "Not attributable"
+    },
+    {
+     "season": "2021",
+     "winPct": 42.9,
+     "captains": 1,
+     "captain": "Mayank Agarwal"
+    },
+    {
+     "season": "2022",
+     "winPct": 50,
+     "captains": 1,
+     "captain": "Mayank Agarwal"
+    },
+    {
+     "season": "2023",
+     "winPct": 42.9,
+     "captains": 1,
+     "captain": "Sam Curran"
+    },
+    {
+     "season": "2024",
+     "winPct": 35.7,
+     "captains": 1,
+     "captain": "Sam Curran"
+    },
+    {
+     "season": "2025",
+     "winPct": 62.5,
+     "captains": 0,
+     "captain": "Not attributable"
+    },
+    {
+     "season": "2026",
+     "winPct": 53.8,
+     "captains": 0,
+     "captain": "Not attributable"
+    }
+   ]
+  },
+  "ce-eras": {
+   "label": "PBKS average season win rate in single-captain seasons",
+   "dataset": "CricField captains.json (captaincy records compiled from match data)",
+   "filters": "Seasons in which exactly one listed captain's span applies",
+   "sampleSize": {
+    "n": 11,
+    "unit": "seasons"
+   },
+   "query": "season table + captains.json",
+   "rows": [
+    {
+     "captain": "David Hussey",
+     "seasons": 2,
+     "winPct": 50
+    },
+    {
+     "captain": "George Bailey",
+     "seasons": 2,
+     "winPct": 46
+    },
+    {
+     "captain": "Ravichandran Ashwin",
+     "seasons": 2,
+     "winPct": 42.9
+    },
+    {
+     "captain": "Mayank Agarwal",
+     "seasons": 2,
+     "winPct": 46.5
+    },
+    {
+     "captain": "Sam Curran",
+     "seasons": 2,
+     "winPct": 39.3
+    },
+    {
+     "captain": "Glenn Maxwell",
+     "seasons": 1,
+     "winPct": 50
+    }
+   ]
+  }
+ }
+}

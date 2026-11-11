@@ -20,7 +20,9 @@ import {
   parseCsv,
   queryAll,
   readTextLoose,
+  RUNS_CONCEDED_SQL,
 } from "./db";
+import { buildBioLookup, normalizeName, type Bio, type BioLookup } from "../player-bio-lookup";
 
 /* ─── Types ──────────────────────────────────────────────────────────────── */
 
@@ -85,52 +87,28 @@ function norm(s: string): string {
     .trim();
 }
 
-/** "JJ Bumrah" and "Jasprit Bumrah" both → "j|bumrah". */
-function initialKey(s: string): string {
-  const t = norm(s).split(" ").filter(Boolean);
-  if (t.length < 2) return t[0] ?? "";
-  return `${t[0][0]}|${t[t.length - 1]}`;
-}
-
+// Day 6: the initial+surname fallback is gone. It gave "N Saini" (Nitin, addbde6c) Navdeep Saini's bowling style
+// through the auction list, and could hand any player another player's record. Name sources are now matched exactly,
+// and only when the written name denotes a single registry id (DAY-06-REPORT.md §A).
 class NameIndex<T> {
   // key → (person id → first record added). Several sources may describe the
   // same person; a key is only ambiguous when it maps to different people.
   private exact = new Map<string, Map<string, T>>();
-  private initials = new Map<string, Map<string, T>>();
 
   /** `personId` groups records about the same player (e.g. their normalised full name). */
   add(name: string, rec: T, personId: string = name): void {
-    if (!name) return;
-    const id = norm(personId) || norm(name);
-    const push = (m: Map<string, Map<string, T>>, k: string) => {
-      if (!k) return;
-      const people = m.get(k) ?? new Map<string, T>();
-      if (!people.has(id)) people.set(id, rec);
-      m.set(k, people);
-    };
-    push(this.exact, norm(name));
-    push(this.initials, initialKey(name));
+    const k = norm(name ?? "");
+    if (!k) return;
+    const id = norm(personId) || k;
+    const people = this.exact.get(k) ?? new Map<string, T>();
+    if (!people.has(id)) people.set(id, rec);
+    this.exact.set(k, people);
   }
 
-  private static unique<T>(people: Map<string, T> | undefined): T | undefined {
+  /** The record for an exact (normalised) name, if that name belongs to exactly one person in this source. */
+  findExact(name: string | null | undefined): T | undefined {
+    const people = name ? this.exact.get(norm(name)) : undefined;
     return people?.size === 1 ? people.values().next().value : undefined;
-  }
-
-  findExact(name: string): T | undefined {
-    return NameIndex.unique(this.exact.get(norm(name)));
-  }
-
-  /** Exact match first, then a unique initial+surname match. */
-  find(...names: (string | null | undefined)[]): T | undefined {
-    for (const n of names) {
-      const hit = n ? NameIndex.unique(this.exact.get(norm(n))) : undefined;
-      if (hit) return hit;
-    }
-    for (const n of names) {
-      const hit = n ? NameIndex.unique(this.initials.get(initialKey(n))) : undefined;
-      if (hit) return hit;
-    }
-    return undefined;
   }
 }
 
@@ -168,17 +146,20 @@ export function bowlingSubtype(meta: Pick<PlayerMeta, "bowlingStyle" | "bowlingT
 
 /* ─── Metadata merge ─────────────────────────────────────────────────────── */
 //
-// Source precedence. Anything feeding a hard XI rule (overseas, keeper) uses
-// exact Cricsheet-name matches only — a fuzzy match once flagged a pace
-// bowler as a keeper.
+// Identity first: a player's bio is the one verified for their Cricsheet registry id (players.cricsheet_id) in the
+// identity index, or, failing that, the single unverified bio that a squad row of the bio's own franchise maps to
+// their written name (the Day 4.6 rules, player-bio-lookup.ts). Sources without ids (the style CSV, squad rows,
+// stumpings) are used only by exact written name, and only when that name denotes one registry id: "Harmeet Singh"
+// is two people, so neither inherits the other's record. The auction list is matched by exact full name only.
+// No fuzzy matching anywhere; an unresolved field stays null / unknown.
 //   country : squads-by-season.json (cricsheetName) → players.country → 2026 auction list
 //   keeper  : stumpings in raw Cricsheet JSON (last 4 seasons) → keeper labels in
 //             squads-by-season / players.role / 2026 auction list
-//   styles  : player-bio.json → players-data-updated.csv → auction list (fuzzy allowed)
+//   styles  : verified player-bio.json → players-data-updated.csv → auction list
 
 interface StyleRec { shortName: string; fullName: string; batStyle: string; bowlStyle: string }
 interface AuctionRec { fullName: string; country: string; specialism: string; batHand: string; bowlStyle: string }
-interface SquadRec { country: string | null; keeperLabel: boolean }
+interface SquadRec { country: string | null }
 
 function loadStyleCsv(root: string): StyleRec[] {
   const text = readTextLoose(path.join(root, "players-data-updated.csv"));
@@ -193,24 +174,44 @@ function loadStyleCsv(root: string): StyleRec[] {
   }));
 }
 
-function loadBioJson(root: string): StyleRec[] {
-  const fp = path.join(root, "artifacts", "api-server", "data", "player-bio.json");
-  if (!fs.existsSync(fp)) return [];
+function readJsonLoose<T>(fp: string): T | undefined {
   try {
-    const obj = JSON.parse(fs.readFileSync(fp, "utf8")) as Record<
-      string,
-      { playerName?: string; fullName?: string; batStyle?: string; bowlStyle?: string }
-    >;
-    return Object.values(obj).map((b) => ({
-      shortName: b.playerName ?? "",
-      fullName: b.fullName ?? "",
-      batStyle: b.batStyle ?? "",
-      bowlStyle: b.bowlStyle ?? "",
-    }));
+    return fs.existsSync(fp) ? (JSON.parse(fs.readFileSync(fp, "utf8")) as T) : undefined;
   } catch {
-    return [];
+    return undefined;
   }
 }
+
+/** Bio key → bio, plus the registry-identity lookup over them (Day 4.6 identity index and franchise squad rows). */
+function loadBios(root: string): { bios: Record<string, Bio>; lookup: BioLookup } {
+  const bios = readJsonLoose<Record<string, Bio>>(path.join(root, "artifacts", "api-server", "data", "player-bio.json")) ?? {};
+  const dataDir = path.join(root, "artifacts", "ipl-analytics", "public", "data");
+  const identityKeys =
+    readJsonLoose<{ keys?: Record<string, [string, number]> }>(path.join(dataDir, "player-recent-matches", "index.json"))?.keys ?? {};
+  const squads = readJsonLoose<Parameters<typeof buildBioLookup>[3]>(path.join(dataDir, "squads-by-season.json")) ?? {};
+  bioIdentityKeys = identityKeys;
+  return { bios, lookup: buildBioLookup(bios, identityKeys, [], squads) };
+}
+
+let bioIdentityKeys: Record<string, [string, number]> | null = null;
+let bioCache: { bios: Record<string, Bio>; lookup: BioLookup } | null = null;
+
+/**
+ * The registry id a profile page's bio stands for: `key` is a bio key ("wanindu-hasaranga") or a bio display name
+ * ("PW Hasaranga"), resolved only through the verified identity index (Day 7). Unverified or ambiguous → null.
+ */
+export function registryIdForBio(key: string): string | null {
+  bioCache ??= loadBios(getProjectRoot());
+  const { bios, lookup } = bioCache;
+  const keys = bios[key] ? [key] : (lookup.exact.get(normalizeName(key)) ?? []);
+  const ids = new Set(keys.map((k) => bioIdentityKeys?.[k]?.[0]).filter((x): x is string => Boolean(x)));
+  return ids.size === 1 ? [...ids][0] : null;
+}
+
+const bioText = (v: unknown): string => {
+  const s = typeof v === "string" ? v.trim() : "";
+  return s && s !== "NULL" ? s : "";
+};
 
 function loadAuctionCsv(root: string): AuctionRec[] {
   const file = fs.readdirSync(root).find((f) => /ipl auction player list.*\.csv$/i.test(f));
@@ -229,7 +230,11 @@ function loadAuctionCsv(root: string): AuctionRec[] {
     }));
 }
 
-/** cricsheetName → latest known country, and whether any season labels them a keeper. */
+/**
+ * cricsheetName → latest known country. Its role labels are not used for keepers:
+ * 206 of the 246 players it labels "wicketkeeper" have never made an IPL stumping
+ * (Warner, Pollard, Gayle, Chawla, Rahane…).
+ */
 function loadSquadsBySeason(root: string): Map<string, SquadRec> {
   const fp = path.join(root, "artifacts", "api-server", "data", "squads-by-season.json");
   const out = new Map<string, SquadRec>();
@@ -239,17 +244,12 @@ function loadSquadsBySeason(root: string): Map<string, SquadRec> {
       string,
       Record<string, { cricsheetName?: string; country?: string | null; role?: string | null }[]>
     >;
-    const latestSeason = Math.max(...Object.keys(bySeason).map(Number));
     for (const season of Object.keys(bySeason).sort()) {
       for (const squad of Object.values(bySeason[season])) {
         for (const p of squad) {
           if (!p.cricsheetName) continue;
           const prev = out.get(p.cricsheetName);
-          // Role labels are noisy, so only the latest one counts, and only if recent.
-          out.set(p.cricsheetName, {
-            country: p.country || prev?.country || null,
-            keeperLabel: p.role ? /wicket/i.test(p.role) && Number(season) >= latestSeason - 2 : Boolean(prev?.keeperLabel),
-          });
+          out.set(p.cricsheetName, { country: p.country || prev?.country || null });
         }
       }
     }
@@ -260,23 +260,29 @@ function loadSquadsBySeason(root: string): Map<string, SquadRec> {
 }
 
 interface RawMatch {
-  info?: { season?: string | number };
+  info?: { season?: string | number; registry?: { people?: Record<string, string> } };
   innings?: {
     overs?: { deliveries?: { wickets?: { kind: string; fielders?: { name?: string; substitute?: boolean }[] }[] }[] }[];
   }[];
 }
 
-/** Fielder name → seasons in which they made a stumping. Only keepers stump. */
-function loadStumpings(root: string): Map<string, Set<string>> {
+/**
+ * One pass over the raw Cricsheet JSON:
+ *   nameToIds : written name → registry ids it denotes (a name used by two people has two)
+ *   stumpings : fielder name → seasons in which they made a stumping. Only keepers stump.
+ */
+function loadRawIndex(root: string): { nameToIds: Map<string, Set<string>>; stumpings: Map<string, Set<string>> } {
   const dir = path.join(root, "lib", "cricket-data", "raw");
-  const out = new Map<string, Set<string>>();
-  if (!fs.existsSync(dir)) return out;
+  const nameToIds = new Map<string, Set<string>>();
+  const stumpings = new Map<string, Set<string>>();
+  if (!fs.existsSync(dir)) return { nameToIds, stumpings };
   for (const file of fs.readdirSync(dir)) {
     if (!file.endsWith(".json")) continue;
-    const text = fs.readFileSync(path.join(dir, file), "utf8");
-    if (!text.includes('"stumped"')) continue;
     try {
-      const match = JSON.parse(text) as RawMatch;
+      const match = JSON.parse(fs.readFileSync(path.join(dir, file), "utf8")) as RawMatch;
+      for (const [name, id] of Object.entries(match.info?.registry?.people ?? {})) {
+        if (id) (nameToIds.get(name) ?? nameToIds.set(name, new Set()).get(name)!).add(id);
+      }
       const season = normalizeSeason(String(match.info?.season ?? ""));
       for (const inn of match.innings ?? [])
         for (const ov of inn.overs ?? [])
@@ -285,16 +291,16 @@ function loadStumpings(root: string): Map<string, Set<string>> {
               if (w.kind !== "stumped") continue;
               for (const f of w.fielders ?? []) {
                 if (!f.name || f.substitute) continue;
-                const s = out.get(f.name) ?? new Set<string>();
+                const s = stumpings.get(f.name) ?? new Set<string>();
                 s.add(season);
-                out.set(f.name, s);
+                stumpings.set(f.name, s);
               }
             }
     } catch {
       /* skip malformed file */
     }
   }
-  return out;
+  return { nameToIds, stumpings };
 }
 
 /**
@@ -317,51 +323,57 @@ export function getPlayerMeta(): Map<number, PlayerMeta> {
   if (metaCache) return metaCache;
   const root = getProjectRoot();
 
-  const styleRecs = [...loadBioJson(root), ...loadStyleCsv(root)];
-  const people = new NameIndex<StyleRec>(); // every record: bat hand
-  const styles = new NameIndex<StyleRec>(); // records with a bowling style
-  const fullNames = new Map<string, string>();
-  for (const r of styleRecs) {
-    if (r.shortName && r.fullName.trim() && !fullNames.has(norm(r.shortName))) {
-      fullNames.set(norm(r.shortName), r.fullName.trim());
-    }
-    const personId = r.fullName.trim() || r.shortName;
-    const indexes = r.bowlStyle.trim() && r.bowlStyle !== "NULL" ? [people, styles] : [people];
-    for (const ix of indexes) {
-      ix.add(r.shortName, r, personId);
-      ix.add(r.fullName, r, personId);
-    }
-  }
+  const { bios, lookup } = loadBios(root);
+  const csv = new NameIndex<StyleRec>();
+  for (const r of loadStyleCsv(root)) csv.add(r.shortName, r, r.fullName.trim() || r.shortName);
   const speedTypes = loadSpeedTypes();
   const auction = new NameIndex<AuctionRec>();
   for (const r of loadAuctionCsv(root)) auction.add(r.fullName, r);
   const squads = loadSquadsBySeason(root);
-  const stumpings = loadStumpings(root);
-  const latestYear = Math.max(0, ...[...stumpings.values()].flatMap((s) => [...s].map(Number)));
+  const { nameToIds, stumpings } = loadRawIndex(root);
 
-  const rows = queryAll<{ player_id: number; name: string; role: string | null; country: string | null }>(
-    "SELECT player_id, name, role, country FROM players",
+  const rows = queryAll<{ player_id: number; cricsheet_id: string | null; name: string; role: string | null; country: string | null }>(
+    "SELECT player_id, cricsheet_id, name, role, country FROM players",
   );
 
   const out = new Map<number, PlayerMeta>();
   for (const p of rows) {
-    const fullName = fullNames.get(norm(p.name)) ?? null;
-    const sq = squads.get(p.name);
+    // Registered players: the warehouse name is the Cricsheet written name, except that a second person with the same
+    // written name is stored as "Name (2)"; that suffixed name is in no name-keyed source, so it matches nothing.
+    // Squad stubs (2026 squad members with no IPL appearance, cricsheet_id "json:N") carry a full display name and no
+    // registry id; they are matched by that exact full name, provided it is not a written name shared by several ids.
+    const ids = nameToIds.get(p.name);
+    const stub = !p.cricsheet_id || p.cricsheet_id.startsWith("json:");
+    const nameIsTheirs = stub ? !(ids && ids.size > 1) : Boolean(ids?.size === 1 && ids.has(p.cricsheet_id!));
+    let bioKey: string | undefined;
+    if (stub) {
+      const exact = nameIsTheirs ? (lookup.exact.get(normalizeName(p.name)) ?? []) : [];
+      bioKey = exact.length === 1 ? exact[0] : undefined;
+    } else {
+      const squadBio = nameIsTheirs ? [...(lookup.squadKeys.get(p.name) ?? [])] : [];
+      bioKey = lookup.idToKey.get(p.cricsheet_id!) ?? (squadBio.length === 1 ? squadBio[0] : undefined);
+    }
+    const bio = bioKey ? bios[bioKey] : undefined;
+    const csvRec = nameIsTheirs ? csv.findExact(p.name) : undefined;
+
+    const fullName = bioText(bio?.fullName) || csvRec?.fullName.trim() || (stub ? p.name : null);
+    const sq = nameIsTheirs ? squads.get(p.name) : undefined;
     const auExact = fullName ? auction.findExact(fullName) : undefined;
 
     const dbCountry = p.country && p.country !== "Unknown" ? p.country : null;
     const country = sq?.country || dbCountry || auExact?.country || null;
 
-    const stumpedIn = stumpings.get(p.name);
-    const recentStumping = stumpedIn ? [...stumpedIn].some((s) => Number(s) >= latestYear - 3) : false;
-    // players.role is not used: it labels some pace bowlers as keepers.
-    const keeper = recentStumping || Boolean(sq?.keeperLabel) || auExact?.specialism === "WICKETKEEPER";
+    // Keeper evidence: an IPL stumping (only keepers stump) or the verified bio's
+    // field position. Role labels (players.role, squad files, bio.role) are not used:
+    // they label batters and pace bowlers as keepers.
+    const stumpedIn = nameIsTheirs ? stumpings.get(p.name) : undefined;
+    const keeper = (stumpedIn?.size ?? 0) > 0
+      || bioText(bio?.fieldPos) === "Wicketkeeper"
+      || auExact?.specialism === "WICKETKEEPER";
 
-    const st = styles.find(p.name, fullName);
-    const au = auExact ?? auction.find(fullName, p.name);
-    const batSrc = (people.find(p.name, fullName)?.batStyle || au?.batHand || "").toLowerCase();
+    const batSrc = (bioText(bio?.batStyle) || bioText(csvRec?.batStyle) || auExact?.batHand || "").toLowerCase();
     const battingHand = batSrc.startsWith("l") ? "L" : batSrc.startsWith("r") ? "R" : null;
-    const bowlingStyle = st?.bowlStyle.trim() || au?.bowlStyle || null;
+    const bowlingStyle = bioText(bio?.bowlStyle) || bioText(csvRec?.bowlStyle) || auExact?.bowlStyle || null;
 
     out.set(p.player_id, {
       playerId: p.player_id,
@@ -425,7 +437,7 @@ function buildSeasonData(): void {
   for (const r of queryAll<{ pid: number; season: string; balls: number; runs: number }>(`
     SELECT d.bowler_id pid, m.season_id season,
            SUM(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) balls,
-           SUM(d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 OR d.is_penalty = 1 THEN d.extra_runs ELSE 0 END) runs
+           SUM(${RUNS_CONCEDED_SQL}) runs
     FROM deliveries d JOIN matches m ON m.match_id = d.match_id
     GROUP BY 1, 2`)) {
     const l = line(r.pid, r.season);

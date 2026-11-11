@@ -7,12 +7,14 @@
  * Any past day's feed can be reproduced by date.
  */
 
+import { RetentionFeedCard } from "@/components/retention/retention-widgets";
 import { useState } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Activity, ArrowRight, ChevronLeft, ChevronRight, Gavel, Lightbulb, Loader2, MapPin, Rss, Swords, TrendingUp } from "lucide-react";
 import { Layout } from "@/components/layout";
 import { DemoBanner, ModuleHeader } from "@/components/decision/module-shell";
+import { FeedIntelSnippets } from "@/components/intelligence/intel-components";
 import { fetchDailyFeed, isOffline, linkHref, readParams, writeParams, type DailyFeed, type Insight, type InsightCategory } from "@/lib/discovery-api";
 import { MOCK_FEED } from "@/components/decision/discovery-mock";
 
@@ -52,6 +54,8 @@ export default function FeedPage() {
           </div>
         </ModuleHeader>
 
+        <RetentionFeedCard />
+        <FeedIntelSnippets />
         {demo && <DemoBanner>Can't reach the API — showing a saved feed from {MOCK_FEED.date}. Start the api-server for today's discoveries.</DemoBanner>}
         {q.isError && !demo && <DemoBanner>{(q.error as Error).message}</DemoBanner>}
         {q.isLoading && <div className="flex items-center gap-2 text-sm text-muted-foreground"><Loader2 className="w-4 h-4 animate-spin" /> Generating today's feed…</div>}

@@ -1,0 +1,156 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-032",
+ "planId": "cf-rcb-032",
+ "franchise": "RCB",
+ "aspect": "auction-economics",
+ "title": "Star Premium Versus Squad Depth: Where Should Royal Challengers Bengaluru Spend Its Budget?",
+ "slug": "rcb-the-price-of-star-power-rcbs-auction-spending-under-the-microscope",
+ "supersedes": {
+  "legacyId": "art-rcb-06",
+  "legacySlug": "rcb-the-price-of-star-power-rcbs-auction-spending-under-the-microscope",
+  "decision": "revise"
+ },
+ "dek": "Should Royal Challengers Bengaluru concentrate their budget on a few stars or spread it across a deep squad? Contribution per crore by price tier tests the trade-off.",
+ "excerpt": "Since 2018, Royal Challengers Bengaluru's \u20b910 Cr and above tier has returned the most tempo runs per crore. Here is where their money has gone and what it bought.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "investigation",
+ "teams": [
+  "RCB"
+ ],
+ "players": [],
+ "seasons": [
+  "2018\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:sp-top-share}} of Royal Challengers Bengaluru's recorded spend since 2018 went on players priced \u20b910 Cr or more; {{ev:sp-low-share}} on players under \u20b92 Cr.",
+  "Tempo runs above average per crore: {{ev:sp-top-per}} in the top tier, {{ev:sp-mid-per}} in the middle, {{ev:sp-low-per}} at the bottom.",
+  "The best-returning tier has been \u20b910 Cr and above."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Stars or Depth",
+   "body": [
+    "The salary cap forces a choice. A franchise can pay a premium for a few proven match-winners, or spread the money across more good players. Each strategy fails differently: stars leave gaps when injured; depth can lack a match-winner.",
+    "Since 2018, Royal Challengers Bengaluru have spent {{ev:sp-top-share}} of their recorded budget on players priced \u20b910 Cr or more, {{ev:sp-mid-share}} in the \u20b92\u201310 Cr range and {{ev:sp-low-share}} below \u20b92 Cr."
+   ],
+   "chartIds": [
+    "sp-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What Each Tier Returned",
+   "body": [
+    "Measured in tempo runs above average per crore, the top tier returned {{ev:sp-top-per}}, the middle tier {{ev:sp-mid-per}} and the bottom tier {{ev:sp-low-per}}.",
+    "The \u20b910 Cr and above tier has given RCB the best return per crore. Low-priced players who never play count at zero, which pulls the bottom tier down."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Balancing the Book",
+   "body": [
+    "The right mix depends on where the surplus comes from. If cheap players regularly produce, depth is efficient; if they rarely play, the money is better concentrated on players who will.",
+    "For RCB, the tier table is the guide to which end of the market has delivered."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What the Model Leaves Out",
+   "body": [
+    "Tempo runs ignore wickets and dismissals, so anchors and wicket-taking bowlers are undervalued, and stars often fill exactly those roles.",
+    "{{hyp:wickets}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Fund the Tier That Delivers",
+   "body": [
+    "Royal Challengers Bengaluru have had the best return from the \u20b910 Cr and above tier. Future auctions should weight the budget towards the tier that has converted money into contribution, while protecting the roles stars uniquely fill.",
+    "Adding a survival term to the model would make the comparison fairer to anchors and wicket-takers."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "sp-chart",
+   "type": "column",
+   "title": "Return per crore by price tier",
+   "subtitle": "RCB, 2018\u20132026",
+   "table": "sp-tiers",
+   "xKey": "tier",
+   "series": [
+    {
+     "key": "perCrore",
+     "label": "tRAA per crore"
+    }
+   ],
+   "xLabel": "Price tier",
+   "unit": "runs per \u20b91 Cr",
+   "takeaway": "The \u20b910 Cr and above tier has returned the most per crore.",
+   "ariaLabel": "Column chart of tempo runs above average per crore for three price tiers."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  },
+  {
+   "id": "cf-squads",
+   "kind": "cricfield-dataset",
+   "title": "CricField squads-by-season dataset",
+   "publisher": "CricField"
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "wickets",
+   "statement": "Hypothesis: adding a value for wickets and survival would raise the measured return of the top price tier.",
+   "whyUnverified": "Wicket values by over and wickets in hand have not been estimated.",
+   "howToTest": "Add a survival and wicket term to tRAA and recompute tier returns."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "10",
+   "reason": "Price-tier boundary (\u20b910 Cr)."
+  },
+  {
+   "text": "2",
+   "reason": "Price-tier boundary (\u20b92 Cr)."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Royal Challengers Bengaluru star players.",
+   "wanted": "Royal Challengers Bengaluru star player celebrating."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-039",
+  "cf-rcb-031",
+  "cf-rcb-037"
+ ],
+ "seo": {
+  "metaTitle": "Star premium versus squad depth at RCB",
+  "metaDescription": "Where Royal Challengers Bengaluru have spent their auction budget since 2018, and which price tier has returned the most contribution per crore."
+ },
+ "methodology": "Contribution is tempo runs above average (tRAA): batting runs above what an average batter would score from the same balls in the same season and phase, plus bowling runs saved against the average bowler in the same season and phase. Wickets and dismissals are not valued in this version. Prices come from CricField squad lists (\u20b9 crore = 100 lakh). Generated by scripts/editorial/engine.",
+ "generator": "engine:v1"
+}

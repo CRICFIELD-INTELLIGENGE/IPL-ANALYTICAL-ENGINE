@@ -1,0 +1,143 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-084",
+ "planId": "cf-rcb-084",
+ "franchise": "RCB",
+ "aspect": "data-science",
+ "title": "Bayesian Shrinkage: How to Judge Royal Challengers Bengaluru Players with Few Deliveries",
+ "slug": "rcb-bayesian-shrinkage-how-to-judge-rcb-players-with-few-deliveries",
+ "dek": "How should Royal Challengers Bengaluru judge a batter who has faced only a few dozen balls? Bayesian shrinkage pulls small-sample numbers towards the average by an amount the data itself decides.",
+ "excerpt": "Estimated from every IPL batter since 2024, the right amount of shrinkage is equivalent to adding a fixed number of average balls to each batter's record. For Royal Challengers Bengaluru, it moves small-sample strike rates the most.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RCB"
+ ],
+ "players": [
+  "V Kohli",
+  "RM Patidar",
+  "PD Salt"
+ ],
+ "seasons": [
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "From {{ev:bs-n}} IPL batters since 2024, the data says to add the equivalent of {{ev:bs-k}} league-average balls (strike rate {{ev:bs-mu}}) to each batter's record.",
+  "{{ev:bs-mover}} moves most among Royal Challengers Bengaluru's leading batters: from {{ev:bs-raw}} raw to {{ev:bs-shr}} shrunk.",
+  "Batters with hundreds of balls barely move; those with a few dozen move a long way."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The Problem With Small Samples",
+   "body": [
+    "A batter who hits sixty off twenty balls has a strike rate of three hundred, but nobody believes he will keep it. The question is how far to pull such numbers back, and the answer depends on how much batters genuinely differ.",
+    "Bayesian shrinkage answers it from the data: compare how much strike rates vary between batters with how much they would vary by chance alone."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What the Data Says",
+   "body": [
+    "Using {{ev:bs-n}} IPL batters since 2024, the estimate is equivalent to adding {{ev:bs-k}} balls at the league strike rate of {{ev:bs-mu}} to every batter's record.",
+    "A batter with that many balls of his own is pulled halfway to the average; one with far more barely moves."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "RCB's Batters, Shrunk",
+   "body": [
+    "The chart compares raw and shrunk strike rates for Royal Challengers Bengaluru's ten busiest batters since 2024. {{ev:bs-mover}} moves most, from {{ev:bs-raw}} to {{ev:bs-shr}}.",
+    "{{hyp:shrink}}"
+   ],
+   "chartIds": [
+    "bs-chart"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Model Choices",
+   "body": [
+    "The estimate treats each ball as independent and uses a single league-wide prior; in practice openers and finishers have different averages, so role-specific priors would be better.",
+    "Batters with fewer than ten balls are excluded from the estimate."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Shrink Every Small Sample",
+   "body": [
+    "Royal Challengers Bengaluru should apply shrinkage before comparing any batters with different sample sizes.",
+    "It costs nothing and removes the most common scouting error."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "bs-chart",
+   "type": "bar",
+   "title": "Raw vs shrunk strike rate",
+   "subtitle": "RCB, ten busiest batters, 2024\u20132026",
+   "table": "bs-table",
+   "xKey": "batter",
+   "series": [
+    {
+     "key": "raw",
+     "label": "Raw"
+    },
+    {
+     "key": "shrunk",
+     "label": "Shrunk"
+    }
+   ],
+   "unit": "runs per 100 balls",
+   "takeaway": "Shrinkage moves small samples most.",
+   "ariaLabel": "Horizontal grouped bar chart of raw and shrunk strike rates for Royal Challengers Bengaluru's ten busiest batters since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "shrink",
+   "statement": "Hypothesis: shrunk strike rates predict next-season strike rates better than raw ones for batters with fewer than two hundred balls.",
+   "whyUnverified": "The out-of-sample comparison has not been run here.",
+   "howToTest": "Compare prediction errors for raw and shrunk strike rates across consecutive seasons."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Royal Challengers Bengaluru batters.",
+   "wanted": "Royal Challengers Bengaluru batter."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rcb-080",
+  "cf-rcb-087",
+  "cf-rcb-083"
+ ],
+ "seo": {
+  "metaTitle": "Bayesian shrinkage: judging RCB players with few deliveries",
+  "metaDescription": "How much to pull small-sample strike rates towards the average, estimated from every IPL batter since 2024, applied to Royal Challengers Bengaluru."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Models are fitted on the warehouse itself and described in full here. Generated by scripts/editorial/engine. Prior strength k = within-batter per-ball variance \u00f7 between-batter variance of true runs per ball (method of moments). Shrunk strike rate = (runs + k \u00d7 league runs per ball) \u00f7 (balls + k) \u00d7 100.",
+ "generator": "engine:v1"
+}

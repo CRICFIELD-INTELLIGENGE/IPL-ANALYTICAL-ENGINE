@@ -1,0 +1,4 @@
+{
+  "$comment": "Manual identity decisions, applied on every build so they survive a rebuild of global.db. Add an entry only after reviewing the identity report's review queue. decision is 'link' (source_key is the same person as cricsheet_id) or 'distinct' (it is not any of the candidates).",
+  "decisions": []
+}

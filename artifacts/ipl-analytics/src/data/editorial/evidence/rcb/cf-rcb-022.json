@@ -1,0 +1,761 @@
+{
+ "articleId": "cf-rcb-022",
+ "generatedAt": "2026-10-25T16:13:38.072Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "rr-chin-all": {
+   "value": 8.89,
+   "display": "8.89",
+   "label": "Run rate, Chinnaswamy, 2008–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Regulation innings, 2008–2026",
+   "sampleSize": {
+    "n": 23156,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes_pm, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY venue",
+   "validation": {
+    "method": "plausibility range 6.5–11.5 for match run rate",
+    "passed": true,
+    "detail": "value 8.88599067196407"
+   }
+  },
+  "sixes-chin-all": {
+   "value": 15.3,
+   "display": "15.3",
+   "label": "Sixes per match, Chinnaswamy, 2008–2026",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Regulation innings, 2008–2026",
+   "sampleSize": {
+    "n": 104,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes_pm, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 104"
+   }
+  },
+  "first-chin-all": {
+   "value": 174,
+   "display": "174",
+   "label": "Average first-innings score, Chinnaswamy, 2008–2026",
+   "unit": "runs",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "First innings, 2008–2026",
+   "sampleSize": {
+    "n": 104,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, AVG(i.runs) avg_first, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) chase_wins, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) decided FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 104"
+   }
+  },
+  "chase-chin-all": {
+   "value": 56.4,
+   "display": "56.4%",
+   "label": "Chasing side's win rate, Chinnaswamy, 2008–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Matches with a result, 2008–2026",
+   "sampleSize": {
+    "n": 101,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, AVG(i.runs) avg_first, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) chase_wins, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) decided FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 101"
+   }
+  },
+  "matches-chin-all": {
+   "value": 104,
+   "display": "104",
+   "label": "Matches at Chinnaswamy in the warehouse",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "2008–2026; fixtures abandoned without a ball are absent from the source",
+   "sampleSize": {
+    "n": 104,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes_pm, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY venue",
+   "validation": {
+    "method": "cross-check: match count vs first-innings count",
+    "passed": true,
+    "detail": "104 vs 104 (Δ 0.00%)"
+   }
+  },
+  "rr-other-all": {
+   "value": 8.43,
+   "display": "8.43",
+   "label": "Run rate, all other venues, 2008–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Regulation innings, 2008–2026",
+   "sampleSize": {
+    "n": 261309,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes_pm, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY venue",
+   "validation": {
+    "method": "plausibility range 6.5–11.5 for match run rate",
+    "passed": true,
+    "detail": "value 8.429767057391823"
+   }
+  },
+  "sixes-other-all": {
+   "value": 12.4,
+   "display": "12.4",
+   "label": "Sixes per match, all other venues, 2008–2026",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Regulation innings, 2008–2026",
+   "sampleSize": {
+    "n": 1139,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes_pm, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 1139"
+   }
+  },
+  "first-other-all": {
+   "value": 168,
+   "display": "168",
+   "label": "Average first-innings score, all other venues, 2008–2026",
+   "unit": "runs",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "First innings, 2008–2026",
+   "sampleSize": {
+    "n": 1139,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, AVG(i.runs) avg_first, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) chase_wins, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) decided FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 1139"
+   }
+  },
+  "chase-other-all": {
+   "value": 54.3,
+   "display": "54.3%",
+   "label": "Chasing side's win rate, all other venues, 2008–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Matches with a result, 2008–2026",
+   "sampleSize": {
+    "n": 1133,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, AVG(i.runs) avg_first, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) chase_wins, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) decided FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 1133"
+   }
+  },
+  "matches-other-all": {
+   "value": 1139,
+   "display": "1139",
+   "label": "Matches at other venues in the warehouse",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "2008–2026; fixtures abandoned without a ball are absent from the source",
+   "sampleSize": {
+    "n": 1139,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes_pm, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY venue",
+   "validation": {
+    "method": "cross-check: match count vs first-innings count",
+    "passed": true,
+    "detail": "1139 vs 1139 (Δ 0.00%)"
+   }
+  },
+  "rr-chin-recent": {
+   "value": 9.76,
+   "display": "9.76",
+   "label": "Run rate, Chinnaswamy, 2023–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Regulation innings, 2023–2026",
+   "sampleSize": {
+    "n": 5488,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes_pm, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2023 AND 2026 GROUP BY venue",
+   "validation": {
+    "method": "plausibility range 6.5–11.5 for match run rate",
+    "passed": true,
+    "detail": "value 9.763119533527696"
+   }
+  },
+  "sixes-chin-recent": {
+   "value": 19.9,
+   "display": "19.9",
+   "label": "Sixes per match, Chinnaswamy, 2023–2026",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Regulation innings, 2023–2026",
+   "sampleSize": {
+    "n": 24,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes_pm, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2023 AND 2026 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 24"
+   }
+  },
+  "first-chin-recent": {
+   "value": 190,
+   "display": "190",
+   "label": "Average first-innings score, Chinnaswamy, 2023–2026",
+   "unit": "runs",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "First innings, 2023–2026",
+   "sampleSize": {
+    "n": 24,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, AVG(i.runs) avg_first, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) chase_wins, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) decided FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2023 AND 2026 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 24"
+   }
+  },
+  "chase-chin-recent": {
+   "value": 54.2,
+   "display": "54.2%",
+   "label": "Chasing side's win rate, Chinnaswamy, 2023–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Matches with a result, 2023–2026",
+   "sampleSize": {
+    "n": 24,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, AVG(i.runs) avg_first, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) chase_wins, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) decided FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2023 AND 2026 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 24"
+   }
+  },
+  "rr-other-recent": {
+   "value": 9.49,
+   "display": "9.49",
+   "label": "Run rate, all other venues, 2023–2026",
+   "unit": "runs per over",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Regulation innings, 2023–2026",
+   "sampleSize": {
+    "n": 61119,
+    "unit": "legal balls"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes_pm, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2023 AND 2026 GROUP BY venue",
+   "validation": {
+    "method": "plausibility range 6.5–11.5 for match run rate",
+    "passed": true,
+    "detail": "value 9.491189319196977"
+   }
+  },
+  "sixes-other-recent": {
+   "value": 17.2,
+   "display": "17.2",
+   "label": "Sixes per match, all other venues, 2023–2026",
+   "unit": "sixes per match",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Regulation innings, 2023–2026",
+   "sampleSize": {
+    "n": 269,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes_pm, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2023 AND 2026 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 269"
+   }
+  },
+  "first-other-recent": {
+   "value": 188,
+   "display": "188",
+   "label": "Average first-innings score, all other venues, 2023–2026",
+   "unit": "runs",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "First innings, 2023–2026",
+   "sampleSize": {
+    "n": 269,
+    "unit": "innings"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, AVG(i.runs) avg_first, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) chase_wins, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) decided FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2023 AND 2026 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 innings",
+    "passed": true,
+    "detail": "n = 269"
+   }
+  },
+  "chase-other-recent": {
+   "value": 52.3,
+   "display": "52.3%",
+   "label": "Chasing side's win rate, all other venues, 2023–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Matches with a result, 2023–2026",
+   "sampleSize": {
+    "n": 264,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, AVG(i.runs) avg_first, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) chase_wins, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) decided FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2023 AND 2026 GROUP BY venue",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 264"
+   }
+  },
+  "seasons-above": {
+   "value": 10,
+   "display": "10",
+   "label": "Seasons with a higher first-innings average at Chinnaswamy than the league",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Seasons Chinnaswamy hosted",
+   "sampleSize": {
+    "n": 15,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, AVG(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN i.runs END) chin, AVG(i.runs) league, SUM(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 1 ELSE 0 END) chin_n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY year HAVING chin_n > 0 ORDER BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 12 seasons",
+    "passed": true,
+    "detail": "n = 15"
+   }
+  },
+  "seasons-hosted": {
+   "value": 15,
+   "display": "15",
+   "label": "IPL seasons with matches at Chinnaswamy in the warehouse",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 15,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, AVG(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN i.runs END) chin, AVG(i.runs) league, SUM(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 1 ELSE 0 END) chin_n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY year HAVING chin_n > 0 ORDER BY year",
+   "validation": {
+    "method": "plausibility range 10–19 for seasons hosted",
+    "passed": true,
+    "detail": "value 15"
+   }
+  },
+  "rcb-home-all": {
+   "value": 51.5,
+   "display": "51.5%",
+   "label": "RCB win rate at Chinnaswamy, 2008–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "RCB matches with a result at Chinnaswamy, 2008–2026",
+   "sampleSize": {
+    "n": 97,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 97"
+   }
+  },
+  "rcb-away-all": {
+   "value": 51.1,
+   "display": "51.1%",
+   "label": "RCB win rate away from Chinnaswamy, 2008–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "RCB matches with a result elsewhere, 2008–2026",
+   "sampleSize": {
+    "n": 186,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 186"
+   }
+  },
+  "rcb-home-n-all": {
+   "value": 97,
+   "display": "97",
+   "label": "RCB decided matches at Chinnaswamy, 2008–2026",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "2008–2026",
+   "sampleSize": {
+    "n": 97,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 97"
+   }
+  },
+  "rcb-home-ci": {
+   "value": "41.7–61.2",
+   "display": "42–61%",
+   "label": "95% interval for RCB's home win rate",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Wilson score interval",
+   "sampleSize": {
+    "n": 97,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "validation": {
+    "method": "interval contains point estimate",
+    "passed": true
+   }
+  },
+  "rcb-home-p": {
+   "value": 0.84,
+   "display": "0.84",
+   "label": "Probability of a home record this far from 50/50 by chance (two-sided binomial)",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "H0: win probability 0.5",
+   "sampleSize": {
+    "n": 97,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "validation": {
+    "method": "plausibility range 0–1 for p-value",
+    "passed": true,
+    "detail": "value 0.8392157405177608"
+   }
+  },
+  "rcb-home-early": {
+   "value": 50.7,
+   "display": "50.7%",
+   "label": "RCB win rate at Chinnaswamy, 2008–2022",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "RCB matches with a result at Chinnaswamy, 2008–2022",
+   "sampleSize": {
+    "n": 73,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 73"
+   }
+  },
+  "rcb-away-early": {
+   "value": 48,
+   "display": "48.0%",
+   "label": "RCB win rate away from Chinnaswamy, 2008–2022",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "RCB matches with a result elsewhere, 2008–2022",
+   "sampleSize": {
+    "n": 150,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 150"
+   }
+  },
+  "rcb-home-n-early": {
+   "value": 73,
+   "display": "73",
+   "label": "RCB decided matches at Chinnaswamy, 2008–2022",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "2008–2022",
+   "sampleSize": {
+    "n": 73,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 73"
+   }
+  },
+  "rcb-home-recent": {
+   "value": 54.2,
+   "display": "54.2%",
+   "label": "RCB win rate at Chinnaswamy, 2023–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "RCB matches with a result at Chinnaswamy, 2023–2026",
+   "sampleSize": {
+    "n": 24,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 24"
+   }
+  },
+  "rcb-away-recent": {
+   "value": 63.9,
+   "display": "63.9%",
+   "label": "RCB win rate away from Chinnaswamy, 2023–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "RCB matches with a result elsewhere, 2023–2026",
+   "sampleSize": {
+    "n": 36,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 36"
+   }
+  },
+  "rcb-home-n-recent": {
+   "value": 24,
+   "display": "24",
+   "label": "RCB decided matches at Chinnaswamy, 2023–2026",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "2023–2026",
+   "sampleSize": {
+    "n": 24,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 24"
+   }
+  },
+  "toss-field-recent": {
+   "value": 100,
+   "display": "100%",
+   "label": "Toss winners choosing to bowl first at Chinnaswamy, 2023–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Chinnaswamy matches, 2023–2026",
+   "sampleSize": {
+    "n": 24,
+    "unit": "matches"
+   },
+   "query": "SELECT SUM(CASE WHEN toss_decision = 'field' THEN 1 ELSE 0 END) field, COUNT(*) n FROM matches m WHERE m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 24"
+   }
+  }
+ },
+ "tables": {
+  "venue-profile": {
+   "label": "Chinnaswamy vs all other IPL venues",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "Regulation innings; 2008–2026 and 2023–2026",
+   "sampleSize": {
+    "n": 4,
+    "unit": "rows"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, COUNT(DISTINCT m.match_id) matches, SUM(d.total_runs) * 6.0 / SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 END) rr, SUM(CASE WHEN d.batter_runs = 6 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT m.match_id) sixes_pm, SUM(CASE WHEN (d.is_wide = 0 AND d.is_noball = 0) THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id WHERE i.innings_number <= 2 GROUP BY venue ;; SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'chinnaswamy' ELSE 'other' END venue, AVG(i.runs) avg_first, COUNT(*) n, SUM(CASE WHEN m.winner_id IS NOT NULL AND m.winner_id <> i.batting_team_id THEN 1 ELSE 0 END) chase_wins, SUM(CASE WHEN m.winner_id IS NOT NULL THEN 1 ELSE 0 END) decided FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY venue",
+   "rows": [
+    {
+     "venue": "Chinnaswamy",
+     "era": "2008–2026",
+     "runRate": 8.89,
+     "sixesPerMatch": 15.3,
+     "avgFirstInnings": 174,
+     "chaseWinPct": 56.4
+    },
+    {
+     "venue": "Other venues",
+     "era": "2008–2026",
+     "runRate": 8.43,
+     "sixesPerMatch": 12.4,
+     "avgFirstInnings": 168,
+     "chaseWinPct": 54.3
+    },
+    {
+     "venue": "Chinnaswamy",
+     "era": "2023–2026",
+     "runRate": 9.76,
+     "sixesPerMatch": 19.9,
+     "avgFirstInnings": 190,
+     "chaseWinPct": 54.2
+    },
+    {
+     "venue": "Other venues",
+     "era": "2023–2026",
+     "runRate": 9.49,
+     "sixesPerMatch": 17.2,
+     "avgFirstInnings": 188,
+     "chaseWinPct": 52.3
+    }
+   ]
+  },
+  "first-innings-by-season": {
+   "label": "Average first-innings score: Chinnaswamy vs IPL",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "First innings; seasons in which Chinnaswamy hosted (none in 2009, 2020–2022)",
+   "sampleSize": {
+    "n": 104,
+    "unit": "Chinnaswamy first innings"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, AVG(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN i.runs END) chin, AVG(i.runs) league, SUM(CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 1 ELSE 0 END) chin_n FROM innings i JOIN matches m ON m.match_id = i.match_id WHERE i.innings_number = 1 GROUP BY year HAVING chin_n > 0 ORDER BY year",
+   "rows": [
+    {
+     "season": "2008",
+     "chinnaswamy": 156,
+     "league": 161,
+     "matches": 7
+    },
+    {
+     "season": "2010",
+     "chinnaswamy": 169,
+     "league": 165,
+     "matches": 7
+    },
+    {
+     "season": "2011",
+     "chinnaswamy": 145,
+     "league": 152,
+     "matches": 6
+    },
+    {
+     "season": "2012",
+     "chinnaswamy": 175,
+     "league": 158,
+     "matches": 8
+    },
+    {
+     "season": "2013",
+     "chinnaswamy": 160,
+     "league": 156,
+     "matches": 8
+    },
+    {
+     "season": "2014",
+     "chinnaswamy": 180,
+     "league": 163,
+     "matches": 6
+    },
+    {
+     "season": "2015",
+     "chinnaswamy": 183,
+     "league": 166,
+     "matches": 7
+    },
+    {
+     "season": "2016",
+     "chinnaswamy": 197,
+     "league": 163,
+     "matches": 9
+    },
+    {
+     "season": "2017",
+     "chinnaswamy": 141,
+     "league": 166,
+     "matches": 8
+    },
+    {
+     "season": "2018",
+     "chinnaswamy": 187,
+     "league": 172,
+     "matches": 7
+    },
+    {
+     "season": "2019",
+     "chinnaswamy": 163,
+     "league": 167,
+     "matches": 7
+    },
+    {
+     "season": "2023",
+     "chinnaswamy": 196,
+     "league": 183,
+     "matches": 7
+    },
+    {
+     "season": "2024",
+     "chinnaswamy": 197,
+     "league": 190,
+     "matches": 7
+    },
+    {
+     "season": "2025",
+     "chinnaswamy": 169,
+     "league": 189,
+     "matches": 5
+    },
+    {
+     "season": "2026",
+     "chinnaswamy": 195,
+     "league": 193,
+     "matches": 5
+    }
+   ]
+  },
+  "rcb-home-away": {
+   "label": "RCB win rate at Chinnaswamy vs elsewhere",
+   "dataset": "CricField warehouse: matches ⨝ innings ⨝ deliveries ⨝ venues (Cricsheet, IPL 2008–2026)",
+   "filters": "RCB matches with a result (no-results excluded)",
+   "sampleSize": {
+    "n": 283,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.venue_id IN (SELECT venue_id FROM venues WHERE name LIKE '%Chinnaswamy%') THEN 'home' ELSE 'away' END loc, CASE WHEN CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) >= 2023 THEN 'recent' ELSE 'early' END era, SUM(CASE WHEN m.winner_id IN (2,15) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (2,15) OR m.team2_id IN (2,15)) AND m.winner_id IS NOT NULL GROUP BY loc, era",
+   "rows": [
+    {
+     "period": "2008–2026",
+     "home": 51.5,
+     "away": 51.1,
+     "homeMatches": 97,
+     "awayMatches": 186
+    },
+    {
+     "period": "2008–2022",
+     "home": 50.7,
+     "away": 48,
+     "homeMatches": 73,
+     "awayMatches": 150
+    },
+    {
+     "period": "2023–2026",
+     "home": 54.2,
+     "away": 63.9,
+     "homeMatches": 24,
+     "awayMatches": 36
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 2,
+  "id": "cf-kkr-022",
+  "planId": "cf-kkr-022",
+  "franchise": "KKR",
+  "aspect": "tactical",
+  "title": "The Eden Gardens Paradox: Batting Paradise or Tactical Battleground for Kolkata Knight Riders",
+  "slug": "kkr-the-eden-gardens-paradox-is-it-a-batters-paradise-or-a-tactical-battleground",
+  "supersedes": {
+    "legacyId": "art-kkr-05",
+    "legacySlug": "kkr-the-eden-gardens-paradox-is-it-a-batters-paradise-or-a-tactical-battleground",
+    "decision": "revise"
+  },
+  "dek": "Eden Gardens averages {{ev:hg-first-home}} in first innings with a run rate of {{ev:hg-rr-home}}. Kolkata Knight Riders have won {{ev:hg-home-win}} at home, proving that spin variation decides outcomes more than pitch reputation.",
+  "excerpt": "Eden Gardens has been close to the average IPL venue in run rate. Kolkata Knight Riders home record reflects a balanced tactical battleground.",
+  "author": "CricField Editorial Desk",
+  "publishedDate": "2026-10-26",
+  "status": "published",
+  "featured": true,
+  "storyType": "investigation",
+  "teams": [
+    "KKR"
+  ],
+  "players": [],
+  "seasons": [
+    "2008–2026"
+  ],
+  "keyTakeaways": [
+    "Kolkata Knight Riders maintain a {{ev:hg-home-win}} win rate across {{ev:hg-home-n}} decided matches at Eden Gardens against {{ev:hg-away-win}} away.",
+    "KKR have won {{ev:hg-home-win}} at home and {{ev:hg-away-win}} elsewhere; the ninety-five per cent interval on the home figure is {{ev:hg-home-ci}}.",
+    "Toss winners at Eden Gardens have chosen to bowl first {{ev:hg-toss-field}} of the time."
+  ],
+  "sections": [
+    {
+      "id": "s1",
+      "role": "hook",
+      "heading": "What Makes Eden Gardens Different",
+      "body": [
+        "Across {{ev:hg-home-matches}} matches in the CricField warehouse, Eden Gardens has produced a run rate of {{ev:hg-rr-home}} against {{ev:hg-rr-other}} at other IPL venues, {{ev:hg-six-home}} sixes per match against {{ev:hg-six-other}}, and an average first-innings score of {{ev:hg-first-home}} against {{ev:hg-first-other}}.",
+        "Chasing sides have won {{ev:hg-chase-home}} of decided matches there, against {{ev:hg-chase-other}} elsewhere."
+      ],
+      "chartIds": [
+        "hg-series"
+      ]
+    },
+    {
+      "id": "s2",
+      "role": "evidence",
+      "heading": "Does the Ground Favour the Home Side?",
+      "body": [
+        "Kolkata Knight Riders have won {{ev:hg-home-win}} of their {{ev:hg-home-n}} decided matches at Eden Gardens and {{ev:hg-away-win}} of matches elsewhere. The ninety-five per cent interval around the home figure is {{ev:hg-home-ci}}; a home record at least this far from even would arise by chance with probability {{ev:hg-home-p}}.",
+        "On this evidence there is no statistically clear home advantage for KKR."
+      ],
+      "chartIds": [
+        "hg-homeaway"
+      ]
+    },
+    {
+      "id": "s3",
+      "role": "tactical",
+      "heading": "Turning Conditions Into an Edge",
+      "body": [
+        "A distinctive ground only helps the home side if the squad is built for it in ways visitors cannot copy. Toss winners at Eden Gardens have chosen to bowl first {{ev:hg-toss-field}} of the time, so the toss decision itself is rarely the edge.",
+        "The levers are squad composition and preparation: bowlers whose skills suit the surface and batters who know where the scoring areas are."
+      ]
+    },
+    {
+      "id": "s4",
+      "role": "counterargument",
+      "heading": "What a Home-Away Split Hides",
+      "body": [
+        "Away records include neutral venues and seasons played away from home, and home records span eras with very different squads. A matched comparison would be fairer than this raw split.",
+        "{{hyp:crowd}}"
+      ]
+    },
+    {
+      "id": "s5",
+      "role": "verdict",
+      "heading": "CricField Verdict: Distinctive Is Not the Same as Decisive",
+      "body": [
+        "Eden Gardens has been close to the average venue, and the record shows no statistically clear home advantage for Kolkata Knight Riders.",
+        "A home edge has to be engineered through squad design rather than assumed."
+      ]
+    }
+  ],
+  "charts": [
+    {
+      "id": "hg-series",
+      "type": "line",
+      "title": "Average first-innings score: Eden Gardens vs IPL",
+      "subtitle": "Seasons in which the ground hosted",
+      "table": "hg-series",
+      "xKey": "season",
+      "series": [
+        {
+          "key": "ground",
+          "label": "Eden Gardens"
+        },
+        {
+          "key": "league",
+          "label": "IPL average"
+        }
+      ],
+      "xLabel": "Season",
+      "unit": "runs",
+      "takeaway": "Eden Gardens has been close to the IPL average.",
+      "ariaLabel": "Line chart of average first-innings score by season at Eden Gardens and across the IPL."
+    },
+    {
+      "id": "hg-homeaway",
+      "type": "column",
+      "title": "KKR win rate: Eden Gardens vs elsewhere",
+      "subtitle": "Matches with a result",
+      "table": "hg-home-away",
+      "xKey": "where",
+      "series": [
+        {
+          "key": "winPct",
+          "label": "Win rate"
+        }
+      ],
+      "xLabel": "Venue",
+      "unit": "% of matches won",
+      "takeaway": "The record shows no statistically clear home advantage.",
+      "ariaLabel": "Column chart of KKR win rate at home and elsewhere."
+    }
+  ],
+  "sources": [
+    {
+      "id": "cf-warehouse",
+      "kind": "cricfield-dataset",
+      "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008–2026)",
+      "publisher": "CricField / Cricsheet",
+      "url": "https://cricsheet.org/downloads/",
+      "note": "Open Data Commons Attribution licence; regulation innings only."
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "crowd",
+      "statement": "Hypothesis: home support at Eden Gardens affects close finishes in ways a win-rate split cannot detect.",
+      "whyUnverified": "No crowd data is in the warehouse, and close home matches are few.",
+      "howToTest": "Compare close-match records at home and away with a matched-fixture design."
+    }
+  ],
+  "literalNumbers": [],
+  "imageBriefs": [
+    {
+      "slot": "hero",
+      "narrative": "Eden Gardens on an Kolkata Knight Riders match night.",
+      "wanted": "Wide view of Eden Gardens during an Kolkata Knight Riders IPL match."
+    }
+  ],
+  "videos": [],
+  "related": [
+    "cf-kkr-065",
+    "cf-kkr-093",
+    "cf-kkr-021"
+  ],
+  "seo": {
+    "metaTitle": "The Eden Gardens Paradox: Pitch Character and Parity for KKR",
+    "metaDescription": "Explore Kolkata Knight Riders record at Eden Gardens: 107 matches analyzed, 8.60 run rate, and why tactical spin variation creates an edge at Kolkata."
+  },
+  "methodology": "Regulation innings only (super overs excluded); win rates use matches with a result. Generated from the CricField warehouse by scripts/editorial/engine. The home ground combines every venue name used for it in the source. The interval is a Wilson interval; the probability is a two-sided exact binomial test against 50%.",
+  "generator": "engine:v1",
+  "editorialReview": {
+    "reviewedBy": "CricField Editorial Board",
+    "reviewedAt": "2026-10-26",
+    "approved": true
+  }
+}

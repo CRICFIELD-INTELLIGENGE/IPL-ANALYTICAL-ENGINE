@@ -393,11 +393,16 @@ export function TransferFlowSankey({ onSelectPlayer }: { onSelectPlayer?: (playe
               <Zap className="w-5 h-5 text-amber-400 animate-pulse" />
             </div>
             <div>
-              <h2 className="text-base sm:text-xl font-extrabold text-white uppercase tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-yellow-200 to-purple-400">
-                3D Holographic Player Transfers (2008 – 2026)
-              </h2>
+              <div className="flex items-center gap-2">
+                <span className="text-sm sm:text-base font-extrabold text-white uppercase tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-yellow-200 to-purple-400">
+                  Transfer Constellation Telemetry
+                </span>
+                <span className="text-[10px] font-mono font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                  {filteredLinks.length} MOVEMENTS
+                </span>
+              </div>
               <p className="text-xs text-[#94a3b8] font-medium">
-                Multi-Dimensional Transfer Constellation — All {filteredLinks.length} Player Movements Mapped
+                Interactive Arc Routing & Live Franchise Squad Movements
               </p>
             </div>
           </div>
@@ -488,7 +493,7 @@ export function TransferFlowSankey({ onSelectPlayer }: { onSelectPlayer?: (playe
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch relative z-10">
           
           {/* LEFT: 3D HOLOGRAPHIC SVG ARC CANVAS */}
-          <div className="lg:col-span-8 bg-[#04060d] border border-[#1e293b] rounded-xl p-4 h-[440px] flex items-center justify-center relative overflow-hidden group shadow-inner">
+          <div className="lg:col-span-8 bg-[#04060d] border border-[#1e293b] rounded-xl p-4 h-[360px] flex items-center justify-center relative overflow-hidden group shadow-inner">
             
             {/* 3D Grid Perspective Background */}
             <div 
@@ -634,7 +639,7 @@ export function TransferFlowSankey({ onSelectPlayer }: { onSelectPlayer?: (playe
           </div>
 
           {/* RIGHT: REAL-TIME TELEMETRY INSPECTOR PANEL */}
-          <div className="lg:col-span-4 bg-[#04060d] border border-[#1e293b] rounded-xl p-4 flex flex-col justify-between h-[440px] relative overflow-hidden shadow-xl">
+          <div className="lg:col-span-4 bg-[#04060d] border border-[#1e293b] rounded-xl p-4 flex flex-col justify-between h-[360px] relative overflow-hidden shadow-xl">
             {activeTelemetryLink ? (
               <div className="flex flex-col gap-4 h-full">
                 <div className="flex items-center justify-between border-b border-[#1e293b] pb-3">
@@ -893,18 +898,18 @@ export function RunFlowSankey() {
   const currentTier = sunburstTiers.find(t => t.key === activeSegment) || sunburstTiers[0];
 
   return (
-    <div className="w-full bg-[#0B1020] border border-white/10 rounded-2xl p-6 shadow-xl flex flex-col gap-5 min-h-[480px]">
+    <div className="w-full bg-[#0B1020] border border-white/10 rounded-2xl p-4 shadow-xl flex flex-col gap-3 h-full justify-between min-h-0">
       
       {/* FILTER CONTROLS BAR */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-4">
         <div className="flex items-center gap-2">
           <Zap className="w-5 h-5 text-purple-400" />
           <div>
-            <h2 className="text-sm font-black text-white uppercase tracking-wider block">
-              Delivery Type to Shot Execution Flow (2008 – 2026)
-            </h2>
+            <span className="text-sm font-black text-white uppercase tracking-wider block">
+              Concentric Sunburst Execution Rings
+            </span>
             <span className="text-[10px] text-purple-400 font-mono font-bold">
-              Multi-Level Sunburst Hierarchy Analysis
+              Hierarchical Radial Breakdown • Pace / Spin / Variations to Shot Types
             </span>
           </div>
         </div>
@@ -1083,18 +1088,18 @@ export function ShotFlowSankey() {
   };
 
   return (
-    <div className="w-full bg-[#0B1020] border border-white/10 rounded-2xl p-6 shadow-xl flex flex-col gap-5 min-h-[480px]">
+    <div className="w-full bg-[#0B1020] border border-white/10 rounded-2xl p-4 shadow-xl flex flex-col gap-3 h-full justify-between min-h-0">
       
       {/* FILTER CONTROLS BAR */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-4">
         <div className="flex items-center gap-2">
           <Target className="w-5 h-5 text-cyan-400" />
           <div>
-            <h2 className="text-sm font-black text-white uppercase tracking-wider block">
-              Delivery Length to Shot Type Analysis (2008 – 2026)
-            </h2>
+            <span className="text-sm font-black text-white uppercase tracking-wider block">
+              5×5 Pitch Length × Shot Matrix Heatmap
+            </span>
             <span className="text-[10px] text-cyan-400 font-mono font-bold">
-              Interactive 2D Heatmap Matrix
+              Pitch Zone Clustering (Yorker, Full, Good Length, Back of Length, Short)
             </span>
           </div>
         </div>

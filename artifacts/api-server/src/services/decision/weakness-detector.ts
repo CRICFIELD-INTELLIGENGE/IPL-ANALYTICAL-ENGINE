@@ -14,7 +14,7 @@
 // effect is large enough to matter on the field; otherwise the weakest cells
 // are shown as a watch list, clearly labelled as not significant.
 
-import { normalizeSeason, queryAll, seasonToDbLabel } from "./db";
+import { normalizeSeason, queryAll, seasonToDbLabel, RUNS_CONCEDED_SQL } from "./db";
 import { round } from "./impact-model";
 import { bowlingSubtype, getBaselines, getPlayerMeta, getSeasons, type BowlingSubtype } from "./player-profiles";
 import { getFranchiseRefs } from "./stats-engine";
@@ -140,7 +140,7 @@ function loadBalls(playerId: number, side: Side, seasons: string[] | null): Ball
     : "CASE WHEN x.kind IN ('bowled','caught','caught and bowled','lbw','stumped','hit wicket') THEN x.kind END";
   const runs = side === "batting"
     ? "d.batter_runs"
-    : "d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 OR d.is_penalty = 1 THEN d.extra_runs ELSE 0 END";
+    : RUNS_CONCEDED_SQL;
   const legal = side === "batting" ? "d.is_wide = 0" : "d.is_wide = 0 AND d.is_noball = 0";
   const seasonSql = seasons ? `AND m.season_id IN (${seasons.map(() => "?").join(",")})` : "";
   const rows = queryAll<{ id: number; mid: string; season: string; date: string; ov: number; bn: number; opp: number; num: number; cp: number; runs: number; legal: number; kind: string | null }>(`

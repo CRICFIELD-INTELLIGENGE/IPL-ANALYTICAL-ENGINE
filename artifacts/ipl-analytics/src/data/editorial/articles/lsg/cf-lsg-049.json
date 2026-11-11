@@ -1,0 +1,135 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-lsg-049",
+ "planId": "cf-lsg-049",
+ "franchise": "LSG",
+ "aspect": "business",
+ "title": "Regional Language Strategy: How Lucknow Super Giants Can Speak to Multiple Audiences",
+ "slug": "lsg-regional-language-strategy-how-lsg-can-speak-to-multiple-audiences",
+ "dek": "Lucknow Super Giants are followed far beyond one city. Where they have played maps the regions, and the languages, a franchise has to speak to.",
+ "excerpt": "Lucknow Super Giants have played in many cities, and only a share of their matches at Lucknow. The travelling fixture list is a map of the audiences a multilingual strategy would serve.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "LSG"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "LSG have played in {{ev:rl-cities-n}} cities, all of them in India.",
+  "{{ev:rl-home}} of their matches were at Lucknow.",
+  "Every one of their matches has been played in India."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "A Franchise Followed Everywhere",
+   "body": [
+    "IPL franchises carry a city's name but draw fans from across the country and beyond. A regional language strategy starts from where those fans are.",
+    "Lucknow Super Giants have played in {{ev:rl-cities-n}} cities and only {{ev:rl-home}} of their matches at Lucknow."
+   ],
+   "chartIds": [
+    "rl-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Every Venue Is a Local Audience",
+   "body": [
+    "Each away fixture is a chance to speak to fans in that city's language. The chart lists the cities where LSG have played most often.",
+    "The fixture list is a map of venues, not of fans; it shows where the team goes, not where its supporters live."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Speaking to Multiple Audiences",
+   "body": [
+    "A multilingual strategy usually means regional-language social channels, commentary partnerships and player content in the languages of the squad and the fan base.",
+    "{{hyp:language}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What the Warehouse Cannot See",
+   "body": [
+    "The CricField warehouse is ball-by-ball cricket data. It contains no audience location, language preference or regional engagement data, so it cannot measure the commercial side of this question directly.",
+    "Building the strategy properly would need audience location and language data from the franchise's own channels and broadcasters."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Follow the Fixture Map",
+   "body": [
+    "Lucknow Super Giants travel to many cities every season. Away fixtures offer natural moments for regional-language content.",
+    "Which languages to prioritise needs audience data that this warehouse does not hold."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "rl-chart",
+   "type": "bar",
+   "title": "Where they have played most",
+   "subtitle": "LSG matches by city",
+   "table": "rl-cities",
+   "xKey": "city",
+   "series": [
+    {
+     "key": "matches",
+     "label": "Matches"
+    }
+   ],
+   "unit": "matches",
+   "takeaway": "LSG have played across many cities, not only at home.",
+   "ariaLabel": "Horizontal bar chart of LSG matches by venue city."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "language",
+   "statement": "Hypothesis: regional-language posts timed around away fixtures draw higher engagement in that region than English-only posts.",
+   "whyUnverified": "No regional engagement data is available.",
+   "howToTest": "Run matched regional and English posts around away fixtures and compare regional engagement."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Lucknow Super Giants on the road.",
+   "wanted": "Lucknow Super Giants playing an away match."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-lsg-058",
+  "cf-lsg-042",
+  "cf-lsg-096"
+ ],
+ "seo": {
+  "metaTitle": "Regional language strategy for LSG",
+  "metaDescription": "Where Lucknow Super Giants have played, how few of their matches are at home, and what a multilingual fan strategy would need."
+ },
+ "methodology": "CricField measures the cricket a franchise puts on the field; it holds no revenue, attendance, audience, merchandise or social-media data. Commercial ideas in this article are labelled hypotheses with the data needed to test them. Generated by scripts/editorial/engine. Cities from venue records; matches outside India are those at venues in the UAE and South Africa.",
+ "generator": "engine:v1"
+}

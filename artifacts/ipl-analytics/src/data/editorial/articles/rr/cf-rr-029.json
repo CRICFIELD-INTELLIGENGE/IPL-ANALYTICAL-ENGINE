@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-029",
+ "planId": "cf-rr-029",
+ "franchise": "RR",
+ "aspect": "tactical",
+ "title": "Risk Budgeting: How Aggressive Should Rajasthan Royals Be at Different Match States?",
+ "slug": "rr-risk-budgeting-how-aggressive-should-rr-be-at-different-match-states",
+ "dek": "How aggressive should Rajasthan Royals be at different match states? Treating wickets as a budget turns that question into arithmetic.",
+ "excerpt": "League-wide since 2022, sides one or no wicket down at halfway have scored markedly faster in overs eleven to fifteen than sides four or more down. Here is how Rajasthan Royals should budget risk.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RR"
+ ],
+ "players": [],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "IPL sides no more than one wicket down at halfway scored {{ev:rb-frr}} an over in overs eleven to fifteen since 2022; four or more down, {{ev:rb-drr}}.",
+  "They lost {{ev:rb-fw}} and {{ev:rb-dw}} wickets respectively in that stretch.",
+  "The analysis covers {{ev:rb-tn}} RR innings since 2022."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Wickets as a Budget",
+   "body": [
+    "A T20 innings has ten wickets and one hundred and twenty balls. Risk budgeting asks how many wickets a side can afford to spend in each phase and still finish strongly.",
+    "Across the league since 2022, sides that were no more than one wicket down at halfway scored {{ev:rb-frr}} an over in overs eleven to fifteen and lost {{ev:rb-fw}} wickets in that stretch."
+   ],
+   "chartIds": [
+    "rb-chart"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "When the Budget Is Spent",
+   "body": [
+    "Sides four or more down at halfway scored {{ev:rb-drr}} an over in the same stretch and lost {{ev:rb-dw}} wickets. The chart includes Rajasthan Royals' own figures where the sample allows.",
+    "The difference is the cost of an overspent budget: a side short of wickets cannot accelerate safely."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Setting the Budget",
+   "body": [
+    "A simple budget is two wickets by the end of the powerplay and four by the fifteenth over. Within it, batters can attack; beyond it, the next batter's job changes to protecting the finish.",
+    "For RR, the budget should depend on the depth of the batting: the deeper the order, the more wickets can be spent early."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Budgets Ignore Who Is In",
+   "body": [
+    "Four wickets down with the two best hitters at the crease is a different state from four down with the tail exposed. A wickets-only budget misses that.",
+    "{{hyp:resources}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Spend Wickets Early Only If the Order Is Deep",
+   "body": [
+    "Rajasthan Royals should set a wickets budget for each phase based on their batting depth, and change the next batter's role when the budget is exceeded.",
+    "The league table gives the baseline rates against which each state can be judged."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "rb-chart",
+   "type": "column",
+   "title": "Run rate in overs 11\u201315 by wickets lost at halfway",
+   "subtitle": "2022\u20132026",
+   "table": "rb-state",
+   "xKey": "state",
+   "series": [
+    {
+     "key": "leagueRR",
+     "label": "Rest of IPL"
+    },
+    {
+     "key": "teamRR",
+     "label": "RR"
+    }
+   ],
+   "xLabel": "Wickets lost after ten overs",
+   "unit": "runs per over",
+   "takeaway": "The more wickets lost by halfway, the slower the scoring that follows.",
+   "ariaLabel": "Column chart of run rate in overs eleven to fifteen grouped by wickets lost after ten overs."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "resources",
+   "statement": "Hypothesis: a resources model that weights wickets by the batters remaining predicts scoring better than wickets lost alone.",
+   "whyUnverified": "Batter quality has not been attached to each wicket state.",
+   "howToTest": "Weight remaining batters by career strike rate and compare predictive power."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Rajasthan Royals batting with intent.",
+   "wanted": "Rajasthan Royals batter attacking in the middle overs."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rr-001",
+  "cf-rr-028",
+  "cf-rr-081"
+ ],
+ "seo": {
+  "metaTitle": "Risk budgeting: how aggressive should RR be?",
+  "metaDescription": "How IPL scoring in overs eleven to fifteen depends on wickets lost at halfway, and how Rajasthan Royals should budget risk."
+ },
+ "methodology": "Regulation innings only (super overs excluded); win rates use matches with a result. Generated from the CricField warehouse by scripts/editorial/engine. States use all dismissals in overs one to ten; the following stretch is overs eleven to fifteen. 2022\u20132026.",
+ "generator": "engine:v1"
+}

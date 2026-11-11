@@ -117,7 +117,8 @@ function build() {
     const legal = f & F_LEGAL ? 1 : 0;
     const wk = f & F_WICKET ? 1 : 0;
     const tr = c.totalRuns[i], br = c.batterRuns[i];
-    const spin = meta.get(c.bowler[i])?.bowlingType === "spin";
+    const btype = meta.get(c.bowler[i])?.bowlingType; // unknown types are left out of the spin / pace splits
+    const spin = btype === "spin", pace = btype === "pace";
     const B = get(c.battingTeam[i], s), W = get(c.bowlingTeam[i], s);
     if (B) {
       const t = B.bat;
@@ -128,7 +129,7 @@ function build() {
         if (br === 4 || br === 6) t.bnd++;
         if (br === 6) t.sixes++;
         if (br === 0) t.dots++;
-        if (spin) { t.spinB++; t.spinR += br; } else { t.paceB++; t.paceR += br; }
+        if (spin) { t.spinB++; t.spinR += br; } else if (pace) { t.paceB++; t.paceR += br; }
         const hand = meta.get(c.batter[i])?.battingHand;
         if (hand) { t.knownHandB++; if (hand === "L") t.leftB++; }
         const pb = B.playersBall.get(c.batter[i]) ?? { faced: 0, bowled: 0 };
@@ -147,7 +148,7 @@ function build() {
       t.legalTotal += legal; t.runsTotal += tr; t.wkTotal += wk;
       if (legal && tr === 0) t.dots++;
       if (br === 4 || br === 6) t.bnd++;
-      if (spin) { t.spinB += legal; t.spinR += c.conceded[i]; } else { t.paceB += legal; t.paceR += c.conceded[i]; }
+      if (spin) { t.spinB += legal; t.spinR += c.conceded[i]; } else if (pace) { t.paceB += legal; t.paceR += c.conceded[i]; }
       if (isLeftArm(c.bowler[i])) t.leftArmB += legal;
       W.bowlInnings.add(c.innings[i]);
       const set = W.bowlersByInnings.get(c.innings[i]) ?? new Set<number>();

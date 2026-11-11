@@ -1,0 +1,152 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-kkr-083",
+ "planId": "cf-kkr-083",
+ "franchise": "KKR",
+ "aspect": "data-science",
+ "title": "A Venue-Adjusted Rating System for Kolkata Knight Riders Players",
+ "slug": "kkr-a-venue-adjusted-rating-system-for-kkr-players",
+ "dek": "A strike rate at a small, flat ground is not the same as one on a slow pitch. A venue-adjusted rating puts Kolkata Knight Riders' batters on level terms.",
+ "excerpt": "Adjusting for where each ball was faced changes Kolkata Knight Riders' batting order of merit. The biggest mover shifts up once venue is accounted for.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "KKR"
+ ],
+ "players": [
+  "AD Russell",
+  "PD Salt",
+  "SP Narine"
+ ],
+ "seasons": [
+  "2022\u20132026"
+ ],
+ "keyTakeaways": [
+  "{{ev:va-top-name}} has the highest venue-adjusted rating among {{ev:va-n}} KKR batters since 2022, at {{ev:va-top-v}} (100 = league average for the season and venue).",
+  "Scoring at Eden Gardens has run at {{ev:va-hf}} of the league average since 2022.",
+  "{{ev:va-mover}} moves {{ev:va-move-n}} places in the ranking once venue is accounted for."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Why Venue Matters",
+   "body": [
+    "IPL grounds differ enormously: short boundaries and flat pitches inflate strike rates, slow surfaces deflate them. A rating that ignores venue rewards batters for where they happen to play.",
+    "Since 2022, scoring off the bat at Eden Gardens has run at {{ev:va-hf}} of the league average."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Adjusted Ratings",
+   "body": [
+    "CricField rates each batter against what an average batter would have scored from the same balls in the same season at the same venues. {{ev:va-top-name}} leads Kolkata Knight Riders' {{ev:va-n}} qualifying batters at {{ev:va-top-v}}.",
+    "The chart compares venue-adjusted ratings with season-only ratings for the leading batters."
+   ],
+   "chartIds": [
+    "va-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Who Moves",
+   "body": [
+    "{{ev:va-mover}} moves {{ev:va-move-n}} places once venue is included, the largest shift in the group. His runs came at harder grounds than his raw numbers suggest.",
+    "{{hyp:venue}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Model Choices",
+   "body": [
+    "Venue factors use all matches at each ground since 2022; grounds with fewer than eight matches are treated as average. Factors are for runs off the bat, so they do not adjust bowling.",
+    "The rating measures tempo, not survival, so anchors are understated."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Rate Where They Played",
+   "body": [
+    "Kolkata Knight Riders should compare batters on venue-adjusted ratings, especially when judging players from other franchises with different home grounds.",
+    "The same adjustment can be built for bowlers with a venue economy factor."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "va-chart",
+   "type": "bar",
+   "title": "Venue-adjusted vs season-only rating",
+   "subtitle": "KKR batters, 2022\u20132026, min. 200 balls",
+   "table": "va-top",
+   "xKey": "batter",
+   "series": [
+    {
+     "key": "venueAdjusted",
+     "label": "Venue-adjusted"
+    },
+    {
+     "key": "seasonOnly",
+     "label": "Season only"
+    }
+   ],
+   "unit": "index (100 = average)",
+   "takeaway": "Venue adjustment reorders the batters.",
+   "ariaLabel": "Horizontal grouped bar chart comparing venue-adjusted and season-only batting ratings for KKR batters since 2022."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "venue",
+   "statement": "Hypothesis: venue-adjusted ratings predict a batter's strike rate after a transfer better than unadjusted ratings.",
+   "whyUnverified": "Transfers have not been used to test the ratings.",
+   "howToTest": "Compare prediction errors for batters who changed franchise using adjusted and unadjusted ratings."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "200",
+   "reason": "Minimum balls stated in a table label."
+  },
+  {
+   "text": "100",
+   "reason": "Index baseline."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "AD Russell batting for Kolkata Knight Riders.",
+   "wanted": "AD Russell batting for Kolkata Knight Riders."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-kkr-070",
+  "cf-kkr-084",
+  "cf-kkr-087"
+ ],
+ "seo": {
+  "metaTitle": "A venue-adjusted rating for KKR batters",
+  "metaDescription": "Kolkata Knight Riders' batters rated against the season and the venues they played at since 2022, and who moves once venue is counted."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Models are fitted on the warehouse itself and described in full here. Generated by scripts/editorial/engine. Rating = runs \u00f7 (balls \u00d7 season runs per ball \u00d7 venue factor) \u00d7 100; venue factor = venue runs per ball \u00f7 league runs per ball, 2022\u20132026.",
+ "generator": "engine:v1"
+}

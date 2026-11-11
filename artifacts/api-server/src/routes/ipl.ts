@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { logger } from "../lib/logger.js";
 import type { Request, Response } from "express";
 import { getTeamAnalytics, getMatchupOpponents, getVenueAnalytics, NOT_SUPPORTED } from "../services/team-analytics.js";
 import { getMatchScorecard, getMatchCommentary } from "../services/match-card.js";
@@ -48,6 +49,15 @@ import {
 // Pre-warm cache on first import
 preLoadAllMatches();
 
+/**
+ * Handbook S5/S8: an unexpected failure is logged server-side and the client gets a fixed message. These handlers
+ * used to return err.message (SQL text, internal names) to any caller.
+ */
+function internalError(res: Response, err: unknown): void {
+  logger.error({ err, path: res.req?.originalUrl }, "ipl route failed");
+  res.status(500).json({ error: "internal_error" });
+}
+
 const router = Router();
 
 function getStatsQuery(req: Request): Record<string, string> {
@@ -76,7 +86,7 @@ function getStatsQuery(req: Request): Record<string, string> {
 router.get("/ipl/overview", (_req: Request, res: Response): void => {
   getOverview()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -86,7 +96,7 @@ router.get("/ipl/overview", (_req: Request, res: Response): void => {
 router.get("/ipl/seasons", (_req: Request, res: Response): void => {
   getSeasons()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -96,7 +106,7 @@ router.get("/ipl/seasons", (_req: Request, res: Response): void => {
 router.get("/ipl/toss-analysis", (_req: Request, res: Response): void => {
   getTossAnalysis()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -106,7 +116,7 @@ router.get("/ipl/toss-analysis", (_req: Request, res: Response): void => {
 router.get("/ipl/phase-analysis", (_req: Request, res: Response): void => {
   getPhaseAnalysis()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -116,31 +126,31 @@ router.get("/ipl/phase-analysis", (_req: Request, res: Response): void => {
 router.get("/ipl/batsmen", (_req: Request, res: Response): void => {
   getBatsmen()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/batsmen/impact", (_req: Request, res: Response): void => {
   getBatsmenImpact()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/batsmen/boundaries", (_req: Request, res: Response): void => {
   getBatsmenBoundaries()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/bowlers", (_req: Request, res: Response): void => {
   getBowlers()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/bowlers/death-specialists", (_req: Request, res: Response): void => {
   getBowlersDeath()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -150,7 +160,7 @@ router.get("/ipl/bowlers/death-specialists", (_req: Request, res: Response): voi
 router.get("/ipl/teams", (_req: Request, res: Response): void => {
   getTeams()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/teams/head-to-head", (req: Request, res: Response): void => {
@@ -179,7 +189,7 @@ router.get("/ipl/teams/head-to-head", (req: Request, res: Response): void => {
 router.get("/ipl/teams/championship", (_req: Request, res: Response): void => {
   getChampionships()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -189,7 +199,7 @@ router.get("/ipl/teams/championship", (_req: Request, res: Response): void => {
 router.get("/ipl/venues", (_req: Request, res: Response): void => {
   getVenues()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -199,19 +209,19 @@ router.get("/ipl/venues", (_req: Request, res: Response): void => {
 router.get("/ipl/records", (_req: Request, res: Response): void => {
   getRecords()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/run-distribution", (_req: Request, res: Response): void => {
   getRunDistribution()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/dismissals", (_req: Request, res: Response): void => {
   getDismissals()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -221,37 +231,37 @@ router.get("/ipl/dismissals", (_req: Request, res: Response): void => {
 router.get("/ipl/top-batters", (_req: Request, res: Response): void => {
   getTopBatters()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/top-bowlers", (_req: Request, res: Response): void => {
   getTopBowlers()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/matches", (_req: Request, res: Response): void => {
   getMatchesList()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/current-squads", (_req: Request, res: Response): void => {
   getCurrentSquads()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/squads-by-season", (_req: Request, res: Response): void => {
   getSquadsBySeason()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/player-auctions", (_req: Request, res: Response): void => {
   getPlayerAuctions()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/team-analytics", (req: Request, res: Response): void => {
@@ -272,7 +282,7 @@ router.get("/ipl/team-analytics", (req: Request, res: Response): void => {
       }
       res.json({ ...data, notSupported: NOT_SUPPORTED });
     })
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/venue-analytics", (req: Request, res: Response): void => {
@@ -292,7 +302,7 @@ router.get("/ipl/venue-analytics", (req: Request, res: Response): void => {
       if (!data) { res.status(404).json({ error: "No analytics for " + venue }); return; }
       res.json(data);
     })
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/matchup-opponents", (req: Request, res: Response): void => {
@@ -304,61 +314,61 @@ router.get("/ipl/matchup-opponents", (req: Request, res: Response): void => {
   }
   getMatchupOpponents(player, role)
     .then(data => res.json(data ?? []))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/captains", (_req: Request, res: Response): void => {
   getCaptains()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/points-tables", (_req: Request, res: Response): void => {
   getPointsTables()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/player-career-stats", (_req: Request, res: Response): void => {
   getPlayerCareerStats()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/player-team-stats", (_req: Request, res: Response): void => {
   getPlayerTeamStats()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/player-season-stats", (_req: Request, res: Response): void => {
   getPlayerSeasonStats()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/player-team-season-stats", (_req: Request, res: Response): void => {
   getPlayerTeamSeasonStats()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/player-images", (_req: Request, res: Response): void => {
   getPlayerImages()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/player-photo-registry", (_req: Request, res: Response): void => {
   getPlayerPhotoRegistry()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/ipl/season-tops", (_req: Request, res: Response): void => {
   getSeasonTops()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -379,7 +389,7 @@ router.get("/ipl/stats/query", (req: Request, res: Response): void => {
     batter: q.batter, bowler: q.bowler,
   })
     .then(stats => res.json(stats))
-    .catch(err  => res.status(500).json({ error: err.message }));
+    .catch(err  => internalError(res, err));
 });
 
 /** Scoring areas (field positions) */
@@ -391,7 +401,7 @@ router.get("/ipl/stats/field-positions", (req: Request, res: Response): void => 
     phase: q.phase, innings: q.innings, batter: q.batter,
   })
     .then(data => res.json(data))
-    .catch(err  => res.status(500).json({ error: err.message }));
+    .catch(err  => internalError(res, err));
 });
 
 /** Batter vs Bowler matchup */
@@ -408,7 +418,7 @@ router.get("/ipl/stats/matchup", (req: Request, res: Response): void => {
     fieldingPosition: q.fieldingPosition,
   })
     .then(data => res.json(data))
-    .catch(err  => res.status(500).json({ error: err.message }));
+    .catch(err  => internalError(res, err));
 });
 
 /** Scenario analytics */
@@ -424,7 +434,7 @@ router.get("/ipl/stats/scenario", (req: Request, res: Response): void => {
     minRuns:  q.minRuns  ? parseInt(q.minRuns)  : 0,
   })
     .then(data => res.json(data))
-    .catch(err  => res.status(500).json({ error: err.message }));
+    .catch(err  => internalError(res, err));
 });
 
 /** Player dimensional drilldown */
@@ -443,7 +453,7 @@ router.get("/ipl/stats/drilldown", (req: Request, res: Response): void => {
     nationality: q.nationality, fieldingPosition: q.fieldingPosition,
   })
     .then(data => res.json(data))
-    .catch(err  => res.status(500).json({ error: err.message }));
+    .catch(err  => internalError(res, err));
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -471,7 +481,7 @@ router.get("/stats/query", (req: Request, res: Response): void => {
   if (isDefault) {
     getPlayerCareerStats()
       .then(stats => res.json(stats))
-      .catch(err => res.status(500).json({ error: err.message }));
+      .catch(err => internalError(res, err));
     return;
   }
 
@@ -502,7 +512,7 @@ router.get("/stats/query", (req: Request, res: Response): void => {
     })
     .catch(err  => {
       req.log.error({ err }, "stats/query failed");
-      res.status(500).json({ error: err.message });
+      internalError(res, err);
     });
 });
 
@@ -519,7 +529,7 @@ router.get("/stats/drilldown", (req: Request, res: Response): void => {
       phase: q.phase, innings: q.innings, batter: q.batter,
     })
       .then(data => res.json(data))
-      .catch(err  => res.status(500).json({ error: err.message }));
+      .catch(err  => internalError(res, err));
     return;
   }
   const dimension = (q.dimension as any) || "phase";
@@ -531,7 +541,7 @@ router.get("/stats/drilldown", (req: Request, res: Response): void => {
     nationality: q.nationality, fieldingPosition: q.fieldingPosition,
   })
     .then(data => res.json(data))
-    .catch(err  => res.status(500).json({ error: err.message }));
+    .catch(err  => internalError(res, err));
 });
 
 router.get("/stats/matchup", (req: Request, res: Response): void => {
@@ -547,7 +557,7 @@ router.get("/stats/matchup", (req: Request, res: Response): void => {
     fieldingPosition: q.fieldingPosition,
   })
     .then(data => res.json(data))
-    .catch(err  => res.status(500).json({ error: err.message }));
+    .catch(err  => internalError(res, err));
 });
 
 router.get("/stats/scenario", (req: Request, res: Response): void => {
@@ -562,7 +572,7 @@ router.get("/stats/scenario", (req: Request, res: Response): void => {
     minRuns:  q.minRuns  ? parseInt(q.minRuns)  : 0,
   })
     .then(data => res.json(data))
-    .catch(err  => res.status(500).json({ error: err.message }));
+    .catch(err  => internalError(res, err));
 });
 
 router.get("/stats/player", (req: Request, res: Response): void => {
@@ -577,12 +587,12 @@ router.get("/stats/player", (req: Request, res: Response): void => {
       nationality: q.nationality, fieldingPosition: q.fieldingPosition,
     })
       .then(data => res.json(data))
-      .catch(err  => res.status(500).json({ error: err.message }));
+      .catch(err  => internalError(res, err));
     return;
   }
   getPlayerCareerStats()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/stats/team", (req: Request, res: Response): void => {
@@ -598,12 +608,12 @@ router.get("/stats/team", (req: Request, res: Response): void => {
       chasingDefending: q.chasingDefending,
     })
       .then(stats => res.json({ team: q.team, stats }))
-      .catch(err => res.status(500).json({ error: err.message }));
+      .catch(err => internalError(res, err));
     return;
   }
   getTeams()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/stats/venue", (req: Request, res: Response): void => {
@@ -619,12 +629,12 @@ router.get("/stats/venue", (req: Request, res: Response): void => {
       chasingDefending: q.chasingDefending,
     })
       .then(stats => res.json({ venue: q.venue, stats }))
-      .catch(err => res.status(500).json({ error: err.message }));
+      .catch(err => internalError(res, err));
     return;
   }
   getVenues()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -634,19 +644,19 @@ router.get("/stats/venue", (req: Request, res: Response): void => {
 router.get("/players", (_req: Request, res: Response): void => {
   getPlayerCareerStats()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/teams", (_req: Request, res: Response): void => {
   getTeams()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/matches", (_req: Request, res: Response): void => {
   getMatchesList()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/matchups", (req: Request, res: Response): void => {
@@ -660,13 +670,13 @@ router.get("/matchups", (req: Request, res: Response): void => {
     phase: q.phase, innings: q.innings, matchContext: q.matchContext,
   })
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/venues", (_req: Request, res: Response): void => {
   getVenues()
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/stat-builder", (req: Request, res: Response): void => {
@@ -682,7 +692,7 @@ router.get("/stat-builder", (req: Request, res: Response): void => {
     batter: q.batter, bowler: q.bowler,
   })
     .then(stats => res.json(stats))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 router.get("/scenario-intelligence", (req: Request, res: Response): void => {
@@ -696,7 +706,7 @@ router.get("/scenario-intelligence", (req: Request, res: Response): void => {
     minRuns:  q.minRuns  ? parseInt(q.minRuns)  : 0,
   })
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 /**
@@ -712,7 +722,7 @@ router.get("/ipl/match/:matchId/scorecard", (req: Request, res: Response): void 
     }
     res.json(card);
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 });
 
@@ -721,7 +731,7 @@ router.get("/ipl/match/:matchId/commentary", (req: Request, res: Response): void
   try {
     res.json(getMatchCommentary(String(req.params.matchId)));
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 });
 
@@ -730,7 +740,7 @@ router.get("/ipl/insights", (_req: Request, res: Response): void => {
   try {
     res.json(getInsightFeed());
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 });
 
@@ -753,7 +763,7 @@ router.get("/ipl/insights/clicks", (_req: Request, res: Response): void => {
   try {
     res.json(getClickStats());
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 });
 
@@ -769,7 +779,7 @@ router.get("/ipl/content/hub", (_req: Request, res: Response): void => {
   try {
     res.json(getContentHub());
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 });
 
@@ -782,7 +792,7 @@ router.get("/ipl/content/business", (req: Request, res: Response): void => {
     const tag = req.query.tag as BusinessTag | undefined;
     res.json(getBusinessArticles(tag));
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    internalError(res, err);
   }
 });
 
@@ -793,7 +803,7 @@ router.get("/ipl/content/business", (req: Request, res: Response): void => {
 router.get("/ipl/news", (req: Request, res: Response): void => {
   getNews(req.query.refresh === "1")
     .then(data => res.json(data))
-    .catch(err => res.status(500).json({ error: err.message }));
+    .catch(err => internalError(res, err));
 });
 
 export default router;

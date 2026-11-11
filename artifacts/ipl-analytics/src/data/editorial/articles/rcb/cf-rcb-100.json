@@ -1,0 +1,185 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rcb-100",
+ "planId": "cf-rcb-100",
+ "franchise": "RCB",
+ "aspect": "future",
+ "title": "The Future XI: Designing Royal Challengers Bengaluru\u2019s Ideal Role Balance, Not a Dream Team",
+ "slug": "rcb-the-future-xi-designing-rcb-ideal-role-balance-not-a-dream-team",
+ "dek": "Forget the fantasy line-up. The two title sides reveal a role structure: a middle order that outscored the league, a five-bowler core and very few true all-rounders. That structure, not the names, is what RCB should rebuild around.",
+ "excerpt": "RCB's 2025\u20132026 batting was not top-heavy; its edge came from positions four to eight. Its bowling leaned on five frontline bowlers and only a handful of genuine two-way players. A blueprint for the next cycle, by role rather than by name.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-25",
+ "status": "review",
+ "featured": false,
+ "storyType": "tactical",
+ "teams": [
+  "RCB"
+ ],
+ "players": [
+  "Krunal Pandya",
+  "Romario Shepherd"
+ ],
+ "seasons": [
+  "2025",
+  "2026"
+ ],
+ "keyTakeaways": [
+  "RCB's batters at four and five struck at {{ev:sr-rcb-4-5}} in 2025\u20132026, against {{ev:sr-league-4-5}} for the rest of the league; at six to eight, {{ev:sr-rcb-6-8}} against {{ev:sr-league-6-8}}.",
+  "The top three's strike rate ({{ev:sr-rcb-1-3}}) was no faster than the league's ({{ev:sr-league-1-3}}): the title edge sat lower down the order.",
+  "Only {{ev:dual-count}} RCB player-seasons in the two title years combined a meaningful batting and bowling workload."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Roles Before Names",
+   "body": [
+    "Every off-season produces dream elevens: the best available opener, the best finisher, the best death bowler. They make for good arguments and poor squads, because a team is a set of roles that have to fit together within a budget, not a list of individual bests.",
+    "RCB have the rare advantage of two consecutive title sides to study. This piece reads their role structure from the ball-by-ball record and turns it into a design brief for the next cycle."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Where the Title Runs Came From",
+   "body": [
+    "Positions one to three supplied {{ev:share-rcb-1-3}} of RCB's batting runs in 2025\u20132026, close to the {{ev:share-league-1-3}} for the rest of the league, and at a strike rate of {{ev:sr-rcb-1-3}}, slightly below the league's {{ev:sr-league-1-3}}. The top order was solid rather than exceptional.",
+    "The difference was further down. Batters at four and five scored {{ev:share-rcb-4-5}} of RCB's runs at a strike rate of {{ev:sr-rcb-4-5}}, where the rest of the league managed {{ev:sr-league-4-5}}. Positions six to eight added {{ev:share-rcb-6-8}} at {{ev:sr-rcb-6-8}}, against {{ev:sr-league-6-8}} elsewhere. In short, RCB's middle and lower order scored much faster than other teams' did.",
+    "With the ball, RCB used {{ev:bowlers-rcb}} bowlers per innings, slightly fewer than the league's {{ev:bowlers-league}}, and their five most-used bowlers in each innings delivered {{ev:top5-rcb}} of the balls, against {{ev:top5-league}} for other teams. This was a frontline attack that rarely needed part-timers."
+   ],
+   "chartIds": [
+    "position-sr"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "The Blueprint",
+   "body": [
+    "Read together, the numbers describe a clear template. The top three must be reliable rather than spectacular, because the acceleration comes later. Positions four to eight must be filled with hitters who can score at a much faster rate than their counterparts elsewhere, which is where auction money for batting depth should go.",
+    "The bowling should rest on five genuine bowlers who can share almost all twenty overs. Genuine two-way players are a bonus, not a requirement: across the two title seasons only {{ev:dual-count}} player-seasons combined at least sixty balls faced with sixty bowled, and together they bowled {{ev:dual-balls}} of RCB's deliveries and scored {{ev:dual-runs}} of the runs.",
+    "That makes the most valuable all-rounder the one whose second skill lets RCB carry an extra specialist, not the one who fills a slot in a dream team. The impact-player rule reinforces the point by letting a side bat deep and bowl deep in the same match."
+   ],
+   "chartIds": [
+    "dual-role"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Why the Past Two Years May Not Repeat",
+   "body": [
+    "Two seasons is a short window, and role structures that worked with one set of players may not survive the next auction. The middle-order strike rate rests on a small number of hitters having good seasons at the same time, and regression would shrink some of that edge.",
+    "We also used batting position as a proxy for role. A batter who opens on one day and comes in at five on another is counted where he actually batted, which is right for describing the side but blurs the role a recruiter is trying to fill.",
+    "{{hyp:middle-order-repeat}}"
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Build the Middle, Bank the Bowlers",
+   "body": [
+    "RCB's ideal future eleven is not a collection of the best available names. It is a reliable top three, a middle and lower order built to outscore the league, and five frontline bowlers who can cover the whole innings, with any genuine all-rounder treated as an upgrade rather than a necessity.",
+    "That is a blueprint the franchise can recruit to across several auctions, and one that does not depend on any single star."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "position-sr",
+   "type": "column",
+   "title": "Strike rate by batting position, 2025\u20132026",
+   "subtitle": "RCB vs the rest of the IPL; position = order of arrival at the crease",
+   "table": "runs-by-position",
+   "xKey": "band",
+   "series": [
+    {
+     "key": "rcbSR",
+     "label": "RCB"
+    },
+    {
+     "key": "leagueSR",
+     "label": "Rest of IPL"
+    }
+   ],
+   "xLabel": "Batting position",
+   "unit": "runs per 100 balls",
+   "takeaway": "RCB matched the league at the top and pulled clear in positions four to eight.",
+   "ariaLabel": "Grouped column chart of strike rate by batting position band, one to three, four to five, six to eight and nine to eleven, for RCB and the rest of the IPL in 2025 and 2026."
+  },
+  {
+   "id": "dual-role",
+   "type": "bar",
+   "title": "RCB's genuine two-way players, 2025\u20132026",
+   "subtitle": "At least 60 balls faced and 60 legal balls bowled in the season",
+   "table": "dual-role",
+   "xKey": "player",
+   "series": [
+    {
+     "key": "ballsFaced",
+     "label": "Balls faced"
+    },
+    {
+     "key": "ballsBowled",
+     "label": "Balls bowled"
+    }
+   ],
+   "unit": "balls",
+   "takeaway": "Only a handful of player-seasons met both thresholds, led by Krunal Pandya in both title years.",
+   "ariaLabel": "Horizontal bar chart of balls faced and balls bowled for the RCB players who met both sixty-ball thresholds in 2025 or 2026."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2025\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/"
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "middle-order-repeat",
+   "statement": "Hypothesis: a middle-order strike-rate edge is less stable from season to season than a top-order one, because it depends on fewer balls and more volatile hitting.",
+   "whyUnverified": "Stability by batting position has not yet been measured across franchises and seasons.",
+   "howToTest": "For every franchise, correlate position-band strike rate relative to the league in consecutive seasons and compare the bands."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "The title-winning squad as a unit.",
+   "wanted": "RCB team celebrating together, 2026, landscape."
+  },
+  {
+   "slot": "s2",
+   "narrative": "Middle-order hitting.",
+   "wanted": "Tim David, Jitesh Sharma or Rajat Patidar batting for RCB, 2025\u20132026."
+  },
+  {
+   "slot": "s4",
+   "narrative": "The two-way player.",
+   "wanted": "Krunal Pandya bowling or batting for RCB."
+  }
+ ],
+ "videos": [
+  {
+   "catalogueId": "JH-1540067129",
+   "afterSection": "s3",
+   "why": "RCB's 2026 Qualifier 1 against Gujarat Titans, in which they posted their highest total of the season."
+  }
+ ],
+ "related": [
+  "cf-rcb-091",
+  "cf-rcb-020",
+  "cf-rcb-033"
+ ],
+ "seo": {
+  "metaTitle": "The Future XI: designing RCB's ideal role balance | CricField",
+  "metaDescription": "RCB's title sides outscored the league from positions four to eight and leaned on five frontline bowlers. A data blueprint for the next cycle, by role not name."
+ },
+ "methodology": "Batting position is the order in which a batter first appears at the crease (as striker or non-striker) in an innings. 'Rest of IPL' excludes RCB. Two-way players are defined from what they did, not from squad labels, which proved unreliable. Bowlers per innings and top-five share use legal balls. Generated by scripts/editorial/evidence/rcb/cf-rcb-100.ts."
+}

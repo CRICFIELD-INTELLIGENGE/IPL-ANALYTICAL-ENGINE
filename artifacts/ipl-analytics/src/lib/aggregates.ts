@@ -107,7 +107,7 @@ export interface BowlerRow {
   boundaryPct: number;
   ballsPerBoundary: number;
   trueEconomy: number | null;
-  bowlerType?: "Pacer" | "Spinner";
+  bowlerType?: "Pacer" | "Spinner" | "Unknown";
   vsLhb?: HandednessSplit;
   vsRhb?: HandednessSplit;
   ppWickets: number;
@@ -587,49 +587,54 @@ export const useSquadsBySeason = (): UseQueryResult<SquadsBySeason> =>
  */
 export const usePlayerDisplayNames = (): Map<string, string> => {
   const squads = useSquadsBySeason();
-  return useMemo(() => {
-    // Count every spelling a player is listed under, then keep the most common.
-    // Taking the first spelling that merely DIFFERED from the scorecard name
-    // let a one-off variant win: Ankit Sharma is listed as "Ankit Nagendra
-    // Sharma" in a single season and as "Ankit Sharma" in six others.
-    const counts = new Map<string, Map<string, number>>();
-    for (const teams of Object.values(squads.data ?? {})) {
-      for (const players of Object.values(teams)) {
-        for (const p of players) {
-          if (!p.cricsheetName || !p.name) continue;
-          let inner = counts.get(p.cricsheetName);
-          if (!inner) { inner = new Map(); counts.set(p.cricsheetName, inner); }
-          inner.set(p.name, (inner.get(p.name) ?? 0) + 1);
-        }
+  return useMemo(() => buildPlayerDisplayNames(squads.data), [squads.data]);
+};
+
+/** Scorecard name → the name people use, from the squad lists (usePlayerDisplayNames). */
+export const buildPlayerDisplayNames = (
+  squadsData: Record<string, Record<string, { name?: string; cricsheetName?: string | null }[]>> | undefined,
+): Map<string, string> => {
+  // Count every spelling a player is listed under, then keep the most common.
+  // Taking the first spelling that merely DIFFERED from the scorecard name
+  // let a one-off variant win: Ankit Sharma is listed as "Ankit Nagendra
+  // Sharma" in a single season and as "Ankit Sharma" in six others.
+  const counts = new Map<string, Map<string, number>>();
+  for (const teams of Object.values(squadsData ?? {})) {
+    for (const players of Object.values(teams)) {
+      for (const p of players) {
+        if (!p.cricsheetName || !p.name) continue;
+        let inner = counts.get(p.cricsheetName);
+        if (!inner) { inner = new Map(); counts.set(p.cricsheetName, inner); }
+        inner.set(p.name, (inner.get(p.name) ?? 0) + 1);
       }
     }
+  }
 
-    /** "Shikhar" reads as a name; "S", "SK" and "AB" are initials. */
-    const isSpelledOut = (name: string) => {
-      const first = name.trim().split(/\s+/)[0] ?? "";
-      return first.length >= 3 && /[aeiou]/i.test(first);
-    };
+  /** "Shikhar" reads as a name; "S", "SK" and "AB" are initials. */
+  const isSpelledOut = (name: string) => {
+    const first = name.trim().split(/\s+/)[0] ?? "";
+    return first.length >= 3 && /[aeiou]/i.test(first);
+  };
 
-    const map = new Map<string, string>();
-    for (const [cricsheet, spellings] of counts) {
-      const total = [...spellings.values()].reduce((a, b) => a + b, 0);
-      const pick = (entries: [string, number][]) =>
-        entries.sort((a, b) => b[1] - a[1] || a[0].length - b[0].length)[0];
+  const map = new Map<string, string>();
+  for (const [cricsheet, spellings] of counts) {
+    const total = [...spellings.values()].reduce((a, b) => a + b, 0);
+    const pick = (entries: [string, number][]) =>
+      entries.sort((a, b) => b[1] - a[1] || a[0].length - b[0].length)[0];
 
-      const spelledOut = pick([...spellings].filter(([s]) => isSpelledOut(s)));
-      const overall = pick([...spellings]);
+    const spelledOut = pick([...spellings].filter(([s]) => isSpelledOut(s)));
+    const overall = pick([...spellings]);
 
-      // Prefer the spelled-out name, since that is how people refer to players.
-      // The exception is someone the sources overwhelmingly abbreviate — MS
-      // Dhoni, AB de Villiers, KL Rahul are known by their initials, and
-      // "Mahendra Singh Dhoni" would read as a mistake.
-      let best = overall?.[0] ?? cricsheet;
-      if (spelledOut && spelledOut[1] / total > 0.2) best = spelledOut[0];
+    // Prefer the spelled-out name, since that is how people refer to players.
+    // The exception is someone the sources overwhelmingly abbreviate — MS
+    // Dhoni, AB de Villiers, KL Rahul are known by their initials, and
+    // "Mahendra Singh Dhoni" would read as a mistake.
+    let best = overall?.[0] ?? cricsheet;
+    if (spelledOut && spelledOut[1] / total > 0.2) best = spelledOut[0];
 
-      if (best && best !== cricsheet) map.set(cricsheet, best);
-    }
-    return map;
-  }, [squads.data]);
+    if (best && best !== cricsheet) map.set(cricsheet, best);
+  }
+  return map;
 };
 
 export const COMMON_PLAYER_NAME_MAP: Record<string, string> = {
@@ -986,6 +991,12 @@ export const normalizeVenueName = (v: string): string => {
 /** URL-safe slug for a venue, always derived from its canonical name. */
 export const venueSlug = (v: string): string =>
   normalizeVenueName(v).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+/** Every venue entry point uses the same dedicated profile and Feed context. */
+export const venueHref = (venue?: string | null): string =>
+  venue?.trim() ? `/venues/${venueSlug(venue)}` : "/feed/venues";
+export const venueHubHref = (venue: string): string =>
+  `/feed/venues?venue=${encodeURIComponent(venueSlug(venue))}`;
 
 // Curated local headshots for a small hand-picked set of marquee players —
 // kept as the highest-priority source since these are pre-verified good

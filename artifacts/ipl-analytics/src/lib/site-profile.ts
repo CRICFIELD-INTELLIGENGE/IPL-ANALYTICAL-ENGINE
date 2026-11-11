@@ -16,7 +16,7 @@ export const SITE = {
   linkedin: "",
   /** Shown on the Contact page as a mailto link when set. */
   email: "",
-  projectName: "IPL Decision Intelligence OS",
+  projectName: "CricField",
 } as const;
 
 export const hasLink = (v: string) => v.trim().length > 0;

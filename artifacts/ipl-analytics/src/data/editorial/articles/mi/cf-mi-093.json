@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-mi-093",
+ "planId": "cf-mi-093",
+ "franchise": "MI",
+ "aspect": "future",
+ "title": "A Digital Twin of Wankhede: Simulating Mumbai Indians\u2019s Home Conditions",
+ "slug": "mi-a-digital-twin-of-wankhede-simulating-mi-home-conditions",
+ "dek": "What would a digital twin of Wankhede need to know? The parameters are already in the data: scoring, chasing, six-hitting, and how pace and spin fare.",
+ "excerpt": "A simulation of Wankhede starts with a handful of measured parameters. Here they are, from first-innings scores to pace and spin economy, set against the rest of the IPL.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "MI"
+ ],
+ "players": [],
+ "seasons": [
+  "2008\u20132026"
+ ],
+ "keyTakeaways": [
+  "Wankhede: first-innings average {{ev:tw-first-home}} (other venues {{ev:tw-first-other}}); chasing sides win {{ev:tw-chase-home}} (elsewhere {{ev:tw-chase-other}}).",
+  "Since 2022, pace has cost {{ev:tw-hp}} an over and spin {{ev:tw-hs}} at Wankhede, against {{ev:tw-op}} and {{ev:tw-os}} elsewhere.",
+  "There are {{ev:tw-six-home}} sixes per match at the ground, against {{ev:tw-six-other}} elsewhere."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "What a Digital Twin Is",
+   "body": [
+    "A digital twin is a simulation calibrated to a real place. For a cricket ground, it would let a team test plans, such as bowling first with three spinners, before the match.",
+    "Its first requirement is a set of measured parameters. The warehouse already provides the main ones."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Parameters",
+   "body": [
+    "At Wankhede, the average first-innings score is {{ev:tw-first-home}} against {{ev:tw-first-other}} elsewhere, and chasing sides win {{ev:tw-chase-home}} of decided matches against {{ev:tw-chase-other}}. There are {{ev:tw-six-home}} sixes per match, against {{ev:tw-six-other}}.",
+    "Since 2022, pace has cost {{ev:tw-hp}} an over at the ground and spin {{ev:tw-hs}}, against {{ev:tw-op}} and {{ev:tw-os}} at other venues. The chart compares them."
+   ],
+   "chartIds": [
+    "tw-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Proposal: Building the Twin",
+   "body": [
+    "Proposal: combine these parameters with ball-by-ball outcome rates by phase and bowling type to simulate innings at the ground, then validate the simulated totals against real ones.",
+    "{{hyp:twin}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What Is Missing",
+   "body": [
+    "A full twin would need pitch reports, weather, dew and boundary dimensions, none of which are in the warehouse. Bowling type is known for bowlers delivering {{ev:tw-cover}} of balls at the ground.",
+    "Those gaps limit how far the twin could be trusted for a specific match."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: The Core Is Ready",
+   "body": [
+    "The core parameters for a Wankhede twin are measurable today. Adding conditions data would turn it into a planning tool.",
+    "Mumbai Indians could validate it against every home match as the season goes on."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "tw-chart",
+   "type": "column",
+   "title": "Pace and spin economy",
+   "subtitle": "Wankhede vs other venues, 2022\u20132026",
+   "table": "tw-type",
+   "xKey": "where",
+   "series": [
+    {
+     "key": "pace",
+     "label": "Pace"
+    },
+    {
+     "key": "spin",
+     "label": "Spin"
+    }
+   ],
+   "xLabel": "Venue",
+   "unit": "runs per over",
+   "takeaway": "Pace and spin fare differently at the ground than elsewhere.",
+   "ariaLabel": "Grouped column chart of pace and spin economy at Wankhede and at other venues since 2022."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "twin",
+   "statement": "Hypothesis: a simple simulation using these parameters predicts first-innings totals at Wankhede within fifteen runs on average.",
+   "whyUnverified": "No simulation has been built.",
+   "howToTest": "Build the simulation and compare predicted and actual totals for every home match."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Wankhede, home of Mumbai Indians.",
+   "wanted": "Wankhede stadium."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-mi-065",
+  "cf-mi-022",
+  "cf-mi-094"
+ ],
+ "seo": {
+  "metaTitle": "A digital twin of Wankhede for MI",
+  "metaDescription": "The measured parameters a simulation of Wankhede would need: scoring, chasing, sixes, and pace and spin economy."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Forward-looking proposals are labelled as such. Generated by scripts/editorial/engine. Ground profile uses all matches at the venue; pace and spin economy uses 2022\u20132026 and bowling types from CricField player-bio data.",
+ "generator": "engine:v1"
+}

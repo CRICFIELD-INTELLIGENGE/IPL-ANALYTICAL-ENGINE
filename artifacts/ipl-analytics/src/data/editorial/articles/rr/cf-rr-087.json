@@ -1,0 +1,156 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-087",
+ "planId": "cf-rr-087",
+ "franchise": "RR",
+ "aspect": "data-science",
+ "title": "The Uncertainty Score: How Confident Are We in Rajasthan Royals Player Rankings?",
+ "slug": "rr-the-uncertainty-score-how-confident-are-we-in-rr-player-rankings",
+ "dek": "Every ranking of Rajasthan Royals' batters hides uncertainty. Bootstrap intervals show how confident anyone can really be that one batter is ahead of another.",
+ "excerpt": "Ranked by strike rate since 2024, most neighbouring pairs of Rajasthan Royals' leading batters have overlapping uncertainty intervals. The order is less certain than any league table makes it look.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "RR"
+ ],
+ "players": [
+  "V Suryavanshi",
+  "YBK Jaiswal",
+  "R Parag"
+ ],
+ "seasons": [
+  "2024\u20132026"
+ ],
+ "keyTakeaways": [
+  "Of the {{ev:un-pairs}} adjacent pairs in Rajasthan Royals' top-{{ev:un-n}} strike-rate ranking since 2024, {{ev:un-ov}} have overlapping ninety-five per cent intervals.",
+  "{{ev:un-wide}} has the widest interval, {{ev:un-wide-w}} strike-rate points across.",
+  "Overlapping intervals mean the order between those batters is not settled by the data."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Rankings Without Error Bars",
+   "body": [
+    "Player rankings are usually shown as a clean list. But every strike rate comes from a limited number of innings, and a few innings more or less could change the order.",
+    "CricField resampled each of Rajasthan Royals' eight busiest batters' innings since 2024 two thousand times to estimate how much each strike rate could plausibly vary."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "How Settled Is the Order?",
+   "body": [
+    "Of the {{ev:un-pairs}} adjacent pairs in the ranking, {{ev:un-ov}} have overlapping ninety-five per cent intervals, so the data does not clearly separate them.",
+    "{{ev:un-wide}} has the widest interval, {{ev:un-wide-w}} strike-rate points across. The table lists every batter's interval."
+   ],
+   "chartIds": [
+    "un-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "An Uncertainty Score",
+   "body": [
+    "A simple uncertainty score for any ranking is the share of adjacent pairs whose intervals overlap. For Rajasthan Royals' batting order of merit, it is {{ev:un-ov}} of {{ev:un-pairs}}.",
+    "{{hyp:uncert}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Method Notes",
+   "body": [
+    "The bootstrap resamples innings, not balls, so it respects the fact that runs come in bursts. It does not account for changes in role or opposition.",
+    "Intervals would narrow with more seasons of data, at the cost of mixing different versions of each player."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: Show the Error Bars",
+   "body": [
+    "Rajasthan Royals should read any ranking of their batters alongside its intervals, and treat overlapping players as level.",
+    "Decisions that depend on separating them need more evidence than one strike rate."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "un-chart",
+   "type": "bar",
+   "title": "Strike rate with uncertainty",
+   "subtitle": "RR, eight busiest batters, 2024\u20132026",
+   "table": "un-table",
+   "xKey": "batter",
+   "series": [
+    {
+     "key": "low",
+     "label": "95% low"
+    },
+    {
+     "key": "strikeRate",
+     "label": "Strike rate"
+    },
+    {
+     "key": "high",
+     "label": "95% high"
+    }
+   ],
+   "unit": "runs per 100 balls",
+   "takeaway": "Many intervals overlap, so the order is uncertain.",
+   "ariaLabel": "Horizontal grouped bar chart of strike rates and 95% bootstrap intervals for Rajasthan Royals' eight busiest batters since 2024."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "uncert",
+   "statement": "Hypothesis: rankings of bowlers by economy carry even more overlap than batting rankings, because bowlers face fewer balls per match.",
+   "whyUnverified": "Bowler intervals have not been computed.",
+   "howToTest": "Bootstrap bowlers' economy by spell and compare overlap rates."
+  }
+ ],
+ "literalNumbers": [
+  {
+   "text": "95%",
+   "reason": "Interval level."
+  },
+  {
+   "text": "2,000",
+   "reason": "Number of bootstrap resamples."
+  }
+ ],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Rajasthan Royals batters.",
+   "wanted": "Rajasthan Royals batter."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-rr-084",
+  "cf-rr-080",
+  "cf-rr-090"
+ ],
+ "seo": {
+  "metaTitle": "The uncertainty score: how confident are RR rankings?",
+  "metaDescription": "Bootstrap intervals on Rajasthan Royals' batting strike rates since 2024, and how many places in the ranking the data cannot separate."
+ },
+ "methodology": "Built from the CricField warehouse (Cricsheet ball-by-ball data, regulation innings). Models are fitted on the warehouse itself and described in full here. Generated by scripts/editorial/engine. 95% intervals from 2,000 bootstrap resamples of each batter's innings (seeded).",
+ "generator": "engine:v1"
+}

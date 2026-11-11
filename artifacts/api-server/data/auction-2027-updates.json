@@ -1,0 +1,96 @@
+[
+  {
+    "kind": "announcement",
+    "id": "bcci-retention-window-2027",
+    "headline": "BCCI officially notifies IPL franchises of the November 15 retention submission deadline for IPL 2027.",
+    "verification": "Official Announcement",
+    "sourceUrl": "https://www.iplt20.com/news",
+    "publishedOn": "2026-10-28",
+    "eventDate": "2026-11-15",
+    "context": "Governing Council confirms each franchise may retain up to 6 players including maximum 5 capped and 2 uncapped, with Right-to-Match (RTM) options at the December mini-auction.",
+    "recordedAt": "2026-10-28T10:00:00.000Z"
+  },
+  {
+    "kind": "announcement",
+    "id": "bcci-salary-cap-increase",
+    "headline": "Franchise total salary purse expanded to ₹120.00 Cr for the IPL 2027 cycle.",
+    "verification": "Official Announcement",
+    "sourceUrl": "https://www.iplt20.com/news",
+    "publishedOn": "2026-10-29",
+    "eventDate": "2026-12-18",
+    "context": "A ₹5 Cr increment over the previous season gives teams increased auction bidding flexibility while enforcing strict minimum spend thresholds of 75%.",
+    "recordedAt": "2026-10-29T14:30:00.000Z"
+  },
+  {
+    "kind": "announcement",
+    "id": "csk-dhoni-status-credible",
+    "headline": "MS Dhoni confirms availability for IPL 2027 in uncapped retention bracket for Chennai Super Kings.",
+    "verification": "Credible Report",
+    "team": "CSK",
+    "sourceUrl": "https://www.espncricinfo.com/story/ipl-2027-ms-dhoni-availability-csk",
+    "publishedOn": "2026-11-01",
+    "eventDate": "2026-11-15",
+    "context": "ESPNCricinfo reports CSK management has submitted provisional paperwork retaining Dhoni under the 5-year international retirement clause at ₹4.00 Cr.",
+    "recordedAt": "2026-11-01T09:15:00.000Z"
+  },
+  {
+    "kind": "announcement",
+    "id": "rcb-patidar-padikkal-core",
+    "headline": "Royal Challengers Bengaluru set to structure core around Rajat Patidar and Devdutt Padikkal alongside Virat Kohli.",
+    "verification": "Credible Report",
+    "team": "RCB",
+    "sourceUrl": "https://www.cricbuzz.com/cricket-news/rcb-retention-strategy-patidar-padikkal",
+    "publishedOn": "2026-11-02",
+    "eventDate": "2026-11-15",
+    "context": "Cricbuzz reports RCB leadership views Patidar and Padikkal as non-negotiable domestic batting anchors to preserve continuity ahead of the 2027 mini-auction.",
+    "recordedAt": "2026-11-02T12:00:00.000Z"
+  },
+  {
+    "kind": "announcement",
+    "id": "mi-rohit-hardik-dynamics",
+    "headline": "Mumbai Indians lock Rohit Sharma as cultural Icon; Naman Dhir elevated to Priority Retain status.",
+    "verification": "Analyst Prediction",
+    "team": "MI",
+    "sourceUrl": "https://cricfield.com/analysis/mi-retention-dynamics-2027",
+    "publishedOn": "2026-11-03",
+    "eventDate": "2026-11-15",
+    "context": "CricField tactical analysis projects MI retaining Rohit at ₹16.30 Cr for franchise identity while preserving emerging finisher Naman Dhir ahead of auction bids.",
+    "recordedAt": "2026-11-03T16:45:00.000Z"
+  },
+  {
+    "kind": "announcement",
+    "id": "kkr-narine-trio-retention",
+    "headline": "Kolkata Knight Riders projected to retain Sunil Narine as Icon with young Indian trio Rinku, Harshit, and Angkrish.",
+    "verification": "Analyst Prediction",
+    "team": "KKR",
+    "sourceUrl": "https://cricfield.com/analysis/kkr-core-retentions-2027",
+    "publishedOn": "2026-11-04",
+    "eventDate": "2026-11-15",
+    "context": "CRR model indicates KKR retains maximum tactical surplus by locking young domestic pace and finishing firepower before testing market depth.",
+    "recordedAt": "2026-11-04T11:20:00.000Z"
+  },
+  {
+    "kind": "announcement",
+    "id": "pant-kuldeep-trade-rumor",
+    "headline": "Delhi Capitals and Lucknow Super Giants in advanced exploratory discussions for blockbuster Rishabh Pant - Kuldeep Yadav swap.",
+    "verification": "Rumor",
+    "team": "DC",
+    "sourceUrl": "https://timesofindia.indiatimes.com/sports/cricket/ipl/trade-rumours-pant-kuldeep",
+    "publishedOn": "2026-11-05",
+    "eventDate": "2026-11-12",
+    "context": "Multiple trade desk sources suggest negotiations are active subject to player consent and IPL Governing Council financial reconciliation. Not yet officially approved.",
+    "recordedAt": "2026-11-05T08:30:00.000Z"
+  },
+  {
+    "kind": "announcement",
+    "id": "srh-pace-restructure-rumor",
+    "headline": "Sunrisers Hyderabad evaluating release of Jaydev Unadkat and Brydon Carse to optimize overseas pace slots.",
+    "verification": "Rumor",
+    "team": "SRH",
+    "sourceUrl": "https://sportstar.thehindu.com/cricket/ipl/srh-auction-purse-plan",
+    "publishedOn": "2026-11-06",
+    "eventDate": "2026-11-15",
+    "context": "SRH expected to prioritize Cummins, Head, Klaasen, and Abhishek, freeing purse allocations for high-impact death bowling specialists at the auction.",
+    "recordedAt": "2026-11-06T15:00:00.000Z"
+  }
+]

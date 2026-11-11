@@ -1,30 +1,59 @@
+import { PreseasonRecruitment } from "@/components/scout/preseason-recruitment";
 /**
  * SQUAD DNA — Decision Intelligence OS, Phase 4 (Intelligence)
  * ─────────────────────────────────────────────────────────────────────────────
- * Every franchise-season measured on 38 dimensions of how it actually played,
- * each scored against the same season's league (so eras compare fairly) and
- * placed as a percentile across every IPL team-season. Grouped into a
- * fingerprint, weighted by how strongly each dimension has tracked winning
- * into a vulnerability score, with historical twins and a side-by-side compare.
+ * Top: the IPL 2027 squad plan, built from the same CRICFIELD Picks the Retention
+ * Room shows (shared rules in lib/retention-summary), so every page agrees.
+ * Below: how the franchise actually played — 38 dimensions per team-season, each
+ * scored against its own season's league, with historical twins and a compare.
+ * The team follows the site-wide selection: a ?team= link sets it, and changing
+ * the team in the header (or here) changes it everywhere.
  */
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangle, Dna, GitCompare, Shield, Trophy, Users } from "lucide-react";
+import { AlertTriangle, ArrowRight, Dna, GitCompare, Shield, Trophy, Users } from "lucide-react";
 import { Layout } from "@/components/layout";
+import { PlayerAvatar } from "@/components/player-avatar";
 import { Card, ErrorBanner, Loading, ModuleHeader, SectionTitle, Select, Tile } from "@/components/decision/module-shell";
-import { readParams, writeParams } from "@/lib/discovery-api";
-import { fetchSquadCompare, fetchSquadProfile, fetchSquadTeams, type DimensionView, type SquadProfile } from "@/lib/sim-api";
+import { CategoryTag, LIVE_SEASON } from "@/components/retention/retention-widgets";import { readParams, writeParams, errorText } from "@/lib/discovery-api";
+import { fetchSquadCompare, fetchSquadProfile, fetchSquadTeams, money, type DimensionView, type SquadProfile } from "@/lib/sim-api";
+import { fetchPicks, type PickRow, type TeamPicks } from "@/lib/retention-api";
+import { RETENTION_INDEX_VERSION } from "@/lib/retention-version";
+import { fetchTeamReport } from "@/lib/intelligence-api";
+import { CALL, callOf, coreFive, firstSentence, genuineDoubt, isCore, likelyReleases, plainAgainst, type Call } from "@/lib/retention-summary";
+import { HUB_TEAMS } from "@/lib/ipl-2027";
+import { RR_PREDICTIONS, getFranchisePredictions } from "@/lib/franchise-predictions";
+import { isTeamCode, TEAM_REGISTRY, useTeamTheme, type TeamCode } from "@/lib/team-context";
 
 const A_COLOR = "#34d399", B_COLOR = "#a78bfa";
+const ROLES: [string, string, string][] = [["batter", "Batters", "#38BDF8"], ["wicketkeeper", "Keepers", "#06B6D4"], ["all-rounder", "All-rounders", "#A855F7"], ["bowler", "Bowlers", "#EC4899"]];
+const panel = "rounded-2xl border border-white/10 bg-[#0B1226]/80 p-5 min-w-0";
 
 export default function SquadDnaPage() {
   const p = readParams();
-  const [team, setTeam] = useState(p.get("team") ?? "RCB");
-  const [season, setSeason] = useState<number | undefined>(p.get("season") ? Number(p.get("season")) : undefined);
+  const { selectedTeam, setSelectedTeam } = useTeamTheme();
+  const urlTeam = p.get("team")?.toUpperCase() ?? null;
+  // A ?team= link wins, then the site-wide team, then RCB.
+  const [team, setTeamState] = useState<string>(urlTeam ?? selectedTeam ?? "RCB");
+  const [season, setSeason] = useState<number | undefined>(p.get("season") && p.get("season") !== "2027" ? Number(p.get("season")) : undefined);
   const [cmp, setCmp] = useState<string | null>(p.get("compare"));
   const [cmpSeason, setCmpSeason] = useState<number | undefined>(p.get("compareSeason") ? Number(p.get("compareSeason")) : undefined);
+
+  const pickTeam = (t: string) => {
+    setTeamState(t); setSeason(undefined); setCmp(null); setCmpSeason(undefined);
+    writeParams({ team: t, season: null, compare: null, compareSeason: null });
+    if (isTeamCode(t) && t !== selectedTeam) setSelectedTeam(t);
+  };
+  // Arriving with ?team=RR makes RR the site-wide team too.
+  useEffect(() => { if (urlTeam && isTeamCode(urlTeam) && urlTeam !== selectedTeam) setSelectedTeam(urlTeam); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // Changing the team in the site header while here follows it.
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) { mounted.current = true; return; }
+    if (selectedTeam && selectedTeam !== team) pickTeam(selectedTeam);
+  }, [selectedTeam]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const teams = useQuery({ queryKey: ["squad-teams"], queryFn: fetchSquadTeams, staleTime: 60 * 60_000, retry: 1 });
   const profile = useQuery({ queryKey: ["squad", team, season], queryFn: () => fetchSquadProfile(team, season), placeholderData: (x) => x, retry: 1 });
@@ -35,16 +64,36 @@ export default function SquadDnaPage() {
   const teamOptions = list.map((t) => ({ value: t.short, label: `${t.short} · ${t.franchise}` }));
   const a = profile.data;
   const b = cmp ? compare.data?.b : undefined;
+  const theme = isTeamCode(team) ? TEAM_REGISTRY[team] : null;
 
   return (
     <Layout hideRightPanel>
-      <div className="space-y-6 pb-16 max-w-6xl mx-auto w-full min-w-0">
-        <ModuleHeader phase="Phase 4 · Intelligence" title="Squad DNA" tagline="38 dimensions of how a franchise actually played — each judged against its own season's league." icon={<Dna className="w-5 h-5 text-emerald-400" />} />
+      <div className="space-y-6 pb-16 max-w-6xl mx-auto w-full min-w-0" style={theme ? ({ "--team-accent": theme.accent } as React.CSSProperties) : undefined}>
+        <ModuleHeader phase="Phase 4 · Intelligence" title="Squad DNA" tagline="The 2027 squad plan, then how the franchise actually played, season by season." icon={<Dna className="w-5 h-5 text-emerald-400" />} />
+
+        <nav aria-label="Franchise" className="-mx-4 overflow-x-auto px-4 py-1 no-scrollbar">
+          <div className="flex items-center gap-2 w-max">
+            {HUB_TEAMS.map((t) => (
+              <button key={t} type="button" aria-pressed={team === t} onClick={() => pickTeam(t)}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-black transition-all ${team === t ? "bg-[#0B1226] border-[var(--team-accent)] text-white ring-2 ring-[var(--team-accent)]/30" : "bg-white/[0.03] border-white/10 text-white/70 hover:border-white/30 hover:text-white"}`}>
+                <img src={TEAM_REGISTRY[t].logoImg} alt="" className="w-5 h-5 object-contain" /><span>{t}</span>
+              </button>
+            ))}
+          </div>
+        </nav>
+
+        {isTeamCode(team) ? <SquadPlan team={team} /> : <p className="rounded-xl border border-white/10 p-4 text-sm text-white/60">{team} no longer plays in the IPL, so there is no 2027 plan. Its history is below.</p>}
+
+        <div className="flex items-center gap-2 pt-2">
+          <Dna className="w-4 h-4 text-emerald-400" />
+          <h2 className="text-sm font-black uppercase tracking-wider text-white">How {team} actually played</h2>
+          <span className="text-[11px] text-white/45">Measured from ball-by-ball data, one season at a time</span>
+        </div>
         {teams.isError && <ErrorBanner error={teams.error} />}
         <Card>
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 items-end">
-            <Select label="Franchise" value={team} onChange={(v) => { setTeam(v); setSeason(undefined); writeParams({ team: v, season: null }); }} options={teamOptions.length ? teamOptions : [{ value: team, label: team }]} />
             <Select label="Season" value={season ?? a?.season ?? 0} onChange={(v) => { setSeason(v); writeParams({ season: v }); }} options={seasonsOf(team).map((s) => ({ value: s, label: String(s) }))} />
+            <div className="hidden lg:block" />
             <div className="hidden lg:block" />
             {cmp ? (
               <>
@@ -66,8 +115,117 @@ export default function SquadDnaPage() {
         {profile.isLoading && <Loading label="Measuring every team-season…" />}
         {a && <DnaView a={a} b={b} correlation={cmp ? compare.data?.correlation : undefined} gaps={cmp ? compare.data?.biggestGaps : undefined} loading={profile.isFetching || compare.isFetching}
           onTwin={(t, s) => { setCmp(t); setCmpSeason(s); writeParams({ compare: t, compareSeason: s }); }} />}
+
+        <PreseasonRecruitment team={team} />
       </div>
     </Layout>
+  );
+}
+
+/** IPL 2027 squad plan: the CRICFIELD Picks verdicts, summarised. Same query key as the Retention Room. */
+function SquadPlan({ team }: { team: TeamCode }) {
+  const theme = TEAM_REGISTRY[team];
+  const q = useQuery({ queryKey: ["retention-picks", team, RETENTION_INDEX_VERSION], queryFn: () => fetchPicks(LIVE_SEASON, team), retry: false, staleTime: 5 * 60_000 });
+  const report = useQuery({ queryKey: ["team-intelligence", team], queryFn: () => fetchTeamReport(team), retry: false, staleTime: 5 * 60_000 });
+  if (q.isError) return <p className="text-xs text-rose-300">{errorText(q.error)}</p>;
+  if (!q.data) return <Loading label={`Reading ${team}'s 2027 picks…`} />;
+  const picks: TeamPicks = q.data;
+  const rows = [...picks.rows].sort((x, y) => y.index - x.index);
+  const by = (c: Call) => rows.filter((p) => callOf(p) === c);
+  const stay = by("retain");
+  const osStay = stay.filter((p) => p.overseas).length;
+  const salary = stay.reduce((s, p) => s + (p.contractLakh ?? 0), 0);
+  const unpriced = stay.filter((p) => p.contractLakh === null).length;
+  const doubts = genuineDoubt(picks);
+  const gaps = report.data?.gaps ?? [];
+  return (
+    <section className="space-y-5" aria-label={`${team} 2027 squad plan`}>
+      <div className={`${panel} relative overflow-hidden`}>
+        <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ background: `radial-gradient(circle at 0% 0%, ${theme.accent}, transparent 55%)` }} />
+        <div className="relative flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <img src={theme.logoImg} alt="" className="w-11 h-11 object-contain" />
+            <div><div className="text-[10px] font-black uppercase tracking-widest text-[var(--team-accent)]">IPL 2027 · squad plan</div><h2 className="text-xl font-black text-white">{theme.name}</h2></div>
+          </div>
+          <Link href={`/retention-room/${team}`} className="text-xs font-bold text-violet-300 hover:text-white inline-flex items-center gap-1">Same calls as the Retention Room <ArrowRight className="w-3.5 h-3.5" /></Link>
+        </div>
+        <div className="relative grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4">
+          {(["retain", "doubt", "release", "unclear"] as const).map((c) => (
+            <div key={c} className={`rounded-xl p-3 ${CALL[c].tone}`}><div className="text-[10px] font-black uppercase tracking-wider">{CALL[c].label}</div><div className="text-2xl font-black text-white tabular-nums">{by(c).length}</div></div>
+          ))}
+        </div>
+        <div className="relative grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2 text-xs">
+          {([["Indian / overseas kept", `${stay.length - osStay} / ${osStay}`], ["Places left to fill", String(Math.max(0, picks.rules.maxSquad - stay.length))], ["Salary of players kept", `${money(salary)}${unpriced ? ` + ${unpriced} unpriced` : ""}`], ["2027 auction purse", picks.rules.auctionPurseLakh ? money(picks.rules.auctionPurseLakh) : "Not confirmed yet"]] as const).map(([k, v]) => (
+            <div key={k} className="rounded-xl border border-white/10 bg-black/20 p-3"><div className="text-[10px] uppercase tracking-wider text-white/45">{k}</div><div className="font-black text-white tabular-nums mt-0.5">{v}</div></div>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-2">
+        <div className={panel}>
+          <h3 className="text-[11px] font-black uppercase tracking-wider text-emerald-400">Build around · 2028 core</h3>
+          <ul className="mt-3 space-y-2.5">{coreFive(picks).map((p) => <PlayerLine key={p.id} p={p} team={team} core={isCore(picks, p.id)} note={firstSentence(p.reason)} />)}</ul>
+        </div>
+        <div className={panel}>
+          <h3 className="text-[11px] font-black uppercase tracking-wider text-rose-400">Most likely released</h3>
+          <ul className="mt-3 space-y-2.5">{likelyReleases(picks).map((p) => <PlayerLine key={p.id} p={p} team={team} note={`${plainAgainst(p)}.${p.contractLakh ? ` Frees ${money(p.contractLakh)}.` : ""}`} />)}</ul>
+          {!likelyReleases(picks).length && <p className="text-xs text-white/50 mt-3">No player is in a release tier.</p>}
+        </div>
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-[1.2fr_1fr]">
+        <div className={panel}>
+          <h3 className="text-[11px] font-black uppercase tracking-wider text-white">Role balance after retentions</h3>
+          <p className="text-[10px] text-white/45 mt-0.5">Players kept, against the whole 2026 squad</p>
+          <div className="mt-3 space-y-3">{ROLES.map(([role, label, colour]) => {
+            const all = rows.filter((p) => p.role === role), kept = all.filter((p) => callOf(p) === "retain");
+            return (
+              <div key={role}>
+                <div className="flex justify-between text-xs text-white/80"><span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full" style={{ background: colour }} />{label}</span><span className="tabular-nums text-white/55">{kept.length} kept of {all.length}</span></div>
+                <div className="h-2 mt-1 rounded-full bg-white/10 overflow-hidden"><div className="h-full rounded-full" style={{ width: `${(kept.length / Math.max(1, all.length)) * 100}%`, background: colour }} /></div>
+                <div className="flex flex-wrap gap-1 mt-1.5">{all.map((p) => <span key={p.id} title={`${p.category} · ${p.index.toFixed(0)}/100`} className={`px-1.5 py-0.5 rounded text-[10px] ${CALL[callOf(p)].tone}`}>{p.name}</span>)}</div>
+              </div>
+            );
+          })}</div>
+        </div>
+        <div className={`${panel} space-y-4`}>
+          <div>
+            <h3 className="text-[11px] font-black uppercase tracking-wider text-amber-300">Open questions</h3>
+            {doubts.length ? <ul className="mt-2 space-y-1.5 text-xs text-white/80">{doubts.map((p) => <li key={p.id}><b className="text-white">{p.name}</b> <CategoryTag category={p.category} /><span className="block text-white/55">Salary {p.contractLakh ? money(p.contractLakh) : "n/a"} against an auction value of about {money(p.predictedLakh)}.</span></li>)}</ul> : <p className="text-xs text-white/50 mt-2">Every call is clear.</p>}
+          </div>
+          <div>
+            <h3 className="text-[11px] font-black uppercase tracking-wider text-sky-300">Gaps to fill at the auction</h3>
+            {gaps.length ? <ul className="mt-2 list-disc pl-4 text-xs text-white/75 space-y-0.5">{gaps.map((g) => <li key={g}>{g}</li>)}</ul> : <p className="text-xs text-white/50 mt-2">{report.isLoading ? "Checking the best XII…" : "No role shortage in the current best XII."}</p>}
+            {(() => {
+              const priorities = getFranchisePredictions(team)?.priorities || (team === "RR" ? RR_PREDICTIONS.priorities : []);
+              return priorities.length > 0 ? (
+                <>
+                  <h4 className="text-[10px] font-black uppercase tracking-wider text-white/50 mt-3">{team} recruitment order</h4>
+                  <ol className="list-decimal pl-4 text-xs text-white/75 space-y-0.5 mt-1">{priorities.map((x: string) => <li key={x}>{x}</li>)}</ol>
+                </>
+              ) : null;
+            })()}
+          </div>
+          <div className="flex flex-wrap gap-3 text-xs pt-1">
+            <Link href={`/ai-analyst/auction-war-room?team=${team}`} className="text-emerald-300 hover:underline">Auction targets →</Link>
+            <Link href="/ai-analyst/playing-xi" className="text-sky-300 hover:underline">Build the playing XI →</Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PlayerLine({ p, team, note, core }: { p: PickRow; team: TeamCode; note: string; core?: boolean }) {
+  return (
+    <li className="flex items-start gap-2.5">
+      <PlayerAvatar name={p.name} teamId={team} className="w-8 h-8 rounded-full shrink-0" disableHover />
+      <div className="min-w-0 text-xs">
+        <div className="flex flex-wrap items-center gap-1.5"><b className="text-white">{p.name}</b><CategoryTag category={p.category} />{core && <span className="text-[9px] font-black text-emerald-300">🔒 CORE</span>}</div>
+        <div className="text-[10px] text-white/45">{p.granularRole}{p.horizon.age !== null ? ` · age ${p.horizon.age}` : ""}{p.contractLakh ? ` · ${money(p.contractLakh)}` : ""}</div>
+        <div className="text-[11px] text-white/70">{note}</div>
+      </div>
+    </li>
   );
 }
 

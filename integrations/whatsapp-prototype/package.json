@@ -1,0 +1,17 @@
+{
+  "name": "cricfield-whatsapp-prototype",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file-if-exists=../../env/whatsapp.env src/server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "dev": "node scripts/dev.mjs"
+  },
+  "dependencies": {
+    "@wappy_ai/whatsapp": "0.1.2"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

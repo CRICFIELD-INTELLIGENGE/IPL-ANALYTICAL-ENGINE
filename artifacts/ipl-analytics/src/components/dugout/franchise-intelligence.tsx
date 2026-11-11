@@ -2,11 +2,11 @@
 // league in the same season, the franchise's exposed and strong areas, and links
 // into the analysis tools. All figures come from the Squad DNA profile.
 
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Activity, Gavel, Map as MapIcon, Sparkles, Swords, BarChart2 } from "lucide-react";
-import { fetchSquadProfile, type DimensionView } from "@/lib/sim-api";
+import { fetchSquadProfile, fetchSquadTeams, type DimensionView } from "@/lib/sim-api";
 
 const PHASE_ROWS: { key: string; label: string; kind: "bat" | "bowl" }[] = [
   { key: "pp_rr", label: "Powerplay scoring", kind: "bat" },
@@ -17,7 +17,14 @@ const PHASE_ROWS: { key: string; label: string; kind: "bat" | "bowl" }[] = [
   { key: "death_econ", label: "Death bowling", kind: "bowl" },
 ];
 
-export function FranchiseIntelligence({ teamName, code, season, accent }: { teamName: string; code: string; season: string; accent: string }) {
+export function FranchiseIntelligence({ teamName, code, season: dugoutSeason, accent }: { teamName: string; code: string; season: string; accent: string }) {
+  // Follows the Dugout season, but any season in the Squad DNA record can be picked here.
+  const [season, setSeason] = useState(dugoutSeason);
+  useEffect(() => { setSeason(dugoutSeason); }, [dugoutSeason, teamName]);
+  const dnaTeams = useQuery({ queryKey: ["squad-teams"], queryFn: fetchSquadTeams, staleTime: 60 * 60_000, retry: 1 });
+  const dnaSeasons = (dnaTeams.data?.teams.find((t) => t.short === code || t.franchise === teamName)?.seasons ?? [])
+    .map(String).sort((a, b) => Number(b) - Number(a));
+  const seasonOptions = dnaSeasons.includes(season) ? dnaSeasons : [season, ...dnaSeasons];
   const profile = useQuery({
     queryKey: ["dugout-profile", teamName, season],
     queryFn: () => fetchSquadProfile(teamName, Number(season)),
@@ -35,7 +42,19 @@ export function FranchiseIntelligence({ teamName, code, season, accent }: { team
           <div className="text-[10px] font-mono uppercase tracking-widest text-white/40">{season} · against the league that season</div>
           <h2 className="font-display font-black text-xl uppercase tracking-tight text-white">Intelligence</h2>
         </div>
-        {p && <div className="text-xs text-white/50 tabular-nums">{p.matches} matches in the record</div>}
+        <div className="flex items-center gap-3">
+          {p && <div className="text-xs text-white/50 tabular-nums">{p.matches} matches in the record</div>}
+          {seasonOptions.length > 1 && (
+            <select
+              aria-label="Squad DNA season"
+              value={season}
+              onChange={(e) => setSeason(e.target.value)}
+              className="rounded-lg border border-white/15 bg-[#0B1528] px-2.5 py-1 text-xs font-bold text-white outline-none focus:border-white/40 cursor-pointer"
+            >
+              {seasonOptions.map((s) => <option key={s} value={s}>{s}</option>)}
+            </select>
+          )}
+        </div>
       </header>
 
       {profile.isLoading && <p className="text-sm text-white/40">Loading the season profile…</p>}

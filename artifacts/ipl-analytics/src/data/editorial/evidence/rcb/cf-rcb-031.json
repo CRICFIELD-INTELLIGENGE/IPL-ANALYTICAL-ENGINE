@@ -1,0 +1,142 @@
+{
+ "articleId": "cf-rcb-031",
+ "generatedAt": "2026-10-26T04:20:28.987Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "wc-per": {
+   "value": 11.6,
+   "display": "₹11.6 Cr",
+   "label": "RCB recorded squad spend per win, 2018–2026",
+   "unit": "₹ crore",
+   "dataset": "CricField warehouse + CricField squads-by-season.json (auction and retention prices)",
+   "filters": "Seasons with recorded prices",
+   "sampleSize": {
+    "n": 9,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN m.winner_id IN (%IDS%) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (%IDS%) OR m.team2_id IN (%IDS%)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 3 seasons",
+    "passed": true,
+    "detail": "n = 9"
+   }
+  },
+  "wc-lg": {
+   "value": 12.4,
+   "display": "₹12.4 Cr",
+   "label": "League recorded squad spend per win, 2018–2026",
+   "unit": "₹ crore",
+   "dataset": "CricField warehouse + CricField squads-by-season.json (auction and retention prices)",
+   "filters": "All franchise-seasons with recorded prices",
+   "sampleSize": {
+    "n": 82,
+    "unit": "franchise-seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN m.winner_id IN (%IDS%) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (%IDS%) OR m.team2_id IN (%IDS%)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 40 franchise-seasons",
+    "passed": true,
+    "detail": "n = 82"
+   }
+  },
+  "wc-r": {
+   "value": 0,
+   "display": "0.00",
+   "label": "Correlation between a franchise-season's recorded spend and its wins",
+   "dataset": "CricField warehouse + CricField squads-by-season.json (auction and retention prices)",
+   "filters": "2018–2026, all franchises",
+   "sampleSize": {
+    "n": 82,
+    "unit": "franchise-seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN m.winner_id IN (%IDS%) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (%IDS%) OR m.team2_id IN (%IDS%)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year",
+   "validation": {
+    "method": "sample-size floor ≥ 40 franchise-seasons",
+    "passed": true,
+    "detail": "n = 82"
+   }
+  },
+  "wc-rank": {
+   "value": "third",
+   "display": "third",
+   "label": "RCB's rank for cheapest spend per win (first = cheapest)",
+   "dataset": "CricField warehouse + CricField squads-by-season.json (auction and retention prices)",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 10,
+    "unit": "franchises"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN m.winner_id IN (%IDS%) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (%IDS%) OR m.team2_id IN (%IDS%)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year",
+   "validation": {
+    "method": "plausibility range 1–10 for rank",
+    "passed": true,
+    "detail": "value 3"
+   }
+  }
+ },
+ "tables": {
+  "win-cost": {
+   "label": "Recorded squad spend per win by season: RCB",
+   "dataset": "CricField warehouse + CricField squads-by-season.json (auction and retention prices)",
+   "filters": "Sum of recorded squad prices ÷ wins in that season",
+   "sampleSize": {
+    "n": 9,
+    "unit": "seasons"
+   },
+   "query": "SELECT CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, SUM(CASE WHEN m.winner_id IN (%IDS%) THEN 1 ELSE 0 END) won, COUNT(*) n FROM matches m WHERE (m.team1_id IN (%IDS%) OR m.team2_id IN (%IDS%)) AND m.winner_id IS NOT NULL AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY year",
+   "rows": [
+    {
+     "season": "2018",
+     "crorePerWin": 13.1,
+     "wins": 6
+    },
+    {
+     "season": "2019",
+     "crorePerWin": 14.8,
+     "wins": 5
+    },
+    {
+     "season": "2020",
+     "crorePerWin": 11.2,
+     "wins": 7
+    },
+    {
+     "season": "2021",
+     "crorePerWin": 9.4,
+     "wins": 9
+    },
+    {
+     "season": "2022",
+     "crorePerWin": 9.9,
+     "wins": 9
+    },
+    {
+     "season": "2023",
+     "crorePerWin": 13.3,
+     "wins": 7
+    },
+    {
+     "season": "2024",
+     "crorePerWin": 13.9,
+     "wins": 7
+    },
+    {
+     "season": "2025",
+     "crorePerWin": 10.8,
+     "wins": 11
+    },
+    {
+     "season": "2026",
+     "crorePerWin": 11.3,
+     "wins": 11
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,189 @@
+{
+ "articleId": "cf-kkr-074",
+ "generatedAt": "2026-10-26T04:21:08.908Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "ac-cover": {
+   "value": 64,
+   "display": "64%",
+   "label": "Share of balls faced by batters with a known birth date",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 139879,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "plausibility range 20–100 for coverage",
+    "passed": true,
+    "detail": "value 63.830882405507616"
+   }
+  },
+  "ac-peak": {
+   "value": "30–34",
+   "display": "30–34",
+   "label": "Age band with the highest relative strike rate (min. 2,000 balls)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 31962,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "max over bands",
+    "passed": true
+   }
+  },
+  "ac-mine": {
+   "value": 33.4,
+   "display": "33.4",
+   "label": "Balls-weighted average age of Kolkata Knight Riders' batters, 2024–2026",
+   "unit": "years",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Batters with a known birth date",
+   "sampleSize": {
+    "n": 2317,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "plausibility range 20–40 for age",
+    "passed": true,
+    "detail": "value 33.37203280103582"
+   }
+  },
+  "ac-mine-cover": {
+   "value": 54,
+   "display": "54%",
+   "label": "Share of Kolkata Knight Riders' balls since 2024 covered by known birth dates",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2024–2026",
+   "sampleSize": {
+    "n": 26,
+    "unit": "player-seasons"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "plausibility range 10–100 for coverage",
+    "passed": true,
+    "detail": "value 53.57225433526012"
+   }
+  },
+  "ac-u25": {
+   "value": 100,
+   "display": "100",
+   "label": "Relative strike rate, batters aged Under 25",
+   "unit": "index (100 = season average)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 13278,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 500 balls",
+    "passed": true,
+    "detail": "n = 13278"
+   }
+  },
+  "ac-a25": {
+   "value": 101,
+   "display": "101",
+   "label": "Relative strike rate, batters aged 25–29",
+   "unit": "index (100 = season average)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 25131,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 500 balls",
+    "passed": true,
+    "detail": "n = 25131"
+   }
+  },
+  "ac-a30": {
+   "value": 102,
+   "display": "102",
+   "label": "Relative strike rate, batters aged 30–34",
+   "unit": "index (100 = season average)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 31962,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 500 balls",
+    "passed": true,
+    "detail": "n = 31962"
+   }
+  },
+  "ac-a35": {
+   "value": 100,
+   "display": "100",
+   "label": "Relative strike rate, batters aged 35 and over",
+   "unit": "index (100 = season average)",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "2018–2026",
+   "sampleSize": {
+    "n": 18915,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, mine",
+   "validation": {
+    "method": "sample-size floor ≥ 500 balls",
+    "passed": true,
+    "detail": "n = 18915"
+   }
+  }
+ },
+ "tables": {
+  "ac-bands": {
+   "label": "IPL batting by age, 2018–2026",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Strike rate relative to season average (100 = average); players with a known birth date",
+   "sampleSize": {
+    "n": 89286,
+    "unit": "balls"
+   },
+   "query": "SELECT pl.name, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year, CASE WHEN i.batting_team_id IN (6) THEN 1 ELSE 0 END mine, SUM(d.batter_runs) runs, SUM(CASE WHEN d.is_wide = 0 THEN 1 ELSE 0 END) balls FROM deliveries d JOIN innings i ON i.innings_id = d.innings_id JOIN matches m ON m.match_id = d.match_id JOIN players pl ON pl.player_id = d.batter_id WHERE i.innings_number <= 2 AND CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) BETWEEN 2018 AND 2026 GROUP BY pl.name, year, mine",
+   "rows": [
+    {
+     "age": "Under 25",
+     "index": 99.6,
+     "balls": 13278
+    },
+    {
+     "age": "25–29",
+     "index": 101.2,
+     "balls": 25131
+    },
+    {
+     "age": "30–34",
+     "index": 101.5,
+     "balls": 31962
+    },
+    {
+     "age": "35 and over",
+     "index": 99.6,
+     "balls": 18915
+    }
+   ]
+  }
+ }
+}

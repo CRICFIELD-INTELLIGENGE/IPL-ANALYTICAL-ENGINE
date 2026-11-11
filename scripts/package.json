@@ -14,11 +14,25 @@
     "migrate-deliveries": "tsx ./src/migrate_deliveries.ts",
     "compute-analytics": "tsx ./src/compute_analytics.ts",
     "update-ipl-data": "tsx ./src/update-ipl-data.ts",
-    "update-ipl-data-v3": "tsx ./src/update-ipl-data-v3.ts"
+    "update-ipl-data-v3": "tsx ./src/update-ipl-data-v3.ts",
+    "global:acquire": "tsx ./src/global/acquire.ts",
+    "global:normalize": "tsx ./src/global/normalize.ts",
+    "global:identity": "tsx ./src/global/identity.ts",
+    "global:aggregate": "tsx ./src/global/aggregate.ts",
+    "global:validate": "tsx ./src/global/validate.ts",
+    "global:build": "tsx ./src/global/sync.ts --skip-download",
+    "global:sync": "tsx ./src/global/sync.ts",
+    "global:onboard": "tsx ./src/global/onboard.ts",
+    "global:bench": "tsx ./src/global/bench.ts",
+    "test:global": "tsx --import ./src/test-readonly-env.mjs --test src/global/tests/*.test.ts src/scout/tests/*.test.ts",
+    "scout:build": "tsx ./src/scout/build.ts",
+    "scout:demo": "tsx ./src/scout/demos.ts",
+    "test:step3": "tsx --import ./src/test-readonly-env.mjs --test src/step3/tests/*.test.ts"
   },
   "dependencies": {
     "@workspace/db": "workspace:*",
-    "drizzle-orm": "catalog:"
+    "drizzle-orm": "catalog:",
+    "fflate": "^0.8.3"
   },
   "devDependencies": {
     "@types/node": "catalog:",

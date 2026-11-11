@@ -1,0 +1,244 @@
+{
+  "advisories": {
+    "1115573": {
+      "findings": [
+        {
+          "version": "8.3.0",
+          "paths": [
+            "artifacts__api-server>express>router>path-to-regexp"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1115573,
+      "title": "path-to-regexp vulnerable to Denial of Service via sequential optional groups",
+      "module_name": "path-to-regexp",
+      "vulnerable_versions": ">=8.0.0 <8.4.0",
+      "patched_versions": ">=8.4.0",
+      "severity": "high",
+      "cwe": "CWE-400, CWE-1333",
+      "github_advisory_id": "GHSA-j3q9-mxjg-w52f",
+      "url": "https://github.com/advisories/GHSA-j3q9-mxjg-w52f"
+    },
+    "1115582": {
+      "findings": [
+        {
+          "version": "8.3.0",
+          "paths": [
+            "artifacts__api-server>express>router>path-to-regexp"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1115582,
+      "title": "path-to-regexp vulnerable to Regular Expression Denial of Service via multiple wildcards",
+      "module_name": "path-to-regexp",
+      "vulnerable_versions": ">=8.0.0 <8.4.0",
+      "patched_versions": ">=8.4.0",
+      "severity": "moderate",
+      "cwe": "CWE-1333",
+      "github_advisory_id": "GHSA-27v5-c462-wpq7",
+      "url": "https://github.com/advisories/GHSA-27v5-c462-wpq7"
+    },
+    "1119502": {
+      "findings": [
+        {
+          "version": "6.15.0",
+          "paths": [
+            "artifacts__api-server>express>body-parser>qs",
+            "artifacts__api-server>express>qs"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1119502,
+      "title": "qs has a remotely triggerable DoS: qs.stringify crashes with TypeError on null/undefined entries in comma-format arrays when encodeValuesOnly is set",
+      "module_name": "qs",
+      "vulnerable_versions": ">=6.11.1 <=6.15.1",
+      "patched_versions": ">=6.15.2",
+      "severity": "moderate",
+      "cwe": "CWE-476",
+      "github_advisory_id": "GHSA-q8mj-m7cp-5q26",
+      "url": "https://github.com/advisories/GHSA-q8mj-m7cp-5q26"
+    },
+    "1123976": {
+      "findings": [
+        {
+          "version": "2.2.2",
+          "paths": [
+            "artifacts__api-server>express>body-parser"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1123976,
+      "title": "body-parser vulnerable to denial of service when invalid limit value silently disables size enforcement",
+      "module_name": "body-parser",
+      "vulnerable_versions": ">=2.0.0 <2.3.0",
+      "patched_versions": ">=2.3.0",
+      "severity": "low",
+      "cwe": "CWE-770",
+      "github_advisory_id": "GHSA-v422-hmwv-36x6",
+      "url": "https://github.com/advisories/GHSA-v422-hmwv-36x6"
+    },
+    "1158506": {
+      "findings": [
+        {
+          "version": "6.15.0",
+          "paths": [
+            "artifacts__api-server>express>body-parser>qs",
+            "artifacts__api-server>express>qs"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1158506,
+      "title": "qs array-limit bypass via bracket-key comma parsing",
+      "module_name": "qs",
+      "vulnerable_versions": ">=6.14.2 <=6.15.3",
+      "patched_versions": ">=6.15.4",
+      "severity": "moderate",
+      "cwe": "CWE-770",
+      "github_advisory_id": "GHSA-x5fp-wj9c-mxmx",
+      "url": "https://github.com/advisories/GHSA-x5fp-wj9c-mxmx"
+    },
+    "1158507": {
+      "findings": [
+        {
+          "version": "6.15.0",
+          "paths": [
+            "artifacts__api-server>express>body-parser>qs",
+            "artifacts__api-server>express>qs"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1158507,
+      "title": "qs: Denial of Service via Attacker Controlled isBuffer",
+      "module_name": "qs",
+      "vulnerable_versions": ">=2.2.5 <6.16.0",
+      "patched_versions": ">=6.16.0",
+      "severity": "moderate",
+      "cwe": "CWE-248, CWE-703",
+      "github_advisory_id": "GHSA-4mjr-xmp4-gh2g",
+      "url": "https://github.com/advisories/GHSA-4mjr-xmp4-gh2g"
+    },
+    "1241210": {
+      "findings": [
+        {
+          "version": "2.0.7",
+          "paths": [
+            "artifacts__api-server>express>proxy-addr"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1241210,
+      "title": "proxy-addr vulnerable to IP spoofing via IPv4-mapped IPv6 trust subnet",
+      "module_name": "proxy-addr",
+      "vulnerable_versions": ">=1.1.0 <2.0.8",
+      "patched_versions": ">=2.0.8",
+      "severity": "critical",
+      "cwe": "CWE-290, CWE-348, CWE-697",
+      "github_advisory_id": "GHSA-jqcg-44mw-7w3h",
+      "url": "https://github.com/advisories/GHSA-jqcg-44mw-7w3h"
+    },
+    "1243066": {
+      "findings": [
+        {
+          "version": "3.25.76",
+          "paths": [
+            "artifacts__api-server>zod",
+            "lib__api-zod>zod",
+            "lib__db>drizzle-zod>zod",
+            "lib__db>zod"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1243066,
+      "title": "Zod can exhaust memory while validating oversized constrained collections",
+      "module_name": "zod",
+      "vulnerable_versions": "<4.6.6",
+      "patched_versions": ">=4.6.6",
+      "severity": "high",
+      "cwe": "CWE-770",
+      "github_advisory_id": "GHSA-mrhx-c7xc-m3w5",
+      "url": "https://github.com/advisories/GHSA-mrhx-c7xc-m3w5"
+    },
+    "1243074": {
+      "findings": [
+        {
+          "version": "2.2.2",
+          "paths": [
+            "artifacts__api-server>express>body-parser"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1243074,
+      "title": "body-parser vulnerable to Denial of Service via trailing bytes after a compressed request body",
+      "module_name": "body-parser",
+      "vulnerable_versions": ">=2.0.0 <2.4.0",
+      "patched_versions": ">=2.4.0",
+      "severity": "high",
+      "cwe": "CWE-248",
+      "github_advisory_id": "GHSA-27r3-jxmh-p828",
+      "url": "https://github.com/advisories/GHSA-27r3-jxmh-p828"
+    },
+    "1243452": {
+      "findings": [
+        {
+          "version": "6.15.0",
+          "paths": [
+            "artifacts__api-server>express>body-parser>qs",
+            "artifacts__api-server>express>qs"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1243452,
+      "title": "qs : qs.stringify with arrayFormat 'comma' throws an uncaught TypeError on array elements carrying a non-callable own toString (DoS)",
+      "module_name": "qs",
+      "vulnerable_versions": ">=6.7.0 <=6.16.0",
+      "patched_versions": ">=6.16.1",
+      "severity": "moderate",
+      "cwe": "CWE-248, CWE-704",
+      "github_advisory_id": "GHSA-6pq8-jhm2-2vcw",
+      "url": "https://github.com/advisories/GHSA-6pq8-jhm2-2vcw"
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 1,
+      "moderate": 5,
+      "high": 3,
+      "critical": 1
+    },
+    "dependencies": 163,
+    "devDependencies": 0,
+    "optionalDependencies": 5,
+    "totalDependencies": 168
+  }
+}

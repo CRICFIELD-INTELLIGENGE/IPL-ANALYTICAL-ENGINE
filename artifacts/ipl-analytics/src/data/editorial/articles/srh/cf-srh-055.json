@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-srh-055",
+ "planId": "cf-srh-055",
+ "franchise": "SRH",
+ "aspect": "fan-culture",
+ "title": "Rivalry Without the Scoreboard: Why Sunrisers Hyderabad Fixtures Feel Personal",
+ "slug": "srh-rivalry-without-the-scoreboard-why-srh-fixtures-feel-personal",
+ "dek": "Some fixtures feel personal before a ball is bowled. For Sunrisers Hyderabad, the most frequent opponent is Kolkata Knight Riders, and the history between them explains some of the edge.",
+ "excerpt": "Sunrisers Hyderabad and Kolkata Knight Riders have met more than any other pairing in Sunrisers Hyderabad's history. The record between them, its streaks and its close finishes, is what gives the fixture its weight.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-10-26",
+ "status": "review",
+ "featured": false,
+ "storyType": "explainer",
+ "teams": [
+  "SRH"
+ ],
+ "players": [],
+ "seasons": [
+  "2013\u20132026"
+ ],
+ "keyTakeaways": [
+  "SRH have won {{ev:rv-won}} of {{ev:rv-n}} decided matches against Kolkata Knight Riders.",
+  "The longest run of consecutive wins by one side in the fixture is {{ev:rv-streak}}, by KKR.",
+  "SRH have won {{ev:rv-last}} of the last five meetings; {{ev:rv-close}} meetings have been close finishes."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "Why Some Fixtures Feel Personal",
+   "body": [
+    "Rivalries are built from history: repeated meetings, memorable finishes, streaks that one side's fans never let the other forget.",
+    "The CricField warehouse holds no survey, sentiment or social-media data, so it cannot measure what fans feel. It can measure what they have watched."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "The Record Between Them",
+   "body": [
+    "Sunrisers Hyderabad have won {{ev:rv-won}} of {{ev:rv-n}} decided matches against Kolkata Knight Riders. The chart shows wins and losses in the fixture season by season.",
+    "The longest run of consecutive wins by one side is {{ev:rv-streak}}, by KKR. {{ev:rv-close}} meetings have been close finishes."
+   ],
+   "chartIds": [
+    "rv-chart"
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Recent Memory",
+   "body": [
+    "Fans weight recent results most heavily. SRH have won {{ev:rv-last}} of the last five meetings.",
+    "{{hyp:rival}}"
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "Most-Played Is a Stand-In",
+   "body": [
+    "The most frequent opponent is a measurable stand-in for a rivalry. The rivalry fans feel most may be with a different side, shaped by geography, a final or a single incident.",
+    "Identifying that would need fan survey data."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "CricField Verdict: History Gives the Fixture Its Edge",
+   "body": [
+    "Sunrisers Hyderabad's record against Kolkata Knight Riders has enough streaks and close finishes to explain why the fixture matters.",
+    "What it means to fans is a question the scoreboard cannot answer."
+   ]
+  }
+ ],
+ "charts": [
+  {
+   "id": "rv-chart",
+   "type": "column",
+   "title": "SRH v KKR",
+   "subtitle": "Wins and losses by season",
+   "table": "rv-series",
+   "xKey": "season",
+   "series": [
+    {
+     "key": "won",
+     "label": "SRH wins"
+    },
+    {
+     "key": "lost",
+     "label": "KKR wins"
+    }
+   ],
+   "xLabel": "Season",
+   "unit": "matches",
+   "takeaway": "The fixture has swung between the two sides over time.",
+   "ariaLabel": "Grouped column chart of SRH wins and losses against KKR by season."
+  }
+ ],
+ "sources": [
+  {
+   "id": "cf-warehouse",
+   "kind": "cricfield-dataset",
+   "title": "CricField ball-by-ball warehouse (Cricsheet IPL data, 2008\u20132026)",
+   "publisher": "CricField / Cricsheet",
+   "url": "https://cricsheet.org/downloads/",
+   "note": "Open Data Commons Attribution licence; regulation innings only."
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "rival",
+   "statement": "Hypothesis: fans rate the KKR fixture as more important than other matches, and that rating follows the recent head-to-head record.",
+   "whyUnverified": "No fan survey data is available.",
+   "howToTest": "Survey fans on fixture importance before and after a season and compare with recent results."
+  }
+ ],
+ "literalNumbers": [],
+ "imageBriefs": [
+  {
+   "slot": "hero",
+   "narrative": "Sunrisers Hyderabad against Kolkata Knight Riders.",
+   "wanted": "Sunrisers Hyderabad v Kolkata Knight Riders match action."
+  }
+ ],
+ "videos": [],
+ "related": [
+  "cf-srh-046",
+  "cf-srh-030",
+  "cf-srh-056"
+ ],
+ "seo": {
+  "metaTitle": "Rivalry without the scoreboard: SRH v KKR",
+  "metaDescription": "The history between Sunrisers Hyderabad and Kolkata Knight Riders: head-to-head record, streaks, recent form and close finishes."
+ },
+ "methodology": "CricField holds ball-by-ball cricket data and no fan survey, sentiment or social-media data. This article measures the cricket fans have experienced; statements about fans themselves are labelled hypotheses. Generated by scripts/editorial/engine. Rivalry = most frequent opponent.",
+ "generator": "engine:v1"
+}

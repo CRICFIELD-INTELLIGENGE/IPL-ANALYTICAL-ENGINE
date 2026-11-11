@@ -27,6 +27,8 @@ import { getBaselines, getPlayerMeta, getRoster, getSeasonLines, getSeasons } fr
 import { getPoolSpace, similarPlayers, type PoolSide, type Space } from "./player-pool";
 import { squadProfile } from "./squad-dna";
 import { franchiseOf, getFranchiseRefs, resolveFranchise } from "./stats-engine";
+import { getSnapshot, playerByWarehouseId, retentionEnvelope, valueAssessment } from "../intelligence/service";
+import { pickFor } from "../retention/service";
 
 export type AuctionView = "backtest" | "live";
 export type Signal = "BUY" | "HOLD" | "AVOID" | "SCOUT";
@@ -36,10 +38,10 @@ export type AuctionRole = "Batter" | "Bowler" | "All-rounder" | "Wicketkeeper";
 
 const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z ]/g, " ").replace(/\s+/g, " ").trim();
 
-interface ListRow { fullName: string; country: string; age: number | null; role: AuctionRole; capped: boolean; reserve: number; iplCaps: number; team2025: string | null; set: string }
+export interface ListRow { fullName: string; country: string; age: number | null; role: AuctionRole; capped: boolean; reserve: number; iplCaps: number; team2025: string | null; set: string }
 interface Sale { season: number; player: string; team: string; lakh: number; baseLakh: number | null; playerId: number | null }
 
-function loadAuctionList(): ListRow[] {
+export function loadAuctionList(): ListRow[] {
   const root = getProjectRoot();
   const file = fs.readdirSync(root).find((f) => /ipl auction player list.*\.csv$/i.test(f));
   const text = file ? readTextLoose(path.join(root, file)) : null;
@@ -304,7 +306,12 @@ export interface AuctionRow {
   marketBasis: number;
   value: number | null; // lakh
   signal: Signal;
-  maxBid: number; // lakh
+  maxBid: number | null; // lakh
+  /** Live board only: 80% range of the shared auction model, and its performance-versus-price rank gap. */
+  marketRange?: { low: number; high: number } | null;
+  valueGap?: number | null;
+  verdict?: string | null;
+  retentionPick?: { index: number; category: string } | null;
   team: string | null; // last IPL team
   actual?: { soldTo: string | null; price: number | null; matches: number; impact: number | null; valueDelivered: number | null; verdict: string };
   lastSale?: { season: number; team: string; price: number } | null;
@@ -611,10 +618,34 @@ function backtestSummary(board: Board): BacktestSummary {
 
 const sgn = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}`;
 
+/**
+ * The live board shows the shared intelligence model, so its price, signal and fit match every other page.
+ * The old value and max bid are dropped there: both turned runs into rupees at an unvalidated going rate.
+ * The 2026 backtest keeps the comparable-sales benchmark it was published with.
+ */
+function liveRow(r: AuctionRow, team?: string): AuctionRow {
+  const p = r.playerId !== null ? playerByWarehouseId(r.playerId) : null;
+  const s = getSnapshot();
+  if (!p || !s) return { ...r, value: null, maxBid: null, marketRange: null, valueGap: null, verdict: null, signal: "SCOUT", contract: null };
+  const v = valueAssessment(p);
+  const retention = retentionEnvelope(s, p);
+  const fit = team ? p.fit.find((f) => f.team === team) : null;
+  return {
+    ...r, market: p.market.lakh, marketRange: { low: p.market.low, high: p.market.high }, marketBasis: 0, value: null, maxBid: null,
+    valueGap: v.gap, verdict: v.verdict, signal: v.verdict === "Undervalued" ? "BUY" : v.verdict === "Overvalued" ? "AVOID" : v.verdict === "Fairly priced" ? "HOLD" : "SCOUT",
+    iar: p.performance.rar === null ? r.iar : round(p.performance.rar, 1),
+    contract: retention.band,
+    retentionPick: (() => { const x = pickFor(p.id); return x ? { index: x.index, category: x.category } : null; })(),
+    fit: fit ? { score: fit.increment, reasons: fit.entersBestSide && fit.replaces[0] ? [`Replaces ${fit.replaces[0]} in the best XII`] : fit.entersBestSide ? [] : ["Would not make the best XII"] } : undefined,
+  };
+}
+
 export function auctionBoard(q: AuctionQuery): AuctionBoardResult {
   const board = buildBoard(q.view);
+  const live = q.view === "live";
+  const shortTeam = q.team ? resolveFranchise(q.team)?.short : undefined;
   const needs = q.team ? teamNeeds(q.team, board.asOf) : null;
-  let rows = board.rows.map((r) => ({ ...r, fit: needs ? fitFor(r.playerId, r.role, board.asOf, needs) : undefined }));
+  let rows = live ? board.rows.map((r) => liveRow(r, shortTeam)) : board.rows.map((r) => ({ ...r, fit: needs ? fitFor(r.playerId, r.role, board.asOf, needs) : undefined }));
   const counts: Record<Signal, number> = { BUY: 0, HOLD: 0, AVOID: 0, SCOUT: 0 };
   if (q.role) rows = rows.filter((r) => r.role === q.role);
   if (q.overseas === "only") rows = rows.filter((r) => r.overseas);
@@ -623,7 +654,7 @@ export function auctionBoard(q: AuctionQuery): AuctionBoardResult {
   if (q.q) { const n = norm(q.q); rows = rows.filter((r) => norm(r.name).includes(n) || norm(r.country).includes(n) || (r.archetype && norm(r.archetype).includes(n))); }
   for (const r of rows) counts[r.signal]++;
   if (q.signal) rows = rows.filter((r) => r.signal === q.signal);
-  const edge = (r: AuctionRow) => (r.value === null ? -1 : r.value / r.market);
+  const edge = (r: AuctionRow) => (live ? r.valueGap ?? -999 : r.value === null ? -1 : r.value / r.market);
   const sort = q.sort ?? (needs ? "fit" : "edge");
   rows.sort((a, b) =>
     sort === "fit" ? (b.fit?.score ?? -1) - (a.fit?.score ?? -1) || edge(b) - edge(a)
@@ -669,6 +700,7 @@ export function auctionPlayer(key: string, view: AuctionView): AuctionPlayerDeta
     base = valueRow(board.model, id, { key: `p:${id}`, name: m.name, country: m.country, role: null, age: null, reserve: null, capped: null, iplCaps: 0 });
   }
   if (!base) return null;
+  if (view === "live") base = liveRow(base);
   const asOf = board.asOf;
   const sales = loadSales();
   let comparables: AuctionPlayerDetail["comparables"] = [];
@@ -687,7 +719,10 @@ export function auctionPlayer(key: string, view: AuctionView): AuctionPlayerDeta
       };
     });
   }
-  const bestFits = getFranchiseRefs()
+  const shared = view === "live" && base.playerId !== null ? playerByWarehouseId(base.playerId) : null;
+  const bestFits = shared
+    ? shared.fit.slice(0, 3).filter((f) => f.increment > 0).map((f) => ({ short: f.team, name: resolveFranchise(f.team)?.name ?? f.team, score: f.increment, reasons: f.replaces[0] ? [`Replaces ${f.replaces[0]} in the best XII`] : [] }))
+    : getFranchiseRefs()
     .filter((f) => getRoster(String(asOf)).some((r) => f.teamIds.includes(r.teamId)))
     .map((f) => { const needs = teamNeeds(f.short, asOf); const fit = needs ? fitFor(base!.playerId, base!.role, asOf, needs) : null; return { short: f.short, name: f.name, score: fit?.score ?? 0, reasons: fit?.reasons ?? [] }; })
     .filter((f) => f.score > 0)
@@ -709,7 +744,7 @@ export function auctionIntel(playerId: number) {
   if (!d) return null;
   const r = d.row;
   return {
-    asOf: d.asOf, signal: r.signal, market: r.market, value: r.value, maxBid: r.maxBid, iar: r.iar, archetype: r.archetype,
+    asOf: d.asOf, signal: r.signal, market: r.market, marketRange: r.marketRange ?? null, verdict: r.verdict ?? null, value: r.value, maxBid: r.maxBid, iar: r.iar, archetype: r.archetype,
     contract: r.contract ?? null, lastSale: r.lastSale ?? null, comparables: d.comparables.slice(0, 3), bestFits: d.bestFits,
   };
 }

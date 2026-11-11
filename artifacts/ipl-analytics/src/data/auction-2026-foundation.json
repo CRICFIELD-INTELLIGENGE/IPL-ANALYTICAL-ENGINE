@@ -1,0 +1,21 @@
+{
+  "season": 2026,
+  "eventDate": "2025-12-16",
+  "venue": "Etihad Arena, Abu Dhabi",
+  "sourceUrl": "https://www.iplt20.com/news/article/tata-ipl-2026-player-retentions-announced",
+  "verifiedAt": "2026-10-28",
+  "maxSquad": 25,
+  "maxOverseas": 8,
+  "teams": {
+    "CSK": { "startingPurseLakhs": 4340, "retained": 16, "overseasRetained": 4 },
+    "DC": { "startingPurseLakhs": 2180, "retained": 17, "overseasRetained": 3 },
+    "GT": { "startingPurseLakhs": 1290, "retained": 20, "overseasRetained": 4 },
+    "KKR": { "startingPurseLakhs": 6430, "retained": 12, "overseasRetained": 2 },
+    "LSG": { "startingPurseLakhs": 2295, "retained": 19, "overseasRetained": 4 },
+    "MI": { "startingPurseLakhs": 275, "retained": 20, "overseasRetained": 7 },
+    "PBKS": { "startingPurseLakhs": 1150, "retained": 21, "overseasRetained": 6 },
+    "RCB": { "startingPurseLakhs": 1640, "retained": 17, "overseasRetained": 6 },
+    "RR": { "startingPurseLakhs": 1605, "retained": 16, "overseasRetained": 7 },
+    "SRH": { "startingPurseLakhs": 2550, "retained": 15, "overseasRetained": 6 }
+  }
+}

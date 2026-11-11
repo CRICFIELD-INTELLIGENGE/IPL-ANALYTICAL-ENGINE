@@ -1,0 +1,67 @@
+{
+  "updatedAt": "2026-11-04",
+  "note": "Player movement between franchises after the IPL 2026 season. Only entries marked Completed or Officially Confirmed change a squad. Everything else is a scenario.",
+  "entries": [
+    {
+      "id": "2027-pant-kuldeep",
+      "kind": "trade",
+      "status": "Completed",
+      "announcedOn": "2026-06-23",
+      "moves": [
+        { "player": "Rishabh Pant", "from": "LSG", "to": "DC", "feeLakh": 1500 },
+        { "player": "Kuldeep Yadav", "from": "DC", "to": "LSG", "feeLakh": 1350 }
+      ],
+      "history": [{ "status": "Completed", "on": "2026-06-23", "sourceUrl": "https://www.iplt20.com/news/4379/rishabh-pant-and-kuldeep-yadav-complete-high-profile-trade-between-dc-and-lsg" }],
+      "sources": [{ "publisher": "IPL (iplt20.com)", "official": true, "url": "https://www.iplt20.com/news/4379/rishabh-pant-and-kuldeep-yadav-complete-high-profile-trade-between-dc-and-lsg", "publishedOn": "2026-06-23" }],
+      "lastChecked": "2026-11-04"
+    },
+    {
+      "id": "2027-natarajan-zeeshan",
+      "kind": "trade",
+      "status": "Completed",
+      "announcedOn": "2026-10-14",
+      "moves": [
+        { "player": "T Natarajan", "from": "DC", "to": "SRH", "feeLakh": 500 },
+        { "player": "Zeeshan Ansari", "from": "SRH", "to": "DC", "feeLakh": 40 }
+      ],
+      "history": [{ "status": "Completed", "on": "2026-10-14", "sourceUrl": "https://www.crictracker.com/cricket-news/t-natarajan-reunites-with-srh-as-zeeshan-ansari-moves-to-dc-in-player-trade/" }],
+      "sources": [
+        { "publisher": "CricTracker", "official": false, "url": "https://www.crictracker.com/cricket-news/t-natarajan-reunites-with-srh-as-zeeshan-ansari-moves-to-dc-in-player-trade/", "publishedOn": "2026-10-14" }
+      ],
+      "lastChecked": "2026-11-04"
+    },
+    {
+      "id": "2027-hardik-arshdeep",
+      "kind": "trade",
+      "status": "Negotiations Reported",
+      "announcedOn": null,
+      "moves": [
+        { "player": "Hardik Pandya", "from": "MI", "to": "PBKS", "feeLakh": null },
+        { "player": "Arshdeep Singh", "from": "PBKS", "to": "MI", "feeLakh": null },
+        { "player": "Vishnu Vinod", "from": "PBKS", "to": "MI", "feeLakh": null }
+      ],
+      "history": [
+        { "status": "Denied", "on": "2026-08-01", "sourceUrl": "https://www.crictracker.com/cricket-news/mumbai-indians-official-provides-huge-update-on-hardik-pandya-player-trade-ahead-of-ipl-2027/" },
+        { "status": "Negotiations Reported", "on": "2026-11-03", "sourceUrl": "https://thefederal.com/sports/cricket/ipl-2027-trade-hardik-set-to-join-pbks-report-261701" }
+      ],
+      "sources": [
+        { "publisher": "The Federal, citing Sportstar", "official": false, "url": "https://thefederal.com/sports/cricket/ipl-2027-trade-hardik-set-to-join-pbks-report-261701", "publishedOn": "2026-11-03" },
+        { "publisher": "CricTracker, quoting an MI official", "official": false, "url": "https://www.crictracker.com/cricket-news/mumbai-indians-official-provides-huge-update-on-hardik-pandya-player-trade-ahead-of-ipl-2027/", "publishedOn": "2026-08-01" }
+      ],
+      "lastChecked": "2026-11-04"
+    },
+    {
+      "id": "2027-stoinis-mohsin",
+      "kind": "trade",
+      "status": "Rumour",
+      "announcedOn": null,
+      "moves": [
+        { "player": "Marcus Stoinis", "from": "PBKS", "to": "LSG", "feeLakh": null },
+        { "player": "Mohsin Khan", "from": "LSG", "to": "PBKS", "feeLakh": null }
+      ],
+      "history": [{ "status": "Rumour", "on": "2026-11-01", "sourceUrl": "https://khelnow.com/cricket/marcus-stoinis-mohsin-khan-likely-swapped-ipl-2027-202611" }],
+      "sources": [{ "publisher": "Khel Now", "official": false, "url": "https://khelnow.com/cricket/marcus-stoinis-mohsin-khan-likely-swapped-ipl-2027-202611", "publishedOn": "2026-11", "note": "Headline only. CricField has not read the article, and the publication date is the month in its URL." }],
+      "lastChecked": "2026-11-04"
+    }
+  ]
+}

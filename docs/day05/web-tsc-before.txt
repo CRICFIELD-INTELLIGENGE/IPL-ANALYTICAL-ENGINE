@@ -1,0 +1,11 @@
+src/components/cricket3d/CricketStadium3D.tsx(3,54): error TS2459: Module '"../../lib/cricket3d/deliveryAdapter"' declares 'BatterHandedness' locally, but it is not exported.
+src/components/cricket3d/CricketStadium3D.tsx(140,51): error TS2339: Property 'x' does not exist on type '[number, number, number]'.
+src/components/cricket3d/CricketStadium3D.tsx(140,70): error TS2339: Property 'y' does not exist on type '[number, number, number]'.
+src/components/cricket3d/CricketStadium3D.tsx(140,89): error TS2339: Property 'z' does not exist on type '[number, number, number]'.
+src/components/cricket3d/CricketStadium3D.tsx(141,50): error TS2339: Property 'x' does not exist on type '[number, number, number]'.
+src/components/cricket3d/CricketStadium3D.tsx(141,67): error TS2339: Property 'y' does not exist on type '[number, number, number]'.
+src/components/cricket3d/CricketStadium3D.tsx(141,84): error TS2339: Property 'z' does not exist on type '[number, number, number]'.
+src/components/cricket3d/CricketStadium3D.tsx(167,33): error TS2339: Property 'pause' does not exist on type 'BoundaryReplayController'.
+src/components/cricket3d/CricketStadium3D.tsx(172,32): error TS2339: Property 'toggleMute' does not exist on type 'StadiumAudioEngine'.
+src/components/cricket3d/CricketStadium3D.tsx(317,13): error TS2367: This comparison appears to be unintentional because the types 'ReplayPhase' and '"PHASE_5_RESET"' have no overlap.
+src/components/cricket3d/DeliveryInfoPanel.tsx(238,15): error TS2353: Object literal may only specify known properties, and 'WAGON_WHEEL' does not exist in type 'Record<CameraMode, string>'.

@@ -13,7 +13,7 @@
 
 import fs from "fs";
 import path from "path";
-import { getProjectRoot, normalizeSeason, queryAll, seasonToDbLabel } from "./db";
+import { getProjectRoot, normalizeSeason, queryAll, seasonToDbLabel, RUNS_CONCEDED_SQL } from "./db";
 import { round } from "./impact-model";
 import { getPlayerMeta, getSeasons } from "./player-profiles";
 
@@ -631,7 +631,7 @@ function runBowling(q: StatQuery): Computed {
   const groups = new Map<string, Group<BowlRaw>>();
   const w = ballWhere(q, { batter: "d.batter_id", bowler: "d.bowler_id" });
   const key = keyExpr(q, "d.bowler_id");
-  const conceded = "d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 OR d.is_penalty = 1 THEN d.extra_runs ELSE 0 END";
+  const conceded = RUNS_CONCEDED_SQL;
 
   for (const r of queryAll<{ k: string | number; balls: number; runs: number; dots: number; fours: number; sixes: number; inns: number }>(`
     SELECT ${key} k,
@@ -836,7 +836,7 @@ function runInningsRecords(q: StatQuery): Computed {
 
   if (q.perspective === "bowling") {
     const w = ballWhere(q, { batter: "d.batter_id", bowler: "d.bowler_id" });
-    const conceded = "d.total_runs - CASE WHEN d.is_bye = 1 OR d.is_legbye = 1 OR d.is_penalty = 1 THEN d.extra_runs ELSE 0 END";
+    const conceded = RUNS_CONCEDED_SQL;
     const spells = queryAll<{ pid: number; inn: number; balls: number; runs: number }>(`
       SELECT d.bowler_id pid, d.innings_id inn,
         SUM(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) balls, SUM(${conceded}) runs

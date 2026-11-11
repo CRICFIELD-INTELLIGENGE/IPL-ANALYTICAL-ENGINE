@@ -1,0 +1,2 @@
+77f96b01ca53571529c3dd757072b9c4a9b3017eb5df04f2e4c57f4edace1bfc *sqlite.db
+80d0ed5858ff9cd57399ef5a78a2bf86ed957f8dcfc20d9e35c7a1eaeb2317d8 *lib/cricket-data/global/warehouse/global.db

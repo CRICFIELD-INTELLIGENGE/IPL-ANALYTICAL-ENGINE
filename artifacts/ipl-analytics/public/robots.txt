@@ -5,3 +5,4 @@ Disallow: /api/
 
 # Sitemaps
 Sitemap: https://ipl-intelligence.com/sitemap.xml
+Sitemap: https://ipl-intelligence.com/sitemap-dugout.xml

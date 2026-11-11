@@ -1,7 +1,9 @@
 import { DatabaseSync } from "node:sqlite";
 import path from "path";
+import { guardWarehouseWrite } from "./lib/warehouse-guard";
 
 const dbPath = path.join(process.cwd(), "sqlite.db");
+guardWarehouseWrite("populate-current-squad.ts", { target: dbPath });
 console.log(`Connecting to database at ${dbPath}`);
 
 const db = new DatabaseSync(dbPath);

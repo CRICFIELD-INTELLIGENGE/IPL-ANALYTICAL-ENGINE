@@ -1,0 +1,114 @@
+{
+ "articleId": "cf-gt-021",
+ "generatedAt": "2026-10-26T04:26:23.354Z",
+ "generator": "scripts/editorial/evidence/run.ts",
+ "database": {
+  "file": "sqlite.db",
+  "matches": 1243,
+  "deliveries": 295732,
+  "lastMatchDate": "2026-05-31"
+ },
+ "metrics": {
+  "toss-lg": {
+   "value": 51.4,
+   "display": "51.4%",
+   "label": "Share of IPL matches won by the toss winner",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "All matches with a result",
+   "sampleSize": {
+    "n": 1234,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.team1_id IN (14) OR m.team2_id IN (14) THEN 1 ELSE 0 END inv, CASE WHEN m.toss_winner_id IN (14) THEN 1 ELSE 0 END tw, m.toss_decision dec, CASE WHEN m.winner_id = m.toss_winner_id THEN 1 ELSE 0 END tossWon, CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END won, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year FROM matches m WHERE m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 500 matches",
+    "passed": true,
+    "detail": "n = 1234"
+   }
+  },
+  "toss-won": {
+   "value": 63.9,
+   "display": "63.9%",
+   "label": "GT win rate after winning the toss",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 36,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.team1_id IN (14) OR m.team2_id IN (14) THEN 1 ELSE 0 END inv, CASE WHEN m.toss_winner_id IN (14) THEN 1 ELSE 0 END tw, m.toss_decision dec, CASE WHEN m.winner_id = m.toss_winner_id THEN 1 ELSE 0 END tossWon, CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END won, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year FROM matches m WHERE m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 36"
+   }
+  },
+  "toss-lost": {
+   "value": 58.5,
+   "display": "58.5%",
+   "label": "GT win rate after losing the toss",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 41,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.team1_id IN (14) OR m.team2_id IN (14) THEN 1 ELSE 0 END inv, CASE WHEN m.toss_winner_id IN (14) THEN 1 ELSE 0 END tw, m.toss_decision dec, CASE WHEN m.winner_id = m.toss_winner_id THEN 1 ELSE 0 END tossWon, CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END won, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year FROM matches m WHERE m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 20 matches",
+    "passed": true,
+    "detail": "n = 41"
+   }
+  },
+  "toss-field": {
+   "value": 92,
+   "display": "92%",
+   "label": "GT choosing to bowl first after winning the toss, 2023–2026",
+   "unit": "%",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Tosses won, 2023–2026",
+   "sampleSize": {
+    "n": 26,
+    "unit": "tosses"
+   },
+   "query": "SELECT CASE WHEN m.team1_id IN (14) OR m.team2_id IN (14) THEN 1 ELSE 0 END inv, CASE WHEN m.toss_winner_id IN (14) THEN 1 ELSE 0 END tw, m.toss_decision dec, CASE WHEN m.winner_id = m.toss_winner_id THEN 1 ELSE 0 END tossWon, CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END won, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year FROM matches m WHERE m.winner_id IS NOT NULL",
+   "validation": {
+    "method": "sample-size floor ≥ 5 tosses",
+    "passed": true,
+    "detail": "n = 26"
+   }
+  }
+ },
+ "tables": {
+  "toss-tab": {
+   "label": "GT win rate by toss outcome and choice",
+   "dataset": "CricField warehouse: Cricsheet IPL ball-by-ball data, 2008–2026",
+   "filters": "Matches with a result",
+   "sampleSize": {
+    "n": 77,
+    "unit": "matches"
+   },
+   "query": "SELECT CASE WHEN m.team1_id IN (14) OR m.team2_id IN (14) THEN 1 ELSE 0 END inv, CASE WHEN m.toss_winner_id IN (14) THEN 1 ELSE 0 END tw, m.toss_decision dec, CASE WHEN m.winner_id = m.toss_winner_id THEN 1 ELSE 0 END tossWon, CASE WHEN m.winner_id IN (14) THEN 1 ELSE 0 END won, CAST(CASE m.season_id WHEN '2007/08' THEN '2008' WHEN '2009/10' THEN '2010' WHEN '2020/21' THEN '2020' ELSE m.season_id END AS INTEGER) year FROM matches m WHERE m.winner_id IS NOT NULL",
+   "rows": [
+    {
+     "situation": "Won toss, chose to bowl",
+     "winPct": 66.7,
+     "matches": 30
+    },
+    {
+     "situation": "Won toss, chose to bat",
+     "winPct": 50,
+     "matches": 6
+    },
+    {
+     "situation": "Lost toss",
+     "winPct": 58.5,
+     "matches": 41
+    }
+   ]
+  }
+ }
+}
