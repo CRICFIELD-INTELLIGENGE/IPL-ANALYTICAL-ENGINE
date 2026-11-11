@@ -1,4 +1,5 @@
 import { CricfieldSplash } from "@/components/cricfield-splash";
+import { CricketLoader } from "@/components/CricketLoader";
 import {RouteHistoryTracker} from '@/lib/route-history';
 import { CricFieldMascot } from "@/components/CricFieldMascot";
 import { UsageTracker } from "@/components/public-metrics";
@@ -98,12 +99,11 @@ const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
 });
 
-/** Shown while a page's chunk loads: the app background and a quiet status line, no layout shift. */
+/** Shown while a page's chunk loads: the app background and cricket intelligence loader. */
 function RouteLoading() {
   return (
-    <div role="status" aria-live="polite" className="min-h-screen w-full bg-[#070c16] flex flex-col items-center justify-center gap-3">
-      <CricFieldMascot activity="loading" size={56} />
-      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-white/40">Loading Intelligence…</span>
+    <div role="status" aria-live="polite" className="min-h-screen w-full bg-[#070c16] flex flex-col items-center justify-center p-4">
+      <CricketLoader label="LOADING INTELLIGENCE…" sublabel="Initializing telemetry & match feeds" />
     </div>
   );
 }
