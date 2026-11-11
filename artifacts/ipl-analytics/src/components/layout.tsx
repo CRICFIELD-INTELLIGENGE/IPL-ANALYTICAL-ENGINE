@@ -184,10 +184,15 @@ export function Layout({
               come back as the header widens. min-w-0 + overflow-hidden lets
               this cluster give way instead of pushing the page sideways. */}
           <div className="flex items-center gap-3 min-w-0 overflow-hidden whitespace-nowrap">
-            <div className="flex flex-col leading-none shrink-0">
-              <span className="text-[9px] font-black text-white/40 uppercase tracking-widest">IPL 2026</span>
-              <span className="text-[11px] font-bold text-white tracking-tight">INTELLIGENCE OS</span>
-            </div>
+            <Link href="/home">
+              <div className="flex items-center gap-2 shrink-0 cursor-pointer group">
+                <img src="/cricfield-logo.png" alt="CricField Logo" className="w-7 h-7 object-contain rounded-lg group-hover:scale-105 transition-transform" />
+                <div className="flex flex-col leading-none shrink-0">
+                  <span className="text-[9px] font-black text-white/40 uppercase tracking-widest">IPL 2026</span>
+                  <span className="text-[11px] font-bold text-white tracking-tight">INTELLIGENCE OS</span>
+                </div>
+              </div>
+            </Link>
             <div className="hidden sm:block h-5 w-px bg-white/10 shrink-0" />
             <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 shrink-0">
               <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
