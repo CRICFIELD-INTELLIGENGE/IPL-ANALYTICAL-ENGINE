@@ -132,8 +132,8 @@ export default function MatchDetailPage() {
           </div>
 
           <div className="flex items-center gap-4">
-                        <div className="flex flex-col items-end">
-              <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em]">Telemetry Channel</span>
+            <div className="flex flex-col items-end">
+              <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em]">Match Analytics Stream</span>
               <span className="text-[11px] font-bold text-white tracking-tight">MATCH_INTEL_v2.0 // {matchId}</span>
             </div>
             <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">

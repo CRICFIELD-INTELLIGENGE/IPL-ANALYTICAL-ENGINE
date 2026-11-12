@@ -9,8 +9,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 const WHATSAPP_NUMBER = (import.meta.env.VITE_WHATSAPP_NUMBER ?? "").trim();
 const whatsappHref = /^[0-9]{7,15}$/.test(WHATSAPP_NUMBER) ? `https://wa.me/${WHATSAPP_NUMBER}` : null;
 
-// /account hosts the DRS login animation; /admin is internal.
-const HIDDEN_PREFIXES = ["/account", "/admin"];
+// /account hosts the DRS login animation; /admin is internal; /match is the broadcast console.
+const HIDDEN_PREFIXES = ["/account", "/admin", "/match"];
 
 // embedded: rendered at the bottom of Layout's right rail. Otherwise floating; the floating one hides
 // while a rail is mounted (Layout sets html[data-right-rail]) so a page never shows two.
@@ -45,17 +45,11 @@ export function AssistantLauncher({ embedded = false }: { embedded?: boolean }) 
             <Sparkles className="h-4 w-4 text-primary" aria-hidden="true" />
             <span className="font-semibold">Ask CricField AI</span>
           </button>
-          {whatsappHref ? (
+          {whatsappHref && (
             <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className={`${action} hover:border-primary/50 hover:bg-slate-100 dark:hover:bg-white/5`} onClick={() => setOpen(false)}>
               <MessageCircle className="h-4 w-4 text-primary" aria-hidden="true" />
               <span className="font-semibold">Chat on WhatsApp</span>
             </a>
-          ) : (
-            <div className={`${action} text-slate-400 dark:text-white/50`} aria-disabled="true">
-              <MessageCircle className="h-4 w-4" aria-hidden="true" />
-              <span className="font-semibold">Chat on WhatsApp</span>
-              <span className="ml-auto rounded-full bg-slate-100 dark:bg-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-slate-600 dark:text-white/70">Soon</span>
-            </div>
           )}
         </div>
       </PopoverContent>
