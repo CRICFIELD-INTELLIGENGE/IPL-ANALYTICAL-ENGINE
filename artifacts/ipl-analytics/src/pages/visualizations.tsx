@@ -3,22 +3,10 @@ import { Layout } from "@/components/layout";
 import { Sparkles, Activity } from "lucide-react";
 import { LivingGroundDeck } from "@/components/visualizations/living-ground-deck";
 import { AdVessel } from "@/components/ad-vessel";
-import { useScroll } from "framer-motion";
 
 export default function VisualizationsPage() {
-  const { scrollYProgress } = useScroll();
-
-  React.useEffect(() => {
-    document.documentElement.style.scrollBehavior = "smooth";
-    document.documentElement.style.scrollSnapType = "y mandatory";
-    return () => {
-      document.documentElement.style.scrollBehavior = "";
-      document.documentElement.style.scrollSnapType = "";
-    };
-  }, []);
-
   return (
-    <Layout hideHeaderProgress={scrollYProgress}>
+    <Layout>
       {/* ═════════════════════════════════════════════════════════════════════
           1. TOP HUD: DATA EXPLORER & ENGINE COVERAGE
              - DEEP ANALYTICS LAB (7 Analytical Engines badge)

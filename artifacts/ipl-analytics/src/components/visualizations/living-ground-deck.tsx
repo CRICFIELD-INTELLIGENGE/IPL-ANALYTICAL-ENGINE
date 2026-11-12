@@ -133,13 +133,10 @@ export function StackingDeckCard({
     <div
       id={id}
       style={{
-        top: "12px",
+        top: "68px",
         zIndex: 10 + index * 5,
-        scrollSnapAlign: "start",
-        scrollSnapStop: "always",
-        scrollMarginTop: "12px",
       }}
-      className="sticky h-[calc(100vh-76px)] max-h-[820px] min-h-[540px] rounded-[24px] border border-slate-800/80 bg-[#070B16]/98 backdrop-blur-2xl shadow-2xl shadow-black/90 flex flex-col overflow-hidden transition-all duration-300 will-change-transform mb-6"
+      className="sticky h-[calc(100vh-84px)] max-h-[820px] min-h-[500px] rounded-[24px] border border-slate-800/80 bg-[#070B16]/98 backdrop-blur-2xl shadow-2xl shadow-black/90 flex flex-col overflow-hidden transition-all duration-300 will-change-transform mb-8"
     >
       {/* 1. MODULE HEADER STRIP (AT TOP OF MODULE) */}
       <div className="h-[48px] px-4 md:px-6 border-b border-white/10 flex items-center justify-between bg-[#080D1F]/90 shrink-0">
@@ -1222,7 +1219,7 @@ export function LivingGroundDeck() {
   const scrollToCard = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      const offset = 10;
+      const offset = 76;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = el.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
