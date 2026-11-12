@@ -14,6 +14,7 @@ import {
   Shield,
   Compass,
   Gavel,
+  Sparkles,
 } from "lucide-react";
 import { useTeamTheme } from "@/lib/team-context";
 import { useLiveIplMatches, getMatchScoreLine } from "@/lib/live";
@@ -248,10 +249,10 @@ export default function HomePage() {
             </aside>
           </section>
 
-          {/* ── ROW 2: TOP STORY & AUCTION PULSE ── */}
+          {/* ── ROW 2: TOP STORY, AUCTION PULSE & SPONSORED AD CARD ── */}
           <section ref={insightsSectionRef} className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-            {/* TOP STORY (6 cols lg, 6 cols xl) */}
-            <div className="reference-stories lg:col-span-6 xl:col-span-6 flex flex-col">
+            {/* TOP STORY (4 cols lg, 5 cols xl) */}
+            <div className="reference-stories lg:col-span-4 xl:col-span-5 flex flex-col">
               <div className="reference-heading">
                 <div className="flex items-baseline gap-2.5">
                   <h2>Top Story</h2>
@@ -272,8 +273,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* AUCTION PULSE (6 cols lg, 6 cols xl) */}
-            <aside className="reference-auction lg:col-span-6 xl:col-span-6 flex flex-col justify-between">
+            {/* AUCTION PULSE (4 cols lg, 4 cols xl) */}
+            <aside className="reference-auction lg:col-span-4 xl:col-span-4 flex flex-col justify-between">
               <div>
                 <div className="reference-heading">
                   <h2>IPL 2027 Auction Pulse</h2>
@@ -328,12 +329,52 @@ export default function HomePage() {
               </div>
             </aside>
 
-            {/* ADVERTISEMENT (ONLY RENDERED IF ADS ARE CONFIGURED & ENABLED) */}
-            {hasAds && (
-              <aside className="lg:col-span-12 reference-home-ad" aria-label="Advertisement">
-                <AdVessel slot="5938201746" format="horizontal" label="Advertisement" className="h-full" />
-              </aside>
-            )}
+            {/* GOOGLE AD CARD (4 cols lg, 3 cols xl - exactly matches Season Honours column alignment) */}
+            <aside
+              className="reference-ad-card lg:col-span-4 xl:col-span-3 flex flex-col justify-between rounded-[20px] border border-white/10 bg-[#08131F] p-4 sm:p-5 shadow-xl min-h-[380px]"
+              aria-label="Sponsored Space"
+            >
+              <div>
+                <div className="reference-heading">
+                  <div className="flex items-center gap-2">
+                    <Sparkles size={16} className="text-primary" />
+                    <h2>Sponsored</h2>
+                  </div>
+                  <span className="text-[10px] font-mono uppercase text-slate-400 border border-white/10 rounded px-1.5 py-0.5">
+                    Ad
+                  </span>
+                </div>
+
+                <div className="mt-3 flex flex-col items-center justify-center">
+                  <AdVessel
+                    slot="5938201746"
+                    format="rectangle"
+                    label="Advertisement"
+                    minHeight={250}
+                    className="w-full flex justify-center items-center overflow-hidden rounded-xl"
+                  />
+                  <div className="w-full rounded-xl border border-dashed border-white/10 bg-white/[0.02] p-5 text-center flex flex-col items-center justify-center min-h-[220px]">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/25 flex items-center justify-center text-primary mb-3">
+                      <Sparkles size={20} />
+                    </div>
+                    <span className="text-xs font-bold text-white mb-1">CricField Partner Space</span>
+                    <p className="text-[11px] text-slate-400 max-w-[200px] leading-relaxed mb-3">
+                      Official partner intelligence & verified sponsor placements.
+                    </p>
+                    <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest border border-white/5 rounded px-2 py-0.5">
+                      Google AdSense Unit
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[10px] text-slate-400 font-mono">
+                <span>ADVERTISEMENT</span>
+                <Link href="/privacy" className="hover:text-white transition-colors">
+                  Privacy & Ads ↗
+                </Link>
+              </div>
+            </aside>
           </section>
 
           {/* ── ROW 3: EXPLORE CRICFIELD TOOLS ── */}
