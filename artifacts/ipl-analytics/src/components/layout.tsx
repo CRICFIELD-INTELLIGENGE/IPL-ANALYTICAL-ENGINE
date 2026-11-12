@@ -19,6 +19,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { CricfieldLogo } from "@/components/cricfield-logo";
 import { AnalystNavigator } from "@/components/analyst-navigator";
 import { TeamSwitcher } from "@/components/team-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const PLAYER_IMAGES = [
   { src: "/ipl-logo.jpg", alt: "IPL Logo" },
@@ -52,21 +53,21 @@ function LiveScoreSnippet() {
   
   return (
     <Link href={`/scores`} className="hidden md:block shrink-0">
-      <div className="flex items-center gap-3 px-3 py-1 rounded-xl bg-white/5 border border-white/10 ml-2 cursor-pointer hover:bg-white/10 transition-all group/score">
+      <div className="flex items-center gap-3 px-3 py-1 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 ml-2 cursor-pointer hover:bg-slate-200 dark:hover:bg-white/10 transition-all group/score">
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
-            <span className="text-[9px] font-black text-white/60 group-hover/score:text-primary transition-colors">{liveMatch.matchInfo.team1.teamSName}</span>
-            <span className="text-[10px] font-bold text-white">{score.team1}</span>
+            <span className="text-[9px] font-black text-slate-500 dark:text-white/60 group-hover/score:text-primary transition-colors">{liveMatch.matchInfo.team1.teamSName}</span>
+            <span className="text-[10px] font-bold text-slate-900 dark:text-white">{score.team1}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[9px] font-black text-white/60 group-hover/score:text-primary transition-colors">{liveMatch.matchInfo.team2.teamSName}</span>
-            <span className="text-[10px] font-bold text-white">{score.team2}</span>
+            <span className="text-[9px] font-black text-slate-500 dark:text-white/60 group-hover/score:text-primary transition-colors">{liveMatch.matchInfo.team2.teamSName}</span>
+            <span className="text-[10px] font-bold text-slate-900 dark:text-white">{score.team2}</span>
           </div>
         </div>
-        <div className="w-px h-6 bg-white/10" />
+        <div className="w-px h-6 bg-slate-200 dark:bg-white/10" />
         <div className="flex flex-col justify-center">
           <span className="text-[8px] font-black text-primary uppercase tracking-tighter">LIVE</span>
-          <span className="text-[7px] font-bold text-white/40 uppercase truncate max-w-[60px]">{liveMatch.matchInfo.status}</span>
+          <span className="text-[7px] font-bold text-slate-400 dark:text-white/40 uppercase truncate max-w-[60px]">{liveMatch.matchInfo.status}</span>
         </div>
       </div>
     </Link>
@@ -92,10 +93,6 @@ export function Layout({
   const [rightPanelCollapsed, setRightPanelCollapsed] = useState(true);
   const [location] = useLocation();
   const [time, setTime] = useState(new Date());
-
-  useEffect(() => {
-    document.documentElement.classList.add("dark");
-  }, []);
 
   // Tells the floating assistant launcher to hide; the rail carries its own.
   useEffect(() => {
@@ -123,7 +120,7 @@ export function Layout({
   if (mobileShell) {
     const path = location.split("?")[0];
     return (
-      <div className="editorial-shell cfm-legacy bg-slate-950 text-slate-100 relative antialiased">
+      <div className="editorial-shell cfm-legacy bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 relative antialiased transition-colors duration-200">
         <main
           data-analytics-theme={["/stats", "/visualizations"].includes(path) ? "true" : undefined}
           data-team-surfaces={["/stats", "/visualizations", "/scores", "/pulse", "/feed"].includes(path) ? "true" : undefined}
@@ -139,35 +136,34 @@ export function Layout({
 
   return (
     // Single page container: NO overflow-hidden, NO h-screen
-    <div className="editorial-shell min-h-screen bg-slate-950 text-slate-100 relative antialiased">
+    <div className="editorial-shell min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 relative antialiased transition-colors duration-200">
       
       {/* 1. TOP HEADER (Sticky to viewport) */}
       {!hideHeader && (
       <motion.header
         style={{ opacity: hdrOpacity, y: hdrY }}
-        className="sticky top-0 z-30 h-14 w-full border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-xl flex items-center px-2 sm:px-4 gap-2"
+        className="sticky top-0 z-30 h-14 w-full border-b border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl flex items-center px-2 sm:px-4 gap-2 transition-colors duration-200"
       >
         <div className="flex items-center gap-3 shrink-0 whitespace-nowrap">
-          <Link href="/home" className="group/brand flex items-center gap-2.5 pl-1 py-1 pr-2 rounded-xl hover:bg-white/5 transition-colors cursor-pointer" aria-label="CricField Home">
+          <Link href="/home" className="group/brand flex items-center gap-2.5 pl-1 py-1 pr-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" aria-label="CricField Home">
             <CricfieldLogo variant="header" asLink={false} />
           </Link>
-          <div className="hidden sm:block h-5 w-px bg-white/10 shrink-0" />
-          <nav aria-label="Primary" className="hidden md:flex items-center gap-3 text-xs font-semibold text-slate-300">
-            {[['Home','/home'],['Scout Lab','/scout'],['Scores','/scores'],['My Dugout','/dugout'],['Stats','/stats']].map(([label,href])=><Link key={href} href={href} className={location === href ? 'text-indigo-300' : 'hover:text-white'} aria-current={location === href ? 'page' : undefined}>{label}</Link>)}
+          <div className="hidden sm:block h-5 w-px bg-slate-200 dark:bg-white/10 shrink-0" />
+          <nav aria-label="Primary" className="hidden md:flex items-center gap-3 text-xs font-semibold text-slate-600 dark:text-slate-300">
+            {[['Home','/home'],['Scout Lab','/scout'],['Scores','/scores'],['My Dugout','/dugout'],['Stats','/stats']].map(([label,href])=><Link key={href} href={href} className={location === href ? 'text-indigo-600 dark:text-indigo-300 font-bold' : 'hover:text-slate-900 dark:hover:text-white'} aria-current={location === href ? 'page' : undefined}>{label}</Link>)}
           </nav>
           {/* Live Score Snippet */}
           <LiveScoreSnippet />
         </div>
 
         <div className="ml-auto flex items-center gap-2 shrink-0">
+          <ThemeToggle />
           <TeamSwitcher />
           {/* AI Analyst lives in the floating assistant launcher, not the header. */}
           {supabaseConfigured && <>
-            <Link href="/account" className="flex items-center gap-2 text-xs font-semibold text-slate-200 py-2"><UserRound size={16}/><span className="hidden sm:inline">Account</span></Link>
-            <span aria-hidden="true" className="h-5 w-px bg-white/10" />
+            <Link href="/account" className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200 py-2"><UserRound size={16}/><span className="hidden sm:inline">Account</span></Link>
+            <span aria-hidden="true" className="h-5 w-px bg-slate-200 dark:bg-white/10" />
           </>}
-          
-
         </div>
       </motion.header>
       )}
@@ -177,13 +173,13 @@ export function Layout({
       <motion.aside
         initial={false}
         animate={{ width: sidebarCollapsed ? 56 : 208 }}
-        className="fixed left-0 top-14 bottom-0 z-20 border-r border-slate-800/80 bg-slate-950/80 backdrop-blur-md flex flex-col items-center py-2 px-1 overflow-hidden"
+        className="fixed left-0 top-14 bottom-0 z-20 border-r border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-slate-950/80 backdrop-blur-md flex flex-col items-center py-2 px-1 overflow-hidden transition-colors duration-200"
       >
         {/* Top Actions: Logo toggle & Home button */}
         <div className="shrink-0 flex flex-col items-center gap-2 mb-2 w-full">
           <button 
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="w-10 h-10 rounded-xl bg-[#0B1020] border border-white/10 flex items-center justify-center shrink-0 transition-all hover:bg-white/5 active:scale-95 shadow-lg cursor-pointer"
+            className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0 transition-all hover:bg-slate-200 dark:hover:bg-white/5 active:scale-95 shadow-sm dark:shadow-lg cursor-pointer"
             aria-label={sidebarCollapsed ? "Expand navigation" : "Collapse navigation"}
             aria-expanded={!sidebarCollapsed}
             title={sidebarCollapsed ? "Expand navigation" : "Collapse navigation"}
@@ -194,8 +190,6 @@ export function Layout({
               className="w-8 h-8 object-contain select-none" 
             />
           </button>
-
-
         </div>
 
         {/* Scrollable Navigation List */}
@@ -208,7 +202,9 @@ export function Layout({
                 <div 
                   title={item.label}
                   className={`w-full flex ${sidebarCollapsed ? "flex-col items-center py-1 px-1" : "flex-row items-center gap-3 py-1 px-3"} rounded-xl transition-all group relative cursor-pointer ${
-                    isActive ? "text-primary bg-primary/10" : "text-white/40 hover:text-white hover:bg-white/5"
+                    isActive
+                      ? "text-primary bg-primary/10 font-bold"
+                      : "text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
                   }`}
                 >
                   <item.icon className={`w-4 h-4 mb-0.5 transition-transform group-hover:scale-110 ${isActive ? "text-primary" : ""}`} />
@@ -221,18 +217,15 @@ export function Layout({
             );
           })}
         </nav>
-
       </motion.aside>
       )}
 
       {/* 3. RIGHT RAIL (Fixed to viewport, never scrolls) */}
       {!hideRightPanel && (
-
-      <motion.aside
+        <motion.aside
           style={{ opacity: rightPanelOpacity }}
           animate={{ width: rightPanelCollapsed ? 56 : 300 }}
-          // Width classes mirror the animated width so the rail never shrink-wraps its unrotated label (~280px) when framer hasn't run.
-          className={`fixed right-0 top-14 bottom-0 z-20 border-l border-slate-800/80 bg-slate-950/80 backdrop-blur-md flex flex-col overflow-hidden ${rightPanelCollapsed ? "w-14" : "w-[300px] max-w-[85vw]"}`}
+          className={`fixed right-0 top-14 bottom-0 z-20 border-l border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-slate-950/80 backdrop-blur-md flex flex-col overflow-hidden transition-colors duration-200 ${rightPanelCollapsed ? "w-14" : "w-[300px] max-w-[85vw]"}`}
         >
           <button 
             onClick={() => setRightPanelCollapsed(!rightPanelCollapsed)}
@@ -253,12 +246,12 @@ export function Layout({
               >
                 <Sparkles className="w-4 h-4 text-primary/60 shrink-0" />
                 <div className="flex-1 flex items-center justify-center">
-                  <span className="font-black text-[10px] uppercase tracking-[0.5em] text-white/20 whitespace-nowrap -rotate-90 origin-center flex items-center gap-4">
-                    AI ANALYST <div className="w-8 h-px bg-white/10" /> NAVIGATOR
+                  <span className="font-black text-[10px] uppercase tracking-[0.5em] text-slate-400 dark:text-white/20 whitespace-nowrap -rotate-90 origin-center flex items-center gap-4">
+                    AI ANALYST <div className="w-8 h-px bg-slate-300 dark:bg-white/10" /> NAVIGATOR
                   </span>
                 </div>
                 <Link href="/ai-analyst">
-                  <TrendingUp className="w-5 h-5 text-primary/40 shrink-0 hover:text-primary transition-colors cursor-pointer" />
+                  <TrendingUp className="w-5 h-5 text-primary/60 shrink-0 hover:text-primary transition-colors cursor-pointer" />
                 </Link>
               </motion.div>
             ) : (
@@ -273,7 +266,7 @@ export function Layout({
               </motion.div>
             )}
           </AnimatePresence>
-          <div className="shrink-0 flex justify-center py-3 border-t border-slate-800/80">
+          <div className="shrink-0 flex justify-center py-3 border-t border-slate-200 dark:border-slate-800/80">
             <AssistantLauncher embedded />
           </div>
         </motion.aside>

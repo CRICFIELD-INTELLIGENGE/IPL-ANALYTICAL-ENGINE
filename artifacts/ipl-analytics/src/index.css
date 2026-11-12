@@ -1,7 +1,39 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@variant dark (&:where(.dark, .dark *));
 
 :root {
+  --background: 210 40% 98%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 221 83% 53%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 263 83% 58%;
+  --radius: 16px;
+
+  /* TEAM THEME DYNAMIC TOKENS (LIGHT DEFAULT) */
+  --team-accent: #6366F1;
+  --team-secondary: #0284C7;
+  --team-glow: rgba(99, 102, 241, 0.15);
+  --team-surface-tint: rgba(99, 102, 241, 0.08);
+  --team-title-ink: #1e3a8a;
+  --team-title-surface: #eff6ff;
+}
+
+.dark, [data-theme="dark"] {
   --background: 228 60% 5%;
   --foreground: 0 0% 100%;
   --card: 226 48% 9%;
@@ -21,9 +53,8 @@
   --border: 226 48% 15%;
   --input: 226 48% 15%;
   --ring: 263 83% 58%;
-  --radius: 16px;
 
-  /* TEAM THEME DYNAMIC TOKENS (DEFAULT NEUTRAL ELECTRIC PURPLE) */
+  /* TEAM THEME DYNAMIC TOKENS (DARK DEFAULT) */
   --team-accent: #A8B7C7;
   --team-secondary: #06B6D4;
   --team-glow: rgba(139, 92, 246, 0.25);
@@ -71,22 +102,28 @@
 html, body, #root {
   margin: 0;
   padding: 0;
-  background-color: #050816;
+  min-height: 100%;
 }
 
 @layer base {
-  * { border-color: rgba(255, 255, 255, 0.05); }
+  * { border-color: rgba(148, 163, 184, 0.2); }
+  .dark * { border-color: rgba(255, 255, 255, 0.08); }
   body {
     font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: hsl(var(--foreground));
+    background-color: #F8FAFC;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .dark body, body.dark, html.dark body {
     background:
       radial-gradient(1200px 600px at 10% -10%, var(--team-glow, hsl(270 95% 25% / 0.35)), transparent 65%),
       radial-gradient(900px 500px at 110% 10%, var(--team-surface-tint, hsl(220 100% 30% / 0.30)), transparent 60%),
       radial-gradient(700px 400px at 50% 110%, var(--team-glow, hsl(320 100% 30% / 0.20)), transparent 65%),
       #050816;
-    transition: background 0.6s ease-in-out;
+    background-color: #050816;
+    color: hsl(var(--foreground));
   }
 }
 
@@ -133,8 +170,15 @@ html, body, #root {
 }
 
 .premium-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.dark .premium-card {
   background-color: #0B1020;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
@@ -183,17 +227,31 @@ html, body, #root {
   padding: 8px 16px;
   white-space: nowrap;    /* Prevents label text from crumpling */
   border-radius: 6px;
-  background: #111827;
-  border: 1px solid #1f293d;
-  color: #94a3b8;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
+.dark .tab-item {
+  background: #111827;
+  border: 1px solid #1f293d;
+  color: #94a3b8;
+}
+
 .tab-item.active {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: #3b82f6;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.dark .tab-item.active {
   background: #1e293b;
   color: #ffffff;
   border-color: #3b82f6;
+  box-shadow: none;
 }
 
 /* News-desk ticker: a continuous marquee. The track holds the list twice, so
@@ -385,29 +443,29 @@ iframe[src*="gettyimages.com"] {
 .franchise-eyebrow { color:var(--team-accent,#8ba7ff); }
 .franchise-action { background:color-mix(in srgb,var(--team-accent) 32%,#0a1528) !important; color:#fff !important; border:1px solid color-mix(in srgb,var(--team-accent) 55%,#172435); }
 .franchise-action:hover { filter:brightness(1.18); }
-.editorial-shell main[data-team-surfaces="true"] { background:color-mix(in srgb,var(--team-accent) 7%,#050b17); }
-.editorial-shell main[data-team-surfaces="true"] :is(.bg-\[\#050816\],.bg-\[\#0B1020\],.bg-\[\#060913\],.bg-\[\#070c16\]) { background-color:color-mix(in srgb,var(--team-accent) 9%,#080f20); }
-.editorial-shell main[data-team-surfaces="true"] .hero-header-bg { background:linear-gradient(130deg,color-mix(in srgb,var(--team-accent) 22%,#071225),#050a16); }
+.dark .editorial-shell main[data-team-surfaces="true"] { background:color-mix(in srgb,var(--team-accent) 7%,#050b17); }
+.dark .editorial-shell main[data-team-surfaces="true"] :is(.bg-\[\#050816\],.bg-\[\#0B1020\],.bg-\[\#060913\],.bg-\[\#070c16\]) { background-color:color-mix(in srgb,var(--team-accent) 9%,#080f20); }
+.dark .editorial-shell main[data-team-surfaces="true"] .hero-header-bg { background:linear-gradient(130deg,color-mix(in srgb,var(--team-accent) 22%,#071225),#050a16); }
 
-.stats-team-overlay { background:linear-gradient(120deg,color-mix(in srgb,var(--team-accent) 22%,transparent),#05081633); }
-.editorial-shell main[data-analytics-theme="true"] { --analytics-accent:var(--team-accent,#3b82f6); }
-.editorial-shell main[data-analytics-theme="true"] :is(.text-primary,[class*="text-purple-"],[class*="text-violet-"]) { color:var(--analytics-accent); }
-.editorial-shell main[data-analytics-theme="true"] :is([class*="bg-purple-"],[class*="bg-violet-"],[class*="bg-primary/"]) { background-color:color-mix(in srgb,var(--analytics-accent) 17%,#091224); }
-.editorial-shell main[data-analytics-theme="true"] :is([class*="border-purple-"],[class*="border-violet-"],[class*="border-primary/"]) { border-color:color-mix(in srgb,var(--analytics-accent) 40%,#182436); }
+.dark .stats-team-overlay { background:linear-gradient(120deg,color-mix(in srgb,var(--team-accent) 22%,transparent),#05081633); }
+.dark .editorial-shell main[data-analytics-theme="true"] { --analytics-accent:var(--team-accent,#3b82f6); }
+.dark .editorial-shell main[data-analytics-theme="true"] :is(.text-primary,[class*="text-purple-"],[class*="text-violet-"]) { color:var(--analytics-accent); }
+.dark .editorial-shell main[data-analytics-theme="true"] :is([class*="bg-purple-"],[class*="bg-violet-"],[class*="bg-primary/"]) { background-color:color-mix(in srgb,var(--analytics-accent) 17%,#091224); }
+.dark .editorial-shell main[data-analytics-theme="true"] :is([class*="border-purple-"],[class*="border-violet-"],[class*="border-primary/"]) { border-color:color-mix(in srgb,var(--analytics-accent) 40%,#182436); }
 
 /* Quiet graphite surfaces keep franchise accents clear across score and stats views. */
-.editorial-shell main[data-team-surfaces="true"],
-.editorial-shell main[data-analytics-theme="true"] { background:#090c10; }
-.editorial-shell main[data-team-surfaces="true"] :is(.bg-\[\#050816\],.bg-\[\#0B1020\],.bg-\[\#060913\],.bg-\[\#070c16\]) { background-color:#0e1218; }
+.dark .editorial-shell main[data-team-surfaces="true"],
+.dark .editorial-shell main[data-analytics-theme="true"] { background:#090c10; }
+.dark .editorial-shell main[data-team-surfaces="true"] :is(.bg-\[\#050816\],.bg-\[\#0B1020\],.bg-\[\#060913\],.bg-\[\#070c16\]) { background-color:#0e1218; }
 
 /* Surfaces remain graphite; franchise identity belongs to compact accents. */
-.editorial-shell { --team-title-surface:#10151b; }
-.franchise-action { background:#171e27 !important; border-color:color-mix(in srgb,var(--team-accent) 35%,#343b43); }
-.editorial-shell main[data-team-surfaces="true"] .hero-header-bg { background:linear-gradient(130deg,#121820,#090c10); }
+.dark .editorial-shell { --team-title-surface:#10151b; }
+.dark .franchise-action { background:#171e27 !important; border-color:color-mix(in srgb,var(--team-accent) 35%,#343b43); }
+.dark .editorial-shell main[data-team-surfaces="true"] .hero-header-bg { background:linear-gradient(130deg,#121820,#090c10); }
 .stats-team-overlay { background:linear-gradient(120deg,#ffffff04,transparent); }
-.editorial-shell main :is([class*="bg-purple-"],[class*="bg-violet-"],[class*="bg-primary/"]) { background-color:#121820; }
-.editorial-shell main[data-analytics-theme="true"] :is([class*="bg-purple-"],[class*="bg-violet-"],[class*="bg-primary/"]) { background-color:#121820; }
-.editorial-shell main :is([class*="from-purple-"],[class*="from-violet-"]) { --tw-gradient-from:#171e27; }
-.editorial-shell main :is([class*="to-purple-"],[class*="to-violet-"]) { --tw-gradient-to:#0a0e13; }
-.editorial-shell main :is([class*="via-purple-"],[class*="via-violet-"]) { --tw-gradient-via:#10161d; }
+.dark .editorial-shell main :is([class*="bg-purple-"],[class*="bg-violet-"],[class*="bg-primary/"]) { background-color:#121820; }
+.dark .editorial-shell main[data-analytics-theme="true"] :is([class*="bg-purple-"],[class*="bg-violet-"],[class*="bg-primary/"]) { background-color:#121820; }
+.dark .editorial-shell main :is([class*="from-purple-"],[class*="from-violet-"]) { --tw-gradient-from:#171e27; }
+.dark .editorial-shell main :is([class*="to-purple-"],[class*="to-violet-"]) { --tw-gradient-to:#0a0e13; }
+.dark .editorial-shell main :is([class*="via-purple-"],[class*="via-violet-"]) { --tw-gradient-via:#10161d; }
 .dimension-slicing-scroll{scrollbar-width:thin;scrollbar-color:#ffffff35 transparent;scrollbar-gutter:stable}.dimension-slicing-scroll::-webkit-scrollbar{width:4px}.dimension-slicing-scroll::-webkit-scrollbar-track{background:transparent}.dimension-slicing-scroll::-webkit-scrollbar-thumb{background:#ffffff30;border-radius:8px}.dimension-slicing-scroll:hover::-webkit-scrollbar-thumb{background:#ffffff50}

@@ -28,7 +28,6 @@ function ScrollToTop() {
 }
 
 export default function MobileApp({ legacy }: { legacy: ReactNode }) {
-  useEffect(() => { document.documentElement.classList.add("dark"); }, []);
   return (
     <div className="cfm">
       <a href="#cfm-main" className="cfm-skip" style={{ position: "absolute", left: -9999 }} onFocus={(e) => (e.currentTarget.style.left = "8px")} onBlur={(e) => (e.currentTarget.style.left = "-9999px")}>Skip to content</a>

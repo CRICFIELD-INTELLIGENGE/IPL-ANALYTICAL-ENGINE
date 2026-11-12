@@ -12,6 +12,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 
 import { isTeamCode, TeamProvider } from "@/lib/team-context";
+import { ThemeProvider } from "@/lib/theme";
 import { ConsentBanner, AnalyticsRouteTracker } from "@/components/consent-banner";
 import { CommercialZone } from "@/components/photo-policy";
 import { AssistantLauncher } from "@/components/assistant-launcher";
@@ -254,19 +255,21 @@ function ViewportExperience() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <TeamProvider>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-            {/* GA4 counts one page view on load and never sees a client-side
-                route change, so page views are sent per navigation instead. */}
-            <RouteHistoryTracker /><AnalyticsRouteTracker /><UsageTracker />
-            <ViewportExperience />
-            <CricfieldSplash />
-          </WouterRouter>
-          <ConsentBanner />
-          <Toaster />
-        </TeamProvider>
-      </TooltipProvider>
+      <ThemeProvider>
+        <TooltipProvider>
+          <TeamProvider>
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              {/* GA4 counts one page view on load and never sees a client-side
+                  route change, so page views are sent per navigation instead. */}
+              <RouteHistoryTracker /><AnalyticsRouteTracker /><UsageTracker />
+              <ViewportExperience />
+              <CricfieldSplash />
+            </WouterRouter>
+            <ConsentBanner />
+            <Toaster />
+          </TeamProvider>
+        </TooltipProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
