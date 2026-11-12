@@ -9,6 +9,7 @@ import { AdVessel } from "@/components/ad-vessel";
 import { EditorialCardMedia } from "@/components/dugout/editorial-image-figure";
 import { getLocalEmbedImages, getPublishedArticleImages, PUBLIC_MANIFEST, isPublishable, isLocalPreviewable } from "@/lib/editorial-images";
 import { useEmbedConsent } from "@/lib/embed-consent";
+import { TeamLogo } from "@/components/team-logo";
 import { NewsCard, newsroomOrder } from "@/components/feed-newsroom";
 import { getV2Index, STORY_TYPE_LABEL } from "@/lib/editorial-v2";
 import { HUB_EVENTS, HUB_TEAMS } from "@/lib/ipl-2027";
@@ -111,6 +112,42 @@ export function selectFeedRetentionPhoto(selectedTeam: TeamCode | null, used: Re
     return candidates.find(image => image.sectionId === "hero") ?? candidates[0];
 }
 
+function RetentionHeroVisual({ team }: { team: TeamCode | null }) {
+  const teamArtwork: Partial<Record<TeamCode, { src: string; alt: string; name: string }>> = {
+    RCB: { src: "/rcb-winner-2026.jpg", alt: "RCB IPL 2026 Champions", name: "Royal Challengers Bengaluru" },
+    CSK: { src: "/msd.jpg", alt: "MS Dhoni CSK", name: "Chennai Super Kings" },
+    MI: { src: "/rohit sharma.jpg", alt: "Rohit Sharma MI", name: "Mumbai Indians" },
+    RR: { src: "/sanju samson.jpg", alt: "Sanju Samson RR", name: "Rajasthan Royals" },
+    SRH: { src: "/bhuvaneswar kumar.jpg", alt: "Sunrisers Hyderabad", name: "Sunrisers Hyderabad" },
+    KKR: { src: "/s narine.jpg", alt: "Sunil Narine KKR", name: "Kolkata Knight Riders" },
+    DC: { src: "/hero-players.png", alt: "Delhi Capitals", name: "Delhi Capitals" },
+    GT: { src: "/rashid khan.jpg", alt: "Rashid Khan GT", name: "Gujarat Titans" },
+    LSG: { src: "/kl rahul.jpg", alt: "Lucknow Super Giants", name: "Lucknow Super Giants" },
+    PBKS: { src: "/hero-players.png", alt: "Punjab Kings", name: "Punjab Kings" },
+  };
+
+  const selected = team && teamArtwork[team] ? teamArtwork[team] : null;
+  const imgSrc = selected?.src ?? "/hero-players.png";
+  const imgAlt = selected?.alt ?? "IPL Retention Stars & Captains";
+  const label = selected?.name ?? "IPL 2027 Franchise Roster Hub";
+
+  return (
+    <div className="relative w-full h-full min-h-[220px] sm:min-h-[340px] overflow-hidden flex items-center justify-center bg-[#070C16] group">
+      <img
+        src={imgSrc}
+        alt={imgAlt}
+        className="absolute inset-0 w-full h-full object-cover object-top opacity-85 group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+      />
+      {/* Precision gradient scrims matching card background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0B1020] via-black/40 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0B1020] via-transparent to-transparent pointer-events-none" />
+      <div className="absolute bottom-3 right-3 text-[10px] font-mono font-bold uppercase tracking-wider text-white/70 bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-lg border border-white/10 pointer-events-none shadow-sm">
+        {label}
+      </div>
+    </div>
+  );
+}
+
 export default function FeedPage() {
   const { selectedTeam } = useTeamTheme();
   const [team, setTeam] = useState<TeamCode | null>(null);
@@ -166,13 +203,17 @@ export default function FeedPage() {
         <div data-feed-part="opening" className="grid gap-4 xl:grid-cols-[1fr_260px]">
           <section data-feed-part="retention-hero" className="relative overflow-hidden rounded-[24px] border border-white/10 bg-[#0B1020] min-h-[340px] grid sm:grid-cols-2">
             <div className="relative min-h-[220px] sm:min-h-[340px] flex items-center bg-[#0B1020] order-last">
-              {retentionPhoto ? <EditorialCardMedia
-                key={`${selectedTeam ?? "all"}-${retentionPhoto.assetId}`}
-                image={retentionPhoto}
-                allowUnpublished={import.meta.env.DEV}
-                preserveAspectRatio
-                fallback={<div className="w-full min-h-[220px] flex items-center justify-center p-6 text-center text-xs text-white/50">Getty photo unavailable. Enable embedded content in Cookie Settings to view team photography.</div>}
-              /> : <div className="w-full p-6 text-center text-xs text-white/50">Team photography will appear here when available.</div>}
+              {retentionPhoto ? (
+                <EditorialCardMedia
+                  key={`${selectedTeam ?? "all"}-${retentionPhoto.assetId}`}
+                  image={retentionPhoto}
+                  allowUnpublished={import.meta.env.DEV}
+                  preserveAspectRatio
+                  fallback={<RetentionHeroVisual team={selectedTeam} />}
+                />
+              ) : (
+                <RetentionHeroVisual team={selectedTeam} />
+              )}
             </div>
             <div className="relative z-10 flex h-full flex-col justify-center p-6 sm:p-8 max-w-xl order-first">
               <div className="franchise-eyebrow text-[11px] font-black uppercase tracking-[0.25em]">IPL 2027 / Squad Building</div>
@@ -490,12 +531,19 @@ function RetentionCountdown() {
 
 export function EntryMedia({ entry }: { entry: IndexEntry }) {
   const image = articleHeaderImage(entry.id);
-  const consent = useEmbedConsent();
+  const t = TEAM_REGISTRY[entry.franchise as TeamCode];
+  const accent = t?.accent ?? "#FF6B00";
   const placeholder = (
-    <div className="aspect-video w-full flex items-center justify-center bg-[#0A0F1D] px-4 text-center text-xs text-white/45">
-      {image?.embedHtml && consent !== "granted"
-        ? "Accept embedded content to view this article’s Getty Images photo"
-        : "Article header photo unavailable"}
+    <div
+      className="aspect-video w-full flex flex-col items-center justify-center p-3 text-center relative overflow-hidden bg-gradient-to-br from-[#0c1322] via-[#080d18] to-[#04060c]"
+      style={{ borderLeft: `3px solid ${accent}` }}
+    >
+      <div className="w-8 h-8 rounded-full flex items-center justify-center mb-1 bg-white/5 border border-white/10">
+        <TeamLogo team={entry.franchise} />
+      </div>
+      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-white/70 truncate max-w-full">
+        {entry.franchise} Editorial
+      </span>
     </div>
   );
   if (!image) return placeholder;
