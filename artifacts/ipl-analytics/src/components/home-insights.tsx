@@ -39,7 +39,7 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
             <div className="bg-[#081622] rounded-[16px] border border-[#19303c] overflow-hidden group hover:border-primary/50 transition-all cursor-pointer min-w-0 shadow-xl h-full flex-1 flex flex-col">
               <div
                 className={`home-story-media w-full relative overflow-hidden bg-[#06111a] flex items-center justify-center shrink-0 ${
-                  isSingle ? "h-56 sm:h-64 lg:h-72" : "aspect-video"
+                  isSingle ? "home-top-story-media" : "aspect-video"
                 }`}
               >
                 <LibraryMedia
@@ -49,8 +49,8 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
                   code={code}
                   teamName={meta.name}
                   aspect={item.aspect}
-                  preserveAspectRatio={false}
-                  aspectRatio="fill"
+                  preserveAspectRatio={isSingle}
+                  aspectRatio={isSingle ? "video" : "fill"}
                 />
               </div>
               <div

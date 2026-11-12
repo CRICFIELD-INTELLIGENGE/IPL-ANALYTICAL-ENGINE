@@ -62,7 +62,7 @@ function queueGettyWidget(p: GettyEmbedParams) {
         w: p.w,
         h: p.h,
         items: p.items,
-        caption: p.caption,
+        caption: false,
         tld: p.tld,
         is360: p.is360,
       });
@@ -86,7 +86,7 @@ function queueGettyWidget(p: GettyEmbedParams) {
           w: p.w,
           h: p.h,
           items: p.items,
-          caption: p.caption,
+          caption: false,
           tld: p.tld,
           is360: p.is360,
         });
