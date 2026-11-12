@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { TeamLogo } from "@/components/team-logo";
 import { Layout } from "@/components/layout";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gavel, Radio, Search, ChevronDown, ExternalLink, Wallet, Users, History, Newspaper, Brain, Sparkles, TrendingUp, CheckCircle2, ArrowRight, Activity } from "lucide-react";
+import { Gavel, Radio, Search, ChevronDown, ExternalLink, Wallet, Users, History, Newspaper, Brain, Sparkles, TrendingUp, CheckCircle2, Activity } from "lucide-react";
 import { Link } from "wouter";
 import { HUB_EVENTS } from "@/lib/ipl-2027";
 import { stamp, useIpl2027Desk } from "@/lib/ipl-2027-desk";
@@ -136,7 +136,6 @@ export default function PulsePage() {
             <PulseHero
               active={active}
               phase={phase.name}
-              onNavigate={setTab}
               seasonSelector={
                 <div className="flex items-center gap-2 shrink-0">
                   <span className="text-[11px] font-bold text-white/70 uppercase tracking-wider">Season:</span>
@@ -248,8 +247,6 @@ const HERO_SLIDES = [
     highlight: "PULSE.",
     tone: "text-[#FF6B00]",
     desc: "Every bid. Every player. Every franchise decision. Retentions, live transactions, and final squads in one centralized intelligence desk.",
-    tab: "Overview" as PulseTab,
-    cta: "Explore Pulse",
   },
   {
     id: "retentions",
@@ -257,8 +254,6 @@ const HERO_SLIDES = [
     highlight: "RETENTIONS.",
     tone: "text-emerald-400",
     desc: "Official retention declarations, released cores, franchise retention expenditure, and remaining purse calculations.",
-    tab: "Retentions" as PulseTab,
-    cta: "View Retentions",
   },
   {
     id: "auction",
@@ -266,8 +261,6 @@ const HERO_SLIDES = [
     highlight: "AUCTION.",
     tone: "text-amber-400",
     desc: "Live hammer bidding, real-time marquee lots, purse deductions, and transaction telemetry direct from the auction floor.",
-    tab: "Live Auction" as PulseTab,
-    cta: "Open Live Auction",
   },
   {
     id: "aftermath",
@@ -275,40 +268,32 @@ const HERO_SLIDES = [
     highlight: "AFTERMATH.",
     tone: "text-purple-400",
     desc: "Complete squad sheets, tactical roster balances, purse efficiency ratings, and verified roster breakdowns post-auction.",
-    tab: "Results" as PulseTab,
-    cta: "Analyze Rosters",
   },
 ];
 
 function PulseHero({
   active,
   phase,
-  onNavigate,
   seasonSelector,
 }: {
   active: number;
   phase: string;
-  onNavigate: (t: PulseTab) => void;
   seasonSelector: React.ReactNode;
 }) {
   const [slideIdx, setSlideIdx] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
-  // Auto-advance slides every 6 seconds unless hovered
+  // Auto-advance slides continuously every 4.5 seconds without stopping on mouse hover
   useEffect(() => {
-    if (isPaused) return;
     const timer = setInterval(() => {
       setSlideIdx(prev => (prev + 1) % HERO_SLIDES.length);
-    }, 6000);
+    }, 4500);
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, []);
 
   const current = HERO_SLIDES[slideIdx];
 
   return (
     <div
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
       data-on-image="true"
       className="editorial-cover-canvas relative rounded-[24px] border border-slate-700/40 dark:border-white/10 overflow-hidden min-h-[300px] sm:min-h-[330px] lg:min-h-[350px] p-6 sm:p-7 flex flex-col justify-between group shadow-lg dark:shadow-2xl h-full bg-[#050816]"
     >
@@ -336,48 +321,30 @@ function PulseHero({
         {seasonSelector}
       </div>
 
-      {/* Middle Content: Consistent Typographic Scale Across All Slides */}
-      <div className="relative z-10 my-auto py-4">
-        <h1
-          key={current.id}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[44px] font-black leading-none uppercase tracking-tight text-white select-none animate-in fade-in slide-in-from-left-2 duration-300"
-          style={{ color: "#ffffff" }}
-        >
-          {current.prefix} <span className={current.tone}>{current.highlight}</span>
-        </h1>
-        <p
-          className="text-xs sm:text-sm text-white/80 max-w-lg mt-3 leading-relaxed"
-          style={{ color: "rgba(255, 255, 255, 0.85)" }}
-        >
-          {current.desc}
-        </p>
-      </div>
-
-      {/* Bottom Bar: Slide Indicators & Call to Action */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/10">
-        <div className="flex items-center gap-1.5">
-          {HERO_SLIDES.map((s, idx) => (
-            <button
-              key={s.id}
-              onClick={() => setSlideIdx(idx)}
-              className={`px-2.5 py-1 rounded-lg text-[10px] font-black font-mono tracking-wider transition-all cursor-pointer ${
-                slideIdx === idx
-                  ? "bg-white text-slate-950 shadow-md font-bold"
-                  : "bg-white/10 text-white/60 hover:bg-white/20 hover:text-white"
-              }`}
+      {/* Middle Content: Animated, consistent typographic scale across all slides without buttons */}
+      <div className="relative z-10 my-auto py-5">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={current.id}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+          >
+            <h1
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[44px] font-black leading-none uppercase tracking-tight text-white select-none"
+              style={{ color: "#ffffff" }}
             >
-              {idx === 0 ? "PULSE" : s.prefix}
-            </button>
-          ))}
-        </div>
-
-        <button
-          onClick={() => onNavigate(current.tab)}
-          className="px-4 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-black text-xs uppercase tracking-wider shadow-md hover:shadow-lg flex items-center gap-1.5 transition-all group/btn cursor-pointer"
-        >
-          <span>{current.cta}</span>
-          <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
-        </button>
+              {current.prefix} <span className={current.tone}>{current.highlight}</span>
+            </h1>
+            <p
+              className="text-xs sm:text-sm text-white/80 max-w-lg mt-3 leading-relaxed"
+              style={{ color: "rgba(255, 255, 255, 0.85)" }}
+            >
+              {current.desc}
+            </p>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
