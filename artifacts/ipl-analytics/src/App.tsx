@@ -4,8 +4,8 @@ import {RouteHistoryTracker} from '@/lib/route-history';
 import { CricFieldMascot } from "@/components/CricFieldMascot";
 import { UsageTracker } from "@/components/public-metrics";
 import TermsPage from "@/pages/terms";
-import { lazy, Suspense } from "react";
-import { Switch, Route, Router as WouterRouter, Redirect, useSearch } from "wouter";
+import { lazy, Suspense, useEffect } from "react";
+import { Switch, Route, Router as WouterRouter, Redirect, useSearch, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -245,6 +245,30 @@ function Router() {
   );
 }
 
+/**
+ * Automatically scrolls window to top on every route change,
+ * preventing new pages from loading scrolled to the bottom/middle.
+ */
+function ScrollToTop() {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.location.hash) {
+        const id = window.location.hash.replace("#", "");
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+  }, [location]);
+
+  return null;
+}
+
 /** Desktop (≥1024px) renders exactly the original tree; below that the mobile shell wraps the same routes. */
 function ViewportExperience() {
   const mobile = useMobileGate();
@@ -262,6 +286,7 @@ function App() {
               {/* GA4 counts one page view on load and never sees a client-side
                   route change, so page views are sent per navigation instead. */}
               <RouteHistoryTracker /><AnalyticsRouteTracker /><UsageTracker />
+              <ScrollToTop />
               <ViewportExperience />
               <CricfieldSplash />
             </WouterRouter>

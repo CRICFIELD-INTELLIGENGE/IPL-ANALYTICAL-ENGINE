@@ -78,6 +78,7 @@ export default function PulsePage() {
   const setTab = (newTab: PulseTab, pushHistory = true) => {
     setTabState(newTab);
     if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       const url = new URL(window.location.href);
       if (newTab === "Overview") {
         url.searchParams.delete("tab");
@@ -97,11 +98,19 @@ export default function PulsePage() {
   const setSeason = (newSeason: number | null) => {
     setSeasonState(newSeason);
     if (typeof window !== "undefined" && newSeason != null) {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       const url = new URL(window.location.href);
       url.searchParams.set("season", String(newSeason));
       window.history.replaceState({ tab, season: newSeason }, "", url.pathname + url.search);
     }
   };
+
+  // Scroll to top immediately when switching tabs or seasons so the new section is viewed from the beginning
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+  }, [tab, active]);
 
   // Synchronize with browser Back / Forward buttons
   useEffect(() => {
@@ -115,6 +124,9 @@ export default function PulsePage() {
         setTabState(found ?? "Overview");
       } else {
         setTabState("Overview");
+      }
+      if (typeof window !== "undefined") {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       }
       const seasonParam = params.get("season");
       if (seasonParam && !isNaN(Number(seasonParam))) {

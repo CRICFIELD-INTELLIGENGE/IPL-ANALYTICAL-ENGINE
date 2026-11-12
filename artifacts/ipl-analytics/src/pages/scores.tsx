@@ -1,5 +1,5 @@
 import { useAnalyticsFilterStore } from "@/lib/store";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Layout } from "@/components/layout";
 import {
   useMatches, useSeasons, useSquadsBySeason, usePlayerBios, usePointsTables, usePlayerImages,
@@ -40,6 +40,13 @@ export default function ScoresPage() {
   const standings = pointsTables.data?.[selectedSeason] || [];
   const leaderTeam = standings[0]?.team;
   const playerImages = usePlayerImages();
+
+  // Scroll to top immediately when switching tabs or seasons
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+  }, [activeTab, selectedSeason]);
 
   return (
     <Layout>
