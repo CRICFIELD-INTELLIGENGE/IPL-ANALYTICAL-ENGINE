@@ -306,7 +306,7 @@ export function LibraryMedia({
   const a = EDITORIAL_ASPECTS.find((x) => x.id === aspect) ?? EDITORIAL_ASPECTS[0];
   const teamCover = code === "CSK" ? "/csk insight.jpg" : code === "RCB" ? "/virat-kohli.png" : code === "MI" ? "/rohit sharma.jpg" : "/TITLE BANNER.png";
   const illustration = (
-    <div className={`${aspectRatio === "square" ? "aspect-square" : "aspect-video"} w-full h-full overflow-hidden [&>div]:rounded-none [&>div]:border-0`}>
+    <div className={`${aspectRatio === "square" ? "aspect-square" : aspectRatio === "fill" ? "w-full h-full" : "aspect-video"} w-full h-full overflow-hidden [&>div]:rounded-none [&>div]:border-0`}>
       <EditorialCoverCanvas franchiseName={teamName} teamCode={code} parameter={a.name} parameterNumber={a.number} title={title} accent={accent} coverImage={teamCover} aspectRatio={aspectRatio === "square" ? "square" : "video"} edition="CricField Library" />
     </div>
   );

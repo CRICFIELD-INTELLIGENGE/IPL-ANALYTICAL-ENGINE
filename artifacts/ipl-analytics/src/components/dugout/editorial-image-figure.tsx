@@ -245,14 +245,15 @@ function GettyEmbed({ params, onFail, fit = false }: { params: GettyEmbedParams;
 
   return (
     <div
-      className="editorial-getty-embed relative mx-auto w-full rounded-xl bg-[#08131F]"
+      className={`editorial-getty-embed relative mx-auto w-full rounded-xl bg-[#08131F] ${fit ? "fit-full h-full" : ""}`}
       style={{
         "--getty-ratio": `${wNum} / ${hNum}`,
-        maxWidth: fit ? `min(${wNum}px, calc(100cqh * ${wNum / hNum}))` : `${wNum}px`,
-        aspectRatio: `${wNum} / ${hNum}`,
+        maxWidth: fit ? "100%" : `${wNum}px`,
+        aspectRatio: fit ? "unset" : `${wNum} / ${hNum}`,
+        height: fit ? "100%" : undefined,
       } as React.CSSProperties}
     >
-      <div ref={ref} className="w-full" />
+      <div ref={ref} className={`w-full ${fit ? "h-full flex items-center justify-center" : ""}`} />
       {!loaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-[#08131F] pointer-events-none transition-opacity duration-300">
           <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />

@@ -340,6 +340,18 @@ html, body {
   border: 0;
 }
 
+.editorial-getty-embed.fit-full,
+.editorial-getty-embed.fit-full .getty.embed.image,
+.editorial-getty-embed.fit-full iframe {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: unset !important;
+  object-fit: cover !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+}
+
 .editorial-shell main[data-white-titles="true"] h1,
 .editorial-shell main[data-white-titles="true"] h1 > span { color:#fff; }
 

@@ -259,7 +259,7 @@ export default function HomePage() {
                 </div>
                 <Link href="/feed">View all stories →</Link>
               </div>
-              <div className="flex-1 min-h-[320px]">
+              <div className="flex-1 flex flex-col min-h-0">
                 <React.Suspense
                   fallback={
                     <div className="p-8 text-center text-xs text-slate-400 bg-[#081622] rounded-xl border border-[#19303c]">

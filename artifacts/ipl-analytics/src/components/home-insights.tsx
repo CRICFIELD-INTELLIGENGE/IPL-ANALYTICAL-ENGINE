@@ -35,16 +35,16 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
         const meta = FRANCHISE_METADATA[code];
         const aspect = EDITORIAL_ASPECTS.find((a) => a.id === item.aspect)?.name;
         return (
-          <Link key={item.key} href={item.href!} className="home-lead-story h-full min-h-0 block">
+          <Link key={item.key} href={item.href!} className="home-lead-story h-full flex-1 flex flex-col min-h-0 block">
             <div
-              className={`bg-[#081622] rounded-[16px] border border-[#19303c] overflow-hidden group hover:border-primary/50 transition-all cursor-pointer min-w-0 shadow-xl h-full ${
+              className={`bg-[#081622] rounded-[16px] border border-[#19303c] overflow-hidden group hover:border-primary/50 transition-all cursor-pointer min-w-0 shadow-xl h-full flex-1 ${
                 isSingle ? "flex flex-col sm:flex-row" : "flex flex-col"
               }`}
             >
               <div
                 className={`home-story-media relative overflow-hidden bg-[#06111a] flex items-center justify-center ${
                   isSingle
-                    ? "w-full sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-square shrink-0"
+                    ? "w-full sm:w-[42%] md:w-[40%] h-64 sm:h-full shrink-0"
                     : "w-full aspect-video"
                 }`}
               >
@@ -56,7 +56,7 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
                   teamName={meta.name}
                   aspect={item.aspect}
                   preserveAspectRatio={false}
-                  aspectRatio={isSingle ? "square" : "video"}
+                  aspectRatio={isSingle ? "fill" : "video"}
                 />
               </div>
               <div
