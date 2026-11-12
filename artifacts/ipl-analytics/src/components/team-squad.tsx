@@ -21,6 +21,7 @@ import { FRANCHISE_SEASON_CAPTAINS } from "@/components/dugout/franchise-hero";
 import { fetchRoster, type RosterPlayer } from "@/lib/dugout-api";
 import {
   useSquadsBySeason, usePlayerBios, usePlayerImages, usePlayerDisplayNames, displayPlayerName, teamShort,
+  usePlayerTeamSeasonStats,
   type PlayerBio, type SquadPlayer,
 } from "@/lib/aggregates";
 
@@ -227,6 +228,7 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
 
   const displayNames = usePlayerDisplayNames();
   const nameOf = (p: RosterPlayer) => displayPlayerName(p.name, displayNames);
+  const playerTeamSeasonStats = usePlayerTeamSeasonStats();
 
   // The official squad listing (iplt20.com) is the authority for role, keeper,
   // nationality, captain and jersey number; season figures come from the roster.
@@ -252,6 +254,69 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
       if (o) (rowsOf.get(o) ?? rowsOf.set(o, []).get(o)!).push(p);
       else unlisted.push(p);
     }
+
+    // Helper to resolve season stats from authenticated playerTeamSeasonStats if missing
+    const resolveSeasonFromDataset = (p: RosterPlayer, o?: OfficialPlayer | null): RosterPlayer => {
+      if (p.season || !season || !playerTeamSeasonStats.data) return p;
+      const candidateNames = [
+        p.cricsheetName,
+        p.name,
+        o?.name,
+        displayPlayerName(p.name, displayNames),
+        o?.name ? displayPlayerName(o.name, displayNames) : null,
+      ].filter((n): n is string => Boolean(n));
+
+      const normCandidateTokens = candidateNames.map(nameTokens);
+      const ptss = playerTeamSeasonStats.data;
+      const normFranchise = franchise.toLowerCase().trim();
+      const shortCode = code.toLowerCase().trim();
+
+      const matchTeam = (t: string) => {
+        const nt = (t || "").toLowerCase().trim();
+        return nt === normFranchise || nt === shortCode || teamShort(t).toLowerCase() === shortCode;
+      };
+
+      const batterMatch = ptss.batters.find(
+        b => String(b.season) === season && matchTeam(b.team) && candidateNames.some(cn => cn.toLowerCase().trim() === b.player?.toLowerCase().trim())
+      ) || ptss.batters.find(
+        b => String(b.season) === season && candidateNames.some(cn => cn.toLowerCase().trim() === b.player?.toLowerCase().trim())
+      ) || ptss.batters.find(
+        b => String(b.season) === season && matchTeam(b.team) && normCandidateTokens.some(tokens => tokens.length > 1 && nameTokens(b.player || "").length > 1 && tokens[tokens.length - 1] === nameTokens(b.player || "")[nameTokens(b.player || "").length - 1] && tokens[0][0] === nameTokens(b.player || "")[0][0])
+      );
+
+      const bowlerMatch = ptss.bowlers.find(
+        w => String(w.season) === season && matchTeam(w.team) && candidateNames.some(cn => cn.toLowerCase().trim() === w.player?.toLowerCase().trim())
+      ) || ptss.bowlers.find(
+        w => String(w.season) === season && candidateNames.some(cn => cn.toLowerCase().trim() === w.player?.toLowerCase().trim())
+      ) || ptss.bowlers.find(
+        w => String(w.season) === season && matchTeam(w.team) && normCandidateTokens.some(tokens => tokens.length > 1 && nameTokens(w.player || "").length > 1 && tokens[tokens.length - 1] === nameTokens(w.player || "")[nameTokens(w.player || "").length - 1] && tokens[0][0] === nameTokens(w.player || "")[0][0])
+      );
+
+      if (batterMatch || bowlerMatch) {
+        const m = Math.max(batterMatch?.matches ?? 0, bowlerMatch?.matches ?? 0);
+        const batBalls = batterMatch?.balls ?? 0;
+        const batRuns = batterMatch?.runs ?? 0;
+        const bowlBalls = bowlerMatch?.balls ?? 0;
+        const bowlRuns = bowlerMatch?.runs ?? 0;
+        const wickets = bowlerMatch?.wickets ?? 0;
+
+        return {
+          ...p,
+          played: true,
+          season: {
+            matches: m,
+            batRuns,
+            batBalls,
+            strikeRate: batterMatch?.sr != null ? Number(batterMatch.sr) : (batBalls >= 20 ? Math.round((batRuns / batBalls) * 1000) / 10 : null),
+            bowlBalls,
+            wickets,
+            economy: bowlerMatch?.econ != null ? Number(bowlerMatch.econ) : (bowlBalls >= 12 ? Math.round((bowlRuns / bowlBalls) * 600) / 100 : null),
+          }
+        };
+      }
+      return p;
+    };
+
     // One card per listed player, in the official order. Duplicate roster rows of
     // that player collapse into the one carrying the season record.
     const merged: RosterPlayer[] = [];
@@ -259,7 +324,7 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
     for (const o of officialList) {
       const rows = rowsOf.get(o) ?? [];
       const best = [...rows].sort((a, b) => (b.season?.matches ?? -1) - (a.season?.matches ?? -1))[0];
-      const p: RosterPlayer = best
+      let p: RosterPlayer = best
         ? {
             ...best,
             name: o.name,
@@ -271,11 +336,13 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
             name: o.name, cricsheetName: null, playerId: null, country: o.country, acquisition: null,
             priceLakh: null, priceUsd: null, priceDisplay: null, played: true, role: o.role, keeper: o.keeper, season: null,
           };
+      p = resolveSeasonFromDataset(p, o);
       merged.push(p);
       byKey.set(keyOf(p), o);
     }
-    return { players: [...merged, ...unlisted], officialByKey: byKey };
-  }, [roster.data, staticSquad, officialList, displayNames]);
+    const resolvedUnlisted = unlisted.map(p => resolveSeasonFromDataset(p));
+    return { players: [...merged, ...resolvedUnlisted], officialByKey: byKey };
+  }, [roster.data, staticSquad, officialList, displayNames, season, playerTeamSeasonStats.data, franchise, code]);
   const officialFor = (p: RosterPlayer) => officialByKey.get(keyOf(p)) ?? null;
 
   const [filter, setFilter] = useState<RoleFilter>("all");
@@ -417,7 +484,7 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
     } catch { /* non-essential */ }
   };
 
-  if (squadsBySeason.isLoading) {
+  if (squadsBySeason.isLoading || (roster.isLoading && !roster.data && !playerTeamSeasonStats.data)) {
     return (
       <div className={`rounded-3xl border border-white/10 bg-[#080E1A] p-8 text-center ${className}`}>
         <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-3" />
