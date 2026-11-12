@@ -7,7 +7,8 @@ import {
 import { Layout } from "@/components/layout";
 import { AdVessel } from "@/components/ad-vessel";
 import { EditorialCardMedia } from "@/components/dugout/editorial-image-figure";
-import { getLocalEmbedImages, getPublishedArticleImages, PUBLIC_MANIFEST, isPublishable, isLocalPreviewable } from "@/lib/editorial-images";
+import { getLocalEmbedImages, getPublishedArticleImages, PUBLIC_MANIFEST, isPublishable, isLocalPreviewable, getArticleHeroImage } from "@/lib/editorial-images";
+import { EDITORIAL_ARTICLES } from "@/data/editorial-magazine-data";
 import { useEmbedConsent } from "@/lib/embed-consent";
 import { NewsCard, newsroomOrder } from "@/components/feed-newsroom";
 import { getV2Index, STORY_TYPE_LABEL } from "@/lib/editorial-v2";
@@ -40,9 +41,25 @@ export const CARDS: CardDef[] = [
 const TOOLS = [
   { label: "Retention Lab", desc: "Model retain/release calls against each squad", href: "/feed/ipl-2027?module=retention", icon: ShieldCheck, tint: "bg-violet-600" },
   { label: "Auction War Room", desc: "Purse, needs and targets by franchise", href: "/ai-analyst/auction-war-room", icon: Wallet, tint: "bg-lime-500" },
-  { label: "Playing XI Builder", desc: "Create balanced combinations", href: "/arcade/build-your-xi", icon: Shirt, tint: "bg-sky-500" },
+  { label: "Playing XI Builder", desc: "Create balanced combinations", href: "/ai-analyst/playing-xi", icon: Shirt, tint: "bg-sky-500" },
   { label: "Scout Engine", desc: "Find players by role, league and metrics", href: "/scout", icon: Search, tint: "bg-fuchsia-600" },
 ];
+
+const legacyEntries: IndexEntry[] = EDITORIAL_ARTICLES.map((art) => ({
+  id: art.id,
+  title: art.title,
+  dek: art.subtitle,
+  slug: art.slug,
+  franchise: art.teamCode as TeamCode,
+  aspect: (art.parameter ? art.parameter.toLowerCase().replace(/\s+/g, "-") : "history") as any,
+  storyType: art.isCoverStory ? "investigation" : "explainer",
+  publishedDate: art.publishedDate || "2024-10-16",
+  readMinutes: parseInt(art.readTime, 10) || 5,
+  featured: Boolean(art.isCoverStory || art.featured),
+  status: "published",
+  players: [],
+  seasons: [],
+}));
 
 // Story types that exist in the article schema; no "news"/"opinion" tab until such content exists.
 export const STORY_TABS = [
@@ -120,7 +137,12 @@ export default function FeedPage() {
   const { data: desk } = useIpl2027Desk();
   useEffect(() => { setTeam(selectedTeam); setLatestTeam(selectedTeam); }, [selectedTeam]);
 
-  const all = useMemo(() => getV2Index(), []);
+  const all = useMemo(() => {
+    const v2 = getV2Index();
+    const existingSlugs = new Set(v2.map((e) => e.slug));
+    const legacy = legacyEntries.filter((e) => !existingSlugs.has(e.slug));
+    return [...v2, ...legacy];
+  }, []);
 
   // Top stories: 1 lead card + 4 sidebar cards. When a team is selected, lead with that team's story, then fill the other 4 slots with other teams' stories so the sidebar is always fully populated.
   const top = useMemo(() => {
@@ -286,7 +308,7 @@ export default function FeedPage() {
                     <NewsCard
                       entry={top[0]}
                       lead
-                      media={<EntryMedia entry={top[0]} />}
+                      media={<EntryMedia entry={top[0]} lead />}
                     />
                   </div>
                   <div className="flex flex-col divide-y divide-white/5 rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden justify-between">
@@ -311,14 +333,14 @@ export default function FeedPage() {
                     </button>
                   ))}
                 </div>
-                <ul className="divide-y divide-white/5">
+                <ul className="divide-y divide-white/5 rounded-2xl border border-white/10 bg-white/[0.02] p-1">
                   {latest.map((e) => {
                     const t = TEAM_REGISTRY[e.franchise as TeamCode];
                     return (
                       <li key={e.id}>
-                        <Link href={`/dugout/articles/${e.slug}`} className="flex items-center gap-3.5 py-3 px-2 rounded-xl group hover:bg-white/[0.03] transition-colors">
+                        <Link href={`/dugout/articles/${e.slug}`} className="flex items-center gap-3.5 py-3 px-3 rounded-xl group hover:bg-white/[0.04] transition-colors">
                           <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
-                            <EntryMedia entry={e} preserveAspectRatio={false} />
+                            <ArticleThumbnail entry={e} />
                           </div>
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest">
@@ -491,20 +513,78 @@ function RetentionCountdown() {
   );
 }
 
-export function EntryMedia({ entry, preserveAspectRatio = false }: { entry: IndexEntry; preserveAspectRatio?: boolean }) {
-  const image = articleHeaderImage(entry.id);
+export function getFranchiseCover(code: string): string {
+  switch (code.toUpperCase()) {
+    case "CSK": return "/csk insight.jpg";
+    case "RCB": return "/virat-kohli.png";
+    case "MI": return "/rohit sharma.jpg";
+    case "SRH": return "/abhisek sharma.jpg";
+    case "RR": return "/sanju samson.jpg";
+    case "GT": return "/rashid khan.jpg";
+    case "LSG": return "/kl rahul.jpg";
+    case "KKR": return "/s narine.jpg";
+    case "DC": return "/dc logo.jpg";
+    case "PBKS": return "/shikhar dhawan.jpg";
+    default: return "/TITLE BANNER.png";
+  }
+}
+
+export function ArticleThumbnail({ entry }: { entry: IndexEntry }) {
+  const image = getArticleHeroImage(entry.id);
+  const t = TEAM_REGISTRY[entry.franchise as TeamCode];
+  const teamCover = getFranchiseCover(entry.franchise);
+
+  if (image?.licensedImageUrl) {
+    return (
+      <img
+        src={image.licensedImageUrl}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+      />
+    );
+  }
+
+  return (
+    <div className="relative w-full h-full overflow-hidden bg-[#0A0F1D] flex items-center justify-center">
+      <img
+        src={teamCover}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105 opacity-85"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#060B16] via-[#060B16]/35 to-transparent" />
+      <span
+        className="relative z-10 px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider border shadow-md backdrop-blur-md"
+        style={{
+          backgroundColor: `${t?.accent ?? "var(--team-accent)"}30`,
+          color: t?.accent ?? "var(--team-accent)",
+          borderColor: `${t?.accent ?? "var(--team-accent)"}60`,
+        }}
+      >
+        {entry.franchise}
+      </span>
+    </div>
+  );
+}
+
+export function EntryMedia({ entry, preserveAspectRatio = false, lead = false }: { entry: IndexEntry; preserveAspectRatio?: boolean; lead?: boolean }) {
+  const image = getArticleHeroImage(entry.id);
   const t = TEAM_REGISTRY[entry.franchise as TeamCode];
   const aspectObj = EDITORIAL_ASPECTS.find((a) => a.id === entry.aspect) ?? EDITORIAL_ASPECTS[0];
-  const teamCover = entry.franchise === "CSK" ? "/csk insight.jpg" : entry.franchise === "RCB" ? "/virat-kohli.png" : entry.franchise === "MI" ? "/rohit sharma.jpg" : "/TITLE BANNER.png";
+  const teamCover = getFranchiseCover(entry.franchise);
 
   const fallbackIllustration = (
-    <div className="aspect-video w-full h-full overflow-hidden [&>div]:rounded-none [&>div]:border-0">
+    <div className="aspect-video w-full h-full overflow-hidden [&>div]:rounded-none [&>div]:border-0 relative">
       <EditorialCoverCanvas
         franchiseName={t?.name ?? entry.franchise}
         teamCode={entry.franchise}
         parameter={aspectObj.name}
         parameterNumber={aspectObj.number}
         title={entry.title}
+        hideTitle={true}
         accent={t?.accent ?? "var(--team-accent)"}
         coverImage={teamCover}
         aspectRatio="video"
@@ -529,9 +609,9 @@ export function EntryMedia({ entry, preserveAspectRatio = false }: { entry: Inde
 function CompactStory({ entry }: { entry: IndexEntry }) {
   const t = TEAM_REGISTRY[entry.franchise as TeamCode];
   return (
-    <Link href={`/dugout/articles/${entry.slug}`} className="flex items-center gap-3 p-3 group hover:bg-white/[0.04] transition-colors">
+    <Link href={`/dugout/articles/${entry.slug}`} className="flex items-center gap-3.5 p-3 group hover:bg-white/[0.04] transition-colors">
       <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
-        <EntryMedia entry={entry} preserveAspectRatio={false} />
+        <ArticleThumbnail entry={entry} />
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest">
@@ -746,9 +826,9 @@ function FanPulsePoll() {
                   style={{ width: `${displayPct}%` }}
                 />
               )}
-              <div className="relative z-10 flex items-center justify-between text-xs">
-                <span className="font-semibold">{opt.label}</span>
-                {votedOption && <span className="font-mono text-[11px] font-black text-[var(--team-accent)]">{displayPct}%</span>}
+              <div className="relative z-10 flex items-center justify-between gap-2 text-xs">
+                <span className="font-semibold leading-tight">{opt.label}</span>
+                {votedOption && <span className="font-mono text-[11px] font-black text-[var(--team-accent)] shrink-0">{displayPct}%</span>}
               </div>
             </button>
           );

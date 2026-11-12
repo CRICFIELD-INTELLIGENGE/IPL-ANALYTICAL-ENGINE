@@ -14,6 +14,7 @@ interface EditorialCoverCanvasProps {
   isCoverStory?: boolean;
   /** Edition chip, e.g. "IPL 2008–2026". Legacy covers keep the original label. */
   edition?: string;
+  hideTitle?: boolean;
 }
 
 export function EditorialCoverCanvas({
@@ -28,6 +29,7 @@ export function EditorialCoverCanvas({
   className = "",
   isCoverStory = false,
   edition = "IPL 2024",
+  hideTitle = false,
 }: EditorialCoverCanvasProps) {
   const [imageError, setImageError] = useState(false);
   const hasImage = Boolean(coverImage && coverImage.trim() !== "" && !imageError);
@@ -128,20 +130,22 @@ export function EditorialCoverCanvas({
       </div>
 
       {/* Center Graphic Crest / Title Art */}
-      <div className="relative z-10 my-auto py-2">
-        <div className="flex items-center gap-2 text-xs font-mono text-gray-400 uppercase tracking-widest mb-1.5">
-          <span style={{ color: accent }}>{franchiseName}</span>
-          <span>•</span>
-          <span>SPECIAL REPORT</span>
+      {!hideTitle && (
+        <div className="relative z-10 my-auto py-2">
+          <div className="flex items-center gap-2 text-xs font-mono text-gray-400 uppercase tracking-widest mb-1.5">
+            <span style={{ color: accent }}>{franchiseName}</span>
+            <span>•</span>
+            <span>SPECIAL REPORT</span>
+          </div>
+          <h3
+            className={`font-black tracking-tight text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-tight ${
+              isCoverStory ? "text-xl sm:text-2xl md:text-3xl" : "text-base sm:text-lg"
+            }`}
+          >
+            {title}
+          </h3>
         </div>
-        <h3
-          className={`font-black tracking-tight text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-tight ${
-            isCoverStory ? "text-xl sm:text-2xl md:text-3xl" : "text-base sm:text-lg"
-          }`}
-        >
-          {title}
-        </h3>
-      </div>
+      )}
 
       {/* Bottom Metadata Ribbon */}
       <div className="relative z-10 flex items-center justify-between text-[10px] font-mono text-gray-400 pt-2 border-t border-white/10">

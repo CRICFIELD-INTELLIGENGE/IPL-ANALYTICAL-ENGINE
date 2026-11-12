@@ -220,7 +220,6 @@ function GettyEmbed({ params, onFail, fit = false }: { params: GettyEmbedParams;
     attachIframeEvents();
 
     const mo = new MutationObserver(() => {
-      stripWhite();
       attachIframeEvents();
     });
     mo.observe(el, { childList: true, subtree: true });
