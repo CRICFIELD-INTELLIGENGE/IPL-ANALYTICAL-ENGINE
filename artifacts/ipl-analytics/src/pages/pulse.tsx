@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { TeamLogo } from "@/components/team-logo";
 import { Layout } from "@/components/layout";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Gavel, Radio, Search, ChevronDown, ExternalLink, Wallet, Users, History, Newspaper, Brain } from "lucide-react";
 import { Link } from "wouter";
 import { HUB_EVENTS } from "@/lib/ipl-2027";
@@ -45,125 +45,238 @@ export default function PulsePage() {
   const active = season ?? (probe.data?.lots.length ? 2027 : 2026);
   const pulse = usePulseAuction(active);
   const { model } = pulse;
-  const [wide, setWide] = useState(() => window.matchMedia("(min-width: 768px)").matches);
+
+  const [captionIndex, setCaptionIndex] = useState(0);
+  const captions = [
+    ["AUCTION", "PULSE.", "text-orange-500"],
+    ["01", "RETENTIONS.", "text-orange-500"],
+    ["02", "AUCTION.", "text-orange-500"],
+    ["03", "AFTERMATH.", "text-orange-500"]
+  ];
+
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)"), on = () => setWide(mq.matches);
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
+    const timer = setInterval(() => {
+      setCaptionIndex(prev => (prev + 1) % captions.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [captions.length]);
 
-  const { scrollYProgress } = useScroll();
-  const masterScale = useTransform(scrollYProgress, [0.6, 1], [1, 0.93]);
-  const heroH = useTransform(scrollYProgress, [0, 0.25, 1], ["100%", "38%", "38%"]);
-  const heroW = useTransform(scrollYProgress, [0, 0.15, 0.35, 1], wide ? ["100%", "100%", "calc(100% - 420px)", "calc(100% - 420px)"] : ["100%", "100%", "100%", "100%"]);
-  const col2W = useTransform(scrollYProgress, [0.15, 0.35, 1], wide ? ["0px", "400px", "400px"] : ["0px", "0px", "0px"]);
-  const titleSz = useTransform(scrollYProgress, [0, 0.25, 1], wide ? ["88px", "22px", "22px"] : ["48px", "20px", "20px"]);
-  const padTop = useTransform(scrollYProgress, [0, 0.25, 1], ["12%", "5%", "5%"]);
-  const padLeft = useTransform(scrollYProgress, [0, 0.25, 1], ["6%", "5%", "5%"]);
-  const titleOp = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0]);
-  const r1Op = useTransform(scrollYProgress, [0.08, 0.2], [0, 1]);
-  const r1X = useTransform(scrollYProgress, [0.08, 0.2], [30, 0]);
-  const r2Op = useTransform(scrollYProgress, [0.2, 0.38], [0, 1]);
-  const r2Y = useTransform(scrollYProgress, [0.2, 0.38], [30, 0]);
-  const r3Op = useTransform(scrollYProgress, [0.38, 0.55], [0, 1]);
-  const r3Y = useTransform(scrollYProgress, [0.38, 0.55], [30, 0]);
-
-  const [caption, setCaption] = useState(0);
-  useMotionValueEvent(scrollYProgress, "change", v => setCaption(v < 0.1 ? 0 : v < 0.2 ? 1 : v < 0.3 ? 2 : 3));
-  const captions = [["AUCTION", "PULSE.", "text-pink-500"], ["01", "RETENTIONS.", "text-emerald-400"], ["02", "AUCTION.", "text-[#F9CD05]"], ["03", "AFTERMATH.", "text-[#8B5CF6]"]];
   const auction = HUB_EVENTS.find(e => e.id === "auction");
   const venue = model.foundation?.venue ?? null;
   const updated = active === 2027 ? pulse.desk.data?.updatedAt : model.foundation?.verifiedAt;
 
   return (
-    <Layout hideHeaderProgress={scrollYProgress}>
-      <div style={{ height: "280vh" }}>
-        <motion.div style={{ scale: masterScale, transformOrigin: "center top" }} className="sticky top-0 w-full h-screen flex flex-col gap-2.5 overflow-hidden bg-[#050816] p-2.5 pb-0">
-          <motion.div className="flex gap-2.5 shrink-0" style={{ height: heroH }}>
-            <motion.div style={{ width: heroW }} className="relative bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden shrink-0 group">
-              <img src="/auction-art.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-700 pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-[#050816]/75 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-black/40" />
-              <motion.div style={{ paddingTop: padTop, paddingLeft: padLeft, opacity: titleOp }} className="relative z-10 h-full flex flex-col pr-4">
-                <div className="flex items-center gap-2 mb-4">
-                  <Gavel className="w-4 h-4 text-[var(--team-accent)]" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] franchise-eyebrow">CricField / IPL 2027</span>
-                </div>
-                <motion.h1 style={{ fontSize: titleSz }} className="font-black leading-[0.82] text-white uppercase tracking-tighter mb-4 scale-x-105 origin-left">
-                  {captions[caption][0]} <span className={captions[caption][2]}>{captions[caption][1]}</span>
-                </motion.h1>
-                <p className="text-white/50 text-[13px] max-w-[420px]">Every bid. Every player. Every franchise decision. Retentions, auction and final squads in one place.</p>
-              </motion.div>
-            </motion.div>
+    <Layout>
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 space-y-5">
+        {/* ROW 1: Hero Banner + Event Status Card */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          {/* Hero Card */}
+          <div className="lg:col-span-7 xl:col-span-8 relative bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden group min-h-[300px] sm:min-h-[320px] p-6 sm:p-8 flex flex-col justify-between shadow-2xl">
+            {/* Background Artwork with balanced gradient overlays */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <img
+                src="/auction-art.jpg"
+                alt="Auction gavel"
+                className="w-full h-full object-cover object-center opacity-85 group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#050816]/95 via-[#050816]/75 to-[#050816]/30" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-black/30" />
+            </div>
 
-            <motion.div style={{ width: col2W, opacity: r1Op, x: r1X }} className={`${card} rounded-[24px] flex flex-col overflow-hidden min-w-0`}>
-              <div className="p-3 border-b border-white/5 flex items-center justify-between">
-                <span className={label}>Event status</span>
-                <span className="text-[9px] font-black uppercase tracking-widest text-pink-300">{phase.name}</span>
+            {/* Content Top */}
+            <div className="relative z-10">
+              <div className="flex items-center gap-2 mb-3">
+                <Gavel className="w-4 h-4 text-orange-400" />
+                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-orange-400/90 font-mono">
+                  CricField / IPL {active}
+                </span>
               </div>
-              <div className="flex-1 p-4 space-y-3 text-xs text-white/70 overflow-hidden">
-                <div className="text-white font-black text-lg">IPL {active} auction</div>
-                <div>{active === 2026 ? `${model.foundation?.eventDate} · ${venue}` : `${auction?.date ?? "Date TBA"} · ${auction?.status === "confirmed" ? "confirmed" : "reported, not yet confirmed"}`}</div>
-                <FeedStatus active={active} pulse={pulse} />
-                <div className="grid grid-cols-3 gap-2 pt-1">
-                  <Kpi k="Sold" v={model.sold} tone="text-emerald-400" />
-                  <Kpi k="Unsold" v={unsoldText(model)} tone="text-red-400" />
-                  <Kpi k="Spent" v={spendText(model)} />
-                </div>
-                {updated && <div className="text-[10px] text-white/40">{active === 2027 ? `Last updated ${stamp(updated)}` : `Records verified ${updated}`}</div>}
-              </div>
-            </motion.div>
-          </motion.div>
 
-          <div className="flex gap-2.5 flex-1 min-h-0">
-            <motion.div style={{ opacity: r2Op, y: r2Y }} className={`${card} flex-1 p-4 flex flex-col min-h-0`}>
-              <div className="flex items-center gap-2 mb-3"><Wallet className="w-4 h-4 text-purple-400" /><span className={label}>Franchise purse board</span></div>
-              <div className="flex-1 min-h-0 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 content-start overflow-hidden">
-                {model.teams.map(t => <PurseBar key={t.code} t={t} />)}
+              {/* Fixed-height headline box with smooth AnimatePresence transition */}
+              <div className="h-[52px] sm:h-[64px] flex items-center overflow-hidden mb-3">
+                <AnimatePresence mode="wait">
+                  <motion.h1
+                    key={captionIndex}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="text-3xl sm:text-4xl md:text-5xl font-black leading-none text-white uppercase tracking-tight"
+                  >
+                    {captions[captionIndex][0]}{" "}
+                    <span className={captions[captionIndex][2]}>
+                      {captions[captionIndex][1]}
+                    </span>
+                  </motion.h1>
+                </AnimatePresence>
               </div>
-            </motion.div>
-            <motion.div style={{ opacity: r3Op, y: r3Y }} className={`${card} hidden md:flex w-[320px] p-4 flex-col gap-2 min-h-0`}>
-              <span className={label}>Biggest purchases</span>
-              <ol className="space-y-1.5 overflow-hidden">
-                {model.ranked.slice(0, 8).map((l, i) => (
-                  <li key={l.id} className="flex items-center gap-2 text-xs">
-                    <span className="w-4 text-white/30 font-mono">{i + 1}</span>
-                    <span className="flex-1 truncate font-bold text-white">{l.player}</span>
-                    <span className="font-black" style={{ color: teamHex(l.team ?? "") }}>{l.team}</span>
-                    <span className="w-20 text-right text-emerald-300">{pulseMoney(l.price, l.usd)}</span>
-                  </li>
-                ))}
-              </ol>
-            </motion.div>
+
+              <p className="text-white/60 text-xs sm:text-sm max-w-[480px] leading-relaxed">
+                Every bid. Every player. Every franchise decision. Retentions, auction and final squads in one place.
+              </p>
+            </div>
+
+            {/* Interactive slide indicators */}
+            <div className="relative z-10 flex items-center gap-2 pt-4">
+              {captions.map((c, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCaptionIndex(i)}
+                  aria-label={`Go to slide: ${c[0]} ${c[1]}`}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    captionIndex === i ? "w-8 bg-orange-500" : "w-2 bg-white/20 hover:bg-white/40"
+                  }`}
+                />
+              ))}
+              <span className="text-[10px] font-mono text-white/40 ml-2">
+                0{captionIndex + 1} / 0{captions.length}
+              </span>
+            </div>
           </div>
-        </motion.div>
-      </div>
 
-      <div className="px-2.5 pb-6 mt-4 space-y-4">
-        <nav className="sticky top-0 z-30 -mx-2.5 px-2.5 py-2 bg-[#050816]/95 backdrop-blur border-b border-white/10 flex items-center gap-1 overflow-x-auto" aria-label="Pulse sections">
-          {PULSE_TABS.map((t, i) => (
-            <button key={t} onClick={() => setTab(t)} aria-current={tab === t}
-              className={`shrink-0 px-3 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider transition-colors ${tab === t ? `bg-gradient-to-r ${TAB_TONES[i]} text-white shadow-lg` : "text-white/60 hover:text-white hover:bg-white/5"}`}>{t}</button>
-          ))}
-          <select value={active} onChange={e => setSeason(Number(e.target.value))} aria-label="Auction season" className="ml-auto shrink-0 bg-white/5 border border-white/10 rounded-full px-2 py-1 text-[11px] text-white">
-            {[2027, ...pulse.seasons.filter(s => s !== 2027)].map(s => <option key={s} value={s} className="bg-[#0B1020]">IPL {s}{s === 2027 && !probe.data?.lots.length ? " · Upcoming" : ""}</option>)}
-          </select>
-        </nav>
+          {/* Event Status Card */}
+          <div className="lg:col-span-5 xl:col-span-4 rounded-[24px] border border-white/10 bg-[#0B1020] flex flex-col justify-between overflow-hidden p-5 sm:p-6 shadow-xl">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <Radio className="w-4 h-4 text-orange-400 animate-pulse" />
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/60">Event Status</span>
+              </div>
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-orange-500/15 border border-orange-500/30 text-orange-400 shrink-0">
+                {phase.name}
+              </span>
+            </div>
 
-        {phase.id !== "after" && <UpcomingBanner viewing={active === 2027} lots={probe.data?.lots.length ?? 0} open={() => { setSeason(2027); setTab("Overview"); }} back={() => setSeason(2026)} />}
+            <div className="py-3 space-y-3">
+              <div>
+                <h2 className="text-white font-black text-xl tracking-tight">IPL {active} Auction</h2>
+                <p className="text-xs text-white/70 mt-1 font-medium">
+                  {active === 2026
+                    ? `${model.foundation?.eventDate ?? "Dec 2025"} · ${venue ?? "Jeddah, Saudi Arabia"}`
+                    : `${auction?.date ?? "Date TBA"} · ${auction?.status === "confirmed" ? "Confirmed" : "Reported, not yet confirmed"}`}
+                </p>
+              </div>
 
-        {pulse.loading ? <Empty>Loading auction records…</Empty> : pulse.error ? <Empty>Auction records are unavailable right now. Try again shortly.</Empty> : (
-          <>
-            {tab === "Overview" && <Overview model={model} pulse={pulse} phase={phase.name} go={setTab} />}
-            {tab === "Live Auction" && <LiveAuction key={active} model={model} pulse={pulse} active={active} />}
-            {tab === "Player Pool" && <PlayerPool model={model} />}
-            {tab === "Franchises" && <Franchises model={model} />}
-            {tab === "Retentions" && <Retentions model={model} pulse={pulse} />}
-            {tab === "Results" && <Results model={model} />}
-            {tab === "Live Blog" && <LiveBlog model={model} pulse={pulse} />}
-            {tab === "Archive" && <Archive pulse={pulse} active={active} pick={s => { setSeason(s); setTab("Results"); }} />}
-          </>
-        )}
+              <FeedStatus active={active} pulse={pulse} />
+
+              <div className="grid grid-cols-3 gap-2 sm:gap-2.5 pt-1">
+                <Kpi k="Sold" v={model.sold} tone="text-emerald-400" />
+                <Kpi k="Unsold" v={unsoldText(model)} tone="text-rose-400" />
+                <Kpi k="Spent" v={spendText(model)} tone="text-amber-300" />
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-white/40">
+              <span className="truncate mr-2">
+                {updated
+                  ? active === 2027
+                    ? `Updated ${stamp(updated)}`
+                    : `Records verified: ${updated}`
+                  : "Verified database records"}
+              </span>
+              <span className="font-mono text-[10px] text-white/30 uppercase shrink-0">Official Hub</span>
+            </div>
+          </div>
+        </div>
+
+        {/* ROW 2: Franchise Purse Board + Biggest Purchases */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          {/* Franchise Purse Board */}
+          <div className="lg:col-span-7 xl:col-span-8 rounded-[24px] border border-white/10 bg-[#0B1020] p-5 sm:p-6 flex flex-col justify-between shadow-xl">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <Wallet className="w-4 h-4 text-purple-400" />
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/60">Franchise Purse Board</span>
+              </div>
+              <span className="text-[10px] text-white/40 font-mono">
+                {model.teams.length} Franchises · Active Cap
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 content-start">
+              {model.teams.map(t => <PurseBar key={t.code} t={t} />)}
+            </div>
+          </div>
+
+          {/* Biggest Purchases */}
+          <div className="lg:col-span-5 xl:col-span-4 rounded-[24px] border border-white/10 bg-[#0B1020] p-5 sm:p-6 flex flex-col justify-between shadow-xl">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <History className="w-4 h-4 text-emerald-400" />
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/60">Biggest Purchases</span>
+              </div>
+              <span className="text-[10px] text-emerald-400/80 font-mono font-bold">Top Auction Buys</span>
+            </div>
+
+            <ol className="space-y-2 flex-1 flex flex-col justify-around">
+              {model.ranked.slice(0, 8).map((l, i) => (
+                <li key={l.id} className="flex items-center gap-2.5 text-xs py-1.5 px-2.5 rounded-lg bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] transition-colors">
+                  <span className="w-5 text-center text-white/40 font-mono text-[11px] font-bold">{i + 1}</span>
+                  <span className="flex-1 truncate font-bold text-white tracking-tight">{l.player}</span>
+                  <span className="font-black text-[11px] px-1.5 py-0.5 rounded" style={{ color: teamHex(l.team ?? ""), backgroundColor: `${teamHex(l.team ?? "")}18` }}>{l.team}</span>
+                  <span className="w-20 text-right font-black text-emerald-400">{pulseMoney(l.price, l.usd)}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+
+        {/* Navigation Tabs and Content */}
+        <div className="space-y-4 pt-2">
+          <nav className="sticky top-0 z-30 py-2.5 px-3 bg-[#050816]/95 backdrop-blur-md border border-white/10 rounded-2xl flex items-center gap-1.5 overflow-x-auto shadow-lg" aria-label="Pulse sections">
+            {PULSE_TABS.map((t, i) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                aria-current={tab === t}
+                className={`shrink-0 px-3.5 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider transition-all ${
+                  tab === t
+                    ? `bg-gradient-to-r ${TAB_TONES[i]} text-white shadow-md shadow-orange-500/20`
+                    : "text-white/60 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+            <select
+              value={active}
+              onChange={e => setSeason(Number(e.target.value))}
+              aria-label="Auction season"
+              className="ml-auto shrink-0 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-[11px] text-white font-bold cursor-pointer hover:bg-white/10 transition-colors focus:outline-none focus:border-orange-500"
+            >
+              {[2027, ...pulse.seasons.filter(s => s !== 2027)].map(s => (
+                <option key={s} value={s} className="bg-[#0B1020] text-white">
+                  IPL {s}{s === 2027 && !probe.data?.lots.length ? " · Upcoming" : ""}
+                </option>
+              ))}
+            </select>
+          </nav>
+
+          {phase.id !== "after" && (
+            <UpcomingBanner
+              viewing={active === 2027}
+              lots={probe.data?.lots.length ?? 0}
+              open={() => { setSeason(2027); setTab("Overview"); }}
+              back={() => setSeason(2026)}
+            />
+          )}
+
+          {pulse.loading ? (
+            <Empty>Loading auction records…</Empty>
+          ) : pulse.error ? (
+            <Empty>Auction records are unavailable right now. Try again shortly.</Empty>
+          ) : (
+            <>
+              {tab === "Overview" && <Overview model={model} pulse={pulse} phase={phase.name} go={setTab} />}
+              {tab === "Live Auction" && <LiveAuction key={active} model={model} pulse={pulse} active={active} />}
+              {tab === "Player Pool" && <PlayerPool model={model} />}
+              {tab === "Franchises" && <Franchises model={model} />}
+              {tab === "Retentions" && <Retentions model={model} pulse={pulse} />}
+              {tab === "Results" && <Results model={model} />}
+              {tab === "Live Blog" && <LiveBlog model={model} pulse={pulse} />}
+              {tab === "Archive" && <Archive pulse={pulse} active={active} pick={s => { setSeason(s); setTab("Results"); }} />}
+            </>
+          )}
+        </div>
       </div>
     </Layout>
   );
@@ -172,10 +285,15 @@ export default function PulsePage() {
 type Pulse = ReturnType<typeof usePulseAuction>;
 
 function FeedStatus({ active, pulse }: { active: number; pulse: Pulse }) {
-  const [dot, text] = active !== 2027 ? ["bg-sky-400", "Archive · verified final results, no bid-by-bid data"]
+  const [dot, text] = active !== 2027 ? ["bg-sky-400", "Archive · verified final results"]
     : pulse.desk.isError ? ["bg-red-500", "Update source offline"]
-    : ["bg-amber-400", "Manual updates from official sources · not a live feed"];
-  return <div className="flex items-center gap-2 text-[11px]"><span className={`w-2 h-2 rounded-full ${dot}`} />{text}</div>;
+    : ["bg-amber-400", "Manual updates from official sources"];
+  return (
+    <div className="flex items-center gap-2 text-[11px] text-white/60 bg-white/[0.03] px-2.5 py-1.5 rounded-lg border border-white/5">
+      <span className={`w-2 h-2 rounded-full shrink-0 ${dot}`} />
+      <span className="truncate">{text}</span>
+    </div>
+  );
 }
 
 function UpcomingBanner({ viewing, lots, open, back }: { viewing: boolean; lots: number; open: () => void; back: () => void }) {
@@ -183,25 +301,65 @@ function UpcomingBanner({ viewing, lots, open, back }: { viewing: boolean; lots:
   const today = new Date().toLocaleDateString("en-CA");
   const days = auction?.date ? Math.ceil((Date.parse(auction.date) - Date.parse(today)) / 86_400_000) : null;
   return (
-    <div className="rounded-[20px] border border-fuchsia-500/30 bg-gradient-to-r from-fuchsia-600/25 via-violet-600/20 to-cyan-500/20 p-4 flex flex-wrap items-center gap-x-6 gap-y-2">
-      <span className="px-2 py-0.5 rounded-full bg-fuchsia-500 text-white text-[9px] font-black uppercase tracking-widest">Upcoming</span>
-      <div>
-        <div className="text-white font-black text-lg leading-tight">IPL 2027 auction</div>
-        <div className="text-[11px] text-white/70">
-          {auction?.date ?? "Date TBA"}{auction?.status !== "confirmed" && " (reported, not yet confirmed)"} · retentions due {retention?.date ?? "TBA"}
+    <div className="rounded-[24px] border border-fuchsia-500/25 bg-gradient-to-r from-fuchsia-950/30 via-violet-950/20 to-[#0B1020] p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+      {/* Left: Event Details & Pill */}
+      <div className="flex items-start sm:items-center gap-3.5 min-w-0 flex-1">
+        <div className="p-2.5 rounded-xl bg-fuchsia-500/20 border border-fuchsia-500/30 text-fuchsia-400 shrink-0 mt-0.5 sm:mt-0">
+          <Gavel className="w-5 h-5" />
+        </div>
+        <div className="space-y-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30 text-[9px] font-black uppercase tracking-widest shrink-0">
+              Upcoming Event
+            </span>
+            <h3 className="text-white font-black text-base sm:text-lg tracking-tight truncate">IPL 2027 Auction</h3>
+          </div>
+          <p className="text-xs text-white/70">
+            {auction?.date ?? "Date TBA"}{auction?.status !== "confirmed" ? " (reported, not yet confirmed)" : ""} · Retentions due {retention?.date ?? "TBA"}
+          </p>
+          <p className="text-[11px] text-white/45 hidden sm:block truncate max-w-xl">
+            {lots ? `${lots} lots recorded so far.` : "Official results will populate live on auction day; IPL 2026 is shown as the reference auction."}
+          </p>
         </div>
       </div>
-      {days != null && days > 0 && <div className="text-3xl font-black bg-gradient-to-r from-amber-300 to-pink-400 bg-clip-text text-transparent">{days} days</div>}
-      <div className="text-[11px] text-white/60 flex-1 min-w-[12rem]">{lots ? `${lots} lots recorded so far.` : "No lots yet. Results appear here once officially confirmed; until then IPL 2026 is shown as the reference auction."}</div>
-      {viewing
-        ? <button onClick={back} className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[11px] font-black uppercase text-white">View IPL 2026 results</button>
-        : <button onClick={open} className="px-3 py-1.5 rounded-full bg-gradient-to-r from-fuchsia-500 to-violet-500 text-[11px] font-black uppercase text-white">Open IPL 2027</button>}
+
+      {/* Right: Countdown & Action */}
+      <div className="flex items-center gap-5 self-end md:self-center shrink-0">
+        {days != null && days > 0 && (
+          <div className="flex flex-col items-end pr-3 border-r border-white/10">
+            <div className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-amber-300 via-pink-400 to-fuchsia-400 bg-clip-text text-transparent leading-none">
+              {days}
+            </div>
+            <div className="text-[9px] font-bold uppercase tracking-widest text-white/40 mt-0.5">Days Left</div>
+          </div>
+        )}
+        {viewing ? (
+          <button
+            onClick={back}
+            className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-black uppercase tracking-wider transition-colors border border-white/15"
+          >
+            View IPL 2026
+          </button>
+        ) : (
+          <button
+            onClick={open}
+            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-fuchsia-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-fuchsia-500/20 transition-all border border-fuchsia-400/30"
+          >
+            Open IPL 2027
+          </button>
+        )}
+      </div>
     </div>
   );
 }
 
 function Kpi({ k, v, tone = "text-white" }: { k: string; v: React.ReactNode; tone?: string }) {
-  return <div className="rounded-xl bg-gradient-to-br from-white/[0.07] to-white/[0.02] border border-white/10 px-2 py-1.5"><div className="text-[8px] font-bold uppercase text-white/40">{k}</div><div className={`text-sm font-black ${tone}`}>{v}</div></div>;
+  return (
+    <div className="rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 px-2.5 py-2 min-w-0">
+      <div className="text-[9px] font-black uppercase tracking-wider text-white/50 truncate mb-0.5">{k}</div>
+      <div className={`text-sm sm:text-base font-black truncate tracking-tight ${tone}`}>{v}</div>
+    </div>
+  );
 }
 // Team accent with a hex alpha suffix (palette accents are #RRGGBB); unknown teams get a neutral white tint.
 // Pulse keys teams by short code (CSK, MI…), which teamColor only knows by full name.
@@ -222,10 +380,10 @@ const SECTION_TONES = new Map<typeof Gavel, { icon: string; bar: string; bg: str
 const spendText = (m: { spent: number | null; spentUsd: number | null }) => m.spent == null && m.spentUsd == null ? "Not recorded" : pulseMoney(m.spent, m.spentUsd);
 const unsoldText =(m: PulseModel) => m.historical && !m.unsold ? "Not in archive" : m.unsold;
 const Empty = ({ children }: { children: React.ReactNode }) => <div className={`${card} p-6 text-sm text-white/60`}>{children}</div>;
-const Section = ({ icon: Icon, title, note, children }: { icon: typeof Gavel; title: string; note?: string; children: React.ReactNode }) => {
+const Section = ({ icon: Icon, title, note, className = "", children }: { icon: typeof Gavel; title: string; note?: string; className?: string; children: React.ReactNode }) => {
   const tone = SECTION_TONES.get(Icon) ?? SECTION_TONES.get(Radio)!;
   return (
-    <section className={`${card} relative overflow-hidden bg-gradient-to-br ${tone.bg} to-[#0B1020] p-4 space-y-3`}>
+    <section className={`${card} relative overflow-hidden bg-gradient-to-br ${tone.bg} to-[#0B1020] p-4 space-y-3 ${className}`}>
       <div className={`absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r ${tone.bar}`} />
       <div className="flex flex-wrap items-center gap-2"><Icon className={`w-4 h-4 ${tone.icon}`} /><h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80">{title}</h2>{note && <span className="ml-auto text-[10px] text-amber-200/80">{note}</span>}</div>
       {children}
@@ -235,42 +393,189 @@ const Section = ({ icon: Icon, title, note, children }: { icon: typeof Gavel; ti
 
 function PurseBar({ t }: { t: PulseTeam }) {
   const pct = t.startingPurse && t.spent != null ? Math.min(100, (t.spent / t.startingPurse) * 100) : 0;
+  const color = teamHex(t.code);
   return (
-    <div className="text-[11px]">
-      <div className="flex justify-between"><span className="font-black" style={{ color: teamHex(t.code) }}>{t.code}</span>
-        <span className="text-white/60">{t.remaining == null ? "Purse unverified" : `${pulseMoney(t.remaining)} left`} · {t.purchases.length} bought</span></div>
-      <div className="h-1.5 bg-white/5 rounded-full overflow-hidden mt-1"><div className="h-full rounded-full" style={{ width: `${pct}%`, background: teamHex(t.code) }} /></div>
+    <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition-all flex flex-col gap-1.5">
+      <div className="flex items-center justify-between text-xs">
+        <div className="flex items-center gap-2">
+          <span
+            className="px-2 py-0.5 rounded text-[11px] font-black tracking-wider"
+            style={{ color, backgroundColor: `${color}20`, border: `1px solid ${color}40` }}
+          >
+            {t.code}
+          </span>
+          <span className="text-white/50 text-[11px] font-mono">
+            {t.purchases.length} bought
+          </span>
+        </div>
+        <div className="font-black text-white text-xs tracking-tight">
+          {t.remaining == null ? (
+            <span className="text-white/40 font-normal">Purse unverified</span>
+          ) : (
+            <span>{pulseMoney(t.remaining)} <span className="text-white/50 text-[10px] font-normal">left</span></span>
+          )}
+        </div>
+      </div>
+      <div className="h-1.5 bg-white/10 rounded-full overflow-hidden w-full">
+        <div
+          className="h-full rounded-full transition-all duration-500"
+          style={{ width: `${pct}%`, background: color }}
+        />
+      </div>
     </div>
   );
 }
 
 function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse; phase: string; go: (t: PulseTab) => void }) {
-  const steps: [string, string, string, PulseTab][] = [["01", "Retentions", "Confirmed squads", "Retentions"], ["02", "Auction", "Live transactions", "Live Auction"], ["03", "Aftermath", "Final squads", "Results"]];
+  const steps: [string, string, string, PulseTab, string, string][] = [
+    ["01", "Retentions", "Confirmed squads & retention decisions", "Retentions", "from-emerald-600/25 via-teal-700/15", "text-emerald-400"],
+    ["02", "Auction", "Live bidding, hammer prices & transactions", "Live Auction", "from-amber-500/25 via-orange-600/15", "text-amber-400"],
+    ["03", "Aftermath", "Final squads, compositions & squad analysis", "Results", "from-violet-600/25 via-fuchsia-700/15", "text-violet-400"],
+  ];
+
+  const totalRegistered = model.rows.length;
+  const remPurseTotal = model.teams.reduce((acc, t) => acc + (t.remaining ?? 0), 0);
+  const totalRetained = model.teams.reduce((acc, t) => acc + (t.retained ?? 0), 0);
+  const topLot = model.ranked[0] ?? null;
+
   return (
-    <div className="space-y-4">
-      <div className="grid gap-3 sm:grid-cols-3">
-        {steps.map(([n, t, d, to], i) => (
-          <button key={n} onClick={() => go(to)} className={`rounded-[20px] border border-white/10 p-4 text-left hover:border-white/30 bg-gradient-to-br ${["from-emerald-600/30 via-teal-700/15", "from-amber-500/30 via-orange-600/15", "from-violet-600/30 via-fuchsia-700/15"][i]} to-[#0B1020]`}>
-            <div className={`text-2xl font-black ${["text-emerald-400", "text-amber-400", "text-violet-400"][i]}`}>{n}</div><div className="font-black text-white uppercase">{t}</div><div className="text-xs text-white/50">{d}</div>
-          </button>
-        ))}
-      </div>
-      <Section icon={Radio} title={`IPL ${model.season} at a glance`} note={`Phase: ${phase}`}>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <Kpi k="Players sold" v={model.sold} tone="text-emerald-400" /><Kpi k="Unsold" v={unsoldText(model)} tone="text-red-400" />
-          <Kpi k="Total spend" v={spendText(model)} /><Kpi k="Top buy" v={model.ranked[0] ? `${model.ranked[0].player} · ${pulseMoney(model.ranked[0].price, model.ranked[0].usd)}` : "—"} />
+    <div className="space-y-5">
+      {/* 2-Column Side-by-Side: Left = IPL at a glance, Right = 3 Stacked Cards (Retentions, Auction, Aftermath) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        {/* Left: IPL at a glance */}
+        <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
+          <Section
+            icon={Radio}
+            title={`IPL ${model.season} at a glance`}
+            note={`Phase: ${phase}`}
+            className="h-full flex flex-col justify-between p-5"
+          >
+            <div className="space-y-3.5">
+              {/* Status Header Meta */}
+              <div className="flex flex-wrap items-center justify-between text-xs text-white/60 pb-2.5 border-b border-white/10 gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                  <span className="font-bold text-white">
+                    {model.historical ? "Official Auction Results" : "Live Pulse Feed"}
+                  </span>
+                  {model.foundation?.venue && (
+                    <span className="text-white/50 hidden sm:inline">· {model.foundation.venue}</span>
+                  )}
+                </div>
+                <div className="text-[11px] font-mono text-white/40">
+                  {model.foundation?.verifiedAt
+                    ? `Verified: ${model.foundation.verifiedAt}`
+                    : model.season === 2027 && pulse.desk.data?.updatedAt
+                    ? `Updated: ${stamp(pulse.desk.data.updatedAt)}`
+                    : "Official BCCI Release"}
+                </div>
+              </div>
+
+              {/* Primary Financial & Volume Metrics */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <Kpi k="Players Sold" v={model.sold} tone="text-emerald-400" />
+                <Kpi k="Unsold" v={unsoldText(model)} tone="text-rose-400" />
+                <Kpi k="Total Expenditure" v={spendText(model)} tone="text-amber-300" />
+                <Kpi
+                  k="Remaining Purse"
+                  v={remPurseTotal > 0 ? pulseMoney(remPurseTotal) : "Cap Exhausted"}
+                  tone="text-purple-300"
+                />
+              </div>
+
+              {/* Secondary Squad & Pool Metrics */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <Kpi k="Auction Pool" v={`${totalRegistered} Lots`} tone="text-white" />
+                <Kpi k="Retained Core" v={`${totalRetained} Players`} tone="text-cyan-300" />
+                <Kpi k="Franchises" v={`${model.teams.length} Teams`} tone="text-white/80" />
+                <Kpi
+                  k="Top Hammer Price"
+                  v={topLot ? pulseMoney(topLot.price, topLot.usd) : "—"}
+                  tone="text-emerald-300"
+                />
+              </div>
+
+              {/* Highlight Card for Top Purchase */}
+              {topLot && (
+                <div className="p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 via-white/[0.03] to-transparent border border-emerald-500/20 flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 shrink-0">
+                      Record Buy
+                    </span>
+                    <div className="truncate">
+                      <strong className="text-white font-black text-xs sm:text-sm tracking-tight">{topLot.player}</strong>
+                      <span className="text-white/40 text-xs ml-2">
+                        Sold to <span className="font-bold text-white" style={{ color: teamHex(topLot.team) }}>{topLot.team}</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="font-mono font-black text-emerald-400 text-xs sm:text-sm shrink-0">
+                    {pulseMoney(topLot.price, topLot.usd)}
+                  </div>
+                </div>
+              )}
+
+              {/* 2027 Timeline or 2026 Metadata Footer */}
+              {model.season === 2027 ? (
+                <div className="pt-2 border-t border-white/5 space-y-2">
+                  <div className="text-[9px] font-black uppercase tracking-widest text-white/40">IPL 2027 timeline</div>
+                  <ol className="space-y-1.5">
+                    {HUB_EVENTS.map(e => (
+                      <li key={e.id} className="flex flex-wrap items-baseline gap-x-3 text-xs">
+                        <span className="w-24 font-mono text-white/50">{e.date ?? "TBA"}</span>
+                        <span className="font-bold text-white">{e.title}</span>
+                        <span className={`text-[9px] font-black uppercase ${e.status === "confirmed" ? "text-emerald-400" : e.status === "reported" ? "text-amber-300" : "text-white/40"}`}>
+                          {e.status === "provisional" ? "to be announced" : e.status}
+                        </span>
+                        {e.sourceUrl && (
+                          <a href={e.sourceUrl} target="_blank" rel="noreferrer" className="text-primary inline-flex items-center gap-0.5 hover:underline">
+                            source <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              ) : (
+                <div className="pt-2 border-t border-white/5 flex flex-wrap items-center justify-between text-[11px] text-white/50 gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span>Venue: {model.foundation?.venue ?? "Etihad Arena, Abu Dhabi"}</span>
+                    <span className="text-white/20">·</span>
+                    <span>Event Date: {model.foundation?.eventDate ?? "Dec 16, 2025"}</span>
+                  </div>
+                  <div className="text-[10px] font-mono text-white/40">
+                    Squad Rules: Max 25 players / 8 overseas
+                  </div>
+                </div>
+              )}
+            </div>
+          </Section>
         </div>
-        {model.season === 2027 && <ol className="space-y-1.5">
-          <li className="text-[9px] font-black uppercase tracking-widest text-white/40">IPL 2027 timeline</li>
-          {HUB_EVENTS.map(e => (
-            <li key={e.id} className="flex flex-wrap items-baseline gap-x-3 text-xs">
-              <span className="w-24 font-mono text-white/50">{e.date ?? "TBA"}</span><span className="font-bold text-white">{e.title}</span>
-              <span className={`text-[9px] font-black uppercase ${e.status === "confirmed" ? "text-emerald-400" : e.status === "reported" ? "text-amber-300" : "text-white/40"}`}>{e.status === "provisional" ? "to be announced" : e.status}</span>
-              {e.sourceUrl && <a href={e.sourceUrl} target="_blank" rel="noreferrer" className="text-primary inline-flex items-center gap-0.5">source <ExternalLink className="w-3 h-3" /></a>}
-            </li>
+
+        {/* Right: 3 stacked navigation cards (Retention, Auction, Aftermath) */}
+        <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-3 justify-between">
+          {steps.map(([n, t, d, to, bgGrad, numColor]) => (
+            <button
+              key={n}
+              onClick={() => go(to)}
+              className={`flex-1 rounded-[20px] border border-white/10 p-5 text-left transition-all duration-200 bg-gradient-to-br ${bgGrad} to-[#0B1020] hover:border-white/30 hover:bg-white/[0.04] flex items-center justify-between group shadow-lg min-h-[96px]`}
+            >
+              <div className="space-y-1 min-w-0 pr-3">
+                <div className="flex items-center gap-2.5">
+                  <span className={`text-2xl font-black ${numColor} tracking-tight font-mono shrink-0`}>{n}</span>
+                  <span className="font-black text-white text-base uppercase tracking-wider truncate">{t}</span>
+                </div>
+                <div className="text-xs text-white/50 group-hover:text-white/75 transition-colors line-clamp-1">{d}</div>
+              </div>
+              <div className="w-8 h-8 rounded-full bg-white/5 group-hover:bg-white/15 flex items-center justify-center shrink-0 border border-white/10 transition-colors ml-2">
+                <span className="text-white/60 group-hover:text-white text-sm font-bold transition-transform group-hover:translate-x-0.5">→</span>
+              </div>
+            </button>
           ))}
-        </ol>}
-      </Section>
+        </div>
+      </div>
+
       <Franchises model={model} compact />
       {pulse.desk.data && pulse.desk.data.announcements.length > 0 && <LiveBlog model={model} pulse={pulse} />}
       <Newsroom />
@@ -463,31 +768,67 @@ function Franchises({ model, compact = false }: { model: PulseModel; compact?: b
   return (
     <Section icon={Wallet} title="Franchise auction board" note={model.foundation ? "Purses from the official retention release" : undefined}>
       <div className="overflow-x-auto">
-        <table className="w-full text-xs min-w-[560px]">
-          <thead className="text-white/40 text-[9px] uppercase"><tr>
-            <th className="text-left py-1 pl-3 min-w-[108px]">Team</th><th className="text-right">Start purse</th><th className="text-right">Spent</th><th className="text-right">Remaining</th><th className="text-right">Bought</th><th className="text-right">Squad</th><th className="text-right">Overseas</th><th className="text-right">Slots</th><th />
-          </tr></thead>
+        <table className="w-full text-xs min-w-[620px]">
+          <thead className="text-white/50 text-[10px] uppercase font-bold tracking-wider border-b border-white/10">
+            <tr>
+              <th className="text-left py-2.5 pl-3 min-w-[120px]">Franchise</th>
+              <th className="text-right py-2.5 px-3">Start Purse</th>
+              <th className="text-right py-2.5 px-3">Total Spent</th>
+              <th className="text-right py-2.5 px-3">Remaining</th>
+              <th className="text-right py-2.5 px-3">Bought</th>
+              <th className="text-right py-2.5 px-3">Squad</th>
+              <th className="text-right py-2.5 px-3">Overseas</th>
+              <th className="text-right py-2.5 px-3">Slots Open</th>
+              <th className="py-2.5 pr-3 text-right" />
+            </tr>
+          </thead>
           <tbody>
             {model.teams.map(t => (
               <React.Fragment key={t.code}>
-                <tr className="border-t border-white/5 cursor-pointer hover:brightness-125" onClick={() => setOpen(open === t.code ? null : t.code)}
-                  style={{ boxShadow: `inset 3px 0 0 ${teamHex(t.code)}`, background: `linear-gradient(90deg, ${tint(t.code, open === t.code ? "33" : "1a")}, transparent 70%)` }}>
-                  <td className="py-2 pl-3 pr-3 font-black whitespace-nowrap" style={{ color: teamHex(t.code) }}><div className="flex items-center gap-2"><TeamLogo team={t.code} size="w-7 h-7 shrink-0"/><span>{t.code}</span></div></td>
-                  <td className="text-right">{t.startingPurse == null ? "Unverified" : pulseMoney(t.startingPurse)}</td>
-                  <td className="text-right">{t.purchases.length ? spendText(t) : "—"}</td>
-                  <td className="text-right text-emerald-300">{t.remaining == null ? "Unverified" : pulseMoney(t.remaining)}</td>
-                  <td className="text-right">{t.purchases.length}</td><td className="text-right">{t.squad ?? "—"}</td>
-                  <td className="text-right">{t.overseas == null ? "—" : `${t.overseas}${model.foundation ? `/${model.foundation.maxOverseas}` : ""}`}</td>
-                  <td className="text-right">{t.slots ?? "—"}</td>
-                  <td className="text-right"><button aria-expanded={open === t.code} aria-label={`${t.code} details`}><ChevronDown className={`w-3.5 h-3.5 inline transition-transform ${open === t.code ? "rotate-180" : ""}`} /></button></td>
+                <tr
+                  className="border-t border-white/5 cursor-pointer hover:bg-white/[0.04] transition-colors"
+                  onClick={() => setOpen(open === t.code ? null : t.code)}
+                  style={{
+                    boxShadow: `inset 3px 0 0 ${teamHex(t.code)}`,
+                    background: `linear-gradient(90deg, ${tint(t.code, open === t.code ? "26" : "12")}, transparent 75%)`
+                  }}
+                >
+                  <td className="py-3 pl-3 pr-3 font-black whitespace-nowrap" style={{ color: teamHex(t.code) }}>
+                    <div className="flex items-center gap-2.5">
+                      <TeamLogo team={t.code} size="w-7 h-7 shrink-0" />
+                      <span className="text-sm tracking-tight">{t.code}</span>
+                    </div>
+                  </td>
+                  <td className="text-right py-3 px-3 font-mono text-white/70">{t.startingPurse == null ? "Unverified" : pulseMoney(t.startingPurse)}</td>
+                  <td className="text-right py-3 px-3 font-mono font-bold text-amber-300">{t.purchases.length ? spendText(t) : "—"}</td>
+                  <td className="text-right py-3 px-3 font-mono font-black text-emerald-400">{t.remaining == null ? "Unverified" : pulseMoney(t.remaining)}</td>
+                  <td className="text-right py-3 px-3 font-mono text-white/80">{t.purchases.length}</td>
+                  <td className="text-right py-3 px-3 font-mono text-white/80">{t.squad ?? "—"}</td>
+                  <td className="text-right py-3 px-3 font-mono text-cyan-300">{t.overseas == null ? "—" : `${t.overseas}${model.foundation ? `/${model.foundation.maxOverseas}` : ""}`}</td>
+                  <td className="text-right py-3 px-3 font-mono text-white/50">{t.slots ?? "—"}</td>
+                  <td className="text-right py-3 pr-3">
+                    <button
+                      aria-expanded={open === t.code}
+                      aria-label={`${t.code} details`}
+                      className="p-1 rounded-lg hover:bg-white/10 transition-colors text-white/60 hover:text-white"
+                    >
+                      <ChevronDown className={`w-4 h-4 inline transition-transform duration-200 ${open === t.code ? "rotate-180" : ""}`} />
+                    </button>
+                  </td>
                 </tr>
-                {open === t.code && <tr><td colSpan={9} className="pb-3"><TeamDrawer t={t} model={model} /></td></tr>}
+                {open === t.code && (
+                  <tr>
+                    <td colSpan={9} className="pb-3 pt-1 px-3">
+                      <TeamDrawer t={t} model={model} />
+                    </td>
+                  </tr>
+                )}
               </React.Fragment>
             ))}
           </tbody>
         </table>
       </div>
-      {compact && <div className="text-[10px] text-white/40">Open a franchise for its retained core, purchases and links to Dugout and Squad DNA.</div>}
+      {compact && <div className="text-[11px] text-white/40 pt-1">Click on any franchise row to inspect its retained core, auction purchases, and tactical squad links.</div>}
     </Section>
   );
 }
@@ -647,7 +988,7 @@ function LiveBlog({ model, pulse }: { model: PulseModel; pulse: Pulse }) {
               )}
               <div className="flex flex-wrap items-center justify-between pt-1 text-[11px] border-t border-white/5 gap-2">
                 <span className="text-[10px] text-white/40 italic">
-                  {e.tag === "Official Announcement" ? "✓ Verified official decision (BCCI / Franchise)" : e.tag === "Credible Report" ? "📰 Credible tier-1 sports journalist report" : e.tag === "Analyst Prediction" ? "🧠 CricField proprietary tactical projection (not official)" : "⚡ Market discussion / unverified negotiation"}
+                  {String(e.tag) === "Official Announcement" ? "✓ Verified official decision (BCCI / Franchise)" : String(e.tag) === "Credible Report" ? "📰 Credible tier-1 sports journalist report" : String(e.tag) === "Analyst Prediction" ? "🧠 CricField proprietary tactical projection (not official)" : "⚡ Market discussion / unverified negotiation"}
                 </span>
                 {e.src && (
                   <a href={e.src} target="_blank" rel="noreferrer" className="text-primary hover:underline inline-flex items-center gap-1 font-bold text-xs">

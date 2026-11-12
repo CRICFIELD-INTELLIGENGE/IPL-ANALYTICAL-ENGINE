@@ -50,25 +50,6 @@ export function CricFieldWordmarkSVG({
   const taglineGlowId = `cfTaglineGlow-${uniqueId}`;
   const mascotExpression = useMascotExpression(activity, emoji);
   const svgRef = React.useRef<SVGSVGElement>(null);
-  const hits = [150, 270, 350, 440, 540, 600, 680, 780, 885];
-  const impactStyles = hits.map((x, i) => {
-    const hit = 18 + i * 5;
-    return `@keyframes cfFall${i} {
-      0%, ${hit}% { transform: translateY(0) rotate(0deg) scaleY(1); }
-      ${hit + 3}% { transform: translateY(4px) rotate(${i % 2 ? -78 : 78}deg) scaleY(.85); }
-      ${hit + 5}%, 73% { transform: translateY(10px) rotate(${i % 2 ? -87 : 87}deg) scaleY(.75); opacity: 1; }
-      79% { transform: translateY(24px) rotate(0deg) scaleY(.02); opacity: 0; }
-      84% { transform: translateY(0) rotate(0deg) scaleY(1.06); opacity: 1; }
-      88%, 100% { transform: none; opacity: 1; }
-    }
-    .cf-letter-${i} { transform-origin: ${x}px 368px; animation: cfFall${i} 18s ease-in-out infinite; }`;
-  }).join('');
-  const deliveryFrames = hits.map((x, i) => {
-    const hit = 18 + i * 5;
-    return `${hit - 2}% { transform: translate(${x - 230}px, -40px); opacity: 1; }
-      ${hit}% { transform: translate(${x - 205}px, 14px); opacity: 1; }
-      ${hit + 2}% { transform: translate(${x - 185}px, -40px); opacity: 1; }`;
-  }).join('');
   const effectiveAccent = accentColor || 'var(--accent-primary, #a3e635)';
 
   return (
@@ -97,42 +78,6 @@ export function CricFieldWordmarkSVG({
 
         {/* Dynamic smooth swinging keyframes for the stump 'I' tilting left and right */}
         <style>{`
-          ${impactStyles}
-          @keyframes cfDelivery {
-            0%, 10%, 96%, 100% { transform: translate(0, 0); }
-            13% { transform: translate(-55px, -40px); }
-            ${deliveryFrames}
-            /* Spring off D, bounce below the baseline, then follow C's sweep home. */
-            62% { transform: translate(715px, 75px); }
-            64% { transform: translate(710px, 210px); }
-            66% { transform: translate(650px, 140px); }
-            69% { transform: translate(565px, 230px); }
-            71% { transform: translate(470px, 190px); }
-            74% { transform: translate(340px, 230px); }
-            77% { transform: translate(180px, 225px); }
-            80% { transform: translate(15px, 220px); }
-            82% { transform: translate(-90px, 199px); }
-            84% { transform: translate(-126px, 180px); }
-            86% { transform: translate(-145px, 145px); }
-            88% { transform: translate(-145px, 110px); }
-            90% { transform: translate(-127px, 69px); }
-            92% { transform: translate(-95px, 38px); }
-            94% { transform: translate(-55px, 23px); }
-          }
-          @keyframes cfReturnTrail {
-            0%, 80% { stroke-dashoffset: 0; }
-            81%, 82% { stroke-dashoffset: 1; }
-            95%, 100% { stroke-dashoffset: 0; }
-          }
-          .cf-return-trails path {
-            stroke-dasharray: 1;
-            animation: cfReturnTrail 18s linear infinite;
-          }
-          .cf-delivery { animation: cfDelivery 18s linear infinite; }
-          @media (prefers-reduced-motion: reduce) {
-            .cf-letter, .cf-delivery, .cf-return-trails path { animation: none !important; }
-            .cf-delivery { transform: none; }
-          }
           @keyframes cfStumpTiltAnim {
             0% { transform: rotate(-8.5deg); }
             8% { transform: rotate(8.5deg); }
@@ -213,7 +158,7 @@ export function CricFieldWordmarkSVG({
 
       {/* ================= 2. THE MASCOT CRICKET BALL ================= */}
       {/* Sits right inside top curl of 'C'. Smooth on top and right, NO spiky antennas or outer loops */}
-      <g id="mascot-ball" className="cf-delivery">
+      <g id="mascot-ball">
         <g transform="translate(155, 116)" filter={`url(#${shadowId})`}>
           <MascotBallArtwork emoji={mascotExpression} accentColor={effectiveAccent} />
         </g>

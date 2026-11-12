@@ -40,7 +40,7 @@ function getProjectRoot(): string {
   let cur = dir;
   while (cur && cur !== path.dirname(cur)) {
     if (fs.existsSync(path.join(cur, "package.json")) &&
-        fs.existsSync(path.join(cur, "lib", "cricket-data", "raw"))) {
+        (fs.existsSync(path.join(cur, "artifacts", "ipl-analytics")) || fs.existsSync(path.join(cur, "lib", "cricket-data", "raw")))) {
       _projectRoot = cur;
       return cur;
     }
