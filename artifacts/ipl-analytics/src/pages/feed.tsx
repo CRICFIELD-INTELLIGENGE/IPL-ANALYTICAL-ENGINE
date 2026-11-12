@@ -154,9 +154,8 @@ export default function FeedPage() {
   const { selectedTeam, setSelectedTeam } = useTeamTheme();
   const [team, setTeam] = useState<TeamCode | null>(selectedTeam);
   const [tab, setTab] = useState<(typeof STORY_TABS)[number]["id"]>("featured");
-  const [latestTeam, setLatestTeam] = useState<TeamCode | null>(selectedTeam);
   const { data: desk } = useIpl2027Desk();
-  useEffect(() => { setTeam(selectedTeam); setLatestTeam(selectedTeam); }, [selectedTeam]);
+  useEffect(() => { setTeam(selectedTeam); }, [selectedTeam]);
 
   const all = useMemo(() => getV2Index(), []);
   const forTeam = useMemo(() => all.filter((e) => !team || e.franchise === team), [all, team]);
@@ -177,20 +176,20 @@ export default function FeedPage() {
     return getDiverseByTeam(newsroomOrder(featured), 8);
   }, [all]);
 
-  // Latest stories: When opted ALL, pop stories from different teams
+  // Latest stories: filtered by active franchise, or diverse league-wide stories when ALL
   const latest = useMemo(() => {
     // Getty's signed viewer cannot mount twice with the same widget ID.
     const topIds = new Set(top.map((e) => e.id));
     const remaining = all.filter((e) => !topIds.has(e.id));
-    if (latestTeam) {
+    if (team) {
       return [...remaining]
-        .filter((e) => e.franchise === latestTeam)
+        .filter((e) => e.franchise === team)
         .sort((a, b) => b.publishedDate.localeCompare(a.publishedDate))
         .slice(0, 8);
     }
     const sorted = [...remaining].sort((a, b) => b.publishedDate.localeCompare(a.publishedDate));
     return getDiverseByTeam(sorted, 8);
-  }, [all, latestTeam, top]);
+  }, [all, team, top]);
 
   const announcements = desk?.announcements.slice(0, 3) ?? [];
   const retentionPhoto = useMemo(() => {
@@ -296,23 +295,29 @@ export default function FeedPage() {
             <section>
               <SectionHead title="Franchise coverage" sub="Pick a team to see its stories." />
               <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter stories by franchise">
-                <TeamChip active={!team} onClick={() => { setTeam(null); }}>ALL</TeamChip>
+                <TeamChip active={!team} onClick={() => setTeam(null)} teamCode="ALL" />
                 {HUB_TEAMS.map((t) => (
-                  <TeamChip color={TEAM_REGISTRY[t].accent} key={t} active={team === t} onClick={() => { setTeam(t); }}>
-                    <img src={TEAM_REGISTRY[t].logoImg} alt="" className="w-4 h-4 object-contain" /> {t}
-                  </TeamChip>
+                  <TeamChip
+                    key={t}
+                    teamCode={t}
+                    accent={TEAM_REGISTRY[t].accent}
+                    active={team === t}
+                    onClick={() => setTeam(t)}
+                  />
                 ))}
                 {team && (
                   <Link
                     href={`/dugout/${team.toLowerCase()}`}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ml-1 border shadow-xs hover:brightness-110 active:scale-95"
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl text-xs font-bold transition-all ml-1 border shadow-xs hover:brightness-110 active:scale-95"
                     style={{
                       backgroundColor: `${TEAM_REGISTRY[team].accent}18`,
                       borderColor: `${TEAM_REGISTRY[team].accent}40`,
                       color: TEAM_REGISTRY[team].accent,
                     }}
                   >
-                    <img src={TEAM_REGISTRY[team].logoImg} alt="" className="w-3.5 h-3.5 object-contain" />
+                    <div className="w-4 h-4 rounded-full bg-white p-0.5 flex items-center justify-center overflow-hidden shrink-0">
+                      <img src={TEAM_REGISTRY[team].logoImg} alt="" className="w-full h-full object-contain" />
+                    </div>
                     <span>{TEAM_REGISTRY[team].name} Dugout</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
@@ -361,22 +366,36 @@ export default function FeedPage() {
 
             {latest.length > 0 && (
               <section>
-                <div className="mb-3 flex flex-wrap items-center gap-2">
-                  <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white mr-2">Latest</h2>
-                  {[null, ...HUB_TEAMS].map((t) => (
+                <div className="mb-3 flex items-center justify-between gap-3 flex-wrap">
+                  <div className="flex items-center gap-2.5">
+                    <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">Latest Stories</h2>
+                    {team ? (
+                      <div
+                        className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border"
+                        style={{
+                          backgroundColor: `${TEAM_REGISTRY[team].accent}18`,
+                          borderColor: `${TEAM_REGISTRY[team].accent}40`,
+                          color: TEAM_REGISTRY[team].accent,
+                        }}
+                      >
+                        <div className="w-3.5 h-3.5 rounded-full bg-white p-0.5 flex items-center justify-center overflow-hidden shrink-0">
+                          <img src={TEAM_REGISTRY[team].logoImg} alt="" className="w-full h-full object-contain" />
+                        </div>
+                        <span>{TEAM_REGISTRY[team].name}</span>
+                      </div>
+                    ) : (
+                      <span className="text-[11px] font-semibold text-slate-500 dark:text-white/40">League-wide updates</span>
+                    )}
+                  </div>
+                  {team && (
                     <button
-                      key={t ?? "all"}
-                      onClick={() => setLatestTeam(t)}
-                      aria-pressed={latestTeam === t}
-                      className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-all ${
-                        latestTeam === t
-                          ? "bg-primary text-white shadow-xs font-bold"
-                          : "text-slate-600 dark:text-white/50 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
-                      }`}
+                      type="button"
+                      onClick={() => setTeam(null)}
+                      className="text-[11px] font-bold text-slate-500 hover:text-slate-900 dark:text-white/50 dark:hover:text-white transition-colors cursor-pointer"
                     >
-                      {t ?? "All"}
+                      Show all teams
                     </button>
-                  ))}
+                  )}
                 </div>
                 <ul className="divide-y divide-slate-200 dark:divide-white/5">
                   {latest.map((e) => {
@@ -601,8 +620,14 @@ export function getArticleVisualUrl(entry: IndexEntry): string {
   if (text.includes("sawai mansingh")) return "/sanju samson.jpg";
 
   // 3. Thematic topics
-  if (text.includes("auction") || text.includes("purse") || text.includes("price") || entry.aspect === "auction-economics") {
+  if (entry.aspect === "auction-economics" || entry.title.toLowerCase().includes("auction") || entry.slug.includes("auction") || entry.title.toLowerCase().includes("purse")) {
     return "/auction-art.jpg";
+  }
+  if (entry.aspect === "bowling-fielding" || text.includes("yorker") || text.includes("bowling") || text.includes("wicket") || text.includes("death over") || text.includes("slower ball")) {
+    if (text.includes("bumrah")) return "/bumrah.jpg";
+    if (text.includes("bhuvi") || text.includes("bhuvneshwar")) return "/bhuvaneswar kumar.jpg";
+    if (text.includes("rashid")) return "/rashid khan.jpg";
+    return "/tactical-yorker.jpg";
   }
   if (text.includes("tactical") || text.includes("powerplay") || text.includes("equation") || text.includes("blueprint") || text.includes("anchor") || entry.aspect === "tactical") {
     return "/tactics-board.jpg";
@@ -616,7 +641,7 @@ export function getArticleVisualUrl(entry: IndexEntry): string {
     return "/squad-building.jpg";
   }
   if (text.includes("boundary") || text.includes("scoring") || text.includes("velocity") || entry.aspect === "batting") {
-    return "/tactical-yorker.jpg";
+    return "/milestone-photos/highest-total-2024-srh.jpg";
   }
 
   // 4. Franchise Marquee Photography Default
@@ -1144,19 +1169,64 @@ function SectionHead({ title, sub }: { title: string; sub?: string }) {
   );
 }
 
-function TeamChip({ active, onClick, children, color = "#8ba7ff" }: { active: boolean; onClick: () => void; children: ReactNode; color?: string }) {
+function TeamChip({
+  active,
+  onClick,
+  teamCode,
+  accent,
+}: {
+  active: boolean;
+  onClick: () => void;
+  teamCode?: TeamCode | "ALL";
+  accent?: string;
+}) {
+  const isAll = !teamCode || teamCode === "ALL";
+  const teamData = !isAll ? TEAM_REGISTRY[teamCode as TeamCode] : null;
+  const teamAccent = accent || teamData?.accent || "#2563eb";
+
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-pressed={active}
-      style={active ? { backgroundColor: `${color}28`, borderColor: color, color } : undefined}
-      className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-black transition-all ${
-        active 
-          ? "border-[var(--team-accent)] bg-[var(--team-accent)] text-black shadow-xs" 
-          : "border-slate-300 dark:border-white/15 bg-white/60 dark:bg-white/5 text-slate-700 dark:text-white/75 hover:border-slate-400 dark:hover:border-white/40 hover:text-slate-900 dark:hover:text-white"
+      className={`inline-flex items-center gap-2 h-9 px-3 rounded-xl border text-xs tracking-wide transition-all cursor-pointer select-none active:scale-95 ${
+        active
+          ? isAll
+            ? "border-slate-900 dark:border-white bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-black shadow-xs"
+            : "text-slate-950 dark:text-white font-black shadow-xs"
+          : "border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.04] text-slate-700 dark:text-slate-200 hover:border-slate-300 dark:hover:border-white/25 hover:bg-slate-50 dark:hover:bg-white/[0.08] font-bold"
       }`}
+      style={
+        active && !isAll
+          ? {
+              backgroundColor: `${teamAccent}18`,
+              borderColor: teamAccent,
+              boxShadow: `0 0 10px ${teamAccent}30`,
+            }
+          : undefined
+      }
     >
-      {children}
+      {isAll ? (
+        <div
+          className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 border transition-all ${
+            active
+              ? "bg-white/10 text-white dark:text-slate-950 dark:bg-black/10 border-transparent"
+              : "bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-white/10"
+          }`}
+        >
+          <Shield size={11} className="stroke-[2.5]" />
+        </div>
+      ) : (
+        <div
+          className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 p-0.5 overflow-hidden border transition-all bg-white ${
+            active ? "shadow-xs" : "border-slate-200/80 dark:border-white/10 shadow-2xs"
+          }`}
+          style={active ? { borderColor: teamAccent } : undefined}
+        >
+          <img src={teamData?.logoImg} alt="" className="w-full h-full object-contain" />
+        </div>
+      )}
+      <span>{isAll ? "ALL" : teamCode}</span>
     </button>
   );
 }
