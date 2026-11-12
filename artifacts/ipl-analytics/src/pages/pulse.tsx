@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { TeamLogo } from "@/components/team-logo";
 import { Layout } from "@/components/layout";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gavel, Radio, Search, ChevronDown, ExternalLink, Wallet, Users, History, Newspaper, Brain, Sparkles, TrendingUp, CheckCircle2 } from "lucide-react";
+import { Gavel, Radio, Search, ChevronDown, ExternalLink, Wallet, Users, History, Newspaper, Brain, Sparkles, TrendingUp, CheckCircle2, ArrowRight, Activity } from "lucide-react";
 import { Link } from "wouter";
 import { HUB_EVENTS } from "@/lib/ipl-2027";
 import { stamp, useIpl2027Desk } from "@/lib/ipl-2027-desk";
@@ -128,47 +128,51 @@ export default function PulsePage() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 space-y-5">
-        {/* Page Top Bar: Title, Season Selector & Navigation Tabs */}
-        <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <Gavel className="w-5 h-5 text-orange-500" />
-                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-orange-500 font-mono">
-                  CricField / IPL {active}
-                </span>
-                <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-orange-500/10 border border-orange-500/25 text-orange-600 dark:text-orange-400">
-                  {phase.name}
-                </span>
-              </div>
-              <h1 className="pulse-heading text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-                AUCTION <span className="text-[#FF6B00]">PULSE.</span>
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-white/60 max-w-2xl mt-0.5">
-                Every bid. Every player. Every franchise decision. Retentions, live transactions, and final squads in one centralized intelligence desk.
-              </p>
-            </div>
-            
-            <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
-              <span className="text-[11px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-wider">Season:</span>
-              <select
-                value={active}
-                onChange={e => setSeason(Number(e.target.value))}
-                aria-label="Auction season"
-                className="bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white font-bold cursor-pointer hover:bg-slate-200 dark:hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
-              >
-                {[2027, ...pulse.seasons.filter(s => s !== 2027)].map(s => (
-                  <option key={s} value={s} className="bg-white dark:bg-[#0B1020] text-slate-900 dark:text-white">
-                    IPL {s}{s === 2027 && !probe.data?.lots.length ? " · Upcoming" : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 space-y-6">
+        {/* SECTION 1 & 2: HERO CAROUSEL + EVENT STATUS CARD */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          {/* Left: The Auction Pulse Hero Carousel / Banner */}
+          <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
+            <PulseHero
+              active={active}
+              phase={phase.name}
+              onNavigate={setTab}
+              seasonSelector={
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-[11px] font-bold text-white/70 uppercase tracking-wider">Season:</span>
+                  <select
+                    value={active}
+                    onChange={e => setSeason(Number(e.target.value))}
+                    aria-label="Auction season"
+                    className="bg-black/50 hover:bg-black/70 border border-white/20 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  >
+                    {[2027, ...pulse.seasons.filter(s => s !== 2027)].map(s => (
+                      <option key={s} value={s} className="bg-[#0B1020] text-white">
+                        IPL {s}{s === 2027 && !probe.data?.lots.length ? " · Upcoming" : ""}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              }
+            />
           </div>
 
-          {/* Sticky Tab Bar */}
-          <nav className="sticky top-16 z-30 py-2 px-2.5 bg-white/95 dark:bg-[#050816]/95 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-2xl flex items-center gap-1.5 overflow-x-auto shadow-sm dark:shadow-lg transition-colors" aria-label="Pulse sections">
+          {/* Right: Controlled Width Event Status Card */}
+          <div className="lg:col-span-5 xl:col-span-4 flex flex-col">
+            <EventStatusCard
+              active={active}
+              model={model}
+              pulse={pulse}
+              phase={phase.name}
+              venue={model.foundation?.venue ?? "Etihad Arena, Abu Dhabi"}
+              updated={active === 2027 ? pulse.desk.data?.updatedAt : model.foundation?.verifiedAt}
+            />
+          </div>
+        </div>
+
+        {/* SECTION 3: STICKY NAVIGATION TABS & UPCOMING BANNER */}
+        <div className="space-y-4">
+          <nav className="sticky top-16 z-30 py-2 px-2.5 bg-white/95 dark:bg-[#050816]/95 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-2xl flex items-center gap-1.5 overflow-x-auto no-scrollbar shadow-sm dark:shadow-lg transition-colors" aria-label="Pulse sections">
             {PULSE_TABS.map((t, i) => (
               <button
                 key={t}
@@ -235,6 +239,228 @@ export default function PulsePage() {
 }
 
 type Pulse = ReturnType<typeof usePulseAuction>;
+
+/* SECTION 1: HERO SLIDES & HERO CAROUSEL COMPONENT */
+const HERO_SLIDES = [
+  {
+    id: "pulse",
+    prefix: "AUCTION",
+    highlight: "PULSE.",
+    tone: "text-[#FF6B00]",
+    desc: "Every bid. Every player. Every franchise decision. Retentions, live transactions, and final squads in one centralized intelligence desk.",
+    tab: "Overview" as PulseTab,
+    cta: "Explore Pulse",
+  },
+  {
+    id: "retentions",
+    prefix: "01",
+    highlight: "RETENTIONS.",
+    tone: "text-emerald-400",
+    desc: "Official retention declarations, released cores, franchise retention expenditure, and remaining purse calculations.",
+    tab: "Retentions" as PulseTab,
+    cta: "View Retentions",
+  },
+  {
+    id: "auction",
+    prefix: "02",
+    highlight: "AUCTION.",
+    tone: "text-amber-400",
+    desc: "Live hammer bidding, real-time marquee lots, purse deductions, and transaction telemetry direct from the auction floor.",
+    tab: "Live Auction" as PulseTab,
+    cta: "Open Live Auction",
+  },
+  {
+    id: "aftermath",
+    prefix: "03",
+    highlight: "AFTERMATH.",
+    tone: "text-purple-400",
+    desc: "Complete squad sheets, tactical roster balances, purse efficiency ratings, and verified roster breakdowns post-auction.",
+    tab: "Results" as PulseTab,
+    cta: "Analyze Rosters",
+  },
+];
+
+function PulseHero({
+  active,
+  phase,
+  onNavigate,
+  seasonSelector,
+}: {
+  active: number;
+  phase: string;
+  onNavigate: (t: PulseTab) => void;
+  seasonSelector: React.ReactNode;
+}) {
+  const [slideIdx, setSlideIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Auto-advance slides every 6 seconds unless hovered
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setSlideIdx(prev => (prev + 1) % HERO_SLIDES.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const current = HERO_SLIDES[slideIdx];
+
+  return (
+    <div
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      data-on-image="true"
+      className="editorial-cover-canvas relative rounded-[24px] border border-slate-700/40 dark:border-white/10 overflow-hidden min-h-[300px] sm:min-h-[330px] lg:min-h-[350px] p-6 sm:p-7 flex flex-col justify-between group shadow-lg dark:shadow-2xl h-full bg-[#050816]"
+    >
+      {/* Background artwork: sharp, vibrant gavel image without excessive blur */}
+      <img
+        src="/auction-art.jpg"
+        alt="Auction Pulse Gavel"
+        className="absolute inset-0 w-full h-full object-cover object-center opacity-85 group-hover:scale-102 transition-transform duration-700 pointer-events-none"
+      />
+      {/* Precision scrims for guaranteed WCAG contrast */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/75 to-black/35 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/30 pointer-events-none" />
+
+      {/* Top Bar: Eyebrow + Season Selector */}
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <Gavel className="w-4 h-4 text-orange-500 shrink-0" />
+          <span className="text-[10px] font-black uppercase tracking-[0.25em] text-orange-400 font-mono">
+            CricField / IPL {active}
+          </span>
+          <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-orange-500/20 text-orange-300 border border-orange-500/30">
+            {phase}
+          </span>
+        </div>
+        {seasonSelector}
+      </div>
+
+      {/* Middle Content: Consistent Typographic Scale Across All Slides */}
+      <div className="relative z-10 my-auto py-4">
+        <h1
+          key={current.id}
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[44px] font-black leading-none uppercase tracking-tight text-white select-none animate-in fade-in slide-in-from-left-2 duration-300"
+          style={{ color: "#ffffff" }}
+        >
+          {current.prefix} <span className={current.tone}>{current.highlight}</span>
+        </h1>
+        <p
+          className="text-xs sm:text-sm text-white/80 max-w-lg mt-3 leading-relaxed"
+          style={{ color: "rgba(255, 255, 255, 0.85)" }}
+        >
+          {current.desc}
+        </p>
+      </div>
+
+      {/* Bottom Bar: Slide Indicators & Call to Action */}
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/10">
+        <div className="flex items-center gap-1.5">
+          {HERO_SLIDES.map((s, idx) => (
+            <button
+              key={s.id}
+              onClick={() => setSlideIdx(idx)}
+              className={`px-2.5 py-1 rounded-lg text-[10px] font-black font-mono tracking-wider transition-all cursor-pointer ${
+                slideIdx === idx
+                  ? "bg-white text-slate-950 shadow-md font-bold"
+                  : "bg-white/10 text-white/60 hover:bg-white/20 hover:text-white"
+              }`}
+            >
+              {idx === 0 ? "PULSE" : s.prefix}
+            </button>
+          ))}
+        </div>
+
+        <button
+          onClick={() => onNavigate(current.tab)}
+          className="px-4 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-black text-xs uppercase tracking-wider shadow-md hover:shadow-lg flex items-center gap-1.5 transition-all group/btn cursor-pointer"
+        >
+          <span>{current.cta}</span>
+          <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* SECTION 2: CONTROLLED WIDTH EVENT STATUS CARD */
+function EventStatusCard({
+  active,
+  model,
+  pulse,
+  phase,
+  venue,
+  updated,
+}: {
+  active: number;
+  model: PulseModel;
+  pulse: Pulse;
+  phase: string;
+  venue: string | null;
+  updated: string | null | undefined;
+}) {
+  const auction = HUB_EVENTS.find(e => e.id === "auction");
+
+  return (
+    <div className="bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 p-5 sm:p-6 flex flex-col justify-between shadow-sm dark:shadow-xl h-full transition-colors">
+      <div>
+        {/* Card Header: Label + Phase */}
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-white/5">
+          <div className="flex items-center gap-2">
+            <Radio className="w-4 h-4 text-pink-500" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-white/50">
+              Event Status
+            </span>
+          </div>
+          <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/20">
+            {phase}
+          </span>
+        </div>
+
+        {/* Event Title & Metadata */}
+        <div className="mt-3.5 space-y-1">
+          <div className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+            IPL {active} Auction
+          </div>
+          <div className="text-xs text-slate-600 dark:text-white/70 font-medium truncate">
+            {active === 2026
+              ? `${model.foundation?.eventDate ?? "Dec 16, 2025"} · ${venue ?? "Etihad Arena, Abu Dhabi"}`
+              : `${auction?.date ?? "Dec 16, 2026"} · ${auction?.status === "confirmed" ? "Confirmed" : "Reported, not yet confirmed"}`}
+          </div>
+        </div>
+
+        {/* Feed Status Indicator */}
+        <div className="mt-3.5">
+          <FeedStatus active={active} pulse={pulse} />
+        </div>
+      </div>
+
+      {/* Statistics Section: Sold, Unsold, Spent with ample space */}
+      <div className="mt-4 pt-3.5 border-t border-slate-100 dark:border-white/5 space-y-3">
+        <div className="grid grid-cols-3 gap-2">
+          <Kpi k="Sold" v={model.sold} tone="text-emerald-600 dark:text-emerald-400" />
+          <Kpi k="Unsold" v={unsoldText(model)} tone="text-rose-600 dark:text-rose-400" />
+          <Kpi k="Spent" v={spendText(model)} tone="text-amber-600 dark:text-amber-300" />
+        </div>
+
+        {/* Verification Meta Footer */}
+        <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 dark:text-white/40 pt-1">
+          <span className="truncate">
+            {updated
+              ? active === 2027
+                ? `Updated: ${stamp(updated)}`
+                : `Verified: ${updated}`
+              : "Official BCCI Release"}
+          </span>
+          <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0 flex items-center gap-1">
+            <CheckCircle2 className="w-3 h-3" />
+            Verified
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function FeedStatus({ active, pulse }: { active: number; pulse: Pulse }) {
   const [dot, text] = active !== 2027 ? ["bg-sky-500", "Archive · verified final results"]
@@ -351,7 +577,143 @@ const Section = ({ icon: Icon, title, note, className = "", children }: { icon: 
   );
 };
 
-/* SECTION 2.B & 2.C: MAIN DASHBOARD & AUCTION NAVIGATION CARDS */
+/* SECTION 4: HIGH-CONTRAST FRANCHISE PURSE BOARD */
+function FranchisePurseBoard({ model }: { model: PulseModel }) {
+  const totalRemaining = model.teams.reduce((acc, t) => acc + (t.remaining ?? 0), 0);
+  const totalSpent = model.teams.reduce((acc, t) => acc + (t.spent ?? 0), 0);
+
+  return (
+    <div className="rounded-[24px] border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] p-5 sm:p-6 shadow-sm dark:shadow-xl flex flex-col justify-between h-full">
+      <div>
+        {/* Header */}
+        <div className="flex flex-wrap items-center justify-between pb-3 mb-4 border-b border-slate-200 dark:border-white/10 gap-2">
+          <div className="flex items-center gap-2">
+            <Wallet className="w-4 h-4 text-purple-500" />
+            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-800 dark:text-white/80">
+              Franchise Purse Board
+            </h2>
+          </div>
+          <div className="text-[11px] font-mono font-bold text-slate-500 dark:text-white/50">
+            Total Remaining: <span className="text-emerald-600 dark:text-emerald-400 font-black">{pulseMoney(totalRemaining)}</span>
+          </div>
+        </div>
+
+        {/* 2-Column Grid of Distinct, High-Contrast Team Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 content-start">
+          {model.teams.map(t => {
+            const pct = t.startingPurse && t.spent != null
+              ? Math.min(100, Math.round((t.spent / t.startingPurse) * 100))
+              : 0;
+            const accent = teamHex(t.code);
+
+            return (
+              <div
+                key={t.code}
+                className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-white/[0.02] hover:bg-slate-100/80 dark:hover:bg-white/[0.05] p-3 transition-all flex flex-col justify-between gap-2 shadow-xs group"
+                style={{ borderLeftColor: accent, borderLeftWidth: "4px" }}
+              >
+                {/* Team & Purse Top Line */}
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <TeamLogo team={t.code} size="w-6 h-6 shrink-0" />
+                    <span className="font-black text-xs sm:text-sm tracking-tight text-slate-900 dark:text-white truncate">
+                      {t.code}
+                    </span>
+                  </div>
+                  <div className="font-mono font-black text-xs text-emerald-600 dark:text-emerald-400 shrink-0">
+                    {t.remaining == null ? "Unverified" : `${pulseMoney(t.remaining)} left`}
+                  </div>
+                </div>
+
+                {/* Progress bar of purse spent */}
+                <div className="h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{ width: `${pct}%`, backgroundColor: accent }}
+                  />
+                </div>
+
+                {/* Bottom stats: Spent and squad count */}
+                <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-white/50 pt-0.5">
+                  <span>{t.purchases.length ? `${spendText(t)} spent (${pct}%)` : "No buys yet"}</span>
+                  <span className="font-bold text-slate-700 dark:text-white/70">
+                    {t.purchases.length} bought · {t.slots ?? (25 - (t.squad ?? 0))} slots open
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="text-[10px] text-slate-400 dark:text-white/40 pt-3 mt-3 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+        <span>Official Purse Allocations & Expenditure</span>
+        <span>Squad Limit: 25 Players</span>
+      </div>
+    </div>
+  );
+}
+
+/* TOP HAMMER ACQUISITIONS SIDEBAR COMPONENT */
+function TopHammerPurchases({ model }: { model: PulseModel }) {
+  return (
+    <div className="rounded-[24px] border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] p-5 sm:p-6 shadow-sm dark:shadow-xl flex flex-col justify-between h-full">
+      <div>
+        <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 dark:border-white/10">
+          <div className="flex items-center gap-2">
+            <History className="w-4 h-4 text-emerald-500" />
+            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-800 dark:text-white/80">
+              Top Hammer Acquisitions
+            </h2>
+          </div>
+          <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-mono font-bold">
+            IPL {model.season}
+          </span>
+        </div>
+
+        <div className="space-y-1.5 overflow-hidden">
+          {model.ranked.slice(0, 8).map((l, i) => (
+            <div
+              key={l.id}
+              className="flex items-center gap-2.5 text-xs py-2 px-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/15 transition-all"
+            >
+              <span className="w-4 text-center text-slate-400 dark:text-white/40 font-mono text-[11px] font-bold">
+                {i + 1}
+              </span>
+              <div className="flex-1 min-w-0">
+                <div className="truncate font-bold text-slate-900 dark:text-white tracking-tight">
+                  {l.player}
+                </div>
+                <div className="text-[10px] text-slate-500 dark:text-white/40">{roleBand(l.role)}</div>
+              </div>
+              <div className="flex flex-col items-end shrink-0">
+                <span className="font-mono font-black text-emerald-600 dark:text-emerald-400">
+                  {pulseMoney(l.price, l.usd)}
+                </span>
+                <span
+                  className="font-black text-[9px] px-1.5 py-0.5 rounded mt-0.5"
+                  style={{
+                    color: teamHex(l.team ?? ""),
+                    backgroundColor: `${teamHex(l.team ?? "")}18`,
+                  }}
+                >
+                  {l.team}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="text-[10px] text-slate-400 dark:text-white/40 pt-3 mt-3 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+        <span>Highest Historical Bids</span>
+        <span>Verified Results</span>
+      </div>
+    </div>
+  );
+}
+
+/* SECTION 3: OVERVIEW TAB CONTENT */
 function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse; phase: string; go: (t: PulseTab) => void }) {
   const steps = [
     {
@@ -386,175 +748,150 @@ function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse
   const topLot = model.ranked[0] ?? null;
 
   return (
-    <div className="space-y-5">
-      {/* 2-Column Side-by-Side: Left = IPL at a glance, Right = 3 Stacked Cards (Retentions, Auction, Aftermath) */}
+    <div className="space-y-6">
+      {/* 1. SIDE-BY-SIDE: FRANCHISE PURSE BOARD (7 cols) + TOP HAMMER BUYS (5 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-        {/* Left: IPL at a glance (Section 2.B) */}
         <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
-          <Section
-            icon={Radio}
-            title={`IPL ${model.season} at a glance`}
-            note={`Phase: ${phase}`}
-            className="h-full flex flex-col justify-between p-5"
+          <FranchisePurseBoard model={model} />
+        </div>
+        <div className="lg:col-span-5 xl:col-span-4 flex flex-col">
+          <TopHammerPurchases model={model} />
+        </div>
+      </div>
+
+      {/* 2. THE 3 AUCTION LIFECYCLE ACTION CARDS */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {steps.map(step => (
+          <button
+            key={step.n}
+            onClick={() => go(step.to)}
+            className={`rounded-[20px] p-5 text-left transition-all duration-200 border hover:shadow-md hover:scale-[1.01] active:scale-[0.99] flex items-center justify-between group shadow-sm min-h-[96px] cursor-pointer ${step.cardClasses}`}
           >
-            <div className="space-y-4">
-              {/* Status Header Meta */}
-              <div className="flex flex-wrap items-center justify-between text-xs text-slate-600 dark:text-white/60 pb-2.5 border-b border-slate-200 dark:border-white/10 gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                  <span className="font-bold text-slate-900 dark:text-white">
-                    {model.historical ? "Official Auction Results" : "Live Pulse Feed"}
-                  </span>
-                  {model.foundation?.venue && (
-                    <span className="text-slate-500 dark:text-white/50 hidden sm:inline">· {model.foundation.venue}</span>
-                  )}
-                </div>
-                <div className="text-[11px] font-mono text-slate-400 dark:text-white/40">
-                  {model.foundation?.verifiedAt
-                    ? `Verified: ${model.foundation.verifiedAt}`
-                    : model.season === 2027 && pulse.desk.data?.updatedAt
-                    ? `Updated: ${stamp(pulse.desk.data.updatedAt)}`
-                    : "Official BCCI Release"}
-                </div>
+            <div className="space-y-1.5 min-w-0 pr-3">
+              <div className="flex items-center gap-2.5">
+                <span className={`text-2xl font-black tracking-tight font-mono shrink-0 ${step.numClass}`}>{step.n}</span>
+                <span className="font-black text-slate-900 dark:text-white text-base uppercase tracking-wider truncate">{step.t}</span>
               </div>
-
-              {/* Primary Financial & Volume Metrics */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                <Kpi k="Players Sold" v={model.sold} tone="text-emerald-600 dark:text-emerald-400" />
-                <Kpi k="Unsold" v={unsoldText(model)} tone="text-rose-600 dark:text-rose-400" />
-                <Kpi k="Total Expenditure" v={spendText(model)} tone="text-amber-600 dark:text-amber-300" />
-                <Kpi
-                  k="Remaining Purse"
-                  v={remPurseTotal > 0 ? pulseMoney(remPurseTotal) : "Cap Exhausted"}
-                  tone="text-purple-600 dark:text-purple-300"
-                />
-              </div>
-
-              {/* Secondary Squad & Pool Metrics (Fills space evenly without emptiness) */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                <Kpi k="Auction Pool" v={`${totalRegistered} Lots`} tone="text-slate-800 dark:text-white" />
-                <Kpi k="Retained Core" v={`${totalRetained} Players`} tone="text-cyan-600 dark:text-cyan-300" />
-                <Kpi k="Franchises" v={`${model.teams.length} Teams`} tone="text-slate-700 dark:text-white/80" />
-                <Kpi
-                  k="Top Hammer Price"
-                  v={topLot ? pulseMoney(topLot.price, topLot.usd) : "—"}
-                  tone="text-emerald-600 dark:text-emerald-300"
-                />
-              </div>
-
-              {/* Highlight Card for Top Purchase */}
-              {topLot && (
-                <div className="p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 dark:border-emerald-500/30 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 shrink-0">
-                      Record Buy
-                    </span>
-                    <div className="truncate">
-                      <strong className="text-slate-900 dark:text-white font-black text-xs sm:text-sm tracking-tight">{topLot.player}</strong>
-                      <span className="text-slate-500 dark:text-white/40 text-xs ml-2">
-                        Sold to <span className="font-bold text-slate-800 dark:text-white" style={{ color: teamHex(topLot.team) }}>{topLot.team}</span>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="font-mono font-black text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm shrink-0">
-                    {pulseMoney(topLot.price, topLot.usd)}
-                  </div>
-                </div>
-              )}
-
-              {/* 2027 Timeline or 2026 Metadata Footer */}
-              {model.season === 2027 ? (
-                <div className="pt-2 border-t border-slate-200 dark:border-white/5 space-y-2">
-                  <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-white/40">IPL 2027 timeline</div>
-                  <ol className="space-y-1.5">
-                    {HUB_EVENTS.map(e => (
-                      <li key={e.id} className="flex flex-wrap items-baseline gap-x-3 text-xs">
-                        <span className="w-24 font-mono text-slate-500 dark:text-white/50">{e.date ?? "TBA"}</span>
-                        <span className="font-bold text-slate-900 dark:text-white">{e.title}</span>
-                        <span className={`text-[9px] font-black uppercase ${e.status === "confirmed" ? "text-emerald-600 dark:text-emerald-400" : e.status === "reported" ? "text-amber-600 dark:text-amber-300" : "text-slate-400 dark:text-white/40"}`}>
-                          {e.status === "provisional" ? "to be announced" : e.status}
-                        </span>
-                        {e.sourceUrl && (
-                          <a href={e.sourceUrl} target="_blank" rel="noreferrer" className="text-primary inline-flex items-center gap-0.5 hover:underline">
-                            source <ExternalLink className="w-3 h-3" />
-                          </a>
-                        )}
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              ) : (
-                <div className="pt-2 border-t border-slate-200 dark:border-white/5 flex flex-wrap items-center justify-between text-[11px] text-slate-500 dark:text-white/50 gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    <span>Venue: {model.foundation?.venue ?? "Etihad Arena, Abu Dhabi"}</span>
-                    <span className="text-slate-300 dark:text-white/20">·</span>
-                    <span>Event Date: {model.foundation?.eventDate ?? "Dec 16, 2025"}</span>
-                  </div>
-                  <div className="text-[10px] font-mono text-slate-400 dark:text-white/40">
-                    Squad Rules: Max 25 players / 8 overseas
-                  </div>
-                </div>
-              )}
+              <div className="text-xs text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white/90 transition-colors line-clamp-1">{step.d}</div>
             </div>
-          </Section>
-        </div>
-
-        {/* Right: 3 stacked navigation cards (Section 2.C) */}
-        <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-3.5 justify-between">
-          {steps.map(step => (
-            <button
-              key={step.n}
-              onClick={() => go(step.to)}
-              className={`flex-1 rounded-[20px] p-5 text-left transition-all duration-200 border hover:shadow-md hover:scale-[1.01] active:scale-[0.99] flex items-center justify-between group shadow-sm min-h-[96px] sm:min-h-[108px] cursor-pointer ${step.cardClasses}`}
-            >
-              <div className="space-y-1.5 min-w-0 pr-3">
-                <div className="flex items-center gap-2.5">
-                  <span className={`text-2xl font-black tracking-tight font-mono shrink-0 ${step.numClass}`}>{step.n}</span>
-                  <span className="font-black text-slate-900 dark:text-white text-base uppercase tracking-wider truncate">{step.t}</span>
-                </div>
-                <div className="text-xs text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white/90 transition-colors line-clamp-1">{step.d}</div>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/5 group-hover:bg-slate-200 dark:group-hover:bg-white/15 flex items-center justify-center shrink-0 border border-slate-200 dark:border-white/10 transition-colors ml-2">
-                <span className="text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white text-sm font-bold transition-transform group-hover:translate-x-0.5">→</span>
-              </div>
-            </button>
-          ))}
-        </div>
+            <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/5 group-hover:bg-slate-200 dark:group-hover:bg-white/15 flex items-center justify-center shrink-0 border border-slate-200 dark:border-white/10 transition-colors ml-2">
+              <span className="text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white text-sm font-bold transition-transform group-hover:translate-x-0.5">→</span>
+            </div>
+          </button>
+        ))}
       </div>
 
-      {/* Franchise Auction Board (Section 2.D) */}
-      <Franchises model={model} compact />
-
-      {/* Top 8 Purchases Board */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-        <div className="lg:col-span-12 rounded-[24px] border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] p-5 sm:p-6 shadow-sm dark:shadow-xl">
-          <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-200 dark:border-white/10">
+      {/* 3. IPL AT A GLANCE (HIGH-DENSITY METRICS & DETAILS) */}
+      <Section
+        icon={Radio}
+        title={`IPL ${model.season} at a glance`}
+        note={`Phase: ${phase}`}
+        className="p-5"
+      >
+        <div className="space-y-4">
+          {/* Status Header Meta */}
+          <div className="flex flex-wrap items-center justify-between text-xs text-slate-600 dark:text-white/60 pb-2.5 border-b border-slate-200 dark:border-white/10 gap-2">
             <div className="flex items-center gap-2">
-              <History className="w-4 h-4 text-emerald-500" />
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-700 dark:text-white/60">Top Hammer Acquisitions</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+              <span className="font-bold text-slate-900 dark:text-white">
+                {model.historical ? "Official Auction Results" : "Live Pulse Feed"}
+              </span>
+              {model.foundation?.venue && (
+                <span className="text-slate-500 dark:text-white/50 hidden sm:inline">· {model.foundation.venue}</span>
+              )}
             </div>
-            <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-mono font-bold">Highest Bids · IPL {model.season}</span>
+            <div className="text-[11px] font-mono text-slate-400 dark:text-white/40">
+              {model.foundation?.verifiedAt
+                ? `Verified: ${model.foundation.verifiedAt}`
+                : model.season === 2027 && pulse.desk.data?.updatedAt
+                ? `Updated: ${stamp(pulse.desk.data.updatedAt)}`
+                : "Official BCCI Release"}
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
-            {model.ranked.slice(0, 8).map((l, i) => (
-              <div key={l.id} className="flex items-center gap-2.5 text-xs py-2 px-3 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/15 transition-all">
-                <span className="w-5 text-center text-slate-400 dark:text-white/40 font-mono text-[11px] font-bold">{i + 1}</span>
-                <div className="flex-1 min-w-0">
-                  <div className="truncate font-bold text-slate-900 dark:text-white tracking-tight">{l.player}</div>
-                  <div className="text-[10px] text-slate-500 dark:text-white/40">{roleBand(l.role)}</div>
-                </div>
-                <div className="flex flex-col items-end shrink-0">
-                  <span className="font-mono font-black text-emerald-600 dark:text-emerald-400">{pulseMoney(l.price, l.usd)}</span>
-                  <span className="font-black text-[10px] px-1.5 py-0.2 rounded mt-0.5" style={{ color: teamHex(l.team ?? ""), backgroundColor: `${teamHex(l.team ?? "")}18` }}>{l.team}</span>
+          {/* Primary Financial & Volume Metrics */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <Kpi k="Players Sold" v={model.sold} tone="text-emerald-600 dark:text-emerald-400" />
+            <Kpi k="Unsold" v={unsoldText(model)} tone="text-rose-600 dark:text-rose-400" />
+            <Kpi k="Total Expenditure" v={spendText(model)} tone="text-amber-600 dark:text-amber-300" />
+            <Kpi
+              k="Remaining Purse"
+              v={remPurseTotal > 0 ? pulseMoney(remPurseTotal) : "Cap Exhausted"}
+              tone="text-purple-600 dark:text-purple-300"
+            />
+          </div>
+
+          {/* Secondary Squad & Pool Metrics */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <Kpi k="Auction Pool" v={`${totalRegistered} Lots`} tone="text-slate-800 dark:text-white" />
+            <Kpi k="Retained Core" v={`${totalRetained} Players`} tone="text-cyan-600 dark:text-cyan-300" />
+            <Kpi k="Franchises" v={`${model.teams.length} Teams`} tone="text-slate-700 dark:text-white/80" />
+            <Kpi
+              k="Top Hammer Price"
+              v={topLot ? pulseMoney(topLot.price, topLot.usd) : "—"}
+              tone="text-emerald-600 dark:text-emerald-300"
+            />
+          </div>
+
+          {/* Highlight Card for Top Purchase */}
+          {topLot && (
+            <div className="p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 dark:border-emerald-500/30 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 shrink-0">
+                  Record Buy
+                </span>
+                <div className="truncate">
+                  <strong className="text-slate-900 dark:text-white font-black text-xs sm:text-sm tracking-tight">{topLot.player}</strong>
+                  <span className="text-slate-500 dark:text-white/40 text-xs ml-2">
+                    Sold to <span className="font-bold text-slate-800 dark:text-white" style={{ color: teamHex(topLot.team) }}>{topLot.team}</span>
+                  </span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
+              <div className="font-mono font-black text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm shrink-0">
+                {pulseMoney(topLot.price, topLot.usd)}
+              </div>
+            </div>
+          )}
 
+          {/* 2027 Timeline or 2026 Metadata Footer */}
+          {model.season === 2027 ? (
+            <div className="pt-2 border-t border-slate-200 dark:border-white/5 space-y-2">
+              <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-white/40">IPL 2027 timeline</div>
+              <ol className="space-y-1.5">
+                {HUB_EVENTS.map(e => (
+                  <li key={e.id} className="flex flex-wrap items-baseline gap-x-3 text-xs">
+                    <span className="w-24 font-mono text-slate-500 dark:text-white/50">{e.date ?? "TBA"}</span>
+                    <span className="font-bold text-slate-900 dark:text-white">{e.title}</span>
+                    <span className={`text-[9px] font-black uppercase ${e.status === "confirmed" ? "text-emerald-600 dark:text-emerald-400" : e.status === "reported" ? "text-amber-600 dark:text-amber-300" : "text-slate-400 dark:text-white/40"}`}>
+                      {e.status === "provisional" ? "to be announced" : e.status}
+                    </span>
+                    {e.sourceUrl && (
+                      <a href={e.sourceUrl} target="_blank" rel="noreferrer" className="text-primary inline-flex items-center gap-0.5 hover:underline">
+                        source <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ) : (
+            <div className="pt-2 border-t border-slate-200 dark:border-white/5 flex flex-wrap items-center justify-between text-[11px] text-slate-500 dark:text-white/50 gap-2">
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span>Venue: {model.foundation?.venue ?? "Etihad Arena, Abu Dhabi"}</span>
+                <span className="text-slate-300 dark:text-white/20">·</span>
+                <span>Event Date: {model.foundation?.eventDate ?? "Dec 16, 2025"}</span>
+              </div>
+              <div className="text-[10px] font-mono text-slate-400 dark:text-white/40">
+                Squad Rules: Max 25 players / 8 overseas
+              </div>
+            </div>
+          )}
+        </div>
+      </Section>
+
+      {/* 4. EXPANDABLE FRANCHISE DIRECTORY TABLE */}
+      <Franchises model={model} compact />
       {pulse.desk.data && pulse.desk.data.announcements.length > 0 && <LiveBlog model={model} pulse={pulse} />}
       <Newsroom />
     </div>
