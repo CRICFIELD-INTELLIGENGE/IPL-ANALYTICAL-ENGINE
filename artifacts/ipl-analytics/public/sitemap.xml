@@ -6,19 +6,19 @@
 
   <!-- Core Landing & Hubs -->
   <url>
-    <loc>https://ipl-intelligence.com/</loc>
+    <loc>https://cricfield.in/</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/home</loc>
+    <loc>https://cricfield.in/home</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst</loc>
+    <loc>https://cricfield.in/ai-analyst</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
@@ -26,25 +26,25 @@
 
   <!-- AI Analyst Phase 3: Tactical Simulation Engines -->
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst/strategy-sim</loc>
+    <loc>https://cricfield.in/ai-analyst/strategy-sim</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst/alt-universe</loc>
+    <loc>https://cricfield.in/ai-analyst/alt-universe</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst/opposition-map</loc>
+    <loc>https://cricfield.in/ai-analyst/opposition-map</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst/decision-replay</loc>
+    <loc>https://cricfield.in/ai-analyst/decision-replay</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -52,19 +52,19 @@
 
   <!-- AI Analyst Phase 4: Squad & Valuation Intelligence -->
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst/auction-war-room</loc>
+    <loc>https://cricfield.in/ai-analyst/auction-war-room</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst/squad-dna</loc>
+    <loc>https://cricfield.in/ai-analyst/squad-dna</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst/player-pool</loc>
+    <loc>https://cricfield.in/ai-analyst/player-pool</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -72,25 +72,25 @@
 
   <!-- AI Analyst Phase 1 & 2: Natural Language, Profiling & Discovery -->
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst/ask</loc>
+    <loc>https://cricfield.in/ai-analyst/ask</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst/pressure</loc>
+    <loc>https://cricfield.in/ai-analyst/pressure</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst/weakness</loc>
+    <loc>https://cricfield.in/ai-analyst/weakness</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/ai-analyst/feed</loc>
+    <loc>https://cricfield.in/ai-analyst/feed</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
@@ -98,49 +98,49 @@
 
   <!-- High-Traffic Intelligence & Analytics Modules -->
   <url>
-    <loc>https://ipl-intelligence.com/stats</loc>
+    <loc>https://cricfield.in/stats</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/pulse</loc>
+    <loc>https://cricfield.in/pulse</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/scores</loc>
+    <loc>https://cricfield.in/scores</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>always</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/intelligence</loc>
+    <loc>https://cricfield.in/intelligence</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/visualizations</loc>
+    <loc>https://cricfield.in/visualizations</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/auction</loc>
+    <loc>https://cricfield.in/auction</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/insights</loc>
+    <loc>https://cricfield.in/insights</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/shop</loc>
+    <loc>https://cricfield.in/shop</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -148,37 +148,37 @@
 
   <!-- About the project -->
   <url>
-    <loc>https://ipl-intelligence.com/about</loc>
+    <loc>https://cricfield.in/about</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/methodology</loc>
+    <loc>https://cricfield.in/methodology</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/data-sources</loc>
+    <loc>https://cricfield.in/data-sources</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/contact</loc>
+    <loc>https://cricfield.in/contact</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/disclaimer</loc>
+    <loc>https://cricfield.in/disclaimer</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://ipl-intelligence.com/privacy</loc>
+    <loc>https://cricfield.in/privacy</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
