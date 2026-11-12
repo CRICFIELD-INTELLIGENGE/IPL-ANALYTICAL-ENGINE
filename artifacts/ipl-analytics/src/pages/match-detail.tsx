@@ -109,22 +109,22 @@ export default function MatchDetailPage() {
 
   return (
     <Layout hideRightPanel>
-      <div className="flex flex-col min-h-screen bg-[#050816] text-white overflow-x-hidden">
+      <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#050816] text-slate-900 dark:text-white overflow-x-hidden transition-colors duration-200">
         {/* TOP NAV BAR */}
-        <div className="sticky top-0 z-[100] px-6 py-4 flex items-center justify-between bg-[#050816]/80 backdrop-blur-md border-b border-white/5">
+        <div className="sticky top-0 z-[100] px-6 py-4 flex items-center justify-between bg-white/80 dark:bg-[#050816]/80 backdrop-blur-md border-b border-slate-200 dark:border-white/5">
           <Link href="/scores">
-            <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary hover:text-white transition-colors group">
+            <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary hover:text-slate-900 dark:hover:text-white transition-colors group">
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Global Hub
             </button>
           </Link>
 
           {/* Tab Navigation */}
-          <div className="hidden lg:flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10 overflow-x-auto hide-scrollbar">
+          <div className="hidden lg:flex items-center gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-xl border border-slate-200 dark:border-white/10 overflow-x-auto hide-scrollbar">
             {["Summary", "Scorecard", "Commentary", "Graph", "Squads", "Overs", "Forecast"].map(tab => (
               <button 
                 key={tab} 
                 onClick={() => setActiveTab(tab.toLowerCase())}
-                className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === tab.toLowerCase() ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === tab.toLowerCase() ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-white/5'}`}
               >
                 {tab}
               </button>
@@ -133,8 +133,8 @@ export default function MatchDetailPage() {
 
           <div className="flex items-center gap-4">
             <div className="flex flex-col items-end">
-              <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em]">Match Analytics Stream</span>
-              <span className="text-[11px] font-bold text-white tracking-tight">MATCH_INTEL_v2.0 // {matchId}</span>
+              <span className="text-[9px] font-black text-slate-400 dark:text-white/30 uppercase tracking-[0.2em]">Match Analytics Stream</span>
+              <span className="text-[11px] font-bold text-slate-900 dark:text-white tracking-tight">MATCH_INTEL_v2.0 // {matchId}</span>
             </div>
             <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
               <Cpu className="w-4 h-4 text-primary animate-pulse" />
@@ -337,7 +337,7 @@ function MatchIntelligenceView({ match, activeTab }: { match: import("@/lib/live
       </AnimatePresence>
 
       {/* FOOTER METADATA */}
-      <div className="px-4 py-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-white/20">
+      <div className="px-4 py-8 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 dark:text-white/40">
         <div className="flex items-center gap-2">
           <Cpu className="w-4 h-4" />
           <span className="text-[10px] font-black uppercase tracking-widest">Cricket Intelligence Operating System v4.2.1</span>
@@ -369,7 +369,7 @@ function FullScorecard({ match, card, isLoading }: { match: LiveMatch; card?: Ma
 
       {/* MATCH FACTS & OFFICIALS */}
       {card && (
-        <div className="bg-[#090d16]/95 rounded-[28px] border border-white/10 p-6 grid grid-cols-1 md:grid-cols-3 gap-5 shadow-2xl">
+        <div className="bg-white dark:bg-[#090d16]/95 rounded-[28px] border border-slate-200 dark:border-white/10 p-6 grid grid-cols-1 md:grid-cols-3 gap-5 shadow-xl dark:shadow-2xl">
           {card.toss && (
             <Fact label="Toss" value={`${card.toss.winner} chose to ${card.toss.decision}`} />
           )}
@@ -424,8 +424,8 @@ function FullScorecard({ match, card, isLoading }: { match: LiveMatch; card?: Ma
 function Fact({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div className="text-[9px] font-black uppercase tracking-widest text-white/30 mb-1">{label}</div>
-      <div className="text-[13px] font-bold text-white/80">{value}</div>
+      <div className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-white/30 mb-1">{label}</div>
+      <div className="text-[13px] font-bold text-slate-800 dark:text-white/80">{value}</div>
     </div>
   );
 }
