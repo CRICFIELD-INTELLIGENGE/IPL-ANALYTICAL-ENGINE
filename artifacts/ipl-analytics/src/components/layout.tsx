@@ -153,7 +153,27 @@ export function Layout({
           </Link>
           <div className="hidden sm:block h-5 w-px bg-white/10 shrink-0" />
           <nav aria-label="Primary" className="hidden md:flex items-center gap-3 text-xs font-semibold text-slate-300">
-            {[['Home','/home'],['Scout Lab','/scout'],['Scores','/scores'],['My Dugout','/dugout'],['Stats','/stats']].map(([label,href])=><Link key={href} href={href} className={location === href ? 'text-indigo-300' : 'hover:text-white'} aria-current={location === href ? 'page' : undefined}>{label}</Link>)}
+            {[
+              ["Home", "/home"],
+              ["Feed", "/feed"],
+              ["Scout Lab", "/scout"],
+              ["Scores", "/scores"],
+              ["My Dugout", "/dugout"],
+              ["Stats", "/stats"],
+            ].map(([label, href]) => {
+              const isCurrentPage = location === href;
+              const isActive = isCurrentPage || (href === "/feed" && location.startsWith("/feed/"));
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={isActive ? "text-indigo-300" : "hover:text-white"}
+                  aria-current={isCurrentPage ? "page" : undefined}
+                >
+                  {label}
+                </Link>
+              );
+            })}
           </nav>
           {/* Live Score Snippet */}
           <LiveScoreSnippet />

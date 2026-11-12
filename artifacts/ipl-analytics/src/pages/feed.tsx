@@ -267,7 +267,7 @@ export default function FeedPage() {
 
         {/* MAIN COLUMN + EDITORIAL RAIL */}
         <div data-feed-part="newsroom" className="grid gap-6 xl:grid-cols-[1fr_270px]">
-          <div className="space-y-6 min-w-0">
+          <div className="@container min-w-0 space-y-6">
             <section>
               <SectionHead title="Franchise coverage" sub="Pick a team to see its stories." />
               <div className="flex flex-wrap gap-2" role="group" aria-label="Filter stories by franchise">
@@ -303,17 +303,22 @@ export default function FeedPage() {
               {top.length === 0 ? (
                 <p className="text-sm text-white/50">No published stories here{team ? ` for ${team}` : ""} yet.</p>
               ) : (
-                <div data-feed-part="top-stories" className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
-                  <div className="flex w-full">
+                <div
+                  data-feed-part="top-stories"
+                  className={`grid gap-3 ${top.length > 1 ? "@min-[640px]:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]" : ""}`}
+                >
+                  <div className="min-w-0">
                     <NewsCard
                       entry={top[0]}
                       lead
-                      media={<EntryMedia entry={top[0]} lead />}
+                      media={<div className="shrink-0"><EntryMedia entry={top[0]} preserveAspectRatio /></div>}
                     />
                   </div>
-                  <div className="flex flex-col divide-y divide-white/5 rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden justify-between">
-                    {top.slice(1).map((e) => <CompactStory key={e.id} entry={e} />)}
-                  </div>
+                  {top.length > 1 && (
+                    <div className="grid min-w-0 auto-rows-fr divide-y divide-white/5 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+                      {top.slice(1).map((entry) => <CompactStory key={entry.id} entry={entry} />)}
+                    </div>
+                  )}
                 </div>
               )}
             </section>
@@ -339,7 +344,7 @@ export default function FeedPage() {
                     return (
                       <li key={e.id}>
                         <Link href={`/dugout/articles/${e.slug}`} className="flex items-center gap-3.5 py-3 px-3 rounded-xl group hover:bg-white/[0.04] transition-colors">
-                          <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
+                          <div className="relative aspect-video w-20 sm:w-24 shrink-0 overflow-hidden rounded-lg bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
                             <ArticleThumbnail entry={e} />
                           </div>
                           <div className="min-w-0 flex-1">
@@ -570,7 +575,7 @@ export function ArticleThumbnail({ entry }: { entry: IndexEntry }) {
   );
 }
 
-export function EntryMedia({ entry, preserveAspectRatio = false, lead = false }: { entry: IndexEntry; preserveAspectRatio?: boolean; lead?: boolean }) {
+export function EntryMedia({ entry, preserveAspectRatio = false }: { entry: IndexEntry; preserveAspectRatio?: boolean }) {
   const image = getArticleHeroImage(entry.id);
   const t = TEAM_REGISTRY[entry.franchise as TeamCode];
   const aspectObj = EDITORIAL_ASPECTS.find((a) => a.id === entry.aspect) ?? EDITORIAL_ASPECTS[0];
@@ -609,8 +614,8 @@ export function EntryMedia({ entry, preserveAspectRatio = false, lead = false }:
 function CompactStory({ entry }: { entry: IndexEntry }) {
   const t = TEAM_REGISTRY[entry.franchise as TeamCode];
   return (
-    <Link href={`/dugout/articles/${entry.slug}`} className="flex items-center gap-3.5 p-3 group hover:bg-white/[0.04] transition-colors">
-      <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
+    <Link href={`/dugout/articles/${entry.slug}`} className="flex items-center gap-3 p-2.5 group hover:bg-white/[0.04] transition-colors">
+      <div className="relative aspect-video w-20 sm:w-24 shrink-0 overflow-hidden rounded-lg bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
         <ArticleThumbnail entry={entry} />
       </div>
       <div className="min-w-0 flex-1">
