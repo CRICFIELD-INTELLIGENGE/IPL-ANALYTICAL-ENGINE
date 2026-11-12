@@ -247,7 +247,7 @@ function GettyEmbed({ params, onFail, fit = false }: { params: GettyEmbedParams;
       className={`editorial-getty-embed relative mx-auto w-full rounded-xl bg-[#08131F] ${fit ? "fit-full h-full" : ""}`}
       style={{
         "--getty-ratio": `${wNum} / ${hNum}`,
-        maxWidth: fit ? "100%" : `${wNum}px`,
+        maxWidth: "100%",
         aspectRatio: fit ? "unset" : `${wNum} / ${hNum}`,
         height: fit ? "100%" : undefined,
       } as React.CSSProperties}

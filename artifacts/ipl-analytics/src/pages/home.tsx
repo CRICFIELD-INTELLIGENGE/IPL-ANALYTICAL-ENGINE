@@ -250,8 +250,8 @@ export default function HomePage() {
 
           {/* ── ROW 2: TOP STORY & AUCTION PULSE ── */}
           <section ref={insightsSectionRef} className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-            {/* TOP STORY (7 cols lg, 8 cols xl) */}
-            <div className={`reference-stories ${hasAds ? "lg:col-span-7 xl:col-span-8" : "lg:col-span-7 xl:col-span-8"} flex flex-col`}>
+            {/* TOP STORY (6 cols lg, 6 cols xl) */}
+            <div className="reference-stories lg:col-span-6 xl:col-span-6 flex flex-col">
               <div className="reference-heading">
                 <div className="flex items-baseline gap-2.5">
                   <h2>Top Story</h2>
@@ -272,8 +272,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* AUCTION PULSE (5 cols lg, 4 cols xl) */}
-            <aside className={`reference-auction ${hasAds ? "lg:col-span-5 xl:col-span-4" : "lg:col-span-5 xl:col-span-4"} flex flex-col justify-between`}>
+            {/* AUCTION PULSE (6 cols lg, 6 cols xl) */}
+            <aside className="reference-auction lg:col-span-6 xl:col-span-6 flex flex-col justify-between">
               <div>
                 <div className="reference-heading">
                   <h2>IPL 2027 Auction Pulse</h2>

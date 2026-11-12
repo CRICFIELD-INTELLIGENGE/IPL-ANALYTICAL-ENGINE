@@ -329,12 +329,18 @@ html, body {
 
 .editorial-getty-embed {
   background-color: #06111a !important;
+  overflow: hidden;
+  border-radius: inherit;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 .editorial-getty-embed .getty.embed.image {
-  max-width: 100%;
-  margin-inline: auto;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
   background-color: transparent !important;
+  display: block !important;
 }
 
 /* Hide the top text link ("Embed from Getty Images") so it doesn't push the photo down and waste card height */
@@ -342,12 +348,18 @@ html, body {
   display: none !important;
 }
 
-.editorial-getty-embed iframe {
-  display: block;
+.editorial-getty-embed .getty.embed.image > div:last-child {
   width: 100% !important;
-  height: auto !important;
-  aspect-ratio: var(--getty-ratio);
-  border: 0;
+  max-width: 100% !important;
+  background-color: transparent !important;
+}
+
+.editorial-getty-embed iframe {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  background-color: transparent !important;
 }
 
 .editorial-getty-embed.fit-full,
