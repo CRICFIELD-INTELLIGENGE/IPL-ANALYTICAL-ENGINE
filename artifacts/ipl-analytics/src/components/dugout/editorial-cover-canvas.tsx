@@ -44,7 +44,7 @@ export function EditorialCoverCanvas({
   return (
     <div
       data-on-image="true"
-      className={`editorial-cover-canvas relative w-full ${aspectClass} overflow-hidden rounded-xl border border-white/10 bg-[#0A0F1D] flex flex-col justify-between p-4 sm:p-6 group select-none ${className}`}
+      className={`editorial-cover-canvas relative w-full ${aspectClass} overflow-hidden rounded-xl border border-white/10 bg-[#0A0F1D] flex flex-col justify-between p-3.5 sm:p-4 group select-none ${className}`}
     >
       {/* If an actual photo file is provided in the future, render it with fallback */}
       {hasImage && (
@@ -107,39 +107,35 @@ export function EditorialCoverCanvas({
 
       {/* Top Header of Editorial Canvas */}
       <div className="relative z-10 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span
-            className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider border shadow-sm backdrop-blur-md"
-            style={{
-              backgroundColor: `${accent}20`,
-              color: accent,
-              borderColor: `${accent}40`,
-            }}
-          >
-            {isCoverStory ? "★ COVER STORY" : `STORY 0${parameterNumber}`}
-          </span>
-          <span className="text-[10px] font-mono uppercase text-gray-300 bg-black/60 px-2.5 py-0.5 rounded border border-white/10 backdrop-blur-md hidden sm:inline">
-            {parameter}
-          </span>
-        </div>
+        <span
+          className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider border shadow-sm backdrop-blur-md whitespace-nowrap"
+          style={{
+            backgroundColor: `${accent}25`,
+            color: accent,
+            borderColor: `${accent}50`,
+          }}
+        >
+          {isCoverStory ? "★ COVER STORY" : `STORY 0${parameterNumber}`}
+        </span>
 
-        <div className="flex items-center gap-1.5 text-[10px] font-mono text-gray-300 bg-black/60 px-2.5 py-0.5 rounded border border-white/10 backdrop-blur-md">
-          <BookOpen className="w-3 h-3 text-sky-400" />
-          <span className="text-gray-200 font-semibold">{edition}</span>
+        <div className="flex items-center gap-1.5 text-[9px] font-mono text-gray-300 bg-black/60 px-2 py-0.5 rounded border border-white/10 backdrop-blur-md whitespace-nowrap">
+          <span className="text-gray-200 font-semibold tracking-wider uppercase">
+            {edition && edition !== "CricField Library" ? edition : (isCoverStory ? "SPECIAL REPORT" : "INTELLIGENCE")}
+          </span>
         </div>
       </div>
 
       {/* Center Graphic Crest / Title Art */}
-      <div className="relative z-10 my-auto py-2">
-        <div className="flex items-center gap-2 text-xs font-mono text-gray-400 uppercase tracking-widest mb-1.5">
-          <span style={{ color: accent }}>{franchiseName}</span>
-          <span>•</span>
-          <span>SPECIAL REPORT</span>
+      <div className="relative z-10 my-auto py-1">
+        <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono uppercase tracking-wider mb-1 text-slate-300 truncate">
+          <span style={{ color: accent }} className="font-bold shrink-0">{franchiseName}</span>
+          <span className="text-white/40 shrink-0">•</span>
+          <span className="text-white/80 font-medium truncate">{parameter || "SPECIAL REPORT"}</span>
         </div>
         <h3
           style={{ color: "#ffffff" }}
           className={`font-black tracking-tight text-white !text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-tight forced-white on-image ${
-            isCoverStory ? "text-xl sm:text-2xl md:text-3xl" : "text-base sm:text-lg"
+            isCoverStory ? "text-lg sm:text-xl md:text-2xl" : "text-sm sm:text-base"
           }`}
         >
           {title}
@@ -147,14 +143,12 @@ export function EditorialCoverCanvas({
       </div>
 
       {/* Bottom Metadata Ribbon */}
-      <div className="relative z-10 flex items-center justify-between text-[10px] font-mono text-gray-400 pt-2 border-t border-white/10">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: accent }} />
-          <span className="uppercase text-gray-300 font-semibold">{franchiseName}</span>
+      <div className="relative z-10 flex items-center justify-between text-[10px] font-mono text-gray-400 pt-1.5 border-t border-white/10">
+        <div className="flex items-center gap-1.5 truncate mr-2">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: accent }} />
+          <span className="uppercase text-gray-300 font-semibold truncate">{franchiseName}</span>
         </div>
-        <div className="flex items-center gap-2 text-gray-400">
-          <span>5-PART STORY</span>
-          <span>•</span>
+        <div className="flex items-center gap-1 text-gray-400 shrink-0 text-[9px]">
           <span>CRICFIELD EDITORIAL</span>
         </div>
       </div>

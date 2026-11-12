@@ -283,13 +283,41 @@ export function FranchiseLibrary({ code, teamName, accent, preview }: { code: st
 }
 
 /** An article's header photo for a card (Getty embed or licensed file), with the CricField illustration as fallback. */
-export function LibraryMedia({ imageId, title, accent, code, teamName, aspect, preserveAspectRatio = false }: { imageId?: string; title: string; accent: string; code: string; teamName: string; aspect: EditorialAspectId; preserveAspectRatio?: boolean }) {
+export function LibraryMedia({
+  imageId,
+  title,
+  accent,
+  code,
+  teamName,
+  aspect,
+  preserveAspectRatio = false,
+  isCoverStory = false,
+}: {
+  imageId?: string;
+  title: string;
+  accent: string;
+  code: string;
+  teamName: string;
+  aspect: EditorialAspectId;
+  preserveAspectRatio?: boolean;
+  isCoverStory?: boolean;
+}) {
   const hero = imageId ? getArticleHeroImage(imageId) : undefined;
   const a = EDITORIAL_ASPECTS.find((x) => x.id === aspect) ?? EDITORIAL_ASPECTS[0];
   const teamCover = code === "CSK" ? "/csk insight.jpg" : code === "RCB" ? "/virat-kohli.png" : code === "MI" ? "/rohit sharma.jpg" : "/TITLE BANNER.png";
   const illustration = (
     <div className="aspect-video w-full overflow-hidden [&>div]:rounded-none [&>div]:border-0">
-      <EditorialCoverCanvas franchiseName={teamName} teamCode={code} parameter={a.name} parameterNumber={a.number} title={title} accent={accent} coverImage={teamCover} aspectRatio="video" edition="CricField Library" />
+      <EditorialCoverCanvas
+        franchiseName={teamName}
+        teamCode={code}
+        parameter={a.name}
+        parameterNumber={a.number}
+        title={title}
+        accent={accent}
+        coverImage={teamCover}
+        aspectRatio="video"
+        isCoverStory={isCoverStory}
+      />
     </div>
   );
   // On card thumbnails, only use direct licensed images; never let brittle third-party embeds break cards
@@ -304,23 +332,23 @@ function LibraryCard({ item, accent, code, teamName }: { item: Item; accent: str
   const badge = item.kind === "live" ? (STORY_TYPE_LABEL[item.storyType ?? ""] ?? "New") : item.kind === "legacy" ? "From the archive" : "Planned";
   const body = (
     <>
-      <div className="flex items-center justify-between gap-2 px-4 pb-2.5 pt-3 text-[10px] font-mono uppercase tracking-wider">
-        <span className="truncate font-bold" style={{ color: accent }}>{aspectName}</span>
-        <span 
-          className="shrink-0 rounded px-1.5 py-0.5 border text-[10px] font-mono uppercase"
-          style={item.kind === "live" ? { backgroundColor: `${accent}15`, borderColor: `${accent}40`, color: accent } : { borderColor: "rgba(255,255,255,0.08)", color: "#94a3b8" }}
-        >
-          {badge}
-        </span>
-      </div>
       {item.kind !== "planned" && <LibraryMedia imageId={item.imageId} title={item.title} accent={accent} code={code} teamName={teamName} aspect={item.aspect} />}
       <div className="flex flex-1 flex-col gap-2 p-4">
+        <div className="flex items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-wider">
+          <span className="truncate font-bold" style={{ color: accent }}>{aspectName}</span>
+          <span 
+            className="shrink-0 rounded px-1.5 py-0.5 border text-[10px] font-mono uppercase"
+            style={item.kind === "live" ? { backgroundColor: `${accent}15`, borderColor: `${accent}40`, color: accent } : { borderColor: "rgba(255,255,255,0.08)", color: "#94a3b8" }}
+          >
+            {badge}
+          </span>
+        </div>
         <h4 className="line-clamp-3 text-[15px] font-semibold leading-snug text-slate-100 group-hover:text-white">{item.title}</h4>
         {item.dek && <p className="line-clamp-2 text-sm leading-relaxed text-slate-400">{item.dek}</p>}
-        <div className="mt-auto flex items-center justify-between pt-2 text-[11px]">
+        <div className="mt-auto flex items-center justify-between pt-2 text-[11px] border-t border-white/5">
           <span className="font-mono text-slate-500">{item.number ? `No. ${item.number}` : ""}{item.meta ? `${item.number ? " · " : ""}${item.meta}` : ""}</span>
           {item.href && (
-            <span className="inline-flex items-center gap-1 font-semibold" style={{ color: accent }}>
+            <span className="inline-flex items-center gap-1 font-semibold group-hover:translate-x-0.5 transition-transform" style={{ color: accent }}>
               Read <ArrowRight className="h-3 w-3" />
             </span>
           )}
