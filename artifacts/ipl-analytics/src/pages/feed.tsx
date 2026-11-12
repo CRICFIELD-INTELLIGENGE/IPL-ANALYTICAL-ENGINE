@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, useRef, type ReactNode } from "react";
 import { Link } from "wouter";
 import {
   ArrowRight, CalendarDays, Users, Gavel, Shield, Star, MapPin, Flame, ShieldCheck,
   Search, Shirt, Wallet, Sparkles, Activity, Trophy, ExternalLink, ChevronLeft, ChevronRight,
+  ChevronUp, ChevronDown,
 } from "lucide-react";
 import { Layout } from "@/components/layout";
 import { AdVessel } from "@/components/ad-vessel";
@@ -16,6 +17,7 @@ import { HUB_EVENTS, HUB_TEAMS } from "@/lib/ipl-2027";
 import { TEAM_REGISTRY, useTeamTheme, type TeamCode } from "@/lib/team-context";
 import { useIpl2027Desk, stamp } from "@/lib/ipl-2027-desk";
 import { EDITORIAL_AUTHOR, type IndexEntry } from "@/data/editorial/schema";
+import { cn } from "@/lib/utils";
 
 export type CardId = "squad" | "auction" | "tactics" | "stars" | "venues" | "storylines";
 
@@ -730,14 +732,187 @@ function isLightHex(hex: string): boolean {
 
 function ScrollingEditorialPicks({ picks }: { picks: IndexEntry[] }) {
   if (picks.length === 0) return null;
-  const displayItems = [...picks, ...picks];
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollPosRef = useRef<number>(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const isHoveredRef = useRef(false);
+  const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Triple items for seamless infinite looping in both directions
+  const displayItems = useMemo(() => [...picks, ...picks, ...picks], [picks]);
+
+  // Keep ref synchronized with state for requestAnimationFrame
+  isHoveredRef.current = isHovered;
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || picks.length === 0) return;
+
+    // Set initial scroll position to start of middle set (Set 2)
+    const singleHeight = container.scrollHeight / 3;
+    if (container.scrollTop < 10 && singleHeight > 0) {
+      container.scrollTop = singleHeight;
+    }
+    scrollPosRef.current = container.scrollTop;
+
+    let lastTime = performance.now();
+    let animationId: number;
+    const scrollSpeed = 24; // smooth 24 pixels per second
+
+    const animate = (currentTime: number) => {
+      const deltaTime = Math.min((currentTime - lastTime) / 1000, 0.1);
+      lastTime = currentTime;
+
+      if (!isHoveredRef.current && container) {
+        const singleH = container.scrollHeight / 3;
+        if (singleH > 0) {
+          scrollPosRef.current += scrollSpeed * deltaTime;
+
+          // Seamless wrap-around
+          if (scrollPosRef.current >= singleH * 2) {
+            scrollPosRef.current -= singleH;
+          } else if (scrollPosRef.current <= 10) {
+            scrollPosRef.current += singleH;
+          }
+
+          container.scrollTop = Math.round(scrollPosRef.current);
+        }
+      } else if (container) {
+        // While paused or hovered, keep the accumulator aligned with manual scroll
+        scrollPosRef.current = container.scrollTop;
+      }
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      if (resumeTimeoutRef.current) {
+        clearTimeout(resumeTimeoutRef.current);
+      }
+    };
+  }, [picks]);
+
+  const handleScroll = () => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // When the user manually wheels or drags, update the position accumulator
+    if (isHoveredRef.current) {
+      scrollPosRef.current = container.scrollTop;
+    }
+
+    const singleH = container.scrollHeight / 3;
+    if (singleH > 0) {
+      if (container.scrollTop >= singleH * 2.1) {
+        container.scrollTop -= singleH;
+        scrollPosRef.current = container.scrollTop;
+      } else if (container.scrollTop <= 10) {
+        container.scrollTop += singleH;
+        scrollPosRef.current = container.scrollTop;
+      }
+    }
+  };
+
+  const handleMouseEnter = () => {
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    setIsHovered(true);
+    isHoveredRef.current = true;
+    if (containerRef.current) {
+      scrollPosRef.current = containerRef.current.scrollTop;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    resumeTimeoutRef.current = setTimeout(() => {
+      setIsHovered(false);
+      isHoveredRef.current = false;
+      if (containerRef.current) {
+        scrollPosRef.current = containerRef.current.scrollTop;
+      }
+    }, 750);
+  };
+
+  const scrollByDirection = (direction: "up" | "down") => {
+    const container = containerRef.current;
+    if (!container) return;
+    const delta = direction === "up" ? -130 : 130;
+    container.scrollBy({ top: delta, behavior: "smooth" });
+    setTimeout(() => {
+      if (containerRef.current) {
+        scrollPosRef.current = containerRef.current.scrollTop;
+      }
+    }, 350);
+  };
 
   return (
-    <RailCard title="Editor's picks">
-      <div className="relative h-[320px] overflow-hidden group">
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-8 bg-gradient-to-b from-slate-50 dark:from-[#0B1020] via-slate-50/80 dark:via-[#0B1020]/80 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-slate-50 dark:from-[#0B1020] via-slate-50/80 dark:via-[#0B1020]/80 to-transparent" />
-        <div className="animate-vertical-scroll space-y-2.5 will-change-transform group-hover:[animation-play-state:paused] pt-1">
+    <RailCard
+      title="Editor's picks"
+      action={
+        <div className="flex items-center gap-1.5">
+          <span
+            className={cn(
+              "text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md transition-colors flex items-center gap-1.5",
+              isHovered
+                ? "bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/30"
+                : "bg-slate-200/60 dark:bg-white/5 text-slate-500 dark:text-white/40 border border-transparent"
+            )}
+            title={isHovered ? "Scroll with mouse wheel, trackpad or arrows" : "Auto-scrolling. Hover to pause and scroll up/down."}
+          >
+            <span
+              className={cn(
+                "w-1.5 h-1.5 rounded-full shrink-0",
+                isHovered ? "bg-orange-500 dark:bg-orange-400" : "bg-emerald-500 dark:bg-emerald-400 animate-pulse"
+              )}
+            />
+            {isHovered ? "Scrollable" : "Auto"}
+          </span>
+          <div className="flex items-center gap-0.5">
+            <button
+              type="button"
+              onClick={() => scrollByDirection("up")}
+              aria-label="Scroll up"
+              title="Scroll up"
+              className="w-5 h-5 rounded flex items-center justify-center text-slate-500 dark:text-white/50 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              <ChevronUp className="w-3.5 h-3.5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByDirection("down")}
+              aria-label="Scroll down"
+              title="Scroll down"
+              className="w-5 h-5 rounded flex items-center justify-center text-slate-500 dark:text-white/50 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      }
+    >
+      <div
+        className="relative group"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleMouseEnter}
+        onTouchEnd={handleMouseLeave}
+      >
+        {/* Top Fade Scrim */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-8 bg-gradient-to-b from-slate-50/90 dark:from-[#0B1020] via-slate-50/60 dark:via-[#0B1020]/60 to-transparent" />
+        
+        {/* Bottom Fade Scrim */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-slate-50/90 dark:from-[#0B1020] via-slate-50/60 dark:via-[#0B1020]/60 to-transparent" />
+
+        {/* Scrollable Container with native wheel & touch support */}
+        <div
+          ref={containerRef}
+          onScroll={handleScroll}
+          className="editorial-picks-scroll relative h-[340px] overflow-y-auto overscroll-contain pr-1 space-y-2.5 pt-2 pb-2"
+        >
           {displayItems.map((e, idx) => {
             const t = TEAM_REGISTRY[e.franchise as TeamCode];
             const rank = (idx % picks.length) + 1;
@@ -986,10 +1161,13 @@ function TeamChip({ active, onClick, children, color = "#8ba7ff" }: { active: bo
   );
 }
 
-function RailCard({ title, children }: { title: string; children: ReactNode }) {
+function RailCard({ title, children, action }: { title: string; children: ReactNode; action?: ReactNode }) {
   return (
     <section className="rounded-[20px] border border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-[#0B1020] p-4 shadow-xs">
-      <h2 className="mb-3 text-[12px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{title}</h2>
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <h2 className="text-[12px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{title}</h2>
+        {action}
+      </div>
       {children}
     </section>
   );
