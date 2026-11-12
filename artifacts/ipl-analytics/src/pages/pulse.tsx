@@ -17,12 +17,12 @@ const STATUS_LABEL: Record<PulseStatus, string> = {
   registered: "Registered", shortlisted: "Shortlisted", pending: "Not yet presented", "on-block": "On the block",
   sold: "Sold", unsold: "Unsold", withdrawn: "Withdrawn", recorded: "Recorded, no sale",
 };
-const STATUS_TONE: Partial<Record<PulseStatus, string>> = { 
-  sold: "text-emerald-600 dark:text-emerald-400 font-bold", 
-  unsold: "text-rose-600 dark:text-rose-400 font-bold", 
-  "on-block": "text-pink-600 dark:text-pink-400 font-bold", 
-  withdrawn: "text-slate-400 dark:text-white/40", 
-  pending: "text-amber-600 dark:text-amber-300 font-bold" 
+const STATUS_TONE: Partial<Record<PulseStatus, string>> = {
+  sold: "text-emerald-600 dark:text-emerald-400 font-bold",
+  unsold: "text-rose-600 dark:text-rose-400 font-bold",
+  "on-block": "text-pink-600 dark:text-pink-400 font-bold",
+  withdrawn: "text-slate-400 dark:text-white/40",
+  pending: "text-amber-600 dark:text-amber-300 font-bold"
 };
 
 function roleBand(role: string) {
@@ -250,21 +250,18 @@ const HERO_SLIDES = [
   },
   {
     id: "retentions",
-    prefix: "01",
     highlight: "RETENTIONS.",
     tone: "text-emerald-400",
     desc: "Official retention declarations, released cores, franchise retention expenditure, and remaining purse calculations.",
   },
   {
     id: "auction",
-    prefix: "02",
     highlight: "AUCTION.",
     tone: "text-amber-400",
     desc: "Live hammer bidding, real-time marquee lots, purse deductions, and transaction telemetry direct from the auction floor.",
   },
   {
     id: "aftermath",
-    prefix: "03",
     highlight: "AFTERMATH.",
     tone: "text-purple-400",
     desc: "Complete squad sheets, tactical roster balances, purse efficiency ratings, and verified roster breakdowns post-auction.",
@@ -1309,12 +1306,12 @@ function Archive({ pulse, active, pick }: { pulse: Pulse; active: number; pick: 
           const total = sold.reduce((n, r) => n + v(r), 0);
           const top = sold.reduce<typeof sold[number] | undefined>((a, r) => !a || v(r) > v(a) ? r : a, undefined);
           return (
-            <button 
-              key={s} 
-              onClick={() => pick(s)} 
+            <button
+              key={s}
+              onClick={() => pick(s)}
               className={`rounded-xl border p-3 text-left text-xs transition-all cursor-pointer ${
-                s === active 
-                  ? "border-orange-500 bg-orange-500/10 shadow-sm" 
+                s === active
+                  ? "border-orange-500 bg-orange-500/10 shadow-sm"
                   : "border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/30 bg-slate-50 dark:bg-white/[0.03]"
               }`}
             >

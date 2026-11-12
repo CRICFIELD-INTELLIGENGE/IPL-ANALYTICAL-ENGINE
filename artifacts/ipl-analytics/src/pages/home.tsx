@@ -109,7 +109,7 @@ export default function HomePage() {
               </div>
 
               {/* TEXT CONTENT (LEFT) */}
-              <div className="home-hero-copy relative z-10 w-full md:w-[65%] lg:w-[58%] flex flex-col justify-between p-6 sm:p-8 lg:p-10">
+              <div className="home-hero-copy relative z-10 w-full md:w-[70%] lg:w-[64%] xl:w-[60%] flex flex-col justify-between p-6 sm:p-8 lg:p-10">
                 <div>
                   {/* Fixed min-height headline box prevents vertical jumping */}
                   <div className="h-[105px] sm:h-[120px] md:h-[135px] flex items-center mb-3 overflow-hidden">
@@ -120,12 +120,14 @@ export default function HomePage() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -14 }}
                         transition={{ duration: 0.35, ease: "easeOut" }}
-                        className="font-black leading-[1.08] text-slate-900 dark:text-white uppercase tracking-tight text-3xl sm:text-4xl md:text-5xl select-none"
+                        className="font-black leading-[1.08] text-slate-900 dark:text-white uppercase tracking-tight text-2xl sm:text-3xl md:text-[36px] lg:text-[42px] xl:text-[46px] select-none"
                       >
                         {curHeadline.prefix === "IPL IS NOT JUST ABOUT" ? (
                           <>
-                            <span className="text-[#FF6B00]">IPL</span>{" "}
-                            <span className="text-slate-900 dark:text-white">IS NOT JUST ABOUT</span>{" "}
+                            <span className="inline-block whitespace-nowrap">
+                              <span className="text-[#FF6B00]">IPL</span>{" "}
+                              <span className="text-slate-900 dark:text-white">IS NOT JUST ABOUT</span>
+                            </span>
                             <br />
                             <span className="text-amber-600 dark:text-[#F9CD05] font-black">CRICKET.</span>
                           </>
