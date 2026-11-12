@@ -31,12 +31,12 @@ interface CardDef {
 }
 
 export const CARDS: CardDef[] = [
-  { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", img: "/squad-building.jpg", color: "text-[var(--team-accent)]", icon: Users },
-  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", img: "/auction-gavel.jpg", color: "text-[var(--team-accent)]", icon: Gavel },
-  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", img: "/tactics-board.jpg", color: "text-emerald-300", icon: Shield },
-  { id: "stars", title: "STAR WATCH", subtitle: "Rising names to watch", img: "/star-watch.jpg", color: "text-rose-300", icon: Star },
-  { id: "venues", title: "VENUES", subtitle: "Conditions and trends", img: "/venues-stadium.jpg", color: "text-sky-300", icon: MapPin },
-  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", img: "/storylines.jpg", color: "text-[var(--team-accent)]", icon: Flame },
+  { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-500 dark:text-[var(--team-accent)]", icon: Users },
+  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", img: "/auction-art.jpg", color: "text-amber-500 dark:text-[var(--team-accent)]", icon: Gavel },
+  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", img: "/assets/tactical-board-hero.png", color: "text-emerald-500 dark:text-emerald-400", icon: Shield },
+  { id: "stars", title: "STAR WATCH", subtitle: "Rising names to watch", img: "/milestone-photos/highest-total-2024-srh.jpg", color: "text-rose-500 dark:text-rose-400", icon: Star },
+  { id: "venues", title: "VENUES", subtitle: "Conditions and trends", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-500 dark:text-sky-400", icon: MapPin },
+  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", img: "/milestone-photos/final-2023-csk.jpg", color: "text-orange-500 dark:text-orange-400", icon: Flame },
 ];
 
 const TOOLS = [
@@ -263,19 +263,26 @@ export default function FeedPage() {
           <SectionHead title="Explore IPL 2027 coverage" sub="Analyses, stories and tools to help you make sense of the road to the auction." />
           <div data-feed-part="coverage" className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
             {CARDS.map((c) => (
-              <Link key={c.id} href={`/feed/${c.id}`} className="group overflow-hidden rounded-2xl border border-white/10 bg-[#0B1020] hover:border-white/30 transition-colors">
-                <div className="h-24 overflow-hidden">
-                  {/* zoom from the top pushes the caption baked into these images out of view */}
-                  <img src={c.img} alt="" className="h-full w-full object-cover object-top origin-top scale-[1.45] group-hover:scale-[1.55] transition-transform duration-500" />
+              <Link
+                key={c.id}
+                href={`/feed/${c.id}`}
+                className="group overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] hover:border-slate-300 dark:hover:border-white/30 shadow-xs hover:shadow-md transition-all flex flex-col"
+              >
+                <div className="h-28 overflow-hidden relative bg-slate-900 shrink-0">
+                  <img
+                    src={c.img}
+                    alt={c.title}
+                    className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <div className="p-3">
+                <div className="p-3 flex-1 flex flex-col justify-between bg-white dark:bg-[#0B1020]">
                   <div className="flex items-center gap-2">
                     <c.icon className={`hidden sm:block w-4 h-4 shrink-0 ${c.color}`} />
-                    <span className="text-[12px] font-black text-white leading-tight">{c.title}</span>
+                    <span className="text-[12px] font-black text-slate-900 dark:text-white leading-tight">{c.title}</span>
                   </div>
                   <div className="mt-1 flex items-end justify-between gap-2">
-                    <span className="text-[11px] text-white/55">{c.subtitle}</span>
-                    <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${c.color}`} />
+                    <span className="text-[11px] text-slate-500 dark:text-white/60 line-clamp-1">{c.subtitle}</span>
+                    <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${c.color} transition-transform group-hover:translate-x-0.5`} />
                   </div>
                 </div>
               </Link>
