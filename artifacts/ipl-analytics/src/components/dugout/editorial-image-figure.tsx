@@ -356,9 +356,6 @@ export function EditorialImageFigure({ image, variant = "inline", allowUnpublish
   const allowed = usePhotoAllowed(image, Boolean(embed));
   const embedConsent = useEmbedConsent();
   const commercialZone = useCommercialZone();
-  // Embeds in card thumbnails frequently fail, show broken third-party boxes, or hijack clicks.
-  // If an embed is present and a pristine editorial fallback is provided, prefer the fallback on cards only.
-  if (variant === "card" && embed && fallback) return <>{fallback}</>;
 
   if (embed && !commercialZone && embedConsent !== "granted") {
     if (fallback) return <>{fallback}</>;
@@ -436,9 +433,6 @@ export function EditorialCardMedia({
   const allowed = usePhotoAllowed(image, Boolean(embed));
   const embedConsent = useEmbedConsent();
   const commercialZone = useCommercialZone();
-  // Embeds in card thumbnails frequently fail, show broken third-party boxes, or hijack clicks.
-  // If an embed is present and a pristine editorial fallback is provided, prefer the fallback on cards only.
-  if (variant === "card" && embed && fallback) return <>{fallback}</>;
 
   if (embed && !commercialZone && embedConsent !== "granted") {
     if (fallback) return <>{fallback}</>;

@@ -292,8 +292,7 @@ export function LibraryMedia({ imageId, title, accent, code, teamName, aspect, p
       <EditorialCoverCanvas franchiseName={teamName} teamCode={code} parameter={a.name} parameterNumber={a.number} title={title} accent={accent} coverImage={teamCover} aspectRatio="video" edition="CricField Library" />
     </div>
   );
-  // On card thumbnails, only use direct licensed images; never let brittle third-party embeds break cards
-  if (hero && hero.licensedImageUrl) {
+  if (hero && (hero.licensedImageUrl || hero.embedHtml)) {
     return <EditorialCardMedia key={hero.assetId} image={hero} preserveAspectRatio={preserveAspectRatio} aspect="video" allowUnpublished={import.meta.env.DEV} fallback={illustration} />;
   }
   return illustration;
