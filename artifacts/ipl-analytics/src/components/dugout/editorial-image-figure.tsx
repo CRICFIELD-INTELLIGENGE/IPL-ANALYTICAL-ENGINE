@@ -221,6 +221,19 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
           onFailRef.current();
         };
       }
+      const imgs = el.querySelectorAll("img");
+      imgs.forEach((img) => {
+        if (img.complete && img.naturalWidth === 0) {
+          onFailRef.current();
+        }
+        img.onerror = () => {
+          onFailRef.current();
+        };
+        img.onload = () => {
+          stripWhite();
+          setLoaded(true);
+        };
+      });
     };
 
     attachIframeEvents();
@@ -258,14 +271,16 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
     };
   }, [loaded]);
 
-  // A single failed asset falls back gracefully after 6 seconds
+  // A single failed asset falls back gracefully after 2 seconds
   useEffect(() => {
     if (!queued || isBlocked) return;
     const t = window.setTimeout(() => {
-      if (!ref.current?.querySelector("iframe") || !loaded) {
+      if (!ref.current?.querySelector("iframe") && !ref.current?.querySelector("img")) {
+        onFailRef.current();
+      } else if (!loaded) {
         onFailRef.current();
       }
-    }, 6000);
+    }, 2000);
     return () => window.clearTimeout(t);
   }, [queued, isBlocked, loaded]);
 
@@ -333,8 +348,18 @@ export function EditorialImageFigure({ image, variant = "inline", allowUnpublish
   const allowed = usePhotoAllowed(image, Boolean(embed));
   const embedConsent = useEmbedConsent();
   const commercialZone = useCommercialZone();
-  if (embed && !commercialZone && embedConsent !== "granted") return <div className="p-5 text-center text-sm text-slate-300"><p>Getty photo is mapped. Enable embedded content to view it.</p><button type="button" onClick={grantEmbedConsent} className="mt-3 rounded-lg border border-amber-400/50 px-4 py-2 text-amber-200">Load Getty photograph</button><a href={image.sourcePageUrl} target="_blank" rel="noreferrer" className="mt-3 block text-xs underline">View on Getty Images ↗</a></div>;
-  if (failed || (embed && isBlocked)) return <div className="p-5 text-center text-sm text-slate-300"><p>Getty’s viewer could not load this mapped photograph.</p><a href={image.sourcePageUrl} target="_blank" rel="noreferrer" className="mt-3 block underline">View photograph on Getty Images ↗</a></div>;
+  // Embeds in card thumbnails frequently fail, show broken third-party boxes, or hijack clicks.
+  // If an embed is present and a pristine editorial fallback is provided, prefer the fallback on cards.
+  if (embed && fallback) return <>{fallback}</>;
+
+  if (embed && !commercialZone && embedConsent !== "granted") {
+    if (fallback) return <>{fallback}</>;
+    return <div className="p-5 text-center text-sm text-slate-300"><p>Getty photo is mapped. Enable embedded content to view it.</p><button type="button" onClick={grantEmbedConsent} className="mt-3 rounded-lg border border-amber-400/50 px-4 py-2 text-amber-200">Load Getty photograph</button><a href={image.sourcePageUrl} target="_blank" rel="noreferrer" className="mt-3 block text-xs underline">View on Getty Images ↗</a></div>;
+  }
+  if (failed || (embed && isBlocked)) {
+    if (fallback) return <>{fallback}</>;
+    return <div className="p-5 text-center text-sm text-slate-300"><p>Getty’s viewer could not load this mapped photograph.</p><a href={image.sourcePageUrl} target="_blank" rel="noreferrer" className="mt-3 block underline">View photograph on Getty Images ↗</a></div>;
+  }
   if (!allowed) return <>{fallback}</>;
   if (!isPublishable(image) && !((allowUnpublished || import.meta.env.DEV) && isLocalPreviewable(image))) return <>{fallback}</>;
   if (!embed && !image.licensedImageUrl) return <>{fallback}</>;
@@ -403,8 +428,18 @@ export function EditorialCardMedia({
   const allowed = usePhotoAllowed(image, Boolean(embed));
   const embedConsent = useEmbedConsent();
   const commercialZone = useCommercialZone();
-  if (embed && !commercialZone && embedConsent !== "granted") return <div className="p-5 text-center text-sm text-slate-300"><p>Getty photo is mapped. Enable embedded content to view it.</p><button type="button" onClick={grantEmbedConsent} className="mt-3 rounded-lg border border-amber-400/50 px-4 py-2 text-amber-200">Load Getty photograph</button><a href={image.sourcePageUrl} target="_blank" rel="noreferrer" className="mt-3 block text-xs underline">View on Getty Images ↗</a></div>;
-  if (failed || (embed && isBlocked)) return <div className="p-5 text-center text-sm text-slate-300"><p>Getty’s viewer could not load this mapped photograph.</p><a href={image.sourcePageUrl} target="_blank" rel="noreferrer" className="mt-3 block underline">View photograph on Getty Images ↗</a></div>;
+  // Embeds in card thumbnails frequently fail, show broken third-party boxes, or hijack clicks.
+  // If an embed is present and a pristine editorial fallback is provided, prefer the fallback on cards.
+  if (embed && fallback) return <>{fallback}</>;
+
+  if (embed && !commercialZone && embedConsent !== "granted") {
+    if (fallback) return <>{fallback}</>;
+    return <div className="p-5 text-center text-sm text-slate-300"><p>Getty photo is mapped. Enable embedded content to view it.</p><button type="button" onClick={grantEmbedConsent} className="mt-3 rounded-lg border border-amber-400/50 px-4 py-2 text-amber-200">Load Getty photograph</button><a href={image.sourcePageUrl} target="_blank" rel="noreferrer" className="mt-3 block text-xs underline">View on Getty Images ↗</a></div>;
+  }
+  if (failed || (embed && isBlocked)) {
+    if (fallback) return <>{fallback}</>;
+    return <div className="p-5 text-center text-sm text-slate-300"><p>Getty’s viewer could not load this mapped photograph.</p><a href={image.sourcePageUrl} target="_blank" rel="noreferrer" className="mt-3 block underline">View photograph on Getty Images ↗</a></div>;
+  }
   if (!allowed) return <>{fallback}</>;
   if (!isPublishable(image) && !((allowUnpublished || import.meta.env.DEV) && isLocalPreviewable(image))) return <>{fallback}</>;
   if (!embed && !image.licensedImageUrl) return <>{fallback}</>;

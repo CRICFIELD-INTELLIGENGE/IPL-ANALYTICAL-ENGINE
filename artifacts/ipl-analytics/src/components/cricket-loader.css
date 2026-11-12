@@ -1,0 +1,157 @@
+/* CricField Cinematic Cricket Loader */
+
+.cricket-loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  user-select: none;
+  perspective: 800px;
+}
+
+.cricket-loader-glow {
+  position: absolute;
+  width: 20rem;
+  height: 20rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(163, 230, 53, 0.12) 0%, rgba(56, 189, 248, 0.05) 45%, transparent 70%);
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cricket-loader-stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#loader,
+.cricket-loader-box {
+  position: relative;
+  width: 12rem;
+  height: 12rem;
+  min-width: 10rem;
+  min-height: 10rem;
+  background-color: transparent;
+}
+
+#ball,
+.cricket-ball,
+#bat,
+.cricket-bat {
+  position: absolute;
+}
+
+#ball,
+.cricket-ball {
+  width: 15%;
+  height: 15%;
+  left: 1.5rem;
+  top: 7.5rem;
+  z-index: 2;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+  animation: bounceBall 1s infinite;
+  animation-delay: 1s;
+}
+
+#bat,
+.cricket-bat {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transform: rotateX(-40deg);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6));
+  animation: moveBat 1s infinite;
+}
+
+/* bounce animation snippet from animate.css library with changes */
+@keyframes bounceBall {
+  from,
+  20%,
+  53%,
+  80%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -60px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes moveBat {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  33% {
+    transform: rotateX(-25deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+.cricket-loader-caption {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.cricket-loader-title {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+  animation: pulseLoaderCaption 2s ease-in-out infinite;
+}
+
+.cricket-loader-subtitle {
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.08em;
+}
+
+@keyframes pulseLoaderCaption {
+  0%, 100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #ball,
+  .cricket-ball,
+  #bat,
+  .cricket-bat,
+  .cricket-loader-title {
+    animation: none !important;
+  }
+}
+

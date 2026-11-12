@@ -285,13 +285,17 @@ export function FranchiseLibrary({ code, teamName, accent, preview }: { code: st
 /** An article's header photo for a card (Getty embed or licensed file), with the CricField illustration as fallback. */
 export function LibraryMedia({ imageId, title, accent, code, teamName, aspect, preserveAspectRatio = false }: { imageId?: string; title: string; accent: string; code: string; teamName: string; aspect: EditorialAspectId; preserveAspectRatio?: boolean }) {
   const hero = imageId ? getArticleHeroImage(imageId) : undefined;
-  const a = EDITORIAL_ASPECTS.find((x) => x.id === aspect)!;
+  const a = EDITORIAL_ASPECTS.find((x) => x.id === aspect) ?? EDITORIAL_ASPECTS[0];
+  const teamCover = code === "CSK" ? "/csk insight.jpg" : code === "RCB" ? "/virat-kohli.png" : code === "MI" ? "/rohit sharma.jpg" : "/TITLE BANNER.png";
   const illustration = (
     <div className="aspect-video w-full overflow-hidden [&>div]:rounded-none [&>div]:border-0">
-      <EditorialCoverCanvas franchiseName={teamName} teamCode={code} parameter={a.name} parameterNumber={a.number} title={title} accent={accent} coverImage="" aspectRatio="video" edition="CricField Library" />
+      <EditorialCoverCanvas franchiseName={teamName} teamCode={code} parameter={a.name} parameterNumber={a.number} title={title} accent={accent} coverImage={teamCover} aspectRatio="video" edition="CricField Library" />
     </div>
   );
-  if (hero) return <EditorialCardMedia key={hero.assetId} image={hero} preserveAspectRatio={preserveAspectRatio} aspect="video" allowUnpublished={import.meta.env.DEV} fallback={illustration} />;
+  // On card thumbnails, only use direct licensed images; never let brittle third-party embeds break cards
+  if (hero && hero.licensedImageUrl) {
+    return <EditorialCardMedia key={hero.assetId} image={hero} preserveAspectRatio={preserveAspectRatio} aspect="video" allowUnpublished={import.meta.env.DEV} fallback={illustration} />;
+  }
   return illustration;
 }
 

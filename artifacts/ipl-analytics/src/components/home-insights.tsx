@@ -33,16 +33,16 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
         const meta = FRANCHISE_METADATA[code];
         const aspect = EDITORIAL_ASPECTS.find((a) => a.id === item.aspect)?.name;
         return (
-          <Link key={item.key} href={item.href!} className="home-lead-story h-full min-h-0">
-            <div className="bg-[#0B1020] rounded-[18px] border border-white/10 overflow-hidden flex flex-col group hover:border-primary/30 transition-all cursor-pointer min-w-0 shadow-xl h-full">
-              <div className="home-story-media">
-                <LibraryMedia imageId={item.imageId} title={item.title} accent={meta.accent} code={code} teamName={meta.name} aspect={item.aspect} preserveAspectRatio />
+          <Link key={item.key} href={item.href!} className="home-lead-story h-full min-h-0 block">
+            <div className="bg-[#081622] rounded-[14px] border border-[#19303c] overflow-hidden flex flex-col group hover:border-primary/40 transition-all cursor-pointer min-w-0 shadow-xl h-full">
+              <div className="home-story-media relative w-full aspect-video overflow-hidden bg-[#06111a]">
+                <LibraryMedia imageId={item.imageId} title={item.title} accent={meta.accent} code={code} teamName={meta.name} aspect={item.aspect} preserveAspectRatio={false} />
               </div>
-              <div className="flex-1 min-h-0 p-3 flex flex-col justify-center border-t border-white/5 bg-white/[0.01]">
-                <p className="font-black text-[10px] leading-tight text-white/90 uppercase group-hover:text-primary transition-colors line-clamp-2 mb-1 tracking-tight">{item.title}</p>
-                <div className="flex items-center justify-between gap-2">
-                  <p className="text-[8px] font-bold truncate" style={{ color: meta.accent }}>{aspect}</p>
-                  <p className="text-[8px] text-primary font-black uppercase tracking-widest shrink-0">{item.meta}</p>
+              <div className="flex-1 min-h-0 p-4 flex flex-col justify-between border-t border-white/10 bg-white/[0.02]">
+                <p className="font-bold text-sm sm:text-base leading-snug text-white/95 group-hover:text-primary transition-colors line-clamp-2 mb-2 tracking-tight">{item.title}</p>
+                <div className="flex items-center justify-between gap-2 mt-auto pt-1">
+                  <p className="text-[11px] font-bold truncate tracking-wide" style={{ color: meta.accent }}>{aspect}</p>
+                  <p className="text-[11px] text-primary font-mono font-bold uppercase tracking-wider shrink-0">{item.meta}</p>
                 </div>
               </div>
             </div>
