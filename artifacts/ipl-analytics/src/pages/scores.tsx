@@ -53,7 +53,7 @@ export default function ScoresPage() {
       <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#050816] text-slate-900 dark:text-white p-4 md:p-8 gap-6">
         
         {/* ─── BROADCAST TELEMETRY & ARCHIVE FILTER BAR ─── */}
-        <div className="bg-white/95 dark:bg-[#0B1020]/90 rounded-[28px] border border-slate-200 dark:border-white/10 p-6 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-sm dark:shadow-2xl sticky top-4 z-[100] backdrop-blur-xl">
+        <div className="bg-white/95 dark:bg-[#0B1020]/90 rounded-[28px] border border-slate-200 dark:border-white/10 p-6 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-sm dark:shadow-2xl relative z-10 backdrop-blur-xl">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary shadow-lg shadow-primary/20">
               <CricFieldMascot team={leaderTeam || "default"} mood="fire" size={38} interactive />
