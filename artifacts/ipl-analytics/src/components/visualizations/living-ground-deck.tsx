@@ -397,8 +397,8 @@ export function Card01MergedScoringRadar() {
       {/* 2. MAIN STAGE: 360 FIELD SVG (LEFT) + SECTOR DOMINANCE METRICS (RIGHT) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center flex-1 min-h-0">
         {/* LEFT: 360° CIRCULAR GROUND RADAR */}
-        <div className="lg:col-span-7 flex flex-col items-center justify-between p-3 bg-[#030611] border border-amber-500/20 rounded-2xl relative h-full min-h-[280px] shadow-[inset_0_0_30px_rgba(245,158,11,0.06)]">
-          <div className="text-[9px] font-mono font-bold text-white/60 w-full flex items-center justify-between px-2 shrink-0">
+        <div className="lg:col-span-7 flex flex-col items-center justify-between p-3 bg-[#030611] border border-amber-500/20 rounded-2xl relative h-full min-h-[280px] shadow-[inset_0_0_30px_rgba(245,158,11,0.06)] forced-white">
+          <div className="text-[9px] font-mono font-bold text-white/60 w-full flex items-center justify-between px-2 shrink-0 forced-white">
             <span className="text-amber-400 flex items-center gap-1.5">
               <Compass className="w-3.5 h-3.5 text-amber-400" />
               360° GROUND RADIAL VELOCITY
@@ -500,7 +500,7 @@ export function Card01MergedScoringRadar() {
             </svg>
           </div>
 
-          <div className="w-full text-center text-[9px] font-mono text-white/40 shrink-0">
+          <div className="w-full text-center text-[9px] font-mono text-white/50 forced-white shrink-0">
             Hover over any sector to inspect directional velocity vectors
           </div>
         </div>
@@ -523,8 +523,8 @@ export function Card01MergedScoringRadar() {
             </div>
           </div>
 
-          {/* Sector Breakdown List */}
-          <div className="grid grid-cols-1 gap-1.5 flex-1 overflow-y-auto no-scrollbar max-h-[250px]">
+          {/* Sector Breakdown List — Clean natural layout without nested scroll trap */}
+          <div className="grid grid-cols-1 gap-1.5 flex-1">
             {playerData.sectors.map((sec) => {
               const isHovered = activeSector === sec.name;
               return (
@@ -532,28 +532,54 @@ export function Card01MergedScoringRadar() {
                   key={sec.name}
                   onMouseEnter={() => setActiveSector(sec.name)}
                   onMouseLeave={() => setActiveSector(null)}
-                  className={`p-2 rounded-xl border transition-all cursor-pointer flex flex-col gap-1 ${
+                  className={`p-2.5 rounded-xl border transition-all cursor-pointer flex flex-col gap-1.5 ${
                     isHovered
-                      ? "bg-amber-500/15 border-amber-500 shadow-sm text-slate-900 dark:text-white"
-                      : "bg-white dark:bg-white/[0.02] border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 shadow-2xs dark:shadow-none"
+                      ? "bg-amber-100 dark:bg-amber-500/25 border-amber-400 dark:border-amber-400 shadow-sm"
+                      : "bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/10 hover:border-amber-300 dark:hover:border-amber-500/40 hover:bg-amber-50/50 dark:hover:bg-white/[0.04] shadow-2xs dark:shadow-none"
                   }`}
                 >
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                    <span
+                      className={`font-bold flex items-center gap-2 ${
+                        isHovered ? "text-amber-950 dark:text-amber-200" : "text-slate-900 dark:text-slate-100"
+                      }`}
+                    >
+                      <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
                       {sec.name}
                     </span>
-                    <span className="font-mono text-amber-600 dark:text-amber-300 font-bold">
-                      {sec.runs}r <span className="text-[10px] text-slate-500 dark:text-white/50">({sec.pct}%)</span>
+                    <span className="font-mono text-amber-700 dark:text-amber-300 font-bold">
+                      {sec.runs}r{" "}
+                      <span
+                        className={`text-[10px] font-normal ${
+                          isHovered ? "text-amber-800/80 dark:text-amber-200/70" : "text-slate-500 dark:text-slate-400"
+                        }`}
+                      >
+                        ({sec.pct}%)
+                      </span>
                     </span>
                   </div>
-                  <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-white/50 font-mono">
-                    <span>SR: <strong className="text-slate-900 dark:text-white">{sec.sr}</strong></span>
-                    <span>{sec.fours} 4s • {sec.sixes} 6s</span>
+                  <div
+                    className={`flex items-center justify-between text-[11px] font-mono ${
+                      isHovered ? "text-amber-900 dark:text-amber-200/80" : "text-slate-600 dark:text-slate-400"
+                    }`}
+                  >
+                    <span>
+                      SR:{" "}
+                      <strong
+                        className={`font-bold ${
+                          isHovered ? "text-amber-950 dark:text-amber-100" : "text-slate-900 dark:text-slate-100"
+                        }`}
+                      >
+                        {sec.sr}
+                      </strong>
+                    </span>
+                    <span className={isHovered ? "text-amber-900/80 dark:text-amber-200/70" : "text-slate-500 dark:text-slate-400"}>
+                      {sec.fours} 4s • {sec.sixes} 6s
+                    </span>
                   </div>
-                  <div className="h-1 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-amber-500 to-yellow-400"
+                      className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full"
                       style={{ width: `${sec.pct * 2.5}%` }}
                     />
                   </div>
@@ -1015,8 +1041,8 @@ export function Card03TheDuel() {
             </div>
           </div>
 
-          {/* 4 Dismissal Breakdown Cards */}
-          <div className="grid grid-cols-1 gap-2 flex-1 max-h-[220px] overflow-y-auto no-scrollbar">
+          {/* 4 Dismissal Breakdown Cards — Clean natural layout without nested scroll trap */}
+          <div className="grid grid-cols-1 gap-2 flex-1">
             {KOHLI_BUMRAH_DISMISSALS
               .filter((d) => activePhaseFilter === "All" || d.phase === activePhaseFilter)
               .map((d) => {
@@ -1030,8 +1056,8 @@ export function Card03TheDuel() {
                     }}
                     className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
                       isSelected
-                        ? "bg-rose-500/15 border-rose-500 shadow-sm text-slate-900 dark:text-white"
-                        : "bg-white dark:bg-white/[0.02] border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 hover:bg-slate-50 dark:hover:bg-white/[0.05] shadow-2xs dark:shadow-none"
+                        ? "bg-rose-100 dark:bg-rose-500/25 border-rose-500 shadow-sm text-slate-900 dark:text-white"
+                        : "bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/10 hover:border-rose-300 dark:hover:border-rose-500/30 hover:bg-rose-50/50 dark:hover:bg-white/[0.04] shadow-2xs dark:shadow-none"
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -1056,9 +1082,9 @@ export function Card03TheDuel() {
           </div>
 
           {/* Tactical Readout */}
-          <div className="p-2.5 rounded-xl bg-gradient-to-r from-red-950/40 via-[#0a0f1d] to-cyan-950/30 border border-white/10 text-[10px] text-slate-300 flex items-center justify-between font-mono">
+          <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-gradient-to-r dark:from-red-950/40 dark:via-[#0a0f1d] dark:to-cyan-950/30 border border-slate-200 dark:border-white/10 text-[10px] text-slate-700 dark:text-slate-300 flex items-center justify-between font-mono">
             <span>
-              <strong>Bumrah Weaponry:</strong> 50% dismissals off Good Length corridor; 50% base yorker/slap setups in death.
+              <strong className="text-slate-900 dark:text-white">Bumrah Weaponry:</strong> 50% dismissals off Good Length corridor; 50% base yorker/slap setups in death.
             </span>
             <Flame className="w-4 h-4 text-rose-500 shrink-0 ml-2" />
           </div>
