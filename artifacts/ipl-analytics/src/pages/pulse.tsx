@@ -723,136 +723,141 @@ function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse
         </div>
       </div>
 
-      {/* 2. THE 3 AUCTION LIFECYCLE ACTION CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {steps.map(step => (
-          <button
-            key={step.n}
-            onClick={() => go(step.to)}
-            className={`rounded-[20px] p-5 text-left transition-all duration-200 border hover:shadow-md hover:scale-[1.01] active:scale-[0.99] flex items-center justify-between group shadow-sm min-h-[96px] cursor-pointer ${step.cardClasses}`}
+      {/* 2. SIDE-BY-SIDE: IPL AT A GLANCE (LEFT) + 3 ACTION CARDS (RIGHT) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        {/* LEFT: IPL AT A GLANCE (7-8 cols) */}
+        <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
+          <Section
+            icon={Radio}
+            title={`IPL ${model.season} at a glance`}
+            note={`Phase: ${phase}`}
+            className="p-5 h-full flex flex-col justify-between"
           >
-            <div className="space-y-1.5 min-w-0 pr-3">
-              <div className="flex items-center gap-2.5">
-                <span className={`text-2xl font-black tracking-tight font-mono shrink-0 ${step.numClass}`}>{step.n}</span>
-                <span className="font-black text-slate-900 dark:text-white text-base uppercase tracking-wider truncate">{step.t}</span>
-              </div>
-              <div className="text-xs text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white/90 transition-colors line-clamp-1">{step.d}</div>
-            </div>
-            <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/5 group-hover:bg-slate-200 dark:group-hover:bg-white/15 flex items-center justify-center shrink-0 border border-slate-200 dark:border-white/10 transition-colors ml-2">
-              <span className="text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white text-sm font-bold transition-transform group-hover:translate-x-0.5">→</span>
-            </div>
-          </button>
-        ))}
-      </div>
-
-      {/* 3. IPL AT A GLANCE (HIGH-DENSITY METRICS & DETAILS) */}
-      <Section
-        icon={Radio}
-        title={`IPL ${model.season} at a glance`}
-        note={`Phase: ${phase}`}
-        className="p-5"
-      >
-        <div className="space-y-4">
-          {/* Status Header Meta */}
-          <div className="flex flex-wrap items-center justify-between text-xs text-slate-600 dark:text-white/60 pb-2.5 border-b border-slate-200 dark:border-white/10 gap-2">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              <span className="font-bold text-slate-900 dark:text-white">
-                {model.historical ? "Official Auction Results" : "Live Pulse Feed"}
-              </span>
-              {model.foundation?.venue && (
-                <span className="text-slate-500 dark:text-white/50 hidden sm:inline">· {model.foundation.venue}</span>
-              )}
-            </div>
-            <div className="text-[11px] font-mono text-slate-400 dark:text-white/40">
-              {model.foundation?.verifiedAt
-                ? `Verified: ${model.foundation.verifiedAt}`
-                : model.season === 2027 && pulse.desk.data?.updatedAt
-                ? `Updated: ${stamp(pulse.desk.data.updatedAt)}`
-                : "Official BCCI Release"}
-            </div>
-          </div>
-
-          {/* Primary Financial & Volume Metrics */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            <Kpi k="Players Sold" v={model.sold} tone="text-emerald-600 dark:text-emerald-400" />
-            <Kpi k="Unsold" v={unsoldText(model)} tone="text-rose-600 dark:text-rose-400" />
-            <Kpi k="Total Expenditure" v={spendText(model)} tone="text-amber-600 dark:text-amber-300" />
-            <Kpi
-              k="Remaining Purse"
-              v={remPurseTotal > 0 ? pulseMoney(remPurseTotal) : "Cap Exhausted"}
-              tone="text-purple-600 dark:text-purple-300"
-            />
-          </div>
-
-          {/* Secondary Squad & Pool Metrics */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            <Kpi k="Auction Pool" v={`${totalRegistered} Lots`} tone="text-slate-800 dark:text-white" />
-            <Kpi k="Retained Core" v={`${totalRetained} Players`} tone="text-cyan-600 dark:text-cyan-300" />
-            <Kpi k="Franchises" v={`${model.teams.length} Teams`} tone="text-slate-700 dark:text-white/80" />
-            <Kpi
-              k="Top Hammer Price"
-              v={topLot ? pulseMoney(topLot.price, topLot.usd) : "—"}
-              tone="text-emerald-600 dark:text-emerald-300"
-            />
-          </div>
-
-          {/* Highlight Card for Top Purchase */}
-          {topLot && (
-            <div className="p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 dark:border-emerald-500/30 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5 min-w-0">
-                <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 shrink-0">
-                  Record Buy
-                </span>
-                <div className="truncate">
-                  <strong className="text-slate-900 dark:text-white font-black text-xs sm:text-sm tracking-tight">{topLot.player}</strong>
-                  <span className="text-slate-500 dark:text-white/40 text-xs ml-2">
-                    Sold to <span className="font-bold text-slate-800 dark:text-white" style={{ color: teamHex(topLot.team) }}>{topLot.team}</span>
+            <div className="space-y-4">
+              {/* Status Header Meta */}
+              <div className="flex flex-wrap items-center justify-between text-xs text-slate-600 dark:text-white/60 pb-2.5 border-b border-slate-200 dark:border-white/10 gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                  <span className="font-bold text-slate-900 dark:text-white">
+                    {model.historical ? "Official Auction Results" : "Live Pulse Feed"}
                   </span>
+                  {model.foundation?.venue && (
+                    <span className="text-slate-500 dark:text-white/50 hidden sm:inline">· {model.foundation.venue}</span>
+                  )}
+                </div>
+                <div className="text-[11px] font-mono text-slate-400 dark:text-white/40">
+                  {model.foundation?.verifiedAt
+                    ? `Verified: ${model.foundation.verifiedAt}`
+                    : model.season === 2027 && pulse.desk.data?.updatedAt
+                    ? `Updated: ${stamp(pulse.desk.data.updatedAt)}`
+                    : "Official BCCI Release"}
                 </div>
               </div>
-              <div className="font-mono font-black text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm shrink-0">
-                {pulseMoney(topLot.price, topLot.usd)}
-              </div>
-            </div>
-          )}
 
-          {/* 2027 Timeline or 2026 Metadata Footer */}
-          {model.season === 2027 ? (
-            <div className="pt-2 border-t border-slate-200 dark:border-white/5 space-y-2">
-              <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-white/40">IPL 2027 timeline</div>
-              <ol className="space-y-1.5">
-                {HUB_EVENTS.map(e => (
-                  <li key={e.id} className="flex flex-wrap items-baseline gap-x-3 text-xs">
-                    <span className="w-24 font-mono text-slate-500 dark:text-white/50">{e.date ?? "TBA"}</span>
-                    <span className="font-bold text-slate-900 dark:text-white">{e.title}</span>
-                    <span className={`text-[9px] font-black uppercase ${e.status === "confirmed" ? "text-emerald-600 dark:text-emerald-400" : e.status === "reported" ? "text-amber-600 dark:text-amber-300" : "text-slate-400 dark:text-white/40"}`}>
-                      {e.status === "provisional" ? "to be announced" : e.status}
+              {/* Primary Financial & Volume Metrics */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <Kpi k="Players Sold" v={model.sold} tone="text-emerald-600 dark:text-emerald-400" />
+                <Kpi k="Unsold" v={unsoldText(model)} tone="text-rose-600 dark:text-rose-400" />
+                <Kpi k="Total Expenditure" v={spendText(model)} tone="text-amber-600 dark:text-amber-300" />
+                <Kpi
+                  k="Remaining Purse"
+                  v={remPurseTotal > 0 ? pulseMoney(remPurseTotal) : "Cap Exhausted"}
+                  tone="text-purple-600 dark:text-purple-300"
+                />
+              </div>
+
+              {/* Secondary Squad & Pool Metrics */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <Kpi k="Auction Pool" v={`${totalRegistered} Lots`} tone="text-slate-800 dark:text-white" />
+                <Kpi k="Retained Core" v={`${totalRetained} Players`} tone="text-cyan-600 dark:text-cyan-300" />
+                <Kpi k="Franchises" v={`${model.teams.length} Teams`} tone="text-slate-700 dark:text-white/80" />
+                <Kpi
+                  k="Top Hammer Price"
+                  v={topLot ? pulseMoney(topLot.price, topLot.usd) : "—"}
+                  tone="text-emerald-600 dark:text-emerald-300"
+                />
+              </div>
+
+              {/* Highlight Card for Top Purchase */}
+              {topLot && (
+                <div className="p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 dark:border-emerald-500/30 flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 shrink-0">
+                      Record Buy
                     </span>
-                    {e.sourceUrl && (
-                      <a href={e.sourceUrl} target="_blank" rel="noreferrer" className="text-primary inline-flex items-center gap-0.5 hover:underline">
-                        source <ExternalLink className="w-3 h-3" />
-                      </a>
-                    )}
-                  </li>
-                ))}
-              </ol>
+                    <div className="truncate">
+                      <strong className="text-slate-900 dark:text-white font-black text-xs sm:text-sm tracking-tight">{topLot.player}</strong>
+                      <span className="text-slate-500 dark:text-white/40 text-xs ml-2">
+                        Sold to <span className="font-bold text-slate-800 dark:text-white" style={{ color: teamHex(topLot.team) }}>{topLot.team}</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="font-mono font-black text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm shrink-0">
+                    {pulseMoney(topLot.price, topLot.usd)}
+                  </div>
+                </div>
+              )}
+
+              {/* 2027 Timeline or 2026 Metadata Footer */}
+              {model.season === 2027 ? (
+                <div className="pt-2 border-t border-slate-200 dark:border-white/5 space-y-2">
+                  <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-white/40">IPL 2027 timeline</div>
+                  <ol className="space-y-1.5">
+                    {HUB_EVENTS.map(e => (
+                      <li key={e.id} className="flex flex-wrap items-baseline gap-x-3 text-xs">
+                        <span className="w-24 font-mono text-slate-500 dark:text-white/50">{e.date ?? "TBA"}</span>
+                        <span className="font-bold text-slate-900 dark:text-white">{e.title}</span>
+                        <span className={`text-[9px] font-black uppercase ${e.status === "confirmed" ? "text-emerald-600 dark:text-emerald-400" : e.status === "reported" ? "text-amber-600 dark:text-amber-300" : "text-slate-400 dark:text-white/40"}`}>
+                          {e.status === "provisional" ? "to be announced" : e.status}
+                        </span>
+                        {e.sourceUrl && (
+                          <a href={e.sourceUrl} target="_blank" rel="noreferrer" className="text-primary inline-flex items-center gap-0.5 hover:underline">
+                            source <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              ) : (
+                <div className="pt-2 border-t border-slate-200 dark:border-white/5 flex flex-wrap items-center justify-between text-[11px] text-slate-500 dark:text-white/50 gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span>Venue: {model.foundation?.venue ?? "Etihad Arena, Abu Dhabi"}</span>
+                    <span className="text-slate-300 dark:text-white/20">·</span>
+                    <span>Event Date: {model.foundation?.eventDate ?? "Dec 16, 2025"}</span>
+                  </div>
+                  <div className="text-[10px] font-mono text-slate-400 dark:text-white/40">
+                    Squad Rules: Max 25 players / 8 overseas
+                  </div>
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="pt-2 border-t border-slate-200 dark:border-white/5 flex flex-wrap items-center justify-between text-[11px] text-slate-500 dark:text-white/50 gap-2">
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                <span>Venue: {model.foundation?.venue ?? "Etihad Arena, Abu Dhabi"}</span>
-                <span className="text-slate-300 dark:text-white/20">·</span>
-                <span>Event Date: {model.foundation?.eventDate ?? "Dec 16, 2025"}</span>
-              </div>
-              <div className="text-[10px] font-mono text-slate-400 dark:text-white/40">
-                Squad Rules: Max 25 players / 8 overseas
-              </div>
-            </div>
-          )}
+          </Section>
         </div>
-      </Section>
+
+        {/* RIGHT: THE 3 AUCTION LIFECYCLE ACTION CARDS (Stacked vertically) */}
+        <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4">
+          {steps.map(step => (
+            <button
+              key={step.n}
+              onClick={() => go(step.to)}
+              className={`flex-1 rounded-[20px] p-5 text-left transition-all duration-200 border hover:shadow-md hover:scale-[1.01] active:scale-[0.99] flex items-center justify-between group shadow-sm min-h-[96px] cursor-pointer ${step.cardClasses}`}
+            >
+              <div className="space-y-1.5 min-w-0 pr-3">
+                <div className="flex items-center gap-2.5">
+                  <span className={`text-2xl font-black tracking-tight font-mono shrink-0 ${step.numClass}`}>{step.n}</span>
+                  <span className="font-black text-slate-900 dark:text-white text-base uppercase tracking-wider truncate">{step.t}</span>
+                </div>
+                <div className="text-xs text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white/90 transition-colors line-clamp-2">{step.d}</div>
+              </div>
+              <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-white/5 group-hover:bg-slate-200 dark:group-hover:bg-white/15 flex items-center justify-center shrink-0 border border-slate-200 dark:border-white/10 transition-colors ml-2">
+                <span className="text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white text-base font-bold transition-transform group-hover:translate-x-0.5">→</span>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* 4. EXPANDABLE FRANCHISE DIRECTORY TABLE */}
       <Franchises model={model} compact />
