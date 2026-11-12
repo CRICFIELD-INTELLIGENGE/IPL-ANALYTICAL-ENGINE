@@ -43,16 +43,20 @@ export function EditorialCoverCanvas({
 
   return (
     <div
-      className={`relative w-full ${aspectClass} overflow-hidden rounded-xl border border-white/10 bg-[#0A0F1D] flex flex-col justify-between p-4 sm:p-6 group select-none ${className}`}
+      data-on-image="true"
+      className={`editorial-cover-canvas relative w-full ${aspectClass} overflow-hidden rounded-xl border border-white/10 bg-[#0A0F1D] flex flex-col justify-between p-4 sm:p-6 group select-none ${className}`}
     >
       {/* If an actual photo file is provided in the future, render it with fallback */}
       {hasImage && (
-        <img
-          src={coverImage}
-          alt={title}
-          onError={() => setImageError(true)}
-          className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 z-0"
-        />
+        <>
+          <img
+            src={coverImage}
+            alt={title}
+            onError={() => setImageError(true)}
+            className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 z-0"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 z-[1] pointer-events-none" />
+        </>
       )}
 
       {/* Editorial Canvas Graphic Background (Visible when no photo is attached) */}
@@ -133,7 +137,8 @@ export function EditorialCoverCanvas({
           <span>SPECIAL REPORT</span>
         </div>
         <h3
-          className={`font-black tracking-tight text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-tight ${
+          style={{ color: "#ffffff" }}
+          className={`font-black tracking-tight text-white !text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-tight forced-white on-image ${
             isCoverStory ? "text-xl sm:text-2xl md:text-3xl" : "text-base sm:text-lg"
           }`}
         >

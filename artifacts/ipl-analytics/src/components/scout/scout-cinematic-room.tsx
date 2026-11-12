@@ -267,7 +267,7 @@ export function ScoutCinematicRoom({
 
   return (
     <div 
-      className="scout-cinematic-wrapper w-full bg-[#03080E] text-[#EFF5F7] select-none relative overflow-hidden font-sans border-b border-[#142330]"
+      className="scout-cinematic-wrapper w-full bg-slate-50 dark:bg-[#03080E] text-slate-900 dark:text-[#EFF5F7] select-none relative overflow-hidden font-sans border-b border-slate-200 dark:border-[#142330]"
       style={{
         ["--scout-accent" as any]: accentColor,
         ["--scout-secondary" as any]: secondaryColor,
@@ -280,7 +280,7 @@ export function ScoutCinematicRoom({
       {/* ── CINEMATIC COMMAND CENTER (WAR ROOM) ── */}
       <div className="relative w-full max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6">
         {/* Tactical Directive Sub-Header & Dynamic 10 IPL Franchise Dugout Switcher */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-3 border-b border-[#142330] relative z-20">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-3 border-b border-slate-200 dark:border-[#142330] relative z-20">
           <div className="flex items-center gap-3">
             <span 
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase border shadow-sm transition-all duration-300"
@@ -294,14 +294,14 @@ export function ScoutCinematicRoom({
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: accentColor }} />
               {theme ? `${theme.shortName} DUGOUT • SCOUT ROOM ACTIVE` : "SCOUT LAB • TACTICAL RADAR ACTIVE"}
             </span>
-            <span className="hidden xl:inline text-xs text-[#718594] font-mono">
+            <span className="hidden xl:inline text-xs text-slate-500 dark:text-[#718594] font-mono">
               DIRECTIVE: 2026 AUCTION RETENTION & REPLACEMENT
             </span>
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
             {/* 10 IPL Franchise Dugout Switcher Bar + Global Option */}
-            <div className="flex items-center gap-1 bg-[#071018]/90 p-1 rounded-2xl border border-white/10 shadow-lg backdrop-blur-md">
+            <div className="flex items-center gap-1 bg-white/90 dark:bg-[#071018]/90 p-1 rounded-2xl border border-slate-200 dark:border-white/10 shadow-md dark:shadow-lg backdrop-blur-md">
               <button
                 type="button"
                 onClick={() => setSelectedTeam(null)}
@@ -309,7 +309,7 @@ export function ScoutCinematicRoom({
                 className={`px-2.5 py-1 rounded-xl text-[10px] font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   !selectedTeam
                     ? "bg-[var(--team-accent)] text-[#050B11] shadow-[0_0_12px_rgba(184,243,107,0.5)] scale-105"
-                    : "text-[#8E9FA9] hover:text-white hover:bg-white/5"
+                    : "text-slate-600 dark:text-[#8E9FA9] hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
                 }`}
                 title="Global Scout Room (Pitch Lime #B8F36B)"
               >
@@ -317,7 +317,7 @@ export function ScoutCinematicRoom({
                 <span className="hidden sm:inline">GLOBAL</span>
               </button>
 
-              <div className="w-px h-4 bg-white/10 mx-0.5" />
+              <div className="w-px h-4 bg-slate-200 dark:bg-white/10 mx-0.5" />
 
               {allTeams.map((t) => {
                 const isCur = selectedTeam === t.id;
@@ -331,7 +331,7 @@ export function ScoutCinematicRoom({
                     className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl p-1 border transition-all flex items-center justify-center cursor-pointer relative ${
                       isCur
                         ? "scale-110 shadow-md z-10"
-                        : "opacity-60 hover:opacity-100 bg-white/5 border-transparent hover:border-white/20"
+                        : "opacity-60 hover:opacity-100 bg-slate-100 dark:bg-white/5 border-transparent hover:border-slate-300 dark:hover:border-white/20"
                     }`}
                     style={isCur ? {
                       borderColor: t.accent,
@@ -679,28 +679,28 @@ export function ScoutCinematicRoom({
                 <div
                   key={card.title}
                   onClick={card.action}
-                  className="group relative bg-[#08121B] hover:bg-[#0C1A27] border rounded-2xl p-3 sm:p-3.5 flex flex-col justify-end h-36 sm:h-40 cursor-pointer transition-all duration-300 shadow-xl hover:-translate-y-1 overflow-hidden"
+                  className="group relative bg-white dark:bg-[#08121B] hover:bg-slate-50 dark:hover:bg-[#0C1A27] border rounded-2xl p-3 sm:p-3.5 flex flex-col justify-end h-36 sm:h-40 cursor-pointer transition-all duration-300 shadow-sm dark:shadow-xl hover:-translate-y-1 overflow-hidden"
                   style={{
                     borderColor: `${accentColor}33`,
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = accentColor;
-                    e.currentTarget.style.boxShadow = `0 12px 28px rgba(0,0,0,0.6), 0 0 16px ${glowColor}`;
+                    e.currentTarget.style.boxShadow = `0 12px 28px rgba(0,0,0,0.15), 0 0 16px ${glowColor}`;
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.borderColor = `${accentColor}33`;
-                    e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.5)";
+                    e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.06)";
                   }}
                 >
-                  <svg aria-hidden="true" viewBox="0 0 180 120" className="absolute inset-0 w-full h-full opacity-40 group-hover:opacity-70 transition-opacity" fill="none" stroke={accentColor}><ellipse cx="90" cy="60" rx="76" ry="48"/><ellipse cx="90" cy="60" rx="52" ry="32" strokeDasharray="3 5"/><rect x="80" y="32" width="20" height="56" rx="2"/><path d="M78 40h24M78 80h24M90 10v15M90 95v15M10 60h20M150 60h20"/><circle cx="45" cy="40" r="4"/><circle cx="133" cy="77" r="4"/><path d="M45 40L90 60l43 17" strokeDasharray="4 4"/></svg>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#060D15] via-[#060D15]/80 to-transparent" />
+                  <svg aria-hidden="true" viewBox="0 0 180 120" className="absolute inset-0 w-full h-full opacity-20 dark:opacity-40 group-hover:opacity-60 transition-opacity" fill="none" stroke={accentColor}><ellipse cx="90" cy="60" rx="76" ry="48"/><ellipse cx="90" cy="60" rx="52" ry="32" strokeDasharray="3 5"/><rect x="80" y="32" width="20" height="56" rx="2"/><path d="M78 40h24M78 80h24M90 10v15M90 95v15M10 60h20M150 60h20"/><circle cx="45" cy="40" r="4"/><circle cx="133" cy="77" r="4"/><path d="M45 40L90 60l43 17" strokeDasharray="4 4"/></svg>
+                  <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#060D15] dark:via-[#060D15]/80" />
 
                   <div className="relative z-10 space-y-1">
-                    <span className="inline-block text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-[#8FA3B2] group-hover:text-white transition-colors">
+                    <span className="inline-block text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-[#8FA3B2] group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
                       {card.sub}
                     </span>
-                    <p className="text-xs sm:text-sm font-black text-white group-hover:text-[var(--scout-accent)] transition-colors leading-tight">
+                    <p className="text-xs sm:text-sm font-black text-slate-900 dark:text-white group-hover:text-[var(--scout-accent)] transition-colors leading-tight">
                       {card.title}
                     </p>
                     <div 
@@ -878,14 +878,14 @@ export function ScoutCinematicRoom({
           <div className="lg:col-span-3 space-y-3">
             
             {/* Top HUD Card: SCOUTING NETWORK */}
-            <div className="bg-[#060F17]/90 border border-[#162734] rounded-xl p-3 shadow-lg backdrop-blur-md">
-              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#A8BCC9] pb-2 border-b border-[#132330]">
+            <div className="bg-white/90 dark:bg-[#060F17]/90 border border-slate-200 dark:border-[#162734] rounded-xl p-3 shadow-md dark:shadow-lg backdrop-blur-md">
+              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-700 dark:text-[#A8BCC9] pb-2 border-b border-slate-200 dark:border-[#132330]">
                 <div className="flex items-center gap-1.5">
                   <span style={{ color: accentColor }}>›</span>
                   <span className="tracking-wider uppercase">SCOUTING NETWORK</span>
                 </div>
 
-                <span className="text-[9px] text-[#556775]">6 CONNECTED</span>
+                <span className="text-[9px] text-slate-500 dark:text-[#556775]">6 CONNECTED</span>
               </div>
 
               <div className="space-y-1.5 pt-2">
@@ -895,24 +895,24 @@ export function ScoutCinematicRoom({
                     <button
                       key={league.code}
                       onClick={() => toggleLeague(league.code)}
-                      className="w-full flex items-center justify-between text-[11px] font-mono py-0.5 hover:text-white transition-colors cursor-pointer"
+                      className="w-full flex items-center justify-between text-[11px] font-mono py-0.5 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                     >
                       <div className="flex items-center gap-1.5">
                         <span 
                           className="w-1.5 h-1.5 rounded-full transition-all"
                           style={{
-                            backgroundColor: isActive ? accentColor : "#445564",
+                            backgroundColor: isActive ? accentColor : "#94A3B8",
                             boxShadow: isActive ? `0 0 6px ${accentColor}` : "none",
                           }}
                         />
-                        <span className={isActive ? "text-white font-bold" : "text-[#758694]"}>
+                        <span className={isActive ? "text-slate-900 dark:text-white font-bold" : "text-slate-500 dark:text-[#758694]"}>
                           {league.name}
                         </span>
                       </div>
 
                       <span 
                         className="text-[9px] font-semibold"
-                        style={{ color: isActive ? accentColor : "#4E606E" }}
+                        style={{ color: isActive ? accentColor : "#94A3B8" }}
                       >
                         {isActive ? "Connected" : "Standby"}
                       </span>
@@ -942,22 +942,22 @@ export function ScoutCinematicRoom({
             </div>
 
             {/* Bottom HUD Card: RECENT SEARCHES */}
-            <div className="bg-[#060F17]/90 border border-[#162734] rounded-xl p-3 shadow-lg backdrop-blur-md">
-              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#A8BCC9] pb-1.5 border-b border-[#132330]">
+            <div className="bg-white/90 dark:bg-[#060F17]/90 border border-slate-200 dark:border-[#162734] rounded-xl p-3 shadow-md dark:shadow-lg backdrop-blur-md">
+              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-700 dark:text-[#A8BCC9] pb-1.5 border-b border-slate-200 dark:border-[#132330]">
                 <div className="flex items-center gap-1.5">
                   <span style={{ color: accentColor }}>›</span>
                   <span className="tracking-wider uppercase">RECENT SEARCHES</span>
                 </div>
 
-                <ChevronDown className="w-3 h-3 text-[#556775] -rotate-90" />
+                <ChevronDown className="w-3 h-3 text-slate-400 dark:text-[#556775] -rotate-90" />
               </div>
 
-              <div className="space-y-1 pt-1.5 text-[11px] font-mono text-[#8295A2]">
+              <div className="space-y-1 pt-1.5 text-[11px] font-mono text-slate-600 dark:text-[#8295A2]">
                 {RECENT_SEARCHES.map((item) => (
                   <button
                     key={item.label}
                     onClick={item.action}
-                    className="w-full text-left py-0.5 px-1 rounded hover:bg-white/5 hover:text-white transition-colors truncate cursor-pointer flex items-center gap-1.5 group"
+                    className="w-full text-left py-0.5 px-1 rounded hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors truncate cursor-pointer flex items-center gap-1.5 group"
                   >
                     <span 
                       className="w-1 h-1 rounded-full group-hover:scale-125 transition-transform" 

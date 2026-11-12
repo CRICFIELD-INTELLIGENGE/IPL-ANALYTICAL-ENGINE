@@ -351,3 +351,94 @@
 }
 
 .scout-eye-ball{position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;color:var(--team-accent)}.scout-eye-ball:before{content:"";position:absolute;inset:0;border:2px dashed var(--team-accent);border-radius:50%;animation:scout-eye-orbit 1.2s linear infinite}@keyframes scout-eye-orbit{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.scout-eye-ball:before{animation:none}}
+
+/* ── SCOUT LAB LIGHT MODE ADAPTATION ── */
+html:not(.dark) .scout-terminal,
+html:not(.dark) .scout-notebook,
+html:not(.dark) .scout-cinematic-wrapper,
+[data-theme="light"] .scout-terminal,
+[data-theme="light"] .scout-notebook,
+[data-theme="light"] .scout-cinematic-wrapper {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .scout-terminal-header,
+[data-theme="light"] .scout-terminal-header {
+  border-color: #e2e8f0 !important;
+  background: #ffffff !important;
+}
+
+html:not(.dark) .scout-terminal-topline,
+[data-theme="light"] .scout-terminal-topline {
+  border-bottom-color: #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+html:not(.dark) .scout-terminal-intro h1,
+[data-theme="light"] .scout-terminal-intro h1 {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .scout-terminal-dek,
+[data-theme="light"] .scout-terminal-dek {
+  color: #475569 !important;
+}
+
+html:not(.dark) .scout-terminal-notebook,
+[data-theme="light"] .scout-terminal-notebook {
+  background: #ffffff !important;
+  border-left: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html:not(.dark) .scout-terminal-notebook > span,
+[data-theme="light"] .scout-terminal-notebook > span {
+  color: #64748b !important;
+}
+
+html:not(.dark) .scout-terminal-notebook p,
+[data-theme="light"] .scout-terminal-notebook p {
+  color: #475569 !important;
+}
+
+html:not(.dark) .scout-terminal-notebook a,
+[data-theme="light"] .scout-terminal-notebook a {
+  border-top-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .scout-league-passport,
+[data-theme="light"] .scout-league-passport {
+  border-top-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .scout-league-passport button,
+[data-theme="light"] .scout-league-passport button {
+  border-right-color: #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+html:not(.dark) .scout-league-passport button:hover,
+[data-theme="light"] .scout-league-passport button:hover {
+  color: #0f172a !important;
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+html:not(.dark) .scout-assignment-strip button,
+[data-theme="light"] .scout-assignment-strip button {
+  border-color: #e2e8f0 !important;
+  background: #ffffff !important;
+  color: #334155 !important;
+}
+
+html:not(.dark) .scout-assignment-strip button:hover,
+[data-theme="light"] .scout-assignment-strip button:hover {
+  border-color: var(--scout-accent) !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) .scout-connections,
+[data-theme="light"] .scout-connections {
+  border-top-color: #e2e8f0 !important;
+}

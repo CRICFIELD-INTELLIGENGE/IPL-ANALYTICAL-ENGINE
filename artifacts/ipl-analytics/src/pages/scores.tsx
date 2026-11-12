@@ -65,7 +65,7 @@ export default function ScoresPage() {
           </div>
           
           {/* Season Selector Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 lg:pb-0 scrollbar-thin">
+          <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 lg:pb-0 no-scrollbar">
             {seasons.data?.slice().reverse().map(s => (
               <button 
                 key={s.season}
@@ -264,7 +264,7 @@ function ScheduleView({ season, matches }: { season: string; matches: MatchSumma
         </div>
 
         {/* Franchise Filter Pills Strip with Team Logos & Colors */}
-        <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 scrollbar-thin">
+        <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 no-scrollbar">
           <button
             onClick={() => setSelectedFranchise("all")}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all whitespace-nowrap ${
@@ -581,7 +581,7 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
         </div>
 
         {/* Team Selector Pills Strip with Dynamic Franchise Logo & Colors */}
-        <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 scrollbar-thin">
+        <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 no-scrollbar">
           {teamNames.map(team => {
             const tColor = teamColor(team);
             const isSelected = activeTeam === team;

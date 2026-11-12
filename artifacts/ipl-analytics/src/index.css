@@ -32,8 +32,8 @@
   --theme-border-subtle: #F1F5F9;
   --theme-text-primary: #0F172A;
   --theme-text-secondary: #334155;
-  --theme-text-muted: #64748B;
-  --theme-text-faint: #94A3B8;
+  --theme-text-muted: #475569;
+  --theme-text-faint: #64748B;
 
   /* TEAM THEME DYNAMIC TOKENS (LIGHT DEFAULT) */
   --team-accent: #6366F1;
@@ -509,7 +509,8 @@ html:not(.dark),
     [class*="bg-[#070C15]"], [class*="bg-[#070C16]"], [class*="bg-[#070c16]"], [class*="bg-[#070c18]"],
     [class*="bg-[#070e17]"], [class*="bg-[#080B16]"], [class*="bg-[#080d19]"], [class*="bg-[#080d1a]"],
     [class*="bg-[#090c10]"], [class*="bg-[#090d16]"], [class*="bg-[#090E17]"], [class*="bg-[#090E20]"],
-    [class*="bg-[#0A0F1D]"], [class*="bg-[#030d14]"]
+    [class*="bg-[#0A0F1D]"], [class*="bg-[#030d14]"], [class*="bg-[#0b0f14]"], [class*="bg-[#050d19]"],
+    [class*="bg-[#03080E]"], [class*="bg-[#071018]"]
   ) {
     background-color: var(--theme-bg-page) !important;
   }
@@ -523,7 +524,9 @@ html:not(.dark),
     [class*="bg-[#0e1524]"], [class*="bg-[#0E1728]"], [class*="bg-[#101726]"], [class*="bg-[#101830]"],
     [class*="bg-[#101F2D]"], [class*="bg-[#101F3C]"], [class*="bg-[#111722]"], [class*="bg-[#111820]"],
     [class*="bg-[#121820]"], [class*="bg-[#121a33]"], [class*="bg-[#141d30]"], [class*="bg-[#14212A]"],
-    [class*="bg-[#162634]"], [class*="bg-[#192D3C]"], [class*="bg-[#090E1A]"]
+    [class*="bg-[#162634]"], [class*="bg-[#192D3C]"], [class*="bg-[#090E1A]"], [class*="bg-[#0C1426]"],
+    [class*="bg-[#101C34]"], [class*="bg-[#1C1226]"], [class*="bg-[#0D1924]"], [class*="bg-[#08131E]"],
+    [class*="bg-[#0B1722]"]
   ) {
     background-color: var(--theme-bg-card) !important;
   }
@@ -565,26 +568,22 @@ html:not(.dark),
   }
 
   /* Text colors: adapt dark-mode text to clean, accessible dark slate,
-     while carefully preserving text on colored buttons, badges, and accents */
+     while carefully preserving text on colored buttons, badges, and media/cover images */
   :is(
-    h1, h2, h3, h4, h5, h6, p, label, th, td
-  ):is(.text-white):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="from-"]):not(.badge):not(.btn) {
+    h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select
+  ):is(.text-white):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="from-"]):not(.badge):not(.btn):not([role="button"]):not(.franchise-action):not([aria-current="page"]):not([aria-current="true"]):not(.forced-white):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
     color: var(--theme-text-primary) !important;
   }
 
-  :is(div, span, a):is(.text-white):not([class*="bg-"]):not([class*="from-"]):not(.badge):not(.btn):not([role="button"]):not(.franchise-action):not([aria-current="page"]):not([aria-current="true"]) {
-    color: var(--theme-text-primary) !important;
-  }
-
-  :is(div, span, p, label, h1, h2, h3, h4, a):is(.text-white\/90, .text-white\/80, .text-white\/75, .text-white\/70):not([class*="bg-"]):not([class*="from-"]):not(.badge) {
+  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select):is(.text-white\/95, .text-white\/90, .text-white\/80, .text-white\/75, .text-white\/70):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="from-"]):not(.badge):not(.forced-white):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
     color: var(--theme-text-secondary) !important;
   }
 
-  :is(div, span, p, label, h1, h2, h3, h4, a):is(.text-white\/60, .text-white\/50):not([class*="bg-"]):not([class*="from-"]):not(.badge) {
+  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select):is(.text-white\/60, .text-white\/50):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="from-"]):not(.badge):not(.forced-white):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
     color: var(--theme-text-muted) !important;
   }
 
-  :is(div, span, p, label, a):is(.text-white\/40, .text-white\/30, .text-white\/20):not([class*="bg-"]):not([class*="from-"]):not(.badge) {
+  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select):is(.text-white\/40, .text-white\/30, .text-white\/20, .text-white\/10):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="from-"]):not(.badge):not(.forced-white):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
     color: var(--theme-text-faint) !important;
   }
 }

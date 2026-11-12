@@ -15,3 +15,129 @@
 .pv-art-guess-cricketer>img{object-position:50% 25%}
 .pv-art-captains-call>img{object-position:50% 25%}
 .pv-art-franchise-gm>img{object-position:50% 40%}
+
+/* ── LIGHT MODE OVERRIDES FOR ARCADE ── */
+html:not(.dark) .pavilion,
+[data-theme="light"] .pavilion {
+  --pav-navy: #ffffff;
+  --pav-navy-2: #f8fafc;
+  --pav-navy-3: #f1f5f9;
+  --pav-line: #e2e8f0;
+  --pav-white: #0f172a;
+  --pav-muted: #64748b;
+}
+
+html:not(.dark) .pv-hero:after,
+[data-theme="light"] .pv-hero:after {
+  background: linear-gradient(90deg, #fffffffa 0%, #fffffff0 40%, #ffffff80 85%), linear-gradient(0deg, #ffffffd0, transparent 60%) !important;
+}
+
+html:not(.dark) .pv-hero h1,
+[data-theme="light"] .pv-hero h1 {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .pv-hero p,
+html:not(.dark) .pv-featured p,
+html:not(.dark) .pv-challenge p,
+[data-theme="light"] .pv-hero p,
+[data-theme="light"] .pv-featured p,
+[data-theme="light"] .pv-challenge p {
+  color: #475569 !important;
+}
+
+html:not(.dark) .pv-passport-wrap .pav-passport,
+[data-theme="light"] .pv-passport-wrap .pav-passport {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) .pv-passport-wrap .pav-passport h3,
+[data-theme="light"] .pv-passport-wrap .pav-passport h3 {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .pv-featured:after,
+[data-theme="light"] .pv-featured:after {
+  background: linear-gradient(90deg, #ffffffe8 0%, #fffffff2 45%, #ffffff60 85%), linear-gradient(0deg, #ffffffa0, transparent) !important;
+}
+
+html:not(.dark) .pv-featured h2,
+[data-theme="light"] .pv-featured h2 {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .pv-challenge:after,
+[data-theme="light"] .pv-challenge:after {
+  background: linear-gradient(90deg, #fffffffa 0%, #fffffff0 50%, #ffffff80 85%), linear-gradient(0deg, #ffffffa0, transparent) !important;
+}
+
+html:not(.dark) .pv-challenge h2,
+html:not(.dark) .pv-challenge h3,
+html:not(.dark) .pv-sidebar h2,
+[data-theme="light"] .pv-challenge h2,
+[data-theme="light"] .pv-challenge h3,
+[data-theme="light"] .pv-sidebar h2 {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .pv-shelf h2,
+[data-theme="light"] .pv-shelf h2 {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .pv-filters button,
+[data-theme="light"] .pv-filters button {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .pv-filters button[aria-pressed=true],
+[data-theme="light"] .pv-filters button[aria-pressed=true] {
+  background: var(--pav-gold) !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) .pv-boards,
+html:not(.dark) .pv-achievements,
+[data-theme="light"] .pv-boards,
+[data-theme="light"] .pv-achievements {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html:not(.dark) .pv-boards select,
+[data-theme="light"] .pv-boards select {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .pv-badges > div,
+[data-theme="light"] .pv-badges > div {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+html:not(.dark) .pv-reward,
+[data-theme="light"] .pv-reward {
+  color: #0f172a !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html:not(.dark) .pv-reward:after,
+[data-theme="light"] .pv-reward:after {
+  background: linear-gradient(90deg, #fffffffa 0%, #fffffff0 50%, #ffffff80 85%) !important;
+}
+
+html:not(.dark) .pv-card h3,
+[data-theme="light"] .pv-card h3 {
+  color: #ffffff !important;
+}

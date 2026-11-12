@@ -40,7 +40,7 @@ export function SiteFooter() {
     <footer className="cricfield-footer cf-footer-utility">
       <div className="cf-footer-container max-w-6xl mx-auto px-4 sm:px-6 pt-10">
         {/* CricField Brand Hero Showcase Card */}
-        <div className="flex justify-center py-6 mb-8 bg-[#070e17] rounded-3xl border border-white/10 p-6 sm:p-10 shadow-2xl">
+        <div className="flex justify-center py-6 mb-8 bg-white dark:bg-[#070e17] rounded-3xl border border-slate-200 dark:border-white/10 p-6 sm:p-10 shadow-lg dark:shadow-2xl">
           <CricFieldLogo
             variant="footer"
             accentColor={accentColor}
@@ -95,11 +95,11 @@ export function SiteFooter() {
         </div>
 
         {/* Bottom Bar with Grounded Compact Wordmark */}
-        <div className="cf-footer-bottom border-t border-white/10 mt-8 pt-6 pb-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div className="cf-footer-bottom border-t border-slate-200 dark:border-white/10 mt-8 pt-6 pb-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
           <div className="flex items-center gap-3">
             <CricFieldLogo variant="compact" accentColor={accentColor} />
-            <span className="text-white/20 hidden sm:inline">|</span>
-            <span className="tracking-wider uppercase text-[10px] text-white/60 hidden sm:inline">
+            <span className="text-slate-300 dark:text-white/20 hidden sm:inline">|</span>
+            <span className="tracking-wider uppercase text-[10px] text-slate-600 dark:text-white/60 hidden sm:inline">
               IPL Global Intelligence
             </span>
           </div>

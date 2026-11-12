@@ -819,18 +819,18 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   const filterControls = (<>
         {/* SMART FILTER BAR */}
-        <div className="bg-[#0B1020] rounded-2xl border border-white/10 p-2 flex flex-wrap items-center gap-2 relative z-50">
+        <div className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-2 flex flex-wrap items-center gap-2 relative z-50 shadow-sm dark:shadow-xl">
 
-          <div className="flex items-center gap-2 px-3 py-2 bg-white/5 rounded-xl border border-white/5 mr-2">
+          <div className="flex items-center gap-2 px-3 py-2 bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/5 mr-2">
             <Filter className="w-3.5 h-3.5 text-primary" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-white/80">Dimensional Slicing</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-800 dark:text-white/80">Dimensional Slicing</span>
           </div>
 
           {/* Reset — always visible, clears every dimensional filter back to defaults */}
           <button
             onClick={clearFilterChain}
             title="Reset all filters"
-            className="flex items-center gap-1.5 px-3 py-2 bg-white/5 hover:bg-red-500/10 border border-white/5 hover:border-red-500/30 rounded-xl text-[10px] font-black uppercase tracking-widest text-white/50 hover:text-red-400 transition-all mr-2 shrink-0"
+            className="flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-red-50 dark:bg-white/5 dark:hover:bg-red-500/10 border border-slate-200 hover:border-red-200 dark:border-white/5 dark:hover:border-red-500/30 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:text-red-600 dark:text-white/50 dark:hover:text-red-400 transition-all mr-2 shrink-0 cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             Reset
@@ -1113,22 +1113,22 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       {/* STATIC DATA SECTION */}
       <div className="space-y-4 px-2.5 pb-6 mt-4">
         {/* CROSS-LINK TO GLOBAL SCOUT LAB */}
-        <div className="rounded-2xl bg-gradient-to-r from-primary/10 via-purple-500/10 to-white/[0.02] border border-primary/20 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+        <div className="rounded-2xl bg-white dark:bg-gradient-to-r dark:from-primary/10 dark:via-purple-500/10 dark:to-white/[0.02] border border-slate-200 dark:border-primary/20 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-sm dark:shadow-lg">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center text-primary shrink-0">
               <Compass className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-xs font-bold text-white block">
+              <span className="text-xs font-bold text-slate-900 dark:text-white block">
                 Looking for multi-league scouting across domestic and overseas tournaments?
               </span>
-              <span className="text-[10px] text-white/50">
+              <span className="text-[10px] text-slate-600 dark:text-white/50">
                 Compare players across IPL, SMAT, BBL, SA20, CPL, and ILT20 with league-adjusted ratings.
               </span>
             </div>
           </div>
           <Link href="/scout">
-            <button className="px-3.5 py-1.5 rounded-xl bg-primary text-[#0B1020] text-xs font-black shadow transition-all hover:bg-primary/90 flex items-center gap-1.5 shrink-0">
+            <button className="px-3.5 py-1.5 rounded-xl bg-primary text-[#0B1020] text-xs font-black shadow transition-all hover:bg-primary/90 flex items-center gap-1.5 shrink-0 cursor-pointer">
               <span>Open Scout Lab</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
@@ -1138,10 +1138,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         {filterControls}
 
         {/* Telemetry Summary Banner */}
-        <div className="mb-6 bg-gradient-to-r from-primary/15 via-blue-900/20 to-slate-950 p-4 rounded-2xl border border-white/10 flex flex-wrap items-center justify-between gap-4 animate-fade-in relative overflow-hidden group">
+        <div className="mb-6 bg-white dark:bg-gradient-to-r dark:from-primary/15 dark:via-blue-900/20 dark:to-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-white/10 flex flex-wrap items-center justify-between gap-4 animate-fade-in relative overflow-hidden group shadow-sm dark:shadow-none">
           <img
             src="/advance stats title image.png"
-            className="absolute right-0 top-0 h-full w-auto object-cover opacity-25 pointer-events-none mix-blend-luminosity group-hover:opacity-35 transition-opacity"
+            className="absolute right-0 top-0 h-full w-auto object-cover opacity-15 dark:opacity-25 pointer-events-none mix-blend-luminosity group-hover:opacity-25 dark:group-hover:opacity-35 transition-opacity"
             alt="Advance Stats Banner"
           />
           <div className="flex items-center gap-3 relative z-10">
@@ -1149,8 +1149,8 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               <Activity className="w-5 h-5 animate-pulse" />
             </div>
             <div>
-              <div className="text-[12px] font-black text-white uppercase tracking-wider">Multidimensional Slicing Telemetry</div>
-              <div className="text-[10px] text-white/50 font-bold mt-0.5">
+              <div className="text-[12px] font-black text-slate-900 dark:text-white uppercase tracking-wider">Multidimensional Slicing Telemetry</div>
+              <div className="text-[10px] text-slate-600 dark:text-white/50 font-bold mt-0.5">
                 {filters.season !== "All Seasons" ? `${filters.season} ` : "All-Time "}
                 {filters.team !== "All Teams" ? `${filters.team} ` : ""}
                 {filters.opposition !== "All Opponents" ? `vs ${filters.opposition} ` : ""}
@@ -1171,7 +1171,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                 className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer border ${
                   filters.team === themeTeam
                     ? "bg-amber-400 text-black border-amber-300 shadow-md shadow-amber-400/20"
-                    : "bg-white/5 text-amber-300 border-amber-400/30 hover:bg-amber-400/10"
+                    : "bg-slate-100 dark:bg-white/5 text-amber-700 dark:text-amber-300 border-amber-400/30 hover:bg-amber-400/10"
                 }`}
               >
                 <Shield className="w-3.5 h-3.5" />
@@ -1179,14 +1179,14 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               </button>
             )}
             <div className="text-right">
-              <div className="text-[8px] font-black text-white/30 uppercase">Fixtures Sliced</div>
-              <div className="text-xl font-black text-white mt-0.5">{activeMatches.length} <span className="text-[10px] text-primary/60 font-bold">Matches</span></div>
+              <div className="text-[8px] font-black text-slate-500 dark:text-white/30 uppercase">Fixtures Sliced</div>
+              <div className="text-xl font-black text-slate-900 dark:text-white mt-0.5">{activeMatches.length} <span className="text-[10px] text-primary font-bold">Matches</span></div>
             </div>
             {filters.venue !== "All Venues" && (
               <div className="text-right">
-                <div className="text-[8px] font-black text-white/30 uppercase">Venue Scorecards</div>
+                <div className="text-[8px] font-black text-slate-500 dark:text-white/30 uppercase">Venue Scorecards</div>
                 <div className="text-xl font-black text-primary mt-0.5">
-                  {activeMatches.filter(m => m.venue && normalizeVenueName(m.venue) === normalizeVenueName(filters.venue)).length} <span className="text-[10px] text-white/40 font-bold">Fixtures</span>
+                  {activeMatches.filter(m => m.venue && normalizeVenueName(m.venue) === normalizeVenueName(filters.venue)).length} <span className="text-[10px] text-slate-500 dark:text-white/40 font-bold">Fixtures</span>
                 </div>
               </div>
             )}
@@ -1195,14 +1195,14 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
         {/* TAB BAR & SEE ALL OPTION */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/5 w-fit max-w-full overflow-x-auto no-scrollbar">
+          <div className="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 w-fit max-w-full overflow-x-auto no-scrollbar">
             {TABS.map(t => (
               <button
                 key={t.id}
                 onClick={() => setActiveTab(t.id)}
-                className={`px-4 py-2 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-all shrink-0 ${activeTab === t.id
-                  ? "bg-gradient-to-r from-primary/40 to-blue-500/20 text-white shadow-[0_0_16px_-4px_hsl(var(--primary))]"
-                  : "text-white/40 hover:text-white hover:bg-white/5"
+                className={`px-4 py-2 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-all shrink-0 cursor-pointer ${activeTab === t.id
+                  ? "bg-gradient-to-r from-primary/80 to-blue-600/80 text-white shadow-md"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-white dark:text-white/40 dark:hover:text-white dark:hover:bg-white/5"
                   }`}
               >
                 <t.Icon className="w-3.5 h-3.5" />
@@ -1214,9 +1214,9 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
           {(activeTab === "batters" || activeTab === "bowlers") && (
             <button
               onClick={() => setShowAll(!showAll)}
-              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 border transition-all shrink-0 ${showAll
+              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 border transition-all shrink-0 cursor-pointer ${showAll
                 ? "bg-primary border-primary/50 text-white shadow-lg shadow-primary/20 hover:bg-primary/95"
-                : "bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/10"
+                : "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700 hover:text-slate-900 dark:bg-white/5 dark:border-white/10 dark:text-white/60 dark:hover:text-white dark:hover:bg-white/10"
                 }`}
             >
               <Eye className="w-3.5 h-3.5" />
@@ -1265,10 +1265,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               transition={{ duration: 0.2 }}
             >
               {activeTab === "batters" && (
-                <div className="bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden shadow-2xl">
+                <div className="bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 overflow-hidden shadow-sm dark:shadow-2xl">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
-                      <thead className="bg-white/[0.03] border-b border-white/5">
+                      <thead className="bg-slate-50 dark:bg-white/[0.03] border-b border-slate-200 dark:border-white/5">
                         <tr>
                           <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("player")}>Rank & Player {batterSortField === "player" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
                           <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("matches")}>Mts {batterSortField === "matches" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
@@ -1340,10 +1340,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               )}
 
               {activeTab === "bowlers" && (
-                <div className="bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden shadow-2xl animate-fade-in">
+                <div className="bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 overflow-hidden shadow-sm dark:shadow-2xl animate-fade-in">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
-                      <thead className="bg-white/[0.03] border-b border-white/5">
+                      <thead className="bg-slate-50 dark:bg-white/[0.03] border-b border-slate-200 dark:border-white/5">
                         <tr>
                           <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("player")}>Rank & Bowler {bowlerSortField === "player" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
                           <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("matches")}>Mts {bowlerSortField === "matches" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
@@ -3101,26 +3101,26 @@ function FilterDropdown({ label, icon: Icon, value, options, onChange }: { label
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-2 px-3 py-2 bg-white/[0.02] border border-white/5 rounded-xl hover:bg-white/5 transition-all group ${isOpen ? 'border-primary/40 bg-white/5' : ''}`}
+        className={`flex items-center gap-2 px-3 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-xl dark:hover:bg-white/5 transition-all group cursor-pointer ${isOpen ? 'border-primary/50 bg-slate-100 dark:bg-white/5' : ''}`}
         title={label}
       >
-        <Icon className={`w-3 h-3 transition-colors ${isOpen ? 'text-primary' : 'text-white/20 group-hover:text-primary'}`} />
+        <Icon className={`w-3 h-3 transition-colors ${isOpen ? 'text-primary' : 'text-slate-400 dark:text-white/20 group-hover:text-primary'}`} />
         <div className="flex flex-col items-start leading-none">
-          <span className="text-[7px] font-black uppercase tracking-[0.1em] text-white/20">{label}</span>
-          <span className="text-[10px] font-bold text-white/60">{value}</span>
+          <span className="text-[7px] font-black uppercase tracking-[0.1em] text-slate-500 dark:text-white/40">{label}</span>
+          <span className="text-[10px] font-bold text-slate-800 dark:text-white/70">{value}</span>
         </div>
-        <ChevronDown className={`w-2.5 h-2.5 text-white/10 ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-2.5 h-2.5 text-slate-400 dark:text-white/20 ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
         <>
           <div className="fixed inset-0 z-20" onClick={() => setIsOpen(false)} />
-          <div className="absolute top-full left-0 mt-2 w-48 bg-[#0B1020] border border-white/10 rounded-xl shadow-2xl z-30 py-2 max-h-64 overflow-y-auto no-scrollbar animate-in fade-in slide-in-from-top-1">
+          <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 rounded-xl shadow-2xl z-30 py-2 max-h-64 overflow-y-auto no-scrollbar animate-in fade-in slide-in-from-top-1">
             {options.map(opt => (
               <button
                 key={opt}
                 onClick={() => { onChange(opt); setIsOpen(false); }}
-                className={`w-full text-left px-4 py-2 text-[10px] font-bold transition-colors ${value === opt ? 'bg-primary/20 text-primary' : 'text-white/40 hover:bg-white/5 hover:text-white'}`}
+                className={`w-full text-left px-4 py-2 text-[10px] font-bold transition-colors cursor-pointer ${value === opt ? 'bg-primary/20 text-primary font-black' : 'text-slate-700 hover:bg-slate-100 dark:text-white/60 dark:hover:bg-white/5 dark:hover:text-white'}`}
                 title={opt}
               >
                 {opt}
