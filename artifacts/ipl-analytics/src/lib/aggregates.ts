@@ -753,6 +753,14 @@ export interface ScorecardBowling {
   name: string; overs: string; maidens: number; runs: number; wickets: number;
   econ: number; dots: number; wides: number; noballs: number;
 }
+export interface OverProgressionItem {
+  over: number;
+  runs: number;
+  wickets: number;
+  bowler?: string;
+  cumRuns: number;
+  cumWickets: number;
+}
 export interface ScorecardInnings {
   team: string; runs: number; wickets: number; overs: string; runRate: number;
   extras: { total: number; wides: number; noballs: number; byes: number; legbyes: number; penalty: number };
@@ -761,6 +769,7 @@ export interface ScorecardInnings {
   fallOfWickets: { wicket: number; name: string; score: string; over: string }[];
   didNotBat: string[];
   superOver: boolean;
+  overProgression?: OverProgressionItem[];
 }
 export interface MatchScorecard {
   matchId: string; season: string | null; date: string | null;

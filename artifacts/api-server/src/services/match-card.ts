@@ -412,6 +412,21 @@ export function getScorecardFromDb(matchId: string): any | null {
     for (const f of inn2Fielders) t1Players.add(f.name);
   }
 
+  // Over by over data from deliveries
+  const overRows = d.prepare(`
+    SELECT d.innings_id,
+           d.over_num,
+           SUM(d.total_runs) AS over_runs,
+           SUM(CASE WHEN dis.dismissal_id IS NOT NULL THEN 1 ELSE 0 END) AS over_wickets,
+           p.name AS bowler_name
+      FROM deliveries d
+      LEFT JOIN dismissals dis ON dis.delivery_id = d.delivery_id
+      LEFT JOIN players p ON p.player_id = d.bowler_id
+     WHERE d.match_id = ?
+     GROUP BY d.innings_id, d.over_num
+     ORDER BY d.innings_id, d.over_num
+  `).all(matchId) as any[];
+
   const inningsResult = inns.map((inn: any, innIdx: number) => {
     const ext = extrasMap.get(inn.innings_id) || { wides: 0, noballs: 0, byes: 0, legbyes: 0, penalty: 0, total: 0 };
     const innBat = batRows.filter((b: any) => b.innings_id === inn.innings_id).map((b: any) => {
@@ -456,6 +471,22 @@ export function getScorecardFromDb(matchId: string): any | null {
     const battedNames = new Set(innBat.map((b: any) => b.name));
     const didNotBat = Array.from(teamSquad).filter(p => !battedNames.has(p));
 
+    const innOvers = overRows.filter((r: any) => r.innings_id === inn.innings_id);
+    let cumRuns = 0;
+    let cumWkts = 0;
+    const overProgression = innOvers.map((r: any) => {
+      cumRuns += r.over_runs;
+      cumWkts += r.over_wickets;
+      return {
+        over: r.over_num + 1,
+        runs: r.over_runs,
+        wickets: r.over_wickets,
+        bowler: r.bowler_name,
+        cumRuns,
+        cumWickets: cumWkts,
+      };
+    });
+
     return {
       team: inn.team_name,
       runs: inn.runs,
@@ -474,6 +505,7 @@ export function getScorecardFromDb(matchId: string): any | null {
       bowling: innBowl,
       fallOfWickets: innFow,
       didNotBat,
+      overProgression,
       superOver: false,
     };
   });
