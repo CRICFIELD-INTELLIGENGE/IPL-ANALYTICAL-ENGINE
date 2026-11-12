@@ -286,7 +286,7 @@ export default function FeedPage() {
           <div className="space-y-6 min-w-0">
             <section>
               <SectionHead title="Franchise coverage" sub="Pick a team to see its stories." />
-              <div className="flex flex-wrap gap-2" role="group" aria-label="Filter stories by franchise">
+              <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter stories by franchise">
                 <TeamChip active={!team} onClick={() => setTeam(null)}>ALL</TeamChip>
                 {HUB_TEAMS.map((t) => (
                   <TeamChip color={TEAM_REGISTRY[t].accent} key={t} active={team === t} onClick={() => setTeam(t)}>
@@ -294,14 +294,26 @@ export default function FeedPage() {
                   </TeamChip>
                 ))}
                 {team && (
-                  <Link href={`/dugout/${team.toLowerCase()}`} style={{ color: TEAM_REGISTRY[team].accent }} className="self-center text-xs ml-1">{TEAM_REGISTRY[team].name} Dugout</Link>
+                  <Link
+                    href={`/dugout/${team.toLowerCase()}`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ml-1 border shadow-xs hover:brightness-110 active:scale-95"
+                    style={{
+                      backgroundColor: `${TEAM_REGISTRY[team].accent}18`,
+                      borderColor: `${TEAM_REGISTRY[team].accent}40`,
+                      color: TEAM_REGISTRY[team].accent,
+                    }}
+                  >
+                    <img src={TEAM_REGISTRY[team].logoImg} alt="" className="w-3.5 h-3.5 object-contain" />
+                    <span>{TEAM_REGISTRY[team].name} Dugout</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 )}
               </div>
             </section>
 
             <section>
               <div className="mb-3 flex flex-wrap items-center gap-3">
-                <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-white">Top stories</h2>
+                <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">Top stories</h2>
                 <div className="flex flex-wrap gap-1 sm:ml-auto" role="tablist">
                   {STORY_TABS.map((t) => (
                     <button
@@ -309,7 +321,11 @@ export default function FeedPage() {
                       role="tab"
                       aria-selected={tab === t.id}
                       onClick={() => setTab(t.id)}
-                      className={`rounded-lg px-3 py-1 text-xs ${tab === t.id ? "bg-violet-600/30 text-white border border-violet-400/40" : "text-white/55 hover:text-white"}`}
+                      className={`rounded-xl px-3 py-1 text-xs font-semibold transition-all ${
+                        tab === t.id
+                          ? "bg-primary text-white shadow-xs font-bold"
+                          : "text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 border border-transparent"
+                      }`}
                     >
                       {t.label}
                     </button>
@@ -317,17 +333,17 @@ export default function FeedPage() {
                 </div>
               </div>
               {top.length === 0 ? (
-                <p className="text-sm text-white/50">No published stories here{team ? ` for ${team}` : ""} yet.</p>
+                <p className="text-sm text-slate-500 dark:text-white/50">No published stories here{team ? ` for ${team}` : ""} yet.</p>
               ) : (
-                <div data-feed-part="top-stories" className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
-                  <div className="flex w-full">
+                <div data-feed-part="top-stories" className="grid gap-4 grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] items-stretch">
+                  <div className="flex w-full min-w-0">
                     <NewsCard
                       entry={top[0]}
                       lead
                       media={<EntryMedia entry={top[0]} />}
                     />
                   </div>
-                  <div className="flex flex-col divide-y divide-white/5 rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden justify-between">
+                  <div className="flex flex-col min-w-0 divide-y divide-slate-200 dark:divide-white/5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] shadow-xs overflow-hidden justify-between">
                     {top.slice(1).map((e) => <CompactStory key={e.id} entry={e} />)}
                   </div>
                 </div>
@@ -337,37 +353,41 @@ export default function FeedPage() {
             {latest.length > 0 && (
               <section>
                 <div className="mb-3 flex flex-wrap items-center gap-2">
-                  <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-white mr-2">Latest</h2>
+                  <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white mr-2">Latest</h2>
                   {[null, ...HUB_TEAMS].map((t) => (
                     <button
                       key={t ?? "all"}
                       onClick={() => setLatestTeam(t)}
                       aria-pressed={latestTeam === t}
-                      className={`rounded-md px-2 py-0.5 text-[11px] ${latestTeam === t ? "bg-violet-600/30 text-white" : "text-white/50 hover:text-white"}`}
+                      className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-all ${
+                        latestTeam === t
+                          ? "bg-primary text-white shadow-xs font-bold"
+                          : "text-slate-600 dark:text-white/50 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
+                      }`}
                     >
                       {t ?? "All"}
                     </button>
                   ))}
                 </div>
-                <ul className="divide-y divide-white/5">
+                <ul className="divide-y divide-slate-200 dark:divide-white/5">
                   {latest.map((e) => {
                     const t = TEAM_REGISTRY[e.franchise as TeamCode];
                     return (
                       <li key={e.id}>
-                        <Link href={`/dugout/articles/${e.slug}`} className="flex items-center gap-3.5 py-3 px-2 rounded-xl group hover:bg-white/[0.03] transition-colors">
-                          <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
-                            <EntryMedia entry={e} />
+                        <Link href={`/dugout/articles/${e.slug}`} className="flex items-center gap-3.5 py-3 px-2 rounded-xl group hover:bg-slate-100/60 dark:hover:bg-white/[0.03] transition-colors">
+                          <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-slate-100 dark:bg-black/50 ring-1 ring-slate-200 dark:ring-white/10 shadow-sm flex items-center justify-center">
+                            <EntryMedia entry={e} compact />
                           </div>
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest">
-                              <span className="text-[var(--team-accent)]">{kicker(e)}</span>
-                              <span className="text-white/20">•</span>
+                              <span className="text-primary font-bold">{kicker(e)}</span>
+                              <span className="text-slate-300 dark:text-white/20">•</span>
                               <span style={{ color: t?.accent ?? "var(--team-accent)" }}>{e.franchise}</span>
                             </div>
-                            <div className="text-xs sm:text-sm font-semibold text-white group-hover:underline line-clamp-2 mt-0.5">{e.title}</div>
-                            <div className="mt-1 text-[10px] text-white/40">{EDITORIAL_AUTHOR} · {dateLabel(e.publishedDate)} · {e.readMinutes} min read</div>
+                            <div className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white group-hover:underline line-clamp-2 mt-0.5">{e.title}</div>
+                            <div className="mt-1 text-[10px] text-slate-500 dark:text-white/40">{EDITORIAL_AUTHOR} · {dateLabel(e.publishedDate)} · {e.readMinutes} min read</div>
                           </div>
-                          <span className="hidden sm:block shrink-0 text-[11px] text-white/40">{dateLabel(e.publishedDate)}</span>
+                          <span className="hidden sm:block shrink-0 text-[11px] text-slate-500 dark:text-white/40">{dateLabel(e.publishedDate)}</span>
                         </Link>
                       </li>
                     );
@@ -529,54 +549,183 @@ function RetentionCountdown() {
   );
 }
 
-export function EntryMedia({ entry }: { entry: IndexEntry }) {
-  const image = articleHeaderImage(entry.id);
+export function getArticleVisualUrl(entry: IndexEntry): string {
+  // If article has a valid direct local licensed image, prefer it
+  const directImage = articleHeaderImage(entry.id);
+  if (directImage?.licensedImageUrl && !directImage.licensedImageUrl.startsWith("http")) {
+    return directImage.licensedImageUrl;
+  }
+
+  const text = `${entry.title} ${entry.slug} ${entry.aspect} ${entry.dek}`.toLowerCase();
+  
+  // 1. Star Players mentioned in title/slug/dek
+  if (text.includes("kohli")) return "/virat-kohli.png";
+  if (text.includes("dhoni") || text.includes("msd")) return "/msd.jpg";
+  if (text.includes("rohit") || (text.includes("sharma") && entry.franchise === "MI")) return "/rohit sharma.jpg";
+  if (text.includes("bumrah")) return "/bumrah.jpg";
+  if (text.includes("narine") || text.includes("rinku")) return "/s narine.jpg";
+  if (text.includes("samson") || text.includes("jaiswal")) return "/sanju samson.jpg";
+  if (text.includes("rashid") || text.includes("gill")) return "/rashid khan.jpg";
+  if (text.includes("mayank") || text.includes("yadav")) return "/mayank yadav.jpg";
+  if (text.includes("rahul")) return "/kl rahul.jpg";
+  if (text.includes("bhuvneshwar") || text.includes("bhuvi")) return "/bhuvaneswar kumar.jpg";
+  if (text.includes("abhishek") || (text.includes("sharma") && entry.franchise === "SRH")) return "/abhisek sharma.jpg";
+  if (text.includes("dhawan") || text.includes("arshdeep")) return "/shikhar dhawan.jpg";
+  if (text.includes("devilliers") || text.includes("de villiers")) return "/ab devillers.jpg";
+  if (text.includes("gayle")) return "/c gayle.jpg";
+  if (text.includes("warner")) return "/d warner.jpg";
+  if (text.includes("jadeja")) return "/r jadeja.jpg";
+  if (text.includes("ashwin")) return "/r ashwin.jpg";
+  if (text.includes("chahal")) return "/y chahal.jpg";
+  if (text.includes("raina")) return "/suresh raina.jpg";
+
+  // 2. Specific Franchise Venues / Stadiums
+  if (text.includes("chinnaswamy")) return "/rcb-winner-2026.jpg";
+  if (text.includes("chepauk")) return "/csk insight.jpg";
+  if (text.includes("wankhede")) return "/rohit sharma.jpg";
+  if (text.includes("eden")) return "/s narine.jpg";
+  if (text.includes("ahmedabad") || text.includes("narendra modi")) return "/rashid khan.jpg";
+  if (text.includes("kotla") || text.includes("arun jaitley")) return "/hero-players.png";
+  if (text.includes("mohali") || text.includes("mullanpur")) return "/shikhar dhawan.jpg";
+  if (text.includes("ekana")) return "/kl rahul.jpg";
+  if (text.includes("uppal")) return "/bhuvaneswar kumar.jpg";
+  if (text.includes("sawai mansingh")) return "/sanju samson.jpg";
+
+  // 3. Thematic topics
+  if (text.includes("auction") || text.includes("purse") || text.includes("price") || entry.aspect === "auction-economics") {
+    return "/auction-art.jpg";
+  }
+  if (text.includes("tactical") || text.includes("powerplay") || text.includes("equation") || text.includes("blueprint") || text.includes("anchor") || entry.aspect === "tactical") {
+    return "/tactics-board.jpg";
+  }
+  if (text.includes("venue") || text.includes("pitch") || text.includes("surface") || text.includes("ground") || text.includes("stadium") || entry.aspect === "venues") {
+    return "/venues-stadium.jpg";
+  }
+  if (text.includes("squad") || text.includes("retention") || text.includes("rebuild") || text.includes("season") || entry.aspect === "history") {
+    if (entry.franchise === "RCB") return "/rcb-winner-2026.jpg";
+    if (entry.franchise === "CSK") return "/csk insight.jpg";
+    return "/squad-building.jpg";
+  }
+  if (text.includes("boundary") || text.includes("scoring") || text.includes("velocity") || entry.aspect === "batting") {
+    return "/tactical-yorker.jpg";
+  }
+
+  // 4. Franchise Marquee Photography Default
+  const franchiseMarquee: Record<string, string> = {
+    RCB: "/rcb-winner-2026.jpg",
+    CSK: "/csk insight.jpg",
+    MI: "/rohit sharma.jpg",
+    KKR: "/s narine.jpg",
+    RR: "/sanju samson.jpg",
+    SRH: "/bhuvaneswar kumar.jpg",
+    GT: "/rashid khan.jpg",
+    LSG: "/kl rahul.jpg",
+    DC: "/hero-players.png",
+    PBKS: "/shikhar dhawan.jpg",
+  };
+
+  return franchiseMarquee[entry.franchise] ?? "/hero-players.png";
+}
+
+export function EntryMedia({
+  entry,
+  aspect = "video",
+  compact = false,
+}: {
+  entry: IndexEntry;
+  aspect?: "video" | "wide";
+  compact?: boolean;
+}) {
   const t = TEAM_REGISTRY[entry.franchise as TeamCode];
   const accent = t?.accent ?? "#FF6B00";
-  const placeholder = (
-    <div
-      className="aspect-video w-full flex flex-col items-center justify-center p-3 text-center relative overflow-hidden bg-gradient-to-br from-[#0c1322] via-[#080d18] to-[#04060c]"
-      style={{ borderLeft: `3px solid ${accent}` }}
-    >
-      <div className="w-8 h-8 rounded-full flex items-center justify-center mb-1 bg-white/5 border border-white/10">
-        <TeamLogo team={entry.franchise} />
-      </div>
-      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-white/70 truncate max-w-full">
-        {entry.franchise} Editorial
-      </span>
-    </div>
-  );
-  if (!image) return placeholder;
+  const imageSrc = getArticleVisualUrl(entry);
+  const kickerLabel = kicker(entry);
+
   return (
-    <EditorialCardMedia
-      key={`${entry.id}-${image.assetId}`}
-      image={image}
-      aspect="video"
-      preserveAspectRatio
-      allowUnpublished={import.meta.env.DEV}
-      fallback={placeholder}
-    />
+    <div
+      className={`relative w-full h-full overflow-hidden bg-slate-900 group ${
+        aspect === "video" ? "aspect-video" : "aspect-[16/9]"
+      }`}
+    >
+      <img
+        src={imageSrc}
+        alt={entry.title}
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+      />
+      {/* High contrast gradient scrims */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent pointer-events-none" />
+
+      {/* Franchise Crest & Badge */}
+      <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1.5 pointer-events-none">
+        <div className="w-6 h-6 rounded-full bg-white dark:bg-slate-900 p-0.5 shadow-md flex items-center justify-center shrink-0 border border-black/10 dark:border-white/20">
+          <img
+            src={t?.logoImg ?? "/favicon.svg"}
+            alt={entry.franchise}
+            className="w-full h-full object-contain"
+          />
+        </div>
+        {!compact && (
+          <span
+            className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-sm backdrop-blur-md border"
+            style={{
+              backgroundColor: `${accent}25`,
+              color: accent,
+              borderColor: `${accent}50`,
+            }}
+          >
+            {entry.franchise}
+          </span>
+        )}
+      </div>
+
+      {/* Story Type Tag in Top-Right */}
+      {!compact && (
+        <div className="absolute top-2.5 right-2.5 z-10 pointer-events-none">
+          <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-black/60 text-white/90 border border-white/15 backdrop-blur-md shadow-sm">
+            {kickerLabel}
+          </span>
+        </div>
+      )}
+
+      {/* Subtle Team Accent Bottom Edge Indicator */}
+      <div
+        className="absolute bottom-0 inset-x-0 h-1 z-10 opacity-80 group-hover:opacity-100 transition-opacity"
+        style={{ backgroundColor: accent }}
+      />
+    </div>
   );
 }
 
 function CompactStory({ entry }: { entry: IndexEntry }) {
   const t = TEAM_REGISTRY[entry.franchise as TeamCode];
   return (
-    <Link href={`/dugout/articles/${entry.slug}`} className="flex items-center gap-3 p-3 group hover:bg-white/[0.04] transition-colors">
-      <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
-        <EntryMedia entry={entry} />
+    <Link href={`/dugout/articles/${entry.slug}`} className="flex items-center gap-3 p-3 group hover:bg-slate-100/60 dark:hover:bg-white/[0.04] transition-colors">
+      <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-slate-100 dark:bg-black/50 ring-1 ring-slate-200 dark:ring-white/10 shadow-sm flex items-center justify-center">
+        <EntryMedia entry={entry} compact />
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest">
-          <span className="text-[var(--team-accent)]">{kicker(entry)}</span>
-          <span className="text-white/20">•</span>
+          <span className="text-primary font-bold">{kicker(entry)}</span>
+          <span className="text-slate-300 dark:text-white/20">•</span>
           <span style={{ color: t?.accent ?? "var(--team-accent)" }}>{entry.franchise}</span>
         </div>
-        <div className="text-xs sm:text-sm font-bold text-white leading-snug group-hover:underline line-clamp-2 mt-0.5">{entry.title}</div>
-        <div className="mt-1 text-[10px] text-white/40">{EDITORIAL_AUTHOR} · {entry.readMinutes} min read</div>
+        <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug group-hover:underline line-clamp-2 mt-0.5">{entry.title}</div>
+        <div className="mt-1 text-[10px] text-slate-500 dark:text-white/40">{EDITORIAL_AUTHOR} · {entry.readMinutes} min read</div>
       </div>
     </Link>
   );
+}
+
+function isLightHex(hex: string): boolean {
+  const clean = (hex || "").replace("#", "");
+  if (clean.length < 6) return false;
+  const r = parseInt(clean.substring(0, 2), 16) || 0;
+  const g = parseInt(clean.substring(2, 4), 16) || 0;
+  const b = parseInt(clean.substring(4, 6), 16) || 0;
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 150;
 }
 
 function ScrollingEditorialPicks({ picks }: { picks: IndexEntry[] }) {
@@ -585,35 +734,36 @@ function ScrollingEditorialPicks({ picks }: { picks: IndexEntry[] }) {
 
   return (
     <RailCard title="Editor's picks">
-      <div className="relative h-[290px] overflow-hidden group">
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-[#0B1020] via-[#0B1020]/80 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-[#0B1020] via-[#0B1020]/80 to-transparent" />
-        <div className="animate-vertical-scroll space-y-2.5 will-change-transform group-hover:[animation-play-state:paused]">
+      <div className="relative h-[320px] overflow-hidden group">
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-8 bg-gradient-to-b from-slate-50 dark:from-[#0B1020] via-slate-50/80 dark:via-[#0B1020]/80 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-slate-50 dark:from-[#0B1020] via-slate-50/80 dark:via-[#0B1020]/80 to-transparent" />
+        <div className="animate-vertical-scroll space-y-2.5 will-change-transform group-hover:[animation-play-state:paused] pt-1">
           {displayItems.map((e, idx) => {
             const t = TEAM_REGISTRY[e.franchise as TeamCode];
             const rank = (idx % picks.length) + 1;
+            const accent = t?.accent ?? "var(--team-accent)";
             return (
               <Link
                 key={`${e.id}-${idx}`}
                 href={`/dugout/articles/${e.slug}`}
-                className="flex items-start gap-2.5 rounded-xl p-2 transition-all hover:bg-white/[0.06] border border-transparent hover:border-white/10"
+                className="flex items-start gap-2.5 rounded-xl p-2.5 transition-all hover:bg-slate-200/50 dark:hover:bg-white/[0.06] border border-transparent hover:border-slate-300 dark:hover:border-white/10"
               >
                 <span
-                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[10px] font-black text-black"
-                  style={{ backgroundColor: t?.accent ?? "var(--team-accent)" }}
+                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[10px] font-black shadow-xs"
+                  style={{ backgroundColor: accent, color: isLightHex(accent) ? "#0A101D" : "#FFFFFF" }}
                 >
                   {rank}
                 </span>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-wider">
-                    <span style={{ color: t?.accent ?? "var(--team-accent)" }}>{e.franchise}</span>
-                    <span className="text-white/25">•</span>
-                    <span className="text-[var(--team-accent)]">{kicker(e)}</span>
+                    <span style={{ color: accent }}>{e.franchise}</span>
+                    <span className="text-slate-400 dark:text-white/25">•</span>
+                    <span className="text-primary font-bold">{kicker(e)}</span>
                   </div>
-                  <h4 className="line-clamp-2 text-xs font-semibold text-white/90 leading-snug group-hover:text-white mt-0.5">
+                  <h4 className="line-clamp-2 text-xs font-bold text-slate-800 dark:text-slate-100 leading-snug group-hover:text-primary dark:group-hover:text-white mt-0.5">
                     {e.title}
                   </h4>
-                  <span className="mt-1 block text-[10px] text-white/40">
+                  <span className="mt-1 block text-[10px] text-slate-500 dark:text-slate-400">
                     {e.readMinutes} min read
                   </span>
                 </div>
@@ -813,8 +963,8 @@ function FanPulsePoll() {
 function SectionHead({ title, sub }: { title: string; sub?: string }) {
   return (
     <div className="mb-3">
-      <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-white">{title}</h2>
-      {sub && <p className="text-xs text-white/55 mt-0.5">{sub}</p>}
+      <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{title}</h2>
+      {sub && <p className="text-xs text-slate-500 dark:text-white/55 mt-0.5">{sub}</p>}
     </div>
   );
 }
@@ -825,7 +975,11 @@ function TeamChip({ active, onClick, children, color = "#8ba7ff" }: { active: bo
       onClick={onClick}
       aria-pressed={active}
       style={active ? { backgroundColor: `${color}28`, borderColor: color, color } : undefined}
-      className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-black ${active ? "border-[var(--team-accent)] bg-[var(--team-accent)] text-black" : "border-white/15 text-white/75 hover:border-white/40"}`}
+      className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-black transition-all ${
+        active 
+          ? "border-[var(--team-accent)] bg-[var(--team-accent)] text-black shadow-xs" 
+          : "border-slate-300 dark:border-white/15 bg-white/60 dark:bg-white/5 text-slate-700 dark:text-white/75 hover:border-slate-400 dark:hover:border-white/40 hover:text-slate-900 dark:hover:text-white"
+      }`}
     >
       {children}
     </button>
@@ -834,8 +988,8 @@ function TeamChip({ active, onClick, children, color = "#8ba7ff" }: { active: bo
 
 function RailCard({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="rounded-[20px] border border-white/10 bg-[#0B1020] p-4">
-      <h2 className="mb-3 text-[12px] font-black uppercase tracking-[0.2em] text-white">{title}</h2>
+    <section className="rounded-[20px] border border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-[#0B1020] p-4 shadow-xs">
+      <h2 className="mb-3 text-[12px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{title}</h2>
       {children}
     </section>
   );
@@ -843,15 +997,15 @@ function RailCard({ title, children }: { title: string; children: ReactNode }) {
 
 function CtaBand({ icon: Icon, kicker, text, href, cta }: { icon: typeof Users; kicker: string; text: string; href: string; cta: string }) {
   return (
-    <div className="flex flex-wrap items-center gap-4 rounded-[20px] border border-white/10 bg-[#0B1020] p-4">
+    <div className="flex flex-wrap items-center gap-4 rounded-[20px] border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0B1020] p-4 shadow-xs">
       <Icon className="w-8 h-8 shrink-0 text-[var(--team-accent)]" />
       <div className="min-w-0 flex-1">
         <div className="text-[10px] font-black uppercase tracking-widest text-[var(--team-accent)]">{kicker}</div>
-        <p className="text-xs text-white/70">{text}</p>
+        <p className="text-xs text-slate-600 dark:text-white/70">{text}</p>
       </div>
       <Link
         href={href}
-        className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-black border border-violet-400/50 text-white hover:bg-violet-600/20"
+        className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-black border border-primary/40 bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
       >
         {cta} <ArrowRight className="w-3.5 h-3.5" />
       </Link>
