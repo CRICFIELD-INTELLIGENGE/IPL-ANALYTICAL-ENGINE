@@ -31,3 +31,24 @@
 @media (min-width:600px) { .ref-home .ref-shared-stories { grid-auto-columns:42%; } .ref-home .ref-games { grid-auto-columns:23%; } }
 .ref-home .ref-shared-stories .home-story-media { aspect-ratio:16/9; }
 .ref-home .ref-shared-stories .home-story-media img { object-fit:contain; }
+
+/* ── LIGHT MODE MOBILE HOME OVERRIDES ── */
+html:not(.dark) .ref-home, [data-theme="light"] .ref-home { background: #F8FAFC; color: #0F172A; }
+html:not(.dark) .ref-shortcuts a > span, [data-theme="light"] .ref-shortcuts a > span { background: #FFFFFF; border-color: var(--ref-accent); }
+html:not(.dark) .ref-shortcuts small, [data-theme="light"] .ref-shortcuts small { color: #334155; }
+html:not(.dark) .ref-hero, [data-theme="light"] .ref-hero { background: #FFFFFF; border-color: #E2E8F0; }
+html:not(.dark) .ref-hero:after, [data-theme="light"] .ref-hero:after { background: linear-gradient(90deg, #FFFFFF 5%, #FFFFFFe0 35%, #FFFFFF15 100%); }
+html:not(.dark) .ref-hero h1, [data-theme="light"] .ref-hero h1 { color: #0F172A; }
+html:not(.dark) .ref-hero p, [data-theme="light"] .ref-hero p { color: #475569; }
+html:not(.dark) .ref-heading h2, [data-theme="light"] .ref-heading h2 { color: #0F172A; }
+html:not(.dark) .ref-explore > a, [data-theme="light"] .ref-explore > a { background: #FFFFFF; border-color: #E2E8F0; color: #0F172A; }
+html:not(.dark) .ref-explore strong, [data-theme="light"] .ref-explore strong { color: #0F172A; }
+html:not(.dark) .ref-explore small, [data-theme="light"] .ref-explore small { color: #64748B; }
+html:not(.dark) .ref-filters button, [data-theme="light"] .ref-filters button { background: #F1F5F9; color: #334155; }
+html:not(.dark) .ref-filters button[aria-pressed=true], [data-theme="light"] .ref-filters button[aria-pressed=true] { background: var(--ref-accent); color: #111; }
+html:not(.dark) .ref-games > a, [data-theme="light"] .ref-games > a { background: #FFFFFF; border-color: #E2E8F0; color: #0F172A; }
+html:not(.dark) .ref-games strong, [data-theme="light"] .ref-games strong { color: #0F172A; }
+html:not(.dark) .ref-matches > a, [data-theme="light"] .ref-matches > a { background: #FFFFFF; border-color: #E2E8F0; color: #0F172A; }
+html:not(.dark) .ref-matches strong, [data-theme="light"] .ref-matches strong { color: #0F172A; }
+html:not(.dark) .ref-matches p, [data-theme="light"] .ref-matches p { color: #64748B; }
+html:not(.dark) .cfm:has(.ref-home) .cfm-top, html:not(.dark) .cfm:has(.ref-home) .cfm-tabs { background: #FFFFFFee; border-color: #E2E8F0; }

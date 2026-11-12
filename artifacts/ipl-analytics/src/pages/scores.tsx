@@ -43,10 +43,10 @@ export default function ScoresPage() {
 
   return (
     <Layout>
-      <div className="flex flex-col min-h-screen bg-[#050816] text-white p-4 md:p-8 gap-6">
+      <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#050816] text-slate-900 dark:text-white p-4 md:p-8 gap-6">
         
         {/* ─── BROADCAST TELEMETRY & ARCHIVE FILTER BAR ─── */}
-        <div className="bg-[#0B1020]/90 rounded-[28px] border border-white/10 p-6 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-2xl sticky top-4 z-[100] backdrop-blur-xl">
+        <div className="bg-white/95 dark:bg-[#0B1020]/90 rounded-[28px] border border-slate-200 dark:border-white/10 p-6 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-sm dark:shadow-2xl sticky top-4 z-[100] backdrop-blur-xl">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary shadow-lg shadow-primary/20">
               <CricFieldMascot team={leaderTeam || "default"} mood="fire" size={38} interactive />
@@ -56,9 +56,9 @@ export default function ScoresPage() {
                 <span className="text-[10px] font-black uppercase tracking-widest franchise-eyebrow flex items-center gap-1">
                   <Sparkles className="w-3 h-3" /> OFFICIAL TOURNAMENT ARCHIVE
                 </span>
-                <span className="text-[10px] font-mono text-white/40">2008–2026</span>
+                <span className="text-[10px] font-mono text-slate-400 dark:text-white/40">2008–2026</span>
               </div>
-              <h1 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white flex items-center gap-2">
+              <h1 className="text-xl md:text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
                 IPL {selectedSeason} MATCH CENTER &amp; SQUADS
               </h1>
             </div>
@@ -73,7 +73,7 @@ export default function ScoresPage() {
                 className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all whitespace-nowrap ${
                   selectedSeason === s.season 
                     ? 'bg-primary text-white font-black shadow-lg shadow-primary/25 scale-105 border border-primary/40' 
-                    : 'bg-white/[0.03] text-white/50 hover:bg-white/10 hover:text-white border border-white/5'
+                    : 'bg-slate-100 dark:bg-white/[0.03] text-slate-600 dark:text-white/50 hover:bg-slate-200 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/5'
                 }`}
               >
                 {s.season}
@@ -84,35 +84,35 @@ export default function ScoresPage() {
 
         {/* ─── TOURNAMENT TELEMETRY STRIP ─── */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="bg-[#0B1020]/80 rounded-2xl border border-white/10 p-4 flex items-center gap-3">
+          <div className="bg-white dark:bg-[#0B1020]/80 rounded-2xl border border-slate-200 dark:border-white/10 p-4 flex items-center gap-3 shadow-sm">
             <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
               <Calendar className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Season Fixtures</span>
-              <span className="text-base font-black text-white">{seasonMatches.length} Matches</span>
+              <span className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 block">Season Fixtures</span>
+              <span className="text-base font-black text-slate-900 dark:text-white">{seasonMatches.length} Matches</span>
             </div>
           </div>
 
-          <div className="bg-[#0B1020]/80 rounded-2xl border border-white/10 p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+          <div className="bg-white dark:bg-[#0B1020]/80 rounded-2xl border border-slate-200 dark:border-white/10 p-4 flex items-center gap-3 shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500 dark:text-cyan-400">
               <Trophy className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Table Leader</span>
-              <span className="text-base font-black text-cyan-300 truncate max-w-[130px] block">
+              <span className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 block">Table Leader</span>
+              <span className="text-base font-black text-cyan-600 dark:text-cyan-300 truncate max-w-[130px] block">
                 {leaderTeam ? teamShort(leaderTeam) : "—"}
               </span>
             </div>
           </div>
 
-          <div className="bg-[#0B1020]/80 rounded-2xl border border-white/10 p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+          <div className="bg-white dark:bg-[#0B1020]/80 rounded-2xl border border-slate-200 dark:border-white/10 p-4 flex items-center gap-3 shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 dark:text-emerald-400">
               <Users className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-[9px] font-black uppercase tracking-widest text-white/40 block">Franchises</span>
-              <span className="text-base font-black text-white">{standings.length || 10} Teams</span>
+              <span className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 block">Franchises</span>
+              <span className="text-base font-black text-slate-900 dark:text-white">{standings.length || 10} Teams</span>
             </div>
           </div>
 
@@ -120,7 +120,7 @@ export default function ScoresPage() {
         </div>
 
         {/* ─── TAB NAVIGATION ─── */}
-        <div className="flex items-center gap-2 bg-white/[0.03] p-1.5 rounded-2xl border border-white/10 w-fit">
+        <div className="flex items-center gap-2 bg-slate-100 dark:bg-white/[0.03] p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 w-fit">
           {[
             { id: "schedule", label: "Schedule & Results", icon: Calendar, count: seasonMatches.length },
             { id: "points", label: "Points Standings", icon: Trophy, count: standings.length },
@@ -132,13 +132,13 @@ export default function ScoresPage() {
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all ${
                 activeTab === tab.id 
                   ? 'bg-gradient-to-r from-primary to-blue-600 text-white shadow-lg shadow-primary/25 border border-primary/40' 
-                  : 'text-white/40 hover:text-white hover:bg-white/5'
+                  : 'text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/5'
               }`}
             >
               <tab.icon className="w-4 h-4" />
               <span>{tab.label}</span>
               {tab.count !== undefined && tab.count > 0 && (
-                <span className={`text-[9px] px-1.5 py-0.2 rounded-md ${activeTab === tab.id ? 'bg-black/30 text-white' : 'bg-white/10 text-white/50'}`}>
+                <span className={`text-[9px] px-1.5 py-0.2 rounded-md ${activeTab === tab.id ? 'bg-black/30 text-white' : 'bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-white/50'}`}>
                   {tab.count}
                 </span>
               )}
@@ -231,30 +231,30 @@ function ScheduleView({ season, matches }: { season: string; matches: MatchSumma
   return (
     <div className="flex flex-col gap-6">
       {/* ─── FIXTURES CONTROL STRIP (SRH INSPIRED FRANCHISE FILTER & SEARCH) ─── */}
-      <div className="bg-[#0B1020]/90 backdrop-blur-xl rounded-2xl border border-white/10 p-4 flex flex-col gap-4 shadow-xl">
+      <div className="bg-white/95 dark:bg-[#0B1020]/90 backdrop-blur-xl rounded-2xl border border-slate-200 dark:border-white/10 p-4 flex flex-col gap-4 shadow-sm dark:shadow-xl">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Search Input */}
           <div className="relative w-full md:w-80">
-            <Search className="w-4 h-4 text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search fixture, team, venue, match #…"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white/[0.04] border border-white/10 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-primary/50 transition-colors"
+              className="w-full bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/30 focus:outline-none focus:border-primary/50 transition-colors"
             />
           </div>
 
           {/* Status Filter Toggle */}
-          <div className="flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10 shrink-0 self-end md:self-auto">
+          <div className="flex items-center gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-xl border border-slate-200 dark:border-white/10 shrink-0 self-end md:self-auto">
             {(["all", "completed", "upcoming"] as const).map(st => (
               <button
                 key={st}
                 onClick={() => setMatchStatusFilter(st)}
                 className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${
                   matchStatusFilter === st
-                    ? "bg-primary text-black font-black shadow-md"
-                    : "text-white/40 hover:text-white"
+                    ? "bg-primary text-white font-black shadow-md"
+                    : "text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white"
                 }`}
               >
                 {st === "all" ? "All Fixtures" : st === "completed" ? "Results" : "Upcoming"}
@@ -269,8 +269,8 @@ function ScheduleView({ season, matches }: { season: string; matches: MatchSumma
             onClick={() => setSelectedFranchise("all")}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all whitespace-nowrap ${
               selectedFranchise === "all"
-                ? "bg-white text-black shadow-lg shadow-white/20 font-black"
-                : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/5"
+                ? "bg-slate-900 text-white dark:bg-white dark:text-black shadow-sm dark:shadow-lg dark:shadow-white/20 font-black"
+                : "bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-white/60 hover:bg-slate-200 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/5"
             }`}
           >
             <Shield className="w-3.5 h-3.5" />

@@ -24,6 +24,17 @@
   --ring: 263 83% 58%;
   --radius: 16px;
 
+  /* CENTRALIZED SEMANTIC THEME TOKENS (LIGHT) */
+  --theme-bg-page: #F8FAFC;
+  --theme-bg-card: #FFFFFF;
+  --theme-bg-card-subtle: #F1F5F9;
+  --theme-border: #E2E8F0;
+  --theme-border-subtle: #F1F5F9;
+  --theme-text-primary: #0F172A;
+  --theme-text-secondary: #334155;
+  --theme-text-muted: #64748B;
+  --theme-text-faint: #94A3B8;
+
   /* TEAM THEME DYNAMIC TOKENS (LIGHT DEFAULT) */
   --team-accent: #6366F1;
   --team-secondary: #0284C7;
@@ -54,6 +65,17 @@
   --input: 226 48% 15%;
   --ring: 263 83% 58%;
 
+  /* CENTRALIZED SEMANTIC THEME TOKENS (DARK) */
+  --theme-bg-page: #050816;
+  --theme-bg-card: #0B1020;
+  --theme-bg-card-subtle: rgba(255, 255, 255, 0.03);
+  --theme-border: rgba(255, 255, 255, 0.12);
+  --theme-border-subtle: rgba(255, 255, 255, 0.06);
+  --theme-text-primary: #FFFFFF;
+  --theme-text-secondary: rgba(255, 255, 255, 0.75);
+  --theme-text-muted: rgba(255, 255, 255, 0.60);
+  --theme-text-faint: rgba(255, 255, 255, 0.40);
+
   /* TEAM THEME DYNAMIC TOKENS (DARK DEFAULT) */
   --team-accent: #A8B7C7;
   --team-secondary: #06B6D4;
@@ -68,8 +90,8 @@
   --team-title-ink: color-mix(in srgb, var(--team-accent) 86%, #90a7c0);
   --team-title-surface: color-mix(in srgb, var(--team-accent) 14%, #060e20);
 }
-/* Preserve the white title; only its existing accent span follows the team. */
-.editorial-shell main:not([data-white-titles="true"]) h1:not(.home-hero-copy h1) > span {
+/* Preserve the white title; only its existing accent span follows the team. Exclude pulse and orange accents. */
+.editorial-shell main:not([data-white-titles="true"]) h1:not(.home-hero-copy h1):not(.pulse-heading) > span:not([class*="text-orange"]):not([class*="text-[#FF6B00]"]) {
   color: var(--team-title-ink);
 }
 
@@ -436,8 +458,8 @@ iframe[src*="gettyimages.com"] {
   padding: 0 !important;
 }
 
-.editorial-shell main[data-white-titles="true"] h1,
-.editorial-shell main[data-white-titles="true"] h1 > span { color:#fff; }
+.dark .editorial-shell main[data-white-titles="true"] h1,
+.dark .editorial-shell main[data-white-titles="true"] h1 > span { color:#fff; }
 
 /* Team-aware supporting labels, calls to action and analytical surfaces. */
 .franchise-eyebrow { color:var(--team-accent,#8ba7ff); }
@@ -469,3 +491,120 @@ iframe[src*="gettyimages.com"] {
 .dark .editorial-shell main :is([class*="to-purple-"],[class*="to-violet-"]) { --tw-gradient-to:#0a0e13; }
 .dark .editorial-shell main :is([class*="via-purple-"],[class*="via-violet-"]) { --tw-gradient-via:#10161d; }
 .dimension-slicing-scroll{scrollbar-width:thin;scrollbar-color:#ffffff35 transparent;scrollbar-gutter:stable}.dimension-slicing-scroll::-webkit-scrollbar{width:4px}.dimension-slicing-scroll::-webkit-scrollbar-track{background:transparent}.dimension-slicing-scroll::-webkit-scrollbar-thumb{background:#ffffff30;border-radius:8px}.dimension-slicing-scroll:hover::-webkit-scrollbar-thumb{background:#ffffff50}
+
+/* ==========================================================================
+   CENTRALIZED THEME DESIGN SYSTEM: GLOBAL UTILITY REMAPPING
+   Ensures 100% theme consistency across all CricField pages without breaking
+   component logic, buttons, or signature accents.
+   ========================================================================== */
+
+/* ── LIGHT MODE REMAPPING ── */
+html:not(.dark),
+[data-theme="light"] {
+  /* Page-level canvas & background overrides (covers bare hex and opacity variants e.g. /90, /95) */
+  :is(
+    [class*="bg-[#030612]"], [class*="bg-[#030712]"], [class*="bg-[#040814]"], [class*="bg-[#050814]"],
+    [class*="bg-[#050816]"], [class*="bg-[#050b14]"], [class*="bg-[#050B11]"], [class*="bg-[#060913]"],
+    [class*="bg-[#06111a]"], [class*="bg-[#06111b]"], [class*="bg-[#070b14]"], [class*="bg-[#070B18]"],
+    [class*="bg-[#070C15]"], [class*="bg-[#070C16]"], [class*="bg-[#070c16]"], [class*="bg-[#070c18]"],
+    [class*="bg-[#070e17]"], [class*="bg-[#080B16]"], [class*="bg-[#080d19]"], [class*="bg-[#080d1a]"],
+    [class*="bg-[#090c10]"], [class*="bg-[#090d16]"], [class*="bg-[#090E17]"], [class*="bg-[#090E20]"],
+    [class*="bg-[#0A0F1D]"], [class*="bg-[#030d14]"]
+  ) {
+    background-color: var(--theme-bg-page) !important;
+  }
+
+  /* Card-level surfaces & containers */
+  :is(
+    [class*="bg-[#08131F]"], [class*="bg-[#081622]"], [class*="bg-[#0B1020]"], [class*="bg-[#0b1020]"],
+    [class*="bg-[#0B1118]"], [class*="bg-[#0B1220]"], [class*="bg-[#0b1220]"], [class*="bg-[#0B1226]"],
+    [class*="bg-[#0B1328]"], [class*="bg-[#0B132B]"], [class*="bg-[#0B1528]"], [class*="bg-[#0c1427]"],
+    [class*="bg-[#0C1322]"], [class*="bg-[#0C1E3C]"], [class*="bg-[#0d1424]"], [class*="bg-[#0e1218]"],
+    [class*="bg-[#0e1524]"], [class*="bg-[#0E1728]"], [class*="bg-[#101726]"], [class*="bg-[#101830]"],
+    [class*="bg-[#101F2D]"], [class*="bg-[#101F3C]"], [class*="bg-[#111722]"], [class*="bg-[#111820]"],
+    [class*="bg-[#121820]"], [class*="bg-[#121a33]"], [class*="bg-[#141d30]"], [class*="bg-[#14212A]"],
+    [class*="bg-[#162634]"], [class*="bg-[#192D3C]"], [class*="bg-[#090E1A]"]
+  ) {
+    background-color: var(--theme-bg-card) !important;
+  }
+
+  /* Subtle card / list item surfaces */
+  :is(
+    .bg-white\/\[0\.02\], .bg-white\/\[0\.03\], .bg-white\/\[0\.04\],
+    .bg-white\/\[0\.05\], .bg-white\/\[0\.06\], .bg-white\/\[0\.08\],
+    .bg-white\/5
+  ) {
+    background-color: var(--theme-bg-card-subtle) !important;
+  }
+
+  /* Subtle border overrides */
+  :is(
+    .border-white\/5, .border-white\/10, .border-white\/15, .border-white\/20,
+    .border-white\/\[0\.04\], .border-white\/\[0\.05\], .border-white\/\[0\.08\],
+    .border-white\/\[0\.1\], .border-\[\#19303c\], .border-\[\#1c3242\],
+    .border-\[\#182436\]
+  ) {
+    border-color: var(--theme-border) !important;
+  }
+
+  /* Hero & banner gradient masks in light mode */
+  :is(
+    .from-\[\#050816\], .from-\[\#050b14\], .from-\[\#070c16\], .from-\[\#090E1A\]
+  ) {
+    --tw-gradient-from: #F8FAFC !important;
+  }
+  :is(
+    .via-\[\#050816\], .via-\[\#050b14\], .via-\[\#070c16\], .via-\[\#090E1A\]
+  ) {
+    --tw-gradient-via: #F8FAFC !important;
+  }
+  :is(
+    .to-\[\#050816\], .to-\[\#050b14\], .to-\[\#070c16\], .to-\[\#090E1A\]
+  ) {
+    --tw-gradient-to: #F8FAFC !important;
+  }
+
+  /* Text colors: adapt dark-mode text to clean, accessible dark slate,
+     while carefully preserving text on colored buttons, badges, and accents */
+  :is(
+    h1, h2, h3, h4, h5, h6, p, label, th, td
+  ):is(.text-white):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="from-"]):not(.badge):not(.btn) {
+    color: var(--theme-text-primary) !important;
+  }
+
+  :is(div, span, a):is(.text-white):not([class*="bg-"]):not([class*="from-"]):not(.badge):not(.btn):not([role="button"]):not(.franchise-action):not([aria-current="page"]):not([aria-current="true"]) {
+    color: var(--theme-text-primary) !important;
+  }
+
+  :is(div, span, p, label, h1, h2, h3, h4, a):is(.text-white\/90, .text-white\/80, .text-white\/75, .text-white\/70):not([class*="bg-"]):not([class*="from-"]):not(.badge) {
+    color: var(--theme-text-secondary) !important;
+  }
+
+  :is(div, span, p, label, h1, h2, h3, h4, a):is(.text-white\/60, .text-white\/50):not([class*="bg-"]):not([class*="from-"]):not(.badge) {
+    color: var(--theme-text-muted) !important;
+  }
+
+  :is(div, span, p, label, a):is(.text-white\/40, .text-white\/30, .text-white\/20):not([class*="bg-"]):not([class*="from-"]):not(.badge) {
+    color: var(--theme-text-faint) !important;
+  }
+}
+
+/* ── DARK MODE CONTRAST BOOST (WCAG AA Compliance) ── */
+.dark,
+[data-theme="dark"] {
+  /* Boost 5% borders to 12% so cards are crisp and discernible */
+  :is(.border-white\/5, .border-white\/\[0\.04\], .border-white\/\[0\.05\]) {
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+  :is(.border-white\/10) {
+    border-color: rgba(255, 255, 255, 0.16) !important;
+  }
+
+  /* Boost low-contrast muted text for WCAG AA compliance (4.5:1 ratio) */
+  :is(.text-white\/40, .text-white\/35, .text-white\/30) {
+    color: rgba(255, 255, 255, 0.58) !important;
+  }
+  :is(.text-white\/50, .text-white\/60) {
+    color: rgba(255, 255, 255, 0.75) !important;
+  }
+}

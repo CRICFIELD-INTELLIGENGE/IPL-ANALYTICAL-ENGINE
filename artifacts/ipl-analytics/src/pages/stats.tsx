@@ -965,29 +965,29 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       <div className="h-[260vh]">
         <motion.div
           style={{ scale: masterScale }}
-          className="team-analytics-page sticky top-0 w-full h-screen flex flex-col gap-2.5 overflow-hidden bg-[#050816] p-2.5 pb-0 origin-top"
+          className="team-analytics-page sticky top-0 w-full h-screen flex flex-col gap-2.5 overflow-hidden bg-slate-50 dark:bg-[#050816] p-2.5 pb-0 origin-top"
         >
           {/* ROW 1: HERO + KPI PANEL */}
           <motion.div className="flex gap-2.5 shrink-0" style={{ height: heroH }}>
-            <motion.div style={{ width: heroW }} className="relative bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden shrink-0 group">
+            <motion.div style={{ width: heroW }} className="relative bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 overflow-hidden shrink-0 group shadow-sm dark:shadow-2xl">
               <div className="absolute inset-0">
-                <img src="/advance stats title image.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-70" />
+                <img src="/advance stats title image.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-20 dark:opacity-70" />
                 <div className="absolute inset-0 bg-gradient-to-br stats-team-overlay" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-[#050816]/70 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-[#050816] dark:via-[#050816]/70 dark:to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent dark:from-[#050816]/80 to-transparent" />
                 <div className="absolute inset-0 opacity-[0.03] bg-grid-40" />
               </div>
               <motion.div style={{ paddingTop: padTop, paddingLeft: padLeft, opacity: titleOp }} className="relative z-10 h-full flex flex-col">
                 <div className="absolute inset-0 bg-black/5" />
                 <div className="relative z-10 flex flex-col items-start">
-                  <motion.h1 style={{ fontSize: titleSz, lineHeight: '0.9', marginBottom: '8px' }} className="font-black leading-[0.82] text-white uppercase tracking-tighter mb-4 scale-x-105 origin-left">
+                  <motion.h1 style={{ fontSize: titleSz, lineHeight: '0.9', marginBottom: '8px' }} className="font-black leading-[0.82] text-slate-900 dark:text-white uppercase tracking-tighter mb-4 scale-x-105 origin-left">
                     {scrollCaption === "STATS CENTER." ? (<><div className="mb-1">ADVANCED</div><span className="text-[#3B82F6] block">STATS.</span></>) :
                       scrollCaption === "BATTER INTEL." ? (<><div className="mb-1">BATTER</div><span className="text-[#F9CD05] block">INTEL.</span></>) :
                         scrollCaption === "BOWLER ARSENAL." ? (<><div className="mb-1">BOWLER</div><span className="text-[#8B5CF6] block">ARSENAL.</span></>) :
                           (<><div className="mb-1">VENUE</div><span className="text-[#10B981] block">ORACLE.</span></>)}
                   </motion.h1>
-                  <motion.p className="text-white/50 text-[13px] max-w-[420px] font-medium tracking-tight">
-                    <span className="text-white/80 font-black mr-2 uppercase tracking-widest">Statsguru Depth:</span>
+                  <motion.p className="text-slate-600 dark:text-white/50 text-[13px] max-w-[420px] font-medium tracking-tight">
+                    <span className="text-slate-900 dark:text-white/80 font-black mr-2 uppercase tracking-widest">Statsguru Depth:</span>
                     Dimensional slicing across {overview.data?.totalMatches ?? "—"} matches and {overview.data?.seasons ?? "—"} seasons of high-fidelity IPL telemetry.
                   </motion.p>
                 </div>
@@ -995,20 +995,20 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
             </motion.div>
 
             {/* KPI STRIP CARD */}
-            <motion.div style={{ width: col2W, opacity: r1Op, x: r1X }} className="bg-[#0B1020] rounded-[24px] border border-white/10 flex flex-col overflow-hidden shadow-2xl min-w-0">
-              <div className="p-3 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
+            <motion.div style={{ width: col2W, opacity: r1Op, x: r1X }} className="bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 flex flex-col overflow-hidden shadow-sm dark:shadow-2xl min-w-0">
+              <div className="p-3 border-b border-slate-200 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-white/[0.02]">
                 <div className="flex items-center gap-2">
-                  <Cpu className="w-3.5 h-3.5 text-blue-400" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-white/60">Analytical KPI Strip</span>
+                  <Cpu className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-white/60">Analytical KPI Strip</span>
                 </div>
-                <span className="text-[8px] font-mono text-white/20">TELEMETRY_v4.2</span>
+                <span className="text-[8px] font-mono text-slate-400 dark:text-white/20">TELEMETRY_v4.2</span>
               </div>
               <div className="flex-1 p-3 grid grid-cols-4 gap-2 content-center">
                 {kpis.map(k => (
-                  <div key={k.label} className="flex flex-col items-center gap-1 py-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all group">
+                  <div key={k.label} className="flex flex-col items-center gap-1 py-3 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all group">
                     <k.Icon className="w-4 h-4 transition-transform group-hover:scale-110 text-[var(--kpi-color)]" style={{ "--kpi-color": k.accent } as React.CSSProperties} />
-                    <motion.span className="text-[13px] font-black text-white [text-shadow:0_0_12px_var(--kpi-shadow)]" style={{ "--kpi-shadow": `${k.accent}33` } as React.CSSProperties}>{k.value}</motion.span>
-                    <motion.span className="text-[7px] font-black text-white/30 uppercase tracking-tighter text-center">{k.label}</motion.span>
+                    <motion.span className="text-[13px] font-black text-slate-900 dark:text-white [text-shadow:0_0_12px_var(--kpi-shadow)]" style={{ "--kpi-shadow": `${k.accent}33` } as React.CSSProperties}>{k.value}</motion.span>
+                    <motion.span className="text-[7px] font-black text-slate-500 dark:text-white/30 uppercase tracking-tighter text-center">{k.label}</motion.span>
                   </div>
                 ))}
               </div>

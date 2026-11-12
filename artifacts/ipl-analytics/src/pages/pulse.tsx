@@ -142,8 +142,8 @@ export default function PulsePage() {
                   {phase.name}
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-                AUCTION <span className="text-orange-500">PULSE.</span>
+              <h1 className="pulse-heading text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                AUCTION <span className="text-[#FF6B00]">PULSE.</span>
               </h1>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-white/60 max-w-2xl mt-0.5">
                 Every bid. Every player. Every franchise decision. Retentions, live transactions, and final squads in one centralized intelligence desk.
