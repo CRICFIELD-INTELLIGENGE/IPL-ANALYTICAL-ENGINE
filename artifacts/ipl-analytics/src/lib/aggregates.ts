@@ -405,7 +405,10 @@ const fetchJson = async <T>(file: string): Promise<T> => {
   try {
     const res = await fetch(apiEndpoint);
     if (res.ok) {
-      return (await res.json()) as T;
+      const data = await res.json();
+      if (data !== null && data !== undefined) {
+        return data as T;
+      }
     }
   } catch {
     // API server or proxy unreachable, seamlessly try static fallback
