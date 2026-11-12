@@ -38,13 +38,87 @@ function auctionPhase() {
 
 export default function PulsePage() {
   const phase = useMemo(auctionPhase, []);
-  const [season, setSeason] = useState<number | null>(null);
-  const [tab, setTab] = useState<PulseTab>(phase.tab);
+
+  // Initialize season from URL param or default
+  const [season, setSeasonState] = useState<number | null>(() => {
+    if (typeof window !== "undefined") {
+      const s = new URLSearchParams(window.location.search).get("season");
+      if (s && !isNaN(Number(s))) return Number(s);
+    }
+    return null;
+  });
+
+  // Initialize tab from URL param or phase default
+  const [tab, setTabState] = useState<PulseTab>(() => {
+    if (typeof window !== "undefined") {
+      const p = new URLSearchParams(window.location.search).get("tab");
+      if (p) {
+        const found = PULSE_TABS.find(
+          t => t.toLowerCase() === p.toLowerCase() || t.toLowerCase() === p.replace(/[-_]/g, " ").toLowerCase()
+        );
+        if (found) return found;
+      }
+    }
+    return "Overview";
+  });
+
   // 2027 only once the desk has lots; until then the verified 2026 auction is the working demo.
   const probe = useIpl2027Desk();
   const active = season ?? (probe.data?.lots.length ? 2027 : 2026);
   const pulse = usePulseAuction(active);
   const { model } = pulse;
+
+  // History-aware tab switcher: pushes state so browser Back goes back to previous tab (e.g. Overview)
+  const setTab = (newTab: PulseTab, pushHistory = true) => {
+    setTabState(newTab);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      if (newTab === "Overview") {
+        url.searchParams.delete("tab");
+      } else {
+        url.searchParams.set("tab", newTab);
+      }
+      const nextUrl = url.pathname + (url.search ? url.search : "");
+      const currentFull = window.location.pathname + window.location.search;
+      if (pushHistory && currentFull !== nextUrl) {
+        window.history.pushState({ tab: newTab, season: active }, "", nextUrl);
+      } else if (!pushHistory) {
+        window.history.replaceState({ tab: newTab, season: active }, "", nextUrl);
+      }
+    }
+  };
+
+  const setSeason = (newSeason: number | null) => {
+    setSeasonState(newSeason);
+    if (typeof window !== "undefined" && newSeason != null) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("season", String(newSeason));
+      window.history.replaceState({ tab, season: newSeason }, "", url.pathname + url.search);
+    }
+  };
+
+  // Synchronize with browser Back / Forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab");
+      if (tabParam) {
+        const found = PULSE_TABS.find(
+          t => t.toLowerCase() === tabParam.toLowerCase() || t.toLowerCase() === tabParam.replace(/[-_]/g, " ").toLowerCase()
+        );
+        setTabState(found ?? "Overview");
+      } else {
+        setTabState("Overview");
+      }
+      const seasonParam = params.get("season");
+      if (seasonParam && !isNaN(Number(seasonParam))) {
+        setSeasonState(Number(seasonParam));
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
 
   const [captionIndex, setCaptionIndex] = useState(0);
   const captions = [
@@ -258,6 +332,22 @@ export default function PulsePage() {
               open={() => { setSeason(2027); setTab("Overview"); }}
               back={() => setSeason(2026)}
             />
+          )}
+
+          {/* In-page Back to Overview navigation bar */}
+          {tab !== "Overview" && (
+            <div className="flex items-center justify-between py-1 px-1">
+              <button
+                onClick={() => setTab("Overview")}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-white/80 hover:text-white text-xs font-bold transition-all group shadow-sm cursor-pointer"
+              >
+                <span className="text-orange-400 group-hover:-translate-x-0.5 transition-transform font-bold">←</span>
+                <span>Back to Overview</span>
+              </button>
+              <div className="text-[11px] font-mono text-white/40">
+                Viewing: <span className="text-white/80 font-bold">{tab}</span>
+              </div>
+            </div>
           )}
 
           {pulse.loading ? (

@@ -5,7 +5,7 @@ let trail:Entry[]=[];let current='';let version=0;const listeners=new Set<()=>vo
 const emit=()=>{version++;listeners.forEach(fn=>fn());};
 const fullPath=()=>location.pathname+location.search+location.hash;
 const internal=(value:string)=>{try{const url=new URL(value,location.origin);return value.startsWith('/')&&!value.startsWith('//')&&url.origin===location.origin;}catch{return false;}};
-export function routeLabel(path:string){const base=path.split(/[?#]/)[0];const labels:Record<string,string>={scores:'Scores & Match Center',intelligence:'Intelligence Hub',feed:'Intel Feed',scout:'Scout Lab',home:'Home',stats:'Tournament Stats',dugout:'Dugout',teams:'Teams',venues:'Venues',players:'Players'};const segments=base.split('/').filter(Boolean);return /^(match|matches)$/.test(segments[0])?`Match #${segments[1]}`:labels[segments[0]]??'Previous Page';}
+export function routeLabel(path:string){const base=path.split(/[?#]/)[0];const labels:Record<string,string>={scores:'Scores & Match Center',intelligence:'Intelligence Hub',feed:'Intel Feed',scout:'Scout Lab',home:'Home',stats:'Tournament Stats',dugout:'Dugout',teams:'Teams',venues:'Venues',players:'Players',pulse:'Auction Pulse'};const segments=base.split('/').filter(Boolean);return /^(match|matches)$/.test(segments[0])?`Match #${segments[1]}`:labels[segments[0]]??'Previous Page';}
 export function RouteHistoryTracker(){
  const [route]=useLocation();
  useEffect(()=>{
