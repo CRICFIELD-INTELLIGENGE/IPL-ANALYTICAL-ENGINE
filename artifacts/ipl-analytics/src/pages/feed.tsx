@@ -296,9 +296,9 @@ export default function FeedPage() {
             <section>
               <SectionHead title="Franchise coverage" sub="Pick a team to see its stories." />
               <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter stories by franchise">
-                <TeamChip active={!team} onClick={() => { setTeam(null); setSelectedTeam(null); setLatestTeam(null); }}>ALL</TeamChip>
+                <TeamChip active={!team} onClick={() => { setTeam(null); }}>ALL</TeamChip>
                 {HUB_TEAMS.map((t) => (
-                  <TeamChip color={TEAM_REGISTRY[t].accent} key={t} active={team === t} onClick={() => { setTeam(t); setSelectedTeam(t); setLatestTeam(t); }}>
+                  <TeamChip color={TEAM_REGISTRY[t].accent} key={t} active={team === t} onClick={() => { setTeam(t); }}>
                     <img src={TEAM_REGISTRY[t].logoImg} alt="" className="w-4 h-4 object-contain" /> {t}
                   </TeamChip>
                 ))}

@@ -113,7 +113,12 @@ export function ScoutCinematicRoom({
   isShortlisted,
   onApplyPreset,
 }: ScoutCinematicRoomProps) {
-  const { selectedTeam, setSelectedTeam, theme, allTeams } = useTeamTheme();
+  const { selectedTeam, allTeams } = useTeamTheme();
+  const [localTeam, setLocalTeam] = useState<TeamCode | null>(selectedTeam);
+
+  useEffect(() => {
+    setLocalTeam(selectedTeam);
+  }, [selectedTeam]);
   const [franchiseDropdownOpen, setFranchiseDropdownOpen] = useState(false);
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
@@ -126,13 +131,13 @@ export function ScoutCinematicRoom({
   const [analystBusy, setAnalystBusy] = useState(false);
   const [askedQuestion, setAskedQuestion] = useState('');
   const [conversation, setConversation] = useState<ScoutTurn[]>([]);
-  useEffect(() => { setConversation([]); setAnalystAnswer(null); onAiCandidates([]); }, [selectedTeam]);
+  useEffect(() => { setConversation([]); setAnalystAnswer(null); onAiCandidates([]); }, [localTeam]);
   const [, navigateToResults] = useLocation();
   const askScout = async () => {
     const question = searchQuery.trim();
     if (question.length < 3) return;
     setSuggestionsOpen(false);
-    navigateToResults(`/scout/results?q=${encodeURIComponent(question)}${selectedTeam ? `&team=${selectedTeam}` : ''}`);
+    navigateToResults(`/scout/results?q=${encodeURIComponent(question)}${localTeam ? `&team=${localTeam}` : ''}`);
   };
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(0);
@@ -304,10 +309,10 @@ export function ScoutCinematicRoom({
             <div className="flex items-center gap-1 bg-white/90 dark:bg-[#071018]/90 p-1 rounded-2xl border border-slate-200 dark:border-white/10 shadow-md dark:shadow-lg backdrop-blur-md">
               <button
                 type="button"
-                onClick={() => setSelectedTeam(null)}
-                aria-pressed={!selectedTeam}
+                onClick={() => setLocalTeam(null)}
+                aria-pressed={!localTeam}
                 className={`px-2.5 py-1 rounded-xl text-[10px] font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  !selectedTeam
+                  !localTeam
                     ? "bg-[var(--team-accent)] text-[#050B11] shadow-[0_0_12px_rgba(184,243,107,0.5)] scale-105"
                     : "text-slate-600 dark:text-[#8E9FA9] hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
                 }`}
@@ -320,12 +325,12 @@ export function ScoutCinematicRoom({
               <div className="w-px h-4 bg-slate-200 dark:bg-white/10 mx-0.5" />
 
               {allTeams.map((t) => {
-                const isCur = selectedTeam === t.id;
+                const isCur = localTeam === t.id;
                 return (
                   <button
                     key={t.id}
                     type="button"
-                    onClick={() => setSelectedTeam(t.id)}
+                    onClick={() => setLocalTeam(t.id)}
                     aria-pressed={isCur}
                     title={`${t.name} (${t.shortName}) Dugout Palette`}
                     className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl p-1 border transition-all flex items-center justify-center cursor-pointer relative ${
@@ -1093,7 +1098,7 @@ export function ScoutCinematicRoom({
                   <p className="mb-2 font-bold">Recruitment fit · {theme?.shortName ?? 'All teams'}</p>
                   {[['Discipline', selectedPlayer.discipline === discipline], ['Role', !role || selectedPlayer.role?.label?.toLowerCase().replaceAll(' ', '_').includes(role)], ['Phase', phase === 'all' || selectedPlayer.phase === phase], ['League', !selectedComps.length || selectedComps.includes(selectedPlayer.competition)], ['Minimum sample', selectedPlayer.balls >= minBalls]].map(([label, matched]) => <p key={String(label)} className="flex justify-between py-1 text-slate-400"><span>{String(label)}</span><span>{matched ? '✓ Matched' : 'Not matched'}</span></p>)}
                   <p className="mt-2 text-[10px] text-slate-500">Age, handedness, nationality, uncapped status and auction availability require verification.</p>
-                  <div className="mt-3 flex flex-wrap gap-3"><Link href={`/scout/player/${selectedPlayer.cricsheet_id}`}>Player report ↗</Link><Link href={`/ai-analyst/squad-dna?team=${selectedTeam ?? 'RCB'}`}>Team requirements ↗</Link><Link href={`/ai-analyst/auction-war-room?team=${selectedTeam ?? ''}&q=${encodeURIComponent(selectedPlayer.name)}`}>IPL 2027 recruitment ↗</Link></div>
+                  <div className="mt-3 flex flex-wrap gap-3"><Link href={`/scout/player/${selectedPlayer.cricsheet_id}`}>Player report ↗</Link><Link href={`/ai-analyst/squad-dna?team=${localTeam ?? 'RCB'}`}>Team requirements ↗</Link><Link href={`/ai-analyst/auction-war-room?team=${localTeam ?? ''}&q=${encodeURIComponent(selectedPlayer.name)}`}>IPL 2027 recruitment ↗</Link></div>
                 </div>
 }
                 {/* Dossier Header: Avatar + Specs + SHORTLIST Badge */}
@@ -1270,7 +1275,7 @@ export function ScoutCinematicRoom({
                 </div>
 
 
-                <div className="flex flex-wrap gap-3 pt-3 text-[10px] text-slate-400"><Link href={`/ai-analyst/squad-dna?team=${selectedTeam ?? 'RCB'}`} className="hover:text-white underline">Review team needs ↗</Link><Link href={`/ai-analyst/auction-war-room?team=${selectedTeam ?? ''}`} className="hover:text-white underline">Recruitment board ↗</Link></div>
+                <div className="flex flex-wrap gap-3 pt-3 text-[10px] text-slate-400"><Link href={`/ai-analyst/squad-dna?team=${localTeam ?? 'RCB'}`} className="hover:text-white underline">Review team needs ↗</Link><Link href={`/ai-analyst/auction-war-room?team=${localTeam ?? ''}`} className="hover:text-white underline">Recruitment board ↗</Link></div>
                 <div className="pt-3 text-xs" aria-live="polite">
                   {evaluation ? <><p className="font-bold" style={{ color: accentColor }}>SRH custom fit · {evaluation.suitabilityScore.toFixed(1)}/10</p><p className="mt-1 text-[10px] text-slate-500">{evaluation.complete ? 'All criteria have evidence.' : `Confirmed points; possible range ${evaluation.suitabilityScore.toFixed(1)}–${evaluation.maximumPossible.toFixed(1)}. Missing attributes remain unknown.`}</p></> : <p className="text-slate-500">Shortlist a player to inspect their fit.</p>}
                   <p className="mt-2 text-[9px] text-slate-500">Custom SRH blueprint: power 2 · left-arm 1.5 · death bowling 2 · uncapped 1 · overseas 1.5 · finisher 2. Not an official recruitment rating.</p>

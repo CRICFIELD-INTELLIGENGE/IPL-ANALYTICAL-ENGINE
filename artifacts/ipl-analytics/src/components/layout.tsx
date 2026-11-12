@@ -157,8 +157,8 @@ export function Layout({
         </div>
 
         <div className="ml-auto flex items-center gap-2 shrink-0">
-          <ThemeToggle />
           <TeamSwitcher />
+          <ThemeToggle />
           {/* AI Analyst lives in the floating assistant launcher, not the header. */}
           {supabaseConfigured && <>
             <Link href="/account" className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200 py-2"><UserRound size={16}/><span className="hidden sm:inline">Account</span></Link>

@@ -162,7 +162,6 @@ export default function DugoutPage() {
   }, [record.data, teams.data, currentTeam, playedSeasons, rival, activeTeamCode]);
 
   const handlePickFranchise = (code: TeamCode) => {
-    setSelectedTeam(code);
     const slug = TEAM_CODE_TO_SLUG[code] ?? code.toLowerCase();
     setLocation(`/dugout/${slug}`);
   };

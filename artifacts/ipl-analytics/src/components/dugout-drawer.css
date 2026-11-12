@@ -1,44 +1,371 @@
-.franchise-center{flex:1;min-width:0;display:flex;justify-content:center;padding:0 8px}.franchise-expander{display:flex;align-items:center;min-width:0;max-width:100%;height:44px;border:1px solid #ffffff1a;border-radius:12px;background:#10171ec9;backdrop-filter:blur(18px)}.franchise-center.is-expanded .franchise-expander{width:100%}.franchise-current{display:flex;align-items:center;justify-content:center;gap:7px;flex-shrink:0;padding:0 11px;height:38px;font-size:11px;color:#d7e0eb;cursor:pointer}.franchise-current img{height:23px;width:23px;object-fit:contain}.franchise-inline-options{display:flex;align-items:center;min-width:0;flex:1;border-left:1px solid #ffffff14}.franchise-inline-scroll{display:flex;align-items:center;gap:4px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;flex:1;min-width:0;padding:1px 6px}.franchise-inline-scroll::-webkit-scrollbar{display:none}.franchise-inline-scroll button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;flex:1 0 36px;height:38px;border-radius:7px;color:#96a5b7;cursor:pointer}.franchise-inline-scroll img{height:23px;width:23px;object-fit:contain}.franchise-inline-scroll span{font-size:7px;font-weight:750;line-height:1}.franchise-inline-scroll button:hover{background:color-mix(in srgb,var(--crest-accent,#a8b7c7) 12%,transparent);color:#fff}.franchise-inline-scroll button[aria-pressed=true]{background:#ffffff0c;box-shadow:inset 0 -2px var(--crest-accent,#a8b7c7)}.franchise-collapse{display:flex;align-items:center;justify-content:center;flex-shrink:0;height:30px;width:27px;margin-right:4px;color:#8897a9;cursor:pointer}.franchise-collapse:hover{color:#fff}.franchise-expander button:focus-visible{outline:2px solid #b5c3d3;outline-offset:-2px}@media(max-width:640px){.franchise-center{padding:0}.franchise-center.is-expanded .franchise-current{padding:0 6px}.franchise-center.is-expanded .franchise-current>span,.franchise-center.is-expanded .franchise-current>svg:last-child{display:none}.franchise-current{padding:0 7px}.franchise-current>span{display:none}}
+/* ==========================================================================
+   CRICFIELD MASTER FRANCHISE SWITCHER (NAVBAR)
+   ========================================================================== */
 
-/* Right-anchored control expands into the free header space to its left. */
-.franchise-center{position:relative;flex:0 0 auto;padding:0;justify-content:flex-end;z-index:2}
-.franchise-center .franchise-expander{height:40px;flex-direction:row-reverse;overflow:hidden}
-.franchise-center.is-expanded .franchise-expander{position:absolute;right:0;top:50%;transform:translateY(-50%);width:min(660px,calc(100vw - 220px));max-width:none;background:#0c121bf5;box-shadow:0 6px 24px #0005}
-.franchise-center.is-expanded{min-width:90px;height:40px}
-.franchise-inline-options{border-left:0;border-right:1px solid #ffffff14;flex-direction:row-reverse}
-.franchise-collapse{margin-right:0;margin-left:4px}
-@media(max-width:767px){.franchise-center.is-expanded .franchise-expander{width:calc(100vw - 100px)}.franchise-center.is-expanded{min-width:40px}}
-
-/* Light Mode Overrides */
-html:not(.dark) .franchise-expander, [data-theme="light"] .franchise-expander {
-  background: #ffffff;
-  border-color: #e2e8f0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+.franchise-center {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 25;
 }
-html:not(.dark) .franchise-current, [data-theme="light"] .franchise-current {
+
+.franchise-center .franchise-expander {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  height: 38px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.franchise-center.is-expanded {
+  min-width: 90px;
+  height: 38px;
+}
+
+.franchise-center.is-expanded .franchise-expander {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(670px, calc(100vw - 230px));
+  max-width: none;
+  background: rgba(11, 16, 32, 0.98);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Trigger Button */
+.franchise-current {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex-shrink: 0;
+  padding: 0 10px;
+  height: 36px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #f1f5f9;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.15s ease;
+}
+
+.franchise-current:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.franchise-current .trigger-crest {
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 1.5px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.franchise-current .trigger-crest img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.franchise-current .trigger-shield {
+  color: #94a3b8;
+}
+
+/* Inline Options Strip */
+.franchise-inline-options {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  flex-direction: row-reverse;
+}
+
+.franchise-inline-scroll {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  flex: 1;
+  min-width: 0;
+  padding: 1px 4px;
+}
+
+.franchise-inline-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Team Buttons */
+.franchise-inline-scroll button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5px;
+  flex: 1 0 40px;
+  min-width: 38px;
+  height: 36px;
+  border-radius: 8px;
+  padding: 1px 2px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.franchise-inline-scroll button span {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: #94a3b8;
+  transition: color 0.15s ease;
+}
+
+/* Uniform Circular Crest Container */
+.franchise-inline-scroll .team-crest-badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 1px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.15s ease;
+}
+
+.franchise-inline-scroll .team-crest-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ALL Badge */
+.franchise-inline-scroll .all-badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.15s ease;
+}
+
+/* Hover States */
+.franchise-inline-scroll button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.franchise-inline-scroll button:hover span {
+  color: #ffffff;
+}
+.franchise-inline-scroll button:hover .team-crest-badge,
+.franchise-inline-scroll button:hover .all-badge {
+  transform: scale(1.12);
+}
+
+/* Active / Pressed State */
+.franchise-inline-scroll button[aria-pressed=true] {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 -2px var(--crest-accent, #38bdf8);
+}
+.franchise-inline-scroll button[aria-pressed=true] .team-crest-badge {
+  box-shadow: 0 0 0 1.5px var(--crest-accent, #38bdf8);
+  transform: scale(1.08);
+}
+.franchise-inline-scroll button[aria-pressed=true] .all-badge {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #60a5fa;
+  transform: scale(1.08);
+}
+.franchise-inline-scroll button[aria-pressed=true] span {
+  color: var(--crest-accent, #ffffff);
+  font-weight: 900;
+}
+
+/* Close Collapse Button */
+.franchise-collapse {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 30px;
+  width: 28px;
+  border-radius: 8px;
+  margin-left: 4px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.franchise-collapse:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.franchise-expander button:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: -2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .franchise-center.is-expanded .franchise-expander {
+    width: calc(100vw - 110px);
+  }
+  .franchise-center.is-expanded {
+    min-width: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .franchise-center {
+    padding: 0;
+  }
+  .franchise-center.is-expanded .franchise-current {
+    padding: 0 6px;
+  }
+  .franchise-center.is-expanded .franchise-current > span,
+  .franchise-center.is-expanded .franchise-current > svg:last-child {
+    display: none;
+  }
+  .franchise-current {
+    padding: 0 6px;
+  }
+  .franchise-current > span {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   LIGHT MODE OVERRIDES
+   ========================================================================== */
+
+html:not(.dark) .franchise-expander,
+[data-theme="light"] .franchise-expander {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+html:not(.dark) .franchise-center.is-expanded .franchise-expander,
+[data-theme="light"] .franchise-center.is-expanded .franchise-expander {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+html:not(.dark) .franchise-current,
+[data-theme="light"] .franchise-current {
   color: #0f172a;
 }
-html:not(.dark) .franchise-center.is-expanded .franchise-expander, [data-theme="light"] .franchise-center.is-expanded .franchise-expander {
+html:not(.dark) .franchise-current:hover,
+[data-theme="light"] .franchise-current:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+html:not(.dark) .franchise-current .trigger-crest,
+[data-theme="light"] .franchise-current .trigger-crest {
   background: #ffffff;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   border-color: #cbd5e1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
-html:not(.dark) .franchise-inline-options, [data-theme="light"] .franchise-inline-options {
-  border-right-color: #e2e8f0;
-}
-html:not(.dark) .franchise-inline-scroll button, [data-theme="light"] .franchise-inline-scroll button {
+
+html:not(.dark) .franchise-current .trigger-shield,
+[data-theme="light"] .franchise-current .trigger-shield {
   color: #475569;
 }
-html:not(.dark) .franchise-inline-scroll button:hover, [data-theme="light"] .franchise-inline-scroll button:hover {
-  background: rgba(0, 0, 0, 0.04);
-  color: #0f172a;
+
+html:not(.dark) .franchise-inline-options,
+[data-theme="light"] .franchise-inline-options {
+  border-right-color: #e2e8f0;
 }
-html:not(.dark) .franchise-inline-scroll button[aria-pressed=true], [data-theme="light"] .franchise-inline-scroll button[aria-pressed=true] {
-  background: #f1f5f9;
+
+html:not(.dark) .franchise-inline-scroll button,
+[data-theme="light"] .franchise-inline-scroll button {
+  color: #475569;
 }
-html:not(.dark) .franchise-collapse, [data-theme="light"] .franchise-collapse {
+
+html:not(.dark) .franchise-inline-scroll button span,
+[data-theme="light"] .franchise-inline-scroll button span {
   color: #64748b;
 }
-html:not(.dark) .franchise-collapse:hover, [data-theme="light"] .franchise-collapse:hover {
+
+html:not(.dark) .franchise-inline-scroll .team-crest-badge,
+[data-theme="light"] .franchise-inline-scroll .team-crest-badge {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+html:not(.dark) .franchise-inline-scroll .all-badge,
+[data-theme="light"] .franchise-inline-scroll .all-badge {
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #cbd5e1;
+}
+
+html:not(.dark) .franchise-inline-scroll button:hover,
+[data-theme="light"] .franchise-inline-scroll button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+html:not(.dark) .franchise-inline-scroll button:hover span,
+[data-theme="light"] .franchise-inline-scroll button:hover span {
+  color: #0f172a;
+}
+
+html:not(.dark) .franchise-inline-scroll button[aria-pressed=true],
+[data-theme="light"] .franchise-inline-scroll button[aria-pressed=true] {
+  background: #f8fafc;
+  box-shadow: inset 0 -2px var(--crest-accent, #2563eb);
+}
+
+html:not(.dark) .franchise-inline-scroll button[aria-pressed=true] span,
+[data-theme="light"] .franchise-inline-scroll button[aria-pressed=true] span {
+  color: #0f172a;
+  font-weight: 900;
+}
+
+html:not(.dark) .franchise-inline-scroll button[aria-pressed=true] .all-badge,
+[data-theme="light"] .franchise-inline-scroll button[aria-pressed=true] .all-badge {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #1d4ed8;
+}
+
+html:not(.dark) .franchise-collapse,
+[data-theme="light"] .franchise-collapse {
+  color: #64748b;
+}
+
+html:not(.dark) .franchise-collapse:hover,
+[data-theme="light"] .franchise-collapse:hover {
+  background: rgba(0, 0, 0, 0.06);
   color: #0f172a;
 }

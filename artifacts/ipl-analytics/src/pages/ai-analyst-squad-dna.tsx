@@ -44,7 +44,6 @@ export default function SquadDnaPage() {
   const pickTeam = (t: string) => {
     setTeamState(t); setSeason(undefined); setCmp(null); setCmpSeason(undefined);
     writeParams({ team: t, season: null, compare: null, compareSeason: null });
-    if (isTeamCode(t) && t !== selectedTeam) setSelectedTeam(t);
   };
   // Changing the team in the site header while here follows it.
   const mounted = useRef(false);
