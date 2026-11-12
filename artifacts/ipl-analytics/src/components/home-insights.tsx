@@ -36,16 +36,10 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
         const aspect = EDITORIAL_ASPECTS.find((a) => a.id === item.aspect)?.name;
         return (
           <Link key={item.key} href={item.href!} className="home-lead-story h-full flex-1 flex flex-col min-h-0 block">
-            <div
-              className={`bg-[#081622] rounded-[16px] border border-[#19303c] overflow-hidden group hover:border-primary/50 transition-all cursor-pointer min-w-0 shadow-xl h-full flex-1 ${
-                isSingle ? "flex flex-col sm:flex-row" : "flex flex-col"
-              }`}
-            >
+            <div className="bg-[#081622] rounded-[16px] border border-[#19303c] overflow-hidden group hover:border-primary/50 transition-all cursor-pointer min-w-0 shadow-xl h-full flex-1 flex flex-col">
               <div
-                className={`home-story-media relative overflow-hidden bg-[#06111a] flex items-center justify-center ${
-                  isSingle
-                    ? "w-full sm:w-[42%] md:w-[40%] h-64 sm:h-full shrink-0"
-                    : "w-full aspect-video"
+                className={`home-story-media w-full relative overflow-hidden bg-[#06111a] flex items-center justify-center shrink-0 ${
+                  isSingle ? "h-56 sm:h-64 lg:h-72" : "aspect-video"
                 }`}
               >
                 <LibraryMedia
@@ -56,14 +50,12 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
                   teamName={meta.name}
                   aspect={item.aspect}
                   preserveAspectRatio={false}
-                  aspectRatio={isSingle ? "fill" : "video"}
+                  aspectRatio="fill"
                 />
               </div>
               <div
-                className={`flex-1 min-h-0 flex flex-col justify-between ${
-                  isSingle
-                    ? "p-5 sm:p-6 border-t sm:border-t-0 sm:border-l border-white/10 bg-white/[0.02]"
-                    : "p-4 border-t border-white/10 bg-white/[0.02]"
+                className={`flex-1 min-h-0 flex flex-col justify-between border-t border-white/10 bg-white/[0.02] ${
+                  isSingle ? "p-5 sm:p-6" : "p-4"
                 }`}
               >
                 <div>

@@ -144,15 +144,13 @@ export default function FeedPage() {
     return [...v2, ...legacy];
   }, []);
 
-  // Top stories: 1 lead card + 4 sidebar cards. When a team is selected, lead with that team's story, then fill the other 4 slots with other teams' stories so the sidebar is always fully populated.
+  // Top stories: 1 lead card + 4 sidebar cards. When a franchise is selected, show only that franchise's stories. Only when ALL is selected do stories mix across franchises.
   const top = useMemo(() => {
     const tabFiltered = tab === "featured" ? all : all.filter((e) => e.storyType === tab);
     const pool = tabFiltered.length ? tabFiltered : all;
     if (team) {
       const teamStories = newsroomOrder(pool.filter((e) => e.franchise === team));
-      const otherStories = newsroomOrder(pool.filter((e) => e.franchise !== team));
-      const combined = [...teamStories, ...getDiverseByTeam(otherStories, 5 - teamStories.length)];
-      return combined.slice(0, 5);
+      return teamStories.slice(0, 5);
     }
     return getDiverseByTeam(newsroomOrder(pool), 5);
   }, [all, tab, team]);
@@ -163,20 +161,19 @@ export default function FeedPage() {
     return getDiverseByTeam(newsroomOrder(featured), 8);
   }, [all]);
 
-  // Latest stories: When a team is selected, show that team's latest first, then fill with other teams' stories.
+  // Latest stories: When a team is selected, show only that team's latest stories.
   const latest = useMemo(() => {
     // Getty's signed viewer cannot mount twice with the same widget ID.
     const topIds = new Set(top.map((e) => e.id));
     const remaining = all.filter((e) => !topIds.has(e.id));
-    if (latestTeam) {
-      const teamLatest = remaining.filter((e) => e.franchise === latestTeam);
-      const otherLatest = remaining.filter((e) => e.franchise !== latestTeam);
-      const combined = [...teamLatest, ...getDiverseByTeam(otherLatest, 8 - teamLatest.length)];
-      return combined.slice(0, 8);
+    const targetTeam = team || latestTeam;
+    if (targetTeam) {
+      const teamLatest = remaining.filter((e) => e.franchise === targetTeam);
+      return teamLatest.slice(0, 8);
     }
     const sorted = [...remaining].sort((a, b) => b.publishedDate.localeCompare(a.publishedDate));
     return getDiverseByTeam(sorted, 8);
-  }, [all, latestTeam, top]);
+  }, [all, latestTeam, team, top]);
 
   const announcements = desk?.announcements.slice(0, 3) ?? [];
   const retentionPhoto = useMemo(() => {
@@ -271,9 +268,9 @@ export default function FeedPage() {
             <section>
               <SectionHead title="Franchise coverage" sub="Pick a team to see its stories." />
               <div className="flex flex-wrap gap-2" role="group" aria-label="Filter stories by franchise">
-                <TeamChip active={!team} onClick={() => setTeam(null)}>ALL</TeamChip>
+                <TeamChip active={!team} onClick={() => { setTeam(null); setLatestTeam(null); }}>ALL</TeamChip>
                 {HUB_TEAMS.map((t) => (
-                  <TeamChip color={TEAM_REGISTRY[t].accent} key={t} active={team === t} onClick={() => setTeam(t)}>
+                  <TeamChip color={TEAM_REGISTRY[t].accent} key={t} active={team === t} onClick={() => { setTeam(t); setLatestTeam(t); }}>
                     <img src={TEAM_REGISTRY[t].logoImg} alt="" className="w-4 h-4 object-contain" /> {t}
                   </TeamChip>
                 ))}
@@ -539,26 +536,14 @@ export function ArticleThumbnail({ entry }: { entry: IndexEntry }) {
   const t = TEAM_REGISTRY[entry.franchise as TeamCode];
   const teamCover = getFranchiseCover(entry.franchise);
 
-  if (image?.licensedImageUrl) {
-    return (
-      <img
-        src={image.licensedImageUrl}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-      />
-    );
-  }
-
-  return (
+  const fallback = (
     <div className="relative w-full h-full overflow-hidden bg-[#0A0F1D] flex items-center justify-center">
       <img
         src={teamCover}
         alt=""
         loading="lazy"
         decoding="async"
-        className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105 opacity-85"
+        className="absolute inset-0 w-full h-full object-cover object-center opacity-85"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#060B16] via-[#060B16]/35 to-transparent" />
       <span
@@ -573,6 +558,21 @@ export function ArticleThumbnail({ entry }: { entry: IndexEntry }) {
       </span>
     </div>
   );
+
+  if (image && (image.licensedImageUrl || image.embedHtml)) {
+    return (
+      <EditorialCardMedia
+        key={`${entry.id}-${image.assetId}`}
+        image={image}
+        aspect="fill"
+        preserveAspectRatio={false}
+        allowUnpublished={import.meta.env.DEV}
+        fallback={fallback}
+      />
+    );
+  }
+
+  return fallback;
 }
 
 export function EntryMedia({ entry, preserveAspectRatio = false }: { entry: IndexEntry; preserveAspectRatio?: boolean }) {
