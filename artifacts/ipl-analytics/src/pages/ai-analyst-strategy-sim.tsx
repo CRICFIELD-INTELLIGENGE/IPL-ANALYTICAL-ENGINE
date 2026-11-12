@@ -16,7 +16,6 @@ import { Layout } from "@/components/layout";
 import { Card, ErrorBanner, Loading, ModuleHeader, NumberField, Pill, SectionTitle, Select, Tile } from "@/components/decision/module-shell";
 import { readParams, writeParams } from "@/lib/discovery-api";
 import { fetchCatalog, fetchStrategySetup, runStrategy, type PlanResult, type StrategyResult } from "@/lib/sim-api";
-import { AdVessel } from "@/components/ad-vessel";
 import { askGeminiAnalyst } from "@/lib/gemini-client";
 
 export default function StrategySimPage() {
@@ -347,12 +346,7 @@ Provide a tactical dugout briefing for the captain:
       </div>
 
       {/* Simulation Result Summary Screen Ad Unit */}
-      <div className="pt-2">
-        <div className="text-center mb-1">
-          <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-white/30">ADVERTISEMENT</span>
-        </div>
-        <AdVessel slot="1029384756" format="horizontal" minHeight={90} label="Tactical Simulation Partner Briefing" />
-      </div>
+      
     </div>
   );
 }

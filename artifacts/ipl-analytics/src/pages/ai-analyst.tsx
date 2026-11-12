@@ -38,7 +38,6 @@ import {
   BarChart3, RotateCcw, CheckCircle2, Flame, Layers, Droplets
 } from "lucide-react";
 import { GpuMeshShader } from "@/components/scrolltide/gpu-mesh-shader";
-import { AdVessel } from "@/components/ad-vessel";
 
 /* ═══════════════════════════════════════════════════════════════════════════
    DATA REGISTRY — 12 DECISION ENGINES
@@ -632,13 +631,7 @@ export default function AIAnalystPage() {
         </section>
 
         {/* ── Sponsored Intelligence Partner Vessel ── */}
-        <section className="relative z-10 max-w-5xl mx-auto w-full">
-          <AdVessel
-            slot="1029384756"
-            format="horizontal"
-            label="Sponsored Intelligence · Quant Terminal Partner"
-          />
-        </section>
+        
 
         {/* ── 5. The X-Factor Quant Philosophy Callout ── */}
         <section className="relative z-10 pt-4">

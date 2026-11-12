@@ -195,14 +195,6 @@ export default function DugoutPage() {
           />
         </Suspense>
 
-        {/* ── GOOGLE ADSENSE / SPONSORED AD CARD ── */}
-        <AdVessel
-          slot="1029384770"
-          format="horizontal"
-          label="Advertisement · Google AdSense · Official Partner"
-          className="my-2"
-        />
-
         {/* ── FRANCHISE STORIES: a 10-article preview; the full 100 live on the Intelligence hub ── */}
         <Suspense fallback={<LibrarySkeleton />}>
           <FranchiseLibrary code={activeTeamCode} teamName={currentTeam.name} accent={currentTeam.accent} preview={10} />

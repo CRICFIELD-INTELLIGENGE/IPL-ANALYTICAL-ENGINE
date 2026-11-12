@@ -15,7 +15,6 @@ import {
   ShoppingBag, CheckCircle2, ChevronRight, Zap, Target
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AdVessel } from "@/components/ad-vessel";
 import { FixtureTicketCard } from "@/components/fixture-ticket-card";
 import { CricFieldMascot } from "@/components/CricFieldMascot";
 
@@ -161,8 +160,7 @@ export default function ScoresPage() {
 
         {/* Native Ad Vessel - Match Day Telemetry Sponsor */}
         <div className="pt-2">
-          <AdVessel slot="1029384757" format="horizontal" label="Match Day Partner · Live Telemetry Briefing" />
-        </div>
+                  </div>
       </div>
     </Layout>
   );

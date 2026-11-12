@@ -25,7 +25,6 @@ import {
 } from "@/lib/ask-api";
 import { MOCK_ANSWER, MOCK_OVERVIEW, MOCK_QUESTION } from "@/components/decision/ask-mock";
 import { askGeminiAnalyst, type GeminiAnalysisResult } from "@/lib/gemini-client";
-import { AdVessel } from "@/components/ad-vessel";
 import { Key, Bot } from "lucide-react";
 
 const EXAMPLES = [
@@ -308,7 +307,7 @@ export default function AskPage() {
                   {geminiResult.text}
                 </div>
                 <p className="text-xs text-slate-400">AI interpretation may contain errors. Inspect the retrieved records below.</p>
-                {geminiResult.evidence?.map(item => <details key={item.id} className="text-xs border border-white/10 rounded p-3"><summary>[{item.id}] {item.tool} � {item.source}</summary><pre className="overflow-auto max-h-80 whitespace-pre-wrap mt-3">{JSON.stringify(item.data, null, 2)}</pre></details>)}
+                {geminiResult.evidence?.map(item => <details key={item.id} className="text-xs border border-white/10 rounded p-3"><summary>[{item.id}] {item.tool} � {item.source}</summary><pre className="overflow-auto max-h-80 whitespace-pre-wrap mt-3">{JSON.stringify(item.data, null, 2)}</pre></details>)}
               </motion.div>
             )}
           </div>
@@ -321,12 +320,7 @@ export default function AskPage() {
 
         {/* ── Native AdSense Sponsored Intelligence Vessel ── */}
         <div className="pt-4">
-          <AdVessel
-            slot="2938475610"
-            format="horizontal"
-            label="Advertisement"
-          />
-        </div>
+                  </div>
       </div>
     </Layout>
   );
