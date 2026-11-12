@@ -61,19 +61,145 @@ const getVenueCity = (v: any): string => String(v?.city || (v?.venue || "").spli
 const normalizePlayerName = (name: string): string =>
   (name || "").toLowerCase().replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim();
 
+function getPageNumbers(current: number, total: number): (number | string)[] {
+  if (total <= 7) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+  if (current <= 4) {
+    return [1, 2, 3, 4, 5, "...", total];
+  }
+  if (current >= total - 3) {
+    return [1, "...", total - 4, total - 3, total - 2, total - 1, total];
+  }
+  return [1, "...", current - 1, current, current + 1, "...", total];
+}
+
+function TablePaginationBar({
+  currentPage,
+  totalPages,
+  totalItems,
+  startIndex,
+  pageSize,
+  onPageChange,
+  onPageSizeChange,
+  itemLabel,
+}: {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  startIndex: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
+  itemLabel: string;
+}) {
+  const pageNumbers = getPageNumbers(currentPage, totalPages);
+  const endIndex = Math.min(startIndex + pageSize, totalItems);
+
+  return (
+    <div className="p-4 border-t border-slate-200 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-50/60 dark:bg-white/[0.01]">
+      <div className="text-xs font-mono text-slate-600 dark:text-white/60">
+        Showing <strong className="text-slate-900 dark:text-white font-bold">{totalItems === 0 ? 0 : startIndex + 1}</strong>–<strong className="text-slate-900 dark:text-white font-bold">{endIndex}</strong> of <strong className="text-slate-900 dark:text-white font-bold">{totalItems}</strong> {itemLabel}
+      </div>
+
+      <div className="flex items-center gap-2 text-xs font-mono">
+        <span className="text-slate-500 dark:text-white/40 text-[11px] font-bold">Show per page:</span>
+        <div className="flex items-center bg-slate-200/70 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-0.5">
+          {[10, 20, 50, 100].map(size => (
+            <button
+              key={size}
+              type="button"
+              onClick={() => {
+                onPageSizeChange(size);
+                onPageChange(1);
+              }}
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                pageSize === size
+                  ? "bg-primary text-white shadow-sm font-black"
+                  : "text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-white/10"
+              }`}
+            >
+              {size}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex items-center gap-1.5 font-mono text-xs">
+        <button
+          type="button"
+          onClick={() => onPageChange(1)}
+          disabled={currentPage === 1}
+          className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all font-bold cursor-pointer"
+          title="First page"
+        >
+          «
+        </button>
+        <button
+          type="button"
+          onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+          disabled={currentPage === 1}
+          className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all font-bold cursor-pointer"
+        >
+          ‹ Prev
+        </button>
+
+        <div className="flex items-center gap-1">
+          {pageNumbers.map((p, idx) => typeof p === "number" ? (
+            <button
+              key={p}
+              type="button"
+              onClick={() => onPageChange(p)}
+              className={`w-8 h-8 rounded-lg text-xs font-bold transition-all flex items-center justify-center cursor-pointer ${
+                currentPage === p
+                  ? "bg-primary text-white shadow-md font-black"
+                  : "border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10"
+              }`}
+            >
+              {p}
+            </button>
+          ) : (
+            <span key={`ellipsis-${idx}`} className="px-1 text-slate-400 dark:text-white/30">…</span>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+          disabled={currentPage === totalPages}
+          className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all font-bold cursor-pointer"
+        >
+          Next ›
+        </button>
+        <button
+          type="button"
+          onClick={() => onPageChange(totalPages)}
+          disabled={currentPage === totalPages}
+          className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all font-bold cursor-pointer"
+          title="Last page"
+        >
+          »
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function StatsPage({ mobilePresentation = false }: { mobilePresentation?: boolean } = {}) {
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState<Tab>("batters");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedVenue, setSelectedVenue] = useState<string | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
-  const [showAll, setShowAll] = useState(false);
+  const [pageSize, setPageSize] = useState<number>(20);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [batterSortField, setBatterSortField] = useState<"player" | "matches" | "innings" | "runs" | "balls" | "highest" | "avg" | "sr" | "boundaryPct" | "fours" | "sixes" | "hundreds" | "fifties">("runs");
   const [bowlerSortField, setBowlerSortField] = useState<"player" | "matches" | "innings" | "wickets" | "econ" | "avg" | "sr" | "dotPct" | "boundaryPct" | "ballsPerBoundary" | "trueEconomy" | "best">("wickets");
   const [batterSortOrder, setBatterSortOrder] = useState<"asc" | "desc">("desc");
   const [bowlerSortOrder, setBowlerSortOrder] = useState<"asc" | "desc">("desc");
 
   const handleBatterSort = (field: typeof batterSortField) => {
+    setCurrentPage(1);
     if (batterSortField === field) {
       setBatterSortOrder(prev => prev === "desc" ? "asc" : "desc");
     } else {
@@ -83,6 +209,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   };
 
   const handleBowlerSort = (field: typeof bowlerSortField) => {
+    setCurrentPage(1);
     if (bowlerSortField === field) {
       setBowlerSortOrder(prev => prev === "desc" ? "asc" : "desc");
     } else {
@@ -91,9 +218,8 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     }
   };
 
-
   useEffect(() => {
-    setShowAll(false);
+    setCurrentPage(1);
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
@@ -170,6 +296,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   const clearFilter = useAnalyticsFilterStore(state => state.clearFilter);
   const resetFilters = useAnalyticsFilterStore(state => state.resetFilters);
   const filterChain = useAnalyticsFilterStore(state => state.chain);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, filters.season, filters.team, filters.opposition, filters.venue, filters.phase, filters.bowler_type]);
   // Matchup Lab state
   const [matchupBatter, setMatchupBatter] = useState("");
   const [matchupBowler, setMatchupBowler] = useState("");
@@ -554,6 +684,21 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     filters.season, filters.team, filters.opposition, filters.venue,
     searchQuery, batterSortField, batterSortOrder, bowlerSortField, bowlerSortOrder
   ]);
+
+  const totalBatterCount = activeData.batters.length;
+  const totalBatterPages = Math.max(1, Math.ceil(totalBatterCount / pageSize));
+  const batterStartIndex = (currentPage - 1) * pageSize;
+  const paginatedBatters = activeData.batters.slice(batterStartIndex, batterStartIndex + pageSize);
+
+  const totalBowlerCount = activeData.bowlers.length;
+  const totalBowlerPages = Math.max(1, Math.ceil(totalBowlerCount / pageSize));
+  const bowlerStartIndex = (currentPage - 1) * pageSize;
+  const paginatedBowlers = activeData.bowlers.slice(bowlerStartIndex, bowlerStartIndex + pageSize);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    document.getElementById("stats-table-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const effectiveScenarioData = useMemo(() => {
     const minBalls = scenarioMinBalls || 10;
@@ -1194,16 +1339,32 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
           </div>
 
           {(activeTab === "batters" || activeTab === "bowlers") && (
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 border transition-all shrink-0 cursor-pointer ${showAll
-                ? "bg-primary border-primary/50 text-white shadow-lg shadow-primary/20 hover:bg-primary/95"
-                : "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700 hover:text-slate-900 dark:bg-white/5 dark:border-white/10 dark:text-white/60 dark:hover:text-white dark:hover:bg-white/10"
-                }`}
-            >
-              <Eye className="w-3.5 h-3.5" />
-              {showAll ? "Show Top 12" : "See All"}
-            </button>
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="text-xs font-mono text-slate-500 dark:text-white/40">
+                {activeTab === "batters"
+                  ? `${totalBatterCount} Batters`
+                  : `${totalBowlerCount} Bowlers`}
+              </span>
+              <div className="flex items-center gap-1.5 text-xs font-mono">
+                <span className="text-[11px] font-bold text-slate-500 dark:text-white/40">Rows:</span>
+                <div className="flex items-center bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-0.5">
+                  {[10, 20, 50, 100].map(size => (
+                    <button
+                      key={size}
+                      type="button"
+                      onClick={() => { setPageSize(size); setCurrentPage(1); }}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                        pageSize === size
+                          ? "bg-primary text-white shadow-sm font-black"
+                          : "text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-white/10"
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           )}
         </div>
 
@@ -1226,6 +1387,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         )}
 
         {/* TAB CONTENT */}
+            <div id="stats-table-anchor" className="scroll-mt-28" />
             <div className="min-h-[600px]">
           {!dynamicStatsQuery.isLoading && !isDefaultCareerView && dynamicStatsQuery.isError && activeData.batters.length === 0 && activeData.bowlers.length === 0 && (
             <div className="mb-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 mx-2">
@@ -1252,55 +1414,53 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                     <table className="w-full text-left border-collapse">
                       <thead className="bg-slate-50 dark:bg-white/[0.03] border-b border-slate-200 dark:border-white/5">
                         <tr>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("player")}>Rank & Player {batterSortField === "player" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("matches")}>Mts {batterSortField === "matches" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("innings")}>Inn {batterSortField === "innings" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("runs")}>Runs {batterSortField === "runs" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("balls")}>Balls {batterSortField === "balls" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("highest")}>HS {batterSortField === "highest" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("avg")}>Avg {batterSortField === "avg" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("sr")}>SR {batterSortField === "sr" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("boundaryPct")} title="Share of the batter's runs scored in fours and sixes">Bdry% {batterSortField === "boundaryPct" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-blue-400/60 uppercase tracking-[0.2em] text-center bg-blue-500/5 cursor-pointer hover:text-blue-300 transition-colors" onClick={() => handleBatterSort("fours")}>4s {batterSortField === "fours" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-purple-400/60 uppercase tracking-[0.2em] text-center bg-purple-500/5 cursor-pointer hover:text-purple-300 transition-colors" onClick={() => handleBatterSort("sixes")}>6s {batterSortField === "sixes" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-red-400/60 uppercase tracking-[0.2em] text-center bg-red-500/5 cursor-pointer hover:text-red-300 transition-colors" onClick={() => handleBatterSort("hundreds")}>100s {batterSortField === "hundreds" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("fifties")}>50s {batterSortField === "fifties" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("player")}>Rank & Player {batterSortField === "player" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("matches")}>Mts {batterSortField === "matches" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("innings")}>Inn {batterSortField === "innings" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("runs")}>Runs {batterSortField === "runs" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("balls")}>Balls {batterSortField === "balls" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("highest")}>HS {batterSortField === "highest" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("avg")}>Avg {batterSortField === "avg" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("sr")}>SR {batterSortField === "sr" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("boundaryPct")} title="Share of the batter's runs scored in fours and sixes">Bdry% {batterSortField === "boundaryPct" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.2em] text-center bg-blue-500/5 cursor-pointer hover:text-blue-700 dark:hover:text-blue-300 transition-colors" onClick={() => handleBatterSort("fours")}>4s {batterSortField === "fours" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-purple-600 dark:text-purple-400 uppercase tracking-[0.2em] text-center bg-purple-500/5 cursor-pointer hover:text-purple-700 dark:hover:text-purple-300 transition-colors" onClick={() => handleBatterSort("sixes")}>6s {batterSortField === "sixes" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-red-600 dark:text-red-400 uppercase tracking-[0.2em] text-center bg-red-500/5 cursor-pointer hover:text-red-700 dark:hover:text-red-300 transition-colors" onClick={() => handleBatterSort("hundreds")}>100s {batterSortField === "hundreds" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("fifties")}>50s {batterSortField === "fifties" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/5">
-                        {activeData.batters.slice(0, showAll ? undefined : 12).map((b, i) => {
-                          const name = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Batter #${i + 1}`);
+                      <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+                        {paginatedBatters.map((b, i) => {
+                          const rank = batterStartIndex + i + 1;
+                          const name = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Batter #${rank}`);
                           return (
-                            <tr key={name + i} className="hover:bg-white/[0.02] transition-colors group">
+                            <tr key={name + rank} className="hover:bg-slate-50/80 dark:hover:bg-white/[0.02] transition-colors group">
                               <td className="px-4 py-4 min-w-[200px]">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-[10px] font-black text-amber-400/40 w-4">#{i + 1}</span>
-                                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-white/10 shrink-0 relative">
+                                  <span className="text-[10px] font-black text-amber-500/70 dark:text-amber-400/40 min-w-6">#{rank}</span>
+                                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-slate-200 dark:border-white/10 shrink-0 relative">
                                     <PlayerAvatar name={name} playerImages={playerImages.data} bio={getBioFor(name)} imgClassName="w-full h-full object-cover select-none" />
                                   </div>
                                   <div className="flex flex-col">
                                     <Link href={`/players/${name.toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}`}>
-                                      {/* Readable name on screen; the link still
-                                          uses the scorecard name, which is what
-                                          the profile slugs are built from. */}
-                                      <span className="text-[13px] font-black text-white hover:text-primary transition-colors cursor-pointer">{displayPlayerName(name, displayNames)}</span>
+                                      <span className="text-[13px] font-black text-slate-900 dark:text-white hover:text-primary transition-colors cursor-pointer">{displayPlayerName(name, displayNames)}</span>
                                     </Link>
-                                    <span className="text-[8px] font-black text-white/20 uppercase tracking-widest">Active Intelligence</span>
+                                    <span className="text-[8px] font-black text-slate-400 dark:text-white/20 uppercase tracking-widest">Active Intelligence</span>
                                   </div>
                                 </div>
                               </td>
-                              <td className="px-4 py-4 text-center font-mono text-[11px] text-primary/80 tabular-nums">{b.matches}</td>
-                              <td className="px-4 py-4 text-center font-mono text-[11px] text-white/60 tabular-nums">{b.innings}</td>
-                              <td className="px-4 py-4 text-center font-black text-[15px] text-white tabular-nums">{fmt(b.runs)}</td>
-                              <td className="px-4 py-4 text-center font-bold text-[12px] text-white/60 tabular-nums">{b.balls}</td>
-                              <td className="px-4 py-4 text-center font-bold text-[12px] text-amber-400 tabular-nums">{b.highest || "—"}</td>
-                              <td className="px-4 py-4 text-center font-bold text-[12px] text-white/80 tabular-nums">{safeToFixed(b.avg, 1)}</td>
+                              <td className="px-4 py-4 text-center font-mono text-[11px] text-primary/90 font-bold tabular-nums">{b.matches}</td>
+                              <td className="px-4 py-4 text-center font-mono text-[11px] text-slate-600 dark:text-white/60 tabular-nums">{b.innings}</td>
+                              <td className="px-4 py-4 text-center font-black text-[15px] text-slate-900 dark:text-white tabular-nums">{fmt(b.runs)}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[12px] text-slate-600 dark:text-white/60 tabular-nums">{b.balls}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[12px] text-amber-600 dark:text-amber-400 tabular-nums">{b.highest || "—"}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[12px] text-slate-700 dark:text-white/80 tabular-nums">{safeToFixed(b.avg, 1)}</td>
                               <td className="px-4 py-4 text-center font-black text-[12px] text-primary tabular-nums">{safeToFixed(b.sr, 1)}</td>
-                              <td className="px-4 py-4 text-center font-bold text-[11px] text-white/40 tabular-nums">{safeToFixed(b.boundaryPct, 0)}%</td>
-                              <td className="px-4 py-4 text-center font-black text-[12px] text-blue-400 tabular-nums bg-blue-500/[0.02]">{b.fours}</td>
-                              <td className="px-4 py-4 text-center font-black text-[12px] text-purple-400 tabular-nums bg-purple-500/[0.02]">{b.sixes}</td>
-                              <td className="px-4 py-4 text-center font-black text-[12px] text-red-400 tabular-nums bg-red-500/[0.02]">{b.hundreds || 0}</td>
-                              <td className="px-4 py-4 text-center font-bold text-[11px] text-white/60 tabular-nums">{b.fifties || 0}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[11px] text-slate-500 dark:text-white/40 tabular-nums">{safeToFixed(b.boundaryPct, 0)}%</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-blue-600 dark:text-blue-400 tabular-nums bg-blue-500/[0.02]">{b.fours}</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-purple-600 dark:text-purple-400 tabular-nums bg-purple-500/[0.02]">{b.sixes}</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-red-600 dark:text-red-400 tabular-nums bg-red-500/[0.02]">{b.hundreds || 0}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[11px] text-slate-600 dark:text-white/60 tabular-nums">{b.fifties || 0}</td>
                             </tr>
                           );
                         })}
@@ -1308,16 +1468,16 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                     </table>
                   </div>
 
-                  {/* See All / Collapse Button below batters table */}
-                  <div className="p-4 border-t border-white/5 flex justify-center bg-white/[0.01]">
-                    <button
-                      onClick={() => setShowAll(!showAll)}
-                      className="px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 border bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/10 hover:border-primary/30 transition-all shadow-lg active:scale-95"
-                    >
-                      <Eye className="w-3.5 h-3.5 text-primary" />
-                      {showAll ? "Show Top 12 Leaders" : `See All ${activeData.batters.length} Players`}
-                    </button>
-                  </div>
+                  <TablePaginationBar
+                    currentPage={currentPage}
+                    totalPages={totalBatterPages}
+                    totalItems={totalBatterCount}
+                    startIndex={batterStartIndex}
+                    pageSize={pageSize}
+                    onPageChange={handlePageChange}
+                    onPageSizeChange={(size) => { setPageSize(size); setCurrentPage(1); }}
+                    itemLabel="Batters"
+                  />
                 </div>
               )}
 
@@ -1327,67 +1487,66 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                     <table className="w-full text-left border-collapse">
                       <thead className="bg-slate-50 dark:bg-white/[0.03] border-b border-slate-200 dark:border-white/5">
                         <tr>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("player")}>Rank & Bowler {bowlerSortField === "player" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("matches")}>Mts {bowlerSortField === "matches" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("innings")}>Inn {bowlerSortField === "innings" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("wickets")}>Wkts {bowlerSortField === "wickets" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("econ")}>Econ {bowlerSortField === "econ" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("avg")}>Avg {bowlerSortField === "avg" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("sr")}>SR {bowlerSortField === "sr" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("dotPct")}>Dot% {bowlerSortField === "dotPct" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                           <th className="px-4 py-4 text-[9px] font-black text-blue-400/60 uppercase tracking-[0.2em] text-center bg-blue-500/5 cursor-pointer hover:text-blue-300 transition-colors" onClick={() => handleBowlerSort("boundaryPct")} title="Boundaries conceded per 100 legal balls">BND% {bowlerSortField === "boundaryPct" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                           <th className="px-4 py-4 text-[9px] font-black text-purple-400/60 uppercase tracking-[0.2em] text-center bg-purple-500/5 cursor-pointer hover:text-purple-300 transition-colors" onClick={() => handleBowlerSort("ballsPerBoundary")}>BPB {bowlerSortField === "ballsPerBoundary" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                           <th className="px-4 py-4 text-[9px] font-black text-red-400/60 uppercase tracking-[0.2em] text-center bg-red-500/5 cursor-pointer hover:text-red-300 transition-colors" onClick={() => handleBowlerSort("trueEconomy")}>True Econ {bowlerSortField === "trueEconomy" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("player")}>Rank & Bowler {bowlerSortField === "player" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("matches")}>Mts {bowlerSortField === "matches" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("innings")}>Inn {bowlerSortField === "innings" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("wickets")}>Wkts {bowlerSortField === "wickets" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("econ")}>Econ {bowlerSortField === "econ" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("avg")}>Avg {bowlerSortField === "avg" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("sr")}>SR {bowlerSortField === "sr" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("dotPct")}>Dot% {bowlerSortField === "dotPct" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.2em] text-center bg-blue-500/5 cursor-pointer hover:text-blue-700 dark:hover:text-blue-300 transition-colors" onClick={() => handleBowlerSort("boundaryPct")} title="Boundaries conceded per 100 legal balls">BND% {bowlerSortField === "boundaryPct" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-purple-600 dark:text-purple-400 uppercase tracking-[0.2em] text-center bg-purple-500/5 cursor-pointer hover:text-purple-700 dark:hover:text-purple-300 transition-colors" onClick={() => handleBowlerSort("ballsPerBoundary")}>BPB {bowlerSortField === "ballsPerBoundary" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-red-600 dark:text-red-400 uppercase tracking-[0.2em] text-center bg-red-500/5 cursor-pointer hover:text-red-700 dark:hover:text-red-300 transition-colors" onClick={() => handleBowlerSort("trueEconomy")}>True Econ {bowlerSortField === "trueEconomy" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/5">
-                        {activeData.bowlers.slice(0, showAll ? undefined : 12).map((b, i) => {
-                          const name = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Bowler #${i + 1}`);
+                      <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+                        {paginatedBowlers.map((b, i) => {
+                          const rank = bowlerStartIndex + i + 1;
+                          const name = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Bowler #${rank}`);
                           return (
-                            <tr key={name + i} className="hover:bg-white/[0.02] transition-colors group">
+                            <tr key={name + rank} className="hover:bg-slate-50/80 dark:hover:bg-white/[0.02] transition-colors group">
                               <td className="px-4 py-4 min-w-[200px]">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-[10px] font-black text-amber-400/40 w-4">#{i + 1}</span>
-                                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-white/10 shrink-0 relative">
+                                  <span className="text-[10px] font-black text-amber-500/70 dark:text-amber-400/40 min-w-6">#{rank}</span>
+                                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-slate-200 dark:border-white/10 shrink-0 relative">
                                     <PlayerAvatar name={name} playerImages={playerImages.data} bio={getBioFor(name)} imgClassName="w-full h-full object-cover select-none" />
                                   </div>
                                   <div className="flex flex-col">
                                     <Link href={`/players/${name.toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}`}>
-                                      {/* Readable name on screen; the link still
-                                          uses the scorecard name, which is what
-                                          the profile slugs are built from. */}
-                                      <span className="text-[13px] font-black text-white hover:text-primary transition-colors cursor-pointer">{displayPlayerName(name, displayNames)}</span>
+                                      <span className="text-[13px] font-black text-slate-900 dark:text-white hover:text-primary transition-colors cursor-pointer">{displayPlayerName(name, displayNames)}</span>
                                     </Link>
-                                    <span className="text-[8px] font-black text-white/20 uppercase tracking-widest">{b.bowlerType ? `${b.bowlerType} Intelligence` : "Active Intelligence"}</span>
+                                    <span className="text-[8px] font-black text-slate-400 dark:text-white/20 uppercase tracking-widest">{b.bowlerType ? `${b.bowlerType} Intelligence` : "Active Intelligence"}</span>
                                   </div>
                                 </div>
                               </td>
-                            <td className="px-4 py-4 text-center font-mono text-[11px] text-primary/80 tabular-nums">{b.matches}</td>
-                            <td className="px-4 py-4 text-center font-mono text-[11px] text-white/60 tabular-nums">{b.innings}</td>
-                            <td className="px-4 py-4 text-center font-black text-[15px] text-white tabular-nums">{b.wickets}</td>
-                            <td className="px-4 py-4 text-center font-bold text-[12px] text-amber-400 tabular-nums">{safeToFixed(b.econ, 2)}</td>
-                            <td className="px-4 py-4 text-center font-bold text-[12px] text-white/80 tabular-nums">{safeToFixed(b.avg, 1)}</td>
-                            <td className="px-4 py-4 text-center font-black text-[12px] text-primary tabular-nums">{safeToFixed(b.sr, 1)}</td>
-                            <td className="px-4 py-4 text-center font-bold text-[11px] text-white/40 tabular-nums">{safeToFixed(b.dotPct, 0)}%</td>
-                            <td className="px-4 py-4 text-center font-black text-[12px] text-blue-400 tabular-nums bg-blue-500/[0.02]">{b.boundaryPct == null ? "—" : `${safeToFixed(b.boundaryPct, 1)}%`}</td>
-                            <td className="px-4 py-4 text-center font-black text-[12px] text-purple-400 tabular-nums bg-purple-500/[0.02]">{safeToFixed(b.ballsPerBoundary, 2)}</td>
-                          </tr>
+                              <td className="px-4 py-4 text-center font-mono text-[11px] text-primary/90 font-bold tabular-nums">{b.matches}</td>
+                              <td className="px-4 py-4 text-center font-mono text-[11px] text-slate-600 dark:text-white/60 tabular-nums">{b.innings}</td>
+                              <td className="px-4 py-4 text-center font-black text-[15px] text-slate-900 dark:text-white tabular-nums">{b.wickets}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[12px] text-emerald-600 dark:text-emerald-400 tabular-nums">{safeToFixed(b.econ, 2)}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[12px] text-slate-700 dark:text-white/80 tabular-nums">{safeToFixed(b.avg, 1)}</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-primary tabular-nums">{safeToFixed(b.sr, 1)}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[11px] text-slate-500 dark:text-white/40 tabular-nums">{safeToFixed(b.dotPct, 0)}%</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-blue-600 dark:text-blue-400 tabular-nums bg-blue-500/[0.02]">{b.boundaryPct == null ? "—" : `${safeToFixed(b.boundaryPct, 1)}%`}</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-purple-600 dark:text-purple-400 tabular-nums bg-purple-500/[0.02]">{safeToFixed(b.ballsPerBoundary, 2)}</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-red-600 dark:text-red-400 tabular-nums bg-red-500/[0.02]">{safeToFixed(b.trueEconomy, 2)}</td>
+                            </tr>
                           );
                         })}
                       </tbody>
                     </table>
                   </div>
 
-                  {/* See All / Collapse Button below bowlers table */}
-                  <div className="p-4 border-t border-white/5 flex justify-center bg-white/[0.01]">
-                    <button
-                      onClick={() => setShowAll(!showAll)}
-                      className="px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 border bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/10 hover:border-primary/30 transition-all shadow-lg active:scale-95"
-                    >
-                      <Eye className="w-3.5 h-3.5 text-primary" />
-                      {showAll ? "Show Top 12 Leaders" : `See All ${activeData.bowlers.length} Bowlers`}
-                    </button>
-                  </div>
+                  <TablePaginationBar
+                    currentPage={currentPage}
+                    totalPages={totalBowlerPages}
+                    totalItems={totalBowlerCount}
+                    startIndex={bowlerStartIndex}
+                    pageSize={pageSize}
+                    onPageChange={handlePageChange}
+                    onPageSizeChange={(size) => { setPageSize(size); setCurrentPage(1); }}
+                    itemLabel="Bowlers"
+                  />
                 </div>
               )}
 
