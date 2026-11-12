@@ -213,6 +213,14 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
       const iframe = el.querySelector("iframe");
       if (iframe) {
         stripWhite();
+        try {
+          if (iframe.contentDocument && iframe.contentDocument.readyState === "complete") {
+            setLoaded(true);
+          }
+        } catch {
+          // Cross-origin iframe access restricted, indicating the iframe has begun loading or loaded
+          setLoaded(true);
+        }
         iframe.onload = () => {
           stripWhite();
           setLoaded(true);
@@ -271,7 +279,7 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
     };
   }, [loaded]);
 
-  // A single failed asset falls back gracefully after 2 seconds
+  // A single failed asset falls back gracefully after 8 seconds
   useEffect(() => {
     if (!queued || isBlocked) return;
     const t = window.setTimeout(() => {
@@ -280,7 +288,7 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
       } else if (!loaded) {
         onFailRef.current();
       }
-    }, 2000);
+    }, 8000);
     return () => window.clearTimeout(t);
   }, [queued, isBlocked, loaded]);
 
@@ -349,8 +357,8 @@ export function EditorialImageFigure({ image, variant = "inline", allowUnpublish
   const embedConsent = useEmbedConsent();
   const commercialZone = useCommercialZone();
   // Embeds in card thumbnails frequently fail, show broken third-party boxes, or hijack clicks.
-  // If an embed is present and a pristine editorial fallback is provided, prefer the fallback on cards.
-  if (embed && fallback) return <>{fallback}</>;
+  // If an embed is present and a pristine editorial fallback is provided, prefer the fallback on cards only.
+  if (variant === "card" && embed && fallback) return <>{fallback}</>;
 
   if (embed && !commercialZone && embedConsent !== "granted") {
     if (fallback) return <>{fallback}</>;
@@ -429,8 +437,8 @@ export function EditorialCardMedia({
   const embedConsent = useEmbedConsent();
   const commercialZone = useCommercialZone();
   // Embeds in card thumbnails frequently fail, show broken third-party boxes, or hijack clicks.
-  // If an embed is present and a pristine editorial fallback is provided, prefer the fallback on cards.
-  if (embed && fallback) return <>{fallback}</>;
+  // If an embed is present and a pristine editorial fallback is provided, prefer the fallback on cards only.
+  if (variant === "card" && embed && fallback) return <>{fallback}</>;
 
   if (embed && !commercialZone && embedConsent !== "granted") {
     if (fallback) return <>{fallback}</>;
