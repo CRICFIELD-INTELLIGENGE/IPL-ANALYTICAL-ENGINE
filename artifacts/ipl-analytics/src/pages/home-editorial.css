@@ -33,18 +33,19 @@
 }
 
 .home-editorial .home-hero-copy h1 {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-style: italic;
-  letter-spacing: -0.035em;
+  font-family: inherit !important;
+  font-style: normal !important;
+  letter-spacing: -0.025em;
   margin: 0;
 }
 
 .home-editorial .home-hero-copy h1 span {
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  text-shadow: none !important;
 }
 
 .home-editorial .home-hero-copy h1 .animate-ipl-glow {
-  animation: home-ipl-colour 14s linear infinite;
+  animation: none !important;
+  text-shadow: none !important;
 }
 
 .home-editorial .home-hero-copy > p {

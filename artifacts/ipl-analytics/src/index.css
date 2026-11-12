@@ -205,14 +205,15 @@ html, body, #root {
 }
 
 @keyframes ipl-glow {
-  0% { color: #06B6D4; text-shadow: 0 0 12px rgba(6, 182, 212, 0.4); }
-  33% { color: #8B5CF6; text-shadow: 0 0 15px rgba(139, 92, 246, 0.4); }
-  66% { color: #D946EF; text-shadow: 0 0 12px rgba(217, 70, 239, 0.4); }
-  100% { color: #3B82F6; text-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+  0% { color: #06B6D4; }
+  33% { color: #8B5CF6; }
+  66% { color: #D946EF; }
+  100% { color: #3B82F6; }
 }
 
 .animate-ipl-glow {
   animation: ipl-glow 6s infinite ease-in-out;
+  text-shadow: none !important;
 }
 
 /* Custom Background Utilities to eliminate inline CSS */

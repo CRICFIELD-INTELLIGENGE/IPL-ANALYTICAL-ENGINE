@@ -32,13 +32,13 @@ import { HUB_EVENTS } from "@/lib/ipl-2027";
 const HomeInsights = React.lazy(() => import("@/components/home-insights"));
 
 const HEADLINES = [
-  { prefix: "IPL IS NOT JUST ABOUT", highlight: "CRICKET.", color: "#F9CD05" },
-  { prefix: "IT'S A", highlight: "PRODUCT.", color: "#06B6D4" },
-  { prefix: "A", highlight: "BUSINESS.", color: "#10B981" },
-  { prefix: "IPL - A", highlight: "FESTIVAL.", color: "#EF4444" },
-  { prefix: "AN", highlight: "EMOTION.", color: "#818CF8" },
-  { prefix: "A", highlight: "CELEBRATION.", color: "#38BDF8" },
-  { prefix: "A", highlight: "BILLION DOLLAR ECOSYSTEM.", color: "#E879F9" },
+  { prefix: "IPL IS NOT JUST ABOUT", highlight: "CRICKET.", darkColor: "#F9CD05", lightColor: "#D97706" },
+  { prefix: "IT'S A", highlight: "PRODUCT.", darkColor: "#06B6D4", lightColor: "#0284C7" },
+  { prefix: "A", highlight: "BUSINESS.", darkColor: "#10B981", lightColor: "#059669" },
+  { prefix: "IPL - A", highlight: "FESTIVAL.", darkColor: "#EF4444", lightColor: "#DC2626" },
+  { prefix: "AN", highlight: "EMOTION.", darkColor: "#818CF8", lightColor: "#4F46E5" },
+  { prefix: "A", highlight: "CELEBRATION.", darkColor: "#38BDF8", lightColor: "#0284C7" },
+  { prefix: "A", highlight: "BILLION DOLLAR ECOSYSTEM.", darkColor: "#E879F9", lightColor: "#C026D3" },
 ];
 
 const daysUntil = (date: string | null) => {
@@ -120,19 +120,27 @@ export default function HomePage() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -14 }}
                         transition={{ duration: 0.35, ease: "easeOut" }}
-                        className="font-black leading-[1.08] text-slate-900 dark:text-white uppercase tracking-tight text-3xl sm:text-4xl md:text-5xl"
+                        className="font-black leading-[1.08] text-slate-900 dark:text-white uppercase tracking-tight text-3xl sm:text-4xl md:text-5xl select-none"
                       >
                         {curHeadline.prefix === "IPL IS NOT JUST ABOUT" ? (
                           <>
-                            <span className="animate-ipl-glow">IPL</span>{" "}
-                            <span className="text-slate-700 dark:text-white/80">IS NOT JUST ABOUT</span>{" "}
+                            <span className="text-[#FF6B00]">IPL</span>{" "}
+                            <span className="text-slate-900 dark:text-white">IS NOT JUST ABOUT</span>{" "}
                             <br />
-                            <span style={{ color: curHeadline.color }}>CRICKET.</span>
+                            <span className="text-amber-600 dark:text-[#F9CD05] font-black">CRICKET.</span>
                           </>
                         ) : (
                           <>
-                            <span className="text-slate-700 dark:text-white/80">{curHeadline.prefix}</span>{" "}
-                            <span style={{ color: curHeadline.color }}>{curHeadline.highlight}</span>
+                            <span className="text-slate-900 dark:text-white">{curHeadline.prefix}</span>{" "}
+                            <span
+                              className="font-black text-[var(--hl-light)] dark:text-[var(--hl-dark)]"
+                              style={{
+                                "--hl-light": curHeadline.lightColor,
+                                "--hl-dark": curHeadline.darkColor,
+                              } as React.CSSProperties}
+                            >
+                              {curHeadline.highlight}
+                            </span>
                           </>
                         )}
                       </motion.h1>
