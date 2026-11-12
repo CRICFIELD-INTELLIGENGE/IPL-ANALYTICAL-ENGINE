@@ -121,17 +121,19 @@ export default function FeedPage() {
   useEffect(() => { setTeam(selectedTeam); setLatestTeam(selectedTeam); }, [selectedTeam]);
 
   const all = useMemo(() => getV2Index(), []);
-  const forTeam = useMemo(() => all.filter((e) => !team || e.franchise === team), [all, team]);
 
-  // Top stories: 1 lead card + 4 sidebar cards. Diverse teams unless a team is explicitly selected.
+  // Top stories: 1 lead card + 4 sidebar cards. When a team is selected, lead with that team's story, then fill the other 4 slots with other teams' stories so the sidebar is always fully populated.
   const top = useMemo(() => {
-    const pool = tab === "featured" ? forTeam : forTeam.filter((e) => e.storyType === tab);
-    const ordered = newsroomOrder(pool);
+    const tabFiltered = tab === "featured" ? all : all.filter((e) => e.storyType === tab);
+    const pool = tabFiltered.length ? tabFiltered : all;
     if (team) {
-      return ordered.slice(0, 5);
+      const teamStories = newsroomOrder(pool.filter((e) => e.franchise === team));
+      const otherStories = newsroomOrder(pool.filter((e) => e.franchise !== team));
+      const combined = [...teamStories, ...getDiverseByTeam(otherStories, 5 - teamStories.length)];
+      return combined.slice(0, 5);
     }
-    return getDiverseByTeam(ordered, 5);
-  }, [forTeam, tab, team]);
+    return getDiverseByTeam(newsroomOrder(pool), 5);
+  }, [all, tab, team]);
 
   // Diverse featured stories across the league for the scrolling editorial rail
   const picks = useMemo(() => {
@@ -139,16 +141,16 @@ export default function FeedPage() {
     return getDiverseByTeam(newsroomOrder(featured), 8);
   }, [all]);
 
-  // Latest stories: When opted ALL, pop stories from different teams
+  // Latest stories: When a team is selected, show that team's latest first, then fill with other teams' stories.
   const latest = useMemo(() => {
     // Getty's signed viewer cannot mount twice with the same widget ID.
     const topIds = new Set(top.map((e) => e.id));
     const remaining = all.filter((e) => !topIds.has(e.id));
     if (latestTeam) {
-      return [...remaining]
-        .filter((e) => e.franchise === latestTeam)
-        .sort((a, b) => b.publishedDate.localeCompare(a.publishedDate))
-        .slice(0, 8);
+      const teamLatest = remaining.filter((e) => e.franchise === latestTeam);
+      const otherLatest = remaining.filter((e) => e.franchise !== latestTeam);
+      const combined = [...teamLatest, ...getDiverseByTeam(otherLatest, 8 - teamLatest.length)];
+      return combined.slice(0, 8);
     }
     const sorted = [...remaining].sort((a, b) => b.publishedDate.localeCompare(a.publishedDate));
     return getDiverseByTeam(sorted, 8);

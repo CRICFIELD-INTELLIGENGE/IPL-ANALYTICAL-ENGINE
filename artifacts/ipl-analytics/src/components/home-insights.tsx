@@ -42,9 +42,9 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
               }`}
             >
               <div
-                className={`home-story-media relative overflow-hidden bg-[#06111a] ${
+                className={`home-story-media relative overflow-hidden bg-[#06111a] flex items-center justify-center ${
                   isSingle
-                    ? "w-full sm:w-[48%] md:w-[46%] h-52 sm:h-auto min-h-[200px] shrink-0"
+                    ? "w-full sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-square shrink-0"
                     : "w-full aspect-video"
                 }`}
               >
@@ -56,6 +56,7 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
                   teamName={meta.name}
                   aspect={item.aspect}
                   preserveAspectRatio={false}
+                  aspectRatio={isSingle ? "square" : "video"}
                 />
               </div>
               <div

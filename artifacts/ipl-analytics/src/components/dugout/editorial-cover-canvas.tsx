@@ -9,7 +9,7 @@ interface EditorialCoverCanvasProps {
   title: string;
   accent?: string;
   coverImage?: string;
-  aspectRatio?: "video" | "hero" | "banner" | "wide";
+  aspectRatio?: "video" | "hero" | "banner" | "wide" | "square";
   className?: string;
   isCoverStory?: boolean;
   /** Edition chip, e.g. "IPL 2008–2026". Legacy covers keep the original label. */
@@ -33,7 +33,9 @@ export function EditorialCoverCanvas({
   const hasImage = Boolean(coverImage && coverImage.trim() !== "" && !imageError);
 
   const aspectClass =
-    aspectRatio === "hero"
+    aspectRatio === "square"
+      ? "aspect-square"
+      : aspectRatio === "hero"
       ? "aspect-video"
       : aspectRatio === "banner"
       ? "aspect-[16/7]"
