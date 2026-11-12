@@ -29,18 +29,7 @@ export default function ScoutHomePage() {
   const [minBalls, setMinBalls] = useState<number>(Math.max(0, Number(sp.get("minBalls")) || 120));
   const [recentSeasons] = useState<number | undefined>(Number(sp.get("recentSeasons")) > 0 ? Number(sp.get("recentSeasons")) : undefined);
   const [franchiseContext, setFranchiseContext] = useState(sp.get("team") ?? "");
-  const { selectedTeam, setSelectedTeam } = useTeamTheme();
-
-  // Sync team param from URL on load
-  useEffect(() => {
-    const urlTeam = sp.get("team");
-    if (urlTeam) {
-      const resolved = resolveTeamCode(urlTeam);
-      if (resolved && resolved !== selectedTeam) {
-        setSelectedTeam(resolved);
-      }
-    }
-  }, []);
+  const { selectedTeam } = useTeamTheme();
   const [searchQuery, setSearchQuery] = useState<string>(sp.get("search") || "");
   const [debouncedSearch, setDebouncedSearch] = useState(searchQuery);
   useEffect(() => { const timer = setTimeout(() => setDebouncedSearch(searchQuery), 300); return () => clearTimeout(timer); }, [searchQuery]);

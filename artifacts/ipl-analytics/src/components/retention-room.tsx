@@ -483,11 +483,9 @@ const SQUADS_BY_TEAM: Record<HubTeam, {
 
 export function RetentionRoom() {
   const [, navigate] = useLocation();
-  const { selectedTeam, setSelectedTeam } = useTeamTheme();
+  const { selectedTeam } = useTeamTheme();
   const q = new URLSearchParams(useSearch()).get("team")?.toUpperCase();
   const activeTeam: HubTeam = HUB_TEAMS.includes(q as HubTeam) ? (q as HubTeam) : selectedTeam ?? "CSK";
-
-  useEffect(() => { if (q && HUB_TEAMS.includes(q as HubTeam) && selectedTeam !== q) setSelectedTeam(q as HubTeam); }, [q, selectedTeam, setSelectedTeam]);
 
   const [phaseTab, setPhaseTab] = useState<"pre" | "post">("pre");
   const [roleFilter, setRoleFilter] = useState<RoleCategory>("All");

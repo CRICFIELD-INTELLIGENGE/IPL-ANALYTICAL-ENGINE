@@ -151,10 +151,10 @@ function RetentionHeroVisual({ team }: { team: TeamCode | null }) {
 }
 
 export default function FeedPage() {
-  const { selectedTeam } = useTeamTheme();
-  const [team, setTeam] = useState<TeamCode | null>(null);
+  const { selectedTeam, setSelectedTeam } = useTeamTheme();
+  const [team, setTeam] = useState<TeamCode | null>(selectedTeam);
   const [tab, setTab] = useState<(typeof STORY_TABS)[number]["id"]>("featured");
-  const [latestTeam, setLatestTeam] = useState<TeamCode | null>(null);
+  const [latestTeam, setLatestTeam] = useState<TeamCode | null>(selectedTeam);
   const { data: desk } = useIpl2027Desk();
   useEffect(() => { setTeam(selectedTeam); setLatestTeam(selectedTeam); }, [selectedTeam]);
 
@@ -289,9 +289,9 @@ export default function FeedPage() {
             <section>
               <SectionHead title="Franchise coverage" sub="Pick a team to see its stories." />
               <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter stories by franchise">
-                <TeamChip active={!team} onClick={() => setTeam(null)}>ALL</TeamChip>
+                <TeamChip active={!team} onClick={() => { setTeam(null); setSelectedTeam(null); setLatestTeam(null); }}>ALL</TeamChip>
                 {HUB_TEAMS.map((t) => (
-                  <TeamChip color={TEAM_REGISTRY[t].accent} key={t} active={team === t} onClick={() => setTeam(t)}>
+                  <TeamChip color={TEAM_REGISTRY[t].accent} key={t} active={team === t} onClick={() => { setTeam(t); setSelectedTeam(t); setLatestTeam(t); }}>
                     <img src={TEAM_REGISTRY[t].logoImg} alt="" className="w-4 h-4 object-contain" /> {t}
                   </TeamChip>
                 ))}

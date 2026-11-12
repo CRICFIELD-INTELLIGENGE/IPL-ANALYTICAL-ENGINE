@@ -46,8 +46,6 @@ export default function SquadDnaPage() {
     writeParams({ team: t, season: null, compare: null, compareSeason: null });
     if (isTeamCode(t) && t !== selectedTeam) setSelectedTeam(t);
   };
-  // Arriving with ?team=RR makes RR the site-wide team too.
-  useEffect(() => { if (urlTeam && isTeamCode(urlTeam) && urlTeam !== selectedTeam) setSelectedTeam(urlTeam); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   // Changing the team in the site header while here follows it.
   const mounted = useRef(false);
   useEffect(() => {

@@ -42,10 +42,8 @@ export default function RetentionRoomPage() {
   const [, params] = useRoute("/retention-room/:team");
   const [, go] = useLocation();
   const requested = params?.team?.toUpperCase() ?? "";
-  const { selectedTeam, setSelectedTeam } = useTeamTheme();
+  const { selectedTeam } = useTeamTheme();
   const team = isTeamCode(requested) ? requested : selectedTeam ?? "RCB";
-  // The room sets the site's franchise colours, as the earlier /feed/squad room did.
-  useEffect(() => { if (selectedTeam !== team) setSelectedTeam(team); }, [team]); // eslint-disable-line react-hooks/exhaustive-deps
   const [season, setSeason] = useState(LIVE_SEASON);
   const [tab, setTab] = useState<Tab>(new URLSearchParams(window.location.search).get("tab") === "fans" ? "fans" : "picks");
   const [choices, setChoices] = useState<Choices>({});

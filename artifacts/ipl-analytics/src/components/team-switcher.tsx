@@ -20,8 +20,8 @@ export function TeamSwitcher() {
  }, [open]);
  return <div ref={container} className={`franchise-center ${open ? 'is-expanded' : ''}`}>
   <motion.div layout transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 370, damping: 34 }} className="franchise-expander">
-   <button ref={trigger} type="button" className="franchise-current" aria-label={`Choose franchise. Current: ${theme?.name ?? 'All cricket'}`} aria-expanded={open} aria-controls="header-franchise-options" onClick={() => setOpen(!open)}>
-    {theme ? <img src={theme.logoImg} alt="" /> : <Shield size={18} />}<span>{theme?.shortName ?? 'Franchise'}</span><ChevronDown size={12} className={open ? 'rotate-180' : ''} />
+   <button ref={trigger} type="button" className="franchise-current" aria-label={`Choose franchise. Current: ${theme?.name ?? 'ALL'}`} aria-expanded={open} aria-controls="header-franchise-options" onClick={() => setOpen(!open)}>
+    {theme ? <img src={theme.logoImg} alt="" /> : <Shield size={18} />}<span>{theme ? theme.shortName : 'ALL'}</span><ChevronDown size={12} className={open ? 'rotate-180' : ''} />
    </button>
    {open && <motion.div id="header-franchise-options" className="franchise-inline-options" initial={{ opacity: 0 }} animate={{ opacity: 1 }} role="group" aria-label="Select franchise">
     <div className="franchise-inline-scroll">

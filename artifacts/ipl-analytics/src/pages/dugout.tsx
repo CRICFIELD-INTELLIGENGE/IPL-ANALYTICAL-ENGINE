@@ -78,14 +78,12 @@ export default function DugoutPage() {
   const rival = currentTeam.archRival ? TEAM_REGISTRY[currentTeam.archRival] : undefined;
   const teamSlug = TEAM_CODE_TO_SLUG[activeTeamCode] ?? "sunrisers-hyderabad";
 
-  // Sync state if route code is valid; redirect bare /dugout to active franchise
+  // Redirect bare /dugout to active franchise; do not automatically overwrite user's selectedTeam
   useEffect(() => {
-    if (resolvedCode && selectedTeam !== resolvedCode) {
-      setSelectedTeam(resolvedCode);
-    } else if (!routeParam) {
+    if (!routeParam) {
       setLocation(`/dugout/${teamSlug}`, { replace: true });
     }
-  }, [resolvedCode, routeParam, teamSlug, selectedTeam, setSelectedTeam, setLocation]);
+  }, [routeParam, teamSlug, setLocation]);
 
   const teams = useTeams();
   const matches = useMatches();
