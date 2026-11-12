@@ -327,55 +327,17 @@ html, body {
   overflow-x: clip;
 }
 
-.getty-embed-wrapper,
-.editorial-getty-embed {
-  background: #08131F !important;
-  background-color: #08131F !important;
-  overflow: hidden !important;
-  border-radius: 0.75rem !important;
+.editorial-getty-embed .getty.embed.image {
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.editorial-getty-embed iframe {
+  display: block;
   width: 100% !important;
-  max-width: 594px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  position: relative !important;
-}
-
-/* Force all Getty-injected DOM wrappers to be 100% transparent with no shadows */
-.getty-embed-wrapper *,
-.editorial-getty-embed *,
-div[class*="getty"],
-div[class*="getty"] *,
-div[class*="gie"],
-div[class*="gie"] * {
-  background: transparent !important;
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
-
-/* Constrain Getty container so it never stretches past 594px where letterboxing occurs */
-.getty.embed.image,
-div[class*="getty"][class*="embed"] {
-  max-width: 594px !important;
-  margin: 0 auto !important;
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-/* Force the Getty iframe to fill its aspect box cleanly with dark scheme and transparent background */
-.getty-embed-wrapper iframe,
-.editorial-getty-embed iframe,
-.getty.embed.image iframe,
-iframe[src*="gettyimages.com"] {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 594px !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  color-scheme: dark !important;
-  border: none !important;
-  display: block !important;
-  margin: 0 auto !important;
-  padding: 0 !important;
+  height: auto !important;
+  aspect-ratio: var(--getty-ratio);
+  border: 0;
 }
 
 .editorial-shell main[data-white-titles="true"] h1,

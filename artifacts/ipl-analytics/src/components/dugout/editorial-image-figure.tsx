@@ -120,7 +120,7 @@ function queueGettyWidget(p: GettyEmbedParams) {
 }
 
 /** Getty Embedded Viewer. Loads only when scrolled near, keeps Getty's attribution link. */
-function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { params: GettyEmbedParams; onFail: () => void; fit?: boolean; naturalHeight?: boolean }) {
+function GettyEmbed({ params, onFail, fit = false }: { params: GettyEmbedParams; onFail: () => void; fit?: boolean }) {
   useRegisterGettyEmbed(); // internal placement accounting only
   const ref = useRef<HTMLDivElement | null>(null);
   const [queued, setQueued] = useState(false);
@@ -184,40 +184,14 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
     };
   }, [embedKey, isBlocked]);
 
-  // Strip white backgrounds from Getty-injected DOM wrappers and watch iframe loading
+  // Watch the viewer that Getty inserts asynchronously.
   useEffect(() => {
     const el = ref.current;
     if (!el || !queued || isBlocked) return;
 
-    const stripWhite = () => {
-      el.querySelectorAll("*").forEach((node) => {
-        const elem = node as HTMLElement;
-        if (elem.style) {
-          elem.style.backgroundColor = "transparent";
-          elem.style.background = "transparent";
-          if (elem.tagName === "IFRAME") {
-            elem.style.colorScheme = "dark";
-            elem.style.border = "none";
-            if (fit) {
-              elem.style.width = "100%";
-              elem.style.height = "100%";
-              elem.style.objectFit = "cover";
-            }
-          }
-          if (elem.classList.contains("getty") || elem.classList.contains("embed")) {
-            elem.style.backgroundColor = "transparent";
-            elem.style.background = "transparent";
-            elem.style.maxWidth = "594px";
-            elem.style.margin = "0 auto";
-          }
-        }
-      });
-    };
-
     const attachIframeEvents = () => {
       const iframe = el.querySelector("iframe");
       if (iframe) {
-        stripWhite();
         try {
           if (iframe.contentDocument && iframe.contentDocument.readyState === "complete") {
             setLoaded(true);
@@ -226,10 +200,7 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
           // Cross-origin iframe access restricted, indicating the iframe has begun loading or loaded
           setLoaded(true);
         }
-        iframe.onload = () => {
-          stripWhite();
-          setLoaded(true);
-        };
+        iframe.onload = () => setLoaded(true);
         iframe.onerror = () => {
           onFailRef.current();
         };
@@ -242,10 +213,7 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
         img.onerror = () => {
           onFailRef.current();
         };
-        img.onload = () => {
-          stripWhite();
-          setLoaded(true);
-        };
+        img.onload = () => setLoaded(true);
       });
     };
 
@@ -258,31 +226,6 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
     mo.observe(el, { childList: true, subtree: true });
     return () => mo.disconnect();
   }, [queued, isBlocked]);
-
-  // Handle reload on significant width resize
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || !loaded) return;
-    let loadedWidth = el.getBoundingClientRect().width;
-    let timer = 0;
-    const ro = new ResizeObserver(() => {
-      window.clearTimeout(timer);
-      timer = window.setTimeout(() => {
-        const width = el.getBoundingClientRect().width;
-        const iframe = el.querySelector("iframe");
-        if (!iframe || Math.abs(width - loadedWidth) < 8) return;
-        loadedWidth = width;
-        const src = iframe.src;
-        iframe.src = "about:blank";
-        window.setTimeout(() => (iframe.src = src), 50);
-      }, 250);
-    });
-    ro.observe(el);
-    return () => {
-      ro.disconnect();
-      window.clearTimeout(timer);
-    };
-  }, [loaded]);
 
   // A single failed asset falls back gracefully after 8 seconds
   useEffect(() => {
@@ -302,16 +245,16 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
 
   return (
     <div
-      className={`getty-embed-wrapper editorial-getty-embed relative mx-auto ${
-        fit
-          ? "w-full h-full flex items-center justify-center overflow-hidden"
-          : "w-full max-w-[594px] rounded-xl overflow-hidden bg-[#08131F]"
-      }`}
-      style={naturalHeight ? { maxWidth: `${wNum}px`, width: "100%" } : fit ? { width: "100%", height: "100%" } : { maxWidth: `${wNum}px`, width: "100%", aspectRatio: `${wNum} / ${hNum}` }}
+      className="editorial-getty-embed relative mx-auto w-full rounded-xl bg-[#08131F]"
+      style={{
+        "--getty-ratio": `${wNum} / ${hNum}`,
+        maxWidth: fit ? `min(${wNum}px, calc(100cqh * ${wNum / hNum}))` : `${wNum}px`,
+        aspectRatio: `${wNum} / ${hNum}`,
+      } as React.CSSProperties}
     >
-      <div ref={ref} className={fit ? "w-full h-full flex items-center justify-center overflow-hidden [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:object-cover [&>iframe]:border-0" : "w-full"} />
+      <div ref={ref} className="w-full" />
       {!loaded && (
-        <div className="absolute inset-0 min-h-[220px] flex items-center justify-center bg-[#08131F] pointer-events-none transition-opacity duration-300">
+        <div className="absolute inset-0 flex items-center justify-center bg-[#08131F] pointer-events-none transition-opacity duration-300">
           <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
         </div>
       )}
@@ -378,11 +321,12 @@ export function EditorialImageFigure({ image, variant = "inline", allowUnpublish
   return (
     <figure
       data-editorial-photo={image.sectionId}
-      className={`relative isolate w-full ${variant === "card" ? "" : "my-1"} ${className}`}
+      style={embed ? { maxWidth: embed.w } : undefined}
+      className={`relative isolate mx-auto w-full ${variant === "card" ? "" : "my-1"} ${className}`}
     >
       <div className="w-full relative flex flex-col items-center justify-center">
         {embed ? (
-          <div className="relative z-10 w-full max-w-[594px] mx-auto">
+          <div className="relative z-10 w-full mx-auto">
             <GettyEmbed key={`${embed.items}-${embed.id}`} params={embed} onFail={onFail} />
           </div>
         ) : (
@@ -454,11 +398,11 @@ export function EditorialCardMedia({
   return (
     <div
       data-editorial-photo={image.sectionId}
-      className={`relative ${embed && preserveAspectRatio ? "" : MEDIA_ASPECT[aspect]} w-full h-full overflow-hidden bg-[#06111a] ${className}`}
+      className={`relative ${embed && preserveAspectRatio ? "" : `${MEDIA_ASPECT[aspect]} h-full`} w-full overflow-hidden bg-[#06111a] ${className}`}
     >
       {embed ? (
-        <div className={preserveAspectRatio ? "relative w-full h-full z-10" : "absolute inset-0 w-full h-full z-10"}>
-          <GettyEmbed key={`${embed.items}-${embed.id}`} params={embed} onFail={onFail} fit={!preserveAspectRatio} naturalHeight={preserveAspectRatio} />
+        <div className={preserveAspectRatio ? "relative w-full z-10" : "absolute inset-0 z-10 flex items-center justify-center [container-type:size]"}>
+          <GettyEmbed key={`${embed.items}-${embed.id}`} params={embed} onFail={onFail} fit={!preserveAspectRatio} />
         </div>
       ) : (
         <>
