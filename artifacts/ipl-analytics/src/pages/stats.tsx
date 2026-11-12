@@ -63,7 +63,6 @@ const normalizePlayerName = (name: string): string =>
 
 export default function StatsPage({ mobilePresentation = false }: { mobilePresentation?: boolean } = {}) {
   const [, setLocation] = useLocation();
-  const { scrollYProgress } = useScroll();
   const [activeTab, setActiveTab] = useState<Tab>("batters");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedVenue, setSelectedVenue] = useState<string | null>(null);
@@ -701,28 +700,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   const removeChainFilter = (key: string) => clearFilter(key as keyof typeof filters);
 
-  // SCROLL TRANSFORMS
-  const masterScale = useTransform(scrollYProgress, [0.6, 1], [1, 0.93]);
-  const heroH = useTransform(scrollYProgress, [0, 0.25, 1], ["100%", "36%", "36%"]);
-  const heroW = useTransform(scrollYProgress, [0, 0.15, 0.35, 1], ["100%", "100%", "calc(100% - 520px)", "calc(100% - 520px)"]);
-  const col2W = useTransform(scrollYProgress, [0.15, 0.35, 1], ["0px", "500px", "500px"]);
-  const titleSz = useTransform(scrollYProgress, [0, 0.25, 1], ["88px", "22px", "22px"]);
-  const padTop = useTransform(scrollYProgress, [0, 0.25, 1], ["12%", "5%", "5%"]);
-  const padLeft = useTransform(scrollYProgress, [0, 0.25, 1], ["6%", "5%", "5%"]);
-  const titleOp = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0]);
-  const r1Op = useTransform(scrollYProgress, [0.08, 0.2], [0, 1]);
-  const r1X = useTransform(scrollYProgress, [0.08, 0.2], [30, 0]);
-  const r2Op = useTransform(scrollYProgress, [0.2, 0.38], [0, 1]);
-  const r2Y = useTransform(scrollYProgress, [0.2, 0.38], [30, 0]);
-
-  const [scrollCaption, setScrollCaption] = useState("STATS CENTER.");
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    if (v < 0.1) setScrollCaption("STATS CENTER.");
-    else if (v < 0.2) setScrollCaption("BATTER INTEL.");
-    else if (v < 0.3) setScrollCaption("BOWLER ARSENAL.");
-    else setScrollCaption("VENUE ORACLE.");
-  });
-
   // KPIs
   const kpis = useMemo(() => {
     const o = overview.data;
@@ -963,175 +940,177 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   </>);
 
   const desktopContent = (
-    <Layout hideHeaderProgress={scrollYProgress}><FeatureSaveButton feature="stats"/>
-      {/* HERO SCROLL */}
-      <div className="h-[260vh]">
-        <motion.div
-          style={{ scale: masterScale }}
-          className="team-analytics-page sticky top-0 w-full h-screen flex flex-col gap-2.5 overflow-hidden bg-slate-50 dark:bg-[#050816] p-2.5 pb-0 origin-top"
-        >
-          {/* ROW 1: HERO + KPI PANEL */}
-          <motion.div className="flex gap-2.5 shrink-0" style={{ height: heroH }}>
-            <motion.div style={{ width: heroW }} className="relative bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 overflow-hidden shrink-0 group shadow-sm dark:shadow-2xl">
-              <div className="absolute inset-0">
-                <img src="/advance stats title image.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-20 dark:opacity-70" />
-                <div className="absolute inset-0 bg-gradient-to-br stats-team-overlay" />
-                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-[#050816] dark:via-[#050816]/70 dark:to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent dark:from-[#050816]/80 to-transparent" />
-                <div className="absolute inset-0 opacity-[0.03] bg-grid-40" />
+    <Layout><FeatureSaveButton feature="stats"/>
+      {/* ═════════════════════════════════════════════════════════════════════
+          HERO & ANALYTICS TELEMETRY SECTION
+          - Clean, responsive natural document flow layout
+          - Zero sticky scroll locking or 260vh trapping
+          - Fully responsive across desktop, tablet and mobile
+          - High-contrast dual theme support (Light and Dark)
+         ═════════════════════════════════════════════════════════════════════ */}
+      <div className="team-analytics-page w-full flex flex-col gap-3 p-2.5 md:p-4 bg-slate-50 dark:bg-[#050816]">
+        {/* ROW 1: HERO TITLE CARD + KPI PANEL */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
+          {/* HERO TITLE CARD (LEFT, 7 cols) */}
+          <div className="lg:col-span-7 relative bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 overflow-hidden group shadow-sm dark:shadow-2xl p-5 md:p-6 flex flex-col justify-between min-h-[180px]">
+            <div className="absolute inset-0 pointer-events-none">
+              <img src="/advance stats title image.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-15 dark:opacity-40" />
+              <div className="absolute inset-0 bg-gradient-to-br stats-team-overlay" />
+              <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-[#050816] dark:via-[#050816]/70 dark:to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent dark:from-[#050816]/80 to-transparent" />
+              <div className="absolute inset-0 opacity-[0.03] bg-grid-40" />
+            </div>
+            <div className="relative z-10 flex flex-col items-start">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/25 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5">
+                  <Flame className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+                  STATSGURU TELEMETRY
+                </span>
+                <span className="text-[10px] font-mono text-slate-500 dark:text-white/40">19 Seasons Indexed</span>
               </div>
-              <motion.div style={{ paddingTop: padTop, paddingLeft: padLeft, opacity: titleOp }} className="relative z-10 h-full flex flex-col">
-                <div className="absolute inset-0 bg-black/5" />
-                <div className="relative z-10 flex flex-col items-start">
-                  <motion.h1 style={{ fontSize: titleSz, lineHeight: '0.9', marginBottom: '8px' }} className="font-black leading-[0.82] text-slate-900 dark:text-white uppercase tracking-tighter mb-4 scale-x-105 origin-left">
-                    {scrollCaption === "STATS CENTER." ? (<><div className="mb-1">ADVANCED</div><span className="text-[#3B82F6] block">STATS.</span></>) :
-                      scrollCaption === "BATTER INTEL." ? (<><div className="mb-1">BATTER</div><span className="text-[#F9CD05] block">INTEL.</span></>) :
-                        scrollCaption === "BOWLER ARSENAL." ? (<><div className="mb-1">BOWLER</div><span className="text-[#8B5CF6] block">ARSENAL.</span></>) :
-                          (<><div className="mb-1">VENUE</div><span className="text-[#10B981] block">ORACLE.</span></>)}
-                  </motion.h1>
-                  <motion.p className="text-slate-600 dark:text-white/50 text-[13px] max-w-[420px] font-medium tracking-tight">
-                    <span className="text-slate-900 dark:text-white/80 font-black mr-2 uppercase tracking-widest">Statsguru Depth:</span>
-                    Dimensional slicing across {overview.data?.totalMatches ?? "—"} matches and {overview.data?.seasons ?? "—"} seasons of high-fidelity IPL telemetry.
-                  </motion.p>
-                </div>
-              </motion.div>
-            </motion.div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-none text-slate-900 dark:text-white uppercase tracking-tighter mb-2 scale-x-105 origin-left">
+                <div className="mb-1 text-slate-900 dark:text-white">ADVANCED</div>
+                <span className="text-blue-600 dark:text-[#3B82F6] block">STATS.</span>
+              </h1>
+              <p className="text-slate-600 dark:text-white/60 text-xs md:text-sm font-medium tracking-tight max-w-[480px]">
+                <span className="text-slate-900 dark:text-white/90 font-black mr-2 uppercase tracking-widest">Statsguru Depth:</span>
+                Dimensional slicing across {overview.data?.totalMatches ?? "1,243"} matches and {overview.data?.seasons ?? "19"} seasons of high-fidelity IPL telemetry.
+              </p>
+            </div>
+          </div>
 
-            {/* KPI STRIP CARD */}
-            <motion.div style={{ width: col2W, opacity: r1Op, x: r1X }} className="bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 flex flex-col overflow-hidden shadow-sm dark:shadow-2xl min-w-0">
-              <div className="p-3 border-b border-slate-200 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-white/[0.02]">
-                <div className="flex items-center gap-2">
-                  <Cpu className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-white/60">Analytical KPI Strip</span>
+          {/* KPI STRIP CARD (RIGHT, 5 cols) */}
+          <div className="lg:col-span-5 bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 flex flex-col overflow-hidden shadow-sm dark:shadow-2xl">
+            <div className="p-3 border-b border-slate-200 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-white/[0.02]">
+              <div className="flex items-center gap-2">
+                <Cpu className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-700 dark:text-white/70">Analytical KPI Strip</span>
+              </div>
+              <span className="text-[8px] font-mono text-slate-400 dark:text-white/30">TELEMETRY_v4.2</span>
+            </div>
+            <div className="flex-1 p-3 grid grid-cols-4 gap-2 content-center">
+              {kpis.map(k => (
+                <div key={k.label} className="flex flex-col items-center gap-1 py-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all group">
+                  <k.Icon className="w-4 h-4 transition-transform group-hover:scale-110 text-[var(--kpi-color)]" style={{ "--kpi-color": k.accent } as React.CSSProperties} />
+                  <span className="text-xs md:text-sm font-black text-slate-900 dark:text-white [text-shadow:0_0_12px_var(--kpi-shadow)]" style={{ "--kpi-shadow": `${k.accent}33` } as React.CSSProperties}>{k.value}</span>
+                  <span className="text-[7px] font-black text-slate-500 dark:text-white/40 uppercase tracking-tighter text-center">{k.label}</span>
                 </div>
-                <span className="text-[8px] font-mono text-slate-400 dark:text-white/20">TELEMETRY_v4.2</span>
-              </div>
-              <div className="flex-1 p-3 grid grid-cols-4 gap-2 content-center">
-                {kpis.map(k => (
-                  <div key={k.label} className="flex flex-col items-center gap-1 py-3 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all group">
-                    <k.Icon className="w-4 h-4 transition-transform group-hover:scale-110 text-[var(--kpi-color)]" style={{ "--kpi-color": k.accent } as React.CSSProperties} />
-                    <motion.span className="text-[13px] font-black text-slate-900 dark:text-white [text-shadow:0_0_12px_var(--kpi-shadow)]" style={{ "--kpi-shadow": `${k.accent}33` } as React.CSSProperties}>{k.value}</motion.span>
-                    <motion.span className="text-[7px] font-black text-slate-500 dark:text-white/30 uppercase tracking-tighter text-center">{k.label}</motion.span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-          {/* ROW 2: SEASON CHART + TOP PERFORMERS PREVIEW */}
-          <motion.div style={{ opacity: r2Op, y: r2Y }} className="flex gap-2.5 flex-1 min-h-0">
-            <div className="flex-1 bg-[#0B1020] rounded-[20px] border border-white/10 p-4 flex flex-col min-h-0 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
-              <div className="flex items-center justify-between mb-4 shrink-0 relative z-10">
-                <div className="flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-primary animate-pulse" />
-                  <span className="text-[11px] font-black uppercase tracking-widest text-white/60">Tournament Telemetry Pulse</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-primary/40" /><span className="text-[8px] font-black text-white/40 uppercase">Volume</span></div>
-                  <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-accent" /><span className="text-[8px] font-black text-white/40 uppercase">Intensity</span></div>
-                </div>
+        {/* ROW 2: SEASON CHART + TOP PERFORMERS PREVIEW */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
+          {/* TOURNAMENT TELEMETRY PULSE (LEFT, 8 cols) */}
+          <div className="lg:col-span-8 bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 p-4 flex flex-col min-h-[220px] relative overflow-hidden group shadow-sm dark:shadow-xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-transparent pointer-events-none" />
+            <div className="flex items-center justify-between mb-3 shrink-0 relative z-10">
+              <div className="flex items-center gap-2">
+                <Activity className="w-4 h-4 text-blue-500 dark:text-blue-400 animate-pulse" />
+                <span className="text-[11px] font-black uppercase tracking-widest text-slate-700 dark:text-white/70">Tournament Telemetry Pulse</span>
               </div>
-              <div className="flex-1 min-h-0 relative z-10">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={seasonChart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid stroke="hsl(250 30% 18%)" strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="season" tick={{ fontSize: 9, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fontSize: 9, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
-                    <Tooltip
-                      contentStyle={tooltipStyle}
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length) {
-                          const data = payload[0].payload;
-                          return (
-                            <div className="bg-[#0B1020] border border-white/10 rounded-xl p-3 shadow-2xl backdrop-blur-md">
-                              <p className="text-[10px] font-black text-white/40 uppercase mb-2">Season 20{data.season} Analysis</p>
-                              <div className="flex flex-col gap-1.5">
-                                <div className="flex justify-between items-center gap-6">
-                                  <span className="text-[9px] font-black text-white/60 uppercase">Run Volume</span>
-                                  <span className="text-[12px] font-black text-white">{fmt(data.runs)}</span>
-                                </div>
-                                <div className="flex justify-between items-center gap-6">
-                                  <span className="text-[9px] font-black text-accent uppercase">Six Intensity</span>
-                                  <span className="text-[12px] font-black text-accent">{data.sixes}</span>
-                                </div>
-                                <div className="mt-2 pt-2 border-t border-white/5 flex flex-col">
-                                  <span className="text-[8px] font-black text-primary uppercase">League Health Index</span>
-                                  <div className="w-full h-1 bg-white/5 rounded-full mt-1 overflow-hidden">
-                                    <motion.div style={{ "--progress-w": `${Math.min(100, (data.runs / 200))}%` } as React.CSSProperties} className="h-full bg-primary w-[var(--progress-w)]" />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="runs"
-                      stroke="hsl(var(--primary))"
-                      strokeWidth={3}
-                      dot={{ r: 0 }}
-                      activeDot={{ r: 4, stroke: "white", strokeWidth: 2 }}
-                    />
-                    <Line
-                      type="stepAfter"
-                      dataKey="sixes"
-                      stroke="hsl(var(--accent))"
-                      strokeWidth={2}
-                      strokeDasharray="5 5"
-                      dot={{ r: 0 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-blue-500" /><span className="text-[9px] font-black text-slate-500 dark:text-white/50 uppercase">Runs Volume</span></div>
+                <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-amber-500" /><span className="text-[9px] font-black text-slate-500 dark:text-white/50 uppercase">Six Intensity</span></div>
               </div>
             </div>
+            <div className="flex-1 h-[160px] min-h-[160px] relative z-10">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={seasonChart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <CartesianGrid stroke="currentColor" className="text-slate-200 dark:text-white/5" strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="season" tick={{ fontSize: 9, fill: "#64748b" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 9, fill: "#64748b" }} axisLine={false} tickLine={false} />
+                  <Tooltip
+                    contentStyle={tooltipStyle}
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        const data = payload[0].payload;
+                        return (
+                          <div className="bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 rounded-xl p-3 shadow-2xl backdrop-blur-md">
+                            <p className="text-[10px] font-black text-slate-500 dark:text-white/50 uppercase mb-2">Season 20{data.season} Analysis</p>
+                            <div className="flex flex-col gap-1.5">
+                              <div className="flex justify-between items-center gap-6">
+                                <span className="text-[9px] font-black text-slate-600 dark:text-white/60 uppercase">Run Volume</span>
+                                <span className="text-[12px] font-black text-slate-900 dark:text-white">{fmt(data.runs)}</span>
+                              </div>
+                              <div className="flex justify-between items-center gap-6">
+                                <span className="text-[9px] font-black text-amber-600 dark:text-amber-400 uppercase">Six Intensity</span>
+                                <span className="text-[12px] font-black text-amber-600 dark:text-amber-400 font-bold">{data.sixes}</span>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="runs"
+                    stroke="#3b82f6"
+                    strokeWidth={2.5}
+                    dot={{ r: 0 }}
+                    activeDot={{ r: 4, stroke: "white", strokeWidth: 2 }}
+                  />
+                  <Line
+                    type="stepAfter"
+                    dataKey="sixes"
+                    stroke="#f59e0b"
+                    strokeWidth={2}
+                    strokeDasharray="4 4"
+                    dot={{ r: 0 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
 
-            <div className="w-[280px] bg-[#0B1020] rounded-[20px] border border-white/10 p-4 flex flex-col gap-2 overflow-y-auto no-scrollbar">
-              <div className="flex items-center gap-2 shrink-0">
-                <Trophy className="w-4 h-4 text-amber-400" />
-                <span className="text-[11px] font-black uppercase tracking-widest text-white/60">Top Performers</span>
-              </div>
+          {/* TOP PERFORMERS PREVIEW (RIGHT, 4 cols) */}
+          <div className="lg:col-span-4 bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 p-4 flex flex-col justify-between shadow-sm dark:shadow-xl">
+            <div className="flex items-center gap-2 mb-2 shrink-0">
+              <Trophy className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+              <span className="text-[11px] font-black uppercase tracking-widest text-slate-700 dark:text-white/70">Top Performers</span>
+            </div>
+            <div className="flex flex-col gap-1.5 flex-1 justify-between">
               {(activeData.batters).slice(0, 5).map((b, i) => {
                 const displayName = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Batter #${i + 1}`);
                 return (
-                <div key={displayName + i} className="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.02] border border-white/5 hover:border-primary/20 transition-colors">
-                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-white/10 shrink-0 relative">
-                    <PlayerAvatar name={displayName} playerImages={playerImages.data} bio={getBioFor(displayName)} imgClassName="w-full h-full object-cover select-none" />
+                  <div key={displayName + i} className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 hover:border-blue-300 dark:hover:border-primary/20 transition-colors">
+                    <div className="w-7 h-7 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-slate-200 dark:border-white/10 shrink-0 relative">
+                      <PlayerAvatar name={displayName} playerImages={playerImages.data} bio={getBioFor(displayName)} imgClassName="w-full h-full object-cover select-none" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[11px] font-bold text-slate-900 dark:text-white truncate">{displayPlayerName(displayName, displayNames)}</div>
+                      <div className="text-[9px] text-slate-500 dark:text-white/40">{fmt(b.runs)} runs · SR {b.sr}</div>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[11px] font-bold truncate">{displayPlayerName(displayName, displayNames)}</div>
-                    <div className="text-[9px] text-white/30">{fmt(b.runs)} runs · SR {b.sr}</div>
-                  </div>
-                </div>
                 );
               })}
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* STATIC DATA SECTION */}
       <div className="space-y-4 px-2.5 pb-6 mt-4">
         {/* CROSS-LINK TO GLOBAL SCOUT LAB */}
-        <div className="rounded-2xl bg-white dark:bg-gradient-to-r dark:from-primary/10 dark:via-purple-500/10 dark:to-white/[0.02] border border-slate-200 dark:border-primary/20 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-sm dark:shadow-lg">
+        <div className="rounded-2xl bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-sm dark:shadow-lg">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center text-primary shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
               <Compass className="w-4 h-4" />
             </div>
             <div>
               <span className="text-xs font-bold text-slate-900 dark:text-white block">
                 Looking for multi-league scouting across domestic and overseas tournaments?
               </span>
-              <span className="text-[10px] text-slate-600 dark:text-white/50">
+              <span className="text-[10px] text-slate-600 dark:text-white/60">
                 Compare players across IPL, SMAT, BBL, SA20, CPL, and ILT20 with league-adjusted ratings.
               </span>
             </div>
           </div>
           <Link href="/scout">
-            <button className="px-3.5 py-1.5 rounded-xl bg-primary text-[#0B1020] text-xs font-black shadow transition-all hover:bg-primary/90 flex items-center gap-1.5 shrink-0 cursor-pointer">
+            <button className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
               <span>Open Scout Lab</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
@@ -1141,7 +1120,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         {filterControls}
 
         {/* Telemetry Summary Banner */}
-        <div className="mb-6 bg-white dark:bg-gradient-to-r dark:from-primary/15 dark:via-blue-900/20 dark:to-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-white/10 flex flex-wrap items-center justify-between gap-4 animate-fade-in relative overflow-hidden group shadow-sm dark:shadow-none">
+        <div className="mb-6 bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4 animate-fade-in relative overflow-hidden group shadow-sm dark:shadow-none">
           <img
             src="/advance stats title image.png"
             className="absolute right-0 top-0 h-full w-auto object-cover opacity-15 dark:opacity-25 pointer-events-none mix-blend-luminosity group-hover:opacity-25 dark:group-hover:opacity-35 transition-opacity"
