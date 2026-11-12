@@ -207,61 +207,166 @@ function MatchIntelligenceView({ match, activeTab }: { match: import("@/lib/live
             
             {/* TELEMETRY GRID */}
             <div className="grid grid-cols-12 gap-6">
-              <motion.div className="col-span-12 lg:col-span-4 bg-[#0B1020] rounded-[24px] border border-white/10 p-6 flex flex-col gap-6 shadow-xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4"><TrendingUp className="w-4 h-4 text-primary/40" /></div>
-                <div>
-                  <h3 className="text-[12px] font-black uppercase tracking-widest text-white/40 mb-1">Win Probability</h3>
-                  <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest">Calculated Real-Time Telemetry</p>
+              {/* WIN PROBABILITY CARD */}
+              <motion.div className="col-span-12 lg:col-span-4 bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 p-6 flex flex-col justify-between gap-5 shadow-md dark:shadow-xl relative overflow-hidden transition-colors">
+                <div className="absolute top-0 right-0 p-4">
+                  <TrendingUp className="w-4 h-4 text-sky-600 dark:text-cyan-400" />
                 </div>
-                <div className="flex-1 flex flex-col justify-center items-center gap-6">
-                  {/* Archived matches: calibrated chase model (final point = result). No live model, so others show "—". */}
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-[12px] font-black uppercase tracking-widest text-slate-800 dark:text-white">
+                      Win Probability
+                    </h3>
+                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-sky-100 dark:bg-cyan-500/15 text-sky-800 dark:text-cyan-300 uppercase">
+                      {info.winner || card.data?.result?.winner ? "Decisive" : "Live"}
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-slate-500 dark:text-white/40 font-mono font-bold uppercase tracking-wider">
+                    Calculated Real-Time Telemetry
+                  </p>
+                </div>
+
+                <div className="flex-1 flex flex-col justify-center gap-4">
                   {(() => {
-                    const last = Array.isArray(winProb.data) && winProb.data.length ? winProb.data[winProb.data.length - 1] : null;
+                    const probPoints = Array.isArray(winProb.data) && winProb.data.length ? winProb.data : null;
+                    const last = probPoints ? probPoints[probPoints.length - 1] : null;
+
+                    const winnerName = (info.winner || card.data?.result?.winner || "").toLowerCase();
+                    const isT1Winner = winnerName.includes(info.team1.teamSName.toLowerCase()) || winnerName.includes(info.team1.teamName.toLowerCase());
+                    const isT2Winner = winnerName.includes(info.team2.teamSName.toLowerCase()) || winnerName.includes(info.team2.teamName.toLowerCase());
+
+                    let t1Prob = 50;
+                    let t2Prob = 50;
+
+                    if (last && typeof last.team1 === "number" && typeof last.team2 === "number") {
+                      t1Prob = Math.round(last.team1);
+                      t2Prob = Math.round(last.team2);
+                    } else if (isT1Winner) {
+                      t1Prob = 100;
+                      t2Prob = 0;
+                    } else if (isT2Winner) {
+                      t1Prob = 0;
+                      t2Prob = 100;
+                    }
+
+                    const t1Col = teamColor(info.team1.teamName);
+                    const t2Col = teamColor(info.team2.teamName);
+
                     return (
                       <>
-                        <div className="relative w-full h-4 bg-white/5 rounded-full overflow-hidden border border-white/5">
-                          {last && (
-                            <motion.div
-                              className="absolute inset-y-0 left-0 bg-primary shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]"
-                              initial={{ width: "50%" }}
-                              animate={{ width: `${last.team1}%` }}
-                              transition={{ duration: 1.5, ease: "easeOut" }}
-                            />
-                          )}
-                        </div>
-                        <div className="w-full flex justify-between px-2">
-                          <div className="text-center">
-                            <div className="text-[24px] font-black text-white leading-none">{last ? `${Math.round(last.team1)}%` : "—"}</div>
-                            <div className="text-[9px] font-black text-primary uppercase mt-1">{info.team1.teamSName}</div>
+                        {/* Dual Team Percentages with Team Badges */}
+                        <div className="w-full flex justify-between items-end px-1">
+                          <div className="flex items-center gap-2.5">
+                            <TeamLogo team={info.team1.teamSName} size="w-8 h-8" />
+                            <div className="text-left">
+                              <div className="text-[26px] font-black text-slate-900 dark:text-white leading-none font-mono">
+                                {t1Prob}%
+                              </div>
+                              <div className="text-[10px] font-bold uppercase mt-1 tracking-wider" style={{ color: t1Col }}>
+                                {info.team1.teamSName}
+                              </div>
+                            </div>
                           </div>
-                          <div className="text-center">
-                            <div className="text-[24px] font-black text-white leading-none">{last ? `${Math.round(last.team2)}%` : "—"}</div>
-                            <div className="text-[9px] font-black text-accent uppercase mt-1">{info.team2.teamSName}</div>
+
+                          <div className="flex items-center gap-2.5 flex-row-reverse text-right">
+                            <TeamLogo team={info.team2.teamSName} size="w-8 h-8" />
+                            <div className="text-right">
+                              <div className="text-[26px] font-black text-slate-900 dark:text-white leading-none font-mono">
+                                {t2Prob}%
+                              </div>
+                              <div className="text-[10px] font-bold uppercase mt-1 tracking-wider" style={{ color: t2Col }}>
+                                {info.team2.teamSName}
+                              </div>
+                            </div>
                           </div>
                         </div>
-                        {!last && <p className="text-[10px] text-white/30 text-center">Not available for this match</p>}
+
+                        {/* Dual-color split progress bar */}
+                        <div className="relative w-full h-3.5 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden border border-slate-200 dark:border-white/10 flex">
+                          <motion.div
+                            className="h-full"
+                            style={{ backgroundColor: t1Col }}
+                            initial={{ width: "50%" }}
+                            animate={{ width: `${t1Prob}%` }}
+                            transition={{ duration: 1.2, ease: "easeOut" }}
+                          />
+                          <motion.div
+                            className="h-full"
+                            style={{ backgroundColor: t2Col }}
+                            initial={{ width: "50%" }}
+                            animate={{ width: `${t2Prob}%` }}
+                            transition={{ duration: 1.2, ease: "easeOut" }}
+                          />
+                        </div>
+
+                        {/* Trajectory Sparkline Curve (when over progression exists) */}
+                        {probPoints && probPoints.length > 2 && (
+                          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 flex flex-col gap-1">
+                            <div className="flex justify-between items-center text-[9px] font-mono text-slate-500 dark:text-slate-400 uppercase font-bold">
+                              <span>Chase Win Trajectory</span>
+                              <span>Over 0 → {probPoints[probPoints.length - 1].over}</span>
+                            </div>
+                            <svg className="w-full h-8 overflow-visible" viewBox={`0 0 ${(probPoints.length - 1) * 15} 32`} preserveAspectRatio="none">
+                              <path
+                                d={probPoints.reduce((acc, pt, idx) => {
+                                  const x = idx * 15;
+                                  const y = 30 - (pt.team2 / 100) * 26;
+                                  return idx === 0 ? `M ${x} ${y}` : `${acc} L ${x} ${y}`;
+                                }, "")}
+                                fill="none"
+                                stroke={t2Col}
+                                strokeWidth="2.5"
+                              />
+                            </svg>
+                          </div>
+                        )}
+
+                        {/* Victory Result Banner */}
+                        {(info.winner || card.data?.result?.winner) && (
+                          <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <Trophy className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                              <span className="text-[11px] font-bold text-emerald-950 dark:text-emerald-200 uppercase tracking-tight truncate">
+                                {info.winner || card.data?.result?.winner} won by {info.margin || card.data?.result?.by || "victory"}
+                              </span>
+                            </div>
+                            <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-200/90 dark:bg-emerald-500/20 text-emerald-900 dark:text-emerald-300 shrink-0">
+                              FINAL
+                            </span>
+                          </div>
+                        )}
                       </>
                     );
                   })()}
                 </div>
               </motion.div>
 
-              <motion.div className="col-span-12 lg:col-span-8 bg-[#0B1020] rounded-[24px] border border-white/10 flex flex-col shadow-xl overflow-hidden">
-                <div className="p-4 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
+              {/* INNINGS PERFORMANCE MATRIX */}
+              <motion.div className="col-span-12 lg:col-span-8 bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 flex flex-col shadow-md dark:shadow-xl overflow-hidden transition-colors">
+                <div className="p-4 border-b border-slate-200/80 dark:border-white/5 flex items-center justify-between bg-slate-50/60 dark:bg-white/[0.02]">
                   <div className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-amber-400" />
-                    <span className="text-[11px] font-black uppercase tracking-widest">Innings Performance Matrix</span>
+                    <Zap className="w-4 h-4 text-amber-500" />
+                    <span className="text-[11px] font-black uppercase tracking-widest text-slate-800 dark:text-white">
+                      Innings Performance Matrix
+                    </span>
                   </div>
+                  <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-white/40 uppercase">
+                    Phase Scoring · Boundaries · Top Impact
+                  </span>
                 </div>
                 <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <DetailedScorecardRow 
                     team={info.team1} 
-                    score={match.matchScore?.team1Score?.inngs2 || match.matchScore?.team1Score?.inngs1} 
+                    score={match.matchScore?.team1Score?.inngs2 || match.matchScore?.team1Score?.inngs1}
+                    innings={card.data?.innings?.[0]}
+                    inningsLabel="1st Innings"
                     isBatting={info.currBatTeamId === info.team1.teamId}
                   />
                   <DetailedScorecardRow 
                     team={info.team2} 
-                    score={match.matchScore?.team2Score?.inngs2 || match.matchScore?.team2Score?.inngs1} 
+                    score={match.matchScore?.team2Score?.inngs2 || match.matchScore?.team2Score?.inngs1}
+                    innings={card.data?.innings?.[1]}
+                    inningsLabel="2nd Innings (Chase)"
                     isBatting={info.currBatTeamId === info.team2.teamId}
                   />
                 </div>
@@ -430,47 +535,153 @@ function Fact({ label, value }: { label: string; value: string }) {
   );
 }
 
-function DetailedScorecardRow({ team, score, isBatting }: { team: any; score: any; isBatting: boolean }) {
-  if (!score || score.runs == null) {
+function DetailedScorecardRow({
+  team,
+  score,
+  innings,
+  inningsLabel,
+  isBatting
+}: {
+  team: any;
+  score: any;
+  innings?: import("@/lib/aggregates").ScorecardInnings;
+  inningsLabel: string;
+  isBatting: boolean;
+}) {
+  const runs = innings?.runs ?? score?.runs;
+  const wickets = innings?.wickets ?? score?.wickets ?? 0;
+  const overs = innings?.overs ?? score?.overs ?? 0;
+  const runRate = innings?.runRate
+    ? Number(innings.runRate).toFixed(2)
+    : runs && overs && Number(overs) > 0
+    ? (runs / Number(overs)).toFixed(2)
+    : "—";
+
+  const fours = innings?.batting?.reduce((sum, b) => sum + (b.fours || 0), 0) ?? 0;
+  const sixes = innings?.batting?.reduce((sum, b) => sum + (b.sixes || 0), 0) ?? 0;
+  const boundaryRuns = fours * 4 + sixes * 6;
+  const boundaryPct = runs ? Math.round((boundaryRuns / runs) * 100) : 0;
+
+  const topBatter = innings?.batting && innings.batting.length > 0
+    ? [...innings.batting].sort((a, b) => b.runs - a.runs)[0]
+    : null;
+
+  const bestBowler = innings?.bowling && innings.bowling.length > 0
+    ? [...innings.bowling].sort((a, b) => b.wickets - a.wickets || a.runs - b.runs)[0]
+    : null;
+
+  const ppOvers = (innings?.overProgression || []).filter(o => o.over <= 6);
+  const ppRuns = ppOvers.reduce((sum, o) => sum + o.runs, 0);
+  const ppWkts = ppOvers.reduce((sum, o) => sum + o.wickets, 0);
+
+  if (runs == null) {
     return (
-      <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col gap-2 opacity-50 relative overflow-hidden group">
+      <div className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 flex flex-col gap-2 opacity-50 relative overflow-hidden group">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <TeamLogo team={team.teamSName} size="w-6 h-6" />
-            <span className="text-[12px] font-black uppercase tracking-widest text-white/40">{team.teamSName}</span>
+            <span className="text-[12px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40">{team.teamSName}</span>
           </div>
-          <div className="px-2 py-0.5 rounded border border-white/10 text-[8px] font-black text-white/20 uppercase tracking-widest">INACTIVE</div>
+          <div className="px-2 py-0.5 rounded border border-slate-200 dark:border-white/10 text-[8px] font-black text-slate-400 dark:text-white/20 uppercase tracking-widest">INACTIVE</div>
         </div>
-        <div className="text-[20px] font-black text-white/10 italic">Yet to Bat</div>
+        <div className="text-[20px] font-black text-slate-400 dark:text-white/20 italic">Yet to Bat</div>
       </div>
     );
   }
 
   return (
-    <div className={`p-5 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col gap-4 relative overflow-hidden group transition-all ${isBatting ? 'border-primary/40 shadow-lg shadow-primary/5 bg-primary/5' : 'hover:border-white/20'}`}>
-      {isBatting && <div className="absolute top-0 right-0 p-3"><div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" /></div>}
-      <div className="flex items-center justify-between gap-3">
+    <div className={`p-5 rounded-2xl border flex flex-col gap-3.5 relative overflow-hidden transition-all ${
+      isBatting
+        ? 'border-primary/50 shadow-md bg-primary/5 dark:bg-primary/10'
+        : 'bg-slate-50/80 dark:bg-white/[0.02] border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/15'
+    }`}>
+      {isBatting && (
+        <div className="absolute top-0 right-0 p-3">
+          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+        </div>
+      )}
+
+      {/* Team Header & Score Line */}
+      <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
           <Link href={`/teams/${teamSlug(team.teamName)}`} className="hover:scale-105 transition-transform shrink-0">
             <TeamLogo team={team.teamSName} size="w-10 h-10" />
           </Link>
           <div className="flex flex-col min-w-0">
-            <span className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-1">{team.teamSName} Innings</span>
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-white/40 mb-0.5">
+              {inningsLabel}
+            </span>
             <Link
               href={`/teams/${teamSlug(team.teamName)}`}
-              className="text-[16px] md:text-[18px] font-black text-white hover:text-primary transition-colors leading-none tracking-tight truncate flex items-center gap-1"
+              className="text-[15px] sm:text-[17px] font-black text-slate-900 dark:text-white hover:text-primary transition-colors leading-none tracking-tight truncate flex items-center gap-1"
             >
               <span className="truncate">{team.teamName}</span>
               <ArrowUpRight className="w-3 h-3 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
+            <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 mt-1">
+              Run Rate: <strong className="text-slate-800 dark:text-slate-200 font-bold">{runRate}</strong> RPO
+            </span>
           </div>
         </div>
+
         <div className="text-right shrink-0">
-          <div className="text-[28px] font-black text-white tabular-nums leading-none mb-1">
-            {score.runs}<span className="text-[18px] text-white/40">/{score.wickets ?? 0}</span>
+          <div className="text-[26px] sm:text-[28px] font-black text-slate-900 dark:text-white tabular-nums leading-none mb-1 font-mono">
+            {runs}<span className="text-[17px] sm:text-[18px] text-slate-500 dark:text-white/40 font-bold">/{wickets}</span>
           </div>
-          <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest font-mono">({score.overs ?? 0} Overs)</div>
+          <div className="text-[10px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-widest font-mono">
+            ({overs} Overs)
+          </div>
         </div>
+      </div>
+
+      {/* Innings Matrix Metrics Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-3 border-t border-slate-200/80 dark:border-white/5">
+        {/* Boundaries */}
+        <div className="p-2.5 rounded-xl bg-white dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/5 flex flex-col">
+          <span className="text-[9px] font-mono uppercase font-bold text-slate-500 dark:text-slate-400">BOUNDARIES</span>
+          <span className="text-xs font-black text-slate-900 dark:text-white font-mono mt-0.5">
+            {fours} <span className="text-[10px] font-normal text-slate-500">4s</span> · {sixes} <span className="text-[10px] font-normal text-slate-500">6s</span>
+          </span>
+          <span className="text-[9px] text-slate-500 dark:text-slate-400 font-mono font-medium">{boundaryRuns} runs ({boundaryPct}%)</span>
+        </div>
+
+        {/* Top Scorer */}
+        <div className="p-2.5 rounded-xl bg-white dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/5 flex flex-col min-w-0">
+          <span className="text-[9px] font-mono uppercase font-bold text-slate-500 dark:text-slate-400">TOP SCORER</span>
+          <span className="text-xs font-black text-slate-900 dark:text-white truncate mt-0.5" title={topBatter?.name}>
+            {topBatter ? `${topBatter.name.split(' ').pop()} ${topBatter.runs}` : '—'}
+          </span>
+          <span className="text-[9px] text-slate-500 dark:text-slate-400 font-mono">
+            {topBatter ? `${topBatter.balls}b · SR ${topBatter.sr}` : '—'}
+          </span>
+        </div>
+
+        {/* Key Bowler Conceded To */}
+        <div className="p-2.5 rounded-xl bg-white dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/5 flex flex-col min-w-0 col-span-2 sm:col-span-1">
+          <span className="text-[9px] font-mono uppercase font-bold text-slate-500 dark:text-slate-400">KEY BOWLER</span>
+          <span className="text-xs font-black text-slate-900 dark:text-white truncate mt-0.5" title={bestBowler?.name}>
+            {bestBowler ? `${bestBowler.name.split(' ').pop()} ${bestBowler.wickets}/${bestBowler.runs}` : '—'}
+          </span>
+          <span className="text-[9px] text-slate-500 dark:text-slate-400 font-mono">
+            {bestBowler ? `${bestBowler.overs} ov · ER ${bestBowler.econ != null ? Number(bestBowler.econ).toFixed(1) : (bestBowler.runs / (parseFloat(bestBowler.overs) || 1)).toFixed(1)}` : '—'}
+          </span>
+        </div>
+      </div>
+
+      {/* Powerplay & Extras Strip */}
+      <div className="flex items-center justify-between text-[10px] font-mono px-0.5 text-slate-600 dark:text-slate-400">
+        <span>
+          {ppOvers.length > 0 ? (
+            <>PP (1-6): <strong className="text-slate-900 dark:text-white font-bold">{ppRuns}/{ppWkts}</strong> ({Number(ppRuns / 6).toFixed(1)} RPO)</>
+          ) : (
+            <>Target: <strong className="text-slate-900 dark:text-white font-bold">{runs}</strong></>
+          )}
+        </span>
+        {innings?.extras?.total ? (
+          <span className="text-slate-500 dark:text-slate-400">
+            {innings.extras.total} Extras ({innings.extras.wides}w, {innings.extras.legbyes}lb)
+          </span>
+        ) : null}
       </div>
     </div>
   );
