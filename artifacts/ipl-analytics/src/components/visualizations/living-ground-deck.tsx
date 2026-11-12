@@ -132,23 +132,19 @@ export function StackingDeckCard({
   return (
     <div
       id={id}
-      style={{
-        top: "68px",
-        zIndex: 10 + index * 5,
-      }}
-      className="sticky h-[calc(100vh-84px)] max-h-[820px] min-h-[500px] rounded-[24px] border border-slate-800/80 bg-[#070B16]/98 backdrop-blur-2xl shadow-2xl shadow-black/90 flex flex-col overflow-hidden transition-all duration-300 will-change-transform mb-8"
+      className="relative w-full rounded-[24px] border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#070B16]/98 shadow-md dark:shadow-2xl flex flex-col overflow-hidden transition-all duration-300 mb-8 scroll-mt-28"
     >
       {/* 1. MODULE HEADER STRIP (AT TOP OF MODULE) */}
-      <div className="h-[48px] px-4 md:px-6 border-b border-white/10 flex items-center justify-between bg-[#080D1F]/90 shrink-0">
+      <div className="h-[48px] px-4 md:px-6 border-b border-slate-200 dark:border-white/10 flex items-center justify-between bg-slate-100/90 dark:bg-[#080D1F]/90 shrink-0">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="p-1.5 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/30 shrink-0">
+          <div className="p-1.5 rounded-xl bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/20 dark:border-purple-500/30 shrink-0">
             <Icon className="w-4 h-4" />
           </div>
           <div className="min-w-0">
-            <span className="text-[9px] font-mono text-purple-400 font-black uppercase tracking-widest block leading-none">
+            <span className="text-[9px] font-mono text-purple-600 dark:text-purple-400 font-black uppercase tracking-widest block leading-none">
               {badge}
             </span>
-            <h2 className="text-xs md:text-sm font-black uppercase text-white tracking-wide truncate leading-tight mt-0.5">
+            <h2 className="text-xs md:text-sm font-black uppercase text-slate-900 dark:text-white tracking-wide truncate leading-tight mt-0.5">
               {title}
             </h2>
           </div>
@@ -156,15 +152,15 @@ export function StackingDeckCard({
 
         {/* Live Engine Telemetry Badge */}
         <div className="flex items-center gap-2 shrink-0">
-          <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[9px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[9px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
             LIVE ENGINE
           </span>
         </div>
       </div>
 
       {/* 2. COMPLETE VISUAL OF DATA FROM THAT MODEL — Neatly visible with zero edge cutting */}
-      <div className="flex-1 overflow-hidden p-3 md:p-4 flex flex-col justify-between min-h-0">
+      <div className="p-3 md:p-5 flex flex-col justify-between bg-slate-50/50 dark:bg-[#050814]/40 min-h-0">
         {children}
       </div>
     </div>
@@ -384,15 +380,15 @@ export function Card01MergedScoringRadar() {
               }}
               className={`px-2.5 py-1 rounded-xl border text-[11px] font-mono font-bold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer ${
                 isSelected
-                  ? "bg-amber-500/20 border-amber-400 text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.25)] scale-102"
-                  : "bg-white/[0.03] border-white/10 text-white/60 hover:text-white hover:bg-white/[0.08]"
+                  ? "bg-amber-500/20 border-amber-500 text-amber-700 dark:text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.25)] scale-102"
+                  : "bg-slate-100 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-white/[0.08]"
               }`}
             >
-              <span className="text-[9px] font-black px-1.5 py-0.2 rounded bg-black/50 text-amber-400">
+              <span className="text-[9px] font-black px-1.5 py-0.2 rounded bg-slate-900 text-amber-400">
                 {p.team}
               </span>
               <span>{name}</span>
-              <span className="text-[10px] text-white/40">({p.runs}r)</span>
+              <span className="text-[10px] text-slate-500 dark:text-white/40">({p.runs}r)</span>
             </button>
           );
         })}
@@ -511,19 +507,19 @@ export function Card01MergedScoringRadar() {
 
         {/* RIGHT: SECTOR DOMINANCE METRICS LIST */}
         <div className="lg:col-span-5 flex flex-col justify-between h-full gap-2 min-h-0">
-          <div className="p-3 rounded-xl bg-gradient-to-r from-amber-950/40 via-[#0a0f1d] to-purple-950/30 border border-amber-500/20 flex items-center justify-between shrink-0">
+          <div className="p-3 rounded-xl bg-slate-100 dark:bg-gradient-to-r dark:from-amber-950/40 dark:via-[#0a0f1d] dark:to-purple-950/30 border border-slate-200 dark:border-amber-500/20 flex items-center justify-between shrink-0 shadow-xs dark:shadow-none">
             <div>
-              <span className="text-[10px] font-mono uppercase text-amber-400 font-bold block">
+              <span className="text-[10px] font-mono uppercase text-amber-600 dark:text-amber-400 font-bold block">
                 {selectedPlayer} ({playerData.team})
               </span>
-              <div className="text-xl font-black text-white font-mono leading-tight">
-                {playerData.runs} <span className="text-xs text-white/50 font-normal">Runs • {playerData.sr} SR</span>
+              <div className="text-xl font-black text-slate-900 dark:text-white font-mono leading-tight">
+                {playerData.runs} <span className="text-xs text-slate-500 dark:text-white/50 font-normal">Runs • {playerData.sr} SR</span>
               </div>
             </div>
             <div className="text-right font-mono text-[10px]">
-              <span className="text-cyan-400 font-bold">{playerData.fours} Fours</span>
-              <span className="text-white/30 mx-1">/</span>
-              <span className="text-amber-400 font-bold">{playerData.sixes} Sixes</span>
+              <span className="text-cyan-600 dark:text-cyan-400 font-bold">{playerData.fours} Fours</span>
+              <span className="text-slate-400 dark:text-white/30 mx-1">/</span>
+              <span className="text-amber-600 dark:text-amber-400 font-bold">{playerData.sixes} Sixes</span>
             </div>
           </div>
 
@@ -538,26 +534,26 @@ export function Card01MergedScoringRadar() {
                   onMouseLeave={() => setActiveSector(null)}
                   className={`p-2 rounded-xl border transition-all cursor-pointer flex flex-col gap-1 ${
                     isHovered
-                      ? "bg-amber-500/20 border-amber-400 shadow-md"
-                      : "bg-white/[0.02] border-white/10 hover:border-white/20"
+                      ? "bg-amber-500/15 border-amber-500 shadow-sm text-slate-900 dark:text-white"
+                      : "bg-white dark:bg-white/[0.02] border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 shadow-2xs dark:shadow-none"
                   }`}
                 >
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-white flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                       {sec.name}
                     </span>
-                    <span className="font-mono text-amber-300 font-bold">
-                      {sec.runs}r <span className="text-[10px] text-white/50">({sec.pct}%)</span>
+                    <span className="font-mono text-amber-600 dark:text-amber-300 font-bold">
+                      {sec.runs}r <span className="text-[10px] text-slate-500 dark:text-white/50">({sec.pct}%)</span>
                     </span>
                   </div>
-                  <div className="flex items-center justify-between text-[10px] text-white/50 font-mono">
-                    <span>SR: <strong className="text-white">{sec.sr}</strong></span>
+                  <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-white/50 font-mono">
+                    <span>SR: <strong className="text-slate-900 dark:text-white">{sec.sr}</strong></span>
                     <span>{sec.fours} 4s • {sec.sixes} 6s</span>
                   </div>
-                  <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-1 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-amber-500 to-yellow-300"
+                      className="h-full bg-gradient-to-r from-amber-500 to-yellow-400"
                       style={{ width: `${sec.pct * 2.5}%` }}
                     />
                   </div>
@@ -566,7 +562,7 @@ export function Card01MergedScoringRadar() {
             })}
           </div>
 
-          <div className="p-2 rounded-xl bg-black/40 border border-white/5 text-[10px] text-white/60 font-mono text-center shrink-0">
+          <div className="p-2 rounded-xl bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[10px] text-slate-600 dark:text-white/60 font-mono text-center shrink-0">
             Real-time radial velocity vectors mapped to ball trajectories
           </div>
         </div>
@@ -585,10 +581,10 @@ export function Card02BowlerTelemetry() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center h-full">
-      <div className="lg:col-span-5 flex flex-col items-center justify-center p-3 bg-[#050814] border border-white/10 rounded-2xl h-full min-h-[300px]">
-        <div className="text-[10px] font-mono font-bold text-white/60 mb-2 flex items-center justify-between w-full px-1">
+      <div className="lg:col-span-5 flex flex-col items-center justify-center p-3 bg-slate-100 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-2xl h-full min-h-[300px]">
+        <div className="text-[10px] font-mono font-bold text-slate-600 dark:text-white/60 mb-2 flex items-center justify-between w-full px-1">
           <span>BOWLER RELEASE</span>
-          <span className="text-cyan-400">BATTER CREASE</span>
+          <span className="text-cyan-600 dark:text-cyan-400">BATTER CREASE</span>
         </div>
         <div className="relative w-full aspect-[1/2] max-w-[170px] rounded-xl overflow-hidden border border-amber-600/30 bg-[#2b1805]">
           <svg viewBox="0 0 100 240" className="w-full h-full">
@@ -616,18 +612,18 @@ export function Card02BowlerTelemetry() {
         {executionDeliveries.map((item) => (
           <div
             key={item.type}
-            className={`p-3.5 rounded-xl bg-[#090e1c] border ${item.border} flex flex-col justify-between`}
+            className={`p-3.5 rounded-xl bg-white dark:bg-[#090e1c] border border-slate-200 dark:${item.border} shadow-2xs dark:shadow-none flex flex-col justify-between`}
           >
-            <div className="flex items-center justify-between border-b border-white/5 pb-1">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/5 pb-1">
               <span className={`text-xs font-black uppercase ${item.color}`}>{item.type}</span>
-              <span className="text-[10px] font-mono text-white/50">{item.balls} Balls</span>
+              <span className="text-[10px] font-mono text-slate-500 dark:text-white/50">{item.balls} Balls</span>
             </div>
             <div className="grid grid-cols-3 gap-1.5 text-center font-mono my-2">
-              <div className="p-1.5 bg-black/40 rounded-lg"><span className="text-[7px] text-white/40 block">ECON</span><span className="text-xs font-black text-white">{item.econ}</span></div>
-              <div className="p-1.5 bg-black/40 rounded-lg"><span className="text-[7px] text-white/40 block">WKTS</span><span className="text-xs font-black text-emerald-400">{item.wkts}</span></div>
-              <div className="p-1.5 bg-black/40 rounded-lg"><span className="text-[7px] text-white/40 block">DOT%</span><span className="text-xs font-black text-cyan-400">{item.dotPct}%</span></div>
+              <div className="p-1.5 bg-slate-100 dark:bg-black/40 rounded-lg"><span className="text-[7px] text-slate-500 dark:text-white/40 block">ECON</span><span className="text-xs font-black text-slate-900 dark:text-white">{item.econ}</span></div>
+              <div className="p-1.5 bg-slate-100 dark:bg-black/40 rounded-lg"><span className="text-[7px] text-slate-500 dark:text-white/40 block">WKTS</span><span className="text-xs font-black text-emerald-600 dark:text-emerald-400">{item.wkts}</span></div>
+              <div className="p-1.5 bg-slate-100 dark:bg-black/40 rounded-lg"><span className="text-[7px] text-slate-500 dark:text-white/40 block">DOT%</span><span className="text-xs font-black text-cyan-600 dark:text-cyan-400">{item.dotPct}%</span></div>
             </div>
-            <span className="text-[9px] font-mono text-white/50 block text-right">False Shot Pressure: 38.4%</span>
+            <span className="text-[9px] font-mono text-slate-500 dark:text-white/50 block text-right">False Shot Pressure: 38.4%</span>
           </div>
         ))}
       </div>
@@ -877,11 +873,11 @@ export function Card03TheDuel() {
   return (
     <div className="flex flex-col gap-4 h-full justify-between">
       {/* 1. COMBAT CLASH VERSUS ENERGY HEADER */}
-      <div className="relative flex flex-col md:flex-row items-center justify-between p-3 md:p-4 bg-gradient-to-r from-red-950/40 via-slate-900/90 to-blue-950/40 rounded-2xl border border-white/10 backdrop-blur-xl shadow-2xl shrink-0 gap-2">
+      <div className="relative flex flex-col md:flex-row items-center justify-between p-3 md:p-4 bg-slate-100 dark:bg-gradient-to-r dark:from-red-950/40 dark:via-slate-900/90 dark:to-blue-950/40 rounded-2xl border border-slate-200 dark:border-white/10 backdrop-blur-xl shadow-sm dark:shadow-2xl shrink-0 gap-2">
         {/* Left: Batter (Kohli / RCB Crimson Glow) */}
         <div className="flex items-center gap-4">
           <div className="relative">
-            <div className="w-12 h-12 rounded-full border-2 border-red-500 bg-red-950/60 flex items-center justify-center font-black text-xl text-red-100 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+            <div className="w-12 h-12 rounded-full border-2 border-red-500 bg-red-100 dark:bg-red-950/60 flex items-center justify-center font-black text-xl text-red-600 dark:text-red-100 shadow-[0_0_20px_rgba(239,68,68,0.25)]">
               VK
             </div>
             <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 bg-red-600 text-[10px] font-mono font-bold rounded text-white">
@@ -889,27 +885,27 @@ export function Card03TheDuel() {
             </span>
           </div>
           <div>
-            <div className="text-[11px] font-mono tracking-widest text-red-400 uppercase">Primary Target</div>
-            <h3 className="text-2xl font-black tracking-tight text-white uppercase">VIRAT KOHLI</h3>
-            <div className="text-xs text-slate-400 font-mono">142 Runs • 96 Balls • 147.9 SR</div>
+            <div className="text-[11px] font-mono tracking-widest text-red-600 dark:text-red-400 uppercase">Primary Target</div>
+            <h3 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase">VIRAT KOHLI</h3>
+            <div className="text-xs text-slate-600 dark:text-slate-400 font-mono">142 Runs • 96 Balls • 147.9 SR</div>
           </div>
         </div>
 
         {/* Center: Duel Badge & Tug-of-War Pressure Meter */}
         <div className="flex flex-col items-center justify-center px-4 md:px-6 w-full md:w-auto">
-          <div className="text-[10px] font-mono text-cyan-400 tracking-[0.3em] uppercase mb-1">Faceoff Index</div>
-          <div className="px-4 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/40 text-cyan-300 font-black text-sm tracking-wider shadow-[0_0_15px_rgba(6,182,212,0.25)]">
+          <div className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 tracking-[0.3em] uppercase mb-1">Faceoff Index</div>
+          <div className="px-4 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-300 font-black text-sm tracking-wider shadow-xs dark:shadow-[0_0_15px_rgba(6,182,212,0.25)]">
             96 DELIVERIES • 4 DISMISSALS
           </div>
-          <div className="text-[11px] text-slate-400 mt-1 font-mono">Avg: 35.5 • Dot%: 43.7%</div>
+          <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1 font-mono">Avg: 35.5 • Dot%: 43.7%</div>
 
           {/* Bidirectional Pressure Tug-of-War Gauge */}
           <div className="w-full max-w-[220px] mt-2">
-            <div className="flex justify-between text-[8px] font-mono text-slate-400 mb-0.5 font-bold">
-              <span className="text-red-400">KOHLI (174.5 SR)</span>
-              <span className="text-cyan-400">BUMRAH (58% DOTS)</span>
+            <div className="flex justify-between text-[8px] font-mono text-slate-500 dark:text-slate-400 mb-0.5 font-bold">
+              <span className="text-red-600 dark:text-red-400">KOHLI (174.5 SR)</span>
+              <span className="text-cyan-600 dark:text-cyan-400">BUMRAH (58% DOTS)</span>
             </div>
-            <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden flex shadow-inner">
+            <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden flex shadow-inner">
               <div className="bg-gradient-to-r from-red-600 to-red-400 h-full w-[46%]" />
               <div className="bg-gradient-to-r from-cyan-400 to-blue-500 h-full w-[54%]" />
             </div>
@@ -919,7 +915,7 @@ export function Card03TheDuel() {
         {/* Right: Bowler (Bumrah / MI Electric Blue Glow) */}
         <div className="flex items-center gap-4 flex-row-reverse text-right">
           <div className="relative">
-            <div className="w-12 h-12 rounded-full border-2 border-cyan-400 bg-blue-950/60 flex items-center justify-center font-black text-xl text-cyan-100 shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+            <div className="w-12 h-12 rounded-full border-2 border-cyan-500 bg-blue-100 dark:bg-blue-950/60 flex items-center justify-center font-black text-xl text-blue-700 dark:text-cyan-100 shadow-[0_0_20px_rgba(6,182,212,0.25)]">
               JB
             </div>
             <span className="absolute -bottom-1 -left-1 px-1.5 py-0.5 bg-cyan-600 text-[10px] font-mono font-bold rounded text-white">
@@ -927,9 +923,9 @@ export function Card03TheDuel() {
             </span>
           </div>
           <div>
-            <div className="text-[11px] font-mono tracking-widest text-cyan-400 uppercase">Apex Enforcer</div>
-            <h3 className="text-2xl font-black tracking-tight text-white uppercase">JASPRIT BUMRAH</h3>
-            <div className="text-xs text-slate-400 font-mono">4 Wkts • 8.87 Econ • 78/100 Threat</div>
+            <div className="text-[11px] font-mono tracking-widest text-cyan-600 dark:text-cyan-400 uppercase">Apex Enforcer</div>
+            <h3 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase">JASPRIT BUMRAH</h3>
+            <div className="text-xs text-slate-600 dark:text-slate-400 font-mono">4 Wkts • 8.87 Econ • 78/100 Threat</div>
           </div>
         </div>
       </div>
@@ -937,7 +933,7 @@ export function Card03TheDuel() {
       {/* 2. MAIN STAGE: 3D DUEL PITCH HOLOGRAM (LEFT) + DISMISSAL ANATOMY (RIGHT) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center flex-1 min-h-0">
         {/* LEFT: 3D DUEL PITCH HOLOGRAPHIC CAGE */}
-        <div className="lg:col-span-6 flex flex-col items-center justify-between p-3.5 bg-[#030611] border border-cyan-500/20 rounded-2xl relative h-full min-h-[320px] shadow-[inset_0_0_30px_rgba(6,182,212,0.06)]">
+        <div className="lg:col-span-6 flex flex-col items-center justify-between p-3.5 bg-slate-900 dark:bg-[#030611] border border-cyan-500/20 rounded-2xl relative h-full min-h-[320px] shadow-[inset_0_0_30px_rgba(6,182,212,0.06)]">
           {/* Top Hologram Indicators */}
           <div className="flex items-center justify-between w-full text-[9px] font-mono font-bold px-2 z-10">
             <span className="text-cyan-400 flex items-center gap-1.5">
@@ -962,22 +958,22 @@ export function Card03TheDuel() {
           </div>
 
           {/* Timeline Scrubber across bottom of Pitch */}
-          <div className="w-full bg-[#070e1c]/95 backdrop-blur-md border border-white/10 rounded-xl p-2.5 z-10 space-y-1.5">
+          <div className="w-full bg-white/95 dark:bg-[#070e1c]/95 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-xl p-2.5 z-10 space-y-1.5 shadow-sm">
             <div className="flex items-center justify-between text-[10px] font-mono">
-              <span className="text-cyan-400 font-bold flex items-center gap-1.5">
-                <Clock className="w-3 h-3 text-cyan-400" />
+              <span className="text-cyan-600 dark:text-cyan-400 font-bold flex items-center gap-1.5">
+                <Clock className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />
                 Delivery {selectedBallIndex} of 96
               </span>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsPlayingTimeline(!isPlayingTimeline)}
-                  className="px-2 py-0.5 rounded bg-cyan-500 text-black font-extrabold text-[9px] uppercase cursor-pointer hover:bg-cyan-400"
+                  className="px-2 py-0.5 rounded bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-[9px] uppercase cursor-pointer transition-colors"
                 >
                   {isPlayingTimeline ? "Pause" : "Play History"}
                 </button>
                 <button
                   onClick={() => { setSelectedBallIndex(96); setSelectedDismissal(null); }}
-                  className="text-slate-400 hover:text-white"
+                  className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                   title="Reset to Ball 96"
                 >
                   <RotateCcw className="w-3 h-3" />
@@ -990,17 +986,17 @@ export function Card03TheDuel() {
               max="96"
               value={selectedBallIndex}
               onChange={(e) => setSelectedBallIndex(Number(e.target.value))}
-              className="w-full accent-cyan-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg"
+              className="w-full accent-cyan-500 cursor-pointer h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg"
             />
           </div>
         </div>
 
         {/* RIGHT: DISMISSAL ANATOMY CARDS & MATCH PHASE SELECTOR */}
         <div className="lg:col-span-6 flex flex-col justify-between h-full gap-2">
-          <div className="flex items-center justify-between border-b border-white/5 pb-1">
-            <span className="text-xs font-black uppercase text-white tracking-wider flex items-center gap-1.5">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/5 pb-1">
+            <span className="text-xs font-black uppercase text-slate-900 dark:text-white tracking-wider flex items-center gap-1.5">
               <span>Dismissal Anatomy</span>
-              <span className="text-rose-400 font-mono text-[10px]">(Click to Replay Ball Track)</span>
+              <span className="text-rose-500 dark:text-rose-400 font-mono text-[10px]">(Click to Replay Ball Track)</span>
             </span>
             <div className="flex items-center gap-1">
               {(["All", "Powerplay", "Death"] as const).map((ph) => (
@@ -1008,7 +1004,9 @@ export function Card03TheDuel() {
                   key={ph}
                   onClick={() => setActivePhaseFilter(ph)}
                   className={`px-2 py-0.5 rounded text-[9px] font-mono uppercase tracking-wider font-bold transition-all cursor-pointer ${
-                    activePhaseFilter === ph ? "bg-rose-500 text-white" : "bg-white/5 text-slate-400 hover:text-white"
+                    activePhaseFilter === ph
+                      ? "bg-rose-500 text-white shadow-xs"
+                      : "bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   {ph}
@@ -1032,24 +1030,24 @@ export function Card03TheDuel() {
                     }}
                     className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
                       isSelected
-                        ? "bg-rose-500/20 border-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.3)]"
-                        : "bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.05]"
+                        ? "bg-rose-500/15 border-rose-500 shadow-sm text-slate-900 dark:text-white"
+                        : "bg-white dark:bg-white/[0.02] border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 hover:bg-slate-50 dark:hover:bg-white/[0.05] shadow-2xs dark:shadow-none"
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                        <span className="px-1.5 py-0.5 rounded bg-rose-500/30 text-rose-300 font-mono text-[9px] font-black">
+                      <span className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                        <span className="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-600 dark:text-rose-300 font-mono text-[9px] font-black border border-rose-500/30">
                           {d.overBall}
                         </span>
                         <span>{d.mode}</span>
                       </span>
-                      <span className="text-[10px] font-mono text-cyan-400 font-bold">{d.speed}</span>
+                      <span className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 font-bold">{d.speed}</span>
                     </div>
 
-                    <div className="text-[10px] text-slate-300 font-mono mt-1">
-                      Length: <strong className="text-amber-300">{d.lengthLine}</strong>
+                    <div className="text-[10px] text-slate-600 dark:text-slate-300 font-mono mt-1">
+                      Length: <strong className="text-amber-600 dark:text-amber-300">{d.lengthLine}</strong>
                     </div>
-                    <div className="text-[9px] text-slate-400 mt-0.5">
+                    <div className="text-[9px] text-slate-500 dark:text-slate-400 mt-0.5">
                       Execution: {d.shotAttempted}
                     </div>
                   </button>
@@ -1077,9 +1075,9 @@ export function Card03TheDuel() {
 export function Card09VenueDna() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center h-full">
-      <div className="lg:col-span-6 flex flex-col items-center justify-center p-3 bg-[#050814] border border-white/10 rounded-2xl h-full">
-        <span className="text-[9px] font-mono text-white/50 uppercase tracking-widest mb-1">BOUNDARY CLEARANCE (METERS)</span>
-        <div className="relative w-full aspect-square max-w-[240px] rounded-full overflow-hidden border-2 border-slate-700 bg-slate-950 p-2">
+      <div className="lg:col-span-6 flex flex-col items-center justify-center p-3 bg-slate-100 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-2xl h-full min-h-[280px]">
+        <span className="text-[9px] font-mono text-slate-500 dark:text-white/50 uppercase tracking-widest mb-1">BOUNDARY CLEARANCE (METERS)</span>
+        <div className="relative w-full aspect-square max-w-[240px] rounded-full overflow-hidden border-2 border-slate-300 dark:border-slate-700 bg-slate-900 dark:bg-slate-950 p-2 shadow-inner">
           <svg viewBox="0 0 400 400" className="w-full h-full">
             <circle cx="200" cy="200" r="190" fill="#062211" stroke="#14532d" strokeWidth="2" />
             <circle cx="200" cy="200" r="180" fill="none" stroke="#ffffff" strokeWidth="2" strokeDasharray="6 4" opacity="0.8" />
@@ -1096,19 +1094,19 @@ export function Card09VenueDna() {
 
       <div className="lg:col-span-6 space-y-3 flex flex-col justify-center h-full">
         <div className="grid grid-cols-2 gap-2.5">
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-cyan-500/20">
-            <span className="text-[9px] font-mono uppercase text-cyan-400 font-bold block">PACE EFFICIENCY</span>
-            <div className="text-lg font-black text-white font-mono">7.82 <span className="text-[10px] text-white/40">ECON</span></div>
-            <span className="text-[9px] text-white/60 font-mono">19.2 SR • 68% Wkts</span>
+          <div className="p-3 rounded-xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-cyan-500/20 shadow-2xs dark:shadow-none">
+            <span className="text-[9px] font-mono uppercase text-cyan-600 dark:text-cyan-400 font-bold block">PACE EFFICIENCY</span>
+            <div className="text-lg font-black text-slate-900 dark:text-white font-mono">7.82 <span className="text-[10px] text-slate-400 dark:text-white/40">ECON</span></div>
+            <span className="text-[9px] text-slate-500 dark:text-white/60 font-mono">19.2 SR • 68% Wkts</span>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-purple-500/20">
-            <span className="text-[9px] font-mono uppercase text-purple-400 font-bold block">SPIN CONTROL</span>
-            <div className="text-lg font-black text-white font-mono">7.21 <span className="text-[10px] text-white/40">ECON</span></div>
-            <span className="text-[9px] text-white/60 font-mono">24.5 SR • 32% Wkts</span>
+          <div className="p-3 rounded-xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-purple-500/20 shadow-2xs dark:shadow-none">
+            <span className="text-[9px] font-mono uppercase text-purple-600 dark:text-purple-400 font-bold block">SPIN CONTROL</span>
+            <div className="text-lg font-black text-slate-900 dark:text-white font-mono">7.21 <span className="text-[10px] text-slate-400 dark:text-white/40">ECON</span></div>
+            <span className="text-[9px] text-slate-500 dark:text-white/60 font-mono">24.5 SR • 32% Wkts</span>
           </div>
         </div>
-        <div className="p-3 rounded-xl bg-[#0e1628] border border-white/10 text-xs text-white/80 space-y-1">
-          <div className="flex items-center gap-1.5 text-amber-400 font-mono font-bold text-[10px]">
+        <div className="p-3 rounded-xl bg-white dark:bg-[#0e1628] border border-slate-200 dark:border-white/10 text-xs text-slate-700 dark:text-white/80 space-y-1 shadow-2xs dark:shadow-none">
+          <div className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 font-mono font-bold text-[10px]">
             <Sparkles className="w-3.5 h-3.5" />
             <span>AI TACTICAL BLUEPRINT</span>
           </div>
@@ -1219,32 +1217,24 @@ export function LivingGroundDeck() {
   const scrollToCard = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      const offset = 76;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = el.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto px-2 md:px-4 pb-24 space-y-4">
+    <div className="relative w-full max-w-7xl mx-auto px-2 md:px-4 pb-24 space-y-6">
       {/* QUICK FILTER DIMENSION BAR (JUMP DIRECTLY TO ANY MODULE) */}
-      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-2.5 px-3 bg-[#060A18]/90 rounded-2xl border border-white/10 backdrop-blur-md shadow-lg">
-        <span className="text-[10px] font-mono font-black uppercase tracking-wider text-purple-400 shrink-0 flex items-center gap-1.5 pr-2 border-r border-white/10">
+      <div className="sticky top-[68px] z-30 flex items-center gap-1.5 overflow-x-auto no-scrollbar py-2.5 px-3 bg-white/95 dark:bg-[#060A18]/90 rounded-2xl border border-slate-200 dark:border-white/10 backdrop-blur-md shadow-sm dark:shadow-lg transition-colors">
+        <span className="text-[10px] font-mono font-black uppercase tracking-wider text-purple-600 dark:text-purple-400 shrink-0 flex items-center gap-1.5 pr-2.5 border-r border-slate-200 dark:border-white/10">
           <Filter className="w-3.5 h-3.5" /> Dimensions
         </span>
         {DECK_CARDS.map((card, idx) => (
           <button
             key={card.id}
             onClick={() => scrollToCard(card.id)}
-            className="shrink-0 px-2.5 py-1 rounded-xl bg-white/[0.04] hover:bg-purple-600/30 border border-white/10 hover:border-purple-500/40 text-white/70 hover:text-white text-[10px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 hover:scale-105 active:scale-95"
+            className="shrink-0 px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-purple-100 dark:bg-white/[0.04] dark:hover:bg-purple-600/30 border border-slate-200 hover:border-purple-300 dark:border-white/10 dark:hover:border-purple-500/40 text-slate-700 hover:text-slate-900 dark:text-white/70 dark:hover:text-white text-[10px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 hover:scale-105 active:scale-95"
           >
-            <span className="text-purple-400 font-black">0{idx + 1}</span>
+            <span className="text-purple-600 dark:text-purple-400 font-black">0{idx + 1}</span>
             <span className="truncate max-w-[130px]">{card.badge.split("•")[1]?.trim() || card.title}</span>
           </button>
         ))}

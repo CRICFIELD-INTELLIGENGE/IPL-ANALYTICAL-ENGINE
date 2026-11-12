@@ -898,29 +898,29 @@ export function RunFlowSankey() {
   const currentTier = sunburstTiers.find(t => t.key === activeSegment) || sunburstTiers[0];
 
   return (
-    <div className="w-full bg-[#0B1020] border border-white/10 rounded-2xl p-4 shadow-xl flex flex-col gap-3 h-full justify-between min-h-0">
+    <div className="w-full bg-transparent p-1 flex flex-col gap-3 h-full justify-between min-h-0">
       
       {/* FILTER CONTROLS BAR */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-white/5 pb-4">
         <div className="flex items-center gap-2">
-          <Zap className="w-5 h-5 text-purple-400" />
+          <Zap className="w-5 h-5 text-purple-600 dark:text-purple-400" />
           <div>
-            <span className="text-sm font-black text-white uppercase tracking-wider block">
+            <span className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider block">
               Concentric Sunburst Execution Rings
             </span>
-            <span className="text-[10px] text-purple-400 font-mono font-bold">
+            <span className="text-[10px] text-purple-600 dark:text-purple-400 font-mono font-bold">
               Hierarchical Radial Breakdown • Pace / Spin / Variations to Shot Types
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-xl border border-white/10">
-          <Calendar className="w-3.5 h-3.5 text-purple-400" />
-          <span className="text-[10px] font-bold text-white/50 uppercase">Season:</span>
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-white/5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10">
+          <Calendar className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+          <span className="text-[10px] font-bold text-slate-500 dark:text-white/50 uppercase">Season:</span>
           <select
             value={selectedSeason}
             onChange={(e) => setSelectedSeason(e.target.value)}
-            className="bg-slate-900 text-purple-300 text-xs font-mono font-bold outline-none cursor-pointer rounded px-2 py-0.5"
+            className="bg-white dark:bg-slate-900 text-purple-700 dark:text-purple-300 text-xs font-mono font-bold outline-none cursor-pointer rounded px-2 py-0.5 border border-slate-200 dark:border-white/10"
           >
             <option value="ALL">All Seasons (2008-2026)</option>
             {["2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019", "2018"].map(y => <option key={y} value={y}>{y}</option>)}
@@ -932,7 +932,7 @@ export function RunFlowSankey() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
         
         {/* SUNBURST CONCENTRIC RINGS SVG */}
-        <div className="col-span-12 md:col-span-6 bg-black/40 border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center relative min-h-[340px]">
+        <div className="col-span-12 md:col-span-6 bg-slate-900 dark:bg-black/40 border border-slate-200 dark:border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center relative min-h-[340px] shadow-xs dark:shadow-none">
           <svg viewBox="0 0 400 400" className="w-full max-w-[360px] h-[320px]">
             {/* Inner Core */}
             <circle cx="200" cy="200" r="45" fill="#0f172a" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
@@ -986,7 +986,9 @@ export function RunFlowSankey() {
                 key={t.key}
                 onClick={() => setActiveSegment(t.key)}
                 className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  activeSegment === t.key ? 'bg-purple-500 text-white shadow-lg' : 'bg-white/5 text-white/50 hover:text-white'
+                  activeSegment === t.key
+                    ? 'bg-purple-600 text-white shadow-md'
+                    : 'bg-slate-800 dark:bg-white/5 text-slate-300 dark:text-white/50 hover:text-white'
                 }`}
               >
                 {t.key}
@@ -997,29 +999,29 @@ export function RunFlowSankey() {
 
         {/* BREAKDOWN SHOT EXECUTION CARDS */}
         <div className="col-span-12 md:col-span-6 flex flex-col gap-3">
-          <div className="flex items-center justify-between border-b border-white/5 pb-2">
-            <span className="text-xs font-bold text-white/50 uppercase tracking-wider">{currentTier.type}</span>
-            <span className="text-xs font-mono font-bold text-amber-400">{currentTier.share}</span>
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/5 pb-2">
+            <span className="text-xs font-bold text-slate-600 dark:text-white/50 uppercase tracking-wider">{currentTier.type}</span>
+            <span className="text-xs font-mono font-bold text-amber-600 dark:text-amber-400">{currentTier.share}</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {currentTier.shots.map((shot, i) => (
-              <div key={i} className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col gap-2">
+              <div key={i} className="p-4 rounded-2xl bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 flex flex-col gap-2 shadow-2xs dark:shadow-none">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: shot.color }} />
-                  <span className="text-xs font-black text-white">{shot.name}</span>
+                  <span className="text-xs font-black text-slate-900 dark:text-white">{shot.name}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-white/60">Volume:</span>
-                  <span className="text-amber-300 font-bold">{shot.runs}</span>
+                  <span className="text-slate-500 dark:text-white/60">Volume:</span>
+                  <span className="text-amber-600 dark:text-amber-300 font-bold">{shot.runs}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-white/60">Strike Rate:</span>
-                  <span className="text-purple-300 font-bold">{shot.sr}</span>
+                  <span className="text-slate-500 dark:text-white/60">Strike Rate:</span>
+                  <span className="text-purple-600 dark:text-purple-300 font-bold">{shot.sr}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-white/60">Boundary %:</span>
-                  <span className="text-cyan-300 font-bold">{shot.boundaryPct}</span>
+                  <span className="text-slate-500 dark:text-white/60">Boundary %:</span>
+                  <span className="text-cyan-600 dark:text-cyan-300 font-bold">{shot.boundaryPct}</span>
                 </div>
               </div>
             ))}
@@ -1088,29 +1090,29 @@ export function ShotFlowSankey() {
   };
 
   return (
-    <div className="w-full bg-[#0B1020] border border-white/10 rounded-2xl p-4 shadow-xl flex flex-col gap-3 h-full justify-between min-h-0">
+    <div className="w-full bg-transparent p-1 flex flex-col gap-3 h-full justify-between min-h-0">
       
       {/* FILTER CONTROLS BAR */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-white/5 pb-4">
         <div className="flex items-center gap-2">
-          <Target className="w-5 h-5 text-cyan-400" />
+          <Target className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
           <div>
-            <span className="text-sm font-black text-white uppercase tracking-wider block">
+            <span className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider block">
               5×5 Pitch Length × Shot Matrix Heatmap
             </span>
-            <span className="text-[10px] text-cyan-400 font-mono font-bold">
+            <span className="text-[10px] text-cyan-600 dark:text-cyan-400 font-mono font-bold">
               Pitch Zone Clustering (Yorker, Full, Good Length, Back of Length, Short)
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-xl border border-white/10">
-          <Filter className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="text-[10px] font-bold text-white/50 uppercase">Batter Stance:</span>
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-white/5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10">
+          <Filter className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+          <span className="text-[10px] font-bold text-slate-500 dark:text-white/50 uppercase">Batter Stance:</span>
           <select
             value={batterType}
             onChange={(e) => setBatterType(e.target.value)}
-            className="bg-slate-900 text-cyan-400 text-xs font-bold outline-none cursor-pointer rounded px-2 py-0.5"
+            className="bg-white dark:bg-slate-900 text-cyan-700 dark:text-cyan-400 text-xs font-bold outline-none cursor-pointer rounded px-2 py-0.5 border border-slate-200 dark:border-white/10"
           >
             <option value="ALL">All Batters (RHB & LHB)</option>
             <option value="RHB">Right-Handed (RHB)</option>
@@ -1123,10 +1125,10 @@ export function ShotFlowSankey() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
         
         {/* MATRIX GRID */}
-        <div className="col-span-12 md:col-span-8 bg-black/40 border border-white/10 rounded-2xl p-4 overflow-x-auto">
+        <div className="col-span-12 md:col-span-8 bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/10 rounded-2xl p-4 overflow-x-auto shadow-2xs dark:shadow-none">
           <div className="min-w-[500px]">
             {/* Header X-Axis Labels */}
-            <div className="grid grid-cols-6 gap-2 mb-2 text-center text-[10px] font-black text-white/50 uppercase">
+            <div className="grid grid-cols-6 gap-2 mb-2 text-center text-[10px] font-black text-slate-600 dark:text-white/50 uppercase">
               <div></div>
               {deliveryLengths.map(dl => <div key={dl}>{dl}</div>)}
             </div>
@@ -1134,7 +1136,7 @@ export function ShotFlowSankey() {
             {/* Matrix Rows */}
             {shotTypes.map(st => (
               <div key={st} className="grid grid-cols-6 gap-2 mb-2 items-center">
-                <div className="text-[10px] font-bold text-white/70 uppercase truncate pr-1 text-right">{st}</div>
+                <div className="text-[10px] font-bold text-slate-700 dark:text-white/70 uppercase truncate pr-1 text-right">{st}</div>
                 {deliveryLengths.map(dl => {
                   const cell = heatmapMatrix[dl]?.[st] || { runs: 0, sr: 0, boundary: "0%" };
                   return (
@@ -1155,34 +1157,34 @@ export function ShotFlowSankey() {
 
         {/* CELL DETAILS / HOVER TOOLTIP CARD */}
         <div className="col-span-12 md:col-span-4 flex flex-col gap-3">
-          <div className="text-xs font-bold text-white/50 uppercase tracking-wider mb-1">Cell Telemetry Details</div>
+          <div className="text-xs font-bold text-slate-500 dark:text-white/50 uppercase tracking-wider mb-1">Cell Telemetry Details</div>
 
           {hoveredCell ? (
-            <div className="p-5 rounded-2xl bg-gradient-to-br from-purple-900/40 to-slate-900 border border-purple-500/30 flex flex-col gap-3 shadow-xl animate-fadeIn">
-              <div className="border-b border-white/10 pb-2">
-                <span className="text-[10px] text-cyan-400 font-mono font-bold block">{hoveredCell.x}</span>
-                <h3 className="text-sm font-black text-white">{hoveredCell.y}</h3>
+            <div className="p-5 rounded-2xl bg-white dark:bg-gradient-to-br dark:from-purple-900/40 dark:to-slate-900 border border-slate-200 dark:border-purple-500/30 flex flex-col gap-3 shadow-sm dark:shadow-xl animate-fadeIn">
+              <div className="border-b border-slate-200 dark:border-white/10 pb-2">
+                <span className="text-[10px] text-cyan-600 dark:text-cyan-400 font-mono font-bold block">{hoveredCell.x}</span>
+                <h3 className="text-sm font-black text-slate-900 dark:text-white">{hoveredCell.y}</h3>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-black/30 p-2.5 rounded-xl border border-white/5">
-                  <span className="text-[9px] text-white/40 uppercase block">Total Runs</span>
-                  <span className="text-lg font-black text-amber-400 font-mono">{hoveredCell.runs}</span>
+                <div className="bg-slate-50 dark:bg-black/30 p-2.5 rounded-xl border border-slate-200 dark:border-white/5">
+                  <span className="text-[9px] text-slate-500 dark:text-white/40 uppercase block">Total Runs</span>
+                  <span className="text-lg font-black text-amber-600 dark:text-amber-400 font-mono">{hoveredCell.runs}</span>
                 </div>
-                <div className="bg-black/30 p-2.5 rounded-xl border border-white/5">
-                  <span className="text-[9px] text-white/40 uppercase block">Strike Rate</span>
-                  <span className="text-lg font-black text-purple-400 font-mono">{hoveredCell.sr}</span>
+                <div className="bg-slate-50 dark:bg-black/30 p-2.5 rounded-xl border border-slate-200 dark:border-white/5">
+                  <span className="text-[9px] text-slate-500 dark:text-white/40 uppercase block">Strike Rate</span>
+                  <span className="text-lg font-black text-purple-600 dark:text-purple-400 font-mono">{hoveredCell.sr}</span>
                 </div>
               </div>
 
-              <div className="bg-black/30 p-2.5 rounded-xl border border-white/5 flex items-center justify-between">
-                <span className="text-[10px] text-white/60 uppercase">Boundary Frequency:</span>
-                <span className="text-xs font-black text-cyan-400 font-mono">{hoveredCell.boundary}</span>
+              <div className="bg-slate-50 dark:bg-black/30 p-2.5 rounded-xl border border-slate-200 dark:border-white/5 flex items-center justify-between">
+                <span className="text-[10px] text-slate-600 dark:text-white/60 uppercase">Boundary Frequency:</span>
+                <span className="text-xs font-black text-cyan-600 dark:text-cyan-400 font-mono">{hoveredCell.boundary}</span>
               </div>
             </div>
           ) : (
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 flex flex-col items-center justify-center text-center text-white/40 text-xs min-h-[180px]">
-              <Target className="w-8 h-8 text-white/20 mb-2" />
+            <div className="p-6 rounded-2xl bg-slate-100 dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 flex flex-col items-center justify-center text-center text-slate-500 dark:text-white/40 text-xs min-h-[180px]">
+              <Target className="w-8 h-8 text-slate-300 dark:text-white/20 mb-2" />
               Hover over any matrix cell to inspect delivery length vs shot execution metrics.
             </div>
           )}

@@ -901,17 +901,10 @@ function ScrollingEditorialPicks({ picks }: { picks: IndexEntry[] }) {
         onTouchStart={handleMouseEnter}
         onTouchEnd={handleMouseLeave}
       >
-        {/* Top Fade Scrim */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-8 bg-gradient-to-b from-slate-50/90 dark:from-[#0B1020] via-slate-50/60 dark:via-[#0B1020]/60 to-transparent" />
-        
-        {/* Bottom Fade Scrim */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-slate-50/90 dark:from-[#0B1020] via-slate-50/60 dark:via-[#0B1020]/60 to-transparent" />
-
-        {/* Scrollable Container with native wheel & touch support */}
         <div
           ref={containerRef}
           onScroll={handleScroll}
-          className="editorial-picks-scroll relative h-[340px] overflow-y-auto overscroll-contain pr-1 space-y-2.5 pt-2 pb-2"
+          className="editorial-picks-scroll relative h-[340px] overflow-y-auto overscroll-contain pr-1 space-y-2 pt-1 pb-1"
         >
           {displayItems.map((e, idx) => {
             const t = TEAM_REGISTRY[e.franchise as TeamCode];
@@ -921,7 +914,7 @@ function ScrollingEditorialPicks({ picks }: { picks: IndexEntry[] }) {
               <Link
                 key={`${e.id}-${idx}`}
                 href={`/dugout/articles/${e.slug}`}
-                className="flex items-start gap-2.5 rounded-xl p-2.5 transition-all hover:bg-slate-200/50 dark:hover:bg-white/[0.06] border border-transparent hover:border-slate-300 dark:hover:border-white/10"
+                className="flex items-start gap-2.5 rounded-xl p-2.5 transition-all hover:bg-slate-200/50 dark:hover:bg-white/[0.08] border border-transparent hover:border-slate-300 dark:hover:border-white/10 group"
               >
                 <span
                   className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[10px] font-black shadow-xs"
@@ -932,13 +925,13 @@ function ScrollingEditorialPicks({ picks }: { picks: IndexEntry[] }) {
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-wider">
                     <span style={{ color: accent }}>{e.franchise}</span>
-                    <span className="text-slate-400 dark:text-white/25">•</span>
+                    <span className="text-slate-400 dark:text-white/40">•</span>
                     <span className="text-primary font-bold">{kicker(e)}</span>
                   </div>
-                  <h4 className="line-clamp-2 text-xs font-bold text-slate-800 dark:text-slate-100 leading-snug group-hover:text-primary dark:group-hover:text-white mt-0.5">
+                  <h4 className="line-clamp-2 text-xs font-bold text-slate-900 dark:text-white leading-snug group-hover:text-primary dark:group-hover:text-cyan-300 mt-0.5 transition-colors">
                     {e.title}
                   </h4>
-                  <span className="mt-1 block text-[10px] text-slate-500 dark:text-slate-400">
+                  <span className="mt-1 block text-[10px] text-slate-500 dark:text-white/60">
                     {e.readMinutes} min read
                   </span>
                 </div>
