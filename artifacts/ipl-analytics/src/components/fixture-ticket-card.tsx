@@ -82,6 +82,30 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
   const t1ScoreParsed = parseScore(match.team1Score);
   const t2ScoreParsed = parseScore(match.team2Score);
 
+  // Winner metadata for Right section (as specified by UI/UX requirements)
+  const winnerFullName = isT1Winner
+    ? match.team1
+    : isT2Winner
+    ? match.team2
+    : match.winner || (match.margin === "tie" ? "Match Tied" : match.team2);
+
+  const winnerDisplayCode = isT1Winner
+    ? homeCode
+    : isT2Winner
+    ? awayCode
+    : match.winner
+    ? teamShort(match.winner)
+    : awayCode;
+
+  const winnerSlug = teamSlug(winnerFullName);
+  const winnerTheme = TEAM_THEMES[winnerDisplayCode] || theme;
+
+  const winningScoreParsed = isT1Winner
+    ? t1ScoreParsed
+    : isT2Winner
+    ? t2ScoreParsed
+    : null;
+
   return (
     <div className="relative w-full max-w-4xl mx-auto my-2 group">
       {/* Outer franchise ambient glow ring */}
@@ -96,9 +120,9 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
         - Sleek compact padding and structured depth 
       */}
       <div
-        className="relative w-full rounded-2xl bg-white/95 dark:bg-[#090d16]/95 border border-slate-200 dark:border-white/10 backdrop-blur-xl shadow-md dark:shadow-2xl p-4 sm:p-5 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)_minmax(0,1.15fr)] gap-4 md:gap-0 items-center transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20"
+        className="relative w-full rounded-2xl bg-white dark:bg-[#090d16] border border-slate-200 dark:border-white/10 backdrop-blur-xl shadow-md dark:shadow-2xl p-4 sm:p-5 grid grid-cols-1 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1.5fr)_minmax(0,1.25fr)] gap-4 md:gap-0 items-center transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20"
         style={{
-          boxShadow: `0 8px 32px -8px rgba(0,0,0,0.15), 0 0 20px -6px ${theme.glow}`,
+          boxShadow: `0 8px 32px -8px rgba(0,0,0,0.12), 0 0 20px -6px ${theme.glow}`,
         }}
       >
         {/* ─── TICKET PERFORATION FISH/NOTCH CUTOUTS (Desktop & Mobile) ─── */}
@@ -107,15 +131,15 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
         <div className="hidden md:block absolute bottom-0 left-[30.5%] -translate-x-1/2 translate-y-1/2 w-5 h-5 rounded-full bg-slate-50 dark:bg-[#050816] border-t border-slate-200 dark:border-white/15 z-20 pointer-events-none" />
 
         {/* Notch at Divider 2 (Top & Bottom) */}
-        <div className="hidden md:block absolute top-0 left-[73.5%] -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-50 dark:bg-[#050816] border-b border-slate-200 dark:border-white/15 z-20 pointer-events-none" />
-        <div className="hidden md:block absolute bottom-0 left-[73.5%] -translate-x-1/2 translate-y-1/2 w-5 h-5 rounded-full bg-slate-50 dark:bg-[#050816] border-t border-slate-200 dark:border-white/15 z-20 pointer-events-none" />
+        <div className="hidden md:block absolute top-0 left-[70.5%] -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-50 dark:bg-[#050816] border-b border-slate-200 dark:border-white/15 z-20 pointer-events-none" />
+        <div className="hidden md:block absolute bottom-0 left-[70.5%] -translate-x-1/2 translate-y-1/2 w-5 h-5 rounded-full bg-slate-50 dark:bg-[#050816] border-t border-slate-200 dark:border-white/15 z-20 pointer-events-none" />
 
         {/* Left & Right Edge Ticket Crimp/Fish-tails */}
         <div className="hidden md:block absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-7 rounded-r-full bg-slate-50 dark:bg-[#050816] border-r border-y border-slate-200 dark:border-white/15 z-20 pointer-events-none" />
         <div className="hidden md:block absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-4 h-7 rounded-l-full bg-slate-50 dark:bg-[#050816] border-l border-y border-slate-200 dark:border-white/15 z-20 pointer-events-none" />
 
         {/* ═══════════════════════════════════════════════════════════
-            LEFT SECTION: Date Stub & Team 1
+            LEFT SECTION: Month, Date, Day, Team 1, Score, Overs, Match #
             ═══════════════════════════════════════════════════════════ */}
         <div className="flex flex-col items-start justify-center min-w-0 pr-0 md:pr-4 md:border-r border-slate-200 dark:border-white/10 relative">
           {/* Month */}
@@ -133,24 +157,24 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
             </span>
           </div>
 
-          {/* Team 1 Full Name */}
+          {/* Team 1 Full Name - Never truncated */}
           <Link
             href={`/teams/${t1Slug}`}
-            className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200 mt-2 truncate max-w-full hover:text-slate-900 dark:hover:text-white transition-colors"
+            className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 mt-2 line-clamp-2 max-w-full hover:text-primary transition-colors leading-tight"
             title={`View ${match.team1} profile`}
           >
             {match.team1}
           </Link>
 
-          {/* Team 1 Score (Cyan) & Overs */}
-          <div className="flex items-baseline gap-1 mt-0.5 flex-nowrap min-w-0">
+          {/* Team 1 Score & Overs */}
+          <div className="flex items-baseline gap-1.5 mt-1 flex-wrap min-w-0">
             {t1ScoreParsed.runsWkts ? (
               <>
                 <span className="font-mono text-lg sm:text-xl font-black text-cyan-600 dark:text-cyan-400 tabular-nums leading-none tracking-tight">
                   {t1ScoreParsed.runsWkts}
                 </span>
                 {t1ScoreParsed.overs && (
-                  <span className="font-mono text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-normal leading-none tabular-nums">
+                  <span className="font-mono text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-none tabular-nums">
                     {t1ScoreParsed.overs}
                   </span>
                 )}
@@ -162,27 +186,25 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
             )}
           </div>
 
-          {/* Match # Pill Chip */}
-          <div className="mt-2.5">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold tracking-wider uppercase border border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-300">
+          {/* Match # Pill Chip & Live Status */}
+          <div className="flex items-center gap-2 mt-2.5 flex-wrap">
+            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-mono font-bold tracking-wider uppercase border border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-300">
               MATCH #{match.id}
             </span>
-          </div>
-
-          {/* Match Time & Green Status Dot */}
-          <div className="flex items-center gap-1.5 mt-2 font-mono text-[11px] text-slate-600 dark:text-slate-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse shrink-0" />
-            <span className="tabular-nums font-semibold">07:30 PM IST</span>
+            <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-500 dark:text-slate-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse shrink-0" />
+              <span className="tabular-nums font-semibold">07:30 PM IST</span>
+            </div>
           </div>
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            CENTER SECTION: Clash, Result, POTM & Venue
+            CENTER SECTION: Team 1 Abbr, Logo, VS, Logo, Team 2 Abbr, Result
             ═══════════════════════════════════════════════════════════ */}
         <div className="flex flex-col items-center justify-center min-w-0 px-0 md:px-4 pt-3 md:pt-0 border-t md:border-t-0 border-slate-200 dark:border-white/10 md:border-r relative">
           {/* Matchup Clash Tiles */}
           <div className="flex items-center justify-center gap-3 sm:gap-4 w-full">
-            {/* Team 1 Code & Logo */}
+            {/* Team 1 Abbreviation & Logo */}
             <div className="flex flex-col items-center min-w-0">
               <span
                 className={`font-mono text-xs sm:text-sm font-black tracking-wider uppercase mb-1.5 ${
@@ -194,10 +216,10 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
               </span>
               <Link
                 href={`/teams/${t1Slug}`}
-                className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center p-1.5 transition-all duration-300 hover:scale-105 shrink-0 ${
+                className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center p-1.5 transition-all duration-300 hover:scale-105 shrink-0 ${
                   isT1Winner
-                    ? "border-2 bg-slate-100 dark:bg-slate-900/80"
-                    : "border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0d1424]/80 shadow-sm dark:shadow-md"
+                    ? "border-2 bg-slate-100 dark:bg-slate-900/80 shadow-md"
+                    : "border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0d1424]/80 shadow-sm"
                 }`}
                 style={
                   isT1Winner
@@ -221,7 +243,7 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
               <div className="w-5 h-[1px] bg-slate-300 dark:bg-slate-700/80 mt-1" />
             </div>
 
-            {/* Team 2 Code & Logo */}
+            {/* Team 2 Abbreviation & Logo */}
             <div className="flex flex-col items-center min-w-0">
               <span
                 className={`font-mono text-xs sm:text-sm font-black tracking-wider uppercase mb-1.5 ${
@@ -233,10 +255,10 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
               </span>
               <Link
                 href={`/teams/${t2Slug}`}
-                className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center p-1.5 transition-all duration-300 hover:scale-105 shrink-0 ${
+                className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center p-1.5 transition-all duration-300 hover:scale-105 shrink-0 ${
                   isT2Winner
-                    ? "border-2 bg-slate-100 dark:bg-slate-900/80"
-                    : "border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0d1424]/80 shadow-sm dark:shadow-md"
+                    ? "border-2 bg-slate-100 dark:bg-slate-900/80 shadow-md"
+                    : "border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0d1424]/80 shadow-sm"
                 }`}
                 style={
                   isT2Winner
@@ -254,17 +276,17 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
           </div>
 
           {/* Outcome / Result Banner */}
-          <div className="w-full mt-3 pt-2.5 border-t border-slate-200 dark:border-white/5 flex flex-col items-center gap-1.5">
+          <div className="w-full mt-3 pt-2.5 border-t border-slate-200 dark:border-white/10 flex flex-col items-center gap-1.5">
             {match.winner || match.margin ? (
               <div className="flex items-center justify-center gap-1.5 text-xs font-black uppercase tracking-tight text-center max-w-full">
                 <Trophy
                   className="w-3.5 h-3.5 shrink-0"
                   style={{ color: theme.primary }}
                 />
-                <span className="truncate">
+                <span className="leading-tight">
                   {match.winner ? (
                     <>
-                      <span style={{ color: theme.primary }}>{teamShort(match.winner)}</span>{" "}
+                      <span style={{ color: theme.primary }}>{winnerCode}</span>{" "}
                       <span className="text-slate-800 dark:text-white">WON BY {match.margin}</span>
                     </>
                   ) : match.margin === "tie" ? (
@@ -282,12 +304,12 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
 
             {/* POTM */}
             {match.mom ? (
-              <div className="flex items-center justify-center gap-1.5 font-mono text-[11px] text-slate-600 dark:text-slate-300 max-w-full truncate">
+              <div className="flex items-center justify-center gap-1.5 font-mono text-[11px] text-slate-600 dark:text-slate-300 max-w-full">
                 <Award className="w-3 h-3 text-cyan-500 dark:text-cyan-400 shrink-0" />
                 <span className="text-slate-500 dark:text-slate-400 font-medium">POTM:</span>
                 <Link
                   href={`/players/${playerSlug(match.mom)}`}
-                  className="font-bold text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 hover:underline truncate transition-colors"
+                  className="font-bold text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 hover:underline transition-colors truncate"
                   title={`View ${match.mom} profile`}
                 >
                   {match.mom}
@@ -308,45 +330,52 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            RIGHT SECTION: Team 2 Stub & Actions
+            RIGHT SECTION: Winning Team Abbr, Full Name, Winning Score, Match Center Button
             ═══════════════════════════════════════════════════════════ */}
-        <div className="flex flex-col items-start md:items-start justify-center min-w-0 pl-0 md:pl-4 pt-3 md:pt-0 border-t md:border-t-0 border-slate-200 dark:border-white/10 relative">
-          {/* Team 2 Code */}
+        <div className="flex flex-col items-start justify-center min-w-0 pl-0 md:pl-4 pt-3 md:pt-0 border-t md:border-t-0 border-slate-200 dark:border-white/10 relative">
+          {/* Winner Abbreviation */}
+          <div className="flex items-center gap-2">
+            <Link
+              href={`/teams/${winnerSlug}`}
+              className="font-mono text-xl sm:text-2xl font-black uppercase tracking-tight leading-none hover:opacity-90 transition-opacity"
+              style={{ color: winnerTheme.primary }}
+              title={`View ${winnerFullName} profile`}
+            >
+              {winnerDisplayCode}
+            </Link>
+            {match.winner && (
+              <span className="font-mono text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                WINNER
+              </span>
+            )}
+          </div>
+
+          {/* Full Team Name - No truncate, clean wrapping */}
           <Link
-            href={`/teams/${t2Slug}`}
-            className="font-mono text-xl sm:text-2xl font-black uppercase tracking-tight leading-none hover:opacity-90 transition-opacity text-slate-900 dark:text-white"
-            style={{ color: isT2Winner ? t2Theme.primary : undefined }}
-            title={`View ${match.team2} profile`}
+            href={`/teams/${winnerSlug}`}
+            className="text-xs sm:text-sm text-slate-800 dark:text-slate-100 font-bold line-clamp-2 max-w-full mt-1.5 hover:text-primary transition-colors leading-tight"
+            title={`View ${winnerFullName} profile`}
           >
-            {awayCode}
+            {winnerFullName}
           </Link>
 
-          {/* Team 2 Full Name */}
-          <Link
-            href={`/teams/${t2Slug}`}
-            className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium truncate max-w-full mt-1 hover:text-slate-900 dark:hover:text-white transition-colors"
-            title={`View ${match.team2} profile`}
-          >
-            {match.team2}
-          </Link>
-
-          {/* Team 2 Score (Emerald if won/available) & Overs */}
-          <div className="flex items-baseline gap-1 mt-0.5 flex-nowrap min-w-0">
-            {t2ScoreParsed.runsWkts ? (
+          {/* Winning Score & Overs */}
+          <div className="flex items-baseline gap-1 mt-1 flex-wrap min-w-0">
+            {winningScoreParsed && winningScoreParsed.runsWkts ? (
               <>
-                <span
-                  className={`font-mono text-lg sm:text-xl font-black tabular-nums leading-none tracking-tight ${
-                    isT2Winner ? "text-emerald-600 dark:text-emerald-400" : "text-slate-700 dark:text-slate-200"
-                  }`}
-                >
-                  {t2ScoreParsed.runsWkts}
+                <span className="font-mono text-lg sm:text-xl font-black text-emerald-600 dark:text-emerald-400 tabular-nums leading-none tracking-tight">
+                  {winningScoreParsed.runsWkts}
                 </span>
-                {t2ScoreParsed.overs && (
-                  <span className="font-mono text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-normal leading-none tabular-nums">
-                    {t2ScoreParsed.overs}
+                {winningScoreParsed.overs && (
+                  <span className="font-mono text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium tabular-nums">
+                    {winningScoreParsed.overs}
                   </span>
                 )}
               </>
+            ) : match.margin === "tie" ? (
+              <span className="font-mono text-xs font-bold text-amber-500 dark:text-amber-400 uppercase tracking-wider">
+                Scores Level
+              </span>
             ) : (
               <span className="font-mono text-[10px] text-slate-500 font-semibold uppercase tracking-wider">
                 Upcoming
@@ -359,11 +388,11 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
             {/* Primary Action Button: MATCH CENTER > */}
             <Link
               href={`/match/${match.id}`}
-              style={{ backgroundColor: theme.primary, color: "#FFFFFF" }}
-              className={`w-full py-2 px-3 rounded-xl text-[11px] font-mono font-black uppercase tracking-wider shadow-md transition-all duration-200 hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-1.5`}
+              style={{ backgroundColor: winnerTheme.primary, color: "#FFFFFF" }}
+              className="w-full py-2 px-3 rounded-xl text-[11px] font-mono font-black uppercase tracking-wider shadow-md transition-all duration-200 hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-1.5 forced-white"
             >
               <Play className="w-3 h-3 fill-current shrink-0" />
-              <span>MATCH CENTER</span>
+              <span>{match.winner || match.margin ? "MATCH CENTER" : "MATCH PREVIEW"}</span>
               <ChevronRight className="w-3 h-3 stroke-[3] shrink-0" />
             </Link>
 

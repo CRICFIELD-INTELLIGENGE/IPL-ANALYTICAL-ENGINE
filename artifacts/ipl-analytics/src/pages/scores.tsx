@@ -172,6 +172,15 @@ export default function ScoresPage() {
    1. SCHEDULE VIEW — SUNRISERS HYDERABAD STYLE TICKET-STUB FIXTURES
    ══════════════════════════════════════════════════════════════════════════ */
 
+function getContrastTextColor(hex: string): string {
+  const c = (hex || "").replace("#", "");
+  const r = parseInt(c.substring(0, 2), 16) || 0;
+  const g = parseInt(c.substring(2, 4), 16) || 0;
+  const b = parseInt(c.substring(4, 6), 16) || 0;
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 140 ? "#0f172a" : "#ffffff";
+}
+
 function ScheduleView({ season, matches }: { season: string; matches: MatchSummary[] }) {
   const [selectedFranchise, setSelectedFranchise] = useState<string>("all");
   const [matchStatusFilter, setMatchStatusFilter] = useState<"all" | "completed" | "upcoming">("all");
@@ -267,28 +276,37 @@ function ScheduleView({ season, matches }: { season: string; matches: MatchSumma
         <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 no-scrollbar">
           <button
             onClick={() => setSelectedFranchise("all")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all whitespace-nowrap ${
+            className={`flex items-center gap-1.5 h-8 px-3.5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer shrink-0 border ${
               selectedFranchise === "all"
-                ? "bg-slate-900 text-white dark:bg-white dark:text-black shadow-sm dark:shadow-lg dark:shadow-white/20 font-black"
-                : "bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-white/60 hover:bg-slate-200 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/5"
+                ? "bg-slate-900 text-white border-slate-900 shadow-sm dark:bg-white dark:text-slate-950 dark:border-white font-black forced-white"
+                : "bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border-slate-200 dark:bg-white/5 dark:hover:bg-white/10 dark:text-slate-300 dark:hover:text-white dark:border-white/10"
             }`}
           >
-            <Shield className="w-3.5 h-3.5" />
+            <Shield className="w-3.5 h-3.5 shrink-0" />
             <span>All Franchises ({matches.length})</span>
           </button>
 
-          {franchises.map(team => {
+          {franchises.filter(Boolean).map(team => {
             const tColor = teamColor(team);
             const isSelected = selectedFranchise === team;
+            const contrastText = getContrastTextColor(tColor);
             return (
               <button
                 key={team}
                 onClick={() => setSelectedFranchise(team)}
-                style={isSelected ? { backgroundColor: tColor, borderColor: tColor, color: "#000" } : undefined}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all whitespace-nowrap ${
+                style={
                   isSelected
-                    ? "font-black shadow-lg scale-105"
-                    : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/5"
+                    ? {
+                        backgroundColor: tColor,
+                        borderColor: tColor,
+                        color: contrastText,
+                      }
+                    : undefined
+                }
+                className={`flex items-center gap-1.5 h-8 px-3 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer shrink-0 border ${
+                  isSelected
+                    ? "font-black shadow-md scale-[1.03] forced-white"
+                    : "bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border-slate-200 dark:bg-white/5 dark:hover:bg-white/10 dark:text-slate-300 dark:hover:text-white dark:border-white/10"
                 }`}
                 title={`Filter ${team} Fixtures`}
               >
@@ -582,18 +600,27 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
 
         {/* Team Selector Pills Strip with Dynamic Franchise Logo & Colors */}
         <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 no-scrollbar">
-          {teamNames.map(team => {
+          {teamNames.filter(Boolean).map(team => {
             const tColor = teamColor(team);
             const isSelected = activeTeam === team;
+            const contrastText = getContrastTextColor(tColor);
             return (
               <button
                 key={team}
                 onClick={() => setSelectedTeamFilter(team)}
-                style={isSelected ? { backgroundColor: tColor, borderColor: tColor, color: "#000" } : undefined}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all whitespace-nowrap ${
+                style={
                   isSelected
-                    ? "font-black shadow-lg scale-105"
-                    : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/5"
+                    ? {
+                        backgroundColor: tColor,
+                        borderColor: tColor,
+                        color: contrastText,
+                      }
+                    : undefined
+                }
+                className={`flex items-center gap-1.5 h-8 px-3.5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer shrink-0 border ${
+                  isSelected
+                    ? "font-black shadow-md scale-[1.03] forced-white"
+                    : "bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border-slate-200 dark:bg-white/5 dark:hover:bg-white/10 dark:text-slate-300 dark:hover:text-white dark:border-white/10"
                 }`}
                 title={`View ${team} Official Squad`}
               >

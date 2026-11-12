@@ -568,23 +568,31 @@ html:not(.dark),
     --tw-gradient-to: #F8FAFC !important;
   }
 
+  /* Utility class to force crisp white text in Light Mode when placed on dark buttons/surfaces */
+  .forced-white,
+  [data-forced-white="true"],
+  .btn-dark-pill,
+  .franchise-pill-active {
+    color: #ffffff !important;
+  }
+
   /* Text colors: adapt dark-mode text to clean, accessible dark slate,
-     while carefully preserving text on colored buttons, badges, and media/cover images */
+     while carefully preserving text on colored buttons, dark buttons, badges, and media/cover images */
   :is(
     h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select
-  ):is(.text-white):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="from-"]):not(.badge):not(.btn):not([role="button"]):not(.franchise-action):not([aria-current="page"]):not([aria-current="true"]):not(.forced-white):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
+  ):is(.text-white):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-slate-9"]):not([class*="bg-slate-8"]):not([class*="bg-black"]):not([class*="bg-zinc-9"]):not([class*="bg-zinc-8"]):not([class*="bg-gray-9"]):not([class*="bg-gray-8"]):not([class*="from-"]):not(.badge):not(.btn):not([role="button"]):not(.franchise-action):not([aria-current="page"]):not([aria-current="true"]):not(.forced-white):not([data-forced-white="true"]):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
     color: var(--theme-text-primary) !important;
   }
 
-  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select):is(.text-white\/95, .text-white\/90, .text-white\/80, .text-white\/75, .text-white\/70):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="from-"]):not(.badge):not(.forced-white):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
+  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select):is(.text-white\/95, .text-white\/90, .text-white\/80, .text-white\/75, .text-white\/70):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-slate-9"]):not([class*="bg-slate-8"]):not([class*="bg-black"]):not([class*="bg-zinc-9"]):not([class*="bg-zinc-8"]):not([class*="bg-gray-9"]):not([class*="bg-gray-8"]):not([class*="from-"]):not(.badge):not(.forced-white):not([data-forced-white="true"]):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
     color: var(--theme-text-secondary) !important;
   }
 
-  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select):is(.text-white\/60, .text-white\/50):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="from-"]):not(.badge):not(.forced-white):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
+  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select):is(.text-white\/60, .text-white\/50):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-slate-9"]):not([class*="bg-slate-8"]):not([class*="bg-black"]):not([class*="bg-zinc-9"]):not([class*="bg-zinc-8"]):not([class*="bg-gray-9"]):not([class*="bg-gray-8"]):not([class*="from-"]):not(.badge):not(.forced-white):not([data-forced-white="true"]):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
     color: var(--theme-text-muted) !important;
   }
 
-  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select):is(.text-white\/40, .text-white\/30, .text-white\/20, .text-white\/10):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="from-"]):not(.badge):not(.forced-white):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
+  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select):is(.text-white\/40, .text-white\/30, .text-white\/20, .text-white\/10):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-slate-9"]):not([class*="bg-slate-8"]):not([class*="bg-black"]):not([class*="bg-zinc-9"]):not([class*="bg-zinc-8"]):not([class*="bg-gray-9"]):not([class*="bg-gray-8"]):not([class*="from-"]):not(.badge):not(.forced-white):not([data-forced-white="true"]):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
     color: var(--theme-text-faint) !important;
   }
 }
