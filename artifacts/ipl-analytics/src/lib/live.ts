@@ -18,6 +18,9 @@ export interface LiveMatchInfo {
   venueInfo?: { id: number; ground: string; city: string; timezone?: string };
   currBatTeamId?: number;
   matchType?: string;
+  mom?: string;
+  winner?: string;
+  margin?: string;
 }
 
 export interface LiveScoreInnings {

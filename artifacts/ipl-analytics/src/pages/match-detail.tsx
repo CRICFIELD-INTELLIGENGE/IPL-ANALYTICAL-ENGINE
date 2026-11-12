@@ -84,7 +84,10 @@ export default function MatchDetailPage() {
           team1: { teamId: 101, teamName: archMatch.team1, teamSName: teamShort(archMatch.team1) },
           team2: { teamId: 102, teamName: archMatch.team2, teamSName: teamShort(archMatch.team2) },
           startDate: new Date(archMatch.date).getTime(),
-          venueInfo: { ground: archMatch.venue.split(',')[0], city: archMatch.venue.split(',')[1]?.trim() || "India" }
+          venueInfo: { ground: archMatch.venue.split(',')[0], city: archMatch.venue.split(',')[1]?.trim() || "India" },
+          mom: archMatch.mom,
+          winner: archMatch.winner,
+          margin: archMatch.margin,
         },
         matchScore: {
           team1Score: { inngs1: { runs: parseInt(archMatch.team1Score?.split('/')[0] || "0"), wickets: parseInt(archMatch.team1Score?.split('/')[1]?.split(' ')[0] || "0"), overs: parseFloat(archMatch.team1Score?.split('(')[1]?.replace(')', '') || "20") } },
