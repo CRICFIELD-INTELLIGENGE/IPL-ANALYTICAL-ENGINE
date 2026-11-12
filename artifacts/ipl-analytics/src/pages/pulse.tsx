@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { TeamLogo } from "@/components/team-logo";
 import { Layout } from "@/components/layout";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gavel, Radio, Search, ChevronDown, ExternalLink, Wallet, Users, History, Newspaper, Brain, Sparkles, TrendingUp, CheckCircle2, Activity } from "lucide-react";
+import { Gavel, Radio, Search, ChevronDown, Check, ExternalLink, Wallet, Users, History, Newspaper, Brain, Sparkles, TrendingUp, CheckCircle2, Activity } from "lucide-react";
 import { Link } from "wouter";
 import { HUB_EVENTS } from "@/lib/ipl-2027";
 import { stamp, useIpl2027Desk } from "@/lib/ipl-2027-desk";
@@ -10,6 +10,13 @@ import { teamColor, playerSlug } from "@/lib/aggregates";
 import { paletteForCode } from "@/lib/team-palette";
 import { isTeamCode } from "@/lib/team-context";
 import { usePulseAuction, pulseMoney, lotValue, PULSE_TABS, type PulseTab, type PulseLot, type PulseModel, type PulseTeam, type PulseStatus } from "@/lib/pulse-auction";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 const card = "bg-white dark:bg-[#0B1020] rounded-[20px] border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-xl transition-colors";
 const label = "text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-white/50";
@@ -149,21 +156,12 @@ export default function PulsePage() {
               active={active}
               phase={phase.name}
               seasonSelector={
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-[11px] font-bold text-white/70 uppercase tracking-wider">Season:</span>
-                  <select
-                    value={active}
-                    onChange={e => setSeason(Number(e.target.value))}
-                    aria-label="Auction season"
-                    className="bg-black/50 hover:bg-black/70 border border-white/20 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  >
-                    {[2027, ...pulse.seasons.filter(s => s !== 2027)].map(s => (
-                      <option key={s} value={s} className="bg-[#0B1020] text-white">
-                        IPL {s}{s === 2027 && !probe.data?.lots.length ? " · Upcoming" : ""}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <SeasonDropdown
+                  seasons={[2027, ...pulse.seasons.filter(s => s !== 2027)]}
+                  active={active}
+                  onSelect={setSeason}
+                  is2027Upcoming={!probe.data?.lots.length}
+                />
               }
             />
           </div>
@@ -279,6 +277,72 @@ const HERO_SLIDES = [
     desc: "Complete squad sheets, tactical roster balances, purse efficiency ratings, and verified roster breakdowns post-auction.",
   },
 ];
+
+function SeasonDropdown({
+  seasons,
+  active,
+  onSelect,
+  is2027Upcoming,
+}: {
+  seasons: number[];
+  active: number;
+  onSelect: (season: number) => void;
+  is2027Upcoming: boolean;
+}) {
+  return (
+    <div className="flex items-center gap-2 shrink-0">
+      <span className="text-[11px] font-bold text-white/70 uppercase tracking-wider select-none">
+        Season:
+      </span>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            type="button"
+            aria-label={`Auction season selector, currently IPL ${active}`}
+            className="group inline-flex items-center gap-2 bg-black/60 hover:bg-black/80 active:bg-black border border-white/20 hover:border-orange-500/60 rounded-xl px-3 py-1.5 text-xs text-white font-bold cursor-pointer transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 shadow-md"
+          >
+            <span className="tracking-wide">IPL {active}</span>
+            <ChevronDown className="w-3.5 h-3.5 text-white/70 group-hover:text-orange-400 group-data-[state=open]:rotate-180 transition-transform duration-200" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align="end"
+          sideOffset={6}
+          className="w-48 sm:w-52 max-h-72 overflow-y-auto rounded-2xl border border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#0B1020]/95 backdrop-blur-xl shadow-2xl p-1.5 z-[100] focus:outline-none"
+        >
+          {seasons.map(s => {
+            const isSelected = s === active;
+            const isUpcoming = s === 2027 && is2027Upcoming;
+            return (
+              <DropdownMenuItem
+                key={s}
+                onSelect={() => onSelect(s)}
+                className={cn(
+                  "flex items-center justify-between px-3 py-2 text-xs rounded-xl cursor-pointer transition-colors outline-none font-medium my-0.5 select-none",
+                  isSelected
+                    ? "bg-orange-500/15 text-orange-600 dark:text-orange-400 font-bold border border-orange-500/30 data-[highlighted]:bg-orange-500/20"
+                    : "text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-950 dark:hover:text-white data-[highlighted]:bg-slate-100 dark:data-[highlighted]:bg-white/10 data-[highlighted]:text-slate-950 dark:data-[highlighted]:text-white"
+                )}
+              >
+                <span className="tracking-tight">IPL {s}</span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {isUpcoming && (
+                    <span className="text-[9px] uppercase font-black tracking-wider px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-500/30">
+                      Upcoming
+                    </span>
+                  )}
+                  {isSelected && (
+                    <Check className="w-3.5 h-3.5 text-orange-500 dark:text-orange-400 stroke-[2.5]" />
+                  )}
+                </div>
+              </DropdownMenuItem>
+            );
+          })}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  );
+}
 
 function PulseHero({
   active,
