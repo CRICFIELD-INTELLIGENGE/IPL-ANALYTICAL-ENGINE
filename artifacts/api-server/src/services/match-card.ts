@@ -355,7 +355,64 @@ export function getScorecardFromDb(matchId: string): any | null {
      ORDER BY dis.delivery_id
   `).all(matchId) as any[];
 
-  const inningsResult = inns.map((inn: any) => {
+  const inn1 = inns[0];
+  const inn2 = inns[1];
+
+  // Extract participating players for each team from batting, bowling, non-strikers, and fielding
+  const t1Players = new Set<string>();
+  const t2Players = new Set<string>();
+
+  if (inn1) {
+    for (const b of batRows.filter((r: any) => r.innings_id === inn1.innings_id)) {
+      t1Players.add(b.player_name);
+    }
+    for (const bw of bowlRows.filter((r: any) => r.innings_id === inn1.innings_id)) {
+      t2Players.add(bw.bowler_name);
+    }
+    const inn1NonStrikers = d.prepare(`
+      SELECT DISTINCT p.name
+        FROM deliveries dl
+        JOIN players p ON p.player_id = dl.non_striker_id
+       WHERE dl.innings_id = ?
+    `).all(inn1.innings_id) as any[];
+    for (const ns of inn1NonStrikers) t1Players.add(ns.name);
+
+    const inn1Fielders = d.prepare(`
+      SELECT DISTINCT p.name
+        FROM dismissals dis
+        JOIN deliveries dl ON dl.delivery_id = dis.delivery_id
+        JOIN players p ON p.player_id = dis.fielder_id
+       WHERE dl.innings_id = ? AND dis.fielder_id IS NOT NULL
+    `).all(inn1.innings_id) as any[];
+    for (const f of inn1Fielders) t2Players.add(f.name);
+  }
+
+  if (inn2) {
+    for (const b of batRows.filter((r: any) => r.innings_id === inn2.innings_id)) {
+      t2Players.add(b.player_name);
+    }
+    for (const bw of bowlRows.filter((r: any) => r.innings_id === inn2.innings_id)) {
+      t1Players.add(bw.bowler_name);
+    }
+    const inn2NonStrikers = d.prepare(`
+      SELECT DISTINCT p.name
+        FROM deliveries dl
+        JOIN players p ON p.player_id = dl.non_striker_id
+       WHERE dl.innings_id = ?
+    `).all(inn2.innings_id) as any[];
+    for (const ns of inn2NonStrikers) t2Players.add(ns.name);
+
+    const inn2Fielders = d.prepare(`
+      SELECT DISTINCT p.name
+        FROM dismissals dis
+        JOIN deliveries dl ON dl.delivery_id = dis.delivery_id
+        JOIN players p ON p.player_id = dis.fielder_id
+       WHERE dl.innings_id = ? AND dis.fielder_id IS NOT NULL
+    `).all(inn2.innings_id) as any[];
+    for (const f of inn2Fielders) t1Players.add(f.name);
+  }
+
+  const inningsResult = inns.map((inn: any, innIdx: number) => {
     const ext = extrasMap.get(inn.innings_id) || { wides: 0, noballs: 0, byes: 0, legbyes: 0, penalty: 0, total: 0 };
     const innBat = batRows.filter((b: any) => b.innings_id === inn.innings_id).map((b: any) => {
       const dis = b.was_dismissed ? (dismissalMap.get(`${inn.innings_id}:${b.player_name}`) || "out") : "not out";
@@ -395,6 +452,10 @@ export function getScorecardFromDb(matchId: string): any | null {
       over: `${f.over_num}.${f.ball_num}`,
     }));
 
+    const teamSquad = innIdx === 0 ? t1Players : t2Players;
+    const battedNames = new Set(innBat.map((b: any) => b.name));
+    const didNotBat = Array.from(teamSquad).filter(p => !battedNames.has(p));
+
     return {
       team: inn.team_name,
       runs: inn.runs,
@@ -412,13 +473,11 @@ export function getScorecardFromDb(matchId: string): any | null {
       batting: innBat,
       bowling: innBowl,
       fallOfWickets: innFow,
-      didNotBat: [],
+      didNotBat,
       superOver: false,
     };
   });
 
-  const inn1 = inns[0];
-  const inn2 = inns[1];
   let calculatedMargin: string | null = null;
   if (inn1 && inn2) {
     if (match.winner_name === inn2.team_name) {
@@ -445,6 +504,11 @@ export function getScorecardFromDb(matchId: string): any | null {
     : [];
   const teams = [match.team1_name || meta?.team1, match.team2_name || meta?.team2].filter(Boolean);
 
+  const squadsResult = [
+    { team: inn1?.team_name || match.team1_name || meta?.team1, players: Array.from(t1Players) },
+    { team: inn2?.team_name || match.team2_name || meta?.team2, players: Array.from(t2Players) },
+  ].filter(s => s.team && s.players.length > 0);
+
   return {
     matchId: String(match.match_id),
     season: String(match.season_id || meta?.season || ""),
@@ -462,7 +526,7 @@ export function getScorecardFromDb(matchId: string): any | null {
     },
     playerOfMatch: pom,
     officials: { umpires: [], tvUmpires: [], matchReferees: [] },
-    squads: teams.map((t: string) => ({ team: t, players: [] })),
+    squads: squadsResult,
     innings: inningsResult,
   };
 }

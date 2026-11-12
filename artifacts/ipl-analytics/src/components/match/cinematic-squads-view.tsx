@@ -16,9 +16,9 @@ const teamSlug = (team?: string | null): string =>
 export function CinematicSquadsView({ match, card }: CinematicSquadsViewProps) {
   const squads = card?.squads ?? [];
 
-  if (squads.length === 0) {
+  if (squads.length === 0 || squads.every(s => s.players.length === 0)) {
     return (
-      <div className="p-16 text-center text-white/40 font-mono text-sm border border-white/10 rounded-[28px] bg-white/[0.02]">
+      <div className="p-16 text-center text-slate-500 dark:text-white/40 font-mono text-sm border border-slate-200 dark:border-white/10 rounded-[28px] bg-white dark:bg-white/[0.02] shadow-sm">
         No confirmed playing XI team sheet is available for this match.
       </div>
     );
@@ -50,7 +50,7 @@ export function CinematicSquadsView({ match, card }: CinematicSquadsViewProps) {
         return (
           <div
             key={s.team}
-            className="bg-[#090d16]/95 rounded-[28px] border border-white/10 p-5 sm:p-6 shadow-2xl flex flex-col gap-4 overflow-hidden relative"
+            className="bg-white dark:bg-[#090d16]/95 rounded-[28px] border border-slate-200 dark:border-white/10 p-5 sm:p-6 shadow-xl dark:shadow-2xl flex flex-col gap-4 overflow-hidden relative"
           >
             {/* Ambient Franchise Rim */}
             <div
@@ -59,7 +59,7 @@ export function CinematicSquadsView({ match, card }: CinematicSquadsViewProps) {
             />
 
             {/* Header: Team & XI Title */}
-            <div className="flex items-center justify-between pb-4 border-b border-white/10 relative z-10">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-white/10 relative z-10">
               <div className="flex items-center gap-3 min-w-0">
                 <Link href={`/teams/${teamSlug(s.team)}`} className="shrink-0 hover:scale-105 transition-transform">
                   <div
@@ -70,20 +70,20 @@ export function CinematicSquadsView({ match, card }: CinematicSquadsViewProps) {
                   </div>
                 </Link>
                 <div className="min-w-0">
-                  <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest block">
+                  <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest block">
                     CONFIRMED LINEUP
                   </span>
                   <Link
                     href={`/teams/${teamSlug(s.team)}`}
-                    className="text-base sm:text-lg font-black uppercase text-white hover:text-cyan-300 transition-colors truncate block"
+                    className="text-base sm:text-lg font-black uppercase text-slate-900 dark:text-white hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors truncate block"
                   >
                     {s.team} XI
                   </Link>
                 </div>
               </div>
 
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/5 border border-white/10 text-[10px] font-mono text-slate-300">
-                <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-mono text-slate-700 dark:text-slate-300">
+                <ShieldCheck className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
                 <span>{s.players.length} PLAYERS</span>
               </div>
             </div>
@@ -97,24 +97,24 @@ export function CinematicSquadsView({ match, card }: CinematicSquadsViewProps) {
                   <Link
                     key={n}
                     href={`/players/${playerSlug(p)}`}
-                    className="p-3 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-white/15 transition-all flex items-center justify-between gap-3 group/p"
+                    className="p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 dark:bg-white/[0.02] dark:hover:bg-white/[0.05] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/15 transition-all flex items-center justify-between gap-3 group/p shadow-sm"
                     title={`View ${p}'s Player Dossier`}
                   >
                     {/* Portrait & Name */}
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-9 h-9 rounded-full overflow-hidden border border-white/20 shrink-0 shadow-sm">
+                      <div className="w-9 h-9 rounded-full overflow-hidden border border-slate-300 dark:border-white/20 shrink-0 shadow-sm">
                         <PlayerAvatar name={p} className="w-full h-full object-cover" />
                       </div>
                       <div className="min-w-0 flex flex-col">
-                        <span className="text-xs font-bold text-white group-hover/p:text-cyan-300 transition-colors truncate">
+                        <span className="text-xs font-bold text-slate-900 dark:text-white group-hover/p:text-cyan-700 dark:group-hover/p:text-cyan-300 transition-colors truncate">
                           {p}
                         </span>
                         {/* Batting/Bowling Match Contribution */}
                         {part ? (
-                          <div className="flex items-center gap-1 text-[9px] font-mono text-slate-400 mt-0.5 truncate">
-                            {part.runs && <span className="text-amber-300 font-semibold">{part.runs}</span>}
+                          <div className="flex items-center gap-1 text-[9px] font-mono text-slate-600 dark:text-slate-400 mt-0.5 truncate">
+                            {part.runs && <span className="text-amber-700 dark:text-amber-300 font-bold">{part.runs}</span>}
                             {part.runs && part.bowling && <span>·</span>}
-                            {part.bowling && <span className="text-cyan-300 font-semibold">{part.bowling}</span>}
+                            {part.bowling && <span className="text-cyan-700 dark:text-cyan-300 font-bold">{part.bowling}</span>}
                           </div>
                         ) : (
                           <span className="text-[9px] font-mono text-slate-500">In Playing XI</span>
@@ -122,7 +122,7 @@ export function CinematicSquadsView({ match, card }: CinematicSquadsViewProps) {
                       </div>
                     </div>
 
-                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-500 opacity-0 group-hover/p:opacity-100 group-hover/p:text-cyan-400 transition-all shrink-0" />
+                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 opacity-0 group-hover/p:opacity-100 group-hover/p:text-cyan-600 dark:group-hover/p:text-cyan-400 transition-all shrink-0" />
                   </Link>
                 );
               })}
