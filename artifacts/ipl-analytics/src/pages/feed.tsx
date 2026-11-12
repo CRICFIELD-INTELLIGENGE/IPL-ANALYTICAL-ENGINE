@@ -14,7 +14,8 @@ import { getV2Index, STORY_TYPE_LABEL } from "@/lib/editorial-v2";
 import { HUB_EVENTS, HUB_TEAMS } from "@/lib/ipl-2027";
 import { TEAM_REGISTRY, useTeamTheme, type TeamCode } from "@/lib/team-context";
 import { useIpl2027Desk, stamp } from "@/lib/ipl-2027-desk";
-import { EDITORIAL_AUTHOR, type IndexEntry } from "@/data/editorial/schema";
+import { EDITORIAL_AUTHOR, EDITORIAL_ASPECTS, type IndexEntry } from "@/data/editorial/schema";
+import { EditorialCoverCanvas } from "@/components/dugout/editorial-cover-canvas";
 
 export type CardId = "squad" | "auction" | "tactics" | "stars" | "venues" | "storylines";
 
@@ -315,7 +316,7 @@ export default function FeedPage() {
                       <li key={e.id}>
                         <Link href={`/dugout/articles/${e.slug}`} className="flex items-center gap-3.5 py-3 px-2 rounded-xl group hover:bg-white/[0.03] transition-colors">
                           <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
-                            <EntryMedia entry={e} />
+                            <EntryMedia entry={e} preserveAspectRatio={false} />
                           </div>
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest">
@@ -488,25 +489,37 @@ function RetentionCountdown() {
   );
 }
 
-export function EntryMedia({ entry }: { entry: IndexEntry }) {
+export function EntryMedia({ entry, preserveAspectRatio = false }: { entry: IndexEntry; preserveAspectRatio?: boolean }) {
   const image = articleHeaderImage(entry.id);
-  const consent = useEmbedConsent();
-  const placeholder = (
-    <div className="aspect-video w-full flex items-center justify-center bg-[#0A0F1D] px-4 text-center text-xs text-white/45">
-      {image?.embedHtml && consent !== "granted"
-        ? "Accept embedded content to view this article’s Getty Images photo"
-        : "Article header photo unavailable"}
+  const t = TEAM_REGISTRY[entry.franchise as TeamCode];
+  const aspectObj = EDITORIAL_ASPECTS.find((a) => a.id === entry.aspect) ?? EDITORIAL_ASPECTS[0];
+  const teamCover = entry.franchise === "CSK" ? "/csk insight.jpg" : entry.franchise === "RCB" ? "/virat-kohli.png" : entry.franchise === "MI" ? "/rohit sharma.jpg" : "/TITLE BANNER.png";
+
+  const fallbackIllustration = (
+    <div className="aspect-video w-full h-full overflow-hidden [&>div]:rounded-none [&>div]:border-0">
+      <EditorialCoverCanvas
+        franchiseName={t?.name ?? entry.franchise}
+        teamCode={entry.franchise}
+        parameter={aspectObj.name}
+        parameterNumber={aspectObj.number}
+        title={entry.title}
+        accent={t?.accent ?? "var(--team-accent)"}
+        coverImage={teamCover}
+        aspectRatio="video"
+        edition="CricField Library"
+      />
     </div>
   );
-  if (!image) return placeholder;
+
+  if (!image) return fallbackIllustration;
   return (
     <EditorialCardMedia
       key={`${entry.id}-${image.assetId}`}
       image={image}
       aspect="video"
-      preserveAspectRatio
+      preserveAspectRatio={preserveAspectRatio}
       allowUnpublished={import.meta.env.DEV}
-      fallback={placeholder}
+      fallback={fallbackIllustration}
     />
   );
 }
@@ -516,7 +529,7 @@ function CompactStory({ entry }: { entry: IndexEntry }) {
   return (
     <Link href={`/dugout/articles/${entry.slug}`} className="flex items-center gap-3 p-3 group hover:bg-white/[0.04] transition-colors">
       <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
-        <EntryMedia entry={entry} />
+        <EntryMedia entry={entry} preserveAspectRatio={false} />
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest">

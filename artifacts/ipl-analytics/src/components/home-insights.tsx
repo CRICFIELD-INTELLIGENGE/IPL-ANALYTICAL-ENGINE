@@ -27,6 +27,8 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
 
   if (!cards.length) return <div className="col-span-full flex items-center justify-center text-[10px] text-white/40">Loading articles…</div>;
 
+  const isSingle = limit === 1;
+
   return (
     <>
       {cards.slice(0, limit).map(({ item, code }) => {
@@ -34,15 +36,68 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
         const aspect = EDITORIAL_ASPECTS.find((a) => a.id === item.aspect)?.name;
         return (
           <Link key={item.key} href={item.href!} className="home-lead-story h-full min-h-0 block">
-            <div className="bg-[#081622] rounded-[14px] border border-[#19303c] overflow-hidden flex flex-col group hover:border-primary/40 transition-all cursor-pointer min-w-0 shadow-xl h-full">
-              <div className="home-story-media relative w-full aspect-video overflow-hidden bg-[#06111a]">
-                <LibraryMedia imageId={item.imageId} title={item.title} accent={meta.accent} code={code} teamName={meta.name} aspect={item.aspect} preserveAspectRatio={false} />
+            <div
+              className={`bg-[#081622] rounded-[16px] border border-[#19303c] overflow-hidden group hover:border-primary/50 transition-all cursor-pointer min-w-0 shadow-xl h-full ${
+                isSingle ? "flex flex-col sm:flex-row" : "flex flex-col"
+              }`}
+            >
+              <div
+                className={`home-story-media relative overflow-hidden bg-[#06111a] ${
+                  isSingle
+                    ? "w-full sm:w-[48%] md:w-[46%] h-52 sm:h-auto min-h-[200px] shrink-0"
+                    : "w-full aspect-video"
+                }`}
+              >
+                <LibraryMedia
+                  imageId={item.imageId}
+                  title={item.title}
+                  accent={meta.accent}
+                  code={code}
+                  teamName={meta.name}
+                  aspect={item.aspect}
+                  preserveAspectRatio={false}
+                />
               </div>
-              <div className="flex-1 min-h-0 p-4 flex flex-col justify-between border-t border-white/10 bg-white/[0.02]">
-                <p className="font-bold text-sm sm:text-base leading-snug text-white/95 group-hover:text-primary transition-colors line-clamp-2 mb-2 tracking-tight">{item.title}</p>
-                <div className="flex items-center justify-between gap-2 mt-auto pt-1">
-                  <p className="text-[11px] font-bold truncate tracking-wide" style={{ color: meta.accent }}>{aspect}</p>
-                  <p className="text-[11px] text-primary font-mono font-bold uppercase tracking-wider shrink-0">{item.meta}</p>
+              <div
+                className={`flex-1 min-h-0 flex flex-col justify-between ${
+                  isSingle
+                    ? "p-5 sm:p-6 border-t sm:border-t-0 sm:border-l border-white/10 bg-white/[0.02]"
+                    : "p-4 border-t border-white/10 bg-white/[0.02]"
+                }`}
+              >
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span
+                      className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded"
+                      style={{
+                        backgroundColor: `${meta.accent}20`,
+                        color: meta.accent,
+                        border: `1px solid ${meta.accent}40`,
+                      }}
+                    >
+                      {code} · {aspect}
+                    </span>
+                  </div>
+                  <p
+                    className={`font-bold leading-snug text-white/95 group-hover:text-primary transition-colors tracking-tight mb-2 ${
+                      isSingle ? "text-base sm:text-lg lg:text-xl line-clamp-3" : "text-sm sm:text-base line-clamp-2"
+                    }`}
+                  >
+                    {item.title}
+                  </p>
+                  {isSingle && item.dek && (
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-2 sm:line-clamp-3 mb-3">
+                      {item.dek}
+                    </p>
+                  )}
+                </div>
+                <div className="flex items-center justify-between gap-2 mt-auto pt-2 border-t border-white/5">
+                  <span className="text-xs font-semibold text-primary group-hover:underline flex items-center gap-1">
+                    Read full story →
+                  </span>
+                  <p className="text-[11px] text-white/40 font-mono font-bold uppercase tracking-wider shrink-0">
+                    {item.meta}
+                  </p>
                 </div>
               </div>
             </div>
