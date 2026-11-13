@@ -565,29 +565,29 @@ export default function PlayerProfilePage() {
     // implies batterStats exists — the radar needs its own guard.
     if (showAsBatter && batterStats) {
       return [
-        { subject: "Powerplay Scoring", value: batterStats.ppSr || 0 },
-        { subject: "Middle-Overs Control", value: batterStats.middleSr || 0 },
-        { subject: "Death-Overs Power", value: batterStats.deathSr || 0 },
-        { subject: "Boundary Ratio", value: batterStats.boundaryPct || 0 },
-        { subject: "Clutch Contribution", value: batterStats.clutch || 0 },
-        { subject: "Running Between Wkts", value: batterStats.form || 0 },
+        { subject: "Powerplay Scoring", short: "Powerplay", value: batterStats.ppSr || 0 },
+        { subject: "Middle-Overs Control", short: "Middle", value: batterStats.middleSr || 0 },
+        { subject: "Death-Overs Power", short: "Death", value: batterStats.deathSr || 0 },
+        { subject: "Boundary Ratio", short: "Boundaries", value: batterStats.boundaryPct || 0 },
+        { subject: "Clutch Contribution", short: "Clutch", value: batterStats.clutch || 0 },
+        { subject: "Running Between Wkts", short: "Running", value: batterStats.form || 0 },
       ];
     }
 
     if (bowlerStats) {
       return [
-        { subject: "Boundary Conceded %", value: bowlerStats.boundaryPct || 0 },
+        { subject: "Boundary Conceded %", short: "Boundaries", value: bowlerStats.boundaryPct || 0 },
         // Unknown bowling type: no Spin Profile axis rather than a 0 that reads as pace (Day 6).
-        ...(bowlerStats.bowlerType === "Unknown" ? [] : [{ subject: "Spin Profile", value: bowlerStats.bowlerType === "Spinner" ? 100 : 0 }]),
-        { subject: "True Economy Delta", value: bowlerStats.trueEconomy || 0 },
-        { subject: "Dot Ball Ratio", value: bowlerStats.dotPct || 0 },
-        { subject: "Clutch Wickets", value: bowlerStats.clutch || 0 },
-        { subject: "Tactical Execution", value: bowlerStats.form || 0 },
+        ...(bowlerStats.bowlerType === "Unknown" ? [] : [{ subject: "Spin Profile", short: bowlerStats.bowlerType === "Spinner" ? "Spin" : "Pace", value: bowlerStats.bowlerType === "Spinner" ? 100 : 0 }]),
+        { subject: "True Economy Delta", short: "True Econ", value: bowlerStats.trueEconomy || 0 },
+        { subject: "Dot Ball Ratio", short: "Dot Balls", value: bowlerStats.dotPct || 0 },
+        { subject: "Clutch Wickets", short: "Clutch", value: bowlerStats.clutch || 0 },
+        { subject: "Tactical Execution", short: "Tactics", value: bowlerStats.form || 0 },
       ];
     }
 
     return [];
-  }, [bio, batterStats, bowlerStats]);
+  }, [bio, batterStats, bowlerStats, showAsBatter]);
 
   if (playerBios.isLoading || identityIndex.isLoading) {
     return (
@@ -714,70 +714,171 @@ export default function PlayerProfilePage() {
                 </div>
               </div>
 
-              {/* 2. CENTER PROFILE INTEL & NARRATIVE BLOCK */}
-              <div className="flex-1 min-w-0 flex flex-col justify-between text-center lg:text-left space-y-4">
-                <div>
-                  {/* Badge Row */}
-                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-3">
-                    <span
-                      className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider border shadow-sm flex items-center gap-1.5"
-                      style={{ backgroundColor: `${pColor}18`, borderColor: `${pColor}50`, color: pColor }}
-                    >
-                      <TeamLogo team={primaryTeam} size="w-3.5 h-3.5" />
-                      <span>{primaryTeam} ({pShort})</span>
-                    </span>
-                    <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/70">
-                      {bio.role}
-                    </span>
-                    <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-                      Elite Tier
-                    </span>
+              {/* 2. CENTER PROFILE INTEL & VECTOR METRIC BLOCK */}
+              <div className="flex-1 min-w-0 flex flex-col xl:flex-row gap-6 items-stretch justify-between">
+                {/* Left: Player Intel & Narrative */}
+                <div className="flex-1 min-w-0 flex flex-col justify-between text-center lg:text-left space-y-4">
+                  <div>
+                    {/* Badge Row */}
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-3">
+                      <span
+                        className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider border shadow-sm flex items-center gap-1.5"
+                        style={{ backgroundColor: `${pColor}18`, borderColor: `${pColor}50`, color: pColor }}
+                      >
+                        <TeamLogo team={primaryTeam} size="w-3.5 h-3.5" />
+                        <span>{primaryTeam} ({pShort})</span>
+                      </span>
+                      <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/70">
+                        {bio.role}
+                      </span>
+                      <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                        <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                        Elite Tier
+                      </span>
+                    </div>
+
+                    {/* Player Name Headlines */}
+                    <div>
+                      <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-none drop-shadow-sm dark:drop-shadow-md">
+                        <span className="text-slate-900 dark:text-white">{profileName}</span>
+                      </h1>
+                      <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-[11px] font-mono font-bold text-slate-500 dark:text-white/40 uppercase mt-2">
+                        <span>Full: {bio.fullName}</span>
+                        <span>·</span>
+                        <span>{bio.country || "India"}</span>
+                        {bio.iplDebut && (
+                          <>
+                            <span>·</span>
+                            <span className="text-cyan-600 dark:text-cyan-400">IPL Debut: {bio.iplDebut}</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Player Bio Summary Paragraph */}
+                    <p className="text-xs text-slate-600 dark:text-white/70 leading-relaxed font-normal mt-3 max-w-2xl">
+                      {bio.bio}
+                    </p>
                   </div>
 
-                  {/* Player Name Headlines */}
-                  <div>
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-none drop-shadow-sm dark:drop-shadow-md">
-                      <span className="text-slate-900 dark:text-white">{profileName}</span>
-                    </h1>
-                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-[11px] font-mono font-bold text-slate-500 dark:text-white/40 uppercase mt-2">
-                      <span>Full: {bio.fullName}</span>
-                      <span>·</span>
-                      <span>{bio.country || "India"}</span>
-                      {bio.iplDebut && (
+                  {/* Quick Physical Archetype Specs Strip */}
+                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-2 border-t border-slate-200 dark:border-white/5">
+                    <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
+                      <span className="text-slate-400 dark:text-white/30 uppercase mr-1">BAT:</span>
+                      <span className="text-slate-900 dark:text-white font-bold">{bio.batStyle || "Right Hand"}</span>
+                    </div>
+                    <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
+                      <span className="text-slate-400 dark:text-white/30 uppercase mr-1">BOWL:</span>
+                      <span className="text-slate-900 dark:text-white font-bold">{bio.bowlStyle || "Right Arm"}</span>
+                    </div>
+                    <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
+                      <span className="text-slate-400 dark:text-white/30 uppercase mr-1">AGE:</span>
+                      <span className="text-slate-900 dark:text-white font-bold">{bio.age ? `${bio.age} YRS` : "—"}</span>
+                    </div>
+                    <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
+                      <span className="text-slate-400 dark:text-white/30 uppercase mr-1">ORIGIN:</span>
+                      <span className="text-slate-900 dark:text-white font-bold">{bio.birthPlace || bio.country || "—"}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: Vector Metrics Radar & Telemetry HUD Card in Player Box */}
+                {radarData.length > 0 && (
+                  <div className="w-full xl:w-[250px] 2xl:w-[270px] shrink-0 rounded-2xl bg-white/75 dark:bg-white/[0.03] border border-slate-200/90 dark:border-white/10 p-3 flex flex-col justify-between shadow-sm dark:shadow-md backdrop-blur-md relative overflow-hidden group/vector">
+                    {/* Top ambient glow */}
+                    <div
+                      className="absolute -top-12 -right-12 w-28 h-28 rounded-full blur-[40px] pointer-events-none opacity-20 dark:opacity-30"
+                      style={{ background: pColor || "#8B5CF6" }}
+                    />
+                    
+                    {/* Vector Header */}
+                    <div className="flex items-center justify-between gap-1 relative z-10 mb-0.5">
+                      <div className="flex items-center gap-1.5">
+                        <Activity className="w-3.5 h-3.5 text-primary" />
+                        <span className="text-[9px] font-black uppercase tracking-widest text-slate-800 dark:text-white/90 font-mono">
+                          Vector Metrics
+                        </span>
+                      </div>
+                      <span className="text-[7.5px] font-mono font-black uppercase px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
+                        {showAsBatter ? "Phase Radar" : "Discipline Radar"}
+                      </span>
+                    </div>
+
+                    {/* Radar Chart */}
+                    <div className="h-[145px] w-full relative z-10 flex items-center justify-center my-0.5">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <RadarChart cx="50%" cy="50%" outerRadius="68%" data={radarData}>
+                          <PolarGrid stroke={isDark ? "rgba(255,255,255,0.08)" : "rgba(15,23,42,0.12)"} />
+                          <PolarAngleAxis
+                            dataKey="short"
+                            stroke={isDark ? "rgba(255,255,255,0.65)" : "rgba(51,65,85,0.85)"}
+                            fontSize={7.5}
+                            tickLine={false}
+                          />
+                          <PolarRadiusAxis angle={30} domain={[0, 'auto']} stroke="transparent" tick={false} />
+                          <Radar
+                            name="Performance"
+                            dataKey="value"
+                            stroke={pColor || "#8B5CF6"}
+                            fill={pColor || "#8B5CF6"}
+                            fillOpacity={isDark ? 0.35 : 0.28}
+                          />
+                        </RadarChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    {/* Bottom Micro-Pills from Advanced Diagnostics */}
+                    <div className="pt-2 border-t border-slate-100 dark:border-white/5 relative z-10 grid grid-cols-3 gap-1 text-center">
+                      {showAsBatter && batterStats ? (
                         <>
-                          <span>·</span>
-                          <span className="text-cyan-600 dark:text-cyan-400">IPL Debut: {bio.iplDebut}</span>
+                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
+                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">PP SR</span>
+                            <span className="text-[10px] font-mono font-black text-blue-600 dark:text-blue-400 block leading-tight">
+                              {batterStats.ppSr ? batterStats.ppSr.toFixed(0) : "—"}
+                            </span>
+                          </div>
+                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
+                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">DEATH SR</span>
+                            <span className="text-[10px] font-mono font-black text-rose-600 dark:text-rose-400 block leading-tight">
+                              {batterStats.deathSr ? batterStats.deathSr.toFixed(0) : "—"}
+                            </span>
+                          </div>
+                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
+                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">BND %</span>
+                            <span className="text-[10px] font-mono font-black text-emerald-600 dark:text-emerald-400 block leading-tight">
+                              {batterStats.boundaryPct ? `${batterStats.boundaryPct}%` : "—"}
+                            </span>
+                          </div>
                         </>
+                      ) : bowlerStats ? (
+                        <>
+                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
+                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">DOTS</span>
+                            <span className="text-[10px] font-mono font-black text-emerald-600 dark:text-emerald-400 block leading-tight">
+                              {bowlerStats.dotPct ? `${bowlerStats.dotPct}%` : "—"}
+                            </span>
+                          </div>
+                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
+                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">TRUE ECO</span>
+                            <span className="text-[10px] font-mono font-black text-purple-600 dark:text-purple-400 block leading-tight">
+                              {bowlerStats.trueEconomy != null ? `${bowlerStats.trueEconomy > 0 ? "+" : ""}${bowlerStats.trueEconomy.toFixed(2)}` : "—"}
+                            </span>
+                          </div>
+                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
+                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">BALL/4</span>
+                            <span className="text-[10px] font-mono font-black text-blue-600 dark:text-blue-400 block leading-tight">
+                              {bowlerStats.ballsPerBoundary ? bowlerStats.ballsPerBoundary.toFixed(1) : "—"}
+                            </span>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="col-span-3 text-[8px] font-mono text-slate-400 dark:text-white/40">
+                          Telemetry Sync Active
+                        </div>
                       )}
                     </div>
                   </div>
-
-                  {/* Player Bio Summary Paragraph */}
-                  <p className="text-xs text-slate-600 dark:text-white/70 leading-relaxed font-normal mt-3 max-w-2xl">
-                    {bio.bio}
-                  </p>
-                </div>
-
-                {/* Quick Physical Archetype Specs Strip */}
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-2 border-t border-slate-200 dark:border-white/5">
-                  <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
-                    <span className="text-slate-400 dark:text-white/30 uppercase mr-1">BAT:</span>
-                    <span className="text-slate-900 dark:text-white font-bold">{bio.batStyle || "Right Hand"}</span>
-                  </div>
-                  <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
-                    <span className="text-slate-400 dark:text-white/30 uppercase mr-1">BOWL:</span>
-                    <span className="text-slate-900 dark:text-white font-bold">{bio.bowlStyle || "Right Arm"}</span>
-                  </div>
-                  <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
-                    <span className="text-slate-400 dark:text-white/30 uppercase mr-1">AGE:</span>
-                    <span className="text-slate-900 dark:text-white font-bold">{bio.age ? `${bio.age} YRS` : "—"}</span>
-                  </div>
-                  <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
-                    <span className="text-slate-400 dark:text-white/30 uppercase mr-1">ORIGIN:</span>
-                    <span className="text-slate-900 dark:text-white font-bold">{bio.birthPlace || bio.country || "—"}</span>
-                  </div>
-                </div>
+                )}
               </div>
 
               {/* 3. HIGH-TECH MODULAR TELEMETRY HUD TILES (Engineered Quant Precision) */}
@@ -1498,10 +1599,10 @@ export default function PlayerProfilePage() {
                   <div className="h-[280px] w-full flex items-center justify-center">
                     <ResponsiveContainer width="100%" height="100%">
                       <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
-                        <PolarGrid stroke="rgba(255,255,255,0.05)" />
-                        <PolarAngleAxis dataKey="subject" stroke="rgba(255,255,255,0.6)" fontSize={9} />
-                        <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="rgba(255,255,255,0.1)" />
-                        <Radar name="Performance" dataKey="value" stroke={pColor} fill={pColor} fillOpacity={0.35} />
+                        <PolarGrid stroke={isDark ? "rgba(255,255,255,0.08)" : "rgba(15,23,42,0.12)"} />
+                        <PolarAngleAxis dataKey="subject" stroke={isDark ? "rgba(255,255,255,0.65)" : "rgba(51,65,85,0.85)"} fontSize={9} />
+                        <PolarRadiusAxis angle={30} domain={[0, 100]} stroke={isDark ? "rgba(255,255,255,0.1)" : "rgba(15,23,42,0.15)"} />
+                        <Radar name="Performance" dataKey="value" stroke={pColor} fill={pColor} fillOpacity={isDark ? 0.35 : 0.28} />
                       </RadarChart>
                     </ResponsiveContainer>
                   </div>
