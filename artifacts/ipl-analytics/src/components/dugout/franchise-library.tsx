@@ -292,6 +292,7 @@ export function LibraryMedia({
   aspect,
   preserveAspectRatio = false,
   isCoverStory = false,
+  aspectRatio = "video",
 }: {
   imageId?: string;
   title: string;
@@ -301,12 +302,13 @@ export function LibraryMedia({
   aspect: EditorialAspectId;
   preserveAspectRatio?: boolean;
   isCoverStory?: boolean;
+  aspectRatio?: "video" | "square" | "classic" | "fill";
 }) {
   const hero = imageId ? getArticleHeroImage(imageId) : undefined;
   const a = EDITORIAL_ASPECTS.find((x) => x.id === aspect) ?? EDITORIAL_ASPECTS[0];
   const teamCover = code === "CSK" ? "/csk insight.jpg" : code === "RCB" ? "/virat-kohli.png" : code === "MI" ? "/rohit sharma.jpg" : "/TITLE BANNER.png";
   const illustration = (
-    <div className="aspect-video w-full overflow-hidden [&>div]:rounded-none [&>div]:border-0">
+    <div className={`${aspectRatio === "square" ? "aspect-square" : aspectRatio === "fill" ? "w-full h-full" : "aspect-video"} w-full overflow-hidden [&>div]:rounded-none [&>div]:border-0`}>
       <EditorialCoverCanvas
         franchiseName={teamName}
         teamCode={code}
@@ -315,14 +317,14 @@ export function LibraryMedia({
         title={title}
         accent={accent}
         coverImage={teamCover}
-        aspectRatio="video"
+        aspectRatio={aspectRatio === "square" ? "square" : "video"}
         isCoverStory={isCoverStory}
+        edition="CricField Library"
       />
     </div>
   );
-  // On card thumbnails, only use direct licensed images; never let brittle third-party embeds break cards
-  if (hero && hero.licensedImageUrl) {
-    return <EditorialCardMedia key={hero.assetId} image={hero} preserveAspectRatio={preserveAspectRatio} aspect="video" allowUnpublished={import.meta.env.DEV} fallback={illustration} />;
+  if (hero && (hero.licensedImageUrl || hero.embedHtml)) {
+    return <EditorialCardMedia key={hero.assetId} image={hero} preserveAspectRatio={preserveAspectRatio} aspect={aspectRatio} allowUnpublished={import.meta.env.DEV} fallback={illustration} />;
   }
   return illustration;
 }

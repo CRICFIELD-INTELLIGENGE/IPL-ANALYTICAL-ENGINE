@@ -165,7 +165,6 @@ export function Layout({
           <Link href="/home" className="group/brand flex items-center pl-1 py-1 pr-1.5 rounded-xl hover:bg-slate-100/70 dark:hover:bg-white/5 transition-all cursor-pointer select-none" aria-label="CricField Home">
             <CricfieldLogo variant="header" asLink={false} />
           </Link>
-
           <nav aria-label="Primary navigation" className="hidden md:flex items-center p-1 rounded-full bg-slate-100/90 dark:bg-white/[0.05] border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
             {PRIMARY_NAV_LINKS.map(({ label, href, hideOnMd }) => {
               const active = isNavActive(href);

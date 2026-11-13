@@ -15,7 +15,6 @@ import { Layout } from "@/components/layout";
 import { Card, ErrorBanner, Loading, ModuleHeader, Pill, SectionTitle, Select, Tile } from "@/components/decision/module-shell";
 import { readParams, writeParams } from "@/lib/discovery-api";
 import { fetchCatalog, fetchOpposition, type BatterBrief, type OppositionReport } from "@/lib/sim-api";
-import { AdVessel } from "@/components/ad-vessel";
 
 export default function OppositionMapPage() {
   const p = readParams();
@@ -176,12 +175,7 @@ function Briefing({ r, loading }: { r: OppositionReport; loading: boolean }) {
       </div>
 
       {/* Simulation Result Summary Screen Ad Unit */}
-      <div className="pt-2">
-        <div className="text-center mb-1">
-          <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-white/30">ADVERTISEMENT</span>
-        </div>
-        <AdVessel slot="1029485739" format="horizontal" minHeight={90} label="Pre-Match Tactical Exploit Briefing" />
-      </div>
+      
     </div>
   );
 }

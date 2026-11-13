@@ -309,6 +309,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   // Scenario Intelligence state
   const [selectedScenario, setSelectedScenario] = useState("death");
   const [scenarioMinBalls, setScenarioMinBalls] = useState(10);
+  const [scenarioRange, setScenarioRange] = useState({ from: "", to: "" });
   // Player drilldown state
   const [drilldownPlayer, setDrilldownPlayer] = useState<string | null>(null);
   const [drilldownDimension, setDrilldownDimension] = useState<"phase" | "delivery" | "scoring-zone" | "bowler" | "over">("phase");
@@ -533,22 +534,27 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   });
 
   // Scenario Intelligence query
+  const scenarioYears = [...new Set((seasons.data ?? []).map(s => s.season).filter(year => /^\d{4}$/.test(year)))].sort();
+  const hasScenarioRange = !!(scenarioRange.from || scenarioRange.to);
   const scenarioQuery = useQuery({
-    queryKey: ["ipl-scenario", selectedScenario, filters.season, filters.team, filters.nationality, scenarioMinBalls],
+    queryKey: ["ipl-scenario", selectedScenario, hasScenarioRange ? null : filters.season, filters.team, filters.nationality, scenarioMinBalls, scenarioRange],
     queryFn: async () => {
-      const params = new URLSearchParams();
-      params.append("scenario", selectedScenario);
-      if (filters.season && filters.season !== "All Seasons") params.append("season", filters.season);
-      if (filters.team && filters.team !== "All Teams") params.append("team", filters.team);
-      if (filters.nationality && filters.nationality !== "all") params.append("nationality", filters.nationality);
-      params.append("minBalls", String(scenarioMinBalls));
-      const res = await fetch(`/api/stats/scenario?${params.toString()}`);
+      const params = new URLSearchParams({ scenario: selectedScenario, minBalls: String(scenarioMinBalls) });
+      if (scenarioRange.from) params.set("seasonFrom", scenarioRange.from);
+      if (scenarioRange.to) params.set("seasonTo", scenarioRange.to);
+      if (!hasScenarioRange && filters.season && filters.season !== "All Seasons") params.set("season", filters.season);
+      if (filters.team && filters.team !== "All Teams") params.set("team", filters.team);
+      if (filters.nationality && filters.nationality !== "all") params.set("nationality", filters.nationality);
+      const res = await fetch(`/api/stats/scenario?${params}`);
       if (!res.ok) throw new Error("Failed to query scenario");
-      return res.json() as Promise<{ batters: any[]; bowlers: any[] }>;
+      const result = await res.json() as { batters: any[]; bowlers: any[] };
+      if (!Array.isArray(result.batters) || !Array.isArray(result.bowlers)) throw new Error("Invalid scenario data");
+      return result;
     },
+    enabled: activeTab === "scenario-intelligence",
     staleTime: 1000 * 60 * 5,
-    placeholderData: (prev: any) => prev,
   });
+  const effectiveScenarioData = scenarioQuery.data ?? { batters: [], bowlers: [] };
 
   // Player drilldown query
   const drilldownQuery = useQuery({
@@ -699,130 +705,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     setCurrentPage(newPage);
     document.getElementById("stats-table-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
-  const effectiveScenarioData = useMemo(() => {
-    const minBalls = scenarioMinBalls || 10;
-    const poolBatters = activeData.batters || [];
-    const poolBowlers = activeData.bowlers || [];
-
-    let processedBatters = [...poolBatters];
-    let processedBowlers = [...poolBowlers];
-
-    switch (selectedScenario) {
-      case "powerplay":
-        processedBatters = processedBatters
-          .filter(b => (b.ppBalls ?? b.balls ?? 0) >= minBalls)
-          .map(b => ({
-            ...b,
-            runs: b.ppRuns ?? b.runs,
-            balls: b.ppBalls ?? b.balls,
-            sr: b.ppSr ?? b.sr,
-            avg: b.avg ?? (b.runs / Math.max(1, b.dismissals || 1))
-          }))
-          .sort((a, b) => (b.sr || 0) - (a.sr || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.ppWickets ?? b.wickets ?? 0) >= 1 || (b.balls || 0) >= minBalls)
-          .map(b => ({
-            ...b,
-            wickets: b.ppWickets ?? b.wickets,
-            econ: b.ppEcon ?? b.econ,
-            sr: b.sr ?? (b.balls / Math.max(1, b.wickets || 1))
-          }))
-          .sort((a, b) => (a.econ || 99) - (b.econ || 99));
-        break;
-
-      case "death":
-        processedBatters = processedBatters
-          .filter(b => (b.deathBalls ?? b.balls ?? 0) >= minBalls)
-          .map(b => ({
-            ...b,
-            runs: b.deathRuns ?? b.runs,
-            balls: b.deathBalls ?? b.balls,
-            sr: b.deathSr ?? b.sr,
-            avg: b.avg ?? (b.runs / Math.max(1, b.dismissals || 1))
-          }))
-          .sort((a, b) => (b.sr || 0) - (a.sr || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.deathWickets ?? b.wickets ?? 0) >= 1 || (b.balls || 0) >= minBalls)
-          .map(b => ({
-            ...b,
-            wickets: b.deathWickets ?? b.wickets,
-            econ: b.deathEcon ?? b.econ,
-            sr: b.sr ?? (b.balls / Math.max(1, b.wickets || 1))
-          }))
-          .sort((a, b) => (a.econ || 99) - (b.econ || 99));
-        break;
-
-      case "clutch":
-      case "high-pressure":
-        processedBatters = processedBatters
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (b.boundaryPct || 0) - (a.boundaryPct || 0) || (b.sr || 0) - (a.sr || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (b.dotPct || 0) - (a.dotPct || 0) || (a.econ || 99) - (b.econ || 99));
-        break;
-
-      case "chasing200plus":
-        processedBatters = processedBatters
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (b.sr || 0) - (a.sr || 0) || (b.runs || 0) - (a.runs || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (a.econ || 99) - (b.econ || 99) || (b.wickets || 0) - (a.wickets || 0));
-        break;
-
-      case "playoff":
-        processedBatters = processedBatters
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (b.runs || 0) - (a.runs || 0) || (b.sr || 0) - (a.sr || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (b.wickets || 0) - (a.wickets || 0) || (a.econ || 99) - (b.econ || 99));
-        break;
-
-      case "death-spin":
-        processedBatters = processedBatters
-          .filter(b => (b.deathBalls ?? b.balls ?? 0) >= minBalls)
-          .map(b => ({
-            ...b,
-            runs: b.deathRuns ?? b.runs,
-            balls: b.deathBalls ?? b.balls,
-            sr: b.deathSr ?? b.sr,
-          }))
-          .sort((a, b) => ((b.deathSr ?? b.sr) || 0) - ((a.deathSr ?? a.sr) || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.bowlerType || b.type || "").toLowerCase().includes("spin") || (b.deathWickets || 0) >= 1)
-          .map(b => ({
-            ...b,
-            wickets: b.deathWickets ?? b.wickets,
-            econ: b.deathEcon ?? b.econ,
-          }))
-          .sort((a, b) => ((a.deathEcon ?? a.econ) || 99) - ((b.deathEcon ?? b.econ) || 99));
-        break;
-
-      default:
-        processedBatters = processedBatters.filter(b => (b.balls || 0) >= minBalls).sort((a, b) => (b.runs || 0) - (a.runs || 0));
-        processedBowlers = processedBowlers.filter(b => (b.balls || 0) >= minBalls).sort((a, b) => (b.wickets || 0) - (a.wickets || 0));
-        break;
-    }
-
-    return {
-      batters: processedBatters.slice(0, 25),
-      bowlers: processedBowlers.slice(0, 25),
-    };
-  }, [selectedScenario, scenarioMinBalls, activeData]);
-
-
-
-
-
-
-
-
-
-
-
 
   const handleFilterChange = <K extends keyof typeof filters>(key: K, value: typeof filters[K]) => {
     setFilter(key, value);
@@ -1698,44 +1580,63 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               {activeTab === "scenario-intelligence" && (
                 <div className="flex flex-col gap-6 animate-fade-in">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="w-1 h-8 bg-gradient-to-b from-amber-400 to-orange-600 rounded-full" />
+                    <div className="w-1.5 h-8 bg-gradient-to-b from-amber-400 to-orange-600 rounded-full" />
                     <div>
-                      <div className="text-sm font-black uppercase tracking-widest text-white">Scenario Intelligence</div>
-                      <div className="text-[10px] text-white/40 font-bold">Who performs best under specific match conditions?</div>
+                      <div className="text-sm font-black uppercase tracking-widest text-slate-900 dark:text-white">Scenario Intelligence</div>
+                      <div className="text-[10px] text-slate-500 dark:text-white/40 font-bold">Who performs best under specific match conditions?</div>
                     </div>
                   </div>
 
                   {/* Scenario presets */}
                   <div className="flex flex-wrap gap-2">
                     {[
-                      { id: "death", label: "Death Overs", color: "from-red-500/20 to-orange-500/10", activeBorder: "border-red-400 text-white bg-red-500/20 ring-2 ring-red-500/40" },
-                      { id: "powerplay", label: "Powerplay", color: "from-blue-500/20 to-cyan-500/10", activeBorder: "border-cyan-400 text-white bg-cyan-500/20 ring-2 ring-cyan-500/40" },
-                      { id: "clutch", label: "Clutch Moments", color: "from-purple-500/20 to-indigo-500/10", activeBorder: "border-purple-400 text-white bg-purple-500/20 ring-2 ring-purple-500/40" },
-                      { id: "high-pressure", label: "High Pressure", color: "from-pink-500/20 to-rose-500/10", activeBorder: "border-pink-400 text-white bg-pink-500/20 ring-2 ring-pink-500/40" },
-                      { id: "chasing200plus", label: "Chasing 200+", color: "from-emerald-500/20 to-teal-500/10", activeBorder: "border-emerald-400 text-white bg-emerald-500/20 ring-2 ring-emerald-500/40" },
-                      { id: "playoff", label: "Playoff Matches", color: "from-amber-500/20 to-yellow-500/10", activeBorder: "border-amber-400 text-white bg-amber-500/20 ring-2 ring-amber-500/40" },
-                      { id: "death-spin", label: "Death vs Spin", color: "from-violet-500/20 to-purple-500/10", activeBorder: "border-violet-400 text-white bg-violet-500/20 ring-2 ring-violet-500/40" },
+                      { id: "death", label: "Death Overs", color: "from-red-500/10 to-orange-500/5 dark:from-red-500/20 dark:to-orange-500/10", activeBorder: "border-red-500 text-red-600 dark:text-white bg-red-500/10 dark:bg-red-500/20 ring-2 ring-red-500/30" },
+                      { id: "powerplay", label: "Powerplay", color: "from-blue-500/10 to-cyan-500/5 dark:from-blue-500/20 dark:to-cyan-500/10", activeBorder: "border-cyan-500 text-cyan-700 dark:text-white bg-cyan-500/10 dark:bg-cyan-500/20 ring-2 ring-cyan-500/30" },
+                      { id: "clutch", label: "Clutch Moments", color: "from-purple-500/10 to-indigo-500/5 dark:from-purple-500/20 dark:to-indigo-500/10", activeBorder: "border-purple-500 text-purple-700 dark:text-white bg-purple-500/10 dark:bg-purple-500/20 ring-2 ring-purple-500/30" },
+                      { id: "high-pressure", label: "High Pressure", color: "from-pink-500/10 to-rose-500/5 dark:from-pink-500/20 dark:to-rose-500/10", activeBorder: "border-pink-500 text-pink-700 dark:text-white bg-pink-500/10 dark:bg-pink-500/20 ring-2 ring-pink-500/30" },
+                      { id: "chasing200plus", label: "Chasing 200+", color: "from-emerald-500/10 to-teal-500/5 dark:from-emerald-500/20 dark:to-teal-500/10", activeBorder: "border-emerald-500 text-emerald-700 dark:text-white bg-emerald-500/10 dark:bg-emerald-500/20 ring-2 ring-emerald-500/30" },
+                      { id: "playoff", label: "Playoff Matches", color: "from-amber-500/10 to-yellow-500/5 dark:from-amber-500/20 dark:to-yellow-500/10", activeBorder: "border-amber-500 text-amber-700 dark:text-white bg-amber-500/10 dark:bg-amber-500/20 ring-2 ring-amber-500/30" },
+                      { id: "death-spin", label: "Death vs Spin", color: "from-violet-500/10 to-purple-500/5 dark:from-violet-500/20 dark:to-purple-500/10", activeBorder: "border-violet-500 text-violet-700 dark:text-white bg-violet-500/10 dark:bg-violet-500/20 ring-2 ring-violet-500/30" },
                     ].map(s => (
                       <button key={s.id}
                         type="button"
                         onClick={() => setSelectedScenario(s.id)}
                         className={`px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all duration-200 cursor-pointer bg-gradient-to-br ${s.color} ${
                           selectedScenario === s.id
-                            ? `${s.activeBorder} scale-105 shadow-xl`
-                            : "border-white/10 text-white/60 hover:text-white hover:border-white/30 hover:bg-white/5"
+                            ? `${s.activeBorder} scale-105 shadow-md`
+                            : "border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-white/30 hover:bg-slate-100/60 dark:hover:bg-white/5"
                         }`}>
                         {s.label}
                       </button>
                     ))}
                   </div>
 
+                  <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-600 dark:text-white/60">
+                    <label className="flex items-center gap-2 font-bold">
+                      From season
+                      <select className="rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-background px-2 py-1 text-slate-800 dark:text-white" value={scenarioRange.from}
+                        onChange={e => setScenarioRange(range => ({ ...range, from: e.target.value }))}>
+                        <option value="">Any</option>
+                        {scenarioYears.filter(year => !scenarioRange.to || year <= scenarioRange.to).map(year => <option key={year}>{year}</option>)}
+                      </select>
+                    </label>
+                    <label className="flex items-center gap-2 font-bold">
+                      To season
+                      <select className="rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-background px-2 py-1 text-slate-800 dark:text-white" value={scenarioRange.to}
+                        onChange={e => setScenarioRange(range => ({ ...range, to: e.target.value }))}>
+                        <option value="">Any</option>
+                        {scenarioYears.filter(year => !scenarioRange.from || year >= scenarioRange.from).map(year => <option key={year}>{year}</option>)}
+                      </select>
+                    </label>
+                  </div>
+
                   {/* Min balls qualifier */}
                   <div className="flex items-center gap-4">
-                    <span className="text-[10px] font-black text-white/40 uppercase tracking-wider">Min balls faced:</span>
+                    <span className="text-[10px] font-black text-slate-500 dark:text-white/40 uppercase tracking-wider">Min balls faced:</span>
                     {[5, 10, 20, 30, 50].map(n => (
                       <button key={n} onClick={() => setScenarioMinBalls(n)}
-                        className={`px-3 py-1 rounded-lg text-[10px] font-black transition-all ${
-                          scenarioMinBalls === n ? "bg-primary/20 text-primary border border-primary/30" : "bg-white/5 text-white/40 border border-white/10 hover:text-white"
+                        className={`px-3 py-1 rounded-lg text-[10px] font-black transition-all cursor-pointer ${
+                          scenarioMinBalls === n ? "bg-primary text-white shadow-xs font-bold" : "bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-white/50 border border-slate-200 dark:border-white/10 hover:text-slate-900 dark:hover:text-white"
                         }`}>
                         {n}
                       </button>
@@ -1743,74 +1644,79 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                   </div>
 
                   {/* Results */}
-                  {scenarioQuery.isLoading && !effectiveScenarioData.batters.length ? (
-                    <div className="text-center py-12 text-white/40 font-mono text-sm">Loading scenario data...</div>
+                  {scenarioQuery.isLoading ? (
+                    <div className="text-center py-12 text-slate-500 dark:text-white/40 font-mono text-sm">Loading scenario data...</div>
+                  ) : scenarioQuery.isError ? (
+                    <div role="status" className="text-center py-12 text-slate-600 dark:text-white/60 text-sm">Scenario data is temporarily unavailable.</div>
+                  ) : !effectiveScenarioData.batters.length && !effectiveScenarioData.bowlers.length ? (
+                    <div role="status" className="text-center py-12 text-slate-600 dark:text-white/60 text-sm">No players meet these scenario filters.</div>
                   ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {/* Batters leaderboard */}
-                      <div>
-                        <div className="text-[10px] font-black uppercase tracking-widest text-primary/60 mb-3">Top Batters</div>
-                        <div className="rounded-xl border border-white/10 overflow-hidden">
+                      <div className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-4 shadow-sm dark:shadow-xl">
+                        <div className="text-[11px] font-black uppercase tracking-widest text-primary mb-3">Top Batters</div>
+                        <div className="rounded-xl border border-slate-200 dark:border-white/10 overflow-hidden">
                           <table className="w-full">
-                            <thead className="bg-white/5 border-b border-white/10">
+                            <thead className="bg-slate-50 dark:bg-white/5 border-b border-slate-200 dark:border-white/10">
                               <tr>
                                 {["Batter","Runs","SR","Avg","Balls"].map(h => (
-                                  <th key={h} className="px-3 py-3 text-[9px] font-black text-white/40 uppercase tracking-wider text-left">{h}</th>
+                                  <th key={h} className="px-3 py-3 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-wider text-left">{h}</th>
                                 ))}
                               </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5">
+                            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                               {(effectiveScenarioData.batters || []).slice(0, 15).map((b: any, i: number) => (
-                                <tr key={b.player} className="hover:bg-white/5">
+                                <tr key={b.player} className="hover:bg-slate-50/80 dark:hover:bg-white/5 transition-colors">
                                   <td className="px-3 py-3">
                                     <Link href={`/players/${playerSlug(b.player)}`} className="flex items-center gap-2 group/p cursor-pointer hover:opacity-90">
-                                      <span className="text-[9px] font-black text-amber-400/40 w-4">#{i+1}</span>
+                                      <span className="text-[10px] font-black text-amber-500 dark:text-amber-400 w-4">#{i+1}</span>
                                       <PlayerAvatar name={b.player} className="w-6 h-6 shrink-0" />
-                                      <span className="text-[12px] font-bold text-white group-hover/p:text-primary transition-colors underline-offset-2 hover:underline">{displayPlayerName(b.player, displayNames)}</span>
-                                      <span className="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-white/5 border border-white/10 text-white/60 ml-auto">
+                                      <span className="text-[12px] font-bold text-slate-900 dark:text-white group-hover/p:text-primary transition-colors underline-offset-2 hover:underline">{displayPlayerName(b.player, displayNames)}</span>
+                                      <span className="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white/60 ml-auto">
                                         {getPlayerTeam(b.player, b)}
                                       </span>
                                     </Link>
                                   </td>
                                   <td className="px-3 py-3 font-black text-primary text-[13px]">{b.runs}</td>
-                                  <td className="px-3 py-3 font-bold text-amber-400 text-[12px]">{b.sr ? Number(b.sr).toFixed(1) : "—"}</td>
-                                  <td className="px-3 py-3 font-bold text-white/60 text-[12px]">{b.avg ? Number(b.avg).toFixed(1) : "—"}</td>
-                                  <td className="px-3 py-3 text-white/40 text-[11px]">{b.balls}</td>
+                                  <td className="px-3 py-3 font-bold text-amber-600 dark:text-amber-400 text-[12px]">{b.sr ? Number(b.sr).toFixed(1) : "—"}</td>
+                                  <td className="px-3 py-3 font-bold text-slate-700 dark:text-white/70 text-[12px]">{b.avg ? Number(b.avg).toFixed(1) : "—"}</td>
+                                  <td className="px-3 py-3 text-slate-500 dark:text-white/40 text-[11px]">{b.balls}</td>
                                 </tr>
                               ))}
                             </tbody>
                           </table>
                         </div>
                       </div>
+
                       {/* Bowlers leaderboard */}
-                      <div>
-                        <div className="text-[10px] font-black uppercase tracking-widest text-amber-400/60 mb-3">Top Bowlers</div>
-                        <div className="rounded-xl border border-white/10 overflow-hidden">
+                      <div className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-4 shadow-sm dark:shadow-xl">
+                        <div className="text-[11px] font-black uppercase tracking-widest text-amber-500 dark:text-amber-400 mb-3">Top Bowlers</div>
+                        <div className="rounded-xl border border-slate-200 dark:border-white/10 overflow-hidden">
                           <table className="w-full">
-                            <thead className="bg-white/5 border-b border-white/10">
+                            <thead className="bg-slate-50 dark:bg-white/5 border-b border-slate-200 dark:border-white/10">
                               <tr>
                                 {["Bowler","Wkts","Econ","SR","Dot%"].map(h => (
-                                  <th key={h} className="px-3 py-3 text-[9px] font-black text-white/40 uppercase tracking-wider text-left">{h}</th>
+                                  <th key={h} className="px-3 py-3 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-wider text-left">{h}</th>
                                 ))}
                               </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5">
+                            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                               {(effectiveScenarioData.bowlers || []).slice(0, 15).map((b: any, i: number) => (
-                                <tr key={b.player} className="hover:bg-white/5">
+                                <tr key={b.player} className="hover:bg-slate-50/80 dark:hover:bg-white/5 transition-colors">
                                   <td className="px-3 py-3">
                                     <Link href={`/players/${playerSlug(b.player)}`} className="flex items-center gap-2 group/p cursor-pointer hover:opacity-90">
-                                      <span className="text-[9px] font-black text-amber-400/40 w-4">#{i+1}</span>
+                                      <span className="text-[10px] font-black text-amber-500 dark:text-amber-400 w-4">#{i+1}</span>
                                       <PlayerAvatar name={b.player} className="w-6 h-6 shrink-0" />
-                                      <span className="text-[12px] font-bold text-white group-hover/p:text-primary transition-colors underline-offset-2 hover:underline">{displayPlayerName(b.player, displayNames)}</span>
-                                      <span className="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-white/5 border border-white/10 text-white/60 ml-auto">
+                                      <span className="text-[12px] font-bold text-slate-900 dark:text-white group-hover/p:text-primary transition-colors underline-offset-2 hover:underline">{displayPlayerName(b.player, displayNames)}</span>
+                                      <span className="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white/60 ml-auto">
                                         {getPlayerTeam(b.player, b)}
                                       </span>
                                     </Link>
                                   </td>
-                                  <td className="px-3 py-3 font-black text-amber-400 text-[13px]">{b.wickets}</td>
-                                  <td className="px-3 py-3 font-bold text-emerald-400 text-[12px]">{b.econ ? Number(b.econ).toFixed(2) : "—"}</td>
-                                  <td className="px-3 py-3 font-bold text-white/60 text-[12px]">{b.sr ? Number(b.sr).toFixed(1) : "—"}</td>
-                                  <td className="px-3 py-3 text-white/40 text-[11px]">{b.dotPct != null ? `${Number(b.dotPct).toFixed(0)}%` : "—"}</td>
+                                  <td className="px-3 py-3 font-black text-amber-600 dark:text-amber-400 text-[13px]">{b.wickets}</td>
+                                  <td className="px-3 py-3 font-bold text-emerald-600 dark:text-emerald-400 text-[12px]">{b.econ ? Number(b.econ).toFixed(2) : "—"}</td>
+                                  <td className="px-3 py-3 font-bold text-slate-700 dark:text-white/70 text-[12px]">{b.sr ? Number(b.sr).toFixed(1) : "—"}</td>
+                                  <td className="px-3 py-3 text-slate-500 dark:text-white/40 text-[11px]">{b.dotPct != null ? `${Number(b.dotPct).toFixed(0)}%` : "—"}</td>
                                 </tr>
                               ))}
                             </tbody>
@@ -1822,7 +1728,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                 </div>
               )}
 
-              
               {activeTab === "records" && (
                 <RecordBookView activeData={activeData} playerImages={playerImages.data ?? {}} matches={matches} />
               )}

@@ -10,12 +10,13 @@ interface EditorialCoverCanvasProps {
   title?: string;
   accent?: string;
   coverImage?: string;
-  aspectRatio?: "video" | "hero" | "banner" | "wide";
+  aspectRatio?: "video" | "hero" | "banner" | "wide" | "square";
   className?: string;
   isCoverStory?: boolean;
   /** Edition chip, e.g. "IPL 2008–2026". Legacy covers keep the original label. */
   edition?: string;
   showTitle?: boolean;
+  hideTitle?: boolean;
 }
 
 export function EditorialCoverCanvas({
@@ -31,6 +32,7 @@ export function EditorialCoverCanvas({
   isCoverStory = false,
   edition = "IPL 2024",
   showTitle = false,
+  hideTitle = false,
 }: EditorialCoverCanvasProps) {
   const [imageError, setImageError] = useState(false);
   const hasImage = Boolean(coverImage && coverImage.trim() !== "" && !imageError);
@@ -38,7 +40,9 @@ export function EditorialCoverCanvas({
   const effectiveAccent = accent || teamData?.accent || "#f97316";
 
   const aspectClass =
-    aspectRatio === "hero"
+    aspectRatio === "square"
+      ? "aspect-square"
+      : aspectRatio === "hero"
       ? "aspect-video"
       : aspectRatio === "banner"
       ? "aspect-[16/7]"
@@ -131,82 +135,84 @@ export function EditorialCoverCanvas({
       </div>
 
       {/* Center Graphic Crest / Branding */}
-      <div className="relative z-10 my-auto py-1">
-        {showTitle && title ? (
-          <>
-            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono uppercase tracking-wider mb-1 text-slate-300 truncate">
-              <span style={{ color: effectiveAccent }} className="font-bold shrink-0">{franchiseName}</span>
-              <span className="text-white/40 shrink-0">•</span>
-              <span className="text-white/80 font-medium truncate">{parameter || "SPECIAL REPORT"}</span>
-            </div>
-            <h3
-              style={{ color: "#ffffff" }}
-              className={`font-black tracking-tight text-white !text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-tight forced-white on-image ${
-                isCoverStory ? "text-lg sm:text-xl md:text-2xl" : "text-sm sm:text-base"
-              }`}
-            >
-              {title}
-            </h3>
-          </>
-        ) : (
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full">
-            <div className="flex items-center gap-3 min-w-0">
-              {teamData?.logoImg ? (
-                <div
-                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-black/60 border p-1.5 backdrop-blur-md shrink-0 flex items-center justify-center shadow-lg transition-transform group-hover:scale-105"
-                  style={{ borderColor: `${effectiveAccent}50` }}
-                >
-                  <img src={teamData.logoImg} alt="" className="w-full h-full object-contain drop-shadow" />
-                </div>
-              ) : (
-                <div
-                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-black/60 border p-1.5 backdrop-blur-md shrink-0 flex items-center justify-center font-black text-sm text-white shadow-lg"
-                  style={{ borderColor: `${effectiveAccent}50`, color: effectiveAccent }}
-                >
-                  {teamCode}
-                </div>
-              )}
-              <div className="flex flex-col min-w-0">
-                <span
-                  className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider truncate"
-                  style={{ color: effectiveAccent }}
-                >
-                  {franchiseName}
-                </span>
-                <span className="text-xs sm:text-sm md:text-base font-black text-white uppercase tracking-wide leading-tight truncate forced-white">
-                  {parameter || "SPECIAL REPORT"}
-                </span>
-                <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
-                  <span className="text-[9px] font-mono text-white/60 uppercase tracking-wider">
-                    ANALYTICAL DOSSIER · VOL. 0{parameterNumber}
+      {!hideTitle && (
+        <div className="relative z-10 my-auto py-1">
+          {showTitle && title ? (
+            <>
+              <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono uppercase tracking-wider mb-1 text-slate-300 truncate">
+                <span style={{ color: effectiveAccent }} className="font-bold shrink-0">{franchiseName}</span>
+                <span className="text-white/40 shrink-0">•</span>
+                <span className="text-white/80 font-medium truncate">{parameter || "SPECIAL REPORT"}</span>
+              </div>
+              <h3
+                style={{ color: "#ffffff" }}
+                className={`font-black tracking-tight text-white !text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-tight forced-white on-image ${
+                  isCoverStory ? "text-lg sm:text-xl md:text-2xl" : "text-sm sm:text-base"
+                }`}
+              >
+                {title}
+              </h3>
+            </>
+          ) : (
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full">
+              <div className="flex items-center gap-3 min-w-0">
+                {teamData?.logoImg ? (
+                  <div
+                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-black/60 border p-1.5 backdrop-blur-md shrink-0 flex items-center justify-center shadow-lg transition-transform group-hover:scale-105"
+                    style={{ borderColor: `${effectiveAccent}50` }}
+                  >
+                    <img src={teamData.logoImg} alt="" className="w-full h-full object-contain drop-shadow" />
+                  </div>
+                ) : (
+                  <div
+                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-black/60 border p-1.5 backdrop-blur-md shrink-0 flex items-center justify-center font-black text-sm text-white shadow-lg"
+                    style={{ borderColor: `${effectiveAccent}50`, color: effectiveAccent }}
+                  >
+                    {teamCode}
+                  </div>
+                )}
+                <div className="flex flex-col min-w-0">
+                  <span
+                    className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider truncate"
+                    style={{ color: effectiveAccent }}
+                  >
+                    {franchiseName}
                   </span>
-                  <span className="text-white/30 text-[9px]">•</span>
-                  <span className="text-[9px] font-mono text-emerald-400 uppercase font-semibold flex items-center gap-1">
-                    <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />
-                    VERIFIED
+                  <span className="text-xs sm:text-sm md:text-base font-black text-white uppercase tracking-wide leading-tight truncate forced-white">
+                    {parameter || "SPECIAL REPORT"}
                   </span>
+                  <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                    <span className="text-[9px] font-mono text-white/60 uppercase tracking-wider">
+                      ANALYTICAL DOSSIER · VOL. 0{parameterNumber}
+                    </span>
+                    <span className="text-white/30 text-[9px]">•</span>
+                    <span className="text-[9px] font-mono text-emerald-400 uppercase font-semibold flex items-center gap-1">
+                      <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />
+                      VERIFIED
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Right: Evidence Telemetry HUD card */}
-            <div className="hidden sm:flex items-center gap-3 bg-black/60 backdrop-blur-md border border-white/10 rounded-xl px-3 py-1.5 shadow-xl shrink-0">
-              <div className="flex flex-col items-end">
-                <span className="text-[8px] font-mono uppercase tracking-wider text-white/50">EVIDENCE TELEMETRY</span>
-                <span className="text-[11px] font-mono font-bold text-white tracking-tight flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: effectiveAccent }} />
-                  280,000+ BALLS
-                </span>
-              </div>
-              <div className="h-5 w-px bg-white/15" />
-              <div className="flex flex-col items-start">
-                <span className="text-[8px] font-mono uppercase tracking-wider text-white/50">DATASET SAMPLE</span>
-                <span className="text-[11px] font-mono font-semibold text-emerald-400">1,243 MATCHES</span>
+              {/* Right: Evidence Telemetry HUD card */}
+              <div className="hidden sm:flex items-center gap-3 bg-black/60 backdrop-blur-md border border-white/10 rounded-xl px-3 py-1.5 shadow-xl shrink-0">
+                <div className="flex flex-col items-end">
+                  <span className="text-[8px] font-mono uppercase tracking-wider text-white/50">EVIDENCE TELEMETRY</span>
+                  <span className="text-[11px] font-mono font-bold text-white tracking-tight flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: effectiveAccent }} />
+                    280,000+ BALLS
+                  </span>
+                </div>
+                <div className="h-5 w-px bg-white/15" />
+                <div className="flex flex-col items-start">
+                  <span className="text-[8px] font-mono uppercase tracking-wider text-white/50">DATASET SAMPLE</span>
+                  <span className="text-[11px] font-mono font-semibold text-emerald-400">1,243 MATCHES</span>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
 
       {/* Bottom Metadata Ribbon */}
       <div className="relative z-10 flex items-center justify-between text-[10px] font-mono text-gray-400 pt-1.5 border-t border-white/10">

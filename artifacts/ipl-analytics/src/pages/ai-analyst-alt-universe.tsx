@@ -16,7 +16,6 @@ import { Card, ErrorBanner, Loading, ModuleHeader, PlayerPicker, SectionTitle, S
 import { LineChart, MatchFinder, PairedHistogram } from "@/components/decision/sim-widgets";
 import { readParams, writeParams } from "@/lib/discovery-api";
 import { fetchAltMatch, fetchAltMatches, runAlternate, type AltChange, type AltResult } from "@/lib/sim-api";
-import { AdVessel } from "@/components/ad-vessel";
 
 type Mode = "swap" | "type" | "none";
 
@@ -186,12 +185,7 @@ function AltView({ r }: { r: AltResult }) {
       </div>
 
       {/* Simulation Result Summary Screen Ad Unit */}
-      <div className="pt-2">
-        <div className="text-center mb-1">
-          <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-white/30">ADVERTISEMENT</span>
-        </div>
-        <AdVessel slot="2948571630" format="horizontal" minHeight={90} label="Simulation Outcome Partner Briefing" />
-      </div>
+      
     </div>
   );
 }

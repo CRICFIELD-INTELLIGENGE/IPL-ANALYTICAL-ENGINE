@@ -62,7 +62,7 @@ function queueGettyWidget(p: GettyEmbedParams) {
         w: p.w,
         h: p.h,
         items: p.items,
-        caption: p.caption,
+        caption: false,
         tld: p.tld,
         is360: p.is360,
       });
@@ -86,7 +86,7 @@ function queueGettyWidget(p: GettyEmbedParams) {
           w: p.w,
           h: p.h,
           items: p.items,
-          caption: p.caption,
+          caption: false,
           tld: p.tld,
           is360: p.is360,
         });
@@ -120,7 +120,7 @@ function queueGettyWidget(p: GettyEmbedParams) {
 }
 
 /** Getty Embedded Viewer. Loads only when scrolled near, keeps Getty's attribution link. */
-function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { params: GettyEmbedParams; onFail: () => void; fit?: boolean; naturalHeight?: boolean }) {
+function GettyEmbed({ params, onFail, fit = false }: { params: GettyEmbedParams; onFail: () => void; fit?: boolean }) {
   useRegisterGettyEmbed(); // internal placement accounting only
   const ref = useRef<HTMLDivElement | null>(null);
   const [queued, setQueued] = useState(false);
@@ -184,39 +184,23 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
     };
   }, [embedKey, isBlocked]);
 
-  // Strip white backgrounds from Getty-injected DOM wrappers and watch iframe loading
+  // Watch the viewer that Getty inserts asynchronously.
   useEffect(() => {
     const el = ref.current;
     if (!el || !queued || isBlocked) return;
 
-    const stripWhite = () => {
-      el.querySelectorAll("*").forEach((node) => {
-        const elem = node as HTMLElement;
-        if (elem.style) {
-          elem.style.backgroundColor = "transparent";
-          elem.style.background = "transparent";
-          if (elem.tagName === "IFRAME") {
-            elem.style.colorScheme = "dark";
-            elem.style.border = "none";
-          }
-          if (elem.classList.contains("getty") || elem.classList.contains("embed")) {
-            elem.style.backgroundColor = "transparent";
-            elem.style.background = "transparent";
-            elem.style.maxWidth = "594px";
-            elem.style.margin = "0 auto";
-          }
-        }
-      });
-    };
-
     const attachIframeEvents = () => {
       const iframe = el.querySelector("iframe");
       if (iframe) {
-        stripWhite();
-        iframe.onload = () => {
-          stripWhite();
+        try {
+          if (iframe.contentDocument && iframe.contentDocument.readyState === "complete") {
+            setLoaded(true);
+          }
+        } catch {
+          // Cross-origin iframe access restricted, indicating the iframe has begun loading or loaded
           setLoaded(true);
-        };
+        }
+        iframe.onload = () => setLoaded(true);
         iframe.onerror = () => {
           onFailRef.current();
         };
@@ -229,49 +213,20 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
         img.onerror = () => {
           onFailRef.current();
         };
-        img.onload = () => {
-          stripWhite();
-          setLoaded(true);
-        };
+        img.onload = () => setLoaded(true);
       });
     };
 
     attachIframeEvents();
 
     const mo = new MutationObserver(() => {
-      stripWhite();
       attachIframeEvents();
     });
     mo.observe(el, { childList: true, subtree: true });
     return () => mo.disconnect();
   }, [queued, isBlocked]);
 
-  // Handle reload on significant width resize
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || !loaded) return;
-    let loadedWidth = el.getBoundingClientRect().width;
-    let timer = 0;
-    const ro = new ResizeObserver(() => {
-      window.clearTimeout(timer);
-      timer = window.setTimeout(() => {
-        const width = el.getBoundingClientRect().width;
-        const iframe = el.querySelector("iframe");
-        if (!iframe || Math.abs(width - loadedWidth) < 8) return;
-        loadedWidth = width;
-        const src = iframe.src;
-        iframe.src = "about:blank";
-        window.setTimeout(() => (iframe.src = src), 50);
-      }, 250);
-    });
-    ro.observe(el);
-    return () => {
-      ro.disconnect();
-      window.clearTimeout(timer);
-    };
-  }, [loaded]);
-
-  // A single failed asset falls back gracefully after 2 seconds
+  // A single failed asset falls back gracefully after 8 seconds
   useEffect(() => {
     if (!queued || isBlocked) return;
     const t = window.setTimeout(() => {
@@ -280,7 +235,7 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
       } else if (!loaded) {
         onFailRef.current();
       }
-    }, 2000);
+    }, 8000);
     return () => window.clearTimeout(t);
   }, [queued, isBlocked, loaded]);
 
@@ -289,16 +244,17 @@ function GettyEmbed({ params, onFail, fit = false, naturalHeight = false }: { pa
 
   return (
     <div
-      className={`getty-embed-wrapper editorial-getty-embed relative mx-auto ${
-        fit
-          ? "w-full h-full"
-          : "w-full max-w-[594px] rounded-xl overflow-hidden bg-[#08131F]"
-      }`}
-      style={naturalHeight ? { maxWidth: `${wNum}px`, width: "100%" } : fit ? { width: "100%", height: "100%" } : { maxWidth: `${wNum}px`, width: "100%", aspectRatio: `${wNum} / ${hNum}` }}
+      className={`editorial-getty-embed relative mx-auto w-full rounded-xl bg-[#08131F] ${fit ? "fit-full h-full" : ""}`}
+      style={{
+        "--getty-ratio": `${wNum} / ${hNum}`,
+        maxWidth: "100%",
+        aspectRatio: fit ? "unset" : `${wNum} / ${hNum}`,
+        height: fit ? "100%" : undefined,
+      } as React.CSSProperties}
     >
-      <div ref={ref} className="w-full" />
+      <div ref={ref} className={`w-full ${fit ? "h-full flex items-center justify-center" : ""}`} />
       {!loaded && (
-        <div className="absolute inset-0 min-h-[220px] flex items-center justify-center bg-[#08131F] pointer-events-none transition-opacity duration-300">
+        <div className="absolute inset-0 flex items-center justify-center bg-[#08131F] pointer-events-none transition-opacity duration-300">
           <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
         </div>
       )}
@@ -348,9 +304,6 @@ export function EditorialImageFigure({ image, variant = "inline", allowUnpublish
   const allowed = usePhotoAllowed(image, Boolean(embed));
   const embedConsent = useEmbedConsent();
   const commercialZone = useCommercialZone();
-  // Embeds in card thumbnails frequently fail, show broken third-party boxes, or hijack clicks.
-  // If an embed is present and a pristine editorial fallback is provided, prefer the fallback on cards.
-  if (embed && fallback) return <>{fallback}</>;
 
   if (embed && !commercialZone && embedConsent !== "granted") {
     if (fallback) return <>{fallback}</>;
@@ -368,12 +321,12 @@ export function EditorialImageFigure({ image, variant = "inline", allowUnpublish
   return (
     <figure
       data-editorial-photo={image.sectionId}
-      className={`relative isolate w-full ${variant === "card" ? "" : "my-1"} ${className}`}
+      style={embed ? { maxWidth: embed.w } : undefined}
+      className={`relative isolate mx-auto w-full ${variant === "card" ? "" : "my-1"} ${className}`}
     >
       <div className="w-full relative flex flex-col items-center justify-center">
-        {fallback && <div className="absolute inset-0 w-full h-full pointer-events-none z-0">{fallback}</div>}
         {embed ? (
-          <div className="relative z-10 w-full max-w-[594px] mx-auto">
+          <div className="relative z-10 w-full mx-auto">
             <GettyEmbed key={`${embed.items}-${embed.id}`} params={embed} onFail={onFail} />
           </div>
         ) : (
@@ -397,7 +350,7 @@ export function EditorialImageFigure({ image, variant = "inline", allowUnpublish
   );
 }
 
-const MEDIA_ASPECT = { video: "aspect-video", cinema: "aspect-[21/9]", classic: "aspect-[4/3]" } as const;
+const MEDIA_ASPECT = { video: "aspect-video", cinema: "aspect-[21/9]", classic: "aspect-[4/3]", square: "aspect-square", fill: "w-full h-full" } as const;
 
 /**
  * Card media frame for Dugout listings: a fixed-ratio dark frame so every card has the same shape.
@@ -428,9 +381,6 @@ export function EditorialCardMedia({
   const allowed = usePhotoAllowed(image, Boolean(embed));
   const embedConsent = useEmbedConsent();
   const commercialZone = useCommercialZone();
-  // Embeds in card thumbnails frequently fail, show broken third-party boxes, or hijack clicks.
-  // If an embed is present and a pristine editorial fallback is provided, prefer the fallback on cards.
-  if (embed && fallback) return <>{fallback}</>;
 
   if (embed && !commercialZone && embedConsent !== "granted") {
     if (fallback) return <>{fallback}</>;
@@ -448,14 +398,11 @@ export function EditorialCardMedia({
   return (
     <div
       data-editorial-photo={image.sectionId}
-      className={`relative ${embed && preserveAspectRatio ? "" : MEDIA_ASPECT[aspect]} w-full overflow-hidden bg-[#0b1220] ${className}`}
+      className={`relative ${embed && preserveAspectRatio ? "" : `${MEDIA_ASPECT[aspect]} h-full`} w-full overflow-hidden bg-[#06111a] ${className}`}
     >
-      {/* Background artwork rendered as a base underneath so the container is NEVER blank */}
-      {fallback && <div className="absolute inset-0 w-full h-full pointer-events-none z-0">{fallback}</div>}
-
       {embed ? (
-        <div className={preserveAspectRatio ? "relative w-full z-10" : "absolute inset-0 w-full h-full z-10"}>
-          <GettyEmbed key={`${embed.items}-${embed.id}`} params={embed} onFail={onFail} fit={!preserveAspectRatio} naturalHeight={preserveAspectRatio} />
+        <div className={preserveAspectRatio ? "relative w-full z-10" : "absolute inset-0 z-10 flex items-center justify-center [container-type:size]"}>
+          <GettyEmbed key={`${embed.items}-${embed.id}`} params={embed} onFail={onFail} fit={!preserveAspectRatio} />
         </div>
       ) : (
         <>

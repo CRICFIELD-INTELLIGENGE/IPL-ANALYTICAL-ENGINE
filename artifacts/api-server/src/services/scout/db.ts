@@ -28,15 +28,21 @@ let dbError: string | null = null;
 
 export function getGlobalDb(): DatabaseSync | null {
   if (db || dbError) return db;
-  const fp = path.join(getProjectRoot(), "lib", "cricket-data", "global", "warehouse", "global.db");
+  const configuredPath = process.env.CRICFIELD_SCOUT_DB_PATH?.trim();
+  const fp = configuredPath
+    ? path.resolve(configuredPath)
+    : path.join(getProjectRoot(), "lib", "cricket-data", "global", "warehouse", "global.db");
   if (!fs.existsSync(fp)) {
     dbError = `global.db not found at ${fp}`;
     return null;
   }
   try {
     db = new DatabaseSync(fp, { readOnly: true });
-    db.exec("PRAGMA foreign_keys = OFF; PRAGMA temp_store = MEMORY;");
+    db.exec("PRAGMA query_only = ON; PRAGMA temp_store = MEMORY;");
+    db.prepare("SELECT player_key FROM players LIMIT 1").get();
+    db.prepare("SELECT competition_id FROM competitions LIMIT 1").get();
   } catch (err) {
+    db?.close();
     dbError = err instanceof Error ? err.message : String(err);
     db = null;
   }

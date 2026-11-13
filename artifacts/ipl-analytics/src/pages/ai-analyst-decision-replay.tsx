@@ -16,7 +16,6 @@ import { Card, ErrorBanner, Loading, ModuleHeader, Pill, SectionTitle, Tile, Win
 import { MatchFinder } from "@/components/decision/sim-widgets";
 import { readParams, writeParams } from "@/lib/discovery-api";
 import { fetchReplay, fetchReplayMatches, type DecisionPoint, type ReplayResult } from "@/lib/sim-api";
-import { AdVessel } from "@/components/ad-vessel";
 
 export default function DecisionReplayPage() {
   const [matchId, setMatchId] = useState<string | null>(readParams().get("match"));
@@ -90,12 +89,7 @@ function Replay({ r, onBack }: { r: ReplayResult; onBack: () => void }) {
       )}
 
       {/* Simulation Result Summary Screen Ad Unit */}
-      <div className="pt-2">
-        <div className="text-center mb-1">
-          <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-white/30">ADVERTISEMENT</span>
-        </div>
-        <AdVessel slot="1029384850" format="horizontal" minHeight={90} label="Tactical Decision Intelligence Briefing" />
-      </div>
+      
     </div>
   );
 }

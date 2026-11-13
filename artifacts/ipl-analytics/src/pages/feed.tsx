@@ -8,7 +8,8 @@ import {
 import { Layout } from "@/components/layout";
 import { AdVessel } from "@/components/ad-vessel";
 import { EditorialCardMedia } from "@/components/dugout/editorial-image-figure";
-import { getLocalEmbedImages, getPublishedArticleImages, PUBLIC_MANIFEST, isPublishable, isLocalPreviewable } from "@/lib/editorial-images";
+import { getLocalEmbedImages, getPublishedArticleImages, PUBLIC_MANIFEST, isPublishable, isLocalPreviewable, getArticleHeroImage } from "@/lib/editorial-images";
+import { EDITORIAL_ARTICLES } from "@/data/editorial-magazine-data";
 import { useEmbedConsent } from "@/lib/embed-consent";
 import { TeamLogo } from "@/components/team-logo";
 import { NewsCard, newsroomOrder } from "@/components/feed-newsroom";
@@ -16,8 +17,9 @@ import { getV2Index, STORY_TYPE_LABEL } from "@/lib/editorial-v2";
 import { HUB_EVENTS, HUB_TEAMS } from "@/lib/ipl-2027";
 import { TEAM_REGISTRY, useTeamTheme, type TeamCode } from "@/lib/team-context";
 import { useIpl2027Desk, stamp } from "@/lib/ipl-2027-desk";
-import { EDITORIAL_AUTHOR, type IndexEntry } from "@/data/editorial/schema";
+import { EDITORIAL_AUTHOR, EDITORIAL_ASPECTS, type IndexEntry } from "@/data/editorial/schema";
 import { cn } from "@/lib/utils";
+import { EditorialCoverCanvas } from "@/components/dugout/editorial-cover-canvas";
 
 export type CardId = "squad" | "auction" | "tactics" | "stars" | "venues" | "storylines";
 
@@ -42,9 +44,25 @@ export const CARDS: CardDef[] = [
 const TOOLS = [
   { label: "Retention Lab", desc: "Model retain/release calls against each squad", href: "/feed/ipl-2027?module=retention", icon: ShieldCheck, tint: "bg-violet-600" },
   { label: "Auction War Room", desc: "Purse, needs and targets by franchise", href: "/ai-analyst/auction-war-room", icon: Wallet, tint: "bg-lime-500" },
-  { label: "Playing XI Builder", desc: "Create balanced combinations", href: "/arcade/build-your-xi", icon: Shirt, tint: "bg-sky-500" },
+  { label: "Playing XI Builder", desc: "Create balanced combinations", href: "/ai-analyst/playing-xi", icon: Shirt, tint: "bg-sky-500" },
   { label: "Scout Engine", desc: "Find players by role, league and metrics", href: "/scout", icon: Search, tint: "bg-fuchsia-600" },
 ];
+
+const legacyEntries: IndexEntry[] = EDITORIAL_ARTICLES.map((art) => ({
+  id: art.id,
+  title: art.title,
+  dek: art.subtitle,
+  slug: art.slug,
+  franchise: art.teamCode as TeamCode,
+  aspect: (art.parameter ? art.parameter.toLowerCase().replace(/\s+/g, "-") : "history") as any,
+  storyType: art.isCoverStory ? "investigation" : "explainer",
+  publishedDate: art.publishedDate || "2024-10-16",
+  readMinutes: parseInt(art.readTime, 10) || 5,
+  featured: Boolean(art.isCoverStory || art.featured),
+  status: "published",
+  players: [],
+  seasons: [],
+}));
 
 // Story types that exist in the article schema; no "news"/"opinion" tab until such content exists.
 export const STORY_TABS = [
@@ -157,18 +175,23 @@ export default function FeedPage() {
   const { data: desk } = useIpl2027Desk();
   useEffect(() => { setTeam(selectedTeam); }, [selectedTeam]);
 
-  const all = useMemo(() => getV2Index(), []);
-  const forTeam = useMemo(() => all.filter((e) => !team || e.franchise === team), [all, team]);
+  const all = useMemo(() => {
+    const v2 = getV2Index();
+    const existingSlugs = new Set(v2.map((e) => e.slug));
+    const legacy = legacyEntries.filter((e) => !existingSlugs.has(e.slug));
+    return [...v2, ...legacy];
+  }, []);
 
-  // Top stories: 1 lead card + 4 sidebar cards. Diverse teams unless a team is explicitly selected.
+  // Top stories: 1 lead card + 4 sidebar cards. When a franchise is selected, show only that franchise's stories. Only when ALL is selected do stories mix across franchises.
   const top = useMemo(() => {
-    const pool = tab === "featured" ? forTeam : forTeam.filter((e) => e.storyType === tab);
-    const ordered = newsroomOrder(pool);
+    const tabFiltered = tab === "featured" ? all : all.filter((e) => e.storyType === tab);
+    const pool = tabFiltered.length ? tabFiltered : all;
     if (team) {
-      return ordered.slice(0, 5);
+      const teamStories = newsroomOrder(pool.filter((e) => e.franchise === team));
+      return teamStories.slice(0, 5);
     }
-    return getDiverseByTeam(ordered, 5);
-  }, [forTeam, tab, team]);
+    return getDiverseByTeam(newsroomOrder(pool), 5);
+  }, [all, tab, team]);
 
   // Diverse featured stories across the league for the scrolling editorial rail
   const picks = useMemo(() => {
@@ -291,7 +314,7 @@ export default function FeedPage() {
 
         {/* MAIN COLUMN + EDITORIAL RAIL */}
         <div data-feed-part="newsroom" className="grid gap-6 xl:grid-cols-[1fr_270px]">
-          <div className="space-y-6 min-w-0">
+          <div className="@container min-w-0 space-y-6">
             <section>
               <SectionHead title="Franchise coverage" sub="Pick a team to see its stories." />
               <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter stories by franchise">
@@ -354,7 +377,7 @@ export default function FeedPage() {
                     <NewsCard
                       entry={top[0]}
                       lead
-                      media={<EntryMedia entry={top[0]} />}
+                      media={<div className="shrink-0"><EntryMedia entry={top[0]} preserveAspectRatio /></div>}
                     />
                   </div>
                   <div className="flex flex-col min-w-0 divide-y divide-slate-200 dark:divide-white/5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] shadow-xs overflow-hidden justify-between">
@@ -731,6 +754,7 @@ export function EntryMedia({
     </div>
   );
 }
+
 
 function CompactStory({ entry }: { entry: IndexEntry }) {
   const t = TEAM_REGISTRY[entry.franchise as TeamCode];
@@ -1129,9 +1153,9 @@ function FanPulsePoll() {
                   style={{ width: `${displayPct}%` }}
                 />
               )}
-              <div className="relative z-10 flex items-center justify-between text-xs">
-                <span className="font-semibold">{opt.label}</span>
-                {votedOption && <span className="font-mono text-[11px] font-black text-[var(--team-accent)]">{displayPct}%</span>}
+              <div className="relative z-10 flex items-center justify-between gap-2 text-xs">
+                <span className="font-semibold leading-tight">{opt.label}</span>
+                {votedOption && <span className="font-mono text-[11px] font-black text-[var(--team-accent)] shrink-0">{displayPct}%</span>}
               </div>
             </button>
           );

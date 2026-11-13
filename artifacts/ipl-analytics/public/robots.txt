@@ -4,5 +4,5 @@ Allow: /
 Disallow: /api/
 
 # Sitemaps
-Sitemap: https://ipl-intelligence.com/sitemap.xml
-Sitemap: https://ipl-intelligence.com/sitemap-dugout.xml
+Sitemap: https://cricfield.in/sitemap.xml
+Sitemap: https://cricfield.in/sitemap-dugout.xml
