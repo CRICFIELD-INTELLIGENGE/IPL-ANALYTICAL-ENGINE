@@ -60,7 +60,9 @@ export interface BatterRow {
   player: string;
   team?: string;
   teamName?: string;
+  matches?: number;
   innings: number;
+  notOuts?: number;
   runs: number;
   balls: number;
   avg: number;
@@ -70,6 +72,7 @@ export interface BatterRow {
   fifties: number;
   hundreds: number;
   highest: number;
+  highestNotOut?: boolean;
   ppSr: number;
   middleSr: number;
   deathSr: number;
@@ -89,6 +92,7 @@ export interface BowlerRow {
   player: string;
   team?: string;
   teamName?: string;
+  matches?: number;
   innings: number;
   overs: string;
   balls: number;

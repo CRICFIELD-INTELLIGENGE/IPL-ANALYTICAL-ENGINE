@@ -307,6 +307,45 @@ export default function PlayerProfilePage() {
     return selectPlayerRows(topBowlers.data.wickets, bio.playerName, bio.fullName)[0] ?? undefined;
   }, [bio, topBowlers.data]);
 
+  // Scope switcher state: "career" or a specific season like "2026", "2025"
+  const [selectedSeasonScope, setSelectedSeasonScope] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const s = new URLSearchParams(window.location.search).get("season");
+      if (s) return s;
+    }
+    return "career";
+  });
+
+  const availableSeasons = useMemo(() => {
+    if (!bio || !playerSeasonStats.data) return [];
+    const bRows = selectPlayerRows(playerSeasonStats.data.batters || [], bio.playerName, bio.fullName);
+    const pRows = selectPlayerRows(playerSeasonStats.data.bowlers || [], bio.playerName, bio.fullName);
+    const seasons = new Set<string>();
+    bRows.forEach((r: any) => r.season && seasons.add(String(r.season)));
+    pRows.forEach((r: any) => r.season && seasons.add(String(r.season)));
+    return Array.from(seasons).sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
+  }, [bio, playerSeasonStats.data]);
+
+  const activeBatterStats = useMemo(() => {
+    if (selectedSeasonScope === "career" || !selectedSeasonScope) {
+      return batterStats ?? null;
+    }
+    if (!bio || !playerSeasonStats.data?.batters) return batterStats ?? null;
+    const rows = selectPlayerRows(playerSeasonStats.data.batters, bio.playerName, bio.fullName);
+    const seasonRow = rows.find((r: any) => String(r.season) === selectedSeasonScope);
+    return seasonRow ?? batterStats ?? null;
+  }, [selectedSeasonScope, batterStats, bio, playerSeasonStats.data]);
+
+  const activeBowlerStats = useMemo(() => {
+    if (selectedSeasonScope === "career" || !selectedSeasonScope) {
+      return bowlerStats ?? null;
+    }
+    if (!bio || !playerSeasonStats.data?.bowlers) return bowlerStats ?? null;
+    const rows = selectPlayerRows(playerSeasonStats.data.bowlers, bio.playerName, bio.fullName);
+    const seasonRow = rows.find((r: any) => String(r.season) === selectedSeasonScope);
+    return seasonRow ?? bowlerStats ?? null;
+  }, [selectedSeasonScope, bowlerStats, bio, playerSeasonStats.data]);
+
   /**
    * Which discipline this profile leads with.
    *
@@ -561,33 +600,36 @@ export default function PlayerProfilePage() {
   const radarData = useMemo(() => {
     if (!bio) return [];
 
+    const b = activeBatterStats ?? batterStats;
+    const w = activeBowlerStats ?? bowlerStats;
+
     // showAsBatter can now be set by the discipline toggle, so it no longer
     // implies batterStats exists — the radar needs its own guard.
-    if (showAsBatter && batterStats) {
+    if (showAsBatter && b) {
       return [
-        { subject: "Powerplay Scoring", short: "Powerplay", value: batterStats.ppSr || 0 },
-        { subject: "Middle-Overs Control", short: "Middle", value: batterStats.middleSr || 0 },
-        { subject: "Death-Overs Power", short: "Death", value: batterStats.deathSr || 0 },
-        { subject: "Boundary Ratio", short: "Boundaries", value: batterStats.boundaryPct || 0 },
-        { subject: "Clutch Contribution", short: "Clutch", value: batterStats.clutch || 0 },
-        { subject: "Running Between Wkts", short: "Running", value: batterStats.form || 0 },
+        { subject: "Powerplay Scoring", short: "Powerplay", value: b.ppSr || 0 },
+        { subject: "Middle-Overs Control", short: "Middle", value: b.middleSr || 0 },
+        { subject: "Death-Overs Power", short: "Death", value: b.deathSr || 0 },
+        { subject: "Boundary Ratio", short: "Boundaries", value: b.boundaryPct || 0 },
+        { subject: "Clutch Contribution", short: "Clutch", value: b.clutch || 0 },
+        { subject: "Running Between Wkts", short: "Running", value: b.form || 0 },
       ];
     }
 
-    if (bowlerStats) {
+    if (w) {
       return [
-        { subject: "Boundary Conceded %", short: "Boundaries", value: bowlerStats.boundaryPct || 0 },
+        { subject: "Boundary Conceded %", short: "Boundaries", value: w.boundaryPct || 0 },
         // Unknown bowling type: no Spin Profile axis rather than a 0 that reads as pace (Day 6).
-        ...(bowlerStats.bowlerType === "Unknown" ? [] : [{ subject: "Spin Profile", short: bowlerStats.bowlerType === "Spinner" ? "Spin" : "Pace", value: bowlerStats.bowlerType === "Spinner" ? 100 : 0 }]),
-        { subject: "True Economy Delta", short: "True Econ", value: bowlerStats.trueEconomy || 0 },
-        { subject: "Dot Ball Ratio", short: "Dot Balls", value: bowlerStats.dotPct || 0 },
-        { subject: "Clutch Wickets", short: "Clutch", value: bowlerStats.clutch || 0 },
-        { subject: "Tactical Execution", short: "Tactics", value: bowlerStats.form || 0 },
+        ...(w.bowlerType === "Unknown" ? [] : [{ subject: "Spin Profile", short: w.bowlerType === "Spinner" ? "Spin" : "Pace", value: w.bowlerType === "Spinner" ? 100 : 0 }]),
+        { subject: "True Economy Delta", short: "True Econ", value: w.trueEconomy || 0 },
+        { subject: "Dot Ball Ratio", short: "Dot Balls", value: w.dotPct || 0 },
+        { subject: "Clutch Wickets", short: "Clutch", value: w.clutch || 0 },
+        { subject: "Tactical Execution", short: "Tactics", value: w.form || 0 },
       ];
     }
 
     return [];
-  }, [bio, batterStats, bowlerStats, showAsBatter]);
+  }, [bio, activeBatterStats, activeBowlerStats, batterStats, bowlerStats, showAsBatter]);
 
   if (playerBios.isLoading || identityIndex.isLoading) {
     return (
@@ -829,45 +871,45 @@ export default function PlayerProfilePage() {
 
                     {/* Bottom Micro-Pills from Advanced Diagnostics */}
                     <div className="pt-2 border-t border-slate-100 dark:border-white/5 relative z-10 grid grid-cols-3 gap-1 text-center">
-                      {showAsBatter && batterStats ? (
+                      {showAsBatter && activeBatterStats ? (
                         <>
                           <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
                             <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">PP SR</span>
                             <span className="text-[10px] font-mono font-black text-blue-600 dark:text-blue-400 block leading-tight">
-                              {batterStats.ppSr ? batterStats.ppSr.toFixed(0) : "—"}
+                              {activeBatterStats.ppSr ? activeBatterStats.ppSr.toFixed(0) : "—"}
                             </span>
                           </div>
                           <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
                             <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">DEATH SR</span>
                             <span className="text-[10px] font-mono font-black text-rose-600 dark:text-rose-400 block leading-tight">
-                              {batterStats.deathSr ? batterStats.deathSr.toFixed(0) : "—"}
+                              {activeBatterStats.deathSr ? activeBatterStats.deathSr.toFixed(0) : "—"}
                             </span>
                           </div>
                           <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
                             <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">BND %</span>
                             <span className="text-[10px] font-mono font-black text-emerald-600 dark:text-emerald-400 block leading-tight">
-                              {batterStats.boundaryPct ? `${batterStats.boundaryPct}%` : "—"}
+                              {activeBatterStats.boundaryPct ? `${activeBatterStats.boundaryPct}%` : "—"}
                             </span>
                           </div>
                         </>
-                      ) : bowlerStats ? (
+                      ) : activeBowlerStats ? (
                         <>
                           <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
                             <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">DOTS</span>
                             <span className="text-[10px] font-mono font-black text-emerald-600 dark:text-emerald-400 block leading-tight">
-                              {bowlerStats.dotPct ? `${bowlerStats.dotPct}%` : "—"}
+                              {activeBowlerStats.dotPct ? `${activeBowlerStats.dotPct}%` : "—"}
                             </span>
                           </div>
                           <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
                             <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">TRUE ECO</span>
                             <span className="text-[10px] font-mono font-black text-purple-600 dark:text-purple-400 block leading-tight">
-                              {bowlerStats.trueEconomy != null ? `${bowlerStats.trueEconomy > 0 ? "+" : ""}${bowlerStats.trueEconomy.toFixed(2)}` : "—"}
+                              {activeBowlerStats.trueEconomy != null ? `${activeBowlerStats.trueEconomy > 0 ? "+" : ""}${activeBowlerStats.trueEconomy.toFixed(2)}` : "—"}
                             </span>
                           </div>
                           <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
                             <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">BALL/4</span>
                             <span className="text-[10px] font-mono font-black text-blue-600 dark:text-blue-400 block leading-tight">
-                              {bowlerStats.ballsPerBoundary ? bowlerStats.ballsPerBoundary.toFixed(1) : "—"}
+                              {activeBowlerStats.ballsPerBoundary ? activeBowlerStats.ballsPerBoundary.toFixed(1) : "—"}
                             </span>
                           </div>
                         </>
@@ -882,9 +924,61 @@ export default function PlayerProfilePage() {
               </div>
 
               {/* 3. HIGH-TECH MODULAR TELEMETRY HUD TILES (Engineered Quant Precision) */}
-              <div className="w-full lg:w-[350px] xl:w-[380px] shrink-0">
+              <div className="w-full lg:w-[350px] xl:w-[380px] shrink-0 flex flex-col justify-between">
+                {/* Season / Career Scope Control */}
+                <div className="mb-2 px-2.5 py-1.5 rounded-xl bg-slate-100/90 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/10 shadow-xs flex items-center justify-between gap-1.5 flex-wrap">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shrink-0" />
+                    <span className="text-[8.5px] font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-white/60 truncate">
+                      {selectedSeasonScope === "career"
+                        ? `IPL Career (${activeBatterStats?.matches ?? activeBowlerStats?.matches ?? seasonalStats.length} M)`
+                        : `IPL ${selectedSeasonScope} (${activeBatterStats?.matches ?? activeBowlerStats?.matches ?? 1} M)`}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedSeasonScope("career")}
+                      className={`px-2 py-0.5 rounded-md text-[8px] font-mono font-bold uppercase tracking-wider transition-all ${
+                        selectedSeasonScope === "career"
+                          ? "bg-primary text-white shadow-xs"
+                          : "bg-white dark:bg-white/5 text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-white/10 border border-slate-200 dark:border-transparent"
+                      }`}
+                    >
+                      Career
+                    </button>
+                    {availableSeasons.slice(0, 2).map(s => (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => setSelectedSeasonScope(s)}
+                        className={`px-2 py-0.5 rounded-md text-[8px] font-mono font-bold uppercase tracking-wider transition-all ${
+                          selectedSeasonScope === s
+                            ? "bg-primary text-white shadow-xs"
+                            : "bg-white dark:bg-white/5 text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-white/10 border border-slate-200 dark:border-transparent"
+                        }`}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                    {availableSeasons.length > 2 && (
+                      <select
+                        value={availableSeasons.slice(0, 2).includes(selectedSeasonScope) || selectedSeasonScope === "career" ? "" : selectedSeasonScope}
+                        onChange={(e) => { if (e.target.value) setSelectedSeasonScope(e.target.value); }}
+                        className="px-1.5 py-0.5 rounded-md text-[8px] font-mono font-bold uppercase tracking-wider bg-white dark:bg-[#0b1020] border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/70"
+                        title="More seasons"
+                      >
+                        <option value="" disabled>More...</option>
+                        {availableSeasons.slice(2).map(s => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-2 gap-2.5">
-                  {((showAsBatter && batterStats) || (!bowlerStats && batterStats)) && (
+                  {((showAsBatter && activeBatterStats) || (!activeBowlerStats && activeBatterStats)) && (
                     <>
                       {/* Metric 1: Total Runs */}
                       <div className="bg-white dark:bg-gradient-to-br dark:from-[#12182c]/90 dark:to-[#070b18]/95 border border-slate-200 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-sm dark:shadow-lg relative overflow-hidden">
@@ -896,21 +990,23 @@ export default function PlayerProfilePage() {
                               Runs
                             </span>
                             <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[7px] font-mono font-bold">
-                              {batterStats.runs >= 3000 ? "TOP 3%" : batterStats.runs >= 1500 ? "CORE XI" : "LEAGUE"}
+                              {selectedSeasonScope === "career"
+                                ? (activeBatterStats.runs >= 3000 ? "TOP 3%" : activeBatterStats.runs >= 1500 ? "CORE XI" : "LEAGUE")
+                                : (activeBatterStats.runs >= 500 ? "ORANGE CAP" : activeBatterStats.runs >= 300 ? "KEY BATTER" : "SQUAD")}
                             </span>
                           </div>
                           <span className="text-2xl xl:text-3xl font-black font-mono text-slate-900 dark:text-white tracking-tight block">
-                            {fmt(batterStats.runs)}
+                            {fmt(activeBatterStats.runs)}
                           </span>
                         </div>
                         <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
                           <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
-                            {batterStats.hundreds ? `${batterStats.hundreds}× 100s · ` : ""}{batterStats.fifties || 0}× 50s
+                            {activeBatterStats.hundreds ? `${activeBatterStats.hundreds}× 100s · ` : ""}{activeBatterStats.fifties || 0}× 50s
                           </span>
                           <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-400"
-                              style={{ width: `${Math.min(100, Math.max(15, Math.round((batterStats.runs / 4500) * 100)))}%` }}
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round((activeBatterStats.runs / (selectedSeasonScope === "career" ? 4500 : 700)) * 100)))}%` }}
                             />
                           </div>
                         </div>
@@ -926,21 +1022,21 @@ export default function PlayerProfilePage() {
                               Strike Rate
                             </span>
                             <span className="px-1.5 py-0.2 rounded bg-primary/10 text-primary border border-primary/20 text-[7px] font-mono font-bold">
-                              {batterStats.sr >= 145 ? "ELITE" : batterStats.sr >= 132 ? "HIGH INTENT" : "ANCHOR"}
+                              {activeBatterStats.sr >= 145 ? "ELITE" : activeBatterStats.sr >= 132 ? "HIGH INTENT" : "ANCHOR"}
                             </span>
                           </div>
                           <span className="text-2xl xl:text-3xl font-black font-mono text-primary tracking-tight block">
-                            {batterStats.sr.toFixed(1)}
+                            {activeBatterStats.sr.toFixed(1)}
                           </span>
                         </div>
                         <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
                           <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
-                            {fmt(batterStats.fours || 0)} 4s · {fmt(batterStats.sixes || 0)} 6s
+                            {fmt(activeBatterStats.fours || 0)} 4s · {fmt(activeBatterStats.sixes || 0)} 6s
                           </span>
                           <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-primary to-cyan-400"
-                              style={{ width: `${Math.min(100, Math.max(15, Math.round(((batterStats.sr - 90) / 75) * 100)))}%` }}
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round(((activeBatterStats.sr - 90) / 75) * 100)))}%` }}
                             />
                           </div>
                         </div>
@@ -956,21 +1052,21 @@ export default function PlayerProfilePage() {
                               Average
                             </span>
                             <span className="px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20 text-[7px] font-mono font-bold">
-                              {batterStats.avg >= 35 ? "ANCHOR+" : "SOLID"}
+                              {activeBatterStats.avg >= 35 ? "ANCHOR+" : "SOLID"}
                             </span>
                           </div>
                           <span className="text-2xl xl:text-3xl font-black font-mono text-slate-900 dark:text-white/90 tracking-tight block">
-                            {batterStats.avg.toFixed(2)}
+                            {activeBatterStats.avg.toFixed(2)}
                           </span>
                         </div>
                         <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
                           <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
-                            {batterStats.innings || 0} Inngs · {fmt(batterStats.balls || 0)} Balls
+                            {activeBatterStats.innings || 0} Inngs · {fmt(activeBatterStats.balls || 0)} Balls
                           </span>
                           <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-400"
-                              style={{ width: `${Math.min(100, Math.max(15, Math.round((batterStats.avg / 45) * 100)))}%` }}
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round((activeBatterStats.avg / 45) * 100)))}%` }}
                             />
                           </div>
                         </div>
@@ -986,11 +1082,11 @@ export default function PlayerProfilePage() {
                               High Score
                             </span>
                             <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 text-[7px] font-mono font-bold">
-                              {batterStats.highest >= 100 ? "CENTURION" : "MATCH-WINNER"}
+                              {activeBatterStats.highest >= 100 ? "CENTURION" : activeBatterStats.highest >= 50 ? "HALF-CENTURY" : "MATCH-WINNER"}
                             </span>
                           </div>
                           <span className="text-2xl xl:text-3xl font-black font-mono text-amber-600 dark:text-amber-300 tracking-tight block">
-                            {batterStats.highest}*
+                            {activeBatterStats.highest}{activeBatterStats.highestNotOut ? "*" : ""}
                           </span>
                         </div>
                         <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
@@ -1000,7 +1096,7 @@ export default function PlayerProfilePage() {
                           <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-400"
-                              style={{ width: `${Math.min(100, Math.max(20, Math.round((batterStats.highest / 130) * 100)))}%` }}
+                              style={{ width: `${Math.min(100, Math.max(20, Math.round((activeBatterStats.highest / 130) * 100)))}%` }}
                             />
                           </div>
                         </div>
@@ -1008,7 +1104,7 @@ export default function PlayerProfilePage() {
                     </>
                   )}
 
-                  {((!showAsBatter && bowlerStats) || (!batterStats && bowlerStats)) && (
+                  {((!showAsBatter && activeBowlerStats) || (!activeBatterStats && activeBowlerStats)) && (
                     <>
                       {/* Metric 1: Total Wickets */}
                       <div className="bg-white dark:bg-gradient-to-br dark:from-[#12182c]/90 dark:to-[#070b18]/95 border border-slate-200 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-sm dark:shadow-lg relative overflow-hidden">
@@ -1020,21 +1116,21 @@ export default function PlayerProfilePage() {
                               Wickets
                             </span>
                             <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[7px] font-mono font-bold">
-                              {bowlerStats.wickets >= 100 ? "CENTURY" : bowlerStats.wickets >= 50 ? "KEY STRIKER" : "SQUAD"}
+                              {activeBowlerStats.wickets >= 100 ? "CENTURY" : activeBowlerStats.wickets >= 50 ? "KEY STRIKER" : "SQUAD"}
                             </span>
                           </div>
                           <span className="text-2xl xl:text-3xl font-black font-mono text-slate-900 dark:text-white tracking-tight block">
-                            {bowlerStats.wickets}
+                            {activeBowlerStats.wickets}
                           </span>
                         </div>
                         <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
                           <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
-                            Lead Strike Asset
+                            {activeBowlerStats.fourW ? `${activeBowlerStats.fourW}× 4w · ` : ""}{activeBowlerStats.fiveW ? `${activeBowlerStats.fiveW}× 5w` : "Lead Strike Asset"}
                           </span>
                           <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-400"
-                              style={{ width: `${Math.min(100, Math.max(15, Math.round((bowlerStats.wickets / 140) * 100)))}%` }}
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round((activeBowlerStats.wickets / 140) * 100)))}%` }}
                             />
                           </div>
                         </div>
@@ -1050,21 +1146,21 @@ export default function PlayerProfilePage() {
                               Economy
                             </span>
                             <span className="px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20 text-[7px] font-mono font-bold">
-                              {bowlerStats.econ <= 7.5 ? "TOP 5%" : "CONTROLLED"}
+                              {activeBowlerStats.econ <= 7.5 ? "TOP 5%" : "CONTROLLED"}
                             </span>
                           </div>
                           <span className="text-2xl xl:text-3xl font-black font-mono text-cyan-700 dark:text-cyan-300 tracking-tight block">
-                            {bowlerStats.econ.toFixed(2)}
+                            {activeBowlerStats.econ.toFixed(2)}
                           </span>
                         </div>
                         <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
                           <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
-                            RPO Defense Rate
+                            {activeBowlerStats.overs || "0"} Overs Defended
                           </span>
                           <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"
-                              style={{ width: `${Math.min(100, Math.max(15, Math.round(((12 - bowlerStats.econ) / 6) * 100)))}%` }}
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round(((12 - activeBowlerStats.econ) / 6) * 100)))}%` }}
                             />
                           </div>
                         </div>
@@ -1080,11 +1176,11 @@ export default function PlayerProfilePage() {
                               Bowl SR
                             </span>
                             <span className="px-1.5 py-0.2 rounded bg-primary/10 text-primary border border-primary/20 text-[7px] font-mono font-bold">
-                              {bowlerStats.sr <= 18 ? "LETHAL" : "REGULAR"}
+                              {activeBowlerStats.sr <= 18 ? "LETHAL" : "REGULAR"}
                             </span>
                           </div>
                           <span className="text-2xl xl:text-3xl font-black font-mono text-primary tracking-tight block">
-                            {bowlerStats.sr.toFixed(1)}
+                            {activeBowlerStats.sr.toFixed(1)}
                           </span>
                         </div>
                         <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
@@ -1094,7 +1190,7 @@ export default function PlayerProfilePage() {
                           <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-primary to-cyan-400"
-                              style={{ width: `${Math.min(100, Math.max(15, Math.round(((30 - bowlerStats.sr) / 18) * 100)))}%` }}
+                              style={{ width: `${Math.min(100, Math.max(15, Math.round(((30 - activeBowlerStats.sr) / 18) * 100)))}%` }}
                             />
                           </div>
                         </div>
@@ -1114,7 +1210,7 @@ export default function PlayerProfilePage() {
                             </span>
                           </div>
                           <span className="text-2xl xl:text-3xl font-black font-mono text-amber-600 dark:text-amber-300 tracking-tight block">
-                            {bowlerStats.best}
+                            {activeBowlerStats.best}
                           </span>
                         </div>
                         <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
