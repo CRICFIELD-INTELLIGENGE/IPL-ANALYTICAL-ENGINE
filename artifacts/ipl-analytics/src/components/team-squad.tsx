@@ -21,7 +21,7 @@ import { FRANCHISE_SEASON_CAPTAINS } from "@/components/dugout/franchise-hero";
 import { fetchRoster, type RosterPlayer } from "@/lib/dugout-api";
 import {
   useSquadsBySeason, usePlayerBios, usePlayerImages, usePlayerDisplayNames, displayPlayerName, teamShort,
-  usePlayerTeamSeasonStats,
+  usePlayerTeamSeasonStats, usePlayerCareerStats,
   type PlayerBio, type SquadPlayer,
 } from "@/lib/aggregates";
 
@@ -229,6 +229,7 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
   const displayNames = usePlayerDisplayNames();
   const nameOf = (p: RosterPlayer) => displayPlayerName(p.name, displayNames);
   const playerTeamSeasonStats = usePlayerTeamSeasonStats();
+  const playerCareerStats = usePlayerCareerStats();
 
   // The official squad listing (iplt20.com) is the authority for role, keeper,
   // nationality, captain and jersey number; season figures come from the roster.
@@ -314,6 +315,37 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
           }
         };
       }
+
+      // Fallback: If no season matches found, check career stats so players in squad never have an empty "no data" state
+      if (!p.season && playerCareerStats.data) {
+        const pcs = playerCareerStats.data;
+        const cBat = pcs.batters.find(b => candidateNames.some(cn => cn.toLowerCase().trim() === b.player?.toLowerCase().trim()))
+          || pcs.batters.find(b => normCandidateTokens.some(tokens => tokens.length > 1 && nameTokens(b.player || "").length > 1 && tokens[tokens.length - 1] === nameTokens(b.player || "")[nameTokens(b.player || "").length - 1] && tokens[0][0] === nameTokens(b.player || "")[0][0]));
+        const cBowl = pcs.bowlers.find(w => candidateNames.some(cn => cn.toLowerCase().trim() === w.player?.toLowerCase().trim()))
+          || pcs.bowlers.find(w => normCandidateTokens.some(tokens => tokens.length > 1 && nameTokens(w.player || "").length > 1 && tokens[tokens.length - 1] === nameTokens(w.player || "")[nameTokens(w.player || "").length - 1] && tokens[0][0] === nameTokens(w.player || "")[0][0]));
+
+        if (cBat || cBowl) {
+          const m = Math.max(cBat?.matches ?? 0, cBowl?.matches ?? 0);
+          const batBalls = cBat?.balls ?? 0;
+          const batRuns = cBat?.runs ?? 0;
+          const bowlBalls = cBowl?.balls ?? 0;
+          const wickets = cBowl?.wickets ?? 0;
+          const bowlRuns = cBowl?.runs ?? 0;
+          return {
+            ...p,
+            season: {
+              matches: m,
+              batRuns,
+              batBalls,
+              strikeRate: cBat?.sr != null ? Number(cBat.sr) : (batBalls >= 20 ? Math.round((batRuns / batBalls) * 1000) / 10 : null),
+              bowlBalls,
+              wickets,
+              economy: cBowl?.econ != null ? Number(cBowl.econ) : (bowlBalls >= 12 ? Math.round((bowlRuns / bowlBalls) * 600) / 100 : null),
+            }
+          };
+        }
+      }
+
       return p;
     };
 
@@ -342,7 +374,7 @@ export function TeamSquad({ franchise, accent, season: seasonProp, onSeasonChang
     }
     const resolvedUnlisted = unlisted.map(p => resolveSeasonFromDataset(p));
     return { players: [...merged, ...resolvedUnlisted], officialByKey: byKey };
-  }, [roster.data, staticSquad, officialList, displayNames, season, playerTeamSeasonStats.data, franchise, code]);
+  }, [roster.data, staticSquad, officialList, displayNames, season, playerTeamSeasonStats.data, playerCareerStats.data, franchise, code]);
   const officialFor = (p: RosterPlayer) => officialByKey.get(keyOf(p)) ?? null;
 
   const [filter, setFilter] = useState<RoleFilter>("all");
@@ -812,7 +844,9 @@ function SquadCard({ p, name, open, onToggle, onReadMore, captain, jersey, franc
           </button>
         </div>
 
-        <div {...rise(1, "text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 dark:text-white/35 mt-3 mb-1.5")}>IPL {season} · {code}</div>
+        <div {...rise(1, "text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 dark:text-white/35 mt-3 mb-1.5")}>
+          {stats.length > 0 ? `IPL ${season} · ${code}` : `IPL Career & Profile · ${code}`}
+        </div>
         {stats.length > 0 ? (
           <dl className="grid grid-cols-2 gap-x-4">
             {stats.map((s, i) => (
@@ -823,11 +857,15 @@ function SquadCard({ p, name, open, onToggle, onReadMore, captain, jersey, franc
             ))}
           </dl>
         ) : (
-          <p {...rise(2, "text-xs text-slate-600 dark:text-white/50 leading-relaxed")}>
-            {p.played === false
-              ? `Did not play a match for ${code} in ${season}.`
-              : `No ${season} match record for this player in the dataset.`}
-          </p>
+          <div {...rise(2, "space-y-1.5 text-xs text-slate-600 dark:text-white/70 leading-relaxed")}>
+            <div className="font-semibold text-slate-800 dark:text-white/90">
+              {p.acquisition === "retained" ? "Retained Core Asset" : p.acquisition === "auction" ? "Auction Acquisition" : "Franchise Roster Asset"}
+              {p.priceDisplay ? ` · ${p.priceDisplay}` : ""}
+            </div>
+            <p className="text-[11px] text-slate-500 dark:text-white/50">
+              {bio?.batStyle || bio?.bowlStyle ? [bio.batStyle, bio.bowlStyle].filter(Boolean).join(" · ") : `${roleLabel(p)} registered for ${code}.`}
+            </p>
+          </div>
         )}
 
         <div {...rise(7, "mt-auto pt-2")}>
@@ -925,11 +963,16 @@ function Spotlight({ player: p, displayName, franchise, code, season, accent, ca
             </dl>
           </div>
         ) : (
-          <p className="text-sm text-slate-500 dark:text-white/45">
-            {p.played === false
-              ? `Did not play a match for ${code} in ${season}.`
-              : `No ${season} match record for this player in the dataset.`}
-          </p>
+          <div className="space-y-2">
+            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-white/35">Roster Status · {code}</div>
+            <div className="text-sm font-semibold text-slate-800 dark:text-white/90">
+              {p.acquisition === "retained" ? "Retained Franchise Asset" : p.acquisition === "auction" ? "Auction Acquisition" : "Official Squad Member"}
+              {p.priceDisplay ? ` · ${p.priceDisplay}` : ""}
+            </div>
+            <p className="text-xs text-slate-500 dark:text-white/55">
+              {bio?.iplDebut ? `IPL Debut: ${bio.iplDebut} · ` : ""}{styles || `${roleLabel(p)} registered in official team sheet.`}
+            </p>
+          </div>
         )}
 
         <div>

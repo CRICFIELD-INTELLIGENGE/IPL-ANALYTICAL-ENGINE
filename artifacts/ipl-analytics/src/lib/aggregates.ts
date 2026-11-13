@@ -806,7 +806,23 @@ export const useMatchScorecard = (matchId: string | number | null | undefined): 
     enabled: matchId != null && matchId !== "",
     staleTime: STALE,
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.BASE_URL}api/ipl/match/${matchId}/scorecard`);
+      const cleanId = String(matchId).trim();
+      // First try precomputed static JSON for instant offline & static Vercel hosting
+      try {
+        const staticRes = await fetch(`${import.meta.env.BASE_URL}data/matches/${cleanId}.json`);
+        if (staticRes.ok) {
+          const contentType = staticRes.headers.get("content-type") || "";
+          if (!contentType.includes("text/html")) {
+            const data = await staticRes.json();
+            if (data && data.scorecard && !data.scorecard.error) {
+              return data.scorecard as MatchScorecard;
+            }
+          }
+        }
+      } catch {}
+
+      // Fallback to dynamic backend API
+      const res = await fetch(`${import.meta.env.BASE_URL}api/ipl/match/${cleanId}/scorecard`);
       if (!res.ok) throw new Error(`Failed to load scorecard: ${res.status}`);
       return (await res.json()) as MatchScorecard;
     },
@@ -819,7 +835,23 @@ export const useMatchCommentary = (matchId: string | number | null | undefined):
     enabled: matchId != null && matchId !== "",
     staleTime: STALE,
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.BASE_URL}api/ipl/match/${matchId}/commentary`);
+      const cleanId = String(matchId).trim();
+      // First try precomputed static JSON for instant offline & static Vercel hosting
+      try {
+        const staticRes = await fetch(`${import.meta.env.BASE_URL}data/matches/${cleanId}.json`);
+        if (staticRes.ok) {
+          const contentType = staticRes.headers.get("content-type") || "";
+          if (!contentType.includes("text/html")) {
+            const data = await staticRes.json();
+            if (data && data.commentary && !data.commentary.error) {
+              return data.commentary as MatchCommentary;
+            }
+          }
+        }
+      } catch {}
+
+      // Fallback to dynamic backend API
+      const res = await fetch(`${import.meta.env.BASE_URL}api/ipl/match/${cleanId}/commentary`);
       if (!res.ok) throw new Error(`Failed to load commentary: ${res.status}`);
       return (await res.json()) as MatchCommentary;
     },

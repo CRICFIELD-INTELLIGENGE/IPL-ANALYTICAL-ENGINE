@@ -396,15 +396,23 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
               <ChevronRight className="w-3 h-3 stroke-[3] shrink-0" />
             </Link>
 
-            {/* Secondary Action Button: Dossier & Squads > */}
-            <Link
-              href={`/match/${match.id}`}
-              className="w-full py-1.5 px-3 rounded-xl text-[11px] font-mono font-bold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.04] dark:hover:bg-white/[0.08] border border-slate-200 hover:border-slate-300 dark:border-white/10 dark:hover:border-white/20 transition-all active:scale-[0.98] flex items-center justify-center gap-1.5"
-            >
-              <Users className="w-3 h-3 text-slate-500 dark:text-slate-400 shrink-0" />
-              <span>Dossier & Squads</span>
-              <ChevronRight className="w-3 h-3 text-slate-500 dark:text-slate-400 shrink-0" />
-            </Link>
+            {/* Secondary Action Buttons: Scorecard, Commentary & Squads */}
+            <div className="grid grid-cols-2 gap-1.5 w-full">
+              <Link
+                href={`/match/${match.id}?tab=scorecard`}
+                className="py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.04] dark:hover:bg-white/[0.08] border border-slate-200 hover:border-slate-300 dark:border-white/10 dark:hover:border-white/20 transition-all active:scale-[0.98] flex items-center justify-center gap-1"
+              >
+                <span>Scorecard</span>
+                <ChevronRight className="w-2.5 h-2.5 text-slate-500 dark:text-slate-400 shrink-0" />
+              </Link>
+              <Link
+                href={`/match/${match.id}?tab=squads`}
+                className="py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.04] dark:hover:bg-white/[0.08] border border-slate-200 hover:border-slate-300 dark:border-white/10 dark:hover:border-white/20 transition-all active:scale-[0.98] flex items-center justify-center gap-1"
+              >
+                <Users className="w-2.5 h-2.5 text-slate-500 dark:text-slate-400 shrink-0" />
+                <span>Squads</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

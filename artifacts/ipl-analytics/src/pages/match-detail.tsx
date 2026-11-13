@@ -103,10 +103,16 @@ export default function MatchDetailPage() {
     }
   }
 
-  const requestedTab = new URLSearchParams(useSearch()).get("tab");
+  const requestedTab = new URLSearchParams(useSearch()).get("tab")?.toLowerCase();
   const [activeTab, setActiveTab] = useState("summary");
   useEffect(() => {
-    setActiveTab(requestedTab === "scorecard" || requestedTab === "commentary" ? requestedTab : "summary");
+    if (requestedTab === "scorecard" || requestedTab === "commentary" || requestedTab === "squads" || requestedTab === "graph" || requestedTab === "overs" || requestedTab === "forecast") {
+      setActiveTab(requestedTab);
+    } else if (requestedTab === "squad") {
+      setActiveTab("squads");
+    } else {
+      setActiveTab("summary");
+    }
   }, [matchId, requestedTab]);
 
   const { scrollYProgress } = useScroll();
