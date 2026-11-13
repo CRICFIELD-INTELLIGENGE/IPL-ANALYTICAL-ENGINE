@@ -238,10 +238,12 @@ export function FranchiseHero({ team, record, loading, seasons, season, onSeason
         ? `Led ${record.latestCaptain.firstSeason}–${record.latestCaptain.lastSeason}`
         : fallbackCaptain.era);
 
-  const titlesCount = record?.titles?.count ?? team.titles;
   const titlesYears = (record?.titles?.years && record.titles.years.length > 0) 
     ? record.titles.years 
     : team.titleYears;
+  const titlesCount = (record?.titles?.count !== undefined && record.titles.count > 0)
+    ? record.titles.count
+    : (team.titles > 0 ? team.titles : titlesYears.length);
 
   // Context-aware seasonal win percentage & record lookup
   const selectedSeasonStat = season

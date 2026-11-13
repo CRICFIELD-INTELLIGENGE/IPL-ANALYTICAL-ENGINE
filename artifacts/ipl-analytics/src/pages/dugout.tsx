@@ -131,7 +131,34 @@ export default function DugoutPage() {
 
   // Effective franchise record with resilient fallbacks
   const effectiveRecord: FranchiseRecord = useMemo(() => {
-    if (record.data) return record.data;
+    const raw = record.data;
+    const canonicalYears = currentTeam.titleYears;
+    const canonicalCount = currentTeam.titles;
+
+    if (raw) {
+      const titlesYears = (raw.titles?.years && raw.titles.years.length > 0)
+        ? raw.titles.years
+        : canonicalYears;
+      const titlesCount = (raw.titles?.count !== undefined && raw.titles.count > 0)
+        ? raw.titles.count
+        : Math.max(canonicalCount, titlesYears.length);
+
+      return {
+        ...raw,
+        titles: {
+          count: titlesCount,
+          years: titlesYears,
+        },
+        seasons: raw.seasons.map((s) => {
+          const isChamp = s.champion || titlesYears.includes(String(s.season));
+          return {
+            ...s,
+            champion: isChamp,
+            madePlayoffs: s.madePlayoffs || isChamp,
+          };
+        }),
+      };
+    }
     const teamSummary = teams.data?.find((t) => t.team === currentTeam.name);
     return {
       franchise: { name: currentTeam.name, short: currentTeam.shortName },
@@ -143,8 +170,8 @@ export default function DugoutPage() {
         won: 7,
         lost: 7,
         noResult: 0,
-        madePlayoffs: s === "2024" || currentTeam.titleYears.includes(s),
-        champion: currentTeam.titleYears.includes(s),
+        madePlayoffs: s === "2024" || canonicalYears.includes(s),
+        champion: canonicalYears.includes(s),
         runnerUp: s === "2024" && activeTeamCode === "SRH",
       })),
       overall: {
@@ -154,8 +181,8 @@ export default function DugoutPage() {
         winPct: teamSummary?.winPct ?? 50.0,
       },
       titles: {
-        count: currentTeam.titles,
-        years: currentTeam.titleYears,
+        count: canonicalCount,
+        years: canonicalYears,
       },
       latestCaptain: null,
       rival: rival ? { name: rival.name, short: rival.shortName } : null,
@@ -188,7 +215,7 @@ export default function DugoutPage() {
           <FranchiseMilestones
             key={activeTeamCode}
             team={currentTeam}
-            record={record.data}
+            record={effectiveRecord}
             matches={matches.data ?? []}
             loading={record.isLoading || matches.isLoading}
             onSeason={setChosenSeason}

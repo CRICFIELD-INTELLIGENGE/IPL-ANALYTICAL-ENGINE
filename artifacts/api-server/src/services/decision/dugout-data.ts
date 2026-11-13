@@ -95,6 +95,32 @@ function latestCaptainFor(short: string, latestSeason: number): CaptainOnRecord 
   return { name: best.player, firstSeason: best.firstSeason, lastSeason: best.lastSeason, matches: best.matches, titles: best.titles };
 }
 
+export const CANONICAL_FRANCHISE_TITLES: Record<string, string[]> = {
+  CSK: ["2010", "2011", "2018", "2021", "2023"],
+  MI: ["2013", "2015", "2017", "2019", "2020"],
+  KKR: ["2012", "2014", "2024"],
+  SRH: ["2009", "2016"],
+  RR: ["2008"],
+  GT: ["2022"],
+  RCB: ["2025", "2026"],
+  DC: [],
+  PBKS: [],
+  LSG: [],
+};
+
+export const CANONICAL_FRANCHISE_RUNNERS_UP: Record<string, string[]> = {
+  CSK: ["2008", "2012", "2013", "2015", "2019"],
+  RCB: ["2009", "2011", "2016"],
+  MI: ["2010"],
+  PBKS: ["2014", "2025"],
+  SRH: ["2018", "2024"],
+  DC: ["2020"],
+  KKR: ["2021"],
+  RR: ["2022"],
+  GT: ["2023", "2026"],
+  LSG: [],
+};
+
 /**
  * Season-by-season record for a franchise, with titles (a final it won), playoff
  * seasons, overall win rate and head-to-head against `rivalKey` when given.
@@ -146,8 +172,23 @@ export function franchiseRecord(key: string, rivalKey?: string): FranchiseRecord
     }
   }
 
+  // Enrich with canonical franchise championships and runners-up honours
+  const canonicalTitles = CANONICAL_FRANCHISE_TITLES[ref.short] ?? [];
+  const canonicalRunnersUp = CANONICAL_FRANCHISE_RUNNERS_UP[ref.short] ?? [];
+  for (const [seasonStr, rec] of bySeason.entries()) {
+    if (canonicalTitles.includes(seasonStr)) {
+      rec.champion = true;
+      rec.madePlayoffs = true;
+      rec.runnerUp = false;
+    } else if (canonicalRunnersUp.includes(seasonStr)) {
+      rec.runnerUp = true;
+      rec.madePlayoffs = true;
+    }
+  }
+
   const seasons = [...bySeason.values()].sort((a, b) => Number(a.season) - Number(b.season));
-  const titleYears = seasons.filter((s) => s.champion).map((s) => s.season);
+  const detectedTitleYears = seasons.filter((s) => s.champion).map((s) => s.season);
+  const titleYears = Array.from(new Set([...detectedTitleYears, ...canonicalTitles])).sort();
   const sorted = [...new Set(allSeasons)].sort();
   h2h.recent.sort((a, b) => b.date.localeCompare(a.date));
 
