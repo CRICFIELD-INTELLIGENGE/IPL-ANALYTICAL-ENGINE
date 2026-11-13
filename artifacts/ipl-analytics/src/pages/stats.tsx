@@ -944,7 +944,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   const filterControls = (<>
         {/* SMART FILTER BAR */}
-        <div className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-2 flex flex-wrap items-center gap-2 relative z-50 shadow-sm dark:shadow-xl">
+        <div className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-2 flex flex-wrap items-center gap-2 relative z-20 shadow-sm dark:shadow-xl">
 
           <div className="flex items-center gap-2 px-3 py-2 bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/5 mr-2">
             <Filter className="w-3.5 h-3.5 text-primary" />

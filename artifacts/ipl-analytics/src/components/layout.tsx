@@ -159,7 +159,7 @@ export function Layout({
       {!hideHeader && (
       <motion.header
         style={{ opacity: hdrOpacity, y: hdrY }}
-        className="sticky top-0 z-30 h-14 w-full border-b border-slate-200/80 dark:border-white/[0.08] bg-white/85 dark:bg-slate-950/85 backdrop-blur-2xl flex items-center px-2.5 sm:px-4 justify-between gap-3 transition-colors duration-200 shadow-[0_1px_3px_0_rgba(0,0,0,0.02)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.4)]"
+        className="sticky top-0 z-40 h-14 w-full border-b border-slate-200/80 dark:border-white/[0.08] bg-white/85 dark:bg-slate-950/85 backdrop-blur-2xl flex items-center px-2.5 sm:px-4 justify-between gap-3 transition-colors duration-200 shadow-[0_1px_3px_0_rgba(0,0,0,0.02)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.4)]"
       >
         <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0 whitespace-nowrap">
           <Link href="/home" className="group/brand flex items-center pl-1 py-1 pr-1.5 rounded-xl hover:bg-slate-100/70 dark:hover:bg-white/5 transition-all cursor-pointer select-none" aria-label="CricField Home">
