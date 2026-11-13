@@ -545,32 +545,32 @@ function RetentionCountdown() {
   ] as const;
 
   return (
-    <section className="rounded-[20px] border border-white/10 bg-[#0B1020] p-4" aria-label="Retention deadline countdown">
+    <section className="rounded-[20px] border border-slate-200/80 dark:border-white/10 bg-white dark:bg-[#0B1020] p-4 shadow-xs" aria-label="Retention deadline countdown">
       <div className="flex items-start justify-between">
         <div>
-          <div className="text-[10px] font-black uppercase tracking-widest text-[var(--team-accent)]">IPL 2027</div>
-          <div className="text-sm font-black uppercase text-white">Retention deadline</div>
+          <div className="text-[10px] font-black uppercase tracking-widest text-indigo-600 dark:text-[var(--team-accent)]">IPL 2027</div>
+          <div className="text-sm font-black uppercase text-slate-900 dark:text-white">Retention deadline</div>
         </div>
-        <CalendarDays className="w-5 h-5 text-[var(--team-accent)]" />
+        <CalendarDays className="w-5 h-5 text-indigo-600 dark:text-[var(--team-accent)]" />
       </div>
       {target ? (
         <>
-          <div className="mt-3 grid grid-cols-4 gap-1 text-center" aria-live="off">
+          <div className="mt-3.5 grid grid-cols-4 gap-2 text-center" aria-live="off">
             {parts.map(([v, l]) => (
-              <div key={l}>
-                <div className="text-2xl font-black tabular-nums text-white">{String(v).padStart(2, "0")}</div>
-                <div className="text-[9px] uppercase text-white/45">{l}</div>
+              <div key={l} className="py-2 px-1 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-100 dark:border-white/[0.06] shadow-2xs">
+                <div className="text-2xl font-black tabular-nums text-slate-900 dark:text-white leading-none">{String(v).padStart(2, "0")}</div>
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-white/60 mt-1">{l}</div>
               </div>
             ))}
           </div>
-          <p className="mt-2 text-[10px] text-white/45">
+          <p className="mt-2.5 text-[11px] font-medium text-slate-500 dark:text-white/60">
             {dateLabel(event!.date!)}{event!.status === "confirmed" ? "" : " · reported date, not yet officially confirmed"}
           </p>
         </>
       ) : (
-        <p className="mt-3 text-sm text-white/60">Date to be announced.</p>
+        <p className="mt-3 text-sm text-slate-600 dark:text-white/60">Date to be announced.</p>
       )}
-      <Link href="/pulse#auction" className="franchise-action mt-3 flex items-center justify-center gap-2 rounded-xl bg-violet-700 py-2 text-xs font-bold text-white hover:bg-violet-600">
+      <Link href="/pulse#auction" className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-violet-700 dark:hover:bg-violet-600 py-2.5 text-xs font-bold text-white shadow-xs transition-colors">
         View key dates <ArrowRight className="w-3.5 h-3.5" />
       </Link>
     </section>
