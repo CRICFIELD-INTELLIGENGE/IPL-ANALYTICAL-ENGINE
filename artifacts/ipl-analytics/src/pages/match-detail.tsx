@@ -7,7 +7,7 @@ import {
 import { useMatches, useSeasons, teamShort, useTeams, teamColor,
   useMatchScorecard, useMatchCommentary, venueHref, normalizeVenueName, playerSlug,
   type MatchScorecard, type MatchCommentary } from "@/lib/aggregates";
-import { Link, useRoute } from "wouter";
+import { Link, useRoute, useSearch } from "wouter";
 import { 
   ArrowLeft, MapPin, Calendar, Trophy, Activity, Zap, 
   TrendingUp, Info, Shield, Target, Clock, Cpu,
@@ -67,12 +67,13 @@ export default function MatchDetailPage() {
   const matchId = params?.id ? parseInt(params.id, 10) : null;
   const q = useLiveAllMatches();
   const archives = useMatches();
+  const archivedMatch = archives.data?.find(m => m.id === String(matchId));
   
   // Try to find in live first, then in archives
   let match = matchId === 99999 ? MOCK_MATCH : q.data?.matches.find((m) => m.matchInfo.matchId === matchId);
   
   if (!match && archives.data && matchId) {
-    const archMatch = archives.data.find(m => m.id === matchId.toString());
+    const archMatch = archivedMatch;
     if (archMatch) {
       match = {
         matchInfo: {
@@ -102,7 +103,11 @@ export default function MatchDetailPage() {
     }
   }
 
+  const requestedTab = new URLSearchParams(useSearch()).get("tab");
   const [activeTab, setActiveTab] = useState("summary");
+  useEffect(() => {
+    setActiveTab(requestedTab === "scorecard" || requestedTab === "commentary" ? requestedTab : "summary");
+  }, [matchId, requestedTab]);
 
   const { scrollYProgress } = useScroll();
   const masterScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.98]);
@@ -111,7 +116,7 @@ export default function MatchDetailPage() {
     <Layout hideRightPanel>
       <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#050816] text-slate-900 dark:text-white overflow-x-hidden transition-colors duration-200">
         {/* TOP NAV BAR */}
-        <div className="sticky top-0 z-[100] px-6 py-4 flex items-center justify-between bg-white/80 dark:bg-[#050816]/80 backdrop-blur-md border-b border-slate-200 dark:border-white/5">
+        <div className="sticky top-0 z-[100] px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-y-3 bg-white/80 dark:bg-[#050816]/80 backdrop-blur-md border-b border-slate-200 dark:border-white/5">
           <Link href="/scores">
             <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary hover:text-slate-900 dark:hover:text-white transition-colors group">
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Global Hub
@@ -119,7 +124,7 @@ export default function MatchDetailPage() {
           </Link>
 
           {/* Tab Navigation */}
-          <div className="hidden lg:flex items-center gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-xl border border-slate-200 dark:border-white/10 overflow-x-auto hide-scrollbar">
+          <div className="order-last lg:order-none flex w-full lg:w-auto min-w-0 items-center gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-xl border border-slate-200 dark:border-white/10 overflow-x-auto hide-scrollbar">
             {["Summary", "Scorecard", "Commentary", "Graph", "Squads", "Overs", "Forecast"].map(tab => (
               <button 
                 key={tab} 
@@ -160,7 +165,7 @@ export default function MatchDetailPage() {
               </Link>
             </div>
           ) : (
-            <MatchIntelligenceView match={match} activeTab={activeTab} />
+            <MatchIntelligenceView match={match} activeTab={activeTab} useProviderDetails={!archivedMatch && matchId !== 99999} />
           )}
         </motion.div>
       </div>
@@ -168,7 +173,7 @@ export default function MatchDetailPage() {
   );
 }
 
-function MatchIntelligenceView({ match, activeTab }: { match: import("@/lib/live").LiveMatch; activeTab: string }) {
+function MatchIntelligenceView({ match, activeTab, useProviderDetails }: { match: LiveMatch; activeTab: string; useProviderDetails: boolean }) {
   const info = match.matchInfo;
   const score = getMatchScoreLine(match);
   const state = getMatchStateColor(info.state);
@@ -177,8 +182,11 @@ function MatchIntelligenceView({ match, activeTab }: { match: import("@/lib/live
   // The real card and commentary for any of the 1243 archived matches. Both are
   // computed from the delivery record, so they are correct for every match
   // rather than for the one the placeholder was written about.
-  const card = useMatchScorecard(info.matchId);
-  const commentary = useMatchCommentary(info.matchId);
+  const fromLiveFeed = useProviderDetails;
+  const card = useMatchScorecard(fromLiveFeed ? null : info.matchId);
+  const commentary = useMatchCommentary(fromLiveFeed ? null : info.matchId);
+  const providerMatch = `https://www.cricbuzz.com/live-cricket-scores/${info.matchId}`;
+  const providerScorecard = `https://www.cricbuzz.com/live-cricket-scorecard/${info.matchId}`;
 
   return (
     <div className="flex flex-col gap-6">
@@ -380,7 +388,8 @@ function MatchIntelligenceView({ match, activeTab }: { match: import("@/lib/live
 
         {activeTab === "commentary" && (
           <motion.div key="commentary" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-             <CinematicCommentaryView card={card.data} commentary={commentary.data} isLoading={commentary.isLoading} />
+             {fromLiveFeed ? <LiveProviderDetails href={providerMatch} label="commentary" /> :
+               <CinematicCommentaryView card={card.data} commentary={commentary.data} isLoading={commentary.isLoading} />}
           </motion.div>
         )}
 
@@ -410,7 +419,8 @@ function MatchIntelligenceView({ match, activeTab }: { match: import("@/lib/live
 
         {activeTab === "scorecard" && (
           <motion.div key="scorecard" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <FullScorecard match={match} card={card.data} isLoading={card.isLoading} />
+            {fromLiveFeed ? <LiveProviderDetails href={providerScorecard} label="scorecard" /> :
+              <FullScorecard match={match} card={card.data} isLoading={card.isLoading} />}
           </motion.div>
         )}
 
@@ -462,6 +472,17 @@ function MatchIntelligenceView({ match, activeTab }: { match: import("@/lib/live
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+function LiveProviderDetails({ href, label }: { href: string; label: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 dark:border-white/10 p-6">
+      <p className="mb-3 text-sm">CricField has the live match summary. Cricbuzz provides the full live {label}.</p>
+      <a className="text-sm font-bold text-primary underline" href={href} target="_blank" rel="noopener noreferrer">
+        Open live {label} on Cricbuzz
+      </a>
     </div>
   );
 }

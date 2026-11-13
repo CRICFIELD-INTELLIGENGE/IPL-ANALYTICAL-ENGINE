@@ -1,3 +1,4 @@
+import { useLiveAllMatches, getMatchScoreLine, getMatchStateColor } from "@/lib/live";
 import { useAnalyticsFilterStore } from "@/lib/store";
 import { useState, useMemo, useEffect } from "react";
 import { useTheme } from "@/lib/theme";
@@ -33,6 +34,10 @@ export default function ScoresPage() {
   const [activeTab, setActiveTab] = useState<"schedule" | "points" | "squad">("schedule");
 
   const allMatches = useMatches();
+  const liveFeed = useLiveAllMatches();
+  const liveMatches = (liveFeed.data?.matches ?? []).filter(match =>
+    getMatchStateColor(match.matchInfo.state).label === "LIVE" && match.matchInfo.matchId !== 99999
+  );
   const seasonMatches = useMemo(
     () => allMatches.data?.filter(m => m.season === selectedSeason) || [],
     [allMatches.data, selectedSeason]
@@ -168,6 +173,30 @@ export default function ScoresPage() {
           transition={{ duration: 0.2 }}
           className="flex-1"
         >
+          {activeTab === "schedule" && (
+            <section aria-label="Live matches" className="mb-6 rounded-2xl border border-slate-200 dark:border-white/10 p-4">
+              <h2 className="mb-3 text-sm font-bold">Live matches</h2>
+              {liveMatches.length === 0 && <p role="status" className="text-sm">
+                {liveFeed.isPending ? "Checking for live matches…" : liveFeed.isError ? "Live feed is temporarily unavailable." : "No matches are live right now."}
+              </p>}
+              {liveMatches.map(match => {
+                const { matchInfo: info } = match;
+                const score = getMatchScoreLine(match);
+                return (
+                  <div key={info.matchId} className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 dark:border-white/10 py-3">
+                    <div>
+                      <p className="font-semibold">{info.team1.teamSName} {score.team1} · {info.team2.teamSName} {score.team2}</p>
+                      <p className="text-xs opacity-70">{info.status}</p>
+                    </div>
+                    <div className="flex gap-4 text-sm font-semibold text-primary">
+                      <Link href={`/match/${info.matchId}?tab=scorecard`}>Scorecard</Link>
+                      <Link href={`/match/${info.matchId}?tab=commentary`}>Commentary</Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </section>
+          )}
           {activeTab === "schedule" && <ScheduleView season={selectedSeason} matches={seasonMatches} />}
           {activeTab === "points" && <PointsView season={selectedSeason} standings={standings} />}
           {activeTab === "squad" && <SquadsListView season={selectedSeason} playerImages={playerImages.data} />}
