@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
+import { Analytics } from "@vercel/analytics/react";
 
 import { isTeamCode, TeamProvider } from "@/lib/team-context";
 import { ThemeProvider } from "@/lib/theme";
@@ -291,6 +292,7 @@ function App() {
               <CricfieldSplash />
             </WouterRouter>
             <ConsentBanner />
+            <Analytics />
             <Toaster />
           </TeamProvider>
         </TooltipProvider>
