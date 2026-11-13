@@ -15,7 +15,7 @@
 import { Router, type Request, type Response } from "express";
 import { logger } from "../lib/logger";
 import { z } from "zod";
-import { isGlobalDbReady, getGlobalDbError } from "../services/scout/db";
+import { isGlobalDbReady, getGlobalDbError, queryOne, queryAll } from "../services/scout/db";
 import { computeBayesianTrueTalent, computeMarkovWinProbability } from "../services/scout/true-talent-model";
 import {
   ratePlayers,
@@ -67,7 +67,46 @@ router.get("/search", (req: Request, res: Response): void => {
   res.json({ results });
 });
 
+const formQuerySchema = z.object({
+  format: z.enum(["T20", "List A", "First-class", "T20I", "ODI", "Test", "100-ball"]).optional(),
+});
+
+router.get("/player/:id/recent-form", (req: Request, res: Response): void => {
+  if (!requireGlobalWarehouse(res)) return;
+  const query = formQuerySchema.safeParse(req.query);
+  if (!query.success) {
+    res.status(400).json({ error: "invalid_format" });
+    return;
+  }
+  const ref = resolvePlayer(String(req.params.id));
+  if (!ref.player) {
+    res.status(ref.candidates.length > 1 ? 409 : 404).json({
+      error: ref.candidates.length > 1 ? "ambiguous_player" : "player_not_found",
+      candidates: ref.candidates,
+    });
+    return;
+  }
+  const hasForm = queryOne("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'scout_recent_form'");
+  const format = query.data.format ?? null;
+  const snapshots = hasForm ? queryAll(
+    'SELECT * FROM scout_recent_form WHERE cricfield_player_id = ? AND (? IS NULL OR format = ?) ORDER BY format, "window"',
+    ref.player.player_key, format, format,
+  ) : [];
+  res.json({ player: ref.player, snapshots, coverage: hasForm ? "available_window" : "warehouse_has_no_form_snapshots" });
+});
+
 // ── 1. GET /api/scout/rankings ─────────────────────────────────────────────
+
+function selectRatingCompetitions(requested?: string): string[] | null {
+  const competitions = queryAll<{ code: string; format: string }>("SELECT code, format FROM competitions ORDER BY code");
+  const requestedCodes = new Set(requested?.split(",").map(code => code.trim().toLowerCase()).filter(Boolean));
+  const selected = requestedCodes.size
+    ? competitions.filter(c => requestedCodes.has(c.code))
+    : competitions.filter(c => c.format === "T20");
+  if (!selected.length || selected.length !== (requestedCodes.size || selected.length)
+    || new Set(selected.map(c => c.format)).size > 1) return null;
+  return selected.map(c => c.code);
+}
 
 // Role labels produced by battingRole()/bowlingRole() (roles-v1), per discipline.
 const RANKING_ROLES: Record<Discipline, string[]> = {
@@ -121,12 +160,11 @@ router.get("/rankings", (req: Request, res: Response): void => {
     search,
   } = parsed.data;
 
-  const availableComps = listCompetitions().map((c) => c.code);
-  let targetComps = compsParam
-    ? compsParam.split(",").map((s) => s.trim().toLowerCase()).filter((s) => availableComps.includes(s))
-    : availableComps;
-
-  if (targetComps.length === 0) targetComps = availableComps;
+  const targetComps = selectRatingCompetitions(compsParam);
+  if (!targetComps) {
+    res.status(400).json({ error: "competitions_must_share_one_format" });
+    return;
+  }
 
   const ratings = ratePlayers({
     discipline,
@@ -208,7 +246,7 @@ router.get("/player/:id", (req: Request, res: Response): void => {
   const attributes = playerAttributes(p.player_key);
   const lines = seasonLines(p.player_key);
   const playerTrends = trends(p.player_key);
-  const comps = listCompetitions().map((c) => c.code);
+  const comps = selectRatingCompetitions() ?? [];
 
   const battingRatings = ratePlayers({
     discipline: "batting",
@@ -241,7 +279,7 @@ router.get("/player/:id", (req: Request, res: Response): void => {
   });
 
   const debutSeasons: Record<string, string | null> = {};
-  for (const c of comps) {
+  for (const { code: c } of listCompetitions()) {
     const d = debutSeason(p.player_key, c);
     if (d) debutSeasons[c] = d;
   }
@@ -322,10 +360,11 @@ router.get("/compare", (req: Request, res: Response): void => {
   const players = resolved.map((r) => r.player!);
   const playerKeys = players.map((p) => p.player_key);
 
-  const availableComps = listCompetitions().map((c) => c.code);
-  const targetComps = compsParam
-    ? compsParam.split(",").map((s) => s.trim().toLowerCase()).filter((s) => availableComps.includes(s))
-    : availableComps;
+  const targetComps = selectRatingCompetitions(compsParam);
+  if (!targetComps) {
+    res.status(400).json({ error: "competitions_must_share_one_format" });
+    return;
+  }
 
   const ratings = ratePlayers({
     discipline,
