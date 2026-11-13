@@ -30,6 +30,15 @@ const PLAYER_IMAGES = [
   { src: "/sanju samson.jpg", alt: "Sanju Samson" },
 ];
 
+const PRIMARY_NAV_LINKS = [
+  { label: "Home", href: "/home" },
+  { label: "Scout Lab", href: "/scout" },
+  { label: "Scores", href: "/scores" },
+  { label: "My Dugout", href: "/dugout" },
+  { label: "Stats", href: "/stats" },
+  { label: "Visuals", href: "/visualizations", hideOnMd: true },
+];
+
 const SIDEBAR_ITEMS = [
   { icon: Home, label: "Home", href: "/home" },
   { icon: Radio, label: "Auction Pulse", href: "/pulse" },
@@ -110,6 +119,14 @@ export function Layout({
   const fmtTime = (d: Date) =>
     d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
 
+  const isNavActive = (href: string) => {
+    const path = location.split("?")[0].replace(/\/+$/, "") || "/";
+    if (href === "/home") {
+      return path === "/" || path === "/home";
+    }
+    return path === href || path.startsWith(`${href}/`);
+  };
+
   const fallback = motionValue(0);
   const hdrOpacity = useTransform(hideHeaderProgress ?? fallback, [0.01, 0.05], [1, 0]);
   const hdrY = useTransform(hideHeaderProgress ?? fallback, [0.01, 0.05], [0, -80]);
@@ -142,27 +159,51 @@ export function Layout({
       {!hideHeader && (
       <motion.header
         style={{ opacity: hdrOpacity, y: hdrY }}
-        className="sticky top-0 z-30 h-14 w-full border-b border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl flex items-center px-2 sm:px-4 gap-2 transition-colors duration-200"
+        className="sticky top-0 z-30 h-14 w-full border-b border-slate-200/80 dark:border-white/[0.08] bg-white/85 dark:bg-slate-950/85 backdrop-blur-2xl flex items-center px-2.5 sm:px-4 justify-between gap-3 transition-colors duration-200 shadow-[0_1px_3px_0_rgba(0,0,0,0.02)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.4)]"
       >
-        <div className="flex items-center gap-3 shrink-0 whitespace-nowrap">
-          <Link href="/home" className="group/brand flex items-center gap-2.5 pl-1 py-1 pr-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" aria-label="CricField Home">
+        <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0 whitespace-nowrap">
+          <Link href="/home" className="group/brand flex items-center pl-1 py-1 pr-1.5 rounded-xl hover:bg-slate-100/70 dark:hover:bg-white/5 transition-all cursor-pointer select-none" aria-label="CricField Home">
             <CricfieldLogo variant="header" asLink={false} />
           </Link>
-          <div className="hidden sm:block h-5 w-px bg-slate-200 dark:bg-white/10 shrink-0" />
-          <nav aria-label="Primary" className="hidden md:flex items-center gap-3 text-xs font-semibold text-slate-600 dark:text-slate-300">
-            {[['Home','/home'],['Scout Lab','/scout'],['Scores','/scores'],['My Dugout','/dugout'],['Stats','/stats']].map(([label,href])=><Link key={href} href={href} className={location === href ? 'text-indigo-600 dark:text-indigo-300 font-bold' : 'hover:text-slate-900 dark:hover:text-white'} aria-current={location === href ? 'page' : undefined}>{label}</Link>)}
+
+          <nav aria-label="Primary navigation" className="hidden md:flex items-center p-1 rounded-full bg-slate-100/90 dark:bg-white/[0.05] border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
+            {PRIMARY_NAV_LINKS.map(({ label, href, hideOnMd }) => {
+              const active = isNavActive(href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={`relative px-3 sm:px-3.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 select-none ${
+                    hideOnMd ? "hidden lg:flex" : "flex"
+                  } ${
+                    active
+                      ? "bg-white dark:bg-white/15 text-slate-900 dark:text-white font-bold shadow-xs border border-slate-200/70 dark:border-white/10"
+                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-white/5"
+                  }`}
+                >
+                  {active && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0 animate-pulse" />
+                  )}
+                  {href === "/scores" && !active && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80 shrink-0" />
+                  )}
+                  <span>{label}</span>
+                </Link>
+              );
+            })}
           </nav>
+
           {/* Live Score Snippet */}
           <LiveScoreSnippet />
         </div>
 
-        <div className="ml-auto flex items-center gap-2 shrink-0">
+        <div className="ml-auto flex items-center gap-2 sm:gap-2.5 shrink-0">
           <TeamSwitcher />
           <ThemeToggle />
           {/* AI Analyst lives in the floating assistant launcher, not the header. */}
           {supabaseConfigured && <>
-            <Link href="/account" className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200 py-2"><UserRound size={16}/><span className="hidden sm:inline">Account</span></Link>
-            <span aria-hidden="true" className="h-5 w-px bg-slate-200 dark:bg-white/10" />
+            <Link href="/account" className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200 py-1.5 px-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"><UserRound size={16}/><span className="hidden sm:inline">Account</span></Link>
           </>}
         </div>
       </motion.header>
