@@ -8,7 +8,7 @@ import { HUB_EVENTS } from "@/lib/ipl-2027";
 import { stamp, useIpl2027Desk } from "@/lib/ipl-2027-desk";
 import { teamColor, playerSlug } from "@/lib/aggregates";
 import { paletteForCode } from "@/lib/team-palette";
-import { isTeamCode } from "@/lib/team-context";
+import { isTeamCode, useTeamTheme } from "@/lib/team-context";
 import { usePulseAuction, pulseMoney, lotValue, PULSE_TABS, type PulseTab, type PulseLot, type PulseModel, type PulseTeam, type PulseStatus } from "@/lib/pulse-auction";
 import {
   DropdownMenu,
@@ -1053,7 +1053,18 @@ function Insight({ lot, model }: { lot: PulseLot; model: PulseModel }) {
 }
 
 function PlayerPool({ model }: { model: PulseModel }) {
-  const [q, setQ] = useState(""), [role, setRole] = useState(""), [country, setCountry] = useState(""), [base, setBase] = useState(""), [team, setTeam] = useState(""), [status, setStatus] = useState("");
+  const { selectedTeam } = useTeamTheme();
+  const [q, setQ] = useState(""), [role, setRole] = useState(""), [country, setCountry] = useState(""), [base, setBase] = useState("");
+  const [team, setTeam] = useState<string>(() => (selectedTeam && model.teams.some(t => t.code === selectedTeam) ? selectedTeam : ""));
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    if (selectedTeam && model.teams.some(t => t.code === selectedTeam)) {
+      setTeam(selectedTeam);
+    } else if (!selectedTeam) {
+      setTeam("");
+    }
+  }, [selectedTeam, model.teams]);
   const [open, setOpen] = useState<string | null>(null);
   const countries = [...new Set(model.rows.map(r => r.country).filter((c): c is string => !!c))].sort();
   const statuses = [...new Set(model.rows.map(r => r.status))];

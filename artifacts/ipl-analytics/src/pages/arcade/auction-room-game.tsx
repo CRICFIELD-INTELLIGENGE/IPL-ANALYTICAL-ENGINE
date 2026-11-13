@@ -6,7 +6,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { auction as A } from "@workspace/arcade-rules";
 import { GameShell } from "@/components/arcade/kit";
 import { api } from "@/lib/arcade/client";
-import { useTeamTheme } from "@/lib/team-context";
 import "./auction-workspace.css";
 type Player = {
   id: string;
@@ -154,7 +153,6 @@ export default function AuctionRoomGame() {
     [maxBase, setMaxBase] = useState("All"),
     [retentionOpen, setRetentionOpen] = useState(true);
 
-  const { setSelectedTeam } = useTeamTheme();
   const generation = useRef(0),
     lock = useRef(false),
     latest = useRef<Draft | null>(null);
@@ -312,8 +310,6 @@ export default function AuctionRoomGame() {
         body: { token, type, ...body },
       });
       receive(r, sentAt, epoch);
-      if (epoch === generation.current && body.team)
-        setSelectedTeam(body.team as Parameters<typeof setSelectedTeam>[0]);
     } catch (e) {
       if (epoch === generation.current) setError((e as Error).message);
     } finally {

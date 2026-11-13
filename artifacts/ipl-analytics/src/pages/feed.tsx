@@ -151,7 +151,7 @@ function RetentionHeroVisual({ team }: { team: TeamCode | null }) {
 }
 
 export default function FeedPage() {
-  const { selectedTeam, setSelectedTeam } = useTeamTheme();
+  const { selectedTeam } = useTeamTheme();
   const [team, setTeam] = useState<TeamCode | null>(selectedTeam);
   const [tab, setTab] = useState<(typeof STORY_TABS)[number]["id"]>("featured");
   const { data: desk } = useIpl2027Desk();

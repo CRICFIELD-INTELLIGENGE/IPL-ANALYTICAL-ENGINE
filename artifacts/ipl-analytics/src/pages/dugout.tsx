@@ -68,7 +68,7 @@ function SectionSkeleton({ height = "h-64" }: { height?: string }) {
 export default function DugoutPage() {
   const [, params] = useRoute("/dugout/:team");
   const [, setLocation] = useLocation();
-  const { selectedTeam, setSelectedTeam } = useTeamTheme();
+  const { selectedTeam } = useTeamTheme();
 
   // Resolve franchise from URL param (supports codes like 'SRH' or slugs like 'sunrisers-hyderabad')
   const routeParam = params?.team ?? "";

@@ -40,7 +40,7 @@ const CALL_TONES: Record<Call, string> = {
 
 export default function SquadDnaPage() {
   const p = readParams();
-  const { selectedTeam, setSelectedTeam } = useTeamTheme();
+  const { selectedTeam } = useTeamTheme();
   const urlTeam = p.get("team")?.toUpperCase() ?? null;
   // A ?team= link wins, then the site-wide team, then RCB.
   const [team, setTeamState] = useState<string>(urlTeam ?? selectedTeam ?? "RCB");

@@ -17,14 +17,14 @@ import "./franchise-dugout.css";
 
 export default function MobileFranchiseDugout() {
  const { team: routeTeam } = useParams<{team?:string}>();
- const { selectedTeam, setSelectedTeam } = useTeamTheme();
+ const { selectedTeam } = useTeamTheme();
  const [,navigate] = useLocation();
  const code = resolveTeamCode(routeTeam ?? "") ?? selectedTeam ?? "SRH";
  const team = TEAM_REGISTRY[code];
  const [tab,setTab] = useState("Overview");
  const [chosen,setChosen] = useState<string|null>(null);
  const [momentIndex,setMomentIndex] = useState(0);
- useEffect(()=>{if(selectedTeam !== code) setSelectedTeam(code);setTab("Overview");setMomentIndex(0);setChosen(null);},[code]);
+ useEffect(()=>{setTab("Overview");setMomentIndex(0);setChosen(null);},[code]);
  const rival = TEAM_REGISTRY[team.archRival];
  const record = useQuery({queryKey:["dugout-franchise",team.name,rival?.name ?? null],queryFn:()=>fetchFranchiseRecord(team.name,rival?.name),retry:1,staleTime:10*60_000});
  const matches=useMatches(); const squads=useSquadsBySeason(); const teams=useTeams();

@@ -1,6 +1,7 @@
 import { useAnalyticsFilterStore } from "@/lib/store";
 import { useState, useMemo, useEffect } from "react";
 import { useTheme } from "@/lib/theme";
+import { useTeamTheme, TEAM_REGISTRY } from "@/lib/team-context";
 import { Layout } from "@/components/layout";
 import {
   useMatches, useSeasons, useSquadsBySeason, usePlayerBios, usePointsTables, usePlayerImages,
@@ -196,9 +197,20 @@ function getContrastTextColor(hex: string): string {
 }
 
 function ScheduleView({ season, matches }: { season: string; matches: MatchSummary[] }) {
-  const [selectedFranchise, setSelectedFranchise] = useState<string>("all");
+  const { selectedTeam } = useTeamTheme();
+  const defaultFranchise = useMemo(() => {
+    if (!selectedTeam || !TEAM_REGISTRY[selectedTeam]) return "all";
+    return TEAM_REGISTRY[selectedTeam].name;
+  }, [selectedTeam]);
+
+  const [selectedFranchise, setSelectedFranchise] = useState<string>(defaultFranchise);
   const [matchStatusFilter, setMatchStatusFilter] = useState<"all" | "completed" | "upcoming">("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  // Keep in sync when the user changes master franchise in the header dropdown
+  useEffect(() => {
+    setSelectedFranchise(defaultFranchise);
+  }, [defaultFranchise]);
 
   // Extract unique franchises playing in this season's matches
   const franchises = useMemo(() => {
@@ -491,6 +503,7 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
   const bios = usePlayerBios();
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
+  const { selectedTeam } = useTeamTheme();
 
   const [viewMode, setViewMode] = useState<"cards" | "list">("cards");
   const [selectedTeamFilter, setSelectedTeamFilter] = useState<string>("");
@@ -503,13 +516,28 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
     [seasonSquads],
   );
 
+  // Sync with master team dropdown when it changes
+  useEffect(() => {
+    if (selectedTeam && TEAM_REGISTRY[selectedTeam]) {
+      const masterName = TEAM_REGISTRY[selectedTeam].name;
+      if (teamNames.includes(masterName)) {
+        setSelectedTeamFilter(masterName);
+      }
+    } else {
+      setSelectedTeamFilter("");
+    }
+  }, [selectedTeam, teamNames]);
+
   // Active single selected team
   const activeTeam = useMemo(() => {
     if (selectedTeamFilter && teamNames.includes(selectedTeamFilter)) {
       return selectedTeamFilter;
     }
+    if (selectedTeam && TEAM_REGISTRY[selectedTeam] && teamNames.includes(TEAM_REGISTRY[selectedTeam].name)) {
+      return TEAM_REGISTRY[selectedTeam].name;
+    }
     return teamNames[0] || "";
-  }, [selectedTeamFilter, teamNames]);
+  }, [selectedTeamFilter, selectedTeam, teamNames]);
 
   // Bios indexing by name variants and exact slug
   const bioIndex = useMemo(() => {
