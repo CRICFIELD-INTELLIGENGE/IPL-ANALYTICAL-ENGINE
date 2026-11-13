@@ -623,23 +623,23 @@ function FranchisePurseBoard({ model }: { model: PulseModel }) {
   const totalSpent = model.teams.reduce((acc, t) => acc + (t.spent ?? 0), 0);
 
   return (
-    <div className="rounded-[24px] border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] p-5 sm:p-6 shadow-sm dark:shadow-xl flex flex-col justify-between h-full">
+    <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] p-3.5 sm:p-4 shadow-sm dark:shadow-xl flex flex-col justify-between h-full">
       <div>
         {/* Header */}
-        <div className="flex flex-wrap items-center justify-between pb-3 mb-4 border-b border-slate-200 dark:border-white/10 gap-2">
-          <div className="flex items-center gap-2">
-            <Wallet className="w-4 h-4 text-purple-500" />
-            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-800 dark:text-white/80">
+        <div className="flex flex-wrap items-center justify-between pb-2 mb-2.5 border-b border-slate-200 dark:border-white/10 gap-2">
+          <div className="flex items-center gap-1.5">
+            <Wallet className="w-3.5 h-3.5 text-purple-500" />
+            <h2 className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-800 dark:text-white/80">
               Franchise Purse Board
             </h2>
           </div>
-          <div className="text-[11px] font-mono font-bold text-slate-500 dark:text-white/50">
+          <div className="text-[10px] font-mono font-bold text-slate-500 dark:text-white/50">
             Total Remaining: <span className="text-emerald-600 dark:text-emerald-400 font-black">{pulseMoney(totalRemaining)}</span>
           </div>
         </div>
 
         {/* 2-Column Grid of Distinct, High-Contrast Team Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 content-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 content-start">
           {model.teams.map(t => {
             const pct = t.startingPurse && t.spent != null
               ? Math.min(100, Math.round((t.spent / t.startingPurse) * 100))
@@ -649,24 +649,24 @@ function FranchisePurseBoard({ model }: { model: PulseModel }) {
             return (
               <div
                 key={t.code}
-                className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-white/[0.02] hover:bg-slate-100/80 dark:hover:bg-white/[0.05] p-3 transition-all flex flex-col justify-between gap-2 shadow-xs group"
-                style={{ borderLeftColor: accent, borderLeftWidth: "4px" }}
+                className="rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-white/[0.02] hover:bg-slate-100/80 dark:hover:bg-white/[0.05] p-2 sm:p-2.5 transition-all flex flex-col justify-between gap-1.5 shadow-2xs group"
+                style={{ borderLeftColor: accent, borderLeftWidth: "3px" }}
               >
                 {/* Team & Purse Top Line */}
                 <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <TeamLogo team={t.code} size="w-6 h-6 shrink-0" />
-                    <span className="font-black text-xs sm:text-sm tracking-tight text-slate-900 dark:text-white truncate">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <TeamLogo team={t.code} size="w-5 h-5 shrink-0" />
+                    <span className="font-black text-xs tracking-tight text-slate-900 dark:text-white truncate">
                       {t.code}
                     </span>
                   </div>
-                  <div className="font-mono font-black text-xs text-emerald-600 dark:text-emerald-400 shrink-0">
+                  <div className="font-mono font-black text-[11px] text-emerald-600 dark:text-emerald-400 shrink-0">
                     {t.remaining == null ? "Unverified" : `${pulseMoney(t.remaining)} left`}
                   </div>
                 </div>
 
                 {/* Progress bar of purse spent */}
-                <div className="h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+                <div className="h-1 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{ width: `${pct}%`, backgroundColor: accent }}
@@ -674,7 +674,7 @@ function FranchisePurseBoard({ model }: { model: PulseModel }) {
                 </div>
 
                 {/* Bottom stats: Spent and squad count */}
-                <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-white/50 pt-0.5">
+                <div className="flex items-center justify-between text-[9px] text-slate-500 dark:text-white/50">
                   <span>{t.purchases.length ? `${spendText(t)} spent (${pct}%)` : "No buys yet"}</span>
                   <span className="font-bold text-slate-700 dark:text-white/70">
                     {t.purchases.length} bought · {t.slots ?? (25 - (t.squad ?? 0))} slots open
@@ -686,7 +686,7 @@ function FranchisePurseBoard({ model }: { model: PulseModel }) {
         </div>
       </div>
 
-      <div className="text-[10px] text-slate-400 dark:text-white/40 pt-3 mt-3 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+      <div className="text-[9px] text-slate-400 dark:text-white/40 pt-2 mt-2 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
         <span>Official Purse Allocations & Expenditure</span>
         <span>Squad Limit: 25 Players</span>
       </div>
@@ -697,12 +697,12 @@ function FranchisePurseBoard({ model }: { model: PulseModel }) {
 /* TOP HAMMER ACQUISITIONS SIDEBAR COMPONENT */
 function TopHammerPurchases({ model }: { model: PulseModel }) {
   return (
-    <div className="rounded-[24px] border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] p-5 sm:p-6 shadow-sm dark:shadow-xl flex flex-col justify-between h-full">
+    <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] p-3.5 sm:p-4 shadow-sm dark:shadow-xl flex flex-col justify-between h-full">
       <div>
-        <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 dark:border-white/10">
-          <div className="flex items-center gap-2">
-            <History className="w-4 h-4 text-emerald-500" />
-            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-800 dark:text-white/80">
+        <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-200 dark:border-white/10">
+          <div className="flex items-center gap-1.5">
+            <History className="w-3.5 h-3.5 text-emerald-500" />
+            <h2 className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-800 dark:text-white/80">
               Top Hammer Acquisitions
             </h2>
           </div>
@@ -711,27 +711,27 @@ function TopHammerPurchases({ model }: { model: PulseModel }) {
           </span>
         </div>
 
-        <div className="space-y-1.5 overflow-hidden">
+        <div className="space-y-1 overflow-hidden">
           {model.ranked.slice(0, 8).map((l, i) => (
             <div
               key={l.id}
-              className="flex items-center gap-2.5 text-xs py-2 px-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/15 transition-all"
+              className="flex items-center gap-2 text-xs py-1.5 px-2 rounded-lg bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/15 transition-all"
             >
-              <span className="w-4 text-center text-slate-400 dark:text-white/40 font-mono text-[11px] font-bold">
+              <span className="w-3.5 text-center text-slate-400 dark:text-white/40 font-mono text-[10px] font-bold">
                 {i + 1}
               </span>
               <div className="flex-1 min-w-0">
-                <div className="truncate font-bold text-slate-900 dark:text-white tracking-tight">
+                <div className="truncate font-bold text-[11px] sm:text-xs text-slate-900 dark:text-white tracking-tight leading-tight">
                   {l.player}
                 </div>
-                <div className="text-[10px] text-slate-500 dark:text-white/40">{roleBand(l.role)}</div>
+                <div className="text-[9px] text-slate-500 dark:text-white/40 leading-tight">{roleBand(l.role)}</div>
               </div>
               <div className="flex flex-col items-end shrink-0">
-                <span className="font-mono font-black text-emerald-600 dark:text-emerald-400">
+                <span className="font-mono font-black text-[11px] sm:text-xs text-emerald-600 dark:text-emerald-400">
                   {pulseMoney(l.price, l.usd)}
                 </span>
                 <span
-                  className="font-black text-[9px] px-1.5 py-0.5 rounded mt-0.5"
+                  className="font-black text-[8px] px-1 py-0.2 rounded mt-0.5"
                   style={{
                     color: teamHex(l.team ?? ""),
                     backgroundColor: `${teamHex(l.team ?? "")}18`,
@@ -745,7 +745,7 @@ function TopHammerPurchases({ model }: { model: PulseModel }) {
         </div>
       </div>
 
-      <div className="text-[10px] text-slate-400 dark:text-white/40 pt-3 mt-3 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+      <div className="text-[9px] text-slate-400 dark:text-white/40 pt-2 mt-2 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
         <span>Highest Historical Bids</span>
         <span>Verified Results</span>
       </div>
@@ -790,7 +790,7 @@ function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse
   return (
     <div className="space-y-6">
       {/* 1. SIDE-BY-SIDE: FRANCHISE PURSE BOARD (7 cols) + TOP HAMMER BUYS (5 cols) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-stretch">
         <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
           <FranchisePurseBoard model={model} />
         </div>
