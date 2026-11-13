@@ -56,8 +56,14 @@ export default function ScoresPage() {
         {/* ─── BROADCAST TELEMETRY & ARCHIVE FILTER BAR ─── */}
         <div className="bg-white/95 dark:bg-[#0B1020]/90 rounded-[28px] border border-slate-200 dark:border-white/10 p-6 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-sm dark:shadow-2xl relative z-10 backdrop-blur-xl">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary shadow-lg shadow-primary/20">
-              <CricFieldMascot team={leaderTeam || "default"} mood="fire" size={38} interactive />
+            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-blue-700 p-0.5 shadow-lg shadow-blue-500/25 flex items-center justify-center shrink-0 group">
+              <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center p-1.5 shadow-inner">
+                <img
+                  src="/ipl-logo-transparent.png"
+                  alt="IPL Tournament Logo"
+                  className="w-full h-full object-contain filter group-hover:scale-105 transition-transform"
+                />
+              </div>
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
