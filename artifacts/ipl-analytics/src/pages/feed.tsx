@@ -632,7 +632,7 @@ export function getArticleVisualUrl(entry: IndexEntry): string {
   if (text.includes("tactical") || text.includes("powerplay") || text.includes("equation") || text.includes("blueprint") || text.includes("anchor") || entry.aspect === "tactical") {
     return "/tactics-board.jpg";
   }
-  if (text.includes("venue") || text.includes("pitch") || text.includes("surface") || text.includes("ground") || text.includes("stadium") || entry.aspect === "venues") {
+  if (text.includes("venue") || text.includes("pitch") || text.includes("surface") || text.includes("ground") || text.includes("stadium") || (entry.aspect as string) === "venues") {
     return "/venues-stadium.jpg";
   }
   if (text.includes("squad") || text.includes("retention") || text.includes("rebuild") || text.includes("season") || entry.aspect === "history") {
