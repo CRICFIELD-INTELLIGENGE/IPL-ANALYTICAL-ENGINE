@@ -648,6 +648,9 @@ const EMPTY_BALL_INFO: BallInfo = {
 
 export interface QueryFilters {
   season?: string;
+  seasonFrom?: string;
+  seasonTo?: string;
+  scenarioTarget?: "high" | "low";
   team?: string;
   opponent?: string;
   venue?: string;
@@ -697,6 +700,12 @@ function filterMatches(filters: QueryFilters | FieldFilters): string[] {
         const sameYear = isPlainSeasonYear(wanted) &&
           (seasonYearOfDate(m.date) === wanted || (isPlainSeasonYear(label) && label === wanted));
         if (!sameLabel && !sameYear) return false;
+      }
+
+      const { seasonFrom, seasonTo } = filters as QueryFilters;
+      if (seasonFrom || seasonTo) {
+        const year = seasonYearOfDate(m.date);
+        if (!year || (seasonFrom && year < seasonFrom) || (seasonTo && year > seasonTo)) return false;
       }
 
       const teamF = (filters as QueryFilters).team;
@@ -836,7 +845,7 @@ async function aggregateQueryStatsUncached(filters: QueryFilters) {
   // the JSON path derives pressure per-ball from over/innings/wickets-fallen.
   const needsPressureFilter = !!filters.pressure && filters.pressure !== "Standard" && filters.pressure !== "Pressure" && filters.pressure !== "All";
 
-  if (hasDb() && !needsHandednessFilter && !needsPressureFilter) {
+  if (hasDb() && !needsHandednessFilter && !needsPressureFilter && !filters.seasonFrom && !filters.seasonTo && !filters.scenarioTarget) {
     try {
       return await aggregateQueryStatsSql(resolvedFilters);
     } catch (err) {
@@ -881,6 +890,16 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
     const matchData = getMatchData(matchId);
     if (!matchData) continue;
 
+    if (filters.scenarioTarget) {
+      const [first, chase] = matchData.innings ?? [];
+      if (!first?.overs?.length || !chase?.overs?.length) continue;
+      const firstTotal = first.overs.reduce((total: number, over: any) =>
+        total + over.deliveries.reduce((runs: number, ball: any) => runs + (ball.runs?.total ?? 0), 0), 0)
+        + (first.penalty_runs?.pre ?? 0) + (first.penalty_runs?.post ?? 0);
+      const target = chase.target?.runs ?? firstTotal + 1;
+      if (filters.scenarioTarget === "high" ? target < 200 : target >= 150) continue;
+    }
+
     matchData.innings?.forEach((inn: any, inningIndex: number) => {
       // Skip Super Over innings (3rd/4th innings or super_over flag) — ESPN/Cricbuzz exclude these from career stats
       if (inn.super_over || inningIndex >= 2) return;
@@ -908,13 +927,21 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
 
       inn.overs?.forEach((overObj: any) => {
         const overNum = overObj.over;
-        if (!passesOverRangeFilter(overNum, (filters as QueryFilters).overRange)) return;
+        if (!passesOverRangeFilter(overNum, (filters as QueryFilters).overRange)) {
+          for (const ball of overObj.deliveries ?? []) {
+            wicketsFallenSoFar += (ball.wickets ?? []).filter((w: { kind: string }) => w.kind !== "retired hurt").length;
+          }
+          return;
+        }
 
         overObj.deliveries?.forEach((d: any, ballIndex: number) => {
           const ext = d.extras ?? {};
           const isWide  = !!ext.wides;
           const isNoball = !!ext.noballs;
           const legalBall = !isWide && !isNoball;
+
+          const wicketsBefore = wicketsFallenSoFar;
+          wicketsFallenSoFar += (d.wickets ?? []).filter((w: { kind: string }) => w.kind !== "retired hurt").length;
 
           // Phase filter
           if (!passesPhaseFilter(overNum, filters)) return;
@@ -933,7 +960,7 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
           if (!passesDeliveryTypeFilter(ballInfo, filters.deliveryType)) return;
 
           // Pressure filter
-          if (!passesPressureFilter(overNum, inningIndex, wicketsFallenSoFar, filters.pressure)) return;
+          if (!passesPressureFilter(overNum, inningIndex, wicketsBefore, filters.pressure)) return;
 
           // Scoring area / fielding position filter
           if (filters.fieldingPosition && filters.fieldingPosition !== "Scoring Area" &&
@@ -1054,7 +1081,6 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
 
             if (d.wickets) {
               d.wickets.forEach((wk: any) => {
-                wicketsFallenSoFar++;
                 const credited = !["run out","retired hurt","retired out","obstructing the field"].includes(wk.kind);
                 if (credited) {
                   ws!.wickets++;
@@ -1072,8 +1098,6 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
             }
           }
 
-          // Track wickets for pressure filter next ball
-          if (d.wickets) wicketsFallenSoFar += d.wickets.length;
         });
       });
 
@@ -1428,10 +1452,12 @@ export async function aggregateScenarioStats(filters: ScenarioFilters) {
     case "chasing200plus":
       baseFilters.innings = "2nd Innings (Chasing)";
       baseFilters.chasingDefending = "Chasing";
+      baseFilters.scenarioTarget = "high";
       break;
     case "defending150minus":
       baseFilters.innings = "1st Innings (Setting)";
       baseFilters.chasingDefending = "Defending";
+      baseFilters.scenarioTarget = "low";
       break;
     case "playoff":
       baseFilters.matchContext = "Playoffs";
@@ -1456,33 +1482,14 @@ export async function aggregateScenarioStats(filters: ScenarioFilters) {
 
   const result = await aggregateQueryStats(baseFilters);
 
-  // For chasing200plus: filter matches where the target was 200+
-  if (filters.scenario === "chasing200plus") {
-    const matchIds = filterMatches(baseFilters);
-    const highTargetMatchIds = new Set(
-      matchesList
-        .filter(m => {
-          if (!matchIds.includes(m.id)) return false;
-          const t1Score = m.team1Score ? parseInt((m.team1Score || "").split("/")[0]) : 0;
-          const t2Score = m.team2Score ? parseInt((m.team2Score || "").split("/")[0]) : 0;
-          return Math.max(t1Score, t2Score) >= 200;
-        })
-        .map(m => m.id)
-    );
-    // Re-run with high-target match list only
-    // For simplicity, mark context
-    result.batters = result.batters.map((b: any) => ({ ...b, scenario: "Chasing 200+" }));
-  }
-
-  if (filters.scenario === "defending150minus") {
-    result.batters = result.batters.map((b: any) => ({ ...b, scenario: "Defending <150" }));
-  }
-
   const minBalls = filters.minBalls || 0;
-  const minRuns  = filters.minRuns  || 0;
-
-  result.batters  = result.batters.filter((b: any) => b.balls >= minBalls && b.runs >= minRuns);
-  result.bowlers  = result.bowlers.filter((b: any) => b.balls >= minBalls);
+  const minRuns = filters.minRuns || 0;
+  const batters: { player: string; balls: number; runs: number; sr: number }[] = result.batters;
+  const bowlers: { player: string; balls: number; wickets: number; econ: number }[] = result.bowlers;
+  result.batters = batters.filter(b => b.balls >= minBalls && b.runs >= minRuns)
+    .sort((a, b) => b.sr - a.sr || b.runs - a.runs || a.player.localeCompare(b.player));
+  result.bowlers = bowlers.filter(b => b.balls >= minBalls)
+    .sort((a, b) => a.econ - b.econ || b.wickets - a.wickets || a.player.localeCompare(b.player));
 
   return result;
 }

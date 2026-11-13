@@ -177,6 +177,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   // Scenario Intelligence state
   const [selectedScenario, setSelectedScenario] = useState("death");
   const [scenarioMinBalls, setScenarioMinBalls] = useState(10);
+  const [scenarioRange, setScenarioRange] = useState({ from: "", to: "" });
   // Player drilldown state
   const [drilldownPlayer, setDrilldownPlayer] = useState<string | null>(null);
   const [drilldownDimension, setDrilldownDimension] = useState<"phase" | "delivery" | "scoring-zone" | "bowler" | "over">("phase");
@@ -401,22 +402,27 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   });
 
   // Scenario Intelligence query
+  const scenarioYears = [...new Set((seasons.data ?? []).map(s => s.season).filter(year => /^\d{4}$/.test(year)))].sort();
+  const hasScenarioRange = !!(scenarioRange.from || scenarioRange.to);
   const scenarioQuery = useQuery({
-    queryKey: ["ipl-scenario", selectedScenario, filters.season, filters.team, filters.nationality, scenarioMinBalls],
+    queryKey: ["ipl-scenario", selectedScenario, hasScenarioRange ? null : filters.season, filters.team, filters.nationality, scenarioMinBalls, scenarioRange],
     queryFn: async () => {
-      const params = new URLSearchParams();
-      params.append("scenario", selectedScenario);
-      if (filters.season && filters.season !== "All Seasons") params.append("season", filters.season);
-      if (filters.team && filters.team !== "All Teams") params.append("team", filters.team);
-      if (filters.nationality && filters.nationality !== "all") params.append("nationality", filters.nationality);
-      params.append("minBalls", String(scenarioMinBalls));
-      const res = await fetch(`/api/stats/scenario?${params.toString()}`);
+      const params = new URLSearchParams({ scenario: selectedScenario, minBalls: String(scenarioMinBalls) });
+      if (scenarioRange.from) params.set("seasonFrom", scenarioRange.from);
+      if (scenarioRange.to) params.set("seasonTo", scenarioRange.to);
+      if (!hasScenarioRange && filters.season && filters.season !== "All Seasons") params.set("season", filters.season);
+      if (filters.team && filters.team !== "All Teams") params.set("team", filters.team);
+      if (filters.nationality && filters.nationality !== "all") params.set("nationality", filters.nationality);
+      const res = await fetch(`/api/stats/scenario?${params}`);
       if (!res.ok) throw new Error("Failed to query scenario");
-      return res.json() as Promise<{ batters: any[]; bowlers: any[] }>;
+      const result = await res.json() as { batters: any[]; bowlers: any[] };
+      if (!Array.isArray(result.batters) || !Array.isArray(result.bowlers)) throw new Error("Invalid scenario data");
+      return result;
     },
+    enabled: activeTab === "scenario-intelligence",
     staleTime: 1000 * 60 * 5,
-    placeholderData: (prev: any) => prev,
   });
+  const effectiveScenarioData = scenarioQuery.data ?? { batters: [], bowlers: [] };
 
   // Player drilldown query
   const drilldownQuery = useQuery({
@@ -553,118 +559,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     searchQuery, batterSortField, batterSortOrder, bowlerSortField, bowlerSortOrder
   ]);
 
-  const effectiveScenarioData = useMemo(() => {
-    const minBalls = scenarioMinBalls || 10;
-    const poolBatters = activeData.batters || [];
-    const poolBowlers = activeData.bowlers || [];
 
-    let processedBatters = [...poolBatters];
-    let processedBowlers = [...poolBowlers];
-
-    switch (selectedScenario) {
-      case "powerplay":
-        processedBatters = processedBatters
-          .filter(b => (b.ppBalls ?? b.balls ?? 0) >= minBalls)
-          .map(b => ({
-            ...b,
-            runs: b.ppRuns ?? b.runs,
-            balls: b.ppBalls ?? b.balls,
-            sr: b.ppSr ?? b.sr,
-            avg: b.avg ?? (b.runs / Math.max(1, b.dismissals || 1))
-          }))
-          .sort((a, b) => (b.sr || 0) - (a.sr || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.ppWickets ?? b.wickets ?? 0) >= 1 || (b.balls || 0) >= minBalls)
-          .map(b => ({
-            ...b,
-            wickets: b.ppWickets ?? b.wickets,
-            econ: b.ppEcon ?? b.econ,
-            sr: b.sr ?? (b.balls / Math.max(1, b.wickets || 1))
-          }))
-          .sort((a, b) => (a.econ || 99) - (b.econ || 99));
-        break;
-
-      case "death":
-        processedBatters = processedBatters
-          .filter(b => (b.deathBalls ?? b.balls ?? 0) >= minBalls)
-          .map(b => ({
-            ...b,
-            runs: b.deathRuns ?? b.runs,
-            balls: b.deathBalls ?? b.balls,
-            sr: b.deathSr ?? b.sr,
-            avg: b.avg ?? (b.runs / Math.max(1, b.dismissals || 1))
-          }))
-          .sort((a, b) => (b.sr || 0) - (a.sr || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.deathWickets ?? b.wickets ?? 0) >= 1 || (b.balls || 0) >= minBalls)
-          .map(b => ({
-            ...b,
-            wickets: b.deathWickets ?? b.wickets,
-            econ: b.deathEcon ?? b.econ,
-            sr: b.sr ?? (b.balls / Math.max(1, b.wickets || 1))
-          }))
-          .sort((a, b) => (a.econ || 99) - (b.econ || 99));
-        break;
-
-      case "clutch":
-      case "high-pressure":
-        processedBatters = processedBatters
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (b.boundaryPct || 0) - (a.boundaryPct || 0) || (b.sr || 0) - (a.sr || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (b.dotPct || 0) - (a.dotPct || 0) || (a.econ || 99) - (b.econ || 99));
-        break;
-
-      case "chasing200plus":
-        processedBatters = processedBatters
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (b.sr || 0) - (a.sr || 0) || (b.runs || 0) - (a.runs || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (a.econ || 99) - (b.econ || 99) || (b.wickets || 0) - (a.wickets || 0));
-        break;
-
-      case "playoff":
-        processedBatters = processedBatters
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (b.runs || 0) - (a.runs || 0) || (b.sr || 0) - (a.sr || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.balls || 0) >= minBalls)
-          .sort((a, b) => (b.wickets || 0) - (a.wickets || 0) || (a.econ || 99) - (b.econ || 99));
-        break;
-
-      case "death-spin":
-        processedBatters = processedBatters
-          .filter(b => (b.deathBalls ?? b.balls ?? 0) >= minBalls)
-          .map(b => ({
-            ...b,
-            runs: b.deathRuns ?? b.runs,
-            balls: b.deathBalls ?? b.balls,
-            sr: b.deathSr ?? b.sr,
-          }))
-          .sort((a, b) => ((b.deathSr ?? b.sr) || 0) - ((a.deathSr ?? a.sr) || 0));
-        processedBowlers = processedBowlers
-          .filter(b => (b.bowlerType || b.type || "").toLowerCase().includes("spin") || (b.deathWickets || 0) >= 1)
-          .map(b => ({
-            ...b,
-            wickets: b.deathWickets ?? b.wickets,
-            econ: b.deathEcon ?? b.econ,
-          }))
-          .sort((a, b) => ((a.deathEcon ?? a.econ) || 99) - ((b.deathEcon ?? b.econ) || 99));
-        break;
-
-      default:
-        processedBatters = processedBatters.filter(b => (b.balls || 0) >= minBalls).sort((a, b) => (b.runs || 0) - (a.runs || 0));
-        processedBowlers = processedBowlers.filter(b => (b.balls || 0) >= minBalls).sort((a, b) => (b.wickets || 0) - (a.wickets || 0));
-        break;
-    }
-
-    return {
-      batters: processedBatters.slice(0, 25),
-      bowlers: processedBowlers.slice(0, 25),
-    };
-  }, [selectedScenario, scenarioMinBalls, activeData]);
 
 
 
@@ -1588,6 +1483,25 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                     ))}
                   </div>
 
+                  <div className="flex flex-wrap items-center gap-3 text-[11px] text-white/60">
+                    <label className="flex items-center gap-2">
+                      From season
+                      <select className="rounded-lg border border-white/10 bg-background px-2 py-1" value={scenarioRange.from}
+                        onChange={e => setScenarioRange(range => ({ ...range, from: e.target.value }))}>
+                        <option value="">Any</option>
+                        {scenarioYears.filter(year => !scenarioRange.to || year <= scenarioRange.to).map(year => <option key={year}>{year}</option>)}
+                      </select>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      To season
+                      <select className="rounded-lg border border-white/10 bg-background px-2 py-1" value={scenarioRange.to}
+                        onChange={e => setScenarioRange(range => ({ ...range, to: e.target.value }))}>
+                        <option value="">Any</option>
+                        {scenarioYears.filter(year => !scenarioRange.from || year >= scenarioRange.from).map(year => <option key={year}>{year}</option>)}
+                      </select>
+                    </label>
+                  </div>
+
                   {/* Min balls qualifier */}
                   <div className="flex items-center gap-4">
                     <span className="text-[10px] font-black text-white/40 uppercase tracking-wider">Min balls faced:</span>
@@ -1602,8 +1516,12 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                   </div>
 
                   {/* Results */}
-                  {scenarioQuery.isLoading && !effectiveScenarioData.batters.length ? (
+                  {scenarioQuery.isLoading ? (
                     <div className="text-center py-12 text-white/40 font-mono text-sm">Loading scenario data...</div>
+                  ) : scenarioQuery.isError ? (
+                    <div role="status" className="text-center py-12 text-white/60 text-sm">Scenario data is temporarily unavailable.</div>
+                  ) : !effectiveScenarioData.batters.length && !effectiveScenarioData.bowlers.length ? (
+                    <div role="status" className="text-center py-12 text-white/60 text-sm">No players meet these scenario filters.</div>
                   ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {/* Batters leaderboard */}

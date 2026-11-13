@@ -90,6 +90,8 @@ __pycache__/
 /sqlite.db
 /data-release/
 # Temporary scratch & test build caches
+.vercel/
+**/.vercel/
 scratch/
 artifacts/ipl-analytics/e2e/.dist/
 artifacts/ipl-analytics/e2e/stats-splash-build/

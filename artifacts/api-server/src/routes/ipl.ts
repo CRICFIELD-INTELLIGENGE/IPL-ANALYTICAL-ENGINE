@@ -562,8 +562,15 @@ router.get("/stats/matchup", (req: Request, res: Response): void => {
 
 router.get("/stats/scenario", (req: Request, res: Response): void => {
   const q = getStatsQuery(req);
+  const { seasonFrom, seasonTo } = req.query;
+  if ([seasonFrom, seasonTo].some(year => year !== undefined && (typeof year !== "string" || !/^\d{4}$/.test(year))) ||
+      (typeof seasonFrom === "string" && typeof seasonTo === "string" && seasonFrom > seasonTo)) {
+    res.status(400).json({ error: "Invalid season range" });
+    return;
+  }
   aggregateScenarioStats({
-    scenario: q.scenario, season: q.season, team: q.team, opponent: q.opponent,
+    scenario: q.scenario, season: seasonFrom || seasonTo ? undefined : q.season,
+    seasonFrom: q.seasonFrom, seasonTo: q.seasonTo, team: q.team, opponent: q.opponent,
     venue: q.venue, phase: q.phase, bowlerType: q.bowlerType,
     deliveryType: q.deliveryType, pressure: q.pressure, innings: q.innings,
     nationality: q.nationality, matchContext: q.matchContext,
