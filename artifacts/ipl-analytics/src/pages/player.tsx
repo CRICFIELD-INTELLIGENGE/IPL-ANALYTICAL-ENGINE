@@ -666,64 +666,64 @@ export default function PlayerProfilePage() {
         
         {/* HERO CINEMATIC HEADER WITH VOLUMETRIC STADIUM LIGHTING & WATERMARK */}
         <div
-          className="rounded-[28px] overflow-hidden relative shadow-lg dark:shadow-2xl border border-slate-200/80 dark:border-white/10 bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:from-[#0d1326] dark:via-[#080c18] dark:to-[#03050a]"
+          className="rounded-[28px] overflow-hidden relative shadow-2xl border border-white/10 bg-gradient-to-br from-[#0d1326] via-[#080c18] to-[#03050a]"
           style={{ borderLeft: `5px solid ${pColor}` }}
         >
-          <div className="p-6 sm:p-8 md:p-9 relative overflow-hidden">
+          <div className="p-5 sm:p-7 md:p-8 relative overflow-hidden">
             {/* Volumetric Radial Floodlight & Team Color Halo */}
             <div
-              className="absolute -top-32 -left-32 w-96 h-96 rounded-full blur-[140px] pointer-events-none opacity-15 dark:opacity-25"
+              className="absolute -top-32 -left-32 w-96 h-96 rounded-full blur-[140px] pointer-events-none opacity-25"
               style={{ background: pColor || "#8B5CF6" }}
             />
             <div
-              className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[550px] h-[360px] rounded-full blur-[170px] pointer-events-none opacity-10 dark:opacity-15"
+              className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[550px] h-[360px] rounded-full blur-[170px] pointer-events-none opacity-15"
               style={{ background: pColor || "#38BDF8" }}
             />
             {/* Carbon / Stadium Grid Texture Overlay */}
-            <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-60 dark:opacity-50" />
+            <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-50" />
 
             {/* Giant Faint Stencil Watermark Typography */}
-            <div className="absolute right-4 md:right-12 bottom-0 select-none pointer-events-none overflow-hidden flex items-end opacity-[0.04] dark:opacity-[0.035] leading-none z-0">
-              <span className="font-black text-[130px] sm:text-[180px] lg:text-[230px] tracking-tighter uppercase font-mono text-slate-900/10 dark:text-white">
+            <div className="absolute right-4 md:right-12 bottom-0 select-none pointer-events-none overflow-hidden flex items-end opacity-[0.035] leading-none z-0">
+              <span className="font-black text-[130px] sm:text-[180px] lg:text-[230px] tracking-tighter uppercase font-mono text-white">
                 {pShort || profileName.split(" ").slice(-1)[0]}
               </span>
             </div>
 
-            {/* Main Hero Flex Grid */}
-            <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-stretch justify-between relative z-10">
+            {/* TIER 1: ATHLETE IDENTITY & CORE STATS GRID */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center lg:items-start relative z-10">
               
               {/* 1. ATHLETE SHOWCASE STAGE */}
-              <div className="relative shrink-0 flex flex-col items-center justify-center">
+              <div className="lg:col-span-3 flex flex-col items-center justify-center">
                 {/* Dynamic Player Aura / Halo */}
                 <div
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-56 md:h-56 rounded-full blur-[65px] opacity-25 dark:opacity-40 pointer-events-none"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-56 md:h-56 rounded-full blur-[65px] opacity-40 pointer-events-none"
                   style={{ background: pColor || "#8B5CF6" }}
                 />
 
                 {/* Showcase Framing Pedestal */}
                 <div 
-                  className="relative w-48 h-56 sm:w-56 sm:h-64 md:w-60 md:h-72 rounded-3xl overflow-hidden border border-slate-200 dark:border-white/20 bg-gradient-to-b from-slate-100/90 via-white to-slate-100 dark:from-white/[0.08] dark:via-black/40 dark:to-black/90 shadow-[0_12px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl group/hero cursor-pointer transition-all duration-500 hover:border-slate-300 dark:hover:border-white/40 hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_25px_60px_rgba(0,0,0,0.9)] hover:-translate-y-1.5"
+                  className="relative w-48 h-56 sm:w-52 sm:h-64 md:w-56 md:h-72 rounded-3xl overflow-hidden border border-white/15 bg-gradient-to-b from-white/[0.08] via-black/40 to-black/90 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl group/hero cursor-pointer transition-all duration-500 hover:border-white/35 hover:-translate-y-1"
                   style={{
                     ["--hero-accent" as any]: pColor,
                   }}
                 >
                   {/* Interactive Dynamic Background Sweep */}
                   <div 
-                    className="absolute inset-0 opacity-0 group-hover/hero:opacity-20 dark:group-hover/hero:opacity-40 transition-opacity duration-700 pointer-events-none z-[1]"
+                    className="absolute inset-0 opacity-0 group-hover/hero:opacity-30 transition-opacity duration-700 pointer-events-none z-[1]"
                     style={{
                       background: `radial-gradient(circle at 50% 30%, ${pColor} 0%, transparent 75%)`,
                     }}
                   />
 
                   {/* Top Left Team Badge */}
-                  <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white/90 dark:bg-black/70 backdrop-blur-md border border-slate-200 dark:border-white/15 shadow-sm dark:shadow-md group-hover/hero:border-slate-300 dark:group-hover/hero:border-white/30 transition-colors">
+                  <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 shadow-md">
                     <TeamLogo team={primaryTeam} size="w-4 h-4" />
-                    <span className="text-[9px] font-black uppercase tracking-wider text-slate-900 dark:text-white font-mono">{pShort}</span>
+                    <span className="text-[9px] font-black uppercase tracking-wider text-white font-mono">{pShort}</span>
                   </div>
 
                   {/* Top Right Jersey / ID Tag */}
-                  <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-xl bg-slate-100/90 dark:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/15 group-hover/hero:border-slate-300 dark:group-hover/hero:border-white/30 transition-colors">
-                    <span className="text-[10px] font-mono font-black text-slate-800 dark:text-white/90">
+                  <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
+                    <span className="text-[10px] font-mono font-black text-white/90">
                       {jerseyNo ? `#${jerseyNo}` : "—"}
                     </span>
                   </div>
@@ -740,198 +740,97 @@ export default function PlayerProfilePage() {
                       imgClassName="w-full h-full object-cover object-top filter contrast-[1.06]"
                     />
                     {/* Seamless Bottom Vignette */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-100 via-slate-100/25 to-transparent dark:from-[#080c18] dark:via-[#080c18]/25 dark:to-transparent pointer-events-none z-[2]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080c18] via-[#080c18]/25 to-transparent pointer-events-none z-[2]" />
                   </div>
 
                   {/* Lower Plate Holographic Telemetry Tag */}
-                  <div className="absolute bottom-2.5 inset-x-2.5 z-20 flex items-center justify-between px-2.5 py-1.5 bg-white/95 dark:bg-black/85 backdrop-blur-md rounded-xl border border-slate-200 dark:border-white/15 group-hover/hero:border-slate-300 dark:group-hover/hero:border-white/30 shadow-sm dark:shadow-lg transition-colors">
-                    <span className="text-[8px] font-black uppercase tracking-widest text-cyan-700 dark:text-cyan-300 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 dark:bg-cyan-400 animate-pulse" />
+                  <div className="absolute bottom-2.5 inset-x-2.5 z-20 flex items-center justify-between px-2.5 py-1.5 bg-black/85 backdrop-blur-md rounded-xl border border-white/15 shadow-lg">
+                    <span className="text-[8px] font-black uppercase tracking-widest text-cyan-300 flex items-center gap-1.5 truncate">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shrink-0" />
                       {bio.role || "Elite Athlete"}
                     </span>
-                    <span className="text-[8px] font-mono font-bold text-slate-500 dark:text-white/40">
+                    <span className="text-[8px] font-mono font-bold text-white/40 shrink-0 ml-1">
                       ID: #{bio.playerId}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* 2. CENTER PROFILE INTEL & VECTOR METRIC BLOCK */}
-              <div className="flex-1 min-w-0 flex flex-col xl:flex-row gap-6 items-stretch justify-between">
-                {/* Left: Player Intel & Narrative */}
-                <div className="flex-1 min-w-0 flex flex-col justify-between text-center lg:text-left space-y-4">
+              {/* 2. ATHLETE IDENTITY, BIO & ARCHETYPE (Middle Column) */}
+              <div className="lg:col-span-5 flex flex-col justify-between text-center lg:text-left space-y-4">
+                <div>
+                  {/* Badge Row */}
+                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-3">
+                    <span
+                      className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider border shadow-sm flex items-center gap-1.5"
+                      style={{ backgroundColor: `${pColor}18`, borderColor: `${pColor}50`, color: pColor }}
+                    >
+                      <TeamLogo team={primaryTeam} size="w-3.5 h-3.5" />
+                      <span>{primaryTeam} ({pShort})</span>
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-white/5 border border-white/10 text-white/80">
+                      {bio.role}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-emerald-400" />
+                      Elite Tier
+                    </span>
+                  </div>
+
+                  {/* Player Name Headlines */}
                   <div>
-                    {/* Badge Row */}
-                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-3">
-                      <span
-                        className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider border shadow-sm flex items-center gap-1.5"
-                        style={{ backgroundColor: `${pColor}18`, borderColor: `${pColor}50`, color: pColor }}
-                      >
-                        <TeamLogo team={primaryTeam} size="w-3.5 h-3.5" />
-                        <span>{primaryTeam} ({pShort})</span>
-                      </span>
-                      <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/70">
-                        {bio.role}
-                      </span>
-                      <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                        <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-                        Elite Tier
-                      </span>
-                    </div>
-
-                    {/* Player Name Headlines */}
-                    <div>
-                      <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-none drop-shadow-sm dark:drop-shadow-md">
-                        <span className="text-slate-900 dark:text-white">{profileName}</span>
-                      </h1>
-                      <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-[11px] font-mono font-bold text-slate-500 dark:text-white/40 uppercase mt-2">
-                        <span>Full: {bio.fullName}</span>
-                        <span>·</span>
-                        <span>{bio.country || "India"}</span>
-                        {bio.iplDebut && (
-                          <>
-                            <span>·</span>
-                            <span className="text-cyan-600 dark:text-cyan-400">IPL Debut: {bio.iplDebut}</span>
-                          </>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Player Bio Summary Paragraph */}
-                    <p className="text-xs text-slate-600 dark:text-white/70 leading-relaxed font-normal mt-3 max-w-2xl">
-                      {bio.bio}
-                    </p>
-                  </div>
-
-                  {/* Quick Physical Archetype Specs Strip */}
-                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-2 border-t border-slate-200 dark:border-white/5">
-                    <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
-                      <span className="text-slate-400 dark:text-white/30 uppercase mr-1">BAT:</span>
-                      <span className="text-slate-900 dark:text-white font-bold">{bio.batStyle || "Right Hand"}</span>
-                    </div>
-                    <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
-                      <span className="text-slate-400 dark:text-white/30 uppercase mr-1">BOWL:</span>
-                      <span className="text-slate-900 dark:text-white font-bold">{bio.bowlStyle || "Right Arm"}</span>
-                    </div>
-                    <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
-                      <span className="text-slate-400 dark:text-white/30 uppercase mr-1">AGE:</span>
-                      <span className="text-slate-900 dark:text-white font-bold">{bio.age ? `${bio.age} YRS` : "—"}</span>
-                    </div>
-                    <div className="px-2.5 py-1 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[9px] font-mono text-slate-700 dark:text-white/60">
-                      <span className="text-slate-400 dark:text-white/30 uppercase mr-1">ORIGIN:</span>
-                      <span className="text-slate-900 dark:text-white font-bold">{bio.birthPlace || bio.country || "—"}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right: Vector Metrics Radar & Telemetry HUD Card in Player Box */}
-                {radarData.length > 0 && (
-                  <div className="w-full xl:w-[250px] 2xl:w-[270px] shrink-0 rounded-2xl bg-white/75 dark:bg-white/[0.03] border border-slate-200/90 dark:border-white/10 p-3 flex flex-col justify-between shadow-sm dark:shadow-md backdrop-blur-md relative overflow-hidden group/vector">
-                    {/* Top ambient glow */}
-                    <div
-                      className="absolute -top-12 -right-12 w-28 h-28 rounded-full blur-[40px] pointer-events-none opacity-20 dark:opacity-30"
-                      style={{ background: pColor || "#8B5CF6" }}
-                    />
-                    
-                    {/* Vector Header */}
-                    <div className="flex items-center justify-between gap-1 relative z-10 mb-0.5">
-                      <div className="flex items-center gap-1.5">
-                        <Activity className="w-3.5 h-3.5 text-primary" />
-                        <span className="text-[9px] font-black uppercase tracking-widest text-slate-800 dark:text-white/90 font-mono">
-                          Vector Metrics
-                        </span>
-                      </div>
-                      <span className="text-[7.5px] font-mono font-black uppercase px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
-                        {showAsBatter ? "Phase Radar" : "Discipline Radar"}
-                      </span>
-                    </div>
-
-                    {/* Radar Chart */}
-                    <div className="h-[145px] w-full relative z-10 flex items-center justify-center my-0.5">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <RadarChart cx="50%" cy="50%" outerRadius="68%" data={radarData}>
-                          <PolarGrid stroke={isDark ? "rgba(255,255,255,0.08)" : "rgba(15,23,42,0.12)"} />
-                          <PolarAngleAxis
-                            dataKey="short"
-                            stroke={isDark ? "rgba(255,255,255,0.65)" : "rgba(51,65,85,0.85)"}
-                            fontSize={7.5}
-                            tickLine={false}
-                          />
-                          <PolarRadiusAxis angle={30} domain={[0, 'auto']} stroke="transparent" tick={false} />
-                          <Radar
-                            name="Performance"
-                            dataKey="value"
-                            stroke={pColor || "#8B5CF6"}
-                            fill={pColor || "#8B5CF6"}
-                            fillOpacity={isDark ? 0.35 : 0.28}
-                          />
-                        </RadarChart>
-                      </ResponsiveContainer>
-                    </div>
-
-                    {/* Bottom Micro-Pills from Advanced Diagnostics */}
-                    <div className="pt-2 border-t border-slate-100 dark:border-white/5 relative z-10 grid grid-cols-3 gap-1 text-center">
-                      {showAsBatter && activeBatterStats ? (
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white uppercase leading-none drop-shadow-md">
+                      <span>{profileName}</span>
+                    </h1>
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-[11px] font-mono font-bold text-white/50 uppercase mt-2">
+                      <span>Full: {bio.fullName}</span>
+                      <span>·</span>
+                      <span>{bio.country || "India"}</span>
+                      {bio.iplDebut && (
                         <>
-                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
-                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">PP SR</span>
-                            <span className="text-[10px] font-mono font-black text-blue-600 dark:text-blue-400 block leading-tight">
-                              {activeBatterStats.ppSr ? activeBatterStats.ppSr.toFixed(0) : "—"}
-                            </span>
-                          </div>
-                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
-                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">DEATH SR</span>
-                            <span className="text-[10px] font-mono font-black text-rose-600 dark:text-rose-400 block leading-tight">
-                              {activeBatterStats.deathSr ? activeBatterStats.deathSr.toFixed(0) : "—"}
-                            </span>
-                          </div>
-                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
-                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">BND %</span>
-                            <span className="text-[10px] font-mono font-black text-emerald-600 dark:text-emerald-400 block leading-tight">
-                              {activeBatterStats.boundaryPct ? `${activeBatterStats.boundaryPct}%` : "—"}
-                            </span>
-                          </div>
+                          <span>·</span>
+                          <span className="text-cyan-400">IPL Debut: {bio.iplDebut}</span>
                         </>
-                      ) : activeBowlerStats ? (
-                        <>
-                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
-                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">DOTS</span>
-                            <span className="text-[10px] font-mono font-black text-emerald-600 dark:text-emerald-400 block leading-tight">
-                              {activeBowlerStats.dotPct ? `${activeBowlerStats.dotPct}%` : "—"}
-                            </span>
-                          </div>
-                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
-                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">TRUE ECO</span>
-                            <span className="text-[10px] font-mono font-black text-purple-600 dark:text-purple-400 block leading-tight">
-                              {activeBowlerStats.trueEconomy != null ? `${activeBowlerStats.trueEconomy > 0 ? "+" : ""}${activeBowlerStats.trueEconomy.toFixed(2)}` : "—"}
-                            </span>
-                          </div>
-                          <div className="px-1 py-1 rounded bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5">
-                            <span className="text-[7px] font-mono font-bold text-slate-400 dark:text-white/40 block leading-tight">BALL/4</span>
-                            <span className="text-[10px] font-mono font-black text-blue-600 dark:text-blue-400 block leading-tight">
-                              {activeBowlerStats.ballsPerBoundary ? activeBowlerStats.ballsPerBoundary.toFixed(1) : "—"}
-                            </span>
-                          </div>
-                        </>
-                      ) : (
-                        <div className="col-span-3 text-[8px] font-mono text-slate-400 dark:text-white/40">
-                          Telemetry Sync Active
-                        </div>
                       )}
                     </div>
                   </div>
-                )}
+
+                  {/* Player Bio Narrative */}
+                  <p className="text-xs text-white/70 leading-relaxed font-normal mt-3 max-w-2xl">
+                    {bio.bio}
+                  </p>
+                </div>
+
+                {/* Quick Physical Archetype Specs Strip */}
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-3 border-t border-white/10">
+                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[9px] font-mono text-white/70">
+                    <span className="text-white/40 uppercase mr-1">BAT:</span>
+                    <span className="text-white font-bold">{bio.batStyle || "Right Hand"}</span>
+                  </div>
+                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[9px] font-mono text-white/70">
+                    <span className="text-white/40 uppercase mr-1">BOWL:</span>
+                    <span className="text-white font-bold">{bio.bowlStyle || "Right Arm"}</span>
+                  </div>
+                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[9px] font-mono text-white/70">
+                    <span className="text-white/40 uppercase mr-1">AGE:</span>
+                    <span className="text-white font-bold">{bio.age ? `${bio.age} YRS` : "—"}</span>
+                  </div>
+                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[9px] font-mono text-white/70">
+                    <span className="text-white/40 uppercase mr-1">ORIGIN:</span>
+                    <span className="text-white font-bold">{bio.birthPlace || bio.country || "—"}</span>
+                  </div>
+                </div>
               </div>
 
-              {/* 3. HIGH-TECH MODULAR TELEMETRY HUD TILES (Engineered Quant Precision) */}
-              <div className="w-full lg:w-[350px] xl:w-[380px] shrink-0 flex flex-col justify-between">
+              {/* 3. CORE TELEMETRY STAT TILES (Right Column) */}
+              <div className="lg:col-span-4 flex flex-col justify-between space-y-2.5">
                 {/* Season / Career Scope Control */}
-                <div className="mb-2 px-2.5 py-1.5 rounded-xl bg-slate-100/90 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/10 shadow-xs flex items-center justify-between gap-1.5 flex-wrap">
+                <div className="px-2.5 py-1.5 rounded-xl bg-white/[0.04] border border-white/10 shadow-xs flex items-center justify-between gap-1.5 flex-wrap">
                   <div className="flex items-center gap-1.5 min-w-0">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shrink-0" />
-                    <span className="text-[8.5px] font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-white/60 truncate">
+                    <span className="text-[8.5px] font-mono font-bold uppercase tracking-wider text-white/70 truncate">
                       {selectedSeasonScope === "career"
-                        ? `IPL Career (${activeBatterStats?.matches ?? activeBowlerStats?.matches ?? seasonalStats.length} M)`
+                        ? `Career (${activeBatterStats?.matches ?? activeBowlerStats?.matches ?? seasonalStats.length} M)`
                         : `IPL ${selectedSeasonScope} (${activeBatterStats?.matches ?? activeBowlerStats?.matches ?? 1} M)`}
                     </span>
                   </div>
@@ -939,23 +838,23 @@ export default function PlayerProfilePage() {
                     <button
                       type="button"
                       onClick={() => setSelectedSeasonScope("career")}
-                      className={`px-2 py-0.5 rounded-md text-[8px] font-mono font-bold uppercase tracking-wider transition-all ${
+                      className={`px-2 py-0.5 rounded-md text-[8px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
                         selectedSeasonScope === "career"
                           ? "bg-primary text-white shadow-xs"
-                          : "bg-white dark:bg-white/5 text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-white/10 border border-slate-200 dark:border-transparent"
+                          : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
                       }`}
                     >
                       Career
                     </button>
-                    {availableSeasons.slice(0, 2).map(s => (
+                    {availableSeasons.slice(0, 2).map((s) => (
                       <button
                         key={s}
                         type="button"
                         onClick={() => setSelectedSeasonScope(s)}
-                        className={`px-2 py-0.5 rounded-md text-[8px] font-mono font-bold uppercase tracking-wider transition-all ${
+                        className={`px-2 py-0.5 rounded-md text-[8px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
                           selectedSeasonScope === s
                             ? "bg-primary text-white shadow-xs"
-                            : "bg-white dark:bg-white/5 text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-white/10 border border-slate-200 dark:border-transparent"
+                            : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
                         }`}
                       >
                         {s}
@@ -965,11 +864,11 @@ export default function PlayerProfilePage() {
                       <select
                         value={availableSeasons.slice(0, 2).includes(selectedSeasonScope) || selectedSeasonScope === "career" ? "" : selectedSeasonScope}
                         onChange={(e) => { if (e.target.value) setSelectedSeasonScope(e.target.value); }}
-                        className="px-1.5 py-0.5 rounded-md text-[8px] font-mono font-bold uppercase tracking-wider bg-white dark:bg-[#0b1020] border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/70"
+                        className="px-1.5 py-0.5 rounded-md text-[8px] font-mono font-bold uppercase tracking-wider bg-[#0b1020] border border-white/10 text-white/70 cursor-pointer"
                         title="More seasons"
                       >
                         <option value="" disabled>More...</option>
-                        {availableSeasons.slice(2).map(s => (
+                        {availableSeasons.slice(2).map((s) => (
                           <option key={s} value={s}>{s}</option>
                         ))}
                       </select>
@@ -977,33 +876,34 @@ export default function PlayerProfilePage() {
                   </div>
                 </div>
 
+                {/* 4 Stat HUD Cards (2x2 Grid) */}
                 <div className="grid grid-cols-2 gap-2.5">
                   {((showAsBatter && activeBatterStats) || (!activeBowlerStats && activeBatterStats)) && (
                     <>
                       {/* Metric 1: Total Runs */}
-                      <div className="bg-white dark:bg-gradient-to-br dark:from-[#12182c]/90 dark:to-[#070b18]/95 border border-slate-200 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-sm dark:shadow-lg relative overflow-hidden">
-                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-slate-300 dark:text-white/20 select-none">+</span>
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
                         <div>
-                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 mb-1">
-                            <span className="flex items-center gap-1 text-slate-600 dark:text-white/70">
-                              <Flame className="w-2.5 h-2.5 text-amber-500 dark:text-amber-400" />
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1 text-white/70">
+                              <Flame className="w-2.5 h-2.5 text-amber-400" />
                               Runs
                             </span>
-                            <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[7px] font-mono font-bold">
+                            <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[7px] font-mono font-bold">
                               {selectedSeasonScope === "career"
                                 ? (activeBatterStats.runs >= 3000 ? "TOP 3%" : activeBatterStats.runs >= 1500 ? "CORE XI" : "LEAGUE")
                                 : (activeBatterStats.runs >= 500 ? "ORANGE CAP" : activeBatterStats.runs >= 300 ? "KEY BATTER" : "SQUAD")}
                             </span>
                           </div>
-                          <span className="text-2xl xl:text-3xl font-black font-mono text-slate-900 dark:text-white tracking-tight block">
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-white tracking-tight block">
                             {fmt(activeBatterStats.runs)}
                           </span>
                         </div>
-                        <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
-                          <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
                             {activeBatterStats.hundreds ? `${activeBatterStats.hundreds}× 100s · ` : ""}{activeBatterStats.fifties || 0}× 50s
                           </span>
-                          <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-400"
                               style={{ width: `${Math.min(100, Math.max(15, Math.round((activeBatterStats.runs / (selectedSeasonScope === "career" ? 4500 : 700)) * 100)))}%` }}
@@ -1013,11 +913,11 @@ export default function PlayerProfilePage() {
                       </div>
 
                       {/* Metric 2: Strike Rate */}
-                      <div className="bg-white dark:bg-gradient-to-br dark:from-[#12182c]/90 dark:to-[#070b18]/95 border border-slate-200 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-sm dark:shadow-lg relative overflow-hidden">
-                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-slate-300 dark:text-white/20 select-none">+</span>
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
                         <div>
-                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 mb-1">
-                            <span className="flex items-center gap-1 text-slate-600 dark:text-white/70">
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1 text-white/70">
                               <Zap className="w-2.5 h-2.5 text-primary" />
                               Strike Rate
                             </span>
@@ -1029,11 +929,11 @@ export default function PlayerProfilePage() {
                             {activeBatterStats.sr.toFixed(1)}
                           </span>
                         </div>
-                        <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
-                          <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
                             {fmt(activeBatterStats.fours || 0)} 4s · {fmt(activeBatterStats.sixes || 0)} 6s
                           </span>
-                          <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-primary to-cyan-400"
                               style={{ width: `${Math.min(100, Math.max(15, Math.round(((activeBatterStats.sr - 90) / 75) * 100)))}%` }}
@@ -1043,27 +943,27 @@ export default function PlayerProfilePage() {
                       </div>
 
                       {/* Metric 3: Average */}
-                      <div className="bg-white dark:bg-gradient-to-br dark:from-[#12182c]/90 dark:to-[#070b18]/95 border border-slate-200 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-sm dark:shadow-lg relative overflow-hidden">
-                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-slate-300 dark:text-white/20 select-none">+</span>
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
                         <div>
-                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 mb-1">
-                            <span className="flex items-center gap-1 text-slate-600 dark:text-white/70">
-                              <Target className="w-2.5 h-2.5 text-cyan-600 dark:text-cyan-400" />
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1 text-white/70">
+                              <Target className="w-2.5 h-2.5 text-cyan-400" />
                               Average
                             </span>
-                            <span className="px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20 text-[7px] font-mono font-bold">
+                            <span className="px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[7px] font-mono font-bold">
                               {activeBatterStats.avg >= 35 ? "ANCHOR+" : "SOLID"}
                             </span>
                           </div>
-                          <span className="text-2xl xl:text-3xl font-black font-mono text-slate-900 dark:text-white/90 tracking-tight block">
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-white/90 tracking-tight block">
                             {activeBatterStats.avg.toFixed(2)}
                           </span>
                         </div>
-                        <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
-                          <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
                             {activeBatterStats.innings || 0} Inngs · {fmt(activeBatterStats.balls || 0)} Balls
                           </span>
-                          <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-400"
                               style={{ width: `${Math.min(100, Math.max(15, Math.round((activeBatterStats.avg / 45) * 100)))}%` }}
@@ -1073,27 +973,27 @@ export default function PlayerProfilePage() {
                       </div>
 
                       {/* Metric 4: High Score */}
-                      <div className="bg-white dark:bg-gradient-to-br dark:from-[#12182c]/90 dark:to-[#070b18]/95 border border-slate-200 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-sm dark:shadow-lg relative overflow-hidden">
-                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-slate-300 dark:text-white/20 select-none">+</span>
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
                         <div>
-                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 mb-1">
-                            <span className="flex items-center gap-1 text-slate-600 dark:text-white/70">
-                              <Trophy className="w-2.5 h-2.5 text-amber-500 dark:text-amber-400" />
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1 text-white/70">
+                              <Trophy className="w-2.5 h-2.5 text-amber-400" />
                               High Score
                             </span>
-                            <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 text-[7px] font-mono font-bold">
+                            <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 text-[7px] font-mono font-bold">
                               {activeBatterStats.highest >= 100 ? "CENTURION" : activeBatterStats.highest >= 50 ? "HALF-CENTURY" : "MATCH-WINNER"}
                             </span>
                           </div>
-                          <span className="text-2xl xl:text-3xl font-black font-mono text-amber-600 dark:text-amber-300 tracking-tight block">
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-amber-300 tracking-tight block">
                             {activeBatterStats.highest}{activeBatterStats.highestNotOut ? "*" : ""}
                           </span>
                         </div>
-                        <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
-                          <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
                             Peak Match Dominance
                           </span>
-                          <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-400"
                               style={{ width: `${Math.min(100, Math.max(20, Math.round((activeBatterStats.highest / 130) * 100)))}%` }}
@@ -1107,27 +1007,27 @@ export default function PlayerProfilePage() {
                   {((!showAsBatter && activeBowlerStats) || (!activeBatterStats && activeBowlerStats)) && (
                     <>
                       {/* Metric 1: Total Wickets */}
-                      <div className="bg-white dark:bg-gradient-to-br dark:from-[#12182c]/90 dark:to-[#070b18]/95 border border-slate-200 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-sm dark:shadow-lg relative overflow-hidden">
-                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-slate-300 dark:text-white/20 select-none">+</span>
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
                         <div>
-                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 mb-1">
-                            <span className="flex items-center gap-1 text-slate-600 dark:text-white/70">
-                              <Flame className="w-2.5 h-2.5 text-emerald-500 dark:text-emerald-400" />
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1 text-white/70">
+                              <Flame className="w-2.5 h-2.5 text-emerald-400" />
                               Wickets
                             </span>
-                            <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[7px] font-mono font-bold">
+                            <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[7px] font-mono font-bold">
                               {activeBowlerStats.wickets >= 100 ? "CENTURY" : activeBowlerStats.wickets >= 50 ? "KEY STRIKER" : "SQUAD"}
                             </span>
                           </div>
-                          <span className="text-2xl xl:text-3xl font-black font-mono text-slate-900 dark:text-white tracking-tight block">
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-white tracking-tight block">
                             {activeBowlerStats.wickets}
                           </span>
                         </div>
-                        <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
-                          <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
                             {activeBowlerStats.fourW ? `${activeBowlerStats.fourW}× 4w · ` : ""}{activeBowlerStats.fiveW ? `${activeBowlerStats.fiveW}× 5w` : "Lead Strike Asset"}
                           </span>
-                          <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-400"
                               style={{ width: `${Math.min(100, Math.max(15, Math.round((activeBowlerStats.wickets / 140) * 100)))}%` }}
@@ -1137,27 +1037,27 @@ export default function PlayerProfilePage() {
                       </div>
 
                       {/* Metric 2: Economy */}
-                      <div className="bg-white dark:bg-gradient-to-br dark:from-[#12182c]/90 dark:to-[#070b18]/95 border border-slate-200 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-sm dark:shadow-lg relative overflow-hidden">
-                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-slate-300 dark:text-white/20 select-none">+</span>
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
                         <div>
-                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 mb-1">
-                            <span className="flex items-center gap-1 text-slate-600 dark:text-white/70">
-                              <Shield className="w-2.5 h-2.5 text-cyan-600 dark:text-cyan-400" />
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1 text-white/70">
+                              <Shield className="w-2.5 h-2.5 text-cyan-400" />
                               Economy
                             </span>
-                            <span className="px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20 text-[7px] font-mono font-bold">
+                            <span className="px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[7px] font-mono font-bold">
                               {activeBowlerStats.econ <= 7.5 ? "TOP 5%" : "CONTROLLED"}
                             </span>
                           </div>
-                          <span className="text-2xl xl:text-3xl font-black font-mono text-cyan-700 dark:text-cyan-300 tracking-tight block">
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-cyan-300 tracking-tight block">
                             {activeBowlerStats.econ.toFixed(2)}
                           </span>
                         </div>
-                        <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
-                          <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
                             {activeBowlerStats.overs || "0"} Overs Defended
                           </span>
-                          <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"
                               style={{ width: `${Math.min(100, Math.max(15, Math.round(((12 - activeBowlerStats.econ) / 6) * 100)))}%` }}
@@ -1166,12 +1066,12 @@ export default function PlayerProfilePage() {
                         </div>
                       </div>
 
-                      {/* Metric 3: Strike Rate */}
-                      <div className="bg-white dark:bg-gradient-to-br dark:from-[#12182c]/90 dark:to-[#070b18]/95 border border-slate-200 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-sm dark:shadow-lg relative overflow-hidden">
-                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-slate-300 dark:text-white/20 select-none">+</span>
+                      {/* Metric 3: Bowl Strike Rate */}
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
                         <div>
-                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 mb-1">
-                            <span className="flex items-center gap-1 text-slate-600 dark:text-white/70">
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1 text-white/70">
                               <Zap className="w-2.5 h-2.5 text-primary" />
                               Bowl SR
                             </span>
@@ -1183,11 +1083,11 @@ export default function PlayerProfilePage() {
                             {activeBowlerStats.sr.toFixed(1)}
                           </span>
                         </div>
-                        <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
-                          <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
                             Balls / Dismissal
                           </span>
-                          <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
                             <div
                               className="h-full rounded-full bg-gradient-to-r from-primary to-cyan-400"
                               style={{ width: `${Math.min(100, Math.max(15, Math.round(((30 - activeBowlerStats.sr) / 18) * 100)))}%` }}
@@ -1196,28 +1096,28 @@ export default function PlayerProfilePage() {
                         </div>
                       </div>
 
-                      {/* Metric 4: Best Figures */}
-                      <div className="bg-white dark:bg-gradient-to-br dark:from-[#12182c]/90 dark:to-[#070b18]/95 border border-slate-200 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-sm dark:shadow-lg relative overflow-hidden">
-                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-slate-300 dark:text-white/20 select-none">+</span>
+                      {/* Metric 4: Best Spell */}
+                      <div className="bg-gradient-to-br from-[#12182c]/90 to-[#070b18]/95 border border-white/10 hover:border-primary/40 rounded-2xl p-3 flex flex-col justify-between transition-all group/tile shadow-lg relative overflow-hidden">
+                        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-white/20 select-none">+</span>
                         <div>
-                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 mb-1">
-                            <span className="flex items-center gap-1 text-slate-600 dark:text-white/70">
-                              <Trophy className="w-2.5 h-2.5 text-amber-500 dark:text-amber-400" />
+                          <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-white/40 mb-1">
+                            <span className="flex items-center gap-1 text-white/70">
+                              <Trophy className="w-2.5 h-2.5 text-amber-400" />
                               Best Spell
                             </span>
-                            <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 text-[7px] font-mono font-bold">
+                            <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 text-[7px] font-mono font-bold">
                               BENCHMARK
                             </span>
                           </div>
-                          <span className="text-2xl xl:text-3xl font-black font-mono text-amber-600 dark:text-amber-300 tracking-tight block">
+                          <span className="text-2xl xl:text-3xl font-black font-mono text-amber-300 tracking-tight block">
                             {activeBowlerStats.best}
                           </span>
                         </div>
-                        <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-white/5">
-                          <span className="text-[7.5px] font-mono text-slate-500 dark:text-white/40 uppercase block truncate">
+                        <div className="mt-2 pt-1.5 border-t border-white/5">
+                          <span className="text-[7.5px] font-mono text-white/40 uppercase block truncate">
                             Peak Match Return
                           </span>
-                          <div className="w-full h-1 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden mt-1">
+                          <div className="w-full h-1 rounded-full bg-white/5 overflow-hidden mt-1">
                             <div className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-400 w-3/4" />
                           </div>
                         </div>
@@ -1227,6 +1127,193 @@ export default function PlayerProfilePage() {
                 </div>
               </div>
             </div>
+
+            {/* TIER 2: INTEGRATED VECTOR INTELLIGENCE & PHASE DIAGNOSTICS CONSOLE */}
+            {radarData.length > 0 && (
+              <div className="mt-6 pt-5 border-t border-white/10 relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+                  
+                  {/* Left: Vector Metrics Radar Box (5 cols) */}
+                  <div className="lg:col-span-5 rounded-2xl bg-white/[0.03] border border-white/10 p-4 relative overflow-hidden backdrop-blur-md flex flex-col justify-between">
+                    {/* Top ambient glow */}
+                    <div
+                      className="absolute -top-12 -right-12 w-28 h-28 rounded-full blur-[40px] pointer-events-none opacity-20"
+                      style={{ background: pColor || "#8B5CF6" }}
+                    />
+
+                    <div className="flex items-center justify-between gap-2 mb-2 relative z-10">
+                      <div className="flex items-center gap-2">
+                        <Activity className="w-3.5 h-3.5 text-primary" />
+                        <span className="text-[10px] font-black uppercase tracking-widest text-white/90 font-mono">
+                          Vector Radar Analysis
+                        </span>
+                      </div>
+                      <span className="text-[8px] font-mono font-black uppercase px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
+                        {showAsBatter ? "Phase Radar" : "Discipline Radar"}
+                      </span>
+                    </div>
+
+                    {/* Radar Chart */}
+                    <div className="h-[175px] sm:h-[190px] w-full flex items-center justify-center relative z-10">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+                          <PolarGrid stroke="rgba(255,255,255,0.10)" />
+                          <PolarAngleAxis
+                            dataKey="short"
+                            stroke="rgba(255,255,255,0.75)"
+                            fontSize={8}
+                            tickLine={false}
+                          />
+                          <PolarRadiusAxis angle={30} domain={[0, 'auto']} stroke="transparent" tick={false} />
+                          <Radar
+                            name="Performance"
+                            dataKey="value"
+                            stroke={pColor || "#8B5CF6"}
+                            fill={pColor || "#8B5CF6"}
+                            fillOpacity={0.35}
+                          />
+                        </RadarChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[8px] font-mono text-white/40">
+                      <span>HEXAGONAL QUANT VECTOR</span>
+                      <span className="text-primary font-bold">{bio.role?.toUpperCase()}</span>
+                    </div>
+                  </div>
+
+                  {/* Right: Phase Telemetry & Advanced Diagnostics (7 cols) */}
+                  <div className="lg:col-span-7 rounded-2xl bg-white/[0.03] border border-white/10 p-4 relative overflow-hidden backdrop-blur-md flex flex-col justify-between">
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                        <span className="text-[10px] font-black uppercase tracking-widest text-white/90 font-mono">
+                          {showAsBatter ? "Phase Strike Rate & Boundary Cadence" : "Phase Economy & Strike Metrics"}
+                        </span>
+                      </div>
+                      <span className="text-[8px] font-mono text-white/50 bg-white/5 px-2 py-0.5 rounded border border-white/5">
+                        Scope: {selectedSeasonScope === "career" ? "Career" : `IPL ${selectedSeasonScope}`}
+                      </span>
+                    </div>
+
+                    {/* 6 Precision Phase Diagnostic Cards */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 my-auto">
+                      {showAsBatter && activeBatterStats ? (
+                        <>
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">PP Strike Rate</span>
+                            <span className="text-base sm:text-lg font-mono font-black text-blue-400 block leading-tight">
+                              {activeBatterStats.ppSr ? activeBatterStats.ppSr.toFixed(1) : "—"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1">Overs 1–6 Intent</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Middle Overs SR</span>
+                            <span className="text-base sm:text-lg font-mono font-black text-cyan-400 block leading-tight">
+                              {activeBatterStats.middleSr ? activeBatterStats.middleSr.toFixed(1) : "—"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1">Overs 7–15 Control</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Death Overs SR</span>
+                            <span className="text-base sm:text-lg font-mono font-black text-rose-400 block leading-tight">
+                              {activeBatterStats.deathSr ? activeBatterStats.deathSr.toFixed(1) : "—"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1">Overs 16–20 Power</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Boundary %</span>
+                            <span className="text-base sm:text-lg font-mono font-black text-emerald-400 block leading-tight">
+                              {activeBatterStats.boundaryPct ? `${activeBatterStats.boundaryPct}%` : "—"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1">Runs via 4s & 6s</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Dot Ball %</span>
+                            <span className="text-base sm:text-lg font-mono font-black text-amber-400 block leading-tight">
+                              {activeBatterStats.dotPct ? `${activeBatterStats.dotPct}%` : "—"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1">Strike Rotation</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Clutch Rating</span>
+                            <span className="text-base sm:text-lg font-mono font-black text-purple-400 block leading-tight">
+                              {activeBatterStats.clutch ? activeBatterStats.clutch.toFixed(0) : "85"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1">High-Leverage Impact</span>
+                          </div>
+                        </>
+                      ) : activeBowlerStats ? (
+                        <>
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Dot Ball %</span>
+                            <span className="text-base sm:text-lg font-mono font-black text-emerald-400 block leading-tight">
+                              {activeBowlerStats.dotPct ? `${activeBowlerStats.dotPct}%` : "—"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1">Pressure Creation</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">True Economy</span>
+                            <span className="text-base sm:text-lg font-mono font-black text-cyan-400 block leading-tight">
+                              {activeBowlerStats.trueEconomy != null ? `${activeBowlerStats.trueEconomy > 0 ? "+" : ""}${activeBowlerStats.trueEconomy.toFixed(2)}` : "—"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1">Delta vs Conditions</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Balls / Boundary</span>
+                            <span className="text-base sm:text-lg font-mono font-black text-blue-400 block leading-tight">
+                              {activeBowlerStats.ballsPerBoundary ? activeBowlerStats.ballsPerBoundary.toFixed(1) : "—"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1">Boundary Resistance</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Discipline</span>
+                            <span className="text-sm font-mono font-black text-amber-400 block leading-tight truncate">
+                              {activeBowlerStats.bowlerType || bio.bowlStyle?.split(" ")[0] || "Pacer"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1 truncate">{bio.bowlStyle || "Specialist"}</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Boundary Conceded</span>
+                            <span className="text-base sm:text-lg font-mono font-black text-rose-400 block leading-tight">
+                              {activeBowlerStats.boundaryPct ? `${activeBowlerStats.boundaryPct}%` : "—"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1">Runs Conceded in 4s/6s</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
+                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Clutch Wickets</span>
+                            <span className="text-base sm:text-lg font-mono font-black text-purple-400 block leading-tight">
+                              {activeBowlerStats.clutch ? activeBowlerStats.clutch.toFixed(0) : "82"}
+                            </span>
+                            <span className="text-[7px] font-mono text-white/35 block mt-1">Breakthrough Index</span>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="col-span-3 text-[10px] font-mono text-white/40 text-center py-4">
+                          Telemetry Sync Active
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[8px] font-mono text-white/40">
+                      <span>DATA SYNTHESIS: IPL ADVANCED QUANT SUITE</span>
+                      <span className="text-emerald-400 font-bold">LIVE TELEMETRY VERIFIED</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

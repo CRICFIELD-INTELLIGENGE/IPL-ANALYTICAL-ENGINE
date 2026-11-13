@@ -3,45 +3,91 @@
 @variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: 210 40% 98%;
-  --foreground: 222 47% 11%;
-  --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --primary: 221 83% 53%;
+  --background: 228 60% 5%;
+  --foreground: 0 0% 100%;
+  --card: 226 48% 9%;
+  --card-foreground: 0 0% 100%;
+  --popover: 228 60% 5%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 213 22% 68%;
   --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222 47% 11%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215 16% 47%;
-  --accent: 210 40% 96%;
-  --accent-foreground: 222 47% 11%;
+  --secondary: 226 48% 12%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 226 48% 15%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 213 22% 68%;
+  --accent-foreground: 210 40% 98%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 210 40% 98%;
-  --border: 214 32% 91%;
-  --input: 214 32% 91%;
+  --border: 226 48% 15%;
+  --input: 226 48% 15%;
   --ring: 263 83% 58%;
   --radius: 16px;
 
-  /* CENTRALIZED SEMANTIC THEME TOKENS (LIGHT) */
-  --theme-bg-page: #F8FAFC;
-  --theme-bg-card: #FFFFFF;
-  --theme-bg-card-subtle: #F1F5F9;
-  --theme-border: #E2E8F0;
-  --theme-border-subtle: #F1F5F9;
-  --theme-text-primary: #0F172A;
-  --theme-text-secondary: #334155;
-  --theme-text-muted: #475569;
-  --theme-text-faint: #64748B;
+  /* CENTRALIZED SEMANTIC THEME TOKENS (DARK DEFAULT) */
+  --theme-bg-page: #050814;
+  --theme-bg-card: #0B1224;
+  --theme-bg-card-subtle: rgba(255, 255, 255, 0.03);
+  --theme-border: rgba(255, 255, 255, 0.09);
+  --theme-border-subtle: rgba(255, 255, 255, 0.04);
+  --theme-text-primary: #FFFFFF;
+  --theme-text-secondary: rgba(255, 255, 255, 0.75);
+  --theme-text-muted: rgba(255, 255, 255, 0.60);
+  --theme-text-faint: rgba(255, 255, 255, 0.40);
+  --palette-glow: rgba(56, 189, 248, 0.15);
 
-  /* TEAM THEME DYNAMIC TOKENS (LIGHT DEFAULT) */
-  --team-accent: #6366F1;
-  --team-secondary: #0284C7;
-  --team-glow: rgba(99, 102, 241, 0.15);
-  --team-surface-tint: rgba(99, 102, 241, 0.08);
-  --team-title-ink: #1e3a8a;
-  --team-title-surface: #eff6ff;
+  /* TEAM THEME DYNAMIC TOKENS (DARK DEFAULT) */
+  --team-accent: #A8B7C7;
+  --team-secondary: #06B6D4;
+  --team-glow: rgba(139, 92, 246, 0.25);
+  --team-surface-tint: rgba(139, 92, 246, 0.12);
+  --team-title-ink: #3b82f6;
+  --team-title-surface: #0c1c36;
+}
+
+/* DARK PALETTES */
+[data-dark-palette="midnight"] {
+  --background: 228 60% 5%;
+  --card: 226 48% 9%;
+  --theme-bg-page: #050814;
+  --theme-bg-card: #0B1224;
+  --theme-bg-card-subtle: rgba(255, 255, 255, 0.03);
+  --theme-border: rgba(255, 255, 255, 0.09);
+  --theme-border-subtle: rgba(255, 255, 255, 0.04);
+  --palette-glow: rgba(56, 189, 248, 0.15);
+}
+
+[data-dark-palette="obsidian"] {
+  --background: 0 0% 0%;
+  --card: 0 0% 4%;
+  --theme-bg-page: #000000;
+  --theme-bg-card: #09090B;
+  --theme-bg-card-subtle: rgba(255, 255, 255, 0.04);
+  --theme-border: rgba(255, 255, 255, 0.12);
+  --theme-border-subtle: rgba(255, 255, 255, 0.06);
+  --palette-glow: rgba(255, 255, 255, 0.08);
+}
+
+[data-dark-palette="cyber"] {
+  --background: 216 65% 4%;
+  --card: 215 58% 9%;
+  --theme-bg-page: #040D1A;
+  --theme-bg-card: #08182D;
+  --theme-bg-card-subtle: rgba(14, 165, 233, 0.06);
+  --theme-border: rgba(56, 189, 248, 0.18);
+  --theme-border-subtle: rgba(56, 189, 248, 0.08);
+  --palette-glow: rgba(6, 182, 212, 0.22);
+}
+
+[data-dark-palette="carbon"] {
+  --background: 220 14% 6%;
+  --card: 220 18% 10%;
+  --theme-bg-page: #0C0E12;
+  --theme-bg-card: #151820;
+  --theme-bg-card-subtle: rgba(255, 255, 255, 0.03);
+  --theme-border: rgba(255, 255, 255, 0.09);
+  --theme-border-subtle: rgba(255, 255, 255, 0.04);
+  --palette-glow: rgba(245, 158, 11, 0.15);
 }
 
 .dark, [data-theme="dark"] {
@@ -64,25 +110,6 @@
   --border: 226 48% 15%;
   --input: 226 48% 15%;
   --ring: 263 83% 58%;
-
-  /* CENTRALIZED SEMANTIC THEME TOKENS (DARK) */
-  --theme-bg-page: #050816;
-  --theme-bg-card: #0B1020;
-  --theme-bg-card-subtle: rgba(255, 255, 255, 0.03);
-  --theme-border: rgba(255, 255, 255, 0.12);
-  --theme-border-subtle: rgba(255, 255, 255, 0.06);
-  --theme-text-primary: #FFFFFF;
-  --theme-text-secondary: rgba(255, 255, 255, 0.75);
-  --theme-text-muted: rgba(255, 255, 255, 0.60);
-  --theme-text-faint: rgba(255, 255, 255, 0.40);
-
-  /* TEAM THEME DYNAMIC TOKENS (DARK DEFAULT) */
-  --team-accent: #A8B7C7;
-  --team-secondary: #06B6D4;
-  --team-glow: rgba(139, 92, 246, 0.25);
-  --team-surface-tint: rgba(139, 92, 246, 0.12);
-  --team-title-ink: #3b82f6;
-  --team-title-surface: #0c1c36;
 }
 
 /* Consistent franchise titles: strong ink over a deep team-coloured surface. */
@@ -128,24 +155,20 @@ html, body, #root {
 }
 
 @layer base {
-  * { border-color: rgba(148, 163, 184, 0.2); }
+  * { border-color: rgba(255, 255, 255, 0.08); }
   .dark * { border-color: rgba(255, 255, 255, 0.08); }
-  body {
+  body, .dark body, body.dark, html.dark body {
     font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: hsl(var(--foreground));
-    background-color: #F8FAFC;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  .dark body, body.dark, html.dark body {
     background:
       radial-gradient(1200px 600px at 10% -10%, var(--team-glow, hsl(270 95% 25% / 0.35)), transparent 65%),
       radial-gradient(900px 500px at 110% 10%, var(--team-surface-tint, hsl(220 100% 30% / 0.30)), transparent 60%),
       radial-gradient(700px 400px at 50% 110%, var(--team-glow, hsl(320 100% 30% / 0.20)), transparent 65%),
-      #050816;
-    background-color: #050816;
-    color: hsl(var(--foreground));
+      var(--theme-bg-page, #050814);
+    background-color: var(--theme-bg-page, #050814);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -221,15 +244,15 @@ html, body, #root {
 }
 
 .premium-card {
-  background-color: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  background-color: var(--theme-bg-card, #0B1224);
+  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.08));
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
   transition: all 0.2s ease;
 }
 
 .dark .premium-card {
-  background-color: #0B1020;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: var(--theme-bg-card, #0B1224);
+  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.08));
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
