@@ -6,7 +6,8 @@ import {
   Sliders, Shield, Flame, Search, ChevronRight, Eye, FastForward,
   RotateCcw, ArrowUpRight, CheckCircle2, Award, Clock, ArrowDownRight,
   TrendingUp, BarChart2, Layers, Maximize2, X, Filter, Shuffle,
-  Network, ArrowLeft, ExternalLink, ChevronDown
+  Network, ArrowLeft, ExternalLink, ChevronDown, ChevronUp, ArrowUp,
+  Radio
 } from "lucide-react";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
 
@@ -112,7 +113,7 @@ export const DECK_CARDS: DeckCardMeta[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 // STACKING DECK CARD CONTAINER
 // Header with module title at top, next module's header peeking at bottom,
-// and whole module info visible at one glance in between.
+// smooth viewport scroll animations, watermark numerals, and holographic ambient flares.
 // ─────────────────────────────────────────────────────────────────────────────
 export function StackingDeckCard({
   index,
@@ -121,6 +122,10 @@ export function StackingDeckCard({
   badge,
   Icon,
   children,
+  onNext,
+  onPrev,
+  isFirst,
+  isLast,
 }: {
   index: number;
   id: string;
@@ -128,18 +133,52 @@ export function StackingDeckCard({
   badge: string;
   Icon: React.ElementType;
   children: React.ReactNode;
+  onNext?: () => void;
+  onPrev?: () => void;
+  isFirst?: boolean;
+  isLast?: boolean;
 }) {
+  const cardAccent =
+    index % 5 === 0
+      ? { color: "#F59E0B" }
+      : index % 5 === 1
+      ? { color: "#06B6D4" }
+      : index % 5 === 2
+      ? { color: "#F43F5E" }
+      : index % 5 === 3
+      ? { color: "#3B82F6" }
+      : { color: "#A855F7" };
+
   return (
-    <div
+    <motion.div
       id={id}
-      className="relative w-full rounded-[24px] border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#070B16]/98 shadow-md dark:shadow-2xl flex flex-col overflow-hidden transition-all duration-300 mb-8 scroll-mt-28"
+      initial={{ opacity: 0.25, y: 38, scale: 0.985 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false, amount: 0.08, margin: "0px 0px -80px 0px" }}
+      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      className="group/card relative w-full rounded-[26px] border border-slate-200/90 dark:border-slate-800/80 bg-white dark:bg-[#070B16]/98 shadow-md hover:shadow-2xl dark:shadow-2xl dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden transition-all duration-300 mb-10 scroll-mt-36 hover:border-purple-300 dark:hover:border-purple-500/40"
     >
+      {/* Giant Holographic Watermark Numeral in Background */}
+      <div className="absolute -top-3 right-5 select-none pointer-events-none overflow-hidden z-0 opacity-[0.035] dark:opacity-[0.05] font-mono font-black text-[130px] sm:text-[150px] leading-none text-slate-900 dark:text-white transition-transform group-hover/card:scale-105 duration-500">
+        {String(index + 1).padStart(2, "0")}
+      </div>
+
+      {/* Subtle Ambient Gradient Flare */}
+      <div
+        className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-[90px] pointer-events-none opacity-15 dark:opacity-25 transition-opacity group-hover/card:opacity-35"
+        style={{ background: cardAccent.color }}
+      />
+
       {/* 1. MODULE HEADER STRIP (AT TOP OF MODULE) */}
-      <div className="h-[48px] px-4 md:px-6 border-b border-slate-200 dark:border-white/10 flex items-center justify-between bg-slate-100/90 dark:bg-[#080D1F]/90 shrink-0">
-        <div className="flex items-center gap-2.5 min-w-0">
-          <div className="p-1.5 rounded-xl bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/20 dark:border-purple-500/30 shrink-0">
+      <div className="h-[52px] px-4 md:px-6 border-b border-slate-200 dark:border-white/10 flex items-center justify-between bg-slate-50/90 dark:bg-[#080D1F]/90 backdrop-blur-md shrink-0 relative z-10">
+        <div className="flex items-center gap-3 min-w-0">
+          <motion.div
+            whileHover={{ rotate: 12, scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="p-2 rounded-xl bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/20 dark:border-purple-500/30 shrink-0 cursor-pointer shadow-sm"
+          >
             <Icon className="w-4 h-4" />
-          </div>
+          </motion.div>
           <div className="min-w-0">
             <span className="text-[9px] font-mono text-purple-600 dark:text-purple-400 font-black uppercase tracking-widest block leading-none">
               {badge}
@@ -150,20 +189,40 @@ export function StackingDeckCard({
           </div>
         </div>
 
-        {/* Live Engine Telemetry Badge */}
+        {/* Live Engine Telemetry Badge & Quick Nav */}
         <div className="flex items-center gap-2 shrink-0">
-          <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[9px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5">
+          {onPrev && !isFirst && (
+            <button
+              onClick={onPrev}
+              title="Previous Engine"
+              aria-label="Previous Engine"
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer hidden sm:flex items-center justify-center"
+            >
+              <ChevronDown className="w-3.5 h-3.5 rotate-180" />
+            </button>
+          )}
+          {onNext && !isLast && (
+            <button
+              onClick={onNext}
+              title="Next Engine"
+              aria-label="Next Engine"
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer hidden sm:flex items-center justify-center"
+            >
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+          )}
+          <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[9px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
-            LIVE ENGINE
+            <span className="hidden sm:inline">LIVE ENGINE</span> 0{index + 1}
           </span>
         </div>
       </div>
 
-      {/* 2. COMPLETE VISUAL OF DATA FROM THAT MODEL — Neatly visible with zero edge cutting */}
-      <div className="p-3 md:p-5 flex flex-col justify-between bg-slate-50/50 dark:bg-[#050814]/40 min-h-0">
+      {/* 2. COMPLETE VISUAL OF DATA FROM THAT MODEL */}
+      <div className="p-3 md:p-5 flex flex-col justify-between bg-slate-50/50 dark:bg-[#050814]/40 min-h-0 relative z-10">
         {children}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -1235,10 +1294,26 @@ export function FullAnalysisModal({
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MAIN EXPORT: LIVING GROUND DECK
-// Renders the 10 stacked cards with peeking headers and full in-between views
+// Renders the 10 stacked cards with peeking headers, kinetic scroll telemetry,
+// sticky interactive dimension HUD, and a floating flight deck controller.
 // ─────────────────────────────────────────────────────────────────────────────
 export function LivingGroundDeck() {
-  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+  const [activeCardId, setActiveCardId] = useState<string>(DECK_CARDS[0].id);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isAutoTouring, setIsAutoTouring] = useState(false);
+  const [isFlightDeckOpen, setIsFlightDeckOpen] = useState(true);
+  const [hasCelebratedEnd, setHasCelebratedEnd] = useState(false);
+  const dimensionBarRef = useRef<HTMLDivElement>(null);
+  const tourTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const activeIndex = useMemo(() => {
+    const idx = DECK_CARDS.findIndex((c) => c.id === activeCardId);
+    return idx >= 0 ? idx : 0;
+  }, [activeCardId]);
+
+  const activeCardMeta = useMemo(() => {
+    return DECK_CARDS[activeIndex] || DECK_CARDS[0];
+  }, [activeIndex]);
 
   const scrollToCard = (id: string) => {
     const el = document.getElementById(id);
@@ -1247,26 +1322,164 @@ export function LivingGroundDeck() {
     }
   };
 
+  const jumpToRelativeCard = (offset: number) => {
+    const nextIdx = Math.max(0, Math.min(DECK_CARDS.length - 1, activeIndex + offset));
+    scrollToCard(DECK_CARDS[nextIdx].id);
+  };
+
+  // 1. Calculate live scroll progress (0 - 100%)
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const p = docHeight > 0 ? Math.min(100, Math.max(0, Math.round((scrollY / docHeight) * 100))) : 0;
+      setScrollProgress(p);
+      if (p >= 92 && !hasCelebratedEnd) {
+        setHasCelebratedEnd(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasCelebratedEnd]);
+
+  // 2. IntersectionObserver to track the active module in the viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveCardId(entry.target.id);
+            // Smoothly auto-scroll dimension bar button into view
+            const btn = dimensionBarRef.current?.querySelector(`[data-card-id="${entry.target.id}"]`) as HTMLElement | null;
+            if (btn && dimensionBarRef.current) {
+              const container = dimensionBarRef.current;
+              const left = btn.offsetLeft - container.offsetWidth / 2 + btn.offsetWidth / 2;
+              container.scrollTo({ left, behavior: "smooth" });
+            }
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -55% 0px", threshold: [0, 0.2] }
+    );
+
+    DECK_CARDS.forEach((card) => {
+      const el = document.getElementById(card.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // 3. Playful Cinematic Tour / Autoplay Mode
+  useEffect(() => {
+    if (!isAutoTouring) {
+      if (tourTimerRef.current) clearInterval(tourTimerRef.current);
+      return;
+    }
+
+    tourTimerRef.current = setInterval(() => {
+      setActiveCardId((current) => {
+        const idx = DECK_CARDS.findIndex((c) => c.id === current);
+        if (idx >= 0 && idx < DECK_CARDS.length - 1) {
+          const nextCard = DECK_CARDS[idx + 1];
+          scrollToCard(nextCard.id);
+          return nextCard.id;
+        } else {
+          setIsAutoTouring(false);
+          return current;
+        }
+      });
+    }, 6500);
+
+    return () => {
+      if (tourTimerRef.current) clearInterval(tourTimerRef.current);
+    };
+  }, [isAutoTouring]);
+
   return (
-    <div className="relative w-full max-w-7xl mx-auto px-2 md:px-4 pb-24 space-y-6">
-      {/* QUICK FILTER DIMENSION BAR (JUMP DIRECTLY TO ANY MODULE) */}
-      <div className="sticky top-[68px] z-30 flex items-center gap-1.5 overflow-x-auto no-scrollbar py-2.5 px-3 bg-white/95 dark:bg-[#060A18]/90 rounded-2xl border border-slate-200 dark:border-white/10 backdrop-blur-md shadow-sm dark:shadow-lg transition-colors">
-        <span className="text-[10px] font-mono font-black uppercase tracking-wider text-purple-600 dark:text-purple-400 shrink-0 flex items-center gap-1.5 pr-2.5 border-r border-slate-200 dark:border-white/10">
-          <Filter className="w-3.5 h-3.5" /> Dimensions
-        </span>
-        {DECK_CARDS.map((card, idx) => (
-          <button
-            key={card.id}
-            onClick={() => scrollToCard(card.id)}
-            className="shrink-0 px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-purple-100 dark:bg-white/[0.04] dark:hover:bg-purple-600/30 border border-slate-200 hover:border-purple-300 dark:border-white/10 dark:hover:border-purple-500/40 text-slate-700 hover:text-slate-900 dark:text-white/70 dark:hover:text-white text-[10px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 hover:scale-105 active:scale-95"
-          >
-            <span className="text-purple-600 dark:text-purple-400 font-black">0{idx + 1}</span>
-            <span className="truncate max-w-[130px]">{card.badge.split("•")[1]?.trim() || card.title}</span>
-          </button>
-        ))}
+    <div className="relative w-full max-w-7xl mx-auto px-2 md:px-4 pb-28 space-y-6">
+      {/* ═════════════════════════════════════════════════════════════════════
+          QUICK FILTER DIMENSION BAR (STICKY WITH PROGRESS LASER & AUTO-SNAP)
+         ═════════════════════════════════════════════════════════════════════ */}
+      <div className="sticky top-[64px] z-30 overflow-hidden rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#060A18]/90 backdrop-blur-xl shadow-md dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-colors">
+        {/* Top Edge Animated Progress Laser */}
+        <div className="h-[3px] w-full bg-slate-100 dark:bg-white/5 relative overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-amber-400 shadow-[0_0_12px_rgba(168,85,247,0.8)]"
+            style={{ width: `${scrollProgress}%` }}
+            transition={{ ease: "easeOut", duration: 0.15 }}
+          />
+        </div>
+
+        {/* Content Strip */}
+        <div
+          ref={dimensionBarRef}
+          className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-2.5 px-3"
+        >
+          {/* Label Badge */}
+          <span className="text-[10px] font-mono font-black uppercase tracking-wider text-purple-600 dark:text-purple-400 shrink-0 flex items-center gap-1.5 pr-2.5 border-r border-slate-200 dark:border-white/10">
+            <Filter className="w-3.5 h-3.5" /> Dimensions
+          </span>
+
+          {/* 10 Module Pill Buttons with Smooth Layout Indicator */}
+          {DECK_CARDS.map((card, idx) => {
+            const isActive = activeCardId === card.id;
+            return (
+              <button
+                key={card.id}
+                data-card-id={card.id}
+                onClick={() => {
+                  if (isAutoTouring) setIsAutoTouring(false);
+                  scrollToCard(card.id);
+                }}
+                className={`relative shrink-0 px-3 py-1.5 rounded-xl text-[10px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 ${
+                  isActive
+                    ? "text-white font-black shadow-md shadow-purple-500/30 scale-105"
+                    : "bg-slate-100 hover:bg-purple-100/60 dark:bg-white/[0.04] dark:hover:bg-purple-600/25 border border-slate-200 hover:border-purple-300 dark:border-white/10 dark:hover:border-purple-500/40 text-slate-700 hover:text-slate-900 dark:text-white/70 dark:hover:text-white"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="active-viz-pill"
+                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 -z-10 shadow-sm border border-purple-400/50"
+                    transition={{ type: "spring", stiffness: 450, damping: 30 }}
+                  />
+                )}
+                <span
+                  className={
+                    isActive
+                      ? "text-purple-200 font-black flex items-center gap-1"
+                      : "text-purple-600 dark:text-purple-400 font-black"
+                  }
+                >
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />}
+                  0{idx + 1}
+                </span>
+                <span className="truncate max-w-[125px]">
+                  {card.badge.split("•")[1]?.trim() || card.title}
+                </span>
+              </button>
+            );
+          })}
+
+          {/* Telemetry Counter Pill (Right side) */}
+          <div className="ml-auto pl-2 border-l border-slate-200 dark:border-white/10 shrink-0 hidden md:flex items-center gap-2">
+            <span className="px-2.5 py-1 rounded-lg bg-purple-500/10 border border-purple-500/20 text-[9px] font-mono font-bold text-purple-700 dark:text-purple-300 uppercase tracking-widest flex items-center gap-1.5">
+              <Activity className="w-3 h-3 text-purple-500 animate-pulse" />
+              0{activeIndex + 1}/10 • {scrollProgress}%
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* 10 STACKING MODULE CARDS — As you scroll down, each cleanly replaces the previous card with complete visual data */}
+      {/* ═════════════════════════════════════════════════════════════════════
+          10 STACKING MODULE CARDS
+          Animated viewport entrance, holographic watermark numerals,
+          and smooth directional jumps between engines.
+         ═════════════════════════════════════════════════════════════════════ */}
+
       {/* CARD 01 */}
       <StackingDeckCard
         index={0}
@@ -1274,6 +1487,8 @@ export function LivingGroundDeck() {
         badge="MODULE 01 • SPATIAL RADAR & COMMAND"
         title="360° Scoring Radar & Radial Velocity Vectors"
         Icon={Compass}
+        isFirst
+        onNext={() => scrollToCard(DECK_CARDS[1].id)}
       >
         <Card01MergedScoringRadar />
       </StackingDeckCard>
@@ -1285,6 +1500,8 @@ export function LivingGroundDeck() {
         badge="MODULE 02 • BOWLING TELEMETRY"
         title="3D Pitch Map & Delivery Execution Matrix"
         Icon={Target}
+        onPrev={() => scrollToCard(DECK_CARDS[0].id)}
+        onNext={() => scrollToCard(DECK_CARDS[2].id)}
       >
         <Card02BowlerTelemetry />
       </StackingDeckCard>
@@ -1296,28 +1513,34 @@ export function LivingGroundDeck() {
         badge="MODULE 03 • HEAD-TO-HEAD"
         title="The Duel: Batter × Bowler Faceoff Matrix"
         Icon={Flame}
+        onPrev={() => scrollToCard(DECK_CARDS[1].id)}
+        onNext={() => scrollToCard(DECK_CARDS[3].id)}
       >
         <Card03TheDuel />
       </StackingDeckCard>
 
-      {/* CARD 04 — Mapped to ShotFlowSankey (5x5 Length vs Shot Type Matrix) */}
+      {/* CARD 04 — Length vs Shot Matrix */}
       <StackingDeckCard
         index={3}
         id="card-length-to-shot"
         badge="MODULE 04 • LENGTH MATRIX"
         title="Delivery Length to Shot Type Analysis (2008 – 2026)"
         Icon={BarChart2}
+        onPrev={() => scrollToCard(DECK_CARDS[2].id)}
+        onNext={() => scrollToCard(DECK_CARDS[4].id)}
       >
         <ShotFlowSankey />
       </StackingDeckCard>
 
-      {/* CARD 05 — Mapped to RunFlowSankey (Sunburst Radial Hierarchy Execution Flow) */}
+      {/* CARD 05 — Execution Flow */}
       <StackingDeckCard
         index={4}
         id="card-shot-execution-flow"
         badge="MODULE 05 • EXECUTION FLOW"
         title="Delivery Type to Shot Execution Flow (2008 – 2026)"
         Icon={Zap}
+        onPrev={() => scrollToCard(DECK_CARDS[3].id)}
+        onNext={() => scrollToCard(DECK_CARDS[5].id)}
       >
         <RunFlowSankey />
       </StackingDeckCard>
@@ -1329,6 +1552,8 @@ export function LivingGroundDeck() {
         badge="MODULE 06 • AUCTION DYNAMICS"
         title="3D Holographic Player Transfers (2008 – 2026)"
         Icon={Shuffle}
+        onPrev={() => scrollToCard(DECK_CARDS[4].id)}
+        onNext={() => scrollToCard(DECK_CARDS[6].id)}
       >
         <TransferFlowSankey />
       </StackingDeckCard>
@@ -1340,6 +1565,8 @@ export function LivingGroundDeck() {
         badge="MODULE 07 • TELEMETRY ENGINE"
         title="Continuous Ball-by-Ball Momentum Stream & Live Telemetry"
         Icon={Activity}
+        onPrev={() => scrollToCard(DECK_CARDS[5].id)}
+        onNext={() => scrollToCard(DECK_CARDS[7].id)}
       >
         <MomentumStream title="Database: 1,243 Total IPL Matches (2008 – 2026)" />
       </StackingDeckCard>
@@ -1351,6 +1578,8 @@ export function LivingGroundDeck() {
         badge="MODULE 08 • WIN ENGINE"
         title="Win Probability Dynamic Stream & Live Shift Engine"
         Icon={TrendingUp}
+        onPrev={() => scrollToCard(DECK_CARDS[6].id)}
+        onNext={() => scrollToCard(DECK_CARDS[8].id)}
       >
         <WinProbabilityStream team1="RCB" team2="CSK" />
       </StackingDeckCard>
@@ -1362,6 +1591,8 @@ export function LivingGroundDeck() {
         badge="MODULE 09 • VENUE GEOMETRY"
         title="Venue Geometry Dimensions & Tactical AI"
         Icon={Layers}
+        onPrev={() => scrollToCard(DECK_CARDS[7].id)}
+        onNext={() => scrollToCard(DECK_CARDS[9].id)}
       >
         <Card09VenueDna />
       </StackingDeckCard>
@@ -1373,11 +1604,175 @@ export function LivingGroundDeck() {
         badge="MODULE 10 • KNOWLEDGE GRAPH"
         title="Knowledge Graph Entity Map"
         Icon={Network}
+        isLast
+        onPrev={() => scrollToCard(DECK_CARDS[8].id)}
       >
         <KnowledgeGraphSimple />
       </StackingDeckCard>
 
+      {/* ═════════════════════════════════════════════════════════════════════
+          CELEBRATORY END MILESTONE CARD
+         ═════════════════════════════════════════════════════════════════════ */}
+      {hasCelebratedEnd && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.5, type: "spring" }}
+          className="rounded-3xl p-6 bg-gradient-to-r from-purple-900/40 via-indigo-900/30 to-purple-900/40 border border-purple-500/30 text-center relative overflow-hidden backdrop-blur-xl shadow-2xl"
+        >
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Sparkles className="w-5 h-5 text-amber-400 animate-bounce" />
+            <span className="text-xs font-mono font-black uppercase tracking-widest text-purple-600 dark:text-purple-300">
+              MISSION ACCOMPLISHED
+            </span>
+            <Sparkles className="w-5 h-5 text-amber-400 animate-bounce" />
+          </div>
+          <h3 className="text-lg md:text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-1">
+            All 10 Spatial Data Engines Explored
+          </h3>
+          <p className="text-xs text-slate-600 dark:text-white/60 font-mono max-w-lg mx-auto mb-4">
+            260,000+ real delivery coordinates, 1,243 matches, and 8 spatial dimensions processed.
+          </p>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-mono text-xs font-bold uppercase tracking-wider shadow-lg shadow-purple-500/30 hover:scale-105 active:scale-95 transition-all inline-flex items-center gap-2 cursor-pointer"
+          >
+            <ArrowUp className="w-4 h-4" /> Glide Back To Top
+          </button>
+        </motion.div>
+      )}
 
+      {/* ═════════════════════════════════════════════════════════════════════
+          FLOATING "FLIGHT DECK" TELEMETRY HUD CONTROLLER (BOTTOM-RIGHT)
+         ═════════════════════════════════════════════════════════════════════ */}
+      <aside aria-label="Visualizations Flight Deck" className="fixed bottom-5 right-5 z-40">
+        <AnimatePresence>
+          {isFlightDeckOpen ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.85, y: 20 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="w-72 sm:w-80 rounded-2xl bg-white/95 dark:bg-[#070B16]/95 border border-purple-500/30 dark:border-purple-500/30 p-3.5 shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-white relative overflow-hidden"
+            >
+              {/* Top ambient glow */}
+              <div className="absolute -top-12 -right-12 w-28 h-28 rounded-full blur-[40px] pointer-events-none bg-purple-600/30" />
+
+              {/* Header */}
+              <div className="flex items-center justify-between mb-2 pb-2 border-b border-slate-200 dark:border-white/10 relative z-10">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  <span className="text-[10px] font-mono font-black uppercase tracking-wider text-purple-600 dark:text-purple-400">
+                    FLIGHT DECK HUD
+                  </span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="text-[9px] font-mono text-slate-500 dark:text-white/40">
+                    0{activeIndex + 1}/10
+                  </span>
+                  <button
+                    onClick={() => setIsFlightDeckOpen(false)}
+                    aria-label="Minimize flight deck"
+                    className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-white/10 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors cursor-pointer"
+                  >
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Current Active Engine Card Preview */}
+              <div className="mb-2.5 p-2 rounded-xl bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/5 relative z-10">
+                <div className="text-[8px] font-mono uppercase tracking-wider text-purple-600 dark:text-purple-400 font-bold truncate">
+                  {activeCardMeta.badge}
+                </div>
+                <div className="text-xs font-black truncate text-slate-900 dark:text-white mt-0.5">
+                  {activeCardMeta.title}
+                </div>
+              </div>
+
+              {/* Navigation Controls: Prev, Tour, Next */}
+              <div className="grid grid-cols-3 gap-1.5 mb-2.5 relative z-10">
+                <button
+                  onClick={() => jumpToRelativeCard(-1)}
+                  disabled={activeIndex === 0}
+                  className="px-2 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-40 text-[10px] font-mono font-bold uppercase transition-all cursor-pointer flex items-center justify-center gap-1 active:scale-95 disabled:cursor-not-allowed"
+                >
+                  <ChevronUp className="w-3.5 h-3.5" /> Prev
+                </button>
+
+                <button
+                  onClick={() => setIsAutoTouring(!isAutoTouring)}
+                  className={`px-2 py-1.5 rounded-xl border text-[10px] font-mono font-bold uppercase transition-all cursor-pointer flex items-center justify-center gap-1 shadow-sm active:scale-95 ${
+                    isAutoTouring
+                      ? "bg-amber-500 text-slate-950 border-amber-400 font-black animate-pulse"
+                      : "bg-purple-600 hover:bg-purple-700 text-white border-purple-500/50"
+                  }`}
+                >
+                  {isAutoTouring ? (
+                    <>
+                      <Pause className="w-3 h-3 fill-current" /> Tour On
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-3 h-3 fill-current" /> Auto Tour
+                    </>
+                  )}
+                </button>
+
+                <button
+                  onClick={() => jumpToRelativeCard(1)}
+                  disabled={activeIndex === DECK_CARDS.length - 1}
+                  className="px-2 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-40 text-[10px] font-mono font-bold uppercase transition-all cursor-pointer flex items-center justify-center gap-1 active:scale-95 disabled:cursor-not-allowed"
+                >
+                  Next <ChevronDown className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* 10 Mini Scrubber Dots (Click to jump anywhere) */}
+              <div className="flex items-center justify-between px-1 pt-1.5 border-t border-slate-200 dark:border-white/10 relative z-10">
+                <div className="flex items-center gap-1.5">
+                  {DECK_CARDS.map((card, i) => (
+                    <button
+                      key={card.id}
+                      onClick={() => {
+                        if (isAutoTouring) setIsAutoTouring(false);
+                        scrollToCard(card.id);
+                      }}
+                      title={`0${i + 1}: ${card.title}`}
+                      className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                        activeIndex === i
+                          ? "w-6 bg-purple-600 dark:bg-purple-400 shadow-[0_0_8px_rgba(168,85,247,0.8)]"
+                          : "w-2.5 bg-slate-300 hover:bg-slate-400 dark:bg-white/20 dark:hover:bg-white/40"
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                {/* Back to top button */}
+                <button
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  title="Scroll back to top"
+                  className="p-1 rounded-md text-slate-500 hover:text-purple-600 dark:text-white/40 dark:hover:text-purple-300 transition-colors cursor-pointer"
+                >
+                  <ArrowUp className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.button
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={() => setIsFlightDeckOpen(true)}
+              className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-white/95 dark:bg-[#070B16]/95 border border-purple-500/40 shadow-xl backdrop-blur-xl text-slate-900 dark:text-white text-xs font-mono font-black uppercase tracking-wider hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span>0{activeIndex + 1}/10 HUD</span>
+              <ChevronUp className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+            </motion.button>
+          )}
+        </AnimatePresence>
+      </aside>
     </div>
   );
 }

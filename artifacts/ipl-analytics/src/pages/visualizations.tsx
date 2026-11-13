@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout } from "@/components/layout";
-import { Sparkles, Activity } from "lucide-react";
+import { Sparkles, Activity, Compass } from "lucide-react";
 import { LivingGroundDeck } from "@/components/visualizations/living-ground-deck";
 import { AdVessel } from "@/components/ad-vessel";
 
@@ -9,8 +9,8 @@ export default function VisualizationsPage() {
     <Layout>
       {/* ═════════════════════════════════════════════════════════════════════
           1. TOP HUD: DATA EXPLORER & ENGINE COVERAGE
-             - DEEP ANALYTICS LAB (7 Analytical Engines badge)
-             - DATA EXPLORER title
+             - DEEP ANALYTICS LAB (10 Spatial Data Engines badge)
+             - DATA EXPLORER title + Interactive Tour CTA
              - ENGINE COVERAGE multi-dimensional stats panel
              - High-contrast, theme-aware in both Light Mode and Dark Mode
          ═════════════════════════════════════════════════════════════════════ */}
@@ -30,16 +30,26 @@ export default function VisualizationsPage() {
                     <Sparkles className="w-3 h-3 text-purple-600 dark:text-purple-400" />
                     DEEP ANALYTICS LAB
                   </span>
-                  <span className="text-[10px] font-mono text-slate-500 dark:text-white/40 tracking-wider">7 Analytical Engines</span>
+                  <span className="text-[10px] font-mono text-slate-500 dark:text-white/40 tracking-wider">10 Spatial Engines</span>
                 </div>
                 <h1 className="text-xl md:text-2xl lg:text-3xl font-black uppercase tracking-tighter scale-x-105 origin-left leading-none">
                   <div className="mb-0.5 text-slate-900 dark:text-white/90">DATA</div>
                   <span className="text-purple-600 dark:text-purple-400 block">EXPLORER.</span>
                 </h1>
               </div>
-              <p className="text-[10px] md:text-[11px] font-mono text-slate-500 dark:text-white/50 mt-1 hidden sm:block">
-                Ball-By-Ball Spatial Graph • Living Ground Stacking Intelligence Deck
-              </p>
+              <div className="flex flex-wrap items-center justify-between gap-2 mt-2">
+                <p className="text-[10px] md:text-[11px] font-mono text-slate-500 dark:text-white/50 hidden sm:block">
+                  Ball-By-Ball Spatial Graph • Living Ground Stacking Intelligence Deck
+                </p>
+                <button
+                  onClick={() => {
+                    document.getElementById("card-scoring-radar")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-[10px] font-mono font-bold uppercase tracking-wider shadow-sm hover:shadow-purple-500/30 transition-all inline-flex items-center gap-1.5 cursor-pointer active:scale-95"
+                >
+                  <Compass className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: "12s" }} /> Explore 10 Living Engines ↓
+                </button>
+              </div>
             </div>
           </div>
 
