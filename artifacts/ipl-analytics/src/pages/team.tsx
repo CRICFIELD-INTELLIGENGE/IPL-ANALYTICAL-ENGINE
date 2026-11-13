@@ -246,48 +246,48 @@ export default function TeamProfilePage() {
         <TeamIntelPanel team={teamData.team} />
 
         {/* SUB TAB BAR */}
-        <div className="flex gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/5 w-fit">
+        <div className="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 w-fit shadow-sm dark:shadow-none">
           <button
             onClick={() => setActiveSubTab("overview")}
-            className={`px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all ${
+            className={`px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all cursor-pointer ${
               activeSubTab === "overview"
-                ? "text-white bg-white/10"
-                : "text-white/40 hover:text-white hover:bg-white/5"
+                ? "text-slate-900 dark:text-white bg-white dark:bg-white/10 shadow-sm dark:shadow-none"
+                : "text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5"
             }`}
-            style={activeSubTab === "overview" ? { boxShadow: `0 0 16px -4px ${pColor}80`, backgroundImage: `linear-gradient(to right, ${pColor}40, transparent)` } : {}}
+            style={activeSubTab === "overview" ? { boxShadow: `0 0 16px -4px ${pColor}80`, backgroundImage: `linear-gradient(to right, ${pColor}25, transparent)` } : {}}
           >
             <Activity className="w-4 h-4" />
             Performance
           </button>
           <button
             onClick={() => setActiveSubTab("squad")}
-            className={`px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all ${
+            className={`px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all cursor-pointer ${
               activeSubTab === "squad"
-                ? "text-white bg-white/10"
-                : "text-white/40 hover:text-white hover:bg-white/5"
+                ? "text-slate-900 dark:text-white bg-white dark:bg-white/10 shadow-sm dark:shadow-none"
+                : "text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5"
             }`}
-            style={activeSubTab === "squad" ? { boxShadow: `0 0 16px -4px ${pColor}80`, backgroundImage: `linear-gradient(to right, ${pColor}40, transparent)` } : {}}
+            style={activeSubTab === "squad" ? { boxShadow: `0 0 16px -4px ${pColor}80`, backgroundImage: `linear-gradient(to right, ${pColor}25, transparent)` } : {}}
           >
             <Users className="w-4 h-4" />
             Current Squad
           </button>
           <button
             onClick={() => setActiveSubTab("history")}
-            className={`px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all ${
+            className={`px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all cursor-pointer ${
               activeSubTab === "history"
-                ? "text-white bg-white/10"
-                : "text-white/40 hover:text-white hover:bg-white/5"
+                ? "text-slate-900 dark:text-white bg-white dark:bg-white/10 shadow-sm dark:shadow-none"
+                : "text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5"
             }`}
-            style={activeSubTab === "history" ? { boxShadow: `0 0 16px -4px ${pColor}80`, backgroundImage: `linear-gradient(to right, ${pColor}40, transparent)` } : {}}
+            style={activeSubTab === "history" ? { boxShadow: `0 0 16px -4px ${pColor}80`, backgroundImage: `linear-gradient(to right, ${pColor}25, transparent)` } : {}}
           >
             <Calendar className="w-4 h-4" />
             Match History
           </button>
           <Link href={`/dugout/${dugoutSlug}`}>
-            <button className="px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all text-white/50 hover:text-white hover:bg-white/10 cursor-pointer">
+            <button className="px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all text-slate-600 dark:text-white/50 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/10 cursor-pointer">
               <Shield className="w-4 h-4" style={{ color: pColor }} />
               Dugout HQ
-              <ArrowRight className="w-3 h-3 text-white/40" />
+              <ArrowRight className="w-3 h-3 text-slate-400 dark:text-white/40" />
             </button>
           </Link>
         </div>

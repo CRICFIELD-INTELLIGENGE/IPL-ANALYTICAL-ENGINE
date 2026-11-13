@@ -556,7 +556,8 @@ html:not(.dark),
     [class*="bg-[#121820]"], [class*="bg-[#121a33]"], [class*="bg-[#141d30]"], [class*="bg-[#14212A]"],
     [class*="bg-[#162634]"], [class*="bg-[#192D3C]"], [class*="bg-[#090E1A]"], [class*="bg-[#0C1426]"],
     [class*="bg-[#101C34]"], [class*="bg-[#1C1226]"], [class*="bg-[#0D1924]"], [class*="bg-[#08131E]"],
-    [class*="bg-[#0B1722]"]
+    [class*="bg-[#0B1722]"], [class*="bg-[#060B16]"], [class*="bg-[#060b16]"], [class*="bg-[#080E1A]"],
+    [class*="bg-[#080e1a]"], [class*="bg-[#091122]"]
   ) {
     background-color: var(--theme-bg-card) !important;
   }
