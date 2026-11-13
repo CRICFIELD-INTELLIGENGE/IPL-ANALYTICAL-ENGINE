@@ -228,12 +228,14 @@ export function ScoutCinematicRoom({
     { label: "Middle order anchors", action: () => { setDiscipline("batting"); setPhase("middle"); setRole("middle_order"); } },
   ];
 
-  // Quick Action cards with authentic player silhouette illustrations
+  // Quick Action cards with authentic player photos & role tags
   const QUICK_CARDS = [
     {
       title: "Finisher",
       sub: "Find a",
       img: "/msd.jpg",
+      role: "Death Overs",
+      icon: Zap,
       action: () => {
         setDiscipline("batting");
         setPhase("death");
@@ -245,6 +247,8 @@ export function ScoutCinematicRoom({
       title: "Fast Bowler",
       sub: "Find a",
       img: "/bumrah.jpg",
+      role: "Pace / Death",
+      icon: Flame,
       action: () => {
         setDiscipline("bowling");
         setRole("death_specialist");
@@ -255,6 +259,8 @@ export function ScoutCinematicRoom({
       title: "Young Talent",
       sub: "Find",
       img: "/abhisek sharma.jpg",
+      role: "High Ceiling",
+      icon: Sparkles,
       action: () => {
         setMinBalls(60);
         setSearchQuery("young");
@@ -264,6 +270,8 @@ export function ScoutCinematicRoom({
       title: "a Player",
       sub: "Replace",
       img: "/virat kohli.jpg",
+      role: "Role Fit Swap",
+      icon: RotateCcw,
       action: () => {
         const el = document.getElementById("scout-workspace");
         if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -289,17 +297,12 @@ export function ScoutCinematicRoom({
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-3 border-b border-slate-200 dark:border-[#142330] relative z-20">
           <div className="flex items-center gap-3">
             <span 
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase border shadow-sm transition-all duration-300 bg-white/90 dark:bg-black/60 backdrop-blur-sm"
-              style={{
-                borderColor: accentColor,
-                color: accentColor,
-                boxShadow: `0 0 12px ${glowColor}`,
-              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase border shadow-2xs transition-all duration-300 bg-emerald-50 dark:bg-black/60 text-emerald-800 dark:text-[var(--scout-accent)] border-emerald-300 dark:border-white/20"
             >
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: accentColor }} />
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-emerald-500" />
               {theme ? `${theme.shortName} DUGOUT • SCOUT ROOM ACTIVE` : "SCOUT LAB • TACTICAL RADAR ACTIVE"}
             </span>
-            <span className="hidden xl:inline text-xs text-slate-500 dark:text-[#718594] font-mono">
+            <span className="hidden xl:inline text-xs text-slate-600 dark:text-[#718594] font-mono font-semibold">
               DIRECTIVE: 2026 AUCTION RETENTION & REPLACEMENT
             </span>
           </div>
@@ -392,16 +395,13 @@ export function ScoutCinematicRoom({
           
           {/* ── LEFT COLUMN (5 cols): Directives & Search & Quick Cards ── */}
           <div className="lg:col-span-5 space-y-4">
-            {/* Handwritten script eyebrow */}
+            {/* Clean modern eyebrow */}
             <div className="space-y-0.5">
-              <p 
-                className="font-serif italic text-xs sm:text-sm tracking-wide transition-colors"
-                style={{ color: accentColor }}
-              >
-                {theme ? `${theme.name} • Dugout Intelligence` : "Different Leagues"}
+              <p className="text-xs sm:text-sm font-bold tracking-wide uppercase text-primary dark:text-[var(--team-accent)]">
+                {theme ? `${theme.name} • Dugout Intelligence` : "Multi-League Radar"}
               </p>
-              <p className="font-serif italic text-[11px] sm:text-xs text-slate-600 dark:text-[#8295A2]">
-                {theme ? theme.motto : "Same Mission To Find The Right Player"}
+              <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">
+                {theme ? theme.motto : "Global Talent Intelligence • Cross-League Sourcing"}
               </p>
             </div>
 
@@ -678,51 +678,66 @@ export function ScoutCinematicRoom({
               </button>
             </div>
 
-            {/* 4 Quick Action Prompt Cards with Increased Size to close gap with ALL LEAGUES box */}
+            {/* 4 Quick Action Prompt Cards with Authentic Player Imagery */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              {QUICK_CARDS.map((card) => (
-                <div
-                  key={card.title}
-                  onClick={card.action}
-                  className="group relative bg-white dark:bg-[#08121B] hover:bg-slate-50 dark:hover:bg-[#0C1A27] border rounded-2xl p-3 sm:p-3.5 flex flex-col justify-end h-36 sm:h-40 cursor-pointer transition-all duration-300 shadow-sm dark:shadow-xl hover:-translate-y-1 overflow-hidden"
-                  style={{
-                    borderColor: `${accentColor}33`,
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = accentColor;
-                    e.currentTarget.style.boxShadow = `0 12px 28px rgba(0,0,0,0.15), 0 0 16px ${glowColor}`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = `${accentColor}33`;
-                    e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.06)";
-                  }}
-                >
-                  <svg aria-hidden="true" viewBox="0 0 180 120" className="absolute inset-0 w-full h-full opacity-20 dark:opacity-40 group-hover:opacity-60 transition-opacity" fill="none" stroke={accentColor}><ellipse cx="90" cy="60" rx="76" ry="48"/><ellipse cx="90" cy="60" rx="52" ry="32" strokeDasharray="3 5"/><rect x="80" y="32" width="20" height="56" rx="2"/><path d="M78 40h24M78 80h24M90 10v15M90 95v15M10 60h20M150 60h20"/><circle cx="45" cy="40" r="4"/><circle cx="133" cy="77" r="4"/><path d="M45 40L90 60l43 17" strokeDasharray="4 4"/></svg>
-                  <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#060D15] dark:via-[#060D15]/80" />
+              {QUICK_CARDS.map((card) => {
+                const Icon = card.icon;
+                return (
+                  <div
+                    key={card.title}
+                    onClick={card.action}
+                    className="group relative bg-white dark:bg-[#08121B] hover:bg-slate-50 dark:hover:bg-[#0C1A27] border border-slate-200/90 dark:border-white/10 rounded-2xl p-2.5 flex flex-col justify-between h-44 cursor-pointer transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-1 overflow-hidden"
+                  >
+                    {/* Top photo banner + role tag */}
+                    <div className="relative w-full h-24 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-900 shrink-0">
+                      <img 
+                        src={card.img} 
+                        alt={card.title} 
+                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                      <div className="absolute top-2 left-2 flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-black/65 backdrop-blur-md text-[9px] font-mono font-bold text-white border border-white/15">
+                        <Icon className="w-2.5 h-2.5 text-emerald-400" />
+                        <span>{card.role}</span>
+                      </div>
+                    </div>
 
-                  <div className="relative z-10 space-y-1">
-                    <span className="inline-block text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-[#8FA3B2] group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
-                      {card.sub}
-                    </span>
-                    <p className="text-xs sm:text-sm font-black text-slate-900 dark:text-white group-hover:text-[var(--scout-accent)] transition-colors leading-tight">
-                      {card.title}
-                    </p>
-                    <div 
-                      className="w-4 h-0.5 rounded-full transition-all duration-300 group-hover:w-8"
-                      style={{ backgroundColor: accentColor }}
-                    />
+                    {/* Bottom title & prompt info */}
+                    <div className="pt-2 px-1 relative z-10 flex items-end justify-between">
+                      <div>
+                        <span className="block text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                          {card.sub}
+                        </span>
+                        <p className="text-xs sm:text-sm font-black text-slate-900 dark:text-white leading-tight group-hover:text-primary transition-colors">
+                          {card.title}
+                        </p>
+                      </div>
+                      <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all">
+                        <ArrowRight className="w-3 h-3 text-slate-500 dark:text-slate-300 group-hover:text-white transition-colors" />
+                      </div>
+                    </div>
                   </div>
-
-                </div>
-
-              ))}
+                );
+              })}
             </div>
           </div>
 
           {/* ── CENTER COLUMN (4 cols): 3D Holographic Globe & Network Connections ── */}
           <div className="lg:col-span-4 flex flex-col items-center justify-center relative min-h-[300px]">
-            <div className="relative w-full max-w-[320px] aspect-square flex items-center justify-center">
+            <div className="relative w-full max-w-[330px] aspect-square flex items-center justify-center rounded-3xl bg-slate-900 dark:bg-[#07121D]/90 border border-slate-800 dark:border-white/10 shadow-xl p-3 overflow-hidden">
+              {/* Radar Grid Backdrop */}
+              <div aria-hidden="true" className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#ffffff22_1px,transparent_1px)] [background-size:16px_16px]" />
+              
+              {/* Top HUD Label on radar */}
+              <div className="absolute top-3 inset-x-0 flex items-center justify-between px-4 z-20 pointer-events-none">
+                <span className="text-[9px] font-mono font-bold tracking-widest text-emerald-400 uppercase flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  RADAR ACTIVE
+                </span>
+                <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider">
+                  6 LEAGUES
+                </span>
+              </div>
               {/* Outer atmospheric aura */}
               <div 
                 className="absolute inset-4 rounded-full blur-2xl opacity-20 pointer-events-none"
@@ -886,11 +901,11 @@ export function ScoutCinematicRoom({
             <div className="bg-white/90 dark:bg-[#060F17]/90 border border-slate-200 dark:border-[#162734] rounded-xl p-3 shadow-md dark:shadow-lg backdrop-blur-md">
               <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-700 dark:text-[#A8BCC9] pb-2 border-b border-slate-200 dark:border-[#132330]">
                 <div className="flex items-center gap-1.5">
-                  <span style={{ color: accentColor }}>›</span>
+                  <span className="text-primary font-bold">›</span>
                   <span className="tracking-wider uppercase">SCOUTING NETWORK</span>
                 </div>
 
-                <span className="text-[9px] text-slate-500 dark:text-[#556775]">6 CONNECTED</span>
+                <span className="text-[9px] font-bold text-emerald-600 dark:text-emerald-400">6 CONNECTED</span>
               </div>
 
               <div className="space-y-1.5 pt-2">
@@ -904,11 +919,9 @@ export function ScoutCinematicRoom({
                     >
                       <div className="flex items-center gap-1.5">
                         <span 
-                          className="w-1.5 h-1.5 rounded-full transition-all"
-                          style={{
-                            backgroundColor: isActive ? accentColor : "#94A3B8",
-                            boxShadow: isActive ? `0 0 6px ${accentColor}` : "none",
-                          }}
+                          className={`w-1.5 h-1.5 rounded-full transition-all ${
+                            isActive ? "bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]" : "bg-slate-300 dark:bg-slate-600"
+                          }`}
                         />
                         <span className={isActive ? "text-slate-900 dark:text-white font-bold" : "text-slate-500 dark:text-[#758694]"}>
                           {league.name}
@@ -916,8 +929,9 @@ export function ScoutCinematicRoom({
                       </div>
 
                       <span 
-                        className="text-[9px] font-semibold"
-                        style={{ color: isActive ? accentColor : "#94A3B8" }}
+                        className={`text-[9px] font-bold ${
+                          isActive ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-slate-500"
+                        }`}
                       >
                         {isActive ? "Connected" : "Standby"}
                       </span>
@@ -927,22 +941,28 @@ export function ScoutCinematicRoom({
               </div>
             </div>
 
-            {/* Pinned Note on Cork/Cardboard with Red Pushpin */}
-            <div className="relative group rotate-1 hover:rotate-0 transition-transform duration-300">
-              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-red-600 border border-red-300 shadow-md z-20 flex items-center justify-center">
-                <div className="w-1 h-1 rounded-full bg-white/70" />
+            {/* Tactical Mandate Card */}
+            <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#060F17]/90 p-3 shadow-md dark:shadow-lg backdrop-blur-md">
+              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-700 dark:text-[#A8BCC9] pb-1.5 border-b border-slate-200 dark:border-[#132330]">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-primary font-bold">›</span>
+                  <span className="tracking-wider uppercase">SCOUT MANDATE</span>
+                </div>
+                <Shield className="w-3.5 h-3.5 text-primary" />
               </div>
-
-              <div className="bg-amber-50/90 dark:bg-[#1C1814] text-amber-950 dark:text-amber-100 rounded-lg p-3 shadow-md dark:shadow-xl border border-amber-200/80 dark:border-[#B5AB94]/30 space-y-0.5 font-serif backdrop-blur-sm">
-                <p className="font-bold text-xs tracking-tight text-amber-950 dark:text-amber-200 leading-tight">
-                  Right Player
-                </p>
-                <p className="font-bold text-xs tracking-tight text-amber-950 dark:text-amber-200 leading-tight">
-                  Right Role
-                </p>
-                <p className="font-bold text-xs tracking-tight text-amber-950 dark:text-amber-200 leading-tight">
-                  Stronger Squad
-                </p>
+              <div className="pt-2 space-y-1.5">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-100">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                  <span>Right Player</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-100">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                  <span>Right Role</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-100">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
+                  <span>Stronger Squad</span>
+                </div>
               </div>
             </div>
 
@@ -950,25 +970,23 @@ export function ScoutCinematicRoom({
             <div className="bg-white/90 dark:bg-[#060F17]/90 border border-slate-200 dark:border-[#162734] rounded-xl p-3 shadow-md dark:shadow-lg backdrop-blur-md">
               <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-700 dark:text-[#A8BCC9] pb-1.5 border-b border-slate-200 dark:border-[#132330]">
                 <div className="flex items-center gap-1.5">
-                  <span style={{ color: accentColor }}>›</span>
+                  <span className="text-primary font-bold">›</span>
                   <span className="tracking-wider uppercase">RECENT SEARCHES</span>
                 </div>
-
                 <ChevronDown className="w-3 h-3 text-slate-400 dark:text-[#556775] -rotate-90" />
               </div>
 
-              <div className="space-y-1 pt-1.5 text-[11px] font-mono text-slate-600 dark:text-[#8295A2]">
+              <div className="space-y-1 pt-1.5 text-xs text-slate-600 dark:text-[#8295A2]">
                 {RECENT_SEARCHES.map((item) => (
                   <button
                     key={item.label}
                     onClick={item.action}
-                    className="w-full text-left py-0.5 px-1 rounded hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors truncate cursor-pointer flex items-center gap-1.5 group"
+                    className="w-full text-left py-1 px-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors truncate cursor-pointer flex items-center gap-2 group font-medium"
                   >
                     <span 
-                      className="w-1 h-1 rounded-full group-hover:scale-125 transition-transform" 
-                      style={{ backgroundColor: accentColor }} 
+                      className="w-1.5 h-1.5 rounded-full bg-slate-400 group-hover:bg-primary group-hover:scale-125 transition-all shrink-0" 
                     />
-                    <span className="truncate">{item.label}</span>
+                    <span className="truncate text-xs">{item.label}</span>
                   </button>
                 ))}
               </div>
@@ -1294,8 +1312,8 @@ export function ScoutCinematicRoom({
 
                 <div className="flex flex-wrap gap-3 pt-3 text-[10px] text-slate-500 dark:text-slate-400"><Link href={`/ai-analyst/squad-dna?team=${localTeam ?? 'RCB'}`} className="hover:text-slate-900 dark:hover:text-white underline">Review team needs ↗</Link><Link href={`/ai-analyst/auction-war-room?team=${localTeam ?? ''}`} className="hover:text-slate-900 dark:hover:text-white underline">Recruitment board ↗</Link></div>
                 <div className="pt-3 text-xs" aria-live="polite">
-                  {evaluation ? <><p className="font-bold" style={{ color: accentColor }}>SRH custom fit · {evaluation.suitabilityScore.toFixed(1)}/10</p><p className="mt-1 text-[10px] text-slate-500">{evaluation.complete ? 'All criteria have evidence.' : `Confirmed points; possible range ${evaluation.suitabilityScore.toFixed(1)}–${evaluation.maximumPossible.toFixed(1)}. Missing attributes remain unknown.`}</p></> : <p className="text-slate-500">Shortlist a player to inspect their fit.</p>}
-                  <p className="mt-2 text-[9px] text-slate-500">Custom SRH blueprint: power 2 · left-arm 1.5 · death bowling 2 · uncapped 1 · overseas 1.5 · finisher 2. Not an official recruitment rating.</p>
+                  {evaluation ? <><p className="font-bold" style={{ color: accentColor }}>{theme?.shortName ?? "Franchise"} custom fit · {evaluation.suitabilityScore.toFixed(1)}/10</p><p className="mt-1 text-[10px] text-slate-500">{evaluation.complete ? 'All criteria have evidence.' : `Confirmed points; possible range ${evaluation.suitabilityScore.toFixed(1)}–${evaluation.maximumPossible.toFixed(1)}. Missing attributes remain unknown.`}</p></> : <p className="text-slate-500 dark:text-slate-400">Shortlist a player to inspect their fit.</p>}
+                  <p className="mt-2 text-[9px] text-slate-500 dark:text-slate-400">Custom {theme?.shortName ?? "team"} blueprint: power 2 · left-arm 1.5 · death bowling 2 · uncapped 1 · overseas 1.5 · finisher 2. Not an official recruitment rating.</p>
                 </div>
 
                 <div className="space-y-1.5 pt-2 text-[11px] font-mono">
