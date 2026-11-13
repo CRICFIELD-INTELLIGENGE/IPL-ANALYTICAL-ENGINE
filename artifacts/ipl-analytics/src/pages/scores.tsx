@@ -1,5 +1,6 @@
 import { useAnalyticsFilterStore } from "@/lib/store";
 import { useState, useMemo, useEffect } from "react";
+import { useTheme } from "@/lib/theme";
 import { Layout } from "@/components/layout";
 import {
   useMatches, useSeasons, useSquadsBySeason, usePlayerBios, usePointsTables, usePlayerImages,
@@ -235,9 +236,9 @@ function ScheduleView({ season, matches }: { season: string; matches: MatchSumma
 
   if (matches.length === 0) {
     return (
-      <div className="py-24 text-center bg-[#0B1020]/60 rounded-3xl border border-white/5">
-        <Trophy className="w-12 h-12 text-white/20 mx-auto mb-3" />
-        <p className="text-white/40 font-black uppercase tracking-widest text-sm">
+      <div className="py-24 text-center bg-white dark:bg-[#0B1020]/60 rounded-3xl border border-slate-200 dark:border-white/5 shadow-sm">
+        <Trophy className="w-12 h-12 text-slate-400 dark:text-white/20 mx-auto mb-3" />
+        <p className="text-slate-500 dark:text-white/40 font-black uppercase tracking-widest text-sm">
           No matches found for {season} season
         </p>
       </div>
@@ -351,9 +352,9 @@ function ScheduleView({ season, matches }: { season: string; matches: MatchSumma
 function PointsView({ season, standings }: { season: string; standings: any[] }) {
   if (standings.length === 0) {
     return (
-      <div className="py-24 text-center bg-[#0B1020]/60 rounded-3xl border border-white/5">
-        <Trophy className="w-12 h-12 text-white/20 mx-auto mb-3" />
-        <p className="text-white/40 font-black uppercase tracking-widest text-sm">
+      <div className="py-24 text-center bg-white dark:bg-[#0B1020]/60 rounded-3xl border border-slate-200 dark:border-white/5 shadow-sm">
+        <Trophy className="w-12 h-12 text-slate-400 dark:text-white/20 mx-auto mb-3" />
+        <p className="text-slate-500 dark:text-white/40 font-black uppercase tracking-widest text-sm">
           No standings available for {season}
         </p>
       </div>
@@ -361,25 +362,25 @@ function PointsView({ season, standings }: { season: string; standings: any[] })
   }
 
   return (
-    <div className="bg-[#0B1020] rounded-[32px] border border-white/10 overflow-hidden shadow-2xl">
-      <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-primary/10 via-transparent to-transparent">
+    <div className="bg-white dark:bg-[#0B1020] rounded-[32px] border border-slate-200 dark:border-white/10 overflow-hidden shadow-sm dark:shadow-2xl">
+      <div className="p-6 border-b border-slate-100 dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-primary/10 via-transparent to-transparent">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center text-primary">
+          <div className="w-10 h-10 rounded-xl bg-primary/10 dark:bg-primary/20 border border-primary/20 dark:border-primary/30 flex items-center justify-center text-primary">
             <Trophy className="w-5 h-5" />
           </div>
           <div>
-            <span className="font-black uppercase tracking-widest text-[14px] text-white block">
+            <span className="font-black uppercase tracking-widest text-[14px] text-slate-900 dark:text-white block">
               {season} League Stage Standings
             </span>
-            <span className="text-[10px] text-white/40 font-mono">
+            <span className="text-[10px] text-slate-500 dark:text-white/40 font-mono">
               Top 4 franchises qualify for the Playoff Qualifier &amp; Eliminator rounds
             </span>
           </div>
         </div>
 
         <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest">
-          <span className="flex items-center gap-1.5 text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-200 dark:border-emerald-500/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Qualified
           </span>
         </div>
@@ -387,13 +388,13 @@ function PointsView({ season, standings }: { season: string; standings: any[] })
 
       <div className="overflow-x-auto">
         <table className="w-full text-left">
-          <thead className="bg-white/[0.02] border-b border-white/5">
+          <thead className="bg-slate-50 dark:bg-white/[0.02] border-b border-slate-100 dark:border-white/5">
             <tr>
               {["Pos", "Franchise", "P", "W", "L", "NR", "NRR", "Pts", "Dossier"].map((h, i) => (
                 <th
                   key={h}
                   className={`px-6 py-4 text-[10px] font-black uppercase tracking-widest ${
-                    h === "Pts" ? "text-primary" : "text-white/40"
+                    h === "Pts" ? "text-primary" : "text-slate-500 dark:text-white/40"
                   } ${i >= 2 && i <= 7 ? "text-center" : ""}`}
                 >
                   {h}
@@ -401,7 +402,7 @@ function PointsView({ season, standings }: { season: string; standings: any[] })
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className="divide-y divide-slate-100 dark:divide-white/5">
             {standings.map(r => {
               const tSlug = teamSlug(r.team);
               const isFirst = r.position === 1;
@@ -409,18 +410,18 @@ function PointsView({ season, standings }: { season: string; standings: any[] })
               return (
                 <tr
                   key={r.team}
-                  className={`hover:bg-white/[0.03] transition-colors group ${
-                    r.qualified ? "bg-emerald-400/[0.03]" : ""
+                  className={`hover:bg-slate-50/80 dark:hover:bg-white/[0.03] transition-colors group ${
+                    r.qualified ? "bg-emerald-50/50 dark:bg-emerald-400/[0.03]" : ""
                   }`}
                 >
                   {/* Position */}
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-2">
-                      <span className={`text-[13px] font-black ${isFirst ? 'text-primary' : 'text-white/60'}`}>
+                      <span className={`text-[13px] font-black ${isFirst ? 'text-primary' : 'text-slate-700 dark:text-white/60'}`}>
                         {r.position}
                       </span>
                       {r.qualified && (
-                        <span className="w-1.5 h-4 rounded-full bg-emerald-400/80 shadow-sm shadow-emerald-400/50" />
+                        <span className="w-1.5 h-4 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50" />
                       )}
                     </div>
                   </td>
@@ -433,23 +434,23 @@ function PointsView({ season, standings }: { season: string; standings: any[] })
                     >
                       <TeamLogo team={r.team} size="w-8 h-8" />
                       <div className="flex flex-col">
-                        <span className="text-[13px] font-black text-white group-hover/teamlink:text-primary transition-colors flex items-center gap-1.5">
+                        <span className="text-[13px] font-black text-slate-900 dark:text-white group-hover/teamlink:text-primary transition-colors flex items-center gap-1.5">
                           {r.team}
                           {isFirst && <CricFieldMascot team={r.team} mood="laughing" size={22} interactive />}
                         </span>
-                        <span className="text-[9px] font-mono text-white/40 uppercase">
+                        <span className="text-[9px] font-mono text-slate-400 dark:text-white/40 uppercase">
                           {teamShort(r.team)} · Franchise Hub ➔
                         </span>
                       </div>
                     </Link>
                   </td>
 
-                  <td className="px-6 py-5 text-center font-bold text-white/60 tabular-nums">{r.played}</td>
-                  <td className="px-6 py-5 text-center font-black text-emerald-400 tabular-nums">{r.wins}</td>
-                  <td className="px-6 py-5 text-center font-black text-red-400 tabular-nums">{r.losses}</td>
-                  <td className="px-6 py-5 text-center font-bold text-white/40 tabular-nums">{r.noResult}</td>
+                  <td className="px-6 py-5 text-center font-bold text-slate-700 dark:text-white/60 tabular-nums">{r.played}</td>
+                  <td className="px-6 py-5 text-center font-black text-emerald-600 dark:text-emerald-400 tabular-nums">{r.wins}</td>
+                  <td className="px-6 py-5 text-center font-black text-rose-600 dark:text-red-400 tabular-nums">{r.losses}</td>
+                  <td className="px-6 py-5 text-center font-bold text-slate-400 dark:text-white/40 tabular-nums">{r.noResult}</td>
                   <td className={`px-6 py-5 text-center font-bold font-mono tabular-nums ${
-                    (r.nrr ?? 0) >= 0 ? "text-emerald-300" : "text-white/40"
+                    (r.nrr ?? 0) >= 0 ? "text-emerald-600 dark:text-emerald-300" : "text-slate-400 dark:text-white/40"
                   }`}>
                     {r.nrr == null ? "—" : (r.nrr > 0 ? "+" : "") + r.nrr.toFixed(3)}
                   </td>
@@ -459,7 +460,7 @@ function PointsView({ season, standings }: { season: string; standings: any[] })
                   <td className="px-6 py-5">
                     <Link
                       href={`/teams/${tSlug}`}
-                      className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/40 text-[10px] font-black text-white/70 hover:text-white uppercase tracking-wider transition-all"
+                      className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 dark:bg-white/5 dark:hover:bg-primary/20 dark:text-white/70 dark:hover:text-white border border-slate-200 dark:border-white/10 text-[10px] font-black uppercase tracking-wider transition-all"
                     >
                       <span>Profile</span>
                       <ArrowUpRight className="w-3 h-3 text-primary" />
@@ -482,6 +483,8 @@ function PointsView({ season, standings }: { season: string; standings: any[] })
 function SquadsListView({ season, playerImages }: { season: string; playerImages?: Record<string, string> }) {
   const squads = useSquadsBySeason();
   const bios = usePlayerBios();
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
   const [viewMode, setViewMode] = useState<"cards" | "list">("cards");
   const [selectedTeamFilter, setSelectedTeamFilter] = useState<string>("");
@@ -545,16 +548,19 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
 
   if (squads.isLoading) {
     return (
-      <div className="py-24 text-center text-white/40 font-black uppercase tracking-widest">
-        Loading squad telemetry…
+      <div className="py-24 text-center bg-white dark:bg-[#0B1020]/60 rounded-3xl border border-slate-200 dark:border-white/5 shadow-sm">
+        <Users className="w-12 h-12 text-slate-400 dark:text-white/20 mx-auto mb-3 animate-pulse" />
+        <p className="text-slate-500 dark:text-white/40 font-black uppercase tracking-widest text-sm">
+          Loading {season} Squad Profiles…
+        </p>
       </div>
     );
   }
   if (!seasonSquads || teamNames.length === 0) {
     return (
-      <div className="py-24 text-center bg-[#0B1020]/60 rounded-3xl border border-white/5">
-        <Users className="w-12 h-12 text-white/20 mx-auto mb-3" />
-        <p className="text-white/40 font-black uppercase tracking-widest text-sm">
+      <div className="py-24 text-center bg-white dark:bg-[#0B1020]/60 rounded-3xl border border-slate-200 dark:border-white/5 shadow-sm">
+        <Users className="w-12 h-12 text-slate-400 dark:text-white/20 mx-auto mb-3" />
+        <p className="text-slate-500 dark:text-white/40 font-black uppercase tracking-widest text-sm">
           No squad data available for {season}
         </p>
       </div>
@@ -566,26 +572,26 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
   return (
     <div className="flex flex-col gap-6">
       {/* ─── SQUADS CONTROLS STRIP: TEAM SELECTION, ROLE FILTER & SEARCH ─── */}
-      <div className="bg-[#0B1020]/90 backdrop-blur-xl rounded-2xl border border-white/10 p-4 flex flex-col gap-4 shadow-xl">
+      <div className="bg-white/95 dark:bg-[#0B1020]/90 backdrop-blur-xl rounded-2xl border border-slate-200 dark:border-white/10 p-4 flex flex-col gap-4 shadow-sm dark:shadow-xl">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Search Input */}
           <div className="relative w-full md:w-80">
-            <Search className="w-4 h-4 text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search player, nationality, role…"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white/[0.04] border border-white/10 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-primary/50 transition-colors"
+              className="w-full bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/30 focus:outline-none focus:border-primary/50 transition-colors"
             />
           </div>
 
           {/* View Mode Toggle: Collector Cards vs Roster List */}
-          <div className="flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10 shrink-0 self-end md:self-auto">
+          <div className="flex items-center gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-xl border border-slate-200 dark:border-white/10 shrink-0 self-end md:self-auto">
             <button
               onClick={() => setViewMode("cards")}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${
-                viewMode === "cards" ? "bg-primary text-black shadow-md" : "text-white/40 hover:text-white"
+                viewMode === "cards" ? "bg-primary text-white shadow-md font-black" : "text-slate-500 hover:text-slate-900 dark:text-white/40 dark:hover:text-white"
               }`}
               title="Luxury Collector Cards (Shop Synergy)"
             >
@@ -595,7 +601,7 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
             <button
               onClick={() => setViewMode("list")}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${
-                viewMode === "list" ? "bg-primary text-black shadow-md" : "text-white/40 hover:text-white"
+                viewMode === "list" ? "bg-primary text-white shadow-md font-black" : "text-slate-500 hover:text-slate-900 dark:text-white/40 dark:hover:text-white"
               }`}
               title="Compact Squad Roster List"
             >
@@ -639,8 +645,8 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
         </div>
 
         {/* Role Filter Tabs (Inspired by SRH Squad Page) */}
-        <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pt-1 border-t border-white/5">
-          <span className="text-[9px] font-black uppercase tracking-widest text-white/40 mr-1 hidden sm:inline">Role:</span>
+        <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pt-1 border-t border-slate-200 dark:border-white/5">
+          <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-white/40 mr-1 hidden sm:inline">Role:</span>
           {[
             { id: "all", label: "All Players" },
             { id: "bat", label: "Batters" },
@@ -653,8 +659,8 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
               onClick={() => setRoleFilter(r.id)}
               className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all whitespace-nowrap ${
                 roleFilter === r.id
-                  ? "bg-white/20 text-white border border-white/30 shadow-sm"
-                  : "bg-white/[0.02] text-white/40 hover:text-white hover:bg-white/5"
+                  ? "bg-slate-900 text-white dark:bg-white/20 dark:text-white border border-slate-900 dark:border-white/30 shadow-xs"
+                  : "bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 dark:bg-white/[0.02] dark:text-white/40 dark:hover:text-white dark:hover:bg-white/5 border border-slate-200/60 dark:border-transparent"
               }`}
             >
               {r.label}
@@ -706,26 +712,30 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
             <div key={team} className="flex flex-col gap-4">
               {/* Franchise Header Banner with Dynamic Team Identity */}
               <div
-                className="relative rounded-3xl border border-white/10 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-2xl overflow-hidden"
+                className="relative rounded-3xl border border-slate-200 dark:border-white/10 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-sm dark:shadow-2xl overflow-hidden"
                 style={{
-                  background: `linear-gradient(135deg, ${activeTeamColor}25 0%, #0B1020 50%, #070A14 100%)`,
-                  boxShadow: `0 10px 40px -15px ${activeTeamColor}30`
+                  background: isDark
+                    ? `linear-gradient(135deg, ${activeTeamColor}25 0%, #0B1020 50%, #070A14 100%)`
+                    : `linear-gradient(135deg, ${activeTeamColor}18 0%, #FFFFFF 50%, #F8FAFC 100%)`,
+                  boxShadow: isDark
+                    ? `0 10px 40px -15px ${activeTeamColor}30`
+                    : `0 8px 30px -10px ${activeTeamColor}25, 0 1px 3px rgba(0,0,0,0.05)`
                 }}
               >
                 {/* Ambient glowing radial aura behind logo */}
                 <div
-                  className="absolute -left-10 -top-10 w-48 h-48 rounded-full pointer-events-none blur-3xl opacity-30"
+                  className="absolute -left-10 -top-10 w-48 h-48 rounded-full pointer-events-none blur-3xl opacity-20 dark:opacity-30"
                   style={{ backgroundColor: activeTeamColor }}
                 />
 
                 <div className="flex items-center gap-5 z-10">
                   <Link href={`/teams/${tSlug}`} className="group/logo hover:scale-105 transition-transform">
                     <div
-                      className="p-2 rounded-2xl border"
+                      className="p-2.5 rounded-2xl border bg-white/80 dark:bg-transparent"
                       style={{
-                        backgroundColor: `${activeTeamColor}15`,
-                        borderColor: `${activeTeamColor}40`,
-                        boxShadow: `0 0 25px ${activeTeamColor}30`
+                        backgroundColor: isDark ? `${activeTeamColor}15` : undefined,
+                        borderColor: isDark ? `${activeTeamColor}40` : `${activeTeamColor}30`,
+                        boxShadow: `0 0 25px ${activeTeamColor}25`
                       }}
                     >
                       <TeamLogo team={team} size="w-14 h-14 md:w-16 md:h-16" />
@@ -735,22 +745,22 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
                   <div className="flex flex-col">
                     <div className="flex items-center gap-2">
                       <span
-                        className="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full border"
+                        className="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full border"
                         style={{
-                          backgroundColor: `${activeTeamColor}20`,
-                          borderColor: `${activeTeamColor}40`,
-                          color: activeTeamColor
+                          backgroundColor: isDark ? `${activeTeamColor}20` : `${activeTeamColor}15`,
+                          borderColor: isDark ? `${activeTeamColor}40` : `${activeTeamColor}30`,
+                          color: isDark ? activeTeamColor : '#0f172a'
                         }}
                       >
                         {season} Official Squad
                       </span>
-                      <span className="text-[10px] font-mono text-white/40">· {players.length} Players Listed</span>
+                      <span className="text-[10px] font-mono text-slate-500 dark:text-white/40">· {players.length} Players Listed</span>
                     </div>
                     <Link
                       href={`/teams/${tSlug}`}
-                      className="text-xl md:text-2xl font-black uppercase text-white hover:text-white/80 transition-colors flex items-center gap-2 mt-1"
+                      className="text-xl md:text-2xl font-black uppercase text-slate-900 dark:text-white hover:opacity-80 transition-opacity flex items-center gap-2 mt-1"
                     >
-                      <span>{team}</span>
+                      <span className="text-slate-900 dark:text-white">{team}</span>
                       <ArrowUpRight className="w-5 h-5 opacity-70" style={{ color: activeTeamColor }} />
                     </Link>
                   </div>
@@ -758,23 +768,23 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
 
                 {/* Team Financials & Quotas Telemetry Cluster */}
                 <div className="flex items-center gap-3 z-10 flex-wrap">
-                  <div className="bg-black/50 border border-white/10 px-4 py-2.5 rounded-2xl text-right">
-                    <span className="text-[9px] font-black text-white/40 uppercase tracking-widest block">Squad Outlay</span>
-                    <span className="text-sm md:text-base font-black text-cyan-300 font-mono">{spendLabel}</span>
+                  <div className="bg-slate-50/90 dark:bg-black/50 border border-slate-200 dark:border-white/10 px-4 py-2.5 rounded-2xl text-right shadow-2xs">
+                    <span className="text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-widest block">Squad Outlay</span>
+                    <span className="text-sm md:text-base font-black text-indigo-600 dark:text-cyan-300 font-mono">{spendLabel}</span>
                   </div>
-                  <div className="bg-black/50 border border-white/10 px-4 py-2.5 rounded-2xl text-right">
-                    <span className="text-[9px] font-black text-white/40 uppercase tracking-widest block">Overseas</span>
-                    <span className="text-sm md:text-base font-black text-white font-mono">{overseas} slots</span>
+                  <div className="bg-slate-50/90 dark:bg-black/50 border border-slate-200 dark:border-white/10 px-4 py-2.5 rounded-2xl text-right shadow-2xs">
+                    <span className="text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-widest block">Overseas</span>
+                    <span className="text-sm md:text-base font-black text-slate-800 dark:text-white font-mono">{overseas} slots</span>
                   </div>
                   {retainedCount > 0 && (
-                    <div className="bg-black/50 border border-white/10 px-4 py-2.5 rounded-2xl text-right hidden sm:block">
-                      <span className="text-[9px] font-black text-white/40 uppercase tracking-widest block">Retained</span>
-                      <span className="text-sm md:text-base font-black text-emerald-400 font-mono">{retainedCount} Stars</span>
+                    <div className="bg-slate-50/90 dark:bg-black/50 border border-slate-200 dark:border-white/10 px-4 py-2.5 rounded-2xl text-right hidden sm:block shadow-2xs">
+                      <span className="text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-widest block">Retained</span>
+                      <span className="text-sm md:text-base font-black text-emerald-600 dark:text-emerald-400 font-mono">{retainedCount} Stars</span>
                     </div>
                   )}
                   <Link
                     href={`/teams/${tSlug}`}
-                    className="px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 text-[11px] font-black uppercase tracking-wider text-white transition-all flex items-center gap-1.5"
+                    className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 border border-slate-200 dark:border-white/15 text-[11px] font-black uppercase tracking-wider text-slate-800 dark:text-white transition-all flex items-center gap-1.5 shadow-2xs"
                   >
                     <span>Franchise Hub</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -785,9 +795,9 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
               {/* View Mode 1: Luxury Shop-Style Collector Cards Grid */}
               {viewMode === "cards" ? (
                 players.length === 0 ? (
-                  <div className="py-16 text-center bg-[#0B1020]/60 rounded-3xl border border-white/5">
-                    <Users className="w-10 h-10 text-white/20 mx-auto mb-2" />
-                    <p className="text-white/40 font-bold uppercase tracking-widest text-xs">
+                  <div className="py-16 text-center bg-white dark:bg-[#0B1020]/60 rounded-3xl border border-slate-200 dark:border-white/5 shadow-sm">
+                    <Users className="w-10 h-10 text-slate-400 dark:text-white/20 mx-auto mb-2" />
+                    <p className="text-slate-500 dark:text-white/40 font-bold uppercase tracking-widest text-xs">
                       No players match the current role or search filter
                     </p>
                   </div>
@@ -800,32 +810,34 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
                       return (
                         <div
                           key={p.name + idx}
-                          className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-white/30 bg-gradient-to-b from-[#111728] via-[#0B0F1E] to-[#060812] shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between"
+                          className="group relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/30 bg-white dark:bg-gradient-to-b dark:from-[#111728] dark:via-[#0B0F1E] dark:to-[#060812] shadow-sm hover:shadow-xl dark:shadow-lg dark:hover:shadow-2xl transition-all duration-300 flex flex-col justify-between"
                           style={{
-                            boxShadow: `0 8px 25px -12px ${activeTeamColor}30`
+                            boxShadow: isDark
+                              ? `0 8px 25px -12px ${activeTeamColor}30`
+                              : `0 4px 20px -8px ${activeTeamColor}20, 0 1px 3px rgba(0,0,0,0.04)`
                           }}
                         >
                           {/* Dynamic ambient franchise corner highlight */}
                           <div
-                            className="absolute top-0 right-0 w-28 h-28 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity blur-2xl"
+                            className="absolute top-0 right-0 w-28 h-28 pointer-events-none opacity-10 dark:opacity-20 group-hover:opacity-25 dark:group-hover:opacity-40 transition-opacity blur-2xl"
                             style={{ backgroundColor: activeTeamColor }}
                           />
 
                           {/* Top Card Strip: Index, Retained & Nationality */}
                           <div className="p-3 pb-1.5 flex items-center justify-between z-10">
                             <div className="flex items-center gap-1">
-                              <span className="text-[10px] font-mono font-bold text-white/40 group-hover:text-white transition-colors">
+                              <span className="text-[10px] font-mono font-bold text-slate-400 dark:text-white/40 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
                                 #{String(idx + 1).padStart(2, "0")}
                               </span>
                               {p.acquisition === "retained" && (
-                                <span className="text-[7px] font-black uppercase tracking-wider text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-1 py-0.5 rounded">
+                                <span className="text-[7px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 dark:text-emerald-300 dark:bg-emerald-500/10 dark:border-emerald-500/30 px-1 py-0.5 rounded">
                                   ★ Retained
                                 </span>
                               )}
                             </div>
                             <div className="flex items-center gap-1">
                               {isOverseas && (
-                                <span className="text-[7px] font-black uppercase tracking-wider text-cyan-300 bg-cyan-500/10 border border-cyan-500/30 px-1 py-0.5 rounded">
+                                <span className="text-[7px] font-black uppercase tracking-wider text-sky-700 bg-sky-50 border border-sky-200 dark:text-cyan-300 dark:bg-cyan-500/10 dark:border-cyan-500/30 px-1 py-0.5 rounded">
                                   ✈ {p.country}
                                 </span>
                               )}
@@ -838,12 +850,12 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
                             <Link href={`/players/${slug}`} className="relative group/avatar cursor-pointer mb-2.5">
                               {/* Glowing halo behind avatar */}
                               <div
-                                className="absolute inset-0 rounded-2xl opacity-20 group-hover/avatar:opacity-60 blur-md transition-opacity"
+                                className="absolute inset-0 rounded-2xl opacity-15 dark:opacity-20 group-hover/avatar:opacity-40 dark:group-hover/avatar:opacity-60 blur-md transition-opacity"
                                 style={{ backgroundColor: activeTeamColor }}
                               />
 
                               {/* Headshot container */}
-                              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-white/20 group-hover/avatar:border-white transition-all shadow-xl bg-black/60 relative">
+                              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/20 group-hover/avatar:border-primary dark:group-hover/avatar:border-white transition-all shadow-sm dark:shadow-xl bg-slate-100 dark:bg-black/60 relative">
                                 <PlayerAvatar
                                   name={p.name}
                                   playerImages={playerImages}
@@ -854,11 +866,11 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
 
                               {/* Floating Role Badge */}
                               <div
-                                className="absolute -bottom-2 inset-x-0 mx-auto w-fit px-2 py-0.5 rounded-full text-[7px] font-black uppercase tracking-wider shadow-md border"
+                                className="absolute -bottom-2 inset-x-0 mx-auto w-fit px-2 py-0.5 rounded-full text-[7px] font-black uppercase tracking-wider shadow-xs border"
                                 style={{
-                                  backgroundColor: "#0B1020",
-                                  borderColor: `${activeTeamColor}60`,
-                                  color: activeTeamColor
+                                  backgroundColor: isDark ? "#0B1020" : "#FFFFFF",
+                                  borderColor: isDark ? `${activeTeamColor}60` : `${activeTeamColor}40`,
+                                  color: isDark ? activeTeamColor : '#0f172a'
                                 }}
                               >
                                 {p.role || bio?.role || "Player"}
@@ -868,30 +880,30 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
                             {/* Player Name */}
                             <Link
                               href={`/players/${slug}`}
-                              className="text-xs sm:text-sm font-black text-white hover:text-primary transition-colors uppercase tracking-tight line-clamp-1 mt-1"
+                              className="text-xs sm:text-sm font-black text-slate-900 dark:text-white hover:text-primary transition-colors uppercase tracking-tight line-clamp-1 mt-1"
                               title={`Open ${p.name}'s Dossier`}
                             >
-                              {p.name}
+                              <span className="text-slate-900 dark:text-white">{p.name}</span>
                             </Link>
 
                             {/* Playing Style Subtitle */}
-                            <span className="text-[8px] font-mono text-white/40 uppercase tracking-wider truncate max-w-full mt-0.5">
+                            <span className="text-[8px] font-mono text-slate-500 dark:text-white/40 uppercase tracking-wider truncate max-w-full mt-0.5">
                               {[bio?.batStyle, bio?.bowlStyle].filter(Boolean).join(" · ") || (isOverseas ? p.country : "Domestic Core")}
                             </span>
                           </div>
 
                           {/* Bottom Card Footer: Price, Status & Actions */}
-                          <div className="p-3 pt-2 bg-black/50 border-t border-white/5 z-10 flex flex-col gap-2">
+                          <div className="p-3 pt-2 bg-slate-50 dark:bg-black/50 border-t border-slate-100 dark:border-white/5 z-10 flex flex-col gap-2">
                             <div className="flex items-center justify-between text-[8px]">
                               <div>
-                                <span className="font-bold text-white/30 uppercase tracking-widest block text-[7px]">Fee</span>
-                                <span className={`text-[11px] font-mono font-black ${p.priceDisplay ? "text-cyan-400" : "text-white/30"}`}>
+                                <span className="font-bold text-slate-400 dark:text-white/30 uppercase tracking-widest block text-[7px]">Fee</span>
+                                <span className={`text-[11px] font-mono font-black ${p.priceDisplay ? "text-indigo-600 dark:text-cyan-400" : "text-slate-400 dark:text-white/30"}`}>
                                   {p.priceDisplay ?? "—"}
                                 </span>
                               </div>
                               <div className="text-right">
-                                <span className="font-bold text-white/30 uppercase tracking-widest block text-[7px]">Status</span>
-                                <span className={`text-[9px] font-bold uppercase ${p.played ? "text-emerald-400" : "text-white/40"}`}>
+                                <span className="font-bold text-slate-400 dark:text-white/30 uppercase tracking-widest block text-[7px]">Status</span>
+                                <span className={`text-[9px] font-bold uppercase ${p.played ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-white/40"}`}>
                                   {p.played ? "Playing XI" : "Squad"}
                                 </span>
                               </div>
@@ -901,7 +913,7 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
                             <div className="grid grid-cols-2 gap-1.5 pt-0.5">
                               <Link
                                 href={`/players/${slug}`}
-                                className="py-1 px-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-white/80 hover:text-white border border-white/10 text-[8px] font-black uppercase tracking-wider text-center transition-all flex items-center justify-center gap-0.5"
+                                className="py-1 px-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-200 dark:bg-white/5 dark:hover:bg-white/15 dark:text-white/80 dark:hover:text-white dark:border-white/10 text-[8px] font-black uppercase tracking-wider text-center transition-all flex items-center justify-center gap-0.5 shadow-2xs"
                               >
                                 <span>Dossier</span>
                                 <ArrowUpRight className="w-2.5 h-2.5" />
@@ -916,18 +928,18 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
                 )
               ) : (
                 /* View Mode 2: Compact Squad List with Direct Links */
-                <div className="bg-[#0B1020] rounded-2xl border border-white/10 overflow-hidden shadow-xl">
-                  <div className="flex flex-col divide-y divide-white/5">
+                <div className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden shadow-sm dark:shadow-xl">
+                  <div className="flex flex-col divide-y divide-slate-100 dark:divide-white/5">
                     {players.map(p => {
                       const { bio, slug } = resolvePlayer(p);
                       return (
                         <div
                           key={p.name}
-                          className="flex items-center justify-between gap-4 p-4 hover:bg-white/[0.02] transition-colors"
+                          className="flex items-center justify-between gap-4 p-4 hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors"
                         >
                           <div className="flex items-center gap-3.5 min-w-0">
                             <Link href={`/players/${slug}`}>
-                              <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/15 hover:border-white transition-colors cursor-pointer bg-black/50">
+                              <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-slate-200 dark:border-white/15 hover:border-primary dark:hover:border-white transition-colors cursor-pointer bg-slate-100 dark:bg-black/50">
                                 <PlayerAvatar
                                   name={p.name}
                                   playerImages={playerImages}
@@ -939,11 +951,11 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
                             <div className="flex flex-col min-w-0">
                               <Link
                                 href={`/players/${slug}`}
-                                className="text-[13px] font-black text-white hover:text-primary transition-colors truncate"
+                                className="text-[13px] font-black text-slate-900 dark:text-white hover:text-primary transition-colors truncate"
                               >
                                 {p.name}
                               </Link>
-                              <span className="text-[10px] font-bold text-white/40 uppercase tracking-wider truncate">
+                              <span className="text-[10px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-wider truncate">
                                 {[p.country, p.role, bio?.batStyle].filter(Boolean).join(" · ") || "—"}
                               </span>
                             </div>
@@ -951,21 +963,21 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
 
                           <div className="flex items-center gap-3 shrink-0">
                             {!p.played && (
-                              <span className="text-[8px] font-black uppercase tracking-widest text-white/30 border border-white/10 rounded px-2 py-0.5">
+                              <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-white/30 border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-transparent rounded px-2 py-0.5">
                                 Bench
                               </span>
                             )}
                             {p.acquisition === "retained" && (
-                              <span className="text-[8px] font-black uppercase tracking-widest text-emerald-300 border border-emerald-400/20 bg-emerald-400/10 rounded px-2 py-0.5">
+                              <span className="text-[8px] font-black uppercase tracking-widest text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-400/20 bg-emerald-50 dark:bg-emerald-400/10 rounded px-2 py-0.5">
                                 Retained
                               </span>
                             )}
-                            <span className={`text-[12px] font-mono font-black tabular-nums ${p.priceDisplay ? "text-cyan-400" : "text-white/20"}`}>
+                            <span className={`text-[12px] font-mono font-black tabular-nums ${p.priceDisplay ? "text-indigo-600 dark:text-cyan-400" : "text-slate-400 dark:text-white/20"}`}>
                               {p.priceDisplay ?? "—"}
                             </span>
                             <Link
                               href={`/players/${slug}`}
-                              className="p-2 rounded-lg bg-white/5 hover:bg-primary/20 text-white/60 hover:text-white transition-colors"
+                              className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 dark:bg-white/5 dark:hover:bg-primary/20 dark:text-white/60 dark:hover:text-white transition-colors"
                               title="Open Player Dossier"
                             >
                               <ArrowUpRight className="w-3.5 h-3.5" />
