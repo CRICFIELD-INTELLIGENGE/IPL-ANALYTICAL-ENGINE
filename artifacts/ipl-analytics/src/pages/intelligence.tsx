@@ -45,7 +45,11 @@ import {
   Award, Flame, Compass, Activity, ShieldCheck, GraduationCap,
   Brain, Rocket, Cpu
 } from "lucide-react";
-import { useTeamTheme } from "@/lib/team-context";
+import { 
+  useTeamTheme, CANONICAL_TEAM_CODES, getFranchisePageTeam, 
+  setFranchisePageTeam, isTeamCode, type TeamCode 
+} from "@/lib/team-context";
+import { FranchiseSwitcher } from "@/components/dugout/franchise-hero";
 
 // 11 Intelligence Angles with custom badge styling and icons
 interface AngleCategory {
@@ -280,11 +284,11 @@ export const FRANCHISE_INTELLIGENCE: Record<string, FranchiseIntelligenceData> =
 };
 
 const ALL_FRANCHISES = [
-  { code: "SRH", name: "Sunrisers Hyderabad" },
   { code: "RCB", name: "Royal Challengers Bengaluru" },
   { code: "CSK", name: "Chennai Super Kings" },
   { code: "MI", name: "Mumbai Indians" },
   { code: "KKR", name: "Kolkata Knight Riders" },
+  { code: "SRH", name: "Sunrisers Hyderabad" },
   { code: "RR", name: "Rajasthan Royals" },
   { code: "DC", name: "Delhi Capitals" },
   { code: "PBKS", name: "Punjab Kings" },
@@ -309,15 +313,24 @@ export default function IntelligencePage() {
   const searchParams = useMemo(() => new URLSearchParams(searchParamStr), [searchParamStr]);
   const activeFranchiseCode = useMemo(() => {
     const raw = searchParams.get("franchise");
-    if (raw) return raw.toUpperCase();
-    return (selectedTeam || "SRH").toUpperCase();
+    if (raw && isTeamCode(raw.toUpperCase())) return raw.toUpperCase() as TeamCode;
+    if (selectedTeam && isTeamCode(selectedTeam)) return selectedTeam;
+    return getFranchisePageTeam();
   }, [searchParams, selectedTeam]);
+
+  // Synchronize remembered team if franchise is specified in URL
+  useEffect(() => {
+    const raw = searchParams.get("franchise");
+    if (raw && isTeamCode(raw.toUpperCase())) {
+      setFranchisePageTeam(raw.toUpperCase() as TeamCode);
+    }
+  }, [searchParams]);
 
   // Franchise Intelligence Configuration
   const franchiseConfig = useMemo(() => {
     return (
       FRANCHISE_INTELLIGENCE[activeFranchiseCode] ||
-      FRANCHISE_INTELLIGENCE["SRH"]
+      FRANCHISE_INTELLIGENCE["RCB"]
     );
   }, [activeFranchiseCode]);
 
@@ -350,8 +363,12 @@ export default function IntelligencePage() {
     setCurrentPage(1);
   }, [activeFranchiseCode]);
 
-  // Switch franchise handler that updates URL query
+  // Switch franchise handler that updates URL query and stores in franchise page memory
   const handleSelectFranchise = (code: string) => {
+    const upper = code.toUpperCase();
+    if (isTeamCode(upper)) {
+      setFranchisePageTeam(upper);
+    }
     setFranchisePickerOpen(false);
     const nextParams = new URLSearchParams(window.location.search);
     nextParams.set("franchise", code.toLowerCase());
@@ -438,6 +455,19 @@ export default function IntelligencePage() {
               style={{ backgroundColor: franchiseMeta.accent || franchiseConfig.accent }}
             />
             <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
+
+            {/* Top Bar with Team Switcher */}
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-5 mb-6 border-b border-slate-200/80 dark:border-white/10">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-white/40">
+                  Select Franchise Intelligence:
+                </span>
+                <span className="text-xs font-mono font-black uppercase text-slate-900 dark:text-white">
+                  {franchiseMeta.name} ({activeFranchiseCode})
+                </span>
+              </div>
+              <FranchiseSwitcher activeCode={activeFranchiseCode} onPick={handleSelectFranchise} />
+            </div>
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Left Content (8 cols) */}
@@ -1015,7 +1045,7 @@ export default function IntelligencePage() {
 
             {/* Quick-Jump Franchise Pills */}
             <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2.5 pt-2 border-t border-slate-100 dark:border-white/10">
-              {(["CSK", "MI", "RCB", "KKR", "SRH", "RR", "DC", "PBKS", "GT", "LSG"] as const).map((code) => {
+              {CANONICAL_TEAM_CODES.map((code) => {
                 const conf = FRANCHISE_INTELLIGENCE[code] ?? { name: code, accent: "#FFD11A" };
                 const isActive = activeFranchiseCode === code;
                 return (

@@ -17,7 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Layout } from "@/components/layout";
 import { 
   useTeamTheme, TEAM_REGISTRY, isTeamCode, resolveTeamCode, 
-  TEAM_CODE_TO_SLUG, type TeamCode 
+  TEAM_CODE_TO_SLUG, type TeamCode, getFranchisePageTeam, setFranchisePageTeam, CANONICAL_TEAM_CODES 
 } from "@/lib/team-context";
 import { useSquadsBySeason, useTeams, useMatches } from "@/lib/aggregates";
 import { fetchFranchiseRecord, type FranchiseRecord } from "@/lib/dugout-api";
@@ -70,20 +70,22 @@ export default function DugoutPage() {
   const [, setLocation] = useLocation();
   const { selectedTeam } = useTeamTheme();
 
-  // Resolve franchise from URL param (supports codes like 'SRH' or slugs like 'sunrisers-hyderabad')
+  // Resolve franchise: route param first, then master selectedTeam if user chose one, else remembered in-page franchise (defaults to first in canonical sequence: RCB)
   const routeParam = params?.team ?? "";
   const resolvedCode = resolveTeamCode(routeParam);
-  const activeTeamCode: TeamCode = resolvedCode ?? (selectedTeam || "SRH");
-  const currentTeam = TEAM_REGISTRY[activeTeamCode] ?? TEAM_REGISTRY["SRH"];
+  const activeTeamCode: TeamCode = resolvedCode ?? (selectedTeam || getFranchisePageTeam());
+  const currentTeam = TEAM_REGISTRY[activeTeamCode] ?? TEAM_REGISTRY["RCB"];
   const rival = currentTeam.archRival ? TEAM_REGISTRY[currentTeam.archRival] : undefined;
-  const teamSlug = TEAM_CODE_TO_SLUG[activeTeamCode] ?? "sunrisers-hyderabad";
+  const teamSlug = TEAM_CODE_TO_SLUG[activeTeamCode] ?? "royal-challengers-bengaluru";
 
-  // Redirect bare /dugout to active franchise; do not automatically overwrite user's selectedTeam
+  // Redirect bare /dugout to active franchise; persist active team in connected page memory
   useEffect(() => {
-    if (!routeParam) {
+    if (resolvedCode) {
+      setFranchisePageTeam(resolvedCode);
+    } else if (!routeParam) {
       setLocation(`/dugout/${teamSlug}`, { replace: true });
     }
-  }, [routeParam, teamSlug, setLocation]);
+  }, [resolvedCode, routeParam, teamSlug, setLocation]);
 
   const teams = useTeams();
   const matches = useMatches();
@@ -162,6 +164,7 @@ export default function DugoutPage() {
   }, [record.data, teams.data, currentTeam, playedSeasons, rival, activeTeamCode]);
 
   const handlePickFranchise = (code: TeamCode) => {
+    setFranchisePageTeam(code);
     const slug = TEAM_CODE_TO_SLUG[code] ?? code.toLowerCase();
     setLocation(`/dugout/${slug}`);
   };

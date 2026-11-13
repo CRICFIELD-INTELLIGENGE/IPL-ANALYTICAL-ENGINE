@@ -170,6 +170,37 @@ export const TEAM_REGISTRY: Record<TeamCode, TeamTheme> = {
   }
 };
 
+export const CANONICAL_TEAM_CODES: TeamCode[] = [
+  "RCB",
+  "CSK",
+  "MI",
+  "KKR",
+  "SRH",
+  "RR",
+  "DC",
+  "PBKS",
+  "GT",
+  "LSG",
+];
+
+const FRANCHISE_PAGE_MEMORY_KEY = "cricfield-franchise-page-team";
+
+export function getFranchisePageTeam(): TeamCode {
+  if (typeof window === "undefined") return CANONICAL_TEAM_CODES[0];
+  try {
+    const val = localStorage.getItem(FRANCHISE_PAGE_MEMORY_KEY)?.toUpperCase();
+    if (val && isTeamCode(val)) return val;
+  } catch {}
+  return CANONICAL_TEAM_CODES[0];
+}
+
+export function setFranchisePageTeam(code: TeamCode): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(FRANCHISE_PAGE_MEMORY_KEY, code);
+  } catch {}
+}
+
 /** True for the ten current franchise codes (own keys only, so "toString" is not a code). */
 export const isTeamCode = (c: string): c is TeamCode => Object.prototype.hasOwnProperty.call(TEAM_REGISTRY, c);
 

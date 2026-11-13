@@ -534,7 +534,7 @@ export default function AIAnalystPage() {
       <div className="relative space-y-8 pb-24 overflow-x-clip">
 
         {/* ── Atmospheric Ambient Shader Background ── */}
-        <div className="absolute -top-10 -left-10 -right-10 h-[640px] pointer-events-none overflow-hidden z-0 opacity-15 dark:opacity-40">
+        <div className="absolute -top-10 -left-10 -right-10 h-[640px] pointer-events-none overflow-hidden z-0 hidden dark:block opacity-40">
           <GpuMeshShader preset="tide-swirl" intensity={0.7} className="w-full h-full" />
         </div>
 

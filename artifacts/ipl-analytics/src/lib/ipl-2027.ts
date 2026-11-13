@@ -6,9 +6,9 @@ import type {
 } from "./aggregates";
 
 export const HUB_TEAMS = [
+  "RCB",
   "CSK",
   "MI",
-  "RCB",
   "KKR",
   "SRH",
   "RR",

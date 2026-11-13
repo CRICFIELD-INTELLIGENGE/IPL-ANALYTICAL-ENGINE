@@ -575,9 +575,22 @@ html:not(.dark),
     .border-white\/5, .border-white\/10, .border-white\/15, .border-white\/20,
     .border-white\/\[0\.04\], .border-white\/\[0\.05\], .border-white\/\[0\.08\],
     .border-white\/\[0\.1\], .border-\[\#19303c\], .border-\[\#1c3242\],
-    .border-\[\#182436\]
+    .border-\[\#182436\], [class*="border-[#2A4050]"], [class*="border-[#2a4050]"],
+    [class*="border-gray-800"]
   ) {
     border-color: var(--theme-border) !important;
+  }
+
+  :is(
+    [class*="divide-[#2A4050]"], [class*="divide-[#2a4050]"]
+  ) > :not([hidden]) ~ :not([hidden]) {
+    border-color: var(--theme-border) !important;
+  }
+
+  /* Dugout v2 / Editorial article root canvas */
+  [data-article-v2] {
+    background-color: var(--theme-bg-page) !important;
+    color: var(--theme-text-primary) !important;
   }
 
   /* Hero & banner gradient masks in light mode */
@@ -608,16 +621,16 @@ html:not(.dark),
   /* Text colors: adapt dark-mode text to clean, accessible dark slate,
      while carefully preserving text on colored buttons, dark buttons, badges, and media/cover images */
   :is(
-    h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select
-  ):is(.text-white):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-slate-9"]):not([class*="bg-slate-8"]):not([class*="bg-black"]):not([class*="bg-zinc-9"]):not([class*="bg-zinc-8"]):not([class*="bg-gray-9"]):not([class*="bg-gray-8"]):not([class*="from-"]):not(.badge):not(.btn):not([role="button"]):not(.franchise-action):not([aria-current="page"]):not([aria-current="true"]):not(.forced-white):not([data-forced-white="true"]):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
+    h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select, li, ol, ul
+  ):is(.text-white, [class*="text-[#EFF5F7]"], [class*="text-[#eff5f7]"], .text-gray-200, .text-gray-300):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-slate-9"]):not([class*="bg-slate-8"]):not([class*="bg-black"]):not([class*="bg-zinc-9"]):not([class*="bg-zinc-8"]):not([class*="bg-gray-9"]):not([class*="bg-gray-8"]):not([class*="from-"]):not(.badge):not(.btn):not([role="button"]):not(.franchise-action):not([aria-current="page"]):not([aria-current="true"]):not(.forced-white):not([data-forced-white="true"]):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
     color: var(--theme-text-primary) !important;
   }
 
-  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select):is(.text-white\/95, .text-white\/90, .text-white\/80, .text-white\/75, .text-white\/70):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-slate-9"]):not([class*="bg-slate-8"]):not([class*="bg-black"]):not([class*="bg-zinc-9"]):not([class*="bg-zinc-8"]):not([class*="bg-gray-9"]):not([class*="bg-gray-8"]):not([class*="from-"]):not(.badge):not(.forced-white):not([data-forced-white="true"]):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
+  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select, li, ol, ul):is(.text-white\/95, .text-white\/90, .text-white\/80, .text-white\/75, .text-white\/70):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-slate-9"]):not([class*="bg-slate-8"]):not([class*="bg-black"]):not([class*="bg-zinc-9"]):not([class*="bg-zinc-8"]):not([class*="bg-gray-9"]):not([class*="bg-gray-8"]):not([class*="from-"]):not(.badge):not(.forced-white):not([data-forced-white="true"]):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
     color: var(--theme-text-secondary) !important;
   }
 
-  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select):is(.text-white\/60, .text-white\/50):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-slate-9"]):not([class*="bg-slate-8"]):not([class*="bg-black"]):not([class*="bg-zinc-9"]):not([class*="bg-zinc-8"]):not([class*="bg-gray-9"]):not([class*="bg-gray-8"]):not([class*="from-"]):not(.badge):not(.forced-white):not([data-forced-white="true"]):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
+  :is(h1, h2, h3, h4, h5, h6, p, label, th, td, div, span, a, button, input, select, li, ol, ul):is(.text-white\/60, .text-white\/50, [class*="text-[#8A9EA8]"], [class*="text-[#8a9ea8]"], .text-gray-400):not([class*="bg-primary"]):not([class*="bg-emerald"]):not([class*="bg-violet"]):not([class*="bg-indigo"]):not([class*="bg-orange"]):not([class*="bg-rose"]):not([class*="bg-red"]):not([class*="bg-blue"]):not([class*="bg-slate-9"]):not([class*="bg-slate-8"]):not([class*="bg-black"]):not([class*="bg-zinc-9"]):not([class*="bg-zinc-8"]):not([class*="bg-gray-9"]):not([class*="bg-gray-8"]):not([class*="from-"]):not(.badge):not(.forced-white):not([data-forced-white="true"]):not(.on-image):not([data-on-image="true"] *):not(.editorial-cover-canvas *):not(.pv-scene ~ *) {
     color: var(--theme-text-muted) !important;
   }
 

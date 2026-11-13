@@ -745,9 +745,9 @@ export function ArticleIntelligenceSnapshot({
   });
 
   return (
-    <div className="rounded-xl border border-[#2A4050] bg-[#101F2D] p-4 text-[#EFF5F7]">
-      <div className="flex items-center justify-between border-b border-[#2A4050] pb-2.5 mb-3">
-        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#B6E95C]">
+    <div className="rounded-xl border border-slate-200 dark:border-[#2A4050] bg-white dark:bg-[#101F2D] p-4 text-slate-800 dark:text-[#EFF5F7] shadow-xs">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#2A4050] pb-2.5 mb-3">
+        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-[#B6E95C]">
           <ShieldCheck className="h-3.5 w-3.5" />
           <span>Intelligence Snapshot</span>
         </div>
@@ -764,36 +764,36 @@ export function ArticleIntelligenceSnapshot({
       </div>
 
       <div className="grid grid-cols-2 gap-2 mb-3">
-        <div className="rounded-lg border border-[#2A4050] bg-[#192D3C] p-2.5">
-          <div className="text-lg font-black font-mono text-[#B6E95C]">{metricsCount}</div>
-          <div className="text-[10px] font-mono text-[#8A9EA8] mt-0.5">Metrics Verified</div>
+        <div className="rounded-lg border border-slate-200 dark:border-[#2A4050] bg-slate-50 dark:bg-[#192D3C] p-2.5">
+          <div className="text-lg font-black font-mono text-emerald-700 dark:text-[#B6E95C]">{metricsCount}</div>
+          <div className="text-[10px] font-mono text-slate-600 dark:text-[#8A9EA8] mt-0.5">Metrics Verified</div>
         </div>
-        <div className="rounded-lg border border-[#2A4050] bg-[#192D3C] p-2.5">
-          <div className="text-lg font-black font-mono text-[#FF982E]">{article.keyTakeaways.length}</div>
-          <div className="text-[10px] font-mono text-[#8A9EA8] mt-0.5">Key Claims Tested</div>
+        <div className="rounded-lg border border-slate-200 dark:border-[#2A4050] bg-slate-50 dark:bg-[#192D3C] p-2.5">
+          <div className="text-lg font-black font-mono text-amber-700 dark:text-[#FF982E]">{article.keyTakeaways.length}</div>
+          <div className="text-[10px] font-mono text-slate-600 dark:text-[#8A9EA8] mt-0.5">Key Claims Tested</div>
         </div>
-        <div className="rounded-lg border border-[#2A4050] bg-[#192D3C] p-2.5">
-          <div className="text-lg font-black font-mono text-[#4AC9D8]">{entry.readMinutes} min</div>
-          <div className="text-[10px] font-mono text-[#8A9EA8] mt-0.5">Reading Time</div>
+        <div className="rounded-lg border border-slate-200 dark:border-[#2A4050] bg-slate-50 dark:bg-[#192D3C] p-2.5">
+          <div className="text-lg font-black font-mono text-cyan-700 dark:text-[#4AC9D8]">{entry.readMinutes} min</div>
+          <div className="text-[10px] font-mono text-slate-600 dark:text-[#8A9EA8] mt-0.5">Reading Time</div>
         </div>
-        <div className="rounded-lg border border-[#2A4050] bg-[#192D3C] p-2.5">
-          <div className="text-lg font-black font-mono text-[#EFF5F7]">{article.sources.length}</div>
-          <div className="text-[10px] font-mono text-[#8A9EA8] mt-0.5">Data Sources</div>
+        <div className="rounded-lg border border-slate-200 dark:border-[#2A4050] bg-slate-50 dark:bg-[#192D3C] p-2.5">
+          <div className="text-lg font-black font-mono text-slate-900 dark:text-[#EFF5F7]">{article.sources.length}</div>
+          <div className="text-[10px] font-mono text-slate-600 dark:text-[#8A9EA8] mt-0.5">Data Sources</div>
         </div>
       </div>
 
-      <div className="space-y-1.5 pt-2 border-t border-[#2A4050] text-xs">
+      <div className="space-y-1.5 pt-2 border-t border-slate-200 dark:border-[#2A4050] text-xs">
         <div className="flex justify-between items-center text-[11px]">
-          <span className="text-[#8A9EA8]">Author:</span>
-          <span className="font-medium text-[#EFF5F7]">{article.author}</span>
+          <span className="text-slate-600 dark:text-[#8A9EA8] font-medium">Author:</span>
+          <span className="font-semibold text-slate-900 dark:text-[#EFF5F7]">{article.author}</span>
         </div>
         <div className="flex justify-between items-center text-[11px]">
-          <span className="text-[#8A9EA8]">Published:</span>
-          <span className="font-mono text-[#8A9EA8]">{dateFormatted}</span>
+          <span className="text-slate-600 dark:text-[#8A9EA8] font-medium">Published:</span>
+          <span className="font-mono text-slate-700 dark:text-[#8A9EA8]">{dateFormatted}</span>
         </div>
         <div className="flex justify-between items-center text-[11px]">
-          <span className="text-[#8A9EA8]">Dataset Sample:</span>
-          <span className="font-mono text-[#4AC9D8]">
+          <span className="text-slate-600 dark:text-[#8A9EA8] font-medium">Dataset Sample:</span>
+          <span className="font-mono font-bold text-cyan-700 dark:text-[#4AC9D8]">
             {evidence.database.matches.toLocaleString("en-IN")} matches
           </span>
         </div>
@@ -813,13 +813,13 @@ export function OnThisPageNav({
   activeId: string;
 }) {
   return (
-    <div className="rounded-xl border border-[#2A4050] bg-[#101F2D] p-4 text-[#EFF5F7]">
-      <div className="flex items-center justify-between border-b border-[#2A4050] pb-2.5 mb-3">
-        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#EFF5F7]">
-          <Compass className="h-3.5 w-3.5 text-[#4AC9D8]" />
+    <div className="rounded-xl border border-slate-200 dark:border-[#2A4050] bg-white dark:bg-[#101F2D] p-4 text-slate-800 dark:text-[#EFF5F7] shadow-xs">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#2A4050] pb-2.5 mb-3">
+        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-[#EFF5F7]">
+          <Compass className="h-3.5 w-3.5 text-cyan-600 dark:text-[#4AC9D8]" />
           <span>On This Page</span>
         </div>
-        <span className="text-[9px] font-mono text-[#8A9EA8]">INTERACTIVE TOC</span>
+        <span className="text-[9px] font-mono text-slate-500 dark:text-[#8A9EA8]">INTERACTIVE TOC</span>
       </div>
 
       <ol className="space-y-1.5 text-xs">
@@ -828,11 +828,11 @@ export function OnThisPageNav({
             href="#takeaways"
             className={`flex items-center gap-2 rounded px-2 py-1 transition ${
               activeId === "takeaways"
-                ? "bg-[#192D3C] text-white font-semibold"
-                : "text-[#8A9EA8] hover:text-[#EFF5F7] hover:bg-[#192D3C]/50"
+                ? "bg-slate-100 dark:bg-[#192D3C] text-slate-950 dark:text-white font-semibold"
+                : "text-slate-600 dark:text-[#8A9EA8] hover:text-slate-950 dark:hover:text-[#EFF5F7] hover:bg-slate-50 dark:hover:bg-[#192D3C]/50"
             }`}
           >
-            <span className="font-mono text-[10px] text-[#B6E95C]">00</span>
+            <span className="font-mono text-[10px] text-emerald-700 dark:text-[#B6E95C]">00</span>
             <span className="truncate">Key Takeaways</span>
           </a>
         </li>
@@ -844,13 +844,13 @@ export function OnThisPageNav({
                 href={`#${s.id}`}
                 className={`flex items-center gap-2 rounded px-2 py-1 transition ${
                   isActive
-                    ? "bg-[#192D3C] text-white font-semibold"
-                    : "text-[#8A9EA8] hover:text-[#EFF5F7] hover:bg-[#192D3C]/50"
+                    ? "bg-slate-100 dark:bg-[#192D3C] text-slate-950 dark:text-white font-semibold"
+                    : "text-slate-600 dark:text-[#8A9EA8] hover:text-slate-950 dark:hover:text-[#EFF5F7] hover:bg-slate-50 dark:hover:bg-[#192D3C]/50"
                 }`}
               >
                 <span
                   className="font-mono text-[10px]"
-                  style={{ color: isActive ? accent : "#8A9EA8" }}
+                  style={{ color: isActive ? accent : undefined }}
                 >
                   {String(idx + 1).padStart(2, "0")}
                 </span>
@@ -864,11 +864,11 @@ export function OnThisPageNav({
             href="#method"
             className={`flex items-center gap-2 rounded px-2 py-1 transition ${
               activeId === "method"
-                ? "bg-[#192D3C] text-white font-semibold"
-                : "text-[#8A9EA8] hover:text-[#EFF5F7] hover:bg-[#192D3C]/50"
+                ? "bg-slate-100 dark:bg-[#192D3C] text-slate-950 dark:text-white font-semibold"
+                : "text-slate-600 dark:text-[#8A9EA8] hover:text-slate-950 dark:hover:text-[#EFF5F7] hover:bg-slate-50 dark:hover:bg-[#192D3C]/50"
             }`}
           >
-            <span className="font-mono text-[10px] text-[#4AC9D8]">06</span>
+            <span className="font-mono text-[10px] text-cyan-700 dark:text-[#4AC9D8]">06</span>
             <span className="truncate">Data & Methodology</span>
           </a>
         </li>
@@ -889,49 +889,49 @@ export function FranchisePerformanceSnapshot({
   const franchiseMeta = FRANCHISE_METADATA[franchiseCode];
 
   return (
-    <div className="rounded-xl border border-[#2A4050] bg-[#101F2D] p-4 text-[#EFF5F7]">
-      <div className="flex items-center justify-between border-b border-[#2A4050] pb-2.5 mb-3">
-        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#EFF5F7]">
+    <div className="rounded-xl border border-slate-200 dark:border-[#2A4050] bg-white dark:bg-[#101F2D] p-4 text-slate-800 dark:text-[#EFF5F7] shadow-xs">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#2A4050] pb-2.5 mb-3">
+        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-[#EFF5F7]">
           <Activity className="h-3.5 w-3.5" style={{ color: accent }} />
           <span>{franchiseCode} Performance Snapshot</span>
         </div>
-        <span className="text-[9px] font-mono text-[#8A9EA8]">WAREHOUSE DATA</span>
+        <span className="text-[9px] font-mono text-slate-500 dark:text-[#8A9EA8]">WAREHOUSE DATA</span>
       </div>
 
       <div className="space-y-2.5 text-xs">
-        <div className="rounded-lg bg-[#192D3C] p-2.5 border border-[#2A4050]">
+        <div className="rounded-lg bg-slate-50 dark:bg-[#192D3C] p-2.5 border border-slate-200 dark:border-[#2A4050]">
           <div className="flex justify-between items-baseline mb-1">
-            <span className="text-[10px] text-[#8A9EA8] uppercase font-mono">Home Venue</span>
-            <span className="text-xs font-mono font-bold text-[#B6E95C]">{metrics.homeWinRate} Win%</span>
+            <span className="text-[10px] text-slate-600 dark:text-[#8A9EA8] uppercase font-mono">Home Venue</span>
+            <span className="text-xs font-mono font-bold text-emerald-700 dark:text-[#B6E95C]">{metrics.homeWinRate} Win%</span>
           </div>
-          <div className="text-xs font-bold text-white truncate">{metrics.homeVenue}</div>
+          <div className="text-xs font-bold text-slate-900 dark:text-white truncate">{metrics.homeVenue}</div>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
-          <div className="rounded-lg bg-[#192D3C] p-2 border border-[#2A4050]">
-            <span className="text-[9px] text-[#8A9EA8] uppercase font-mono block">Powerplay Tempo</span>
-            <span className="text-sm font-mono font-bold text-[#FF982E] mt-0.5 block">{metrics.powerplayRunRate}</span>
-            <span className="text-[9px] text-[#8A9EA8] font-mono">{metrics.powerplayBoundaryRate} boundary</span>
+          <div className="rounded-lg bg-slate-50 dark:bg-[#192D3C] p-2 border border-slate-200 dark:border-[#2A4050]">
+            <span className="text-[9px] text-slate-600 dark:text-[#8A9EA8] uppercase font-mono block">Powerplay Tempo</span>
+            <span className="text-sm font-mono font-bold text-amber-700 dark:text-[#FF982E] mt-0.5 block">{metrics.powerplayRunRate}</span>
+            <span className="text-[9px] text-slate-600 dark:text-[#8A9EA8] font-mono">{metrics.powerplayBoundaryRate} boundary</span>
           </div>
-          <div className="rounded-lg bg-[#192D3C] p-2 border border-[#2A4050]">
-            <span className="text-[9px] text-[#8A9EA8] uppercase font-mono block">Death Economy</span>
-            <span className="text-sm font-mono font-bold text-[#4AC9D8] mt-0.5 block">{metrics.deathEconomy}</span>
-            <span className="text-[9px] text-[#8A9EA8] font-mono">Overs 17–20</span>
+          <div className="rounded-lg bg-slate-50 dark:bg-[#192D3C] p-2 border border-slate-200 dark:border-[#2A4050]">
+            <span className="text-[9px] text-slate-600 dark:text-[#8A9EA8] uppercase font-mono block">Death Economy</span>
+            <span className="text-sm font-mono font-bold text-cyan-700 dark:text-[#4AC9D8] mt-0.5 block">{metrics.deathEconomy}</span>
+            <span className="text-[9px] text-slate-600 dark:text-[#8A9EA8] font-mono">Overs 17–20</span>
           </div>
         </div>
 
-        <div className="rounded-lg bg-[#192D3C] p-2.5 border border-[#2A4050] space-y-1">
+        <div className="rounded-lg bg-slate-50 dark:bg-[#192D3C] p-2.5 border border-slate-200 dark:border-[#2A4050] space-y-1">
           <div className="flex justify-between items-center text-[10px] font-mono">
-            <span className="text-[#8A9EA8] uppercase">Phase Rank</span>
-            <span className="font-bold text-[#B6E95C]">{metrics.phaseRank}</span>
+            <span className="text-slate-600 dark:text-[#8A9EA8] uppercase">Phase Rank</span>
+            <span className="font-bold text-emerald-700 dark:text-[#B6E95C]">{metrics.phaseRank}</span>
           </div>
           <div className="flex justify-between items-center text-[10px] font-mono">
-            <span className="text-[#8A9EA8] uppercase">Squad Status</span>
-            <span className="text-white truncate max-w-[170px]">{metrics.retentionSummary}</span>
+            <span className="text-slate-600 dark:text-[#8A9EA8] uppercase">Squad Status</span>
+            <span className="text-slate-900 dark:text-white truncate max-w-[170px]">{metrics.retentionSummary}</span>
           </div>
-          <div className="flex justify-between items-center text-[10px] font-mono pt-1 border-t border-[#2A4050]/50">
-            <span className="text-[#8A9EA8] uppercase">Purse</span>
-            <span className="font-bold text-[#FF982E]">{metrics.auctionSpend}</span>
+          <div className="flex justify-between items-center text-[10px] font-mono pt-1 border-t border-slate-200 dark:border-[#2A4050]/50">
+            <span className="text-slate-600 dark:text-[#8A9EA8] uppercase">Purse</span>
+            <span className="font-bold text-amber-700 dark:text-[#FF982E]">{metrics.auctionSpend}</span>
           </div>
         </div>
       </div>
@@ -1001,13 +1001,13 @@ export function PlayersInThisStory({
     .slice(0, 3);
 
   return (
-    <div className="rounded-xl border border-[#2A4050] bg-[#101F2D] p-4 text-[#EFF5F7]">
-      <div className="flex items-center justify-between border-b border-[#2A4050] pb-2.5 mb-3">
-        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#EFF5F7]">
-          <Users className="h-3.5 w-3.5 text-[#B6E95C]" />
+    <div className="rounded-xl border border-slate-200 dark:border-[#2A4050] bg-white dark:bg-[#101F2D] p-4 text-slate-800 dark:text-[#EFF5F7] shadow-xs">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#2A4050] pb-2.5 mb-3">
+        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-[#EFF5F7]">
+          <Users className="h-3.5 w-3.5 text-emerald-600 dark:text-[#B6E95C]" />
           <span>Players in This Story</span>
         </div>
-        <span className="text-[9px] font-mono text-[#8A9EA8]">ROSTER TELEMETRY</span>
+        <span className="text-[9px] font-mono text-slate-500 dark:text-[#8A9EA8]">ROSTER TELEMETRY</span>
       </div>
 
       <div className="space-y-2.5">
@@ -1015,10 +1015,10 @@ export function PlayersInThisStory({
           <Link
             key={player.slug}
             href={`/players/${player.slug}`}
-            className="group flex items-center gap-3 rounded-xl border border-[#2A4050] bg-[#192D3C] p-2.5 hover:border-[#B6E95C]/40 hover:bg-[#192D3C]/90 transition"
+            className="group flex items-center gap-3 rounded-xl border border-slate-200 dark:border-[#2A4050] bg-slate-50 dark:bg-[#192D3C] p-2.5 hover:border-emerald-500/40 dark:hover:border-[#B6E95C]/40 hover:bg-slate-100 dark:hover:bg-[#192D3C]/90 transition"
           >
             {/* Dedicated DP with explicit fit and dimensions */}
-            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-slate-700/80 bg-slate-900">
+            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-slate-300 dark:border-slate-700/80 bg-slate-100 dark:bg-slate-900">
               <img
                 src={player.image}
                 alt={player.name}
@@ -1031,15 +1031,15 @@ export function PlayersInThisStory({
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center justify-between">
-                <h5 className="text-sm font-semibold text-white group-hover:text-[#B6E95C] transition truncate">
+                <h5 className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-[#B6E95C] transition truncate">
                   {player.name}
                 </h5>
-                <span className="font-mono text-[9px] uppercase px-1.5 py-0.5 rounded bg-[#08131F] text-[#8A9EA8] border border-[#2A4050]">
+                <span className="font-mono text-[9px] uppercase px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#08131F] text-slate-600 dark:text-[#8A9EA8] border border-slate-200 dark:border-[#2A4050]">
                   {player.teamCode}
                 </span>
               </div>
-              <p className="text-[11px] text-[#8A9EA8] truncate">{player.role}</p>
-              <p className="text-[10px] text-amber-400/90 font-mono mt-0.5 truncate">{player.iplStatsSummary}</p>
+              <p className="text-[11px] text-slate-500 dark:text-[#8A9EA8] truncate">{player.role}</p>
+              <p className="text-[10px] text-amber-600 dark:text-amber-400/90 font-mono mt-0.5 truncate">{player.iplStatsSummary}</p>
             </div>
           </Link>
         ))}
@@ -1091,27 +1091,27 @@ export function PhaseTacticalComparison({
   ];
 
   return (
-    <div className="rounded-xl border border-[#2A4050] bg-[#101F2D] p-4 text-[#EFF5F7]">
-      <div className="flex items-center justify-between border-b border-[#2A4050] pb-2.5 mb-3">
-        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#EFF5F7]">
-          <BarChart2 className="h-3.5 w-3.5 text-[#FF982E]" />
+    <div className="rounded-xl border border-slate-200 dark:border-[#2A4050] bg-white dark:bg-[#101F2D] p-4 text-slate-800 dark:text-[#EFF5F7] shadow-xs">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#2A4050] pb-2.5 mb-3">
+        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-[#EFF5F7]">
+          <BarChart2 className="h-3.5 w-3.5 text-amber-600 dark:text-[#FF982E]" />
           <span>Phase & Tactical Benchmark</span>
         </div>
-        <span className="text-[9px] font-mono text-[#8A9EA8]">VS LEAGUE AVG</span>
+        <span className="text-[9px] font-mono text-slate-500 dark:text-[#8A9EA8]">VS LEAGUE AVG</span>
       </div>
 
       <div className="space-y-2 text-xs">
         {rows.map((r, i) => (
-          <div key={i} className="rounded-lg bg-[#192D3C] p-2 border border-[#2A4050]">
-            <div className="flex justify-between items-center text-[10px] text-[#8A9EA8] font-mono mb-1">
+          <div key={i} className="rounded-lg bg-slate-50 dark:bg-[#192D3C] p-2 border border-slate-200 dark:border-[#2A4050]">
+            <div className="flex justify-between items-center text-[10px] text-slate-500 dark:text-[#8A9EA8] font-mono mb-1">
               <span>{r.metric}</span>
-              <span className={r.isPositive ? "text-[#B6E95C] font-bold" : "text-rose-400 font-bold"}>
+              <span className={r.isPositive ? "text-emerald-700 dark:text-[#B6E95C] font-bold" : "text-rose-600 dark:text-rose-400 font-bold"}>
                 {r.diff}
               </span>
             </div>
             <div className="flex justify-between items-baseline font-mono">
-              <span className="text-sm font-black text-white">{r.teamVal}</span>
-              <span className="text-[10px] text-[#8A9EA8]">Avg: {r.leagueAvg}</span>
+              <span className="text-sm font-black text-slate-900 dark:text-white">{r.teamVal}</span>
+              <span className="text-[10px] text-slate-500 dark:text-[#8A9EA8]">Avg: {r.leagueAvg}</span>
             </div>
           </div>
         ))}
@@ -1158,13 +1158,13 @@ export function ExploreUnderlyingData({
   ];
 
   return (
-    <div className="rounded-xl border border-[#2A4050] bg-[#101F2D] p-4 text-[#EFF5F7]">
-      <div className="flex items-center justify-between border-b border-[#2A4050] pb-2.5 mb-3">
-        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#EFF5F7]">
-          <Database className="h-3.5 w-3.5 text-[#4AC9D8]" />
+    <div className="rounded-xl border border-slate-200 dark:border-[#2A4050] bg-white dark:bg-[#101F2D] p-4 text-slate-800 dark:text-[#EFF5F7] shadow-xs">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#2A4050] pb-2.5 mb-3">
+        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-[#EFF5F7]">
+          <Database className="h-3.5 w-3.5 text-cyan-600 dark:text-[#4AC9D8]" />
           <span>Explore Underlying Data</span>
         </div>
-        <span className="text-[9px] font-mono text-[#4AC9D8]">TOOLS</span>
+        <span className="text-[9px] font-mono text-cyan-600 dark:text-[#4AC9D8]">TOOLS</span>
       </div>
 
       <div className="space-y-2">
@@ -1172,20 +1172,20 @@ export function ExploreUnderlyingData({
           <Link
             key={idx}
             href={link.href}
-            className="group flex items-start gap-2.5 rounded-lg border border-[#2A4050] bg-[#192D3C] p-2.5 hover:border-[#4AC9D8]/50 hover:bg-[#192D3C]/80 transition"
+            className="group flex items-start gap-2.5 rounded-lg border border-slate-200 dark:border-[#2A4050] bg-slate-50 dark:bg-[#192D3C] p-2.5 hover:border-cyan-500/50 dark:hover:border-[#4AC9D8]/50 hover:bg-slate-100 dark:hover:bg-[#192D3C]/80 transition"
           >
             <div className="min-w-0 flex-1">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-white group-hover:text-[#4AC9D8] transition truncate">
+                <span className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-[#4AC9D8] transition truncate">
                   {link.title}
                 </span>
-                <span className="rounded bg-[#08131F] px-1 py-0.5 text-[8px] font-mono font-bold uppercase text-[#8A9EA8]">
+                <span className="rounded bg-slate-100 dark:bg-[#08131F] px-1 py-0.5 text-[8px] font-mono font-bold uppercase text-slate-500 dark:text-[#8A9EA8]">
                   {link.badge}
                 </span>
               </div>
-              <p className="mt-0.5 text-[10px] text-[#8A9EA8] truncate">{link.desc}</p>
+              <p className="mt-0.5 text-[10px] text-slate-500 dark:text-[#8A9EA8] truncate">{link.desc}</p>
             </div>
-            <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#8A9EA8] mt-1 group-hover:text-[#4AC9D8] group-hover:translate-x-0.5 transition" />
+            <ArrowRight className="h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-[#8A9EA8] mt-1 group-hover:text-cyan-600 dark:group-hover:text-[#4AC9D8] group-hover:translate-x-0.5 transition" />
           </Link>
         ))}
       </div>
@@ -1204,13 +1204,13 @@ export function RelatedIntelligenceArticles({
   if (!related || related.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-[#2A4050] bg-[#101F2D] p-4 text-[#EFF5F7]">
-      <div className="flex items-center justify-between border-b border-[#2A4050] pb-2.5 mb-3">
-        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#EFF5F7]">
-          <BookOpen className="h-3.5 w-3.5 text-[#B6E95C]" />
+    <div className="rounded-xl border border-slate-200 dark:border-[#2A4050] bg-white dark:bg-[#101F2D] p-4 text-slate-800 dark:text-[#EFF5F7] shadow-xs">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#2A4050] pb-2.5 mb-3">
+        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-[#EFF5F7]">
+          <BookOpen className="h-3.5 w-3.5 text-emerald-600 dark:text-[#B6E95C]" />
           <span>Related Intelligence</span>
         </div>
-        <span className="text-[9px] font-mono text-[#8A9EA8]">CURATED</span>
+        <span className="text-[9px] font-mono text-slate-500 dark:text-[#8A9EA8]">CURATED</span>
       </div>
 
       <ul className="space-y-2.5">
@@ -1220,24 +1220,24 @@ export function RelatedIntelligenceArticles({
             <li key={p.planId}>
               <Link
                 href={`/dugout/articles/${live.slug}`}
-                className="group block rounded-lg border border-[#2A4050] bg-[#192D3C] p-2.5 hover:border-[#B6E95C]/40 hover:bg-[#192D3C]/80 transition"
+                className="group block rounded-lg border border-slate-200 dark:border-[#2A4050] bg-slate-50 dark:bg-[#192D3C] p-2.5 hover:border-emerald-500/40 dark:hover:border-[#B6E95C]/40 hover:bg-slate-100 dark:hover:bg-[#192D3C]/80 transition"
               >
-                <div className="flex items-center justify-between text-[9px] font-mono text-[#8A9EA8] mb-1">
+                <div className="flex items-center justify-between text-[9px] font-mono text-slate-500 dark:text-[#8A9EA8] mb-1">
                   <span className="uppercase">{live.franchise}</span>
                   <span>{live.readMinutes} min read</span>
                 </div>
-                <h5 className="text-xs font-bold leading-snug text-white group-hover:text-[#B6E95C] transition line-clamp-2">
+                <h5 className="text-xs font-bold leading-snug text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-[#B6E95C] transition line-clamp-2">
                   {p.title}
                 </h5>
               </Link>
             </li>
           ) : (
-            <li key={p.planId} className="rounded-lg border border-[#2A4050]/50 bg-[#192D3C]/40 p-2.5 text-xs text-[#8A9EA8]">
+            <li key={p.planId} className="rounded-lg border border-slate-200 dark:border-[#2A4050]/50 bg-slate-50 dark:bg-[#192D3C]/40 p-2.5 text-xs text-slate-500 dark:text-[#8A9EA8]">
               <div className="flex items-center justify-between text-[9px] font-mono mb-1">
                 <span>PLANNED DOSSIER</span>
-                <span className="text-[8px] border border-[#2A4050] px-1 rounded">IN QUEUE</span>
+                <span className="text-[8px] border border-slate-200 dark:border-[#2A4050] px-1 rounded">IN QUEUE</span>
               </div>
-              <div className="line-clamp-2 text-slate-400">{p.title}</div>
+              <div className="line-clamp-2 text-slate-600 dark:text-slate-400">{p.title}</div>
             </li>
           );
         })}
@@ -1261,23 +1261,23 @@ export function MoreFromFranchise({
   const totalCount = franchiseArticles.length;
 
   return (
-    <div className="rounded-xl border border-[#2A4050] bg-[#101F2D] p-4 text-[#EFF5F7]">
-      <div className="flex items-center justify-between border-b border-[#2A4050] pb-2.5 mb-3">
-        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#EFF5F7]">
+    <div className="rounded-xl border border-slate-200 dark:border-[#2A4050] bg-white dark:bg-[#101F2D] p-4 text-slate-800 dark:text-[#EFF5F7] shadow-xs">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#2A4050] pb-2.5 mb-3">
+        <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-[#EFF5F7]">
           <Shield className="h-3.5 w-3.5" style={{ color: accent }} />
           <span>More From {franchiseCode}</span>
         </div>
-        <span className="text-[9px] font-mono text-[#8A9EA8]">
+        <span className="text-[9px] font-mono text-slate-500 dark:text-[#8A9EA8]">
           {publishedCount}/{totalCount} PUBLISHED
         </span>
       </div>
 
       <div className="mb-3 space-y-1">
-        <div className="flex justify-between text-[10px] font-mono text-[#8A9EA8]">
+        <div className="flex justify-between text-[10px] font-mono text-slate-500 dark:text-[#8A9EA8]">
           <span>Dossier Archive Progress</span>
           <span>{Math.round((publishedCount / Math.max(totalCount, 1)) * 100)}%</span>
         </div>
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#192D3C]">
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-[#192D3C]">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{
@@ -1293,17 +1293,17 @@ export function MoreFromFranchise({
           <Link
             key={art.id}
             href={`/dugout/articles/${art.slug}`}
-            className="group flex items-start justify-between gap-2 rounded-lg border border-[#2A4050] bg-[#192D3C] p-2 hover:border-white/20 transition"
+            className="group flex items-start justify-between gap-2 rounded-lg border border-slate-200 dark:border-[#2A4050] bg-slate-50 dark:bg-[#192D3C] p-2 hover:border-slate-300 dark:hover:border-white/20 transition"
           >
-            <span className="text-xs font-medium text-[#8A9EA8] group-hover:text-white line-clamp-1">
+            <span className="text-xs font-medium text-slate-700 dark:text-[#8A9EA8] group-hover:text-slate-900 dark:group-hover:text-white line-clamp-1">
               {art.title}
             </span>
-            <ChevronRight className="h-3.5 w-3.5 shrink-0 text-[#8A9EA8] group-hover:text-white group-hover:translate-x-0.5 transition" />
+            <ChevronRight className="h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-[#8A9EA8] group-hover:text-slate-900 dark:group-hover:text-white group-hover:translate-x-0.5 transition" />
           </Link>
         ))}
       </div>
 
-      <div className="mt-3 pt-2.5 border-t border-[#2A4050] text-center">
+      <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-[#2A4050] text-center">
         <Link
           href={`/dugout/${franchiseCode.toLowerCase()}`}
           className="inline-flex items-center gap-1 text-[11px] font-mono font-bold hover:underline"
@@ -1348,8 +1348,8 @@ export function EditorialFullSidebar({
         metricsCount={metricsCount}
       />
 
-      {/* 2. On This Page Navigation (Sticky Container) */}
-      <div className="sticky top-14 z-20">
+      {/* 2. On This Page Navigation */}
+      <div>
         <OnThisPageNav
           sections={article.sections}
           accent={accent}
