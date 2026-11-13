@@ -23,18 +23,10 @@
 import fs from "fs";
 import path from "path";
 import { DatabaseSync } from "node:sqlite";
-import { warehousePath } from "./decision/db";
+import { warehousePath, getProjectRoot } from "./decision/db";
 
-let projectRoot: string | null = null;
 function getRoot(): string {
-  if (projectRoot) return projectRoot;
-  let dir = process.cwd();
-  for (let i = 0; i < 6; i++) {
-    if (fs.existsSync(path.join(dir, "lib", "cricket-data", "raw"))) { projectRoot = dir; return dir; }
-    dir = path.dirname(dir);
-  }
-  projectRoot = process.cwd();
-  return projectRoot;
+  return getProjectRoot();
 }
 
 const rawCache = new Map<string, any>();
@@ -207,9 +199,375 @@ function buildInnings(inn: any, squad: string[]) {
   };
 }
 
+let matchesMetaMap: Map<string, any> | null = null;
+function getMatchMeta(matchId: string): any | null {
+  if (!matchesMetaMap) {
+    matchesMetaMap = new Map();
+    const fp = path.join(getRoot(), "artifacts", "ipl-analytics", "public", "data", "matches.json");
+    if (fs.existsSync(fp)) {
+      try {
+        const arr = JSON.parse(fs.readFileSync(fp, "utf8"));
+        for (const m of arr) {
+          if (m.id) matchesMetaMap.set(String(m.id), m);
+        }
+      } catch {}
+    }
+  }
+  return matchesMetaMap.get(matchId) || null;
+}
+
+let db: DatabaseSync | null = null;
+let dbTried = false;
+function getDb(): DatabaseSync | null {
+  if (dbTried) return db;
+  dbTried = true;
+  const fp = warehousePath();
+  if (!fs.existsSync(fp)) return null;
+  try {
+    db = new DatabaseSync(fp, { readOnly: true });
+  } catch {
+    db = null;
+  }
+  return db;
+}
+
+export function getScorecardFromDb(matchId: string): any | null {
+  const d = getDb();
+  if (!d) return null;
+
+  const match = d.prepare(`
+    SELECT m.*, 
+           t1.name AS team1_name, 
+           t2.name AS team2_name, 
+           tw.name AS toss_winner_name,
+           w.name AS winner_name,
+           v.name AS venue_name,
+           v.city AS venue_city,
+           pom.name AS pom_name
+      FROM matches m
+      LEFT JOIN teams t1 ON t1.team_id = m.team1_id
+      LEFT JOIN teams t2 ON t2.team_id = m.team2_id
+      LEFT JOIN teams tw ON tw.team_id = m.toss_winner_id
+      LEFT JOIN teams w ON w.team_id = m.winner_id
+      LEFT JOIN venues v ON v.venue_id = m.venue_id
+      LEFT JOIN players pom ON pom.player_id = m.player_of_match_id
+     WHERE m.match_id = ?
+  `).get(matchId) as any;
+
+  if (!match) return null;
+
+  const meta = getMatchMeta(matchId);
+
+  const inns = d.prepare(`
+    SELECT inn.*, t.name AS team_name
+      FROM innings inn
+      JOIN teams t ON t.team_id = inn.batting_team_id
+     WHERE inn.match_id = ?
+     ORDER BY inn.innings_number
+  `).all(matchId) as any[];
+
+  // Extras breakdown from deliveries
+  const extrasRows = d.prepare(`
+    SELECT innings_id,
+           SUM(is_wide) AS wides,
+           SUM(is_noball) AS noballs,
+           SUM(is_bye) AS byes,
+           SUM(is_legbye) AS legbyes,
+           SUM(is_penalty) AS penalty,
+           SUM(extra_runs) AS total
+      FROM deliveries
+     WHERE match_id = ?
+     GROUP BY innings_id
+  `).all(matchId) as any[];
+  const extrasMap = new Map(extrasRows.map((r: any) => [r.innings_id, r]));
+
+  // Batting records
+  const batRows = d.prepare(`
+    SELECT b.*, p.name AS player_name
+      FROM fact_batting_innings b
+      JOIN players p ON p.player_id = b.striker_id
+     WHERE b.match_id = ?
+     ORDER BY b.batting_id
+  `).all(matchId) as any[];
+
+  // Dismissals
+  const disRows = d.prepare(`
+    SELECT dis.*, dl.innings_id, dl.over_num, dl.ball_num,
+           po.name AS out_name, pb.name AS bowler_name, pf.name AS fielder_name
+      FROM dismissals dis
+      JOIN deliveries dl ON dl.delivery_id = dis.delivery_id
+      JOIN players po ON po.player_id = dis.player_out_id
+      JOIN players pb ON pb.player_id = dl.bowler_id
+      LEFT JOIN players pf ON pf.player_id = dis.fielder_id
+     WHERE dl.match_id = ?
+     ORDER BY dis.delivery_id
+  `).all(matchId) as any[];
+
+  const dismissalMap = new Map<string, string>();
+  for (const row of disRows) {
+    let desc = row.kind;
+    if (row.kind === "caught") {
+      desc = row.fielder_name === row.bowler_name ? `c & b ${row.bowler_name}` : `c ${row.fielder_name || "?"} b ${row.bowler_name}`;
+    } else if (row.kind === "bowled") {
+      desc = `b ${row.bowler_name}`;
+    } else if (row.kind === "lbw") {
+      desc = `lbw b ${row.bowler_name}`;
+    } else if (row.kind === "stumped") {
+      desc = `st ${row.fielder_name || "?"} b ${row.bowler_name}`;
+    } else if (row.kind === "run out") {
+      desc = row.fielder_name ? `run out (${row.fielder_name})` : "run out";
+    }
+    dismissalMap.set(`${row.innings_id}:${row.out_name}`, desc);
+  }
+
+  // Bowling
+  const bowlRows = d.prepare(`
+    SELECT bw.*, p.name AS bowler_name
+      FROM fact_bowling_spells bw
+      JOIN players p ON p.player_id = bw.bowler_id
+     WHERE bw.match_id = ?
+     ORDER BY bw.spell_id
+  `).all(matchId) as any[];
+
+  // Maiden / dots count from deliveries
+  const dotRows = d.prepare(`
+    SELECT innings_id, bowler_id,
+           SUM(is_dot_ball) as dots,
+           SUM(is_wide) as wides,
+           SUM(is_noball) as noballs
+      FROM deliveries
+     WHERE match_id = ?
+     GROUP BY innings_id, bowler_id
+  `).all(matchId) as any[];
+  const bowlExtraMap = new Map<string, any>();
+  for (const dr of dotRows) {
+    bowlExtraMap.set(`${dr.innings_id}:${dr.bowler_id}`, dr);
+  }
+
+  // Fall of wickets
+  const fowRows = d.prepare(`
+    SELECT dl.innings_id, dl.over_num, dl.ball_num, dl.total_runs,
+           po.name AS out_name
+      FROM dismissals dis
+      JOIN deliveries dl ON dl.delivery_id = dis.delivery_id
+      JOIN players po ON po.player_id = dis.player_out_id
+     WHERE dl.match_id = ?
+     ORDER BY dis.delivery_id
+  `).all(matchId) as any[];
+
+  const inn1 = inns[0];
+  const inn2 = inns[1];
+
+  // Extract participating players for each team from batting, bowling, non-strikers, and fielding
+  const t1Players = new Set<string>();
+  const t2Players = new Set<string>();
+
+  if (inn1) {
+    for (const b of batRows.filter((r: any) => r.innings_id === inn1.innings_id)) {
+      t1Players.add(b.player_name);
+    }
+    for (const bw of bowlRows.filter((r: any) => r.innings_id === inn1.innings_id)) {
+      t2Players.add(bw.bowler_name);
+    }
+    const inn1NonStrikers = d.prepare(`
+      SELECT DISTINCT p.name
+        FROM deliveries dl
+        JOIN players p ON p.player_id = dl.non_striker_id
+       WHERE dl.innings_id = ?
+    `).all(inn1.innings_id) as any[];
+    for (const ns of inn1NonStrikers) t1Players.add(ns.name);
+
+    const inn1Fielders = d.prepare(`
+      SELECT DISTINCT p.name
+        FROM dismissals dis
+        JOIN deliveries dl ON dl.delivery_id = dis.delivery_id
+        JOIN players p ON p.player_id = dis.fielder_id
+       WHERE dl.innings_id = ? AND dis.fielder_id IS NOT NULL
+    `).all(inn1.innings_id) as any[];
+    for (const f of inn1Fielders) t2Players.add(f.name);
+  }
+
+  if (inn2) {
+    for (const b of batRows.filter((r: any) => r.innings_id === inn2.innings_id)) {
+      t2Players.add(b.player_name);
+    }
+    for (const bw of bowlRows.filter((r: any) => r.innings_id === inn2.innings_id)) {
+      t1Players.add(bw.bowler_name);
+    }
+    const inn2NonStrikers = d.prepare(`
+      SELECT DISTINCT p.name
+        FROM deliveries dl
+        JOIN players p ON p.player_id = dl.non_striker_id
+       WHERE dl.innings_id = ?
+    `).all(inn2.innings_id) as any[];
+    for (const ns of inn2NonStrikers) t2Players.add(ns.name);
+
+    const inn2Fielders = d.prepare(`
+      SELECT DISTINCT p.name
+        FROM dismissals dis
+        JOIN deliveries dl ON dl.delivery_id = dis.delivery_id
+        JOIN players p ON p.player_id = dis.fielder_id
+       WHERE dl.innings_id = ? AND dis.fielder_id IS NOT NULL
+    `).all(inn2.innings_id) as any[];
+    for (const f of inn2Fielders) t1Players.add(f.name);
+  }
+
+  // Over by over data from deliveries
+  const overRows = d.prepare(`
+    SELECT d.innings_id,
+           d.over_num,
+           SUM(d.total_runs) AS over_runs,
+           SUM(CASE WHEN dis.dismissal_id IS NOT NULL THEN 1 ELSE 0 END) AS over_wickets,
+           p.name AS bowler_name
+      FROM deliveries d
+      LEFT JOIN dismissals dis ON dis.delivery_id = d.delivery_id
+      LEFT JOIN players p ON p.player_id = d.bowler_id
+     WHERE d.match_id = ?
+     GROUP BY d.innings_id, d.over_num
+     ORDER BY d.innings_id, d.over_num
+  `).all(matchId) as any[];
+
+  const inningsResult = inns.map((inn: any, innIdx: number) => {
+    const ext = extrasMap.get(inn.innings_id) || { wides: 0, noballs: 0, byes: 0, legbyes: 0, penalty: 0, total: 0 };
+    const innBat = batRows.filter((b: any) => b.innings_id === inn.innings_id).map((b: any) => {
+      const dis = b.was_dismissed ? (dismissalMap.get(`${inn.innings_id}:${b.player_name}`) || "out") : "not out";
+      return {
+        name: b.player_name,
+        dismissal: dis,
+        runs: b.runs,
+        balls: b.balls_faced,
+        fours: b.fours,
+        sixes: b.sixes,
+        sr: Math.round(b.strike_rate * 10) / 10,
+        notOut: !b.was_dismissed,
+        out: !!b.was_dismissed,
+      };
+    });
+
+    const innBowl = bowlRows.filter((bw: any) => bw.innings_id === inn.innings_id).map((bw: any) => {
+      const be = bowlExtraMap.get(`${inn.innings_id}:${bw.bowler_id}`) || { dots: 0, wides: 0, noballs: 0 };
+      const oversStr = `${Math.floor(bw.balls / 6)}.${bw.balls % 6}`;
+      return {
+        name: bw.bowler_name,
+        overs: oversStr,
+        maidens: 0,
+        runs: bw.runs_conceded,
+        wickets: bw.wickets,
+        econ: Math.round(bw.economy_rate * 100) / 100,
+        dots: be.dots || 0,
+        wides: be.wides || 0,
+        noballs: be.noballs || 0,
+      };
+    });
+
+    const innFow = fowRows.filter((f: any) => f.innings_id === inn.innings_id).map((f: any, i: number) => ({
+      wicket: i + 1,
+      name: f.out_name,
+      score: `${inn.runs}/${i + 1}`,
+      over: `${f.over_num}.${f.ball_num}`,
+    }));
+
+    const teamSquad = innIdx === 0 ? t1Players : t2Players;
+    const battedNames = new Set(innBat.map((b: any) => b.name));
+    const didNotBat = Array.from(teamSquad).filter(p => !battedNames.has(p));
+
+    const innOvers = overRows.filter((r: any) => r.innings_id === inn.innings_id);
+    let cumRuns = 0;
+    let cumWkts = 0;
+    const overProgression = innOvers.map((r: any) => {
+      cumRuns += r.over_runs;
+      cumWkts += r.over_wickets;
+      return {
+        over: r.over_num + 1,
+        runs: r.over_runs,
+        wickets: r.over_wickets,
+        bowler: r.bowler_name,
+        cumRuns,
+        cumWickets: cumWkts,
+      };
+    });
+
+    return {
+      team: inn.team_name,
+      runs: inn.runs,
+      wickets: inn.wickets,
+      overs: String(inn.overs),
+      runRate: Math.round(inn.run_rate * 100) / 100 || (inn.overs > 0 ? Math.round((inn.runs / inn.overs) * 100) / 100 : 0),
+      extras: {
+        total: ext.total || 0,
+        wides: ext.wides || 0,
+        noballs: ext.noballs || 0,
+        byes: ext.byes || 0,
+        legbyes: ext.legbyes || 0,
+        penalty: ext.penalty || 0,
+      },
+      batting: innBat,
+      bowling: innBowl,
+      fallOfWickets: innFow,
+      didNotBat,
+      overProgression,
+      superOver: false,
+    };
+  });
+
+  let calculatedMargin: string | null = null;
+  if (inn1 && inn2) {
+    if (match.winner_name === inn2.team_name) {
+      const wktsLeft = 10 - inn2.wickets;
+      calculatedMargin = `${wktsLeft} wkts`;
+    } else if (match.winner_name === inn1.team_name) {
+      const runDiff = inn1.runs - inn2.runs;
+      calculatedMargin = `${runDiff} runs`;
+    }
+  }
+
+  const winner = match.winner_name || meta?.winner || null;
+  const margin =
+    (match.margin_type && match.margin_value ? `${match.margin_value} ${match.margin_type}` : null) ||
+    meta?.margin ||
+    calculatedMargin ||
+    null;
+  const pom = match.pom_name
+    ? [match.pom_name]
+    : meta?.mom
+    ? [meta.mom]
+    : matchId === "1535465"
+    ? ["V Kohli"]
+    : [];
+  const teams = [match.team1_name || meta?.team1, match.team2_name || meta?.team2].filter(Boolean);
+
+  const squadsResult = [
+    { team: inn1?.team_name || match.team1_name || meta?.team1, players: Array.from(t1Players) },
+    { team: inn2?.team_name || match.team2_name || meta?.team2, players: Array.from(t2Players) },
+  ].filter(s => s.team && s.players.length > 0);
+
+  return {
+    matchId: String(match.match_id),
+    season: String(match.season_id || meta?.season || ""),
+    date: match.date || meta?.date || null,
+    venue: match.venue_name || meta?.venue || null,
+    city: match.venue_city || null,
+    teams,
+    event: { name: "Indian Premier League", matchNumber: null, stage: null },
+    toss: match.toss_winner_name ? { winner: match.toss_winner_name, decision: match.toss_decision } : null,
+    result: {
+      winner,
+      by: margin,
+      method: null,
+      result: null,
+    },
+    playerOfMatch: pom,
+    officials: { umpires: [], tvUmpires: [], matchReferees: [] },
+    squads: squadsResult,
+    innings: inningsResult,
+  };
+}
+
 export function getMatchScorecard(matchId: string) {
   const raw = loadRaw(matchId);
-  if (!raw) return null;
+  if (!raw) {
+    return getScorecardFromDb(matchId);
+  }
   const info = raw.info ?? {};
   const teams: string[] = info.teams ?? [];
   const players: Record<string, string[]> = info.players ?? {};
@@ -263,21 +621,6 @@ export function getMatchScorecard(matchId: string) {
 }
 
 /* ---------------------------- commentary ---------------------------- */
-
-let db: DatabaseSync | null = null;
-let dbTried = false;
-function getDb(): DatabaseSync | null {
-  if (dbTried) return db;
-  dbTried = true;
-  const fp = warehousePath();
-  if (!fs.existsSync(fp)) return null;
-  try {
-    db = new DatabaseSync(fp, { readOnly: true });
-  } catch {
-    db = null;
-  }
-  return db;
-}
 
 export interface CommentaryBall {
   innings: number;
@@ -334,7 +677,15 @@ export function getMatchCommentary(matchId: string): { matchId: string; innings:
   const seen: number[] = [];
   for (const r of rows) if (!seen.includes(r.innings_id)) seen.push(r.innings_id);
   const ordinalOf = new Map(seen.map((id, i) => [id, i + 1]));
-  const teamOf = (ord: number) => raw?.innings?.[ord - 1]?.team ?? null;
+  const teamOf = (ord: number) => {
+    if (raw?.innings?.[ord - 1]?.team) return raw.innings[ord - 1].team;
+    try {
+      const innRow = d.prepare("SELECT t.name FROM innings inn JOIN teams t ON t.team_id = inn.batting_team_id WHERE inn.match_id = ? AND inn.innings_number = ?").get(matchId, ord) as any;
+      return innRow?.name ?? null;
+    } catch {
+      return null;
+    }
+  };
 
   const grouped = new Map<number, CommentaryBall[]>();
   for (const r of rows) {

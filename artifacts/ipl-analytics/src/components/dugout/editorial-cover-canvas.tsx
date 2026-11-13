@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { BookOpen, ShieldCheck, Sparkles } from "lucide-react";
+import { TEAM_REGISTRY, type TeamCode } from "@/lib/team-context";
 
 interface EditorialCoverCanvasProps {
   franchiseName: string;
   teamCode: string;
   parameter: string;
   parameterNumber?: number;
-  title: string;
+  title?: string;
   accent?: string;
   coverImage?: string;
   aspectRatio?: "video" | "hero" | "banner" | "wide" | "square";
@@ -14,6 +15,7 @@ interface EditorialCoverCanvasProps {
   isCoverStory?: boolean;
   /** Edition chip, e.g. "IPL 2008–2026". Legacy covers keep the original label. */
   edition?: string;
+  showTitle?: boolean;
   hideTitle?: boolean;
 }
 
@@ -29,10 +31,13 @@ export function EditorialCoverCanvas({
   className = "",
   isCoverStory = false,
   edition = "IPL 2024",
-  hideTitle = false,
+  showTitle = false,
+  hideTitle,
 }: EditorialCoverCanvasProps) {
   const [imageError, setImageError] = useState(false);
   const hasImage = Boolean(coverImage && coverImage.trim() !== "" && !imageError);
+  const teamData = (teamCode && teamCode in TEAM_REGISTRY) ? TEAM_REGISTRY[teamCode as TeamCode] : null;
+  const effectiveAccent = accent || teamData?.accent || "#f97316";
 
   const aspectClass =
     aspectRatio === "square"
@@ -47,16 +52,20 @@ export function EditorialCoverCanvas({
 
   return (
     <div
-      className={`relative w-full ${aspectClass} overflow-hidden rounded-xl border border-white/10 bg-[#0A0F1D] flex flex-col justify-between p-4 sm:p-6 group select-none ${className}`}
+      data-on-image="true"
+      className={`editorial-cover-canvas relative w-full ${aspectClass} overflow-hidden rounded-xl border border-white/10 bg-[#0A0F1D] flex flex-col justify-between p-3.5 sm:p-4 group select-none ${className}`}
     >
       {/* If an actual photo file is provided in the future, render it with fallback */}
       {hasImage && (
-        <img
-          src={coverImage}
-          alt={title}
-          onError={() => setImageError(true)}
-          className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 z-0"
-        />
+        <>
+          <img
+            src={coverImage}
+            alt={title}
+            onError={() => setImageError(true)}
+            className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 z-0"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 z-[1] pointer-events-none" />
+        </>
       )}
 
       {/* Editorial Canvas Graphic Background (Visible when no photo is attached) */}
@@ -64,11 +73,11 @@ export function EditorialCoverCanvas({
         {/* Ambient radial glow using team accent */}
         <div
           className="absolute -top-12 -right-12 w-64 sm:w-80 h-64 sm:h-80 rounded-full blur-3xl opacity-25"
-          style={{ backgroundColor: accent }}
+          style={{ backgroundColor: effectiveAccent }}
         />
         <div
           className="absolute -bottom-12 -left-12 w-64 sm:w-80 h-64 sm:h-80 rounded-full blur-3xl opacity-15"
-          style={{ backgroundColor: accent }}
+          style={{ backgroundColor: effectiveAccent }}
         />
 
         {/* Geometric Pitch & Trajectory SVG Pattern */}
@@ -89,7 +98,7 @@ export function EditorialCoverCanvas({
         <div className="absolute inset-0 opacity-20 flex items-center justify-center">
           <div
             className="w-96 h-96 rounded-full border border-dashed"
-            style={{ borderColor: accent }}
+            style={{ borderColor: effectiveAccent }}
           />
           <div
             className="absolute w-[500px] h-[500px] rounded-full border border-white/10"
@@ -107,55 +116,109 @@ export function EditorialCoverCanvas({
 
       {/* Top Header of Editorial Canvas */}
       <div className="relative z-10 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span
-            className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider border shadow-sm backdrop-blur-md"
-            style={{
-              backgroundColor: `${accent}20`,
-              color: accent,
-              borderColor: `${accent}40`,
-            }}
-          >
-            {isCoverStory ? "★ COVER STORY" : `STORY 0${parameterNumber}`}
-          </span>
-          <span className="text-[10px] font-mono uppercase text-gray-300 bg-black/60 px-2.5 py-0.5 rounded border border-white/10 backdrop-blur-md hidden sm:inline">
-            {parameter}
-          </span>
-        </div>
+        <span
+          className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider border shadow-sm backdrop-blur-md whitespace-nowrap"
+          style={{
+            backgroundColor: `${effectiveAccent}25`,
+            color: effectiveAccent,
+            borderColor: `${effectiveAccent}50`,
+          }}
+        >
+          {isCoverStory ? "★ COVER STORY" : `STORY 0${parameterNumber}`}
+        </span>
 
-        <div className="flex items-center gap-1.5 text-[10px] font-mono text-gray-300 bg-black/60 px-2.5 py-0.5 rounded border border-white/10 backdrop-blur-md">
-          <BookOpen className="w-3 h-3 text-sky-400" />
-          <span className="text-gray-200 font-semibold">{edition}</span>
+        <div className="flex items-center gap-1.5 text-[9px] font-mono text-gray-300 bg-black/60 px-2 py-0.5 rounded border border-white/10 backdrop-blur-md whitespace-nowrap">
+          <span className="text-gray-200 font-semibold tracking-wider uppercase">
+            {edition && edition !== "CricField Library" ? edition : (isCoverStory ? "SPECIAL REPORT" : "INTELLIGENCE")}
+          </span>
         </div>
       </div>
 
-      {/* Center Graphic Crest / Title Art */}
-      {!hideTitle && (
-        <div className="relative z-10 my-auto py-2">
-          <div className="flex items-center gap-2 text-xs font-mono text-gray-400 uppercase tracking-widest mb-1.5">
-            <span style={{ color: accent }}>{franchiseName}</span>
-            <span>•</span>
-            <span>SPECIAL REPORT</span>
+      {/* Center Graphic Crest / Branding */}
+      <div className="relative z-10 my-auto py-1">
+        {(hideTitle !== undefined ? !hideTitle : showTitle) && title ? (
+          <>
+            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-mono uppercase tracking-wider mb-1 text-slate-300 truncate">
+              <span style={{ color: effectiveAccent }} className="font-bold shrink-0">{franchiseName}</span>
+              <span className="text-white/40 shrink-0">•</span>
+              <span className="text-white/80 font-medium truncate">{parameter || "SPECIAL REPORT"}</span>
+            </div>
+            <h3
+              style={{ color: "#ffffff" }}
+              className={`font-black tracking-tight text-white !text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-tight forced-white on-image ${
+                isCoverStory ? "text-lg sm:text-xl md:text-2xl" : "text-sm sm:text-base"
+              }`}
+            >
+              {title}
+            </h3>
+          </>
+        ) : (
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full">
+            <div className="flex items-center gap-3 min-w-0">
+              {teamData?.logoImg ? (
+                <div
+                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-black/60 border p-1.5 backdrop-blur-md shrink-0 flex items-center justify-center shadow-lg transition-transform group-hover:scale-105"
+                  style={{ borderColor: `${effectiveAccent}50` }}
+                >
+                  <img src={teamData.logoImg} alt="" className="w-full h-full object-contain drop-shadow" />
+                </div>
+              ) : (
+                <div
+                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-black/60 border p-1.5 backdrop-blur-md shrink-0 flex items-center justify-center font-black text-sm text-white shadow-lg"
+                  style={{ borderColor: `${effectiveAccent}50`, color: effectiveAccent }}
+                >
+                  {teamCode}
+                </div>
+              )}
+              <div className="flex flex-col min-w-0">
+                <span
+                  className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider truncate"
+                  style={{ color: effectiveAccent }}
+                >
+                  {franchiseName}
+                </span>
+                <span className="text-xs sm:text-sm md:text-base font-black text-white uppercase tracking-wide leading-tight truncate forced-white">
+                  {parameter || "SPECIAL REPORT"}
+                </span>
+                <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                  <span className="text-[9px] font-mono text-white/60 uppercase tracking-wider">
+                    ANALYTICAL DOSSIER · VOL. 0{parameterNumber}
+                  </span>
+                  <span className="text-white/30 text-[9px]">•</span>
+                  <span className="text-[9px] font-mono text-emerald-400 uppercase font-semibold flex items-center gap-1">
+                    <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />
+                    VERIFIED
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Evidence Telemetry HUD card */}
+            <div className="hidden sm:flex items-center gap-3 bg-black/60 backdrop-blur-md border border-white/10 rounded-xl px-3 py-1.5 shadow-xl shrink-0">
+              <div className="flex flex-col items-end">
+                <span className="text-[8px] font-mono uppercase tracking-wider text-white/50">EVIDENCE TELEMETRY</span>
+                <span className="text-[11px] font-mono font-bold text-white tracking-tight flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: effectiveAccent }} />
+                  280,000+ BALLS
+                </span>
+              </div>
+              <div className="h-5 w-px bg-white/15" />
+              <div className="flex flex-col items-start">
+                <span className="text-[8px] font-mono uppercase tracking-wider text-white/50">DATASET SAMPLE</span>
+                <span className="text-[11px] font-mono font-semibold text-emerald-400">1,243 MATCHES</span>
+              </div>
+            </div>
           </div>
-          <h3
-            className={`font-black tracking-tight text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-tight ${
-              isCoverStory ? "text-xl sm:text-2xl md:text-3xl" : "text-base sm:text-lg"
-            }`}
-          >
-            {title}
-          </h3>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Bottom Metadata Ribbon */}
-      <div className="relative z-10 flex items-center justify-between text-[10px] font-mono text-gray-400 pt-2 border-t border-white/10">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: accent }} />
-          <span className="uppercase text-gray-300 font-semibold">{franchiseName}</span>
+      <div className="relative z-10 flex items-center justify-between text-[10px] font-mono text-gray-400 pt-1.5 border-t border-white/10">
+        <div className="flex items-center gap-1.5 truncate mr-2">
+          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: effectiveAccent }} />
+          <span className="uppercase text-gray-300 font-semibold truncate">{franchiseName}</span>
         </div>
-        <div className="flex items-center gap-2 text-gray-400">
-          <span>5-PART STORY</span>
-          <span>•</span>
+        <div className="flex items-center gap-1 text-gray-400 shrink-0 text-[9px]">
           <span>CRICFIELD EDITORIAL</span>
         </div>
       </div>

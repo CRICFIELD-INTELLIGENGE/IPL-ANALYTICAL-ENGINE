@@ -1,11 +1,15 @@
-.editorial-shell { background:#030d14; }
-.editorial-shell > header { background:#06111bec; border-color:#17303e; }
+.editorial-shell { background:#f8fafc; }
+.editorial-shell > header { background:rgba(255, 255, 255, 0.9); border-color:#e2e8f0; }
 .editorial-shell > header > div:first-child > div:first-child > span:first-child { font-size:17px; letter-spacing:-.025em; color:var(--team-accent,#8ba7ff); }
 .editorial-shell > header > div:first-child > div:first-child > span:last-child { font-size:7px; letter-spacing:.09em; margin-top:4px; }
-.editorial-shell > aside { background:#06111bf5; border-color:#17303e; }
+.editorial-shell > aside { background:rgba(255, 255, 255, 0.95); border-color:#e2e8f0; }
 .editorial-shell > aside nav a > div { border-radius:7px; }
 .editorial-shell > aside nav a[aria-current=page] > div { color:#8ba7ff; background:#8ba7ff10; }
 .editorial-shell a:focus-visible, .editorial-shell button:focus-visible { outline:2px solid #8ba7ff; outline-offset:3px; }
+
+.dark .editorial-shell, [data-theme="dark"] .editorial-shell { background:#030d14; }
+.dark .editorial-shell > header, [data-theme="dark"] .editorial-shell > header { background:#06111bec; border-color:#17303e; }
+.dark .editorial-shell > aside, [data-theme="dark"] .editorial-shell > aside { background:#06111bf5; border-color:#17303e; }
 @media(max-width:480px) {
  .editorial-shell > header { padding-left:10px; padding-right:10px; gap:8px; }
  .editorial-shell > header > div:last-child { gap:8px; }

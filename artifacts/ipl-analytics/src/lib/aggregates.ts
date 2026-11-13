@@ -60,7 +60,9 @@ export interface BatterRow {
   player: string;
   team?: string;
   teamName?: string;
+  matches?: number;
   innings: number;
+  notOuts?: number;
   runs: number;
   balls: number;
   avg: number;
@@ -70,6 +72,7 @@ export interface BatterRow {
   fifties: number;
   hundreds: number;
   highest: number;
+  highestNotOut?: boolean;
   ppSr: number;
   middleSr: number;
   deathSr: number;
@@ -89,6 +92,7 @@ export interface BowlerRow {
   player: string;
   team?: string;
   teamName?: string;
+  matches?: number;
   innings: number;
   overs: string;
   balls: number;
@@ -753,6 +757,14 @@ export interface ScorecardBowling {
   name: string; overs: string; maidens: number; runs: number; wickets: number;
   econ: number; dots: number; wides: number; noballs: number;
 }
+export interface OverProgressionItem {
+  over: number;
+  runs: number;
+  wickets: number;
+  bowler?: string;
+  cumRuns: number;
+  cumWickets: number;
+}
 export interface ScorecardInnings {
   team: string; runs: number; wickets: number; overs: string; runRate: number;
   extras: { total: number; wides: number; noballs: number; byes: number; legbyes: number; penalty: number };
@@ -761,6 +773,7 @@ export interface ScorecardInnings {
   fallOfWickets: { wicket: number; name: string; score: string; over: string }[];
   didNotBat: string[];
   superOver: boolean;
+  overProgression?: OverProgressionItem[];
 }
 export interface MatchScorecard {
   matchId: string; season: string | null; date: string | null;

@@ -45,7 +45,11 @@ import {
   Award, Flame, Compass, Activity, ShieldCheck, GraduationCap,
   Brain, Rocket, Cpu
 } from "lucide-react";
-import { useTeamTheme } from "@/lib/team-context";
+import { 
+  useTeamTheme, CANONICAL_TEAM_CODES, getFranchisePageTeam, 
+  setFranchisePageTeam, isTeamCode, type TeamCode 
+} from "@/lib/team-context";
+import { FranchiseSwitcher } from "@/components/dugout/franchise-hero";
 
 // 11 Intelligence Angles with custom badge styling and icons
 interface AngleCategory {
@@ -280,11 +284,11 @@ export const FRANCHISE_INTELLIGENCE: Record<string, FranchiseIntelligenceData> =
 };
 
 const ALL_FRANCHISES = [
-  { code: "SRH", name: "Sunrisers Hyderabad" },
   { code: "RCB", name: "Royal Challengers Bengaluru" },
   { code: "CSK", name: "Chennai Super Kings" },
   { code: "MI", name: "Mumbai Indians" },
   { code: "KKR", name: "Kolkata Knight Riders" },
+  { code: "SRH", name: "Sunrisers Hyderabad" },
   { code: "RR", name: "Rajasthan Royals" },
   { code: "DC", name: "Delhi Capitals" },
   { code: "PBKS", name: "Punjab Kings" },
@@ -309,15 +313,24 @@ export default function IntelligencePage() {
   const searchParams = useMemo(() => new URLSearchParams(searchParamStr), [searchParamStr]);
   const activeFranchiseCode = useMemo(() => {
     const raw = searchParams.get("franchise");
-    if (raw) return raw.toUpperCase();
-    return (selectedTeam || "SRH").toUpperCase();
+    if (raw && isTeamCode(raw.toUpperCase())) return raw.toUpperCase() as TeamCode;
+    if (selectedTeam && isTeamCode(selectedTeam)) return selectedTeam;
+    return getFranchisePageTeam();
   }, [searchParams, selectedTeam]);
+
+  // Synchronize remembered team if franchise is specified in URL
+  useEffect(() => {
+    const raw = searchParams.get("franchise");
+    if (raw && isTeamCode(raw.toUpperCase())) {
+      setFranchisePageTeam(raw.toUpperCase() as TeamCode);
+    }
+  }, [searchParams]);
 
   // Franchise Intelligence Configuration
   const franchiseConfig = useMemo(() => {
     return (
       FRANCHISE_INTELLIGENCE[activeFranchiseCode] ||
-      FRANCHISE_INTELLIGENCE["SRH"]
+      FRANCHISE_INTELLIGENCE["RCB"]
     );
   }, [activeFranchiseCode]);
 
@@ -350,8 +363,12 @@ export default function IntelligencePage() {
     setCurrentPage(1);
   }, [activeFranchiseCode]);
 
-  // Switch franchise handler that updates URL query
+  // Switch franchise handler that updates URL query and stores in franchise page memory
   const handleSelectFranchise = (code: string) => {
+    const upper = code.toUpperCase();
+    if (isTeamCode(upper)) {
+      setFranchisePageTeam(upper);
+    }
     setFranchisePickerOpen(false);
     const nextParams = new URLSearchParams(window.location.search);
     nextParams.set("franchise", code.toLowerCase());
@@ -405,22 +422,22 @@ export default function IntelligencePage() {
 
   return (
     <Layout>
-      <main key={activeFranchiseCode} className="min-h-screen bg-[#070C16] text-[#F3F4F6] pb-24 font-sans selection:bg-lime-400 selection:text-black">
+      <main key={activeFranchiseCode} className="min-h-screen bg-slate-50 dark:bg-[#070C16] text-slate-900 dark:text-[#F3F4F6] pb-24 font-sans selection:bg-lime-400 selection:text-black">
         {/* ── BREADCRUMBS & FRANCHISE SWITCHER ROW ── */}
-        <div className="border-b border-white/10 bg-[#070C16]/95 backdrop-blur-xl px-4 sm:px-6 lg:px-8 py-3">
+        <div className="border-b border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#070C16]/95 backdrop-blur-xl px-4 sm:px-6 lg:px-8 py-3">
           <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
             {/* Breadcrumb path */}
-            <div className="flex items-center gap-2 font-mono text-[11px] text-slate-400">
+            <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500 dark:text-slate-400">
               <Link href="/dugout">
-                <span className="hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-                  <Shield className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+                  <Shield className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
                   <span>Editorial Dugout</span>
                 </span>
               </Link>
               <span>›</span>
-              <span className="text-white font-bold">{franchiseMeta.name}</span>
+              <span className="text-slate-800 dark:text-white font-bold">{franchiseMeta.name}</span>
               <span>›</span>
-              <span className="text-cyan-300 font-black">Intelligence Hub</span>
+              <span className="text-cyan-600 dark:text-cyan-300 font-black">Intelligence Hub</span>
             </div>
 
 
@@ -431,13 +448,26 @@ export default function IntelligencePage() {
           {/* ═════════════════════════════════════════════════════════════════
               1. FRANCHISE INTELLIGENCE HUB HERO
              ═════════════════════════════════════════════════════════════════ */}
-          <section className="relative rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-r from-[#0C1222] via-[#0D162C] to-[#1A0F22] p-6 sm:p-8 lg:p-10 shadow-2xl">
+          <section className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 bg-white dark:bg-gradient-to-r dark:from-[#0C1222] dark:via-[#0D162C] dark:to-[#1A0F22] p-6 sm:p-8 lg:p-10 shadow-sm dark:shadow-2xl">
             {/* Ambient Background Light Flares */}
             <div
               className="absolute top-0 right-1/4 w-[450px] h-[450px] rounded-full blur-3xl opacity-20 pointer-events-none"
               style={{ backgroundColor: franchiseMeta.accent || franchiseConfig.accent }}
             />
             <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
+
+            {/* Top Bar with Team Switcher */}
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-5 mb-6 border-b border-slate-200/80 dark:border-white/10">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-white/40">
+                  Select Franchise Intelligence:
+                </span>
+                <span className="text-xs font-mono font-black uppercase text-slate-900 dark:text-white">
+                  {franchiseMeta.name} ({activeFranchiseCode})
+                </span>
+              </div>
+              <FranchiseSwitcher activeCode={activeFranchiseCode} onPick={handleSelectFranchise} />
+            </div>
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Left Content (8 cols) */}
@@ -455,52 +485,52 @@ export default function IntelligencePage() {
                     >
                       FRANCHISE INTELLIGENCE HUB
                     </span>
-                    <div className="font-serif italic text-sm text-amber-300 mt-1">
+                    <div className="font-serif italic text-sm text-amber-500 dark:text-amber-300 mt-1">
                       "{franchiseConfig.motto}"
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-display tracking-tight text-white uppercase leading-tight">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-display tracking-tight text-slate-900 dark:text-white uppercase leading-tight">
                     {franchiseMeta.name}
                   </h1>
-                  <p className="text-sm sm:text-base font-semibold text-slate-300">
+                  <p className="text-sm sm:text-base font-semibold text-slate-700 dark:text-slate-300">
                     100 Deep-Dive Articles. 10 Angles. One Complete Franchise Story.
                   </p>
-                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-2xl">
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl">
                     Explore {activeFranchiseCode}'s batting firepower, tactical evolution, auction strategy, fan culture, historical moments, data-driven analysis and future roadmap — all in one place.
                   </p>
                 </div>
 
                 {/* Stat Counters Ribbon */}
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2">
-                  <div className="p-3 rounded-2xl bg-black/40 border border-white/5 text-left font-mono">
-                    <div className="text-2xl font-black text-white">100</div>
-                    <div className="text-[9px] uppercase tracking-wider text-slate-400 mt-0.5">Intelligence Articles</div>
+                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-left font-mono">
+                    <div className="text-2xl font-black text-slate-900 dark:text-white">100</div>
+                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">Intelligence Articles</div>
                   </div>
-                  <div className="p-3 rounded-2xl bg-black/40 border border-white/5 text-left font-mono">
-                    <div className="text-2xl font-black text-amber-400">10</div>
-                    <div className="text-[9px] uppercase tracking-wider text-slate-400 mt-0.5">Editorial Angles</div>
+                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-left font-mono">
+                    <div className="text-2xl font-black text-amber-500 dark:text-amber-400">10</div>
+                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">Editorial Angles</div>
                   </div>
-                  <div className="p-3 rounded-2xl bg-black/40 border border-white/5 text-left font-mono">
-                    <div className="text-2xl font-black text-cyan-400">15</div>
-                    <div className="text-[9px] uppercase tracking-wider text-slate-400 mt-0.5">Seasons Covered</div>
+                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-left font-mono">
+                    <div className="text-2xl font-black text-cyan-600 dark:text-cyan-400">15</div>
+                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">Seasons Covered</div>
                   </div>
-                  <div className="p-3 rounded-2xl bg-black/40 border border-white/5 text-left font-mono">
-                    <div className="text-2xl font-black text-emerald-400">50+</div>
-                    <div className="text-[9px] uppercase tracking-wider text-slate-400 mt-0.5">Players Analysed</div>
+                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-left font-mono">
+                    <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400">50+</div>
+                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">Players Analysed</div>
                   </div>
-                  <div className="p-3 rounded-2xl bg-black/40 border border-white/5 text-left font-mono col-span-2 sm:col-span-1">
-                    <div className="text-2xl font-black text-purple-400">∞</div>
-                    <div className="text-[9px] uppercase tracking-wider text-slate-400 mt-0.5">Stories to Explore</div>
+                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-left font-mono col-span-2 sm:col-span-1">
+                    <div className="text-2xl font-black text-purple-600 dark:text-purple-400">∞</div>
+                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">Stories to Explore</div>
                   </div>
                 </div>
               </div>
 
               {/* Right Hero Cinematic Visual (4 cols) */}
               <div className="lg:col-span-4 relative flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-xs aspect-square rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-gradient-to-tr from-black via-slate-900/40 to-transparent flex items-center justify-center p-3">
+                <div className="relative w-full max-w-xs aspect-square rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-md dark:shadow-2xl bg-slate-100 dark:bg-gradient-to-tr dark:from-black dark:via-slate-900/40 dark:to-transparent flex items-center justify-center p-3">
                   <img
                     src={franchiseConfig.heroImage}
                     alt={franchiseMeta.name}
@@ -509,7 +539,7 @@ export default function IntelligencePage() {
                       (e.target as HTMLImageElement).src = franchiseConfig.stadiumImage || "/hero-players.png";
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0C1222] via-transparent to-transparent opacity-75" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 dark:from-[#0C1222] via-transparent to-transparent opacity-75" />
                   <div className="absolute bottom-4 left-4 right-4 text-left">
                     <span className="text-[9px] font-mono uppercase tracking-widest text-amber-400 font-bold">
                       {activeFranchiseCode} LEGACY
@@ -550,21 +580,21 @@ export default function IntelligencePage() {
                     className={`group relative p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between h-[100px] overflow-hidden ${
                       isActive
                         ? `${angle.borderColor} ${angle.bgActive} shadow-lg ring-1 ring-cyan-400/40`
-                        : "border-white/10 bg-[#0B1220]/70 hover:bg-white/[0.06] hover:border-white/20"
+                        : "border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1220]/70 hover:bg-slate-50 dark:hover:bg-white/[0.06] hover:border-slate-300 dark:hover:border-white/20 shadow-sm dark:shadow-none"
                     }`}
                   >
                     {/* Top Row: Icon + Badge Count */}
                     <div className="flex items-center justify-between w-full">
-                      <div className={`w-7 h-7 rounded-xl flex items-center justify-center bg-black/40 border border-white/10 ${angle.color}`}>
+                      <div className={`w-7 h-7 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/10 ${angle.color}`}>
                         <IconComponent className="w-3.5 h-3.5" />
                       </div>
-                      <span className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-full bg-white/10 ${isActive ? "text-white font-black" : "text-slate-400"}`}>
+                      <span className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-full bg-slate-100 dark:bg-white/10 ${isActive ? "text-white font-black" : "text-slate-600 dark:text-slate-400"}`}>
                         {angleCounts[angle.id] ?? 0}
                       </span>
                     </div>
 
                     {/* Bottom Label */}
-                    <div className="text-[11px] font-bold leading-tight text-white group-hover:text-cyan-300 transition-colors">
+                    <div className="text-[11px] font-bold leading-tight text-slate-800 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
                       {angle.label}
                     </div>
                   </button>
@@ -580,12 +610,12 @@ export default function IntelligencePage() {
             {/* ── LEFT COLUMN: 8 COLS ── */}
             <div className="lg:col-span-8 space-y-6">
               {/* Section Title & Subhead */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-white/10 pb-3">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white flex items-center gap-2">
+                  <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
                     <span>ALL {activeFranchiseCode} INTELLIGENCE ARTICLES</span>
                   </h2>
-                  <p className="text-xs text-slate-400 mt-0.5">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                     A complete library of analytical, tactical and storytelling articles on {franchiseMeta.name}.
                   </p>
                 </div>
@@ -596,7 +626,7 @@ export default function IntelligencePage() {
               </div>
 
               {/* Filter Dropdown Ribbon */}
-              <div className="p-3 rounded-2xl bg-[#0B1220]/80 border border-white/10 flex flex-wrap items-center justify-between gap-3">
+              <div className="p-3 rounded-2xl bg-white dark:bg-[#0B1220]/80 border border-slate-200 dark:border-white/10 flex flex-wrap items-center justify-between gap-3 shadow-sm dark:shadow-none">
                 <div className="flex flex-wrap items-center gap-2 flex-1">
                   {/* Dropdown: Angle */}
                   <select
@@ -605,7 +635,7 @@ export default function IntelligencePage() {
                       setSelectedAngle(e.target.value);
                       setCurrentPage(1);
                     }}
-                    className="px-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-xs font-mono text-white focus:outline-none focus:border-cyan-400 cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-800 dark:text-white focus:outline-none focus:border-cyan-400 cursor-pointer"
                   >
                     <option value="all">All Angles</option>
                     <option value="batting">Batting Intelligence</option>
@@ -624,7 +654,7 @@ export default function IntelligencePage() {
                   <select
                     value={selectedSeason}
                     onChange={(e) => setSelectedSeason(e.target.value)}
-                    className="px-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-xs font-mono text-white focus:outline-none focus:border-cyan-400 cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-800 dark:text-white focus:outline-none focus:border-cyan-400 cursor-pointer"
                   >
                     <option value="All Seasons">All Seasons</option>
                     {SEASONS.map((s) => (
@@ -636,7 +666,7 @@ export default function IntelligencePage() {
                   <select
                     value={selectedPlayer}
                     onChange={(e) => setSelectedPlayer(e.target.value)}
-                    className="px-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-xs font-mono text-white focus:outline-none focus:border-cyan-400 cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-800 dark:text-white focus:outline-none focus:border-cyan-400 cursor-pointer"
                   >
                     <option value="All Players">All Players ({activeFranchiseCode})</option>
                     {franchiseConfig.players.map((p) => (
@@ -656,35 +686,35 @@ export default function IntelligencePage() {
                       setCurrentPage(1);
                     }}
                     placeholder="Search articles..."
-                    className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-black/40 border border-white/10 hover:border-cyan-500/30 focus:border-cyan-400 focus:outline-none text-xs font-mono text-white placeholder:text-slate-500 transition-all"
+                    className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/10 hover:border-cyan-500/30 focus:border-cyan-400 focus:outline-none text-xs font-mono text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all"
                   />
                 </div>
               </div>
 
               {/* ── FEATURED ARTICLE HERO CARD ── */}
               {featuredArticle && (
-                <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-r from-[#0C1426] via-[#101C34] to-[#1C1226] p-6 sm:p-7 shadow-2xl group hover:border-white/20 transition-all">
+                <div className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 bg-white dark:bg-gradient-to-r dark:from-[#0C1426] dark:via-[#101C34] dark:to-[#1C1226] p-6 sm:p-7 shadow-lg dark:shadow-2xl group hover:border-slate-300 dark:hover:border-white/20 transition-all">
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                     {/* Left text */}
                     <div className="md:col-span-7 space-y-3">
                       <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-widest bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
+                        <span className="px-2.5 py-0.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-widest bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
                           <Compass className="w-3 h-3" />
                           <span>{aspectName(featuredArticle.aspect)}</span>
                         </span>
                         {featuredArticle.meta && (
-                          <span className="text-[10px] font-mono text-slate-400 flex items-center gap-1">
+                          <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 flex items-center gap-1">
                             <Clock className="w-3 h-3" />
                             <span>{featuredArticle.meta}</span>
                           </span>
                         )}
                       </div>
 
-                      <h3 className="text-xl sm:text-2xl font-black text-white leading-tight group-hover:text-amber-300 transition-colors">
+                      <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-amber-300 transition-colors">
                         {featuredArticle.title}
                       </h3>
 
-                      <p className="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-2">
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-2">
                         {featuredArticle.dek}
                       </p>
 
@@ -707,9 +737,9 @@ export default function IntelligencePage() {
                         <Link href={`/dugout/${activeFranchiseCode.toLowerCase()}`}>
                           <button
                             type="button"
-                            className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white font-mono text-xs font-bold uppercase tracking-wider border border-white/10 transition-all flex items-center gap-1.5 cursor-pointer"
+                            className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-white/5 dark:hover:bg-white/10 dark:text-white font-mono text-xs font-bold uppercase tracking-wider border border-slate-200 dark:border-white/10 transition-all flex items-center gap-1.5 cursor-pointer"
                           >
-                            <Activity className="w-3.5 h-3.5 text-cyan-400" />
+                            <Activity className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
                             <span>Deep Dive Analysis</span>
                           </button>
                         </Link>
@@ -718,8 +748,16 @@ export default function IntelligencePage() {
 
                     {/* Right hero image */}
                     <div className="md:col-span-5 relative">
-                      <div className="rounded-2xl overflow-hidden border border-white/10 relative shadow-xl">
-                        <LibraryMedia imageId={featuredArticle.imageId} title={featuredArticle.title} accent={franchiseMeta.accent ?? franchiseConfig.accent} code={activeFranchiseCode} teamName={franchiseMeta.name} aspect={featuredArticle.aspect} />
+                      <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 relative shadow-xl">
+                        <LibraryMedia
+                          imageId={featuredArticle.imageId}
+                          title={featuredArticle.title}
+                          accent={franchiseMeta.accent ?? franchiseConfig.accent}
+                          code={activeFranchiseCode}
+                          teamName={franchiseMeta.name}
+                          aspect={featuredArticle.aspect}
+                          isCoverStory={true}
+                        />
                       </div>
                     </div>
                   </div>
@@ -748,40 +786,54 @@ export default function IntelligencePage() {
                       key={art.key}
                       href={art.href ?? "#"}
                       onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
-                      className="group flex flex-col justify-between rounded-2xl border border-white/10 bg-[#0B1220]/70 hover:bg-[#0E1728] hover:border-white/25 overflow-hidden transition-all duration-300 shadow-lg cursor-pointer"
+                      className="group flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-white/10 bg-white hover:bg-slate-50 dark:bg-[#0B1220]/70 dark:hover:bg-[#0E1728] hover:border-slate-300 dark:hover:border-white/25 overflow-hidden transition-all duration-300 shadow-md dark:shadow-lg cursor-pointer"
                     >
-                      {/* Aspect + read time */}
-                      <div className="flex items-center justify-between gap-2 px-3 pt-3 pb-2 text-[9px] font-mono">
-                        <span className="px-2 py-0.5 rounded-md bg-black/50 border border-white/15 text-white font-bold truncate max-w-[170px]">
-                          {aspectName(art.aspect)}
-                        </span>
-                        {art.meta && (
-                          <span className="px-1.5 py-0.5 rounded-md bg-black/50 border border-white/10 text-slate-300 flex items-center gap-1 shrink-0">
-                            <Clock className="w-2.5 h-2.5" />
-                            {art.meta}
-                          </span>
-                        )}
-                      </div>
-
                       {/* 16:9 cover: the article's header photo, or the CricField illustration */}
-                      <LibraryMedia imageId={art.imageId} title={art.title} accent={franchiseMeta.accent ?? franchiseConfig.accent} code={activeFranchiseCode} teamName={franchiseMeta.name} aspect={art.aspect} />
+                      <LibraryMedia
+                        imageId={art.imageId}
+                        title={art.title}
+                        accent={franchiseMeta.accent ?? franchiseConfig.accent}
+                        code={activeFranchiseCode}
+                        teamName={franchiseMeta.name}
+                        aspect={art.aspect}
+                      />
 
                       {/* Body Details */}
-                      <div className="p-4 space-y-2 flex-1 flex flex-col">
-                        <h4 className="font-bold text-sm text-white group-hover:text-cyan-300 transition-colors line-clamp-2 leading-snug">
+                      <div className="p-4 space-y-2.5 flex-1 flex flex-col">
+                        {/* Aspect + read time */}
+                        <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
+                          <span
+                            className="px-2 py-0.5 rounded-md font-bold uppercase tracking-wider truncate max-w-[190px]"
+                            style={{
+                              backgroundColor: `${franchiseMeta.accent}15`,
+                              color: franchiseMeta.accent,
+                              border: `1px solid ${franchiseMeta.accent}30`,
+                            }}
+                          >
+                            {aspectName(art.aspect)}
+                          </span>
+                          {art.meta && (
+                            <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1 shrink-0 font-medium text-[11px]">
+                              <Clock className="w-3 h-3 text-slate-400" />
+                              {art.meta}
+                            </span>
+                          )}
+                        </div>
+
+                        <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-primary dark:group-hover:text-cyan-300 transition-colors line-clamp-2 leading-snug">
                           {art.title}
                         </h4>
 
-                        <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                        <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
                           {art.dek}
                         </p>
 
                         {/* Footer */}
-                        <div className="mt-auto pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                        <div className="mt-auto pt-3 border-t border-slate-100 dark:border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500">
                           <span>{art.number ? `No. ${art.number}` : ""}</span>
-                          <span className="flex items-center gap-1 text-slate-400">
+                          <span className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
                             {art.kind === "legacy" ? "From the archive" : (STORY_TYPE_LABEL[art.storyType ?? ""] ?? "New")}
-                            <ArrowRight className="w-3 h-3 text-cyan-400" />
+                            <ArrowRight className="w-3 h-3 text-cyan-600 dark:text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
                           </span>
                         </div>
                       </div>
@@ -836,7 +888,7 @@ export default function IntelligencePage() {
             {/* ── RIGHT COLUMN: 4 COLS (INTELLIGENCE SIDEBAR) ── */}
             <div className="lg:col-span-4 space-y-6">
               {/* CARD 1: TRENDING TOPICS (DYNAMIC PER FRANCHISE) */}
-              <div className="rounded-3xl border border-white/10 bg-[#0B1220]/80 p-5 space-y-4 shadow-xl">
+              <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1220]/80 p-5 space-y-4 shadow-sm dark:shadow-xl">
                 <div className="flex items-center gap-2 text-xs font-mono font-black uppercase tracking-widest" style={{ color: franchiseMeta.accent }}>
                   <Flame className="w-4 h-4 text-orange-400" />
                   <span>TRENDING TOPICS</span>
@@ -850,13 +902,13 @@ export default function IntelligencePage() {
                         setSearchQuery(item.title);
                         setCurrentPage(1);
                       }}
-                      className="p-3 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 transition-all flex items-start gap-3 cursor-pointer group"
+                      className="p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 dark:bg-white/[0.03] dark:hover:bg-white/[0.06] dark:border-white/5 transition-all flex items-start gap-3 cursor-pointer group"
                     >
                       <span className="w-6 h-6 rounded-lg bg-black/50 border border-white/10 text-cyan-400 font-mono font-black text-xs flex items-center justify-center shrink-0">
                         {item.rank}
                       </span>
                       <div className="space-y-0.5 flex-1">
-                        <div className="text-xs font-bold text-white group-hover:text-cyan-300 transition-colors leading-snug">
+                        <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-primary dark:group-hover:text-cyan-300 transition-colors leading-snug">
                           {item.title}
                         </div>
                         <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
@@ -873,8 +925,8 @@ export default function IntelligencePage() {
               </div>
 
               {/* CARD 2: QUICK FILTERS (DYNAMIC PER FRANCHISE) */}
-              <div className="rounded-3xl border border-white/10 bg-[#0B1220]/80 p-5 space-y-4 shadow-xl">
-                <div className="flex items-center gap-2 text-xs font-mono font-black uppercase tracking-widest text-cyan-400">
+              <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1220]/80 p-5 space-y-4 shadow-sm dark:shadow-xl">
+                <div className="flex items-center gap-2 text-xs font-mono font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
                   <Filter className="w-4 h-4" />
                   <span>QUICK FILTERS</span>
                 </div>
@@ -892,7 +944,7 @@ export default function IntelligencePage() {
                             setSearchQuery(tag);
                             setCurrentPage(1);
                           }}
-                          className="px-2.5 py-1 rounded-xl bg-white/[0.03] hover:bg-white/10 border border-white/10 text-white/80 hover:text-white text-[11px] font-mono transition-all cursor-pointer"
+                          className="px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.03] dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 hover:text-slate-900 dark:text-white/80 dark:hover:text-white text-[11px] font-mono transition-all cursor-pointer"
                         >
                           {tag}
                         </button>
@@ -900,7 +952,7 @@ export default function IntelligencePage() {
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-white/5">
+                  <div className="pt-2 border-t border-slate-100 dark:border-white/5">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold block mb-2">
                       Seasons
                     </span>
@@ -915,7 +967,7 @@ export default function IntelligencePage() {
                           className={`py-1 rounded-xl text-[10px] font-mono font-bold transition-all cursor-pointer ${
                             selectedSeason === s
                               ? "bg-cyan-500 text-black font-black"
-                              : "bg-white/[0.03] hover:bg-white/10 border border-white/5 text-slate-300"
+                              : "bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.03] dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 text-slate-700 dark:text-slate-300"
                           }`}
                         >
                           {s}
@@ -927,8 +979,8 @@ export default function IntelligencePage() {
               </div>
 
               {/* CARD 3: RELATED INTELLIGENCE TOOLS */}
-              <div className="rounded-3xl border border-white/10 bg-[#0B1220]/80 p-5 space-y-3 shadow-xl">
-                <div className="flex items-center gap-2 text-xs font-mono font-black uppercase tracking-widest text-amber-400">
+              <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1220]/80 p-5 space-y-3 shadow-sm dark:shadow-xl">
+                <div className="flex items-center gap-2 text-xs font-mono font-black uppercase tracking-widest text-amber-500 dark:text-amber-400">
                   <Cpu className="w-4 h-4" />
                   <span>RELATED INTELLIGENCE TOOLS</span>
                 </div>
@@ -942,16 +994,16 @@ export default function IntelligencePage() {
                     { label: "Franchise Timeline", sub: "Key moments across IPL seasons", href: `/dugout/${activeFranchiseCode.toLowerCase()}#history` },
                   ].map((tool) => (
                     <Link key={tool.label} href={tool.href}>
-                      <div className="p-3 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/5 hover:border-white/20 transition-all flex items-center justify-between cursor-pointer group">
+                      <div className="p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 dark:bg-white/[0.03] dark:hover:bg-white/[0.07] dark:border-white/5 dark:hover:border-white/20 transition-all flex items-center justify-between cursor-pointer group">
                         <div className="space-y-0.5">
-                          <div className="text-xs font-bold text-white group-hover:text-amber-300 transition-colors">
+                          <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-amber-500 dark:group-hover:text-amber-300 transition-colors">
                             {tool.label}
                           </div>
-                          <div className="text-[10px] text-slate-400">
+                          <div className="text-[10px] text-slate-500 dark:text-slate-400">
                             {tool.sub}
                           </div>
                         </div>
-                        <ChevronRight className="w-4 h-4 text-white/40 group-hover:translate-x-1 group-hover:text-amber-400 transition-transform shrink-0 ml-2" />
+                        <ChevronRight className="w-4 h-4 text-slate-400 dark:text-white/40 group-hover:translate-x-1 group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-transform shrink-0 ml-2" />
                       </div>
                     </Link>
                   ))}
@@ -963,17 +1015,17 @@ export default function IntelligencePage() {
           {/* ═════════════════════════════════════════════════════════════════
               4. CROSS-FRANCHISE SWITCHER (LEAGUE INTEL & DUGOUT DIRECTORY)
              ═════════════════════════════════════════════════════════════════ */}
-          <section className="relative rounded-3xl overflow-hidden border border-white/10 bg-[#0C1322] p-6 sm:p-8 shadow-2xl space-y-6">
+          <section className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0C1322] p-6 sm:p-8 shadow-sm dark:shadow-2xl space-y-6">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div className="space-y-2">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-white/[0.04] text-[10px] font-mono font-bold uppercase tracking-widest text-slate-300">
-                  <Compass className="w-3.5 h-3.5 text-amber-400" />
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/[0.04] text-[10px] font-mono font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300">
+                  <Compass className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
                   <span>FRANCHISE DIRECTORY</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
                   Explore Rival Dugouts &amp; League Intel
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-400 max-w-2xl leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
                   Track tactical evolutions, auction blue-prints, and squad telemetry across all 10 IPL franchises.
                 </p>
               </div>
@@ -982,7 +1034,7 @@ export default function IntelligencePage() {
                 <Link href="/teams">
                   <button
                     type="button"
-                    className="px-5 py-2.5 rounded-xl border border-white/15 bg-white/[0.05] hover:bg-white/10 hover:border-white/30 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer"
+                    className="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-white/15 bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.05] hover:border-slate-300 dark:hover:border-white/30 text-slate-800 dark:text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <span>Browse All Franchises</span>
                     <ArrowRight className="w-4 h-4" />
@@ -992,8 +1044,8 @@ export default function IntelligencePage() {
             </div>
 
             {/* Quick-Jump Franchise Pills */}
-            <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2.5 pt-2 border-t border-white/10">
-              {(["CSK", "MI", "RCB", "KKR", "SRH", "RR", "DC", "PBKS", "GT", "LSG"] as const).map((code) => {
+            <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2.5 pt-2 border-t border-slate-100 dark:border-white/10">
+              {CANONICAL_TEAM_CODES.map((code) => {
                 const conf = FRANCHISE_INTELLIGENCE[code] ?? { name: code, accent: "#FFD11A" };
                 const isActive = activeFranchiseCode === code;
                 return (
@@ -1006,20 +1058,20 @@ export default function IntelligencePage() {
                     }}
                     className={`group relative flex flex-col items-center justify-center gap-2 p-3 rounded-2xl border transition-all text-center cursor-pointer ${
                       isActive
-                        ? "border-white/40 bg-white/10 shadow-lg"
-                        : "border-white/5 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.06]"
+                        ? "border-primary/40 bg-primary/10 dark:border-white/40 dark:bg-white/10 shadow-md"
+                        : "border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/[0.02] hover:border-slate-300 dark:hover:border-white/20 hover:bg-slate-100 dark:hover:bg-white/[0.06]"
                     }`}
                     style={isActive ? { borderColor: `${conf.accent}90` } : undefined}
                     title={`Switch intelligence view to ${conf.name}`}
                   >
-                    <div className="w-8 h-8 rounded-xl bg-black/40 border border-white/10 flex items-center justify-center p-1 group-hover:scale-105 transition-transform">
+                    <div className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/10 flex items-center justify-center p-1 group-hover:scale-105 transition-transform">
                       <TeamLogo team={code} size="w-6 h-6" />
                     </div>
                     <div className="space-y-0.5">
-                      <div className="text-xs font-mono font-bold text-white group-hover:text-amber-300 transition-colors flex items-center justify-center gap-1">
+                      <div className="text-xs font-mono font-bold text-slate-800 dark:text-white group-hover:text-primary dark:group-hover:text-amber-300 transition-colors flex items-center justify-center gap-1">
                         <span>{code}</span>
                       </div>
-                      <div className="text-[10px] text-slate-400 truncate max-w-[80px]">
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate max-w-[80px]">
                         {isActive ? (
                           <span className="font-semibold" style={{ color: conf.accent }}>Active</span>
                         ) : (

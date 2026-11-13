@@ -33,13 +33,13 @@ import { HUB_EVENTS } from "@/lib/ipl-2027";
 const HomeInsights = React.lazy(() => import("@/components/home-insights"));
 
 const HEADLINES = [
-  { prefix: "IPL IS NOT JUST ABOUT", highlight: "CRICKET.", color: "#F9CD05" },
-  { prefix: "IT'S A", highlight: "PRODUCT.", color: "#06B6D4" },
-  { prefix: "A", highlight: "BUSINESS.", color: "#10B981" },
-  { prefix: "IPL - A", highlight: "FESTIVAL.", color: "#EF4444" },
-  { prefix: "AN", highlight: "EMOTION.", color: "#818CF8" },
-  { prefix: "A", highlight: "CELEBRATION.", color: "#38BDF8" },
-  { prefix: "A", highlight: "BILLION DOLLAR ECOSYSTEM.", color: "#E879F9" },
+  { prefix: "IPL IS NOT JUST ABOUT", highlight: "CRICKET.", darkColor: "#F9CD05", lightColor: "#D97706" },
+  { prefix: "IT'S A", highlight: "PRODUCT.", darkColor: "#06B6D4", lightColor: "#0284C7" },
+  { prefix: "A", highlight: "BUSINESS.", darkColor: "#10B981", lightColor: "#059669" },
+  { prefix: "IPL - A", highlight: "FESTIVAL.", darkColor: "#EF4444", lightColor: "#DC2626" },
+  { prefix: "AN", highlight: "EMOTION.", darkColor: "#818CF8", lightColor: "#4F46E5" },
+  { prefix: "A", highlight: "CELEBRATION.", darkColor: "#38BDF8", lightColor: "#0284C7" },
+  { prefix: "A", highlight: "BILLION DOLLAR ECOSYSTEM.", darkColor: "#E879F9", lightColor: "#C026D3" },
 ];
 
 const daysUntil = (date: string | null) => {
@@ -104,13 +104,13 @@ export default function HomePage() {
                     alt="IPL Champions and Star Players"
                   />
                   {/* Blending gradients */}
-                  <div className="absolute inset-y-0 left-0 w-32 sm:w-56 bg-gradient-to-r from-[#050b14] via-[#050b14]/80 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#050b14] via-[#050b14]/60 to-transparent" />
+                  <div className="absolute inset-y-0 left-0 w-32 sm:w-56 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-[#050b14] dark:via-[#050b14]/80 dark:to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white via-white/60 to-transparent dark:from-[#050b14] dark:via-[#050b14]/60 dark:to-transparent" />
                 </div>
               </div>
 
               {/* TEXT CONTENT (LEFT) */}
-              <div className="home-hero-copy relative z-10 w-full md:w-[65%] lg:w-[58%] flex flex-col justify-between p-6 sm:p-8 lg:p-10">
+              <div className="home-hero-copy relative z-10 w-full md:w-[70%] lg:w-[64%] xl:w-[60%] flex flex-col justify-between p-6 sm:p-8 lg:p-10">
                 <div>
                   {/* Fixed min-height headline box prevents vertical jumping */}
                   <div className="h-[105px] sm:h-[120px] md:h-[135px] flex items-center mb-3 overflow-hidden">
@@ -121,26 +121,36 @@ export default function HomePage() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -14 }}
                         transition={{ duration: 0.35, ease: "easeOut" }}
-                        className="font-black leading-[1.08] text-white uppercase tracking-tight text-3xl sm:text-4xl md:text-5xl"
+                        className="font-black leading-[1.08] text-slate-900 dark:text-white uppercase tracking-tight text-2xl sm:text-3xl md:text-[36px] lg:text-[42px] xl:text-[46px] select-none"
                       >
                         {curHeadline.prefix === "IPL IS NOT JUST ABOUT" ? (
                           <>
-                            <span className="animate-ipl-glow">IPL</span>{" "}
-                            <span className="text-white/80">IS NOT JUST ABOUT</span>{" "}
+                            <span className="inline-block whitespace-nowrap">
+                              <span className="text-[#FF6B00]">IPL</span>{" "}
+                              <span className="text-slate-900 dark:text-white">IS NOT JUST ABOUT</span>
+                            </span>
                             <br />
-                            <span style={{ color: curHeadline.color }}>CRICKET.</span>
+                            <span className="text-amber-600 dark:text-[#F9CD05] font-black">CRICKET.</span>
                           </>
                         ) : (
                           <>
-                            <span className="text-white/80">{curHeadline.prefix}</span>{" "}
-                            <span style={{ color: curHeadline.color }}>{curHeadline.highlight}</span>
+                            <span className="text-slate-900 dark:text-white">{curHeadline.prefix}</span>{" "}
+                            <span
+                              className="font-black text-[var(--hl-light)] dark:text-[var(--hl-dark)]"
+                              style={{
+                                "--hl-light": curHeadline.lightColor,
+                                "--hl-dark": curHeadline.darkColor,
+                              } as React.CSSProperties}
+                            >
+                              {curHeadline.highlight}
+                            </span>
                           </>
                         )}
                       </motion.h1>
                     </AnimatePresence>
                   </div>
 
-                  <p className="text-slate-300 text-sm md:text-[15px] max-w-[440px] leading-relaxed mb-6 font-normal">
+                  <p className="text-slate-600 dark:text-slate-300 text-sm md:text-[15px] max-w-[440px] leading-relaxed mb-6 font-normal">
                     Data-driven insights across sports, business, fans and the IPL economy.
                   </p>
                 </div>
@@ -154,7 +164,7 @@ export default function HomePage() {
                     Explore Insights <ArrowRight className="w-4 h-4" />
                   </button>
                   <Link href="/feed">
-                    <button className="flex items-center gap-2 bg-white/10 border border-white/15 text-white font-bold text-xs uppercase tracking-wider px-4 py-3 rounded-xl hover:bg-white/20 transition-all hover:scale-[1.02] cursor-pointer">
+                    <button className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 border border-slate-200 dark:border-white/15 text-slate-800 dark:text-white font-bold text-xs uppercase tracking-wider px-4 py-3 rounded-xl transition-all hover:scale-[1.02] cursor-pointer">
                       Feed <Activity className="w-4 h-4" />
                     </button>
                   </Link>
@@ -195,25 +205,25 @@ export default function HomePage() {
                     <div className="flex items-center gap-3 mt-3">
                       <TeamLogo team="RCB" />
                       <div>
-                        <h3 className="text-lg font-black text-white">RCB</h3>
-                        <p className="text-xs text-slate-300">Royal Challengers Bengaluru</p>
+                        <h3 className="text-lg font-black text-slate-900 dark:text-white">RCB</h3>
+                        <p className="text-xs text-slate-600 dark:text-slate-300">Royal Challengers Bengaluru</p>
                       </div>
                     </div>
-                    <p className="mt-3 text-xs sm:text-sm font-semibold text-white">
+                    <p className="mt-3 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white">
                       Back-to-back champions.
                     </p>
-                    <p className="text-xs text-slate-400 mt-1">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                       Defeated Gujarat Titans by 5 wickets in the 2026 final.
                     </p>
-                    <div className="flex justify-between mt-3 text-xs pt-1 border-t border-white/10">
-                      <Link href="/dugout/RCB" className="text-red-400 font-semibold hover:underline">
+                    <div className="flex justify-between mt-3 text-xs pt-1 border-t border-slate-200 dark:border-white/10">
+                      <Link href="/dugout/RCB" className="text-red-500 dark:text-red-400 font-semibold hover:underline">
                         Explore RCB →
                       </Link>
                       <a
                         href="https://www.royalchallengers.com/rcb-cricket-news/news/rcb-crowned-as-ipl-2026-champions"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-slate-400 hover:text-slate-300"
+                        className="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300"
                       >
                         Final report ↗
                       </a>
@@ -226,16 +236,16 @@ export default function HomePage() {
               <div className="reference-franchise-focus">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <Shield size={16} className="text-sky-400" />
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-200">
+                    <Shield size={16} className="text-sky-500 dark:text-sky-400" />
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">
                       Franchise in Focus
                     </span>
                   </div>
-                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-sky-400/20 text-sky-300 border border-sky-400/30">
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-sky-500/10 dark:bg-sky-400/20 text-sky-600 dark:text-sky-300 border border-sky-500/20 dark:border-sky-400/30">
                     {selectedTeam || "IPL 2026"}
                   </span>
                 </div>
-                <p className="text-xs text-slate-300 leading-snug mb-3">
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-snug mb-3">
                   Deep-dive into {selectedTeam ? `${selectedTeam}'s` : "all franchise"} squads, tactical balance, and season timelines.
                 </p>
                 <Link

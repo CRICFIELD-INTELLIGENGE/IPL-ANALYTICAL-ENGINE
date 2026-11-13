@@ -61,20 +61,145 @@ const getVenueCity = (v: any): string => String(v?.city || (v?.venue || "").spli
 const normalizePlayerName = (name: string): string =>
   (name || "").toLowerCase().replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim();
 
+function getPageNumbers(current: number, total: number): (number | string)[] {
+  if (total <= 7) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+  if (current <= 4) {
+    return [1, 2, 3, 4, 5, "...", total];
+  }
+  if (current >= total - 3) {
+    return [1, "...", total - 4, total - 3, total - 2, total - 1, total];
+  }
+  return [1, "...", current - 1, current, current + 1, "...", total];
+}
+
+function TablePaginationBar({
+  currentPage,
+  totalPages,
+  totalItems,
+  startIndex,
+  pageSize,
+  onPageChange,
+  onPageSizeChange,
+  itemLabel,
+}: {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  startIndex: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
+  itemLabel: string;
+}) {
+  const pageNumbers = getPageNumbers(currentPage, totalPages);
+  const endIndex = Math.min(startIndex + pageSize, totalItems);
+
+  return (
+    <div className="p-4 border-t border-slate-200 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-50/60 dark:bg-white/[0.01]">
+      <div className="text-xs font-mono text-slate-600 dark:text-white/60">
+        Showing <strong className="text-slate-900 dark:text-white font-bold">{totalItems === 0 ? 0 : startIndex + 1}</strong>–<strong className="text-slate-900 dark:text-white font-bold">{endIndex}</strong> of <strong className="text-slate-900 dark:text-white font-bold">{totalItems}</strong> {itemLabel}
+      </div>
+
+      <div className="flex items-center gap-2 text-xs font-mono">
+        <span className="text-slate-500 dark:text-white/40 text-[11px] font-bold">Show per page:</span>
+        <div className="flex items-center bg-slate-200/70 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-0.5">
+          {[10, 20, 50, 100].map(size => (
+            <button
+              key={size}
+              type="button"
+              onClick={() => {
+                onPageSizeChange(size);
+                onPageChange(1);
+              }}
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                pageSize === size
+                  ? "bg-primary text-white shadow-sm font-black"
+                  : "text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-white/10"
+              }`}
+            >
+              {size}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex items-center gap-1.5 font-mono text-xs">
+        <button
+          type="button"
+          onClick={() => onPageChange(1)}
+          disabled={currentPage === 1}
+          className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all font-bold cursor-pointer"
+          title="First page"
+        >
+          «
+        </button>
+        <button
+          type="button"
+          onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+          disabled={currentPage === 1}
+          className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all font-bold cursor-pointer"
+        >
+          ‹ Prev
+        </button>
+
+        <div className="flex items-center gap-1">
+          {pageNumbers.map((p, idx) => typeof p === "number" ? (
+            <button
+              key={p}
+              type="button"
+              onClick={() => onPageChange(p)}
+              className={`w-8 h-8 rounded-lg text-xs font-bold transition-all flex items-center justify-center cursor-pointer ${
+                currentPage === p
+                  ? "bg-primary text-white shadow-md font-black"
+                  : "border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10"
+              }`}
+            >
+              {p}
+            </button>
+          ) : (
+            <span key={`ellipsis-${idx}`} className="px-1 text-slate-400 dark:text-white/30">…</span>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+          disabled={currentPage === totalPages}
+          className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all font-bold cursor-pointer"
+        >
+          Next ›
+        </button>
+        <button
+          type="button"
+          onClick={() => onPageChange(totalPages)}
+          disabled={currentPage === totalPages}
+          className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-white/80 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all font-bold cursor-pointer"
+          title="Last page"
+        >
+          »
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function StatsPage({ mobilePresentation = false }: { mobilePresentation?: boolean } = {}) {
   const [, setLocation] = useLocation();
-  const { scrollYProgress } = useScroll();
   const [activeTab, setActiveTab] = useState<Tab>("batters");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedVenue, setSelectedVenue] = useState<string | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
-  const [showAll, setShowAll] = useState(false);
+  const [pageSize, setPageSize] = useState<number>(20);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [batterSortField, setBatterSortField] = useState<"player" | "matches" | "innings" | "runs" | "balls" | "highest" | "avg" | "sr" | "boundaryPct" | "fours" | "sixes" | "hundreds" | "fifties">("runs");
   const [bowlerSortField, setBowlerSortField] = useState<"player" | "matches" | "innings" | "wickets" | "econ" | "avg" | "sr" | "dotPct" | "boundaryPct" | "ballsPerBoundary" | "trueEconomy" | "best">("wickets");
   const [batterSortOrder, setBatterSortOrder] = useState<"asc" | "desc">("desc");
   const [bowlerSortOrder, setBowlerSortOrder] = useState<"asc" | "desc">("desc");
 
   const handleBatterSort = (field: typeof batterSortField) => {
+    setCurrentPage(1);
     if (batterSortField === field) {
       setBatterSortOrder(prev => prev === "desc" ? "asc" : "desc");
     } else {
@@ -84,6 +209,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   };
 
   const handleBowlerSort = (field: typeof bowlerSortField) => {
+    setCurrentPage(1);
     if (bowlerSortField === field) {
       setBowlerSortOrder(prev => prev === "desc" ? "asc" : "desc");
     } else {
@@ -92,9 +218,11 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     }
   };
 
-
   useEffect(() => {
-    setShowAll(false);
+    setCurrentPage(1);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
   }, [activeTab]);
 
   const latestTeams = usePlayerLatestTeams();
@@ -168,6 +296,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   const clearFilter = useAnalyticsFilterStore(state => state.clearFilter);
   const resetFilters = useAnalyticsFilterStore(state => state.resetFilters);
   const filterChain = useAnalyticsFilterStore(state => state.chain);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, filters.season, filters.team, filters.opposition, filters.venue, filters.phase, filters.bowler_type]);
   // Matchup Lab state
   const [matchupBatter, setMatchupBatter] = useState("");
   const [matchupBowler, setMatchupBowler] = useState("");
@@ -559,6 +691,20 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     searchQuery, batterSortField, batterSortOrder, bowlerSortField, bowlerSortOrder
   ]);
 
+  const totalBatterCount = activeData.batters.length;
+  const totalBatterPages = Math.max(1, Math.ceil(totalBatterCount / pageSize));
+  const batterStartIndex = (currentPage - 1) * pageSize;
+  const paginatedBatters = activeData.batters.slice(batterStartIndex, batterStartIndex + pageSize);
+
+  const totalBowlerCount = activeData.bowlers.length;
+  const totalBowlerPages = Math.max(1, Math.ceil(totalBowlerCount / pageSize));
+  const bowlerStartIndex = (currentPage - 1) * pageSize;
+  const paginatedBowlers = activeData.bowlers.slice(bowlerStartIndex, bowlerStartIndex + pageSize);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    document.getElementById("stats-table-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
 
 
@@ -592,28 +738,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   const clearFilterChain = () => resetFilters();
 
   const removeChainFilter = (key: string) => clearFilter(key as keyof typeof filters);
-
-  // SCROLL TRANSFORMS
-  const masterScale = useTransform(scrollYProgress, [0.6, 1], [1, 0.93]);
-  const heroH = useTransform(scrollYProgress, [0, 0.25, 1], ["100%", "36%", "36%"]);
-  const heroW = useTransform(scrollYProgress, [0, 0.15, 0.35, 1], ["100%", "100%", "calc(100% - 520px)", "calc(100% - 520px)"]);
-  const col2W = useTransform(scrollYProgress, [0.15, 0.35, 1], ["0px", "500px", "500px"]);
-  const titleSz = useTransform(scrollYProgress, [0, 0.25, 1], ["88px", "22px", "22px"]);
-  const padTop = useTransform(scrollYProgress, [0, 0.25, 1], ["12%", "5%", "5%"]);
-  const padLeft = useTransform(scrollYProgress, [0, 0.25, 1], ["6%", "5%", "5%"]);
-  const titleOp = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0]);
-  const r1Op = useTransform(scrollYProgress, [0.08, 0.2], [0, 1]);
-  const r1X = useTransform(scrollYProgress, [0.08, 0.2], [30, 0]);
-  const r2Op = useTransform(scrollYProgress, [0.2, 0.38], [0, 1]);
-  const r2Y = useTransform(scrollYProgress, [0.2, 0.38], [30, 0]);
-
-  const [scrollCaption, setScrollCaption] = useState("STATS CENTER.");
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    if (v < 0.1) setScrollCaption("STATS CENTER.");
-    else if (v < 0.2) setScrollCaption("BATTER INTEL.");
-    else if (v < 0.3) setScrollCaption("BOWLER ARSENAL.");
-    else setScrollCaption("VENUE ORACLE.");
-  });
 
   // KPIs
   const kpis = useMemo(() => {
@@ -714,18 +838,18 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   const filterControls = (<>
         {/* SMART FILTER BAR */}
-        <div className="bg-[#0B1020] rounded-2xl border border-white/10 p-2 flex flex-wrap items-center gap-2 relative z-50">
+        <div className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-2 flex flex-wrap items-center gap-2 relative z-20 shadow-sm dark:shadow-xl">
 
-          <div className="flex items-center gap-2 px-3 py-2 bg-white/5 rounded-xl border border-white/5 mr-2">
+          <div className="flex items-center gap-2 px-3 py-2 bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/5 mr-2">
             <Filter className="w-3.5 h-3.5 text-primary" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-white/80">Dimensional Slicing</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-800 dark:text-white/80">Dimensional Slicing</span>
           </div>
 
           {/* Reset — always visible, clears every dimensional filter back to defaults */}
           <button
             onClick={clearFilterChain}
             title="Reset all filters"
-            className="flex items-center gap-1.5 px-3 py-2 bg-white/5 hover:bg-red-500/10 border border-white/5 hover:border-red-500/30 rounded-xl text-[10px] font-black uppercase tracking-widest text-white/50 hover:text-red-400 transition-all mr-2 shrink-0"
+            className="flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-red-50 dark:bg-white/5 dark:hover:bg-red-500/10 border border-slate-200 hover:border-red-200 dark:border-white/5 dark:hover:border-red-500/30 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:text-red-600 dark:text-white/50 dark:hover:text-red-400 transition-all mr-2 shrink-0 cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             Reset
@@ -855,175 +979,177 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   </>);
 
   const desktopContent = (
-    <Layout hideHeaderProgress={scrollYProgress}><FeatureSaveButton feature="stats"/>
-      {/* HERO SCROLL */}
-      <div className="h-[260vh]">
-        <motion.div
-          style={{ scale: masterScale }}
-          className="team-analytics-page sticky top-0 w-full h-screen flex flex-col gap-2.5 overflow-hidden bg-[#050816] p-2.5 pb-0 origin-top"
-        >
-          {/* ROW 1: HERO + KPI PANEL */}
-          <motion.div className="flex gap-2.5 shrink-0" style={{ height: heroH }}>
-            <motion.div style={{ width: heroW }} className="relative bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden shrink-0 group">
-              <div className="absolute inset-0">
-                <img src="/advance stats title image.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-70" />
-                <div className="absolute inset-0 bg-gradient-to-br stats-team-overlay" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-[#050816]/70 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/80 to-transparent" />
-                <div className="absolute inset-0 opacity-[0.03] bg-grid-40" />
+    <Layout><FeatureSaveButton feature="stats"/>
+      {/* ═════════════════════════════════════════════════════════════════════
+          HERO & ANALYTICS TELEMETRY SECTION
+          - Clean, responsive natural document flow layout
+          - Zero sticky scroll locking or 260vh trapping
+          - Fully responsive across desktop, tablet and mobile
+          - High-contrast dual theme support (Light and Dark)
+         ═════════════════════════════════════════════════════════════════════ */}
+      <div className="team-analytics-page w-full flex flex-col gap-3 p-2.5 md:p-4 bg-slate-50 dark:bg-[#050816]">
+        {/* ROW 1: HERO TITLE CARD + KPI PANEL */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
+          {/* HERO TITLE CARD (LEFT, 7 cols) */}
+          <div className="lg:col-span-7 relative bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 overflow-hidden group shadow-sm dark:shadow-2xl p-5 md:p-6 flex flex-col justify-between min-h-[180px]">
+            <div className="absolute inset-0 pointer-events-none">
+              <img src="/advance stats title image.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-15 dark:opacity-40" />
+              <div className="absolute inset-0 bg-gradient-to-br stats-team-overlay" />
+              <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-[#050816] dark:via-[#050816]/70 dark:to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent dark:from-[#050816]/80 to-transparent" />
+              <div className="absolute inset-0 opacity-[0.03] bg-grid-40" />
+            </div>
+            <div className="relative z-10 flex flex-col items-start">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/25 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5">
+                  <Flame className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+                  STATSGURU TELEMETRY
+                </span>
+                <span className="text-[10px] font-mono text-slate-500 dark:text-white/40">19 Seasons Indexed</span>
               </div>
-              <motion.div style={{ paddingTop: padTop, paddingLeft: padLeft, opacity: titleOp }} className="relative z-10 h-full flex flex-col">
-                <div className="absolute inset-0 bg-black/5" />
-                <div className="relative z-10 flex flex-col items-start">
-                  <motion.h1 style={{ fontSize: titleSz, lineHeight: '0.9', marginBottom: '8px' }} className="font-black leading-[0.82] text-white uppercase tracking-tighter mb-4 scale-x-105 origin-left">
-                    {scrollCaption === "STATS CENTER." ? (<><div className="mb-1">ADVANCED</div><span className="text-[#3B82F6] block">STATS.</span></>) :
-                      scrollCaption === "BATTER INTEL." ? (<><div className="mb-1">BATTER</div><span className="text-[#F9CD05] block">INTEL.</span></>) :
-                        scrollCaption === "BOWLER ARSENAL." ? (<><div className="mb-1">BOWLER</div><span className="text-[#8B5CF6] block">ARSENAL.</span></>) :
-                          (<><div className="mb-1">VENUE</div><span className="text-[#10B981] block">ORACLE.</span></>)}
-                  </motion.h1>
-                  <motion.p className="text-white/50 text-[13px] max-w-[420px] font-medium tracking-tight">
-                    <span className="text-white/80 font-black mr-2 uppercase tracking-widest">Statsguru Depth:</span>
-                    Dimensional slicing across {overview.data?.totalMatches ?? "—"} matches and {overview.data?.seasons ?? "—"} seasons of high-fidelity IPL telemetry.
-                  </motion.p>
-                </div>
-              </motion.div>
-            </motion.div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-none text-slate-900 dark:text-white uppercase tracking-tighter mb-2 scale-x-105 origin-left">
+                <div className="mb-1 text-slate-900 dark:text-white">ADVANCED</div>
+                <span className="text-blue-600 dark:text-[#3B82F6] block">STATS.</span>
+              </h1>
+              <p className="text-slate-600 dark:text-white/60 text-xs md:text-sm font-medium tracking-tight max-w-[480px]">
+                <span className="text-slate-900 dark:text-white/90 font-black mr-2 uppercase tracking-widest">Statsguru Depth:</span>
+                Dimensional slicing across {overview.data?.totalMatches ?? "1,243"} matches and {overview.data?.seasons ?? "19"} seasons of high-fidelity IPL telemetry.
+              </p>
+            </div>
+          </div>
 
-            {/* KPI STRIP CARD */}
-            <motion.div style={{ width: col2W, opacity: r1Op, x: r1X }} className="bg-[#0B1020] rounded-[24px] border border-white/10 flex flex-col overflow-hidden shadow-2xl min-w-0">
-              <div className="p-3 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
-                <div className="flex items-center gap-2">
-                  <Cpu className="w-3.5 h-3.5 text-blue-400" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-white/60">Analytical KPI Strip</span>
+          {/* KPI STRIP CARD (RIGHT, 5 cols) */}
+          <div className="lg:col-span-5 bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 flex flex-col overflow-hidden shadow-sm dark:shadow-2xl">
+            <div className="p-3 border-b border-slate-200 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-white/[0.02]">
+              <div className="flex items-center gap-2">
+                <Cpu className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-700 dark:text-white/70">Analytical KPI Strip</span>
+              </div>
+              <span className="text-[8px] font-mono text-slate-400 dark:text-white/30">TELEMETRY_v4.2</span>
+            </div>
+            <div className="flex-1 p-3 grid grid-cols-4 gap-2 content-center">
+              {kpis.map(k => (
+                <div key={k.label} className="flex flex-col items-center gap-1 py-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all group">
+                  <k.Icon className="w-4 h-4 transition-transform group-hover:scale-110 text-[var(--kpi-color)]" style={{ "--kpi-color": k.accent } as React.CSSProperties} />
+                  <span className="text-xs md:text-sm font-black text-slate-900 dark:text-white [text-shadow:0_0_12px_var(--kpi-shadow)]" style={{ "--kpi-shadow": `${k.accent}33` } as React.CSSProperties}>{k.value}</span>
+                  <span className="text-[7px] font-black text-slate-500 dark:text-white/40 uppercase tracking-tighter text-center">{k.label}</span>
                 </div>
-                <span className="text-[8px] font-mono text-white/20">TELEMETRY_v4.2</span>
-              </div>
-              <div className="flex-1 p-3 grid grid-cols-4 gap-2 content-center">
-                {kpis.map(k => (
-                  <div key={k.label} className="flex flex-col items-center gap-1 py-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all group">
-                    <k.Icon className="w-4 h-4 transition-transform group-hover:scale-110 text-[var(--kpi-color)]" style={{ "--kpi-color": k.accent } as React.CSSProperties} />
-                    <motion.span className="text-[13px] font-black text-white [text-shadow:0_0_12px_var(--kpi-shadow)]" style={{ "--kpi-shadow": `${k.accent}33` } as React.CSSProperties}>{k.value}</motion.span>
-                    <motion.span className="text-[7px] font-black text-white/30 uppercase tracking-tighter text-center">{k.label}</motion.span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-          {/* ROW 2: SEASON CHART + TOP PERFORMERS PREVIEW */}
-          <motion.div style={{ opacity: r2Op, y: r2Y }} className="flex gap-2.5 flex-1 min-h-0">
-            <div className="flex-1 bg-[#0B1020] rounded-[20px] border border-white/10 p-4 flex flex-col min-h-0 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
-              <div className="flex items-center justify-between mb-4 shrink-0 relative z-10">
-                <div className="flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-primary animate-pulse" />
-                  <span className="text-[11px] font-black uppercase tracking-widest text-white/60">Tournament Telemetry Pulse</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-primary/40" /><span className="text-[8px] font-black text-white/40 uppercase">Volume</span></div>
-                  <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-accent" /><span className="text-[8px] font-black text-white/40 uppercase">Intensity</span></div>
-                </div>
+        {/* ROW 2: SEASON CHART + TOP PERFORMERS PREVIEW */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
+          {/* TOURNAMENT TELEMETRY PULSE (LEFT, 8 cols) */}
+          <div className="lg:col-span-8 bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 p-4 flex flex-col min-h-[220px] relative overflow-hidden group shadow-sm dark:shadow-xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-transparent pointer-events-none" />
+            <div className="flex items-center justify-between mb-3 shrink-0 relative z-10">
+              <div className="flex items-center gap-2">
+                <Activity className="w-4 h-4 text-blue-500 dark:text-blue-400 animate-pulse" />
+                <span className="text-[11px] font-black uppercase tracking-widest text-slate-700 dark:text-white/70">Tournament Telemetry Pulse</span>
               </div>
-              <div className="flex-1 min-h-0 relative z-10">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={seasonChart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid stroke="hsl(250 30% 18%)" strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="season" tick={{ fontSize: 9, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fontSize: 9, fill: "hsl(230 15% 60%)" }} axisLine={false} tickLine={false} />
-                    <Tooltip
-                      contentStyle={tooltipStyle}
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length) {
-                          const data = payload[0].payload;
-                          return (
-                            <div className="bg-[#0B1020] border border-white/10 rounded-xl p-3 shadow-2xl backdrop-blur-md">
-                              <p className="text-[10px] font-black text-white/40 uppercase mb-2">Season 20{data.season} Analysis</p>
-                              <div className="flex flex-col gap-1.5">
-                                <div className="flex justify-between items-center gap-6">
-                                  <span className="text-[9px] font-black text-white/60 uppercase">Run Volume</span>
-                                  <span className="text-[12px] font-black text-white">{fmt(data.runs)}</span>
-                                </div>
-                                <div className="flex justify-between items-center gap-6">
-                                  <span className="text-[9px] font-black text-accent uppercase">Six Intensity</span>
-                                  <span className="text-[12px] font-black text-accent">{data.sixes}</span>
-                                </div>
-                                <div className="mt-2 pt-2 border-t border-white/5 flex flex-col">
-                                  <span className="text-[8px] font-black text-primary uppercase">League Health Index</span>
-                                  <div className="w-full h-1 bg-white/5 rounded-full mt-1 overflow-hidden">
-                                    <motion.div style={{ "--progress-w": `${Math.min(100, (data.runs / 200))}%` } as React.CSSProperties} className="h-full bg-primary w-[var(--progress-w)]" />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="runs"
-                      stroke="hsl(var(--primary))"
-                      strokeWidth={3}
-                      dot={{ r: 0 }}
-                      activeDot={{ r: 4, stroke: "white", strokeWidth: 2 }}
-                    />
-                    <Line
-                      type="stepAfter"
-                      dataKey="sixes"
-                      stroke="hsl(var(--accent))"
-                      strokeWidth={2}
-                      strokeDasharray="5 5"
-                      dot={{ r: 0 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-blue-500" /><span className="text-[9px] font-black text-slate-500 dark:text-white/50 uppercase">Runs Volume</span></div>
+                <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-amber-500" /><span className="text-[9px] font-black text-slate-500 dark:text-white/50 uppercase">Six Intensity</span></div>
               </div>
             </div>
+            <div className="flex-1 h-[160px] min-h-[160px] relative z-10">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={seasonChart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <CartesianGrid stroke="currentColor" className="text-slate-200 dark:text-white/5" strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="season" tick={{ fontSize: 9, fill: "#64748b" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 9, fill: "#64748b" }} axisLine={false} tickLine={false} />
+                  <Tooltip
+                    contentStyle={tooltipStyle}
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        const data = payload[0].payload;
+                        return (
+                          <div className="bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 rounded-xl p-3 shadow-2xl backdrop-blur-md">
+                            <p className="text-[10px] font-black text-slate-500 dark:text-white/50 uppercase mb-2">Season 20{data.season} Analysis</p>
+                            <div className="flex flex-col gap-1.5">
+                              <div className="flex justify-between items-center gap-6">
+                                <span className="text-[9px] font-black text-slate-600 dark:text-white/60 uppercase">Run Volume</span>
+                                <span className="text-[12px] font-black text-slate-900 dark:text-white">{fmt(data.runs)}</span>
+                              </div>
+                              <div className="flex justify-between items-center gap-6">
+                                <span className="text-[9px] font-black text-amber-600 dark:text-amber-400 uppercase">Six Intensity</span>
+                                <span className="text-[12px] font-black text-amber-600 dark:text-amber-400 font-bold">{data.sixes}</span>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="runs"
+                    stroke="#3b82f6"
+                    strokeWidth={2.5}
+                    dot={{ r: 0 }}
+                    activeDot={{ r: 4, stroke: "white", strokeWidth: 2 }}
+                  />
+                  <Line
+                    type="stepAfter"
+                    dataKey="sixes"
+                    stroke="#f59e0b"
+                    strokeWidth={2}
+                    strokeDasharray="4 4"
+                    dot={{ r: 0 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
 
-            <div className="w-[280px] bg-[#0B1020] rounded-[20px] border border-white/10 p-4 flex flex-col gap-2 overflow-y-auto no-scrollbar">
-              <div className="flex items-center gap-2 shrink-0">
-                <Trophy className="w-4 h-4 text-amber-400" />
-                <span className="text-[11px] font-black uppercase tracking-widest text-white/60">Top Performers</span>
-              </div>
+          {/* TOP PERFORMERS PREVIEW (RIGHT, 4 cols) */}
+          <div className="lg:col-span-4 bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 p-4 flex flex-col justify-between shadow-sm dark:shadow-xl">
+            <div className="flex items-center gap-2 mb-2 shrink-0">
+              <Trophy className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+              <span className="text-[11px] font-black uppercase tracking-widest text-slate-700 dark:text-white/70">Top Performers</span>
+            </div>
+            <div className="flex flex-col gap-1.5 flex-1 justify-between">
               {(activeData.batters).slice(0, 5).map((b, i) => {
                 const displayName = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Batter #${i + 1}`);
                 return (
-                <div key={displayName + i} className="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.02] border border-white/5 hover:border-primary/20 transition-colors">
-                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-white/10 shrink-0 relative">
-                    <PlayerAvatar name={displayName} playerImages={playerImages.data} bio={getBioFor(displayName)} imgClassName="w-full h-full object-cover select-none" />
+                  <div key={displayName + i} className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 hover:border-blue-300 dark:hover:border-primary/20 transition-colors">
+                    <div className="w-7 h-7 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-slate-200 dark:border-white/10 shrink-0 relative">
+                      <PlayerAvatar name={displayName} playerImages={playerImages.data} bio={getBioFor(displayName)} imgClassName="w-full h-full object-cover select-none" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[11px] font-bold text-slate-900 dark:text-white truncate">{displayPlayerName(displayName, displayNames)}</div>
+                      <div className="text-[9px] text-slate-500 dark:text-white/40">{fmt(b.runs)} runs · SR {b.sr}</div>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[11px] font-bold truncate">{displayPlayerName(displayName, displayNames)}</div>
-                    <div className="text-[9px] text-white/30">{fmt(b.runs)} runs · SR {b.sr}</div>
-                  </div>
-                </div>
                 );
               })}
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* STATIC DATA SECTION */}
       <div className="space-y-4 px-2.5 pb-6 mt-4">
         {/* CROSS-LINK TO GLOBAL SCOUT LAB */}
-        <div className="rounded-2xl bg-gradient-to-r from-primary/10 via-purple-500/10 to-white/[0.02] border border-primary/20 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+        <div className="rounded-2xl bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-sm dark:shadow-lg">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center text-primary shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
               <Compass className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-xs font-bold text-white block">
+              <span className="text-xs font-bold text-slate-900 dark:text-white block">
                 Looking for multi-league scouting across domestic and overseas tournaments?
               </span>
-              <span className="text-[10px] text-white/50">
+              <span className="text-[10px] text-slate-600 dark:text-white/60">
                 Compare players across IPL, SMAT, BBL, SA20, CPL, and ILT20 with league-adjusted ratings.
               </span>
             </div>
           </div>
           <Link href="/scout">
-            <button className="px-3.5 py-1.5 rounded-xl bg-primary text-[#0B1020] text-xs font-black shadow transition-all hover:bg-primary/90 flex items-center gap-1.5 shrink-0">
+            <button className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
               <span>Open Scout Lab</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
@@ -1033,10 +1159,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         {filterControls}
 
         {/* Telemetry Summary Banner */}
-        <div className="mb-6 bg-gradient-to-r from-primary/15 via-blue-900/20 to-slate-950 p-4 rounded-2xl border border-white/10 flex flex-wrap items-center justify-between gap-4 animate-fade-in relative overflow-hidden group">
+        <div className="mb-6 bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4 animate-fade-in relative overflow-hidden group shadow-sm dark:shadow-none">
           <img
             src="/advance stats title image.png"
-            className="absolute right-0 top-0 h-full w-auto object-cover opacity-25 pointer-events-none mix-blend-luminosity group-hover:opacity-35 transition-opacity"
+            className="absolute right-0 top-0 h-full w-auto object-cover opacity-15 dark:opacity-25 pointer-events-none mix-blend-luminosity group-hover:opacity-25 dark:group-hover:opacity-35 transition-opacity"
             alt="Advance Stats Banner"
           />
           <div className="flex items-center gap-3 relative z-10">
@@ -1044,8 +1170,8 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               <Activity className="w-5 h-5 animate-pulse" />
             </div>
             <div>
-              <div className="text-[12px] font-black text-white uppercase tracking-wider">Multidimensional Slicing Telemetry</div>
-              <div className="text-[10px] text-white/50 font-bold mt-0.5">
+              <div className="text-[12px] font-black text-slate-900 dark:text-white uppercase tracking-wider">Multidimensional Slicing Telemetry</div>
+              <div className="text-[10px] text-slate-600 dark:text-white/50 font-bold mt-0.5">
                 {filters.season !== "All Seasons" ? `${filters.season} ` : "All-Time "}
                 {filters.team !== "All Teams" ? `${filters.team} ` : ""}
                 {filters.opposition !== "All Opponents" ? `vs ${filters.opposition} ` : ""}
@@ -1066,7 +1192,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                 className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer border ${
                   filters.team === themeTeam
                     ? "bg-amber-400 text-black border-amber-300 shadow-md shadow-amber-400/20"
-                    : "bg-white/5 text-amber-300 border-amber-400/30 hover:bg-amber-400/10"
+                    : "bg-slate-100 dark:bg-white/5 text-amber-700 dark:text-amber-300 border-amber-400/30 hover:bg-amber-400/10"
                 }`}
               >
                 <Shield className="w-3.5 h-3.5" />
@@ -1074,14 +1200,14 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               </button>
             )}
             <div className="text-right">
-              <div className="text-[8px] font-black text-white/30 uppercase">Fixtures Sliced</div>
-              <div className="text-xl font-black text-white mt-0.5">{activeMatches.length} <span className="text-[10px] text-primary/60 font-bold">Matches</span></div>
+              <div className="text-[8px] font-black text-slate-500 dark:text-white/30 uppercase">Fixtures Sliced</div>
+              <div className="text-xl font-black text-slate-900 dark:text-white mt-0.5">{activeMatches.length} <span className="text-[10px] text-primary font-bold">Matches</span></div>
             </div>
             {filters.venue !== "All Venues" && (
               <div className="text-right">
-                <div className="text-[8px] font-black text-white/30 uppercase">Venue Scorecards</div>
+                <div className="text-[8px] font-black text-slate-500 dark:text-white/30 uppercase">Venue Scorecards</div>
                 <div className="text-xl font-black text-primary mt-0.5">
-                  {activeMatches.filter(m => m.venue && normalizeVenueName(m.venue) === normalizeVenueName(filters.venue)).length} <span className="text-[10px] text-white/40 font-bold">Fixtures</span>
+                  {activeMatches.filter(m => m.venue && normalizeVenueName(m.venue) === normalizeVenueName(filters.venue)).length} <span className="text-[10px] text-slate-500 dark:text-white/40 font-bold">Fixtures</span>
                 </div>
               </div>
             )}
@@ -1090,14 +1216,14 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
         {/* TAB BAR & SEE ALL OPTION */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/5 w-fit max-w-full overflow-x-auto no-scrollbar">
+          <div className="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 w-fit max-w-full overflow-x-auto no-scrollbar">
             {TABS.map(t => (
               <button
                 key={t.id}
                 onClick={() => setActiveTab(t.id)}
-                className={`px-4 py-2 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-all shrink-0 ${activeTab === t.id
-                  ? "bg-gradient-to-r from-primary/40 to-blue-500/20 text-white shadow-[0_0_16px_-4px_hsl(var(--primary))]"
-                  : "text-white/40 hover:text-white hover:bg-white/5"
+                className={`px-4 py-2 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-all shrink-0 cursor-pointer ${activeTab === t.id
+                  ? "bg-gradient-to-r from-primary/80 to-blue-600/80 text-white shadow-md"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-white dark:text-white/40 dark:hover:text-white dark:hover:bg-white/5"
                   }`}
               >
                 <t.Icon className="w-3.5 h-3.5" />
@@ -1107,16 +1233,32 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
           </div>
 
           {(activeTab === "batters" || activeTab === "bowlers") && (
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 border transition-all shrink-0 ${showAll
-                ? "bg-primary border-primary/50 text-white shadow-lg shadow-primary/20 hover:bg-primary/95"
-                : "bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/10"
-                }`}
-            >
-              <Eye className="w-3.5 h-3.5" />
-              {showAll ? "Show Top 12" : "See All"}
-            </button>
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="text-xs font-mono text-slate-500 dark:text-white/40">
+                {activeTab === "batters"
+                  ? `${totalBatterCount} Batters`
+                  : `${totalBowlerCount} Bowlers`}
+              </span>
+              <div className="flex items-center gap-1.5 text-xs font-mono">
+                <span className="text-[11px] font-bold text-slate-500 dark:text-white/40">Rows:</span>
+                <div className="flex items-center bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-0.5">
+                  {[10, 20, 50, 100].map(size => (
+                    <button
+                      key={size}
+                      type="button"
+                      onClick={() => { setPageSize(size); setCurrentPage(1); }}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                        pageSize === size
+                          ? "bg-primary text-white shadow-sm font-black"
+                          : "text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-white/10"
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           )}
         </div>
 
@@ -1139,6 +1281,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         )}
 
         {/* TAB CONTENT */}
+            <div id="stats-table-anchor" className="scroll-mt-28" />
             <div className="min-h-[600px]">
           {!dynamicStatsQuery.isLoading && !isDefaultCareerView && dynamicStatsQuery.isError && activeData.batters.length === 0 && activeData.bowlers.length === 0 && (
             <div className="mb-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 mx-2">
@@ -1160,60 +1303,58 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               transition={{ duration: 0.2 }}
             >
               {activeTab === "batters" && (
-                <div className="bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden shadow-2xl">
+                <div className="bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 overflow-hidden shadow-sm dark:shadow-2xl">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
-                      <thead className="bg-white/[0.03] border-b border-white/5">
+                      <thead className="bg-slate-50 dark:bg-white/[0.03] border-b border-slate-200 dark:border-white/5">
                         <tr>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("player")}>Rank & Player {batterSortField === "player" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("matches")}>Mts {batterSortField === "matches" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("innings")}>Inn {batterSortField === "innings" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("runs")}>Runs {batterSortField === "runs" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("balls")}>Balls {batterSortField === "balls" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("highest")}>HS {batterSortField === "highest" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("avg")}>Avg {batterSortField === "avg" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("sr")}>SR {batterSortField === "sr" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("boundaryPct")} title="Share of the batter's runs scored in fours and sixes">Bdry% {batterSortField === "boundaryPct" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-blue-400/60 uppercase tracking-[0.2em] text-center bg-blue-500/5 cursor-pointer hover:text-blue-300 transition-colors" onClick={() => handleBatterSort("fours")}>4s {batterSortField === "fours" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-purple-400/60 uppercase tracking-[0.2em] text-center bg-purple-500/5 cursor-pointer hover:text-purple-300 transition-colors" onClick={() => handleBatterSort("sixes")}>6s {batterSortField === "sixes" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-red-400/60 uppercase tracking-[0.2em] text-center bg-red-500/5 cursor-pointer hover:text-red-300 transition-colors" onClick={() => handleBatterSort("hundreds")}>100s {batterSortField === "hundreds" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBatterSort("fifties")}>50s {batterSortField === "fifties" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("player")}>Rank & Player {batterSortField === "player" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("matches")}>Mts {batterSortField === "matches" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("innings")}>Inn {batterSortField === "innings" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("runs")}>Runs {batterSortField === "runs" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("balls")}>Balls {batterSortField === "balls" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("highest")}>HS {batterSortField === "highest" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("avg")}>Avg {batterSortField === "avg" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("sr")}>SR {batterSortField === "sr" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("boundaryPct")} title="Share of the batter's runs scored in fours and sixes">Bdry% {batterSortField === "boundaryPct" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.2em] text-center bg-blue-500/5 cursor-pointer hover:text-blue-700 dark:hover:text-blue-300 transition-colors" onClick={() => handleBatterSort("fours")}>4s {batterSortField === "fours" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-purple-600 dark:text-purple-400 uppercase tracking-[0.2em] text-center bg-purple-500/5 cursor-pointer hover:text-purple-700 dark:hover:text-purple-300 transition-colors" onClick={() => handleBatterSort("sixes")}>6s {batterSortField === "sixes" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-red-600 dark:text-red-400 uppercase tracking-[0.2em] text-center bg-red-500/5 cursor-pointer hover:text-red-700 dark:hover:text-red-300 transition-colors" onClick={() => handleBatterSort("hundreds")}>100s {batterSortField === "hundreds" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBatterSort("fifties")}>50s {batterSortField === "fifties" && (batterSortOrder === "desc" ? "▼" : "▲")}</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/5">
-                        {activeData.batters.slice(0, showAll ? undefined : 12).map((b, i) => {
-                          const name = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Batter #${i + 1}`);
+                      <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+                        {paginatedBatters.map((b, i) => {
+                          const rank = batterStartIndex + i + 1;
+                          const name = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Batter #${rank}`);
                           return (
-                            <tr key={name + i} className="hover:bg-white/[0.02] transition-colors group">
+                            <tr key={name + rank} className="hover:bg-slate-50/80 dark:hover:bg-white/[0.02] transition-colors group">
                               <td className="px-4 py-4 min-w-[200px]">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-[10px] font-black text-amber-400/40 w-4">#{i + 1}</span>
-                                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-white/10 shrink-0 relative">
+                                  <span className="text-[10px] font-black text-amber-500/70 dark:text-amber-400/40 min-w-6">#{rank}</span>
+                                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-slate-200 dark:border-white/10 shrink-0 relative">
                                     <PlayerAvatar name={name} playerImages={playerImages.data} bio={getBioFor(name)} imgClassName="w-full h-full object-cover select-none" />
                                   </div>
                                   <div className="flex flex-col">
                                     <Link href={`/players/${name.toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}`}>
-                                      {/* Readable name on screen; the link still
-                                          uses the scorecard name, which is what
-                                          the profile slugs are built from. */}
-                                      <span className="text-[13px] font-black text-white hover:text-primary transition-colors cursor-pointer">{displayPlayerName(name, displayNames)}</span>
+                                      <span className="text-[13px] font-black text-slate-900 dark:text-white hover:text-primary transition-colors cursor-pointer">{displayPlayerName(name, displayNames)}</span>
                                     </Link>
-                                    <span className="text-[8px] font-black text-white/20 uppercase tracking-widest">Active Intelligence</span>
+                                    <span className="text-[8px] font-black text-slate-400 dark:text-white/20 uppercase tracking-widest">Active Intelligence</span>
                                   </div>
                                 </div>
                               </td>
-                              <td className="px-4 py-4 text-center font-mono text-[11px] text-primary/80 tabular-nums">{b.matches}</td>
-                              <td className="px-4 py-4 text-center font-mono text-[11px] text-white/60 tabular-nums">{b.innings}</td>
-                              <td className="px-4 py-4 text-center font-black text-[15px] text-white tabular-nums">{fmt(b.runs)}</td>
-                              <td className="px-4 py-4 text-center font-bold text-[12px] text-white/60 tabular-nums">{b.balls}</td>
-                              <td className="px-4 py-4 text-center font-bold text-[12px] text-amber-400 tabular-nums">{b.highest || "—"}</td>
-                              <td className="px-4 py-4 text-center font-bold text-[12px] text-white/80 tabular-nums">{safeToFixed(b.avg, 1)}</td>
+                              <td className="px-4 py-4 text-center font-mono text-[11px] text-primary/90 font-bold tabular-nums">{b.matches}</td>
+                              <td className="px-4 py-4 text-center font-mono text-[11px] text-slate-600 dark:text-white/60 tabular-nums">{b.innings}</td>
+                              <td className="px-4 py-4 text-center font-black text-[15px] text-slate-900 dark:text-white tabular-nums">{fmt(b.runs)}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[12px] text-slate-600 dark:text-white/60 tabular-nums">{b.balls}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[12px] text-amber-600 dark:text-amber-400 tabular-nums">{b.highest || "—"}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[12px] text-slate-700 dark:text-white/80 tabular-nums">{safeToFixed(b.avg, 1)}</td>
                               <td className="px-4 py-4 text-center font-black text-[12px] text-primary tabular-nums">{safeToFixed(b.sr, 1)}</td>
-                              <td className="px-4 py-4 text-center font-bold text-[11px] text-white/40 tabular-nums">{safeToFixed(b.boundaryPct, 0)}%</td>
-                              <td className="px-4 py-4 text-center font-black text-[12px] text-blue-400 tabular-nums bg-blue-500/[0.02]">{b.fours}</td>
-                              <td className="px-4 py-4 text-center font-black text-[12px] text-purple-400 tabular-nums bg-purple-500/[0.02]">{b.sixes}</td>
-                              <td className="px-4 py-4 text-center font-black text-[12px] text-red-400 tabular-nums bg-red-500/[0.02]">{b.hundreds || 0}</td>
-                              <td className="px-4 py-4 text-center font-bold text-[11px] text-white/60 tabular-nums">{b.fifties || 0}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[11px] text-slate-500 dark:text-white/40 tabular-nums">{safeToFixed(b.boundaryPct, 0)}%</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-blue-600 dark:text-blue-400 tabular-nums bg-blue-500/[0.02]">{b.fours}</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-purple-600 dark:text-purple-400 tabular-nums bg-purple-500/[0.02]">{b.sixes}</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-red-600 dark:text-red-400 tabular-nums bg-red-500/[0.02]">{b.hundreds || 0}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[11px] text-slate-600 dark:text-white/60 tabular-nums">{b.fifties || 0}</td>
                             </tr>
                           );
                         })}
@@ -1221,86 +1362,85 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                     </table>
                   </div>
 
-                  {/* See All / Collapse Button below batters table */}
-                  <div className="p-4 border-t border-white/5 flex justify-center bg-white/[0.01]">
-                    <button
-                      onClick={() => setShowAll(!showAll)}
-                      className="px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 border bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/10 hover:border-primary/30 transition-all shadow-lg active:scale-95"
-                    >
-                      <Eye className="w-3.5 h-3.5 text-primary" />
-                      {showAll ? "Show Top 12 Leaders" : `See All ${activeData.batters.length} Players`}
-                    </button>
-                  </div>
+                  <TablePaginationBar
+                    currentPage={currentPage}
+                    totalPages={totalBatterPages}
+                    totalItems={totalBatterCount}
+                    startIndex={batterStartIndex}
+                    pageSize={pageSize}
+                    onPageChange={handlePageChange}
+                    onPageSizeChange={(size) => { setPageSize(size); setCurrentPage(1); }}
+                    itemLabel="Batters"
+                  />
                 </div>
               )}
 
               {activeTab === "bowlers" && (
-                <div className="bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden shadow-2xl animate-fade-in">
+                <div className="bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 overflow-hidden shadow-sm dark:shadow-2xl animate-fade-in">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
-                      <thead className="bg-white/[0.03] border-b border-white/5">
+                      <thead className="bg-slate-50 dark:bg-white/[0.03] border-b border-slate-200 dark:border-white/5">
                         <tr>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("player")}>Rank & Bowler {bowlerSortField === "player" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("matches")}>Mts {bowlerSortField === "matches" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("innings")}>Inn {bowlerSortField === "innings" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("wickets")}>Wkts {bowlerSortField === "wickets" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("econ")}>Econ {bowlerSortField === "econ" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("avg")}>Avg {bowlerSortField === "avg" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("sr")}>SR {bowlerSortField === "sr" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                          <th className="px-4 py-4 text-[9px] font-black text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-white transition-colors" onClick={() => handleBowlerSort("dotPct")}>Dot% {bowlerSortField === "dotPct" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                           <th className="px-4 py-4 text-[9px] font-black text-blue-400/60 uppercase tracking-[0.2em] text-center bg-blue-500/5 cursor-pointer hover:text-blue-300 transition-colors" onClick={() => handleBowlerSort("boundaryPct")} title="Boundaries conceded per 100 legal balls">BND% {bowlerSortField === "boundaryPct" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                           <th className="px-4 py-4 text-[9px] font-black text-purple-400/60 uppercase tracking-[0.2em] text-center bg-purple-500/5 cursor-pointer hover:text-purple-300 transition-colors" onClick={() => handleBowlerSort("ballsPerBoundary")}>BPB {bowlerSortField === "ballsPerBoundary" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
-                           <th className="px-4 py-4 text-[9px] font-black text-red-400/60 uppercase tracking-[0.2em] text-center bg-red-500/5 cursor-pointer hover:text-red-300 transition-colors" onClick={() => handleBowlerSort("trueEconomy")}>True Econ {bowlerSortField === "trueEconomy" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("player")}>Rank & Bowler {bowlerSortField === "player" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("matches")}>Mts {bowlerSortField === "matches" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("innings")}>Inn {bowlerSortField === "innings" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("wickets")}>Wkts {bowlerSortField === "wickets" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("econ")}>Econ {bowlerSortField === "econ" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("avg")}>Avg {bowlerSortField === "avg" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("sr")}>SR {bowlerSortField === "sr" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-slate-500 dark:text-white/40 uppercase tracking-[0.2em] text-center cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors" onClick={() => handleBowlerSort("dotPct")}>Dot% {bowlerSortField === "dotPct" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.2em] text-center bg-blue-500/5 cursor-pointer hover:text-blue-700 dark:hover:text-blue-300 transition-colors" onClick={() => handleBowlerSort("boundaryPct")} title="Boundaries conceded per 100 legal balls">BND% {bowlerSortField === "boundaryPct" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-purple-600 dark:text-purple-400 uppercase tracking-[0.2em] text-center bg-purple-500/5 cursor-pointer hover:text-purple-700 dark:hover:text-purple-300 transition-colors" onClick={() => handleBowlerSort("ballsPerBoundary")}>BPB {bowlerSortField === "ballsPerBoundary" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
+                          <th className="px-4 py-4 text-[9px] font-black text-red-600 dark:text-red-400 uppercase tracking-[0.2em] text-center bg-red-500/5 cursor-pointer hover:text-red-700 dark:hover:text-red-300 transition-colors" onClick={() => handleBowlerSort("trueEconomy")}>True Econ {bowlerSortField === "trueEconomy" && (bowlerSortOrder === "desc" ? "▼" : "▲")}</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/5">
-                        {activeData.bowlers.slice(0, showAll ? undefined : 12).map((b, i) => {
-                          const name = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Bowler #${i + 1}`);
+                      <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+                        {paginatedBowlers.map((b, i) => {
+                          const rank = bowlerStartIndex + i + 1;
+                          const name = b.player || b.player_name || b.name || (b.player_id ? `Player #${b.player_id}` : `IPL Bowler #${rank}`);
                           return (
-                            <tr key={name + i} className="hover:bg-white/[0.02] transition-colors group">
+                            <tr key={name + rank} className="hover:bg-slate-50/80 dark:hover:bg-white/[0.02] transition-colors group">
                               <td className="px-4 py-4 min-w-[200px]">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-[10px] font-black text-amber-400/40 w-4">#{i + 1}</span>
-                                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-white/10 shrink-0 relative">
+                                  <span className="text-[10px] font-black text-amber-500/70 dark:text-amber-400/40 min-w-6">#{rank}</span>
+                                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-[#0A1329] to-[#040814] border border-slate-200 dark:border-white/10 shrink-0 relative">
                                     <PlayerAvatar name={name} playerImages={playerImages.data} bio={getBioFor(name)} imgClassName="w-full h-full object-cover select-none" />
                                   </div>
                                   <div className="flex flex-col">
                                     <Link href={`/players/${name.toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}`}>
-                                      {/* Readable name on screen; the link still
-                                          uses the scorecard name, which is what
-                                          the profile slugs are built from. */}
-                                      <span className="text-[13px] font-black text-white hover:text-primary transition-colors cursor-pointer">{displayPlayerName(name, displayNames)}</span>
+                                      <span className="text-[13px] font-black text-slate-900 dark:text-white hover:text-primary transition-colors cursor-pointer">{displayPlayerName(name, displayNames)}</span>
                                     </Link>
-                                    <span className="text-[8px] font-black text-white/20 uppercase tracking-widest">{b.bowlerType ? `${b.bowlerType} Intelligence` : "Active Intelligence"}</span>
+                                    <span className="text-[8px] font-black text-slate-400 dark:text-white/20 uppercase tracking-widest">{b.bowlerType ? `${b.bowlerType} Intelligence` : "Active Intelligence"}</span>
                                   </div>
                                 </div>
                               </td>
-                            <td className="px-4 py-4 text-center font-mono text-[11px] text-primary/80 tabular-nums">{b.matches}</td>
-                            <td className="px-4 py-4 text-center font-mono text-[11px] text-white/60 tabular-nums">{b.innings}</td>
-                            <td className="px-4 py-4 text-center font-black text-[15px] text-white tabular-nums">{b.wickets}</td>
-                            <td className="px-4 py-4 text-center font-bold text-[12px] text-amber-400 tabular-nums">{safeToFixed(b.econ, 2)}</td>
-                            <td className="px-4 py-4 text-center font-bold text-[12px] text-white/80 tabular-nums">{safeToFixed(b.avg, 1)}</td>
-                            <td className="px-4 py-4 text-center font-black text-[12px] text-primary tabular-nums">{safeToFixed(b.sr, 1)}</td>
-                            <td className="px-4 py-4 text-center font-bold text-[11px] text-white/40 tabular-nums">{safeToFixed(b.dotPct, 0)}%</td>
-                            <td className="px-4 py-4 text-center font-black text-[12px] text-blue-400 tabular-nums bg-blue-500/[0.02]">{b.boundaryPct == null ? "—" : `${safeToFixed(b.boundaryPct, 1)}%`}</td>
-                            <td className="px-4 py-4 text-center font-black text-[12px] text-purple-400 tabular-nums bg-purple-500/[0.02]">{safeToFixed(b.ballsPerBoundary, 2)}</td>
-                          </tr>
+                              <td className="px-4 py-4 text-center font-mono text-[11px] text-primary/90 font-bold tabular-nums">{b.matches}</td>
+                              <td className="px-4 py-4 text-center font-mono text-[11px] text-slate-600 dark:text-white/60 tabular-nums">{b.innings}</td>
+                              <td className="px-4 py-4 text-center font-black text-[15px] text-slate-900 dark:text-white tabular-nums">{b.wickets}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[12px] text-emerald-600 dark:text-emerald-400 tabular-nums">{safeToFixed(b.econ, 2)}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[12px] text-slate-700 dark:text-white/80 tabular-nums">{safeToFixed(b.avg, 1)}</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-primary tabular-nums">{safeToFixed(b.sr, 1)}</td>
+                              <td className="px-4 py-4 text-center font-bold text-[11px] text-slate-500 dark:text-white/40 tabular-nums">{safeToFixed(b.dotPct, 0)}%</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-blue-600 dark:text-blue-400 tabular-nums bg-blue-500/[0.02]">{b.boundaryPct == null ? "—" : `${safeToFixed(b.boundaryPct, 1)}%`}</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-purple-600 dark:text-purple-400 tabular-nums bg-purple-500/[0.02]">{safeToFixed(b.ballsPerBoundary, 2)}</td>
+                              <td className="px-4 py-4 text-center font-black text-[12px] text-red-600 dark:text-red-400 tabular-nums bg-red-500/[0.02]">{safeToFixed(b.trueEconomy, 2)}</td>
+                            </tr>
                           );
                         })}
                       </tbody>
                     </table>
                   </div>
 
-                  {/* See All / Collapse Button below bowlers table */}
-                  <div className="p-4 border-t border-white/5 flex justify-center bg-white/[0.01]">
-                    <button
-                      onClick={() => setShowAll(!showAll)}
-                      className="px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 border bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/10 hover:border-primary/30 transition-all shadow-lg active:scale-95"
-                    >
-                      <Eye className="w-3.5 h-3.5 text-primary" />
-                      {showAll ? "Show Top 12 Leaders" : `See All ${activeData.bowlers.length} Bowlers`}
-                    </button>
-                  </div>
+                  <TablePaginationBar
+                    currentPage={currentPage}
+                    totalPages={totalBowlerPages}
+                    totalItems={totalBowlerCount}
+                    startIndex={bowlerStartIndex}
+                    pageSize={pageSize}
+                    onPageChange={handlePageChange}
+                    onPageSizeChange={(size) => { setPageSize(size); setCurrentPage(1); }}
+                    itemLabel="Bowlers"
+                  />
                 </div>
               )}
 
@@ -3019,26 +3159,26 @@ function FilterDropdown({ label, icon: Icon, value, options, onChange }: { label
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-2 px-3 py-2 bg-white/[0.02] border border-white/5 rounded-xl hover:bg-white/5 transition-all group ${isOpen ? 'border-primary/40 bg-white/5' : ''}`}
+        className={`flex items-center gap-2 px-3 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-xl dark:hover:bg-white/5 transition-all group cursor-pointer ${isOpen ? 'border-primary/50 bg-slate-100 dark:bg-white/5' : ''}`}
         title={label}
       >
-        <Icon className={`w-3 h-3 transition-colors ${isOpen ? 'text-primary' : 'text-white/20 group-hover:text-primary'}`} />
+        <Icon className={`w-3 h-3 transition-colors ${isOpen ? 'text-primary' : 'text-slate-400 dark:text-white/20 group-hover:text-primary'}`} />
         <div className="flex flex-col items-start leading-none">
-          <span className="text-[7px] font-black uppercase tracking-[0.1em] text-white/20">{label}</span>
-          <span className="text-[10px] font-bold text-white/60">{value}</span>
+          <span className="text-[7px] font-black uppercase tracking-[0.1em] text-slate-500 dark:text-white/40">{label}</span>
+          <span className="text-[10px] font-bold text-slate-800 dark:text-white/70">{value}</span>
         </div>
-        <ChevronDown className={`w-2.5 h-2.5 text-white/10 ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-2.5 h-2.5 text-slate-400 dark:text-white/20 ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
         <>
           <div className="fixed inset-0 z-20" onClick={() => setIsOpen(false)} />
-          <div className="absolute top-full left-0 mt-2 w-48 bg-[#0B1020] border border-white/10 rounded-xl shadow-2xl z-30 py-2 max-h-64 overflow-y-auto no-scrollbar animate-in fade-in slide-in-from-top-1">
+          <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 rounded-xl shadow-2xl z-30 py-2 max-h-64 overflow-y-auto no-scrollbar animate-in fade-in slide-in-from-top-1">
             {options.map(opt => (
               <button
                 key={opt}
                 onClick={() => { onChange(opt); setIsOpen(false); }}
-                className={`w-full text-left px-4 py-2 text-[10px] font-bold transition-colors ${value === opt ? 'bg-primary/20 text-primary' : 'text-white/40 hover:bg-white/5 hover:text-white'}`}
+                className={`w-full text-left px-4 py-2 text-[10px] font-bold transition-colors cursor-pointer ${value === opt ? 'bg-primary/20 text-primary font-black' : 'text-slate-700 hover:bg-slate-100 dark:text-white/60 dark:hover:bg-white/5 dark:hover:text-white'}`}
                 title={opt}
               >
                 {opt}

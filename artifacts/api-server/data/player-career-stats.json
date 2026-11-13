@@ -19,7 +19,8 @@
       "ppSr": 129.55,
       "middleSr": 125.8,
       "deathSr": 188.38,
-      "boundaryPct": 56.58
+      "boundaryPct": 56.58,
+      "highestNotOut": true
     },
     {
       "player": "RG Sharma",
@@ -40,7 +41,8 @@
       "ppSr": 126.43,
       "middleSr": 122.51,
       "deathSr": 181.14,
-      "boundaryPct": 62.6
+      "boundaryPct": 62.6,
+      "highestNotOut": true
     },
     {
       "player": "S Dhawan",
@@ -61,7 +63,8 @@
       "ppSr": 122.84,
       "middleSr": 126.52,
       "deathSr": 158.67,
-      "boundaryPct": 58.95
+      "boundaryPct": 58.95,
+      "highestNotOut": true
     },
     {
       "player": "DA Warner",
@@ -82,7 +85,8 @@
       "ppSr": 138.28,
       "middleSr": 134.83,
       "deathSr": 176.9,
-      "boundaryPct": 61.96
+      "boundaryPct": 61.96,
+      "highestNotOut": false
     },
     {
       "player": "KL Rahul",
@@ -103,7 +107,8 @@
       "ppSr": 128.73,
       "middleSr": 138.85,
       "deathSr": 178.9,
-      "boundaryPct": 59.6
+      "boundaryPct": 59.6,
+      "highestNotOut": true
     },
     {
       "player": "SK Raina",
@@ -124,7 +129,8 @@
       "ppSr": 132.88,
       "middleSr": 131.05,
       "deathSr": 170.59,
-      "boundaryPct": 58.65
+      "boundaryPct": 58.65,
+      "highestNotOut": true
     },
     {
       "player": "MS Dhoni",
@@ -145,7 +151,8 @@
       "ppSr": 81.94,
       "middleSr": 100.47,
       "deathSr": 174.97,
-      "boundaryPct": 56.7
+      "boundaryPct": 56.7,
+      "highestNotOut": true
     },
     {
       "player": "AM Rahane",
@@ -166,7 +173,8 @@
       "ppSr": 123.17,
       "middleSr": 122.75,
       "deathSr": 157.59,
-      "boundaryPct": 56.01
+      "boundaryPct": 56.01,
+      "highestNotOut": true
     },
     {
       "player": "SV Samson",
@@ -187,7 +195,8 @@
       "ppSr": 127.38,
       "middleSr": 138.69,
       "deathSr": 191.03,
-      "boundaryPct": 61.49
+      "boundaryPct": 61.49,
+      "highestNotOut": false
     },
     {
       "player": "AB de Villiers",
@@ -208,7 +217,8 @@
       "ppSr": 119.14,
       "middleSr": 131.29,
       "deathSr": 222.91,
-      "boundaryPct": 61.18
+      "boundaryPct": 61.18,
+      "highestNotOut": true
     },
     {
       "player": "CH Gayle",
@@ -229,7 +239,8 @@
       "ppSr": 134.75,
       "middleSr": 156.13,
       "deathSr": 204.58,
-      "boundaryPct": 75.77
+      "boundaryPct": 75.77,
+      "highestNotOut": true
     },
     {
       "player": "RV Uthappa",
@@ -250,7 +261,8 @@
       "ppSr": 124.39,
       "middleSr": 127.93,
       "deathSr": 173.93,
-      "boundaryPct": 60.9
+      "boundaryPct": 60.9,
+      "highestNotOut": false
     },
     {
       "player": "KD Karthik",
@@ -271,7 +283,8 @@
       "ppSr": 98.51,
       "middleSr": 122.39,
       "deathSr": 173.41,
-      "boundaryPct": 58.45
+      "boundaryPct": 58.45,
+      "highestNotOut": true
     },
     {
       "player": "F du Plessis",
@@ -292,7 +305,8 @@
       "ppSr": 136.34,
       "middleSr": 126.08,
       "deathSr": 179.75,
-      "boundaryPct": 58.75
+      "boundaryPct": 58.75,
+      "highestNotOut": false
     },
     {
       "player": "JC Buttler",
@@ -313,7 +327,8 @@
       "ppSr": 141.96,
       "middleSr": 144.06,
       "deathSr": 192.81,
-      "boundaryPct": 66.77
+      "boundaryPct": 66.77,
+      "highestNotOut": false
     },
     {
       "player": "Shubman Gill",
@@ -334,7 +349,8 @@
       "ppSr": 134.56,
       "middleSr": 147.2,
       "deathSr": 155.92,
-      "boundaryPct": 58.63
+      "boundaryPct": 58.63,
+      "highestNotOut": false
     },
     {
       "player": "SA Yadav",
@@ -355,7 +371,8 @@
       "ppSr": 141.05,
       "middleSr": 144.14,
       "deathSr": 178.21,
-      "boundaryPct": 65.4
+      "boundaryPct": 65.4,
+      "highestNotOut": true
     },
     {
       "player": "AT Rayudu",
@@ -376,7 +393,8 @@
       "ppSr": 106.15,
       "middleSr": 120.87,
       "deathSr": 168.91,
-      "boundaryPct": 56.9
+      "boundaryPct": 56.9,
+      "highestNotOut": true
     },
     {
       "player": "SS Iyer",
@@ -397,7 +415,8 @@
       "ppSr": 113.41,
       "middleSr": 136.61,
       "deathSr": 185.1,
-      "boundaryPct": 59.21
+      "boundaryPct": 59.21,
+      "highestNotOut": true
     },
     {
       "player": "G Gambhir",
@@ -418,7 +437,8 @@
       "ppSr": 121.9,
       "middleSr": 123.7,
       "deathSr": 145.16,
-      "boundaryPct": 55.06
+      "boundaryPct": 55.06,
+      "highestNotOut": false
     },
     {
       "player": "MK Pandey",
@@ -439,7 +459,8 @@
       "ppSr": 114.38,
       "middleSr": 118.3,
       "deathSr": 151.38,
-      "boundaryPct": 52.19
+      "boundaryPct": 52.19,
+      "highestNotOut": true
     },
     {
       "player": "SR Watson",
@@ -460,7 +481,8 @@
       "ppSr": 112.57,
       "middleSr": 153.48,
       "deathSr": 184.9,
-      "boundaryPct": 68.25
+      "boundaryPct": 68.25,
+      "highestNotOut": true
     },
     {
       "player": "RR Pant",
@@ -481,7 +503,8 @@
       "ppSr": 118.11,
       "middleSr": 135.74,
       "deathSr": 202.78,
-      "boundaryPct": 64.32
+      "boundaryPct": 64.32,
+      "highestNotOut": true
     },
     {
       "player": "Ishan Kishan",
@@ -502,7 +525,8 @@
       "ppSr": 138.17,
       "middleSr": 140.08,
       "deathSr": 189.09,
-      "boundaryPct": 66.33
+      "boundaryPct": 66.33,
+      "highestNotOut": true
     },
     {
       "player": "RA Jadeja",
@@ -523,7 +547,8 @@
       "ppSr": 144.04,
       "middleSr": 110.46,
       "deathSr": 150.16,
-      "boundaryPct": 50.71
+      "boundaryPct": 50.71,
+      "highestNotOut": true
     },
     {
       "player": "Q de Kock",
@@ -544,7 +569,8 @@
       "ppSr": 130.09,
       "middleSr": 133.98,
       "deathSr": 205.13,
-      "boundaryPct": 63.76
+      "boundaryPct": 63.76,
+      "highestNotOut": true
     },
     {
       "player": "KA Pollard",
@@ -565,7 +591,8 @@
       "ppSr": 77.78,
       "middleSr": 124.49,
       "deathSr": 170.18,
-      "boundaryPct": 64.77
+      "boundaryPct": 64.77,
+      "highestNotOut": true
     },
     {
       "player": "DA Miller",
@@ -586,7 +613,8 @@
       "ppSr": 87.18,
       "middleSr": 122.05,
       "deathSr": 174.25,
-      "boundaryPct": 56.33
+      "boundaryPct": 56.33,
+      "highestNotOut": true
     },
     {
       "player": "YK Pathan",
@@ -607,7 +635,8 @@
       "ppSr": 142.32,
       "middleSr": 133.56,
       "deathSr": 160.63,
-      "boundaryPct": 62.48
+      "boundaryPct": 62.48,
+      "highestNotOut": false
     },
     {
       "player": "N Rana",
@@ -628,7 +657,8 @@
       "ppSr": 121.23,
       "middleSr": 137.58,
       "deathSr": 183.54,
-      "boundaryPct": 66.86
+      "boundaryPct": 66.86,
+      "highestNotOut": true
     },
     {
       "player": "HH Pandya",
@@ -649,7 +679,8 @@
       "ppSr": 98.31,
       "middleSr": 134.07,
       "deathSr": 168.72,
-      "boundaryPct": 62.54
+      "boundaryPct": 62.54,
+      "highestNotOut": false
     },
     {
       "player": "WP Saha",
@@ -670,7 +701,8 @@
       "ppSr": 132.66,
       "middleSr": 109.78,
       "deathSr": 157.79,
-      "boundaryPct": 58.15
+      "boundaryPct": 58.15,
+      "highestNotOut": true
     },
     {
       "player": "BB McCullum",
@@ -691,7 +723,8 @@
       "ppSr": 127.46,
       "middleSr": 131.65,
       "deathSr": 186.6,
-      "boundaryPct": 67.78
+      "boundaryPct": 67.78,
+      "highestNotOut": true
     },
     {
       "player": "PA Patel",
@@ -712,7 +745,8 @@
       "ppSr": 121.66,
       "middleSr": 117.59,
       "deathSr": 133.8,
-      "boundaryPct": 61.59
+      "boundaryPct": 61.59,
+      "highestNotOut": false
     },
     {
       "player": "RD Gaikwad",
@@ -733,7 +767,8 @@
       "ppSr": 128.12,
       "middleSr": 137.44,
       "deathSr": 175.15,
-      "boundaryPct": 59.25
+      "boundaryPct": 59.25,
+      "highestNotOut": true
     },
     {
       "player": "GJ Maxwell",
@@ -754,7 +789,8 @@
       "ppSr": 140.26,
       "middleSr": 152.27,
       "deathSr": 178.53,
-      "boundaryPct": 68.04
+      "boundaryPct": 68.04,
+      "highestNotOut": false
     },
     {
       "player": "MA Agarwal",
@@ -775,7 +811,8 @@
       "ppSr": 121.97,
       "middleSr": 139.19,
       "deathSr": 206.56,
-      "boundaryPct": 61.39
+      "boundaryPct": 61.39,
+      "highestNotOut": true
     },
     {
       "player": "Yuvraj Singh",
@@ -796,7 +833,8 @@
       "ppSr": 102.72,
       "middleSr": 115.33,
       "deathSr": 180.84,
-      "boundaryPct": 64.07
+      "boundaryPct": 64.07,
+      "highestNotOut": false
     },
     {
       "player": "V Sehwag",
@@ -817,7 +855,8 @@
       "ppSr": 144.16,
       "middleSr": 172.68,
       "deathSr": 208.57,
-      "boundaryPct": 72.29
+      "boundaryPct": 72.29,
+      "highestNotOut": false
     },
     {
       "player": "AD Russell",
@@ -838,7 +877,8 @@
       "ppSr": 264.29,
       "middleSr": 152.12,
       "deathSr": 195.9,
-      "boundaryPct": 78.54
+      "boundaryPct": 78.54,
+      "highestNotOut": true
     },
     {
       "player": "M Vijay",
@@ -859,7 +899,8 @@
       "ppSr": 114.47,
       "middleSr": 130.87,
       "deathSr": 176.06,
-      "boundaryPct": 58.57
+      "boundaryPct": 58.57,
+      "highestNotOut": false
     },
     {
       "player": "YBK Jaiswal",
@@ -880,7 +921,8 @@
       "ppSr": 158.94,
       "middleSr": 137.96,
       "deathSr": 209.52,
-      "boundaryPct": 73.43
+      "boundaryPct": 73.43,
+      "highestNotOut": true
     },
     {
       "player": "N Pooran",
@@ -901,7 +943,8 @@
       "ppSr": 152.0,
       "middleSr": 158.66,
       "deathSr": 177.58,
-      "boundaryPct": 70.91
+      "boundaryPct": 70.91,
+      "highestNotOut": true
     },
     {
       "player": "B Sai Sudharsan",
@@ -922,7 +965,8 @@
       "ppSr": 138.53,
       "middleSr": 148.25,
       "deathSr": 206.71,
-      "boundaryPct": 60.83
+      "boundaryPct": 60.83,
+      "highestNotOut": true
     },
     {
       "player": "SPD Smith",
@@ -943,7 +987,8 @@
       "ppSr": 121.65,
       "middleSr": 116.8,
       "deathSr": 162.67,
-      "boundaryPct": 50.7
+      "boundaryPct": 50.7,
+      "highestNotOut": true
     },
     {
       "player": "SE Marsh",
@@ -964,7 +1009,8 @@
       "ppSr": 105.07,
       "middleSr": 148.97,
       "deathSr": 159.76,
-      "boundaryPct": 61.85
+      "boundaryPct": 61.85,
+      "highestNotOut": false
     },
     {
       "player": "JH Kallis",
@@ -985,7 +1031,8 @@
       "ppSr": 105.5,
       "middleSr": 98.52,
       "deathSr": 172.81,
-      "boundaryPct": 52.9
+      "boundaryPct": 52.9,
+      "highestNotOut": true
     },
     {
       "player": "DR Smith",
@@ -1006,7 +1053,8 @@
       "ppSr": 124.28,
       "middleSr": 148.3,
       "deathSr": 151.35,
-      "boundaryPct": 70.52
+      "boundaryPct": 70.52,
+      "highestNotOut": true
     },
     {
       "player": "Abhishek Sharma",
@@ -1027,7 +1075,8 @@
       "ppSr": 171.87,
       "middleSr": 174.95,
       "deathSr": 154.33,
-      "boundaryPct": 73.98
+      "boundaryPct": 73.98,
+      "highestNotOut": false
     },
     {
       "player": "SR Tendulkar",
@@ -1048,7 +1097,8 @@
       "ppSr": 116.4,
       "middleSr": 116.65,
       "deathSr": 163.5,
-      "boundaryPct": 58.18
+      "boundaryPct": 58.18,
+      "highestNotOut": true
     },
     {
       "player": "RA Tripathi",
@@ -1069,7 +1119,8 @@
       "ppSr": 139.53,
       "middleSr": 134.9,
       "deathSr": 145.03,
-      "boundaryPct": 62.24
+      "boundaryPct": 62.24,
+      "highestNotOut": true
     },
     {
       "player": "D Padikkal",
@@ -1090,7 +1141,8 @@
       "ppSr": 133.58,
       "middleSr": 131.59,
       "deathSr": 142.27,
-      "boundaryPct": 63.61
+      "boundaryPct": 63.61,
+      "highestNotOut": true
     },
     {
       "player": "MP Stoinis",
@@ -1111,7 +1163,8 @@
       "ppSr": 127.2,
       "middleSr": 129.67,
       "deathSr": 180.81,
-      "boundaryPct": 63.6
+      "boundaryPct": 63.6,
+      "highestNotOut": true
     },
     {
       "player": "R Dravid",
@@ -1132,7 +1185,8 @@
       "ppSr": 108.77,
       "middleSr": 114.82,
       "deathSr": 168.07,
-      "boundaryPct": 57.22
+      "boundaryPct": 57.22,
+      "highestNotOut": true
     },
     {
       "player": "S Dube",
@@ -1153,7 +1207,8 @@
       "ppSr": 80.43,
       "middleSr": 137.9,
       "deathSr": 167.91,
-      "boundaryPct": 63.41
+      "boundaryPct": 63.41,
+      "highestNotOut": true
     },
     {
       "player": "KS Williamson",
@@ -1174,7 +1229,8 @@
       "ppSr": 100.42,
       "middleSr": 126.49,
       "deathSr": 166.06,
-      "boundaryPct": 53.01
+      "boundaryPct": 53.01,
+      "highestNotOut": false
     },
     {
       "player": "H Klaasen",
@@ -1195,7 +1251,8 @@
       "ppSr": 130.95,
       "middleSr": 157.99,
       "deathSr": 192.69,
-      "boundaryPct": 61.98
+      "boundaryPct": 61.98,
+      "highestNotOut": true
     },
     {
       "player": "AJ Finch",
@@ -1216,7 +1273,8 @@
       "ppSr": 114.75,
       "middleSr": 136.42,
       "deathSr": 157.54,
-      "boundaryPct": 63.32
+      "boundaryPct": 63.32,
+      "highestNotOut": true
     },
     {
       "player": "AR Patel",
@@ -1237,7 +1295,8 @@
       "ppSr": 109.72,
       "middleSr": 119.66,
       "deathSr": 154.27,
-      "boundaryPct": 56.68
+      "boundaryPct": 56.68,
+      "highestNotOut": false
     },
     {
       "player": "AC Gilchrist",
@@ -1258,7 +1317,8 @@
       "ppSr": 134.08,
       "middleSr": 144.42,
       "deathSr": 196.88,
-      "boundaryPct": 72.89
+      "boundaryPct": 72.89,
+      "highestNotOut": true
     },
     {
       "player": "JP Duminy",
@@ -1279,7 +1339,8 @@
       "ppSr": 98.33,
       "middleSr": 103.99,
       "deathSr": 169.62,
-      "boundaryPct": 48.2
+      "boundaryPct": 48.2,
+      "highestNotOut": true
     },
     {
       "player": "KH Pandya",
@@ -1300,7 +1361,8 @@
       "ppSr": 107.5,
       "middleSr": 122.19,
       "deathSr": 158.73,
-      "boundaryPct": 57.92
+      "boundaryPct": 57.92,
+      "highestNotOut": false
     },
     {
       "player": "MEK Hussey",
@@ -1321,7 +1383,8 @@
       "ppSr": 107.95,
       "middleSr": 125.25,
       "deathSr": 191.91,
-      "boundaryPct": 55.84
+      "boundaryPct": 55.84,
+      "highestNotOut": true
     },
     {
       "player": "PP Shaw",
@@ -1342,7 +1405,8 @@
       "ppSr": 146.57,
       "middleSr": 150.15,
       "deathSr": 142.86,
-      "boundaryPct": 69.66
+      "boundaryPct": 69.66,
+      "highestNotOut": false
     },
     {
       "player": "R Parag",
@@ -1363,7 +1427,8 @@
       "ppSr": 137.5,
       "middleSr": 138.24,
       "deathSr": 160.39,
-      "boundaryPct": 63.36
+      "boundaryPct": 63.36,
+      "highestNotOut": false
     },
     {
       "player": "P Simran Singh",
@@ -1384,7 +1449,8 @@
       "ppSr": 152.99,
       "middleSr": 161.73,
       "deathSr": 179.55,
-      "boundaryPct": 72.28
+      "boundaryPct": 72.28,
+      "highestNotOut": false
     },
     {
       "player": "Tilak Varma",
@@ -1405,7 +1471,8 @@
       "ppSr": 117.07,
       "middleSr": 132.74,
       "deathSr": 198.18,
-      "boundaryPct": 60.17
+      "boundaryPct": 60.17,
+      "highestNotOut": true
     },
     {
       "player": "MR Marsh",
@@ -1426,7 +1493,8 @@
       "ppSr": 156.24,
       "middleSr": 139.82,
       "deathSr": 152.87,
-      "boundaryPct": 69.33
+      "boundaryPct": 69.33,
+      "highestNotOut": false
     },
     {
       "player": "SP Narine",
@@ -1447,7 +1515,8 @@
       "ppSr": 170.14,
       "middleSr": 174.19,
       "deathSr": 121.21,
-      "boundaryPct": 81.54
+      "boundaryPct": 81.54,
+      "highestNotOut": false
     },
     {
       "player": "DPMD Jayawardene",
@@ -1468,7 +1537,8 @@
       "ppSr": 121.24,
       "middleSr": 113.05,
       "deathSr": 159.15,
-      "boundaryPct": 57.38
+      "boundaryPct": 57.38,
+      "highestNotOut": true
     },
     {
       "player": "KK Nair",
@@ -1489,7 +1559,8 @@
       "ppSr": 127.89,
       "middleSr": 123.01,
       "deathSr": 177.42,
-      "boundaryPct": 61.1
+      "boundaryPct": 61.1,
+      "highestNotOut": true
     },
     {
       "player": "Mandeep Singh",
@@ -1510,7 +1581,8 @@
       "ppSr": 114.26,
       "middleSr": 118.39,
       "deathSr": 149.64,
-      "boundaryPct": 54.63
+      "boundaryPct": 54.63,
+      "highestNotOut": true
     },
     {
       "player": "MK Tiwary",
@@ -1531,7 +1603,8 @@
       "ppSr": 97.39,
       "middleSr": 108.3,
       "deathSr": 144.9,
-      "boundaryPct": 50.97
+      "boundaryPct": 50.97,
+      "highestNotOut": true
     },
     {
       "player": "KC Sangakkara",
@@ -1552,7 +1625,8 @@
       "ppSr": 116.0,
       "middleSr": 118.6,
       "deathSr": 155.38,
-      "boundaryPct": 55.84
+      "boundaryPct": 55.84,
+      "highestNotOut": false
     },
     {
       "player": "VR Iyer",
@@ -1573,7 +1647,8 @@
       "ppSr": 138.48,
       "middleSr": 140.59,
       "deathSr": 160.74,
-      "boundaryPct": 65.35
+      "boundaryPct": 65.35,
+      "highestNotOut": true
     },
     {
       "player": "JM Bairstow",
@@ -1594,7 +1669,8 @@
       "ppSr": 151.04,
       "middleSr": 140.56,
       "deathSr": 136.36,
-      "boundaryPct": 67.86
+      "boundaryPct": 67.86,
+      "highestNotOut": true
     },
     {
       "player": "AK Markram",
@@ -1615,7 +1691,8 @@
       "ppSr": 129.95,
       "middleSr": 127.91,
       "deathSr": 180.49,
-      "boundaryPct": 55.77
+      "boundaryPct": 55.77,
+      "highestNotOut": true
     },
     {
       "player": "RM Patidar",
@@ -1636,7 +1713,8 @@
       "ppSr": 113.02,
       "middleSr": 171.92,
       "deathSr": 215.32,
-      "boundaryPct": 67.25
+      "boundaryPct": 67.25,
+      "highestNotOut": true
     },
     {
       "player": "DJ Bravo",
@@ -1657,7 +1735,8 @@
       "ppSr": 111.82,
       "middleSr": 92.31,
       "deathSr": 174.14,
-      "boundaryPct": 56.15
+      "boundaryPct": 56.15,
+      "highestNotOut": true
     },
     {
       "player": "SO Hetmyer",
@@ -1678,7 +1757,8 @@
       "ppSr": 101.49,
       "middleSr": 127.01,
       "deathSr": 171.94,
-      "boundaryPct": 62.05
+      "boundaryPct": 62.05,
+      "highestNotOut": false
     },
     {
       "player": "TM Head",
@@ -1699,7 +1779,8 @@
       "ppSr": 177.82,
       "middleSr": 153.26,
       "deathSr": 178.57,
-      "boundaryPct": 74.29
+      "boundaryPct": 74.29,
+      "highestNotOut": false
     },
     {
       "player": "NV Ojha",
@@ -1720,7 +1801,8 @@
       "ppSr": 102.49,
       "middleSr": 120.86,
       "deathSr": 139.8,
-      "boundaryPct": 61.65
+      "boundaryPct": 61.65,
+      "highestNotOut": true
     },
     {
       "player": "DJ Hooda",
@@ -1741,7 +1823,8 @@
       "ppSr": 100.0,
       "middleSr": 125.83,
       "deathSr": 145.62,
-      "boundaryPct": 51.07
+      "boundaryPct": 51.07,
+      "highestNotOut": true
     },
     {
       "player": "SS Tiwary",
@@ -1762,7 +1845,8 @@
       "ppSr": 104.97,
       "middleSr": 113.41,
       "deathSr": 144.13,
-      "boundaryPct": 49.8
+      "boundaryPct": 49.8,
+      "highestNotOut": false
     },
     {
       "player": "S Badrinath",
@@ -1783,7 +1867,8 @@
       "ppSr": 76.79,
       "middleSr": 120.09,
       "deathSr": 151.8,
-      "boundaryPct": 54.41
+      "boundaryPct": 54.41,
+      "highestNotOut": true
     },
     {
       "player": "EJG Morgan",
@@ -1804,7 +1889,8 @@
       "ppSr": 92.11,
       "middleSr": 111.21,
       "deathSr": 164.33,
-      "boundaryPct": 59.22
+      "boundaryPct": 59.22,
+      "highestNotOut": true
     },
     {
       "player": "BJ Hodge",
@@ -1825,7 +1911,8 @@
       "ppSr": 91.36,
       "middleSr": 110.81,
       "deathSr": 162.47,
-      "boundaryPct": 53.29
+      "boundaryPct": 53.29,
+      "highestNotOut": false
     },
     {
       "player": "RK Singh",
@@ -1846,7 +1933,8 @@
       "ppSr": 133.33,
       "middleSr": 110.96,
       "deathSr": 189.69,
-      "boundaryPct": 61.55
+      "boundaryPct": 61.55,
+      "highestNotOut": true
     },
     {
       "player": "SC Ganguly",
@@ -1867,7 +1955,8 @@
       "ppSr": 102.12,
       "middleSr": 98.13,
       "deathSr": 184.47,
-      "boundaryPct": 59.3
+      "boundaryPct": 59.3,
+      "highestNotOut": false
     },
     {
       "player": "CA Lynn",
@@ -1888,7 +1977,8 @@
       "ppSr": 144.26,
       "middleSr": 138.54,
       "deathSr": 105.88,
-      "boundaryPct": 69.53
+      "boundaryPct": 69.53,
+      "highestNotOut": true
     },
     {
       "player": "DJ Hussey",
@@ -1909,7 +1999,8 @@
       "ppSr": 116.52,
       "middleSr": 107.02,
       "deathSr": 175.97,
-      "boundaryPct": 54.46
+      "boundaryPct": 54.46,
+      "highestNotOut": false
     },
     {
       "player": "R Tewatia",
@@ -1930,7 +2021,8 @@
       "ppSr": 66.67,
       "middleSr": 100.77,
       "deathSr": 165.75,
-      "boundaryPct": 62.37
+      "boundaryPct": 62.37,
+      "highestNotOut": false
     },
     {
       "player": "PD Salt",
@@ -1951,7 +2043,8 @@
       "ppSr": 172.13,
       "middleSr": 178.97,
       "deathSr": 184.21,
-      "boundaryPct": 75.83
+      "boundaryPct": 75.83,
+      "highestNotOut": true
     },
     {
       "player": "V Shankar",
@@ -1972,7 +2065,8 @@
       "ppSr": 97.69,
       "middleSr": 115.88,
       "deathSr": 166.13,
-      "boundaryPct": 51.91
+      "boundaryPct": 51.91,
+      "highestNotOut": true
     },
     {
       "player": "KM Jadhav",
@@ -1993,7 +2087,8 @@
       "ppSr": 82.72,
       "middleSr": 116.84,
       "deathSr": 138.82,
-      "boundaryPct": 53.64
+      "boundaryPct": 53.64,
+      "highestNotOut": false
     },
     {
       "player": "Dhruv Jurel",
@@ -2014,7 +2109,8 @@
       "ppSr": 162.37,
       "middleSr": 138.71,
       "deathSr": 173.84,
-      "boundaryPct": 63.93
+      "boundaryPct": 63.93,
+      "highestNotOut": true
     },
     {
       "player": "A Badoni",
@@ -2035,7 +2131,8 @@
       "ppSr": 125.25,
       "middleSr": 125.85,
       "deathSr": 164.53,
-      "boundaryPct": 56.54
+      "boundaryPct": 56.54,
+      "highestNotOut": false
     },
     {
       "player": "MM Ali",
@@ -2056,7 +2153,8 @@
       "ppSr": 121.35,
       "middleSr": 135.33,
       "deathSr": 175.47,
-      "boundaryPct": 67.01
+      "boundaryPct": 67.01,
+      "highestNotOut": true
     },
     {
       "player": "TM Dilshan",
@@ -2077,7 +2175,8 @@
       "ppSr": 110.91,
       "middleSr": 103.33,
       "deathSr": 171.55,
-      "boundaryPct": 61.06
+      "boundaryPct": 61.06,
+      "highestNotOut": true
     },
     {
       "player": "TH David",
@@ -2098,7 +2197,8 @@
       "ppSr": 0.0,
       "middleSr": 141.28,
       "deathSr": 195.14,
-      "boundaryPct": 69.68
+      "boundaryPct": 69.68,
+      "highestNotOut": true
     },
     {
       "player": "IK Pathan",
@@ -2119,7 +2219,8 @@
       "ppSr": 124.62,
       "middleSr": 90.39,
       "deathSr": 149.32,
-      "boundaryPct": 50.04
+      "boundaryPct": 50.04,
+      "highestNotOut": false
     },
     {
       "player": "JM Sharma",
@@ -2140,7 +2241,8 @@
       "ppSr": 56.52,
       "middleSr": 139.77,
       "deathSr": 182.13,
-      "boundaryPct": 67.93
+      "boundaryPct": 67.93,
+      "highestNotOut": true
     },
     {
       "player": "ML Hayden",
@@ -2161,7 +2263,8 @@
       "ppSr": 129.93,
       "middleSr": 140.14,
       "deathSr": 192.0,
-      "boundaryPct": 67.57
+      "boundaryPct": 67.57,
+      "highestNotOut": false
     },
     {
       "player": "M Vohra",
@@ -2182,7 +2285,8 @@
       "ppSr": 127.96,
       "middleSr": 126.44,
       "deathSr": 221.43,
-      "boundaryPct": 62.23
+      "boundaryPct": 62.23,
+      "highestNotOut": true
     },
     {
       "player": "DP Conway",
@@ -2203,7 +2307,8 @@
       "ppSr": 125.82,
       "middleSr": 152.34,
       "deathSr": 152.38,
-      "boundaryPct": 62.22
+      "boundaryPct": 62.22,
+      "highestNotOut": true
     },
     {
       "player": "LMP Simmons",
@@ -2224,7 +2329,8 @@
       "ppSr": 117.83,
       "middleSr": 135.11,
       "deathSr": 155.56,
-      "boundaryPct": 64.87
+      "boundaryPct": 64.87,
+      "highestNotOut": true
     },
     {
       "player": "LS Livingstone",
@@ -2245,7 +2351,8 @@
       "ppSr": 132.59,
       "middleSr": 137.91,
       "deathSr": 216.98,
-      "boundaryPct": 69.04
+      "boundaryPct": 69.04,
+      "highestNotOut": true
     },
     {
       "player": "C Green",
@@ -2266,7 +2373,8 @@
       "ppSr": 150.29,
       "middleSr": 138.9,
       "deathSr": 182.76,
-      "boundaryPct": 61.22
+      "boundaryPct": 61.22,
+      "highestNotOut": true
     },
     {
       "player": "V Suryavanshi",
@@ -2287,7 +2395,8 @@
       "ppSr": 226.96,
       "middleSr": 228.77,
       "deathSr": 290.0,
-      "boundaryPct": 87.55
+      "boundaryPct": 87.55,
+      "highestNotOut": false
     },
     {
       "player": "LRPL Taylor",
@@ -2308,7 +2417,8 @@
       "ppSr": 128.1,
       "middleSr": 109.56,
       "deathSr": 156.78,
-      "boundaryPct": 53.1
+      "boundaryPct": 53.1,
+      "highestNotOut": true
     },
     {
       "player": "KP Pietersen",
@@ -2329,7 +2439,8 @@
       "ppSr": 133.33,
       "middleSr": 127.89,
       "deathSr": 178.26,
-      "boundaryPct": 60.34
+      "boundaryPct": 60.34,
+      "highestNotOut": true
     },
     {
       "player": "MC Henriques",
@@ -2350,7 +2461,8 @@
       "ppSr": 115.0,
       "middleSr": 113.26,
       "deathSr": 165.02,
-      "boundaryPct": 51.6
+      "boundaryPct": 51.6,
+      "highestNotOut": true
     },
     {
       "player": "SM Curran",
@@ -2371,7 +2483,8 @@
       "ppSr": 113.08,
       "middleSr": 112.57,
       "deathSr": 181.67,
-      "boundaryPct": 58.78
+      "boundaryPct": 58.78,
+      "highestNotOut": false
     },
     {
       "player": "Y Venugopal Rao",
@@ -2392,7 +2505,8 @@
       "ppSr": 78.35,
       "middleSr": 106.97,
       "deathSr": 154.18,
-      "boundaryPct": 53.81
+      "boundaryPct": 53.81,
+      "highestNotOut": true
     },
     {
       "player": "T Stubbs",
@@ -2413,7 +2527,8 @@
       "ppSr": 100.0,
       "middleSr": 118.32,
       "deathSr": 198.55,
-      "boundaryPct": 56.33
+      "boundaryPct": 56.33,
+      "highestNotOut": true
     },
     {
       "player": "A Symonds",
@@ -2434,7 +2549,8 @@
       "ppSr": 87.8,
       "middleSr": 125.83,
       "deathSr": 159.24,
-      "boundaryPct": 55.65
+      "boundaryPct": 55.65,
+      "highestNotOut": true
     },
     {
       "player": "JA Morkel",
@@ -2455,7 +2571,8 @@
       "ppSr": 141.67,
       "middleSr": 120.3,
       "deathSr": 156.13,
-      "boundaryPct": 58.93
+      "boundaryPct": 58.93,
+      "highestNotOut": true
     },
     {
       "player": "CL White",
@@ -2476,7 +2593,8 @@
       "ppSr": 81.08,
       "middleSr": 111.09,
       "deathSr": 188.08,
-      "boundaryPct": 54.51
+      "boundaryPct": 54.51,
+      "highestNotOut": false
     },
     {
       "player": "BA Stokes",
@@ -2497,7 +2615,8 @@
       "ppSr": 132.6,
       "middleSr": 125.45,
       "deathSr": 161.72,
-      "boundaryPct": 55.19
+      "boundaryPct": 55.19,
+      "highestNotOut": true
     },
     {
       "player": "Priyansh Arya",
@@ -2518,7 +2637,8 @@
       "ppSr": 190.99,
       "middleSr": 199.14,
       "deathSr": 0.0,
-      "boundaryPct": 79.87
+      "boundaryPct": 79.87,
+      "highestNotOut": false
     },
     {
       "player": "Shashank Singh",
@@ -2539,7 +2659,8 @@
       "ppSr": 136.0,
       "middleSr": 131.5,
       "deathSr": 195.42,
-      "boundaryPct": 63.43
+      "boundaryPct": 63.43,
+      "highestNotOut": true
     },
     {
       "player": "Washington Sundar",
@@ -2560,7 +2681,8 @@
       "ppSr": 127.66,
       "middleSr": 115.61,
       "deathSr": 155.84,
-      "boundaryPct": 55.86
+      "boundaryPct": 55.86,
+      "highestNotOut": false
     },
     {
       "player": "HH Gibbs",
@@ -2581,7 +2703,8 @@
       "ppSr": 107.45,
       "middleSr": 106.38,
       "deathSr": 156.52,
-      "boundaryPct": 58.47
+      "boundaryPct": 58.47,
+      "highestNotOut": true
     },
     {
       "player": "A Raghuvanshi",
@@ -2602,7 +2725,8 @@
       "ppSr": 145.88,
       "middleSr": 140.91,
       "deathSr": 163.1,
-      "boundaryPct": 62.6
+      "boundaryPct": 62.6,
+      "highestNotOut": true
     },
     {
       "player": "STR Binny",
@@ -2623,7 +2747,8 @@
       "ppSr": 72.0,
       "middleSr": 117.72,
       "deathSr": 150.95,
-      "boundaryPct": 53.86
+      "boundaryPct": 53.86,
+      "highestNotOut": true
     },
     {
       "player": "Abdul Samad",
@@ -2644,7 +2769,8 @@
       "ppSr": 0.0,
       "middleSr": 121.51,
       "deathSr": 169.85,
-      "boundaryPct": 64.18
+      "boundaryPct": 64.18,
+      "highestNotOut": false
     },
     {
       "player": "RD Rickelton",
@@ -2665,7 +2791,8 @@
       "ppSr": 161.52,
       "middleSr": 182.98,
       "deathSr": 184.62,
-      "boundaryPct": 76.79
+      "boundaryPct": 76.79,
+      "highestNotOut": true
     },
     {
       "player": "Harbhajan Singh",
@@ -2686,7 +2813,8 @@
       "ppSr": 121.57,
       "middleSr": 104.26,
       "deathSr": 151.46,
-      "boundaryPct": 68.19
+      "boundaryPct": 68.19,
+      "highestNotOut": false
     },
     {
       "player": "R Ashwin",
@@ -2707,7 +2835,8 @@
       "ppSr": 106.85,
       "middleSr": 101.09,
       "deathSr": 133.71,
-      "boundaryPct": 51.62
+      "boundaryPct": 51.62,
+      "highestNotOut": false
     },
     {
       "player": "MS Bisla",
@@ -2728,7 +2857,8 @@
       "ppSr": 109.22,
       "middleSr": 115.74,
       "deathSr": 157.58,
-      "boundaryPct": 63.91
+      "boundaryPct": 63.91,
+      "highestNotOut": false
     },
     {
       "player": "Shakib Al Hasan",
@@ -2749,7 +2879,8 @@
       "ppSr": 97.22,
       "middleSr": 117.21,
       "deathSr": 140.0,
-      "boundaryPct": 52.71
+      "boundaryPct": 52.71,
+      "highestNotOut": true
     },
     {
       "player": "Nithish Kumar Reddy",
@@ -2770,7 +2901,8 @@
       "ppSr": 89.29,
       "middleSr": 141.25,
       "deathSr": 196.67,
-      "boundaryPct": 60.48
+      "boundaryPct": 60.48,
+      "highestNotOut": true
     },
     {
       "player": "N Wadhera",
@@ -2791,7 +2923,8 @@
       "ppSr": 106.0,
       "middleSr": 137.38,
       "deathSr": 171.11,
-      "boundaryPct": 65.56
+      "boundaryPct": 65.56,
+      "highestNotOut": false
     },
     {
       "player": "M Shahrukh Khan",
@@ -2812,7 +2945,8 @@
       "ppSr": 109.52,
       "middleSr": 134.6,
       "deathSr": 165.83,
-      "boundaryPct": 65.55
+      "boundaryPct": 65.55,
+      "highestNotOut": false
     },
     {
       "player": "Abishek Porel",
@@ -2833,7 +2967,8 @@
       "ppSr": 147.49,
       "middleSr": 138.89,
       "deathSr": 172.22,
-      "boundaryPct": 63.46
+      "boundaryPct": 63.46,
+      "highestNotOut": false
     },
     {
       "player": "ST Jayasuriya",
@@ -2854,7 +2989,8 @@
       "ppSr": 140.44,
       "middleSr": 153.01,
       "deathSr": 0.0,
-      "boundaryPct": 74.22
+      "boundaryPct": 74.22,
+      "highestNotOut": true
     },
     {
       "player": "SN Khan",
@@ -2875,7 +3011,8 @@
       "ppSr": 152.21,
       "middleSr": 107.23,
       "deathSr": 169.61,
-      "boundaryPct": 62.2
+      "boundaryPct": 62.2,
+      "highestNotOut": true
     },
     {
       "player": "GC Smith",
@@ -2896,7 +3033,8 @@
       "ppSr": 96.64,
       "middleSr": 124.07,
       "deathSr": 165.0,
-      "boundaryPct": 58.19
+      "boundaryPct": 58.19,
+      "highestNotOut": false
     },
     {
       "player": "AD Mathews",
@@ -2917,7 +3055,8 @@
       "ppSr": 58.82,
       "middleSr": 102.48,
       "deathSr": 153.99,
-      "boundaryPct": 48.34
+      "boundaryPct": 48.34,
+      "highestNotOut": true
     },
     {
       "player": "Naman Dhir",
@@ -2938,7 +3077,8 @@
       "ppSr": 142.24,
       "middleSr": 151.83,
       "deathSr": 193.46,
-      "boundaryPct": 68.73
+      "boundaryPct": 68.73,
+      "highestNotOut": true
     },
     {
       "player": "TL Suman",
@@ -2959,7 +3099,8 @@
       "ppSr": 102.21,
       "middleSr": 121.33,
       "deathSr": 133.33,
-      "boundaryPct": 55.62
+      "boundaryPct": 55.62,
+      "highestNotOut": true
     },
     {
       "player": "AM Nayar",
@@ -2980,7 +3121,8 @@
       "ppSr": 89.04,
       "middleSr": 96.74,
       "deathSr": 157.36,
-      "boundaryPct": 50.6
+      "boundaryPct": 50.6,
+      "highestNotOut": true
     },
     {
       "player": "GJ Bailey",
@@ -3001,7 +3143,8 @@
       "ppSr": 102.34,
       "middleSr": 89.52,
       "deathSr": 174.87,
-      "boundaryPct": 52.79
+      "boundaryPct": 52.79,
+      "highestNotOut": true
     },
     {
       "player": "E Lewis",
@@ -3022,7 +3165,8 @@
       "ppSr": 146.85,
       "middleSr": 118.82,
       "deathSr": 152.38,
-      "boundaryPct": 70.95
+      "boundaryPct": 70.95,
+      "highestNotOut": false
     },
     {
       "player": "PJ Cummins",
@@ -3043,7 +3187,8 @@
       "ppSr": 0.0,
       "middleSr": 128.37,
       "deathSr": 165.23,
-      "boundaryPct": 66.04
+      "boundaryPct": 66.04,
+      "highestNotOut": true
     },
     {
       "player": "Rashid Khan",
@@ -3064,7 +3209,8 @@
       "ppSr": 0.0,
       "middleSr": 120.24,
       "deathSr": 165.84,
-      "boundaryPct": 68.98
+      "boundaryPct": 68.98,
+      "highestNotOut": true
     },
     {
       "player": "PP Chawla",
@@ -3085,7 +3231,8 @@
       "ppSr": 115.38,
       "middleSr": 88.14,
       "deathSr": 121.45,
-      "boundaryPct": 55.13
+      "boundaryPct": 55.13,
+      "highestNotOut": true
     },
     {
       "player": "CH Morris",
@@ -3106,7 +3253,8 @@
       "ppSr": 242.86,
       "middleSr": 109.68,
       "deathSr": 167.45,
-      "boundaryPct": 60.52
+      "boundaryPct": 60.52,
+      "highestNotOut": true
     },
     {
       "player": "JJ Roy",
@@ -3127,7 +3275,8 @@
       "ppSr": 131.03,
       "middleSr": 148.46,
       "deathSr": 178.26,
-      "boundaryPct": 69.38
+      "boundaryPct": 69.38,
+      "highestNotOut": true
     },
     {
       "player": "D Brevis",
@@ -3148,7 +3297,8 @@
       "ppSr": 114.47,
       "middleSr": 144.63,
       "deathSr": 214.63,
-      "boundaryPct": 67.66
+      "boundaryPct": 67.66,
+      "highestNotOut": false
     },
     {
       "player": "JD Ryder",
@@ -3169,7 +3319,8 @@
       "ppSr": 134.97,
       "middleSr": 114.42,
       "deathSr": 160.71,
-      "boundaryPct": 64.57
+      "boundaryPct": 64.57,
+      "highestNotOut": false
     },
     {
       "player": "Shahbaz Ahmed",
@@ -3190,7 +3341,8 @@
       "ppSr": 80.77,
       "middleSr": 107.23,
       "deathSr": 147.2,
-      "boundaryPct": 49.75
+      "boundaryPct": 49.75,
+      "highestNotOut": true
     },
     {
       "player": "WG Jacks",
@@ -3211,7 +3363,8 @@
       "ppSr": 153.55,
       "middleSr": 146.23,
       "deathSr": 292.0,
-      "boundaryPct": 71.1
+      "boundaryPct": 71.1,
+      "highestNotOut": true
     },
     {
       "player": "HM Amla",
@@ -3232,7 +3385,8 @@
       "ppSr": 131.16,
       "middleSr": 124.36,
       "deathSr": 234.62,
-      "boundaryPct": 63.43
+      "boundaryPct": 63.43,
+      "highestNotOut": true
     },
     {
       "player": "Ashutosh Sharma",
@@ -3253,7 +3407,8 @@
       "ppSr": 0.0,
       "middleSr": 125.64,
       "deathSr": 192.17,
-      "boundaryPct": 70.21
+      "boundaryPct": 70.21,
+      "highestNotOut": true
     },
     {
       "player": "R Powell",
@@ -3274,7 +3429,8 @@
       "ppSr": 115.38,
       "middleSr": 108.84,
       "deathSr": 188.89,
-      "boundaryPct": 68.47
+      "boundaryPct": 68.47,
+      "highestNotOut": true
     },
     {
       "player": "JP Inglis",
@@ -3295,7 +3451,8 @@
       "ppSr": 198.06,
       "middleSr": 150.36,
       "deathSr": 140.91,
-      "boundaryPct": 73.53
+      "boundaryPct": 73.53,
+      "highestNotOut": true
     },
     {
       "player": "CJ Anderson",
@@ -3316,7 +3473,8 @@
       "ppSr": 85.25,
       "middleSr": 121.01,
       "deathSr": 166.67,
-      "boundaryPct": 64.31
+      "boundaryPct": 64.31,
+      "highestNotOut": true
     },
     {
       "player": "RS Bopara",
@@ -3337,7 +3495,8 @@
       "ppSr": 90.28,
       "middleSr": 108.29,
       "deathSr": 172.12,
-      "boundaryPct": 47.46
+      "boundaryPct": 47.46,
+      "highestNotOut": false
     },
     {
       "player": "JP Faulkner",
@@ -3358,7 +3517,8 @@
       "ppSr": 73.68,
       "middleSr": 86.05,
       "deathSr": 154.58,
-      "boundaryPct": 53.51
+      "boundaryPct": 53.51,
+      "highestNotOut": false
     },
     {
       "player": "MK Lomror",
@@ -3379,7 +3539,8 @@
       "ppSr": 81.58,
       "middleSr": 137.82,
       "deathSr": 161.97,
-      "boundaryPct": 59.2
+      "boundaryPct": 59.2,
+      "highestNotOut": true
     },
     {
       "player": "SE Rutherford",
@@ -3400,7 +3561,8 @@
       "ppSr": 25.0,
       "middleSr": 136.61,
       "deathSr": 161.21,
-      "boundaryPct": 66.92
+      "boundaryPct": 66.92,
+      "highestNotOut": true
     },
     {
       "player": "M Manhas",
@@ -3421,7 +3583,8 @@
       "ppSr": 86.79,
       "middleSr": 96.55,
       "deathSr": 131.89,
-      "boundaryPct": 45.14
+      "boundaryPct": 45.14,
+      "highestNotOut": true
     },
     {
       "player": "Gurkeerat Singh",
@@ -3442,7 +3605,8 @@
       "ppSr": 94.59,
       "middleSr": 100.9,
       "deathSr": 154.94,
-      "boundaryPct": 55.97
+      "boundaryPct": 55.97,
+      "highestNotOut": false
     },
     {
       "player": "OA Shah",
@@ -3463,7 +3627,8 @@
       "ppSr": 127.78,
       "middleSr": 107.0,
       "deathSr": 157.31,
-      "boundaryPct": 54.15
+      "boundaryPct": 54.15,
+      "highestNotOut": false
     },
     {
       "player": "PC Valthaty",
@@ -3484,7 +3649,8 @@
       "ppSr": 112.23,
       "middleSr": 124.58,
       "deathSr": 209.09,
-      "boundaryPct": 72.08
+      "boundaryPct": 72.08,
+      "highestNotOut": true
     },
     {
       "player": "SW Billings",
@@ -3505,7 +3671,8 @@
       "ppSr": 128.87,
       "middleSr": 117.65,
       "deathSr": 168.57,
-      "boundaryPct": 55.67
+      "boundaryPct": 55.67,
+      "highestNotOut": false
     },
     {
       "player": "C Connolly",
@@ -3526,7 +3693,8 @@
       "ppSr": 133.01,
       "middleSr": 161.49,
       "deathSr": 254.05,
-      "boundaryPct": 74.13
+      "boundaryPct": 74.13,
+      "highestNotOut": true
     },
     {
       "player": "RR Rossouw",
@@ -3547,7 +3715,8 @@
       "ppSr": 140.4,
       "middleSr": 148.24,
       "deathSr": 210.26,
-      "boundaryPct": 69.77
+      "boundaryPct": 69.77,
+      "highestNotOut": true
     },
     {
       "player": "DT Christian",
@@ -3568,7 +3737,8 @@
       "ppSr": 37.5,
       "middleSr": 88.62,
       "deathSr": 138.57,
-      "boundaryPct": 44.78
+      "boundaryPct": 44.78,
+      "highestNotOut": false
     },
     {
       "player": "A Mhatre",
@@ -3589,7 +3759,8 @@
       "ppSr": 189.66,
       "middleSr": 184.71,
       "deathSr": 90.0,
-      "boundaryPct": 77.55
+      "boundaryPct": 77.55,
+      "highestNotOut": false
     },
     {
       "player": "Sameer Rizvi",
@@ -3610,7 +3781,8 @@
       "ppSr": 56.25,
       "middleSr": 140.31,
       "deathSr": 201.54,
-      "boundaryPct": 65.09
+      "boundaryPct": 65.09,
+      "highestNotOut": false
     },
     {
       "player": "SA Asnodkar",
@@ -3631,7 +3803,8 @@
       "ppSr": 133.01,
       "middleSr": 111.54,
       "deathSr": 0.0,
-      "boundaryPct": 67.14
+      "boundaryPct": 67.14,
+      "highestNotOut": false
     },
     {
       "player": "NLTC Perera",
@@ -3652,7 +3825,8 @@
       "ppSr": 128.57,
       "middleSr": 117.09,
       "deathSr": 151.7,
-      "boundaryPct": 58.77
+      "boundaryPct": 58.77,
+      "highestNotOut": false
     },
     {
       "player": "JR Hopes",
@@ -3673,7 +3847,8 @@
       "ppSr": 125.56,
       "middleSr": 146.09,
       "deathSr": 140.0,
-      "boundaryPct": 62.83
+      "boundaryPct": 62.83,
+      "highestNotOut": false
     },
     {
       "player": "R Ravindra",
@@ -3694,7 +3869,8 @@
       "ppSr": 137.5,
       "middleSr": 146.15,
       "deathSr": 266.67,
-      "boundaryPct": 61.99
+      "boundaryPct": 61.99,
+      "highestNotOut": true
     },
     {
       "player": "J Botha",
@@ -3715,7 +3891,8 @@
       "ppSr": 86.54,
       "middleSr": 111.41,
       "deathSr": 129.27,
-      "boundaryPct": 45.48
+      "boundaryPct": 45.48,
+      "highestNotOut": true
     },
     {
       "player": "LR Shukla",
@@ -3736,7 +3913,8 @@
       "ppSr": 40.0,
       "middleSr": 101.66,
       "deathSr": 133.54,
-      "boundaryPct": 56.3
+      "boundaryPct": 56.3,
+      "highestNotOut": true
     },
     {
       "player": "AL Menaria",
@@ -3757,7 +3935,8 @@
       "ppSr": 100.0,
       "middleSr": 110.45,
       "deathSr": 121.25,
-      "boundaryPct": 50.87
+      "boundaryPct": 50.87,
+      "highestNotOut": false
     },
     {
       "player": "MV Boucher",
@@ -3778,7 +3957,8 @@
       "ppSr": 91.67,
       "middleSr": 99.28,
       "deathSr": 159.86,
-      "boundaryPct": 52.28
+      "boundaryPct": 52.28,
+      "highestNotOut": true
     },
     {
       "player": "CA Pujara",
@@ -3799,7 +3979,8 @@
       "ppSr": 93.89,
       "middleSr": 105.79,
       "deathSr": 114.63,
-      "boundaryPct": 57.44
+      "boundaryPct": 57.44,
+      "highestNotOut": false
     },
     {
       "player": "Azhar Mahmood",
@@ -3820,7 +4001,8 @@
       "ppSr": 91.67,
       "middleSr": 129.26,
       "deathSr": 135.16,
-      "boundaryPct": 60.31
+      "boundaryPct": 60.31,
+      "highestNotOut": true
     },
     {
       "player": "J Fraser-McGurk",
@@ -3841,7 +4023,8 @@
       "ppSr": 206.94,
       "middleSr": 177.55,
       "deathSr": 0.0,
-      "boundaryPct": 87.27
+      "boundaryPct": 87.27,
+      "highestNotOut": false
     },
     {
       "player": "A Mishra",
@@ -3862,7 +4045,8 @@
       "ppSr": 20.0,
       "middleSr": 73.17,
       "deathSr": 104.0,
-      "boundaryPct": 40.42
+      "boundaryPct": 40.42,
+      "highestNotOut": false
     },
     {
       "player": "KR Mayers",
@@ -3883,7 +4067,8 @@
       "ppSr": 137.56,
       "middleSr": 167.24,
       "deathSr": 0.0,
-      "boundaryPct": 74.93
+      "boundaryPct": 74.93,
+      "highestNotOut": false
     },
     {
       "player": "DB Ravi Teja",
@@ -3904,7 +4089,8 @@
       "ppSr": 91.38,
       "middleSr": 111.68,
       "deathSr": 138.52,
-      "boundaryPct": 51.73
+      "boundaryPct": 51.73,
+      "highestNotOut": false
     },
     {
       "player": "S Sohal",
@@ -3925,7 +4111,8 @@
       "ppSr": 126.82,
       "middleSr": 134.92,
       "deathSr": 44.44,
-      "boundaryPct": 66.3
+      "boundaryPct": 66.3,
+      "highestNotOut": false
     },
     {
       "player": "P Negi",
@@ -3946,7 +4133,8 @@
       "ppSr": 66.67,
       "middleSr": 102.97,
       "deathSr": 141.21,
-      "boundaryPct": 55.89
+      "boundaryPct": 55.89,
+      "highestNotOut": false
     },
     {
       "player": "Rahmanullah Gurbaz",
@@ -3967,7 +4155,8 @@
       "ppSr": 129.23,
       "middleSr": 152.05,
       "deathSr": 0.0,
-      "boundaryPct": 73.83
+      "boundaryPct": 73.83,
+      "highestNotOut": false
     },
     {
       "player": "B Kumar",
@@ -3988,7 +4177,8 @@
       "ppSr": 0.0,
       "middleSr": 74.51,
       "deathSr": 96.93,
-      "boundaryPct": 45.2
+      "boundaryPct": 45.2,
+      "highestNotOut": false
     },
     {
       "player": "KV Sharma",
@@ -4009,7 +4199,8 @@
       "ppSr": 77.78,
       "middleSr": 92.38,
       "deathSr": 137.02,
-      "boundaryPct": 51.7
+      "boundaryPct": 51.7,
+      "highestNotOut": true
     },
     {
       "player": "DJ Mitchell",
@@ -4030,7 +4221,8 @@
       "ppSr": 124.36,
       "middleSr": 137.75,
       "deathSr": 121.05,
-      "boundaryPct": 49.0
+      "boundaryPct": 49.0,
+      "highestNotOut": true
     },
     {
       "player": "SN Thakur",
@@ -4051,7 +4243,8 @@
       "ppSr": 0.0,
       "middleSr": 128.89,
       "deathSr": 137.87,
-      "boundaryPct": 59.03
+      "boundaryPct": 59.03,
+      "highestNotOut": false
     },
     {
       "player": "FH Allen",
@@ -4072,7 +4265,8 @@
       "ppSr": 183.19,
       "middleSr": 284.0,
       "deathSr": 0.0,
-      "boundaryPct": 85.96
+      "boundaryPct": 85.96,
+      "highestNotOut": true
     },
     {
       "player": "R Bhatia",
@@ -4093,7 +4287,8 @@
       "ppSr": 0.0,
       "middleSr": 81.25,
       "deathSr": 145.93,
-      "boundaryPct": 50.88
+      "boundaryPct": 50.88,
+      "highestNotOut": true
     },
     {
       "player": "P Kumar",
@@ -4114,7 +4309,8 @@
       "ppSr": 75.0,
       "middleSr": 88.89,
       "deathSr": 112.64,
-      "boundaryPct": 55.88
+      "boundaryPct": 55.88,
+      "highestNotOut": false
     },
     {
       "player": "AP Tare",
@@ -4135,7 +4331,8 @@
       "ppSr": 111.88,
       "middleSr": 162.22,
       "deathSr": 153.85,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": false
     },
     {
       "player": "JEC Franklin",
@@ -4156,7 +4353,8 @@
       "ppSr": 84.95,
       "middleSr": 107.86,
       "deathSr": 142.65,
-      "boundaryPct": 47.09
+      "boundaryPct": 47.09,
+      "highestNotOut": false
     },
     {
       "player": "JC Archer",
@@ -4177,7 +4375,8 @@
       "ppSr": 0.0,
       "middleSr": 113.21,
       "deathSr": 158.33,
-      "boundaryPct": 62.58
+      "boundaryPct": 62.58,
+      "highestNotOut": false
     },
     {
       "player": "D Ferreira",
@@ -4198,7 +4397,8 @@
       "ppSr": 127.27,
       "middleSr": 139.53,
       "deathSr": 204.26,
-      "boundaryPct": 74.23
+      "boundaryPct": 74.23,
+      "highestNotOut": false
     },
     {
       "player": "RN ten Doeschate",
@@ -4219,7 +4419,8 @@
       "ppSr": 85.71,
       "middleSr": 122.73,
       "deathSr": 151.43,
-      "boundaryPct": 59.51
+      "boundaryPct": 59.51,
+      "highestNotOut": true
     },
     {
       "player": "JO Holder",
@@ -4240,7 +4441,8 @@
       "ppSr": 57.14,
       "middleSr": 123.19,
       "deathSr": 131.21,
-      "boundaryPct": 58.64
+      "boundaryPct": 58.64,
+      "highestNotOut": true
     },
     {
       "player": "Anuj Rawat",
@@ -4261,7 +4463,8 @@
       "ppSr": 94.32,
       "middleSr": 94.9,
       "deathSr": 175.31,
-      "boundaryPct": 59.12
+      "boundaryPct": 59.12,
+      "highestNotOut": false
     },
     {
       "player": "Aniket Verma",
@@ -4282,7 +4485,8 @@
       "ppSr": 106.25,
       "middleSr": 150.49,
       "deathSr": 185.71,
-      "boundaryPct": 70.48
+      "boundaryPct": 70.48,
+      "highestNotOut": false
     },
     {
       "player": "R Vinay Kumar",
@@ -4303,7 +4507,8 @@
       "ppSr": 0.0,
       "middleSr": 100.0,
       "deathSr": 115.93,
-      "boundaryPct": 44.52
+      "boundaryPct": 44.52,
+      "highestNotOut": true
     },
     {
       "player": "Lalit Yadav",
@@ -4324,7 +4529,8 @@
       "ppSr": 78.12,
       "middleSr": 104.49,
       "deathSr": 117.5,
-      "boundaryPct": 49.18
+      "boundaryPct": 49.18,
+      "highestNotOut": true
     },
     {
       "player": "DB Das",
@@ -4345,7 +4551,8 @@
       "ppSr": 109.43,
       "middleSr": 116.22,
       "deathSr": 120.62,
-      "boundaryPct": 61.84
+      "boundaryPct": 61.84,
+      "highestNotOut": true
     },
     {
       "player": "C de Grandhomme",
@@ -4366,7 +4573,8 @@
       "ppSr": 50.0,
       "middleSr": 129.09,
       "deathSr": 141.59,
-      "boundaryPct": 59.41
+      "boundaryPct": 59.41,
+      "highestNotOut": false
     },
     {
       "player": "LA Pomersbach",
@@ -4387,7 +4595,8 @@
       "ppSr": 130.0,
       "middleSr": 111.97,
       "deathSr": 136.73,
-      "boundaryPct": 58.94
+      "boundaryPct": 58.94,
+      "highestNotOut": true
     },
     {
       "player": "UBT Chand",
@@ -4408,7 +4617,8 @@
       "ppSr": 84.51,
       "middleSr": 107.14,
       "deathSr": 166.67,
-      "boundaryPct": 60.67
+      "boundaryPct": 60.67,
+      "highestNotOut": false
     },
     {
       "player": "Ramandeep Singh",
@@ -4429,7 +4639,8 @@
       "ppSr": 66.67,
       "middleSr": 111.61,
       "deathSr": 191.11,
-      "boundaryPct": 60.87
+      "boundaryPct": 60.87,
+      "highestNotOut": false
     },
     {
       "player": "Kartik Sharma",
@@ -4450,7 +4661,8 @@
       "ppSr": 134.78,
       "middleSr": 125.5,
       "deathSr": 175.0,
-      "boundaryPct": 65.08
+      "boundaryPct": 65.08,
+      "highestNotOut": false
     },
     {
       "player": "DJG Sammy",
@@ -4471,7 +4683,8 @@
       "ppSr": 160.0,
       "middleSr": 107.86,
       "deathSr": 141.67,
-      "boundaryPct": 56.95
+      "boundaryPct": 56.95,
+      "highestNotOut": false
     },
     {
       "player": "SP Goswami",
@@ -4492,7 +4705,8 @@
       "ppSr": 97.6,
       "middleSr": 98.11,
       "deathSr": 118.18,
-      "boundaryPct": 49.83
+      "boundaryPct": 49.83,
+      "highestNotOut": false
     },
     {
       "player": "A Manohar",
@@ -4513,7 +4727,8 @@
       "ppSr": 66.67,
       "middleSr": 107.32,
       "deathSr": 157.45,
-      "boundaryPct": 60.27
+      "boundaryPct": 60.27,
+      "highestNotOut": true
     },
     {
       "player": "Y Nagar",
@@ -4534,7 +4749,8 @@
       "ppSr": 66.67,
       "middleSr": 80.62,
       "deathSr": 140.94,
-      "boundaryPct": 47.02
+      "boundaryPct": 47.02,
+      "highestNotOut": true
     },
     {
       "player": "GH Vihari",
@@ -4555,7 +4771,8 @@
       "ppSr": 65.56,
       "middleSr": 90.06,
       "deathSr": 114.29,
-      "boundaryPct": 34.51
+      "boundaryPct": 34.51,
+      "highestNotOut": false
     },
     {
       "player": "VVS Laxman",
@@ -4576,7 +4793,8 @@
       "ppSr": 99.47,
       "middleSr": 126.03,
       "deathSr": 50.0,
-      "boundaryPct": 57.45
+      "boundaryPct": 57.45,
+      "highestNotOut": false
     },
     {
       "player": "HV Patel",
@@ -4597,7 +4815,8 @@
       "ppSr": 0.0,
       "middleSr": 88.16,
       "deathSr": 131.48,
-      "boundaryPct": 57.86
+      "boundaryPct": 57.86,
+      "highestNotOut": true
     },
     {
       "player": "B Chipli",
@@ -4618,7 +4837,8 @@
       "ppSr": 72.37,
       "middleSr": 105.04,
       "deathSr": 178.57,
-      "boundaryPct": 55.0
+      "boundaryPct": 55.0,
+      "highestNotOut": true
     },
     {
       "player": "A Ashish Reddy",
@@ -4639,7 +4859,8 @@
       "ppSr": 83.33,
       "middleSr": 148.78,
       "deathSr": 146.58,
-      "boundaryPct": 55.0
+      "boundaryPct": 55.0,
+      "highestNotOut": true
     },
     {
       "player": "P Nissanka",
@@ -4660,7 +4881,8 @@
       "ppSr": 169.06,
       "middleSr": 119.44,
       "deathSr": 0.0,
-      "boundaryPct": 73.38
+      "boundaryPct": 73.38,
+      "highestNotOut": false
     },
     {
       "player": "MJ Lumb",
@@ -4681,7 +4903,8 @@
       "ppSr": 146.1,
       "middleSr": 132.5,
       "deathSr": 0.0,
-      "boundaryPct": 77.7
+      "boundaryPct": 77.7,
+      "highestNotOut": false
     },
     {
       "player": "PBB Rajapaksa",
@@ -4702,7 +4925,8 @@
       "ppSr": 160.42,
       "middleSr": 143.7,
       "deathSr": 75.0,
-      "boundaryPct": 64.26
+      "boundaryPct": 64.26,
+      "highestNotOut": false
     },
     {
       "player": "PK Garg",
@@ -4723,7 +4947,8 @@
       "ppSr": 100.0,
       "middleSr": 104.67,
       "deathSr": 162.5,
-      "boundaryPct": 43.22
+      "boundaryPct": 43.22,
+      "highestNotOut": true
     },
     {
       "player": "MJ Guptill",
@@ -4744,7 +4969,8 @@
       "ppSr": 139.74,
       "middleSr": 130.0,
       "deathSr": 0.0,
-      "boundaryPct": 68.89
+      "boundaryPct": 68.89,
+      "highestNotOut": true
     },
     {
       "player": "R Sathish",
@@ -4765,7 +4991,8 @@
       "ppSr": 0.0,
       "middleSr": 100.0,
       "deathSr": 138.98,
-      "boundaryPct": 45.93
+      "boundaryPct": 45.93,
+      "highestNotOut": true
     },
     {
       "player": "R Shepherd",
@@ -4786,7 +5013,8 @@
       "ppSr": 0.0,
       "middleSr": 140.38,
       "deathSr": 193.07,
-      "boundaryPct": 76.12
+      "boundaryPct": 76.12,
+      "highestNotOut": true
     },
     {
       "player": "K Rabada",
@@ -4807,7 +5035,8 @@
       "ppSr": 33.33,
       "middleSr": 92.5,
       "deathSr": 119.87,
-      "boundaryPct": 57.25
+      "boundaryPct": 57.25,
+      "highestNotOut": false
     },
     {
       "player": "Atharva Taide",
@@ -4828,7 +5057,8 @@
       "ppSr": 152.43,
       "middleSr": 139.19,
       "deathSr": 0.0,
-      "boundaryPct": 64.62
+      "boundaryPct": 64.62,
+      "highestNotOut": false
     },
     {
       "player": "M Kaif",
@@ -4849,7 +5079,8 @@
       "ppSr": 57.89,
       "middleSr": 109.58,
       "deathSr": 120.0,
-      "boundaryPct": 47.88
+      "boundaryPct": 47.88,
+      "highestNotOut": true
     },
     {
       "player": "Harpreet Brar",
@@ -4870,7 +5101,8 @@
       "ppSr": 0.0,
       "middleSr": 74.07,
       "deathSr": 137.5,
-      "boundaryPct": 56.22
+      "boundaryPct": 56.22,
+      "highestNotOut": false
     },
     {
       "player": "K Gowtham",
@@ -4891,7 +5123,8 @@
       "ppSr": 160.0,
       "middleSr": 136.36,
       "deathSr": 186.36,
-      "boundaryPct": 65.59
+      "boundaryPct": 65.59,
+      "highestNotOut": true
     },
     {
       "player": "SM Katich",
@@ -4912,7 +5145,8 @@
       "ppSr": 134.26,
       "middleSr": 122.58,
       "deathSr": 125.0,
-      "boundaryPct": 63.07
+      "boundaryPct": 63.07,
+      "highestNotOut": false
     },
     {
       "player": "BCJ Cutting",
@@ -4933,7 +5167,8 @@
       "ppSr": 0.0,
       "middleSr": 110.0,
       "deathSr": 178.51,
-      "boundaryPct": 73.11
+      "boundaryPct": 73.11,
+      "highestNotOut": true
     },
     {
       "player": "MD Mishra",
@@ -4954,7 +5189,8 @@
       "ppSr": 104.03,
       "middleSr": 124.62,
       "deathSr": 142.11,
-      "boundaryPct": 60.76
+      "boundaryPct": 60.76,
+      "highestNotOut": false
     },
     {
       "player": "SB Dubey",
@@ -4975,7 +5211,8 @@
       "ppSr": 233.33,
       "middleSr": 112.24,
       "deathSr": 171.59,
-      "boundaryPct": 66.36
+      "boundaryPct": 66.36,
+      "highestNotOut": true
     },
     {
       "player": "K Goel",
@@ -4996,7 +5233,8 @@
       "ppSr": 99.38,
       "middleSr": 66.67,
       "deathSr": 107.14,
-      "boundaryPct": 55.96
+      "boundaryPct": 55.96,
+      "highestNotOut": false
     },
     {
       "player": "AA Jhunjhunwala",
@@ -5017,7 +5255,8 @@
       "ppSr": 70.59,
       "middleSr": 99.2,
       "deathSr": 135.29,
-      "boundaryPct": 48.85
+      "boundaryPct": 48.85,
+      "highestNotOut": true
     },
     {
       "player": "Mohammad Nabi",
@@ -5038,7 +5277,8 @@
       "ppSr": 153.85,
       "middleSr": 132.0,
       "deathSr": 148.28,
-      "boundaryPct": 64.19
+      "boundaryPct": 64.19,
+      "highestNotOut": false
     },
     {
       "player": "Kuldeep Yadav",
@@ -5059,7 +5299,8 @@
       "ppSr": 0.0,
       "middleSr": 52.27,
       "deathSr": 89.47,
-      "boundaryPct": 42.86
+      "boundaryPct": 42.86,
+      "highestNotOut": true
     },
     {
       "player": "R Dhawan",
@@ -5080,7 +5321,8 @@
       "ppSr": 0.0,
       "middleSr": 76.36,
       "deathSr": 127.27,
-      "boundaryPct": 54.29
+      "boundaryPct": 54.29,
+      "highestNotOut": true
     },
     {
       "player": "UT Yadav",
@@ -5101,7 +5343,8 @@
       "ppSr": 0.0,
       "middleSr": 23.08,
       "deathSr": 109.04,
-      "boundaryPct": 56.73
+      "boundaryPct": 56.73,
+      "highestNotOut": true
     },
     {
       "player": "CA Ingram",
@@ -5122,7 +5365,8 @@
       "ppSr": 77.78,
       "middleSr": 106.67,
       "deathSr": 150.0,
-      "boundaryPct": 57.56
+      "boundaryPct": 57.56,
+      "highestNotOut": false
     },
     {
       "player": "PD Collingwood",
@@ -5143,7 +5387,8 @@
       "ppSr": 136.84,
       "middleSr": 104.35,
       "deathSr": 180.0,
-      "boundaryPct": 56.16
+      "boundaryPct": 56.16,
+      "highestNotOut": true
     },
     {
       "player": "JD Unadkat",
@@ -5164,7 +5409,8 @@
       "ppSr": 0.0,
       "middleSr": 82.14,
       "deathSr": 126.24,
-      "boundaryPct": 52.74
+      "boundaryPct": 52.74,
+      "highestNotOut": false
     },
     {
       "player": "KS Bharat",
@@ -5185,7 +5431,8 @@
       "ppSr": 110.17,
       "middleSr": 120.0,
       "deathSr": 168.42,
-      "boundaryPct": 48.24
+      "boundaryPct": 48.24,
+      "highestNotOut": true
     },
     {
       "player": "SK Warne",
@@ -5206,7 +5453,8 @@
       "ppSr": 0.0,
       "middleSr": 74.39,
       "deathSr": 103.79,
-      "boundaryPct": 46.46
+      "boundaryPct": 46.46,
+      "highestNotOut": true
     },
     {
       "player": "Urvil Patel",
@@ -5227,7 +5475,8 @@
       "ppSr": 211.76,
       "middleSr": 189.29,
       "deathSr": 0.0,
-      "boundaryPct": 83.25
+      "boundaryPct": 83.25,
+      "highestNotOut": false
     },
     {
       "player": "SP Fleming",
@@ -5248,7 +5497,8 @@
       "ppSr": 109.09,
       "middleSr": 138.18,
       "deathSr": 0.0,
-      "boundaryPct": 64.29
+      "boundaryPct": 64.29,
+      "highestNotOut": false
     },
     {
       "player": "AS Raut",
@@ -5269,7 +5519,8 @@
       "ppSr": 116.67,
       "middleSr": 115.52,
       "deathSr": 116.5,
-      "boundaryPct": 48.45
+      "boundaryPct": 48.45,
+      "highestNotOut": true
     },
     {
       "player": "Salman Butt",
@@ -5290,7 +5541,8 @@
       "ppSr": 106.12,
       "middleSr": 128.07,
       "deathSr": 266.67,
-      "boundaryPct": 68.39
+      "boundaryPct": 68.39,
+      "highestNotOut": false
     },
     {
       "player": "BJ Rohrer",
@@ -5311,7 +5563,8 @@
       "ppSr": 0.0,
       "middleSr": 108.57,
       "deathSr": 225.71,
-      "boundaryPct": 59.07
+      "boundaryPct": 59.07,
+      "highestNotOut": true
     },
     {
       "player": "M Jansen",
@@ -5332,7 +5585,8 @@
       "ppSr": 0.0,
       "middleSr": 94.74,
       "deathSr": 114.71,
-      "boundaryPct": 46.88
+      "boundaryPct": 46.88,
+      "highestNotOut": true
     },
     {
       "player": "YV Takawale",
@@ -5353,7 +5607,8 @@
       "ppSr": 91.67,
       "middleSr": 127.27,
       "deathSr": 223.08,
-      "boundaryPct": 63.54
+      "boundaryPct": 63.54,
+      "highestNotOut": false
     },
     {
       "player": "HC Brook",
@@ -5374,7 +5629,8 @@
       "ppSr": 114.29,
       "middleSr": 128.89,
       "deathSr": 144.0,
-      "boundaryPct": 61.05
+      "boundaryPct": 61.05,
+      "highestNotOut": true
     },
     {
       "player": "Bipul Sharma",
@@ -5395,7 +5651,8 @@
       "ppSr": 0.0,
       "middleSr": 107.14,
       "deathSr": 157.8,
-      "boundaryPct": 52.41
+      "boundaryPct": 52.41,
+      "highestNotOut": true
     },
     {
       "player": "MS Wade",
@@ -5416,7 +5673,8 @@
       "ppSr": 115.31,
       "middleSr": 88.61,
       "deathSr": 0.0,
-      "boundaryPct": 56.83
+      "boundaryPct": 56.83,
+      "highestNotOut": false
     },
     {
       "player": "SD Hope",
@@ -5437,7 +5695,8 @@
       "ppSr": 130.0,
       "middleSr": 180.77,
       "deathSr": 110.0,
-      "boundaryPct": 65.57
+      "boundaryPct": 65.57,
+      "highestNotOut": true
     },
     {
       "player": "FY Fazal",
@@ -5458,7 +5717,8 @@
       "ppSr": 96.2,
       "middleSr": 111.29,
       "deathSr": 118.75,
-      "boundaryPct": 51.37
+      "boundaryPct": 51.37,
+      "highestNotOut": false
     },
     {
       "player": "Sikandar Raza",
@@ -5479,7 +5739,8 @@
       "ppSr": 88.89,
       "middleSr": 136.56,
       "deathSr": 138.24,
-      "boundaryPct": 52.75
+      "boundaryPct": 52.75,
+      "highestNotOut": false
     },
     {
       "player": "CR Brathwaite",
@@ -5500,7 +5761,8 @@
       "ppSr": 0.0,
       "middleSr": 75.0,
       "deathSr": 198.73,
-      "boundaryPct": 75.14
+      "boundaryPct": 75.14,
+      "highestNotOut": true
     },
     {
       "player": "AC Voges",
@@ -5521,7 +5783,8 @@
       "ppSr": 77.78,
       "middleSr": 114.1,
       "deathSr": 151.79,
-      "boundaryPct": 43.09
+      "boundaryPct": 43.09,
+      "highestNotOut": true
     },
     {
       "player": "S Gopal",
@@ -5542,7 +5805,8 @@
       "ppSr": 0.0,
       "middleSr": 73.77,
       "deathSr": 129.81,
-      "boundaryPct": 48.89
+      "boundaryPct": 48.89,
+      "highestNotOut": false
     },
     {
       "player": "AB Agarkar",
@@ -5563,7 +5827,8 @@
       "ppSr": 153.85,
       "middleSr": 72.34,
       "deathSr": 132.98,
-      "boundaryPct": 45.81
+      "boundaryPct": 45.81,
+      "highestNotOut": false
     },
     {
       "player": "C Munro",
@@ -5584,7 +5849,8 @@
       "ppSr": 143.96,
       "middleSr": 93.33,
       "deathSr": 80.0,
-      "boundaryPct": 70.06
+      "boundaryPct": 70.06,
+      "highestNotOut": false
     },
     {
       "player": "MW Short",
@@ -5605,7 +5871,8 @@
       "ppSr": 133.98,
       "middleSr": 100.0,
       "deathSr": 0.0,
-      "boundaryPct": 64.41
+      "boundaryPct": 64.41,
+      "highestNotOut": false
     },
     {
       "player": "MF Maharoof",
@@ -5626,7 +5893,8 @@
       "ppSr": 0.0,
       "middleSr": 123.53,
       "deathSr": 151.69,
-      "boundaryPct": 57.63
+      "boundaryPct": 57.63,
+      "highestNotOut": false
     },
     {
       "player": "MD Choudhary",
@@ -5647,7 +5915,8 @@
       "ppSr": 0.0,
       "middleSr": 127.91,
       "deathSr": 149.35,
-      "boundaryPct": 68.24
+      "boundaryPct": 68.24,
+      "highestNotOut": true
     },
     {
       "player": "DH Yagnik",
@@ -5668,7 +5937,8 @@
       "ppSr": 0.0,
       "middleSr": 119.35,
       "deathSr": 128.0,
-      "boundaryPct": 61.18
+      "boundaryPct": 61.18,
+      "highestNotOut": false
     },
     {
       "player": "CM Gautam",
@@ -5689,7 +5959,8 @@
       "ppSr": 109.68,
       "middleSr": 104.55,
       "deathSr": 125.0,
-      "boundaryPct": 61.54
+      "boundaryPct": 61.54,
+      "highestNotOut": false
     },
     {
       "player": "MG Johnson",
@@ -5710,7 +5981,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 109.03,
-      "boundaryPct": 49.1
+      "boundaryPct": 49.1,
+      "highestNotOut": true
     },
     {
       "player": "DW Steyn",
@@ -5731,7 +6003,8 @@
       "ppSr": 0.0,
       "middleSr": 44.44,
       "deathSr": 107.95,
-      "boundaryPct": 44.31
+      "boundaryPct": 44.31,
+      "highestNotOut": true
     },
     {
       "player": "MN van Wyk",
@@ -5752,7 +6025,8 @@
       "ppSr": 112.0,
       "middleSr": 114.06,
       "deathSr": 153.49,
-      "boundaryPct": 49.1
+      "boundaryPct": 49.1,
+      "highestNotOut": false
     },
     {
       "player": "Suryansh Shedge",
@@ -5773,7 +6047,8 @@
       "ppSr": 177.78,
       "middleSr": 168.25,
       "deathSr": 148.28,
-      "boundaryPct": 65.45
+      "boundaryPct": 65.45,
+      "highestNotOut": false
     },
     {
       "player": "PA Reddy",
@@ -5794,7 +6069,8 @@
       "ppSr": 99.04,
       "middleSr": 90.2,
       "deathSr": 300.0,
-      "boundaryPct": 43.9
+      "boundaryPct": 43.9,
+      "highestNotOut": false
     },
     {
       "player": "JG Bethell",
@@ -5815,7 +6091,8 @@
       "ppSr": 152.22,
       "middleSr": 100.0,
       "deathSr": 0.0,
-      "boundaryPct": 73.62
+      "boundaryPct": 73.62,
+      "highestNotOut": false
     },
     {
       "player": "N Jagadeesan",
@@ -5836,7 +6113,8 @@
       "ppSr": 104.92,
       "middleSr": 119.18,
       "deathSr": 84.62,
-      "boundaryPct": 59.26
+      "boundaryPct": 59.26,
+      "highestNotOut": true
     },
     {
       "player": "MN Samuels",
@@ -5857,7 +6135,8 @@
       "ppSr": 36.0,
       "middleSr": 97.69,
       "deathSr": 147.06,
-      "boundaryPct": 48.45
+      "boundaryPct": 48.45,
+      "highestNotOut": false
     },
     {
       "player": "RE van der Merwe",
@@ -5878,7 +6157,8 @@
       "ppSr": 97.3,
       "middleSr": 120.69,
       "deathSr": 115.22,
-      "boundaryPct": 57.86
+      "boundaryPct": 57.86,
+      "highestNotOut": false
     },
     {
       "player": "R McLaren",
@@ -5899,7 +6179,8 @@
       "ppSr": 66.67,
       "middleSr": 82.11,
       "deathSr": 118.97,
-      "boundaryPct": 38.99
+      "boundaryPct": 38.99,
+      "highestNotOut": true
     },
     {
       "player": "V Nigam",
@@ -5920,7 +6201,8 @@
       "ppSr": 250.0,
       "middleSr": 160.61,
       "deathSr": 175.0,
-      "boundaryPct": 76.43
+      "boundaryPct": 76.43,
+      "highestNotOut": false
     },
     {
       "player": "Azmatullah Omarzai",
@@ -5941,7 +6223,8 @@
       "ppSr": 0.0,
       "middleSr": 130.16,
       "deathSr": 181.58,
-      "boundaryPct": 68.87
+      "boundaryPct": 68.87,
+      "highestNotOut": false
     },
     {
       "player": "J Overton",
@@ -5962,7 +6245,8 @@
       "ppSr": 0.0,
       "middleSr": 156.67,
       "deathSr": 165.08,
-      "boundaryPct": 64.9
+      "boundaryPct": 64.9,
+      "highestNotOut": false
     },
     {
       "player": "AD Hales",
@@ -5983,7 +6267,8 @@
       "ppSr": 140.74,
       "middleSr": 91.89,
       "deathSr": 0.0,
-      "boundaryPct": 59.46
+      "boundaryPct": 59.46,
+      "highestNotOut": false
     },
     {
       "player": "D Wiese",
@@ -6004,7 +6289,8 @@
       "ppSr": 0.0,
       "middleSr": 95.83,
       "deathSr": 162.34,
-      "boundaryPct": 60.81
+      "boundaryPct": 60.81,
+      "highestNotOut": true
     },
     {
       "player": "SM Pollock",
@@ -6025,7 +6311,8 @@
       "ppSr": 16.67,
       "middleSr": 104.76,
       "deathSr": 190.48,
-      "boundaryPct": 65.31
+      "boundaryPct": 65.31,
+      "highestNotOut": false
     },
     {
       "player": "S Vidyut",
@@ -6046,7 +6333,8 @@
       "ppSr": 135.53,
       "middleSr": 140.0,
       "deathSr": 0.0,
-      "boundaryPct": 70.34
+      "boundaryPct": 70.34,
+      "highestNotOut": false
     },
     {
       "player": "Sachin Baby",
@@ -6067,7 +6355,8 @@
       "ppSr": 0.0,
       "middleSr": 89.09,
       "deathSr": 158.33,
-      "boundaryPct": 51.39
+      "boundaryPct": 51.39,
+      "highestNotOut": false
     },
     {
       "player": "DL Chahar",
@@ -6088,7 +6377,8 @@
       "ppSr": 0.0,
       "middleSr": 156.41,
       "deathSr": 126.56,
-      "boundaryPct": 60.56
+      "boundaryPct": 60.56,
+      "highestNotOut": false
     },
     {
       "player": "Arshad Khan",
@@ -6109,7 +6399,8 @@
       "ppSr": 0.0,
       "middleSr": 150.0,
       "deathSr": 149.15,
-      "boundaryPct": 63.38
+      "boundaryPct": 63.38,
+      "highestNotOut": true
     },
     {
       "player": "N Saini",
@@ -6130,7 +6421,8 @@
       "ppSr": 95.24,
       "middleSr": 108.16,
       "deathSr": 87.5,
-      "boundaryPct": 45.71
+      "boundaryPct": 45.71,
+      "highestNotOut": false
     },
     {
       "player": "Anmolpreet Singh",
@@ -6151,7 +6443,8 @@
       "ppSr": 127.47,
       "middleSr": 95.83,
       "deathSr": 0.0,
-      "boundaryPct": 67.63
+      "boundaryPct": 67.63,
+      "highestNotOut": false
     },
     {
       "player": "MJ Santner",
@@ -6172,7 +6465,8 @@
       "ppSr": 83.33,
       "middleSr": 73.33,
       "deathSr": 136.23,
-      "boundaryPct": 52.94
+      "boundaryPct": 52.94,
+      "highestNotOut": false
     },
     {
       "player": "S Anirudha",
@@ -6193,7 +6487,8 @@
       "ppSr": 92.86,
       "middleSr": 103.03,
       "deathSr": 146.15,
-      "boundaryPct": 57.35
+      "boundaryPct": 57.35,
+      "highestNotOut": false
     },
     {
       "player": "GD Phillips",
@@ -6214,7 +6509,8 @@
       "ppSr": 33.33,
       "middleSr": 101.96,
       "deathSr": 165.22,
-      "boundaryPct": 57.58
+      "boundaryPct": 57.58,
+      "highestNotOut": false
     },
     {
       "player": "SB Styris",
@@ -6235,7 +6531,8 @@
       "ppSr": 61.54,
       "middleSr": 89.25,
       "deathSr": 148.15,
-      "boundaryPct": 44.27
+      "boundaryPct": 44.27,
+      "highestNotOut": true
     },
     {
       "player": "W Jaffer",
@@ -6256,7 +6553,8 @@
       "ppSr": 86.52,
       "middleSr": 165.62,
       "deathSr": 0.0,
-      "boundaryPct": 56.92
+      "boundaryPct": 56.92,
+      "highestNotOut": false
     },
     {
       "player": "RD Chahar",
@@ -6277,7 +6575,8 @@
       "ppSr": 0.0,
       "middleSr": 25.0,
       "deathSr": 115.74,
-      "boundaryPct": 63.57
+      "boundaryPct": 63.57,
+      "highestNotOut": true
     },
     {
       "player": "Kamran Akmal",
@@ -6298,7 +6597,8 @@
       "ppSr": 124.39,
       "middleSr": 255.0,
       "deathSr": 152.94,
-      "boundaryPct": 78.12
+      "boundaryPct": 78.12,
+      "highestNotOut": true
     },
     {
       "player": "TK Curran",
@@ -6319,7 +6619,8 @@
       "ppSr": 0.0,
       "middleSr": 101.75,
       "deathSr": 138.0,
-      "boundaryPct": 45.67
+      "boundaryPct": 45.67,
+      "highestNotOut": true
     },
     {
       "player": "P Dogra",
@@ -6340,7 +6641,8 @@
       "ppSr": 0.0,
       "middleSr": 71.05,
       "deathSr": 117.74,
-      "boundaryPct": 36.22
+      "boundaryPct": 36.22,
+      "highestNotOut": false
     },
     {
       "player": "UT Khawaja",
@@ -6361,7 +6663,8 @@
       "ppSr": 142.67,
       "middleSr": 80.0,
       "deathSr": 0.0,
-      "boundaryPct": 58.27
+      "boundaryPct": 58.27,
+      "highestNotOut": false
     },
     {
       "player": "SS Prabhudessai",
@@ -6382,7 +6685,8 @@
       "ppSr": 66.67,
       "middleSr": 127.03,
       "deathSr": 120.0,
-      "boundaryPct": 53.97
+      "boundaryPct": 53.97,
+      "highestNotOut": false
     },
     {
       "player": "M Morkel",
@@ -6403,7 +6707,8 @@
       "ppSr": 0.0,
       "middleSr": 111.11,
       "deathSr": 143.21,
-      "boundaryPct": 58.73
+      "boundaryPct": 58.73,
+      "highestNotOut": true
     },
     {
       "player": "MM Sharma",
@@ -6424,7 +6729,8 @@
       "ppSr": 0.0,
       "middleSr": 76.6,
       "deathSr": 100.0,
-      "boundaryPct": 48.0
+      "boundaryPct": 48.0,
+      "highestNotOut": true
     },
     {
       "player": "BB Samantray",
@@ -6445,7 +6751,8 @@
       "ppSr": 71.43,
       "middleSr": 109.68,
       "deathSr": 140.0,
-      "boundaryPct": 51.2
+      "boundaryPct": 51.2,
+      "highestNotOut": false
     },
     {
       "player": "MC Juneja",
@@ -6466,7 +6773,8 @@
       "ppSr": 111.11,
       "middleSr": 93.62,
       "deathSr": 106.25,
-      "boundaryPct": 40.0
+      "boundaryPct": 40.0,
+      "highestNotOut": false
     },
     {
       "player": "B Lee",
@@ -6487,7 +6795,8 @@
       "ppSr": 0.0,
       "middleSr": 120.0,
       "deathSr": 128.74,
-      "boundaryPct": 64.52
+      "boundaryPct": 64.52,
+      "highestNotOut": false
     },
     {
       "player": "Harpreet Singh",
@@ -6508,7 +6817,8 @@
       "ppSr": 103.45,
       "middleSr": 82.69,
       "deathSr": 131.58,
-      "boundaryPct": 47.15
+      "boundaryPct": 47.15,
+      "highestNotOut": false
     },
     {
       "player": "AB McDonald",
@@ -6529,7 +6839,8 @@
       "ppSr": 157.89,
       "middleSr": 81.25,
       "deathSr": 123.08,
-      "boundaryPct": 48.78
+      "boundaryPct": 48.78,
+      "highestNotOut": true
     },
     {
       "player": "S Arora",
@@ -6550,7 +6861,8 @@
       "ppSr": 200.0,
       "middleSr": 110.71,
       "deathSr": 183.33,
-      "boundaryPct": 74.38
+      "boundaryPct": 74.38,
+      "highestNotOut": true
     },
     {
       "player": "NK Patel",
@@ -6571,7 +6883,8 @@
       "ppSr": 81.82,
       "middleSr": 92.86,
       "deathSr": 168.18,
-      "boundaryPct": 51.24
+      "boundaryPct": 51.24,
+      "highestNotOut": true
     },
     {
       "player": "DL Vettori",
@@ -6592,7 +6905,8 @@
       "ppSr": 0.0,
       "middleSr": 87.04,
       "deathSr": 125.42,
-      "boundaryPct": 46.28
+      "boundaryPct": 46.28,
+      "highestNotOut": false
     },
     {
       "player": "TG Southee",
@@ -6613,7 +6927,8 @@
       "ppSr": 0.0,
       "middleSr": 51.85,
       "deathSr": 132.5,
-      "boundaryPct": 46.67
+      "boundaryPct": 46.67,
+      "highestNotOut": true
     },
     {
       "player": "AC Blizzard",
@@ -6634,7 +6949,8 @@
       "ppSr": 130.26,
       "middleSr": 150.0,
       "deathSr": 0.0,
-      "boundaryPct": 80.0
+      "boundaryPct": 80.0,
+      "highestNotOut": false
     },
     {
       "player": "Z Khan",
@@ -6655,7 +6971,8 @@
       "ppSr": 0.0,
       "middleSr": 31.03,
       "deathSr": 99.08,
-      "boundaryPct": 47.86
+      "boundaryPct": 47.86,
+      "highestNotOut": true
     },
     {
       "player": "Mohammed Siraj",
@@ -6676,7 +6993,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 86.82,
-      "boundaryPct": 58.12
+      "boundaryPct": 58.12,
+      "highestNotOut": true
     },
     {
       "player": "Misbah-ul-Haq",
@@ -6697,7 +7015,8 @@
       "ppSr": 142.11,
       "middleSr": 114.29,
       "deathSr": 210.0,
-      "boundaryPct": 64.96
+      "boundaryPct": 64.96,
+      "highestNotOut": true
     },
     {
       "player": "RJ Harris",
@@ -6718,7 +7037,8 @@
       "ppSr": 0.0,
       "middleSr": 80.0,
       "deathSr": 111.49,
-      "boundaryPct": 35.9
+      "boundaryPct": 35.9,
+      "highestNotOut": false
     },
     {
       "player": "KK Cooper",
@@ -6739,7 +7059,8 @@
       "ppSr": 350.0,
       "middleSr": 136.36,
       "deathSr": 179.55,
-      "boundaryPct": 72.41
+      "boundaryPct": 72.41,
+      "highestNotOut": false
     },
     {
       "player": "Mohammed Shami",
@@ -6760,7 +7081,8 @@
       "ppSr": 0.0,
       "middleSr": 106.67,
       "deathSr": 103.12,
-      "boundaryPct": 57.39
+      "boundaryPct": 57.39,
+      "highestNotOut": false
     },
     {
       "player": "DJM Short",
@@ -6781,7 +7103,8 @@
       "ppSr": 83.33,
       "middleSr": 166.67,
       "deathSr": 0.0,
-      "boundaryPct": 64.35
+      "boundaryPct": 64.35,
+      "highestNotOut": false
     },
     {
       "player": "Aman Hakim Khan",
@@ -6802,7 +7125,8 @@
       "ppSr": 80.0,
       "middleSr": 89.66,
       "deathSr": 143.9,
-      "boundaryPct": 59.13
+      "boundaryPct": 59.13,
+      "highestNotOut": false
     },
     {
       "player": "M Kartik",
@@ -6823,7 +7147,8 @@
       "ppSr": 0.0,
       "middleSr": 109.38,
       "deathSr": 102.63,
-      "boundaryPct": 30.09
+      "boundaryPct": 30.09,
+      "highestNotOut": false
     },
     {
       "player": "MA Starc",
@@ -6844,7 +7169,8 @@
       "ppSr": 0.0,
       "middleSr": 105.71,
       "deathSr": 86.05,
-      "boundaryPct": 39.64
+      "boundaryPct": 39.64,
+      "highestNotOut": false
     },
     {
       "player": "DJ Harris",
@@ -6865,7 +7191,8 @@
       "ppSr": 89.06,
       "middleSr": 145.95,
       "deathSr": 0.0,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": false
     },
     {
       "player": "JDP Oram",
@@ -6886,7 +7213,8 @@
       "ppSr": 0.0,
       "middleSr": 75.86,
       "deathSr": 124.0,
-      "boundaryPct": 50.94
+      "boundaryPct": 50.94,
+      "highestNotOut": true
     },
     {
       "player": "LJ Wright",
@@ -6907,7 +7235,8 @@
       "ppSr": 100.0,
       "middleSr": 93.33,
       "deathSr": 227.03,
-      "boundaryPct": 77.36
+      "boundaryPct": 77.36,
+      "highestNotOut": false
     },
     {
       "player": "DS Kulkarni",
@@ -6928,7 +7257,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 101.02,
-      "boundaryPct": 38.46
+      "boundaryPct": 38.46,
+      "highestNotOut": true
     },
     {
       "player": "RJ Quiney",
@@ -6949,7 +7279,8 @@
       "ppSr": 91.55,
       "middleSr": 132.14,
       "deathSr": 33.33,
-      "boundaryPct": 64.08
+      "boundaryPct": 64.08,
+      "highestNotOut": false
     },
     {
       "player": "MS Gony",
@@ -6970,7 +7301,8 @@
       "ppSr": 0.0,
       "middleSr": 64.71,
       "deathSr": 162.96,
-      "boundaryPct": 72.73
+      "boundaryPct": 72.73,
+      "highestNotOut": false
     },
     {
       "player": "SD Chitnis",
@@ -6991,7 +7323,8 @@
       "ppSr": 16.67,
       "middleSr": 119.57,
       "deathSr": 116.22,
-      "boundaryPct": 52.53
+      "boundaryPct": 52.53,
+      "highestNotOut": false
     },
     {
       "player": "CJ Ferguson",
@@ -7012,7 +7345,8 @@
       "ppSr": 70.83,
       "middleSr": 82.86,
       "deathSr": 100.0,
-      "boundaryPct": 36.73
+      "boundaryPct": 36.73,
+      "highestNotOut": false
     },
     {
       "player": "MJ Clarke",
@@ -7033,7 +7367,8 @@
       "ppSr": 118.75,
       "middleSr": 73.33,
       "deathSr": 0.0,
-      "boundaryPct": 48.98
+      "boundaryPct": 48.98,
+      "highestNotOut": false
     },
     {
       "player": "PN Mankad",
@@ -7054,7 +7389,8 @@
       "ppSr": 118.42,
       "middleSr": 141.67,
       "deathSr": 163.64,
-      "boundaryPct": 65.98
+      "boundaryPct": 65.98,
+      "highestNotOut": true
     },
     {
       "player": "C Bosch",
@@ -7075,7 +7411,8 @@
       "ppSr": 0.0,
       "middleSr": 40.0,
       "deathSr": 163.79,
-      "boundaryPct": 63.92
+      "boundaryPct": 63.92,
+      "highestNotOut": true
     },
     {
       "player": "TA Boult",
@@ -7096,7 +7433,8 @@
       "ppSr": 0.0,
       "middleSr": 88.89,
       "deathSr": 111.84,
-      "boundaryPct": 47.31
+      "boundaryPct": 47.31,
+      "highestNotOut": true
     },
     {
       "player": "JDS Neesham",
@@ -7117,7 +7455,8 @@
       "ppSr": 0.0,
       "middleSr": 108.7,
       "deathSr": 89.36,
-      "boundaryPct": 39.13
+      "boundaryPct": 39.13,
+      "highestNotOut": false
     },
     {
       "player": "PHKD Mendis",
@@ -7138,7 +7477,8 @@
       "ppSr": 55.56,
       "middleSr": 174.29,
       "deathSr": 104.0,
-      "boundaryPct": 43.48
+      "boundaryPct": 43.48,
+      "highestNotOut": true
     },
     {
       "player": "Himmat Singh",
@@ -7159,7 +7499,8 @@
       "ppSr": 0.0,
       "middleSr": 90.0,
       "deathSr": 166.67,
-      "boundaryPct": 54.35
+      "boundaryPct": 54.35,
+      "highestNotOut": true
     },
     {
       "player": "PR Shah",
@@ -7180,7 +7521,8 @@
       "ppSr": 96.77,
       "middleSr": 89.74,
       "deathSr": 128.57,
-      "boundaryPct": 52.17
+      "boundaryPct": 52.17,
+      "highestNotOut": false
     },
     {
       "player": "DJ Jacobs",
@@ -7201,7 +7543,8 @@
       "ppSr": 91.21,
       "middleSr": 128.57,
       "deathSr": 0.0,
-      "boundaryPct": 69.57
+      "boundaryPct": 69.57,
+      "highestNotOut": false
     },
     {
       "player": "AJ Tye",
@@ -7222,7 +7565,8 @@
       "ppSr": 0.0,
       "middleSr": 131.25,
       "deathSr": 116.67,
-      "boundaryPct": 59.34
+      "boundaryPct": 59.34,
+      "highestNotOut": false
     },
     {
       "player": "RT Ponting",
@@ -7243,7 +7587,8 @@
       "ppSr": 60.0,
       "middleSr": 86.79,
       "deathSr": 0.0,
-      "boundaryPct": 35.16
+      "boundaryPct": 35.16,
+      "highestNotOut": false
     },
     {
       "player": "S Rana",
@@ -7264,7 +7609,8 @@
       "ppSr": 90.91,
       "middleSr": 33.33,
       "deathSr": 136.0,
-      "boundaryPct": 46.15
+      "boundaryPct": 46.15,
+      "highestNotOut": true
     },
     {
       "player": "AD Nath",
@@ -7285,7 +7631,8 @@
       "ppSr": 100.0,
       "middleSr": 91.94,
       "deathSr": 88.0,
-      "boundaryPct": 44.44
+      "boundaryPct": 44.44,
+      "highestNotOut": false
     },
     {
       "player": "PR Veer",
@@ -7306,7 +7653,8 @@
       "ppSr": 0.0,
       "middleSr": 153.57,
       "deathSr": 120.51,
-      "boundaryPct": 64.44
+      "boundaryPct": 64.44,
+      "highestNotOut": true
     },
     {
       "player": "MD Shanaka",
@@ -7327,7 +7675,8 @@
       "ppSr": 0.0,
       "middleSr": 126.67,
       "deathSr": 123.08,
-      "boundaryPct": 56.18
+      "boundaryPct": 56.18,
+      "highestNotOut": true
     },
     {
       "player": "Iqbal Abdulla",
@@ -7348,7 +7697,8 @@
       "ppSr": 0.0,
       "middleSr": 72.0,
       "deathSr": 118.64,
-      "boundaryPct": 47.73
+      "boundaryPct": 47.73,
+      "highestNotOut": true
     },
     {
       "player": "SL Malinga",
@@ -7369,7 +7719,8 @@
       "ppSr": 0.0,
       "middleSr": 66.67,
       "deathSr": 89.58,
-      "boundaryPct": 61.36
+      "boundaryPct": 61.36,
+      "highestNotOut": false
     },
     {
       "player": "Ankit Sharma",
@@ -7390,7 +7741,8 @@
       "ppSr": 117.39,
       "middleSr": 120.0,
       "deathSr": 141.18,
-      "boundaryPct": 59.77
+      "boundaryPct": 59.77,
+      "highestNotOut": true
     },
     {
       "player": "AP Majumdar",
@@ -7411,7 +7763,8 @@
       "ppSr": 140.0,
       "middleSr": 110.34,
       "deathSr": 66.67,
-      "boundaryPct": 45.98
+      "boundaryPct": 45.98,
+      "highestNotOut": false
     },
     {
       "player": "MJ McClenaghan",
@@ -7432,7 +7785,8 @@
       "ppSr": 0.0,
       "middleSr": 152.63,
       "deathSr": 112.0,
-      "boundaryPct": 72.94
+      "boundaryPct": 72.94,
+      "highestNotOut": false
     },
     {
       "player": "RE Levi",
@@ -7453,7 +7807,8 @@
       "ppSr": 108.77,
       "middleSr": 131.25,
       "deathSr": 0.0,
-      "boundaryPct": 77.11
+      "boundaryPct": 77.11,
+      "highestNotOut": false
     },
     {
       "player": "NM Coulter-Nile",
@@ -7474,7 +7829,8 @@
       "ppSr": 0.0,
       "middleSr": 56.25,
       "deathSr": 130.36,
-      "boundaryPct": 63.41
+      "boundaryPct": 63.41,
+      "highestNotOut": true
     },
     {
       "player": "CJ Jordan",
@@ -7495,7 +7851,8 @@
       "ppSr": 0.0,
       "middleSr": 16.67,
       "deathSr": 112.68,
-      "boundaryPct": 37.04
+      "boundaryPct": 37.04,
+      "highestNotOut": false
     },
     {
       "player": "PWH de Silva",
@@ -7516,7 +7873,8 @@
       "ppSr": 0.0,
       "middleSr": 71.43,
       "deathSr": 105.66,
-      "boundaryPct": 41.98
+      "boundaryPct": 41.98,
+      "highestNotOut": false
     },
     {
       "player": "WPUJC Vaas",
@@ -7537,7 +7895,8 @@
       "ppSr": 0.0,
       "middleSr": 110.0,
       "deathSr": 111.32,
-      "boundaryPct": 32.1
+      "boundaryPct": 32.1,
+      "highestNotOut": false
     },
     {
       "player": "Shahid Afridi",
@@ -7558,7 +7917,8 @@
       "ppSr": 238.89,
       "middleSr": 88.89,
       "deathSr": 220.0,
-      "boundaryPct": 79.01
+      "boundaryPct": 79.01,
+      "highestNotOut": false
     },
     {
       "player": "LA Carseldine",
@@ -7579,7 +7939,8 @@
       "ppSr": 108.57,
       "middleSr": 115.0,
       "deathSr": 153.85,
-      "boundaryPct": 54.32
+      "boundaryPct": 54.32,
+      "highestNotOut": false
     },
     {
       "player": "RV Patel",
@@ -7600,7 +7961,8 @@
       "ppSr": 0.0,
       "middleSr": 90.32,
       "deathSr": 123.81,
-      "boundaryPct": 45.0
+      "boundaryPct": 45.0,
+      "highestNotOut": true
     },
     {
       "player": "AD Mascarenhas",
@@ -7621,7 +7983,8 @@
       "ppSr": 200.0,
       "middleSr": 72.22,
       "deathSr": 122.5,
-      "boundaryPct": 32.91
+      "boundaryPct": 32.91,
+      "highestNotOut": false
     },
     {
       "player": "CR Woakes",
@@ -7642,7 +8005,8 @@
       "ppSr": 0.0,
       "middleSr": 71.43,
       "deathSr": 112.5,
-      "boundaryPct": 51.28
+      "boundaryPct": 51.28,
+      "highestNotOut": false
     },
     {
       "player": "JR Philippe",
@@ -7663,7 +8027,8 @@
       "ppSr": 92.73,
       "middleSr": 130.0,
       "deathSr": 50.0,
-      "boundaryPct": 53.85
+      "boundaryPct": 53.85,
+      "highestNotOut": false
     },
     {
       "player": "AS Roy",
@@ -7684,7 +8049,8 @@
       "ppSr": 80.0,
       "middleSr": 75.0,
       "deathSr": 151.28,
-      "boundaryPct": 46.15
+      "boundaryPct": 46.15,
+      "highestNotOut": true
     },
     {
       "player": "KA Jamieson",
@@ -7705,7 +8071,8 @@
       "ppSr": 0.0,
       "middleSr": 68.57,
       "deathSr": 139.47,
-      "boundaryPct": 62.34
+      "boundaryPct": 62.34,
+      "highestNotOut": true
     },
     {
       "player": "IR Jaggi",
@@ -7726,7 +8093,8 @@
       "ppSr": 67.57,
       "middleSr": 82.61,
       "deathSr": 92.86,
-      "boundaryPct": 31.58
+      "boundaryPct": 31.58,
+      "highestNotOut": false
     },
     {
       "player": "B Akhil",
@@ -7747,7 +8115,8 @@
       "ppSr": 0.0,
       "middleSr": 128.57,
       "deathSr": 144.12,
-      "boundaryPct": 65.79
+      "boundaryPct": 65.79,
+      "highestNotOut": true
     },
     {
       "player": "JJ Bumrah",
@@ -7768,7 +8137,8 @@
       "ppSr": 0.0,
       "middleSr": 142.86,
       "deathSr": 82.28,
-      "boundaryPct": 40.0
+      "boundaryPct": 40.0,
+      "highestNotOut": true
     },
     {
       "player": "TR Birt",
@@ -7789,7 +8159,8 @@
       "ppSr": 0.0,
       "middleSr": 71.43,
       "deathSr": 162.16,
-      "boundaryPct": 64.0
+      "boundaryPct": 64.0,
+      "highestNotOut": false
     },
     {
       "player": "A Kamboj",
@@ -7810,7 +8181,8 @@
       "ppSr": 0.0,
       "middleSr": 237.5,
       "deathSr": 125.0,
-      "boundaryPct": 59.46
+      "boundaryPct": 59.46,
+      "highestNotOut": true
     },
     {
       "player": "RR Sarwan",
@@ -7831,7 +8203,8 @@
       "ppSr": 112.5,
       "middleSr": 80.0,
       "deathSr": 0.0,
-      "boundaryPct": 41.1
+      "boundaryPct": 41.1,
+      "highestNotOut": false
     },
     {
       "player": "M Klinger",
@@ -7852,7 +8225,8 @@
       "ppSr": 102.04,
       "middleSr": 82.14,
       "deathSr": 0.0,
-      "boundaryPct": 49.32
+      "boundaryPct": 49.32,
+      "highestNotOut": false
     },
     {
       "player": "LH Ferguson",
@@ -7873,7 +8247,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 153.19,
-      "boundaryPct": 55.56
+      "boundaryPct": 55.56,
+      "highestNotOut": true
     },
     {
       "player": "Vishnu Vinod",
@@ -7894,7 +8269,8 @@
       "ppSr": 47.62,
       "middleSr": 136.0,
       "deathSr": 142.11,
-      "boundaryPct": 56.34
+      "boundaryPct": 56.34,
+      "highestNotOut": false
     },
     {
       "player": "SK Rasheed",
@@ -7915,7 +8291,8 @@
       "ppSr": 115.0,
       "middleSr": 66.67,
       "deathSr": 0.0,
-      "boundaryPct": 67.61
+      "boundaryPct": 67.61,
+      "highestNotOut": false
     },
     {
       "player": "J Suchith",
@@ -7936,7 +8313,8 @@
       "ppSr": 0.0,
       "middleSr": 46.67,
       "deathSr": 180.65,
-      "boundaryPct": 60.0
+      "boundaryPct": 60.0,
+      "highestNotOut": true
     },
     {
       "player": "Vivrant Sharma",
@@ -7957,7 +8335,8 @@
       "ppSr": 112.5,
       "middleSr": 182.61,
       "deathSr": 0.0,
-      "boundaryPct": 69.57
+      "boundaryPct": 69.57,
+      "highestNotOut": false
     },
     {
       "player": "AA Bilakhia",
@@ -7978,7 +8357,8 @@
       "ppSr": 71.88,
       "middleSr": 50.0,
       "deathSr": 109.09,
-      "boundaryPct": 28.99
+      "boundaryPct": 28.99,
+      "highestNotOut": false
     },
     {
       "player": "Avesh Khan",
@@ -7999,7 +8379,8 @@
       "ppSr": 0.0,
       "middleSr": 300.0,
       "deathSr": 143.59,
-      "boundaryPct": 76.47
+      "boundaryPct": 76.47,
+      "highestNotOut": true
     },
     {
       "player": "RR Powar",
@@ -8020,7 +8401,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 111.67,
-      "boundaryPct": 44.78
+      "boundaryPct": 44.78,
+      "highestNotOut": true
     },
     {
       "player": "HR Shokeen",
@@ -8041,7 +8423,8 @@
       "ppSr": 20.0,
       "middleSr": 97.67,
       "deathSr": 135.29,
-      "boundaryPct": 54.55
+      "boundaryPct": 54.55,
+      "highestNotOut": true
     },
     {
       "player": "R Sharma",
@@ -8062,7 +8445,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 89.04,
-      "boundaryPct": 57.58
+      "boundaryPct": 57.58,
+      "highestNotOut": true
     },
     {
       "player": "WD Parnell",
@@ -8083,7 +8467,8 @@
       "ppSr": 78.57,
       "middleSr": 62.5,
       "deathSr": 84.48,
-      "boundaryPct": 33.85
+      "boundaryPct": 33.85,
+      "highestNotOut": false
     },
     {
       "player": "Mohammad Hafeez",
@@ -8104,7 +8489,8 @@
       "ppSr": 77.78,
       "middleSr": 68.42,
       "deathSr": 111.11,
-      "boundaryPct": 62.5
+      "boundaryPct": 62.5,
+      "highestNotOut": false
     },
     {
       "player": "N Sindhu",
@@ -8125,7 +8511,8 @@
       "ppSr": 126.09,
       "middleSr": 125.93,
       "deathSr": 0.0,
-      "boundaryPct": 63.49
+      "boundaryPct": 63.49,
+      "highestNotOut": false
     },
     {
       "player": "Anirudh Singh",
@@ -8146,7 +8533,8 @@
       "ppSr": 90.0,
       "middleSr": 100.0,
       "deathSr": 92.86,
-      "boundaryPct": 47.62
+      "boundaryPct": 47.62,
+      "highestNotOut": false
     },
     {
       "player": "A Flintoff",
@@ -8167,7 +8555,8 @@
       "ppSr": 107.69,
       "middleSr": 100.0,
       "deathSr": 147.06,
-      "boundaryPct": 51.61
+      "boundaryPct": 51.61,
+      "highestNotOut": false
     },
     {
       "player": "SP Jackson",
@@ -8188,7 +8577,8 @@
       "ppSr": 111.11,
       "middleSr": 94.44,
       "deathSr": 113.33,
-      "boundaryPct": 42.62
+      "boundaryPct": 42.62,
+      "highestNotOut": false
     },
     {
       "player": "Sandeep Sharma",
@@ -8209,7 +8599,8 @@
       "ppSr": 0.0,
       "middleSr": 80.0,
       "deathSr": 80.0,
-      "boundaryPct": 26.67
+      "boundaryPct": 26.67,
+      "highestNotOut": true
     },
     {
       "player": "S Aravind",
@@ -8230,7 +8621,8 @@
       "ppSr": 0.0,
       "middleSr": 83.33,
       "deathSr": 108.89,
-      "boundaryPct": 47.46
+      "boundaryPct": 47.46,
+      "highestNotOut": true
     },
     {
       "player": "Harshit Rana",
@@ -8251,7 +8643,8 @@
       "ppSr": 0.0,
       "middleSr": 131.82,
       "deathSr": 88.24,
-      "boundaryPct": 64.41
+      "boundaryPct": 64.41,
+      "highestNotOut": false
     },
     {
       "player": "MG Bracewell",
@@ -8272,7 +8665,8 @@
       "ppSr": 100.0,
       "middleSr": 134.38,
       "deathSr": 100.0,
-      "boundaryPct": 51.72
+      "boundaryPct": 51.72,
+      "highestNotOut": true
     },
     {
       "player": "I Sharma",
@@ -8293,7 +8687,8 @@
       "ppSr": 0.0,
       "middleSr": 85.71,
       "deathSr": 81.82,
-      "boundaryPct": 49.12
+      "boundaryPct": 49.12,
+      "highestNotOut": true
     },
     {
       "player": "WA Mota",
@@ -8314,7 +8709,8 @@
       "ppSr": 0.0,
       "middleSr": 68.75,
       "deathSr": 85.19,
-      "boundaryPct": 14.29
+      "boundaryPct": 14.29,
+      "highestNotOut": false
     },
     {
       "player": "M Rawat",
@@ -8335,7 +8731,8 @@
       "ppSr": 0.0,
       "middleSr": 68.18,
       "deathSr": 88.89,
-      "boundaryPct": 40.0
+      "boundaryPct": 40.0,
+      "highestNotOut": true
     },
     {
       "player": "TU Deshpande",
@@ -8356,7 +8753,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 154.29,
-      "boundaryPct": 59.26
+      "boundaryPct": 59.26,
+      "highestNotOut": false
     },
     {
       "player": "PVD Chameera",
@@ -8377,7 +8775,8 @@
       "ppSr": 0.0,
       "middleSr": 100.0,
       "deathSr": 118.18,
-      "boundaryPct": 56.6
+      "boundaryPct": 56.6,
+      "highestNotOut": false
     },
     {
       "player": "DJ Willey",
@@ -8398,7 +8797,8 @@
       "ppSr": 54.55,
       "middleSr": 79.31,
       "deathSr": 109.09,
-      "boundaryPct": 52.83
+      "boundaryPct": 52.83,
+      "highestNotOut": true
     },
     {
       "player": "Shivang Kumar",
@@ -8419,7 +8819,8 @@
       "ppSr": 0.0,
       "middleSr": 70.59,
       "deathSr": 141.38,
-      "boundaryPct": 56.6
+      "boundaryPct": 56.6,
+      "highestNotOut": false
     },
     {
       "player": "A Chopra",
@@ -8440,7 +8841,8 @@
       "ppSr": 69.23,
       "middleSr": 83.33,
       "deathSr": 50.0,
-      "boundaryPct": 52.83
+      "boundaryPct": 52.83,
+      "highestNotOut": false
     },
     {
       "player": "RP Singh",
@@ -8461,7 +8863,8 @@
       "ppSr": 0.0,
       "middleSr": 33.33,
       "deathSr": 71.43,
-      "boundaryPct": 26.92
+      "boundaryPct": 26.92,
+      "highestNotOut": false
     },
     {
       "player": "Shoaib Malik",
@@ -8482,7 +8885,8 @@
       "ppSr": 130.77,
       "middleSr": 100.0,
       "deathSr": 114.29,
-      "boundaryPct": 38.46
+      "boundaryPct": 38.46,
+      "highestNotOut": false
     },
     {
       "player": "Swapnil Singh",
@@ -8503,7 +8907,8 @@
       "ppSr": 0.0,
       "middleSr": 96.15,
       "deathSr": 136.84,
-      "boundaryPct": 58.82
+      "boundaryPct": 58.82,
+      "highestNotOut": true
     },
     {
       "player": "Shivam Mavi",
@@ -8524,7 +8929,8 @@
       "ppSr": 0.0,
       "middleSr": 60.0,
       "deathSr": 94.12,
-      "boundaryPct": 54.9
+      "boundaryPct": 54.9,
+      "highestNotOut": false
     },
     {
       "player": "OF Smith",
@@ -8545,7 +8951,8 @@
       "ppSr": 0.0,
       "middleSr": 33.33,
       "deathSr": 137.14,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": true
     },
     {
       "player": "KB Arun Karthik",
@@ -8566,7 +8973,8 @@
       "ppSr": 0.0,
       "middleSr": 118.18,
       "deathSr": 86.21,
-      "boundaryPct": 43.14
+      "boundaryPct": 43.14,
+      "highestNotOut": true
     },
     {
       "player": "R Rampaul",
@@ -8587,7 +8995,8 @@
       "ppSr": 0.0,
       "middleSr": 93.75,
       "deathSr": 105.88,
-      "boundaryPct": 47.06
+      "boundaryPct": 47.06,
+      "highestNotOut": true
     },
     {
       "player": "VR Aaron",
@@ -8608,7 +9017,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 70.42,
-      "boundaryPct": 40.0
+      "boundaryPct": 40.0,
+      "highestNotOut": true
     },
     {
       "player": "RV Gomez",
@@ -8629,7 +9039,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 113.64,
-      "boundaryPct": 52.0
+      "boundaryPct": 52.0,
+      "highestNotOut": true
     },
     {
       "player": "A Nortje",
@@ -8650,7 +9061,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 98.0,
-      "boundaryPct": 48.98
+      "boundaryPct": 48.98,
+      "highestNotOut": true
     },
     {
       "player": "AS Yadav",
@@ -8671,7 +9083,8 @@
       "ppSr": 0.0,
       "middleSr": 100.0,
       "deathSr": 134.48,
-      "boundaryPct": 65.31
+      "boundaryPct": 65.31,
+      "highestNotOut": false
     },
     {
       "player": "SB Bangar",
@@ -8692,7 +9105,8 @@
       "ppSr": 0.0,
       "middleSr": 48.57,
       "deathSr": 139.13,
-      "boundaryPct": 44.9
+      "boundaryPct": 44.9,
+      "highestNotOut": true
     },
     {
       "player": "AG Paunikar",
@@ -8713,7 +9127,8 @@
       "ppSr": 84.48,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 73.47
+      "boundaryPct": 73.47,
+      "highestNotOut": false
     },
     {
       "player": "M Markande",
@@ -8734,7 +9149,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 117.07,
-      "boundaryPct": 54.17
+      "boundaryPct": 54.17,
+      "highestNotOut": true
     },
     {
       "player": "T Kohler-Cadmore",
@@ -8755,7 +9171,8 @@
       "ppSr": 92.16,
       "middleSr": 33.33,
       "deathSr": 0.0,
-      "boundaryPct": 70.83
+      "boundaryPct": 70.83,
+      "highestNotOut": false
     },
     {
       "player": "Yashpal Singh",
@@ -8776,7 +9193,8 @@
       "ppSr": 47.22,
       "middleSr": 76.47,
       "deathSr": 130.77,
-      "boundaryPct": 42.55
+      "boundaryPct": 42.55,
+      "highestNotOut": false
     },
     {
       "player": "SU Parakh",
@@ -8797,7 +9215,8 @@
       "ppSr": 171.43,
       "middleSr": 115.79,
       "deathSr": 0.0,
-      "boundaryPct": 69.57
+      "boundaryPct": 69.57,
+      "highestNotOut": false
     },
     {
       "player": "Ravi Bishnoi",
@@ -8818,7 +9237,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 70.59,
-      "boundaryPct": 44.44
+      "boundaryPct": 44.44,
+      "highestNotOut": false
     },
     {
       "player": "TL Seifert",
@@ -8839,7 +9259,8 @@
       "ppSr": 116.22,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": false
     },
     {
       "player": "DR Sams",
@@ -8860,7 +9281,8 @@
       "ppSr": 16.67,
       "middleSr": 114.29,
       "deathSr": 112.5,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": true
     },
     {
       "player": "D Pretorius",
@@ -8881,7 +9303,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 157.14,
-      "boundaryPct": 68.18
+      "boundaryPct": 68.18,
+      "highestNotOut": true
     },
     {
       "player": "Rasikh Salam",
@@ -8902,7 +9325,8 @@
       "ppSr": 0.0,
       "middleSr": 73.33,
       "deathSr": 118.52,
-      "boundaryPct": 46.51
+      "boundaryPct": 46.51,
+      "highestNotOut": false
     },
     {
       "player": "Sunny Singh",
@@ -8923,7 +9347,8 @@
       "ppSr": 187.5,
       "middleSr": 150.0,
       "deathSr": 77.78,
-      "boundaryPct": 69.77
+      "boundaryPct": 69.77,
+      "highestNotOut": false
     },
     {
       "player": "SK Trivedi",
@@ -8944,7 +9369,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 72.41,
-      "boundaryPct": 42.86
+      "boundaryPct": 42.86,
+      "highestNotOut": false
     },
     {
       "player": "AB Barath",
@@ -8965,7 +9391,8 @@
       "ppSr": 128.57,
       "middleSr": 95.65,
       "deathSr": 40.0,
-      "boundaryPct": 61.9
+      "boundaryPct": 61.9,
+      "highestNotOut": false
     },
     {
       "player": "A Nehra",
@@ -8986,7 +9413,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 66.13,
-      "boundaryPct": 43.9
+      "boundaryPct": 43.9,
+      "highestNotOut": true
     },
     {
       "player": "J Yadav",
@@ -9007,7 +9435,8 @@
       "ppSr": 0.0,
       "middleSr": 100.0,
       "deathSr": 114.81,
-      "boundaryPct": 35.0
+      "boundaryPct": 35.0,
+      "highestNotOut": false
     },
     {
       "player": "XC Bartlett",
@@ -9028,7 +9457,8 @@
       "ppSr": 0.0,
       "middleSr": 71.43,
       "deathSr": 214.29,
-      "boundaryPct": 60.0
+      "boundaryPct": 60.0,
+      "highestNotOut": true
     },
     {
       "player": "LPC Silva",
@@ -9049,7 +9479,8 @@
       "ppSr": 128.57,
       "middleSr": 88.89,
       "deathSr": 230.0,
-      "boundaryPct": 65.0
+      "boundaryPct": 65.0,
+      "highestNotOut": true
     },
     {
       "player": "BR Dunk",
@@ -9070,7 +9501,8 @@
       "ppSr": 114.29,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 70.0
+      "boundaryPct": 70.0,
+      "highestNotOut": false
     },
     {
       "player": "S Nadeem",
@@ -9091,7 +9523,8 @@
       "ppSr": 0.0,
       "middleSr": 42.86,
       "deathSr": 45.45,
-      "boundaryPct": 20.51
+      "boundaryPct": 20.51,
+      "highestNotOut": true
     },
     {
       "player": "MM Patel",
@@ -9112,7 +9545,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 102.63,
-      "boundaryPct": 51.28
+      "boundaryPct": 51.28,
+      "highestNotOut": true
     },
     {
       "player": "DJ Thornely",
@@ -9133,7 +9567,8 @@
       "ppSr": 20.0,
       "middleSr": 106.06,
       "deathSr": 0.0,
-      "boundaryPct": 51.28
+      "boundaryPct": 51.28,
+      "highestNotOut": false
     },
     {
       "player": "Umar Gul",
@@ -9154,7 +9589,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 205.26,
-      "boundaryPct": 87.18
+      "boundaryPct": 87.18,
+      "highestNotOut": true
     },
     {
       "player": "AUK Pathan",
@@ -9175,7 +9611,8 @@
       "ppSr": 280.0,
       "middleSr": 137.5,
       "deathSr": 140.0,
-      "boundaryPct": 82.05
+      "boundaryPct": 82.05,
+      "highestNotOut": false
     },
     {
       "player": "YS Chahal",
@@ -9196,7 +9633,8 @@
       "ppSr": 0.0,
       "middleSr": 17.39,
       "deathSr": 52.38,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "S Narwal",
@@ -9217,7 +9655,8 @@
       "ppSr": 0.0,
       "middleSr": 133.33,
       "deathSr": 138.89,
-      "boundaryPct": 64.86
+      "boundaryPct": 64.86,
+      "highestNotOut": false
     },
     {
       "player": "Anureet Singh",
@@ -9238,7 +9677,8 @@
       "ppSr": 0.0,
       "middleSr": 44.44,
       "deathSr": 84.21,
-      "boundaryPct": 38.89
+      "boundaryPct": 38.89,
+      "highestNotOut": false
     },
     {
       "player": "Sohail Tanvir",
@@ -9259,7 +9699,8 @@
       "ppSr": 162.5,
       "middleSr": 110.0,
       "deathSr": 109.09,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": false
     },
     {
       "player": "Joginder Sharma",
@@ -9280,7 +9721,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 128.57,
-      "boundaryPct": 44.44
+      "boundaryPct": 44.44,
+      "highestNotOut": true
     },
     {
       "player": "L Balaji",
@@ -9301,7 +9743,8 @@
       "ppSr": 0.0,
       "middleSr": 25.0,
       "deathSr": 77.78,
-      "boundaryPct": 38.89
+      "boundaryPct": 38.89,
+      "highestNotOut": false
     },
     {
       "player": "AN Ahmed",
@@ -9322,7 +9765,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 138.46,
-      "boundaryPct": 61.11
+      "boundaryPct": 61.11,
+      "highestNotOut": true
     },
     {
       "player": "KW Richardson",
@@ -9343,7 +9787,8 @@
       "ppSr": 0.0,
       "middleSr": 105.56,
       "deathSr": 80.95,
-      "boundaryPct": 38.89
+      "boundaryPct": 38.89,
+      "highestNotOut": false
     },
     {
       "player": "M Ashwin",
@@ -9364,7 +9809,8 @@
       "ppSr": 0.0,
       "middleSr": 38.46,
       "deathSr": 81.08,
-      "boundaryPct": 40.0
+      "boundaryPct": 40.0,
+      "highestNotOut": true
     },
     {
       "player": "RA Bawa",
@@ -9385,7 +9831,8 @@
       "ppSr": 0.0,
       "middleSr": 84.62,
       "deathSr": 133.33,
-      "boundaryPct": 22.86
+      "boundaryPct": 22.86,
+      "highestNotOut": false
     },
     {
       "player": "Salil Arora",
@@ -9406,7 +9853,8 @@
       "ppSr": 0.0,
       "middleSr": 166.67,
       "deathSr": 0.0,
-      "boundaryPct": 57.14
+      "boundaryPct": 57.14,
+      "highestNotOut": false
     },
     {
       "player": "A Kumble",
@@ -9427,7 +9875,8 @@
       "ppSr": 0.0,
       "middleSr": 20.0,
       "deathSr": 80.95,
-      "boundaryPct": 34.29
+      "boundaryPct": 34.29,
+      "highestNotOut": false
     },
     {
       "player": "B Sumanth",
@@ -9448,7 +9897,8 @@
       "ppSr": 0.0,
       "middleSr": 81.82,
       "deathSr": 100.0,
-      "boundaryPct": 34.29
+      "boundaryPct": 34.29,
+      "highestNotOut": false
     },
     {
       "player": "L Ronchi",
@@ -9469,7 +9919,8 @@
       "ppSr": 100.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 88.24
+      "boundaryPct": 88.24,
+      "highestNotOut": false
     },
     {
       "player": "S Sreesanth",
@@ -9490,7 +9941,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 61.82,
-      "boundaryPct": 70.59
+      "boundaryPct": 70.59,
+      "highestNotOut": true
     },
     {
       "player": "A Mithun",
@@ -9511,7 +9963,8 @@
       "ppSr": 0.0,
       "middleSr": 125.0,
       "deathSr": 135.71,
-      "boundaryPct": 64.71
+      "boundaryPct": 64.71,
+      "highestNotOut": false
     },
     {
       "player": "AP Dole",
@@ -9532,7 +9985,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 165.0,
-      "boundaryPct": 52.94
+      "boundaryPct": 52.94,
+      "highestNotOut": false
     },
     {
       "player": "Imran Tahir",
@@ -9553,7 +10007,8 @@
       "ppSr": 0.0,
       "middleSr": 66.67,
       "deathSr": 93.55,
-      "boundaryPct": 60.61
+      "boundaryPct": 60.61,
+      "highestNotOut": true
     },
     {
       "player": "Navdeep Saini",
@@ -9574,7 +10029,8 @@
       "ppSr": 0.0,
       "middleSr": 55.56,
       "deathSr": 103.7,
-      "boundaryPct": 36.36
+      "boundaryPct": 36.36,
+      "highestNotOut": false
     },
     {
       "player": "D Salunkhe",
@@ -9595,7 +10051,8 @@
       "ppSr": 0.0,
       "middleSr": 114.29,
       "deathSr": 147.06,
-      "boundaryPct": 60.61
+      "boundaryPct": 60.61,
+      "highestNotOut": true
     },
     {
       "player": "Basil Thampi",
@@ -9616,7 +10073,8 @@
       "ppSr": 0.0,
       "middleSr": 60.0,
       "deathSr": 96.67,
-      "boundaryPct": 31.25
+      "boundaryPct": 31.25,
+      "highestNotOut": true
     },
     {
       "player": "AT Carey",
@@ -9637,7 +10095,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 110.34,
-      "boundaryPct": 18.75
+      "boundaryPct": 18.75,
+      "highestNotOut": true
     },
     {
       "player": "Arshdeep Singh",
@@ -9658,7 +10117,8 @@
       "ppSr": 0.0,
       "middleSr": 133.33,
       "deathSr": 63.64,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": true
     },
     {
       "player": "RJ Peterson",
@@ -9679,7 +10139,8 @@
       "ppSr": 0.0,
       "middleSr": 92.86,
       "deathSr": 118.75,
-      "boundaryPct": 56.25
+      "boundaryPct": 56.25,
+      "highestNotOut": true
     },
     {
       "player": "NS Naik",
@@ -9700,7 +10161,8 @@
       "ppSr": 43.75,
       "middleSr": 91.67,
       "deathSr": 59.09,
-      "boundaryPct": 25.81
+      "boundaryPct": 25.81,
+      "highestNotOut": false
     },
     {
       "player": "CV Varun",
@@ -9721,7 +10183,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 62.0,
-      "boundaryPct": 38.71
+      "boundaryPct": 38.71,
+      "highestNotOut": true
     },
     {
       "player": "Noor Ahmad",
@@ -9742,7 +10205,8 @@
       "ppSr": 0.0,
       "middleSr": 17.65,
       "deathSr": 68.29,
-      "boundaryPct": 45.16
+      "boundaryPct": 45.16,
+      "highestNotOut": true
     },
     {
       "player": "G Coetzee",
@@ -9763,7 +10227,8 @@
       "ppSr": 0.0,
       "middleSr": 88.89,
       "deathSr": 95.83,
-      "boundaryPct": 64.52
+      "boundaryPct": 64.52,
+      "highestNotOut": true
     },
     {
       "player": "GF Linde",
@@ -9784,7 +10249,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 147.62,
-      "boundaryPct": 77.42
+      "boundaryPct": 77.42,
+      "highestNotOut": false
     },
     {
       "player": "T Taibu",
@@ -9805,7 +10271,8 @@
       "ppSr": 0.0,
       "middleSr": 105.56,
       "deathSr": 150.0,
-      "boundaryPct": 38.71
+      "boundaryPct": 38.71,
+      "highestNotOut": false
     },
     {
       "player": "S Sriram",
@@ -9826,7 +10293,8 @@
       "ppSr": 118.18,
       "middleSr": 72.0,
       "deathSr": 0.0,
-      "boundaryPct": 38.71
+      "boundaryPct": 38.71,
+      "highestNotOut": false
     },
     {
       "player": "Akshat Raghuwanshi",
@@ -9847,7 +10315,8 @@
       "ppSr": 0.0,
       "middleSr": 116.0,
       "deathSr": 0.0,
-      "boundaryPct": 34.48
+      "boundaryPct": 34.48,
+      "highestNotOut": false
     },
     {
       "player": "J Syed Mohammad",
@@ -9868,7 +10337,8 @@
       "ppSr": 0.0,
       "middleSr": 81.82,
       "deathSr": 133.33,
-      "boundaryPct": 55.17
+      "boundaryPct": 55.17,
+      "highestNotOut": true
     },
     {
       "player": "VH Zol",
@@ -9889,7 +10359,8 @@
       "ppSr": 104.76,
       "middleSr": 140.0,
       "deathSr": 0.0,
-      "boundaryPct": 62.07
+      "boundaryPct": 62.07,
+      "highestNotOut": false
     },
     {
       "player": "SB Jakati",
@@ -9910,7 +10381,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 96.55,
-      "boundaryPct": 42.86
+      "boundaryPct": 42.86,
+      "highestNotOut": false
     },
     {
       "player": "AS Joseph",
@@ -9931,7 +10403,8 @@
       "ppSr": 0.0,
       "middleSr": 100.0,
       "deathSr": 82.76,
-      "boundaryPct": 44.44
+      "boundaryPct": 44.44,
+      "highestNotOut": true
     },
     {
       "player": "AB Dinda",
@@ -9952,7 +10425,8 @@
       "ppSr": 0.0,
       "middleSr": 75.0,
       "deathSr": 50.0,
-      "boundaryPct": 30.77
+      "boundaryPct": 30.77,
+      "highestNotOut": false
     },
     {
       "player": "PJ Sangwan",
@@ -9973,7 +10447,8 @@
       "ppSr": 0.0,
       "middleSr": 44.44,
       "deathSr": 62.86,
-      "boundaryPct": 15.38
+      "boundaryPct": 15.38,
+      "highestNotOut": true
     },
     {
       "player": "AS Rajpoot",
@@ -9994,7 +10469,8 @@
       "ppSr": 0.0,
       "middleSr": 20.0,
       "deathSr": 69.44,
-      "boundaryPct": 53.85
+      "boundaryPct": 53.85,
+      "highestNotOut": false
     },
     {
       "player": "DJ Malan",
@@ -10015,7 +10491,8 @@
       "ppSr": 50.0,
       "middleSr": 104.17,
       "deathSr": 0.0,
-      "boundaryPct": 38.46
+      "boundaryPct": 38.46,
+      "highestNotOut": false
     },
     {
       "player": "AA Kulkarni",
@@ -10036,7 +10513,8 @@
       "ppSr": 80.95,
       "middleSr": 75.0,
       "deathSr": 0.0,
-      "boundaryPct": 46.15
+      "boundaryPct": 46.15,
+      "highestNotOut": false
     },
     {
       "player": "JM Kemp",
@@ -10057,7 +10535,8 @@
       "ppSr": 66.67,
       "middleSr": 153.85,
       "deathSr": 50.0,
-      "boundaryPct": 38.46
+      "boundaryPct": 38.46,
+      "highestNotOut": false
     },
     {
       "player": "NL McCullum",
@@ -10078,7 +10557,8 @@
       "ppSr": 0.0,
       "middleSr": 120.0,
       "deathSr": 117.65,
-      "boundaryPct": 23.08
+      "boundaryPct": 23.08,
+      "highestNotOut": false
     },
     {
       "player": "A Choudhary",
@@ -10099,7 +10579,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 125.0,
-      "boundaryPct": 40.0
+      "boundaryPct": 40.0,
+      "highestNotOut": true
     },
     {
       "player": "AF Milne",
@@ -10120,7 +10601,8 @@
       "ppSr": 0.0,
       "middleSr": 66.67,
       "deathSr": 86.36,
-      "boundaryPct": 24.0
+      "boundaryPct": 24.0,
+      "highestNotOut": true
     },
     {
       "player": "Akash Deep",
@@ -10141,7 +10623,8 @@
       "ppSr": 0.0,
       "middleSr": 250.0,
       "deathSr": 166.67,
-      "boundaryPct": 80.0
+      "boundaryPct": 80.0,
+      "highestNotOut": false
     },
     {
       "player": "Mohsin Khan",
@@ -10162,7 +10645,8 @@
       "ppSr": 0.0,
       "middleSr": 33.33,
       "deathSr": 96.0,
-      "boundaryPct": 56.0
+      "boundaryPct": 56.0,
+      "highestNotOut": true
     },
     {
       "player": "Sanvir Singh",
@@ -10183,7 +10667,8 @@
       "ppSr": 140.0,
       "middleSr": 0.0,
       "deathSr": 128.57,
-      "boundaryPct": 56.0
+      "boundaryPct": 56.0,
+      "highestNotOut": true
     },
     {
       "player": "S Chanderpaul",
@@ -10204,7 +10689,8 @@
       "ppSr": 80.65,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 64.0
+      "boundaryPct": 64.0,
+      "highestNotOut": false
     },
     {
       "player": "KC Cariappa",
@@ -10225,7 +10711,8 @@
       "ppSr": 0.0,
       "middleSr": 150.0,
       "deathSr": 92.31,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": true
     },
     {
       "player": "AJ Turner",
@@ -10246,7 +10733,8 @@
       "ppSr": 0.0,
       "middleSr": 170.0,
       "deathSr": 38.89,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": false
     },
     {
       "player": "Kartik Tyagi",
@@ -10267,7 +10755,8 @@
       "ppSr": 0.0,
       "middleSr": 200.0,
       "deathSr": 83.33,
-      "boundaryPct": 58.33
+      "boundaryPct": 58.33,
+      "highestNotOut": false
     },
     {
       "player": "Tanush Kotian",
@@ -10288,7 +10777,8 @@
       "ppSr": 90.0,
       "middleSr": 54.55,
       "deathSr": 0.0,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": false
     },
     {
       "player": "MA Khote",
@@ -10309,7 +10799,8 @@
       "ppSr": 0.0,
       "middleSr": 85.71,
       "deathSr": 120.0,
-      "boundaryPct": 58.33
+      "boundaryPct": 58.33,
+      "highestNotOut": false
     },
     {
       "player": "ER Dwivedi",
@@ -10330,7 +10821,8 @@
       "ppSr": 100.0,
       "middleSr": 0.0,
       "deathSr": 211.11,
-      "boundaryPct": 83.33
+      "boundaryPct": 83.33,
+      "highestNotOut": false
     },
     {
       "player": "P Dubey",
@@ -10351,7 +10843,8 @@
       "ppSr": 0.0,
       "middleSr": 81.25,
       "deathSr": 58.82,
-      "boundaryPct": 34.78
+      "boundaryPct": 34.78,
+      "highestNotOut": true
     },
     {
       "player": "Umran Malik",
@@ -10372,7 +10865,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 143.75,
-      "boundaryPct": 69.57
+      "boundaryPct": 69.57,
+      "highestNotOut": true
     },
     {
       "player": "J Arunkumar",
@@ -10393,7 +10887,8 @@
       "ppSr": 100.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 86.96
+      "boundaryPct": 86.96,
+      "highestNotOut": false
     },
     {
       "player": "SW Tait",
@@ -10414,7 +10909,8 @@
       "ppSr": 0.0,
       "middleSr": 111.11,
       "deathSr": 76.47,
-      "boundaryPct": 43.48
+      "boundaryPct": 43.48,
+      "highestNotOut": false
     },
     {
       "player": "BMAJ Mendis",
@@ -10435,7 +10931,8 @@
       "ppSr": 50.0,
       "middleSr": 88.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "KL Nagarkoti",
@@ -10456,7 +10953,8 @@
       "ppSr": 0.0,
       "middleSr": 46.15,
       "deathSr": 80.0,
-      "boundaryPct": 18.18
+      "boundaryPct": 18.18,
+      "highestNotOut": true
     },
     {
       "player": "HE van der Dussen",
@@ -10477,7 +10975,8 @@
       "ppSr": 0.0,
       "middleSr": 71.43,
       "deathSr": 120.0,
-      "boundaryPct": 36.36
+      "boundaryPct": 36.36,
+      "highestNotOut": true
     },
     {
       "player": "SA Abbott",
@@ -10498,7 +10997,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 146.67,
-      "boundaryPct": 72.73
+      "boundaryPct": 72.73,
+      "highestNotOut": false
     },
     {
       "player": "AU Rashid",
@@ -10519,7 +11019,8 @@
       "ppSr": 0.0,
       "middleSr": 138.46,
       "deathSr": 133.33,
-      "boundaryPct": 63.64
+      "boundaryPct": 63.64,
+      "highestNotOut": false
     },
     {
       "player": "Yudhvir Singh",
@@ -10540,7 +11041,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 166.67,
-      "boundaryPct": 72.73
+      "boundaryPct": 72.73,
+      "highestNotOut": false
     },
     {
       "player": "Sediqullah Atal",
@@ -10561,7 +11063,8 @@
       "ppSr": 0.0,
       "middleSr": 137.5,
       "deathSr": 0.0,
-      "boundaryPct": 54.55
+      "boundaryPct": 54.55,
+      "highestNotOut": false
     },
     {
       "player": "GB Hogg",
@@ -10582,7 +11085,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 18.18
+      "boundaryPct": 18.18,
+      "highestNotOut": false
     },
     {
       "player": "B Indrajith",
@@ -10603,7 +11107,8 @@
       "ppSr": 70.37,
       "middleSr": 66.67,
       "deathSr": 0.0,
-      "boundaryPct": 38.1
+      "boundaryPct": 38.1,
+      "highestNotOut": false
     },
     {
       "player": "AJ Hosein",
@@ -10624,7 +11129,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 161.54,
-      "boundaryPct": 47.62
+      "boundaryPct": 47.62,
+      "highestNotOut": true
     },
     {
       "player": "Kumar Kushagra",
@@ -10645,7 +11151,8 @@
       "ppSr": 126.67,
       "middleSr": 40.0,
       "deathSr": 0.0,
-      "boundaryPct": 57.14
+      "boundaryPct": 57.14,
+      "highestNotOut": false
     },
     {
       "player": "M Tiwari",
@@ -10666,7 +11173,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 200.0,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": true
     },
     {
       "player": "DE Bollinger",
@@ -10687,7 +11195,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 91.3,
-      "boundaryPct": 47.62
+      "boundaryPct": 47.62,
+      "highestNotOut": true
     },
     {
       "player": "S Kaul",
@@ -10708,7 +11217,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 55.56,
-      "boundaryPct": 20.0
+      "boundaryPct": 20.0,
+      "highestNotOut": true
     },
     {
       "player": "C Sakariya",
@@ -10729,7 +11239,8 @@
       "ppSr": 0.0,
       "middleSr": 25.0,
       "deathSr": 70.37,
-      "boundaryPct": 60.0
+      "boundaryPct": 60.0,
+      "highestNotOut": true
     },
     {
       "player": "BKG Mendis",
@@ -10750,7 +11261,8 @@
       "ppSr": 222.22,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 80.0
+      "boundaryPct": 80.0,
+      "highestNotOut": false
     },
     {
       "player": "RR Raje",
@@ -10771,7 +11283,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 111.11,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": true
     },
     {
       "player": "M Muralitharan",
@@ -10792,7 +11305,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 66.67,
-      "boundaryPct": 20.0
+      "boundaryPct": 20.0,
+      "highestNotOut": false
     },
     {
       "player": "AC Thomas",
@@ -10813,7 +11327,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 105.26,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": false
     },
     {
       "player": "NJ Maddinson",
@@ -10834,7 +11349,8 @@
       "ppSr": 95.24,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 80.0
+      "boundaryPct": 80.0,
+      "highestNotOut": false
     },
     {
       "player": "P Ray Barman",
@@ -10855,7 +11371,8 @@
       "ppSr": 0.0,
       "middleSr": 82.61,
       "deathSr": 0.0,
-      "boundaryPct": 42.11
+      "boundaryPct": 42.11,
+      "highestNotOut": false
     },
     {
       "player": "NT Ellis",
@@ -10876,7 +11393,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 105.56,
-      "boundaryPct": 31.58
+      "boundaryPct": 31.58,
+      "highestNotOut": false
     },
     {
       "player": "JR Hazlewood",
@@ -10897,7 +11415,8 @@
       "ppSr": 0.0,
       "middleSr": 18.18,
       "deathSr": 89.47,
-      "boundaryPct": 21.05
+      "boundaryPct": 21.05,
+      "highestNotOut": true
     },
     {
       "player": "Gulbadin Naib",
@@ -10918,7 +11437,8 @@
       "ppSr": 0.0,
       "middleSr": 80.0,
       "deathSr": 150.0,
-      "boundaryPct": 52.63
+      "boundaryPct": 52.63,
+      "highestNotOut": false
     },
     {
       "player": "R Smaran",
@@ -10939,7 +11459,8 @@
       "ppSr": 52.63,
       "middleSr": 100.0,
       "deathSr": 250.0,
-      "boundaryPct": 63.16
+      "boundaryPct": 63.16,
+      "highestNotOut": false
     },
     {
       "player": "A Mukund",
@@ -10960,7 +11481,8 @@
       "ppSr": 93.33,
       "middleSr": 83.33,
       "deathSr": 0.0,
-      "boundaryPct": 21.05
+      "boundaryPct": 21.05,
+      "highestNotOut": false
     },
     {
       "player": "R Bishnoi",
@@ -10981,7 +11503,8 @@
       "ppSr": 128.57,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 84.21
+      "boundaryPct": 84.21,
+      "highestNotOut": false
     },
     {
       "player": "DR Martyn",
@@ -11002,7 +11525,8 @@
       "ppSr": 33.33,
       "middleSr": 72.22,
       "deathSr": 166.67,
-      "boundaryPct": 21.05
+      "boundaryPct": 21.05,
+      "highestNotOut": false
     },
     {
       "player": "Y Gnaneswara Rao",
@@ -11023,7 +11547,8 @@
       "ppSr": 115.38,
       "middleSr": 100.0,
       "deathSr": 0.0,
-      "boundaryPct": 63.16
+      "boundaryPct": 63.16,
+      "highestNotOut": false
     },
     {
       "player": "R Shukla",
@@ -11044,7 +11569,8 @@
       "ppSr": 0.0,
       "middleSr": 100.0,
       "deathSr": 81.82,
-      "boundaryPct": 42.11
+      "boundaryPct": 42.11,
+      "highestNotOut": false
     },
     {
       "player": "P Sahu",
@@ -11065,7 +11591,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 146.15,
-      "boundaryPct": 52.63
+      "boundaryPct": 52.63,
+      "highestNotOut": true
     },
     {
       "player": "KMA Paul",
@@ -11086,7 +11613,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 75.0,
-      "boundaryPct": 55.56
+      "boundaryPct": 55.56,
+      "highestNotOut": false
     },
     {
       "player": "T Banton",
@@ -11107,7 +11635,8 @@
       "ppSr": 90.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 55.56
+      "boundaryPct": 55.56,
+      "highestNotOut": false
     },
     {
       "player": "Arjun Tendulkar",
@@ -11128,7 +11657,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 128.57,
-      "boundaryPct": 33.33
+      "boundaryPct": 33.33,
+      "highestNotOut": false
     },
     {
       "player": "Naveen-ul-Haq",
@@ -11149,7 +11679,8 @@
       "ppSr": 0.0,
       "middleSr": 20.0,
       "deathSr": 85.0,
-      "boundaryPct": 44.44
+      "boundaryPct": 44.44,
+      "highestNotOut": false
     },
     {
       "player": "Sumit Kumar",
@@ -11170,7 +11701,8 @@
       "ppSr": 0.0,
       "middleSr": 133.33,
       "deathSr": 20.0,
-      "boundaryPct": 77.78
+      "boundaryPct": 77.78,
+      "highestNotOut": true
     },
     {
       "player": "Saurav Chauhan",
@@ -11191,7 +11723,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 130.77,
-      "boundaryPct": 55.56
+      "boundaryPct": 55.56,
+      "highestNotOut": false
     },
     {
       "player": "R Sai Kishore",
@@ -11212,7 +11745,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 112.5,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": false
     },
     {
       "player": "DS Lehmann",
@@ -11233,7 +11767,8 @@
       "ppSr": 133.33,
       "middleSr": 93.33,
       "deathSr": 0.0,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": false
     },
     {
       "player": "Harmeet Singh",
@@ -11254,7 +11789,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 150.0,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": false
     },
     {
       "player": "JJ van der Wath",
@@ -11275,7 +11811,8 @@
       "ppSr": 0.0,
       "middleSr": 80.0,
       "deathSr": 127.27,
-      "boundaryPct": 55.56
+      "boundaryPct": 55.56,
+      "highestNotOut": true
     },
     {
       "player": "BJ Haddin",
@@ -11296,7 +11833,8 @@
       "ppSr": 163.64,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 77.78
+      "boundaryPct": 77.78,
+      "highestNotOut": false
     },
     {
       "player": "PV Tambe",
@@ -11317,7 +11855,8 @@
       "ppSr": 0.0,
       "middleSr": 66.67,
       "deathSr": 40.0,
-      "boundaryPct": 22.22
+      "boundaryPct": 22.22,
+      "highestNotOut": true
     },
     {
       "player": "JA Richardson",
@@ -11338,7 +11877,8 @@
       "ppSr": 0.0,
       "middleSr": 68.18,
       "deathSr": 50.0,
-      "boundaryPct": 47.06
+      "boundaryPct": 47.06,
+      "highestNotOut": false
     },
     {
       "player": "M Theekshana",
@@ -11359,7 +11899,8 @@
       "ppSr": 0.0,
       "middleSr": 16.67,
       "deathSr": 68.18,
-      "boundaryPct": 35.29
+      "boundaryPct": 35.29,
+      "highestNotOut": true
     },
     {
       "player": "Parvez Rasool",
@@ -11380,7 +11921,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 85.0,
-      "boundaryPct": 23.53
+      "boundaryPct": 23.53,
+      "highestNotOut": false
     },
     {
       "player": "KS Sharma",
@@ -11401,7 +11943,8 @@
       "ppSr": 66.67,
       "middleSr": 60.0,
       "deathSr": 0.0,
-      "boundaryPct": 25.0
+      "boundaryPct": 25.0,
+      "highestNotOut": false
     },
     {
       "player": "YV Dhull",
@@ -11422,7 +11965,8 @@
       "ppSr": 22.22,
       "middleSr": 100.0,
       "deathSr": 0.0,
-      "boundaryPct": 25.0
+      "boundaryPct": 25.0,
+      "highestNotOut": false
     },
     {
       "player": "Vijaykumar Vyshak",
@@ -11443,7 +11987,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 37.5
+      "boundaryPct": 37.5,
+      "highestNotOut": true
     },
     {
       "player": "CK Kapugedera",
@@ -11464,7 +12009,8 @@
       "ppSr": 0.0,
       "middleSr": 33.33,
       "deathSr": 75.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "PP Ojha",
@@ -11485,7 +12031,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 37.21,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "A Zampa",
@@ -11506,7 +12053,8 @@
       "ppSr": 0.0,
       "middleSr": 64.29,
       "deathSr": 60.0,
-      "boundaryPct": 26.67
+      "boundaryPct": 26.67,
+      "highestNotOut": false
     },
     {
       "player": "M Prasidh Krishna",
@@ -11527,7 +12075,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 48.39,
-      "boundaryPct": 26.67
+      "boundaryPct": 26.67,
+      "highestNotOut": true
     },
     {
       "player": "SD Lad",
@@ -11548,7 +12097,8 @@
       "ppSr": 115.38,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": false
     },
     {
       "player": "JL Pattinson",
@@ -11569,7 +12119,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 115.38,
-      "boundaryPct": 53.33
+      "boundaryPct": 53.33,
+      "highestNotOut": false
     },
     {
       "player": "I Udana",
@@ -11590,7 +12141,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 136.36,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": true
     },
     {
       "player": "Virat Singh",
@@ -11611,7 +12163,8 @@
       "ppSr": 0.0,
       "middleSr": 62.5,
       "deathSr": 0.0,
-      "boundaryPct": 26.67
+      "boundaryPct": 26.67,
+      "highestNotOut": false
     },
     {
       "player": "VY Mahesh",
@@ -11632,7 +12185,8 @@
       "ppSr": 0.0,
       "middleSr": 37.5,
       "deathSr": 63.16,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "GR Napier",
@@ -11653,7 +12207,8 @@
       "ppSr": 0.0,
       "middleSr": 83.33,
       "deathSr": 125.0,
-      "boundaryPct": 26.67
+      "boundaryPct": 26.67,
+      "highestNotOut": false
     },
     {
       "player": "C Madan",
@@ -11674,7 +12229,8 @@
       "ppSr": 78.95,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 80.0
+      "boundaryPct": 80.0,
+      "highestNotOut": false
     },
     {
       "player": "FA Allen",
@@ -11695,7 +12251,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 84.62,
-      "boundaryPct": 28.57
+      "boundaryPct": 28.57,
+      "highestNotOut": true
     },
     {
       "player": "MP Breetzke",
@@ -11716,7 +12273,8 @@
       "ppSr": 116.67,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 71.43
+      "boundaryPct": 71.43,
+      "highestNotOut": false
     },
     {
       "player": "Auqib Nabi",
@@ -11737,7 +12295,8 @@
       "ppSr": 0.0,
       "middleSr": 400.0,
       "deathSr": 333.33,
-      "boundaryPct": 100.0
+      "boundaryPct": 100.0,
+      "highestNotOut": true
     },
     {
       "player": "N Burger",
@@ -11758,7 +12317,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 155.56,
-      "boundaryPct": 42.86
+      "boundaryPct": 42.86,
+      "highestNotOut": true
     },
     {
       "player": "MDKJ Perera",
@@ -11779,7 +12339,8 @@
       "ppSr": 107.69,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 85.71
+      "boundaryPct": 85.71,
+      "highestNotOut": false
     },
     {
       "player": "F Behardien",
@@ -11800,7 +12361,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 116.67,
-      "boundaryPct": 57.14
+      "boundaryPct": 57.14,
+      "highestNotOut": true
     },
     {
       "player": "S Badree",
@@ -11821,7 +12383,8 @@
       "ppSr": 0.0,
       "middleSr": 55.56,
       "deathSr": 57.14,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Mustafizur Rahman",
@@ -11842,7 +12405,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 54.17,
-      "boundaryPct": 46.15
+      "boundaryPct": 46.15,
+      "highestNotOut": true
     },
     {
       "player": "DR Shorey",
@@ -11863,7 +12427,8 @@
       "ppSr": 0.0,
       "middleSr": 76.47,
       "deathSr": 0.0,
-      "boundaryPct": 46.15
+      "boundaryPct": 46.15,
+      "highestNotOut": false
     },
     {
       "player": "Harsh Dubey",
@@ -11884,7 +12449,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 144.44,
-      "boundaryPct": 61.54
+      "boundaryPct": 61.54,
+      "highestNotOut": true
     },
     {
       "player": "DT Patil",
@@ -11905,7 +12471,8 @@
       "ppSr": 0.0,
       "middleSr": 75.0,
       "deathSr": 400.0,
-      "boundaryPct": 30.77
+      "boundaryPct": 30.77,
+      "highestNotOut": false
     },
     {
       "player": "KJ Abbott",
@@ -11926,7 +12493,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 185.71,
-      "boundaryPct": 46.15
+      "boundaryPct": 46.15,
+      "highestNotOut": true
     },
     {
       "player": "AR Bawne",
@@ -11947,7 +12515,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 33.33
+      "boundaryPct": 33.33,
+      "highestNotOut": true
     },
     {
       "player": "MA Wood",
@@ -11968,7 +12537,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 150.0,
-      "boundaryPct": 83.33
+      "boundaryPct": 83.33,
+      "highestNotOut": true
     },
     {
       "player": "Mujeeb Ur Rahman",
@@ -11989,7 +12559,8 @@
       "ppSr": 0.0,
       "middleSr": 33.33,
       "deathSr": 91.67,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": true
     },
     {
       "player": "K Kartikeya",
@@ -12010,7 +12581,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 76.92,
-      "boundaryPct": 33.33
+      "boundaryPct": 33.33,
+      "highestNotOut": false
     },
     {
       "player": "DG Nalkande",
@@ -12031,7 +12603,8 @@
       "ppSr": 0.0,
       "middleSr": 109.09,
       "deathSr": 0.0,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": false
     },
     {
       "player": "R Minz",
@@ -12052,7 +12625,8 @@
       "ppSr": 0.0,
       "middleSr": 40.0,
       "deathSr": 150.0,
-      "boundaryPct": 33.33
+      "boundaryPct": 33.33,
+      "highestNotOut": false
     },
     {
       "player": "T Dahiya",
@@ -12073,7 +12647,8 @@
       "ppSr": 0.0,
       "middleSr": 33.33,
       "deathSr": 91.67,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": false
     },
     {
       "player": "T Thushara",
@@ -12094,7 +12669,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 66.67,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "AA Chavan",
@@ -12115,7 +12691,8 @@
       "ppSr": 0.0,
       "middleSr": 33.33,
       "deathSr": 137.5,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": true
     },
     {
       "player": "DAJ Bracewell",
@@ -12136,7 +12713,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 133.33,
-      "boundaryPct": 33.33
+      "boundaryPct": 33.33,
+      "highestNotOut": true
     },
     {
       "player": "K Upadhyay",
@@ -12157,7 +12735,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 133.33,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": true
     },
     {
       "player": "Karanveer Singh",
@@ -12178,7 +12757,8 @@
       "ppSr": 0.0,
       "middleSr": 57.14,
       "deathSr": 80.0,
-      "boundaryPct": 33.33
+      "boundaryPct": 33.33,
+      "highestNotOut": true
     },
     {
       "player": "T Kohli",
@@ -12199,7 +12779,8 @@
       "ppSr": 58.33,
       "middleSr": 0.0,
       "deathSr": 57.14,
-      "boundaryPct": 54.55
+      "boundaryPct": 54.55,
+      "highestNotOut": false
     },
     {
       "player": "DNT Zoysa",
@@ -12220,7 +12801,8 @@
       "ppSr": 0.0,
       "middleSr": 100.0,
       "deathSr": 125.0,
-      "boundaryPct": 36.36
+      "boundaryPct": 36.36,
+      "highestNotOut": true
     },
     {
       "player": "M Ntini",
@@ -12241,7 +12823,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 61.11,
-      "boundaryPct": 72.73
+      "boundaryPct": 72.73,
+      "highestNotOut": false
     },
     {
       "player": "T Henderson",
@@ -12262,7 +12845,8 @@
       "ppSr": 20.0,
       "middleSr": 150.0,
       "deathSr": 0.0,
-      "boundaryPct": 54.55
+      "boundaryPct": 54.55,
+      "highestNotOut": false
     },
     {
       "player": "RK Bhui",
@@ -12283,7 +12867,8 @@
       "ppSr": 0.0,
       "middleSr": 55.56,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "BB Sran",
@@ -12304,7 +12889,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 71.43,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "VG Arora",
@@ -12325,7 +12911,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Simarjeet Singh",
@@ -12346,7 +12933,8 @@
       "ppSr": 0.0,
       "middleSr": 66.67,
       "deathSr": 66.67,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Mukesh Kumar",
@@ -12367,7 +12955,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 55.56,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "JE Root",
@@ -12388,7 +12977,8 @@
       "ppSr": 66.67,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 40.0
+      "boundaryPct": 40.0,
+      "highestNotOut": false
     },
     {
       "player": "Krish Bhagat",
@@ -12409,7 +12999,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 46.15,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "D du Preez",
@@ -12430,7 +13021,8 @@
       "ppSr": 0.0,
       "middleSr": 75.0,
       "deathSr": 77.78,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "J Theron",
@@ -12451,7 +13043,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 83.33,
-      "boundaryPct": 40.0
+      "boundaryPct": 40.0,
+      "highestNotOut": true
     },
     {
       "player": "KAJ Roach",
@@ -12472,7 +13065,8 @@
       "ppSr": 0.0,
       "middleSr": 250.0,
       "deathSr": 71.43,
-      "boundaryPct": 40.0
+      "boundaryPct": 40.0,
+      "highestNotOut": false
     },
     {
       "player": "TD Paine",
@@ -12493,7 +13087,8 @@
       "ppSr": 38.46,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "AG Murtaza",
@@ -12514,7 +13109,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 71.43,
-      "boundaryPct": 40.0
+      "boundaryPct": 40.0,
+      "highestNotOut": false
     },
     {
       "player": "SMSM Senanayake",
@@ -12535,7 +13131,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 58.82,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "X Thalaivan Sargunam",
@@ -12556,7 +13153,8 @@
       "ppSr": 0.0,
       "middleSr": 57.14,
       "deathSr": 66.67,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "L Wood",
@@ -12577,7 +13175,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 300.0,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": true
     },
     {
       "player": "PWA Mulder",
@@ -12598,7 +13197,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 44.44
+      "boundaryPct": 44.44,
+      "highestNotOut": false
     },
     {
       "player": "AA Noffke",
@@ -12619,7 +13219,8 @@
       "ppSr": 0.0,
       "middleSr": 90.0,
       "deathSr": 0.0,
-      "boundaryPct": 44.44
+      "boundaryPct": 44.44,
+      "highestNotOut": false
     },
     {
       "player": "SM Harwood",
@@ -12640,7 +13241,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 64.29,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "TS Mills",
@@ -12661,7 +13263,8 @@
       "ppSr": 0.0,
       "middleSr": 40.0,
       "deathSr": 66.67,
-      "boundaryPct": 75.0
+      "boundaryPct": 75.0,
+      "highestNotOut": false
     },
     {
       "player": "P Chopra",
@@ -12682,7 +13285,8 @@
       "ppSr": 0.0,
       "middleSr": 133.33,
       "deathSr": 0.0,
-      "boundaryPct": 100.0
+      "boundaryPct": 100.0,
+      "highestNotOut": false
     },
     {
       "player": "JPR Scantlebury-Searles",
@@ -12703,7 +13307,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 133.33,
-      "boundaryPct": 75.0
+      "boundaryPct": 75.0,
+      "highestNotOut": true
     },
     {
       "player": "Mukesh Choudhary",
@@ -12724,7 +13329,8 @@
       "ppSr": 0.0,
       "middleSr": 100.0,
       "deathSr": 100.0,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": true
     },
     {
       "player": "OC McCoy",
@@ -12745,7 +13351,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 160.0,
-      "boundaryPct": 75.0
+      "boundaryPct": 75.0,
+      "highestNotOut": false
     },
     {
       "player": "SH Johnson",
@@ -12766,7 +13373,8 @@
       "ppSr": 0.0,
       "middleSr": 33.33,
       "deathSr": 77.78,
-      "boundaryPct": 50.0
+      "boundaryPct": 50.0,
+      "highestNotOut": true
     },
     {
       "player": "Akash Madhwal",
@@ -12787,7 +13395,8 @@
       "ppSr": 0.0,
       "middleSr": 40.0,
       "deathSr": 66.67,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "KT Maphaka",
@@ -12808,7 +13417,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 400.0,
-      "boundaryPct": 100.0
+      "boundaryPct": 100.0,
+      "highestNotOut": true
     },
     {
       "player": "TM Srivastava",
@@ -12829,7 +13439,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 85.71,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Jaskaran Singh",
@@ -12850,7 +13461,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 77.78,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "CK Langeveldt",
@@ -12871,7 +13483,8 @@
       "ppSr": 0.0,
       "middleSr": 25.0,
       "deathSr": 140.0,
-      "boundaryPct": 75.0
+      "boundaryPct": 75.0,
+      "highestNotOut": false
     },
     {
       "player": "CJ McKay",
@@ -12892,7 +13505,8 @@
       "ppSr": 0.0,
       "middleSr": 53.33,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Ankit Soni",
@@ -12913,7 +13527,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 77.78,
-      "boundaryPct": 85.71
+      "boundaryPct": 85.71,
+      "highestNotOut": true
     },
     {
       "player": "IS Sodhi",
@@ -12934,7 +13549,8 @@
       "ppSr": 0.0,
       "middleSr": 28.57,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "V Viyaskanth",
@@ -12955,7 +13571,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 140.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "MJ Henry",
@@ -12976,7 +13593,8 @@
       "ppSr": 0.0,
       "middleSr": 100.0,
       "deathSr": 40.0,
-      "boundaryPct": 57.14
+      "boundaryPct": 57.14,
+      "highestNotOut": false
     },
     {
       "player": "LG Pretorius",
@@ -12997,7 +13615,8 @@
       "ppSr": 0.0,
       "middleSr": 100.0,
       "deathSr": 125.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "E Malinga",
@@ -13018,7 +13637,8 @@
       "ppSr": 0.0,
       "middleSr": 25.0,
       "deathSr": 46.15,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Pankaj Singh",
@@ -13039,7 +13659,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 58.33,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "AN Ghosh",
@@ -13060,7 +13681,8 @@
       "ppSr": 100.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 57.14
+      "boundaryPct": 57.14,
+      "highestNotOut": false
     },
     {
       "player": "VS Malik",
@@ -13081,7 +13703,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 57.14
+      "boundaryPct": 57.14,
+      "highestNotOut": false
     },
     {
       "player": "I Malhotra",
@@ -13102,7 +13725,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 175.0,
-      "boundaryPct": 57.14
+      "boundaryPct": 57.14,
+      "highestNotOut": true
     },
     {
       "player": "UA Birla",
@@ -13123,7 +13747,8 @@
       "ppSr": 66.67,
       "middleSr": 20.0,
       "deathSr": 0.0,
-      "boundaryPct": 57.14
+      "boundaryPct": 57.14,
+      "highestNotOut": false
     },
     {
       "player": "DM Bravo",
@@ -13144,7 +13769,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 120.0,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": true
     },
     {
       "player": "JP Behrendorff",
@@ -13165,7 +13791,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 66.67,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "DA Payne",
@@ -13186,7 +13813,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 120.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "SB Joshi",
@@ -13207,7 +13835,8 @@
       "ppSr": 0.0,
       "middleSr": 46.15,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "SS Shaikh",
@@ -13228,7 +13857,8 @@
       "ppSr": 0.0,
       "middleSr": 85.71,
       "deathSr": 0.0,
-      "boundaryPct": 66.67
+      "boundaryPct": 66.67,
+      "highestNotOut": false
     },
     {
       "player": "BA Bhatt",
@@ -13249,7 +13879,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 85.71,
-      "boundaryPct": 100.0
+      "boundaryPct": 100.0,
+      "highestNotOut": true
     },
     {
       "player": "PSP Handscomb",
@@ -13270,7 +13901,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "B Laughlin",
@@ -13291,7 +13923,8 @@
       "ppSr": 0.0,
       "middleSr": 42.86,
       "deathSr": 33.33,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "B Stanlake",
@@ -13312,7 +13945,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 250.0,
-      "boundaryPct": 80.0
+      "boundaryPct": 80.0,
+      "highestNotOut": true
     },
     {
       "player": "Fazalhaq Farooqi",
@@ -13333,7 +13967,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 33.33,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Arshad Khan (2)",
@@ -13354,7 +13989,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 125.0,
-      "boundaryPct": 80.0
+      "boundaryPct": 80.0,
+      "highestNotOut": false
     },
     {
       "player": "Prince Yadav",
@@ -13375,7 +14011,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 45.45,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "MP Yadav",
@@ -13396,7 +14033,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 80.0
+      "boundaryPct": 80.0,
+      "highestNotOut": false
     },
     {
       "player": "Sakib Hussain",
@@ -13417,7 +14055,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 71.43,
-      "boundaryPct": 80.0
+      "boundaryPct": 80.0,
+      "highestNotOut": true
     },
     {
       "player": "SJ Srivastava",
@@ -13438,7 +14077,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "KMDN Kulasekara",
@@ -13459,7 +14099,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 166.67,
-      "boundaryPct": 80.0
+      "boundaryPct": 80.0,
+      "highestNotOut": true
     },
     {
       "player": "P Awana",
@@ -13480,7 +14121,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 35.71,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Shivam Sharma",
@@ -13501,7 +14143,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 166.67,
-      "boundaryPct": 80.0
+      "boundaryPct": 80.0,
+      "highestNotOut": false
     },
     {
       "player": "A Dananjaya",
@@ -13522,7 +14165,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 80.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "T Natarajan",
@@ -13543,7 +14187,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 57.14,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Yash Dayal",
@@ -13564,7 +14209,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "A Tomar",
@@ -13585,7 +14231,8 @@
       "ppSr": 50.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 100.0
+      "boundaryPct": 100.0,
+      "highestNotOut": false
     },
     {
       "player": "Liton Das",
@@ -13606,7 +14253,8 @@
       "ppSr": 100.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 100.0
+      "boundaryPct": 100.0,
+      "highestNotOut": false
     },
     {
       "player": "L Ngidi",
@@ -13627,7 +14275,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 44.44,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Ravi Singh",
@@ -13648,7 +14297,8 @@
       "ppSr": 0.0,
       "middleSr": 200.0,
       "deathSr": 0.0,
-      "boundaryPct": 100.0
+      "boundaryPct": 100.0,
+      "highestNotOut": true
     },
     {
       "player": "SR Dubey",
@@ -13669,7 +14319,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 200.0,
-      "boundaryPct": 100.0
+      "boundaryPct": 100.0,
+      "highestNotOut": true
     },
     {
       "player": "VRV Singh",
@@ -13690,7 +14341,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 133.33,
-      "boundaryPct": 100.0
+      "boundaryPct": 100.0,
+      "highestNotOut": false
     },
     {
       "player": "GD McGrath",
@@ -13711,7 +14363,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 80.0,
-      "boundaryPct": 100.0
+      "boundaryPct": 100.0,
+      "highestNotOut": true
     },
     {
       "player": "CRD Fernando",
@@ -13732,7 +14385,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 133.33,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "FH Edwards",
@@ -13753,7 +14407,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 80.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "A Uniyal",
@@ -13774,7 +14429,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 57.14,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "DP Nannes",
@@ -13795,7 +14451,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 22.22,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "RS Sodhi",
@@ -13816,7 +14473,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 200.0,
-      "boundaryPct": 100.0
+      "boundaryPct": 100.0,
+      "highestNotOut": true
     },
     {
       "player": "A Chandila",
@@ -13837,7 +14495,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 57.14,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "GC Viljoen",
@@ -13858,7 +14517,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 42.86,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "RJW Topley",
@@ -13879,7 +14539,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "DS Rathi",
@@ -13900,7 +14561,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 37.5,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "PP Hinge",
@@ -13921,7 +14583,8 @@
       "ppSr": 0.0,
       "middleSr": 37.5,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "D Kalyankrishna",
@@ -13942,7 +14605,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 37.5,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Mohammad Asif",
@@ -13963,7 +14627,8 @@
       "ppSr": 0.0,
       "middleSr": 66.67,
       "deathSr": 33.33,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Younis Khan",
@@ -13984,7 +14649,8 @@
       "ppSr": 42.86,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Kamran Khan",
@@ -14005,7 +14671,8 @@
       "ppSr": 0.0,
       "middleSr": 75.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "BAW Mendis",
@@ -14026,7 +14693,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "S Tyagi",
@@ -14047,7 +14715,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 75.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "R Ninan",
@@ -14068,7 +14737,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "JE Taylor",
@@ -14089,7 +14759,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "KK Ahmed",
@@ -14110,7 +14781,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 22.22,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "GHS Garton",
@@ -14131,7 +14803,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "T Shamsi",
@@ -14152,7 +14825,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "BR Sharath",
@@ -14173,7 +14847,8 @@
       "ppSr": 0.0,
       "middleSr": 40.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "RJ Gleeson",
@@ -14194,7 +14869,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Shivam Singh",
@@ -14215,7 +14891,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 66.67,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Brijesh Sharma",
@@ -14236,7 +14913,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "DV Malewar",
@@ -14257,7 +14935,8 @@
       "ppSr": 40.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "AM Ghazanfar",
@@ -14278,7 +14957,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 66.67,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Shoaib Akhtar",
@@ -14299,7 +14979,8 @@
       "ppSr": 0.0,
       "middleSr": 40.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "H Das",
@@ -14320,7 +15001,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 40.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "VS Yeligati",
@@ -14341,7 +15023,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "KP Appanna",
@@ -14362,7 +15045,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Mashrafe Mortaza",
@@ -14383,7 +15067,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "A Singh",
@@ -14404,7 +15089,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 25.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Mohammad Ashraful",
@@ -14425,7 +15111,8 @@
       "ppSr": 20.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "RS Gavaskar",
@@ -14446,7 +15133,8 @@
       "ppSr": 0.0,
       "middleSr": 25.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "SB Wagh",
@@ -14467,7 +15155,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 66.67,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "S Randiv",
@@ -14488,7 +15177,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "RG More",
@@ -14509,7 +15199,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "LE Plunkett",
@@ -14530,7 +15221,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 33.33,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "HF Gurney",
@@ -14551,7 +15243,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 20.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Mohit Rathee",
@@ -14572,7 +15265,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Abdul Basith",
@@ -14593,7 +15287,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "SZ Mulani",
@@ -14614,7 +15309,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "KA Maharaj",
@@ -14635,7 +15331,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "LB Williams",
@@ -14656,7 +15353,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "MJ Suthar",
@@ -14677,7 +15375,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "PVSN Raju",
@@ -14698,7 +15397,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "MS Bhandage",
@@ -14719,7 +15419,8 @@
       "ppSr": 0.0,
       "middleSr": 25.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Ashok Sharma",
@@ -14740,7 +15441,8 @@
       "ppSr": 0.0,
       "middleSr": 33.33,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Ashwani Kumar",
@@ -14761,7 +15463,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 16.67,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "SS Mishra",
@@ -14782,7 +15485,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 33.33,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "PM Sarvesh Kumar",
@@ -14803,7 +15507,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "DP Vijaykumar",
@@ -14824,7 +15529,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Shoaib Ahmed",
@@ -14845,7 +15551,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "SE Bond",
@@ -14866,7 +15573,8 @@
       "ppSr": 0.0,
       "middleSr": 50.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "NJ Rimmington",
@@ -14887,7 +15595,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 100.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "P Parameswaran",
@@ -14908,7 +15617,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "BE Hendricks",
@@ -14929,7 +15639,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 33.33,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "M de Lange",
@@ -14950,7 +15661,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 50.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "DJ Muthuswami",
@@ -14971,7 +15683,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 33.33,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "S Lamichhane",
@@ -14992,7 +15705,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "JL Denly",
@@ -15013,7 +15727,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Y Prithvi Raj",
@@ -15034,7 +15749,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "SS Cottrell",
@@ -15055,7 +15771,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "K Yadav",
@@ -15076,7 +15793,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "KR Sen",
@@ -15097,7 +15815,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "RP Meredith",
@@ -15118,7 +15837,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "R Sanjay Yadav",
@@ -15139,7 +15859,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "KM Asif",
@@ -15160,7 +15881,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Mayank Dagar",
@@ -15181,7 +15903,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "KS Rathore",
@@ -15202,7 +15925,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "MJ Owen",
@@ -15223,7 +15947,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Musheer Khan",
@@ -15244,7 +15969,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "U Kaul",
@@ -15265,7 +15991,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "Abdur Razzak",
@@ -15286,7 +16013,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "C Nanda",
@@ -15307,7 +16035,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "YA Abdulla",
@@ -15328,7 +16057,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "S Ladda",
@@ -15349,7 +16079,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "L Ablish",
@@ -15370,7 +16101,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": true
     },
     {
       "player": "ND Doshi",
@@ -15391,7 +16123,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "RR Bhatkal",
@@ -15412,7 +16145,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "V Pratap Singh",
@@ -15433,7 +16167,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "Sunny Gupta",
@@ -15454,7 +16189,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "IC Pandey",
@@ -15475,7 +16211,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     },
     {
       "player": "S Kaushik",
@@ -15496,7 +16233,8 @@
       "ppSr": 0.0,
       "middleSr": 0.0,
       "deathSr": 0.0,
-      "boundaryPct": 0.0
+      "boundaryPct": 0.0,
+      "highestNotOut": false
     }
   ],
   "bowlers": [

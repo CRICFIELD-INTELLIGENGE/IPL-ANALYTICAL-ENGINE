@@ -1,7 +1,7 @@
 import { displayPlayerName, normalizePlayerName, playerSlug } from "@/lib/aggregates";
 import type { PlayerIdentityIndex } from "@/lib/player-recent-matches";
 
-type BioNames = { playerName?: string; fullName?: string };
+type BioNames = { playerName?: string; fullName?: string; playerId?: string | number };
 
 /**
  * Resolves a player page's URL slug to a bio key (player-bio.json), or null when no single player matches.
@@ -23,6 +23,13 @@ export function resolvePlayerKey(bios: Record<string, BioNames>, slug: string, i
 
   const exactKey = keys.find(k => k.toLowerCase() === s);
   if (exactKey) return exactKey;
+
+  // Support numeric player ID resolution (e.g. /scout/player/8383)
+  const byPlayerId = keys.find(k => {
+    const pId = bios[k]?.playerId;
+    return pId != null && String(pId) === s;
+  });
+  if (byPlayerId) return byPlayerId;
 
   const slugAsName = normalizePlayerName(s.replace(/-/g, " "));
   const nameMatches = (k: string) =>

@@ -19,23 +19,23 @@ import {
 } from "@/lib/intelligence-api";
 
 const STATUS: Record<DisplayStatus, { label: string; cls: string; help: string }> = {
-  verified_data: { label: "Verified Data", cls: "border-emerald-400/40 bg-emerald-500/15 text-emerald-200", help: "From a sourced record, not a model." },
-  model_prediction: { label: "Model Prediction", cls: "border-sky-400/40 bg-sky-500/15 text-sky-200", help: "From a model that passed time-based validation." },
-  provisional_estimate: { label: "Provisional Estimate", cls: "border-amber-400/40 bg-amber-500/15 text-amber-200", help: "Calculated, but not validated well enough to be called a prediction." },
-  limited_evidence: { label: "Limited Evidence", cls: "border-orange-400/40 bg-orange-500/15 text-orange-200", help: "Too little IPL play to judge reliably." },
-  unavailable: { label: "Unavailable", cls: "border-white/15 bg-white/5 text-white/60", help: "Not published: the data does not support a figure." },
+  verified_data: { label: "Verified Data", cls: "border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-800 dark:text-emerald-200", help: "From a sourced record, not a model." },
+  model_prediction: { label: "Model Prediction", cls: "border-sky-500/30 bg-sky-500/10 dark:bg-sky-500/15 text-sky-800 dark:text-sky-200", help: "From a model that passed time-based validation." },
+  provisional_estimate: { label: "Provisional Estimate", cls: "border-amber-500/30 bg-amber-500/10 dark:bg-amber-500/15 text-amber-800 dark:text-amber-200", help: "Calculated, but not validated well enough to be called a prediction." },
+  limited_evidence: { label: "Limited Evidence", cls: "border-orange-500/30 bg-orange-500/10 dark:bg-orange-500/15 text-orange-800 dark:text-orange-200", help: "Too little IPL play to judge reliably." },
+  unavailable: { label: "Unavailable", cls: "border-slate-300 dark:border-white/15 bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white/60", help: "Not published: the data does not support a figure." },
 };
 
 export function ModelConfidenceIndicator({ status, reason }: { status: DisplayStatus; reason?: string | null }) {
   const s = STATUS[status];
-  return <span title={reason ?? s.help} className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider whitespace-nowrap ${s.cls}`}>{s.label}</span>;
+  return <span title={reason ?? s.help} className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap shadow-xs ${s.cls}`}>{s.label}</span>;
 }
 
 function Panel({ title, status, reason, children, className = "" }: { title: string; status?: DisplayStatus; reason?: string | null; children: React.ReactNode; className?: string }) {
   return (
-    <div className={`rounded-xl border border-white/10 bg-white/[0.03] p-3 space-y-2 min-w-0 ${className}`}>
+    <div className={`rounded-xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-white/[0.03] p-3 space-y-2 min-w-0 shadow-sm dark:shadow-none ${className}`}>
       <div className="flex items-center justify-between gap-2">
-        <h4 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">{title}</h4>
+        <h4 className="text-[10px] uppercase tracking-wider text-slate-600 dark:text-muted-foreground font-bold">{title}</h4>
         {status && <ModelConfidenceIndicator status={status} reason={reason} />}
       </div>
       {children}
@@ -44,10 +44,10 @@ function Panel({ title, status, reason, children, className = "" }: { title: str
 }
 
 function Provenance({ version, cutoff, target }: { version: string; cutoff: string; target?: number }) {
-  return <p className="text-[10px] text-muted-foreground">Model {version} · data to {cutoff}{target ? ` · for the ${target} season` : ""}. CricField estimate, not an official IPL or franchise valuation.</p>;
+  return <p className="text-[10px] text-slate-500 dark:text-muted-foreground">Model {version} · data to {cutoff}{target ? ` · for the ${target} season` : ""}. CricField analytical estimate, not an official IPL match record or franchise valuation.</p>;
 }
 
-const Note = ({ children }: { children: React.ReactNode }) => <p className="text-[11px] text-muted-foreground leading-snug">{children}</p>;
+const Note = ({ children }: { children: React.ReactNode }) => <p className="text-[11px] text-slate-600 dark:text-muted-foreground leading-snug">{children}</p>;
 
 /** Player Performance: sporting units only. */
 export function PlayerValuationCard({ d }: { d: PlayerIntelligence }) {
@@ -57,15 +57,18 @@ export function PlayerValuationCard({ d }: { d: PlayerIntelligence }) {
     <Panel title="Player performance" status={e.status} reason={e.statusReason}>
       {e.value === null ? <Note>{e.statusReason}</Note> : <>
         <div className="flex items-baseline gap-2">
-          <span className="font-display font-black text-2xl text-white tabular-nums">{signed(e.value)}</span>
-          <span className="text-[11px] text-muted-foreground">runs above replacement per match</span>
+          <span className="font-display font-black text-2xl text-slate-900 dark:text-white tabular-nums">{signed(e.value)}</span>
+          <span className="text-[11px] text-slate-600 dark:text-muted-foreground font-semibold">runs above replacement per match</span>
         </div>
-        {e.uncertainty && <div className="text-[11px] text-muted-foreground tabular-nums">80% range {signed(e.uncertainty.low)} to {signed(e.uncertainty.high)}{e.sampleSize ? ` · ${e.sampleSize.value} ${e.sampleSize.unit}` : ""}</div>}
-        <ul className="text-xs space-y-0.5">{e.factors.map((f) => <li key={f.label}><b className="text-white">{f.label}:</b> <span className="text-muted-foreground">{f.detail}</span></li>)}</ul>
+        <div className="text-[9.5px] font-mono text-purple-700 dark:text-purple-300 font-bold tracking-tight">
+          PROPRIETARY MODEL OUTPUT · ANALYTICAL ESTIMATE
+        </div>
+        {e.uncertainty && <div className="text-[11px] text-slate-600 dark:text-muted-foreground tabular-nums">80% range {signed(e.uncertainty.low)} to {signed(e.uncertainty.high)}{e.sampleSize ? ` · ${e.sampleSize.value} ${e.sampleSize.unit}` : ""}</div>}
+        <ul className="text-xs space-y-0.5">{e.factors.map((f) => <li key={f.label}><b className="text-slate-900 dark:text-white">{f.label}:</b> <span className="text-slate-600 dark:text-muted-foreground">{f.detail}</span></li>)}</ul>
         {raw && (
-          <dl className="grid grid-cols-3 gap-x-2 gap-y-1 text-[11px] tabular-nums pt-1 border-t border-white/10">
+          <dl className="grid grid-cols-3 gap-x-2 gap-y-1 text-[11px] tabular-nums pt-1 border-t border-slate-200 dark:border-white/10">
             {([["PP SR", raw.ppSR], ["Mid SR", raw.midSR], ["Death SR", raw.deathSR], ["PP econ", raw.ppEcon], ["Mid econ", raw.midEcon], ["Death econ", raw.deathEcon]] as const).map(([k, v]) => v === null || v === undefined ? null : (
-              <div key={k}><dt className="text-muted-foreground">{k}</dt><dd className="text-white font-semibold">{v.toFixed(k.includes("econ") ? 2 : 0)}</dd></div>
+              <div key={k}><dt className="text-slate-500 dark:text-muted-foreground">{k}</dt><dd className="text-slate-900 dark:text-white font-semibold">{v.toFixed(k.includes("econ") ? 2 : 0)}</dd></div>
             ))}
           </dl>
         )}
@@ -81,14 +84,17 @@ export function AuctionPriceForecast({ market, sold, value }: { market: Envelope
     <Panel title="Market price" status={market.status} reason={market.statusReason}>
       {market.value === null ? <Note>{market.statusReason}</Note> : <>
         <div className="flex items-baseline gap-2">
-          <span className="font-display font-black text-2xl text-white tabular-nums">{money(market.value)}</span>
-          <span className="text-[11px] text-muted-foreground">expected price if sold</span>
+          <span className="font-display font-black text-2xl text-slate-900 dark:text-white tabular-nums">{money(market.value)}</span>
+          <span className="text-[11px] text-slate-600 dark:text-muted-foreground font-semibold">expected price if sold</span>
         </div>
-        {market.uncertainty && <div className="text-[11px] text-muted-foreground tabular-nums">80% range {money(market.uncertainty.low)} to {money(market.uncertainty.high)}</div>}
+        <div className="text-[9.5px] font-mono text-sky-700 dark:text-sky-300 font-bold tracking-tight">
+          MODEL PREDICTION · NOT ACTUAL AUCTION PRICE
+        </div>
+        {market.uncertainty && <div className="text-[11px] text-slate-600 dark:text-muted-foreground tabular-nums">80% range {money(market.uncertainty.low)} to {money(market.uncertainty.high)}</div>}
         {market.statusReason && <Note>{market.statusReason}</Note>}
-        {value && value.verdict !== "Not assessed" && <div className="text-xs"><b className={value.verdict === "Undervalued" ? "text-emerald-300" : value.verdict === "Overvalued" ? "text-rose-300" : "text-white"}>{value.verdict}</b> <span className="text-muted-foreground">{value.note}</span></div>}
-        {sold.value !== null && <div className="text-[11px] text-amber-200/90" title={sold.statusReason ?? undefined}>Provisional sold likelihood {Math.round(sold.value * 100)}%, from the 2026 pool alone.</div>}
-        {market.factors.length > 0 && <ul className="text-[11px] text-muted-foreground">{market.factors.map((f) => <li key={f.label}>{f.label}: {f.detail}</li>)}</ul>}
+        {value && value.verdict !== "Not assessed" && <div className="text-xs"><b className={value.verdict === "Undervalued" ? "text-emerald-600 dark:text-emerald-300" : value.verdict === "Overvalued" ? "text-rose-600 dark:text-rose-300" : "text-slate-900 dark:text-white"}>{value.verdict}</b> <span className="text-slate-600 dark:text-muted-foreground">{value.note}</span></div>}
+        {sold.value !== null && <div className="text-[11px] text-amber-700 dark:text-amber-200/90 font-medium" title={sold.statusReason ?? undefined}>Provisional sold likelihood {Math.round(sold.value * 100)}%, from the 2026 pool alone.</div>}
+        {market.factors.length > 0 && <ul className="text-[11px] text-slate-600 dark:text-muted-foreground">{market.factors.map((f) => <li key={f.label}>{f.label}: {f.detail}</li>)}</ul>}
         <Note>No rupee value of a run is assumed. No validated conversion exists, so performance and price stay separate.</Note>
       </>}
     </Panel>
@@ -103,9 +109,9 @@ export function FranchiseFitMatrix({ fit }: { fit: FranchiseFit }) {
       <ul className="space-y-1">
         {fit.teams.map((t) => (
           <li key={t.team} className="grid grid-cols-[3rem_1fr_3.5rem] gap-2 items-center text-xs tabular-nums" title={t.replaces.length ? `Would replace ${t.replaces.join(", ")} in the best XII` : t.entersBestSide ? "Enters the best XII" : "Would not make the best XII"}>
-            <span className={`font-semibold ${t.isCurrentTeam ? "text-violet-300" : "text-white"}`}>{t.team}</span>
-            <span className="h-2 rounded-full bg-white/10 overflow-hidden"><span className={`block h-full rounded-full ${t.isCurrentTeam ? "bg-violet-400" : "bg-emerald-400/80"}`} style={{ width: `${Math.max(0, (t.increment / top) * 100)}%` }} /></span>
-            <span className="text-right">{signed(t.increment)}</span>
+            <span className={`font-semibold ${t.isCurrentTeam ? "text-violet-700 dark:text-violet-300" : "text-slate-900 dark:text-white"}`}>{t.team}</span>
+            <span className="h-2 rounded-full bg-slate-200 dark:bg-white/10 overflow-hidden"><span className={`block h-full rounded-full ${t.isCurrentTeam ? "bg-violet-500 dark:bg-violet-400" : "bg-emerald-500 dark:bg-emerald-400/80"}`} style={{ width: `${Math.max(0, (t.increment / top) * 100)}%` }} /></span>
+            <span className="text-right font-medium text-slate-800 dark:text-white">{signed(t.increment)}</span>
           </li>
         ))}
       </ul>
@@ -121,13 +127,16 @@ export function RetentionOutlook({ r }: { r: Retention }) {
     <Panel title="Retention outlook" status={r.status} reason={r.statusReason}>
       {r.kind === "none" ? <Note>{r.statusReason}</Note> : <>
         <div className="flex items-baseline gap-2">
-          <span className={`font-display font-black text-xl ${/kept|Retained/.test(r.band ?? "") ? "text-emerald-300" : /risk|Released/.test(r.band ?? "") ? "text-rose-300" : "text-amber-200"}`}>{r.band}</span>
-          {r.kind === "index" && <span className="text-[11px] text-muted-foreground tabular-nums">index {r.value}/100</span>}
-          {r.kind === "probability" && r.value !== null && <span className="text-[11px] text-muted-foreground tabular-nums">{Math.round(r.value * 100)}%</span>}
+          <span className={`font-display font-black text-xl ${/kept|Retained/.test(r.band ?? "") ? "text-emerald-600 dark:text-emerald-300" : /risk|Released/.test(r.band ?? "") ? "text-rose-600 dark:text-rose-300" : "text-amber-600 dark:text-amber-200"}`}>{r.band}</span>
+          {r.kind === "index" && <span className="text-[11px] text-slate-600 dark:text-muted-foreground tabular-nums font-medium">index {r.value}/100</span>}
+          {r.kind === "probability" && r.value !== null && <span className="text-[11px] text-slate-600 dark:text-muted-foreground tabular-nums font-medium">{Math.round(r.value * 100)}%</span>}
+        </div>
+        <div className="text-[9.5px] font-mono text-amber-700 dark:text-amber-300 font-bold tracking-tight">
+          MODEL-GENERATED ESTIMATE · SQUAD RANKING
         </div>
         {r.kind === "index" && <Note>{r.value} is a rank across 2026 squads, not a chance of being kept. {r.statusReason}</Note>}
         {r.kind === "decision" && <Note>{r.statusReason}</Note>}
-        {r.factors.length > 0 && <ul className="text-[11px] text-muted-foreground">{r.factors.map((f) => <li key={f.label}>{f.label} {f.detail}</li>)}</ul>}
+        {r.factors.length > 0 && <ul className="text-[11px] text-slate-600 dark:text-muted-foreground">{r.factors.map((f) => <li key={f.label}>{f.label} {f.detail}</li>)}</ul>}
       </>}
     </Panel>
   );
@@ -173,11 +182,16 @@ export function PlayerIntelligenceSection({ player, className = "" }: { player: 
   if (!q.data) return null;
   const d = q.data;
   return (
-    <section className={`rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-600/10 to-transparent p-4 space-y-3 min-w-0 ${className}`}>
-      <div className="flex items-baseline gap-2 flex-wrap">
-        <BrainCircuit className="w-4 h-4 text-violet-300 self-center" />
-        <h3 className="font-display font-bold text-sm uppercase tracking-wider text-white">Player Intelligence</h3>
-        <span className="text-[11px] text-muted-foreground">{d.current?.team ? `${d.current.team} · ` : ""}{d.current?.role ?? ""}{d.current?.contractLakh ? ` · 2026 contract ${money(d.current.contractLakh)}` : ""}</span>
+    <section className={`rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-600/10 via-violet-500/5 to-transparent p-4 space-y-3 min-w-0 ${className}`}>
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <BrainCircuit className="w-4 h-4 text-violet-600 dark:text-violet-300 self-center" />
+          <h3 className="font-display font-bold text-sm uppercase tracking-wider text-slate-900 dark:text-white">Player Intelligence</h3>
+          <span className="text-[11px] text-slate-500 dark:text-muted-foreground">{d.current?.team ? `${d.current.team} · ` : ""}{d.current?.role ?? ""}{d.current?.contractLakh ? ` · 2026 contract ${money(d.current.contractLakh)}` : ""}</span>
+        </div>
+        <span className="px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider bg-violet-100 dark:bg-violet-950/60 text-violet-800 dark:text-violet-300 border border-violet-300/80 dark:border-violet-500/30">
+          Proprietary Analytical Estimates · Not Official Match Records
+        </span>
       </div>
       {d.inCurrentPool ? (
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">

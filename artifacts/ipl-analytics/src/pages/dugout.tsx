@@ -17,7 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Layout } from "@/components/layout";
 import { 
   useTeamTheme, TEAM_REGISTRY, isTeamCode, resolveTeamCode, 
-  TEAM_CODE_TO_SLUG, type TeamCode 
+  TEAM_CODE_TO_SLUG, type TeamCode, getFranchisePageTeam, setFranchisePageTeam, CANONICAL_TEAM_CODES 
 } from "@/lib/team-context";
 import { useSquadsBySeason, useTeams, useMatches } from "@/lib/aggregates";
 import { fetchFranchiseRecord, type FranchiseRecord } from "@/lib/dugout-api";
@@ -68,24 +68,24 @@ function SectionSkeleton({ height = "h-64" }: { height?: string }) {
 export default function DugoutPage() {
   const [, params] = useRoute("/dugout/:team");
   const [, setLocation] = useLocation();
-  const { selectedTeam, setSelectedTeam } = useTeamTheme();
+  const { selectedTeam } = useTeamTheme();
 
-  // Resolve franchise from URL param (supports codes like 'SRH' or slugs like 'sunrisers-hyderabad')
+  // Resolve franchise: route param first, then master selectedTeam if user chose one, else remembered in-page franchise (defaults to first in canonical sequence: RCB)
   const routeParam = params?.team ?? "";
   const resolvedCode = resolveTeamCode(routeParam);
-  const activeTeamCode: TeamCode = resolvedCode ?? (selectedTeam || "SRH");
-  const currentTeam = TEAM_REGISTRY[activeTeamCode] ?? TEAM_REGISTRY["SRH"];
+  const activeTeamCode: TeamCode = resolvedCode ?? (selectedTeam || getFranchisePageTeam());
+  const currentTeam = TEAM_REGISTRY[activeTeamCode] ?? TEAM_REGISTRY["RCB"];
   const rival = currentTeam.archRival ? TEAM_REGISTRY[currentTeam.archRival] : undefined;
-  const teamSlug = TEAM_CODE_TO_SLUG[activeTeamCode] ?? "sunrisers-hyderabad";
+  const teamSlug = TEAM_CODE_TO_SLUG[activeTeamCode] ?? "royal-challengers-bengaluru";
 
-  // Sync state if route code is valid; redirect bare /dugout to active franchise
+  // Redirect bare /dugout to active franchise; persist active team in connected page memory
   useEffect(() => {
-    if (resolvedCode && selectedTeam !== resolvedCode) {
-      setSelectedTeam(resolvedCode);
+    if (resolvedCode) {
+      setFranchisePageTeam(resolvedCode);
     } else if (!routeParam) {
       setLocation(`/dugout/${teamSlug}`, { replace: true });
     }
-  }, [resolvedCode, routeParam, teamSlug, selectedTeam, setSelectedTeam, setLocation]);
+  }, [resolvedCode, routeParam, teamSlug, setLocation]);
 
   const teams = useTeams();
   const matches = useMatches();
@@ -131,7 +131,34 @@ export default function DugoutPage() {
 
   // Effective franchise record with resilient fallbacks
   const effectiveRecord: FranchiseRecord = useMemo(() => {
-    if (record.data) return record.data;
+    const raw = record.data;
+    const canonicalYears = currentTeam.titleYears;
+    const canonicalCount = currentTeam.titles;
+
+    if (raw) {
+      const titlesYears = (raw.titles?.years && raw.titles.years.length > 0)
+        ? raw.titles.years
+        : canonicalYears;
+      const titlesCount = (raw.titles?.count !== undefined && raw.titles.count > 0)
+        ? raw.titles.count
+        : Math.max(canonicalCount, titlesYears.length);
+
+      return {
+        ...raw,
+        titles: {
+          count: titlesCount,
+          years: titlesYears,
+        },
+        seasons: raw.seasons.map((s) => {
+          const isChamp = s.champion || titlesYears.includes(String(s.season));
+          return {
+            ...s,
+            champion: isChamp,
+            madePlayoffs: s.madePlayoffs || isChamp,
+          };
+        }),
+      };
+    }
     const teamSummary = teams.data?.find((t) => t.team === currentTeam.name);
     return {
       franchise: { name: currentTeam.name, short: currentTeam.shortName },
@@ -143,8 +170,8 @@ export default function DugoutPage() {
         won: 7,
         lost: 7,
         noResult: 0,
-        madePlayoffs: s === "2024" || currentTeam.titleYears.includes(s),
-        champion: currentTeam.titleYears.includes(s),
+        madePlayoffs: s === "2024" || canonicalYears.includes(s),
+        champion: canonicalYears.includes(s),
         runnerUp: s === "2024" && activeTeamCode === "SRH",
       })),
       overall: {
@@ -154,8 +181,8 @@ export default function DugoutPage() {
         winPct: teamSummary?.winPct ?? 50.0,
       },
       titles: {
-        count: currentTeam.titles,
-        years: currentTeam.titleYears,
+        count: canonicalCount,
+        years: canonicalYears,
       },
       latestCaptain: null,
       rival: rival ? { name: rival.name, short: rival.shortName } : null,
@@ -164,7 +191,7 @@ export default function DugoutPage() {
   }, [record.data, teams.data, currentTeam, playedSeasons, rival, activeTeamCode]);
 
   const handlePickFranchise = (code: TeamCode) => {
-    setSelectedTeam(code);
+    setFranchisePageTeam(code);
     const slug = TEAM_CODE_TO_SLUG[code] ?? code.toLowerCase();
     setLocation(`/dugout/${slug}`);
   };
@@ -188,7 +215,7 @@ export default function DugoutPage() {
           <FranchiseMilestones
             key={activeTeamCode}
             team={currentTeam}
-            record={record.data}
+            record={effectiveRecord}
             matches={matches.data ?? []}
             loading={record.isLoading || matches.isLoading}
             onSeason={setChosenSeason}

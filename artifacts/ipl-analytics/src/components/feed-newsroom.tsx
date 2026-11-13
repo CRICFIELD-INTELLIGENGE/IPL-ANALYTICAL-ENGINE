@@ -18,7 +18,7 @@ export function NewsCard({ entry, lead = false, media }: { entry: IndexEntry; le
   return (
     <Link
       href={`/dugout/articles/${entry.slug}`}
-      className={`group flex flex-col w-full h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-white/25 transition-colors ${lead ? "lg:col-span-2" : ""}`}
+      className="group flex flex-col w-full h-full overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] shadow-xs hover:border-slate-300 dark:hover:border-white/25 transition-all"
     >
       {media ? (
         media
@@ -29,9 +29,9 @@ export function NewsCard({ entry, lead = false, media }: { entry: IndexEntry; le
         <div className="text-[10px] font-black uppercase tracking-widest" style={{ color: team.accent }}>
           {entry.franchise} · {category}
         </div>
-        <h3 className={`font-bold text-white leading-snug group-hover:underline ${lead ? "text-xl sm:text-2xl" : "text-[15px]"}`}>{entry.title}</h3>
-        <p className={`text-sm text-white/60 ${lead ? "" : "line-clamp-2"}`}>{entry.dek}</p>
-        <div className="mt-auto pt-2 text-[11px] text-white/40">
+        <h3 className={`font-bold text-slate-900 dark:text-white leading-snug group-hover:underline ${lead ? "text-xl sm:text-2xl" : "text-[15px]"}`}>{entry.title}</h3>
+        <p className={`text-sm text-slate-600 dark:text-white/60 ${lead ? "" : "line-clamp-2"}`}>{entry.dek}</p>
+        <div className="mt-auto pt-2 text-[11px] text-slate-500 dark:text-white/40">
           {EDITORIAL_AUTHOR} · {dateLabel(entry.publishedDate)} · {entry.readMinutes} min read
         </div>
       </div>

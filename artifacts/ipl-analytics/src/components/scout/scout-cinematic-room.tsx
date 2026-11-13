@@ -113,7 +113,13 @@ export function ScoutCinematicRoom({
   isShortlisted,
   onApplyPreset,
 }: ScoutCinematicRoomProps) {
-  const { selectedTeam, setSelectedTeam, theme, allTeams } = useTeamTheme();
+  const { selectedTeam, allTeams } = useTeamTheme();
+  const [localTeam, setLocalTeam] = useState<TeamCode | null>(selectedTeam);
+  const theme = localTeam ? TEAM_REGISTRY[localTeam] : null;
+
+  useEffect(() => {
+    setLocalTeam(selectedTeam);
+  }, [selectedTeam]);
   const [franchiseDropdownOpen, setFranchiseDropdownOpen] = useState(false);
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
@@ -126,13 +132,13 @@ export function ScoutCinematicRoom({
   const [analystBusy, setAnalystBusy] = useState(false);
   const [askedQuestion, setAskedQuestion] = useState('');
   const [conversation, setConversation] = useState<ScoutTurn[]>([]);
-  useEffect(() => { setConversation([]); setAnalystAnswer(null); onAiCandidates([]); }, [selectedTeam]);
+  useEffect(() => { setConversation([]); setAnalystAnswer(null); onAiCandidates([]); }, [localTeam]);
   const [, navigateToResults] = useLocation();
   const askScout = async () => {
     const question = searchQuery.trim();
     if (question.length < 3) return;
     setSuggestionsOpen(false);
-    navigateToResults(`/scout/results?q=${encodeURIComponent(question)}${selectedTeam ? `&team=${selectedTeam}` : ''}`);
+    navigateToResults(`/scout/results?q=${encodeURIComponent(question)}${localTeam ? `&team=${localTeam}` : ''}`);
   };
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(0);
@@ -222,12 +228,14 @@ export function ScoutCinematicRoom({
     { label: "Middle order anchors", action: () => { setDiscipline("batting"); setPhase("middle"); setRole("middle_order"); } },
   ];
 
-  // Quick Action cards with authentic player silhouette illustrations
+  // Quick Action cards with authentic player photos & role tags
   const QUICK_CARDS = [
     {
       title: "Finisher",
       sub: "Find a",
       img: "/msd.jpg",
+      role: "Death Overs",
+      icon: Zap,
       action: () => {
         setDiscipline("batting");
         setPhase("death");
@@ -239,6 +247,8 @@ export function ScoutCinematicRoom({
       title: "Fast Bowler",
       sub: "Find a",
       img: "/bumrah.jpg",
+      role: "Pace / Death",
+      icon: Flame,
       action: () => {
         setDiscipline("bowling");
         setRole("death_specialist");
@@ -249,6 +259,8 @@ export function ScoutCinematicRoom({
       title: "Young Talent",
       sub: "Find",
       img: "/abhisek sharma.jpg",
+      role: "High Ceiling",
+      icon: Sparkles,
       action: () => {
         setMinBalls(60);
         setSearchQuery("young");
@@ -258,6 +270,8 @@ export function ScoutCinematicRoom({
       title: "a Player",
       sub: "Replace",
       img: "/virat kohli.jpg",
+      role: "Role Fit Swap",
+      icon: RotateCcw,
       action: () => {
         const el = document.getElementById("scout-workspace");
         if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -267,7 +281,7 @@ export function ScoutCinematicRoom({
 
   return (
     <div 
-      className="scout-cinematic-wrapper w-full bg-[#03080E] text-[#EFF5F7] select-none relative overflow-hidden font-sans border-b border-[#142330]"
+      className="scout-cinematic-wrapper w-full bg-slate-50 dark:bg-[#03080E] text-slate-900 dark:text-[#EFF5F7] select-none relative overflow-hidden font-sans border-b border-slate-200 dark:border-[#142330]"
       style={{
         ["--scout-accent" as any]: accentColor,
         ["--scout-secondary" as any]: secondaryColor,
@@ -280,36 +294,30 @@ export function ScoutCinematicRoom({
       {/* ── CINEMATIC COMMAND CENTER (WAR ROOM) ── */}
       <div className="relative w-full max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6">
         {/* Tactical Directive Sub-Header & Dynamic 10 IPL Franchise Dugout Switcher */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-3 border-b border-[#142330] relative z-20">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-3 border-b border-slate-200 dark:border-[#142330] relative z-20">
           <div className="flex items-center gap-3">
             <span 
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase border shadow-sm transition-all duration-300"
-              style={{
-                borderColor: accentColor,
-                backgroundColor: "rgba(0,0,0,0.6)",
-                color: accentColor,
-                boxShadow: `0 0 12px ${glowColor}`,
-              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase border shadow-2xs transition-all duration-300 bg-emerald-50 dark:bg-black/60 text-emerald-800 dark:text-[var(--scout-accent)] border-emerald-300 dark:border-white/20"
             >
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: accentColor }} />
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-emerald-500" />
               {theme ? `${theme.shortName} DUGOUT • SCOUT ROOM ACTIVE` : "SCOUT LAB • TACTICAL RADAR ACTIVE"}
             </span>
-            <span className="hidden xl:inline text-xs text-[#718594] font-mono">
+            <span className="hidden xl:inline text-xs text-slate-600 dark:text-[#718594] font-mono font-semibold">
               DIRECTIVE: 2026 AUCTION RETENTION & REPLACEMENT
             </span>
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
             {/* 10 IPL Franchise Dugout Switcher Bar + Global Option */}
-            <div className="flex items-center gap-1 bg-[#071018]/90 p-1 rounded-2xl border border-white/10 shadow-lg backdrop-blur-md">
+            <div className="flex items-center gap-1 bg-white/90 dark:bg-[#071018]/90 p-1 rounded-2xl border border-slate-200 dark:border-white/10 shadow-md dark:shadow-lg backdrop-blur-md">
               <button
                 type="button"
-                onClick={() => setSelectedTeam(null)}
-                aria-pressed={!selectedTeam}
+                onClick={() => setLocalTeam(null)}
+                aria-pressed={!localTeam}
                 className={`px-2.5 py-1 rounded-xl text-[10px] font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  !selectedTeam
+                  !localTeam
                     ? "bg-[var(--team-accent)] text-[#050B11] shadow-[0_0_12px_rgba(184,243,107,0.5)] scale-105"
-                    : "text-[#8E9FA9] hover:text-white hover:bg-white/5"
+                    : "text-slate-600 dark:text-[#8E9FA9] hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
                 }`}
                 title="Global Scout Room (Pitch Lime #B8F36B)"
               >
@@ -317,21 +325,21 @@ export function ScoutCinematicRoom({
                 <span className="hidden sm:inline">GLOBAL</span>
               </button>
 
-              <div className="w-px h-4 bg-white/10 mx-0.5" />
+              <div className="w-px h-4 bg-slate-200 dark:bg-white/10 mx-0.5" />
 
               {allTeams.map((t) => {
-                const isCur = selectedTeam === t.id;
+                const isCur = localTeam === t.id;
                 return (
                   <button
                     key={t.id}
                     type="button"
-                    onClick={() => setSelectedTeam(t.id)}
+                    onClick={() => setLocalTeam(t.id)}
                     aria-pressed={isCur}
                     title={`${t.name} (${t.shortName}) Dugout Palette`}
                     className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl p-1 border transition-all flex items-center justify-center cursor-pointer relative ${
                       isCur
                         ? "scale-110 shadow-md z-10"
-                        : "opacity-60 hover:opacity-100 bg-white/5 border-transparent hover:border-white/20"
+                        : "opacity-60 hover:opacity-100 bg-slate-100 dark:bg-white/5 border-transparent hover:border-slate-300 dark:hover:border-white/20"
                     }`}
                     style={isCur ? {
                       borderColor: t.accent,
@@ -387,16 +395,13 @@ export function ScoutCinematicRoom({
           
           {/* ── LEFT COLUMN (5 cols): Directives & Search & Quick Cards ── */}
           <div className="lg:col-span-5 space-y-4">
-            {/* Handwritten script eyebrow */}
+            {/* Clean modern eyebrow */}
             <div className="space-y-0.5">
-              <p 
-                className="font-serif italic text-xs sm:text-sm tracking-wide transition-colors"
-                style={{ color: accentColor }}
-              >
-                {theme ? `${theme.name} • Dugout Intelligence` : "Different Leagues"}
+              <p className="text-xs sm:text-sm font-bold tracking-wide uppercase text-primary dark:text-[var(--team-accent)]">
+                {theme ? `${theme.name} • Dugout Intelligence` : "Multi-League Radar"}
               </p>
-              <p className="font-serif italic text-[11px] sm:text-xs text-[#8295A2]">
-                {theme ? theme.motto : "Same Mission To Find The Right Player"}
+              <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">
+                {theme ? theme.motto : "Global Talent Intelligence • Cross-League Sourcing"}
               </p>
             </div>
 
@@ -405,7 +410,7 @@ export function ScoutCinematicRoom({
               <div className="flex items-center gap-3">
                 {theme && (
                   <div 
-                    className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl border-2 p-1.5 flex items-center justify-center shrink-0 bg-[#08121B] shadow-xl transition-all duration-300"
+                    className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl border-2 p-1.5 flex items-center justify-center shrink-0 bg-white dark:bg-[#08121B] shadow-md dark:shadow-xl transition-all duration-300"
                     style={{ borderColor: accentColor, boxShadow: `0 0 20px ${glowColor}` }}
                   >
                     <img src={theme.logoImg} alt={theme.name} className="w-full h-full object-contain" />
@@ -413,7 +418,7 @@ export function ScoutCinematicRoom({
 
                 )}
                 <div>
-                  <h1 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight uppercase leading-[0.95]">
+                  <h1 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-white tracking-tight uppercase leading-[0.95]">
                     {theme ? `${theme.shortName} ` : "SCOUT "}
                     <span style={{ color: accentColor }}>{theme ? "SCOUT ROOM" : "LAB"}</span>
                   </h1>
@@ -423,7 +428,7 @@ export function ScoutCinematicRoom({
                 </div>
 
               </div>
-              <p className="text-[11px] sm:text-xs text-[#70828F] pt-0.5">
+              <p className="text-[11px] sm:text-xs text-slate-600 dark:text-[#70828F] pt-0.5">
                 {theme 
                   ? `One search. Six leagues. Scout players matching ${theme.shortName}'s tactical requirements.` 
                   : "One search. Six leagues. Find your next match-winner."}
@@ -432,35 +437,35 @@ export function ScoutCinematicRoom({
 
             {/* Search Console Capsule */}
             <div className="relative pt-0.5">
-              {(analystBusy || analystAnswer) && <section aria-label="Scout AI answer" aria-live="polite" className="mt-3 rounded-xl border border-white/15 bg-[#0c121a] p-4 text-xs">
-                <div className="flex items-center justify-between gap-3"><h3 className="font-bold">{theme?.shortName ?? "Franchise"} Scout AI</h3><button type="button" aria-label="Close AI answer" onClick={() => setAnalystAnswer(null)} className="text-slate-400">Close</button></div>
+              {(analystBusy || analystAnswer) && <section aria-label="Scout AI answer" aria-live="polite" className="mt-3 rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-[#0c121a] p-4 text-xs text-slate-800 dark:text-slate-100 shadow-md">
+                <div className="flex items-center justify-between gap-3"><h3 className="font-bold">{theme?.shortName ?? "Franchise"} Scout AI</h3><button type="button" aria-label="Close AI answer" onClick={() => setAnalystAnswer(null)} className="text-slate-400 hover:text-slate-600 dark:hover:text-white">Close</button></div>
                 <button type="button" className="mt-2 text-[10px] text-slate-500 underline" onClick={() => { setConversation([]); setAnalystAnswer(null); onAiCandidates([]); }}>New conversation</button>
                 {conversation.length > 2 && <details className="mt-2 text-[10px] text-slate-500"><summary>Earlier conversation</summary>{conversation.slice(0,-2).map((turn,index)=><p key={index} className="mt-2 whitespace-pre-wrap">{turn.role}: {turn.content}</p>)}</details>}
                 <p className="my-2 text-slate-500">{askedQuestion}</p>
                 {analystBusy ? <div role="status" className="flex items-center gap-3"><span className="scout-eye-ball"><Eye size={17}/></span>Reading warehouse evidence and preparing your answer…</div> : analystAnswer?.source === 'live_api' ? <>
-                  <p className="whitespace-pre-wrap leading-relaxed text-slate-200">{analystAnswer.text}</p>
+                  <p className="whitespace-pre-wrap leading-relaxed text-slate-800 dark:text-slate-200">{analystAnswer.text}</p>
                   {analystAnswer.webStatus && <p className="mt-2 text-[10px] text-slate-500">{analystAnswer.webStatus}</p>}
                   {analystAnswer.webSources?.map(source => /^https:\/\//.test(source.url) && <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer" className="mt-2 block text-xs underline">[{source.id}] {source.title} ↗</a>)}
                   {analystAnswer.limitations && <p className="mt-2 text-[10px] text-slate-400">Coverage: {analystAnswer.limitations}</p>}
-                  {analystAnswer.candidates?.map(player => <div key={`${player.cricsheet_id}-${player.competition}`} className="mt-2 flex items-center justify-between rounded-lg border border-white/10 p-2"><button type="button" onClick={() => selectResult(player)} className="text-left">{player.name}<small className="block text-slate-500">{player.role.label} · {player.competition.toUpperCase()} · {player.balls} balls</small></button><button type="button" onClick={() => saveTarget(player.cricsheet_id)} className="rounded border border-white/15 px-2 py-1">{isShortlisted(player.cricsheet_id) ? 'Remove target' : 'Shortlist'}</button></div>)}
+                  {analystAnswer.candidates?.map(player => <div key={`${player.cricsheet_id}-${player.competition}`} className="mt-2 flex items-center justify-between rounded-lg border border-slate-200 dark:border-white/10 p-2"><button type="button" onClick={() => selectResult(player)} className="text-left">{player.name}<small className="block text-slate-500">{player.role.label} · {player.competition.toUpperCase()} · {player.balls} balls</small></button><button type="button" onClick={() => saveTarget(player.cricsheet_id)} className="rounded border border-slate-200 dark:border-white/15 px-2 py-1">{isShortlisted(player.cricsheet_id) ? 'Remove target' : 'Shortlist'}</button></div>)}
                   <p className="mt-3 text-[10px] text-slate-500">AI explanation — verify against the retrieved evidence. Coverage depends on the warehouse and supported query tools.</p>
-                  {analystAnswer.evidence?.map(item => <details key={item.id} className="mt-2 rounded border border-white/10 p-2"><summary className="cursor-pointer">{item.id} · {item.tool} · {item.source}</summary><pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap text-[10px]">{JSON.stringify(item.data,null,2)}</pre></details>)}
-                </> : <p role="alert" className="text-slate-400">{analystAnswer?.error ?? 'Unable to answer this question. Try again.'}</p>}
+                  {analystAnswer.evidence?.map(item => <details key={item.id} className="mt-2 rounded border border-slate-200 dark:border-white/10 p-2"><summary className="cursor-pointer">{item.id} · {item.tool} · {item.source}</summary><pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap text-[10px]">{JSON.stringify(item.data,null,2)}</pre></details>)}
+                </> : <p role="alert" className="text-slate-500 dark:text-slate-400">{analystAnswer?.error ?? 'Unable to answer this question. Try again.'}</p>}
               </section>}
-              {suggestionsOpen && <div id="scout-search-results" role="listbox" aria-label="Scout suggestions" className="absolute top-full left-0 right-0 z-[60] mt-1 max-h-60 overflow-y-auto rounded-lg border border-white/15 bg-[#0c121a] p-1 shadow-2xl">
-                {searching ? <div role="status" className="flex items-center gap-3 p-3 text-xs"><span className="scout-eye-ball"><Eye size={17}/></span>Scouting matching players…</div> : searchFailed ? <p role="alert" className="p-3 text-xs">Search unavailable. Please try again.</p> : <>
-                  {searchQuery.trim().length >= 3 && <button type="button" onMouseDown={e => e.preventDefault()} onClick={() => void askScout()} className="block w-full rounded-lg px-3 py-2 text-left text-xs hover:bg-white/5">Ask Scout AI: “{searchQuery}”<small className="block text-[10px] text-slate-500">Natural-language answer from warehouse evidence · Enter</small></button>}
+              {suggestionsOpen && <div id="scout-search-results" role="listbox" aria-label="Scout suggestions" className="absolute top-full left-0 right-0 z-[60] mt-1 max-h-60 overflow-y-auto rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-[#0c121a] p-1 shadow-2xl text-slate-800 dark:text-slate-100">
+                {searching ? <div role="status" className="flex items-center gap-3 p-3 text-xs"><span className="scout-eye-ball"><Eye size={17}/></span>Scouting matching players…</div> : searchFailed ? <p role="alert" className="p-3 text-xs text-slate-500">Search unavailable. Please try again.</p> : <>
+                  {searchQuery.trim().length >= 3 && <button type="button" onMouseDown={e => e.preventDefault()} onClick={() => void askScout()} className="block w-full rounded-lg px-3 py-2 text-left text-xs hover:bg-slate-100 dark:hover:bg-white/5 text-slate-800 dark:text-white">Ask Scout AI: “{searchQuery}”<small className="block text-[10px] text-slate-500">Natural-language answer from warehouse evidence · Enter</small></button>}
                   <p className="px-2 py-1 text-[10px] text-slate-500">{searchQuery ? 'Matching players in the database' : 'Players matching your current filters'}</p>
-                  {discoveryResults.slice(0,3).map((player,index) => <div key={player.cricsheet_id} className="flex items-center"><button type="button" role="option" aria-selected={index === highlightedSuggestion} key={player.cricsheet_id} onMouseDown={e => e.preventDefault()} onClick={() => selectResult(player)} className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-xs ${index === highlightedSuggestion ? 'bg-white/10' : 'hover:bg-white/5'}`}><span>{player.name}<small className="block text-[10px] text-slate-500">{player.role?.label} · {player.competition.toUpperCase()}</small></span><ArrowRight size={14}/></button><button type="button" aria-label={`${isShortlisted(player.cricsheet_id) ? 'Remove' : 'Shortlist'} ${player.name}`} onMouseDown={e => e.preventDefault()} onClick={() => saveTarget(player.cricsheet_id)} className="px-2 text-slate-400 hover:text-white">{isShortlisted(player.cricsheet_id) ? <BookmarkCheck size={15}/> : <Bookmark size={15}/>}</button></div>)}
-                  {searchQuery && !discoveryResults.length && <p className="p-3 text-xs text-slate-400">No players match these filters. Try another name or relax the requirements.</p>}
+                  {discoveryResults.slice(0,3).map((player,index) => <div key={player.cricsheet_id} className="flex items-center"><button type="button" role="option" aria-selected={index === highlightedSuggestion} key={player.cricsheet_id} onMouseDown={e => e.preventDefault()} onClick={() => selectResult(player)} className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-xs ${index === highlightedSuggestion ? 'bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-semibold' : 'hover:bg-slate-50 dark:hover:bg-white/5 text-slate-700 dark:text-slate-200'}`}><span>{player.name}<small className="block text-[10px] text-slate-500">{player.role?.label} · {player.competition.toUpperCase()}</small></span><ArrowRight size={14}/></button><button type="button" aria-label={`${isShortlisted(player.cricsheet_id) ? 'Remove' : 'Shortlist'} ${player.name}`} onMouseDown={e => e.preventDefault()} onClick={() => saveTarget(player.cricsheet_id)} className="px-2 text-slate-400 hover:text-slate-700 dark:hover:text-white">{isShortlisted(player.cricsheet_id) ? <BookmarkCheck size={15}/> : <Bookmark size={15}/>}</button></div>)}
+                  {searchQuery && !discoveryResults.length && <p className="p-3 text-xs text-slate-500 dark:text-slate-400">No players match these filters. Try another name or relax the requirements.</p>}
                 </>}
               </div>}
 
               <div 
-                className="w-full flex items-center bg-[#071018] border rounded-full px-3.5 py-1.5 transition-all duration-300 shadow-xl"
+                className="w-full flex items-center bg-white dark:bg-[#071018] border rounded-full px-3.5 py-1.5 transition-all duration-300 shadow-md dark:shadow-xl"
                 style={{
                   borderColor: searchQuery ? accentColor : `${accentColor}44`,
-                  boxShadow: searchQuery ? `0 0 18px ${glowColor}` : `0 4px 16px rgba(0,0,0,0.5), 0 0 8px ${glowColor}`,
+                  boxShadow: searchQuery ? `0 0 18px ${glowColor}` : `0 4px 16px rgba(0,0,0,0.06), 0 0 8px ${glowColor}`,
                 }}
               >
                 <Search 
@@ -481,7 +486,7 @@ export function ScoutCinematicRoom({
                   }}
                   onChange={(e) => { setSearchQuery(e.target.value); setSuggestionsOpen(true); setHighlightedSuggestion(0); }}
                   placeholder={`What kind of player are you looking for${theme ? ` for ${theme.shortName}` : ""}?`}
-                  className="w-full bg-transparent border-0 px-2.5 py-1 text-xs text-[#EFF5F7] placeholder-[#5A6D7B] focus:outline-none font-medium"
+                  className="w-full bg-transparent border-0 px-2.5 py-1 text-xs text-slate-900 dark:text-[#EFF5F7] placeholder-slate-400 dark:placeholder-[#5A6D7B] focus:outline-none font-medium"
                 />
                 <button
                   type="button"
@@ -507,17 +512,17 @@ export function ScoutCinematicRoom({
                 <button
                   type="button"
                   onClick={() => setRoleDropdownOpen((v) => !v)}
-                  className="flex items-center gap-1 bg-[#09141D] hover:bg-[#0F1E2B] border border-[#1C2E3C] px-2.5 py-1 rounded-lg text-[#A6B8C4] transition-all cursor-pointer"
+                  className="flex items-center gap-1 bg-white dark:bg-[#09141D] hover:bg-slate-50 dark:hover:bg-[#0F1E2B] border border-slate-200 dark:border-[#1C2E3C] px-2.5 py-1 rounded-lg text-slate-700 dark:text-[#A6B8C4] shadow-xs transition-all cursor-pointer"
                 >
                   <span className="text-[10px]">👤</span>
                   <span>{role ? role.replace("_", " ") : "Role"}</span>
-                  <ChevronDown className="w-2.5 h-2.5 text-[#5D6F7C]" />
+                  <ChevronDown className="w-2.5 h-2.5 text-slate-400 dark:text-[#5D6F7C]" />
                 </button>
                 {roleDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1 w-44 bg-[#0A141E] border border-[#1C2E3C] rounded-xl shadow-2xl p-1 z-50 space-y-0.5">
+                  <div className="absolute top-full left-0 mt-1 w-44 bg-white dark:bg-[#0A141E] border border-slate-200 dark:border-[#1C2E3C] rounded-xl shadow-xl p-1 z-50 space-y-0.5 text-slate-800 dark:text-white">
                     <button 
                       onClick={() => { setRole(""); setRoleDropdownOpen(false); }} 
-                      className="w-full text-left px-2 py-1 rounded text-xs hover:bg-white/5"
+                      className="w-full text-left px-2 py-1 rounded text-xs hover:bg-slate-100 dark:hover:bg-white/5"
                     >
                       All Roles
                     </button>
@@ -530,7 +535,7 @@ export function ScoutCinematicRoom({
                           setRoleDropdownOpen(false);
                         }}
                         className={`w-full text-left px-2 py-1 rounded text-xs capitalize ${
-                          role === r ? "bg-white/10 text-white font-bold" : "text-[#8E9FA9] hover:bg-white/5"
+                          role === r ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-bold" : "text-slate-600 dark:text-[#8E9FA9] hover:bg-slate-50 dark:hover:bg-white/5"
                         }`}
                       >
                         {r.replace("_", " ")}
@@ -546,14 +551,14 @@ export function ScoutCinematicRoom({
                 <button
                   type="button"
                   onClick={() => setCountryDropdownOpen((v) => !v)}
-                  className="flex items-center gap-1 bg-[#09141D] hover:bg-[#0F1E2B] border border-[#1C2E3C] px-2.5 py-1 rounded-lg text-[#A6B8C4] transition-all cursor-pointer"
+                  className="flex items-center gap-1 bg-white dark:bg-[#09141D] hover:bg-slate-50 dark:hover:bg-[#0F1E2B] border border-slate-200 dark:border-[#1C2E3C] px-2.5 py-1 rounded-lg text-slate-700 dark:text-[#A6B8C4] shadow-xs transition-all cursor-pointer"
                 >
                   <span className="text-[10px]">🌐</span>
                   <span>{selectedCountry === "All" ? "Country" : selectedCountry}</span>
-                  <ChevronDown className="w-2.5 h-2.5 text-[#5D6F7C]" />
+                  <ChevronDown className="w-2.5 h-2.5 text-slate-400 dark:text-[#5D6F7C]" />
                 </button>
                 {countryDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1 w-32 bg-[#0A141E] border border-[#1C2E3C] rounded-xl shadow-2xl p-1 z-50 space-y-0.5">
+                  <div className="absolute top-full left-0 mt-1 w-32 bg-white dark:bg-[#0A141E] border border-slate-200 dark:border-[#1C2E3C] rounded-xl shadow-xl p-1 z-50 space-y-0.5 text-slate-800 dark:text-white">
                     {["All", "India", "Australia", "South Africa", "West Indies", "Overseas"].map((c) => (
                       <button
                         key={c}
@@ -567,7 +572,7 @@ export function ScoutCinematicRoom({
                           else setSelectedComps([]);
                         }}
                         className={`w-full text-left px-2 py-1 rounded text-xs ${
-                          selectedCountry === c ? "bg-white/10 text-white font-bold" : "text-[#8E9FA9] hover:bg-white/5"
+                          selectedCountry === c ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-bold" : "text-slate-600 dark:text-[#8E9FA9] hover:bg-slate-50 dark:hover:bg-white/5"
                         }`}
                       >
                         {c}
@@ -583,14 +588,14 @@ export function ScoutCinematicRoom({
                 <button
                   type="button"
                   onClick={() => setAgeDropdownOpen((v) => !v)}
-                  className="flex items-center gap-1 bg-[#09141D] hover:bg-[#0F1E2B] border border-[#1C2E3C] px-2.5 py-1 rounded-lg text-[#A6B8C4] transition-all cursor-pointer"
+                  className="flex items-center gap-1 bg-white dark:bg-[#09141D] hover:bg-slate-50 dark:hover:bg-[#0F1E2B] border border-slate-200 dark:border-[#1C2E3C] px-2.5 py-1 rounded-lg text-slate-700 dark:text-[#A6B8C4] shadow-xs transition-all cursor-pointer"
                 >
                   <span className="text-[10px]">🎂</span>
                   <span>{selectedAge === "All" ? "Age" : selectedAge}</span>
-                  <ChevronDown className="w-2.5 h-2.5 text-[#5D6F7C]" />
+                  <ChevronDown className="w-2.5 h-2.5 text-slate-400 dark:text-[#5D6F7C]" />
                 </button>
                 {ageDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1 w-28 bg-[#0A141E] border border-[#1C2E3C] rounded-xl shadow-2xl p-1 z-50 space-y-0.5">
+                  <div className="absolute top-full left-0 mt-1 w-28 bg-white dark:bg-[#0A141E] border border-slate-200 dark:border-[#1C2E3C] rounded-xl shadow-xl p-1 z-50 space-y-0.5 text-slate-800 dark:text-white">
                     {["All", "< 23", "23–26", "27–30", "31+"].map((a) => (
                       <button
                         key={a}
@@ -600,7 +605,7 @@ export function ScoutCinematicRoom({
                           if (a === "< 23") setMinBalls(60);
                         }}
                         className={`w-full text-left px-2 py-1 rounded text-xs ${
-                          selectedAge === a ? "bg-white/10 text-white font-bold" : "text-[#8E9FA9] hover:bg-white/5"
+                          selectedAge === a ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-bold" : "text-slate-600 dark:text-[#8E9FA9] hover:bg-slate-50 dark:hover:bg-white/5"
                         }`}
                       >
                         {a}
@@ -616,7 +621,7 @@ export function ScoutCinematicRoom({
                 <button
                   type="button"
                   onClick={() => setLeagueDropdownOpen((v) => !v)}
-                  className="flex items-center gap-1 bg-[#09141D] hover:bg-[#0F1E2B] border border-[#1C2E3C] px-2.5 py-1 rounded-lg text-[#A6B8C4] transition-all cursor-pointer"
+                  className="flex items-center gap-1 bg-white dark:bg-[#09141D] hover:bg-slate-50 dark:hover:bg-[#0F1E2B] border border-slate-200 dark:border-[#1C2E3C] px-2.5 py-1 rounded-lg text-slate-700 dark:text-[#A6B8C4] shadow-xs transition-all cursor-pointer"
                 >
                   <span className="text-[10px]">⭕</span>
                   <span>
@@ -626,16 +631,16 @@ export function ScoutCinematicRoom({
                         ? selectedComps[0].toUpperCase() 
                         : `${selectedComps.length} Leagues`}
                   </span>
-                  <ChevronDown className="w-2.5 h-2.5 text-[#5D6F7C]" />
+                  <ChevronDown className="w-2.5 h-2.5 text-slate-400 dark:text-[#5D6F7C]" />
                 </button>
                 {leagueDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1 w-40 bg-[#0A141E] border border-[#1C2E3C] rounded-xl shadow-2xl p-1 z-50 space-y-0.5">
+                  <div className="absolute top-full left-0 mt-1 w-40 bg-white dark:bg-[#0A141E] border border-slate-200 dark:border-[#1C2E3C] rounded-xl shadow-xl p-1 z-50 space-y-0.5 text-slate-800 dark:text-white">
                     <button
                       onClick={() => {
                         setSelectedComps([]);
                         setLeagueDropdownOpen(false);
                       }}
-                      className="w-full text-left px-2 py-1 rounded text-xs text-[#8E9FA9] hover:bg-white/5"
+                      className="w-full text-left px-2 py-1 rounded text-xs text-slate-600 dark:text-[#8E9FA9] hover:bg-slate-100 dark:hover:bg-white/5"
                     >
                       All 6 Leagues
                     </button>
@@ -645,8 +650,8 @@ export function ScoutCinematicRoom({
                         onClick={() => toggleLeague(l.code)}
                         className={`w-full flex items-center justify-between px-2 py-1 rounded text-xs ${
                           selectedComps.includes(l.code)
-                            ? "bg-white/10 text-white font-bold"
-                            : "text-[#8E9FA9] hover:bg-white/5"
+                            ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-bold"
+                            : "text-slate-600 dark:text-[#8E9FA9] hover:bg-slate-50 dark:hover:bg-white/5"
                         }`}
                       >
                         <span>{l.name}</span>
@@ -664,8 +669,8 @@ export function ScoutCinematicRoom({
                 onClick={() => setMinBalls(minBalls === 120 ? 60 : 120)}
                 className={`p-1 rounded-lg border transition-all cursor-pointer ${
                   minBalls !== 120 
-                    ? "bg-white/10 border-[var(--scout-accent)] text-[var(--scout-accent)]" 
-                    : "bg-[#09141D] border-[#1C2E3C] text-[#6E818F] hover:text-white"
+                    ? "bg-slate-100 dark:bg-white/10 border-[var(--scout-accent)] text-[var(--scout-accent)]" 
+                    : "bg-white dark:bg-[#09141D] border-slate-200 dark:border-[#1C2E3C] text-slate-500 dark:text-[#6E818F] hover:text-slate-900 dark:hover:text-white shadow-xs"
                 }`}
                 title={`Sample threshold (${minBalls}b)`}
               >
@@ -673,51 +678,66 @@ export function ScoutCinematicRoom({
               </button>
             </div>
 
-            {/* 4 Quick Action Prompt Cards with Increased Size to close gap with ALL LEAGUES box */}
+            {/* 4 Quick Action Prompt Cards with Authentic Player Imagery */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              {QUICK_CARDS.map((card) => (
-                <div
-                  key={card.title}
-                  onClick={card.action}
-                  className="group relative bg-[#08121B] hover:bg-[#0C1A27] border rounded-2xl p-3 sm:p-3.5 flex flex-col justify-end h-36 sm:h-40 cursor-pointer transition-all duration-300 shadow-xl hover:-translate-y-1 overflow-hidden"
-                  style={{
-                    borderColor: `${accentColor}33`,
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = accentColor;
-                    e.currentTarget.style.boxShadow = `0 12px 28px rgba(0,0,0,0.6), 0 0 16px ${glowColor}`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = `${accentColor}33`;
-                    e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.5)";
-                  }}
-                >
-                  <svg aria-hidden="true" viewBox="0 0 180 120" className="absolute inset-0 w-full h-full opacity-40 group-hover:opacity-70 transition-opacity" fill="none" stroke={accentColor}><ellipse cx="90" cy="60" rx="76" ry="48"/><ellipse cx="90" cy="60" rx="52" ry="32" strokeDasharray="3 5"/><rect x="80" y="32" width="20" height="56" rx="2"/><path d="M78 40h24M78 80h24M90 10v15M90 95v15M10 60h20M150 60h20"/><circle cx="45" cy="40" r="4"/><circle cx="133" cy="77" r="4"/><path d="M45 40L90 60l43 17" strokeDasharray="4 4"/></svg>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#060D15] via-[#060D15]/80 to-transparent" />
+              {QUICK_CARDS.map((card) => {
+                const Icon = card.icon;
+                return (
+                  <div
+                    key={card.title}
+                    onClick={card.action}
+                    className="group relative bg-white dark:bg-[#08121B] hover:bg-slate-50 dark:hover:bg-[#0C1A27] border border-slate-200/90 dark:border-white/10 rounded-2xl p-2.5 flex flex-col justify-between h-44 cursor-pointer transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-1 overflow-hidden"
+                  >
+                    {/* Top photo banner + role tag */}
+                    <div className="relative w-full h-24 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-900 shrink-0">
+                      <img 
+                        src={card.img} 
+                        alt={card.title} 
+                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                      <div className="absolute top-2 left-2 flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-black/65 backdrop-blur-md text-[9px] font-mono font-bold text-white border border-white/15">
+                        <Icon className="w-2.5 h-2.5 text-emerald-400" />
+                        <span>{card.role}</span>
+                      </div>
+                    </div>
 
-                  <div className="relative z-10 space-y-1">
-                    <span className="inline-block text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-[#8FA3B2] group-hover:text-white transition-colors">
-                      {card.sub}
-                    </span>
-                    <p className="text-xs sm:text-sm font-black text-white group-hover:text-[var(--scout-accent)] transition-colors leading-tight">
-                      {card.title}
-                    </p>
-                    <div 
-                      className="w-4 h-0.5 rounded-full transition-all duration-300 group-hover:w-8"
-                      style={{ backgroundColor: accentColor }}
-                    />
+                    {/* Bottom title & prompt info */}
+                    <div className="pt-2 px-1 relative z-10 flex items-end justify-between">
+                      <div>
+                        <span className="block text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                          {card.sub}
+                        </span>
+                        <p className="text-xs sm:text-sm font-black text-slate-900 dark:text-white leading-tight group-hover:text-primary transition-colors">
+                          {card.title}
+                        </p>
+                      </div>
+                      <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all">
+                        <ArrowRight className="w-3 h-3 text-slate-500 dark:text-slate-300 group-hover:text-white transition-colors" />
+                      </div>
+                    </div>
                   </div>
-
-                </div>
-
-              ))}
+                );
+              })}
             </div>
           </div>
 
           {/* ── CENTER COLUMN (4 cols): 3D Holographic Globe & Network Connections ── */}
           <div className="lg:col-span-4 flex flex-col items-center justify-center relative min-h-[300px]">
-            <div className="relative w-full max-w-[320px] aspect-square flex items-center justify-center">
+            <div className="relative w-full max-w-[330px] aspect-square flex items-center justify-center rounded-3xl bg-slate-900 dark:bg-[#07121D]/90 border border-slate-800 dark:border-white/10 shadow-xl p-3 overflow-hidden">
+              {/* Radar Grid Backdrop */}
+              <div aria-hidden="true" className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#ffffff22_1px,transparent_1px)] [background-size:16px_16px]" />
+              
+              {/* Top HUD Label on radar */}
+              <div className="absolute top-3 inset-x-0 flex items-center justify-between px-4 z-20 pointer-events-none">
+                <span className="text-[9px] font-mono font-bold tracking-widest text-emerald-400 uppercase flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  RADAR ACTIVE
+                </span>
+                <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider">
+                  6 LEAGUES
+                </span>
+              </div>
               {/* Outer atmospheric aura */}
               <div 
                 className="absolute inset-4 rounded-full blur-2xl opacity-20 pointer-events-none"
@@ -878,14 +898,14 @@ export function ScoutCinematicRoom({
           <div className="lg:col-span-3 space-y-3">
             
             {/* Top HUD Card: SCOUTING NETWORK */}
-            <div className="bg-[#060F17]/90 border border-[#162734] rounded-xl p-3 shadow-lg backdrop-blur-md">
-              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#A8BCC9] pb-2 border-b border-[#132330]">
+            <div className="bg-white/90 dark:bg-[#060F17]/90 border border-slate-200 dark:border-[#162734] rounded-xl p-3 shadow-md dark:shadow-lg backdrop-blur-md">
+              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-700 dark:text-[#A8BCC9] pb-2 border-b border-slate-200 dark:border-[#132330]">
                 <div className="flex items-center gap-1.5">
-                  <span style={{ color: accentColor }}>›</span>
+                  <span className="text-primary font-bold">›</span>
                   <span className="tracking-wider uppercase">SCOUTING NETWORK</span>
                 </div>
 
-                <span className="text-[9px] text-[#556775]">6 CONNECTED</span>
+                <span className="text-[9px] font-bold text-emerald-600 dark:text-emerald-400">6 CONNECTED</span>
               </div>
 
               <div className="space-y-1.5 pt-2">
@@ -895,24 +915,23 @@ export function ScoutCinematicRoom({
                     <button
                       key={league.code}
                       onClick={() => toggleLeague(league.code)}
-                      className="w-full flex items-center justify-between text-[11px] font-mono py-0.5 hover:text-white transition-colors cursor-pointer"
+                      className="w-full flex items-center justify-between text-[11px] font-mono py-0.5 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                     >
                       <div className="flex items-center gap-1.5">
                         <span 
-                          className="w-1.5 h-1.5 rounded-full transition-all"
-                          style={{
-                            backgroundColor: isActive ? accentColor : "#445564",
-                            boxShadow: isActive ? `0 0 6px ${accentColor}` : "none",
-                          }}
+                          className={`w-1.5 h-1.5 rounded-full transition-all ${
+                            isActive ? "bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]" : "bg-slate-300 dark:bg-slate-600"
+                          }`}
                         />
-                        <span className={isActive ? "text-white font-bold" : "text-[#758694]"}>
+                        <span className={isActive ? "text-slate-900 dark:text-white font-bold" : "text-slate-500 dark:text-[#758694]"}>
                           {league.name}
                         </span>
                       </div>
 
                       <span 
-                        className="text-[9px] font-semibold"
-                        style={{ color: isActive ? accentColor : "#4E606E" }}
+                        className={`text-[9px] font-bold ${
+                          isActive ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-slate-500"
+                        }`}
                       >
                         {isActive ? "Connected" : "Standby"}
                       </span>
@@ -922,48 +941,52 @@ export function ScoutCinematicRoom({
               </div>
             </div>
 
-            {/* Pinned Note on Cork/Cardboard with Red Pushpin */}
-            <div className="relative group rotate-1 hover:rotate-0 transition-transform duration-300">
-              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-red-600 border border-red-300 shadow-md z-20 flex items-center justify-center">
-                <div className="w-1 h-1 rounded-full bg-white/70" />
+            {/* Tactical Mandate Card */}
+            <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#060F17]/90 p-3 shadow-md dark:shadow-lg backdrop-blur-md">
+              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-700 dark:text-[#A8BCC9] pb-1.5 border-b border-slate-200 dark:border-[#132330]">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-primary font-bold">›</span>
+                  <span className="tracking-wider uppercase">SCOUT MANDATE</span>
+                </div>
+                <Shield className="w-3.5 h-3.5 text-primary" />
               </div>
-
-              <div className="bg-[#D9D1BF] text-[#1E2A30] rounded-lg p-3 shadow-xl border border-[#B5AB94] space-y-0.5 font-serif">
-                <p className="font-bold text-xs tracking-tight text-[#16242C] leading-tight">
-                  Right Player
-                </p>
-                <p className="font-bold text-xs tracking-tight text-[#16242C] leading-tight">
-                  Right Role
-                </p>
-                <p className="font-bold text-xs tracking-tight text-[#16242C] leading-tight">
-                  Stronger Squad
-                </p>
+              <div className="pt-2 space-y-1.5">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-100">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                  <span>Right Player</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-100">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                  <span>Right Role</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-100">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
+                  <span>Stronger Squad</span>
+                </div>
               </div>
             </div>
 
             {/* Bottom HUD Card: RECENT SEARCHES */}
-            <div className="bg-[#060F17]/90 border border-[#162734] rounded-xl p-3 shadow-lg backdrop-blur-md">
-              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#A8BCC9] pb-1.5 border-b border-[#132330]">
+            <div className="bg-white/90 dark:bg-[#060F17]/90 border border-slate-200 dark:border-[#162734] rounded-xl p-3 shadow-md dark:shadow-lg backdrop-blur-md">
+              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-700 dark:text-[#A8BCC9] pb-1.5 border-b border-slate-200 dark:border-[#132330]">
                 <div className="flex items-center gap-1.5">
-                  <span style={{ color: accentColor }}>›</span>
+                  <span className="text-primary font-bold">›</span>
                   <span className="tracking-wider uppercase">RECENT SEARCHES</span>
                 </div>
-
-                <ChevronDown className="w-3 h-3 text-[#556775] -rotate-90" />
+                <ChevronDown className="w-3 h-3 text-slate-400 dark:text-[#556775] -rotate-90" />
               </div>
 
-              <div className="space-y-1 pt-1.5 text-[11px] font-mono text-[#8295A2]">
+              <div className="space-y-1 pt-1.5 text-xs text-slate-600 dark:text-[#8295A2]">
                 {RECENT_SEARCHES.map((item) => (
                   <button
                     key={item.label}
                     onClick={item.action}
-                    className="w-full text-left py-0.5 px-1 rounded hover:bg-white/5 hover:text-white transition-colors truncate cursor-pointer flex items-center gap-1.5 group"
+                    className="w-full text-left py-1 px-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors truncate cursor-pointer flex items-center gap-2 group font-medium"
                   >
                     <span 
-                      className="w-1 h-1 rounded-full group-hover:scale-125 transition-transform" 
-                      style={{ backgroundColor: accentColor }} 
+                      className="w-1.5 h-1.5 rounded-full bg-slate-400 group-hover:bg-primary group-hover:scale-125 transition-all shrink-0" 
                     />
-                    <span className="truncate">{item.label}</span>
+                    <span className="truncate text-xs">{item.label}</span>
                   </button>
                 ))}
               </div>
@@ -973,23 +996,23 @@ export function ScoutCinematicRoom({
         </div>
 
         {/* ── 3. TACTICAL SCOUT DESK (LOWER HALF OF ROOM) ── */}
-        <div className="mt-6 pt-5 border-t border-[#12202C] relative">
+        <div className="mt-6 pt-5 border-t border-slate-200 dark:border-[#12202C] relative">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end relative z-10">
             
             {/* ── LEFT DESK: Stenciled Binder & Radar with Seam-Stitched Red Ball (3 cols) ── */}
             <div className="lg:col-span-3 flex flex-col items-center sm:items-start space-y-3">
               <div 
-                className="w-full bg-[#141210] border-2 rounded-2xl p-3.5 shadow-2xl relative overflow-hidden transition-all duration-300"
+                className="w-full bg-white dark:bg-[#141210] border-2 rounded-2xl p-3.5 shadow-md dark:shadow-2xl relative overflow-hidden transition-all duration-300"
                 style={{ borderColor: `${accentColor}33` }}
               >
-                <div className="flex items-center justify-between border-b border-[#2C2620] pb-1.5">
-                  <span className="font-display font-black text-xs tracking-widest text-[#B5A48F] uppercase">
+                <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#2C2620] pb-1.5">
+                  <span className="font-display font-black text-xs tracking-widest text-slate-800 dark:text-[#B5A48F] uppercase">
                     ALL LEAGUES
                   </span>
                   <div className="flex items-center gap-1">
-                    <Coffee className="w-3 h-3 text-[#B5A48F]" />
-                    <span className="text-[8px] font-mono text-[#7D7062]">CRICFIELD</span>
+                    <Coffee className="w-3 h-3 text-slate-600 dark:text-[#B5A48F]" />
+                    <span className="text-[8px] font-mono text-slate-500 dark:text-[#7D7062]">CRICFIELD</span>
                   </div>
 
                 </div>
@@ -1003,7 +1026,7 @@ export function ScoutCinematicRoom({
                       className={`p-1 rounded border transition-colors cursor-pointer ${
                         selectedComps.includes(l.code)
                           ? "bg-[var(--scout-accent)] text-[#050B11] border-[var(--scout-accent)]"
-                          : "bg-[#1E1A16] border-[#2E2820] text-[#9E8F7F] hover:text-white"
+                          : "bg-slate-100 dark:bg-[#1E1A16] border-slate-200 dark:border-[#2E2820] text-slate-700 dark:text-[#9E8F7F] hover:bg-slate-200 dark:hover:text-white"
                       }`}
                     >
                       {l.badge}
@@ -1074,34 +1097,56 @@ export function ScoutCinematicRoom({
             {/* ── CENTER DESK: The Master Scout Dossier Clipboard (6 cols) ── */}
             <div className="lg:col-span-6">
               <div 
-                className="bg-[#0A131C] border-2 rounded-2xl p-4 sm:p-5 shadow-2xl relative transition-all duration-300"
+                className="bg-white dark:bg-[#0A131C] border-2 rounded-2xl p-4 sm:p-5 shadow-lg dark:shadow-2xl relative transition-all duration-300"
                 style={{
                   borderColor: isDossierShortlisted ? accentColor : `${accentColor}44`,
-                  boxShadow: `0 16px 40px rgba(0,0,0,0.6), 0 0 24px ${glowColor}`,
+                  boxShadow: `0 16px 40px rgba(0,0,0,0.06), 0 0 24px ${glowColor}`,
                 }}
               >
                 <div className="mb-4 flex gap-2" role="group" aria-label="Scout views">
-                  <button type="button" aria-pressed={activeTab === 'search'} onClick={() => { setActiveTab('search'); onSelectPlayer(null); }} className="rounded-lg border border-white/15 px-3 py-2 text-xs">Scout Room Search</button>
-                  <button type="button" aria-pressed={activeTab === 'shortlist'} onClick={() => { setActiveTab(activeTab === 'shortlist' ? 'search' : 'shortlist'); onSelectPlayer(null); }} className="rounded-lg border border-white/15 px-3 py-2 text-xs">Shortlisted Targets ({shortlist.length})</button>
+                  <button 
+                    type="button" 
+                    aria-pressed={activeTab === 'search'} 
+                    onClick={() => { setActiveTab('search'); onSelectPlayer(null); }} 
+                    className={`rounded-lg border px-3 py-2 text-xs font-semibold transition-all ${
+                      activeTab === 'search' 
+                        ? "bg-slate-200 dark:bg-white/20 border-slate-300 dark:border-white/30 text-slate-900 dark:text-white shadow-xs" 
+                        : "border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                    }`}
+                  >
+                    Scout Room Search
+                  </button>
+                  <button 
+                    type="button" 
+                    aria-pressed={activeTab === 'shortlist'} 
+                    onClick={() => { setActiveTab(activeTab === 'shortlist' ? 'search' : 'shortlist'); onSelectPlayer(null); }} 
+                    className={`rounded-lg border px-3 py-2 text-xs font-semibold transition-all ${
+                      activeTab === 'shortlist' 
+                        ? "bg-slate-200 dark:bg-white/20 border-slate-300 dark:border-white/30 text-slate-900 dark:text-white shadow-xs" 
+                        : "border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                    }`}
+                  >
+                    Shortlisted Targets ({shortlist.length})
+                  </button>
                 </div>
 
                 {activeTab === 'shortlist' ? <section aria-label="Shortlisted targets" className="space-y-2">
-                  {shortlist.length ? shortlist.map(player => <div key={player.cricsheet_id} className="flex items-center justify-between gap-3 rounded-lg border border-white/10 p-3"><div><Link href={`/scout/player/${player.cricsheet_id}`} className="text-sm font-bold">{player.name}</Link><button type="button" className="mt-1 block text-[10px] underline" onClick={() => setEvaluatedTargetId(player.cricsheet_id)}>Inspect recruitment fit</button><p className="mt-1 text-xs text-slate-400">{player.role?.label} · {player.competition.toUpperCase()}</p></div><button type="button" className="text-xs text-slate-400 hover:text-white" onClick={() => onToggleShortlist(player.cricsheet_id)}>Remove target</button></div>) : <p className="p-4 text-xs text-slate-400">No targets yet. Shortlist players from search to build your squad.</p>}
-                </section> : !selectedPlayer || isShortlisted(selectedPlayer.cricsheet_id) ? <p className="p-4 text-xs text-slate-400">Search for a player above, or open Shortlisted Targets to review saved players.</p> : <>
+                  {shortlist.length ? shortlist.map(player => <div key={player.cricsheet_id} className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 p-3"><div><Link href={`/scout/player/${player.cricsheet_id}`} className="text-sm font-bold text-slate-900 dark:text-white">{player.name}</Link><button type="button" className="mt-1 block text-[10px] underline text-slate-600 dark:text-slate-300" onClick={() => setEvaluatedTargetId(player.cricsheet_id)}>Inspect recruitment fit</button><p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{player.role?.label} · {player.competition.toUpperCase()}</p></div><button type="button" className="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white" onClick={() => onToggleShortlist(player.cricsheet_id)}>Remove target</button></div>) : <p className="p-4 text-xs text-slate-500 dark:text-slate-400">No targets yet. Shortlist players from search to build your squad.</p>}
+                </section> : !selectedPlayer || isShortlisted(selectedPlayer.cricsheet_id) ? <p className="p-4 text-xs text-slate-500 dark:text-slate-400">Search for a player above, or open Shortlisted Targets to review saved players.</p> : <>
                 <div id="scout-selected-player" className="scroll-mt-20" />
-                {selectedPlayer && <div className="mb-3 rounded-lg border border-white/10 bg-[#0b1118] p-3 text-xs">
-                  <p className="mb-2 font-bold">Recruitment fit · {theme?.shortName ?? 'All teams'}</p>
-                  {[['Discipline', selectedPlayer.discipline === discipline], ['Role', !role || selectedPlayer.role?.label?.toLowerCase().replaceAll(' ', '_').includes(role)], ['Phase', phase === 'all' || selectedPlayer.phase === phase], ['League', !selectedComps.length || selectedComps.includes(selectedPlayer.competition)], ['Minimum sample', selectedPlayer.balls >= minBalls]].map(([label, matched]) => <p key={String(label)} className="flex justify-between py-1 text-slate-400"><span>{String(label)}</span><span>{matched ? '✓ Matched' : 'Not matched'}</span></p>)}
+                {selectedPlayer && <div className="mb-3 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0b1118] p-3 text-xs text-slate-700 dark:text-slate-300">
+                  <p className="mb-2 font-bold text-slate-900 dark:text-white">Recruitment fit · {theme?.shortName ?? 'All teams'}</p>
+                  {[['Discipline', selectedPlayer.discipline === discipline], ['Role', !role || selectedPlayer.role?.label?.toLowerCase().replaceAll(' ', '_').includes(role)], ['Phase', phase === 'all' || selectedPlayer.phase === phase], ['League', !selectedComps.length || selectedComps.includes(selectedPlayer.competition)], ['Minimum sample', selectedPlayer.balls >= minBalls]].map(([label, matched]) => <p key={String(label)} className="flex justify-between py-1 text-slate-600 dark:text-slate-400"><span>{String(label)}</span><span>{matched ? '✓ Matched' : 'Not matched'}</span></p>)}
                   <p className="mt-2 text-[10px] text-slate-500">Age, handedness, nationality, uncapped status and auction availability require verification.</p>
-                  <div className="mt-3 flex flex-wrap gap-3"><Link href={`/scout/player/${selectedPlayer.cricsheet_id}`}>Player report ↗</Link><Link href={`/ai-analyst/squad-dna?team=${selectedTeam ?? 'RCB'}`}>Team requirements ↗</Link><Link href={`/ai-analyst/auction-war-room?team=${selectedTeam ?? ''}&q=${encodeURIComponent(selectedPlayer.name)}`}>IPL 2027 recruitment ↗</Link></div>
+                  <div className="mt-3 flex flex-wrap gap-3"><Link href={`/scout/player/${selectedPlayer.cricsheet_id}`} className="text-slate-800 dark:text-slate-200 underline">Player report ↗</Link><Link href={`/ai-analyst/squad-dna?team=${localTeam ?? 'RCB'}`} className="text-slate-800 dark:text-slate-200 underline">Team requirements ↗</Link><Link href={`/ai-analyst/auction-war-room?team=${localTeam ?? ''}&q=${encodeURIComponent(selectedPlayer.name)}`} className="text-slate-800 dark:text-slate-200 underline">IPL 2027 recruitment ↗</Link></div>
                 </div>
 }
                 {/* Dossier Header: Avatar + Specs + SHORTLIST Badge */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#162634]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-[#162634]">
                   <div className="flex items-center gap-3">
                     {/* Player photo / avatar */}
                     <div 
-                      className="w-14 h-14 rounded-xl overflow-hidden border-2 flex items-center justify-center font-display font-black text-base bg-[#050C14] shrink-0 shadow-md"
+                      className="w-14 h-14 rounded-xl overflow-hidden border-2 flex items-center justify-center font-display font-black text-base bg-slate-100 dark:bg-[#050C14] shrink-0 shadow-sm dark:shadow-md"
                       style={{ borderColor: accentColor }}
                     >
                       {activeDossier.photo ? (
@@ -1121,16 +1166,16 @@ export function ScoutCinematicRoom({
 
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-2">
-                        <h3 className="font-display font-black text-lg text-white tracking-wide">
+                        <h3 className="font-display font-black text-lg text-slate-900 dark:text-white tracking-wide">
                           {activeDossier.name}
                         </h3>
                         <span className="text-sm">{activeDossier.flag}</span>
                       </div>
 
-                      <p className="text-[11px] text-[#9BB0BF] font-medium leading-none">
+                      <p className="text-[11px] text-slate-600 dark:text-[#9BB0BF] font-medium leading-none">
                         {activeDossier.roleSpec}
                       </p>
-                      <p className="text-[10px] font-mono text-[#627685]">
+                      <p className="text-[10px] font-mono text-slate-500 dark:text-[#627685]">
                         {activeDossier.meta}
                       </p>
                     </div>
@@ -1162,7 +1207,7 @@ export function ScoutCinematicRoom({
 
 
                 {/* Two Columns: STRENGTHS vs WHY CONSIDER? */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-3 border-b border-[#162634] text-[11px]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-3 border-b border-slate-200 dark:border-[#162634] text-[11px]">
                   {/* Strengths */}
                   <div className="space-y-1">
                     <span 
@@ -1171,7 +1216,7 @@ export function ScoutCinematicRoom({
                     >
                       STRENGTHS
                     </span>
-                    <ul className="space-y-1 text-[#C4D5E0]">
+                    <ul className="space-y-1 text-slate-700 dark:text-[#C4D5E0]">
                       {activeDossier.strengths.map((s, idx) => (
                         <li key={idx} className="flex items-start gap-1.5">
                           <span style={{ color: accentColor }} className="font-bold">›</span>
@@ -1190,7 +1235,7 @@ export function ScoutCinematicRoom({
                     >
                       WHY CONSIDER?
                     </span>
-                    <p className="text-[#8FA2B0] leading-relaxed">
+                    <p className="text-slate-600 dark:text-[#8FA2B0] leading-relaxed">
                       {activeDossier.whyConsider}
                     </p>
                   </div>
@@ -1202,27 +1247,27 @@ export function ScoutCinematicRoom({
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3">
                   <div className="flex items-center gap-4 font-mono">
                     <div>
-                      <span className="block text-[9px] text-[#627685] uppercase">SR (16-20)</span>
-                      <strong className="text-base font-bold text-white tracking-tight">
+                      <span className="block text-[9px] text-slate-500 dark:text-[#627685] uppercase">SR (16-20)</span>
+                      <strong className="text-base font-bold text-slate-900 dark:text-white tracking-tight">
                         {activeDossier.srDeath}
                       </strong>
                     </div>
 
 
-                    <div className="h-6 w-px bg-[#162634]" />
+                    <div className="h-6 w-px bg-slate-200 dark:bg-[#162634]" />
 
                     <div>
-                      <span className="block text-[9px] text-[#627685] uppercase">Avg (T20)</span>
-                      <strong className="text-base font-bold text-white tracking-tight">
+                      <span className="block text-[9px] text-slate-500 dark:text-[#627685] uppercase">Avg (T20)</span>
+                      <strong className="text-base font-bold text-slate-900 dark:text-white tracking-tight">
                         {activeDossier.avgT20}
                       </strong>
                     </div>
 
 
-                    <div className="h-6 w-px bg-[#162634]" />
+                    <div className="h-6 w-px bg-slate-200 dark:bg-[#162634]" />
 
                     <div>
-                      <span className="block text-[9px] text-[#627685] uppercase">Recent Form</span>
+                      <span className="block text-[9px] text-slate-500 dark:text-[#627685] uppercase">Recent Form</span>
                       <div className="flex items-end gap-1 h-4 pt-0.5">
                         {activeDossier.recentForm.map((val, idx) => (
                           <div
@@ -1245,12 +1290,7 @@ export function ScoutCinematicRoom({
                   {/* View Player File Action */}
                   <Link 
                     href={`/scout/player/${activeDossier.cricsheet_id}`}
-                    className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg border font-mono font-bold text-[11px] transition-all hover:brightness-110 cursor-pointer"
-                    style={{
-                      borderColor: "rgba(255,255,255,0.15)",
-                      backgroundColor: "rgba(255,255,255,0.04)",
-                      color: "#FFFFFF",
-                    }}
+                    className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg border font-mono font-bold text-[11px] transition-all hover:brightness-105 cursor-pointer bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border-slate-200 dark:border-white/15 text-slate-900 dark:text-white shadow-xs"
                   >
                     <span>View Player File</span>
                     <ArrowRight className="w-3 h-3" style={{ color: accentColor }} />
@@ -1263,17 +1303,17 @@ export function ScoutCinematicRoom({
 
             {/* ── RIGHT DESK: Wirebound Notepad with Interactive Checklist (3 cols) ── */}
             <div className="lg:col-span-3 space-y-3">
-              <div className="bg-[#0E1721] border border-[#1A2A38] rounded-xl p-3 shadow-xl relative overflow-hidden">
-                <div className="flex items-center justify-between border-b border-[#182634] pb-1.5 text-[9px] font-mono text-[#7D8F9C]">
+              <div className="bg-white dark:bg-[#0E1721] border border-slate-200 dark:border-[#1A2A38] rounded-xl p-3 shadow-md dark:shadow-xl relative overflow-hidden">
+                <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#182634] pb-1.5 text-[9px] font-mono text-slate-500 dark:text-[#7D8F9C]">
                   <span>RECRUITMENT REQUIREMENTS</span>
                   <span>CHECKLIST</span>
                 </div>
 
 
-                <div className="flex flex-wrap gap-3 pt-3 text-[10px] text-slate-400"><Link href={`/ai-analyst/squad-dna?team=${selectedTeam ?? 'RCB'}`} className="hover:text-white underline">Review team needs ↗</Link><Link href={`/ai-analyst/auction-war-room?team=${selectedTeam ?? ''}`} className="hover:text-white underline">Recruitment board ↗</Link></div>
+                <div className="flex flex-wrap gap-3 pt-3 text-[10px] text-slate-500 dark:text-slate-400"><Link href={`/ai-analyst/squad-dna?team=${localTeam ?? 'RCB'}`} className="hover:text-slate-900 dark:hover:text-white underline">Review team needs ↗</Link><Link href={`/ai-analyst/auction-war-room?team=${localTeam ?? ''}`} className="hover:text-slate-900 dark:hover:text-white underline">Recruitment board ↗</Link></div>
                 <div className="pt-3 text-xs" aria-live="polite">
-                  {evaluation ? <><p className="font-bold" style={{ color: accentColor }}>SRH custom fit · {evaluation.suitabilityScore.toFixed(1)}/10</p><p className="mt-1 text-[10px] text-slate-500">{evaluation.complete ? 'All criteria have evidence.' : `Confirmed points; possible range ${evaluation.suitabilityScore.toFixed(1)}–${evaluation.maximumPossible.toFixed(1)}. Missing attributes remain unknown.`}</p></> : <p className="text-slate-500">Shortlist a player to inspect their fit.</p>}
-                  <p className="mt-2 text-[9px] text-slate-500">Custom SRH blueprint: power 2 · left-arm 1.5 · death bowling 2 · uncapped 1 · overseas 1.5 · finisher 2. Not an official recruitment rating.</p>
+                  {evaluation ? <><p className="font-bold" style={{ color: accentColor }}>{theme?.shortName ?? "Franchise"} custom fit · {evaluation.suitabilityScore.toFixed(1)}/10</p><p className="mt-1 text-[10px] text-slate-500">{evaluation.complete ? 'All criteria have evidence.' : `Confirmed points; possible range ${evaluation.suitabilityScore.toFixed(1)}–${evaluation.maximumPossible.toFixed(1)}. Missing attributes remain unknown.`}</p></> : <p className="text-slate-500 dark:text-slate-400">Shortlist a player to inspect their fit.</p>}
+                  <p className="mt-2 text-[9px] text-slate-500 dark:text-slate-400">Custom {theme?.shortName ?? "team"} blueprint: power 2 · left-arm 1.5 · death bowling 2 · uncapped 1 · overseas 1.5 · finisher 2. Not an official recruitment rating.</p>
                 </div>
 
                 <div className="space-y-1.5 pt-2 text-[11px] font-mono">
@@ -1291,9 +1331,9 @@ export function ScoutCinematicRoom({
                     return (
                       <div
                         key={item.key}
-                        className="w-full flex items-center justify-between py-1 px-1 rounded hover:bg-white/5 transition-colors cursor-pointer text-left"
+                        className="w-full flex items-center justify-between py-1 px-1 rounded hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer text-left"
                       >
-                        <span className={checked ? "text-white font-medium" : "text-[#677A87]"}>
+                        <span className={checked ? "text-slate-900 dark:text-white font-medium" : "text-slate-600 dark:text-[#677A87]"}>
                           {item.label}
                         </span>
                         {checked ? (
@@ -1302,9 +1342,9 @@ export function ScoutCinematicRoom({
                             style={{ color: accentColor }} 
                           />
                         ) : (
-                          <Square className="w-3.5 h-3.5 shrink-0 text-[#40505D]" />
+                          <Square className="w-3.5 h-3.5 shrink-0 text-slate-400 dark:text-[#40505D]" />
                         )}
-                        <span className="text-[9px] text-slate-400">{status}</span>
+                        <span className="text-[9px] text-slate-500 dark:text-slate-400">{status}</span>
                       </div>
 
                     );

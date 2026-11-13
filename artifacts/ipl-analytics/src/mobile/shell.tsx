@@ -6,6 +6,7 @@ import { useTeamTheme, TEAM_REGISTRY, TEAM_CODE_TO_SLUG, type TeamCode } from "@
 import { searchPlayers, type PlayerSearchHit } from "@/lib/discovery-api";
 import { playerSlug } from "@/lib/aggregates";
 import { CricfieldLogo } from "@/components/cricfield-logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export const TABS: { href: string; label: string; icon: typeof House; match: (p: string) => boolean; cls?: string }[] = [
  { href: "/home", label: "Home", icon: House, match: (p: string) => p === "/" || p === "/home" },
@@ -49,7 +50,8 @@ export function TopBar() {
             <strong>{title ?? "CRICFIELD"}</strong>
           )}
         </div>
-        <div className="cfm-top-actions">
+        <div className="cfm-top-actions items-center">
+          <ThemeToggle />
           <button type="button" className="cfm-icon" aria-label="Search players and teams" onClick={() => setSearch(true)}>
             <Search size={20} />
           </button>

@@ -10,11 +10,16 @@ import { fetchMatchIntel, fetchPlayerIntel, fetchTeamIntel, fetchVenueIntel, mon
 
 function Shell({ title, sub, children, className = "" }: { title: string; sub: string; children: React.ReactNode; className?: string }) {
   return (
-    <section className={`rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-600/10 to-transparent p-4 space-y-3 min-w-0 ${className}`}>
-      <div className="flex items-baseline gap-2 flex-wrap">
-        <BrainCircuit className="w-4 h-4 text-violet-300 self-center" />
-        <h3 className="font-display font-bold text-sm uppercase tracking-wider text-white">{title}</h3>
-        <span className="text-[11px] text-muted-foreground">{sub}</span>
+    <section className={`rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-600/10 via-violet-500/5 to-transparent p-4 space-y-3 min-w-0 ${className}`}>
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <BrainCircuit className="w-4 h-4 text-violet-600 dark:text-violet-300 self-center" />
+          <h3 className="font-display font-bold text-sm uppercase tracking-wider text-slate-900 dark:text-white">{title}</h3>
+          <span className="text-[11px] text-slate-500 dark:text-muted-foreground">{sub}</span>
+        </div>
+        <span className="px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider bg-violet-100 dark:bg-violet-950/60 text-violet-800 dark:text-violet-300 border border-violet-300/80 dark:border-violet-500/30">
+          Warehouse Model Analytics
+        </span>
       </div>
       {children}
     </section>
@@ -35,26 +40,26 @@ export function PlayerIntelPanel({ player, className }: { player: string | numbe
     <Shell title="Decision Intelligence" sub="From the ball-by-ball warehouse" className={className}>
       <div className={`grid gap-3 ${sides.length + (a ? 1 : 0) >= 3 ? "lg:grid-cols-3" : "md:grid-cols-2"}`}>
         {sides.map(([side, s]) => (
-          <div key={side} className="rounded-xl border border-white/10 bg-white/[0.03] p-3 space-y-2 text-xs min-w-0">
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">{side}</div>
+          <div key={side} className="rounded-xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-white/[0.03] p-3 space-y-2 text-xs min-w-0 shadow-sm dark:shadow-none text-slate-700 dark:text-slate-300">
+            <div className="text-[10px] uppercase tracking-wider text-slate-600 dark:text-muted-foreground font-bold">{side}</div>
             {s.pressure && (
               <div className="flex items-baseline gap-2">
-                <HeartPulse className="w-3.5 h-3.5 text-fuchsia-400 self-center" />
-                <span>Pressure index <b className="text-white text-sm tabular-nums">{s.pressure.index ?? "—"}</b>/100 · {s.pressure.archetype}</span>
+                <HeartPulse className="w-3.5 h-3.5 text-fuchsia-600 dark:text-fuchsia-400 self-center" />
+                <span>Pressure index <b className="text-slate-900 dark:text-white text-sm tabular-nums">{s.pressure.index ?? "—"}</b>/100 · {s.pressure.archetype}</span>
               </div>
             )}
-            {s.weakness && <div className="flex items-start gap-2"><Eye className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" /><span><b className="text-white">Weak spot:</b> {s.weakness.headline}</span></div>}
-            {!s.weakness && s.strength && <div className="flex items-start gap-2"><Shield className="w-3.5 h-3.5 text-emerald-400 mt-0.5 shrink-0" /><span><b className="text-white">Strength:</b> {s.strength.headline}</span></div>}
+            {s.weakness && <div className="flex items-start gap-2"><Eye className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" /><span><b className="text-slate-900 dark:text-white">Weak spot:</b> {s.weakness.headline}</span></div>}
+            {!s.weakness && s.strength && <div className="flex items-start gap-2"><Shield className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" /><span><b className="text-slate-900 dark:text-white">Strength:</b> {s.strength.headline}</span></div>}
             {s.pool && (
               <div className="flex items-start gap-2">
-                <Network className="w-3.5 h-3.5 text-cyan-400 mt-0.5 shrink-0" />
-                <span><b className="text-white">{s.pool.archetype}.</b> Most like {s.pool.neighbours.slice(0, 3).map((n) => `${n.name} (${n.similarity}%)`).join(", ")}</span>
+                <Network className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 mt-0.5 shrink-0" />
+                <span><b className="text-slate-900 dark:text-white">{s.pool.archetype}.</b> Most like {s.pool.neighbours.slice(0, 3).map((n) => `${n.name} (${n.similarity}%)`).join(", ")}</span>
               </div>
             )}
             <div className="flex flex-wrap gap-3 pt-1">
-              <Link href={`/ai-analyst/pressure?player=${d.playerId}&side=${side}`} className={`${linkCls} text-fuchsia-300`}>Pressure genome</Link>
-              <Link href={`/ai-analyst/weakness?player=${d.playerId}&side=${side}`} className={`${linkCls} text-amber-300`}>Weaknesses</Link>
-              <Link href={`/ai-analyst/player-pool?player=${d.playerId}&side=${side}`} className={`${linkCls} text-cyan-300`}>Similar players</Link>
+              <Link href={`/ai-analyst/pressure?player=${d.playerId}&side=${side}`} className={`${linkCls} text-fuchsia-700 dark:text-fuchsia-300`}>Pressure genome</Link>
+              <Link href={`/ai-analyst/weakness?player=${d.playerId}&side=${side}`} className={`${linkCls} text-amber-700 dark:text-amber-300`}>Weaknesses</Link>
+              <Link href={`/ai-analyst/player-pool?player=${d.playerId}&side=${side}`} className={`${linkCls} text-cyan-700 dark:text-cyan-300`}>Similar players</Link>
             </div>
           </div>
         ))}

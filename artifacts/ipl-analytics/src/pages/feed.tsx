@@ -1,22 +1,23 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, useRef, type ReactNode } from "react";
 import { Link } from "wouter";
 import {
   ArrowRight, CalendarDays, Users, Gavel, Shield, Star, MapPin, Flame, ShieldCheck,
   Search, Shirt, Wallet, Sparkles, Activity, Trophy, ExternalLink, ChevronLeft, ChevronRight,
+  ChevronUp, ChevronDown,
 } from "lucide-react";
 import { Layout } from "@/components/layout";
 import { AdVessel } from "@/components/ad-vessel";
 import { EditorialCardMedia } from "@/components/dugout/editorial-image-figure";
-import { getLocalEmbedImages, getPublishedArticleImages, PUBLIC_MANIFEST, isPublishable, isLocalPreviewable, getArticleHeroImage } from "@/lib/editorial-images";
-import { EDITORIAL_ARTICLES } from "@/data/editorial-magazine-data";
+import { getLocalEmbedImages, getPublishedArticleImages, PUBLIC_MANIFEST, isPublishable, isLocalPreviewable } from "@/lib/editorial-images";
 import { useEmbedConsent } from "@/lib/embed-consent";
+import { TeamLogo } from "@/components/team-logo";
 import { NewsCard, newsroomOrder } from "@/components/feed-newsroom";
 import { getV2Index, STORY_TYPE_LABEL } from "@/lib/editorial-v2";
 import { HUB_EVENTS, HUB_TEAMS } from "@/lib/ipl-2027";
 import { TEAM_REGISTRY, useTeamTheme, type TeamCode } from "@/lib/team-context";
 import { useIpl2027Desk, stamp } from "@/lib/ipl-2027-desk";
-import { EDITORIAL_AUTHOR, EDITORIAL_ASPECTS, type IndexEntry } from "@/data/editorial/schema";
-import { EditorialCoverCanvas } from "@/components/dugout/editorial-cover-canvas";
+import { EDITORIAL_AUTHOR, type IndexEntry } from "@/data/editorial/schema";
+import { cn } from "@/lib/utils";
 
 export type CardId = "squad" | "auction" | "tactics" | "stars" | "venues" | "storylines";
 
@@ -30,36 +31,20 @@ interface CardDef {
 }
 
 export const CARDS: CardDef[] = [
-  { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", img: "/squad-building.jpg", color: "text-[var(--team-accent)]", icon: Users },
-  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", img: "/auction-gavel.jpg", color: "text-[var(--team-accent)]", icon: Gavel },
-  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", img: "/tactics-board.jpg", color: "text-emerald-300", icon: Shield },
-  { id: "stars", title: "STAR WATCH", subtitle: "Rising names to watch", img: "/star-watch.jpg", color: "text-rose-300", icon: Star },
-  { id: "venues", title: "VENUES", subtitle: "Conditions and trends", img: "/venues-stadium.jpg", color: "text-sky-300", icon: MapPin },
-  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", img: "/storylines.jpg", color: "text-[var(--team-accent)]", icon: Flame },
+  { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-500 dark:text-[var(--team-accent)]", icon: Users },
+  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", img: "/auction-art.jpg", color: "text-amber-500 dark:text-[var(--team-accent)]", icon: Gavel },
+  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", img: "/assets/tactical-board-hero.png", color: "text-emerald-500 dark:text-emerald-400", icon: Shield },
+  { id: "stars", title: "STAR WATCH", subtitle: "Rising names to watch", img: "/milestone-photos/highest-total-2024-srh.jpg", color: "text-rose-500 dark:text-rose-400", icon: Star },
+  { id: "venues", title: "VENUES", subtitle: "Conditions and trends", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-500 dark:text-sky-400", icon: MapPin },
+  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", img: "/milestone-photos/final-2023-csk.jpg", color: "text-orange-500 dark:text-orange-400", icon: Flame },
 ];
 
 const TOOLS = [
   { label: "Retention Lab", desc: "Model retain/release calls against each squad", href: "/feed/ipl-2027?module=retention", icon: ShieldCheck, tint: "bg-violet-600" },
   { label: "Auction War Room", desc: "Purse, needs and targets by franchise", href: "/ai-analyst/auction-war-room", icon: Wallet, tint: "bg-lime-500" },
-  { label: "Playing XI Builder", desc: "Create balanced combinations", href: "/ai-analyst/playing-xi", icon: Shirt, tint: "bg-sky-500" },
+  { label: "Playing XI Builder", desc: "Create balanced combinations", href: "/arcade/build-your-xi", icon: Shirt, tint: "bg-sky-500" },
   { label: "Scout Engine", desc: "Find players by role, league and metrics", href: "/scout", icon: Search, tint: "bg-fuchsia-600" },
 ];
-
-const legacyEntries: IndexEntry[] = EDITORIAL_ARTICLES.map((art) => ({
-  id: art.id,
-  title: art.title,
-  dek: art.subtitle,
-  slug: art.slug,
-  franchise: art.teamCode as TeamCode,
-  aspect: (art.parameter ? art.parameter.toLowerCase().replace(/\s+/g, "-") : "history") as any,
-  storyType: art.isCoverStory ? "investigation" : "explainer",
-  publishedDate: art.publishedDate || "2024-10-16",
-  readMinutes: parseInt(art.readTime, 10) || 5,
-  featured: Boolean(art.isCoverStory || art.featured),
-  status: "published",
-  players: [],
-  seasons: [],
-}));
 
 // Story types that exist in the article schema; no "news"/"opinion" tab until such content exists.
 export const STORY_TABS = [
@@ -129,31 +114,61 @@ export function selectFeedRetentionPhoto(selectedTeam: TeamCode | null, used: Re
     return candidates.find(image => image.sectionId === "hero") ?? candidates[0];
 }
 
+function RetentionHeroVisual({ team }: { team: TeamCode | null }) {
+  const teamArtwork: Partial<Record<TeamCode, { src: string; alt: string; name: string }>> = {
+    RCB: { src: "/rcb-winner-2026.jpg", alt: "RCB IPL 2026 Champions", name: "Royal Challengers Bengaluru" },
+    CSK: { src: "/msd.jpg", alt: "MS Dhoni CSK", name: "Chennai Super Kings" },
+    MI: { src: "/rohit sharma.jpg", alt: "Rohit Sharma MI", name: "Mumbai Indians" },
+    RR: { src: "/sanju samson.jpg", alt: "Sanju Samson RR", name: "Rajasthan Royals" },
+    SRH: { src: "/bhuvaneswar kumar.jpg", alt: "Sunrisers Hyderabad", name: "Sunrisers Hyderabad" },
+    KKR: { src: "/s narine.jpg", alt: "Sunil Narine KKR", name: "Kolkata Knight Riders" },
+    DC: { src: "/hero-players.png", alt: "Delhi Capitals", name: "Delhi Capitals" },
+    GT: { src: "/rashid khan.jpg", alt: "Rashid Khan GT", name: "Gujarat Titans" },
+    LSG: { src: "/kl rahul.jpg", alt: "Lucknow Super Giants", name: "Lucknow Super Giants" },
+    PBKS: { src: "/hero-players.png", alt: "Punjab Kings", name: "Punjab Kings" },
+  };
+
+  const selected = team && teamArtwork[team] ? teamArtwork[team] : null;
+  const imgSrc = selected?.src ?? "/hero-players.png";
+  const imgAlt = selected?.alt ?? "IPL Retention Stars & Captains";
+  const label = selected?.name ?? "IPL 2027 Franchise Roster Hub";
+
+  return (
+    <div className="relative w-full h-full min-h-[220px] sm:min-h-[340px] overflow-hidden flex items-center justify-center bg-[#070C16] group">
+      <img
+        src={imgSrc}
+        alt={imgAlt}
+        className="absolute inset-0 w-full h-full object-cover object-top opacity-85 group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+      />
+      {/* Precision gradient scrims matching card background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0B1020] via-black/40 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0B1020] via-transparent to-transparent pointer-events-none" />
+      <div className="absolute bottom-3 right-3 text-[10px] font-mono font-bold uppercase tracking-wider text-white/70 bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-lg border border-white/10 pointer-events-none shadow-sm">
+        {label}
+      </div>
+    </div>
+  );
+}
+
 export default function FeedPage() {
   const { selectedTeam } = useTeamTheme();
-  const [team, setTeam] = useState<TeamCode | null>(null);
+  const [team, setTeam] = useState<TeamCode | null>(selectedTeam);
   const [tab, setTab] = useState<(typeof STORY_TABS)[number]["id"]>("featured");
-  const [latestTeam, setLatestTeam] = useState<TeamCode | null>(null);
   const { data: desk } = useIpl2027Desk();
-  useEffect(() => { setTeam(selectedTeam); setLatestTeam(selectedTeam); }, [selectedTeam]);
+  useEffect(() => { setTeam(selectedTeam); }, [selectedTeam]);
 
-  const all = useMemo(() => {
-    const v2 = getV2Index();
-    const existingSlugs = new Set(v2.map((e) => e.slug));
-    const legacy = legacyEntries.filter((e) => !existingSlugs.has(e.slug));
-    return [...v2, ...legacy];
-  }, []);
+  const all = useMemo(() => getV2Index(), []);
+  const forTeam = useMemo(() => all.filter((e) => !team || e.franchise === team), [all, team]);
 
-  // Top stories: 1 lead card + 4 sidebar cards. When a franchise is selected, show only that franchise's stories. Only when ALL is selected do stories mix across franchises.
+  // Top stories: 1 lead card + 4 sidebar cards. Diverse teams unless a team is explicitly selected.
   const top = useMemo(() => {
-    const tabFiltered = tab === "featured" ? all : all.filter((e) => e.storyType === tab);
-    const pool = tabFiltered.length ? tabFiltered : all;
+    const pool = tab === "featured" ? forTeam : forTeam.filter((e) => e.storyType === tab);
+    const ordered = newsroomOrder(pool);
     if (team) {
-      const teamStories = newsroomOrder(pool.filter((e) => e.franchise === team));
-      return teamStories.slice(0, 5);
+      return ordered.slice(0, 5);
     }
-    return getDiverseByTeam(newsroomOrder(pool), 5);
-  }, [all, tab, team]);
+    return getDiverseByTeam(ordered, 5);
+  }, [forTeam, tab, team]);
 
   // Diverse featured stories across the league for the scrolling editorial rail
   const picks = useMemo(() => {
@@ -161,19 +176,20 @@ export default function FeedPage() {
     return getDiverseByTeam(newsroomOrder(featured), 8);
   }, [all]);
 
-  // Latest stories: When a team is selected, show only that team's latest stories.
+  // Latest stories: filtered by active franchise, or diverse league-wide stories when ALL
   const latest = useMemo(() => {
     // Getty's signed viewer cannot mount twice with the same widget ID.
     const topIds = new Set(top.map((e) => e.id));
     const remaining = all.filter((e) => !topIds.has(e.id));
-    const targetTeam = team || latestTeam;
-    if (targetTeam) {
-      const teamLatest = remaining.filter((e) => e.franchise === targetTeam);
-      return teamLatest.slice(0, 8);
+    if (team) {
+      return [...remaining]
+        .filter((e) => e.franchise === team)
+        .sort((a, b) => b.publishedDate.localeCompare(a.publishedDate))
+        .slice(0, 8);
     }
     const sorted = [...remaining].sort((a, b) => b.publishedDate.localeCompare(a.publishedDate));
     return getDiverseByTeam(sorted, 8);
-  }, [all, latestTeam, team, top]);
+  }, [all, team, top]);
 
   const announcements = desk?.announcements.slice(0, 3) ?? [];
   const retentionPhoto = useMemo(() => {
@@ -188,13 +204,17 @@ export default function FeedPage() {
         <div data-feed-part="opening" className="grid gap-4 xl:grid-cols-[1fr_260px]">
           <section data-feed-part="retention-hero" className="relative overflow-hidden rounded-[24px] border border-white/10 bg-[#0B1020] min-h-[340px] grid sm:grid-cols-2">
             <div className="relative min-h-[220px] sm:min-h-[340px] flex items-center bg-[#0B1020] order-last">
-              {retentionPhoto ? <EditorialCardMedia
-                key={`${selectedTeam ?? "all"}-${retentionPhoto.assetId}`}
-                image={retentionPhoto}
-                allowUnpublished={import.meta.env.DEV}
-                preserveAspectRatio
-                fallback={<div className="w-full min-h-[220px] flex items-center justify-center p-6 text-center text-xs text-white/50">Getty photo unavailable. Enable embedded content in Cookie Settings to view team photography.</div>}
-              /> : <div className="w-full p-6 text-center text-xs text-white/50">Team photography will appear here when available.</div>}
+              {retentionPhoto ? (
+                <EditorialCardMedia
+                  key={`${selectedTeam ?? "all"}-${retentionPhoto.assetId}`}
+                  image={retentionPhoto}
+                  allowUnpublished={import.meta.env.DEV}
+                  preserveAspectRatio
+                  fallback={<RetentionHeroVisual team={selectedTeam} />}
+                />
+              ) : (
+                <RetentionHeroVisual team={selectedTeam} />
+              )}
             </div>
             <div className="relative z-10 flex h-full flex-col justify-center p-6 sm:p-8 max-w-xl order-first">
               <div className="franchise-eyebrow text-[11px] font-black uppercase tracking-[0.25em]">IPL 2027 / Squad Building</div>
@@ -242,19 +262,26 @@ export default function FeedPage() {
           <SectionHead title="Explore IPL 2027 coverage" sub="Analyses, stories and tools to help you make sense of the road to the auction." />
           <div data-feed-part="coverage" className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
             {CARDS.map((c) => (
-              <Link key={c.id} href={`/feed/${c.id}`} className="group overflow-hidden rounded-2xl border border-white/10 bg-[#0B1020] hover:border-white/30 transition-colors">
-                <div className="h-24 overflow-hidden">
-                  {/* zoom from the top pushes the caption baked into these images out of view */}
-                  <img src={c.img} alt="" className="h-full w-full object-cover object-top origin-top scale-[1.45] group-hover:scale-[1.55] transition-transform duration-500" />
+              <Link
+                key={c.id}
+                href={`/feed/${c.id}`}
+                className="group overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] hover:border-slate-300 dark:hover:border-white/30 shadow-xs hover:shadow-md transition-all flex flex-col"
+              >
+                <div className="h-28 overflow-hidden relative bg-slate-900 shrink-0">
+                  <img
+                    src={c.img}
+                    alt={c.title}
+                    className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <div className="p-3">
+                <div className="p-3 flex-1 flex flex-col justify-between bg-white dark:bg-[#0B1020]">
                   <div className="flex items-center gap-2">
                     <c.icon className={`hidden sm:block w-4 h-4 shrink-0 ${c.color}`} />
-                    <span className="text-[12px] font-black text-white leading-tight">{c.title}</span>
+                    <span className="text-[12px] font-black text-slate-900 dark:text-white leading-tight">{c.title}</span>
                   </div>
                   <div className="mt-1 flex items-end justify-between gap-2">
-                    <span className="text-[11px] text-white/55">{c.subtitle}</span>
-                    <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${c.color}`} />
+                    <span className="text-[11px] text-slate-500 dark:text-white/60 line-clamp-1">{c.subtitle}</span>
+                    <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${c.color} transition-transform group-hover:translate-x-0.5`} />
                   </div>
                 </div>
               </Link>
@@ -264,25 +291,43 @@ export default function FeedPage() {
 
         {/* MAIN COLUMN + EDITORIAL RAIL */}
         <div data-feed-part="newsroom" className="grid gap-6 xl:grid-cols-[1fr_270px]">
-          <div className="@container min-w-0 space-y-6">
+          <div className="space-y-6 min-w-0">
             <section>
               <SectionHead title="Franchise coverage" sub="Pick a team to see its stories." />
-              <div className="flex flex-wrap gap-2" role="group" aria-label="Filter stories by franchise">
-                <TeamChip active={!team} onClick={() => { setTeam(null); setLatestTeam(null); }}>ALL</TeamChip>
+              <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter stories by franchise">
+                <TeamChip active={!team} onClick={() => setTeam(null)} teamCode="ALL" />
                 {HUB_TEAMS.map((t) => (
-                  <TeamChip color={TEAM_REGISTRY[t].accent} key={t} active={team === t} onClick={() => { setTeam(t); setLatestTeam(t); }}>
-                    <img src={TEAM_REGISTRY[t].logoImg} alt="" className="w-4 h-4 object-contain" /> {t}
-                  </TeamChip>
+                  <TeamChip
+                    key={t}
+                    teamCode={t}
+                    accent={TEAM_REGISTRY[t].accent}
+                    active={team === t}
+                    onClick={() => setTeam(t)}
+                  />
                 ))}
                 {team && (
-                  <Link href={`/dugout/${team.toLowerCase()}`} style={{ color: TEAM_REGISTRY[team].accent }} className="self-center text-xs ml-1">{TEAM_REGISTRY[team].name} Dugout</Link>
+                  <Link
+                    href={`/dugout/${team.toLowerCase()}`}
+                    className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl text-xs font-bold transition-all ml-1 border shadow-xs hover:brightness-110 active:scale-95"
+                    style={{
+                      backgroundColor: `${TEAM_REGISTRY[team].accent}18`,
+                      borderColor: `${TEAM_REGISTRY[team].accent}40`,
+                      color: TEAM_REGISTRY[team].accent,
+                    }}
+                  >
+                    <div className="w-4 h-4 rounded-full bg-white p-0.5 flex items-center justify-center overflow-hidden shrink-0">
+                      <img src={TEAM_REGISTRY[team].logoImg} alt="" className="w-full h-full object-contain" />
+                    </div>
+                    <span>{TEAM_REGISTRY[team].name} Dugout</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 )}
               </div>
             </section>
 
             <section>
               <div className="mb-3 flex flex-wrap items-center gap-3">
-                <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-white">Top stories</h2>
+                <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">Top stories</h2>
                 <div className="flex flex-wrap gap-1 sm:ml-auto" role="tablist">
                   {STORY_TABS.map((t) => (
                     <button
@@ -290,7 +335,11 @@ export default function FeedPage() {
                       role="tab"
                       aria-selected={tab === t.id}
                       onClick={() => setTab(t.id)}
-                      className={`rounded-lg px-3 py-1 text-xs ${tab === t.id ? "bg-violet-600/30 text-white border border-violet-400/40" : "text-white/55 hover:text-white"}`}
+                      className={`rounded-xl px-3 py-1 text-xs font-semibold transition-all ${
+                        tab === t.id
+                          ? "bg-primary text-white shadow-xs font-bold"
+                          : "text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 border border-transparent"
+                      }`}
                     >
                       {t.label}
                     </button>
@@ -298,62 +347,75 @@ export default function FeedPage() {
                 </div>
               </div>
               {top.length === 0 ? (
-                <p className="text-sm text-white/50">No published stories here{team ? ` for ${team}` : ""} yet.</p>
+                <p className="text-sm text-slate-500 dark:text-white/50">No published stories here{team ? ` for ${team}` : ""} yet.</p>
               ) : (
-                <div
-                  data-feed-part="top-stories"
-                  className={`grid gap-3 ${top.length > 1 ? "@min-[640px]:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]" : ""}`}
-                >
-                  <div className="min-w-0">
+                <div data-feed-part="top-stories" className="grid gap-4 grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] items-stretch">
+                  <div className="flex w-full min-w-0">
                     <NewsCard
                       entry={top[0]}
                       lead
-                      media={<div className="shrink-0"><EntryMedia entry={top[0]} preserveAspectRatio /></div>}
+                      media={<EntryMedia entry={top[0]} />}
                     />
                   </div>
-                  {top.length > 1 && (
-                    <div className="grid min-w-0 auto-rows-fr divide-y divide-white/5 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
-                      {top.slice(1).map((entry) => <CompactStory key={entry.id} entry={entry} />)}
-                    </div>
-                  )}
+                  <div className="flex flex-col min-w-0 divide-y divide-slate-200 dark:divide-white/5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] shadow-xs overflow-hidden justify-between">
+                    {top.slice(1).map((e) => <CompactStory key={e.id} entry={e} />)}
+                  </div>
                 </div>
               )}
             </section>
 
             {latest.length > 0 && (
               <section>
-                <div className="mb-3 flex flex-wrap items-center gap-2">
-                  <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-white mr-2">Latest</h2>
-                  {[null, ...HUB_TEAMS].map((t) => (
+                <div className="mb-3 flex items-center justify-between gap-3 flex-wrap">
+                  <div className="flex items-center gap-2.5">
+                    <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">Latest Stories</h2>
+                    {team ? (
+                      <div
+                        className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border"
+                        style={{
+                          backgroundColor: `${TEAM_REGISTRY[team].accent}18`,
+                          borderColor: `${TEAM_REGISTRY[team].accent}40`,
+                          color: TEAM_REGISTRY[team].accent,
+                        }}
+                      >
+                        <div className="w-3.5 h-3.5 rounded-full bg-white p-0.5 flex items-center justify-center overflow-hidden shrink-0">
+                          <img src={TEAM_REGISTRY[team].logoImg} alt="" className="w-full h-full object-contain" />
+                        </div>
+                        <span>{TEAM_REGISTRY[team].name}</span>
+                      </div>
+                    ) : (
+                      <span className="text-[11px] font-semibold text-slate-500 dark:text-white/40">League-wide updates</span>
+                    )}
+                  </div>
+                  {team && (
                     <button
-                      key={t ?? "all"}
-                      onClick={() => setLatestTeam(t)}
-                      aria-pressed={latestTeam === t}
-                      className={`rounded-md px-2 py-0.5 text-[11px] ${latestTeam === t ? "bg-violet-600/30 text-white" : "text-white/50 hover:text-white"}`}
+                      type="button"
+                      onClick={() => setTeam(null)}
+                      className="text-[11px] font-bold text-slate-500 hover:text-slate-900 dark:text-white/50 dark:hover:text-white transition-colors cursor-pointer"
                     >
-                      {t ?? "All"}
+                      Show all teams
                     </button>
-                  ))}
+                  )}
                 </div>
-                <ul className="divide-y divide-white/5 rounded-2xl border border-white/10 bg-white/[0.02] p-1">
+                <ul className="divide-y divide-slate-200 dark:divide-white/5">
                   {latest.map((e) => {
                     const t = TEAM_REGISTRY[e.franchise as TeamCode];
                     return (
                       <li key={e.id}>
-                        <Link href={`/dugout/articles/${e.slug}`} className="flex items-center gap-3.5 py-3 px-3 rounded-xl group hover:bg-white/[0.04] transition-colors">
-                          <div className="relative aspect-video w-20 sm:w-24 shrink-0 overflow-hidden rounded-lg bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
-                            <ArticleThumbnail entry={e} />
+                        <Link href={`/dugout/articles/${e.slug}`} className="flex items-center gap-3.5 py-3 px-2 rounded-xl group hover:bg-slate-100/60 dark:hover:bg-white/[0.03] transition-colors">
+                          <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-slate-100 dark:bg-black/50 ring-1 ring-slate-200 dark:ring-white/10 shadow-sm flex items-center justify-center">
+                            <EntryMedia entry={e} compact />
                           </div>
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest">
-                              <span className="text-[var(--team-accent)]">{kicker(e)}</span>
-                              <span className="text-white/20">•</span>
+                              <span className="text-primary font-bold">{kicker(e)}</span>
+                              <span className="text-slate-300 dark:text-white/20">•</span>
                               <span style={{ color: t?.accent ?? "var(--team-accent)" }}>{e.franchise}</span>
                             </div>
-                            <div className="text-xs sm:text-sm font-semibold text-white group-hover:underline line-clamp-2 mt-0.5">{e.title}</div>
-                            <div className="mt-1 text-[10px] text-white/40">{EDITORIAL_AUTHOR} · {dateLabel(e.publishedDate)} · {e.readMinutes} min read</div>
+                            <div className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white group-hover:underline line-clamp-2 mt-0.5">{e.title}</div>
+                            <div className="mt-1 text-[10px] text-slate-500 dark:text-white/40">{EDITORIAL_AUTHOR} · {dateLabel(e.publishedDate)} · {e.readMinutes} min read</div>
                           </div>
-                          <span className="hidden sm:block shrink-0 text-[11px] text-white/40">{dateLabel(e.publishedDate)}</span>
+                          <span className="hidden sm:block shrink-0 text-[11px] text-slate-500 dark:text-white/40">{dateLabel(e.publishedDate)}</span>
                         </Link>
                       </li>
                     );
@@ -483,189 +545,425 @@ function RetentionCountdown() {
   ] as const;
 
   return (
-    <section className="rounded-[20px] border border-white/10 bg-[#0B1020] p-4" aria-label="Retention deadline countdown">
+    <section className="rounded-[20px] border border-slate-200/80 dark:border-white/10 bg-white dark:bg-[#0B1020] p-4 shadow-xs" aria-label="Retention deadline countdown">
       <div className="flex items-start justify-between">
         <div>
-          <div className="text-[10px] font-black uppercase tracking-widest text-[var(--team-accent)]">IPL 2027</div>
-          <div className="text-sm font-black uppercase text-white">Retention deadline</div>
+          <div className="text-[10px] font-black uppercase tracking-widest text-indigo-600 dark:text-[var(--team-accent)]">IPL 2027</div>
+          <div className="text-sm font-black uppercase text-slate-900 dark:text-white">Retention deadline</div>
         </div>
-        <CalendarDays className="w-5 h-5 text-[var(--team-accent)]" />
+        <CalendarDays className="w-5 h-5 text-indigo-600 dark:text-[var(--team-accent)]" />
       </div>
       {target ? (
         <>
-          <div className="mt-3 grid grid-cols-4 gap-1 text-center" aria-live="off">
+          <div className="mt-3.5 grid grid-cols-4 gap-2 text-center" aria-live="off">
             {parts.map(([v, l]) => (
-              <div key={l}>
-                <div className="text-2xl font-black tabular-nums text-white">{String(v).padStart(2, "0")}</div>
-                <div className="text-[9px] uppercase text-white/45">{l}</div>
+              <div key={l} className="py-2 px-1 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-100 dark:border-white/[0.06] shadow-2xs">
+                <div className="text-2xl font-black tabular-nums text-slate-900 dark:text-white leading-none">{String(v).padStart(2, "0")}</div>
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-white/60 mt-1">{l}</div>
               </div>
             ))}
           </div>
-          <p className="mt-2 text-[10px] text-white/45">
+          <p className="mt-2.5 text-[11px] font-medium text-slate-500 dark:text-white/60">
             {dateLabel(event!.date!)}{event!.status === "confirmed" ? "" : " · reported date, not yet officially confirmed"}
           </p>
         </>
       ) : (
-        <p className="mt-3 text-sm text-white/60">Date to be announced.</p>
+        <p className="mt-3 text-sm text-slate-600 dark:text-white/60">Date to be announced.</p>
       )}
-      <Link href="/pulse#auction" className="franchise-action mt-3 flex items-center justify-center gap-2 rounded-xl bg-violet-700 py-2 text-xs font-bold text-white hover:bg-violet-600">
+      <Link href="/pulse#auction" className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-violet-700 dark:hover:bg-violet-600 py-2.5 text-xs font-bold text-white shadow-xs transition-colors">
         View key dates <ArrowRight className="w-3.5 h-3.5" />
       </Link>
     </section>
   );
 }
 
-export function getFranchiseCover(code: string): string {
-  switch (code.toUpperCase()) {
-    case "CSK": return "/csk insight.jpg";
-    case "RCB": return "/virat-kohli.png";
-    case "MI": return "/rohit sharma.jpg";
-    case "SRH": return "/abhisek sharma.jpg";
-    case "RR": return "/sanju samson.jpg";
-    case "GT": return "/rashid khan.jpg";
-    case "LSG": return "/kl rahul.jpg";
-    case "KKR": return "/s narine.jpg";
-    case "DC": return "/dc logo.jpg";
-    case "PBKS": return "/shikhar dhawan.jpg";
-    default: return "/TITLE BANNER.png";
-  }
-}
-
-export function ArticleThumbnail({ entry }: { entry: IndexEntry }) {
-  const image = getArticleHeroImage(entry.id);
-  const t = TEAM_REGISTRY[entry.franchise as TeamCode];
-  const teamCover = getFranchiseCover(entry.franchise);
-
-  const fallback = (
-    <div className="relative w-full h-full overflow-hidden bg-[#0A0F1D] flex items-center justify-center">
-      <img
-        src={teamCover}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 w-full h-full object-cover object-center opacity-85"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#060B16] via-[#060B16]/35 to-transparent" />
-      <span
-        className="relative z-10 px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider border shadow-md backdrop-blur-md"
-        style={{
-          backgroundColor: `${t?.accent ?? "var(--team-accent)"}30`,
-          color: t?.accent ?? "var(--team-accent)",
-          borderColor: `${t?.accent ?? "var(--team-accent)"}60`,
-        }}
-      >
-        {entry.franchise}
-      </span>
-    </div>
-  );
-
-  if (image && (image.licensedImageUrl || image.embedHtml)) {
-    return (
-      <EditorialCardMedia
-        key={`${entry.id}-${image.assetId}`}
-        image={image}
-        aspect="fill"
-        preserveAspectRatio={false}
-        allowUnpublished={import.meta.env.DEV}
-        fallback={fallback}
-      />
-    );
+export function getArticleVisualUrl(entry: IndexEntry): string {
+  // If article has a valid direct local licensed image, prefer it
+  const directImage = articleHeaderImage(entry.id);
+  if (directImage?.licensedImageUrl && !directImage.licensedImageUrl.startsWith("http")) {
+    return directImage.licensedImageUrl;
   }
 
-  return fallback;
+  const text = `${entry.title} ${entry.slug} ${entry.aspect} ${entry.dek}`.toLowerCase();
+  
+  // 1. Star Players mentioned in title/slug/dek
+  if (text.includes("kohli")) return "/virat-kohli.png";
+  if (text.includes("dhoni") || text.includes("msd")) return "/msd.jpg";
+  if (text.includes("rohit") || (text.includes("sharma") && entry.franchise === "MI")) return "/rohit sharma.jpg";
+  if (text.includes("bumrah")) return "/bumrah.jpg";
+  if (text.includes("narine") || text.includes("rinku")) return "/s narine.jpg";
+  if (text.includes("samson") || text.includes("jaiswal")) return "/sanju samson.jpg";
+  if (text.includes("rashid") || text.includes("gill")) return "/rashid khan.jpg";
+  if (text.includes("mayank") || text.includes("yadav")) return "/mayank yadav.jpg";
+  if (text.includes("rahul")) return "/kl rahul.jpg";
+  if (text.includes("bhuvneshwar") || text.includes("bhuvi")) return "/bhuvaneswar kumar.jpg";
+  if (text.includes("abhishek") || (text.includes("sharma") && entry.franchise === "SRH")) return "/abhisek sharma.jpg";
+  if (text.includes("dhawan") || text.includes("arshdeep")) return "/shikhar dhawan.jpg";
+  if (text.includes("devilliers") || text.includes("de villiers")) return "/ab devillers.jpg";
+  if (text.includes("gayle")) return "/c gayle.jpg";
+  if (text.includes("warner")) return "/d warner.jpg";
+  if (text.includes("jadeja")) return "/r jadeja.jpg";
+  if (text.includes("ashwin")) return "/r ashwin.jpg";
+  if (text.includes("chahal")) return "/y chahal.jpg";
+  if (text.includes("raina")) return "/suresh raina.jpg";
+
+  // 2. Specific Franchise Venues / Stadiums
+  if (text.includes("chinnaswamy")) return "/rcb-winner-2026.jpg";
+  if (text.includes("chepauk")) return "/csk insight.jpg";
+  if (text.includes("wankhede")) return "/rohit sharma.jpg";
+  if (text.includes("eden")) return "/s narine.jpg";
+  if (text.includes("ahmedabad") || text.includes("narendra modi")) return "/rashid khan.jpg";
+  if (text.includes("kotla") || text.includes("arun jaitley")) return "/hero-players.png";
+  if (text.includes("mohali") || text.includes("mullanpur")) return "/shikhar dhawan.jpg";
+  if (text.includes("ekana")) return "/kl rahul.jpg";
+  if (text.includes("uppal")) return "/bhuvaneswar kumar.jpg";
+  if (text.includes("sawai mansingh")) return "/sanju samson.jpg";
+
+  // 3. Thematic topics
+  if (entry.aspect === "auction-economics" || entry.title.toLowerCase().includes("auction") || entry.slug.includes("auction") || entry.title.toLowerCase().includes("purse")) {
+    return "/auction-art.jpg";
+  }
+  if (entry.aspect === "bowling-fielding" || text.includes("yorker") || text.includes("bowling") || text.includes("wicket") || text.includes("death over") || text.includes("slower ball")) {
+    if (text.includes("bumrah")) return "/bumrah.jpg";
+    if (text.includes("bhuvi") || text.includes("bhuvneshwar")) return "/bhuvaneswar kumar.jpg";
+    if (text.includes("rashid")) return "/rashid khan.jpg";
+    return "/tactical-yorker.jpg";
+  }
+  if (text.includes("tactical") || text.includes("powerplay") || text.includes("equation") || text.includes("blueprint") || text.includes("anchor") || entry.aspect === "tactical") {
+    return "/tactics-board.jpg";
+  }
+  if (text.includes("venue") || text.includes("pitch") || text.includes("surface") || text.includes("ground") || text.includes("stadium") || entry.aspect === "venues") {
+    return "/venues-stadium.jpg";
+  }
+  if (text.includes("squad") || text.includes("retention") || text.includes("rebuild") || text.includes("season") || entry.aspect === "history") {
+    if (entry.franchise === "RCB") return "/rcb-winner-2026.jpg";
+    if (entry.franchise === "CSK") return "/csk insight.jpg";
+    return "/squad-building.jpg";
+  }
+  if (text.includes("boundary") || text.includes("scoring") || text.includes("velocity") || entry.aspect === "batting") {
+    return "/milestone-photos/highest-total-2024-srh.jpg";
+  }
+
+  // 4. Franchise Marquee Photography Default
+  const franchiseMarquee: Record<string, string> = {
+    RCB: "/rcb-winner-2026.jpg",
+    CSK: "/csk insight.jpg",
+    MI: "/rohit sharma.jpg",
+    KKR: "/s narine.jpg",
+    RR: "/sanju samson.jpg",
+    SRH: "/bhuvaneswar kumar.jpg",
+    GT: "/rashid khan.jpg",
+    LSG: "/kl rahul.jpg",
+    DC: "/hero-players.png",
+    PBKS: "/shikhar dhawan.jpg",
+  };
+
+  return franchiseMarquee[entry.franchise] ?? "/hero-players.png";
 }
 
-export function EntryMedia({ entry, preserveAspectRatio = false }: { entry: IndexEntry; preserveAspectRatio?: boolean }) {
-  const image = getArticleHeroImage(entry.id);
+export function EntryMedia({
+  entry,
+  aspect = "video",
+  compact = false,
+}: {
+  entry: IndexEntry;
+  aspect?: "video" | "wide";
+  compact?: boolean;
+}) {
   const t = TEAM_REGISTRY[entry.franchise as TeamCode];
-  const aspectObj = EDITORIAL_ASPECTS.find((a) => a.id === entry.aspect) ?? EDITORIAL_ASPECTS[0];
-  const teamCover = getFranchiseCover(entry.franchise);
+  const accent = t?.accent ?? "#FF6B00";
+  const imageSrc = getArticleVisualUrl(entry);
+  const kickerLabel = kicker(entry);
 
-  const fallbackIllustration = (
-    <div className="aspect-video w-full h-full overflow-hidden [&>div]:rounded-none [&>div]:border-0 relative">
-      <EditorialCoverCanvas
-        franchiseName={t?.name ?? entry.franchise}
-        teamCode={entry.franchise}
-        parameter={aspectObj.name}
-        parameterNumber={aspectObj.number}
-        title={entry.title}
-        hideTitle={true}
-        accent={t?.accent ?? "var(--team-accent)"}
-        coverImage={teamCover}
-        aspectRatio="video"
-        edition="CricField Library"
-      />
-    </div>
-  );
-
-  if (!image) return fallbackIllustration;
   return (
-    <EditorialCardMedia
-      key={`${entry.id}-${image.assetId}`}
-      image={image}
-      aspect="video"
-      preserveAspectRatio={preserveAspectRatio}
-      allowUnpublished={import.meta.env.DEV}
-      fallback={fallbackIllustration}
-    />
+    <div
+      className={`relative w-full h-full overflow-hidden bg-slate-900 group ${
+        aspect === "video" ? "aspect-video" : "aspect-[16/9]"
+      }`}
+    >
+      <img
+        src={imageSrc}
+        alt={entry.title}
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+      />
+      {/* High contrast gradient scrims */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent pointer-events-none" />
+
+      {/* Franchise Crest & Badge */}
+      <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1.5 pointer-events-none">
+        <div className="w-6 h-6 rounded-full bg-white dark:bg-slate-900 p-0.5 shadow-md flex items-center justify-center shrink-0 border border-black/10 dark:border-white/20">
+          <img
+            src={t?.logoImg ?? "/favicon.svg"}
+            alt={entry.franchise}
+            className="w-full h-full object-contain"
+          />
+        </div>
+        {!compact && (
+          <span
+            className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-sm backdrop-blur-md border"
+            style={{
+              backgroundColor: `${accent}25`,
+              color: accent,
+              borderColor: `${accent}50`,
+            }}
+          >
+            {entry.franchise}
+          </span>
+        )}
+      </div>
+
+      {/* Story Type Tag in Top-Right */}
+      {!compact && (
+        <div className="absolute top-2.5 right-2.5 z-10 pointer-events-none">
+          <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-black/60 text-white/90 border border-white/15 backdrop-blur-md shadow-sm">
+            {kickerLabel}
+          </span>
+        </div>
+      )}
+
+      {/* Subtle Team Accent Bottom Edge Indicator */}
+      <div
+        className="absolute bottom-0 inset-x-0 h-1 z-10 opacity-80 group-hover:opacity-100 transition-opacity"
+        style={{ backgroundColor: accent }}
+      />
+    </div>
   );
 }
 
 function CompactStory({ entry }: { entry: IndexEntry }) {
   const t = TEAM_REGISTRY[entry.franchise as TeamCode];
   return (
-    <Link href={`/dugout/articles/${entry.slug}`} className="flex items-center gap-3 p-2.5 group hover:bg-white/[0.04] transition-colors">
-      <div className="relative aspect-video w-20 sm:w-24 shrink-0 overflow-hidden rounded-lg bg-black/50 ring-1 ring-white/10 shadow-sm flex items-center justify-center">
-        <ArticleThumbnail entry={entry} />
+    <Link href={`/dugout/articles/${entry.slug}`} className="flex items-center gap-3 p-3 group hover:bg-slate-100/60 dark:hover:bg-white/[0.04] transition-colors">
+      <div className="relative aspect-video w-28 sm:w-32 shrink-0 overflow-hidden rounded-xl bg-slate-100 dark:bg-black/50 ring-1 ring-slate-200 dark:ring-white/10 shadow-sm flex items-center justify-center">
+        <EntryMedia entry={entry} compact />
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest">
-          <span className="text-[var(--team-accent)]">{kicker(entry)}</span>
-          <span className="text-white/20">•</span>
+          <span className="text-primary font-bold">{kicker(entry)}</span>
+          <span className="text-slate-300 dark:text-white/20">•</span>
           <span style={{ color: t?.accent ?? "var(--team-accent)" }}>{entry.franchise}</span>
         </div>
-        <div className="text-xs sm:text-sm font-bold text-white leading-snug group-hover:underline line-clamp-2 mt-0.5">{entry.title}</div>
-        <div className="mt-1 text-[10px] text-white/40">{EDITORIAL_AUTHOR} · {entry.readMinutes} min read</div>
+        <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug group-hover:underline line-clamp-2 mt-0.5">{entry.title}</div>
+        <div className="mt-1 text-[10px] text-slate-500 dark:text-white/40">{EDITORIAL_AUTHOR} · {entry.readMinutes} min read</div>
       </div>
     </Link>
   );
 }
 
+function isLightHex(hex: string): boolean {
+  const clean = (hex || "").replace("#", "");
+  if (clean.length < 6) return false;
+  const r = parseInt(clean.substring(0, 2), 16) || 0;
+  const g = parseInt(clean.substring(2, 4), 16) || 0;
+  const b = parseInt(clean.substring(4, 6), 16) || 0;
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 150;
+}
+
 function ScrollingEditorialPicks({ picks }: { picks: IndexEntry[] }) {
   if (picks.length === 0) return null;
-  const displayItems = [...picks, ...picks];
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollPosRef = useRef<number>(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const isHoveredRef = useRef(false);
+  const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Triple items for seamless infinite looping in both directions
+  const displayItems = useMemo(() => [...picks, ...picks, ...picks], [picks]);
+
+  // Keep ref synchronized with state for requestAnimationFrame
+  isHoveredRef.current = isHovered;
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || picks.length === 0) return;
+
+    // Set initial scroll position to start of middle set (Set 2)
+    const singleHeight = container.scrollHeight / 3;
+    if (container.scrollTop < 10 && singleHeight > 0) {
+      container.scrollTop = singleHeight;
+    }
+    scrollPosRef.current = container.scrollTop;
+
+    let lastTime = performance.now();
+    let animationId: number;
+    const scrollSpeed = 24; // smooth 24 pixels per second
+
+    const animate = (currentTime: number) => {
+      const deltaTime = Math.min((currentTime - lastTime) / 1000, 0.1);
+      lastTime = currentTime;
+
+      if (!isHoveredRef.current && container) {
+        const singleH = container.scrollHeight / 3;
+        if (singleH > 0) {
+          scrollPosRef.current += scrollSpeed * deltaTime;
+
+          // Seamless wrap-around
+          if (scrollPosRef.current >= singleH * 2) {
+            scrollPosRef.current -= singleH;
+          } else if (scrollPosRef.current <= 10) {
+            scrollPosRef.current += singleH;
+          }
+
+          container.scrollTop = Math.round(scrollPosRef.current);
+        }
+      } else if (container) {
+        // While paused or hovered, keep the accumulator aligned with manual scroll
+        scrollPosRef.current = container.scrollTop;
+      }
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      if (resumeTimeoutRef.current) {
+        clearTimeout(resumeTimeoutRef.current);
+      }
+    };
+  }, [picks]);
+
+  const handleScroll = () => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // When the user manually wheels or drags, update the position accumulator
+    if (isHoveredRef.current) {
+      scrollPosRef.current = container.scrollTop;
+    }
+
+    const singleH = container.scrollHeight / 3;
+    if (singleH > 0) {
+      if (container.scrollTop >= singleH * 2.1) {
+        container.scrollTop -= singleH;
+        scrollPosRef.current = container.scrollTop;
+      } else if (container.scrollTop <= 10) {
+        container.scrollTop += singleH;
+        scrollPosRef.current = container.scrollTop;
+      }
+    }
+  };
+
+  const handleMouseEnter = () => {
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    setIsHovered(true);
+    isHoveredRef.current = true;
+    if (containerRef.current) {
+      scrollPosRef.current = containerRef.current.scrollTop;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    resumeTimeoutRef.current = setTimeout(() => {
+      setIsHovered(false);
+      isHoveredRef.current = false;
+      if (containerRef.current) {
+        scrollPosRef.current = containerRef.current.scrollTop;
+      }
+    }, 750);
+  };
+
+  const scrollByDirection = (direction: "up" | "down") => {
+    const container = containerRef.current;
+    if (!container) return;
+    const delta = direction === "up" ? -130 : 130;
+    container.scrollBy({ top: delta, behavior: "smooth" });
+    setTimeout(() => {
+      if (containerRef.current) {
+        scrollPosRef.current = containerRef.current.scrollTop;
+      }
+    }, 350);
+  };
 
   return (
-    <RailCard title="Editor's picks">
-      <div className="relative h-[290px] overflow-hidden group">
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-[#0B1020] via-[#0B1020]/80 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-[#0B1020] via-[#0B1020]/80 to-transparent" />
-        <div className="animate-vertical-scroll space-y-2.5 will-change-transform group-hover:[animation-play-state:paused]">
+    <RailCard
+      title="Editor's picks"
+      action={
+        <div className="flex items-center gap-1.5">
+          <span
+            className={cn(
+              "text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md transition-colors flex items-center gap-1.5",
+              isHovered
+                ? "bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/30"
+                : "bg-slate-200/60 dark:bg-white/5 text-slate-500 dark:text-white/40 border border-transparent"
+            )}
+            title={isHovered ? "Scroll with mouse wheel, trackpad or arrows" : "Auto-scrolling. Hover to pause and scroll up/down."}
+          >
+            <span
+              className={cn(
+                "w-1.5 h-1.5 rounded-full shrink-0",
+                isHovered ? "bg-orange-500 dark:bg-orange-400" : "bg-emerald-500 dark:bg-emerald-400 animate-pulse"
+              )}
+            />
+            {isHovered ? "Scrollable" : "Auto"}
+          </span>
+          <div className="flex items-center gap-0.5">
+            <button
+              type="button"
+              onClick={() => scrollByDirection("up")}
+              aria-label="Scroll up"
+              title="Scroll up"
+              className="w-5 h-5 rounded flex items-center justify-center text-slate-500 dark:text-white/50 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              <ChevronUp className="w-3.5 h-3.5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByDirection("down")}
+              aria-label="Scroll down"
+              title="Scroll down"
+              className="w-5 h-5 rounded flex items-center justify-center text-slate-500 dark:text-white/50 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      }
+    >
+      <div
+        className="relative group"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleMouseEnter}
+        onTouchEnd={handleMouseLeave}
+      >
+        <div
+          ref={containerRef}
+          onScroll={handleScroll}
+          className="editorial-picks-scroll relative h-[340px] overflow-y-auto overscroll-contain pr-1 space-y-2 pt-1 pb-1"
+        >
           {displayItems.map((e, idx) => {
             const t = TEAM_REGISTRY[e.franchise as TeamCode];
             const rank = (idx % picks.length) + 1;
+            const accent = t?.accent ?? "var(--team-accent)";
             return (
               <Link
                 key={`${e.id}-${idx}`}
                 href={`/dugout/articles/${e.slug}`}
-                className="flex items-start gap-2.5 rounded-xl p-2 transition-all hover:bg-white/[0.06] border border-transparent hover:border-white/10"
+                className="flex items-start gap-2.5 rounded-xl p-2.5 transition-all hover:bg-slate-200/50 dark:hover:bg-white/[0.08] border border-transparent hover:border-slate-300 dark:hover:border-white/10 group"
               >
                 <span
-                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[10px] font-black text-black"
-                  style={{ backgroundColor: t?.accent ?? "var(--team-accent)" }}
+                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[10px] font-black shadow-xs"
+                  style={{ backgroundColor: accent, color: isLightHex(accent) ? "#0A101D" : "#FFFFFF" }}
                 >
                   {rank}
                 </span>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-wider">
-                    <span style={{ color: t?.accent ?? "var(--team-accent)" }}>{e.franchise}</span>
-                    <span className="text-white/25">•</span>
-                    <span className="text-[var(--team-accent)]">{kicker(e)}</span>
+                    <span style={{ color: accent }}>{e.franchise}</span>
+                    <span className="text-slate-400 dark:text-white/40">•</span>
+                    <span className="text-primary font-bold">{kicker(e)}</span>
                   </div>
-                  <h4 className="line-clamp-2 text-xs font-semibold text-white/90 leading-snug group-hover:text-white mt-0.5">
+                  <h4 className="line-clamp-2 text-xs font-bold text-slate-900 dark:text-white leading-snug group-hover:text-primary dark:group-hover:text-cyan-300 mt-0.5 transition-colors">
                     {e.title}
                   </h4>
-                  <span className="mt-1 block text-[10px] text-white/40">
+                  <span className="mt-1 block text-[10px] text-slate-500 dark:text-white/60">
                     {e.readMinutes} min read
                   </span>
                 </div>
@@ -831,9 +1129,9 @@ function FanPulsePoll() {
                   style={{ width: `${displayPct}%` }}
                 />
               )}
-              <div className="relative z-10 flex items-center justify-between gap-2 text-xs">
-                <span className="font-semibold leading-tight">{opt.label}</span>
-                {votedOption && <span className="font-mono text-[11px] font-black text-[var(--team-accent)] shrink-0">{displayPct}%</span>}
+              <div className="relative z-10 flex items-center justify-between text-xs">
+                <span className="font-semibold">{opt.label}</span>
+                {votedOption && <span className="font-mono text-[11px] font-black text-[var(--team-accent)]">{displayPct}%</span>}
               </div>
             </button>
           );
@@ -865,29 +1163,81 @@ function FanPulsePoll() {
 function SectionHead({ title, sub }: { title: string; sub?: string }) {
   return (
     <div className="mb-3">
-      <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-white">{title}</h2>
-      {sub && <p className="text-xs text-white/55 mt-0.5">{sub}</p>}
+      <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{title}</h2>
+      {sub && <p className="text-xs text-slate-500 dark:text-white/55 mt-0.5">{sub}</p>}
     </div>
   );
 }
 
-function TeamChip({ active, onClick, children, color = "#8ba7ff" }: { active: boolean; onClick: () => void; children: ReactNode; color?: string }) {
+function TeamChip({
+  active,
+  onClick,
+  teamCode,
+  accent,
+}: {
+  active: boolean;
+  onClick: () => void;
+  teamCode?: TeamCode | "ALL";
+  accent?: string;
+}) {
+  const isAll = !teamCode || teamCode === "ALL";
+  const teamData = !isAll ? TEAM_REGISTRY[teamCode as TeamCode] : null;
+  const teamAccent = accent || teamData?.accent || "#2563eb";
+
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-pressed={active}
-      style={active ? { backgroundColor: `${color}28`, borderColor: color, color } : undefined}
-      className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-black ${active ? "border-[var(--team-accent)] bg-[var(--team-accent)] text-black" : "border-white/15 text-white/75 hover:border-white/40"}`}
+      className={`inline-flex items-center gap-2 h-9 px-3 rounded-xl border text-xs tracking-wide transition-all cursor-pointer select-none active:scale-95 ${
+        active
+          ? isAll
+            ? "border-slate-900 dark:border-white bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-black shadow-xs"
+            : "text-slate-950 dark:text-white font-black shadow-xs"
+          : "border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.04] text-slate-700 dark:text-slate-200 hover:border-slate-300 dark:hover:border-white/25 hover:bg-slate-50 dark:hover:bg-white/[0.08] font-bold"
+      }`}
+      style={
+        active && !isAll
+          ? {
+              backgroundColor: `${teamAccent}18`,
+              borderColor: teamAccent,
+              boxShadow: `0 0 10px ${teamAccent}30`,
+            }
+          : undefined
+      }
     >
-      {children}
+      {isAll ? (
+        <div
+          className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 border transition-all ${
+            active
+              ? "bg-white/10 text-white dark:text-slate-950 dark:bg-black/10 border-transparent"
+              : "bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-white/10"
+          }`}
+        >
+          <Shield size={11} className="stroke-[2.5]" />
+        </div>
+      ) : (
+        <div
+          className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 p-0.5 overflow-hidden border transition-all bg-white ${
+            active ? "shadow-xs" : "border-slate-200/80 dark:border-white/10 shadow-2xs"
+          }`}
+          style={active ? { borderColor: teamAccent } : undefined}
+        >
+          <img src={teamData?.logoImg} alt="" className="w-full h-full object-contain" />
+        </div>
+      )}
+      <span>{isAll ? "ALL" : teamCode}</span>
     </button>
   );
 }
 
-function RailCard({ title, children }: { title: string; children: ReactNode }) {
+function RailCard({ title, children, action }: { title: string; children: ReactNode; action?: ReactNode }) {
   return (
-    <section className="rounded-[20px] border border-white/10 bg-[#0B1020] p-4">
-      <h2 className="mb-3 text-[12px] font-black uppercase tracking-[0.2em] text-white">{title}</h2>
+    <section className="rounded-[20px] border border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-[#0B1020] p-4 shadow-xs">
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <h2 className="text-[12px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{title}</h2>
+        {action}
+      </div>
       {children}
     </section>
   );
@@ -895,15 +1245,15 @@ function RailCard({ title, children }: { title: string; children: ReactNode }) {
 
 function CtaBand({ icon: Icon, kicker, text, href, cta }: { icon: typeof Users; kicker: string; text: string; href: string; cta: string }) {
   return (
-    <div className="flex flex-wrap items-center gap-4 rounded-[20px] border border-white/10 bg-[#0B1020] p-4">
+    <div className="flex flex-wrap items-center gap-4 rounded-[20px] border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0B1020] p-4 shadow-xs">
       <Icon className="w-8 h-8 shrink-0 text-[var(--team-accent)]" />
       <div className="min-w-0 flex-1">
         <div className="text-[10px] font-black uppercase tracking-widest text-[var(--team-accent)]">{kicker}</div>
-        <p className="text-xs text-white/70">{text}</p>
+        <p className="text-xs text-slate-600 dark:text-white/70">{text}</p>
       </div>
       <Link
         href={href}
-        className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-black border border-violet-400/50 text-white hover:bg-violet-600/20"
+        className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-black border border-primary/40 bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
       >
         {cta} <ArrowRight className="w-3.5 h-3.5" />
       </Link>

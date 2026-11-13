@@ -13,7 +13,7 @@ export function TokenText({ text, evidence, article }: { text: string; evidence:
           if (!m) return null;
           const tip = `${m.label} — n = ${m.sampleSize.n.toLocaleString("en-IN")} ${m.sampleSize.unit}. ${m.filters}`;
           return (
-            <span key={i} className="font-semibold text-white decoration-white/25 decoration-dotted underline-offset-4 hover:underline" title={tip} data-metric={seg.id}>
+            <span key={i} className="font-semibold text-slate-950 dark:text-white decoration-slate-400 dark:decoration-white/25 decoration-dotted underline-offset-4 hover:underline" title={tip} data-metric={seg.id}>
               {m.display}
             </span>
           );

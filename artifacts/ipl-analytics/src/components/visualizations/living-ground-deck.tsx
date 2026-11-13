@@ -6,7 +6,8 @@ import {
   Sliders, Shield, Flame, Search, ChevronRight, Eye, FastForward,
   RotateCcw, ArrowUpRight, CheckCircle2, Award, Clock, ArrowDownRight,
   TrendingUp, BarChart2, Layers, Maximize2, X, Filter, Shuffle,
-  Network, ArrowLeft, ExternalLink, ChevronDown
+  Network, ArrowLeft, ExternalLink, ChevronDown, ChevronUp, ArrowUp,
+  Radio
 } from "lucide-react";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
 
@@ -112,7 +113,7 @@ export const DECK_CARDS: DeckCardMeta[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 // STACKING DECK CARD CONTAINER
 // Header with module title at top, next module's header peeking at bottom,
-// and whole module info visible at one glance in between.
+// smooth viewport scroll animations, watermark numerals, and holographic ambient flares.
 // ─────────────────────────────────────────────────────────────────────────────
 export function StackingDeckCard({
   index,
@@ -121,6 +122,10 @@ export function StackingDeckCard({
   badge,
   Icon,
   children,
+  onNext,
+  onPrev,
+  isFirst,
+  isLast,
 }: {
   index: number;
   id: string;
@@ -128,49 +133,96 @@ export function StackingDeckCard({
   badge: string;
   Icon: React.ElementType;
   children: React.ReactNode;
+  onNext?: () => void;
+  onPrev?: () => void;
+  isFirst?: boolean;
+  isLast?: boolean;
 }) {
+  const cardAccent =
+    index % 5 === 0
+      ? { color: "#F59E0B" }
+      : index % 5 === 1
+      ? { color: "#06B6D4" }
+      : index % 5 === 2
+      ? { color: "#F43F5E" }
+      : index % 5 === 3
+      ? { color: "#3B82F6" }
+      : { color: "#A855F7" };
+
   return (
-    <div
+    <motion.div
       id={id}
-      style={{
-        top: "12px",
-        zIndex: 10 + index * 5,
-        scrollSnapAlign: "start",
-        scrollSnapStop: "always",
-        scrollMarginTop: "12px",
-      }}
-      className="sticky h-[calc(100vh-76px)] max-h-[820px] min-h-[540px] rounded-[24px] border border-slate-800/80 bg-[#070B16]/98 backdrop-blur-2xl shadow-2xl shadow-black/90 flex flex-col overflow-hidden transition-all duration-300 will-change-transform mb-6"
+      initial={{ opacity: 0.25, y: 38, scale: 0.985 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false, amount: 0.08, margin: "0px 0px -80px 0px" }}
+      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      className="group/card relative w-full rounded-[26px] border border-slate-200/90 dark:border-slate-800/80 bg-white dark:bg-[#070B16]/98 shadow-md hover:shadow-2xl dark:shadow-2xl dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden transition-all duration-300 mb-10 scroll-mt-36 hover:border-purple-300 dark:hover:border-purple-500/40"
     >
+      {/* Giant Holographic Watermark Numeral in Background */}
+      <div className="absolute -top-3 right-5 select-none pointer-events-none overflow-hidden z-0 opacity-[0.035] dark:opacity-[0.05] font-mono font-black text-[130px] sm:text-[150px] leading-none text-slate-900 dark:text-white transition-transform group-hover/card:scale-105 duration-500">
+        {String(index + 1).padStart(2, "0")}
+      </div>
+
+      {/* Subtle Ambient Gradient Flare */}
+      <div
+        className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-[90px] pointer-events-none opacity-15 dark:opacity-25 transition-opacity group-hover/card:opacity-35"
+        style={{ background: cardAccent.color }}
+      />
+
       {/* 1. MODULE HEADER STRIP (AT TOP OF MODULE) */}
-      <div className="h-[48px] px-4 md:px-6 border-b border-white/10 flex items-center justify-between bg-[#080D1F]/90 shrink-0">
-        <div className="flex items-center gap-2.5 min-w-0">
-          <div className="p-1.5 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/30 shrink-0">
+      <div className="h-[52px] px-4 md:px-6 border-b border-slate-200 dark:border-white/10 flex items-center justify-between bg-slate-50/90 dark:bg-[#080D1F]/90 backdrop-blur-md shrink-0 relative z-10">
+        <div className="flex items-center gap-3 min-w-0">
+          <motion.div
+            whileHover={{ rotate: 12, scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="p-2 rounded-xl bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/20 dark:border-purple-500/30 shrink-0 cursor-pointer shadow-sm"
+          >
             <Icon className="w-4 h-4" />
-          </div>
+          </motion.div>
           <div className="min-w-0">
-            <span className="text-[9px] font-mono text-purple-400 font-black uppercase tracking-widest block leading-none">
+            <span className="text-[9px] font-mono text-purple-600 dark:text-purple-400 font-black uppercase tracking-widest block leading-none">
               {badge}
             </span>
-            <h2 className="text-xs md:text-sm font-black uppercase text-white tracking-wide truncate leading-tight mt-0.5">
+            <h2 className="text-xs md:text-sm font-black uppercase text-slate-900 dark:text-white tracking-wide truncate leading-tight mt-0.5">
               {title}
             </h2>
           </div>
         </div>
 
-        {/* Live Engine Telemetry Badge */}
+        {/* Live Engine Telemetry Badge & Quick Nav */}
         <div className="flex items-center gap-2 shrink-0">
-          <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[9px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            LIVE ENGINE
+          {onPrev && !isFirst && (
+            <button
+              onClick={onPrev}
+              title="Previous Engine"
+              aria-label="Previous Engine"
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer hidden sm:flex items-center justify-center"
+            >
+              <ChevronDown className="w-3.5 h-3.5 rotate-180" />
+            </button>
+          )}
+          {onNext && !isLast && (
+            <button
+              onClick={onNext}
+              title="Next Engine"
+              aria-label="Next Engine"
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer hidden sm:flex items-center justify-center"
+            >
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+          )}
+          <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[9px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
+            <span className="hidden sm:inline">LIVE ENGINE</span> 0{index + 1}
           </span>
         </div>
       </div>
 
-      {/* 2. COMPLETE VISUAL OF DATA FROM THAT MODEL — Neatly visible with zero edge cutting */}
-      <div className="flex-1 overflow-hidden p-3 md:p-4 flex flex-col justify-between min-h-0">
+      {/* 2. COMPLETE VISUAL OF DATA FROM THAT MODEL */}
+      <div className="p-3 md:p-5 flex flex-col justify-between bg-slate-50/50 dark:bg-[#050814]/40 min-h-0 relative z-10">
         {children}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -387,15 +439,15 @@ export function Card01MergedScoringRadar() {
               }}
               className={`px-2.5 py-1 rounded-xl border text-[11px] font-mono font-bold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer ${
                 isSelected
-                  ? "bg-amber-500/20 border-amber-400 text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.25)] scale-102"
-                  : "bg-white/[0.03] border-white/10 text-white/60 hover:text-white hover:bg-white/[0.08]"
+                  ? "bg-amber-500/20 border-amber-500 text-amber-700 dark:text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.25)] scale-102"
+                  : "bg-slate-100 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-white/[0.08]"
               }`}
             >
-              <span className="text-[9px] font-black px-1.5 py-0.2 rounded bg-black/50 text-amber-400">
+              <span className="text-[9px] font-black px-1.5 py-0.2 rounded bg-slate-900 text-amber-400">
                 {p.team}
               </span>
               <span>{name}</span>
-              <span className="text-[10px] text-white/40">({p.runs}r)</span>
+              <span className="text-[10px] text-slate-500 dark:text-white/40">({p.runs}r)</span>
             </button>
           );
         })}
@@ -404,8 +456,8 @@ export function Card01MergedScoringRadar() {
       {/* 2. MAIN STAGE: 360 FIELD SVG (LEFT) + SECTOR DOMINANCE METRICS (RIGHT) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center flex-1 min-h-0">
         {/* LEFT: 360° CIRCULAR GROUND RADAR */}
-        <div className="lg:col-span-7 flex flex-col items-center justify-between p-3 bg-[#030611] border border-amber-500/20 rounded-2xl relative h-full min-h-[280px] shadow-[inset_0_0_30px_rgba(245,158,11,0.06)]">
-          <div className="text-[9px] font-mono font-bold text-white/60 w-full flex items-center justify-between px-2 shrink-0">
+        <div className="lg:col-span-7 flex flex-col items-center justify-between p-3 bg-[#030611] border border-amber-500/20 rounded-2xl relative h-full min-h-[280px] shadow-[inset_0_0_30px_rgba(245,158,11,0.06)] forced-white">
+          <div className="text-[9px] font-mono font-bold text-white/60 w-full flex items-center justify-between px-2 shrink-0 forced-white">
             <span className="text-amber-400 flex items-center gap-1.5">
               <Compass className="w-3.5 h-3.5 text-amber-400" />
               360° GROUND RADIAL VELOCITY
@@ -507,31 +559,31 @@ export function Card01MergedScoringRadar() {
             </svg>
           </div>
 
-          <div className="w-full text-center text-[9px] font-mono text-white/40 shrink-0">
+          <div className="w-full text-center text-[9px] font-mono text-white/50 forced-white shrink-0">
             Hover over any sector to inspect directional velocity vectors
           </div>
         </div>
 
         {/* RIGHT: SECTOR DOMINANCE METRICS LIST */}
         <div className="lg:col-span-5 flex flex-col justify-between h-full gap-2 min-h-0">
-          <div className="p-3 rounded-xl bg-gradient-to-r from-amber-950/40 via-[#0a0f1d] to-purple-950/30 border border-amber-500/20 flex items-center justify-between shrink-0">
+          <div className="p-3 rounded-xl bg-slate-100 dark:bg-gradient-to-r dark:from-amber-950/40 dark:via-[#0a0f1d] dark:to-purple-950/30 border border-slate-200 dark:border-amber-500/20 flex items-center justify-between shrink-0 shadow-xs dark:shadow-none">
             <div>
-              <span className="text-[10px] font-mono uppercase text-amber-400 font-bold block">
+              <span className="text-[10px] font-mono uppercase text-amber-600 dark:text-amber-400 font-bold block">
                 {selectedPlayer} ({playerData.team})
               </span>
-              <div className="text-xl font-black text-white font-mono leading-tight">
-                {playerData.runs} <span className="text-xs text-white/50 font-normal">Runs • {playerData.sr} SR</span>
+              <div className="text-xl font-black text-slate-900 dark:text-white font-mono leading-tight">
+                {playerData.runs} <span className="text-xs text-slate-500 dark:text-white/50 font-normal">Runs • {playerData.sr} SR</span>
               </div>
             </div>
             <div className="text-right font-mono text-[10px]">
-              <span className="text-cyan-400 font-bold">{playerData.fours} Fours</span>
-              <span className="text-white/30 mx-1">/</span>
-              <span className="text-amber-400 font-bold">{playerData.sixes} Sixes</span>
+              <span className="text-cyan-600 dark:text-cyan-400 font-bold">{playerData.fours} Fours</span>
+              <span className="text-slate-400 dark:text-white/30 mx-1">/</span>
+              <span className="text-amber-600 dark:text-amber-400 font-bold">{playerData.sixes} Sixes</span>
             </div>
           </div>
 
-          {/* Sector Breakdown List */}
-          <div className="grid grid-cols-1 gap-1.5 flex-1 overflow-y-auto no-scrollbar max-h-[250px]">
+          {/* Sector Breakdown List — Clean natural layout without nested scroll trap */}
+          <div className="grid grid-cols-1 gap-1.5 flex-1">
             {playerData.sectors.map((sec) => {
               const isHovered = activeSector === sec.name;
               return (
@@ -539,28 +591,54 @@ export function Card01MergedScoringRadar() {
                   key={sec.name}
                   onMouseEnter={() => setActiveSector(sec.name)}
                   onMouseLeave={() => setActiveSector(null)}
-                  className={`p-2 rounded-xl border transition-all cursor-pointer flex flex-col gap-1 ${
+                  className={`p-2.5 rounded-xl border transition-all cursor-pointer flex flex-col gap-1.5 ${
                     isHovered
-                      ? "bg-amber-500/20 border-amber-400 shadow-md"
-                      : "bg-white/[0.02] border-white/10 hover:border-white/20"
+                      ? "bg-amber-100 dark:bg-amber-500/25 border-amber-400 dark:border-amber-400 shadow-sm"
+                      : "bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/10 hover:border-amber-300 dark:hover:border-amber-500/40 hover:bg-amber-50/50 dark:hover:bg-white/[0.04] shadow-2xs dark:shadow-none"
                   }`}
                 >
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-white flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    <span
+                      className={`font-bold flex items-center gap-2 ${
+                        isHovered ? "text-amber-950 dark:text-amber-200" : "text-slate-900 dark:text-slate-100"
+                      }`}
+                    >
+                      <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
                       {sec.name}
                     </span>
-                    <span className="font-mono text-amber-300 font-bold">
-                      {sec.runs}r <span className="text-[10px] text-white/50">({sec.pct}%)</span>
+                    <span className="font-mono text-amber-700 dark:text-amber-300 font-bold">
+                      {sec.runs}r{" "}
+                      <span
+                        className={`text-[10px] font-normal ${
+                          isHovered ? "text-amber-800/80 dark:text-amber-200/70" : "text-slate-500 dark:text-slate-400"
+                        }`}
+                      >
+                        ({sec.pct}%)
+                      </span>
                     </span>
                   </div>
-                  <div className="flex items-center justify-between text-[10px] text-white/50 font-mono">
-                    <span>SR: <strong className="text-white">{sec.sr}</strong></span>
-                    <span>{sec.fours} 4s • {sec.sixes} 6s</span>
+                  <div
+                    className={`flex items-center justify-between text-[11px] font-mono ${
+                      isHovered ? "text-amber-900 dark:text-amber-200/80" : "text-slate-600 dark:text-slate-400"
+                    }`}
+                  >
+                    <span>
+                      SR:{" "}
+                      <strong
+                        className={`font-bold ${
+                          isHovered ? "text-amber-950 dark:text-amber-100" : "text-slate-900 dark:text-slate-100"
+                        }`}
+                      >
+                        {sec.sr}
+                      </strong>
+                    </span>
+                    <span className={isHovered ? "text-amber-900/80 dark:text-amber-200/70" : "text-slate-500 dark:text-slate-400"}>
+                      {sec.fours} 4s • {sec.sixes} 6s
+                    </span>
                   </div>
-                  <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-amber-500 to-yellow-300"
+                      className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full"
                       style={{ width: `${sec.pct * 2.5}%` }}
                     />
                   </div>
@@ -569,7 +647,7 @@ export function Card01MergedScoringRadar() {
             })}
           </div>
 
-          <div className="p-2 rounded-xl bg-black/40 border border-white/5 text-[10px] text-white/60 font-mono text-center shrink-0">
+          <div className="p-2 rounded-xl bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-[10px] text-slate-600 dark:text-white/60 font-mono text-center shrink-0">
             Real-time radial velocity vectors mapped to ball trajectories
           </div>
         </div>
@@ -588,10 +666,10 @@ export function Card02BowlerTelemetry() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center h-full">
-      <div className="lg:col-span-5 flex flex-col items-center justify-center p-3 bg-[#050814] border border-white/10 rounded-2xl h-full min-h-[300px]">
-        <div className="text-[10px] font-mono font-bold text-white/60 mb-2 flex items-center justify-between w-full px-1">
+      <div className="lg:col-span-5 flex flex-col items-center justify-center p-3 bg-slate-100 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-2xl h-full min-h-[300px]">
+        <div className="text-[10px] font-mono font-bold text-slate-600 dark:text-white/60 mb-2 flex items-center justify-between w-full px-1">
           <span>BOWLER RELEASE</span>
-          <span className="text-cyan-400">BATTER CREASE</span>
+          <span className="text-cyan-600 dark:text-cyan-400">BATTER CREASE</span>
         </div>
         <div className="relative w-full aspect-[1/2] max-w-[170px] rounded-xl overflow-hidden border border-amber-600/30 bg-[#2b1805]">
           <svg viewBox="0 0 100 240" className="w-full h-full">
@@ -619,18 +697,18 @@ export function Card02BowlerTelemetry() {
         {executionDeliveries.map((item) => (
           <div
             key={item.type}
-            className={`p-3.5 rounded-xl bg-[#090e1c] border ${item.border} flex flex-col justify-between`}
+            className={`p-3.5 rounded-xl bg-white dark:bg-[#090e1c] border border-slate-200 dark:${item.border} shadow-2xs dark:shadow-none flex flex-col justify-between`}
           >
-            <div className="flex items-center justify-between border-b border-white/5 pb-1">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/5 pb-1">
               <span className={`text-xs font-black uppercase ${item.color}`}>{item.type}</span>
-              <span className="text-[10px] font-mono text-white/50">{item.balls} Balls</span>
+              <span className="text-[10px] font-mono text-slate-500 dark:text-white/50">{item.balls} Balls</span>
             </div>
             <div className="grid grid-cols-3 gap-1.5 text-center font-mono my-2">
-              <div className="p-1.5 bg-black/40 rounded-lg"><span className="text-[7px] text-white/40 block">ECON</span><span className="text-xs font-black text-white">{item.econ}</span></div>
-              <div className="p-1.5 bg-black/40 rounded-lg"><span className="text-[7px] text-white/40 block">WKTS</span><span className="text-xs font-black text-emerald-400">{item.wkts}</span></div>
-              <div className="p-1.5 bg-black/40 rounded-lg"><span className="text-[7px] text-white/40 block">DOT%</span><span className="text-xs font-black text-cyan-400">{item.dotPct}%</span></div>
+              <div className="p-1.5 bg-slate-100 dark:bg-black/40 rounded-lg"><span className="text-[7px] text-slate-500 dark:text-white/40 block">ECON</span><span className="text-xs font-black text-slate-900 dark:text-white">{item.econ}</span></div>
+              <div className="p-1.5 bg-slate-100 dark:bg-black/40 rounded-lg"><span className="text-[7px] text-slate-500 dark:text-white/40 block">WKTS</span><span className="text-xs font-black text-emerald-600 dark:text-emerald-400">{item.wkts}</span></div>
+              <div className="p-1.5 bg-slate-100 dark:bg-black/40 rounded-lg"><span className="text-[7px] text-slate-500 dark:text-white/40 block">DOT%</span><span className="text-xs font-black text-cyan-600 dark:text-cyan-400">{item.dotPct}%</span></div>
             </div>
-            <span className="text-[9px] font-mono text-white/50 block text-right">False Shot Pressure: 38.4%</span>
+            <span className="text-[9px] font-mono text-slate-500 dark:text-white/50 block text-right">False Shot Pressure: 38.4%</span>
           </div>
         ))}
       </div>
@@ -880,11 +958,11 @@ export function Card03TheDuel() {
   return (
     <div className="flex flex-col gap-4 h-full justify-between">
       {/* 1. COMBAT CLASH VERSUS ENERGY HEADER */}
-      <div className="relative flex flex-col md:flex-row items-center justify-between p-3 md:p-4 bg-gradient-to-r from-red-950/40 via-slate-900/90 to-blue-950/40 rounded-2xl border border-white/10 backdrop-blur-xl shadow-2xl shrink-0 gap-2">
+      <div className="relative flex flex-col md:flex-row items-center justify-between p-3 md:p-4 bg-slate-100 dark:bg-gradient-to-r dark:from-red-950/40 dark:via-slate-900/90 dark:to-blue-950/40 rounded-2xl border border-slate-200 dark:border-white/10 backdrop-blur-xl shadow-sm dark:shadow-2xl shrink-0 gap-2">
         {/* Left: Batter (Kohli / RCB Crimson Glow) */}
         <div className="flex items-center gap-4">
           <div className="relative">
-            <div className="w-12 h-12 rounded-full border-2 border-red-500 bg-red-950/60 flex items-center justify-center font-black text-xl text-red-100 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+            <div className="w-12 h-12 rounded-full border-2 border-red-500 bg-red-100 dark:bg-red-950/60 flex items-center justify-center font-black text-xl text-red-600 dark:text-red-100 shadow-[0_0_20px_rgba(239,68,68,0.25)]">
               VK
             </div>
             <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 bg-red-600 text-[10px] font-mono font-bold rounded text-white">
@@ -892,27 +970,27 @@ export function Card03TheDuel() {
             </span>
           </div>
           <div>
-            <div className="text-[11px] font-mono tracking-widest text-red-400 uppercase">Primary Target</div>
-            <h3 className="text-2xl font-black tracking-tight text-white uppercase">VIRAT KOHLI</h3>
-            <div className="text-xs text-slate-400 font-mono">142 Runs • 96 Balls • 147.9 SR</div>
+            <div className="text-[11px] font-mono tracking-widest text-red-600 dark:text-red-400 uppercase">Primary Target</div>
+            <h3 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase">VIRAT KOHLI</h3>
+            <div className="text-xs text-slate-600 dark:text-slate-400 font-mono">142 Runs • 96 Balls • 147.9 SR</div>
           </div>
         </div>
 
         {/* Center: Duel Badge & Tug-of-War Pressure Meter */}
         <div className="flex flex-col items-center justify-center px-4 md:px-6 w-full md:w-auto">
-          <div className="text-[10px] font-mono text-cyan-400 tracking-[0.3em] uppercase mb-1">Faceoff Index</div>
-          <div className="px-4 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/40 text-cyan-300 font-black text-sm tracking-wider shadow-[0_0_15px_rgba(6,182,212,0.25)]">
+          <div className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 tracking-[0.3em] uppercase mb-1">Faceoff Index</div>
+          <div className="px-4 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-300 font-black text-sm tracking-wider shadow-xs dark:shadow-[0_0_15px_rgba(6,182,212,0.25)]">
             96 DELIVERIES • 4 DISMISSALS
           </div>
-          <div className="text-[11px] text-slate-400 mt-1 font-mono">Avg: 35.5 • Dot%: 43.7%</div>
+          <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1 font-mono">Avg: 35.5 • Dot%: 43.7%</div>
 
           {/* Bidirectional Pressure Tug-of-War Gauge */}
           <div className="w-full max-w-[220px] mt-2">
-            <div className="flex justify-between text-[8px] font-mono text-slate-400 mb-0.5 font-bold">
-              <span className="text-red-400">KOHLI (174.5 SR)</span>
-              <span className="text-cyan-400">BUMRAH (58% DOTS)</span>
+            <div className="flex justify-between text-[8px] font-mono text-slate-500 dark:text-slate-400 mb-0.5 font-bold">
+              <span className="text-red-600 dark:text-red-400">KOHLI (174.5 SR)</span>
+              <span className="text-cyan-600 dark:text-cyan-400">BUMRAH (58% DOTS)</span>
             </div>
-            <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden flex shadow-inner">
+            <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden flex shadow-inner">
               <div className="bg-gradient-to-r from-red-600 to-red-400 h-full w-[46%]" />
               <div className="bg-gradient-to-r from-cyan-400 to-blue-500 h-full w-[54%]" />
             </div>
@@ -922,7 +1000,7 @@ export function Card03TheDuel() {
         {/* Right: Bowler (Bumrah / MI Electric Blue Glow) */}
         <div className="flex items-center gap-4 flex-row-reverse text-right">
           <div className="relative">
-            <div className="w-12 h-12 rounded-full border-2 border-cyan-400 bg-blue-950/60 flex items-center justify-center font-black text-xl text-cyan-100 shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+            <div className="w-12 h-12 rounded-full border-2 border-cyan-500 bg-blue-100 dark:bg-blue-950/60 flex items-center justify-center font-black text-xl text-blue-700 dark:text-cyan-100 shadow-[0_0_20px_rgba(6,182,212,0.25)]">
               JB
             </div>
             <span className="absolute -bottom-1 -left-1 px-1.5 py-0.5 bg-cyan-600 text-[10px] font-mono font-bold rounded text-white">
@@ -930,9 +1008,9 @@ export function Card03TheDuel() {
             </span>
           </div>
           <div>
-            <div className="text-[11px] font-mono tracking-widest text-cyan-400 uppercase">Apex Enforcer</div>
-            <h3 className="text-2xl font-black tracking-tight text-white uppercase">JASPRIT BUMRAH</h3>
-            <div className="text-xs text-slate-400 font-mono">4 Wkts • 8.87 Econ • 78/100 Threat</div>
+            <div className="text-[11px] font-mono tracking-widest text-cyan-600 dark:text-cyan-400 uppercase">Apex Enforcer</div>
+            <h3 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase">JASPRIT BUMRAH</h3>
+            <div className="text-xs text-slate-600 dark:text-slate-400 font-mono">4 Wkts • 8.87 Econ • 78/100 Threat</div>
           </div>
         </div>
       </div>
@@ -940,7 +1018,7 @@ export function Card03TheDuel() {
       {/* 2. MAIN STAGE: 3D DUEL PITCH HOLOGRAM (LEFT) + DISMISSAL ANATOMY (RIGHT) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center flex-1 min-h-0">
         {/* LEFT: 3D DUEL PITCH HOLOGRAPHIC CAGE */}
-        <div className="lg:col-span-6 flex flex-col items-center justify-between p-3.5 bg-[#030611] border border-cyan-500/20 rounded-2xl relative h-full min-h-[320px] shadow-[inset_0_0_30px_rgba(6,182,212,0.06)]">
+        <div className="lg:col-span-6 flex flex-col items-center justify-between p-3.5 bg-slate-900 dark:bg-[#030611] border border-cyan-500/20 rounded-2xl relative h-full min-h-[320px] shadow-[inset_0_0_30px_rgba(6,182,212,0.06)]">
           {/* Top Hologram Indicators */}
           <div className="flex items-center justify-between w-full text-[9px] font-mono font-bold px-2 z-10">
             <span className="text-cyan-400 flex items-center gap-1.5">
@@ -965,22 +1043,22 @@ export function Card03TheDuel() {
           </div>
 
           {/* Timeline Scrubber across bottom of Pitch */}
-          <div className="w-full bg-[#070e1c]/95 backdrop-blur-md border border-white/10 rounded-xl p-2.5 z-10 space-y-1.5">
+          <div className="w-full bg-white/95 dark:bg-[#070e1c]/95 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-xl p-2.5 z-10 space-y-1.5 shadow-sm">
             <div className="flex items-center justify-between text-[10px] font-mono">
-              <span className="text-cyan-400 font-bold flex items-center gap-1.5">
-                <Clock className="w-3 h-3 text-cyan-400" />
+              <span className="text-cyan-600 dark:text-cyan-400 font-bold flex items-center gap-1.5">
+                <Clock className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />
                 Delivery {selectedBallIndex} of 96
               </span>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsPlayingTimeline(!isPlayingTimeline)}
-                  className="px-2 py-0.5 rounded bg-cyan-500 text-black font-extrabold text-[9px] uppercase cursor-pointer hover:bg-cyan-400"
+                  className="px-2 py-0.5 rounded bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-[9px] uppercase cursor-pointer transition-colors"
                 >
                   {isPlayingTimeline ? "Pause" : "Play History"}
                 </button>
                 <button
                   onClick={() => { setSelectedBallIndex(96); setSelectedDismissal(null); }}
-                  className="text-slate-400 hover:text-white"
+                  className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                   title="Reset to Ball 96"
                 >
                   <RotateCcw className="w-3 h-3" />
@@ -993,17 +1071,17 @@ export function Card03TheDuel() {
               max="96"
               value={selectedBallIndex}
               onChange={(e) => setSelectedBallIndex(Number(e.target.value))}
-              className="w-full accent-cyan-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg"
+              className="w-full accent-cyan-500 cursor-pointer h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg"
             />
           </div>
         </div>
 
         {/* RIGHT: DISMISSAL ANATOMY CARDS & MATCH PHASE SELECTOR */}
         <div className="lg:col-span-6 flex flex-col justify-between h-full gap-2">
-          <div className="flex items-center justify-between border-b border-white/5 pb-1">
-            <span className="text-xs font-black uppercase text-white tracking-wider flex items-center gap-1.5">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/5 pb-1">
+            <span className="text-xs font-black uppercase text-slate-900 dark:text-white tracking-wider flex items-center gap-1.5">
               <span>Dismissal Anatomy</span>
-              <span className="text-rose-400 font-mono text-[10px]">(Click to Replay Ball Track)</span>
+              <span className="text-rose-500 dark:text-rose-400 font-mono text-[10px]">(Click to Replay Ball Track)</span>
             </span>
             <div className="flex items-center gap-1">
               {(["All", "Powerplay", "Death"] as const).map((ph) => (
@@ -1011,7 +1089,9 @@ export function Card03TheDuel() {
                   key={ph}
                   onClick={() => setActivePhaseFilter(ph)}
                   className={`px-2 py-0.5 rounded text-[9px] font-mono uppercase tracking-wider font-bold transition-all cursor-pointer ${
-                    activePhaseFilter === ph ? "bg-rose-500 text-white" : "bg-white/5 text-slate-400 hover:text-white"
+                    activePhaseFilter === ph
+                      ? "bg-rose-500 text-white shadow-xs"
+                      : "bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   {ph}
@@ -1020,8 +1100,8 @@ export function Card03TheDuel() {
             </div>
           </div>
 
-          {/* 4 Dismissal Breakdown Cards */}
-          <div className="grid grid-cols-1 gap-2 flex-1 max-h-[220px] overflow-y-auto no-scrollbar">
+          {/* 4 Dismissal Breakdown Cards — Clean natural layout without nested scroll trap */}
+          <div className="grid grid-cols-1 gap-2 flex-1">
             {KOHLI_BUMRAH_DISMISSALS
               .filter((d) => activePhaseFilter === "All" || d.phase === activePhaseFilter)
               .map((d) => {
@@ -1035,24 +1115,24 @@ export function Card03TheDuel() {
                     }}
                     className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
                       isSelected
-                        ? "bg-rose-500/20 border-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.3)]"
-                        : "bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.05]"
+                        ? "bg-rose-100 dark:bg-rose-500/25 border-rose-500 shadow-sm text-slate-900 dark:text-white"
+                        : "bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/10 hover:border-rose-300 dark:hover:border-rose-500/30 hover:bg-rose-50/50 dark:hover:bg-white/[0.04] shadow-2xs dark:shadow-none"
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                        <span className="px-1.5 py-0.5 rounded bg-rose-500/30 text-rose-300 font-mono text-[9px] font-black">
+                      <span className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                        <span className="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-600 dark:text-rose-300 font-mono text-[9px] font-black border border-rose-500/30">
                           {d.overBall}
                         </span>
                         <span>{d.mode}</span>
                       </span>
-                      <span className="text-[10px] font-mono text-cyan-400 font-bold">{d.speed}</span>
+                      <span className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 font-bold">{d.speed}</span>
                     </div>
 
-                    <div className="text-[10px] text-slate-300 font-mono mt-1">
-                      Length: <strong className="text-amber-300">{d.lengthLine}</strong>
+                    <div className="text-[10px] text-slate-600 dark:text-slate-300 font-mono mt-1">
+                      Length: <strong className="text-amber-600 dark:text-amber-300">{d.lengthLine}</strong>
                     </div>
-                    <div className="text-[9px] text-slate-400 mt-0.5">
+                    <div className="text-[9px] text-slate-500 dark:text-slate-400 mt-0.5">
                       Execution: {d.shotAttempted}
                     </div>
                   </button>
@@ -1061,9 +1141,9 @@ export function Card03TheDuel() {
           </div>
 
           {/* Tactical Readout */}
-          <div className="p-2.5 rounded-xl bg-gradient-to-r from-red-950/40 via-[#0a0f1d] to-cyan-950/30 border border-white/10 text-[10px] text-slate-300 flex items-center justify-between font-mono">
+          <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-gradient-to-r dark:from-red-950/40 dark:via-[#0a0f1d] dark:to-cyan-950/30 border border-slate-200 dark:border-white/10 text-[10px] text-slate-700 dark:text-slate-300 flex items-center justify-between font-mono">
             <span>
-              <strong>Bumrah Weaponry:</strong> 50% dismissals off Good Length corridor; 50% base yorker/slap setups in death.
+              <strong className="text-slate-900 dark:text-white">Bumrah Weaponry:</strong> 50% dismissals off Good Length corridor; 50% base yorker/slap setups in death.
             </span>
             <Flame className="w-4 h-4 text-rose-500 shrink-0 ml-2" />
           </div>
@@ -1080,9 +1160,9 @@ export function Card03TheDuel() {
 export function Card09VenueDna() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center h-full">
-      <div className="lg:col-span-6 flex flex-col items-center justify-center p-3 bg-[#050814] border border-white/10 rounded-2xl h-full">
-        <span className="text-[9px] font-mono text-white/50 uppercase tracking-widest mb-1">BOUNDARY CLEARANCE (METERS)</span>
-        <div className="relative w-full aspect-square max-w-[240px] rounded-full overflow-hidden border-2 border-slate-700 bg-slate-950 p-2">
+      <div className="lg:col-span-6 flex flex-col items-center justify-center p-3 bg-slate-100 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-2xl h-full min-h-[280px]">
+        <span className="text-[9px] font-mono text-slate-500 dark:text-white/50 uppercase tracking-widest mb-1">BOUNDARY CLEARANCE (METERS)</span>
+        <div className="relative w-full aspect-square max-w-[240px] rounded-full overflow-hidden border-2 border-slate-300 dark:border-slate-700 bg-slate-900 dark:bg-slate-950 p-2 shadow-inner">
           <svg viewBox="0 0 400 400" className="w-full h-full">
             <circle cx="200" cy="200" r="190" fill="#062211" stroke="#14532d" strokeWidth="2" />
             <circle cx="200" cy="200" r="180" fill="none" stroke="#ffffff" strokeWidth="2" strokeDasharray="6 4" opacity="0.8" />
@@ -1099,19 +1179,19 @@ export function Card09VenueDna() {
 
       <div className="lg:col-span-6 space-y-3 flex flex-col justify-center h-full">
         <div className="grid grid-cols-2 gap-2.5">
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-cyan-500/20">
-            <span className="text-[9px] font-mono uppercase text-cyan-400 font-bold block">PACE EFFICIENCY</span>
-            <div className="text-lg font-black text-white font-mono">7.82 <span className="text-[10px] text-white/40">ECON</span></div>
-            <span className="text-[9px] text-white/60 font-mono">19.2 SR • 68% Wkts</span>
+          <div className="p-3 rounded-xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-cyan-500/20 shadow-2xs dark:shadow-none">
+            <span className="text-[9px] font-mono uppercase text-cyan-600 dark:text-cyan-400 font-bold block">PACE EFFICIENCY</span>
+            <div className="text-lg font-black text-slate-900 dark:text-white font-mono">7.82 <span className="text-[10px] text-slate-400 dark:text-white/40">ECON</span></div>
+            <span className="text-[9px] text-slate-500 dark:text-white/60 font-mono">19.2 SR • 68% Wkts</span>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-purple-500/20">
-            <span className="text-[9px] font-mono uppercase text-purple-400 font-bold block">SPIN CONTROL</span>
-            <div className="text-lg font-black text-white font-mono">7.21 <span className="text-[10px] text-white/40">ECON</span></div>
-            <span className="text-[9px] text-white/60 font-mono">24.5 SR • 32% Wkts</span>
+          <div className="p-3 rounded-xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-purple-500/20 shadow-2xs dark:shadow-none">
+            <span className="text-[9px] font-mono uppercase text-purple-600 dark:text-purple-400 font-bold block">SPIN CONTROL</span>
+            <div className="text-lg font-black text-slate-900 dark:text-white font-mono">7.21 <span className="text-[10px] text-slate-400 dark:text-white/40">ECON</span></div>
+            <span className="text-[9px] text-slate-500 dark:text-white/60 font-mono">24.5 SR • 32% Wkts</span>
           </div>
         </div>
-        <div className="p-3 rounded-xl bg-[#0e1628] border border-white/10 text-xs text-white/80 space-y-1">
-          <div className="flex items-center gap-1.5 text-amber-400 font-mono font-bold text-[10px]">
+        <div className="p-3 rounded-xl bg-white dark:bg-[#0e1628] border border-slate-200 dark:border-white/10 text-xs text-slate-700 dark:text-white/80 space-y-1 shadow-2xs dark:shadow-none">
+          <div className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 font-mono font-bold text-[10px]">
             <Sparkles className="w-3.5 h-3.5" />
             <span>AI TACTICAL BLUEPRINT</span>
           </div>
@@ -1214,46 +1294,192 @@ export function FullAnalysisModal({
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MAIN EXPORT: LIVING GROUND DECK
-// Renders the 10 stacked cards with peeking headers and full in-between views
+// Renders the 10 stacked cards with peeking headers, kinetic scroll telemetry,
+// sticky interactive dimension HUD, and a floating flight deck controller.
 // ─────────────────────────────────────────────────────────────────────────────
 export function LivingGroundDeck() {
-  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+  const [activeCardId, setActiveCardId] = useState<string>(DECK_CARDS[0].id);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isAutoTouring, setIsAutoTouring] = useState(false);
+  const [isFlightDeckOpen, setIsFlightDeckOpen] = useState(true);
+  const [hasCelebratedEnd, setHasCelebratedEnd] = useState(false);
+  const dimensionBarRef = useRef<HTMLDivElement>(null);
+  const tourTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const activeIndex = useMemo(() => {
+    const idx = DECK_CARDS.findIndex((c) => c.id === activeCardId);
+    return idx >= 0 ? idx : 0;
+  }, [activeCardId]);
+
+  const activeCardMeta = useMemo(() => {
+    return DECK_CARDS[activeIndex] || DECK_CARDS[0];
+  }, [activeIndex]);
 
   const scrollToCard = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      const offset = 10;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = el.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
+  const jumpToRelativeCard = (offset: number) => {
+    const nextIdx = Math.max(0, Math.min(DECK_CARDS.length - 1, activeIndex + offset));
+    scrollToCard(DECK_CARDS[nextIdx].id);
+  };
+
+  // 1. Calculate live scroll progress (0 - 100%)
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const p = docHeight > 0 ? Math.min(100, Math.max(0, Math.round((scrollY / docHeight) * 100))) : 0;
+      setScrollProgress(p);
+      if (p >= 92 && !hasCelebratedEnd) {
+        setHasCelebratedEnd(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasCelebratedEnd]);
+
+  // 2. IntersectionObserver to track the active module in the viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveCardId(entry.target.id);
+            // Smoothly auto-scroll dimension bar button into view
+            const btn = dimensionBarRef.current?.querySelector(`[data-card-id="${entry.target.id}"]`) as HTMLElement | null;
+            if (btn && dimensionBarRef.current) {
+              const container = dimensionBarRef.current;
+              const left = btn.offsetLeft - container.offsetWidth / 2 + btn.offsetWidth / 2;
+              container.scrollTo({ left, behavior: "smooth" });
+            }
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -55% 0px", threshold: [0, 0.2] }
+    );
+
+    DECK_CARDS.forEach((card) => {
+      const el = document.getElementById(card.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // 3. Playful Cinematic Tour / Autoplay Mode
+  useEffect(() => {
+    if (!isAutoTouring) {
+      if (tourTimerRef.current) clearInterval(tourTimerRef.current);
+      return;
+    }
+
+    tourTimerRef.current = setInterval(() => {
+      setActiveCardId((current) => {
+        const idx = DECK_CARDS.findIndex((c) => c.id === current);
+        if (idx >= 0 && idx < DECK_CARDS.length - 1) {
+          const nextCard = DECK_CARDS[idx + 1];
+          scrollToCard(nextCard.id);
+          return nextCard.id;
+        } else {
+          setIsAutoTouring(false);
+          return current;
+        }
+      });
+    }, 6500);
+
+    return () => {
+      if (tourTimerRef.current) clearInterval(tourTimerRef.current);
+    };
+  }, [isAutoTouring]);
+
   return (
-    <div className="relative w-full max-w-7xl mx-auto px-2 md:px-4 pb-24 space-y-4">
-      {/* QUICK FILTER DIMENSION BAR (JUMP DIRECTLY TO ANY MODULE) */}
-      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-2.5 px-3 bg-[#060A18]/90 rounded-2xl border border-white/10 backdrop-blur-md shadow-lg">
-        <span className="text-[10px] font-mono font-black uppercase tracking-wider text-purple-400 shrink-0 flex items-center gap-1.5 pr-2 border-r border-white/10">
-          <Filter className="w-3.5 h-3.5" /> Dimensions
-        </span>
-        {DECK_CARDS.map((card, idx) => (
-          <button
-            key={card.id}
-            onClick={() => scrollToCard(card.id)}
-            className="shrink-0 px-2.5 py-1 rounded-xl bg-white/[0.04] hover:bg-purple-600/30 border border-white/10 hover:border-purple-500/40 text-white/70 hover:text-white text-[10px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 hover:scale-105 active:scale-95"
-          >
-            <span className="text-purple-400 font-black">0{idx + 1}</span>
-            <span className="truncate max-w-[130px]">{card.badge.split("•")[1]?.trim() || card.title}</span>
-          </button>
-        ))}
+    <div className="relative w-full max-w-7xl mx-auto px-2 md:px-4 pb-28 space-y-6">
+      {/* ═════════════════════════════════════════════════════════════════════
+          QUICK FILTER DIMENSION BAR (STICKY WITH PROGRESS LASER & AUTO-SNAP)
+         ═════════════════════════════════════════════════════════════════════ */}
+      <div className="sticky top-[64px] z-30 overflow-hidden rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#060A18]/90 backdrop-blur-xl shadow-md dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-colors">
+        {/* Top Edge Animated Progress Laser */}
+        <div className="h-[3px] w-full bg-slate-100 dark:bg-white/5 relative overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-amber-400 shadow-[0_0_12px_rgba(168,85,247,0.8)]"
+            style={{ width: `${scrollProgress}%` }}
+            transition={{ ease: "easeOut", duration: 0.15 }}
+          />
+        </div>
+
+        {/* Content Strip */}
+        <div
+          ref={dimensionBarRef}
+          className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-2.5 px-3"
+        >
+          {/* Label Badge */}
+          <span className="text-[10px] font-mono font-black uppercase tracking-wider text-purple-600 dark:text-purple-400 shrink-0 flex items-center gap-1.5 pr-2.5 border-r border-slate-200 dark:border-white/10">
+            <Filter className="w-3.5 h-3.5" /> Dimensions
+          </span>
+
+          {/* 10 Module Pill Buttons with Smooth Layout Indicator */}
+          {DECK_CARDS.map((card, idx) => {
+            const isActive = activeCardId === card.id;
+            return (
+              <button
+                key={card.id}
+                data-card-id={card.id}
+                onClick={() => {
+                  if (isAutoTouring) setIsAutoTouring(false);
+                  scrollToCard(card.id);
+                }}
+                className={`relative shrink-0 px-3 py-1.5 rounded-xl text-[10px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 ${
+                  isActive
+                    ? "text-white font-black shadow-md shadow-purple-500/30 scale-105"
+                    : "bg-slate-100 hover:bg-purple-100/60 dark:bg-white/[0.04] dark:hover:bg-purple-600/25 border border-slate-200 hover:border-purple-300 dark:border-white/10 dark:hover:border-purple-500/40 text-slate-700 hover:text-slate-900 dark:text-white/70 dark:hover:text-white"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="active-viz-pill"
+                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 -z-10 shadow-sm border border-purple-400/50"
+                    transition={{ type: "spring", stiffness: 450, damping: 30 }}
+                  />
+                )}
+                <span
+                  className={
+                    isActive
+                      ? "text-purple-200 font-black flex items-center gap-1"
+                      : "text-purple-600 dark:text-purple-400 font-black"
+                  }
+                >
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />}
+                  0{idx + 1}
+                </span>
+                <span className="truncate max-w-[125px]">
+                  {card.badge.split("•")[1]?.trim() || card.title}
+                </span>
+              </button>
+            );
+          })}
+
+          {/* Telemetry Counter Pill (Right side) */}
+          <div className="ml-auto pl-2 border-l border-slate-200 dark:border-white/10 shrink-0 hidden md:flex items-center gap-2">
+            <span className="px-2.5 py-1 rounded-lg bg-purple-500/10 border border-purple-500/20 text-[9px] font-mono font-bold text-purple-700 dark:text-purple-300 uppercase tracking-widest flex items-center gap-1.5">
+              <Activity className="w-3 h-3 text-purple-500 animate-pulse" />
+              0{activeIndex + 1}/10 • {scrollProgress}%
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* 10 STACKING MODULE CARDS — As you scroll down, each cleanly replaces the previous card with complete visual data */}
+      {/* ═════════════════════════════════════════════════════════════════════
+          10 STACKING MODULE CARDS
+          Animated viewport entrance, holographic watermark numerals,
+          and smooth directional jumps between engines.
+         ═════════════════════════════════════════════════════════════════════ */}
+
       {/* CARD 01 */}
       <StackingDeckCard
         index={0}
@@ -1261,6 +1487,8 @@ export function LivingGroundDeck() {
         badge="MODULE 01 • SPATIAL RADAR & COMMAND"
         title="360° Scoring Radar & Radial Velocity Vectors"
         Icon={Compass}
+        isFirst
+        onNext={() => scrollToCard(DECK_CARDS[1].id)}
       >
         <Card01MergedScoringRadar />
       </StackingDeckCard>
@@ -1272,6 +1500,8 @@ export function LivingGroundDeck() {
         badge="MODULE 02 • BOWLING TELEMETRY"
         title="3D Pitch Map & Delivery Execution Matrix"
         Icon={Target}
+        onPrev={() => scrollToCard(DECK_CARDS[0].id)}
+        onNext={() => scrollToCard(DECK_CARDS[2].id)}
       >
         <Card02BowlerTelemetry />
       </StackingDeckCard>
@@ -1283,28 +1513,34 @@ export function LivingGroundDeck() {
         badge="MODULE 03 • HEAD-TO-HEAD"
         title="The Duel: Batter × Bowler Faceoff Matrix"
         Icon={Flame}
+        onPrev={() => scrollToCard(DECK_CARDS[1].id)}
+        onNext={() => scrollToCard(DECK_CARDS[3].id)}
       >
         <Card03TheDuel />
       </StackingDeckCard>
 
-      {/* CARD 04 — Mapped to ShotFlowSankey (5x5 Length vs Shot Type Matrix) */}
+      {/* CARD 04 — Length vs Shot Matrix */}
       <StackingDeckCard
         index={3}
         id="card-length-to-shot"
         badge="MODULE 04 • LENGTH MATRIX"
         title="Delivery Length to Shot Type Analysis (2008 – 2026)"
         Icon={BarChart2}
+        onPrev={() => scrollToCard(DECK_CARDS[2].id)}
+        onNext={() => scrollToCard(DECK_CARDS[4].id)}
       >
         <ShotFlowSankey />
       </StackingDeckCard>
 
-      {/* CARD 05 — Mapped to RunFlowSankey (Sunburst Radial Hierarchy Execution Flow) */}
+      {/* CARD 05 — Execution Flow */}
       <StackingDeckCard
         index={4}
         id="card-shot-execution-flow"
         badge="MODULE 05 • EXECUTION FLOW"
         title="Delivery Type to Shot Execution Flow (2008 – 2026)"
         Icon={Zap}
+        onPrev={() => scrollToCard(DECK_CARDS[3].id)}
+        onNext={() => scrollToCard(DECK_CARDS[5].id)}
       >
         <RunFlowSankey />
       </StackingDeckCard>
@@ -1316,6 +1552,8 @@ export function LivingGroundDeck() {
         badge="MODULE 06 • AUCTION DYNAMICS"
         title="3D Holographic Player Transfers (2008 – 2026)"
         Icon={Shuffle}
+        onPrev={() => scrollToCard(DECK_CARDS[4].id)}
+        onNext={() => scrollToCard(DECK_CARDS[6].id)}
       >
         <TransferFlowSankey />
       </StackingDeckCard>
@@ -1327,6 +1565,8 @@ export function LivingGroundDeck() {
         badge="MODULE 07 • TELEMETRY ENGINE"
         title="Continuous Ball-by-Ball Momentum Stream & Live Telemetry"
         Icon={Activity}
+        onPrev={() => scrollToCard(DECK_CARDS[5].id)}
+        onNext={() => scrollToCard(DECK_CARDS[7].id)}
       >
         <MomentumStream title="Database: 1,243 Total IPL Matches (2008 – 2026)" />
       </StackingDeckCard>
@@ -1338,6 +1578,8 @@ export function LivingGroundDeck() {
         badge="MODULE 08 • WIN ENGINE"
         title="Win Probability Dynamic Stream & Live Shift Engine"
         Icon={TrendingUp}
+        onPrev={() => scrollToCard(DECK_CARDS[6].id)}
+        onNext={() => scrollToCard(DECK_CARDS[8].id)}
       >
         <WinProbabilityStream team1="RCB" team2="CSK" />
       </StackingDeckCard>
@@ -1349,6 +1591,8 @@ export function LivingGroundDeck() {
         badge="MODULE 09 • VENUE GEOMETRY"
         title="Venue Geometry Dimensions & Tactical AI"
         Icon={Layers}
+        onPrev={() => scrollToCard(DECK_CARDS[7].id)}
+        onNext={() => scrollToCard(DECK_CARDS[9].id)}
       >
         <Card09VenueDna />
       </StackingDeckCard>
@@ -1360,11 +1604,175 @@ export function LivingGroundDeck() {
         badge="MODULE 10 • KNOWLEDGE GRAPH"
         title="Knowledge Graph Entity Map"
         Icon={Network}
+        isLast
+        onPrev={() => scrollToCard(DECK_CARDS[8].id)}
       >
         <KnowledgeGraphSimple />
       </StackingDeckCard>
 
+      {/* ═════════════════════════════════════════════════════════════════════
+          CELEBRATORY END MILESTONE CARD
+         ═════════════════════════════════════════════════════════════════════ */}
+      {hasCelebratedEnd && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.5, type: "spring" }}
+          className="rounded-3xl p-6 bg-gradient-to-r from-purple-900/40 via-indigo-900/30 to-purple-900/40 border border-purple-500/30 text-center relative overflow-hidden backdrop-blur-xl shadow-2xl"
+        >
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Sparkles className="w-5 h-5 text-amber-400 animate-bounce" />
+            <span className="text-xs font-mono font-black uppercase tracking-widest text-purple-600 dark:text-purple-300">
+              MISSION ACCOMPLISHED
+            </span>
+            <Sparkles className="w-5 h-5 text-amber-400 animate-bounce" />
+          </div>
+          <h3 className="text-lg md:text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-1">
+            All 10 Spatial Data Engines Explored
+          </h3>
+          <p className="text-xs text-slate-600 dark:text-white/60 font-mono max-w-lg mx-auto mb-4">
+            260,000+ real delivery coordinates, 1,243 matches, and 8 spatial dimensions processed.
+          </p>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-mono text-xs font-bold uppercase tracking-wider shadow-lg shadow-purple-500/30 hover:scale-105 active:scale-95 transition-all inline-flex items-center gap-2 cursor-pointer"
+          >
+            <ArrowUp className="w-4 h-4" /> Glide Back To Top
+          </button>
+        </motion.div>
+      )}
 
+      {/* ═════════════════════════════════════════════════════════════════════
+          FLOATING "FLIGHT DECK" TELEMETRY HUD CONTROLLER (BOTTOM-RIGHT)
+         ═════════════════════════════════════════════════════════════════════ */}
+      <aside aria-label="Visualizations Flight Deck" className="fixed bottom-5 right-5 z-40">
+        <AnimatePresence>
+          {isFlightDeckOpen ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.85, y: 20 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="w-72 sm:w-80 rounded-2xl bg-white/95 dark:bg-[#070B16]/95 border border-purple-500/30 dark:border-purple-500/30 p-3.5 shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-white relative overflow-hidden"
+            >
+              {/* Top ambient glow */}
+              <div className="absolute -top-12 -right-12 w-28 h-28 rounded-full blur-[40px] pointer-events-none bg-purple-600/30" />
+
+              {/* Header */}
+              <div className="flex items-center justify-between mb-2 pb-2 border-b border-slate-200 dark:border-white/10 relative z-10">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  <span className="text-[10px] font-mono font-black uppercase tracking-wider text-purple-600 dark:text-purple-400">
+                    FLIGHT DECK HUD
+                  </span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="text-[9px] font-mono text-slate-500 dark:text-white/40">
+                    0{activeIndex + 1}/10
+                  </span>
+                  <button
+                    onClick={() => setIsFlightDeckOpen(false)}
+                    aria-label="Minimize flight deck"
+                    className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-white/10 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors cursor-pointer"
+                  >
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Current Active Engine Card Preview */}
+              <div className="mb-2.5 p-2 rounded-xl bg-slate-100/80 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/5 relative z-10">
+                <div className="text-[8px] font-mono uppercase tracking-wider text-purple-600 dark:text-purple-400 font-bold truncate">
+                  {activeCardMeta.badge}
+                </div>
+                <div className="text-xs font-black truncate text-slate-900 dark:text-white mt-0.5">
+                  {activeCardMeta.title}
+                </div>
+              </div>
+
+              {/* Navigation Controls: Prev, Tour, Next */}
+              <div className="grid grid-cols-3 gap-1.5 mb-2.5 relative z-10">
+                <button
+                  onClick={() => jumpToRelativeCard(-1)}
+                  disabled={activeIndex === 0}
+                  className="px-2 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-40 text-[10px] font-mono font-bold uppercase transition-all cursor-pointer flex items-center justify-center gap-1 active:scale-95 disabled:cursor-not-allowed"
+                >
+                  <ChevronUp className="w-3.5 h-3.5" /> Prev
+                </button>
+
+                <button
+                  onClick={() => setIsAutoTouring(!isAutoTouring)}
+                  className={`px-2 py-1.5 rounded-xl border text-[10px] font-mono font-bold uppercase transition-all cursor-pointer flex items-center justify-center gap-1 shadow-sm active:scale-95 ${
+                    isAutoTouring
+                      ? "bg-amber-500 text-slate-950 border-amber-400 font-black animate-pulse"
+                      : "bg-purple-600 hover:bg-purple-700 text-white border-purple-500/50"
+                  }`}
+                >
+                  {isAutoTouring ? (
+                    <>
+                      <Pause className="w-3 h-3 fill-current" /> Tour On
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-3 h-3 fill-current" /> Auto Tour
+                    </>
+                  )}
+                </button>
+
+                <button
+                  onClick={() => jumpToRelativeCard(1)}
+                  disabled={activeIndex === DECK_CARDS.length - 1}
+                  className="px-2 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-40 text-[10px] font-mono font-bold uppercase transition-all cursor-pointer flex items-center justify-center gap-1 active:scale-95 disabled:cursor-not-allowed"
+                >
+                  Next <ChevronDown className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* 10 Mini Scrubber Dots (Click to jump anywhere) */}
+              <div className="flex items-center justify-between px-1 pt-1.5 border-t border-slate-200 dark:border-white/10 relative z-10">
+                <div className="flex items-center gap-1.5">
+                  {DECK_CARDS.map((card, i) => (
+                    <button
+                      key={card.id}
+                      onClick={() => {
+                        if (isAutoTouring) setIsAutoTouring(false);
+                        scrollToCard(card.id);
+                      }}
+                      title={`0${i + 1}: ${card.title}`}
+                      className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                        activeIndex === i
+                          ? "w-6 bg-purple-600 dark:bg-purple-400 shadow-[0_0_8px_rgba(168,85,247,0.8)]"
+                          : "w-2.5 bg-slate-300 hover:bg-slate-400 dark:bg-white/20 dark:hover:bg-white/40"
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                {/* Back to top button */}
+                <button
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  title="Scroll back to top"
+                  className="p-1 rounded-md text-slate-500 hover:text-purple-600 dark:text-white/40 dark:hover:text-purple-300 transition-colors cursor-pointer"
+                >
+                  <ArrowUp className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.button
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={() => setIsFlightDeckOpen(true)}
+              className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-white/95 dark:bg-[#070B16]/95 border border-purple-500/40 shadow-xl backdrop-blur-xl text-slate-900 dark:text-white text-xs font-mono font-black uppercase tracking-wider hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span>0{activeIndex + 1}/10 HUD</span>
+              <ChevronUp className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+            </motion.button>
+          )}
+        </AnimatePresence>
+      </aside>
     </div>
   );
 }

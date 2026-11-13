@@ -29,18 +29,7 @@ export default function ScoutHomePage() {
   const [minBalls, setMinBalls] = useState<number>(Math.max(0, Number(sp.get("minBalls")) || 120));
   const [recentSeasons] = useState<number | undefined>(Number(sp.get("recentSeasons")) > 0 ? Number(sp.get("recentSeasons")) : undefined);
   const [franchiseContext, setFranchiseContext] = useState(sp.get("team") ?? "");
-  const { selectedTeam, setSelectedTeam } = useTeamTheme();
-
-  // Sync team param from URL on load
-  useEffect(() => {
-    const urlTeam = sp.get("team");
-    if (urlTeam) {
-      const resolved = resolveTeamCode(urlTeam);
-      if (resolved && resolved !== selectedTeam) {
-        setSelectedTeam(resolved);
-      }
-    }
-  }, []);
+  const { selectedTeam } = useTeamTheme();
   const [searchQuery, setSearchQuery] = useState<string>(sp.get("search") || "");
   const [debouncedSearch, setDebouncedSearch] = useState(searchQuery);
   useEffect(() => { const timer = setTimeout(() => setDebouncedSearch(searchQuery), 300); return () => clearTimeout(timer); }, [searchQuery]);
@@ -162,7 +151,7 @@ export default function ScoutHomePage() {
 
   return (
     <Layout>
-      <div className="scout-terminal scout-notebook w-full max-w-full min-h-[calc(100vh-56px)] bg-[#050B11] text-[#EFF5F7]">
+      <div className="scout-terminal scout-notebook w-full max-w-full min-h-[calc(100vh-56px)] bg-slate-50 dark:bg-[#050B11] text-slate-900 dark:text-[#EFF5F7] transition-colors">
         {/* CINEMATIC SCOUT COMMAND ROOM (Matches Lovable Format 1:1 with Dynamic Team Dugout Palette) */}
         <ScoutCinematicRoom
           discipline={discipline}

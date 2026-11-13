@@ -33,18 +33,19 @@
 }
 
 .home-editorial .home-hero-copy h1 {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-style: italic;
-  letter-spacing: -0.035em;
+  font-family: inherit !important;
+  font-style: normal !important;
+  letter-spacing: -0.025em;
   margin: 0;
 }
 
 .home-editorial .home-hero-copy h1 span {
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  text-shadow: none !important;
 }
 
 .home-editorial .home-hero-copy h1 .animate-ipl-glow {
-  animation: home-ipl-colour 14s linear infinite;
+  animation: none !important;
+  text-shadow: none !important;
 }
 
 .home-editorial .home-hero-copy > p {
@@ -278,4 +279,134 @@
     animation: none;
     color: #f9cd05;
   }
+}
+
+/* ==========================================================================
+   HOME EDITORIAL LIGHT MODE OVERRIDES
+   ========================================================================== */
+html:not(.dark) .home-editorial,
+[data-theme="light"] .home-editorial {
+  background: #F8FAFC;
+  color: #0F172A;
+}
+
+html:not(.dark) .home-editorial .home-main-hero,
+[data-theme="light"] .home-editorial .home-main-hero {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
+}
+
+html:not(.dark) .home-editorial .home-hero-copy > p,
+[data-theme="light"] .home-editorial .home-hero-copy > p {
+  color: #475569;
+}
+
+html:not(.dark) .reference-scores,
+html:not(.dark) .reference-auction,
+[data-theme="light"] .reference-scores,
+[data-theme="light"] .reference-auction {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+html:not(.dark) .reference-heading h2,
+[data-theme="light"] .reference-heading h2 {
+  color: #0F172A;
+}
+
+html:not(.dark) .reference-countdown,
+[data-theme="light"] .reference-countdown {
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+}
+
+html:not(.dark) .reference-countdown strong,
+[data-theme="light"] .reference-countdown strong {
+  color: #D97706;
+}
+
+html:not(.dark) .reference-countdown small,
+[data-theme="light"] .reference-countdown small {
+  color: #64748B;
+}
+
+html:not(.dark) .reference-champion,
+[data-theme="light"] .reference-champion {
+  background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);
+  border-color: #FECACA;
+}
+
+html:not(.dark) .reference-champion h3,
+[data-theme="light"] .reference-champion h3 {
+  color: #0F172A;
+}
+
+html:not(.dark) .reference-champion p,
+[data-theme="light"] .reference-champion p {
+  color: #475569;
+}
+
+html:not(.dark) .reference-franchise-focus,
+[data-theme="light"] .reference-franchise-focus {
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+}
+
+html:not(.dark) .reference-franchise-focus:hover,
+[data-theme="light"] .reference-franchise-focus:hover {
+  background: #F1F5F9;
+  border-color: #38bdf8;
+}
+
+html:not(.dark) .reference-auction-link,
+[data-theme="light"] .reference-auction-link {
+  color: #334155;
+  border-bottom-color: #E2E8F0;
+}
+
+html:not(.dark) .reference-auction-link:hover,
+[data-theme="light"] .reference-auction-link:hover {
+  background: #F1F5F9;
+}
+
+html:not(.dark) .reference-auction-link small,
+[data-theme="light"] .reference-auction-link small {
+  color: #64748B;
+}
+
+html:not(.dark) .reference-auction-prep,
+[data-theme="light"] .reference-auction-prep {
+  background: #F5F3FF;
+  border-color: #DDD6FE;
+}
+
+html:not(.dark) .reference-auction-prep p,
+[data-theme="light"] .reference-auction-prep p {
+  color: #4B5563;
+}
+
+html:not(.dark) .reference-tool,
+[data-theme="light"] .reference-tool {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+html:not(.dark) .reference-tool:hover,
+[data-theme="light"] .reference-tool:hover {
+  background: #F8FAFC;
+  border-color: #38bdf8;
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.08);
+}
+
+html:not(.dark) .reference-tool h3,
+[data-theme="light"] .reference-tool h3 {
+  color: #0F172A;
+}
+
+html:not(.dark) .reference-tool p,
+[data-theme="light"] .reference-tool p {
+  color: #64748B;
 }

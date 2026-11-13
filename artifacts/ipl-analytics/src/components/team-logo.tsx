@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { teamColor, teamShort } from "@/lib/aggregates";
 
-export function TeamLogo({ team, size = "w-14 h-14" }: { team: string; size?: string }) {
+export function TeamLogo({
+  team,
+  size = "w-14 h-14",
+  className = "",
+}: {
+  team: string;
+  size?: string;
+  className?: string;
+}) {
   const [error, setError] = useState(false);
   const t = team?.toUpperCase() || "";
-  
+
   const isCSK = t.includes("CSK") || t.includes("CHENNAI");
   const isMI = t.includes("MI") || t.includes("MUMBAI");
   const isSRH = t.includes("SRH") || t.includes("HYDERABAD");
@@ -16,13 +24,9 @@ export function TeamLogo({ team, size = "w-14 h-14" }: { team: string; size?: st
   const isPBKS = t.includes("PBKS") || t.includes("PUNJAB");
   const isDeccan = t.includes("DECCAN") || t.includes("CHARGERS");
   const isGLions = t.includes("GUJARAT LIONS") || (t.includes("LIONS") && t.includes("GUJARAT"));
-  // Both Pune sides share the word, so the more specific one is decided first
-  // and Warriors takes whatever is left.
   const isRPS = t.includes("RISING PUNE") || t.includes("SUPERGIANT") || t === "RPS";
   const isPW = t.includes("PUNE WARRIORS") || t === "PW" || (t.includes("PUNE") && !isRPS);
   const isKTK = t.includes("KOCHI") || t.includes("TUSKER") || t === "KTK";
-  // Matched on the full name or an exact code, never on a bare "RR" substring:
-  // "PUNE WARRIORS" contains one.
   const isRR = t.includes("RAJASTHAN") || t === "RR";
 
   let src = null;
@@ -42,18 +46,14 @@ export function TeamLogo({ team, size = "w-14 h-14" }: { team: string; size?: st
   else if (isKTK) src = "/kochi tuskers kerala logo.png";
   else if (isRR) src = "/rr logo.png";
 
-  // Every IPL franchise now has an asset, so this is only reached if a file
-  // fails to load or an unrecognised name is passed. It uses the real
-  // abbreviation and club colour rather than the first three letters of the
-  // name, which produced "RAJ", "RIS" and "KOC".
   if (error || !src) {
     const accent = teamColor(team);
     return (
       <div
-        className={`${size} rounded-full flex items-center justify-center font-black text-[10px] shrink-0 uppercase tracking-tighter border`}
+        className={`${size} rounded-full flex items-center justify-center font-black text-[10px] shrink-0 uppercase tracking-tighter border shadow-sm ${className}`}
         style={{
           background: `linear-gradient(135deg, ${accent}55, ${accent}18)`,
-          borderColor: `${accent}66`,
+          borderColor: `${accent}88`,
           color: "#fff",
         }}
         title={team}
@@ -64,17 +64,42 @@ export function TeamLogo({ team, size = "w-14 h-14" }: { team: string; size?: st
   }
 
   const isJpg = src.endsWith(".jpg");
+  const isCompact =
+    size.includes("w-3") ||
+    size.includes("w-3.5") ||
+    size.includes("w-4") ||
+    size.includes("w-5") ||
+    size.includes("w-6") ||
+    size.includes("w-7");
+
+  // Padding tuned so every logo fills its circular badge comfortably without clipping
+  const paddingClass = isCompact
+    ? "p-[1.5px]"
+    : isRR
+    ? "p-1"
+    : isJpg
+    ? "p-0.5"
+    : "p-1.5";
+
+  // GT has white graphic elements, so its official dark navy #0B1B3D provides contrast
+  // JPGs and other PNGs have rich white/light surfaces or dark colors
+  const containerBg = isGT
+    ? "bg-[#0B1B3D] border border-[#1E3A8A]/80 shadow-sm"
+    : isJpg
+    ? "bg-white border border-slate-200/80 dark:border-white/20 shadow-sm"
+    : "bg-white/95 dark:bg-slate-900/90 border border-slate-200/80 dark:border-white/15 shadow-sm";
 
   return (
-    <div className="relative group/logo">
-      <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl opacity-0 group-hover/logo:opacity-100 transition-opacity" />
+    <div
+      className={`relative ${size} ${containerBg} rounded-full flex items-center justify-center shrink-0 overflow-hidden ${className}`}
+      title={team}
+    >
       <img
         src={src}
-        className={`${size} object-contain shrink-0 relative z-10 rounded-full ${isJpg ? 'bg-white p-0.5 border border-white/20' : ''}`}
+        className={`w-full h-full object-contain shrink-0 ${paddingClass}`}
         style={{
-          filter: isGT ? 'invert(1) hue-rotate(180deg) brightness(1.2) contrast(1.2)' : 'none',
-          mixBlendMode: isGT ? 'screen' : 'normal',
-          opacity: 0.95
+          filter: "none",
+          mixBlendMode: "normal",
         }}
         alt={team}
         onError={() => setError(true)}
@@ -82,4 +107,3 @@ export function TeamLogo({ team, size = "w-14 h-14" }: { team: string; size?: st
     </div>
   );
 }
-

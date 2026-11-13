@@ -6,8 +6,9 @@ import { useTeamTheme } from '@/lib/team-context';
 
 export default function CricfieldHeroBanner({ showSwitcher = false }: { showSwitcher?: boolean }) {
   const [showDoodle, setShowDoodle] = useState(false);
-  const { selectedTeam, setSelectedTeam } = useTeamTheme();
-  const activeKey = selectedTeam ? selectedTeam.toLowerCase() : 'default';
+  const { selectedTeam } = useTeamTheme();
+  const [localOverride, setLocalOverride] = useState<string | null>(null);
+  const activeKey = localOverride ?? (selectedTeam ? selectedTeam.toLowerCase() : 'default');
   const theme: FranchiseTheme = FRANCHISE_THEMES[activeKey] || FRANCHISE_THEMES.default;
 
   return (
@@ -69,9 +70,9 @@ export default function CricfieldHeroBanner({ showSwitcher = false }: { showSwit
               type="button"
               onClick={() => {
                 if (key === 'default') {
-                  setSelectedTeam(null);
+                  setLocalOverride('default');
                 } else {
-                  setSelectedTeam(key.toUpperCase() as any);
+                  setLocalOverride(key);
                 }
               }}
               className={`px-3 py-1 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${

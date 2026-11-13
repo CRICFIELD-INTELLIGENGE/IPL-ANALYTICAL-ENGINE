@@ -9,6 +9,26 @@
     <link rel="apple-touch-icon" href="/favicon.svg?v=2" />
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
 
+    <!-- Theme initialization script (prevents flash of incorrect theme) -->
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('cricfield-theme');
+          var theme = stored;
+          if (!theme || theme === 'system') {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Google Fonts including Teko for athletic sports wordmark -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,7 +107,7 @@
       }
     </style>
   </head>
-  <body class="bg-[#070e17] text-white antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+  <body class="bg-slate-50 dark:bg-[#070e17] text-slate-900 dark:text-white antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
     <div id="root">
       <main id="loader-root">
         <div id="loader">

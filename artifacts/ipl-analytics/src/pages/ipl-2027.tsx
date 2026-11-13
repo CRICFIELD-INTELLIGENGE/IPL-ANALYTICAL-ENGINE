@@ -107,7 +107,7 @@ function Metric({ label, value }: { label: string; value: ReactNode }) {
 export default function Ipl2027Page() {
   const search = useSearch();
   const [, navigate] = useLocation();
-  const { selectedTeam, setSelectedTeam } = useTeamTheme();
+  const { selectedTeam } = useTeamTheme();
   const params = new URLSearchParams(search);
   const requestedTeam = params.get("team")?.toUpperCase();
   const team: HubTeam = HUB_TEAMS.includes(requestedTeam as HubTeam)
@@ -137,7 +137,6 @@ export default function Ipl2027Page() {
     const previous = lastTeamSync.current;
     if (!previous || previous.route !== route) {
       lastTeamSync.current = { route, team };
-      if (selectedTeam !== team) setSelectedTeam(team);
     } else if (selectedTeam && selectedTeam !== previous.team) {
       // The existing header switcher also controls this workspace.
       lastTeamSync.current = { route, team: selectedTeam };
@@ -145,7 +144,7 @@ export default function Ipl2027Page() {
         `/feed/ipl-2027?${new URLSearchParams({ team: selectedTeam, module })}`,
       );
     }
-  }, [requestedTeam, team, selectedTeam, module, navigate, setSelectedTeam]);
+  }, [requestedTeam, team, selectedTeam, module, navigate]);
   useEffect(() => {
     setDecisions({});
     setSelectedId("");

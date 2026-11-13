@@ -81,25 +81,25 @@ export function AnalystNavigator() {
   return (
     <div className="flex h-full flex-col gap-4 overflow-y-auto p-4 no-scrollbar">
       <Link href="/ai-analyst">
-        <div className="group mr-8 flex cursor-pointer items-center gap-2 border-b border-white/5 pb-3">
+        <div className="group mr-8 flex cursor-pointer items-center gap-2 border-b border-slate-200 dark:border-white/5 pb-3">
           <Sparkles className="h-4 w-4 text-primary transition-transform group-hover:scale-110" />
-          <span className="text-[11px] font-black uppercase tracking-[0.2em] transition-colors group-hover:text-primary">AI Analyst Navigator</span>
+          <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-800 dark:text-slate-200 transition-colors group-hover:text-primary">AI Analyst Navigator</span>
         </div>
       </Link>
 
       {/* 1. Where you are */}
       <section className="space-y-2">
-        <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-white/30">
+        <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-white/40">
           <Compass className="h-3 w-3" /> You are on
         </div>
-        <div className="rounded-xl border border-white/5 bg-white/[0.03] p-3">
-          <div className="text-[12px] font-bold text-white">{guide.title}</div>
-          <p className="mt-1 text-[10px] leading-relaxed text-white/55">{guide.answers}</p>
+        <div className="rounded-xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/[0.03] p-3 shadow-xs">
+          <div className="text-[12px] font-bold text-slate-900 dark:text-white">{guide.title}</div>
+          <p className="mt-1 text-[10px] leading-relaxed text-slate-600 dark:text-white/55">{guide.answers}</p>
         </div>
         <div className="space-y-1">
           {guide.next.map((n) => (
             <Link key={n.href + n.label} href={location.startsWith("/feed/ipl-2027") && n.href.startsWith("/feed/ipl-2027") && selectedTeam ? `${n.href}&team=${selectedTeam}` : n.href}>
-              <div className="group flex cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-[10px] font-semibold text-white/70 transition-colors hover:bg-white/5 hover:text-white">
+              <div className="group flex cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-[10px] font-semibold text-slate-700 dark:text-white/70 transition-colors hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white">
                 {n.label}
                 <ArrowRight className="h-3 w-3 text-primary/60 transition-transform group-hover:translate-x-0.5" />
               </div>
@@ -110,56 +110,56 @@ export function AnalystNavigator() {
 
       {/* 2. Insight metrics */}
       <section className="space-y-2">
-        <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-white/30">
+        <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-white/40">
           <Gauge className="h-3 w-3" /> {teamName ? `${selectedTeam} at a glance` : "Insight metrics"}
         </div>
         {!teamName ? (
-          <p className="rounded-xl border border-dashed border-white/10 p-3 text-[10px] leading-relaxed text-white/50">Choose a franchise with the team switcher at the top to see its record and form here.</p>
+          <p className="rounded-xl border border-dashed border-slate-300 dark:border-white/10 p-3 text-[10px] leading-relaxed text-slate-500 dark:text-white/50">Choose a franchise with the team switcher at the top to see its record and form here.</p>
         ) : !metrics ? (
-          <p className="rounded-xl border border-white/5 p-3 text-[10px] text-white/40">Loading match data…</p>
+          <p className="rounded-xl border border-slate-200 dark:border-white/5 p-3 text-[10px] text-slate-400 dark:text-white/40">Loading match data…</p>
         ) : (
           <div className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
               <Metric label={`${metrics.latest} record`} value={`${metrics.won}–${metrics.lost}`} />
               <Metric label={`${metrics.latest} win rate`} value={metrics.winPct == null ? "—" : `${metrics.winPct}%`} />
               <Metric label="All-time win rate" value={metrics.allTimePct == null ? "—" : `${metrics.allTimePct}%`} />
-              <div className="rounded-xl border border-white/5 bg-white/[0.03] p-2.5">
-                <div className="text-[8px] font-black uppercase tracking-widest text-white/35">Last 5</div>
+              <div className="rounded-xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/[0.03] p-2.5">
+                <div className="text-[8px] font-black uppercase tracking-widest text-slate-400 dark:text-white/35">Last 5</div>
                 <div className="mt-1 flex gap-1">
                   {metrics.form.map((r, i) => (
-                    <span key={i} className={`flex h-4 w-4 items-center justify-center rounded text-[8px] font-black ${r === "W" ? "bg-emerald-500/20 text-emerald-300" : "bg-red-500/15 text-red-300"}`}>{r}</span>
+                    <span key={i} className={`flex h-4 w-4 items-center justify-center rounded text-[8px] font-black ${r === "W" ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-300" : "bg-red-500/15 text-red-600 dark:text-red-300"}`}>{r}</span>
                   ))}
                 </div>
               </div>
             </div>
             {metrics.last && (
-              <p className="text-[10px] leading-relaxed text-white/55">
-                Latest result: <span className={metrics.last.won ? "text-emerald-300" : "text-red-300"}>{metrics.last.won ? "won" : "lost"}</span> v {metrics.last.opp}
+              <p className="text-[10px] leading-relaxed text-slate-600 dark:text-white/55">
+                Latest result: <span className={metrics.last.won ? "text-emerald-600 dark:text-emerald-300 font-bold" : "text-red-600 dark:text-red-300 font-bold"}>{metrics.last.won ? "won" : "lost"}</span> v {metrics.last.opp}
                 {metrics.last.margin ? ` by ${metrics.last.margin}` : ""} ({metrics.last.date}).
               </p>
             )}
-            <p className="text-[8px] uppercase tracking-wider text-white/25">Source: CricField ball-by-ball match data</p>
+            <p className="text-[8px] uppercase tracking-wider text-slate-400 dark:text-white/25">Source: CricField ball-by-ball match data</p>
           </div>
         )}
       </section>
 
       {/* 3. Ask the AI Analyst */}
       <section className="space-y-2">
-        <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-white/30">
+        <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-white/40">
           <MessageSquareText className="h-3 w-3" /> Ask the AI Analyst
         </div>
         {questions.map((q) => (
           <Link key={q} href={`/ai-analyst/ask?q=${encodeURIComponent(q + askContext)}`}>
-            <div className="cursor-pointer rounded-xl border border-white/5 bg-gradient-to-br from-primary/[0.07] to-transparent p-2.5 text-[10px] leading-snug text-white/75 transition-all hover:border-primary/40 hover:text-white">
+            <div className="cursor-pointer rounded-xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-gradient-to-br dark:from-primary/[0.07] dark:to-transparent p-2.5 text-[10px] leading-snug text-slate-700 dark:text-white/75 transition-all hover:border-primary/40 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100">
               {q}
             </div>
           </Link>
         ))}
       </section>
 
-      <div className="mt-auto border-t border-white/5 pt-3">
+      <div className="mt-auto border-t border-slate-200 dark:border-white/5 pt-3">
         <Link href="/ai-analyst">
-          <button className="w-full rounded-xl border border-primary/20 bg-primary/10 py-2.5 text-[9px] font-black uppercase tracking-widest text-primary transition-all hover:bg-primary/20">
+          <button className="w-full rounded-xl border border-primary/20 bg-primary/10 py-2.5 text-[9px] font-black uppercase tracking-widest text-primary transition-all hover:bg-primary/20 cursor-pointer">
             Open AI Analyst
           </button>
         </Link>
@@ -170,9 +170,9 @@ export function AnalystNavigator() {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-white/5 bg-white/[0.03] p-2.5">
-      <div className="text-[8px] font-black uppercase tracking-widest text-white/35">{label}</div>
-      <div className="mt-0.5 text-sm font-black text-white">{value}</div>
+    <div className="rounded-xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/[0.03] p-2.5">
+      <div className="text-[8px] font-black uppercase tracking-widest text-slate-400 dark:text-white/35">{label}</div>
+      <div className="mt-0.5 text-sm font-black text-slate-900 dark:text-white">{value}</div>
     </div>
   );
 }

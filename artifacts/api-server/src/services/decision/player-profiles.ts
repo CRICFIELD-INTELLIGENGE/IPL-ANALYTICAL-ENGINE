@@ -309,12 +309,16 @@ function loadRawIndex(root: string): { nameToIds: Map<string, Set<string>>; stum
  * into spin territory, but no spinner on record tops 124 kph.
  */
 function loadSpeedTypes(): Map<number, BowlingType> {
-  const rows = queryAll<{ pid: number; n: number; kph: number }>(`
-    SELECT d.bowler_id pid, COUNT(*) n, MAX(dc.speed_kph) kph
-    FROM delivery_commentary dc JOIN deliveries d ON d.delivery_id = dc.delivery_id
-    WHERE dc.speed_kph > 60
-    GROUP BY 1 HAVING n >= 6`);
-  return new Map(rows.map((r) => [r.pid, r.kph >= 124 ? "pace" : "spin"]));
+  try {
+    const rows = queryAll<{ pid: number; n: number; kph: number }>(`
+      SELECT d.bowler_id pid, COUNT(*) n, MAX(dc.speed_kph) kph
+      FROM delivery_commentary dc JOIN deliveries d ON d.delivery_id = dc.delivery_id
+      WHERE dc.speed_kph > 60
+      GROUP BY 1 HAVING n >= 6`);
+    return new Map(rows.map((r) => [r.pid, r.kph >= 124 ? "pace" : "spin"]));
+  } catch {
+    return new Map();
+  }
 }
 
 let metaCache: Map<number, PlayerMeta> | null = null;
