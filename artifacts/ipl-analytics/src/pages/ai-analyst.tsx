@@ -397,6 +397,81 @@ const ENGINES: DecisionEngine[] = [
    SUB-COMPONENTS
    ═══════════════════════════════════════════════════════════════════════════ */
 
+const ENGINE_THEMES: Record<string, { card: string; accent: string; accentBg: string; border: string }> = {
+  "strategy-sim": {
+    card: "bg-gradient-to-br from-white via-cyan-50/40 to-blue-50/20 border-cyan-200/80 dark:from-cyan-950/60 dark:via-slate-900/80 dark:to-blue-950/60 dark:border-cyan-500/40",
+    accent: "text-cyan-600 dark:text-cyan-400",
+    accentBg: "bg-cyan-50 dark:bg-cyan-500/15",
+    border: "border-cyan-200 dark:border-cyan-500/40",
+  },
+  "alt-universe": {
+    card: "bg-gradient-to-br from-white via-violet-50/40 to-purple-50/20 border-violet-200/80 dark:from-violet-950/60 dark:via-slate-900/80 dark:to-purple-950/60 dark:border-violet-500/40",
+    accent: "text-violet-600 dark:text-violet-400",
+    accentBg: "bg-violet-50 dark:bg-violet-500/15",
+    border: "border-violet-200 dark:border-violet-500/40",
+  },
+  "opposition-map": {
+    card: "bg-gradient-to-br from-white via-rose-50/40 to-pink-50/20 border-rose-200/80 dark:from-rose-950/60 dark:via-slate-900/80 dark:to-pink-950/60 dark:border-rose-500/40",
+    accent: "text-rose-600 dark:text-rose-400",
+    accentBg: "bg-rose-50 dark:bg-rose-500/15",
+    border: "border-rose-200 dark:border-rose-500/40",
+  },
+  "decision-replay": {
+    card: "bg-gradient-to-br from-white via-amber-50/40 to-orange-50/20 border-amber-200/80 dark:from-amber-950/60 dark:via-slate-900/80 dark:to-orange-950/60 dark:border-amber-500/40",
+    accent: "text-amber-600 dark:text-amber-400",
+    accentBg: "bg-amber-50 dark:bg-amber-500/15",
+    border: "border-amber-200 dark:border-amber-500/40",
+  },
+  "auction-war-room": {
+    card: "bg-gradient-to-br from-white via-emerald-50/40 to-teal-50/20 border-emerald-200/80 dark:from-emerald-950/60 dark:via-slate-900/80 dark:to-teal-950/60 dark:border-emerald-500/40",
+    accent: "text-emerald-600 dark:text-emerald-400",
+    accentBg: "bg-emerald-50 dark:bg-emerald-500/15",
+    border: "border-emerald-200 dark:border-emerald-500/40",
+  },
+  "playing-xi": {
+    card: "bg-gradient-to-br from-white via-blue-50/40 to-indigo-50/20 border-blue-200/80 dark:from-blue-950/60 dark:via-slate-900/80 dark:to-indigo-950/60 dark:border-blue-500/40",
+    accent: "text-blue-600 dark:text-blue-400",
+    accentBg: "bg-blue-50 dark:bg-blue-500/15",
+    border: "border-blue-200 dark:border-blue-500/40",
+  },
+  "squad-dna": {
+    card: "bg-gradient-to-br from-white via-teal-50/40 to-emerald-50/20 border-teal-200/80 dark:from-teal-950/60 dark:via-slate-900/80 dark:to-emerald-950/60 dark:border-teal-500/40",
+    accent: "text-teal-600 dark:text-teal-400",
+    accentBg: "bg-teal-50 dark:bg-teal-500/15",
+    border: "border-teal-200 dark:border-teal-500/40",
+  },
+  "player-pool": {
+    card: "bg-gradient-to-br from-white via-sky-50/40 to-cyan-50/20 border-sky-200/80 dark:from-sky-950/60 dark:via-slate-900/80 dark:to-cyan-950/60 dark:border-sky-500/40",
+    accent: "text-sky-600 dark:text-sky-400",
+    accentBg: "bg-sky-50 dark:bg-sky-500/15",
+    border: "border-sky-200 dark:border-sky-500/40",
+  },
+  "pressure": {
+    card: "bg-gradient-to-br from-white via-fuchsia-50/40 to-pink-50/20 border-fuchsia-200/80 dark:from-fuchsia-950/60 dark:via-slate-900/80 dark:to-pink-950/60 dark:border-fuchsia-500/40",
+    accent: "text-fuchsia-600 dark:text-fuchsia-400",
+    accentBg: "bg-fuchsia-50 dark:bg-fuchsia-500/15",
+    border: "border-fuchsia-200 dark:border-fuchsia-500/40",
+  },
+  "weakness": {
+    card: "bg-gradient-to-br from-white via-red-50/40 to-rose-50/20 border-red-200/80 dark:from-red-950/60 dark:via-slate-900/80 dark:to-rose-950/60 dark:border-red-500/40",
+    accent: "text-red-600 dark:text-red-400",
+    accentBg: "bg-red-50 dark:bg-red-500/15",
+    border: "border-red-200 dark:border-red-500/40",
+  },
+  "insight-feed": {
+    card: "bg-gradient-to-br from-white via-purple-50/40 to-indigo-50/20 border-purple-200/80 dark:from-purple-950/60 dark:via-slate-900/80 dark:to-indigo-950/60 dark:border-purple-500/40",
+    accent: "text-purple-600 dark:text-purple-400",
+    accentBg: "bg-purple-50 dark:bg-purple-500/15",
+    border: "border-purple-200 dark:border-purple-500/40",
+  },
+  "dew-impact-matrix": {
+    card: "bg-gradient-to-br from-white via-sky-50/40 to-teal-50/20 border-sky-200/80 dark:from-sky-950/60 dark:via-slate-900/80 dark:to-teal-950/60 dark:border-sky-500/40",
+    accent: "text-sky-600 dark:text-sky-400",
+    accentBg: "bg-sky-50 dark:bg-sky-500/15",
+    border: "border-sky-200 dark:border-sky-500/40",
+  },
+};
+
 function StatsBar() {
   const { data } = useQuery({
     queryKey: ["history-overview"],
@@ -406,19 +481,19 @@ function StatsBar() {
   });
   const c = (data ?? MOCK_OVERVIEW).coverage;
   const stats = [
-    { icon: Activity, label: "Ball-by-ball deliveries", value: c.deliveries.toLocaleString("en-US"), glow: "text-cyan-400", border: "border-cyan-500/20" },
-    { icon: Globe,    label: "IPL seasons covered",     value: `${c.firstSeason}–${c.lastSeason}`, glow: "text-violet-400", border: "border-violet-500/20" },
-    { icon: Users,    label: "Players with ball data",  value: c.players.toLocaleString("en-US"), glow: "text-emerald-400", border: "border-emerald-500/20" },
-    { icon: Zap,      label: "AI decision modules",     value: "12 Live", glow: "text-amber-400", border: "border-amber-500/20" },
+    { icon: Activity, label: "Ball-by-ball deliveries", value: c.deliveries.toLocaleString("en-US"), glow: "text-cyan-600 dark:text-cyan-400", border: "border-slate-200 dark:border-cyan-500/20" },
+    { icon: Globe,    label: "IPL seasons covered",     value: `${c.firstSeason}–${c.lastSeason}`, glow: "text-violet-600 dark:text-violet-400", border: "border-slate-200 dark:border-violet-500/20" },
+    { icon: Users,    label: "Players with ball data",  value: c.players.toLocaleString("en-US"), glow: "text-emerald-600 dark:text-emerald-400", border: "border-slate-200 dark:border-emerald-500/20" },
+    { icon: Zap,      label: "AI decision modules",     value: "12 Live", glow: "text-amber-600 dark:text-amber-400", border: "border-slate-200 dark:border-amber-500/20" },
   ];
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 my-6">
       {stats.map((s, i) => (
-        <GlassCard key={s.label} className={`p-4 bg-white/[0.02] border ${s.border} hover:border-white/30 transition-all`} delay={i * 0.05}>
+        <GlassCard key={s.label} className={`p-4 bg-white dark:bg-white/[0.02] border ${s.border} hover:border-slate-300 dark:hover:border-white/30 transition-all shadow-sm dark:shadow-none`} delay={i * 0.05}>
           <s.icon className={`w-4 h-4 ${s.glow} mb-2`} />
-          <div className="font-display font-black text-xl text-white tracking-tight">{s.value}</div>
-          <div className="text-[11px] text-muted-foreground mt-0.5 font-mono">{s.label}</div>
+          <div className="font-display font-black text-xl text-slate-900 dark:text-white tracking-tight">{s.value}</div>
+          <div className="text-[11px] text-slate-500 dark:text-muted-foreground mt-0.5 font-mono">{s.label}</div>
         </GlassCard>
       ))}
     </div>
@@ -459,7 +534,7 @@ export default function AIAnalystPage() {
       <div className="relative space-y-8 pb-24 overflow-x-clip">
 
         {/* ── Atmospheric Ambient Shader Background ── */}
-        <div className="absolute -top-10 -left-10 -right-10 h-[640px] pointer-events-none overflow-hidden z-0 opacity-40">
+        <div className="absolute -top-10 -left-10 -right-10 h-[640px] pointer-events-none overflow-hidden z-0 opacity-15 dark:opacity-40">
           <GpuMeshShader preset="tide-swirl" intensity={0.7} className="w-full h-full" />
         </div>
 
@@ -469,10 +544,10 @@ export default function AIAnalystPage() {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-4 shadow-[0_0_20px_rgba(6,182,212,0.25)]"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/30 mb-4 shadow-sm dark:shadow-[0_0_20px_rgba(6,182,212,0.25)]"
           >
-            <Brain className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-cyan-300">
+            <Brain className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+            <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-cyan-700 dark:text-cyan-300">
               CRICFIELD · QUANT COMMAND CENTER
             </span>
           </motion.div>
@@ -481,10 +556,10 @@ export default function AIAnalystPage() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-display font-black text-3xl sm:text-5xl leading-tight mb-3 text-white tracking-tight"
+            className="font-display font-black text-3xl sm:text-5xl leading-tight mb-3 text-slate-900 dark:text-white tracking-tight"
           >
             What do you want to{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(6,182,212,0.55)]">
+            <span className="bg-gradient-to-r from-cyan-600 via-teal-600 to-indigo-600 dark:from-cyan-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent dark:drop-shadow-[0_0_25px_rgba(6,182,212,0.55)]">
               decide?
             </span>
           </motion.h1>
@@ -493,7 +568,7 @@ export default function AIAnalystPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.25 }}
-            className="text-sm text-white/70 leading-relaxed max-w-2xl mx-auto"
+            className="text-sm text-slate-600 dark:text-white/70 leading-relaxed max-w-2xl mx-auto"
           >
             Don't type a search query. Choose a decision. AI simulates, optimizes, discovers and challenges
             IPL matchplay and auction strategy across 280,000+ real deliveries.
@@ -511,18 +586,18 @@ export default function AIAnalystPage() {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-cyan-400 uppercase px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
+                <span className="text-[10px] font-mono font-bold tracking-widest text-cyan-700 dark:text-cyan-400 uppercase px-2.5 py-0.5 rounded-full bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/20">
                   TACTICAL MATRIX
                 </span>
-                <span className="text-xs text-white/50">· All Products Live</span>
+                <span className="text-xs text-slate-500 dark:text-white/50">· All Products Live</span>
               </div>
-              <h2 className="font-display font-black text-2xl text-white tracking-tight">
+              <h2 className="font-display font-black text-2xl text-slate-900 dark:text-white tracking-tight">
                 Decision Engines Cockpit
               </h2>
             </div>
 
             {/* Category Filter Pills */}
-            <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-xl">
+            <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/10 backdrop-blur-xl">
               {[
                 { id: "all", label: "All Engines (12)" },
                 { id: "tactics", label: "Tactics & Sim (5)" },
@@ -534,8 +609,8 @@ export default function AIAnalystPage() {
                   onClick={() => setActiveCategory(f.id as any)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                     activeCategory === f.id
-                      ? "bg-white/15 text-white shadow-sm"
-                      : "text-white/40 hover:text-white"
+                      ? "bg-white dark:bg-white/15 text-slate-900 dark:text-white shadow-sm"
+                      : "text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   {f.label}
@@ -548,6 +623,12 @@ export default function AIAnalystPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredEngines.map((engine) => {
               const Icon = engine.icon;
+              const theme = ENGINE_THEMES[engine.id] ?? {
+                card: "bg-white border-slate-200 dark:bg-slate-900 dark:border-white/10",
+                accent: "text-cyan-600 dark:text-cyan-400",
+                accentBg: "bg-cyan-50 dark:bg-cyan-500/15",
+                border: "border-cyan-200 dark:border-cyan-500/40",
+              };
               return (
                 <motion.div
                   key={engine.id}
@@ -556,45 +637,45 @@ export default function AIAnalystPage() {
                   className="flex flex-col"
                 >
                   <GlassCard
-                    className={`flex-1 flex flex-col justify-between p-6 bg-gradient-to-br ${engine.gradient} border ${engine.borderColor} hover:border-cyan-400/50 transition-all duration-300 group shadow-lg`}
+                    className={`flex-1 flex flex-col justify-between p-6 border ${theme.card} hover:border-cyan-500/60 dark:hover:border-cyan-400/50 transition-all duration-300 group shadow-sm hover:shadow-md dark:shadow-lg`}
                   >
                     <div>
                       {/* Top Row: Icon + Badge + Phase */}
                       <div className="flex items-start justify-between gap-3 mb-4">
                         <div
-                          className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border ${engine.accentBg} ${engine.borderColor} group-hover:scale-105 transition-transform`}
+                          className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border ${theme.accentBg} ${theme.border} group-hover:scale-105 transition-transform shadow-xs dark:shadow-none`}
                         >
-                          <Icon className={`w-5 h-5 ${engine.accent}`} />
+                          <Icon className={`w-5 h-5 ${theme.accent}`} />
                         </div>
 
                         <div className="flex flex-col items-end gap-1">
                           <span
-                            className={`text-[9px] font-black tracking-widest px-2.5 py-0.5 rounded-full border uppercase ${engine.accentBg} ${engine.accent} ${engine.borderColor}`}
+                            className={`text-[9px] font-black tracking-widest px-2.5 py-0.5 rounded-full border uppercase ${theme.accentBg} ${theme.accent} ${theme.border}`}
                           >
                             {engine.badge}
                           </span>
-                          <span className="font-mono text-[9px] text-white/40">
+                          <span className="font-mono text-[9px] text-slate-400 dark:text-white/40">
                             PHASE {engine.phase} · {engine.num}
                           </span>
                         </div>
                       </div>
 
                       {/* Title & Tagline */}
-                      <h3 className="font-display font-black text-lg text-white group-hover:text-cyan-300 transition-colors">
+                      <h3 className="font-display font-black text-lg text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
                         {engine.name}
                       </h3>
-                      <p className="text-xs text-white/70 mt-1 leading-relaxed">
+                      <p className="text-xs text-slate-600 dark:text-white/70 mt-1 leading-relaxed">
                         {engine.tagline}
                       </p>
 
                       {/* Quant Metrics Grid */}
-                      <div className="grid grid-cols-3 gap-1.5 mt-4 py-2 px-2.5 rounded-xl bg-black/40 border border-white/10">
+                      <div className="grid grid-cols-3 gap-1.5 mt-4 py-2 px-2.5 rounded-xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/10">
                         {engine.metrics.map((m) => (
                           <div key={m.label} className="text-center">
-                            <div className="text-[8px] uppercase tracking-wider text-white/40 font-mono truncate">
+                            <div className="text-[8px] uppercase tracking-wider text-slate-500 dark:text-white/40 font-mono truncate">
                               {m.label}
                             </div>
-                            <div className="text-[10px] font-black text-white mt-0.5 truncate">
+                            <div className="text-[10px] font-black text-slate-900 dark:text-white mt-0.5 truncate">
                               {m.value}
                             </div>
                           </div>
@@ -606,7 +687,7 @@ export default function AIAnalystPage() {
                         {engine.tags.map((t) => (
                           <span
                             key={t}
-                            className="text-[9px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-white/60"
+                            className="text-[9px] font-mono px-2 py-0.5 rounded-md bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white/60 shadow-xs dark:shadow-none"
                           >
                             {t.startsWith("#") ? t : `#${t}`}
                           </span>
@@ -615,10 +696,10 @@ export default function AIAnalystPage() {
                     </div>
 
                     {/* Action Button */}
-                    <div className="mt-5 pt-3 border-t border-white/10 flex items-center gap-2">
+                    <div className="mt-5 pt-3 border-t border-slate-200 dark:border-white/10 flex items-center gap-2">
                       <button
                         onClick={() => handleAction(engine.id)}
-                        className="w-full py-2.5 px-3 rounded-2xl flex items-center justify-center gap-2 text-xs font-bold bg-white/10 hover:bg-cyan-500/20 text-white hover:text-cyan-300 border border-white/15 hover:border-cyan-400/40 transition-all shadow-sm"
+                        className="w-full py-2.5 px-3 rounded-2xl flex items-center justify-center gap-2 text-xs font-bold bg-white dark:bg-white/10 hover:bg-slate-50 dark:hover:bg-cyan-500/20 text-slate-900 dark:text-white hover:text-cyan-700 dark:hover:text-cyan-300 border border-slate-200 dark:border-white/15 hover:border-cyan-400/40 transition-all shadow-xs dark:shadow-none"
                       >
                         <span>{engine.cta}</span>
                         <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -642,22 +723,22 @@ export default function AIAnalystPage() {
 
         {/* ── 5. The X-Factor Quant Philosophy Callout ── */}
         <section className="relative z-10 pt-4">
-          <GlassCard className="p-8 bg-gradient-to-br from-cyan-950/40 via-slate-900/60 to-violet-950/40 border border-cyan-500/20 shadow-[0_0_40px_rgba(6,182,212,0.1)]">
+          <GlassCard className="p-8 bg-gradient-to-br from-white via-cyan-50/20 to-slate-50 dark:from-cyan-950/40 dark:via-slate-900/60 dark:to-violet-950/40 border border-slate-200 dark:border-cyan-500/20 shadow-sm dark:shadow-[0_0_40px_rgba(6,182,212,0.1)]">
             <div className="flex items-start gap-5">
-              <div className="w-14 h-14 rounded-3xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(6,182,212,0.3)]">
-                <Brain className="w-7 h-7 text-cyan-400" />
+              <div className="w-14 h-14 rounded-3xl bg-cyan-100 dark:bg-cyan-500/20 border border-cyan-200 dark:border-cyan-500/40 flex items-center justify-center shrink-0 shadow-sm dark:shadow-[0_0_25px_rgba(6,182,212,0.3)]">
+                <Brain className="w-7 h-7 text-cyan-600 dark:text-cyan-400" />
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] font-mono font-bold tracking-widest text-cyan-400 uppercase px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
+                  <span className="text-[10px] font-mono font-bold tracking-widest text-cyan-700 dark:text-cyan-400 uppercase px-2.5 py-0.5 rounded-full bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/20">
                     PHILOSOPHY
                   </span>
-                  <span className="text-xs text-white/50">· Quant Decision Intelligence</span>
+                  <span className="text-xs text-slate-500 dark:text-white/50">· Quant Decision Intelligence</span>
                 </div>
-                <h3 className="font-display font-black text-xl text-white">
+                <h3 className="font-display font-black text-xl text-slate-900 dark:text-white">
                   The X-Factor: AI that thinks in scenarios, not searches
                 </h3>
-                <p className="text-sm text-white/70 mt-2 leading-relaxed max-w-3xl">
+                <p className="text-sm text-slate-600 dark:text-white/70 mt-2 leading-relaxed max-w-3xl">
                   Instead of typing plain text queries into a conversational chatbot, you interact directly with decision levers.
                   The engine simulates, optimizes, discovers and challenges tactical choices using 280,000+ ball-by-ball deliveries
                   and real auction mechanics.
@@ -668,8 +749,8 @@ export default function AIAnalystPage() {
                     { icon: Trophy,   label: "Raw Stats  →  Calibrated Strategy" },
                     { icon: Sparkles, label: "Simple Query  →  1,000 Monte Carlo Runs" },
                   ].map((item) => (
-                    <div key={item.label} className="flex items-center gap-2.5 text-xs text-cyan-300 font-semibold p-3 rounded-2xl bg-white/[0.03] border border-white/10">
-                      <item.icon className="w-4 h-4 text-cyan-400 shrink-0" />
+                    <div key={item.label} className="flex items-center gap-2.5 text-xs text-cyan-700 dark:text-cyan-300 font-semibold p-3 rounded-2xl bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 shadow-xs dark:shadow-none">
+                      <item.icon className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0" />
                       <span>{item.label}</span>
                     </div>
                   ))}
