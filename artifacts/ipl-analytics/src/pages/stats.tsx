@@ -706,6 +706,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     document.getElementById("stats-table-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+
   const handleFilterChange = <K extends keyof typeof filters>(key: K, value: typeof filters[K]) => {
     setFilter(key, value);
   };

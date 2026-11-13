@@ -291,8 +291,8 @@ export function LibraryMedia({
   teamName,
   aspect,
   preserveAspectRatio = false,
-  isCoverStory = false,
   aspectRatio = "video",
+  isCoverStory = false,
 }: {
   imageId?: string;
   title: string;
@@ -301,14 +301,14 @@ export function LibraryMedia({
   teamName: string;
   aspect: EditorialAspectId;
   preserveAspectRatio?: boolean;
-  isCoverStory?: boolean;
   aspectRatio?: "video" | "square" | "classic" | "fill";
+  isCoverStory?: boolean;
 }) {
   const hero = imageId ? getArticleHeroImage(imageId) : undefined;
   const a = EDITORIAL_ASPECTS.find((x) => x.id === aspect) ?? EDITORIAL_ASPECTS[0];
   const teamCover = code === "CSK" ? "/csk insight.jpg" : code === "RCB" ? "/virat-kohli.png" : code === "MI" ? "/rohit sharma.jpg" : "/TITLE BANNER.png";
   const illustration = (
-    <div className={`${aspectRatio === "square" ? "aspect-square" : aspectRatio === "fill" ? "w-full h-full" : "aspect-video"} w-full overflow-hidden [&>div]:rounded-none [&>div]:border-0`}>
+    <div className={`${aspectRatio === "square" ? "aspect-square" : aspectRatio === "fill" ? "w-full h-full" : "aspect-video"} w-full h-full overflow-hidden [&>div]:rounded-none [&>div]:border-0`}>
       <EditorialCoverCanvas
         franchiseName={teamName}
         teamCode={code}
