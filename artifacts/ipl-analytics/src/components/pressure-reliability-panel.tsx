@@ -1,11 +1,33 @@
 // Scenario Intelligence → Pressure Reliability.
-// Every number comes from /api/stats/pressure-reliability (a published snapshot); nothing is computed here.
+// Numbers come from /api/stats/pressure-reliability. Where no API is deployed (the static Vercel site),
+// the same engine module runs in the browser on the same published snapshot (/data/pressure-reliability.json).
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { PlayerAvatar } from "@/components/player-avatar";
 import { playerSlug, usePlayerDisplayNames, displayPlayerName } from "@/lib/aggregates";
+import { computePressureReliability, modelInfoOf, type PressureQuery, type Snapshot } from "../../../api-server/src/services/pressure/engine";
+
+// API first; on a static deploy /api returns the HTML shell, so fall back to the snapshot.
+async function fromApi<T>(url: string): Promise<T | null> {
+  try {
+    const res = await fetch(url);
+    if (!res.ok || !(res.headers.get("content-type") || "").includes("application/json")) return null;
+    return (await res.json()) as T;
+  } catch {
+    return null;
+  }
+}
+let snapshotPromise: Promise<Snapshot> | null = null;
+function loadSnapshot(): Promise<Snapshot> {
+  snapshotPromise ??= fetch("/data/pressure-reliability.json").then(r => {
+    if (!r.ok) throw new Error(`snapshot HTTP ${r.status}`);
+    return r.json() as Promise<Snapshot>;
+  });
+  snapshotPromise.catch(() => { snapshotPromise = null; });
+  return snapshotPromise;
+}
 
 type Row = {
   player: string; team: string; competitions: string[];
@@ -18,7 +40,7 @@ type Row = {
 };
 type Result = {
   version: string; definitionLabel: string; scope: string; unit: string; matches: number; qualified: number;
-  cohort: { players: number; pressureMeanPer100: number; usualToPressureSlope: number; priorStrengthBalls: number; pressureSpecificSdPer100: number };
+  cohort: { players: number; pressureMeanPer100: number; usualToPressureSlope: number; priorStrengthBalls: number; pressureTrueSpreadPer100: number; forecastPriorStrengthBalls: number };
   players: Row[];
 };
 type DefinitionRow = { id: string; label: string; shareOfBalls: number; batting: { priorStrengthBalls: number; upliftSplitHalf: number }; bowling: { priorStrengthBalls: number; upliftSplitHalf: number } };
@@ -74,9 +96,10 @@ export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom:
   const [minBalls, setMinBalls] = useState("250");
   const [minMatches, setMinMatches] = useState("20");
   const [sort, setSort] = useState<"adjusted" | "conservative">("adjusted");
+  const [estimator, setEstimator] = useState<"pressure" | "forecast">("pressure");
 
   const comps = COMP_SETS.find(c => c.id === compSet)!.comps;
-  const params = new URLSearchParams({ comps, role, definition, lens, minBalls, minMatches, sort, t20iScope, limit: "30" });
+  const params = new URLSearchParams({ comps, role, definition, lens, minBalls, minMatches, sort, t20iScope, estimator, limit: "30" });
   // The challenge window starts in 2022; the shared season range overrides it.
   params.set("seasonFrom", seasonFrom || "2022");
   if (seasonTo) params.set("seasonTo", seasonTo);
@@ -84,20 +107,22 @@ export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom:
   const result = useQuery({
     queryKey: ["pressure-reliability", params.toString()],
     queryFn: async (): Promise<Result> => {
-      const res = await fetch(`/api/stats/pressure-reliability?${params}`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return res.json();
+      const api = await fromApi<Result>(`/api/stats/pressure-reliability?${params}`);
+      if (api) return api;
+      const q: PressureQuery = {
+        comps: comps.split(","), role, definition: definition as PressureQuery["definition"], lens: lens as PressureQuery["lens"],
+        minBalls: Number(minBalls), minMatches: Number(minMatches), sort, t20iScope, estimator, limit: 30,
+        from: Number(seasonFrom || "2022"), to: seasonTo ? Number(seasonTo) : undefined,
+      };
+      return computePressureReliability(await loadSnapshot(), q) as unknown as Result;
     },
     staleTime: 1000 * 60 * 10,
     placeholderData: prev => prev,
   });
   const model = useQuery({
     queryKey: ["pressure-reliability-model"],
-    queryFn: async (): Promise<ModelInfo> => {
-      const res = await fetch(`/api/stats/pressure-reliability/model`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return res.json();
-    },
+    queryFn: async (): Promise<ModelInfo> =>
+      (await fromApi<ModelInfo>(`/api/stats/pressure-reliability/model`)) ?? (modelInfoOf(await loadSnapshot()) as unknown as ModelInfo),
     staleTime: Infinity,
   });
 
@@ -112,13 +137,13 @@ export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom:
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-black uppercase text-white tracking-wider">Pressure Reliability</span>
           <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-pink-500/20 text-pink-200 border border-pink-400/30">
-            Same pressure for bat &amp; ball · anchored Bayes
+            Same pressure for bat &amp; ball · empirical Bayes
           </span>
         </div>
         <p className="text-[11px] text-white/70 max-w-3xl leading-relaxed">
           Every ball is scored against what normally happens in that innings, over and wickets-down state, after allowing for the opposition.
-          A wicket costs the runs it removes from the innings. Each player's pressure balls are then combined with their usual level, and the
-          data decides how much: a long pressure record moves a player a long way from their usual form, a short one barely moves them.
+          A wicket costs the runs it removes from the innings. The score uses pressure balls only, pulled toward the average by an amount
+          the data sets, so a short hot streak cannot top the table. "Usual" and "Uplift" show how the same player does in calmer balls.
         </p>
       </div>
 
@@ -133,6 +158,8 @@ export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom:
         <Chips label="Role lens" value={lens} options={LENSES} onChange={setLens} />
         <Chips label="Min pressure balls" value={minBalls} options={["120", "250", "400"].map(v => ({ id: v, label: v }))} onChange={setMinBalls} />
         <Chips label="Min matches" value={minMatches} options={["10", "20", "30"].map(v => ({ id: v, label: v }))} onChange={setMinMatches} />
+        <Chips<"pressure" | "forecast"> label="Score" value={estimator}
+          options={[{ id: "pressure", label: "Pressure record (official)" }, { id: "forecast", label: "Forecast (blend with usual)" }]} onChange={setEstimator} />
         <Chips<"adjusted" | "conservative"> label="Rank by" value={sort} options={[{ id: "adjusted", label: "Best estimate" }, { id: "conservative", label: "Safest pick (lower bound)" }]} onChange={setSort} />
       </div>
 
@@ -165,7 +192,7 @@ export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom:
                   ["Usual /100", "Same measure in ordinary balls (shrunk)"],
                   ["Estimate /100 · 90% range", "Best estimate of pressure value; bar shows the 90% range"],
                   ["Uplift", "Estimate minus usual: better (+) or worse (−) than usual under pressure"],
-                  ["Own evidence", "Share of the estimate from the player's own pressure balls (rest from their usual level)"],
+                  ["Own evidence", "Share of the score from the player's own pressure balls (the rest is the average, or their usual level in forecast mode)"],
                   ["Good games", "Share of matches with positive pressure value"],
                 ].map(([h, title]) => (
                   <th key={h} title={title} className="px-3 py-3 text-[9px] font-black text-white/40 uppercase tracking-wider text-left whitespace-nowrap">{h}</th>
@@ -216,10 +243,10 @@ export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom:
       {data && model.data && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px] text-white/60">
           <div className="rounded-xl border border-white/10 p-3 bg-white/[0.02]">
-            <div className="text-[9px] font-black uppercase tracking-wider text-white/40 mb-1">How much pressure differs from usual</div>
-            Usual form predicts pressure form with a slope of {data.cohort.usualToPressureSlope}. On top of that, real pressure-specific
-            differences are about ±{data.cohort.pressureSpecificSdPer100} per 100 balls. A player needs about
-            {" "}<b className="text-white">{data.cohort.priorStrengthBalls.toLocaleString("en-IN")} pressure balls</b> before half their estimate comes from pressure alone.
+            <div className="text-[9px] font-black uppercase tracking-wider text-white/40 mb-1">How hard the adjustment is</div>
+            A player needs about <b className="text-white">{data.cohort.priorStrengthBalls.toLocaleString("en-IN")} pressure balls</b> before half
+            their score is their own; real differences between players are about ±{data.cohort.pressureTrueSpreadPer100} per 100 pressure balls.
+            Usual form predicts pressure form with a slope of {data.cohort.usualToPressureSlope}.
           </div>
           <div className="rounded-xl border border-white/10 p-3 bg-white/[0.02]">
             <div className="text-[9px] font-black uppercase tracking-wider text-white/40 mb-1">Why the rules model</div>

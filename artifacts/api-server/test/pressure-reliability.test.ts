@@ -74,7 +74,7 @@ test("anchored shrinkage: small pressure samples sit near the usual-level foreca
 
 const Q = { comps: ["ipl", "t20i"], from: 2022, to: 2026, definition: "rules" as const, minBalls: 120, minMatches: 10, lens: "all" as const };
 
-test("rankings: filters respected, sorted, estimate between usual forecast and raw, inside its interval", () => {
+test("rankings: filters respected, sorted, pressure-only score inside its interval, forecast between usual and raw", () => {
   for (const role of ["batting", "bowling"] as const) {
     const r = pressureReliability({ ...Q, role, limit: 200 });
     assert.ok(r.players.length > 10);
@@ -83,7 +83,10 @@ test("rankings: filters respected, sorted, estimate between usual forecast and r
       assert.ok(p.competitions.every(c => c === "ipl" || c === "t20i"));
       assert.ok(p.interval90[0] <= p.adjustedPer100 && p.adjustedPer100 <= p.interval90[1]);
       const lo = Math.min(p.expectedFromUsualPer100, p.rawPer100) - 0.02, hi = Math.max(p.expectedFromUsualPer100, p.rawPer100) + 0.02;
-      assert.ok(p.adjustedPer100 >= lo && p.adjustedPer100 <= hi, p.player);
+      // Forecast mode sits between the usual-level forecast and the raw pressure rate; the official score is pressure-only.
+      assert.ok(p.forecastPer100 >= lo && p.forecastPer100 <= hi, p.player);
+      assert.equal(p.adjustedPer100, p.pressureOnlyPer100);
+      assert.ok(p.evidenceWeight > 0 && p.evidenceWeight < 1);
     }
     for (let i = 1; i < r.players.length; i++) assert.ok(r.players[i - 1].adjustedPer100 >= r.players[i].adjustedPer100);
   }

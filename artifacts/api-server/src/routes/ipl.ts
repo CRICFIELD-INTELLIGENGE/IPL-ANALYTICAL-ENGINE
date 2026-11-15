@@ -598,11 +598,12 @@ router.get("/stats/pressure-reliability", (req: Request, res: Response): void =>
   const t20iScope = str("t20iScope") ?? "full-members";
   const lens = str("lens") ?? "all";
   const sort = str("sort") ?? "adjusted";
+  const estimator = str("estimator") ?? "pressure";
   const from = str("seasonFrom") ? int("seasonFrom", 0, 2100) : undefined;
   const to = str("seasonTo") ? int("seasonTo", 0, 2100) : undefined;
   const minBalls = int("minBalls", 120, 5000), minMatches = int("minMatches", 10, 500), limit = int("limit", 50, 200);
   if (!comps.length || comps.some(c => !known.includes(c)) || !["batting", "bowling"].includes(role) ||
-      !(definition in DEFINITIONS) || !["full-members", "all"].includes(t20iScope) || !(LENSES as readonly string[]).includes(lens) || !["adjusted", "conservative"].includes(sort) ||
+      !(definition in DEFINITIONS) || !["full-members", "all"].includes(t20iScope) || !(LENSES as readonly string[]).includes(lens) || !["adjusted", "conservative"].includes(sort) || !["pressure", "forecast"].includes(estimator) ||
       [from, to, minBalls, minMatches, limit].some(v => Number.isNaN(v)) || (from && to && from > to)) {
     res.status(400).json({ error: "Invalid pressure-reliability query", competitions: known });
     return;
@@ -610,7 +611,7 @@ router.get("/stats/pressure-reliability", (req: Request, res: Response): void =>
   try {
     res.json(pressureReliability({
       comps, from, to, role: role as "batting" | "bowling", definition: definition as Definition, lens: lens as Lens,
-      t20iScope: t20iScope as "full-members" | "all",
+      t20iScope: t20iScope as "full-members" | "all", estimator: estimator as "pressure" | "forecast",
       sort: sort as "adjusted" | "conservative", minBalls, minMatches, limit,
     }));
   } catch (err) { internalError(res, err); }

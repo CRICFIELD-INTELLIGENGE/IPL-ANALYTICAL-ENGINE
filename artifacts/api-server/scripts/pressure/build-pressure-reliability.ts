@@ -371,6 +371,48 @@ const definitionComparison = DEFINITIONS.map(def => {
 });
 console.log("definitions", JSON.stringify(definitionComparison, null, 1));
 
+// ── 6c. Are the rule thresholds load-bearing? ───────────────────────────────
+// Re-rank the challenge-scope top 10 (pressure-only EB, ≥250 pressure balls, ≥20 matches)
+// under each one-at-a-time change of a rule threshold and report the overlap with the
+// selected thresholds (death from over 16, RRR ≥ 9, collapse ≥3 down for ≤35).
+const ruleSensitivity = (() => {
+  const variants = [
+    { id: "selected", death: 15, rrr: 9, collapse: 35 },
+    { id: "death from over 15", death: 14, rrr: 9, collapse: 35 },
+    { id: "death from over 17", death: 16, rrr: 9, collapse: 35 },
+    { id: "required rate ≥ 8", death: 15, rrr: 8, collapse: 35 },
+    { id: "required rate ≥ 10", death: 15, rrr: 10, collapse: 35 },
+    { id: "collapse ≤30", death: 15, rrr: 9, collapse: 30 },
+    { id: "collapse ≤40", death: 15, rrr: 9, collapse: 40 },
+  ];
+  const top = (v: (typeof variants)[number], role: 0 | 1) => {
+    const per = new Map<number, Map<number, { b: number; v: number }>>();
+    balls.forEach((b, i) => {
+      if (!inScope(b) || isNaN(li[i])) return;
+      const val = ballValues[i * 2 + role];
+      if (isNaN(val)) return;
+      const st = states[i]!;
+      const rrr = st.innings === 2 && st.target !== null && st.ballsLeft > 0 ? ((st.target - st.runs) / st.ballsLeft) * 6 : 0;
+      if (!(b.over >= v.death || rrr >= v.rrr || (b.wktsBefore >= 3 && b.runsBefore <= v.collapse))) return;
+      const p = role === 0 ? b.batter : b.bowler;
+      const m = per.get(p) ?? per.set(p, new Map()).get(p)!;
+      const e = m.get(b.match) ?? m.set(b.match, { b: 0, v: 0 }).get(b.match)!;
+      e.b += (role === 0 ? b.faced : b.legal) ? 1 : 0; e.v += val;
+    });
+    const ps = [...per.entries()].map(([id, m]) => { const ms = [...m.values()]; return { id, balls: ms.reduce((x, y) => x + y.b, 0), value: ms.reduce((x, y) => x + y.v, 0), matches: ms }; });
+    const eb = fitEb(ps.filter(p => p.balls >= 30));
+    return ps.filter(p => p.balls >= 250 && p.matches.length >= 20)
+      .map(p => ({ id: p.id, est: eb.mu + (p.balls / (p.balls + eb.K)) * (p.value / p.balls - eb.mu) }))
+      .sort((a, b) => b.est - a.est).slice(0, 10).map(p => p.id);
+  };
+  const base = [top(variants[0], 0), top(variants[0], 1)];
+  return variants.slice(1).map(v => {
+    const t = [top(v, 0), top(v, 1)];
+    return { variant: v.id, battingOverlap: t[0].filter(x => base[0].includes(x)).length, bowlingOverlap: t[1].filter(x => base[1].includes(x)).length };
+  });
+})();
+console.log("ruleSensitivity", JSON.stringify(ruleSensitivity));
+
 // ── 7. Ball values → player-match rows ──────────────────────────────────────
 // Groups (overlapping): 0 all balls, 1 rules pressure (A, the selected definition),
 // 2 leverage top 30%, 3 leverage top 10%. Fields: balls, runs, outs, value×100, dots, boundaries.
@@ -440,6 +482,7 @@ const model = {
   tierPercentiles: TIER_Q, tierLeverage: thresholds.map(v => +v.toFixed(5)),
   definitionComparison,
   opposition: oppStats,
+  ruleSensitivity,
   winProbability: { weights: { chase: wp.chase, first: wp.first }, validation },
   pressureShare: {
     definition: "rules", pressureBalls: share.total,
@@ -464,6 +507,21 @@ const out = path.join(getProjectRoot(), "artifacts", "api-server", "data", "pres
 fs.mkdirSync(path.dirname(out), { recursive: true });
 fs.writeFileSync(out, JSON.stringify({ version, builtAt: new Date().toISOString(), source: "Cricsheet via global.db (ODC-BY 1.0)", competitions: comps, model, data }));
 console.log(`wrote ${out} (${(fs.statSync(out).size / 1e6).toFixed(1)} MB), ${rowList.length} rows, version ${version}`);
+
+// Browser copy for deploys without the API (the site is static on Vercel): same format,
+// same version, rows limited to the competitions the Scenario panel offers (no SMAT).
+{
+  const smat = compIndex.get("smat");
+  const keep = rowList.map((r, i) => i).filter(i => data.matches.comp[data.rows.match[i]] !== smat);
+  const pick = <T,>(arr: T[], width: number) => keep.flatMap(i => arr.slice(i * width, i * width + width));
+  const client = { ...data, rows: {
+    match: pick(data.rows.match, 1), player: pick(data.rows.player, 1), role: pick(data.rows.role, 1), team: pick(data.rows.team, 1),
+    bins: pick(data.rows.bins, NG * NFLD), phase: pick(data.rows.phase, 3),
+  } };
+  const clientOut = path.join(getProjectRoot(), "artifacts", "ipl-analytics", "public", "data", "pressure-reliability.json");
+  fs.writeFileSync(clientOut, JSON.stringify({ version, builtAt: new Date().toISOString(), source: "Cricsheet via global.db (ODC-BY 1.0)", competitions: comps, model, data: client }));
+  console.log(`wrote ${clientOut} (${(fs.statSync(clientOut).size / 1e6).toFixed(1)} MB), ${keep.length} rows`);
+}
 console.log("thresholds", thresholds, "share", JSON.stringify(model.pressureShare));
 
 function round(o: { brier: number; logLoss: number; n: number }) {
