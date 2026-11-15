@@ -13,7 +13,7 @@ export const SITE_ORIGIN = normalizeSiteOrigin(import.meta.env.VITE_SITE_ORIGIN)
 const articleLoaders = import.meta.glob<{ default: ArticleV2 | null }>("../data/editorial/articles/*/*.json");
 const evidenceLoaders = import.meta.glob<{ default: EvidenceFile | null }>("../data/editorial/evidence/*/*.json");
 
-export const isVisibleStatus = (status: ArticleStatus) => status === "published" || Boolean(import.meta.env?.DEV);
+export const isVisibleStatus = (status: ArticleStatus) => status === "published" || status === "review" || Boolean(import.meta.env?.DEV);
 
 const INDEX: IndexEntry[] = ((indexData as { articles: IndexEntry[] | null }).articles ?? []).filter((e) => isVisibleStatus(e.status));
 

@@ -4,6 +4,7 @@ import { Scale } from "lucide-react";
 import { LeagueValuePanel } from "@/components/intelligence/intel-components";
 import { FeatureSaveButton } from "@/components/feature-save-button";
 import { PressureReliabilityPanel } from "@/components/pressure-reliability-panel";
+import { RunFlowSankey, ShotFlowSankey } from "@/components/visualizations/sankey-diagram";
 import React, { useEffect, useMemo, useState } from "react";
 import { Layout } from "@/components/layout";
 import { TeamLogo } from "@/components/team-logo";
@@ -52,6 +53,7 @@ const TABS = [
   { id: "head2head", label: "Head to Head", Icon: Crosshair },
   { id: "stat-builder", label: "Stat Builder", Icon: Filter },
   { id: "scenario-intelligence", label: "Scenario Intelligence", Icon: Cpu },
+  { id: "tactics", label: "Tactical Execution & Length Matrix", Icon: BarChart2 },
   { id: "ask", label: "Ask AI", Icon: Cpu },
 ] as const;
 type Tab = typeof TABS[number]["id"];
@@ -1836,6 +1838,51 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               )}
               {activeTab === "stat-builder" && (
                 <StatBuilderView batters={activeData.batters} bowlers={activeData.bowlers} playerImages={playerImages.data ?? {}} />
+              )}
+              {activeTab === "tactics" && (
+                <div className="flex flex-col gap-6 animate-fade-in">
+                  {/* Delivery Length to Shot Type Matrix */}
+                  <div className="p-6 rounded-[24px] bg-[#0B1020] border border-white/10 shadow-xl">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
+                      <div>
+                        <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
+                          <BarChart2 className="w-3 h-3 text-blue-400" />
+                          LENGTH MATRIX &amp; SHOT HEATMAP
+                        </span>
+                        <h2 className="text-base sm:text-lg font-black text-white mt-1.5 uppercase tracking-tight">
+                          Delivery Length to Shot Type Matrix
+                        </h2>
+                        <p className="text-xs text-white/50 font-mono mt-0.5">
+                          Interactive length distribution across all IPL seasons (2008 – 2026)
+                        </p>
+                      </div>
+                    </div>
+                    <div className="min-h-[400px] w-full overflow-hidden">
+                      <RunFlowSankey />
+                    </div>
+                  </div>
+
+                  {/* Shot Execution Flow */}
+                  <div className="p-6 rounded-[24px] bg-[#0B1020] border border-white/10 shadow-xl">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
+                      <div>
+                        <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
+                          <Zap className="w-3 h-3 text-purple-400" />
+                          BALL RELEASE TO OUTCOME FLOW
+                        </span>
+                        <h2 className="text-base sm:text-lg font-black text-white mt-1.5 uppercase tracking-tight">
+                          Shot Execution Flow
+                        </h2>
+                        <p className="text-xs text-white/50 font-mono mt-0.5">
+                          Delivery Seam / Spin Release to Shot Execution Outcome (2008 – 2026)
+                        </p>
+                      </div>
+                    </div>
+                    <div className="min-h-[400px] w-full overflow-hidden">
+                      <ShotFlowSankey />
+                    </div>
+                  </div>
+                </div>
               )}
               {activeTab === "ask" && (
                 <AskAIView />

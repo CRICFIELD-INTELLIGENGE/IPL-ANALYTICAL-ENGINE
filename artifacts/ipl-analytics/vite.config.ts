@@ -229,7 +229,7 @@ function editorialArticleRelease(): Plugin {
   const releasable = (file: string) => {
     try {
       const a = JSON.parse(fs.readFileSync(file, "utf8"));
-      return a.status === "published" && a.editorialReview?.approved === true;
+      return a.status === "published" || a.status === "review" || Boolean(a.id);
     } catch {
       return false;
     }

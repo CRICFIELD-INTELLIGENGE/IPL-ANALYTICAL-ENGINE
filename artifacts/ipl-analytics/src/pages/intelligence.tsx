@@ -209,7 +209,7 @@ export const FRANCHISE_INTELLIGENCE: Record<string, FranchiseIntelligenceData> =
     code: "DC",
     name: "Delhi Capitals",
     motto: "Roar Macha",
-    heroImage: "/arun jaitely stadium.webp",
+    heroImage: "/players/dc-2026/kl-rahul.webp",
     stadiumImage: "/arun jaitely stadium.webp",
     featuredPlayer: "KL Rahul",
     accent: "#0078BC",
@@ -536,7 +536,12 @@ export default function IntelligencePage() {
                     alt={franchiseMeta.name}
                     className="w-full h-full object-cover rounded-2xl opacity-90 shadow-2xl filter contrast-110"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = franchiseConfig.stadiumImage || "/hero-players.png";
+                      const img = e.target as HTMLImageElement;
+                      if (!img.src.endsWith("kl%20rahul.jpg") && !img.src.endsWith("kl rahul.jpg")) {
+                        img.src = "/kl rahul.jpg";
+                      } else {
+                        img.src = franchiseConfig.stadiumImage || "/hero-players.png";
+                      }
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 dark:from-[#0C1222] via-transparent to-transparent opacity-75" />

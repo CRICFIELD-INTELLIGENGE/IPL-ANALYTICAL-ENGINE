@@ -22,6 +22,7 @@ import { useTeamTheme, type TeamCode, TEAM_REGISTRY } from "@/lib/team-context";
 import { TeamLogo } from "@/components/team-logo";
 import { AdVessel } from "@/components/ad-vessel";
 import { HUB_EVENTS } from "@/lib/ipl-2027";
+import editorialArchive from "@/data/editorial/index.json";
 
 const HEADLINES = [
   { prefix: "IPL IS NOT JUST ABOUT", highlight: "CRICKET.", darkColor: "#F9CD05", lightColor: "#D97706" },
@@ -222,62 +223,72 @@ const AUCTION_TARGETS = [
   },
 ];
 
-const LATEST_INSIGHTS = [
-  {
-    id: "ins-1",
-    category: "AUCTION",
-    tag: "Auction",
-    title: "IPL 2027 Auction: 5 Big Questions for Every Franchise",
-    date: "Nov 13, 2026",
-    img: "/auction-art.jpg",
-    href: "/auction",
-  },
-  {
-    id: "ins-2",
-    category: "TACTICS",
-    tag: "Tactics",
-    title: "The Rise of Matchup-Specific Bowling in T20 Cricket",
-    date: "Nov 11, 2026",
-    img: "/assets/tactical-board-hero.png",
-    href: "/tactics",
-  },
-  {
-    id: "ins-3",
-    category: "RISING STARS",
-    tag: "Players",
-    title: "10 Indian Uncapped Players to Watch for IPL 2027",
-    date: "Nov 10, 2026",
-    img: "/milestone-photos/highest-total-2024-srh.jpg",
-    href: "/stars",
-  },
-  {
-    id: "ins-4",
-    category: "VENUE INTELLIGENCE",
-    tag: "Venues",
-    title: "How Ground Dimensions Are Shaping T20 Strategy",
-    date: "Nov 9, 2026",
-    img: "/branding/auth/stadium-sunset-v1.png",
-    href: "/venues",
-  },
-  {
-    id: "ins-5",
-    category: "SQUAD BUILDING",
-    tag: "Teams",
-    title: "Squad Rebuilding & Retention Geometry: The Core vs Flexibility Dilemma",
-    date: "Nov 8, 2026",
-    img: "/milestone-photos/final-2024-kkr.jpg",
-    href: "/squad",
-  },
-  {
-    id: "ins-6",
-    category: "AUCTION",
-    tag: "Auction",
-    title: "Purse Dynamics: Inflation, Right-to-Match Cards and Bidding Curves",
-    date: "Nov 7, 2026",
-    img: "/auction-gavel.jpg",
-    href: "/auction",
-  },
-];
+const FRANCHISE_PICS: Record<string, string> = {
+  CSK: "/venue-images/ma chidambaram stadium.webp",
+  MI: "/venue-images/wankhede stadium.webp",
+  RCB: "/venue-images/chinnaswamy stadium.webp",
+  KKR: "/venue-images/eden gardens stadium.webp",
+  SRH: "/venue-images/rajiv gandhi hyderabad stadium.webp",
+  DC: "/venue-images/arun jaitely stadium.webp",
+  RR: "/venue-images/sawai mansingh jaipur stadium.webp",
+  GT: "/venue-images/narendra modi stadium.webp",
+  LSG: "/venue-images/ekana lucknow stadium.webp",
+  PBKS: "/venue-images/mullanpur new pca stadium.webp",
+};
+
+const ASPECT_LABELS: Record<string, string> = {
+  "batting": "Batting Intelligence",
+  "bowling-fielding": "Bowling Telemetry",
+  "auction-economics": "Auction Economics",
+  "tactical": "Tactical Modeling",
+  "venues": "Venue Conditions",
+  "history": "Franchise History",
+  "future": "Strategic Outlook",
+  "data-science": "Deep Quant Analytics",
+};
+
+export interface ArticleArchiveItem {
+  id: string;
+  category: string;
+  tag: string;
+  title: string;
+  date: string;
+  img: string;
+  href: string;
+  aspect: string;
+  franchise: string;
+}
+
+const ALL_EDITORIAL_INSIGHTS: ArticleArchiveItem[] = (editorialArchive.articles || []).map((art) => {
+  const franchise = art.franchise || "IPL";
+  const tag =
+    art.aspect === "auction-economics"
+      ? "Auction"
+      : art.aspect === "batting" || art.aspect === "bowling-fielding" || art.aspect === "tactical"
+      ? "Tactics"
+      : (art.players && art.players.length > 0)
+      ? "Players"
+      : (art.aspect === "venues" || art.title.toLowerCase().includes("stadium") || art.title.toLowerCase().includes("ground"))
+      ? "Venues"
+      : "Teams";
+
+  const img = FRANCHISE_PICS[franchise] || "/auction-art.jpg";
+  const dateFormatted = art.publishedDate
+    ? new Date(art.publishedDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+    : "Nov 2026";
+
+  return {
+    id: art.id,
+    category: `${franchise} • ${ASPECT_LABELS[art.aspect] || "Editorial Insight"}`,
+    tag,
+    title: art.title,
+    date: dateFormatted,
+    img,
+    href: `/dugout/articles/${art.slug}`,
+    aspect: art.aspect,
+    franchise,
+  };
+});
 
 const CATEGORY_TABS = ["All", "Auction", "Tactics", "Players", "Venues", "Teams"] as const;
 
@@ -343,10 +354,20 @@ export default function HomePage() {
   const activeIntel = FRANCHISE_MAP[activeTeamCode];
   const activeTheme = TEAM_REGISTRY[activeTeamCode];
 
-  // Filtered latest insights
-  const filteredInsights = selectedCategory === "All"
-    ? LATEST_INSIGHTS.slice(0, 4)
-    : LATEST_INSIGHTS.filter((ins) => ins.tag.toLowerCase() === selectedCategory.toLowerCase());
+  // Filtered latest insights connected to the 1,000-article editorial engine
+  const filteredInsights = useMemo(() => {
+    if (selectedCategory === "All") {
+      const picks: ArticleArchiveItem[] = [];
+      const franchises = ["CSK", "RCB", "MI", "KKR", "SRH", "DC", "RR", "GT"];
+      for (const f of franchises) {
+        const found = ALL_EDITORIAL_INSIGHTS.find((a) => a.franchise === f);
+        if (found) picks.push(found);
+      }
+      return picks.length >= 4 ? picks.slice(0, 8) : ALL_EDITORIAL_INSIGHTS.slice(0, 8);
+    }
+    const cat = selectedCategory.toLowerCase();
+    return ALL_EDITORIAL_INSIGHTS.filter((ins) => ins.tag.toLowerCase() === cat).slice(0, 8);
+  }, [selectedCategory]);
 
   const curHeadline = HEADLINES[captionIdx];
 
@@ -790,9 +811,14 @@ export default function HomePage() {
             {/* Header & Tabs */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
               <div className="flex items-center gap-4 flex-wrap">
-                <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white">
-                  Latest Insights
-                </h2>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white">
+                    Latest Insights
+                  </h2>
+                  <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                    1,000 Articles Archive
+                  </span>
+                </div>
 
                 {/* Filter Tabs */}
                 <div className="flex items-center gap-1.5 bg-[#081322] border border-white/10 rounded-xl p-1">
@@ -816,12 +842,12 @@ export default function HomePage() {
                 href="/intelligence"
                 className="text-xs font-bold text-[#00D2FF] hover:underline flex items-center gap-1"
               >
-                <span>View all insights</span>
+                <span>Explore all 1,000 stories</span>
                 <ArrowRight size={14} />
               </Link>
             </div>
 
-            {/* 4 Responsive Cards */}
+            {/* Responsive Article Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {filteredInsights.map((item) => (
                 <Link
@@ -835,6 +861,9 @@ export default function HomePage() {
                       src={item.img}
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/auction-art.jpg";
+                      }}
                     />
                     <div className="absolute top-3 left-3">
                       <span className="px-2.5 py-0.5 rounded-md text-[9px] font-mono font-black uppercase tracking-wider text-[#00D2FF] bg-slate-950/80 border border-[#00D2FF]/30 backdrop-blur-sm">

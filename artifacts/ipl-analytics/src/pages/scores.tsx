@@ -20,7 +20,6 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { FixtureTicketCard } from "@/components/fixture-ticket-card";
 import { CricFieldMascot } from "@/components/CricFieldMascot";
-import { RunFlowSankey, ShotFlowSankey } from "@/components/visualizations/sankey-diagram";
 
 /** Helper to generate standard URL slug for a team */
 const teamSlug = (team?: string | null): string =>
@@ -128,21 +127,43 @@ export default function ScoresPage() {
             </div>
           </div>
           
-          {/* Season Selector Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 lg:pb-0 no-scrollbar">
-            {seasons.data?.slice().reverse().map(s => (
+          {/* Season Selector Pills: 2026, 2025, 2024 + Historical Archive */}
+          <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+            {["2026", "2025", "2024"].map((yr) => (
               <button 
-                key={s.season}
-                onClick={() => filterStore.setFilter("season", s.season)}
-                className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all whitespace-nowrap ${
-                  selectedSeason === s.season 
+                key={yr}
+                onClick={() => filterStore.setFilter("season", yr)}
+                className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
+                  selectedSeason === yr 
                     ? 'bg-primary text-white font-black shadow-lg shadow-primary/25 scale-105 border border-primary/40' 
-                    : 'bg-slate-100 dark:bg-white/[0.03] text-slate-600 dark:text-white/50 hover:bg-slate-200 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/5'
+                    : 'bg-slate-100 dark:bg-white/[0.04] text-slate-600 dark:text-white/60 hover:bg-slate-200 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10'
                 }`}
               >
-                {s.season}
+                {yr}
               </button>
             ))}
+            <div className="relative">
+              <select
+                value={["2026", "2025", "2024"].includes(selectedSeason) ? "" : selectedSeason}
+                onChange={(e) => {
+                  if (e.target.value) filterStore.setFilter("season", e.target.value);
+                }}
+                className={`px-3 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer bg-slate-100 dark:bg-white/[0.04] text-slate-700 dark:text-white/70 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 outline-none ${
+                  !["2026", "2025", "2024"].includes(selectedSeason) ? "border-primary text-primary font-black" : ""
+                }`}
+                title="Select Archive Season (2008–2023)"
+                aria-label="Historical Season Archive"
+              >
+                <option value="" disabled className="bg-slate-900 text-white">
+                  {!["2026", "2025", "2024"].includes(selectedSeason) ? `Archive: ${selectedSeason}` : "Archive (2008–23)"}
+                </option>
+                {seasons.data?.slice().reverse().filter(s => !["2026", "2025", "2024"].includes(s.season)).map(s => (
+                  <option key={s.season} value={s.season} className="bg-slate-900 text-white">
+                    {s.season} Season
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 
@@ -200,7 +221,6 @@ export default function ScoresPage() {
             { id: "schedule", label: "Schedule & Results", icon: Calendar, count: seasonMatches.length },
             { id: "points", label: "Points Standings", icon: Trophy, count: standings.length },
             { id: "squad", label: "Squads & Player Cards", icon: Users },
-            { id: "tactics", label: "Tactical Execution & Length Matrix", icon: BarChart2 },
           ].map(tab => (
             <button 
               key={tab.id}
@@ -254,51 +274,6 @@ export default function ScoresPage() {
           {activeTab === "schedule" && <ScheduleView season={selectedSeason} matches={seasonMatches} />}
           {activeTab === "points" && <PointsView season={selectedSeason} standings={standings} />}
           {activeTab === "squad" && <SquadsListView season={selectedSeason} playerImages={playerImages.data} />}
-          {activeTab === "tactics" && (
-            <div className="space-y-6">
-              {/* Module 04: Delivery Length to Shot Type Analysis */}
-              <div className="p-6 rounded-[24px] bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-blue-500/25 shadow-xl">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-200 dark:border-white/10">
-                  <div>
-                    <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-600 dark:text-blue-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
-                      <BarChart2 className="w-3 h-3 text-blue-500" />
-                      MODULE 04 • LENGTH MATRIX
-                    </span>
-                    <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1.5 uppercase tracking-tight">
-                      Delivery Length to Shot Type Analysis (2008 – 2026)
-                    </h2>
-                    <p className="text-xs text-slate-500 dark:text-white/50 font-mono mt-0.5">
-                      Interactive Heatmap Flow &amp; Batter Stance Distribution
-                    </p>
-                  </div>
-                </div>
-                <div className="min-h-[400px] w-full overflow-hidden">
-                  <RunFlowSankey />
-                </div>
-              </div>
-
-              {/* Module 05: Delivery Type to Shot Execution Flow */}
-              <div className="p-6 rounded-[24px] bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-purple-500/25 shadow-xl">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-200 dark:border-white/10">
-                  <div>
-                    <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-600 dark:text-purple-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
-                      <Zap className="w-3 h-3 text-purple-500" />
-                      MODULE 05 • EXECUTION FLOW
-                    </span>
-                    <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1.5 uppercase tracking-tight">
-                      Delivery Type to Shot Execution Flow (2008 – 2026)
-                    </h2>
-                    <p className="text-xs text-slate-500 dark:text-white/50 font-mono mt-0.5">
-                      Multi-Level Hierarchy Analysis: Seam / Spin Release → Shot Execution Outcome
-                    </p>
-                  </div>
-                </div>
-                <div className="min-h-[400px] w-full overflow-hidden">
-                  <ShotFlowSankey />
-                </div>
-              </div>
-            </div>
-          )}
         </motion.div>
 
         {/* Native Ad Vessel - Match Day Telemetry Sponsor */}

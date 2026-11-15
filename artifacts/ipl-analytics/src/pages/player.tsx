@@ -135,7 +135,7 @@ export default function PlayerProfilePage() {
     staleTime: 1000 * 60 * 60,
   });
 
-  const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "recent" | "matchups">("overview");
+  const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "clutch" | "tactical" | "venue" | "recent" | "matchups">("overview");
   const [showCompareModal, setShowCompareModal] = useState(false);
   const [showAskAIModal, setShowAskAIModal] = useState(false);
   const [showAllAuction, setShowAllAuction] = useState(false);
@@ -807,9 +807,9 @@ export default function PlayerProfilePage() {
                     </span>
                   </div>
 
-                  {/* Player Name Headlines */}
+                  {/* Player Name Headlines - Redesigned High-Impact Athletic Typography */}
                   <div>
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white uppercase leading-none drop-shadow-md">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white uppercase leading-none drop-shadow-md font-sans">
                       <span>{profileName}</span>
                     </h1>
                     <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-[11px] font-mono font-bold text-white/50 uppercase mt-2">
@@ -826,59 +826,86 @@ export default function PlayerProfilePage() {
                   </div>
 
                   {/* Player Bio Narrative */}
-                  <p className="text-xs text-white/70 leading-relaxed font-normal mt-3 max-w-2xl">
+                  <p className="text-xs sm:text-[13px] text-white/75 leading-relaxed font-normal mt-2.5 max-w-2xl">
                     {bio.bio}
                   </p>
 
-                  {/* Recent Form Sparkline & Core Action Buttons */}
-                  <div className="my-3 p-3 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <div className="flex items-center gap-3 w-full sm:w-auto">
-                      <div className="text-left">
-                        <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-white/40 block">Recent Form (Last 5)</span>
-                        <div className="flex items-center gap-1.5 mt-1 flex-wrap">
-                          {recentScores.length > 0 ? recentScores.map((score, sIdx) => (
-                            <span
-                              key={sIdx}
-                              className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold border ${
-                                score.runs >= 100
-                                  ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                                  : score.runs >= 50
-                                  ? "bg-primary/20 text-primary border-primary/40"
-                                  : "bg-white/5 text-white/80 border-white/10"
-                              }`}
-                              title={`${score.runs}${score.notOut ? '*' : ''} vs ${score.vsTeam}`}
-                            >
-                              {score.runs}{score.notOut ? '*' : ''}
-                            </span>
-                          )) : (
-                            <span className="text-xs font-mono text-white/40">Verified IPL archive active</span>
-                          )}
-                        </div>
+                  {/* Analytical Command Suites & Actions Strip */}
+                  <div className="my-3 p-3 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md space-y-2.5">
+                    <div className="flex items-center justify-between gap-2 px-0.5">
+                      <span className="text-[9.5px] font-mono font-black uppercase tracking-widest text-cyan-400 flex items-center gap-1.5">
+                        <Activity className="w-3.5 h-3.5" />
+                        Analytical Command Suites
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => setShowCompareModal(true)}
+                          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+                        >
+                          <Layers className="w-3.5 h-3.5" />
+                          <span>Compare</span>
+                        </button>
+                        <button
+                          onClick={() => setShowAskAIModal(true)}
+                          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+                        >
+                          <Sparkles className="w-3.5 h-3.5" />
+                          <span>Ask AI</span>
+                        </button>
                       </div>
-                      {recentScores.length > 0 && (
-                        <div className="border-l border-white/10 pl-3">
-                          <span className="text-[9px] font-mono uppercase text-white/40 block">Form Avg</span>
-                          <span className="text-xs font-mono font-black text-emerald-400">
-                            {(recentScores.reduce((acc, s) => acc + s.runs, 0) / Math.max(1, recentScores.filter(s => !s.notOut).length || 1)).toFixed(1)}
-                          </span>
-                        </div>
-                      )}
                     </div>
 
-                    <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
+                    {/* 3 Core Analytical Segments */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                       <button
-                        onClick={() => setShowCompareModal(true)}
-                        className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary hover:text-white text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+                        onClick={() => setActiveSubTab("clutch")}
+                        className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer group flex flex-col justify-between ${
+                          activeSubTab === "clutch"
+                            ? "bg-primary/20 border-primary text-white shadow-[0_0_16px_-3px_hsl(var(--primary))]"
+                            : "bg-white/[0.03] border-white/10 hover:border-white/25 hover:bg-white/[0.06] text-white/80"
+                        }`}
                       >
-                        <Layers className="w-3.5 h-3.5" />
-                        <span>Compare</span>
+                        <div className="flex items-center justify-between text-[8px] font-mono font-black uppercase tracking-wider text-primary">
+                          <span>Clutch Telemetry</span>
+                          <Shield className="w-3 h-3" />
+                        </div>
+                        <div className="text-xs font-bold text-white truncate mt-1">
+                          Pressure Passport · {bio?.playerName || profileName}
+                        </div>
                       </button>
+
                       <button
-                        onClick={() => setShowAskAIModal(true)}
-                        className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 hover:text-white text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+                        onClick={() => setActiveSubTab("tactical")}
+                        className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer group flex flex-col justify-between ${
+                          activeSubTab === "tactical"
+                            ? "bg-cyan-500/20 border-cyan-400 text-white shadow-[0_0_16px_-3px_rgba(6,182,212,0.5)]"
+                            : "bg-white/[0.03] border-white/10 hover:border-white/25 hover:bg-white/[0.06] text-white/80"
+                        }`}
                       >
-                        <Sparkles className="w-3.5 h-3.5" />
-                        <span>Ask AI</span>
+                        <div className="flex items-center justify-between text-[8px] font-mono font-black uppercase tracking-wider text-cyan-400">
+                          <span>Tactical Modeling</span>
+                          <Compass className="w-3 h-3" />
+                        </div>
+                        <div className="text-xs font-bold text-white truncate mt-1">
+                          Tactical DNA · {bio?.playerName || profileName}
+                        </div>
+                      </button>
+
+                      <button
+                        onClick={() => setActiveSubTab("venue")}
+                        className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer group flex flex-col justify-between ${
+                          activeSubTab === "venue"
+                            ? "bg-purple-500/20 border-purple-400 text-white shadow-[0_0_16px_-3px_rgba(168,85,247,0.5)]"
+                            : "bg-white/[0.03] border-white/10 hover:border-white/25 hover:bg-white/[0.06] text-white/80"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between text-[8px] font-mono font-black uppercase tracking-wider text-purple-400">
+                          <span>Venue Intelligence</span>
+                          <Activity className="w-3 h-3" />
+                        </div>
+                        <div className="text-xs font-bold text-white truncate mt-1">
+                          Ground &amp; Splits · {bio?.playerName || profileName}
+                        </div>
                       </button>
                     </div>
                   </div>
@@ -1210,193 +1237,6 @@ export default function PlayerProfilePage() {
                 </div>
               </div>
             </div>
-
-            {/* TIER 2: INTEGRATED VECTOR INTELLIGENCE & PHASE DIAGNOSTICS CONSOLE */}
-            {radarData.length > 0 && (
-              <div className="mt-6 pt-5 border-t border-white/10 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
-                  
-                  {/* Left: Vector Metrics Radar Box (5 cols) */}
-                  <div className="lg:col-span-5 rounded-2xl bg-white/[0.03] border border-white/10 p-4 relative overflow-hidden backdrop-blur-md flex flex-col justify-between">
-                    {/* Top ambient glow */}
-                    <div
-                      className="absolute -top-12 -right-12 w-28 h-28 rounded-full blur-[40px] pointer-events-none opacity-20"
-                      style={{ background: pColor || "#8B5CF6" }}
-                    />
-
-                    <div className="flex items-center justify-between gap-2 mb-2 relative z-10">
-                      <div className="flex items-center gap-2">
-                        <Activity className="w-3.5 h-3.5 text-primary" />
-                        <span className="text-[10px] font-black uppercase tracking-widest text-white/90 font-mono">
-                          Vector Radar Analysis
-                        </span>
-                      </div>
-                      <span className="text-[8px] font-mono font-black uppercase px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
-                        {showAsBatter ? "Phase Radar" : "Discipline Radar"}
-                      </span>
-                    </div>
-
-                    {/* Radar Chart (Enlarged) */}
-                    <div className="h-[270px] sm:h-[290px] w-full flex items-center justify-center relative z-10">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <RadarChart cx="50%" cy="50%" outerRadius="82%" data={radarData}>
-                          <PolarGrid stroke="rgba(255,255,255,0.12)" />
-                          <PolarAngleAxis
-                            dataKey="short"
-                            stroke="rgba(255,255,255,0.85)"
-                            fontSize={10}
-                            tickLine={false}
-                          />
-                          <PolarRadiusAxis angle={30} domain={[0, 'auto']} stroke="transparent" tick={false} />
-                          <Radar
-                            name="Performance"
-                            dataKey="value"
-                            stroke={pColor || "#8B5CF6"}
-                            fill={pColor || "#8B5CF6"}
-                            fillOpacity={0.35}
-                          />
-                        </RadarChart>
-                      </ResponsiveContainer>
-                    </div>
-
-                    <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[8px] font-mono text-white/40">
-                      <span>HEXAGONAL QUANT VECTOR</span>
-                      <span className="text-primary font-bold">{bio.role?.toUpperCase()}</span>
-                    </div>
-                  </div>
-
-                  {/* Right: Phase Telemetry & Advanced Diagnostics (7 cols) */}
-                  <div className="lg:col-span-7 rounded-2xl bg-white/[0.03] border border-white/10 p-4 relative overflow-hidden backdrop-blur-md flex flex-col justify-between">
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-                        <span className="text-[10px] font-black uppercase tracking-widest text-white/90 font-mono">
-                          {showAsBatter ? "Phase Strike Rate & Boundary Cadence" : "Phase Economy & Strike Metrics"}
-                        </span>
-                      </div>
-                      <span className="text-[8px] font-mono text-white/50 bg-white/5 px-2 py-0.5 rounded border border-white/5">
-                        Scope: {selectedSeasonScope === "career" ? "Career" : `IPL ${selectedSeasonScope}`}
-                      </span>
-                    </div>
-
-                    {/* 6 Precision Phase Diagnostic Cards */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 my-auto">
-                      {showAsBatter && activeBatterStats ? (
-                        <>
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">PP Strike Rate</span>
-                            <span className="text-base sm:text-lg font-mono font-black text-blue-400 block leading-tight">
-                              {activeBatterStats.ppSr ? activeBatterStats.ppSr.toFixed(1) : "—"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1">Overs 1–6 Intent</span>
-                          </div>
-
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Middle Overs SR</span>
-                            <span className="text-base sm:text-lg font-mono font-black text-cyan-400 block leading-tight">
-                              {activeBatterStats.middleSr ? activeBatterStats.middleSr.toFixed(1) : "—"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1">Overs 7–15 Control</span>
-                          </div>
-
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Death Overs SR</span>
-                            <span className="text-base sm:text-lg font-mono font-black text-rose-400 block leading-tight">
-                              {activeBatterStats.deathSr ? activeBatterStats.deathSr.toFixed(1) : "—"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1">Overs 16–20 Power</span>
-                          </div>
-
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Boundary %</span>
-                            <span className="text-base sm:text-lg font-mono font-black text-emerald-400 block leading-tight">
-                              {activeBatterStats.boundaryPct ? `${activeBatterStats.boundaryPct}%` : "—"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1">Runs via 4s & 6s</span>
-                          </div>
-
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Dot Ball %</span>
-                            <span className="text-base sm:text-lg font-mono font-black text-amber-400 block leading-tight">
-                              {activeBatterStats.dotPct ? `${activeBatterStats.dotPct}%` : "—"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1">Strike Rotation</span>
-                          </div>
-
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Clutch Rating</span>
-                            <span className="text-base sm:text-lg font-mono font-black text-purple-400 block leading-tight">
-                              {activeBatterStats.clutch ? activeBatterStats.clutch.toFixed(0) : "85"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1">High-Leverage Impact</span>
-                          </div>
-                        </>
-                      ) : activeBowlerStats ? (
-                        <>
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Dot Ball %</span>
-                            <span className="text-base sm:text-lg font-mono font-black text-emerald-400 block leading-tight">
-                              {activeBowlerStats.dotPct ? `${activeBowlerStats.dotPct}%` : "—"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1">Pressure Creation</span>
-                          </div>
-
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">True Economy</span>
-                            <span className="text-base sm:text-lg font-mono font-black text-cyan-400 block leading-tight">
-                              {activeBowlerStats.trueEconomy != null ? `${activeBowlerStats.trueEconomy > 0 ? "+" : ""}${activeBowlerStats.trueEconomy.toFixed(2)}` : "—"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1">Delta vs Conditions</span>
-                          </div>
-
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Balls / Boundary</span>
-                            <span className="text-base sm:text-lg font-mono font-black text-blue-400 block leading-tight">
-                              {activeBowlerStats.ballsPerBoundary ? activeBowlerStats.ballsPerBoundary.toFixed(1) : "—"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1">Boundary Resistance</span>
-                          </div>
-
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Discipline</span>
-                            <span className="text-sm font-mono font-black text-amber-400 block leading-tight truncate">
-                              {activeBowlerStats.bowlerType || bio.bowlStyle?.split(" ")[0] || "Pacer"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1 truncate">{bio.bowlStyle || "Specialist"}</span>
-                          </div>
-
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Boundary Conceded</span>
-                            <span className="text-base sm:text-lg font-mono font-black text-rose-400 block leading-tight">
-                              {activeBowlerStats.boundaryPct ? `${activeBowlerStats.boundaryPct}%` : "—"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1">Runs Conceded in 4s/6s</span>
-                          </div>
-
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-colors">
-                            <span className="text-[7.5px] font-mono font-bold text-white/40 block uppercase tracking-wider mb-0.5">Clutch Wickets</span>
-                            <span className="text-base sm:text-lg font-mono font-black text-purple-400 block leading-tight">
-                              {activeBowlerStats.clutch ? activeBowlerStats.clutch.toFixed(0) : "82"}
-                            </span>
-                            <span className="text-[7px] font-mono text-white/35 block mt-1">Breakthrough Index</span>
-                          </div>
-                        </>
-                      ) : (
-                        <div className="col-span-3 text-[10px] font-mono text-white/40 text-center py-4">
-                          Telemetry Sync Active
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[8px] font-mono text-white/40">
-                      <span>DATA SYNTHESIS: IPL ADVANCED QUANT SUITE</span>
-                      <span className="text-emerald-400 font-bold">LIVE TELEMETRY VERIFIED</span>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            )}
           </div>
         </div>
 
@@ -1405,20 +1245,20 @@ export default function PlayerProfilePage() {
           <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
             <button
               onClick={() => setActiveSubTab("overview")}
-              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
+              className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
                 activeSubTab === "overview"
-                  ? "bg-primary text-white shadow-[0_0_20px_-3px_hsl(var(--primary))]"
+                  ? "bg-primary text-slate-950 font-black shadow-[0_0_20px_-3px_hsl(var(--primary))]"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/5"
               }`}
             >
               <User className="w-3.5 h-3.5" />
-              <span>Bio &amp; Overview</span>
+              <span>Bio &amp; Career</span>
             </button>
             <button
               onClick={() => setActiveSubTab("metrics")}
-              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
+              className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
                 activeSubTab === "metrics"
-                  ? "bg-primary text-white shadow-[0_0_20px_-3px_hsl(var(--primary))]"
+                  ? "bg-primary text-slate-950 font-black shadow-[0_0_20px_-3px_hsl(var(--primary))]"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/5"
               }`}
             >
@@ -1426,26 +1266,59 @@ export default function PlayerProfilePage() {
               <span>Vector Metrics</span>
             </button>
             <button
-              onClick={() => setActiveSubTab("recent")}
-              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
-                activeSubTab === "recent"
-                  ? "bg-primary text-white shadow-[0_0_20px_-3px_hsl(var(--primary))]"
+              onClick={() => setActiveSubTab("clutch")}
+              className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
+                activeSubTab === "clutch"
+                  ? "bg-emerald-500 text-slate-950 font-black shadow-[0_0_20px_-3px_rgba(16,185,129,0.5)]"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/5"
               }`}
             >
-              <CalendarDays className="w-3.5 h-3.5" />
-              <span>Recent Performances</span>
+              <Shield className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Pressure Passport</span>
+            </button>
+            <button
+              onClick={() => setActiveSubTab("tactical")}
+              className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
+                activeSubTab === "tactical"
+                  ? "bg-cyan-400 text-slate-950 font-black shadow-[0_0_20px_-3px_rgba(6,182,212,0.5)]"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/5"
+              }`}
+            >
+              <Compass className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Tactical DNA</span>
+            </button>
+            <button
+              onClick={() => setActiveSubTab("venue")}
+              className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
+                activeSubTab === "venue"
+                  ? "bg-purple-500 text-white font-black shadow-[0_0_20px_-3px_rgba(168,85,247,0.5)]"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/5"
+              }`}
+            >
+              <MapPin className="w-3.5 h-3.5 text-purple-400" />
+              <span>Venue Intelligence</span>
             </button>
             <button
               onClick={() => setActiveSubTab("matchups")}
-              className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
+              className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
                 activeSubTab === "matchups"
-                  ? "bg-primary text-white shadow-[0_0_20px_-3px_hsl(var(--primary))]"
+                  ? "bg-primary text-slate-950 font-black shadow-[0_0_20px_-3px_hsl(var(--primary))]"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/5"
               }`}
             >
               <Crosshair className="w-3.5 h-3.5" />
-              <span>Head To Head Matchups</span>
+              <span>Head To Head</span>
+            </button>
+            <button
+              onClick={() => setActiveSubTab("recent")}
+              className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
+                activeSubTab === "recent"
+                  ? "bg-primary text-slate-950 font-black shadow-[0_0_20px_-3px_hsl(var(--primary))]"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/5"
+              }`}
+            >
+              <CalendarDays className="w-3.5 h-3.5" />
+              <span>Recent Form</span>
             </button>
           </div>
         </div>
@@ -1626,10 +1499,7 @@ export default function PlayerProfilePage() {
                   </div>
                 </GlassCard>
 
-                {/* ── 3. FORM & PLAYER DNA: ENLARGED RADAR & AXIS GLOSSARY ── */}
-                <div className="lg:col-span-3">
-                  <EnlargedRadarChartSection radarData={radarData || []} pColor={pColor} isBatter={showAsBatter} />
-                </div>
+
 
                 {/* ── 4. PRESSURE INTELLIGENCE: PRESSURE PASSPORT & CHASE >10 RPO ── */}
                 <div className="lg:col-span-3">
@@ -1924,6 +1794,27 @@ export default function PlayerProfilePage() {
                   </div>
                 </GlassCard>
               </>
+            )}
+
+            {/* CLUTCH TELEMETRY & PRESSURE PASSPORT SUB-TAB */}
+            {activeSubTab === "clutch" && (
+              <div className="lg:col-span-3 space-y-6">
+                <PlayerPressurePassportSection playerName={bio?.playerName || profileName || "Player"} pColor={pColor} />
+              </div>
+            )}
+
+            {/* TACTICAL INTELLIGENCE & SCENARIO MODELING SUB-TAB */}
+            {activeSubTab === "tactical" && (
+              <div className="lg:col-span-3 space-y-6">
+                <PlayerTacticalIntelligenceSection playerName={bio?.playerName || profileName || "Player"} pColor={pColor} />
+              </div>
+            )}
+
+            {/* VENUE & OPPOSITION INTELLIGENCE SUB-TAB */}
+            {activeSubTab === "venue" && (
+              <div className="lg:col-span-3 space-y-6">
+                <PlayerVenueOppositionSection playerName={bio?.playerName || profileName || "Player"} />
+              </div>
             )}
 
             {/* METRICS SUB-TAB */}
