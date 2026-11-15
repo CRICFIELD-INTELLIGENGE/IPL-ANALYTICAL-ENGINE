@@ -128,17 +128,17 @@ function Router() {
       {ADMIN_PAGES_ENABLED && <Route path="/admin/photo-pipeline" component={PhotoPipelineDashboard} />}
       {ADMIN_PAGES_ENABLED && <Route path="/photo-pipeline" component={PhotoPipelineDashboard} />}
       {ADMIN_PAGES_ENABLED && <Route path="/admin/editorial-images" component={EditorialImageReviewPage} />}
-      <Route path="/arena"><Redirect to="/feed" /></Route>
-      <Route path="/beyond-xi"><Redirect to="/feed" /></Route>
-      <Route path="/fan-arena"><Redirect to="/feed" /></Route>
+      <Route path="/arena"><Redirect to="/intelligence" /></Route>
+      <Route path="/beyond-xi"><Redirect to="/intelligence" /></Route>
+      <Route path="/fan-arena"><Redirect to="/intelligence" /></Route>
       {/* On-Field Panel System */}
       <Route path="/intelligence" component={IntelligencePage} />
       {/* Top-level destinations. */}
       <Route path="/feed/ipl-2027" component={Ipl2027Page} />
       <Route path="/feed/ipl-2027/retentions" component={Ipl2027RetentionsPage} />
       <Route path="/feed/squad" component={SquadRedirect} />
-      <Route path="/feed/:category" component={FeedCategoryPage} />
-      <Route path="/feed" component={FeedPage} />
+      <Route path="/feed/:category"><Redirect to="/intelligence" /></Route>
+      <Route path="/feed"><Redirect to="/intelligence" /></Route>
       <Route path="/stats"><StatsPage /></Route>
       <Route path="/pulse" component={PulsePage} />
       {/* Scout Lab: Global Talent Intelligence across 6 leagues */}
@@ -148,12 +148,12 @@ function Router() {
       <Route path="/scout/compare" component={ScoutComparePage} />
       <Route path="/scout/roles" component={ScoutRolesPage} />
 
-            {/* Deprecated video routes redirect to Fan Arena */}
+            {/* Deprecated video routes redirect to Intelligence */}
       <Route path="/watch">
-        <Redirect to="/feed" />
+        <Redirect to="/intelligence" />
       </Route>
       <Route path="/watch-and-analyze">
-        <Redirect to="/feed" />
+        <Redirect to="/intelligence" />
       </Route>
 
       {/* CricField Arcade: Cricket Mini-Games */}
@@ -167,7 +167,7 @@ function Router() {
       {/* The former /on-field/* paths, kept as redirects so anything already
           bookmarked or shared keeps working rather than 404ing. */}
       <Route path="/on-field/feed">
-        <Redirect to="/feed" />
+        <Redirect to="/intelligence" />
       </Route>
       <Route path="/on-field/stats">
         <Redirect to="/stats" />
@@ -176,7 +176,7 @@ function Router() {
         <Redirect to="/pulse" />
       </Route>
       <Route path="/on-field">
-        <Redirect to="/feed" />
+        <Redirect to="/intelligence" />
       </Route>
       <Route path="/match/:id" component={MatchDetailPage} />
       <Route path="/product">
@@ -188,7 +188,9 @@ function Router() {
       <Route path="/growth">
         <Redirect to="/intelligence?role=growth" />
       </Route>
-      <Route path="/strategy" component={FeedPage} />
+      <Route path="/strategy">
+        <Redirect to="/intelligence" />
+      </Route>
       <Route path="/reports" component={ReportsPage} />
       <Route path="/blogs" component={BlogsPage} />
       <Route path="/insights">

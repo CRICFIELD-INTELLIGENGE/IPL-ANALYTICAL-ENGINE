@@ -644,21 +644,23 @@ function FranchisePurseBoard({ model }: { model: PulseModel }) {
             const accent = teamHex(t.code);
 
             return (
-              <div
+              <Link
                 key={t.code}
-                className="rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-white/[0.02] hover:bg-slate-100/80 dark:hover:bg-white/[0.05] p-2 sm:p-2.5 transition-all flex flex-col justify-between gap-1.5 shadow-2xs group"
+                href={`/dugout/${t.code}`}
+                className="rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-white/[0.02] hover:bg-slate-100/80 dark:hover:bg-white/[0.05] hover:scale-[1.02] p-2 sm:p-2.5 transition-all flex flex-col justify-between gap-1.5 shadow-2xs group cursor-pointer"
                 style={{ borderLeftColor: accent, borderLeftWidth: "3px" }}
+                title={`Open ${t.code} Dugout & Squad Tab`}
               >
                 {/* Team & Purse Top Line */}
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5 min-w-0">
                     <TeamLogo team={t.code} size="w-5 h-5 shrink-0" />
-                    <span className="font-black text-xs tracking-tight text-slate-900 dark:text-white truncate">
+                    <span className="font-black text-xs tracking-tight text-slate-900 dark:text-white truncate group-hover:text-primary transition-colors">
                       {t.code}
                     </span>
                   </div>
                   <div className="font-mono font-black text-[11px] text-emerald-600 dark:text-emerald-400 shrink-0">
-                    {t.remaining == null ? "Unverified" : `${pulseMoney(t.remaining)} left`}
+                    {t.remaining == null ? "—" : `${pulseMoney(t.remaining)} left`}
                   </div>
                 </div>
 
@@ -677,7 +679,7 @@ function FranchisePurseBoard({ model }: { model: PulseModel }) {
                     {t.purchases.length} bought · {t.slots ?? (25 - (t.squad ?? 0))} slots open
                   </span>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -928,9 +930,6 @@ function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse
               </div>
             </button>
           ))}
-          <div className="rounded-[20px] overflow-hidden border border-slate-200 dark:border-white/10 p-2 bg-slate-50 dark:bg-[#0B1020]/60 shadow-sm">
-            <AdVessel format="in-feed" minHeight={90} className="w-full" />
-          </div>
         </div>
       </div>
 

@@ -211,30 +211,7 @@ export default function DugoutPage() {
           switcher={<FranchiseSwitcher activeCode={activeTeamCode} onPick={handlePickFranchise} />}
         />
 
-        <div id="milestones" className="scroll-mt-24">
-          <Suspense fallback={<SectionSkeleton height="h-96" />}>
-            <FranchiseMilestones
-              key={activeTeamCode}
-              team={currentTeam}
-              record={effectiveRecord}
-              matches={matches.data ?? []}
-              loading={record.isLoading || matches.isLoading}
-              onSeason={setChosenSeason}
-            />
-          </Suspense>
-        </div>
-
-        {/* ── FRANCHISE STORIES: a 10-article preview; the full 100 live on the Intelligence hub ── */}
-        <div id="newsroom" className="scroll-mt-24">
-          <Suspense fallback={<LibrarySkeleton />}>
-            <FranchiseLibrary code={activeTeamCode} teamName={currentTeam.name} accent={currentTeam.accent} preview={10} />
-          </Suspense>
-        </div>
-
-        {/* ── NATIVE AD VESSEL ── */}
-        <AdVessel slot="1029384760" format="horizontal" label="Franchise Partner Briefing · Official Dugout Telemetry" />
-
-        {/* ── SQUAD EXPLORER (REDESIGNED STADIUM CARDS) ── */}
+        {/* ── 1. SQUAD EXPLORER (REDESIGNED STADIUM CARDS) ── */}
         <section id="squad" className="scroll-mt-24 space-y-3 min-w-0">
           <div className="flex items-center justify-between border-b border-white/10 pb-2">
             <div className="flex items-center gap-2">
@@ -257,7 +234,7 @@ export default function DugoutPage() {
           </Suspense>
         </section>
 
-        {/* ── FRANCHISE INTELLIGENCE ── */}
+        {/* ── 2. FRANCHISE INTELLIGENCE ── */}
         {season && (
           <div id="intelligence" className="scroll-mt-24 space-y-8">
             <Suspense fallback={<SectionSkeleton height="h-80" />}>
@@ -267,7 +244,31 @@ export default function DugoutPage() {
           </div>
         )}
 
-        {/* ── SEASON TIMELINE ── */}
+        {/* ── 3. FRANCHISE STORIES: a 10-article preview; the full 100 live on the Intelligence hub ── */}
+        <div id="newsroom" className="scroll-mt-24">
+          <Suspense fallback={<LibrarySkeleton />}>
+            <FranchiseLibrary code={activeTeamCode} teamName={currentTeam.name} accent={currentTeam.accent} preview={10} />
+          </Suspense>
+        </div>
+
+        {/* ── NATIVE AD VESSEL ── */}
+        <AdVessel slot="1029384760" format="horizontal" label="Franchise Partner Briefing · Official Dugout Telemetry" />
+
+        {/* ── 4. FRANCHISE MILESTONES ── */}
+        <div id="milestones" className="scroll-mt-24">
+          <Suspense fallback={<SectionSkeleton height="h-96" />}>
+            <FranchiseMilestones
+              key={activeTeamCode}
+              team={currentTeam}
+              record={effectiveRecord}
+              matches={matches.data ?? []}
+              loading={record.isLoading || matches.isLoading}
+              onSeason={setChosenSeason}
+            />
+          </Suspense>
+        </div>
+
+        {/* ── 5. SEASON TIMELINE / HISTORY ── */}
         <div id="history" className="scroll-mt-24">
           <Suspense fallback={<SectionSkeleton height="h-44" />}>
             <SeasonTimeline

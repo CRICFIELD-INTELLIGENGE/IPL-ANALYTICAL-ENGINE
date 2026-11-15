@@ -186,11 +186,8 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
             )}
           </div>
 
-          {/* Match # Pill Chip & Live Status */}
+          {/* Time & Live Status */}
           <div className="flex items-center gap-2 mt-2.5 flex-wrap">
-            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-mono font-bold tracking-wider uppercase border border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-300">
-              MATCH #{match.id}
-            </span>
             <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-500 dark:text-slate-400">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse shrink-0" />
               <span className="tabular-nums font-semibold">07:30 PM IST</span>

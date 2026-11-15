@@ -153,11 +153,16 @@ export class ApiError extends Error {
 }
 
 async function json<T>(res: Response): Promise<T> {
-  if (!res.ok) {
-    const body = await res.json().catch(() => null);
+  const ct = res.headers.get("content-type") || "";
+  if (!res.ok || ct.includes("text/html")) {
+    const body = ct.includes("application/json") ? await res.json().catch(() => null) : null;
     throw new ApiError(body?.detail ?? body?.error ?? `HTTP ${res.status}`, body?.error ?? null);
   }
-  return res.json() as Promise<T>;
+  try {
+    return (await res.json()) as T;
+  } catch {
+    throw new ApiError("Failed to parse JSON response", null);
+  }
 }
 
 /** True when a failed request should show demo data rather than an error message. */

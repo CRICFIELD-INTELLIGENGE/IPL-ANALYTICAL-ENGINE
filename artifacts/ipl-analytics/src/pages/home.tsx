@@ -166,15 +166,11 @@ export default function HomePage() {
 
                 {/* CALL TO ACTION BUTTONS */}
                 <div className="flex flex-wrap items-center gap-3 pt-2">
-                  <button
-                    onClick={scrollToInsights}
-                    className="flex items-center gap-2 bg-primary text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl hover:bg-primary/90 shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] cursor-pointer"
-                  >
-                    Explore Insights <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <Link href="/feed">
-                    <button className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 border border-slate-200 dark:border-white/15 text-slate-800 dark:text-white font-bold text-xs uppercase tracking-wider px-4 py-3 rounded-xl transition-all hover:scale-[1.02] cursor-pointer">
-                      Feed <Activity className="w-4 h-4" />
+                  <Link href="/intelligence">
+                    <button
+                      className="flex items-center gap-2 bg-primary text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl hover:bg-primary/90 shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] cursor-pointer"
+                    >
+                      Explore Insights <ArrowRight className="w-4 h-4" />
                     </button>
                   </Link>
                 </div>
@@ -279,7 +275,7 @@ export default function HomePage() {
                   Analyses, stories and tools to help you make sense of the road to the auction.
                 </p>
               </div>
-              <Link href="/feed" className="text-xs font-bold text-primary hover:underline flex items-center gap-1 self-start sm:self-auto">
+              <Link href="/intelligence" className="text-xs font-bold text-primary hover:underline flex items-center gap-1 self-start sm:self-auto">
                 <span>View Full Intel Desk</span>
                 <ArrowRight size={13} />
               </Link>
@@ -322,7 +318,7 @@ export default function HomePage() {
                   <h2>Top Story</h2>
                   <p className="hidden md:block text-xs text-slate-400">Analysis. Opinions. The stories behind the game.</p>
                 </div>
-                <Link href="/feed">View all stories →</Link>
+                <Link href="/intelligence">View all stories →</Link>
               </div>
               <div className="flex-1 flex flex-col min-h-0">
                 <React.Suspense

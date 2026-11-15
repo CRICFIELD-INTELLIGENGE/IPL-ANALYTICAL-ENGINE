@@ -45,6 +45,7 @@ export default function ScoresPage() {
   const pointsTables = usePointsTables();
   const standings = pointsTables.data?.[selectedSeason] || [];
   const leaderTeam = standings[0]?.team;
+  const leaderColor = leaderTeam ? teamColor(leaderTeam) : "#0ea5e9";
   const playerImages = usePlayerImages();
 
   // Scroll to top immediately when switching tabs or seasons
@@ -77,9 +78,23 @@ export default function ScoresPage() {
                 </span>
                 <span className="text-[10px] font-mono text-slate-400 dark:text-white/40">2008–2026</span>
               </div>
-              <h1 className="text-xl md:text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-                IPL {selectedSeason} MATCH CENTER &amp; SQUADS
-              </h1>
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <h1 className="text-xl md:text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                  IPL {selectedSeason} MATCH CENTER &amp; SQUADS
+                </h1>
+                <select
+                  value={selectedSeason}
+                  onChange={(e) => filterStore.setFilter("season", e.target.value)}
+                  className="px-2.5 py-1 text-xs font-bold rounded-lg border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-800 dark:text-white cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary"
+                  aria-label="Select IPL Season"
+                >
+                  {seasons.data?.slice().reverse().map((s) => (
+                    <option key={s.season} value={s.season} className="bg-slate-900 text-white">
+                      IPL {s.season}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
           
@@ -114,12 +129,23 @@ export default function ScoresPage() {
           </div>
 
           <div className="bg-white dark:bg-[#0B1020]/80 rounded-2xl border border-slate-200 dark:border-white/10 p-4 flex items-center gap-3 shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500 dark:text-cyan-400">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center transition-colors"
+              style={{
+                backgroundColor: `${leaderColor}20`,
+                borderColor: `${leaderColor}40`,
+                borderWidth: 1,
+                color: leaderColor,
+              }}
+            >
               <Trophy className="w-5 h-5" />
             </div>
             <div>
               <span className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 block">Table Leader</span>
-              <span className="text-base font-black text-cyan-600 dark:text-cyan-300 truncate max-w-[130px] block">
+              <span
+                className="text-base font-black truncate max-w-[130px] block"
+                style={{ color: leaderColor }}
+              >
                 {leaderTeam ? teamShort(leaderTeam) : "—"}
               </span>
             </div>
@@ -173,12 +199,9 @@ export default function ScoresPage() {
           transition={{ duration: 0.2 }}
           className="flex-1"
         >
-          {activeTab === "schedule" && (
+          {activeTab === "schedule" && liveMatches.length > 0 && (
             <section aria-label="Live matches" className="mb-6 rounded-2xl border border-slate-200 dark:border-white/10 p-4">
               <h2 className="mb-3 text-sm font-bold">Live matches</h2>
-              {liveMatches.length === 0 && <p role="status" className="text-sm">
-                {liveFeed.isPending ? "Checking for live matches…" : liveFeed.isError ? "Live feed is temporarily unavailable." : "No matches are live right now."}
-              </p>}
               {liveMatches.map(match => {
                 const { matchInfo: info } = match;
                 const score = getMatchScoreLine(match);

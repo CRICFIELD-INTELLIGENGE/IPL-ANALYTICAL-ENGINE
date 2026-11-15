@@ -538,9 +538,14 @@ export default function PlayerProfilePage() {
       }
       if (filterInnings !== "all") params.set("innings", filterInnings === "1st" ? "1st Innings" : "2nd Innings");
       if (filterVenue !== "all") params.set("venue", filterVenue);
-      const response = await fetch(`/api/stats/matchup?${params.toString()}`);
-      if (!response.ok) throw new Error("Failed to load recorded matchup statistics");
-      return response.json();
+      try {
+        const response = await fetch(`/api/stats/matchup?${params.toString()}`);
+        const ct = response.headers.get("content-type") || "";
+        if (!response.ok || ct.includes("text/html")) return null;
+        return await response.json();
+      } catch {
+        return null;
+      }
     },
     enabled: activeSubTab === "matchups" && !!matchupPair,
   });

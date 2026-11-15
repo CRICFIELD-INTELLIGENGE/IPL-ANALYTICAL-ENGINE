@@ -408,7 +408,8 @@ const fetchJson = async <T>(file: string): Promise<T> => {
   const apiEndpoint = `${import.meta.env.BASE_URL}api/ipl/${cleanFile.replace(/\.json$/, "")}`;
   try {
     const res = await fetch(apiEndpoint);
-    if (res.ok) {
+    const ct = res.headers.get("content-type") || "";
+    if (res.ok && !ct.includes("text/html")) {
       const data = await res.json();
       if (data !== null && data !== undefined) {
         return data as T;
@@ -721,9 +722,14 @@ export const useTeamAnalytics = (
       const params = new URLSearchParams({ team: team! });
       if (from != null) params.set("from", String(from));
       if (to != null) params.set("to", String(to));
-      const res = await fetch(`${import.meta.env.BASE_URL}api/ipl/team-analytics?${params}`);
-      if (!res.ok) throw new Error(`Failed to load team analytics: ${res.status}`);
-      return (await res.json()) as TeamAnalytics;
+      try {
+        const res = await fetch(`${import.meta.env.BASE_URL}api/ipl/team-analytics?${params}`);
+        const ct = res.headers.get("content-type") || "";
+        if (res.ok && !ct.includes("text/html")) {
+          return (await res.json()) as TeamAnalytics;
+        }
+      } catch {}
+      return null as any;
     },
   });
 
@@ -741,9 +747,14 @@ export const useVenueAnalytics = (
       if (opts?.from != null) params.set("from", String(opts.from));
       if (opts?.to != null) params.set("to", String(opts.to));
       if (opts?.timeOfDay && opts.timeOfDay !== "all") params.set("timeOfDay", opts.timeOfDay);
-      const res = await fetch(`${import.meta.env.BASE_URL}api/ipl/venue-analytics?${params}`);
-      if (!res.ok) throw new Error(`Failed to load venue analytics: ${res.status}`);
-      return (await res.json()) as VenueAnalytics;
+      try {
+        const res = await fetch(`${import.meta.env.BASE_URL}api/ipl/venue-analytics?${params}`);
+        const ct = res.headers.get("content-type") || "";
+        if (res.ok && !ct.includes("text/html")) {
+          return (await res.json()) as VenueAnalytics;
+        }
+      } catch {}
+      return null as any;
     },
   });
 

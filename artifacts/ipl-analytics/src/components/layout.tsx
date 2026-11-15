@@ -194,10 +194,14 @@ export function Layout({
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5 shrink-0">
           <TeamSwitcher />
           <ThemeToggle />
-          {/* AI Analyst lives in the floating assistant launcher, not the header. */}
-          {supabaseConfigured && <>
-            <Link href="/account" className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200 py-1.5 px-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"><UserRound size={16}/><span className="hidden sm:inline">Account</span></Link>
-          </>}
+          <Link
+            href="/account"
+            className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 py-1.5 px-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-white/10 transition-colors shadow-2xs"
+            title="My Account"
+          >
+            <UserRound size={15} />
+            <span className="hidden sm:inline font-bold">Account</span>
+          </Link>
         </div>
       </motion.header>
       )}

@@ -506,9 +506,14 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       if (filters.phase) params.append("phase", filters.phase);
       if (filters.pressure_state) params.append("pressure", filters.pressure_state);
       params.append("dimension", "scoring-zone");
-      const res = await fetch(`/api/stats/drilldown?${params.toString()}`);
-      if (!res.ok) throw new Error("Failed to query field positions");
-      return res.json() as Promise<FieldPositionRow[]>;
+      try {
+        const res = await fetch(`/api/stats/drilldown?${params.toString()}`);
+        const ct = res.headers.get("content-type") || "";
+        if (!res.ok || ct.includes("text/html")) return [];
+        return (await res.json()) as FieldPositionRow[];
+      } catch {
+        return [];
+      }
     },
     staleTime: 1000 * 60 * 5,
     placeholderData: (prev: any) => prev,
@@ -524,9 +529,14 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       params.append("bowler", matchupBowler);
       if (filters.season && filters.season !== "All Seasons") params.append("season", filters.season);
       if (filters.venue && filters.venue !== "All Venues") params.append("venue", filters.venue);
-      const res = await fetch(`/api/stats/matchup?${params.toString()}`);
-      if (!res.ok) throw new Error("Failed to query matchup");
-      return res.json();
+      try {
+        const res = await fetch(`/api/stats/matchup?${params.toString()}`);
+        const ct = res.headers.get("content-type") || "";
+        if (!res.ok || ct.includes("text/html")) return null;
+        return await res.json();
+      } catch {
+        return null;
+      }
     },
     enabled: !!(matchupBatter && matchupBowler),
     staleTime: 1000 * 60 * 10,
@@ -545,11 +555,16 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       if (!hasScenarioRange && filters.season && filters.season !== "All Seasons") params.set("season", filters.season);
       if (filters.team && filters.team !== "All Teams") params.set("team", filters.team);
       if (filters.nationality && filters.nationality !== "all") params.set("nationality", filters.nationality);
-      const res = await fetch(`/api/stats/scenario?${params}`);
-      if (!res.ok) throw new Error("Failed to query scenario");
-      const result = await res.json() as { batters: any[]; bowlers: any[] };
-      if (!Array.isArray(result.batters) || !Array.isArray(result.bowlers)) throw new Error("Invalid scenario data");
-      return result;
+      try {
+        const res = await fetch(`/api/stats/scenario?${params}`);
+        const ct = res.headers.get("content-type") || "";
+        if (!res.ok || ct.includes("text/html")) return { batters: [], bowlers: [] };
+        const result = await res.json() as { batters: any[]; bowlers: any[] };
+        if (!Array.isArray(result.batters) || !Array.isArray(result.bowlers)) return { batters: [], bowlers: [] };
+        return result;
+      } catch {
+        return { batters: [], bowlers: [] };
+      }
     },
     enabled: activeTab === "scenario-intelligence",
     staleTime: 1000 * 60 * 5,
@@ -566,9 +581,14 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       params.append("dimension", drilldownDimension);
       if (filters.season && filters.season !== "All Seasons") params.append("season", filters.season);
       if (filters.team && filters.team !== "All Teams") params.append("team", filters.team);
-      const res = await fetch(`/api/stats/drilldown?${params.toString()}`);
-      if (!res.ok) throw new Error("Failed to query drilldown");
-      return res.json();
+      try {
+        const res = await fetch(`/api/stats/drilldown?${params.toString()}`);
+        const ct = res.headers.get("content-type") || "";
+        if (!res.ok || ct.includes("text/html")) return [];
+        return await res.json();
+      } catch {
+        return [];
+      }
     },
     enabled: !!drilldownPlayer,
     staleTime: 1000 * 60 * 5,
@@ -4028,9 +4048,14 @@ function FieldPositionsView({
       if (deliveryType && deliveryType !== "Delivery Type" && deliveryType !== "Delivery")
         params.append("deliveryType", deliveryType);
       params.append("dimension", "scoring-zone");
-      const res = await fetch(`/api/stats/drilldown?${params.toString()}`);
-      if (!res.ok) throw new Error("Failed to query field positions");
-      return res.json() as Promise<FPRow[]>;
+      try {
+        const res = await fetch(`/api/stats/drilldown?${params.toString()}`);
+        const ct = res.headers.get("content-type") || "";
+        if (!res.ok || ct.includes("text/html")) return [];
+        return (await res.json()) as FPRow[];
+      } catch {
+        return [];
+      }
     },
     staleTime: 1000 * 60 * 5,
   });
