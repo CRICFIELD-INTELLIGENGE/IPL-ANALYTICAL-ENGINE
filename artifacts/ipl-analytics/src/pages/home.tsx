@@ -356,17 +356,60 @@ export default function HomePage() {
 
   // Filtered latest insights connected to the 1,000-article editorial engine
   const filteredInsights = useMemo(() => {
+    const seenTitles = new Set<string>();
+
     if (selectedCategory === "All") {
-      const picks: ArticleArchiveItem[] = [];
-      const franchises = ["CSK", "RCB", "MI", "KKR", "SRH", "DC", "RR", "GT"];
+      // Curate a vibrant, diverse mix of 8 articles from different franchises with distinct topics & aspects
+      // Avoid repetitive "Powerplay Equation" titles by staggering franchise offsets
+      const diversePicks: ArticleArchiveItem[] = [];
+      const franchises = ["RCB", "CSK", "MI", "KKR", "SRH", "RR", "DC", "GT", "LSG", "PBKS"];
+
+      const franchiseOffsets: Record<string, number> = {
+        RCB: 5,   // Chasing Under Pressure
+        CSK: 4,   // The Finisher's Clock
+        MI: 1,    // The Anchor Paradox
+        KKR: 8,   // Middle Overs Spin Control
+        SRH: 14,  // Boundary Maximization
+        RR: 20,   // Death Bowling Defense
+        DC: 28,   // Indian Core Architecture
+        GT: 16,   // Spatial Ground Dimension Strategy
+        LSG: 24,  // Defensive First-Innings Totals
+        PBKS: 11, // New Ball Pace Penetration
+      };
+
       for (const f of franchises) {
-        const found = ALL_EDITORIAL_INSIGHTS.find((a) => a.franchise === f);
-        if (found) picks.push(found);
+        const teamPool = ALL_EDITORIAL_INSIGHTS.filter(a => a.franchise === f);
+        const offset = franchiseOffsets[f] || 2;
+        const candidate =
+          teamPool.find((a, idx) => idx >= offset && !seenTitles.has(a.title) && !a.title.toLowerCase().includes("powerplay equation")) ||
+          teamPool.find(a => !seenTitles.has(a.title) && !a.title.toLowerCase().includes("powerplay equation")) ||
+          teamPool[0];
+
+        if (candidate && !seenTitles.has(candidate.title)) {
+          seenTitles.add(candidate.title);
+          diversePicks.push(candidate);
+        }
+        if (diversePicks.length >= 8) break;
       }
-      return picks.length >= 4 ? picks.slice(0, 8) : ALL_EDITORIAL_INSIGHTS.slice(0, 8);
+
+      return diversePicks.length >= 4 ? diversePicks : ALL_EDITORIAL_INSIGHTS.slice(0, 8);
     }
+
     const cat = selectedCategory.toLowerCase();
-    return ALL_EDITORIAL_INSIGHTS.filter((ins) => ins.tag.toLowerCase() === cat).slice(0, 8);
+    const results: ArticleArchiveItem[] = [];
+    for (const ins of ALL_EDITORIAL_INSIGHTS) {
+      if (ins.tag.toLowerCase() === cat) {
+        const baseTitle = ins.title.split(":")[0].trim().toLowerCase();
+        if (!seenTitles.has(baseTitle) && !seenTitles.has(ins.title)) {
+          seenTitles.add(baseTitle);
+          seenTitles.add(ins.title);
+          results.push(ins);
+        }
+      }
+      if (results.length >= 8) break;
+    }
+
+    return results.length > 0 ? results : ALL_EDITORIAL_INSIGHTS.slice(0, 8);
   }, [selectedCategory]);
 
   const curHeadline = HEADLINES[captionIdx];

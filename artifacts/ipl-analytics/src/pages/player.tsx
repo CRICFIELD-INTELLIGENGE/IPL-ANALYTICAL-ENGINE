@@ -1,3 +1,5 @@
+import { PlayerT20Evidence } from "@/components/scout/t20-scouting";
+import ScoutPlayerPage from "@/pages/scout-player";
 import { PlayerRetentionCard } from "@/components/retention/retention-widgets";
 import {ScoringRing} from '@/components/visualizations/scoring-ring';
 import {PlayerCareerMilestones} from '@/components/player-career-milestones';
@@ -8,6 +10,8 @@ import {
   PlayerTacticalIntelligenceSection,
   PlayerVenueOppositionSection,
   EnlargedRadarChartSection,
+  PlayerIntelligenceHub,
+  HeadToHeadGroundVisual,
 } from "@/components/player-intelligence-sections";
 import React, { useState, useMemo } from "react";
 import { useRoute, Link } from "wouter";
@@ -135,7 +139,7 @@ export default function PlayerProfilePage() {
     staleTime: 1000 * 60 * 60,
   });
 
-  const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "clutch" | "tactical" | "venue" | "recent" | "matchups">("overview");
+  const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "intelligence" | "clutch" | "tactical" | "venue" | "recent" | "matchups">("overview");
   const [showCompareModal, setShowCompareModal] = useState(false);
   const [showAskAIModal, setShowAskAIModal] = useState(false);
   const [showAllAuction, setShowAllAuction] = useState(false);
@@ -673,6 +677,7 @@ export default function PlayerProfilePage() {
   }
 
   if (playerBios.isError || !bio) {
+    if (scoutParams?.id) return <ScoutPlayerPage />;
     return (
       <Layout>
         <div className="flex flex-col items-center justify-center min-h-[70vh] gap-3">
@@ -1266,37 +1271,15 @@ export default function PlayerProfilePage() {
               <span>Vector Metrics</span>
             </button>
             <button
-              onClick={() => setActiveSubTab("clutch")}
+              onClick={() => setActiveSubTab("intelligence")}
               className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
-                activeSubTab === "clutch"
-                  ? "bg-emerald-500 text-slate-950 font-black shadow-[0_0_20px_-3px_rgba(16,185,129,0.5)]"
+                activeSubTab === "intelligence" || activeSubTab === "clutch" || activeSubTab === "tactical" || activeSubTab === "venue"
+                  ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_-3px_rgba(6,182,212,0.6)]"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/5"
               }`}
             >
-              <Shield className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Pressure Passport</span>
-            </button>
-            <button
-              onClick={() => setActiveSubTab("tactical")}
-              className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
-                activeSubTab === "tactical"
-                  ? "bg-cyan-400 text-slate-950 font-black shadow-[0_0_20px_-3px_rgba(6,182,212,0.5)]"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/5"
-              }`}
-            >
-              <Compass className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Tactical DNA</span>
-            </button>
-            <button
-              onClick={() => setActiveSubTab("venue")}
-              className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
-                activeSubTab === "venue"
-                  ? "bg-purple-500 text-white font-black shadow-[0_0_20px_-3px_rgba(168,85,247,0.5)]"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/5"
-              }`}
-            >
-              <MapPin className="w-3.5 h-3.5 text-purple-400" />
-              <span>Venue Intelligence</span>
+              <Shield className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Player Intelligence Hub</span>
             </button>
             <button
               onClick={() => setActiveSubTab("matchups")}
@@ -1339,6 +1322,7 @@ export default function PlayerProfilePage() {
             {/* OVERVIEW SUB-TAB */}
             {activeSubTab === "overview" && (
               <>
+                <PlayerT20Evidence playerRef={scoutParams?.id || profileName} />
                 {/* Decision Intelligence: pressure, weakness, similar players, auction value */}
                 <PlayerIntelligenceSection player={bio.playerName} className="lg:col-span-3" />
                 <PlayerRetentionCard player={bio.playerName} className="lg:col-span-3" />
@@ -1500,21 +1484,6 @@ export default function PlayerProfilePage() {
                 </GlassCard>
 
 
-
-                {/* ── 4. PRESSURE INTELLIGENCE: PRESSURE PASSPORT & CHASE >10 RPO ── */}
-                <div className="lg:col-span-3">
-                  <PlayerPressurePassportSection playerName={bio?.playerName || profileName || "Player"} pColor={pColor} />
-                </div>
-
-                {/* ── 6. TACTICAL INTELLIGENCE: SCORING ACCELERATION & SCENARIO ENGINE ── */}
-                <div className="lg:col-span-3">
-                  <PlayerTacticalIntelligenceSection playerName={bio?.playerName || profileName || "Player"} pColor={pColor} />
-                </div>
-
-                {/* ── 7. VENUE & OPPOSITION INTELLIGENCE: GROUNDS & CHASE SPLITS ── */}
-                <div className="lg:col-span-3">
-                  <PlayerVenueOppositionSection playerName={bio?.playerName || profileName || "Player"} />
-                </div>
 
                 {/* ── 8. CAREER MILESTONES: 3 FEATURED LANDMARKS & EXPANDABLE TIMELINE ── */}
                 <PlayerCareerMilestones
@@ -1796,25 +1765,16 @@ export default function PlayerProfilePage() {
               </>
             )}
 
-            {/* CLUTCH TELEMETRY & PRESSURE PASSPORT SUB-TAB */}
-            {activeSubTab === "clutch" && (
-              <div className="lg:col-span-3 space-y-6">
-                <PlayerPressurePassportSection playerName={bio?.playerName || profileName || "Player"} pColor={pColor} />
-              </div>
-            )}
-
-            {/* TACTICAL INTELLIGENCE & SCENARIO MODELING SUB-TAB */}
-            {activeSubTab === "tactical" && (
-              <div className="lg:col-span-3 space-y-6">
-                <PlayerTacticalIntelligenceSection playerName={bio?.playerName || profileName || "Player"} pColor={pColor} />
-              </div>
-            )}
-
-            {/* VENUE & OPPOSITION INTELLIGENCE SUB-TAB */}
-            {activeSubTab === "venue" && (
-              <div className="lg:col-span-3 space-y-6">
-                <PlayerVenueOppositionSection playerName={bio?.playerName || profileName || "Player"} />
-              </div>
+            {/* PLAYER INTELLIGENCE HUB SUB-TAB (Merged from Clutch, Tactical & Venue Intelligence) */}
+            {(activeSubTab === "intelligence" || activeSubTab === "clutch" || activeSubTab === "tactical" || activeSubTab === "venue") && (
+              <PlayerIntelligenceHub
+                playerName={bio?.playerName || profileName || "Player"}
+                primaryTeam={primaryTeam}
+                pColor={pColor}
+                showAsBatter={showAsBatter}
+                batterStats={activeBatterStats}
+                bowlerStats={activeBowlerStats}
+              />
             )}
 
             {/* METRICS SUB-TAB */}
@@ -2273,19 +2233,15 @@ export default function PlayerProfilePage() {
                   </GlassCard>
                 )}
 
-                {/* DELIVERIES & SCORING ZONES DATA SYNC FOR THIS HEAD-TO-HEAD DUEL */}
+                {/* HEAD-TO-HEAD SHOT ZONE DISTRIBUTION & GROUND VISUAL CONTROL */}
                 <div className="space-y-6">
-                   <DeliveryTypeBreakdown player={`${bio.playerName} vs ${activeOpponentName}`} />
-                   <ShotZoneMap
-                     player={`${bio.playerName} vs ${activeOpponentName}`}
-                     title="Head-to-Head Shot Zone Distribution"
-                     data={[
-                       { x: 0.2, y: 0.8, runs: 24, frequency: 0.20 },
-                       { x: 0.5, y: 0.7, runs: 42, frequency: 0.40 },
-                       { x: 0.8, y: 0.6, runs: 35, frequency: 0.30 },
-                       { x: 0.3, y: 0.3, runs: 12, frequency: 0.10 }
-                     ]}
-                   />
+                  <HeadToHeadGroundVisual
+                    batterName={bio.playerName}
+                    bowlerName={activeOpponentName}
+                    matchupData={recordedMatchupQuery.data}
+                  />
+
+                  <DeliveryTypeBreakdown player={`${bio.playerName} vs ${activeOpponentName}`} />
                 </div>
 
               </div>
