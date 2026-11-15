@@ -1098,6 +1098,10 @@ const CURATED_LOCAL_IMAGES: Record<string, string> = {
   "dj bravo": "/dj bravo.jpg",
   "dwayne bravo": "/dj bravo.jpg",
   "kl rahul": "/kl rahul.jpg",
+  "k l rahul": "/kl rahul.jpg",
+  "k.l. rahul": "/kl rahul.jpg",
+  "k rahul": "/kl rahul.jpg",
+  "kannaur lokesh rahul": "/kl rahul.jpg",
   "a mishra": "/a mishra.jpg",
   "amit mishra": "/a mishra.jpg",
   "am rahane": "/a rahane.jpg",
@@ -1357,7 +1361,15 @@ export function getPlayerImageCandidates(
     }
   };
 
-  // 1. Curated dictionary & bio full name / player name lookup
+  // 1. Small hand-picked marquee set (highest priority verified crops)
+  const curated =
+    CURATED_LOCAL_IMAGES[curatedKey(name)] ??
+    CURATED_LOCAL_IMAGES[curatedKey(bio?.fullName)] ??
+    CURATED_LOCAL_IMAGES[curatedKey(bio?.playerName)] ??
+    (COMMON_PLAYER_NAME_MAP[name] ? CURATED_LOCAL_IMAGES[curatedKey(COMMON_PLAYER_NAME_MAP[name])] : undefined);
+  if (curated) addUrl(curated);
+
+  // 2. Curated dictionary & bio full name / player name lookup
   if (playerImages) {
     checkDict(name);
     if (bio?.fullName) checkDict(bio.fullName);
@@ -1372,30 +1384,24 @@ export function getPlayerImageCandidates(
         const kp = k.toLowerCase().split(/\s+/);
         return kp.length >= 2 && kp[0].charAt(0) === firstInitial && kp[kp.length - 1] === lastName;
       });
-      for (const h of hits) {
-        if (playerImages[h]) addUrl(playerImages[h]);
+      // STRICT GUARD: Only accept if exactly ONE player in the dictionary matches this initial + surname
+      // Never substitute another player's face when multiple players share initials/surname (e.g. Sharma, Singh)
+      if (hits.length === 1 && playerImages[hits[0]]) {
+        addUrl(playerImages[hits[0]]);
       }
     }
   }
-
-  // 2. Small hand-picked marquee set
-  const curated =
-    CURATED_LOCAL_IMAGES[curatedKey(name)] ??
-    CURATED_LOCAL_IMAGES[curatedKey(bio?.fullName)] ??
-    CURATED_LOCAL_IMAGES[curatedKey(bio?.playerName)] ??
-    (COMMON_PLAYER_NAME_MAP[name] ? CURATED_LOCAL_IMAGES[curatedKey(COMMON_PLAYER_NAME_MAP[name])] : undefined);
-  if (curated) addUrl(curated);
 
   // 3. Real image already recorded in player-bio.json
   const bioImg = usableBioImage(bio?.image);
   if (bioImg) addUrl(bioImg);
 
-  // 4. Programmatic CDN guesses
+  // 4. Programmatic CDN guesses (capped to prevent endless 404 cascade)
   candidates.push(...s3ImageCandidates(name, bio?.fullName));
-  if (bio?.playerName && bio.playerName !== name) {
+  if (bio?.playerName && bio.playerName !== name && candidates.length < 3) {
     candidates.push(...s3ImageCandidates(bio.playerName, bio?.fullName));
   }
-  if (COMMON_PLAYER_NAME_MAP[name]) {
+  if (COMMON_PLAYER_NAME_MAP[name] && candidates.length < 4) {
     candidates.push(...s3ImageCandidates(COMMON_PLAYER_NAME_MAP[name]));
   }
 

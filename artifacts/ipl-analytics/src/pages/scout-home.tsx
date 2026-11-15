@@ -1,3 +1,4 @@
+import { TeamT20Scouting } from "@/components/scout/t20-scouting";
 import "./scout-terminal.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -152,6 +153,7 @@ export default function ScoutHomePage() {
   return (
     <Layout>
       <div className="scout-terminal scout-notebook w-full max-w-full min-h-[calc(100vh-56px)] bg-slate-50 dark:bg-[#050B11] text-slate-900 dark:text-[#EFF5F7] transition-colors">
+        <div className="mx-auto max-w-7xl px-4 pt-5"><TeamT20Scouting /></div>
         {/* CINEMATIC SCOUT COMMAND ROOM (Matches Lovable Format 1:1 with Dynamic Team Dugout Palette) */}
         <ScoutCinematicRoom
           discipline={discipline}

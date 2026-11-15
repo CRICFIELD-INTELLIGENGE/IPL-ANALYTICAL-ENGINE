@@ -368,11 +368,11 @@ export function getTierKey(p: PickRow, _data?: TeamPicks): "icons" | "core" | "p
   if (p.category === "Icons" || (p as any).isIcon) {
     return "icons";
   }
-  if (p.category === "Franchise Cornerstone" || p.category === "Franchise Core") {
+  if (p.category === "Franchise Cornerstone" || (p.category as string) === "Franchise Core") {
     return "core";
   }
   if (p.category === "Priority Retain") return "priority";
-  if (p.category === "Strong Retain" || p.category === "Strong retain") return "strong";
+  if (p.category === "Strong Retain" || (p.category as string) === "Strong retain") return "strong";
   if (p.category === "Retain") return "retain";
   if (p.category === "Retention Dilemma") return "dilemma";
   if (p.category === "Release Candidate" || p.category === "Release / Buyback Review" || p.recommendation === "release") {
@@ -1154,9 +1154,9 @@ function ForecastTab({ team }: { team: TeamCode }) {
     .filter((p) => {
       if (filterTier === "all") return true;
       if (filterTier === "icons") return p.category === "Icons" || (p as any).isIcon;
-      if (filterTier === "core") return p.category === "Franchise Cornerstone" || p.category === "Franchise Core";
+      if (filterTier === "core") return p.category === "Franchise Cornerstone" || (p.category as string) === "Franchise Core";
       if (filterTier === "priority") return p.category === "Priority Retain";
-      if (filterTier === "strong") return p.category === "Strong Retain" || p.category === "Strong retain";
+      if (filterTier === "strong") return p.category === "Strong Retain" || (p.category as string) === "Strong retain";
       if (filterTier === "retain") return p.category === "Retain";
       if (filterTier === "dilemma") return p.category === "Retention Dilemma";
       if (filterTier === "release") return p.category === "Release Candidate" || p.category === "Release / Buyback Review" || p.recommendation === "release";

@@ -43,7 +43,7 @@ export const futureProof = (p: PickRow) => p.horizon.age === null || p.horizon.a
 export const isCore = (picks: TeamPicks | undefined, id: string) => {
   const row = picks?.rows.find((p) => p.id === id);
   if (row) {
-    return row.category === "Franchise Cornerstone" || row.category === "Franchise Core";
+    return row.category === "Franchise Cornerstone" || (row.category as string) === "Franchise Core";
   }
   return Boolean(picks?.planning?.coreLocks.some((l) => l.id === id));
 };

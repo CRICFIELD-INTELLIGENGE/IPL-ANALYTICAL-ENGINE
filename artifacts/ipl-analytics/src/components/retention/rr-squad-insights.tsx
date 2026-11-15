@@ -120,9 +120,9 @@ export function FranchiseSquadInsights({ team = "RR" }: { team?: string }) {
   // Match filter function
   const matchFilter = (p: PickRow) => {
     if (filterTier === "all") return true;
-    if (filterTier === "core") return p.category === "Franchise Cornerstone" || p.category === "Franchise Core";
+    if (filterTier === "core") return p.category === "Franchise Cornerstone" || (p.category as string) === "Franchise Core";
     if (filterTier === "priority") return p.category === "Priority Retain";
-    if (filterTier === "strong") return p.category === "Strong Retain" || p.category === "Strong retain";
+    if (filterTier === "strong") return p.category === "Strong Retain" || (p.category as string) === "Strong retain";
     if (filterTier === "retain") return p.category === "Retain";
     if (filterTier === "dilemma") return p.category === "Retention Dilemma";
     if (filterTier === "release") return p.category === "Release Candidate" || p.category === "Release / Buyback Review" || p.recommendation === "release";
@@ -142,9 +142,9 @@ export function FranchiseSquadInsights({ team = "RR" }: { team?: string }) {
   // Filter count helper
   const countFor = (opt: FilterTierOption) => {
     if (opt === "all") return rows.length;
-    if (opt === "core") return rows.filter((p) => p.category === "Franchise Cornerstone" || p.category === "Franchise Core").length;
+    if (opt === "core") return rows.filter((p) => p.category === "Franchise Cornerstone" || (p.category as string) === "Franchise Core").length;
     if (opt === "priority") return rows.filter((p) => p.category === "Priority Retain").length;
-    if (opt === "strong") return rows.filter((p) => p.category === "Strong Retain" || p.category === "Strong retain").length;
+    if (opt === "strong") return rows.filter((p) => p.category === "Strong Retain" || (p.category as string) === "Strong retain").length;
     if (opt === "retain") return rows.filter((p) => p.category === "Retain").length;
     if (opt === "dilemma") return rows.filter((p) => p.category === "Retention Dilemma").length;
     if (opt === "release") return rows.filter((p) => p.category === "Release Candidate" || p.category === "Release / Buyback Review" || p.recommendation === "release").length;
@@ -220,7 +220,7 @@ export function FranchiseSquadInsights({ team = "RR" }: { team?: string }) {
                 <ShieldCheck className="w-4 h-4 text-emerald-400" /> Core Commitments & Planning Purse
               </h3>
               <span className="font-mono text-emerald-300 font-black text-sm">
-                Available: {planning.remainingPurseCr != null ? `₹${planning.remainingPurseCr} Cr` : money(planning.remainingPurseLakh ?? 0)}
+                Available: {(planning as any).remainingPurseCr != null ? `₹${(planning as any).remainingPurseCr} Cr` : money((planning as any).remainingPurseLakh ?? 0)}
               </span>
             </div>
             <p className="text-white/80">

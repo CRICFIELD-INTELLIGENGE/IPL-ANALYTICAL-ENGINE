@@ -836,81 +836,25 @@ export default function PlayerProfilePage() {
                   </p>
 
                   {/* Analytical Command Suites & Actions Strip */}
-                  <div className="my-3 p-3 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md space-y-2.5">
-                    <div className="flex items-center justify-between gap-2 px-0.5">
-                      <span className="text-[9.5px] font-mono font-black uppercase tracking-widest text-cyan-400 flex items-center gap-1.5">
-                        <Activity className="w-3.5 h-3.5" />
-                        Analytical Command Suites
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => setShowCompareModal(true)}
-                          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
-                        >
-                          <Layers className="w-3.5 h-3.5" />
-                          <span>Compare</span>
-                        </button>
-                        <button
-                          onClick={() => setShowAskAIModal(true)}
-                          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
-                        >
-                          <Sparkles className="w-3.5 h-3.5" />
-                          <span>Ask AI</span>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* 3 Core Analytical Segments */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <div className="my-2.5 p-2.5 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md flex items-center justify-between gap-3">
+                    <span className="text-[10px] font-mono font-black uppercase tracking-widest text-cyan-400 flex items-center gap-1.5 pl-1">
+                      <Activity className="w-3.5 h-3.5" />
+                      Analytical Command Suites
+                    </span>
+                    <div className="flex items-center gap-2">
                       <button
-                        onClick={() => setActiveSubTab("clutch")}
-                        className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer group flex flex-col justify-between ${
-                          activeSubTab === "clutch"
-                            ? "bg-primary/20 border-primary text-white shadow-[0_0_16px_-3px_hsl(var(--primary))]"
-                            : "bg-white/[0.03] border-white/10 hover:border-white/25 hover:bg-white/[0.06] text-white/80"
-                        }`}
+                        onClick={() => setShowCompareModal(true)}
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
                       >
-                        <div className="flex items-center justify-between text-[8px] font-mono font-black uppercase tracking-wider text-primary">
-                          <span>Clutch Telemetry</span>
-                          <Shield className="w-3 h-3" />
-                        </div>
-                        <div className="text-xs font-bold text-white truncate mt-1">
-                          Pressure Passport · {bio?.playerName || profileName}
-                        </div>
+                        <Layers className="w-3.5 h-3.5" />
+                        <span>Compare</span>
                       </button>
-
                       <button
-                        onClick={() => setActiveSubTab("tactical")}
-                        className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer group flex flex-col justify-between ${
-                          activeSubTab === "tactical"
-                            ? "bg-cyan-500/20 border-cyan-400 text-white shadow-[0_0_16px_-3px_rgba(6,182,212,0.5)]"
-                            : "bg-white/[0.03] border-white/10 hover:border-white/25 hover:bg-white/[0.06] text-white/80"
-                        }`}
+                        onClick={() => setShowAskAIModal(true)}
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
                       >
-                        <div className="flex items-center justify-between text-[8px] font-mono font-black uppercase tracking-wider text-cyan-400">
-                          <span>Tactical Modeling</span>
-                          <Compass className="w-3 h-3" />
-                        </div>
-                        <div className="text-xs font-bold text-white truncate mt-1">
-                          Tactical DNA · {bio?.playerName || profileName}
-                        </div>
-                      </button>
-
-                      <button
-                        onClick={() => setActiveSubTab("venue")}
-                        className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer group flex flex-col justify-between ${
-                          activeSubTab === "venue"
-                            ? "bg-purple-500/20 border-purple-400 text-white shadow-[0_0_16px_-3px_rgba(168,85,247,0.5)]"
-                            : "bg-white/[0.03] border-white/10 hover:border-white/25 hover:bg-white/[0.06] text-white/80"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between text-[8px] font-mono font-black uppercase tracking-wider text-purple-400">
-                          <span>Venue Intelligence</span>
-                          <Activity className="w-3 h-3" />
-                        </div>
-                        <div className="text-xs font-bold text-white truncate mt-1">
-                          Ground &amp; Splits · {bio?.playerName || profileName}
-                        </div>
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Ask AI</span>
                       </button>
                     </div>
                   </div>
@@ -1322,7 +1266,7 @@ export default function PlayerProfilePage() {
             {/* OVERVIEW SUB-TAB */}
             {activeSubTab === "overview" && (
               <>
-                <PlayerT20Evidence playerRef={scoutParams?.id || profileName} />
+                <PlayerT20Evidence playerRef={scoutParams?.id || (playerKey && identityIndex.data?.keys[playerKey]?.[0]) || profileName} />
                 {/* Decision Intelligence: pressure, weakness, similar players, auction value */}
                 <PlayerIntelligenceSection player={bio.playerName} className="lg:col-span-3" />
                 <PlayerRetentionCard player={bio.playerName} className="lg:col-span-3" />

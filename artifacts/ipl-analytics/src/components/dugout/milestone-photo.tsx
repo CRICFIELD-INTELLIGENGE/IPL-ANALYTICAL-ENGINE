@@ -35,12 +35,34 @@ export function MilestonePhotoGallery({ frames, moment, team }: { frames: Milest
 
   if (!photo) return <figure className="fm-photo-panel"><div className="fm-photo-fallback fm-photo-unavailable"><div><img src={team.logoImg} alt="" /><strong>{team.shortName} · {moment.season ?? "The legacy"}</strong><p>A verified photograph of this team at this occasion is not yet available.</p>{moment.match && <Link href={`/match/${moment.match.id}`}>Relive the match <ArrowRight size={14} /></Link>}</div></div></figure>;
 
-  const mapped=gettyMappings.find(mapping=>mapping.localPhoto===photo.src);
-  const gettyPhoto=PUBLIC_MANIFEST.images.find(image=>mapped?.candidates.some(candidate=>candidate.assetId===image.assetId)&&(isPublishable(image)||isLocalPreviewable(image)));
+  const mapped = gettyMappings.find(mapping => mapping.localPhoto === photo.src);
+  const teamKeywords = [team.id, team.shortName, team.name].map(t => t.toLowerCase());
+  const gettyPhoto = PUBLIC_MANIFEST.images.find(image =>
+    mapped?.candidates.some(candidate => candidate.assetId === image.assetId) &&
+    (isPublishable(image) || isLocalPreviewable(image)) &&
+    (image.depicts?.some(d => teamKeywords.some(kw => d.toLowerCase().includes(kw))) ?? true)
+  );
   const showcase = photo.presentation !== "landscape";
 
-  const getty = gettyMappings.find(mapping=>mapping.localPhoto===photo.src);
-  const caption = <><p>{photo.caption}</p><span>{photo.credit}</span><a href={photo.sourceUrl} target="_blank" rel="noopener noreferrer">Original photo source <ArrowRight size={12} /></a>{getty?.candidates.slice(0,3).map(candidate=><a key={candidate.assetId} href={candidate.sourcePageUrl ?? undefined} target="_blank" rel="noopener noreferrer" title={candidate.caption ?? undefined}>Getty · same-event frame #{candidate.assetId} ↗</a>)}</>;
+  const getty = mapped;
+  const verifiedCandidates = (getty?.candidates || []).filter(c => {
+    const img = PUBLIC_MANIFEST.images.find(i => i.assetId === c.assetId);
+    return !img || img.depicts?.some(d => teamKeywords.some(kw => d.toLowerCase().includes(kw)));
+  });
+  const caption = (
+    <>
+      <p>{photo.caption}</p>
+      <span>{photo.credit}</span>
+      <a href={photo.sourceUrl} target="_blank" rel="noopener noreferrer">
+        Original photo source <ArrowRight size={12} />
+      </a>
+      {verifiedCandidates.slice(0, 3).map(candidate => (
+        <a key={candidate.assetId} href={candidate.sourcePageUrl ?? undefined} target="_blank" rel="noopener noreferrer" title={candidate.caption ?? undefined}>
+          Getty · same-event frame #{candidate.assetId} ↗
+        </a>
+      ))}
+    </>
+  );
 
   return <Dialog open={expanded} onOpenChange={setExpanded}><figure className={`fm-photo-panel fm-memory ${showcase ? "is-showcase" : "is-landscape"}`}>
 

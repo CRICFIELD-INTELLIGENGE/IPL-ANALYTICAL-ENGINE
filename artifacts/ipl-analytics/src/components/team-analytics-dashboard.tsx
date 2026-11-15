@@ -98,18 +98,20 @@ export function TeamAnalyticsDashboard({
 
     for (const m of mine) {
       const isWon = sameSide(m.winner, team);
-      const isTossWon = sameSide(m.toss_winner, team);
+      const tossWin = (m as any).toss_winner ?? (m as any).tossWinner;
+      const tossDec = (m as any).toss_decision ?? (m as any).tossDecision;
+      const isTossWon = sameSide(tossWin, team);
       if (isTossWon) {
         tossWon++;
         if (isWon) tossWonWins++;
-        if (m.toss_decision === "bat") choseBat++;
-        else if (m.toss_decision === "field") choseField++;
+        if (tossDec === "bat") choseBat++;
+        else if (tossDec === "field") choseField++;
       } else {
         tossLost++;
         if (isWon) tossLostWins++;
       }
 
-      const didBatFirst = (isTossWon && m.toss_decision === "bat") || (!isTossWon && m.toss_decision === "field");
+      const didBatFirst = (isTossWon && tossDec === "bat") || (!isTossWon && tossDec === "field");
       if (didBatFirst) {
         batFirst++;
         if (isWon) batFirstWins++;
@@ -199,6 +201,7 @@ export function TeamAnalyticsDashboard({
       captains: [],
       headToHead,
       collapses: { inningsBatted: played, collapseInnings: Math.round(played * 0.12), collapsePct: 12.0 },
+      notSupported: [],
     };
   }, [matches, team, preset.from, preset.to]);
 

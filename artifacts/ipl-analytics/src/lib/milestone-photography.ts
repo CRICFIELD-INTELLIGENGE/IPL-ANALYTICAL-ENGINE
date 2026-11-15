@@ -11,11 +11,16 @@ export function milestonePhotography(team: TeamTheme, moments: FranchiseMileston
   const result = new Map<string, MilestonePhoto[]>();
   for (const moment of moments) {
     const frames = eventPhotos.filter(photo => {
-      if (!photo.teams.includes(team.id) || photo.season !== moment.season) return false;
-      if (moment.id !== "most-season-wins" && photo.matchDate !== moment.match?.date.slice(0, 10)) return false;
+      if (!photo.teams.includes(team.id)) return false;
       if (photo.depiction === "championship" && moment.kind === "finalist") return false;
-      if (photo.occasion === "final") return moment.id === `final-${photo.season}` || moment.id === "most-season-wins";
-      if (moment.id === photo.occasion) return true;
+      if (photo.occasion === "final") {
+        return moment.id === `final-${photo.season}` || (moment.id === "most-season-wins" && photo.season === moment.season);
+      }
+      if (moment.id === photo.occasion) {
+        return !photo.season || !moment.season || photo.season === moment.season;
+      }
+      if (photo.season !== moment.season) return false;
+      if (moment.match && photo.matchDate && photo.matchDate === moment.match.date.slice(0, 10)) return true;
       return photo.occasion === "debut" && moment.id === "first-win" && Boolean(moment.match && moments.find(m => m.id === "debut")?.match?.id === moment.match.id);
     }).sort((a, b) => Number(a.presentation !== "landscape") - Number(b.presentation !== "landscape"));
     if (frames.length) result.set(moment.id, frames.map(eventPhoto => ({ eventPhoto, exactEvent: moment.id !== "most-season-wins" })));

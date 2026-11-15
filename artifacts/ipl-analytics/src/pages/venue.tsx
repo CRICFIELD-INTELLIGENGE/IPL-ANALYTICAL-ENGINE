@@ -32,8 +32,14 @@ export default function VenueProfilePage() {
     // Client-side synthesis fallback from match warehouse
     const matchGroup = (matches.data ?? []).filter(m => venueSlug(m.venue) === wanted);
     if (matchGroup.length > 0) {
-      const firstInnRuns = matchGroup.map(m => m.team1Score).filter(Boolean) as number[];
-      const secondInnRuns = matchGroup.map(m => m.team2Score).filter(Boolean) as number[];
+      const firstInnRuns = matchGroup.map(m => {
+        const parsed = m.team1Score?.match(/^\s*(\d+)/);
+        return parsed ? Number(parsed[1]) : 0;
+      }).filter(n => n > 0);
+      const secondInnRuns = matchGroup.map(m => {
+        const parsed = m.team2Score?.match(/^\s*(\d+)/);
+        return parsed ? Number(parsed[1]) : 0;
+      }).filter(n => n > 0);
       const avg1st = firstInnRuns.length ? Math.round(firstInnRuns.reduce((a, b) => a + b, 0) / firstInnRuns.length) : 174;
       const avg2nd = secondInnRuns.length ? Math.round(secondInnRuns.reduce((a, b) => a + b, 0) / secondInnRuns.length) : 158;
       const chaseWins = matchGroup.filter(m => m.winner && m.winner === m.team2).length;
@@ -41,7 +47,7 @@ export default function VenueProfilePage() {
 
       return {
         venue: normalizeVenueName(matchGroup[0].venue),
-        city: matchGroup[0].city || "India",
+        city: (matchGroup[0] as any).city || "India",
         matches: matchGroup.length,
         avg1stInn: avg1st,
         avg2ndInn: avg2nd,

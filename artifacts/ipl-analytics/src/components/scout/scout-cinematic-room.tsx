@@ -642,9 +642,9 @@ export function ScoutCinematicRoom({
                       }}
                       className="w-full text-left px-2 py-1 rounded text-xs text-slate-600 dark:text-[#8E9FA9] hover:bg-slate-100 dark:hover:bg-white/5"
                     >
-                      All 6 Leagues
+                      All T20 competitions
                     </button>
-                    {SCOUT_LEAGUES.map((l) => (
+                    {[...SCOUT_LEAGUES, { code: "t20i", name: "Men’s T20Is" }].map((l) => (
                       <button
                         key={l.code}
                         onClick={() => toggleLeague(l.code)}

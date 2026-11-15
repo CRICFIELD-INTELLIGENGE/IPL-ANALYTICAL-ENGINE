@@ -199,6 +199,11 @@ export function PlayerAvatar({
         <img
           key={src}
           src={src}
+          ref={(img) => {
+            if (img && img.complete && img.naturalWidth > 0 && !loaded) {
+              setLoaded(true);
+            }
+          }}
           style={{
             objectFit: framing === "chest" ? "contain" : "cover",
             objectPosition: framing === "chest" ? "center bottom" : "center top",
@@ -208,10 +213,11 @@ export function PlayerAvatar({
             maxHeight: "100%",
           }}
           alt={labelName || "Player"}
-          className={`${imgClassName} ${!disableHover && framing !== "chest" ? "player-dp-img" : ""} absolute inset-0 z-[1] transition-opacity duration-200 ${loaded ? "opacity-100" : "opacity-0"}`}
+          className={`${imgClassName} ${!disableHover && framing !== "chest" ? "player-dp-img" : ""} absolute inset-0 z-[1] transition-opacity duration-150 ${loaded ? "opacity-100" : "opacity-0"}`}
           onLoad={() => setLoaded(true)}
           onError={handleError}
           loading="lazy"
+          decoding="async"
         />
       )}
     </div>

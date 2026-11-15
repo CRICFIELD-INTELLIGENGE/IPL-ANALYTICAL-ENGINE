@@ -30,7 +30,7 @@ const PLAYER_IMAGES = [
   { src: "/sanju samson.jpg", alt: "Sanju Samson" },
 ];
 
-const PRIMARY_NAV_LINKS = [
+const PRIMARY_NAV_LINKS: Array<{ label: string; href: string; hideOnMd?: boolean }> = [
   { label: "Home", href: "/home" },
   { label: "Pulse", href: "/pulse" },
   { label: "Scores", href: "/scores" },

@@ -50,7 +50,7 @@ interface WeatherPreset {
 
 export function CinematicForecastView({ card, match }: CinematicForecastViewProps) {
   const { resolvedTheme } = useTheme();
-  const isLight = resolvedTheme === "light";
+  const isLight = (resolvedTheme as string) === "light";
 
   const ground = match.matchInfo.venueInfo?.ground || card?.venue || "Narendra Modi Stadium, Ahmedabad";
   const city = match.matchInfo.venueInfo?.city || card?.city || "Ahmedabad";

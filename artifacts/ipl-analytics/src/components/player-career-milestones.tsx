@@ -323,7 +323,7 @@ export function PlayerCareerMilestones({
           </h2>
         </div>
         <div className="fm-header-identity">
-          <PlayerAvatar name={name} size="w-11 h-11" className="rounded-xl border border-white/20" />
+          <PlayerAvatar name={name} className="w-11 h-11 rounded-xl border border-white/20" />
           <span>
             {name}
             <small>Career Landmarks &amp; Verified Match Archive</small>
@@ -522,7 +522,7 @@ function MilestoneStageCard({
       {/* Center Crest / Avatar */}
       <div className="relative z-10 flex flex-col items-center justify-center my-auto">
         <div className="fm-crest">
-          <PlayerAvatar name={name} size="w-24 h-24 text-2xl" className="rounded-full shadow-2xl" />
+          <PlayerAvatar name={name} className="w-24 h-24 text-2xl rounded-full shadow-2xl" />
           <div className="fm-trophy">
             <Trophy size={20} />
           </div>

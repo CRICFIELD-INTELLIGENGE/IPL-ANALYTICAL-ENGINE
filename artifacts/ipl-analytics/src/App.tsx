@@ -148,7 +148,7 @@ function Router() {
       <Route path="/feed"><Redirect to="/home" /></Route>
       <Route path="/stats"><StatsPage /></Route>
       <Route path="/pulse" component={PulsePage} />
-      {/* Scout Lab: Global Talent Intelligence across 6 leagues */}
+      {/* Scout Lab: Global T20 Talent Intelligence */}
       <Route path="/scout/results" component={ScoutResultsPage} />
       <Route path="/scout" component={ScoutHomePage} />
       <Route path="/scout/player/:id" component={PlayerProfilePage} />

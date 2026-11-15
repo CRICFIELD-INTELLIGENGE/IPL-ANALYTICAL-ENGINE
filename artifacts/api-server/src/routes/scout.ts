@@ -10,8 +10,10 @@
 //   - Zero raw SQL execution exposed to clients.
 //   - All parameters validated with Zod.
 //   - Read-only queries over global.db.
-//   - Automated franchise recommendations NOT exposed until squad eligibility & valuations verified.
+//   - Team scouting shortlists describe performance fit and carry an eligibility caveat.
 
+import { latestIplTeams, playerT20Evidence, scoutingNeeds, t20Coverage, teamT20Suggestions } from "../services/scout/t20-scouting";
+import { getAuctionDeskSnapshot } from "./auction-2027";
 import { Router, type Request, type Response } from "express";
 import { logger } from "../lib/logger";
 import { z } from "zod";
@@ -67,6 +69,55 @@ router.get("/search", (req: Request, res: Response): void => {
   res.json({ results });
 });
 
+router.get("/t20/coverage", (_req: Request, res: Response): void => {
+  if (!requireGlobalWarehouse(res)) return;
+  res.json({ competitions: t20Coverage(), teams: latestIplTeams() });
+});
+
+const teamSuggestionsQuery = z.object({
+  team: z.coerce.number().int().positive(),
+  need: z.enum(["opener", "middle_order", "finisher", "powerplay_bowler", "middle_overs_bowler", "death_bowler"]),
+  source: z.enum(["all", "international", "domestic"]).default("all"),
+  seasons: z.coerce.number().int().min(1).max(5).default(3),
+});
+
+router.get("/t20/suggestions", (req: Request, res: Response): void => {
+  if (!requireGlobalWarehouse(res)) return;
+  const query = teamSuggestionsQuery.safeParse(req.query);
+  if (!query.success) {
+    res.status(400).json({ error: "invalid_scouting_filters" });
+    return;
+  }
+
+  const { team: teamId, need, source, seasons } = query.data;
+  const team = latestIplTeams().find(item => item.id === teamId);
+  if (!team) {
+    res.status(404).json({ error: "ipl_team_not_found" });
+    return;
+  }
+  const competitions = t20Coverage().filter(item =>
+    source === "all" || item.format === (source === "international" ? "T20I" : "T20"),
+  );
+  const { retentions } = getAuctionDeskSnapshot();
+  const candidates = teamT20Suggestions(team, need, competitions.map(item => item.code), seasons, retentions);
+  res.json({ team, need: scoutingNeeds[need], competitions, candidates });
+});
+
+router.get("/t20/player/:id", (req: Request, res: Response): void => {
+  if (!requireGlobalWarehouse(res)) return;
+  const ref = String(req.params.id);
+  const resolved = resolvePlayer(ref);
+  const candidates = resolved.player ? [resolved.player] : queryAll<{ player_key: number }>(
+    "SELECT player_key FROM players WHERE unique_name = ? COLLATE NOCASE OR name = ? COLLATE NOCASE LIMIT 2",
+    ref, ref,
+  );
+  if (resolved.candidates.length > 1 || candidates.length !== 1) {
+    res.status(404).json({ error: "unresolved_scout_player" });
+    return;
+  }
+  res.json(playerT20Evidence(candidates[0].player_key));
+});
+
 const formQuerySchema = z.object({
   format: z.enum(["T20", "List A", "First-class", "T20I", "ODI", "Test", "100-ball"]).optional(),
 });
@@ -102,9 +153,9 @@ function selectRatingCompetitions(requested?: string): string[] | null {
   const requestedCodes = new Set(requested?.split(",").map(code => code.trim().toLowerCase()).filter(Boolean));
   const selected = requestedCodes.size
     ? competitions.filter(c => requestedCodes.has(c.code))
-    : competitions.filter(c => c.format === "T20");
+    : competitions.filter(c => c.format === "T20" || c.format === "T20I");
   if (!selected.length || selected.length !== (requestedCodes.size || selected.length)
-    || new Set(selected.map(c => c.format)).size > 1) return null;
+    || new Set(selected.map(c => c.format === "T20I" ? "T20" : c.format)).size > 1) return null;
   return selected.map(c => c.code);
 }
 

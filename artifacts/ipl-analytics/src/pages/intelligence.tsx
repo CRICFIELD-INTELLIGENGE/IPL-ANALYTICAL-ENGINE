@@ -399,8 +399,11 @@ export default function IntelligencePage() {
       if (selectedAngle !== "all" && art.aspect !== ANGLE_TO_ASPECT[selectedAngle]) return false;
 
       if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
-        if (!art.title.toLowerCase().includes(q) && !art.dek.toLowerCase().includes(q) && !aspectName(art.aspect).toLowerCase().includes(q)) return false;
+        const q = searchQuery.toLowerCase().trim();
+        const matchesExact = art.title.toLowerCase().includes(q) || art.dek.toLowerCase().includes(q) || aspectName(art.aspect).toLowerCase().includes(q);
+        const tokens = q.split(/\s+/).filter(t => t.length > 2);
+        const matchesTokens = tokens.length > 0 && tokens.every(t => art.title.toLowerCase().includes(t) || art.dek.toLowerCase().includes(t));
+        if (!matchesExact && !matchesTokens) return false;
       }
 
       if (selectedPlayer !== "All Players") {
@@ -932,18 +935,25 @@ export default function IntelligencePage() {
                       Popular Filters ({activeFranchiseCode})
                     </span>
                     <div className="flex flex-wrap gap-1.5">
-                      {franchiseConfig.popularTags.map((tag) => (
-                        <button
-                          key={tag}
-                          onClick={() => {
-                            setSearchQuery(tag);
-                            setCurrentPage(1);
-                          }}
-                          className="px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.03] dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 hover:text-slate-900 dark:text-white/80 dark:hover:text-white text-[11px] font-mono transition-all cursor-pointer"
-                        >
-                          {tag}
-                        </button>
-                      ))}
+                      {franchiseConfig.popularTags.map((tag) => {
+                        const isSelected = searchQuery.toLowerCase() === tag.toLowerCase();
+                        return (
+                          <button
+                            key={tag}
+                            onClick={() => {
+                              setSearchQuery(isSelected ? "" : tag);
+                              setCurrentPage(1);
+                            }}
+                            className={`px-2.5 py-1 rounded-xl text-[11px] font-mono transition-all cursor-pointer border ${
+                              isSelected
+                                ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/50 font-bold shadow-xs"
+                                : "bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.03] dark:hover:bg-white/10 border-slate-200 dark:border-white/10 text-slate-700 hover:text-slate-900 dark:text-white/80 dark:hover:text-white"
+                            }`}
+                          >
+                            {tag}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 

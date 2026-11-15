@@ -802,20 +802,15 @@ export function PlayerIntelligenceHub({
   return (
     <div className="lg:col-span-3 space-y-6 animate-fade-in">
       {/* 1. Hub Header with Navigation Pills */}
-      <div className="bg-[#0B1020] border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
+      <div className="bg-[#0B1020]/90 border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
             <Activity className="w-5 h-5 animate-pulse" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-sm sm:text-base font-black text-white uppercase tracking-wider">
-                PLAYER INTELLIGENCE HUB
-              </h2>
-              <span className="px-2 py-0.5 rounded-full text-[9px] font-mono font-black uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                PRO TELEMETRY
-              </span>
-            </div>
+            <h2 className="text-base sm:text-lg font-black text-white uppercase tracking-wider">
+              PLAYER INTELLIGENCE HUB
+            </h2>
             <p className="text-xs text-white/50 font-medium mt-0.5">
               Unified performance, strategy &amp; match-context analytics
             </p>
@@ -823,20 +818,20 @@ export function PlayerIntelligenceHub({
         </div>
 
         {/* Section View Pills */}
-        <div className="flex items-center gap-1.5 p-1 bg-white/5 border border-white/10 rounded-xl overflow-x-auto">
+        <div className="flex items-center gap-1.5 p-1 bg-[#050B18] border border-white/10 rounded-xl overflow-x-auto">
           {[
             { id: "all", label: "Overview", icon: Layers },
-            { id: "pressure", label: "Pressure & Clutch", icon: Shield },
+            { id: "pressure", label: "Pressure & Clutch", icon: Target },
             { id: "tactical", label: "Tactical & Scenarios", icon: Compass },
             { id: "venue", label: "Venue & Opposition", icon: MapPin },
           ].map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveSectionFilter(tab.id as any)}
-              className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                 activeSectionFilter === tab.id
                   ? "bg-white text-slate-950 font-black shadow-md"
-                  : "text-white/50 hover:text-white hover:bg-white/5"
+                  : "text-white/60 hover:text-white hover:bg-white/5"
               }`}
             >
               <tab.icon className="w-3.5 h-3.5" />
@@ -905,13 +900,18 @@ export function PlayerIntelligenceHub({
 
       {/* Row 1: PRESSURE PASSPORT & CLUTCH TELEMETRY */}
       {(activeSectionFilter === "all" || activeSectionFilter === "pressure") && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 p-4 sm:p-5 rounded-2xl bg-[#091122] border border-cyan-500/20 shadow-xl relative overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 p-4 sm:p-5 rounded-2xl bg-[#070D1B] border border-cyan-500/25 shadow-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
           {/* Left card */}
-          <div className="lg:col-span-3 bg-gradient-to-br from-cyan-950/40 via-cyan-900/20 to-transparent border border-cyan-500/30 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden">
+          <div className="lg:col-span-3 bg-gradient-to-br from-cyan-950/60 via-slate-900/80 to-[#070D1A] border border-cyan-500/30 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden min-h-[170px]">
+            {/* Watermark player silhouette */}
+            <div
+              className="absolute right-0 bottom-0 w-36 h-48 pointer-events-none opacity-20 mix-blend-screen bg-no-repeat bg-contain bg-bottom"
+              style={{ backgroundImage: "url('/players/rcb-2026/virat-kohli.webp')" }}
+            />
             <div className="relative z-10">
-              <div className="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/40 flex items-center justify-center text-cyan-400 mb-3 shadow-[0_0_15px_-3px_rgba(6,182,212,0.4)]">
                 <Target className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-black text-white uppercase tracking-tight leading-snug">
@@ -921,15 +921,11 @@ export function PlayerIntelligenceHub({
                 How {playerName} performs when the game is on the line.
               </p>
             </div>
-            <div className="relative z-10 pt-4 mt-4 border-t border-cyan-500/20 flex items-center justify-between text-[10px] font-mono text-cyan-300">
-              <span>LEVERAGE INDEX: HIGH</span>
-              <span>PAR 85+</span>
-            </div>
           </div>
 
           {/* Middle card: Radial gauge + Stats */}
           <div className="lg:col-span-4 bg-[#0B1426] border border-white/10 rounded-2xl p-5 flex flex-col justify-between">
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-5 my-auto">
               {/* SVG Radial Gauge */}
               <div className="relative w-28 h-28 shrink-0 flex items-center justify-center">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
@@ -947,7 +943,7 @@ export function PlayerIntelligenceHub({
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
                   <span className="text-2xl font-black font-mono text-white leading-none">88.5</span>
                   <span className="text-[7.5px] font-mono uppercase text-white/40 mt-0.5">Pressure Index</span>
-                  <span className="px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 text-[7px] font-bold mt-1">Top 2%</span>
+                  <span className="px-1.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[8px] font-bold mt-1">Top 2%</span>
                 </div>
               </div>
 
@@ -967,7 +963,7 @@ export function PlayerIntelligenceHub({
                 </div>
                 <div className="flex justify-between items-baseline">
                   <span className="text-[10px] text-white/60 font-medium">Clutch Impact (WPA/inn)</span>
-                  <span className="text-sm font-black font-mono text-blue-400">+0.36</span>
+                  <span className="text-sm font-black font-mono text-cyan-400">+0.36</span>
                 </div>
               </div>
             </div>
@@ -985,12 +981,9 @@ export function PlayerIntelligenceHub({
 
             <div className="grid grid-cols-2 gap-4 my-2">
               {/* Strike Rate Comparison */}
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono text-white/50 uppercase">Strike Rate</span>
-                  <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[8px] font-black">+41.7%</span>
-                </div>
-                <div className="flex items-end justify-between h-16 pt-2">
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex flex-col items-center justify-between space-y-2">
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[9px] font-black">+41.7%</span>
+                <div className="flex items-end justify-center gap-3 h-16 pt-1 w-full">
                   <div className="w-10 flex flex-col items-center">
                     <span className="text-[10px] font-mono text-white/60">130.2</span>
                     <div className="w-full bg-slate-600 rounded-t h-8 mt-1" />
@@ -1000,15 +993,13 @@ export function PlayerIntelligenceHub({
                     <div className="w-full bg-gradient-to-t from-cyan-600 to-cyan-400 rounded-t h-12 mt-1 shadow-lg shadow-cyan-500/30" />
                   </div>
                 </div>
+                <span className="text-[11px] font-bold text-white/70">Strike Rate</span>
               </div>
 
               {/* Average Comparison */}
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono text-white/50 uppercase">Average</span>
-                  <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[8px] font-black">+24.5%</span>
-                </div>
-                <div className="flex items-end justify-between h-16 pt-2">
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex flex-col items-center justify-between space-y-2">
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[9px] font-black">+24.5%</span>
+                <div className="flex items-end justify-center gap-3 h-16 pt-1 w-full">
                   <div className="w-10 flex flex-col items-center">
                     <span className="text-[10px] font-mono text-white/60">37.6</span>
                     <div className="w-full bg-slate-600 rounded-t h-8 mt-1" />
@@ -1018,6 +1009,7 @@ export function PlayerIntelligenceHub({
                     <div className="w-full bg-gradient-to-t from-cyan-600 to-cyan-400 rounded-t h-12 mt-1 shadow-lg shadow-cyan-500/30" />
                   </div>
                 </div>
+                <span className="text-[11px] font-bold text-white/70">Average</span>
               </div>
             </div>
           </div>
@@ -1026,13 +1018,18 @@ export function PlayerIntelligenceHub({
 
       {/* Row 2: TACTICAL INTELLIGENCE & SCENARIO MODELING */}
       {(activeSectionFilter === "all" || activeSectionFilter === "tactical") && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 p-4 sm:p-5 rounded-2xl bg-[#091122] border border-purple-500/20 shadow-xl relative overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 p-4 sm:p-5 rounded-2xl bg-[#070D1B] border border-purple-500/25 shadow-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
           {/* Left card */}
-          <div className="lg:col-span-3 bg-gradient-to-br from-purple-950/40 via-purple-900/20 to-transparent border border-purple-500/30 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden">
+          <div className="lg:col-span-3 bg-gradient-to-br from-purple-950/60 via-slate-900/80 to-[#070D1A] border border-purple-500/30 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden min-h-[170px]">
+            {/* Watermark player silhouette */}
+            <div
+              className="absolute right-0 bottom-0 w-36 h-48 pointer-events-none opacity-20 mix-blend-screen bg-no-repeat bg-contain bg-bottom"
+              style={{ backgroundImage: "url('/players/rcb-2026/virat-kohli.webp')" }}
+            />
             <div className="relative z-10">
-              <div className="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/15 border border-purple-500/40 flex items-center justify-center text-purple-400 mb-3.5 shadow-[0_0_15px_-3px_rgba(168,85,247,0.4)]">
                 <Compass className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-black text-white uppercase tracking-tight leading-snug">
@@ -1042,10 +1039,6 @@ export function PlayerIntelligenceHub({
                 Role, game-plan fit and situation-based impact.
               </p>
             </div>
-            <div className="relative z-10 pt-4 mt-4 border-t border-purple-500/20 flex items-center justify-between text-[10px] font-mono text-purple-300">
-              <span>ADAPTABILITY SCORE: 92</span>
-              <span>PHASE SPECIALIST</span>
-            </div>
           </div>
 
           {/* Middle card: Phase-wise Batting DNA */}
@@ -1054,11 +1047,11 @@ export function PlayerIntelligenceHub({
               Phase-wise Batting DNA
             </h4>
 
-            <div className="space-y-4">
+            <div className="space-y-4 my-auto">
               <div>
                 <div className="flex justify-between text-xs font-bold mb-1">
                   <span className="text-white/70">Balls 1–10 (Foundation)</span>
-                  <span className="font-mono text-purple-400">SR 118.4</span>
+                  <span className="font-mono text-purple-400 font-bold">SR 118.4</span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-white/5 overflow-hidden">
                   <div className="h-full rounded-full bg-gradient-to-r from-purple-600 to-purple-400" style={{ width: "55%" }} />
@@ -1068,7 +1061,7 @@ export function PlayerIntelligenceHub({
               <div>
                 <div className="flex justify-between text-xs font-bold mb-1">
                   <span className="text-white/70">Balls 11–25 (Acceleration)</span>
-                  <span className="font-mono text-purple-400">SR 144.2</span>
+                  <span className="font-mono text-purple-400 font-bold">SR 144.2</span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-white/5 overflow-hidden">
                   <div className="h-full rounded-full bg-gradient-to-r from-purple-600 to-purple-400" style={{ width: "68%" }} />
@@ -1078,7 +1071,7 @@ export function PlayerIntelligenceHub({
               <div>
                 <div className="flex justify-between text-xs font-bold mb-1">
                   <span className="text-white/70">Balls 26+ (Finish)</span>
-                  <span className="font-mono text-emerald-400">SR 214.8</span>
+                  <span className="font-mono text-emerald-400 font-bold">SR 214.8</span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-white/5 overflow-hidden">
                   <div className="h-full rounded-full bg-gradient-to-r from-purple-500 to-emerald-400" style={{ width: "95%" }} />
@@ -1091,7 +1084,6 @@ export function PlayerIntelligenceHub({
           <div className="lg:col-span-5 bg-[#0B1426] border border-white/10 rounded-2xl p-5 flex flex-col justify-between">
             <div className="flex items-center justify-between pb-2 border-b border-white/10 mb-2">
               <span className="text-xs font-black uppercase tracking-wider text-white">Scenario Outcomes (Simulation)</span>
-              <span className="text-[9px] font-mono text-purple-400">MONTE CARLO PROJECTION</span>
             </div>
 
             <div className="overflow-x-auto">
@@ -1133,13 +1125,18 @@ export function PlayerIntelligenceHub({
 
       {/* Row 3: VENUE & OPPOSITION INTELLIGENCE */}
       {(activeSectionFilter === "all" || activeSectionFilter === "venue") && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 p-4 sm:p-5 rounded-2xl bg-[#091122] border border-amber-500/20 shadow-xl relative overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 p-4 sm:p-5 rounded-2xl bg-[#070D1B] border border-amber-500/25 shadow-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
           {/* Left card */}
-          <div className="lg:col-span-3 bg-gradient-to-br from-amber-950/40 via-amber-900/20 to-transparent border border-amber-500/30 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden">
+          <div className="lg:col-span-3 bg-gradient-to-br from-amber-950/60 via-slate-900/80 to-[#070D1A] border border-amber-500/30 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden min-h-[170px]">
+            {/* Watermark stadium background */}
+            <div
+              className="absolute inset-0 pointer-events-none opacity-20 mix-blend-screen bg-no-repeat bg-cover bg-center"
+              style={{ backgroundImage: "url('/venues-stadium.jpg')" }}
+            />
             <div className="relative z-10">
-              <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-amber-400 mb-3.5 shadow-[0_0_15px_-3px_rgba(245,158,11,0.4)]">
                 <MapPin className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-black text-white uppercase tracking-tight leading-snug">
@@ -1149,17 +1146,12 @@ export function PlayerIntelligenceHub({
                 Performance across grounds, franchises and bowling matchups.
               </p>
             </div>
-            <div className="relative z-10 pt-4 mt-4 border-t border-amber-500/20 flex items-center justify-between text-[10px] font-mono text-amber-300">
-              <span>VENUE INDEX: 94.2</span>
-              <span>GROUND CONTROL</span>
-            </div>
           </div>
 
           {/* Middle card: Major Venue Records */}
           <div className="lg:col-span-5 bg-[#0B1426] border border-white/10 rounded-2xl p-5 flex flex-col justify-between">
             <div className="flex items-center justify-between pb-2 border-b border-white/10 mb-2">
               <span className="text-xs font-black uppercase tracking-wider text-white">Major Venue Records</span>
-              <span className="text-[9px] font-mono text-white/40">CAREER SPLITS</span>
             </div>
 
             <div className="overflow-x-auto">
@@ -1176,32 +1168,32 @@ export function PlayerIntelligenceHub({
                   <tr>
                     <td className="py-2 pr-2 font-bold text-white">M. Chinnaswamy (RCB)</td>
                     <td className="py-2 pr-2 text-right text-white/70">84</td>
-                    <td className="py-2 pr-2 text-right font-black text-emerald-400">41.6</td>
-                    <td className="py-2 text-right text-amber-300">142.8</td>
+                    <td className="py-2 pr-2 text-right font-black text-teal-400">41.6</td>
+                    <td className="py-2 text-right font-bold text-amber-300">142.8</td>
                   </tr>
                   <tr>
                     <td className="py-2 pr-2 font-bold text-white">Wankhede Stadium (MI)</td>
                     <td className="py-2 pr-2 text-right text-white/70">18</td>
-                    <td className="py-2 pr-2 text-right font-black text-emerald-400">45.6</td>
-                    <td className="py-2 text-right text-amber-300">139.2</td>
+                    <td className="py-2 pr-2 text-right font-black text-teal-400">45.6</td>
+                    <td className="py-2 text-right font-bold text-amber-300">139.2</td>
                   </tr>
                   <tr>
                     <td className="py-2 pr-2 font-bold text-white">Eden Gardens (KKR)</td>
                     <td className="py-2 pr-2 text-right text-white/70">16</td>
-                    <td className="py-2 pr-2 text-right font-black text-emerald-400">42.2</td>
-                    <td className="py-2 text-right text-amber-300">136.5</td>
+                    <td className="py-2 pr-2 text-right font-black text-teal-400">42.2</td>
+                    <td className="py-2 text-right font-bold text-amber-300">136.5</td>
                   </tr>
                   <tr>
                     <td className="py-2 pr-2 font-bold text-white">MA Chidambaram (CSK)</td>
                     <td className="py-2 pr-2 text-right text-white/70">14</td>
-                    <td className="py-2 pr-2 text-right text-cyan-400">32.3</td>
-                    <td className="py-2 text-right text-amber-300">122.4</td>
+                    <td className="py-2 pr-2 text-right font-black text-cyan-400">32.3</td>
+                    <td className="py-2 text-right font-bold text-amber-300">122.4</td>
                   </tr>
                   <tr>
                     <td className="py-2 pr-2 font-bold text-white">Narendra Modi Stadium</td>
                     <td className="py-2 pr-2 text-right text-white/70">10</td>
-                    <td className="py-2 pr-2 text-right font-black text-emerald-400">54.0</td>
-                    <td className="py-2 text-right text-amber-300">146.2</td>
+                    <td className="py-2 pr-2 text-right font-black text-teal-400">54.0</td>
+                    <td className="py-2 text-right font-bold text-amber-300">146.2</td>
                   </tr>
                 </tbody>
               </table>
@@ -1212,57 +1204,59 @@ export function PlayerIntelligenceHub({
           <div className="lg:col-span-4 bg-[#0B1426] border border-white/10 rounded-2xl p-5 flex flex-col justify-between">
             <div className="flex items-center justify-between pb-2 border-b border-white/10 mb-2">
               <span className="text-xs font-black uppercase tracking-wider text-white">Vs Bowling Types &amp; Franchises</span>
-              <div className="flex p-0.5 bg-white/5 border border-white/10 rounded-lg text-[9px] font-bold">
+              <div className="flex p-0.5 bg-[#050B18] border border-white/10 rounded-lg text-[9px] font-bold">
                 <button
                   onClick={() => setVsType("bowling")}
-                  className={`px-2 py-0.5 rounded transition-all ${vsType === "bowling" ? "bg-white text-slate-950 font-black" : "text-white/50"}`}
+                  className={`px-2.5 py-0.5 rounded transition-all cursor-pointer ${vsType === "bowling" ? "bg-white text-slate-950 font-black shadow-sm" : "text-white/50"}`}
                 >
                   Bowling Type
                 </button>
                 <button
                   onClick={() => setVsType("opposition")}
-                  className={`px-2 py-0.5 rounded transition-all ${vsType === "opposition" ? "bg-white text-slate-950 font-black" : "text-white/50"}`}
+                  className={`px-2.5 py-0.5 rounded transition-all cursor-pointer ${vsType === "opposition" ? "bg-white text-slate-950 font-black shadow-sm" : "text-white/50"}`}
                 >
                   Opposition
                 </button>
               </div>
             </div>
 
-            <div className="flex items-center justify-around my-2">
-              {/* Pace ring */}
-              <div className="flex flex-col items-center">
-                <div className="relative w-20 h-20 flex items-center justify-center">
-                  <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="38" stroke="rgba(255,255,255,0.08)" strokeWidth="7" fill="none" />
-                    <circle cx="50" cy="50" r="38" stroke="#06B6D4" strokeWidth="7" strokeDasharray="238.7" strokeDashoffset="69" strokeLinecap="round" fill="none" />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <span className="text-base font-black font-mono text-cyan-400 leading-none">136.9</span>
-                    <span className="text-[7px] font-mono text-white/50">vs Pace</span>
+            <div className="flex items-center justify-between my-auto py-2">
+              <div className="flex items-center gap-4">
+                {/* Pace ring */}
+                <div className="flex flex-col items-center">
+                  <div className="relative w-18 h-18 sm:w-20 sm:h-20 flex items-center justify-center">
+                    <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="38" stroke="rgba(255,255,255,0.08)" strokeWidth="7" fill="none" />
+                      <circle cx="50" cy="50" r="38" stroke="#06B6D4" strokeWidth="7" strokeDasharray="238.7" strokeDashoffset="69" strokeLinecap="round" fill="none" />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                      <span className="text-sm sm:text-base font-black font-mono text-cyan-400 leading-none">136.9</span>
+                      <span className="text-[7px] font-mono text-white/50">vs Pace</span>
+                    </div>
                   </div>
+                  <span className="text-[9px] font-bold text-white/60 mt-1">(71% runs)</span>
                 </div>
-                <span className="text-[9px] font-bold text-white/60 mt-1.5">(71% runs)</span>
+
+                {/* Spin ring */}
+                <div className="flex flex-col items-center">
+                  <div className="relative w-18 h-18 sm:w-20 sm:h-20 flex items-center justify-center">
+                    <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="38" stroke="rgba(255,255,255,0.08)" strokeWidth="7" fill="none" />
+                      <circle cx="50" cy="50" r="38" stroke="#EC4899" strokeWidth="7" strokeDasharray="238.7" strokeDashoffset="170" strokeLinecap="round" fill="none" />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                      <span className="text-sm sm:text-base font-black font-mono text-pink-400 leading-none">128.4</span>
+                      <span className="text-[7px] font-mono text-white/50">vs Spin</span>
+                    </div>
+                  </div>
+                  <span className="text-[9px] font-bold text-white/60 mt-1">(29% runs)</span>
+                </div>
               </div>
 
-              {/* Spin ring */}
-              <div className="flex flex-col items-center">
-                <div className="relative w-20 h-20 flex items-center justify-center">
-                  <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="38" stroke="rgba(255,255,255,0.08)" strokeWidth="7" fill="none" />
-                    <circle cx="50" cy="50" r="38" stroke="#F43F5E" strokeWidth="7" strokeDasharray="238.7" strokeDashoffset="170" strokeLinecap="round" fill="none" />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <span className="text-base font-black font-mono text-rose-400 leading-none">128.4</span>
-                    <span className="text-[7px] font-mono text-white/50">vs Spin</span>
-                  </div>
-                </div>
-                <span className="text-[9px] font-bold text-white/60 mt-1.5">(29% runs)</span>
-              </div>
-
-              {/* Advantage */}
-              <div className="flex flex-col items-center justify-center p-3 rounded-xl bg-white/[0.02] border border-white/5">
-                <span className="text-base font-black font-mono text-emerald-400">+8.5%</span>
-                <span className="text-[8px] font-bold uppercase text-white/40 tracking-wider text-center mt-0.5">SR Advantage</span>
+              {/* Advantage Callout */}
+              <div className="flex flex-col items-start justify-center pl-2">
+                <span className="text-2xl sm:text-3xl font-black font-mono text-emerald-400 leading-none">+8.5%</span>
+                <span className="text-[11px] font-bold text-white/70 mt-1">SR Advantage</span>
               </div>
             </div>
           </div>

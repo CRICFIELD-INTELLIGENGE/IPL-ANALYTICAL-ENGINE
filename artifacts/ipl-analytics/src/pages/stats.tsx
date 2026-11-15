@@ -1,3 +1,4 @@
+import { TeamT20Scouting } from "@/components/scout/t20-scouting";
 import { MobileStatsPresentation } from "@/mobile/screens/stats-presentation";
 import {ScoringRing} from '@/components/visualizations/scoring-ring';
 import { Scale } from "lucide-react";
@@ -1210,6 +1211,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
       {/* STATIC DATA SECTION */}
       <div className="space-y-4 px-2.5 pb-6 mt-4">
+        {!mobilePresentation && <TeamT20Scouting />}
         {/* CROSS-LINK TO GLOBAL SCOUT LAB */}
         <div className="rounded-2xl bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-sm dark:shadow-lg">
           <div className="flex items-center gap-3">

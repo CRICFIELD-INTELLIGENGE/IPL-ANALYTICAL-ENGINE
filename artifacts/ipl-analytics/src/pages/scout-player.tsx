@@ -1,3 +1,4 @@
+import { PlayerT20Evidence } from "@/components/scout/t20-scouting";
 import React, { useState } from "react";
 import { useRoute, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
@@ -190,7 +191,7 @@ export default function ScoutPlayerPage() {
                   Leagues
                 </span>
                 <span className="text-sm font-black text-white font-mono">
-                  {contextSummary.competitionsPlayed.length} of 6
+                  {contextSummary.competitionsPlayed.length}
                 </span>
               </div>
 
@@ -352,6 +353,8 @@ export default function ScoutPlayerPage() {
             Similar Profiles ({similarPlayers.length})
           </button>
         </div>
+
+        <PlayerT20Evidence playerRef={player.cricsheet_id} />
 
         {/* TAB 1: SEASON-BY-SEASON CROSS-LEAGUE RECORD */}
         {activeTab === "seasons" && (

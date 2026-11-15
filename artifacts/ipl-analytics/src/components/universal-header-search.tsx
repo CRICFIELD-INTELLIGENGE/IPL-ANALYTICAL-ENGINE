@@ -98,9 +98,10 @@ export function UniversalHeaderSearch() {
       const venuesList = Array.isArray(venuesQuery.data) ? venuesQuery.data : [];
       for (const v of venuesList) {
         if (!v || !v.venue) continue;
+        const vCity = (v as any).city as string | undefined;
         const vScore = Math.max(
           calcScore(v.venue),
-          v.city ? calcScore(v.city) : 0
+          vCity ? calcScore(vCity) : 0
         );
         if (vScore > 0) {
           const slug = String(v.venue).toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -108,8 +109,8 @@ export function UniversalHeaderSearch() {
             id: `venue-${v.venue}`,
             type: "venue",
             title: v.venue,
-            subtitle: v.city ? `${v.city} · ${v.matches || 0} IPL matches recorded` : `${v.matches || 0} IPL matches`,
-            badge: v.city || "Venue",
+            subtitle: vCity ? `${vCity} · ${v.matches || 0} IPL matches recorded` : `${v.matches || 0} IPL matches`,
+            badge: vCity || "Venue",
             url: `/venues/${slug}`,
             score: vScore,
           });
@@ -294,8 +295,7 @@ export function UniversalHeaderSearch() {
                           <div className="flex items-center gap-2.5 min-w-0">
                             <PlayerAvatar
                               name={item.title}
-                              size="w-7 h-7 text-[10px]"
-                              className="shrink-0 rounded-full border border-white/10"
+                              className="w-7 h-7 text-[10px] shrink-0 rounded-full border border-white/10"
                             />
                             <div className="min-w-0">
                               <div className="text-xs font-bold truncate text-white leading-tight">
