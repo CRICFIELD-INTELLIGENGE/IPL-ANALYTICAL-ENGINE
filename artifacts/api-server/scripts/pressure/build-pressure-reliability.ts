@@ -30,10 +30,13 @@ const HOLDOUT_FROM = "2023-01-01";
 const TIER_Q = [0.5, 0.7, 0.9]; // medium, high, extreme = top 50 / 30 / 10% of balls by leverage
 
 // ── 1. Load ────────────────────────────────────────────────────────────────
-type M = { id: number; comp: string; date: string; year: number; winner: number | null; result: string | null; method: string | null };
+type M = { id: number; comp: string; date: string; year: number; winner: number | null; result: string | null; method: string | null; t1: string; t2: string };
+// ICC Full Members. Cricsheet withholds all Afghanistan matches, so that side never appears.
+const FULL_MEMBERS = new Set(["Afghanistan", "Australia", "Bangladesh", "England", "India", "Ireland", "New Zealand", "Pakistan", "South Africa", "Sri Lanka", "West Indies", "Zimbabwe"]);
 const matches = new Map<number, M>();
-for (const r of db.prepare(`SELECT m.match_id id, c.code comp, m.start_date date, m.winner_id winner, m.result, m.method
-  FROM matches m JOIN competitions c USING(competition_id) WHERE m.scheduled_overs = 20 AND m.balls_per_over = 6`).all() as any[]) {
+for (const r of db.prepare(`SELECT m.match_id id, c.code comp, m.start_date date, m.winner_id winner, m.result, m.method, a.name t1, b.name t2
+  FROM matches m JOIN competitions c USING(competition_id) JOIN teams a ON a.team_id = m.team1_id JOIN teams b ON b.team_id = m.team2_id
+  WHERE m.scheduled_overs = 20 AND m.balls_per_over = 6`).all() as any[]) {
   matches.set(r.id, { ...r, year: Number(r.date.slice(0, 4)) });
 }
 const inningsMeta = new Map<string, { bat: number; bowl: number; target: number | null; targetBalls: number | null }>();
@@ -229,7 +232,6 @@ const li = new Float64Array(balls.length).fill(NaN);
 balls.forEach((b, i) => { const s = states[i]; if (s && s.ballsLeft > 0 && s.wickets < 10) li[i] = leverage(wp, table, s, outcomesOf[cellOf(b)]); });
 const sorted = [...li].filter(v => !isNaN(v)).sort((a, b) => a - b);
 const thresholds = TIER_Q.map(q => sorted[Math.floor(q * (sorted.length - 1))]);
-const tierOf = (v: number) => (isNaN(v) ? -1 : v >= thresholds[2] ? 3 : v >= thresholds[1] ? 2 : v >= thresholds[0] ? 1 : 0);
 
 // ── 6b. Which pressure definition is worth using? ───────────────────────────
 // A definition is useful if (1) player value under it is repeatable — odd-numbered vs
@@ -247,6 +249,52 @@ balls.forEach((b, i) => {
   ballValues[i * 2 + 1] = ((d.n ? d.conceded / d.n : 1.3) * s.scale - b.conceded) + cost * ((b.bowlerWkt ? 1 : 0) - (d.n ? d.bw / d.n : 0.05));
   wpNow[i] = winProb(wp, table, s);
 });
+
+// ── 6a. Opposition strength ─────────────────────────────────────────────────
+// Feasting on weak attacks (or weak line-ups) should not count as pressure skill.
+// For each team-year, the mean value every batter got against its bowling (and every
+// bowler against its batting) is an opposition effect; it is shrunk toward 0 by
+// empirical Bayes (K from the data) and subtracted from the opponent's ball values.
+// Two alternating passes so a strong attack's effect is not diluted by weak batters.
+const oppEffect: Record<"bowlingSide" | "battingSide", Map<string, number>> = { bowlingSide: new Map(), battingSide: new Map() };
+const oppStats: Record<string, { teamYears: number; K: number; sdPer100: number }> = {};
+{
+  const keyOf = (b: Ball, side: "bat" | "bowl") => `${inningsMeta.get(`${b.match}:${b.inn}`)![side]}:${matches.get(b.match)!.year}`;
+  for (let pass = 0; pass < 6; pass++) {
+    for (const [role, side, name] of [[0, "bowl", "bowlingSide"], [1, "bat", "battingSide"]] as const) {
+      const other = role === 0 ? oppEffect.battingSide : oppEffect.bowlingSide;
+      const otherSide = role === 0 ? "bat" : "bowl";
+      const sums = new Map<string, { n: number; v: number; vv: number }>();
+      balls.forEach((b, i) => {
+        const v = ballValues[i * 2 + role];
+        if (isNaN(v)) return;
+        // Remove the player's own side's effect estimated in the previous pass.
+        const own = other.get(keyOf(b, otherSide)) ?? 0;
+        // own > 0 means that side is weak (opponents do well against it), so add it back.
+        const x = v + own;
+        const k = keyOf(b, side);
+        const e = sums.get(k) ?? sums.set(k, { n: 0, v: 0, vv: 0 }).get(k)!;
+        e.n++; e.v += x; e.vv += x * x;
+      });
+      let tot = 0, totN = 0, within = 0;
+      for (const e of sums.values()) { tot += e.v; totN += e.n; within += e.vv - (e.v * e.v) / e.n; }
+      const mu = tot / totN, s2 = within / totN;
+      let num = 0, noise = 0, w = 0;
+      for (const e of sums.values()) { num += e.n * (e.v / e.n - mu) ** 2; noise += s2; w += e.n; }
+      const tau2 = Math.max(1e-9, (num - noise) / w);
+      const K = s2 / tau2;
+      const map = oppEffect[name];
+      map.clear();
+      for (const [k, e] of sums) map.set(k, (e.n / (e.n + K)) * (e.v / e.n - mu));
+      oppStats[name] = { teamYears: sums.size, K: Math.round(K), sdPer100: +(Math.sqrt(tau2) * 100).toFixed(2) };
+    }
+  }
+  balls.forEach((b, i) => {
+    if (!isNaN(ballValues[i * 2])) ballValues[i * 2] -= oppEffect.bowlingSide.get(keyOf(b, "bowl")) ?? 0;
+    if (!isNaN(ballValues[i * 2 + 1])) ballValues[i * 2 + 1] -= oppEffect.battingSide.get(keyOf(b, "bat")) ?? 0;
+  });
+  console.log("opposition", JSON.stringify(oppStats));
+}
 const liSorted = sorted;
 const lev40 = liSorted[Math.floor(0.6 * (liSorted.length - 1))];
 const rulesTest = (b: Ball, i: number) => {
@@ -268,7 +316,7 @@ function pearson(x: number[], y: number[]) {
   for (let i = 0; i < n; i++) { sxy += (x[i] - mx) * (y[i] - my); sxx += (x[i] - mx) ** 2; syy += (y[i] - my) ** 2; }
   return sxy / Math.sqrt(sxx * syy);
 }
-const inScope = (b: Ball) => { const m = matches.get(b.match)!; return m.date >= "2022-01-01" && (m.comp === "ipl" || m.comp === "t20i"); };
+const inScope = (b: Ball) => { const m = matches.get(b.match)!; return m.date >= "2022-01-01" && (m.comp === "ipl" || (m.comp === "t20i" && FULL_MEMBERS.has(m.t1) && FULL_MEMBERS.has(m.t2))); };
 const definitionComparison = DEFINITIONS.map(def => {
   const out: Record<string, unknown> = { id: def.id, label: def.label };
   let flagged = 0, total = 0;
@@ -324,34 +372,39 @@ const definitionComparison = DEFINITIONS.map(def => {
 console.log("definitions", JSON.stringify(definitionComparison, null, 1));
 
 // ── 7. Ball values → player-match rows ──────────────────────────────────────
-// Row bins: [calm, medium, high, extreme] × [balls, runs, outs, value×100]; phase: pressure (medium+) balls by PP/middle/death.
+// Groups (overlapping): 0 all balls, 1 rules pressure (A, the selected definition),
+// 2 leverage top 30%, 3 leverage top 10%. Fields: balls, runs, outs, value×100, dots, boundaries.
+// "Ordinary" for any definition = group 0 minus that group. phase = all balls by PP/middle/death
+// (where the player usually bats/bowls, used by the role lens).
+// Rows start in ROW_FROM to keep the snapshot small; the models above use every season.
+const ROW_FROM = "2016-01-01";
+const NG = 4, NFLD = 6;
 const rows = new Map<string, { match: number; player: number; role: 0 | 1; team: number; bins: number[]; phase: number[] }>();
 const rowFor = (match: number, player: number, role: 0 | 1, team: number) => {
   const k = `${match}:${player}:${role}`;
-  return rows.get(k) ?? rows.set(k, { match, player, role, team, bins: new Array(16).fill(0), phase: [0, 0, 0] }).get(k)!;
+  return rows.get(k) ?? rows.set(k, { match, player, role, team, bins: new Array(NG * NFLD).fill(0), phase: [0, 0, 0] }).get(k)!;
 };
 const share = { innings: [0, 0], phase: [0, 0, 0], total: 0 };
+const add = (r: { bins: number[] }, groups: number[], f: number[]) => { for (const g of groups) for (let k = 0; k < NFLD; k++) r.bins[g * NFLD + k] += f[k]; };
 balls.forEach((b, i) => {
-  const t = tierOf(li[i]);
   const s = states[i];
-  if (t < 0 || !s) return;
+  if (!s || isNaN(li[i]) || matches.get(b.match)!.date < ROW_FROM) return;
   const meta = inningsMeta.get(`${b.match}:${b.inn}`)!;
-  const scale = s.scale, c = cellOf(b);
-  const cost = wicketCost(s.ballsLeft, s.wickets, scale);
   const phase = b.over < 6 ? 0 : b.over < 15 ? 1 : 2;
-  if (t >= 2 && b.legal) { share.innings[b.inn - 1]++; share.phase[phase]++; share.total++; }
+  const groups = [0];
+  if (rulesTest(b, i)) groups.push(1);
+  if (li[i] >= thresholds[1]) groups.push(2);
+  if (li[i] >= thresholds[2]) groups.push(3);
+  if (groups.includes(1) && b.legal) { share.innings[b.inn - 1]++; share.phase[phase]++; share.total++; }
+  const boundary = b.rb === 4 || b.rb === 6 ? 1 : 0;
   if (b.faced) {
-    const f = faced[c];
-    const v = (b.rb - (f.n ? f.runs / f.n : 1) * scale) - cost * ((b.strikerOut ? 1 : 0) - outcomesOf[c].pOut);
     const r = rowFor(b.match, b.batter, 0, meta.bat);
-    r.bins[t * 4] += 1; r.bins[t * 4 + 1] += b.rb; r.bins[t * 4 + 2] += b.strikerOut ? 1 : 0; r.bins[t * 4 + 3] += v * 100;
-    if (t >= 1) r.phase[phase]++;
+    add(r, groups, [1, b.rb, b.strikerOut ? 1 : 0, ballValues[i * 2] * 100, b.rb === 0 ? 1 : 0, boundary]);
+    r.phase[phase]++;
   }
-  const d = deliv[c];
-  const v = ((d.n ? d.conceded / d.n : 1.3) * scale - b.conceded) + cost * ((b.bowlerWkt ? 1 : 0) - (d.n ? d.bw / d.n : 0.05));
   const r = rowFor(b.match, b.bowler, 1, meta.bowl);
-  r.bins[t * 4] += b.legal ? 1 : 0; r.bins[t * 4 + 1] += b.conceded; r.bins[t * 4 + 2] += b.bowlerWkt ? 1 : 0; r.bins[t * 4 + 3] += v * 100;
-  if (t >= 1 && b.legal) r.phase[phase]++;
+  add(r, groups, [b.legal ? 1 : 0, b.conceded, b.bowlerWkt ? 1 : 0, ballValues[i * 2 + 1] * 100, b.legal && b.conceded === 0 ? 1 : 0, boundary]);
+  if (b.legal) r.phase[phase]++;
 });
 
 // ── 8. Publish ──────────────────────────────────────────────────────────────
@@ -368,7 +421,11 @@ const compIndex = new Map(comps.map((c, i) => [c.code, i]));
 const rowList = [...rows.values()].sort((a, b) => a.match - b.match || a.player - b.player || a.role - b.role);
 
 const data = {
-  matches: { date: matchIds.map(id => matches.get(id)!.date), comp: matchIds.map(id => compIndex.get(matches.get(id)!.comp)!) },
+  matches: {
+    date: matchIds.map(id => matches.get(id)!.date), comp: matchIds.map(id => compIndex.get(matches.get(id)!.comp)!),
+    // 1 = both sides are ICC Full Members (always 1 for franchise leagues).
+    fullMember: matchIds.map(id => { const m = matches.get(id)!; return m.comp !== "t20i" || (FULL_MEMBERS.has(m.t1) && FULL_MEMBERS.has(m.t2)) ? 1 : 0; }),
+  },
   players: playerIds.map(id => names.get(id) ?? `player ${id}`),
   teams: teamIds.map(id => teamNames.get(id) ?? `team ${id}`),
   rows: {
@@ -378,12 +435,14 @@ const data = {
   },
 };
 const model = {
-  method: "Leverage = E|ΔWP| of the next ball from calibrated logistic win-probability models; tiers are leverage percentiles. Value = runs vs context expectation (innings × over × wickets, competition-season scaled) minus wicket cost (drop in expected remaining runs).",
+  method: "Pressure (selected, A) = death overs, or a chase needing ≥9 an over, or a collapse (≥3 down for ≤35); chosen over leverage definitions because player value under it repeats more across matches (definitionComparison). Leverage = E|ΔWP| of the next ball from calibrated logistic win-probability models. Value = runs vs context expectation (innings × over × wickets, competition-season scaled) minus wicket cost (drop in expected remaining runs).",
+  groups: ["all", "rules", "leverage30", "leverage10"], fields: ["balls", "runs", "outs", "value100", "dots", "boundaries"], rowsFrom: ROW_FROM,
   tierPercentiles: TIER_Q, tierLeverage: thresholds.map(v => +v.toFixed(5)),
   definitionComparison,
+  opposition: oppStats,
   winProbability: { weights: { chase: wp.chase, first: wp.first }, validation },
   pressureShare: {
-    highTierBalls: share.total,
+    definition: "rules", pressureBalls: share.total,
     innings: { first: +(share.innings[0] / share.total).toFixed(4), chase: +(share.innings[1] / share.total).toFixed(4) },
     phase: { powerplay: +(share.phase[0] / share.total).toFixed(4), middle: +(share.phase[1] / share.total).toFixed(4), death: +(share.phase[2] / share.total).toFixed(4) },
   },

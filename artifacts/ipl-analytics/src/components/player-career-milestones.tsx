@@ -8,7 +8,7 @@ import { PlayerAvatar } from '@/components/player-avatar';
 import './dugout/franchise-milestones.css';
 
 type Season = { season: string; runs?: number; wickets?: number };
-const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
+const normalize = (value?: string | null) => (value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 
 const FILTERS = [
   { id: 'all', label: 'All milestones' },
@@ -36,10 +36,10 @@ export interface PlayerMilestoneItem {
 }
 
 export function PlayerCareerMilestones({
-  name,
+  name = 'Player',
   aliases = [],
-  seasons,
-  batting,
+  seasons = [],
+  batting = true,
   accent = '#00D2FF',
   history = [],
   captaincy,
@@ -68,160 +68,168 @@ export function PlayerCareerMilestones({
   const [selectedId, setSelectedId] = useState<string>('');
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  const valid = seasons.filter(s => Number.isFinite(Number(s.season)) && Number.isFinite(batting ? s.runs : s.wickets));
-  const best = [...valid].sort((a, b) => (batting ? b.runs! - a.runs! : b.wickets! - a.wickets!))[0];
+  const safeSeasons = Array.isArray(seasons) ? seasons : [];
+  const valid = safeSeasons.filter(s => s && Number.isFinite(Number(s.season)) && Number.isFinite(batting ? s.runs : s.wickets));
+  const best = [...valid].sort((a, b) => (batting ? (b.runs || 0) - (a.runs || 0) : (b.wickets || 0) - (a.wickets || 0)))[0];
   const first = [...valid].sort((a, b) => Number(a.season) - Number(b.season))[0];
 
   const moments = useMemo(() => {
-    const list: PlayerMilestoneItem[] = [];
+    try {
+      const list: PlayerMilestoneItem[] = [];
 
-    // 1. First Recorded Season
-    if (first) {
-      list.push({
-        id: 'first-season',
-        season: first.season,
-        value: first.season,
-        title: 'IPL Debut Chapter',
-        label: 'THE FIRST CHAPTER',
-        description: `${name} made their recorded IPL debut in ${first.season}, establishing the foundation of an iconic tournament career.`,
-        kind: 'first',
-        category: 'chapters',
-        stats: [
-          { label: 'Debut Year', value: first.season },
-          { label: batting ? 'Debut Runs' : 'Debut Wickets', value: String(batting ? first.runs : first.wickets) },
-          { label: 'Tournament', value: 'IPL' }
-        ]
-      });
-    }
+      // 1. First Recorded Season
+      if (first && first.season) {
+        list.push({
+          id: 'first-season',
+          season: String(first.season),
+          value: String(first.season),
+          title: 'IPL Debut Chapter',
+          label: 'THE FIRST CHAPTER',
+          description: `${name} made their recorded IPL debut in ${first.season}, establishing the foundation of an iconic tournament career.`,
+          kind: 'first',
+          category: 'chapters',
+          stats: [
+            { label: 'Debut Year', value: String(first.season) },
+            { label: batting ? 'Debut Runs' : 'Debut Wickets', value: String(batting ? (first.runs ?? 0) : (first.wickets ?? 0)) },
+            { label: 'Tournament', value: 'IPL' }
+          ]
+        });
+      }
 
-    // 2. Best Season
-    if (best) {
-      list.push({
-        id: 'best-season',
-        season: best.season,
-        value: String(batting ? best.runs : best.wickets),
-        title: `Peak Season Performance (${best.season})`,
-        label: 'CAREER BENCHMARK',
-        description: `Delivered a stellar campaign in ${best.season}, amassing ${batting ? best.runs : best.wickets} ${batting ? 'runs' : 'wickets'} at elite efficiency across the competition.`,
-        kind: 'record',
-        category: 'records',
-        stats: [
-          { label: batting ? 'Peak Runs' : 'Peak Wickets', value: String(batting ? best.runs : best.wickets) },
-          { label: 'Season', value: best.season },
-          { label: 'Impact', value: 'All-Tournament' }
-        ]
-      });
-    }
+      // 2. Best Season
+      if (best && best.season) {
+        const peakVal = batting ? (best.runs ?? 0) : (best.wickets ?? 0);
+        list.push({
+          id: 'best-season',
+          season: String(best.season),
+          value: String(peakVal),
+          title: `Peak Season Performance (${best.season})`,
+          label: 'CAREER BENCHMARK',
+          description: `Delivered a stellar campaign in ${best.season}, amassing ${peakVal} ${batting ? 'runs' : 'wickets'} at elite efficiency across the competition.`,
+          kind: 'record',
+          category: 'records',
+          stats: [
+            { label: batting ? 'Peak Runs' : 'Peak Wickets', value: String(peakVal) },
+            { label: 'Season', value: String(best.season) },
+            { label: 'Impact', value: 'All-Tournament' }
+          ]
+        });
+      }
 
-    // 3. Career Aggregates (1000, 3000, 5000, 7000 runs OR 100, 150, 200 wickets)
-    let cumulative = 0;
-    const crossed = new Set<number>();
-    for (const row of [...valid].sort((a, b) => Number(a.season) - Number(b.season))) {
-      cumulative += Number(batting ? row.runs : row.wickets);
-      for (const threshold of batting ? [1000, 3000, 5000, 7000] : [100, 150, 200]) {
-        if (cumulative >= threshold && !crossed.has(threshold)) {
-          crossed.add(threshold);
-          list.push({
-            id: `aggregate-${threshold}`,
-            season: row.season,
-            value: threshold.toLocaleString(),
-            title: `${threshold.toLocaleString()} Career ${batting ? 'Runs' : 'Wickets'} Landmark`,
-            label: 'CAREER MILESTONE',
-            description: `Crossed the ${threshold.toLocaleString()} ${batting ? 'run' : 'wicket'} plateau during the ${row.season} season, joining an exclusive pantheon of IPL greats.`,
-            kind: 'record',
-            category: 'records',
-            stats: [
-              { label: 'Plateau', value: `${threshold}+` },
-              { label: 'Season Achieved', value: row.season },
-              { label: 'Elite Tier', value: 'Top 5%' }
-            ]
-          });
+      // 3. Career Aggregates
+      let cumulative = 0;
+      const crossed = new Set<number>();
+      for (const row of [...valid].sort((a, b) => Number(a.season) - Number(b.season))) {
+        cumulative += Number(batting ? row.runs : row.wickets) || 0;
+        for (const threshold of batting ? [1000, 3000, 5000, 7000] : [100, 150, 200]) {
+          if (cumulative >= threshold && !crossed.has(threshold)) {
+            crossed.add(threshold);
+            list.push({
+              id: `aggregate-${threshold}`,
+              season: String(row.season),
+              value: threshold.toLocaleString(),
+              title: `${threshold.toLocaleString()} Career ${batting ? 'Runs' : 'Wickets'} Landmark`,
+              label: 'CAREER MILESTONE',
+              description: `Crossed the ${threshold.toLocaleString()} ${batting ? 'run' : 'wicket'} plateau during the ${row.season} season, joining an exclusive pantheon of IPL greats.`,
+              kind: 'record',
+              category: 'records',
+              stats: [
+                { label: 'Plateau', value: `${threshold}+` },
+                { label: 'Season Achieved', value: String(row.season) },
+                { label: 'Elite Tier', value: 'Top 5%' }
+              ]
+            });
+          }
         }
       }
+
+      // 4. Standout Match Performances
+      const safeMatches = Array.isArray(matches) ? matches : [];
+      const standout = [...safeMatches]
+        .filter(m => m && ((m.batting?.runs ?? 0) >= 50 || (m.bowling?.wickets ?? 0) >= 4))
+        .sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+      const seenMatches = new Set<string>();
+      for (const match of standout) {
+        if (!match || !match.matchId || seenMatches.has(match.matchId)) continue;
+        seenMatches.add(match.matchId);
+        const bat = match.batting;
+        const bowl = match.bowling;
+        const century = (bat?.runs ?? 0) >= 100;
+        const spell = (bowl?.wickets ?? 0) >= 4;
+
+        const sr = bat && bat.balls ? ((bat.runs / bat.balls) * 100).toFixed(1) : undefined;
+        list.push({
+          id: `match-${match.matchId}`,
+          season: String(match.season || 'IPL'),
+          date: match.date,
+          matchId: match.matchId,
+          opponent: match.vsTeam,
+          venue: match.venue,
+          value: century || !spell ? `${bat?.runs ?? 0}${bat?.notOut ? '*' : ''}` : `${bowl?.wickets ?? 0} Wkts`,
+          title: century
+            ? `Century against ${match.vsTeam || 'Opponent'}`
+            : spell
+            ? `Match-Winning Spell vs ${match.vsTeam || 'Opponent'}`
+            : `Match-Defining 50 vs ${match.vsTeam || 'Opponent'}`,
+          label: century ? 'CENTURIES' : spell ? 'BOWLING SPELLS' : 'SPECIAL INNINGS',
+          description: `Delivered on ${match.date || 'Matchday'} at ${match.venue || 'Stadium'}. ${bat && bat.runs >= 50 ? `Blasted ${bat.runs}${bat.notOut ? ' not out' : ''} from ${bat.balls} balls. ` : ''}${spell ? `Took ${bowl?.wickets} key dismissals. ` : ''}${match.team || 'Team'} registered: ${match.result || 'Result'}.`,
+          kind: century || spell ? 'champion' : 'record',
+          category: 'matches',
+          stats: [
+            ...(bat ? [{ label: 'Runs Scored', value: `${bat.runs}${bat.notOut ? '*' : ''}` }] : []),
+            ...(bat?.balls ? [{ label: 'Balls Faced', value: String(bat.balls) }] : []),
+            ...(sr ? [{ label: 'Strike Rate', value: sr }] : []),
+            ...(bowl ? [{ label: 'Wickets', value: String(bowl.wickets) }] : []),
+            { label: 'Opponent', value: match.vsTeam || 'Opposition' }
+          ]
+        });
+      }
+
+      // 5. Leadership / Captaincy
+      if (captaincy?.firstSeason) {
+        list.push({
+          id: 'captaincy-landmark',
+          season: String(captaincy.firstSeason),
+          value: String(captaincy.firstSeason),
+          title: 'Franchise Leadership & Captaincy',
+          label: 'LEADERSHIP ARCHIVE',
+          description: `Commanded franchise leadership starting in ${captaincy.firstSeason}.${captaincy.titles ? ` Led team to ${captaincy.titles} IPL championship victory.` : ' Commanded high-intensity tactical strategy on the field.'}`,
+          kind: captaincy.titles ? 'champion' : 'record',
+          category: 'chapters',
+          stats: [
+            { label: 'Captain Since', value: String(captaincy.firstSeason) },
+            { label: 'Titles Won', value: String(captaincy.titles || 0) },
+            { label: 'Leadership', value: 'Captain' }
+          ]
+        });
+      }
+
+      // 6. Longevity
+      const distinctYears = [...new Set(valid.map(r => r.season).filter(Boolean))].sort();
+      if (distinctYears.length >= 10) {
+        list.push({
+          id: 'longevity-10',
+          season: String(distinctYears[distinctYears.length - 1]),
+          value: `${distinctYears.length} Yrs`,
+          title: `${distinctYears.length} IPL Seasons Completed`,
+          label: 'LONGEVITY & SUSTAINED EXCELLENCE',
+          description: `Maintained top-tier competitiveness across ${distinctYears.length} distinct IPL editions, anchoring franchise consistency.`,
+          kind: 'record',
+          category: 'records',
+          stats: [
+            { label: 'Total Seasons', value: String(distinctYears.length) },
+            { label: 'Debut', value: String(distinctYears[0]) },
+            { label: 'Latest', value: String(distinctYears[distinctYears.length - 1]) }
+          ]
+        });
+      }
+
+      return list.sort((a, b) => Number(Boolean(b.matchId)) - Number(Boolean(a.matchId)) || (b.date ?? b.season).localeCompare(a.date ?? a.season));
+    } catch (err) {
+      console.error("PlayerCareerMilestones generation error:", err);
+      return [];
     }
-
-    // 4. Standout Match Performances (Centuries, 50s, 4-fers)
-    const standout = [...matches]
-      .filter(m => (m.batting?.runs ?? 0) >= 50 || (m.bowling?.wickets ?? 0) >= 4)
-      .sort((a, b) => a.date.localeCompare(b.date));
-
-    const seenMatches = new Set<string>();
-    for (const match of standout) {
-      if (seenMatches.has(match.matchId)) continue;
-      seenMatches.add(match.matchId);
-      const bat = match.batting;
-      const bowl = match.bowling;
-      const century = (bat?.runs ?? 0) >= 100;
-      const spell = (bowl?.wickets ?? 0) >= 4;
-
-      const sr = bat && bat.balls ? ((bat.runs / bat.balls) * 100).toFixed(1) : undefined;
-      list.push({
-        id: `match-${match.matchId}`,
-        season: match.season,
-        date: match.date,
-        matchId: match.matchId,
-        opponent: match.vsTeam,
-        venue: match.venue,
-        value: century || !spell ? `${bat?.runs}${bat?.notOut ? '*' : ''}` : `${bowl?.wickets} Wkts`,
-        title: century
-          ? `Century against ${match.vsTeam}`
-          : spell
-          ? `Match-Winning Spell vs ${match.vsTeam}`
-          : `Match-Defining 50 vs ${match.vsTeam}`,
-        label: century ? 'CENTURIES' : spell ? 'BOWLING SPELLS' : 'SPECIAL INNINGS',
-        description: `Delivered on ${match.date} at ${match.venue}. ${bat && bat.runs >= 50 ? `Blasted ${bat.runs}${bat.notOut ? ' not out' : ''} from ${bat.balls} balls. ` : ''}${spell ? `Took ${bowl?.wickets} key dismissals. ` : ''}${match.team} registered: ${match.result}.`,
-        kind: century || spell ? 'champion' : 'record',
-        category: 'matches',
-        stats: [
-          ...(bat ? [{ label: 'Runs Scored', value: `${bat.runs}${bat.notOut ? '*' : ''}` }] : []),
-          ...(bat?.balls ? [{ label: 'Balls Faced', value: String(bat.balls) }] : []),
-          ...(sr ? [{ label: 'Strike Rate', value: sr }] : []),
-          ...(bowl ? [{ label: 'Wickets', value: String(bowl.wickets) }] : []),
-          { label: 'Opponent', value: match.vsTeam }
-        ]
-      });
-    }
-
-    // 5. Leadership / Captaincy
-    if (captaincy?.firstSeason) {
-      list.push({
-        id: 'captaincy-landmark',
-        season: String(captaincy.firstSeason),
-        value: String(captaincy.firstSeason),
-        title: 'Franchise Leadership & Captaincy',
-        label: 'LEADERSHIP ARCHIVE',
-        description: `Commanded franchise leadership starting in ${captaincy.firstSeason}.${captaincy.titles ? ` Led team to ${captaincy.titles} IPL championship victory.` : ' Commanded high-intensity tactical strategy on the field.'}`,
-        kind: captaincy.titles ? 'champion' : 'record',
-        category: 'chapters',
-        stats: [
-          { label: 'Captain Since', value: String(captaincy.firstSeason) },
-          { label: 'Titles Won', value: String(captaincy.titles || 0) },
-          { label: 'Leadership', value: 'Captain' }
-        ]
-      });
-    }
-
-    // 6. Longevity
-    const distinctYears = [...new Set(valid.map(r => r.season))].sort();
-    if (distinctYears.length >= 10) {
-      list.push({
-        id: 'longevity-10',
-        season: distinctYears[distinctYears.length - 1],
-        value: `${distinctYears.length} Yrs`,
-        title: `${distinctYears.length} IPL Seasons Completed`,
-        label: 'LONGEVITY & SUSTAINED EXCELLENCE',
-        description: `Maintained top-tier competitiveness across ${distinctYears.length} distinct IPL editions, anchoring franchise consistency.`,
-        kind: 'record',
-        category: 'records',
-        stats: [
-          { label: 'Total Seasons', value: String(distinctYears.length) },
-          { label: 'Debut', value: distinctYears[0] },
-          { label: 'Latest', value: distinctYears[distinctYears.length - 1] }
-        ]
-      });
-    }
-
-    return list.sort((a, b) => Number(Boolean(b.matchId)) - Number(Boolean(a.matchId)) || (b.date ?? b.season).localeCompare(a.date ?? a.season));
   }, [name, valid, best, first, matches, captaincy, batting]);
 
   const visible = useMemo(() => {
@@ -245,8 +253,15 @@ export function PlayerCareerMilestones({
   };
 
   // Color styling matching franchise-milestones palette
-  const cleanAccent = accent || '#00D2FF';
-  const rgb = cleanAccent.replace('#', '').match(/.{2}/g)?.map(v => parseInt(v, 16) / 255) ?? [0, 0.8, 1];
+  const cleanAccent = (typeof accent === "string" && accent.startsWith("#") ? accent : "#00D2FF");
+  const hexClean = cleanAccent.replace(/[^0-9a-fA-F]/g, "");
+  const rgb: [number, number, number] = hexClean.length >= 6
+    ? [
+        parseInt(hexClean.slice(0, 2), 16) / 255,
+        parseInt(hexClean.slice(2, 4), 16) / 255,
+        parseInt(hexClean.slice(4, 6), 16) / 255,
+      ]
+    : [0, 0.8, 1];
   const [red, green, blue] = rgb.map(v => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
   const onAccent = 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.179 ? '#142029' : '#ffffff';
 
@@ -257,16 +272,24 @@ export function PlayerCareerMilestones({
   } as CSSProperties;
 
   // Find matching Getty editorial photograph if available
-  const names = [name, ...aliases].filter(Boolean).map(normalize);
-  const photo = moment
-    ? PUBLIC_MANIFEST.images.find(image =>
-        image.source === 'getty' &&
-        (moment.date ? image.matchDate === moment.date : image.matchDate?.startsWith(moment.season + '-')) &&
-        image.discovery?.captionVerified &&
-        (image.depicts?.some(person => names.includes(normalize(person))) ||
-          [name, ...aliases].filter(n => n && n.trim().split(/\s+/).every(part => part.length > 1)).some(n => image.caption.toLowerCase().includes(n.toLowerCase()))) &&
-        (isPublishable(image) || isLocalPreviewable(image))
-      )
+  const names = [name, ...(Array.isArray(aliases) ? aliases : [])].filter(Boolean).map(normalize);
+  const photo = moment && PUBLIC_MANIFEST && Array.isArray(PUBLIC_MANIFEST.images)
+    ? PUBLIC_MANIFEST.images.find(image => {
+        if (!image || image.source !== 'getty') return false;
+        if (!image.discovery?.captionVerified) return false;
+        if (moment.date) {
+          if (image.matchDate !== moment.date) return false;
+        } else if (moment.season) {
+          if (!image.matchDate?.startsWith(moment.season + '-')) return false;
+        }
+        const cap = typeof image.caption === 'string' ? image.caption.toLowerCase() : '';
+        const depictsMatch = Array.isArray(image.depicts) && image.depicts.some(person => person && names.includes(normalize(person)));
+        const captionMatch = [name, ...(Array.isArray(aliases) ? aliases : [])]
+          .filter(n => n && n.trim().split(/\s+/).every(part => part.length > 1))
+          .some(n => cap.includes(n.toLowerCase()));
+        if (!depictsMatch && !captionMatch) return false;
+        return isPublishable(image) || isLocalPreviewable(image);
+      })
     : undefined;
 
   if (!moment) {

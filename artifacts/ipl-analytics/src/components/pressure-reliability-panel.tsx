@@ -9,39 +9,40 @@ import { playerSlug, usePlayerDisplayNames, displayPlayerName } from "@/lib/aggr
 
 type Row = {
   player: string; team: string; competitions: string[];
-  pressureBalls: number; pressureMatches: number; pressureRuns: number; pressureOuts: number;
-  pressureRate: number | null; ordinaryRate: number | null; lift: number | null;
-  rawPer100: number; adjustedPer100: number; interval90: [number, number];
-  reliability: number; confidence: "high" | "medium" | "low"; successRate: number;
-  phaseShare: { powerplay: number; middle: number; death: number };
+  pressureBalls: number; pressureMatches: number;
+  pressure: { rate: number | null; perOut: number | null; outs: number; dotPct: number | null; boundaryPct: number | null };
+  ordinary: { rate: number | null; perOut: number | null; dotPct: number | null };
+  rateLift: number | null;
+  rawPer100: number; usualPer100: number; expectedFromUsualPer100: number; adjustedPer100: number; interval90: [number, number];
+  upliftRawPer100: number; upliftAdjustedPer100: number; evidenceWeight: number; goodMatchRate: number;
 };
 type Result = {
-  version: string; scope: string; unit: string; matches: number; qualified: number;
-  cohort: { players: number; mean: number; priorStrengthBalls: number; trueSpreadSd: number };
+  version: string; definitionLabel: string; scope: string; unit: string; matches: number; qualified: number;
+  cohort: { players: number; pressureMeanPer100: number; usualToPressureSlope: number; priorStrengthBalls: number; pressureSpecificSdPer100: number };
   players: Row[];
 };
+type DefinitionRow = { id: string; label: string; shareOfBalls: number; batting: { priorStrengthBalls: number; upliftSplitHalf: number }; bowling: { priorStrengthBalls: number; upliftSplitHalf: number } };
 type ModelInfo = {
-  version: string;
-  winProbability: { validation: Record<"chase" | "firstInnings", { holdoutFrom: string; model: { brier: number; n: number }; baseline: { brier: number } }> };
-  pressureShare: { innings: { first: number; chase: number }; phase: { powerplay: number; middle: number; death: number } };
-  coverage: Record<string, { name: string; matches: number; from: string | null; to: string | null }>;
+  winProbability: { validation: Record<"chase" | "firstInnings", { holdoutFrom: string; model: { brier: number }; baseline: { brier: number } }> };
+  definitionComparison: DefinitionRow[];
 };
 
 const COMP_SETS = [
+  { id: "ipl-t20i", label: "IPL + T20I (challenge)", comps: "ipl,t20i" },
   { id: "ipl", label: "IPL", comps: "ipl" },
+  { id: "t20i", label: "T20I", comps: "t20i" },
   { id: "leagues", label: "IPL + overseas leagues", comps: "ipl,bbl,cpl,sa20,ilt20" },
-  { id: "all", label: "+ SMAT", comps: "ipl,bbl,cpl,sa20,ilt20,smat" },
 ];
-const TIERS = [
-  { id: "medium", label: "Medium · top 50%" },
-  { id: "high", label: "High · top 30%" },
-  { id: "extreme", label: "Extreme · top 10%" },
+const DEFS = [
+  { id: "rules", label: "Rules (selected)" },
+  { id: "leverage30", label: "Leverage · top 30%" },
+  { id: "leverage10", label: "Leverage · top 10%" },
 ];
 const LENSES = [
   { id: "all", label: "Any phase" },
-  { id: "powerplay", label: "Powerplay rebuild" },
-  { id: "middle", label: "Middle-overs control" },
-  { id: "death", label: "Death finisher / enforcer" },
+  { id: "powerplay", label: "Powerplay" },
+  { id: "middle", label: "Middle overs" },
+  { id: "death", label: "Death overs" },
 ];
 
 function Chips<T extends string>({ label, value, options, onChange }: { label: string; value: T; options: { id: T; label: string }[]; onChange: (v: T) => void }) {
@@ -65,18 +66,19 @@ const signed = (v: number | null, d = 1) => (v === null ? "—" : `${v > 0 ? "+"
 
 export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom: string; seasonTo: string }) {
   const displayNames = usePlayerDisplayNames();
-  const [compSet, setCompSet] = useState("ipl");
+  const [compSet, setCompSet] = useState("ipl-t20i");
+  const [t20iScope, setT20iScope] = useState<"full-members" | "all">("full-members");
   const [role, setRole] = useState<"batting" | "bowling">("batting");
-  const [tier, setTier] = useState("high");
+  const [definition, setDefinition] = useState("rules");
   const [lens, setLens] = useState("all");
-  const [minBalls, setMinBalls] = useState("120");
-  const [minMatches, setMinMatches] = useState("10");
+  const [minBalls, setMinBalls] = useState("250");
+  const [minMatches, setMinMatches] = useState("20");
   const [sort, setSort] = useState<"adjusted" | "conservative">("adjusted");
 
-  const params = new URLSearchParams({
-    comps: COMP_SETS.find(c => c.id === compSet)!.comps, role, tier, lens, minBalls, minMatches, sort, limit: "30",
-  });
-  if (seasonFrom) params.set("seasonFrom", seasonFrom);
+  const comps = COMP_SETS.find(c => c.id === compSet)!.comps;
+  const params = new URLSearchParams({ comps, role, definition, lens, minBalls, minMatches, sort, t20iScope, limit: "30" });
+  // The challenge window starts in 2022; the shared season range overrides it.
+  params.set("seasonFrom", seasonFrom || "2022");
   if (seasonTo) params.set("seasonTo", seasonTo);
 
   const result = useQuery({
@@ -99,10 +101,10 @@ export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom:
     staleTime: Infinity,
   });
 
-  const rateLabel = role === "batting" ? "SR" : "Econ";
+  const bat = role === "batting";
   const data = result.data;
   const maxAbs = Math.max(10, ...(data?.players ?? []).flatMap(p => p.interval90.map(Math.abs)));
-  const toX = (v: number) => 50 + (v / maxAbs) * 50;
+  const toX = (v: number) => 60 + (v / maxAbs) * 58;
 
   return (
     <div className="flex flex-col gap-5">
@@ -110,30 +112,34 @@ export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom:
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-black uppercase text-white tracking-wider">Pressure Reliability</span>
           <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-pink-500/20 text-pink-200 border border-pink-400/30">
-            Leverage-defined · Bayes-adjusted
+            Same pressure for bat &amp; ball · anchored Bayes
           </span>
         </div>
         <p className="text-[11px] text-white/70 max-w-3xl leading-relaxed">
-          Who keeps delivering when one ball can swing the match? A ball counts as pressure when the next delivery is expected to move the
-          batting side's win probability the most. Each ball is then scored against what is normal for that innings, over and wickets down in
-          that competition-season, with a wicket costing the runs it removes from the innings. Small samples are pulled toward the average
-          by an amount estimated from the data, so a hot month does not top the table.
+          Every ball is scored against what normally happens in that innings, over and wickets-down state, after allowing for the opposition.
+          A wicket costs the runs it removes from the innings. Each player's pressure balls are then combined with their usual level, and the
+          data decides how much: a long pressure record moves a player a long way from their usual form, a short one barely moves them.
         </p>
       </div>
 
       <div className="flex flex-col gap-2">
         <Chips label="Competitions" value={compSet} options={COMP_SETS} onChange={setCompSet} />
+        {comps.includes("t20i") && (
+          <Chips<"full-members" | "all"> label="T20I matches" value={t20iScope}
+            options={[{ id: "full-members", label: "Full Members only" }, { id: "all", label: "All nations" }]} onChange={setT20iScope} />
+        )}
         <Chips<"batting" | "bowling"> label="Role" value={role} options={[{ id: "batting", label: "Batters" }, { id: "bowling", label: "Bowlers" }]} onChange={setRole} />
-        <Chips label="Pressure level" value={tier} options={TIERS} onChange={setTier} />
+        <Chips label="Pressure model" value={definition} options={DEFS} onChange={setDefinition} />
         <Chips label="Role lens" value={lens} options={LENSES} onChange={setLens} />
-        <Chips label="Min pressure balls" value={minBalls} options={["60", "120", "250", "500"].map(v => ({ id: v, label: v }))} onChange={setMinBalls} />
-        <Chips label="Min matches" value={minMatches} options={["5", "10", "20"].map(v => ({ id: v, label: v }))} onChange={setMinMatches} />
-        <Chips<"adjusted" | "conservative"> label="Rank by" value={sort} options={[{ id: "adjusted", label: "Adjusted value" }, { id: "conservative", label: "Safest pick (lower bound)" }]} onChange={setSort} />
+        <Chips label="Min pressure balls" value={minBalls} options={["120", "250", "400"].map(v => ({ id: v, label: v }))} onChange={setMinBalls} />
+        <Chips label="Min matches" value={minMatches} options={["10", "20", "30"].map(v => ({ id: v, label: v }))} onChange={setMinMatches} />
+        <Chips<"adjusted" | "conservative"> label="Rank by" value={sort} options={[{ id: "adjusted", label: "Best estimate" }, { id: "conservative", label: "Safest pick (lower bound)" }]} onChange={setSort} />
       </div>
 
       {data && (
-        <div className="text-[10px] font-mono text-white/50 border border-white/10 rounded-lg px-3 py-2 bg-white/[0.02]">
-          {data.scope} · {data.matches.toLocaleString("en-IN")} matches · {data.qualified} qualify
+        <div className="text-[10px] font-mono text-white/50 border border-white/10 rounded-lg px-3 py-2 bg-white/[0.02] flex flex-col gap-0.5">
+          <span>{data.definitionLabel}</span>
+          <span>{data.scope} · {data.matches.toLocaleString("en-IN")} matches · {data.qualified} qualify</span>
         </div>
       )}
 
@@ -145,17 +151,21 @@ export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom:
         <div role="status" className="text-center py-12 text-white/60 text-sm">No players meet these filters. Lower the minimums or widen the seasons.</div>
       ) : (
         <div className="rounded-xl border border-white/10 overflow-x-auto">
-          <table className="w-full min-w-[980px]">
+          <table className="w-full min-w-[1060px]">
             <caption className="sr-only">Pressure reliability ranking</caption>
             <thead className="bg-white/5 border-b border-white/10">
               <tr>
                 {[
                   ["Player", ""], ["P balls", "Pressure balls"], ["Matches", "Matches with pressure balls"],
-                  [`P ${rateLabel}`, `${rateLabel} under pressure`], [`Normal ${rateLabel}`, `${rateLabel} in calmer balls`],
-                  ["Lift", role === "batting" ? "Pressure SR minus normal SR" : "Normal economy minus pressure economy"],
+                  [bat ? "P SR" : "P Econ", bat ? "Strike rate under pressure" : "Economy under pressure"],
+                  [bat ? "Usual SR" : "Usual Econ", "In ordinary balls"],
+                  [bat ? "P Avg" : "P Balls/wkt", bat ? "Runs per dismissal under pressure" : "Balls per wicket under pressure"],
+                  ["P Dot%", "Dot-ball share under pressure"],
                   ["Raw /100", "Runs above expectation per 100 pressure balls, before adjustment"],
-                  ["Adjusted /100 · 90% range", "After pulling toward the cohort average; bar shows the 90% range"],
-                  ["Reliability", "Share of the score that comes from the player's own balls"],
+                  ["Usual /100", "Same measure in ordinary balls (shrunk)"],
+                  ["Estimate /100 · 90% range", "Best estimate of pressure value; bar shows the 90% range"],
+                  ["Uplift", "Estimate minus usual: better (+) or worse (−) than usual under pressure"],
+                  ["Own evidence", "Share of the estimate from the player's own pressure balls (rest from their usual level)"],
                   ["Good games", "Share of matches with positive pressure value"],
                 ].map(([h, title]) => (
                   <th key={h} title={title} className="px-3 py-3 text-[9px] font-black text-white/40 uppercase tracking-wider text-left whitespace-nowrap">{h}</th>
@@ -171,32 +181,31 @@ export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom:
                       <PlayerAvatar name={p.player} className="w-6 h-6 shrink-0" />
                       <span className="flex flex-col">
                         <span className="text-[12px] font-bold text-white group-hover/p:underline">{displayPlayerName(p.player, displayNames)}</span>
-                        <span className="text-[9px] text-white/40">{p.team}{p.competitions.length > 1 ? ` · ${p.competitions.join(", ").toUpperCase()}` : ""}</span>
+                        <span className="text-[9px] text-white/40">{p.team} · {p.competitions.join(" + ").toUpperCase()}</span>
                       </span>
                     </Link>
                   </td>
                   <td className="px-3 py-2.5 text-white/70 text-[12px]">{p.pressureBalls}</td>
                   <td className="px-3 py-2.5 text-white/50 text-[12px]">{p.pressureMatches}</td>
-                  <td className="px-3 py-2.5 font-bold text-amber-300 text-[12px]">{p.pressureRate?.toFixed(role === "batting" ? 1 : 2) ?? "—"}</td>
-                  <td className="px-3 py-2.5 text-white/50 text-[12px]">{p.ordinaryRate?.toFixed(role === "batting" ? 1 : 2) ?? "—"}</td>
-                  <td className={`px-3 py-2.5 text-[12px] font-bold ${p.lift !== null && p.lift >= 0 ? "text-emerald-400" : "text-rose-400"}`}>{signed(p.lift, role === "batting" ? 1 : 2)}</td>
+                  <td className="px-3 py-2.5 font-bold text-amber-300 text-[12px]">{p.pressure.rate?.toFixed(bat ? 1 : 2) ?? "—"}</td>
+                  <td className="px-3 py-2.5 text-white/50 text-[12px]">{p.ordinary.rate?.toFixed(bat ? 1 : 2) ?? "—"}</td>
+                  <td className="px-3 py-2.5 text-white/60 text-[12px]">{p.pressure.perOut ?? "—"}</td>
+                  <td className="px-3 py-2.5 text-white/60 text-[12px]">{p.pressure.dotPct ?? "—"}</td>
                   <td className="px-3 py-2.5 text-white/50 text-[12px]">{signed(p.rawPer100)}</td>
+                  <td className="px-3 py-2.5 text-white/50 text-[12px]">{signed(p.usualPer100)}</td>
                   <td className="px-3 py-2.5">
                     <div className="flex items-center gap-2">
                       <span className="text-[13px] font-black text-pink-200 w-12">{signed(p.adjustedPer100)}</span>
                       <svg width="120" height="12" role="img" aria-label={`90% range ${p.interval90[0]} to ${p.interval90[1]}`}>
                         <line x1="60" x2="60" y1="0" y2="12" stroke="rgba(255,255,255,0.2)" />
-                        <line x1={toX(p.interval90[0]) * 1.2} x2={toX(p.interval90[1]) * 1.2} y1="6" y2="6" stroke="rgba(244,114,182,0.6)" strokeWidth="3" strokeLinecap="round" />
-                        <circle cx={toX(p.adjustedPer100) * 1.2} cy="6" r="3.5" fill="#fbcfe8" />
+                        <line x1={toX(p.interval90[0])} x2={toX(p.interval90[1])} y1="6" y2="6" stroke="rgba(244,114,182,0.6)" strokeWidth="3" strokeLinecap="round" />
+                        <circle cx={toX(p.adjustedPer100)} cy="6" r="3.5" fill="#fbcfe8" />
                       </svg>
                     </div>
                   </td>
-                  <td className="px-3 py-2.5 text-[11px]">
-                    <span className={p.confidence === "high" ? "text-emerald-300" : p.confidence === "medium" ? "text-amber-300" : "text-white/40"}>
-                      {pct(p.reliability)} · {p.confidence}
-                    </span>
-                  </td>
-                  <td className="px-3 py-2.5 text-white/60 text-[12px]">{pct(p.successRate)}</td>
+                  <td className={`px-3 py-2.5 text-[12px] font-bold ${p.upliftAdjustedPer100 >= 0 ? "text-emerald-400" : "text-rose-400"}`}>{signed(p.upliftAdjustedPer100)}</td>
+                  <td className="px-3 py-2.5 text-[11px] text-white/60">{pct(p.evidenceWeight)}</td>
+                  <td className="px-3 py-2.5 text-white/60 text-[12px]">{pct(p.goodMatchRate)}</td>
                 </tr>
               ))}
             </tbody>
@@ -207,27 +216,30 @@ export function PressureReliabilityPanel({ seasonFrom, seasonTo }: { seasonFrom:
       {data && model.data && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px] text-white/60">
           <div className="rounded-xl border border-white/10 p-3 bg-white/[0.02]">
-            <div className="text-[9px] font-black uppercase tracking-wider text-white/40 mb-1">How hard the adjustment is</div>
-            A player needs about <b className="text-white">{data.cohort.priorStrengthBalls} pressure balls</b> before half their score is their own;
-            the rest is the cohort average ({signed(data.cohort.mean)} per 100). Real differences between players are about ±{data.cohort.trueSpreadSd} per 100.
+            <div className="text-[9px] font-black uppercase tracking-wider text-white/40 mb-1">How much pressure differs from usual</div>
+            Usual form predicts pressure form with a slope of {data.cohort.usualToPressureSlope}. On top of that, real pressure-specific
+            differences are about ±{data.cohort.pressureSpecificSdPer100} per 100 balls. A player needs about
+            {" "}<b className="text-white">{data.cohort.priorStrengthBalls.toLocaleString("en-IN")} pressure balls</b> before half their estimate comes from pressure alone.
+          </div>
+          <div className="rounded-xl border border-white/10 p-3 bg-white/[0.02]">
+            <div className="text-[9px] font-black uppercase tracking-wider text-white/40 mb-1">Why the rules model</div>
+            Tested on IPL + Full-Member T20Is since 2022. Under the rules model, pressure value repeats best from odd to even matches
+            (players needing {model.data.definitionComparison.find(d => d.id === "rules")?.batting.priorStrengthBalls} balls for batting,
+            {" "}{model.data.definitionComparison.find(d => d.id === "rules")?.bowling.priorStrengthBalls} for bowling, against
+            {" "}{model.data.definitionComparison.find(d => d.id === "leverage40")?.batting.priorStrengthBalls} and
+            {" "}{model.data.definitionComparison.find(d => d.id === "leverage40")?.bowling.priorStrengthBalls} for leverage at the same share of balls).
           </div>
           <div className="rounded-xl border border-white/10 p-3 bg-white/[0.02]">
             <div className="text-[9px] font-black uppercase tracking-wider text-white/40 mb-1">Win-probability check (unseen matches)</div>
-            Tested on matches from {model.data.winProbability.validation.chase.holdoutFrom.slice(0, 4)} on. Brier score, lower is better:
-            chases {model.data.winProbability.validation.chase.model.brier} vs {model.data.winProbability.validation.chase.baseline.brier} for always guessing the average win rate;
-            first innings {model.data.winProbability.validation.firstInnings.model.brier} vs {model.data.winProbability.validation.firstInnings.baseline.brier}.
-          </div>
-          <div className="rounded-xl border border-white/10 p-3 bg-white/[0.02]">
-            <div className="text-[9px] font-black uppercase tracking-wider text-white/40 mb-1">Where high-pressure balls fall</div>
-            Chases {pct(model.data.pressureShare.innings.chase)}, first innings {pct(model.data.pressureShare.innings.first)}.
-            Powerplay {pct(model.data.pressureShare.phase.powerplay)}, middle {pct(model.data.pressureShare.phase.middle)}, death {pct(model.data.pressureShare.phase.death)}.
-            Early wickets move the result more than most people expect.
+            Matches from {model.data.winProbability.validation.chase.holdoutFrom.slice(0, 4)} on. Brier score (lower is better): chases
+            {" "}{model.data.winProbability.validation.chase.model.brier} vs {model.data.winProbability.validation.chase.baseline.brier} for always
+            guessing the average; first innings {model.data.winProbability.validation.firstInnings.model.brier} vs {model.data.winProbability.validation.firstInnings.baseline.brier}.
           </div>
         </div>
       )}
       {data && (
         <div className="text-[9px] text-white/30 font-mono">
-          Model {data.version} · Ball-by-ball data: Cricsheet (ODC-BY 1.0) · No T20I matches loaded yet · Opposition strength is not adjusted
+          Model {data.version} · Ball-by-ball data: Cricsheet (ODC-BY 1.0) · Cricsheet withholds Afghanistan matches, so Afghan players count from franchise cricket only
         </div>
       )}
     </div>

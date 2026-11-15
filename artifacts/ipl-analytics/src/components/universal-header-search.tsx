@@ -53,127 +53,135 @@ export function UniversalHeaderSearch() {
 
   // Compute matched items
   const results = useMemo(() => {
-    const raw = query.trim().toLowerCase();
-    if (raw.length < 1) return { players: [], venues: [], teams: [], all: [] };
+    try {
+      const raw = (query || "").trim().toLowerCase();
+      if (raw.length < 1) return { players: [], venues: [], teams: [], all: [] };
 
-    // Helper for matching score
-    const calcScore = (text: string): number => {
-      const lower = text.toLowerCase();
-      if (lower === raw) return 100;
-      if (lower.startsWith(raw)) return 90;
-      const words = lower.split(/[\s\-]+/);
-      if (words.some((w) => w.startsWith(raw))) return 80;
-      if (lower.includes(raw)) return 60;
-      return 0;
-    };
+      // Helper for matching score
+      const calcScore = (text?: string | null): number => {
+        if (!text || typeof text !== "string") return 0;
+        const lower = text.toLowerCase();
+        if (lower === raw) return 100;
+        if (lower.startsWith(raw)) return 90;
+        const words = lower.split(/[\s\-]+/);
+        if (words.some((w) => w && w.startsWith(raw))) return 80;
+        if (lower.includes(raw)) return 60;
+        return 0;
+      };
 
-    // 1. MATCH TEAMS
-    const teamHits: SearchResultItem[] = [];
-    const teamEntries = Object.entries(TEAM_REGISTRY);
-    for (const [code, info] of teamEntries) {
-      const nameScore = Math.max(
-        calcScore(info.name),
-        calcScore(info.shortName),
-        calcScore(code)
-      );
-      if (nameScore > 0) {
-        teamHits.push({
-          id: `team-${code}`,
-          type: "team",
-          title: info.name,
-          subtitle: `${info.shortName} · Indian Premier League Franchise`,
-          badge: code,
-          url: `/dugout/${code.toLowerCase()}`,
-          score: nameScore + 5, // slight boost for top franchises
-          teamCode: code,
-        });
+      // 1. MATCH TEAMS
+      const teamHits: SearchResultItem[] = [];
+      const teamEntries = Object.entries(TEAM_REGISTRY || {});
+      for (const [code, info] of teamEntries) {
+        if (!info) continue;
+        const nameScore = Math.max(
+          calcScore(info.name),
+          calcScore(info.shortName),
+          calcScore(code)
+        );
+        if (nameScore > 0) {
+          teamHits.push({
+            id: `team-${code}`,
+            type: "team",
+            title: info.name || code,
+            subtitle: `${info.shortName || code} · Indian Premier League Franchise`,
+            badge: code,
+            url: `/dugout/${code.toLowerCase()}`,
+            score: nameScore + 5,
+            teamCode: code,
+          });
+        }
       }
-    }
 
-    // 2. MATCH VENUES
-    const venueHits: SearchResultItem[] = [];
-    const venuesList = venuesQuery.data || [];
-    for (const v of venuesList) {
-      const vScore = Math.max(
-        calcScore(v.venue),
-        v.city ? calcScore(v.city) : 0
-      );
-      if (vScore > 0) {
-        const slug = v.venue.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-        venueHits.push({
-          id: `venue-${v.venue}`,
-          type: "venue",
-          title: v.venue,
-          subtitle: v.city ? `${v.city} · ${v.matches || 0} IPL matches recorded` : `${v.matches || 0} IPL matches`,
-          badge: v.city || "Venue",
-          url: `/venues/${slug}`,
-          score: vScore,
-        });
+      // 2. MATCH VENUES
+      const venueHits: SearchResultItem[] = [];
+      const venuesList = Array.isArray(venuesQuery.data) ? venuesQuery.data : [];
+      for (const v of venuesList) {
+        if (!v || !v.venue) continue;
+        const vScore = Math.max(
+          calcScore(v.venue),
+          v.city ? calcScore(v.city) : 0
+        );
+        if (vScore > 0) {
+          const slug = String(v.venue).toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+          venueHits.push({
+            id: `venue-${v.venue}`,
+            type: "venue",
+            title: v.venue,
+            subtitle: v.city ? `${v.city} · ${v.matches || 0} IPL matches recorded` : `${v.matches || 0} IPL matches`,
+            badge: v.city || "Venue",
+            url: `/venues/${slug}`,
+            score: vScore,
+          });
+        }
       }
-    }
 
-    // 3. MATCH PLAYERS
-    const playerHits: SearchResultItem[] = [];
-    const bios = playerBiosQuery.data || {};
-    const latestTeams = latestTeamsQuery.data || {};
+      // 3. MATCH PLAYERS
+      const playerHits: SearchResultItem[] = [];
+      const bios = (playerBiosQuery.data && typeof playerBiosQuery.data === "object") ? playerBiosQuery.data : {};
+      const latestTeams = (latestTeamsQuery.data && typeof latestTeamsQuery.data === "object") ? latestTeamsQuery.data : {};
 
-    // Also include common names
-    const seenNames = new Set<string>();
+      const seenNames = new Set<string>();
 
-    for (const [key, bio] of Object.entries(bios)) {
-      const pName = bio.playerName || "";
-      const fName = bio.fullName || "";
-      const commonName = COMMON_PLAYER_NAME_MAP[pName] || "";
+      for (const [key, bio] of Object.entries(bios)) {
+        if (!bio || typeof bio !== "object") continue;
+        const pName = typeof bio.playerName === "string" ? bio.playerName : "";
+        const fName = typeof bio.fullName === "string" ? bio.fullName : "";
+        const commonName = (pName && COMMON_PLAYER_NAME_MAP && COMMON_PLAYER_NAME_MAP[pName]) || "";
 
-      const pScore = Math.max(
-        calcScore(pName),
-        calcScore(fName),
-        calcScore(commonName),
-        calcScore(key)
-      );
+        const pScore = Math.max(
+          calcScore(pName),
+          calcScore(fName),
+          calcScore(commonName),
+          calcScore(key)
+        );
 
-      if (pScore > 0) {
-        const canonical = commonName || fName || pName;
-        const normKey = canonical.toLowerCase().replace(/[^a-z0-9]/g, "");
-        if (seenNames.has(normKey)) continue;
-        seenNames.add(normKey);
+        if (pScore > 0) {
+          const canonical = commonName || fName || pName || key;
+          const normKey = canonical.toLowerCase().replace(/[^a-z0-9]/g, "");
+          if (seenNames.has(normKey)) continue;
+          seenNames.add(normKey);
 
-        const assignedTeam = latestTeams[pName] || latestTeams[fName] || latestTeams[canonical] || "";
-        const role = bio.role || "IPL Player";
-        const slug = playerSlug(canonical);
+          const assignedTeam = (pName && latestTeams[pName]) || (fName && latestTeams[fName]) || (canonical && latestTeams[canonical]) || "";
+          const role = bio.role || "IPL Player";
+          const slug = playerSlug(canonical);
 
-        playerHits.push({
-          id: `player-${key}`,
-          type: "player",
-          title: canonical,
-          subtitle: assignedTeam ? `${assignedTeam} · ${role}` : role,
-          badge: assignedTeam ? teamShort(assignedTeam) : bio.country || undefined,
-          url: `/players/${slug}`,
-          score: pScore,
-          playerKey: key,
-          teamCode: assignedTeam ? teamShort(assignedTeam) : undefined,
-          image: bio.image,
-        });
+          playerHits.push({
+            id: `player-${key}`,
+            type: "player",
+            title: canonical,
+            subtitle: assignedTeam ? `${assignedTeam} · ${role}` : role,
+            badge: assignedTeam ? teamShort(assignedTeam) : bio.country || undefined,
+            url: `/players/${slug}`,
+            score: pScore,
+            playerKey: key,
+            teamCode: assignedTeam ? teamShort(assignedTeam) : undefined,
+            image: bio.image,
+          });
+        }
       }
+
+      // Sort by relevance score
+      teamHits.sort((a, b) => b.score - a.score);
+      venueHits.sort((a, b) => b.score - a.score);
+      playerHits.sort((a, b) => b.score - a.score);
+
+      const limitedTeams = teamHits.slice(0, 3);
+      const limitedVenues = venueHits.slice(0, 4);
+      const limitedPlayers = playerHits.slice(0, 6);
+
+      const all = [...limitedPlayers, ...limitedTeams, ...limitedVenues];
+
+      return {
+        players: limitedPlayers,
+        venues: limitedVenues,
+        teams: limitedTeams,
+        all,
+      };
+    } catch (err) {
+      console.error("UniversalHeaderSearch index error:", err);
+      return { players: [], venues: [], teams: [], all: [] };
     }
-
-    // Sort by relevance score
-    teamHits.sort((a, b) => b.score - a.score);
-    venueHits.sort((a, b) => b.score - a.score);
-    playerHits.sort((a, b) => b.score - a.score);
-
-    const limitedTeams = teamHits.slice(0, 3);
-    const limitedVenues = venueHits.slice(0, 4);
-    const limitedPlayers = playerHits.slice(0, 6);
-
-    const all = [...limitedPlayers, ...limitedTeams, ...limitedVenues];
-
-    return {
-      players: limitedPlayers,
-      venues: limitedVenues,
-      teams: limitedTeams,
-      all,
-    };
   }, [query, playerBiosQuery.data, venuesQuery.data, latestTeamsQuery.data]);
 
   const handleSelect = (item: SearchResultItem) => {

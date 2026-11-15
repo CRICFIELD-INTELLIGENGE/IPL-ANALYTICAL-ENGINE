@@ -5,7 +5,7 @@ import { getTeamAnalytics, getMatchupOpponents, getVenueAnalytics, NOT_SUPPORTED
 import { getMatchScorecard, getMatchCommentary } from "../services/match-card.js";
 import { getInsightFeed, resolveAndCount, getClickStats } from "../services/insights.js";
 import { getNews } from "../services/news.js";
-import { pressureReliability, pressureModelInfo, pressureCompetitions, TIERS, LENSES, type Tier, type Lens } from "../services/pressure/reliability.js";
+import { pressureReliability, pressureModelInfo, pressureCompetitions, DEFINITIONS, LENSES, type Definition, type Lens } from "../services/pressure/reliability.js";
 import { getContentHub, getBusinessArticles, type BusinessTag } from "../services/content-hub.js";
 import {
   aggregateQueryStats,
@@ -594,21 +594,23 @@ router.get("/stats/pressure-reliability", (req: Request, res: Response): void =>
   const known = pressureCompetitions();
   const comps = (str("comps") ?? "ipl").split(",").filter(Boolean);
   const role = str("role") ?? "batting";
-  const tier = str("tier") ?? "high";
+  const definition = str("definition") ?? "rules";
+  const t20iScope = str("t20iScope") ?? "full-members";
   const lens = str("lens") ?? "all";
   const sort = str("sort") ?? "adjusted";
   const from = str("seasonFrom") ? int("seasonFrom", 0, 2100) : undefined;
   const to = str("seasonTo") ? int("seasonTo", 0, 2100) : undefined;
   const minBalls = int("minBalls", 120, 5000), minMatches = int("minMatches", 10, 500), limit = int("limit", 50, 200);
   if (!comps.length || comps.some(c => !known.includes(c)) || !["batting", "bowling"].includes(role) ||
-      !(tier in TIERS) || !(LENSES as readonly string[]).includes(lens) || !["adjusted", "conservative"].includes(sort) ||
+      !(definition in DEFINITIONS) || !["full-members", "all"].includes(t20iScope) || !(LENSES as readonly string[]).includes(lens) || !["adjusted", "conservative"].includes(sort) ||
       [from, to, minBalls, minMatches, limit].some(v => Number.isNaN(v)) || (from && to && from > to)) {
     res.status(400).json({ error: "Invalid pressure-reliability query", competitions: known });
     return;
   }
   try {
     res.json(pressureReliability({
-      comps, from, to, role: role as "batting" | "bowling", tier: tier as Tier, lens: lens as Lens,
+      comps, from, to, role: role as "batting" | "bowling", definition: definition as Definition, lens: lens as Lens,
+      t20iScope: t20iScope as "full-members" | "all",
       sort: sort as "adjusted" | "conservative", minBalls, minMatches, limit,
     }));
   } catch (err) { internalError(res, err); }

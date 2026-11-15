@@ -178,6 +178,71 @@ export function fitEb(players: EbInput[]): EbResult {
   return { mu, s2, tau2, K: s2 / tau2 };
 }
 
+/**
+ * Anchored empirical Bayes: a player's pressure rate is shrunk toward what their
+ * USUAL level predicts, not toward the cohort mean.
+ *   1. The ordinary rate is itself shrunk (K_O = s²_O/τ²_O) so tail-enders with few
+ *      calm balls do not get extreme anchors.
+ *   2. prior_i = μP + β(r̃O_i − μO), β from a ball-weighted regression of pressure
+ *      rates on shrunk ordinary rates (regression calibration, so no attenuation).
+ *   3. Pressure-specific spread τ² (after removing sampling noise) sets how far the
+ *      player's own pressure balls may move them: weight = B/(B+K), K = s²/τ².
+ */
+export interface AnchoredInput { pB: number; pV: number; pMatches: { b: number; v: number }[]; oB: number; oV: number; oMatches: { b: number; v: number }[] }
+export interface AnchoredFit { muP: number; muO: number; beta: number; s2: number; s2O: number; tau2: number; tau2O: number; K: number; KO: number; players: number }
+
+function withinNoise(groups: { b: number; v: number }[][], totals: { b: number; v: number }[]): number {
+  let ss = 0, sb = 0;
+  groups.forEach((ms, i) => {
+    const n = ms.length, t = totals[i];
+    if (n < 2 || t.b <= 0) return;
+    const r = t.v / t.b;
+    let pss = 0;
+    for (const m of ms) pss += (m.v - r * m.b) ** 2;
+    ss += (pss * n) / (n - 1); sb += t.b;
+  });
+  return sb > 0 ? ss / sb : 1;
+}
+
+function spread(rates: { b: number; r: number }[], mu: number, s2: number): number {
+  let num = 0, w = 0;
+  for (const x of rates) { num += x.b * (x.r - mu) ** 2 - s2; w += x.b; }
+  return Math.max(1e-6, num / w);
+}
+
+export function fitAnchoredEb(all: AnchoredInput[], minBalls = 30): AnchoredFit {
+  const ps = all.filter(p => p.pB >= minBalls && p.oB >= minBalls);
+  const sum = (f: (p: AnchoredInput) => number) => ps.reduce((s, p) => s + f(p), 0);
+  const W = sum(p => p.pB);
+  const muP = sum(p => p.pV) / W;
+  const muO = sum(p => p.oV) / sum(p => p.oB);
+  const s2 = withinNoise(ps.map(p => p.pMatches), ps.map(p => ({ b: p.pB, v: p.pV })));
+  const s2O = withinNoise(ps.map(p => p.oMatches), ps.map(p => ({ b: p.oB, v: p.oV })));
+  const tau2O = spread(ps.map(p => ({ b: p.oB, r: p.oV / p.oB })), muO, s2O);
+  const KO = s2O / tau2O;
+  const shrunkO = (p: AnchoredInput) => muO + (p.oB / (p.oB + KO)) * (p.oV / p.oB - muO);
+  let sxy = 0, sxx = 0;
+  for (const p of ps) {
+    const x = shrunkO(p) - muO, y = p.pV / p.pB - muP;
+    sxy += p.pB * x * y; sxx += p.pB * x * x;
+  }
+  const beta = sxx > 0 ? sxy / sxx : 0;
+  const resid = ps.map(p => ({ b: p.pB, r: p.pV / p.pB - beta * (shrunkO(p) - muO) }));
+  const tau2 = spread(resid, muP, s2);
+  return { muP, muO, beta, s2, s2O, tau2, tau2O, K: s2 / tau2, KO, players: ps.length };
+}
+
+export function anchoredShrink(fit: AnchoredFit, p: { pB: number; pV: number; oB: number; oV: number }) {
+  const rO = p.oB > 0 ? p.oV / p.oB : fit.muO;
+  const usual = fit.muO + (p.oB / (p.oB + fit.KO)) * (rO - fit.muO);
+  const prior = fit.muP + fit.beta * (usual - fit.muO);
+  const rP = p.pB > 0 ? p.pV / p.pB : prior;
+  const weight = p.pB / (p.pB + fit.K);
+  const mean = prior + weight * (rP - prior);
+  const sd = Math.sqrt(1 / (1 / fit.tau2 + p.pB / fit.s2));
+  return { mean, sd, weight, prior, rP, rO, usual };
+}
+
 export function shrink(eb: EbResult, balls: number, value: number): { mean: number; sd: number; weight: number } {
   const r = balls > 0 ? value / balls : eb.mu;
   const weight = balls / (balls + eb.K);

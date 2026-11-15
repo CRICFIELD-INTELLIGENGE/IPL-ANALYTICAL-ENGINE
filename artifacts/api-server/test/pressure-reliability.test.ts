@@ -4,7 +4,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { fitEb, fitLogistic, leverage, makeMonotone, shrink, sigmoid, winProb } from "../src/services/pressure/model";
+import { anchoredShrink, fitAnchoredEb, fitEb, fitLogistic, leverage, makeMonotone, shrink, sigmoid, winProb } from "../src/services/pressure/model";
 import { pressureModelInfo, pressureReliability } from "../src/services/pressure/reliability";
 
 test("logistic fit recovers known weights", () => {
@@ -57,26 +57,56 @@ test("snapshot: win-probability models beat the base rate on unseen 2023+ matche
   for (const k of ["chase", "firstInnings"]) assert.ok(v[k].model.brier < v[k].baseline.brier, k);
 });
 
-test("rankings: filters respected, sorted, intervals contain the estimate", () => {
-  const r = pressureReliability({ comps: ["ipl"], from: 2022, to: 2026, role: "batting", tier: "high", minBalls: 120, minMatches: 10, lens: "all" });
-  assert.ok(r.players.length > 10);
-  for (const p of r.players) {
-    assert.ok(p.pressureBalls >= 120 && p.pressureMatches >= 10);
-    assert.deepEqual(p.competitions, ["ipl"]);
-    assert.ok(p.interval90[0] <= p.adjustedPer100 && p.adjustedPer100 <= p.interval90[1]);
-    // Shrunk estimate lies between the cohort mean and the raw rate.
-    const lo = Math.min(r.cohort.mean, p.rawPer100) - 0.02, hi = Math.max(r.cohort.mean, p.rawPer100) + 0.02;
-    assert.ok(p.adjustedPer100 >= lo && p.adjustedPer100 <= hi, p.player);
+test("anchored shrinkage: small pressure samples sit near the usual-level forecast", () => {
+  const mk = (pB: number, rate: number, oB: number, oRate: number) => ({
+    pB, pV: pB * rate, oB, oV: oB * oRate,
+    pMatches: Array.from({ length: 10 }, (_, i) => ({ b: pB / 10, v: (pB / 10) * rate * (i % 2 ? 1.3 : 0.7) })),
+    oMatches: Array.from({ length: 10 }, (_, i) => ({ b: oB / 10, v: (oB / 10) * oRate * (i % 2 ? 1.2 : 0.8) })),
+  });
+  const cohort = Array.from({ length: 60 }, (_, i) => mk(200 + i * 10, (i - 30) / 300, 600, (i - 30) / 300));
+  const fit = fitAnchoredEb(cohort);
+  assert.ok(fit.beta > 0.5, `beta ${fit.beta}`);
+  const small = anchoredShrink(fit, { pB: 20, pV: 20 * 0.5, oB: 600, oV: 0 });
+  const big = anchoredShrink(fit, { pB: 5000, pV: 5000 * 0.5, oB: 600, oV: 0 });
+  assert.ok(Math.abs(small.mean - small.prior) < Math.abs(big.mean - big.prior));
+  assert.ok(small.weight < big.weight);
+});
+
+const Q = { comps: ["ipl", "t20i"], from: 2022, to: 2026, definition: "rules" as const, minBalls: 120, minMatches: 10, lens: "all" as const };
+
+test("rankings: filters respected, sorted, estimate between usual forecast and raw, inside its interval", () => {
+  for (const role of ["batting", "bowling"] as const) {
+    const r = pressureReliability({ ...Q, role, limit: 200 });
+    assert.ok(r.players.length > 10);
+    for (const p of r.players) {
+      assert.ok(p.pressureBalls >= 120 && p.pressureMatches >= 10);
+      assert.ok(p.competitions.every(c => c === "ipl" || c === "t20i"));
+      assert.ok(p.interval90[0] <= p.adjustedPer100 && p.adjustedPer100 <= p.interval90[1]);
+      const lo = Math.min(p.expectedFromUsualPer100, p.rawPer100) - 0.02, hi = Math.max(p.expectedFromUsualPer100, p.rawPer100) + 0.02;
+      assert.ok(p.adjustedPer100 >= lo && p.adjustedPer100 <= hi, p.player);
+    }
+    for (let i = 1; i < r.players.length; i++) assert.ok(r.players[i - 1].adjustedPer100 >= r.players[i].adjustedPer100);
   }
-  for (let i = 1; i < r.players.length; i++) assert.ok(r.players[i - 1].adjustedPer100 >= r.players[i].adjustedPer100);
-  const death = pressureReliability({ comps: ["ipl"], from: 2022, to: 2026, role: "batting", tier: "high", minBalls: 120, minMatches: 10, lens: "death" });
+  const death = pressureReliability({ ...Q, role: "batting", lens: "death" });
   for (const p of death.players) assert.ok(p.phaseShare.death >= 0.4);
 });
 
-test("stricter tier means fewer pressure balls for the same player", () => {
-  const q = { comps: ["ipl"], role: "bowling" as const, minBalls: 0, minMatches: 0, lens: "all" as const, limit: 200 };
-  const hi = pressureReliability({ ...q, tier: "high" }).players, ex = pressureReliability({ ...q, tier: "extreme" }).players;
-  const p = hi[0];
-  const e = ex.find(x => x.player === p.player);
-  assert.ok(!e || e.pressureBalls <= p.pressureBalls);
+test("full-member scope excludes associate-only players; 'all' includes more matches", () => {
+  const fm = pressureReliability({ ...Q, comps: ["t20i"], role: "batting", minBalls: 0, minMatches: 0 });
+  const all = pressureReliability({ ...Q, comps: ["t20i"], role: "batting", minBalls: 0, minMatches: 0, t20iScope: "all" });
+  assert.ok(all.matches > fm.matches);
+});
+
+test("same delivery, same pressure: batters and bowlers see the same pressure-ball total", () => {
+  const bat = pressureReliability({ ...Q, comps: ["ipl"], role: "batting", minBalls: 0, minMatches: 0, limit: 5000 });
+  const bowl = pressureReliability({ ...Q, comps: ["ipl"], role: "bowling", minBalls: 0, minMatches: 0, limit: 5000 });
+  const sb = bat.players.reduce((s, p) => s + p.pressureBalls, 0), sw = bowl.players.reduce((s, p) => s + p.pressureBalls, 0);
+  // Batters count balls faced (no wides), bowlers legal balls (no wides or no-balls): the totals differ only by no-balls.
+  assert.ok(sb >= sw && (sb - sw) / sw < 0.01, `${sb} vs ${sw}`);
+});
+
+test("stricter leverage definition means fewer pressure balls", () => {
+  const q = { ...Q, comps: ["ipl"], role: "bowling" as const, minBalls: 0, minMatches: 0, limit: 5000 };
+  const tot = (d: "leverage30" | "leverage10") => pressureReliability({ ...q, definition: d }).players.reduce((s, p) => s + p.pressureBalls, 0);
+  assert.ok(tot("leverage10") < tot("leverage30"));
 });

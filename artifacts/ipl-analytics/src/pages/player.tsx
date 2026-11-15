@@ -1520,7 +1520,7 @@ export default function PlayerProfilePage() {
                               {showAsBatter ? "Best Season" : "Most Wickets"}
                             </div>
                             <div className="text-[15px] font-black text-primary">
-                              {Math.max(...seasonalStats.map((s: any) => (showAsBatter ? s.runs : s.wickets) || 0))}
+                              {Math.max(0, ...seasonalStats.map((s: any) => (showAsBatter ? s.runs : s.wickets) || 0))}
                             </div>
                           </div>
                         </>
