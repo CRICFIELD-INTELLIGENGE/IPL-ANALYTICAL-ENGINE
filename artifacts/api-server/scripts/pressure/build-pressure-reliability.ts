@@ -2,6 +2,9 @@
 //
 //   node --import tsx scripts/pressure/build-pressure-reliability.ts
 //
+// Official challenge data (loaded by ingest-official.ts) runs through the same pipeline:
+//   CRICFIELD_SCOUT_DB_PATH=../../lib/cricket-data/official/official.db //   PRESSURE_OUT=data/pressure-official/pressure-reliability.json PRESSURE_CLIENT_OUT=none //   PRESSURE_SOURCE="SupeRR Selector S2 official data pack" node --import tsx scripts/pressure/build-pressure-reliability.ts
+//
 // Steps (every constant is estimated from the data, none is hand-set):
 //   1. Rebuild the state before every delivery (runs, legal balls, wickets, target).
 //   2. Expected outcome per ball by innings × over × wickets, scaled to each
@@ -503,14 +506,16 @@ const model = {
 };
 const body = JSON.stringify({ data, model });
 const version = `cf-pressure.${crypto.createHash("sha256").update(body).digest("hex").slice(0, 10)}`;
-const out = path.join(getProjectRoot(), "artifacts", "api-server", "data", "pressure", "pressure-reliability.json");
+const SOURCE = process.env.PRESSURE_SOURCE ?? "Cricsheet via global.db (ODC-BY 1.0)";
+const out = process.env.PRESSURE_OUT ? path.resolve(process.env.PRESSURE_OUT) : path.join(getProjectRoot(), "artifacts", "api-server", "data", "pressure", "pressure-reliability.json");
 fs.mkdirSync(path.dirname(out), { recursive: true });
-fs.writeFileSync(out, JSON.stringify({ version, builtAt: new Date().toISOString(), source: "Cricsheet via global.db (ODC-BY 1.0)", competitions: comps, model, data }));
+fs.writeFileSync(out, JSON.stringify({ version, builtAt: new Date().toISOString(), source: SOURCE, competitions: comps, model, data }));
 console.log(`wrote ${out} (${(fs.statSync(out).size / 1e6).toFixed(1)} MB), ${rowList.length} rows, version ${version}`);
 
 // Browser copy for deploys without the API (the site is static on Vercel): same format,
 // same version, rows limited to the competitions the Scenario panel offers (no SMAT).
-{
+// PRESSURE_CLIENT_OUT=none skips it (the official challenge data is never published).
+if (process.env.PRESSURE_CLIENT_OUT !== "none") {
   const smat = compIndex.get("smat");
   const keep = rowList.map((r, i) => i).filter(i => data.matches.comp[data.rows.match[i]] !== smat);
   const pick = <T,>(arr: T[], width: number) => keep.flatMap(i => arr.slice(i * width, i * width + width));
@@ -519,7 +524,7 @@ console.log(`wrote ${out} (${(fs.statSync(out).size / 1e6).toFixed(1)} MB), ${ro
     bins: pick(data.rows.bins, NG * NFLD), phase: pick(data.rows.phase, 3),
   } };
   const clientOut = path.join(getProjectRoot(), "artifacts", "ipl-analytics", "public", "data", "pressure-reliability.json");
-  fs.writeFileSync(clientOut, JSON.stringify({ version, builtAt: new Date().toISOString(), source: "Cricsheet via global.db (ODC-BY 1.0)", competitions: comps, model, data: client }));
+  fs.writeFileSync(clientOut, JSON.stringify({ version, builtAt: new Date().toISOString(), source: SOURCE, competitions: comps, model, data: client }));
   console.log(`wrote ${clientOut} (${(fs.statSync(clientOut).size / 1e6).toFixed(1)} MB), ${keep.length} rows`);
 }
 console.log("thresholds", thresholds, "share", JSON.stringify(model.pressureShare));

@@ -114,3 +114,7 @@ docs/data-repairs/**/backup/
 .vercel
 
 /artifacts/api-server/data/*.db
+
+# SupeRR Selector official data pack (challenge data, not for publication)
+lib/cricket-data/official/
+artifacts/api-server/data/pressure-official/
