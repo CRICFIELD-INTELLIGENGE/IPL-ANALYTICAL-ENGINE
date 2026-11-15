@@ -1,0 +1,1231 @@
+{
+  "modelVersion": "cf-pressure.1593daffa4",
+  "generatedAt": "2026-11-15T19:11:44.278Z",
+  "configuration": {
+    "comps": [
+      "ipl",
+      "t20i"
+    ],
+    "from": 2022,
+    "to": 2026,
+    "definition": "rules",
+    "minBalls": 250,
+    "minMatches": 20,
+    "lens": "all",
+    "t20iScope": "full-members",
+    "estimator": "pressure",
+    "limit": 1000
+  },
+  "batters": [
+    {
+      "rank": 1,
+      "player": "Suryakumar Yadav",
+      "team": "Mumbai Indians",
+      "competitions": [
+        "t20i",
+        "ipl"
+      ],
+      "pressureBalls": 1075,
+      "pressureMatches": 69,
+      "ordinaryBalls": 1572,
+      "pressure": {
+        "rate": 179.63,
+        "perOut": 42,
+        "outs": 46,
+        "dotPct": 29.8,
+        "boundaryPct": 27.5
+      },
+      "ordinary": {
+        "rate": 155.98,
+        "perOut": 35.5,
+        "dotPct": 34.1
+      },
+      "rateLift": 23.65,
+      "rawPer100": 47.03,
+      "ordinaryPer100": 20.69,
+      "usualPer100": 15.64,
+      "expectedFromUsualPer100": 15,
+      "adjustedPer100": 36.67,
+      "interval90": [
+        23.84,
+        49.5
+      ],
+      "pressureOnlyPer100": 36.67,
+      "forecastPer100": 32.12,
+      "upliftRawPer100": 26.35,
+      "upliftAdjustedPer100": 21.03,
+      "evidenceWeight": 0.751,
+      "goodMatchRate": 0.681,
+      "phaseShare": {
+        "powerplay": 0.235,
+        "middle": 0.636,
+        "death": 0.129
+      },
+      "pTop10": 0.9105
+    },
+    {
+      "rank": 2,
+      "player": "Pathum Nissanka",
+      "team": "Sri Lanka",
+      "competitions": [
+        "t20i",
+        "ipl"
+      ],
+      "pressureBalls": 457,
+      "pressureMatches": 26,
+      "ordinaryBalls": 1064,
+      "pressure": {
+        "rate": 159.3,
+        "perOut": 42.8,
+        "outs": 17,
+        "dotPct": 31.1,
+        "boundaryPct": 22.3
+      },
+      "ordinary": {
+        "rate": 124.44,
+        "perOut": 27,
+        "dotPct": 41.7
+      },
+      "rateLift": 34.86,
+      "rawPer100": 44.83,
+      "ordinaryPer100": -4.86,
+      "usualPer100": -2.55,
+      "expectedFromUsualPer100": 6.66,
+      "adjustedPer100": 27.56,
+      "interval90": [
+        10.53,
+        44.58
+      ],
+      "pressureOnlyPer100": 27.56,
+      "forecastPer100": 19.18,
+      "upliftRawPer100": 49.69,
+      "upliftAdjustedPer100": 30.1,
+      "evidenceWeight": 0.562,
+      "goodMatchRate": 0.654,
+      "phaseShare": {
+        "powerplay": 0.639,
+        "middle": 0.32,
+        "death": 0.041
+      },
+      "pTop10": 0.55945
+    },
+    {
+      "rank": 3,
+      "player": "Tim David",
+      "team": "Australia",
+      "competitions": [
+        "ipl",
+        "t20i"
+      ],
+      "pressureBalls": 745,
+      "pressureMatches": 74,
+      "ordinaryBalls": 420,
+      "pressure": {
+        "rate": 194.09,
+        "perOut": 34.4,
+        "outs": 42,
+        "dotPct": 28.6,
+        "boundaryPct": 28.3
+      },
+      "ordinary": {
+        "rate": 147.62,
+        "perOut": 36.5,
+        "dotPct": 36
+      },
+      "rateLift": 46.47,
+      "rawPer100": 36.56,
+      "ordinaryPer100": 34.17,
+      "usualPer100": 15.48,
+      "expectedFromUsualPer100": 14.93,
+      "adjustedPer100": 26.48,
+      "interval90": [
+        11.85,
+        41.11
+      ],
+      "pressureOnlyPer100": 26.48,
+      "forecastPer100": 24.51,
+      "upliftRawPer100": 2.4,
+      "upliftAdjustedPer100": 11,
+      "evidenceWeight": 0.677,
+      "goodMatchRate": 0.554,
+      "phaseShare": {
+        "powerplay": 0.043,
+        "middle": 0.471,
+        "death": 0.486
+      },
+      "pTop10": 0.52025
+    },
+    {
+      "rank": 4,
+      "player": "Romario Shepherd",
+      "team": "West Indies",
+      "competitions": [
+        "t20i",
+        "ipl"
+      ],
+      "pressureBalls": 539,
+      "pressureMatches": 56,
+      "ordinaryBalls": 139,
+      "pressure": {
+        "rate": 164.56,
+        "perOut": 30.6,
+        "outs": 29,
+        "dotPct": 36.9,
+        "boundaryPct": 22.8
+      },
+      "ordinary": {
+        "rate": 119.42,
+        "perOut": 16.6,
+        "dotPct": 46.8
+      },
+      "rateLift": 45.14,
+      "rawPer100": 40.04,
+      "ordinaryPer100": 3.84,
+      "usualPer100": 2.17,
+      "expectedFromUsualPer100": 8.82,
+      "adjustedPer100": 26.26,
+      "interval90": [
+        10.03,
+        42.48
+      ],
+      "pressureOnlyPer100": 26.26,
+      "forecastPer100": 20.23,
+      "upliftRawPer100": 36.2,
+      "upliftAdjustedPer100": 24.09,
+      "evidenceWeight": 0.602,
+      "goodMatchRate": 0.607,
+      "phaseShare": {
+        "powerplay": 0.001,
+        "middle": 0.414,
+        "death": 0.584
+      },
+      "pTop10": 0.5152
+    },
+    {
+      "rank": 5,
+      "player": "Dinesh Karthik",
+      "team": "Royal Challengers Bengaluru",
+      "competitions": [
+        "ipl",
+        "t20i"
+      ],
+      "pressureBalls": 531,
+      "pressureMatches": 55,
+      "ordinaryBalls": 108,
+      "pressure": {
+        "rate": 184.75,
+        "perOut": 31.6,
+        "outs": 31,
+        "dotPct": 28.6,
+        "boundaryPct": 28.1
+      },
+      "ordinary": {
+        "rate": 81.48,
+        "perOut": 29.3,
+        "dotPct": 48.1
+      },
+      "rateLift": 103.26,
+      "rawPer100": 40.17,
+      "ordinaryPer100": -29.09,
+      "usualPer100": -3.14,
+      "expectedFromUsualPer100": 6.39,
+      "adjustedPer100": 26.21,
+      "interval90": [
+        9.91,
+        42.51
+      ],
+      "pressureOnlyPer100": 26.21,
+      "forecastPer100": 18.61,
+      "upliftRawPer100": 69.27,
+      "upliftAdjustedPer100": 29.35,
+      "evidenceWeight": 0.599,
+      "goodMatchRate": 0.527,
+      "phaseShare": {
+        "powerplay": 0.025,
+        "middle": 0.304,
+        "death": 0.671
+      },
+      "pTop10": 0.5093
+    },
+    {
+      "rank": 6,
+      "player": "Shashank Singh",
+      "team": "Punjab Kings",
+      "competitions": [
+        "ipl"
+      ],
+      "pressureBalls": 409,
+      "pressureMatches": 35,
+      "ordinaryBalls": 151,
+      "pressure": {
+        "rate": 185.33,
+        "perOut": 47.4,
+        "outs": 16,
+        "dotPct": 24.2,
+        "boundaryPct": 25.9
+      },
+      "ordinary": {
+        "rate": 97.35,
+        "perOut": 18.4,
+        "dotPct": 37.1
+      },
+      "rateLift": 87.98,
+      "rawPer100": 39.88,
+      "ordinaryPer100": -39.48,
+      "usualPer100": -6.86,
+      "expectedFromUsualPer100": 4.68,
+      "adjustedPer100": 23.82,
+      "interval90": [
+        6.27,
+        41.37
+      ],
+      "pressureOnlyPer100": 23.82,
+      "forecastPer100": 15.38,
+      "upliftRawPer100": 79.36,
+      "upliftAdjustedPer100": 30.68,
+      "evidenceWeight": 0.535,
+      "goodMatchRate": 0.543,
+      "phaseShare": {
+        "powerplay": 0.045,
+        "middle": 0.487,
+        "death": 0.468
+      },
+      "pTop10": 0.40975
+    },
+    {
+      "rank": 7,
+      "player": "Ashutosh Sharma",
+      "team": "Delhi Capitals",
+      "competitions": [
+        "ipl"
+      ],
+      "pressureBalls": 305,
+      "pressureMatches": 25,
+      "ordinaryBalls": 29,
+      "pressure": {
+        "rate": 176.39,
+        "perOut": 29.9,
+        "outs": 18,
+        "dotPct": 31.1,
+        "boundaryPct": 25.2
+      },
+      "ordinary": {
+        "rate": 89.66,
+        "perOut": 26,
+        "dotPct": 44.8
+      },
+      "rateLift": 86.74,
+      "rawPer100": 41.25,
+      "ordinaryPer100": -1.03,
+      "usualPer100": 1.62,
+      "expectedFromUsualPer100": 8.57,
+      "adjustedPer100": 21.93,
+      "interval90": [
+        3.05,
+        40.81
+      ],
+      "pressureOnlyPer100": 21.93,
+      "forecastPer100": 16.6,
+      "upliftRawPer100": 42.28,
+      "upliftAdjustedPer100": 20.3,
+      "evidenceWeight": 0.462,
+      "goodMatchRate": 0.56,
+      "phaseShare": {
+        "powerplay": 0,
+        "middle": 0.35,
+        "death": 0.65
+      },
+      "pTop10": 0.35515
+    },
+    {
+      "rank": 8,
+      "player": "Rovman Powell",
+      "team": "West Indies",
+      "competitions": [
+        "t20i",
+        "ipl"
+      ],
+      "pressureBalls": 937,
+      "pressureMatches": 82,
+      "ordinaryBalls": 597,
+      "pressure": {
+        "rate": 162.22,
+        "perOut": 25.8,
+        "outs": 59,
+        "dotPct": 35.3,
+        "boundaryPct": 22.4
+      },
+      "ordinary": {
+        "rate": 119.26,
+        "perOut": 33.9,
+        "dotPct": 42.5
+      },
+      "rateLift": 42.96,
+      "rawPer100": 28.1,
+      "ordinaryPer100": -4.28,
+      "usualPer100": -1.33,
+      "expectedFromUsualPer100": 7.22,
+      "adjustedPer100": 21.84,
+      "interval90": [
+        8.34,
+        35.34
+      ],
+      "pressureOnlyPer100": 21.84,
+      "forecastPer100": 17.66,
+      "upliftRawPer100": 32.38,
+      "upliftAdjustedPer100": 23.17,
+      "evidenceWeight": 0.725,
+      "goodMatchRate": 0.512,
+      "phaseShare": {
+        "powerplay": 0.076,
+        "middle": 0.585,
+        "death": 0.339
+      },
+      "pTop10": 0.3016
+    },
+    {
+      "rank": 9,
+      "player": "Phil Salt",
+      "team": "England",
+      "competitions": [
+        "t20i",
+        "ipl"
+      ],
+      "pressureBalls": 375,
+      "pressureMatches": 28,
+      "ordinaryBalls": 1264,
+      "pressure": {
+        "rate": 179.47,
+        "perOut": 33.6,
+        "outs": 20,
+        "dotPct": 30.1,
+        "boundaryPct": 26.7
+      },
+      "ordinary": {
+        "rate": 166.53,
+        "perOut": 39,
+        "dotPct": 34.1
+      },
+      "rateLift": 12.93,
+      "rawPer100": 36.14,
+      "ordinaryPer100": 21.41,
+      "usualPer100": 15.29,
+      "expectedFromUsualPer100": 14.84,
+      "adjustedPer100": 21.16,
+      "interval90": [
+        3.2,
+        39.11
+      ],
+      "pressureOnlyPer100": 21.16,
+      "forecastPer100": 20.93,
+      "upliftRawPer100": 14.72,
+      "upliftAdjustedPer100": 5.86,
+      "evidenceWeight": 0.513,
+      "goodMatchRate": 0.464,
+      "phaseShare": {
+        "powerplay": 0.594,
+        "middle": 0.348,
+        "death": 0.058
+      },
+      "pTop10": 0.3276
+    },
+    {
+      "rank": 10,
+      "player": "Andre Russell",
+      "team": "West Indies",
+      "competitions": [
+        "ipl",
+        "t20i"
+      ],
+      "pressureBalls": 481,
+      "pressureMatches": 46,
+      "ordinaryBalls": 252,
+      "pressure": {
+        "rate": 179.83,
+        "perOut": 26.2,
+        "outs": 33,
+        "dotPct": 40.5,
+        "boundaryPct": 28.3
+      },
+      "ordinary": {
+        "rate": 154.37,
+        "perOut": 35.4,
+        "dotPct": 45.2
+      },
+      "rateLift": 25.47,
+      "rawPer100": 31.04,
+      "ordinaryPer100": 37.19,
+      "usualPer100": 12.6,
+      "expectedFromUsualPer100": 13.6,
+      "adjustedPer100": 20.13,
+      "interval90": [
+        3.35,
+        36.91
+      ],
+      "pressureOnlyPer100": 20.13,
+      "forecastPer100": 19.52,
+      "upliftRawPer100": -6.14,
+      "upliftAdjustedPer100": 7.53,
+      "evidenceWeight": 0.575,
+      "goodMatchRate": 0.522,
+      "phaseShare": {
+        "powerplay": 0,
+        "middle": 0.54,
+        "death": 0.46
+      },
+      "pTop10": 0.2792
+    }
+  ],
+  "bowlers": [
+    {
+      "rank": 1,
+      "player": "Jasprit Bumrah",
+      "team": "India",
+      "competitions": [
+        "ipl",
+        "t20i"
+      ],
+      "pressureBalls": 894,
+      "pressureMatches": 69,
+      "ordinaryBalls": 766,
+      "pressure": {
+        "rate": 7.45,
+        "perOut": 15.7,
+        "outs": 57,
+        "dotPct": 41.1,
+        "boundaryPct": 15.3
+      },
+      "ordinary": {
+        "rate": 6.73,
+        "perOut": 29.5,
+        "dotPct": 50
+      },
+      "rateLift": -0.72,
+      "rawPer100": 36.65,
+      "ordinaryPer100": 22.49,
+      "usualPer100": 9.8,
+      "expectedFromUsualPer100": 8.75,
+      "adjustedPer100": 15.28,
+      "interval90": [
+        4.75,
+        25.82
+      ],
+      "pressureOnlyPer100": 15.28,
+      "forecastPer100": 14.87,
+      "upliftRawPer100": 14.16,
+      "upliftAdjustedPer100": 5.49,
+      "evidenceWeight": 0.435,
+      "goodMatchRate": 0.696,
+      "phaseShare": {
+        "powerplay": 0.434,
+        "middle": 0.235,
+        "death": 0.331
+      },
+      "pTop10": 0.79125
+    },
+    {
+      "rank": 2,
+      "player": "Mitchell Santner",
+      "team": "New Zealand",
+      "competitions": [
+        "ipl",
+        "t20i"
+      ],
+      "pressureBalls": 642,
+      "pressureMatches": 46,
+      "ordinaryBalls": 969,
+      "pressure": {
+        "rate": 7.36,
+        "perOut": 14.3,
+        "outs": 45,
+        "dotPct": 37.1,
+        "boundaryPct": 12.6
+      },
+      "ordinary": {
+        "rate": 7.52,
+        "perOut": 26.9,
+        "dotPct": 36.9
+      },
+      "rateLift": 0.16,
+      "rawPer100": 32.44,
+      "ordinaryPer100": 8.48,
+      "usualPer100": 4.93,
+      "expectedFromUsualPer100": 2.41,
+      "adjustedPer100": 10.8,
+      "interval90": [
+        -0.45,
+        22.05
+      ],
+      "pressureOnlyPer100": 10.8,
+      "forecastPer100": 7.45,
+      "upliftRawPer100": 23.96,
+      "upliftAdjustedPer100": 5.87,
+      "evidenceWeight": 0.356,
+      "goodMatchRate": 0.587,
+      "phaseShare": {
+        "powerplay": 0.182,
+        "middle": 0.708,
+        "death": 0.11
+      },
+      "pTop10": 0.55045
+    },
+    {
+      "rank": 3,
+      "player": "Sunil Narine",
+      "team": "Kolkata Knight Riders",
+      "competitions": [
+        "ipl"
+      ],
+      "pressureBalls": 605,
+      "pressureMatches": 46,
+      "ordinaryBalls": 925,
+      "pressure": {
+        "rate": 6.56,
+        "perOut": 17.3,
+        "outs": 35,
+        "dotPct": 38.5,
+        "boundaryPct": 9.6
+      },
+      "ordinary": {
+        "rate": 7.06,
+        "perOut": 31.9,
+        "dotPct": 37.7
+      },
+      "rateLift": 0.51,
+      "rawPer100": 31.05,
+      "ordinaryPer100": 17.42,
+      "usualPer100": 8.59,
+      "expectedFromUsualPer100": 7.18,
+      "adjustedPer100": 9.87,
+      "interval90": [
+        -1.49,
+        21.24
+      ],
+      "pressureOnlyPer100": 9.87,
+      "forecastPer100": 10.99,
+      "upliftRawPer100": 13.63,
+      "upliftAdjustedPer100": 1.28,
+      "evidenceWeight": 0.342,
+      "goodMatchRate": 0.739,
+      "phaseShare": {
+        "powerplay": 0.133,
+        "middle": 0.725,
+        "death": 0.141
+      },
+      "pTop10": 0.48285
+    },
+    {
+      "rank": 4,
+      "player": "Matheesha Pathirana",
+      "team": "Kolkata Knight Riders",
+      "competitions": [
+        "ipl",
+        "t20i"
+      ],
+      "pressureBalls": 715,
+      "pressureMatches": 48,
+      "ordinaryBalls": 393,
+      "pressure": {
+        "rate": 8.86,
+        "perOut": 11.9,
+        "outs": 60,
+        "dotPct": 37.3,
+        "boundaryPct": 16.8
+      },
+      "ordinary": {
+        "rate": 8.03,
+        "perOut": 19.6,
+        "dotPct": 37.9
+      },
+      "rateLift": -0.83,
+      "rawPer100": 24.01,
+      "ordinaryPer100": 17.14,
+      "usualPer100": 5.73,
+      "expectedFromUsualPer100": 3.46,
+      "adjustedPer100": 8.43,
+      "interval90": [
+        -2.6,
+        19.46
+      ],
+      "pressureOnlyPer100": 8.43,
+      "forecastPer100": 7.23,
+      "upliftRawPer100": 6.87,
+      "upliftAdjustedPer100": 2.7,
+      "evidenceWeight": 0.381,
+      "goodMatchRate": 0.667,
+      "phaseShare": {
+        "powerplay": 0.067,
+        "middle": 0.463,
+        "death": 0.47
+      },
+      "pTop10": 0.40835
+    },
+    {
+      "rank": 5,
+      "player": "Rashid Khan",
+      "team": "Afghanistan",
+      "competitions": [
+        "ipl",
+        "t20i"
+      ],
+      "pressureBalls": 1114,
+      "pressureMatches": 91,
+      "ordinaryBalls": 1543,
+      "pressure": {
+        "rate": 8.05,
+        "perOut": 13,
+        "outs": 86,
+        "dotPct": 36.6,
+        "boundaryPct": 15.3
+      },
+      "ordinary": {
+        "rate": 7.03,
+        "perOut": 25.7,
+        "dotPct": 35.2
+      },
+      "rateLift": -1.02,
+      "rawPer100": 17.95,
+      "ordinaryPer100": 16.56,
+      "usualPer100": 10.04,
+      "expectedFromUsualPer100": 9.07,
+      "adjustedPer100": 8.2,
+      "interval90": [
+        -1.82,
+        18.21
+      ],
+      "pressureOnlyPer100": 8.2,
+      "forecastPer100": 11.37,
+      "upliftRawPer100": 1.39,
+      "upliftAdjustedPer100": -1.85,
+      "evidenceWeight": 0.489,
+      "goodMatchRate": 0.582,
+      "phaseShare": {
+        "powerplay": 0.099,
+        "middle": 0.709,
+        "death": 0.192
+      },
+      "pTop10": 0.38375
+    },
+    {
+      "rank": 6,
+      "player": "Mohammad Nawaz",
+      "team": "Pakistan",
+      "competitions": [
+        "t20i"
+      ],
+      "pressureBalls": 272,
+      "pressureMatches": 23,
+      "ordinaryBalls": 648,
+      "pressure": {
+        "rate": 6.55,
+        "perOut": 11.3,
+        "outs": 24,
+        "dotPct": 42.6,
+        "boundaryPct": 11
+      },
+      "ordinary": {
+        "rate": 7.4,
+        "perOut": 18.5,
+        "dotPct": 30.9
+      },
+      "rateLift": 0.85,
+      "rawPer100": 44.55,
+      "ordinaryPer100": 5.51,
+      "usualPer100": 3.34,
+      "expectedFromUsualPer100": 0.36,
+      "adjustedPer100": 7.52,
+      "interval90": [
+        -5.1,
+        20.13
+      ],
+      "pressureOnlyPer100": 7.52,
+      "forecastPer100": 3.84,
+      "upliftRawPer100": 39.03,
+      "upliftAdjustedPer100": 4.17,
+      "evidenceWeight": 0.19,
+      "goodMatchRate": 0.565,
+      "phaseShare": {
+        "powerplay": 0.17,
+        "middle": 0.776,
+        "death": 0.054
+      },
+      "pTop10": 0.37095
+    },
+    {
+      "rank": 7,
+      "player": "Jacob Duffy",
+      "team": "New Zealand",
+      "competitions": [
+        "t20i",
+        "ipl"
+      ],
+      "pressureBalls": 468,
+      "pressureMatches": 34,
+      "ordinaryBalls": 385,
+      "pressure": {
+        "rate": 9.13,
+        "perOut": 13,
+        "outs": 36,
+        "dotPct": 43.6,
+        "boundaryPct": 22
+      },
+      "ordinary": {
+        "rate": 8.29,
+        "perOut": 16.7,
+        "dotPct": 47
+      },
+      "rateLift": -0.84,
+      "rawPer100": 27.34,
+      "ordinaryPer100": 16.99,
+      "usualPer100": 5.64,
+      "expectedFromUsualPer100": 3.35,
+      "adjustedPer100": 7.03,
+      "interval90": [
+        -4.81,
+        18.86
+      ],
+      "pressureOnlyPer100": 7.03,
+      "forecastPer100": 6.42,
+      "upliftRawPer100": 10.35,
+      "upliftAdjustedPer100": 1.39,
+      "evidenceWeight": 0.287,
+      "goodMatchRate": 0.588,
+      "phaseShare": {
+        "powerplay": 0.584,
+        "middle": 0.169,
+        "death": 0.247
+      },
+      "pTop10": 0.3359
+    },
+    {
+      "rank": 8,
+      "player": "Kuldeep Yadav",
+      "team": "India",
+      "competitions": [
+        "ipl",
+        "t20i"
+      ],
+      "pressureBalls": 727,
+      "pressureMatches": 61,
+      "ordinaryBalls": 1156,
+      "pressure": {
+        "rate": 8.15,
+        "perOut": 14.3,
+        "outs": 51,
+        "dotPct": 34,
+        "boundaryPct": 14.3
+      },
+      "ordinary": {
+        "rate": 7.99,
+        "perOut": 18.6,
+        "dotPct": 33.6
+      },
+      "rateLift": -0.16,
+      "rawPer100": 19.31,
+      "ordinaryPer100": 13.82,
+      "usualPer100": 7.72,
+      "expectedFromUsualPer100": 6.05,
+      "adjustedPer100": 6.72,
+      "interval90": [
+        -4.27,
+        17.72
+      ],
+      "pressureOnlyPer100": 6.72,
+      "forecastPer100": 8.52,
+      "upliftRawPer100": 5.49,
+      "upliftAdjustedPer100": -1,
+      "evidenceWeight": 0.385,
+      "goodMatchRate": 0.557,
+      "phaseShare": {
+        "powerplay": 0.01,
+        "middle": 0.842,
+        "death": 0.149
+      },
+      "pTop10": 0.3098
+    },
+    {
+      "rank": 9,
+      "player": "Bhuvneshwar Kumar",
+      "team": "India",
+      "competitions": [
+        "t20i",
+        "ipl"
+      ],
+      "pressureBalls": 1268,
+      "pressureMatches": 85,
+      "ordinaryBalls": 911,
+      "pressure": {
+        "rate": 8.93,
+        "perOut": 17.1,
+        "outs": 74,
+        "dotPct": 37.3,
+        "boundaryPct": 20.4
+      },
+      "ordinary": {
+        "rate": 7.34,
+        "perOut": 22.8,
+        "dotPct": 49.9
+      },
+      "rateLift": -1.59,
+      "rawPer100": 12.76,
+      "ordinaryPer100": 14.96,
+      "usualPer100": 7.51,
+      "expectedFromUsualPer100": 5.78,
+      "adjustedPer100": 6.11,
+      "interval90": [
+        -3.59,
+        15.8
+      ],
+      "pressureOnlyPer100": 6.11,
+      "forecastPer100": 7.77,
+      "upliftRawPer100": -2.2,
+      "upliftAdjustedPer100": -1.41,
+      "evidenceWeight": 0.522,
+      "goodMatchRate": 0.588,
+      "phaseShare": {
+        "powerplay": 0.603,
+        "middle": 0.083,
+        "death": 0.314
+      },
+      "pTop10": 0.25075
+    },
+    {
+      "rank": 10,
+      "player": "Jofra Archer",
+      "team": "England",
+      "competitions": [
+        "t20i",
+        "ipl"
+      ],
+      "pressureBalls": 598,
+      "pressureMatches": 49,
+      "ordinaryBalls": 619,
+      "pressure": {
+        "rate": 9.26,
+        "perOut": 13.6,
+        "outs": 44,
+        "dotPct": 39.6,
+        "boundaryPct": 23.2
+      },
+      "ordinary": {
+        "rate": 8.62,
+        "perOut": 24.8,
+        "dotPct": 46.2
+      },
+      "rateLift": -0.64,
+      "rawPer100": 19.21,
+      "ordinaryPer100": -3.69,
+      "usualPer100": 0.33,
+      "expectedFromUsualPer100": -3.57,
+      "adjustedPer100": 5.77,
+      "interval90": [
+        -5.62,
+        17.16
+      ],
+      "pressureOnlyPer100": 5.77,
+      "forecastPer100": 0.03,
+      "upliftRawPer100": 22.9,
+      "upliftAdjustedPer100": 5.44,
+      "evidenceWeight": 0.34,
+      "goodMatchRate": 0.551,
+      "phaseShare": {
+        "powerplay": 0.562,
+        "middle": 0.158,
+        "death": 0.28
+      },
+      "pTop10": 0.27025
+    }
+  ],
+  "cohort": {
+    "batting": {
+      "players": 249,
+      "pressureMeanPer100": 8.63,
+      "ordinaryMeanPer100": 1.76,
+      "usualToPressureSlope": 0.458,
+      "forecastPriorStrengthBalls": 937,
+      "usualPriorStrengthBalls": 572,
+      "priorStrengthBalls": 356,
+      "pressureTrueSpreadPer100": 15.64,
+      "pressureSpecificSdPer100": 9.68
+    },
+    "bowling": {
+      "players": 288,
+      "pressureMeanPer100": -1.06,
+      "ordinaryMeanPer100": 2.25,
+      "usualToPressureSlope": 1.301,
+      "forecastPriorStrengthBalls": 3182,
+      "usualPriorStrengthBalls": 1290,
+      "priorStrengthBalls": 1163,
+      "pressureTrueSpreadPer100": 8.52,
+      "pressureSpecificSdPer100": 5.16
+    }
+  },
+  "sensitivity": [
+    {
+      "variant": "Eligibility ≥120 balls, ≥10 matches",
+      "batting": 8,
+      "bowling": 10
+    },
+    {
+      "variant": "Eligibility ≥400 balls, ≥30 matches",
+      "batting": 7,
+      "bowling": 9
+    },
+    {
+      "variant": "Pressure = leverage top 30%",
+      "batting": 4,
+      "bowling": 5
+    },
+    {
+      "variant": "T20I: all nations (associates included)",
+      "batting": 10,
+      "bowling": 9
+    },
+    {
+      "variant": "IPL only",
+      "batting": 4,
+      "bowling": 6
+    },
+    {
+      "variant": "Seasons 2024–2026 only",
+      "batting": 5,
+      "bowling": 7
+    },
+    {
+      "variant": "Forecast estimator (anchored to usual level)",
+      "batting": 7,
+      "bowling": 5
+    },
+    {
+      "variant": "Rank by lower 90% bound",
+      "batting": 7,
+      "bowling": 9
+    }
+  ],
+  "ruleSensitivity": [
+    {
+      "variant": "death from over 15",
+      "battingOverlap": 10,
+      "bowlingOverlap": 9
+    },
+    {
+      "variant": "death from over 17",
+      "battingOverlap": 9,
+      "bowlingOverlap": 10
+    },
+    {
+      "variant": "required rate ≥ 8",
+      "battingOverlap": 9,
+      "bowlingOverlap": 9
+    },
+    {
+      "variant": "required rate ≥ 10",
+      "battingOverlap": 8,
+      "bowlingOverlap": 7
+    },
+    {
+      "variant": "collapse ≤30",
+      "battingOverlap": 10,
+      "bowlingOverlap": 10
+    },
+    {
+      "variant": "collapse ≤40",
+      "battingOverlap": 9,
+      "bowlingOverlap": 10
+    }
+  ],
+  "definitionComparison": [
+    {
+      "id": "rules",
+      "label": "A. Rules: death overs, or chase needing ≥9 an over, or collapse (≥3 down for ≤35)",
+      "batting": {
+        "priorStrengthBalls": 356,
+        "upliftSplitHalf": 0.143,
+        "upliftPlayers": 120,
+        "trueSpreadPer100": 15.64,
+        "players": 154,
+        "splitHalf": 0.15,
+        "reliability": 0.26,
+        "vsOrdinary": 0.155,
+        "playersVsOrdinary": 143
+      },
+      "bowling": {
+        "priorStrengthBalls": 1162,
+        "upliftSplitHalf": -0.037,
+        "upliftPlayers": 148,
+        "trueSpreadPer100": 8.52,
+        "players": 156,
+        "splitHalf": 0.308,
+        "reliability": 0.471,
+        "vsOrdinary": 0.369,
+        "playersVsOrdinary": 165
+      },
+      "shareOfBalls": 0.449,
+      "phaseShare": [
+        0.202,
+        0.311,
+        0.487
+      ]
+    },
+    {
+      "id": "rulesLive",
+      "label": "C. Rules, but only while the match is live (batting side's win probability 2–98%)",
+      "batting": {
+        "priorStrengthBalls": 534,
+        "upliftSplitHalf": 0.068,
+        "upliftPlayers": 123,
+        "trueSpreadPer100": 12.45,
+        "players": 133,
+        "splitHalf": 0.076,
+        "reliability": 0.141,
+        "vsOrdinary": 0.182,
+        "playersVsOrdinary": 150
+      },
+      "bowling": {
+        "priorStrengthBalls": 886,
+        "upliftSplitHalf": 0.099,
+        "upliftPlayers": 136,
+        "trueSpreadPer100": 9.52,
+        "players": 139,
+        "splitHalf": 0.335,
+        "reliability": 0.502,
+        "vsOrdinary": 0.33,
+        "playersVsOrdinary": 158
+      },
+      "shareOfBalls": 0.385,
+      "phaseShare": [
+        0.228,
+        0.314,
+        0.458
+      ]
+    },
+    {
+      "id": "leverage40",
+      "label": "B. Leverage, top 40% of balls (same share as the rules)",
+      "batting": {
+        "priorStrengthBalls": 1093,
+        "upliftSplitHalf": 0.06,
+        "upliftPlayers": 136,
+        "trueSpreadPer100": 8.94,
+        "players": 144,
+        "splitHalf": 0.233,
+        "reliability": 0.378,
+        "vsOrdinary": 0.329,
+        "playersVsOrdinary": 155
+      },
+      "bowling": {
+        "priorStrengthBalls": 2028,
+        "upliftSplitHalf": 0.006,
+        "upliftPlayers": 139,
+        "trueSpreadPer100": 6.64,
+        "players": 144,
+        "splitHalf": 0.077,
+        "reliability": 0.143,
+        "vsOrdinary": 0.282,
+        "playersVsOrdinary": 163
+      },
+      "shareOfBalls": 0.392,
+      "phaseShare": [
+        0.469,
+        0.297,
+        0.235
+      ]
+    },
+    {
+      "id": "leverage30",
+      "label": "Leverage, top 30% of balls",
+      "batting": {
+        "priorStrengthBalls": 516,
+        "upliftSplitHalf": 0.183,
+        "upliftPlayers": 116,
+        "trueSpreadPer100": 12.94,
+        "players": 118,
+        "splitHalf": 0.288,
+        "reliability": 0.447,
+        "vsOrdinary": 0.335,
+        "playersVsOrdinary": 137
+      },
+      "bowling": {
+        "priorStrengthBalls": 1915,
+        "upliftSplitHalf": -0.072,
+        "upliftPlayers": 110,
+        "trueSpreadPer100": 6.86,
+        "players": 111,
+        "splitHalf": -0.014,
+        "reliability": -0.028,
+        "vsOrdinary": 0.325,
+        "playersVsOrdinary": 131
+      },
+      "shareOfBalls": 0.293,
+      "phaseShare": [
+        0.438,
+        0.34,
+        0.222
+      ]
+    },
+    {
+      "id": "leverage10",
+      "label": "Leverage, top 10% of balls",
+      "batting": {
+        "priorStrengthBalls": 1039,
+        "upliftSplitHalf": -0.273,
+        "upliftPlayers": 17,
+        "trueSpreadPer100": 8.37,
+        "players": 17,
+        "splitHalf": -0.259,
+        "reliability": -0.699,
+        "vsOrdinary": 0.083,
+        "playersVsOrdinary": 33
+      },
+      "bowling": {
+        "priorStrengthBalls": 1209,
+        "upliftSplitHalf": -0.176,
+        "upliftPlayers": 26,
+        "trueSpreadPer100": 8.06,
+        "players": 26,
+        "splitHalf": -0.132,
+        "reliability": -0.304,
+        "vsOrdinary": 0.382,
+        "playersVsOrdinary": 36
+      },
+      "shareOfBalls": 0.097,
+      "phaseShare": [
+        0.252,
+        0.423,
+        0.326
+      ]
+    },
+    {
+      "id": "difficulty",
+      "label": "Difficulty: batting side's win probability 5–35% (behind but alive)",
+      "batting": {
+        "priorStrengthBalls": 13723,
+        "upliftSplitHalf": 0.173,
+        "upliftPlayers": 81,
+        "trueSpreadPer100": 2.66,
+        "players": 82,
+        "splitHalf": 0.235,
+        "reliability": 0.38,
+        "vsOrdinary": 0.256,
+        "playersVsOrdinary": 113
+      },
+      "bowling": {
+        "priorStrengthBalls": 430,
+        "upliftSplitHalf": 0.111,
+        "upliftPlayers": 87,
+        "trueSpreadPer100": 14.48,
+        "players": 87,
+        "splitHalf": 0.22,
+        "reliability": 0.36,
+        "vsOrdinary": 0.337,
+        "playersVsOrdinary": 111
+      },
+      "shareOfBalls": 0.228,
+      "phaseShare": [
+        0.296,
+        0.492,
+        0.212
+      ]
+    }
+  ]
+}

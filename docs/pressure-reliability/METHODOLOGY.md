@@ -63,17 +63,17 @@ We compared four families of definitions and chose using evidence, not appeal. E
 
 Against leverage at the same share of balls, rule A needs fewer balls to separate players. Batting K is 424
 against 803, and bowling K is 1122 against 3214.
-Rule A is also the only family whose uplift repeats for both roles at all.
+Because one definition must serve both roles, we chose the one with the lowest *combined* K (batting + bowling).
+Some alternatives do better for one role alone, as the table shows, but each is much worse for the other.
 
 Leverage was built and validated, but it is *not* used to define pressure. Leverage is the expected change in win probability from
 the next ball, using calibrated logistic win-probability models. On matches from 2023 on, which the
 models never saw, the Brier score was 0.1133 for chases (against 0.25 for always guessing
 the base rate) and 0.2042 for first innings (against 0.2495).
 
-Leverage concentrates on powerplay balls, because early wickets move the projected result. That is true, but it makes a weaker
-pressure definition for comparing players. Our "difficulty" variant (batting side's win probability between 5% and 35%) also
-loses on both tests. Adding a "match still live" condition to rule A (model C) makes it worse. Even hopeless-looking chases still
-separate good and bad finishers.
+Leverage concentrates on powerplay balls, because early wickets move the projected result. That is true, but in this data it makes
+a weaker definition for comparing players (higher K in both roles). Uplift repeatability is low under every definition
+(see the table), which is why uplift is reported but not used to rank (Section 4).
 
 **Threshold sensitivity.** We moved each threshold on its own and re-ranked. Top-10 overlap with the selected thresholds:
 
@@ -91,7 +91,7 @@ separate good and bad finishers.
 Each delivery gets a value measured from the player's own side, in runs:
 
 * **Expected outcome.** We use the average for the same innings, over and wickets-down state (0–6+), pooled across all
-  15,89,302 deliveries and scaled to the scoring rate of that competition-season. The peer
+  1,589,302 deliveries and scaled to the scoring rate of that competition-season. The peer
   baseline never uses the evaluated player's identity.
 * **Wicket cost.** A wicket costs the runs it removes from the rest of the innings: the fall in expected remaining runs, read from a
   table by overs left and wickets down that is estimated from completed first innings and forced to be monotone.

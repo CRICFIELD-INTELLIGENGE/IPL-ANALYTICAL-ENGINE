@@ -1,6 +1,8 @@
 // SupeRR Selector S2, Round 1 — official rankings + methodology report from the published snapshot.
 //
 //   node --import tsx scripts/pressure/rankings-report.ts
+//   Official data: PRESSURE_SNAPSHOT=data/pressure-official/pressure-reliability.json \
+//     PRESSURE_REPORT_DIR=../../docs/pressure-reliability/official node --import tsx scripts/pressure/rankings-report.ts
 //
 // Writes docs/pressure-reliability/{rankings.json, METHODOLOGY.md}. Every number comes from
 // the snapshot and the serving code the website uses, so the report, the API and the
@@ -9,6 +11,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { pressureReliability, pressureModelInfo, type PressureQuery } from "../../src/services/pressure/reliability";
+import { computePressureReliability } from "../../src/services/pressure/engine";
 
 const OFFICIAL: Omit<PressureQuery, "role"> = {
   comps: ["ipl", "t20i"], from: 2022, to: 2026, definition: "rules", minBalls: 250, minMatches: 20,
@@ -58,7 +61,21 @@ const sensitivity = variants.map(v => {
 });
 
 // ── Write rankings.json ─────────────────────────────────────────────────────
-const outDir = path.resolve(process.cwd(), "..", "..", "docs", "pressure-reliability");
+const outDir = process.env.PRESSURE_REPORT_DIR ? path.resolve(process.env.PRESSURE_REPORT_DIR) : path.resolve(process.cwd(), "..", "..", "docs", "pressure-reliability");
+const OFFICIAL_DATA = /official/i.test(String(info.source));
+const ingest = (() => {
+  const fp = path.resolve(process.cwd(), "..", "..", "lib", "cricket-data", "official", "ingest-report.json");
+  return OFFICIAL_DATA && fs.existsSync(fp) ? JSON.parse(fs.readFileSync(fp, "utf8")) : null;
+})();
+// The Cricsheet build's top 10 under the same configuration, for a cross-source comparison.
+const cricsheetTop = (() => {
+  if (!OFFICIAL_DATA) return null;
+  const fp = path.resolve(process.cwd(), "data", "pressure", "pressure-reliability.json");
+  if (!fs.existsSync(fp)) return null;
+  const snap = JSON.parse(fs.readFileSync(fp, "utf8"));
+  return Object.fromEntries(ROLES.map(r => [r, computePressureReliability(snap, { ...OFFICIAL, role: r }).players.slice(0, 10).map(p => p.player)])) as Record<Role, string[]>;
+})();
+const surname = (n: string) => n.split(" ").at(-1)!.toLowerCase();
 fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(path.join(outDir, "rankings.json"), JSON.stringify({
   modelVersion: official.batting.version, generatedAt: new Date().toISOString(), configuration: OFFICIAL,
@@ -91,7 +108,7 @@ const rawLeaders = (role: Role) => [...official[role].players].sort((a, b) => b.
 const movers = (role: Role) => rawLeaders(role).filter(p => !top10[role].some(t => t.player === p.player))
   .map(p => `${p.player} (raw ${sg(p.rawPer100)} from ${p.pressureBalls} balls → score ${sg(p.adjustedPer100)})`).join("; ") || "none";
 
-const md = `# Who Delivers Under Pressure? — Methodology Report
+const md = `# Who Delivers Under Pressure? — Methodology Report${OFFICIAL_DATA ? " (official data pack)" : ""}
 
 **SupeRR Selector Season 2 · Round 1** · CricField Pressure Reliability engine · model \`${official.batting.version}\` · generated ${new Date().toISOString().slice(0, 10)}
 
@@ -112,7 +129,22 @@ empirical Bayes. A short hot streak cannot top the table.
 |---|---|---|
 ${Object.entries(info.coverage).filter(([, c]: any) => c.matches > 0).map(([code, c]: any) => `| ${c.name} (\`${code}\`) | ${c.matches} | ${c.from} to ${c.to} |`).join("\n")}
 
-* Ball-by-ball data come from Cricsheet (ODC-BY 1.0), loaded into CricField's warehouse by the repository's pipeline.
+${OFFICIAL_DATA ? `* **Source: the supplied SupeRR Selector S2 data pack** (${(ingest?.deliveries ?? 200999).toLocaleString("en-US")} deliveries, ${ingest?.matches ?? 883} matches).
+  All modelling (expected outcomes, wicket cost, win probability, pressure, rankings) uses only this data.
+* **How the pack was read.** \`runs\` is the batter's runs; \`extras1_runs\` is an extras-type code, not a run count. \`Overstep\`
+  and \`other\` are no-balls, and \`extras_2_runs\` holds byes or leg-byes off a no-ball. We confirmed these readings by
+  aligning 1,479 innings ball for ball with an independent public source (Cricsheet).
+* **Imputed extras.** The pack does not record how many runs a wide, bye or leg-bye produced, so each counts as 1 (a penalty as 5).
+  This only affects team totals and the chase target; batter runs, wickets and runs charged to bowlers are exact, apart from
+  wide boundaries. Checked against the pack's own results:
+  ${ingest ? `wicket margins match exactly in ${ingest.wicketMargins.exact} of ${ingest.wicketMargins.checked} matches (the single exception is a margin inconsistent with the pack's own ball data); run margins are within 3 runs in ${ingest.runMargins.within3} of ${ingest.runMargins.checked} matches (mean absolute difference ${ingest.runMargins.meanAbs} runs).` : "see ingest-report.json."}
+* **Rankings use** IPL 2022–2026 plus T20Is between ICC Full Members (Afghanistan included): ${official.batting.matches} matches.
+  T20Is involving associate nations and the Emerging / Rising Stars tournaments (A-teams) feed only the general models.
+  A robustness row below adds associate T20Is back.
+* Super overs are excluded. Rain-affected chases use the pack's revised target and overs. Reduced first innings are left out of the
+  first-innings models.
+
+` : `* Ball-by-ball data come from Cricsheet (ODC-BY 1.0), loaded into CricField's warehouse by the repository's pipeline.
   Every delivery passes the check *runs.total = batter + extras*, and *extras = wides + no-balls + byes + leg-byes + penalty*,
   with 0 failures across all competitions.
 * **Rankings use** the IPL (2022 onward) plus men's T20Is (2022 onward) where both sides are ICC Full Members:
@@ -122,7 +154,7 @@ ${Object.entries(info.coverage).filter(([, c]: any) => c.matches > 0).map(([code
 * Super overs are excluded. Rain-revised targets come from the official revised target. Reduced first innings, whose length is
   not recorded, are excluded from the first-innings models.
 
-## 2. Defining pressure (the same for bat and ball)
+`}## 2. Defining pressure (the same for bat and ball)
 
 We compared four families of definitions and chose using evidence, not appeal. Each candidate is applied to the same deliveries
 (IPL + Full-Member T20Is, 2022 onward) and scored on two tests:
@@ -145,17 +177,17 @@ ${defs.map(d => `| ${d.label} | ${pc(d.shareOfBalls)} | ${d.batting.priorStrengt
 
 Against leverage at the same share of balls, rule A needs fewer balls to separate players. Batting K is ${def("rules").batting.priorStrengthBalls}
 against ${def("leverage40").batting.priorStrengthBalls}, and bowling K is ${def("rules").bowling.priorStrengthBalls} against ${def("leverage40").bowling.priorStrengthBalls}.
-Rule A is also the only family whose uplift repeats for both roles at all.
+Because one definition must serve both roles, we chose the one with the lowest *combined* K (batting + bowling).
+Some alternatives do better for one role alone, as the table shows, but each is much worse for the other.
 
 Leverage was built and validated, but it is *not* used to define pressure. Leverage is the expected change in win probability from
 the next ball, using calibrated logistic win-probability models. On matches from ${wpv.chase.holdoutFrom.slice(0, 4)} on, which the
 models never saw, the Brier score was ${wpv.chase.model.brier} for chases (against ${wpv.chase.baseline.brier} for always guessing
 the base rate) and ${wpv.firstInnings.model.brier} for first innings (against ${wpv.firstInnings.baseline.brier}).
 
-Leverage concentrates on powerplay balls, because early wickets move the projected result. That is true, but it makes a weaker
-pressure definition for comparing players. Our "difficulty" variant (batting side's win probability between 5% and 35%) also
-loses on both tests. Adding a "match still live" condition to rule A (model C) makes it worse. Even hopeless-looking chases still
-separate good and bad finishers.
+Leverage concentrates on powerplay balls, because early wickets move the projected result. That is true, but in this data it makes
+a weaker definition for comparing players (higher K in both roles). Uplift repeatability is low under every definition
+(see the table), which is why uplift is reported but not used to rank (Section 4).
 
 **Threshold sensitivity.** We moved each threshold on its own and re-ranked. Top-10 overlap with the selected thresholds:
 
@@ -168,7 +200,7 @@ ${info.ruleSensitivity.map((r: any) => `| ${r.variant} | ${r.battingOverlap} | $
 Each delivery gets a value measured from the player's own side, in runs:
 
 * **Expected outcome.** We use the average for the same innings, over and wickets-down state (0–6+), pooled across all
-  ${info.deliveries.toLocaleString("en-IN")} deliveries and scaled to the scoring rate of that competition-season. The peer
+  ${info.deliveries.toLocaleString("en-US")} deliveries and scaled to the scoring rate of that competition-season. The peer
   baseline never uses the evaluated player's identity.
 * **Wicket cost.** A wicket costs the runs it removes from the rest of the innings: the fall in expected remaining runs, read from a
   table by overs left and wickets down that is estimated from completed first innings and forced to be monotone.
@@ -224,7 +256,14 @@ positive pressure value.
 **Where raw statistics and the model disagree.** Players in the raw top 10 who drop out after the sample-size adjustment:
 batting: ${movers("batting")}. Bowling: ${movers("bowling")}.
 
-### Robustness: top-10 overlap under alternative choices
+${cricsheetTop ? `### Cross-check against an independent source
+
+The same method, run on Cricsheet's public ball-by-ball data (which covers some different T20Is and has no Afghanistan matches),
+keeps **${top10.batting.filter(p => cricsheetTop.batting.some(c => surname(c) === surname(p.player))).length} of 10 batters** and
+**${top10.bowling.filter(p => cricsheetTop.bowling.some(c => surname(c) === surname(p.player))).length} of 10 bowlers**.
+The leaders (Suryakumar Yadav and Jasprit Bumrah) are the same in both.
+
+` : ""}### Robustness: top-10 overlap under alternative choices
 
 | Alternative | Batters kept (of 10) | Bowlers kept (of 10) |
 |---|---|---|
@@ -237,7 +276,7 @@ ${sensitivity.map(r => `| ${r.variant} | ${r.batting} | ${r.bowling} |`).join("\
   neighbouring ranks are close calls. P(top 10) shows which places are secure.
 * **Bowling is harder to separate than batting** (K ${official.bowling.cohort.priorStrengthBalls} against ${official.batting.cohort.priorStrengthBalls}).
   Only the leaders' ranges sit clearly above average.
-* **Not modelled:** ball tracking, field placements, pitch and weather. These are not in the data and were not invented. Bowling
+${OFFICIAL_DATA ? "* **Imputed extras** (Section 1) can move a chase target by a few runs, which shifts some balls across the required-rate-9 line. The threshold sensitivity in Section 2 covers this: moving that line by a full run an over keeps 7 to 9 of each top 10.\n" : ""}* **Not modelled:** ball tracking, field placements, pitch and weather. These are not in the data and were not invented. Bowling
   style is not used.
 * **Team strength** is adjusted per team-year. Associate-nation T20Is are excluded from the rankings, because their strength cannot
   be estimated reliably against Full Members from the few cross-tier matches.
