@@ -458,14 +458,11 @@ function MatchIntelligenceView({ match, activeTab, useProviderDetails }: { match
         <div className="flex items-center gap-2">
           <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-white/50">CricField Match Center</span>
         </div>
-        <div className="flex items-center gap-6">
-          <span className="text-[10px] font-mono text-slate-500 dark:text-white/40">
-            {info.state === "Complete" ? "Verified Official Ball-by-Ball Match Record" : "Live Telemetry Feed"}
-          </span>
-          {info.state !== "Complete" && (
+        {info.state !== "Complete" && (
+          <div className="flex items-center gap-6">
             <span className="text-[10px] font-bold uppercase tracking-widest">Last Synced: {new Date().toLocaleTimeString()}</span>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

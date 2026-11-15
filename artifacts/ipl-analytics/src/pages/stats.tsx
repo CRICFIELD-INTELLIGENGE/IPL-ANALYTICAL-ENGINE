@@ -53,7 +53,7 @@ const TABS = [
   { id: "head2head", label: "Head to Head", Icon: Crosshair },
   { id: "stat-builder", label: "Stat Builder", Icon: Filter },
   { id: "scenario-intelligence", label: "Scenario Intelligence", Icon: Cpu },
-  { id: "tactics", label: "Tactical Execution & Length Matrix", Icon: BarChart2 },
+  { id: "tactics", label: "Tactics & Length", Icon: BarChart2 },
   { id: "ask", label: "Ask AI", Icon: Cpu },
 ] as const;
 type Tab = typeof TABS[number]["id"];
@@ -1236,19 +1236,19 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         {filterControls}
 
         {/* Telemetry Summary Banner */}
-        <div className="mb-6 bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4 animate-fade-in relative overflow-hidden group shadow-sm dark:shadow-none">
+        <div className="mb-6 bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 p-4 rounded-2xl grid grid-cols-1 md:grid-cols-12 gap-4 items-center animate-fade-in relative overflow-hidden group shadow-sm dark:shadow-none">
           <img
             src="/advance stats title image.png"
             className="absolute right-0 top-0 h-full w-auto object-cover opacity-15 dark:opacity-25 pointer-events-none mix-blend-luminosity group-hover:opacity-25 dark:group-hover:opacity-35 transition-opacity"
             alt="Advance Stats Banner"
           />
-          <div className="flex items-center gap-3 relative z-10">
-            <div className="p-2 bg-primary/20 rounded-xl text-primary">
+          <div className="md:col-span-7 flex items-center gap-3 relative z-10">
+            <div className="p-2 bg-primary/20 rounded-xl text-primary shrink-0">
               <Activity className="w-5 h-5 animate-pulse" />
             </div>
-            <div>
-              <div className="text-[12px] font-black text-slate-900 dark:text-white uppercase tracking-wider">Multidimensional Slicing Telemetry</div>
-              <div className="text-[10px] text-slate-600 dark:text-white/50 font-bold mt-0.5">
+            <div className="min-w-0">
+              <div className="text-[12px] font-black text-slate-900 dark:text-white uppercase tracking-wider truncate">Multidimensional Slicing Telemetry</div>
+              <div className="text-[10px] text-slate-600 dark:text-white/50 font-bold mt-0.5 truncate">
                 {filters.season !== "All Seasons" ? `${filters.season} ` : "All-Time "}
                 {filters.team !== "All Teams" ? `${filters.team} ` : ""}
                 {filters.opposition !== "All Opponents" ? `vs ${filters.opposition} ` : ""}
@@ -1256,7 +1256,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-4 relative z-10 flex-wrap">
+          <div className="md:col-span-5 flex items-center justify-start md:justify-end gap-4 relative z-10 flex-wrap">
             {themeTeam && (
               <button
                 onClick={() => {
@@ -1291,9 +1291,9 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
           </div>
         </div>
 
-        {/* TAB BAR & SEE ALL OPTION */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 w-fit max-w-full overflow-x-auto no-scrollbar">
+        {/* TAB BAR */}
+        <div className="w-full overflow-x-auto no-scrollbar pb-1">
+          <div className="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 w-fit max-w-full">
             {TABS.map(t => (
               <button
                 key={t.id}
@@ -1308,16 +1308,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               </button>
             ))}
           </div>
-
-          {(activeTab === "batters" || activeTab === "bowlers") && (
-            <div className="flex items-center">
-              <span className="text-xs font-mono text-slate-500 dark:text-white/40">
-                {activeTab === "batters"
-                  ? `${totalBatterCount} Batters`
-                  : `${totalBowlerCount} Bowlers`}
-              </span>
-            </div>
-          )}
         </div>
 
         {/* QUERY CHAIN BREADCRUMB TRAIL */}
