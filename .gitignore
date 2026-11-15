@@ -110,3 +110,7 @@ docs/data-repairs/**/backup/
 /artifacts/api-server/data/platform.sqlite*
 # Player Intelligence: training tables are rebuilt by intelligence:train; published snapshots are tracked.
 /artifacts/api-server/data/intelligence/work/
+
+.vercel
+
+/artifacts/api-server/data/*.db

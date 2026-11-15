@@ -59,9 +59,9 @@ def source_url(value, provider=None):
     return value
 
 
-def scoped_date(value):
+def scoped_date(value, cutoff=END):
     day = date.fromisoformat(value)
-    if not START <= day <= END:
+    if not START <= day <= cutoff:
         raise ValueError(f"Date outside release window: {value}")
     return day
 
@@ -113,7 +113,7 @@ def canonical_id(code, fmt, day, teams, fixture_key):
     return "dom_" + hashlib.sha256(value.encode()).hexdigest()[:24]
 
 
-def match_record(row):
+def match_record(row, cutoff=END):
     provider = row["provider"]
     if provider not in (*DOMAINS, "Official"):
         raise ValueError(f"Unsupported provider: {provider}")
@@ -121,7 +121,8 @@ def match_record(row):
     m["source_match_id"] = str(m["source_match_id"]).strip()
     if not m["source_match_id"] or m["competition_code"] not in REGISTRY:
         raise ValueError("Match must have a source ID and a registered competition")
-    start, end = scoped_date(m["start_date"]), scoped_date(m.get("end_date") or m["start_date"])
+    start = scoped_date(m["start_date"], cutoff)
+    end = scoped_date(m.get("end_date") or m["start_date"], cutoff)
     m["end_date"] = end.isoformat()
     if end < start or m["status"] not in STATUSES or m["team1"].casefold() == m["team2"].casefold():
         raise ValueError("Invalid match date, status, or teams")
@@ -282,6 +283,7 @@ def main():
     parser.add_argument("--cricsheet", type=Path, nargs="*", default=[], help="Official local Cricsheet JSON ZIPs")
     parser.add_argument("--identity-map", type=Path, help="Verified provider player ID to CricField ID CSV")
     parser.add_argument("--edition-evidence", type=Path, help="CSV of verified edition statuses and expected completed counts")
+    parser.add_argument("--through", type=date.fromisoformat, default=END, help="Inclusive match cutoff (YYYY-MM-DD)")
     args = parser.parse_args()
     out = args.output
     out.mkdir(parents=True, exist_ok=True)
@@ -311,7 +313,7 @@ def main():
     for raw in sources:
         key = (raw.get("provider"), str(raw.get("source_match_id")))
         try:
-            m = match_record(raw)
+            m = match_record(raw, args.through)
             if m["provider"] != "Cricsheet" and m.get("deliveries"):
                 raise ValueError("Delivery rows are supported only through the licensed Cricsheet adapter")
             old = records.get(key)
@@ -319,7 +321,7 @@ def main():
                 raise ValueError("Conflicting match metadata for same provider ID")
             if old and old.get("verified_fixture_key") and not m.get("verified_fixture_key"):
                 m["verified_fixture_key"] = old["verified_fixture_key"]
-                m = match_record(m)
+                m = match_record(m, args.through)
             inn = validated_innings(m)
             m["parsed"] = bool(inn)
             m["verified"] = bool(inn and m["status"] in FINISHED)
@@ -420,7 +422,7 @@ def main():
         raise ValueError("Duplicate canonical player-match records")
     coverage = []
     for code,(name,group) in REGISTRY.items():
-        for y in range(2024,2027):
+        for y in range(START.year, args.through.year + 1):
             matches = [m for m in entries if m["competition_code"]==code and m["start_date"].startswith(str(y))]
             proof = editions.get((code,y), {})
             expected = int(proof["expected_completed_matches"]) if proof.get("expected_completed_matches") else None

@@ -49,3 +49,21 @@ Each scorecard must include expected_innings, the number of innings confirmed in
 the source. The command reconciles the innings, calls the existing domestic
 importer, and writes the six CricHeroes CSVs. Supply --identity-map to resolve
 provider IDs with verified evidence. This workflow writes staging exports.
+
+## SMAT refresh
+
+Online refreshes persist the SMAT ZIP and HTTP validators in the Scout cache
+(`--cache-dir` overrides the default). The next run reuses the ZIP if Cricsheet
+returns HTTP 304. Network and upstream server failures can reuse the last usable
+ZIP with a stale-cache message. Use `--offline` for a cache-only run.
+
+For other registered domestic tournaments, run the same command with
+`--scorecards-only --scorecards PATH_TO_AUTHORIZED_JSONL`. Keep the provider
+exports as checkpoints and pass any verified fixture and identity mappings.
+
+Run from the repository root with the existing domestic baseline and a fresh output directory.
+The refresh uses the official Cricsheet SMAT archive by default.
+
+    python scripts/sync-scout-smat.py --baseline DOMESTIC_SCORECARD_DB --output RELEASE_DIRECTORY
+
+Pass `--archive LOCAL_ZIP` to run from a downloaded copy and `--through YYYY-MM-DD` to reproduce a prior cutoff. The default cutoff is today's date in India. Pass existing fixture manifests, authorized scorecards and player mappings with `--fixtures`, `--scorecards` and `--identity-map`. The command prints the latest match date in the archive so a stale archive can be distinguished from a fresh one. Each run writes a separate staging release. New fixtures can appear only after an input source publishes them.

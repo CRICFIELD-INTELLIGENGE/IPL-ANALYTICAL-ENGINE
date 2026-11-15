@@ -37,7 +37,7 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
       <Link href={item.href!} className="home-lead-story h-full min-h-0 block group">
         <div className="bg-white dark:bg-[#081622] rounded-[16px] border border-slate-200 dark:border-[#19303c] overflow-hidden flex flex-col group-hover:border-primary/50 transition-all cursor-pointer min-w-0 shadow-lg dark:shadow-2xl h-full">
           {/* Cover Media */}
-          <div className="home-story-media relative w-full aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] overflow-hidden bg-slate-950 dark:bg-[#06111a] shrink-0">
+          <div className="home-story-media relative w-full aspect-video overflow-hidden bg-slate-950 dark:bg-[#06111a] shrink-0">
             <LibraryMedia
               imageId={item.imageId}
               title={item.title}
@@ -45,7 +45,7 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
               code={code}
               teamName={meta.name}
               aspect={item.aspect}
-              preserveAspectRatio={false}
+              preserveAspectRatio={true}
               isCoverStory={true}
             />
           </div>
@@ -88,14 +88,10 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
               )}
             </div>
 
-            {/* Bottom Action Strip & Telemetry Footprint */}
+            {/* Bottom Action Strip */}
             <div className="mt-5 pt-3.5 border-t border-slate-200/80 dark:border-white/10 flex items-center justify-between gap-3 flex-wrap">
-              <div className="flex items-center gap-2.5 text-xs font-mono text-slate-500 dark:text-slate-400">
-                <span className="font-semibold text-primary">{item.meta || "3 min read"}</span>
-                <span className="text-slate-300 dark:text-white/20">•</span>
-                <span>Ball-by-ball model</span>
-                <span className="text-slate-300 dark:text-white/20 hidden sm:inline">•</span>
-                <span className="hidden sm:inline">2008–2026 Archive</span>
+              <div className="flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-slate-400">
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400">Editorial Investigation</span>
               </div>
 
               <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-1.5 rounded-lg bg-primary/10 text-primary border border-primary/25 group-hover:bg-primary group-hover:text-slate-950 transition-all shadow-sm">
@@ -118,13 +114,12 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
           <Link key={item.key} href={item.href!} className="home-lead-story h-full min-h-0 block">
             <div className="bg-white dark:bg-[#081622] rounded-[14px] border border-slate-200 dark:border-[#19303c] overflow-hidden flex flex-col group hover:border-primary/40 transition-all cursor-pointer min-w-0 shadow-md dark:shadow-xl h-full">
               <div className="home-story-media relative w-full aspect-video overflow-hidden bg-slate-950 dark:bg-[#06111a]">
-                <LibraryMedia imageId={item.imageId} title={item.title} accent={meta.accent} code={code} teamName={meta.name} aspect={item.aspect} preserveAspectRatio={false} />
+                <LibraryMedia imageId={item.imageId} title={item.title} accent={meta.accent} code={code} teamName={meta.name} aspect={item.aspect} preserveAspectRatio={true} />
               </div>
               <div className="flex-1 min-h-0 p-4 flex flex-col justify-between border-t border-slate-100 dark:border-white/10 bg-slate-50/50 dark:bg-white/[0.02]">
                 <p className="font-bold text-sm sm:text-base leading-snug text-slate-900 dark:text-white/95 group-hover:text-primary transition-colors line-clamp-2 mb-2 tracking-tight">{item.title}</p>
                 <div className="flex items-center justify-between gap-2 mt-auto pt-1">
                   <p className="text-[11px] font-bold truncate tracking-wide" style={{ color: meta.accent }}>{aspect}</p>
-                  <p className="text-[11px] text-primary font-mono font-bold uppercase tracking-wider shrink-0">{item.meta}</p>
                 </div>
               </div>
             </div>

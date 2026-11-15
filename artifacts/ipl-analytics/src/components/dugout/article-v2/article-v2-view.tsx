@@ -506,8 +506,6 @@ export function ArticleV2View({ entry }: { entry: IndexEntry }) {
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-2 font-mono">
-              <Clock className="h-3.5 w-3.5 text-cyan-600 dark:text-[#4AC9D8]" />
-              <span>{entry.readMinutes} min read</span>
               {a.seasons.slice(0, 3).map((s) => (
                 <span key={s} className="rounded border border-slate-200 dark:border-[#2A4050] bg-slate-100 dark:bg-[#192D3C] px-1.5 py-0.5 text-[10px] text-slate-700 dark:text-[#EFF5F7]">{s}</span>
               ))}

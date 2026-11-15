@@ -9,6 +9,7 @@ import { stamp, useIpl2027Desk } from "@/lib/ipl-2027-desk";
 import { teamColor, playerSlug } from "@/lib/aggregates";
 import { paletteForCode } from "@/lib/team-palette";
 import { isTeamCode } from "@/lib/team-context";
+import { AdVessel } from "@/components/ad-vessel";
 import { usePulseAuction, pulseMoney, lotValue, PULSE_TABS, type PulseTab, type PulseLot, type PulseModel, type PulseTeam, type PulseStatus } from "@/lib/pulse-auction";
 import {
   DropdownMenu,
@@ -486,11 +487,7 @@ function EventStatusCard({
         {/* Verification Meta Footer */}
         <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 dark:text-white/40 pt-1">
           <span className="truncate">
-            {updated
-              ? active === 2027
-                ? `Updated: ${stamp(updated)}`
-                : `Verified: ${updated}`
-              : "Official BCCI Release"}
+            Official BCCI Release
           </span>
           <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0 flex items-center gap-1">
             <CheckCircle2 className="w-3 h-3" />
@@ -721,9 +718,12 @@ function TopHammerPurchases({ model }: { model: PulseModel }) {
                 {i + 1}
               </span>
               <div className="flex-1 min-w-0">
-                <div className="truncate font-bold text-[11px] sm:text-xs text-slate-900 dark:text-white tracking-tight leading-tight">
+                <Link
+                  href={`/players/${playerSlug(l.player)}`}
+                  className="block truncate font-bold text-[11px] sm:text-xs text-slate-900 dark:text-white tracking-tight leading-tight hover:text-emerald-500 hover:underline"
+                >
                   {l.player}
-                </div>
+                </Link>
                 <div className="text-[9px] text-slate-500 dark:text-white/40 leading-tight">{roleBand(l.role)}</div>
               </div>
               <div className="flex flex-col items-end shrink-0">
@@ -747,7 +747,7 @@ function TopHammerPurchases({ model }: { model: PulseModel }) {
 
       <div className="text-[9px] text-slate-400 dark:text-white/40 pt-2 mt-2 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
         <span>Highest Historical Bids</span>
-        <span>Verified Results</span>
+        <span>Official Results</span>
       </div>
     </div>
   );
@@ -822,11 +822,7 @@ function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse
                   )}
                 </div>
                 <div className="text-[11px] font-mono text-slate-400 dark:text-white/40">
-                  {model.foundation?.verifiedAt
-                    ? `Verified: ${model.foundation.verifiedAt}`
-                    : model.season === 2027 && pulse.desk.data?.updatedAt
-                    ? `Updated: ${stamp(pulse.desk.data.updatedAt)}`
-                    : "Official BCCI Release"}
+                  Official BCCI Release
                 </div>
               </div>
 
@@ -932,6 +928,9 @@ function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse
               </div>
             </button>
           ))}
+          <div className="rounded-[20px] overflow-hidden border border-slate-200 dark:border-white/10 p-2 bg-slate-50 dark:bg-[#0B1020]/60 shadow-sm">
+            <AdVessel format="in-feed" minHeight={90} className="w-full" />
+          </div>
         </div>
       </div>
 
@@ -1200,13 +1199,32 @@ function TeamDrawer({ t, model }: { t: PulseTeam; model: PulseModel }) {
     <div className="rounded-xl border p-4 grid gap-3 md:grid-cols-2 text-[11px] bg-white dark:bg-[#0B1020]" style={teamCard(t.code)}>
       <div>
         <div className="font-black uppercase text-[9px] tracking-widest text-emerald-600 dark:text-emerald-400 mb-1">Retained core ({t.retained ?? t.core.length})</div>
-        <div className="text-slate-700 dark:text-white/70 leading-relaxed">{t.core.length ? t.core.map(p => p.name).join(", ") : "No retention list recorded."}</div>
+        <div className="text-slate-700 dark:text-white/70 leading-relaxed">
+          {t.core.length ? (
+            t.core.map((p, idx) => (
+              <React.Fragment key={p.name + idx}>
+                {idx > 0 && ", "}
+                <Link href={`/players/${playerSlug(p.name)}`} className="text-slate-900 dark:text-white font-medium hover:text-emerald-500 hover:underline">
+                  {p.name}
+                </Link>
+              </React.Fragment>
+            ))
+          ) : "No retention list recorded."}
+        </div>
         {needs && <div className="mt-2 text-amber-700 dark:text-amber-200/80 font-medium">Recruitment: {needs}{t.overseas != null && model.foundation ? `, ${Math.max(0, model.foundation.maxOverseas - t.overseas)} overseas` : ""}.</div>}
       </div>
       <div>
         <div className="font-black uppercase text-[9px] tracking-widest text-pink-600 dark:text-pink-300 mb-1">Bought at auction ({t.purchases.length})</div>
         <ul className="space-y-1">{[...t.purchases].sort((a, b) => (b.price ?? 0) - (a.price ?? 0)).map(p => (
-          <li key={p.id} className="flex justify-between gap-2 py-0.5 border-b border-slate-100 dark:border-white/5"><span className="text-slate-800 dark:text-white truncate">{p.player} <span className="text-slate-400 dark:text-white/40">({roleBand(p.role)})</span></span><span className="text-emerald-600 dark:text-emerald-300 font-mono font-bold shrink-0">{pulseMoney(p.price, p.usd)}</span></li>
+          <li key={p.id} className="flex justify-between gap-2 py-0.5 border-b border-slate-100 dark:border-white/5">
+            <span className="text-slate-800 dark:text-white truncate">
+              <Link href={`/players/${playerSlug(p.player)}`} className="hover:text-pink-500 hover:underline font-medium">
+                {p.player}
+              </Link>{" "}
+              <span className="text-slate-400 dark:text-white/40">({roleBand(p.role)})</span>
+            </span>
+            <span className="text-emerald-600 dark:text-emerald-300 font-mono font-bold shrink-0">{pulseMoney(p.price, p.usd)}</span>
+          </li>
         ))}</ul>
       </div>
       {isTeamCode(t.code) && <div className="md:col-span-2 flex flex-wrap gap-x-4 gap-y-1.5 pt-2 border-t border-slate-200 dark:border-white/10 font-bold">
@@ -1230,8 +1248,36 @@ function Retentions({ model, pulse }: { model: PulseModel; pulse: Pulse }) {
           <div key={t.code} className="rounded-xl border p-3 text-xs space-y-1.5 bg-white dark:bg-[#0B1020]" style={teamCard(t.code)}>
             <div className="flex items-baseline justify-between">{isTeamCode(t.code) ? <Link href={`/dugout/${t.code}`} className="font-black" style={{ color: teamHex(t.code) }}>{t.code}</Link> : <span className="font-black" style={{ color: teamHex(t.code) }}>{t.code}</span>}
               <span className="text-slate-500 dark:text-white/50 text-[11px] font-mono">{t.retained == null ? "Not announced" : `${t.retained} retained`}{t.startingPurse != null ? ` · ${pulseMoney(t.startingPurse)} purse` : ""}</span></div>
-            <div><span className="text-[9px] font-black uppercase text-emerald-600 dark:text-emerald-400">Retained </span><span className="text-slate-700 dark:text-white/70">{t.core.map(p => p.name).join(", ") || "Not announced"}</span></div>
-            {released(t.code).length > 0 && <div><span className="text-[9px] font-black uppercase text-red-600 dark:text-red-400">Released </span><span className="text-slate-700 dark:text-white/70">{released(t.code).join(", ")}</span></div>}
+            <div>
+              <span className="text-[9px] font-black uppercase text-emerald-600 dark:text-emerald-400">Retained </span>
+              <span className="text-slate-700 dark:text-white/70">
+                {t.core.length > 0 ? (
+                  t.core.map((p, idx) => (
+                    <React.Fragment key={p.name + idx}>
+                      {idx > 0 && ", "}
+                      <Link href={`/players/${playerSlug(p.name)}`} className="text-slate-900 dark:text-white font-medium hover:text-emerald-500 hover:underline">
+                        {p.name}
+                      </Link>
+                    </React.Fragment>
+                  ))
+                ) : "Not announced"}
+              </span>
+            </div>
+            {released(t.code).length > 0 && (
+              <div>
+                <span className="text-[9px] font-black uppercase text-red-600 dark:text-red-400">Released </span>
+                <span className="text-slate-700 dark:text-white/70">
+                  {released(t.code).map((name, idx) => (
+                    <React.Fragment key={name + idx}>
+                      {idx > 0 && ", "}
+                      <Link href={`/players/${playerSlug(name)}`} className="hover:text-red-500 hover:underline">
+                        {name}
+                      </Link>
+                    </React.Fragment>
+                  ))}
+                </span>
+              </div>
+            )}
           </div>
         ))}
       </div>

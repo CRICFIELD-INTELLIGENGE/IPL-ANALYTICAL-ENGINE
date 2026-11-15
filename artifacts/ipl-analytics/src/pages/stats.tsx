@@ -1760,28 +1760,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
           <AdVessel slot="1029384758" format="horizontal" label="Stats Partner Briefing · High-Performance Telemetry" />
         </div>
 
-        {/* DEEP DIVE LINKS */}
-        <div className="flex items-center gap-2 mt-6 mb-2">
-          <ArrowRight className="w-4 h-4 text-primary" />
-          <span className="text-[11px] font-black uppercase tracking-[0.2em] text-white/60">Intelligence Ecosystem</span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {[
-            { label: "Cricket Feed", href: "/feed", icon: Zap, color: "from-red-500/20 to-pink-500/10" },
-            { label: "Franchise Intelligence", href: "/intelligence", icon: Cpu, color: "from-amber-500/20 to-orange-500/10" },
-            { label: "Auction Pulse", href: "/pulse", icon: Activity, color: "from-purple-500/20 to-blue-500/10" },
-          ].map(lnk => (
-            <Link key={lnk.label} href={lnk.href}>
-              <GlassCard className={`p-4 bg-gradient-to-br ${lnk.color} cursor-pointer hover:scale-[1.02] transition-transform group`}>
-                <lnk.icon className="w-5 h-5 text-white/60 mb-2 group-hover:text-white transition-colors" />
-                <div className="text-[12px] font-black uppercase tracking-wider">{lnk.label}</div>
-                <div className="flex items-center gap-1 mt-1 text-[9px] text-white/30 font-bold">
-                  <span>{lnk.href==='/feed'?'Open feed':lnk.href==='/intelligence'?'Read intelligence':'Open Auction Pulse'}</span><ArrowRight className="w-3 h-3" />
-                </div>
-              </GlassCard>
-            </Link>
-          ))}
-        </div>
+
       </div>
 
       {/* Venue Detail Overlay Modal */}

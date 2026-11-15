@@ -413,7 +413,7 @@ export default function FeedPage() {
                               <span style={{ color: t?.accent ?? "var(--team-accent)" }}>{e.franchise}</span>
                             </div>
                             <div className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white group-hover:underline line-clamp-2 mt-0.5">{e.title}</div>
-                            <div className="mt-1 text-[10px] text-slate-500 dark:text-white/40">{EDITORIAL_AUTHOR} · {dateLabel(e.publishedDate)} · {e.readMinutes} min read</div>
+                            <div className="mt-1 text-[10px] text-slate-500 dark:text-white/40">{EDITORIAL_AUTHOR} · {dateLabel(e.publishedDate)}</div>
                           </div>
                           <span className="hidden sm:block shrink-0 text-[11px] text-slate-500 dark:text-white/40">{dateLabel(e.publishedDate)}</span>
                         </Link>
@@ -746,7 +746,7 @@ function CompactStory({ entry }: { entry: IndexEntry }) {
           <span style={{ color: t?.accent ?? "var(--team-accent)" }}>{entry.franchise}</span>
         </div>
         <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug group-hover:underline line-clamp-2 mt-0.5">{entry.title}</div>
-        <div className="mt-1 text-[10px] text-slate-500 dark:text-white/40">{EDITORIAL_AUTHOR} · {entry.readMinutes} min read</div>
+        <div className="mt-1 text-[10px] text-slate-500 dark:text-white/40">{EDITORIAL_AUTHOR} · {dateLabel(entry.publishedDate)}</div>
       </div>
     </Link>
   );
@@ -964,7 +964,7 @@ function ScrollingEditorialPicks({ picks }: { picks: IndexEntry[] }) {
                     {e.title}
                   </h4>
                   <span className="mt-1 block text-[10px] text-slate-500 dark:text-white/60">
-                    {e.readMinutes} min read
+                    {dateLabel(e.publishedDate)}
                   </span>
                 </div>
               </Link>

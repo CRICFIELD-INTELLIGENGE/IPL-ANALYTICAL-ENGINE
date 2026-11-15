@@ -773,8 +773,8 @@ export function ArticleIntelligenceSnapshot({
           <div className="text-[10px] font-mono text-slate-600 dark:text-[#8A9EA8] mt-0.5">Key Claims Tested</div>
         </div>
         <div className="rounded-lg border border-slate-200 dark:border-[#2A4050] bg-slate-50 dark:bg-[#192D3C] p-2.5">
-          <div className="text-lg font-black font-mono text-cyan-700 dark:text-[#4AC9D8]">{entry.readMinutes} min</div>
-          <div className="text-[10px] font-mono text-slate-600 dark:text-[#8A9EA8] mt-0.5">Reading Time</div>
+          <div className="text-lg font-black font-mono text-cyan-700 dark:text-[#4AC9D8]">{article.sections.length}</div>
+          <div className="text-[10px] font-mono text-slate-600 dark:text-[#8A9EA8] mt-0.5">Analytic Sections</div>
         </div>
         <div className="rounded-lg border border-slate-200 dark:border-[#2A4050] bg-slate-50 dark:bg-[#192D3C] p-2.5">
           <div className="text-lg font-black font-mono text-slate-900 dark:text-[#EFF5F7]">{article.sources.length}</div>
@@ -1224,7 +1224,6 @@ export function RelatedIntelligenceArticles({
               >
                 <div className="flex items-center justify-between text-[9px] font-mono text-slate-500 dark:text-[#8A9EA8] mb-1">
                   <span className="uppercase">{live.franchise}</span>
-                  <span>{live.readMinutes} min read</span>
                 </div>
                 <h5 className="text-xs font-bold leading-snug text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-[#B6E95C] transition line-clamp-2">
                   {p.title}

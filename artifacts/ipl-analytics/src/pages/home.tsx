@@ -15,6 +15,9 @@ import {
   Compass,
   Gavel,
   Sparkles,
+  Users,
+  Star,
+  Flame,
 } from "lucide-react";
 import { useTeamTheme } from "@/lib/team-context";
 import { useLiveIplMatches, getMatchScoreLine } from "@/lib/live";
@@ -40,6 +43,15 @@ const HEADLINES = [
   { prefix: "AN", highlight: "EMOTION.", darkColor: "#818CF8", lightColor: "#4F46E5" },
   { prefix: "A", highlight: "CELEBRATION.", darkColor: "#38BDF8", lightColor: "#0284C7" },
   { prefix: "A", highlight: "BILLION DOLLAR ECOSYSTEM.", darkColor: "#E879F9", lightColor: "#C026D3" },
+];
+
+const EXPLORE_COVERAGE_CARDS = [
+  { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-500 dark:text-amber-400", icon: Users },
+  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", img: "/auction-art.jpg", color: "text-amber-500 dark:text-amber-400", icon: Gavel },
+  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", img: "/assets/tactical-board-hero.png", color: "text-emerald-500 dark:text-emerald-400", icon: Shield },
+  { id: "stars", title: "STAR WATCH", subtitle: "Rising names to watch", img: "/milestone-photos/highest-total-2024-srh.jpg", color: "text-rose-500 dark:text-rose-400", icon: Star },
+  { id: "venues", title: "VENUES", subtitle: "Conditions and trends", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-500 dark:text-sky-400", icon: MapPin },
+  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", img: "/milestone-photos/final-2023-csk.jpg", color: "text-orange-500 dark:text-orange-400", icon: Flame },
 ];
 
 const daysUntil = (date: string | null) => {
@@ -112,8 +124,8 @@ export default function HomePage() {
               {/* TEXT CONTENT (LEFT) */}
               <div className="home-hero-copy relative z-10 w-full md:w-[70%] lg:w-[64%] xl:w-[60%] flex flex-col justify-between p-6 sm:p-8 lg:p-10">
                 <div>
-                  {/* Fixed min-height headline box prevents vertical jumping */}
-                  <div className="h-[105px] sm:h-[120px] md:h-[135px] flex items-center mb-3 overflow-hidden">
+                  {/* Min-height headline box with smooth wrapping prevents cutting off words on any screen size */}
+                  <div className="min-h-[105px] sm:min-h-[120px] md:min-h-[135px] flex items-center mb-3">
                     <AnimatePresence mode="wait">
                       <motion.h1
                         key={captionIdx}
@@ -121,17 +133,14 @@ export default function HomePage() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -14 }}
                         transition={{ duration: 0.35, ease: "easeOut" }}
-                        className="font-black leading-[1.08] text-slate-900 dark:text-white uppercase tracking-tight text-2xl sm:text-3xl md:text-[36px] lg:text-[42px] xl:text-[46px] select-none"
+                        className="font-black leading-[1.08] text-slate-900 dark:text-white uppercase tracking-tight text-2xl sm:text-3xl md:text-[34px] lg:text-[40px] xl:text-[44px] select-none break-words"
                       >
                         {curHeadline.prefix === "IPL IS NOT JUST ABOUT" ? (
-                          <>
-                            <span className="inline-block whitespace-nowrap">
-                              <span className="text-[#FF6B00]">IPL</span>{" "}
-                              <span className="text-slate-900 dark:text-white">IS NOT JUST ABOUT</span>
-                            </span>
-                            <br />
-                            <span className="text-amber-600 dark:text-[#F9CD05] font-black">CRICKET.</span>
-                          </>
+                          <span>
+                            <span className="text-[#FF6B00]">IPL</span>{" "}
+                            <span className="text-slate-900 dark:text-white">IS NOT JUST ABOUT</span>{" "}
+                            <span className="text-amber-600 dark:text-[#F9CD05] font-black inline-block">CRICKET.</span>
+                          </span>
                         ) : (
                           <>
                             <span className="text-slate-900 dark:text-white">{curHeadline.prefix}</span>{" "}
@@ -259,6 +268,51 @@ export default function HomePage() {
             </aside>
           </section>
 
+          {/* ── ROW 1.5: EXPLORE IPL 2027 COVERAGE ── */}
+          <section className="space-y-3.5 my-2">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 border-b border-slate-200/80 dark:border-white/10 pb-2.5">
+              <div className="flex items-baseline gap-2.5">
+                <h2 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white">
+                  Explore IPL 2027 coverage
+                </h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 hidden md:block">
+                  Analyses, stories and tools to help you make sense of the road to the auction.
+                </p>
+              </div>
+              <Link href="/feed" className="text-xs font-bold text-primary hover:underline flex items-center gap-1 self-start sm:self-auto">
+                <span>View Full Intel Desk</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-3.5">
+              {EXPLORE_COVERAGE_CARDS.map((c) => (
+                <Link
+                  key={c.id}
+                  href={`/feed/${c.id}`}
+                  className="group overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] hover:border-slate-300 dark:hover:border-white/30 shadow-xs hover:shadow-md transition-all flex flex-col"
+                >
+                  <div className="h-28 overflow-hidden relative bg-slate-900 shrink-0">
+                    <img
+                      src={c.img}
+                      alt={c.title}
+                      className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-3 flex-1 flex flex-col justify-between bg-white dark:bg-[#0B1020]">
+                    <div className="flex items-center gap-1.5">
+                      <c.icon className={`hidden sm:block w-3.5 h-3.5 shrink-0 ${c.color}`} />
+                      <span className="text-[11px] font-black text-slate-900 dark:text-white leading-tight uppercase tracking-wider">{c.title}</span>
+                    </div>
+                    <div className="mt-1.5 flex items-end justify-between gap-2">
+                      <span className="text-[10px] text-slate-500 dark:text-white/60 line-clamp-1">{c.subtitle}</span>
+                      <ArrowRight className={`w-3 h-3 shrink-0 ${c.color} transition-transform group-hover:translate-x-0.5`} />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+
           {/* ── ROW 2: TOP STORY, AUCTION PULSE & SPONSORED AD CARD ── */}
           <section ref={insightsSectionRef} className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
             {/* TOP STORY (4 cols lg, 5 cols xl) */}
@@ -308,9 +362,9 @@ export default function HomePage() {
                 <div className="reference-auction-links flex flex-col gap-1 my-2">
                   {[
                     ["Retention tracker", "Confirmed updates and coverage", "/feed/ipl-2027/retentions"],
-                    ["Player market", "Historical results and available player pools", "/pulse"],
+                    ["Player market", "Historical results and available player pools", "/pulse?tab=Player+Pool"],
                     ["Franchise needs", "Role balance and squad depth", "/ai-analyst/squad-dna"],
-                    ["Auction news & analysis", "Stories behind the decisions", "/feed/auction"],
+                    ["Auction news & analysis", "Stories behind the decisions", "/pulse?season=2027&tab=Live+Blog"],
                   ].map(([title, desc, href]) => (
                     <Link key={href} href={href} className="reference-auction-link">
                       <Gavel size={16} />

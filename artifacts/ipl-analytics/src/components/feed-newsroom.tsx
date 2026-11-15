@@ -32,7 +32,7 @@ export function NewsCard({ entry, lead = false, media }: { entry: IndexEntry; le
         <h3 className={`font-bold text-slate-900 dark:text-white leading-snug group-hover:underline ${lead ? "text-xl sm:text-2xl" : "text-[15px]"}`}>{entry.title}</h3>
         <p className={`text-sm text-slate-600 dark:text-white/60 ${lead ? "" : "line-clamp-2"}`}>{entry.dek}</p>
         <div className="mt-auto pt-2 text-[11px] text-slate-500 dark:text-white/40">
-          {EDITORIAL_AUTHOR} · {dateLabel(entry.publishedDate)} · {entry.readMinutes} min read
+          {EDITORIAL_AUTHOR} · {dateLabel(entry.publishedDate)}
         </div>
       </div>
     </Link>

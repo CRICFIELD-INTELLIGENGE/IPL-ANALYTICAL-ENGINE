@@ -211,21 +211,25 @@ export default function DugoutPage() {
           switcher={<FranchiseSwitcher activeCode={activeTeamCode} onPick={handlePickFranchise} />}
         />
 
-        <Suspense fallback={<SectionSkeleton height="h-96" />}>
-          <FranchiseMilestones
-            key={activeTeamCode}
-            team={currentTeam}
-            record={effectiveRecord}
-            matches={matches.data ?? []}
-            loading={record.isLoading || matches.isLoading}
-            onSeason={setChosenSeason}
-          />
-        </Suspense>
+        <div id="milestones" className="scroll-mt-24">
+          <Suspense fallback={<SectionSkeleton height="h-96" />}>
+            <FranchiseMilestones
+              key={activeTeamCode}
+              team={currentTeam}
+              record={effectiveRecord}
+              matches={matches.data ?? []}
+              loading={record.isLoading || matches.isLoading}
+              onSeason={setChosenSeason}
+            />
+          </Suspense>
+        </div>
 
         {/* ── FRANCHISE STORIES: a 10-article preview; the full 100 live on the Intelligence hub ── */}
-        <Suspense fallback={<LibrarySkeleton />}>
-          <FranchiseLibrary code={activeTeamCode} teamName={currentTeam.name} accent={currentTeam.accent} preview={10} />
-        </Suspense>
+        <div id="newsroom" className="scroll-mt-24">
+          <Suspense fallback={<LibrarySkeleton />}>
+            <FranchiseLibrary code={activeTeamCode} teamName={currentTeam.name} accent={currentTeam.accent} preview={10} />
+          </Suspense>
+        </div>
 
         {/* ── NATIVE AD VESSEL ── */}
         <AdVessel slot="1029384760" format="horizontal" label="Franchise Partner Briefing · Official Dugout Telemetry" />
@@ -255,23 +259,27 @@ export default function DugoutPage() {
 
         {/* ── FRANCHISE INTELLIGENCE ── */}
         {season && (
-          <Suspense fallback={<SectionSkeleton height="h-80" />}>
-            <RetentionFranchisePreview team={activeTeamCode} />
-            <FranchiseIntelligence teamName={currentTeam.name} code={activeTeamCode} season={season} accent={currentTeam.accent} />
-          </Suspense>
+          <div id="intelligence" className="scroll-mt-24 space-y-8">
+            <Suspense fallback={<SectionSkeleton height="h-80" />}>
+              <RetentionFranchisePreview team={activeTeamCode} />
+              <FranchiseIntelligence teamName={currentTeam.name} code={activeTeamCode} season={season} accent={currentTeam.accent} />
+            </Suspense>
+          </div>
         )}
 
         {/* ── SEASON TIMELINE ── */}
-        <Suspense fallback={<SectionSkeleton height="h-44" />}>
-          <SeasonTimeline
-            record={effectiveRecord}
-            allSeasons={allSeasons}
-            season={season}
-            onSeason={setChosenSeason}
-            accent={currentTeam.accent}
-            franchiseName={currentTeam.name}
-          />
-        </Suspense>
+        <div id="history" className="scroll-mt-24">
+          <Suspense fallback={<SectionSkeleton height="h-44" />}>
+            <SeasonTimeline
+              record={effectiveRecord}
+              allSeasons={allSeasons}
+              season={season}
+              onSeason={setChosenSeason}
+              accent={currentTeam.accent}
+              franchiseName={currentTeam.name}
+            />
+          </Suspense>
+        </div>
 
         {/* ── FAN ZONE & RIVALRY ── */}
         <Suspense fallback={<SectionSkeleton height="h-64" />}>

@@ -141,7 +141,7 @@ export default function FeedCategoryPage({ params }: { params?: { category?: str
               {articles.slice(3).map((a) => (
                 <li key={a.id}>
                   <Link href={`/dugout/articles/${a.slug}`} className="flex flex-col gap-0.5 p-3 hover:bg-white/[0.03]">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-white/40">{a.franchise} · {a.readMinutes} min read</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-white/40">{a.franchise}</span>
                     <span className="text-sm font-semibold text-white">{a.title}</span>
                   </Link>
                 </li>
