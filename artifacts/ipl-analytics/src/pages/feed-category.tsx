@@ -76,7 +76,8 @@ export default function FeedCategoryPage({ params }: { params?: { category?: str
   const search = useSearch();
   const team = new URLSearchParams(search).get("team")?.toUpperCase();
 
-  const rawCat = params?.category || routeParams?.category || (location.includes("/feed/") ? location.split("/feed/")[1]?.split(/[?#]/)[0] : "");
+  const pathnameCat = location.replace(/^\//, "").split(/[?#\/]/)[0]?.toLowerCase();
+  const rawCat = params?.category || routeParams?.category || (location.includes("/feed/") ? location.split("/feed/")[1]?.split(/[?#]/)[0] : pathnameCat);
   const category = (rawCat || "").toLowerCase() as CardId;
 
   const def = CATEGORIES[category];
@@ -104,8 +105,8 @@ export default function FeedCategoryPage({ params }: { params?: { category?: str
   return (
     <Layout>
       <div className="space-y-5 p-4 bg-[#050816] min-h-screen">
-        <Link href="/feed" className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-white">
-          <ArrowLeft className="w-3.5 h-3.5" /> IPL 2027 Feed
+        <Link href="/home" className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-white">
+          <ArrowLeft className="w-3.5 h-3.5" /> Back to Home
         </Link>
 
         {/* HERO */}

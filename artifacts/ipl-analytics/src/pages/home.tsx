@@ -3,47 +3,43 @@ import { MobileHome } from "@/components/mobile-home";
 import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "wouter";
 import { Layout } from "@/components/layout";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
-  ArrowUpRight,
-  MapPin,
-  Activity,
-  BarChart2,
   Shield,
-  Compass,
   Gavel,
-  Sparkles,
   Users,
   Star,
   Flame,
-  Target,
+  MapPin,
   Calendar,
   Bookmark,
   Database,
   Cpu,
-  Layers,
+  Target,
 } from "lucide-react";
 import { useTeamTheme, type TeamCode, TEAM_REGISTRY } from "@/lib/team-context";
 import { TeamLogo } from "@/components/team-logo";
 import { AdVessel } from "@/components/ad-vessel";
 import { HUB_EVENTS } from "@/lib/ipl-2027";
 
-const EXPLORE_COVERAGE_CARDS = [
-  { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-500 dark:text-amber-400", icon: Users },
-  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", img: "/auction-art.jpg", color: "text-amber-500 dark:text-amber-400", icon: Gavel },
-  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", img: "/assets/tactical-board-hero.png", color: "text-emerald-500 dark:text-emerald-400", icon: Shield },
-  { id: "stars", title: "STAR WATCH", subtitle: "Rising names to watch", img: "/milestone-photos/highest-total-2024-srh.jpg", color: "text-rose-500 dark:text-rose-400", icon: Star },
-  { id: "venues", title: "VENUES", subtitle: "Conditions and trends", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-500 dark:text-sky-400", icon: MapPin },
-  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", img: "/milestone-photos/final-2023-csk.jpg", color: "text-orange-500 dark:text-orange-400", icon: Flame },
+const HEADLINES = [
+  { prefix: "IPL IS NOT JUST ABOUT", highlight: "CRICKET.", darkColor: "#F9CD05", lightColor: "#D97706" },
+  { prefix: "IT'S A", highlight: "PRODUCT.", darkColor: "#06B6D4", lightColor: "#0284C7" },
+  { prefix: "A", highlight: "BUSINESS.", darkColor: "#10B981", lightColor: "#059669" },
+  { prefix: "IPL - A", highlight: "FESTIVAL.", darkColor: "#EF4444", lightColor: "#DC2626" },
+  { prefix: "AN", highlight: "EMOTION.", darkColor: "#818CF8", lightColor: "#4F46E5" },
+  { prefix: "A", highlight: "CELEBRATION.", darkColor: "#38BDF8", lightColor: "#0284C7" },
+  { prefix: "A", highlight: "BILLION DOLLAR ECOSYSTEM.", darkColor: "#E879F9", lightColor: "#C026D3" },
 ];
 
-const INTELLIGENCE_STRIP = [
-  { title: "Scout Lab", desc: "Discover & evaluate talent", icon: Compass, href: "/scout", color: "text-emerald-400", bg: "bg-emerald-500/10" },
-  { title: "Scenario Intelligence", desc: "Situation, strategy & decisions", icon: Target, href: "/ai-analyst/opposition-map", color: "text-amber-400", bg: "bg-amber-500/10" },
-  { title: "Tactical Matrix", desc: "Matchups, plans & formations", icon: Activity, href: "/ai-analyst/squad-dna", color: "text-cyan-400", bg: "bg-cyan-500/10" },
-  { title: "Venue Intelligence", desc: "Grounds, dimensions & trends", icon: MapPin, href: "/feed/venues", color: "text-teal-400", bg: "bg-teal-500/10" },
-  { title: "Player Intelligence", desc: "Form, consistency & context", icon: BarChart2, href: "/ai-analyst/player-pool", color: "text-purple-400", bg: "bg-purple-500/10" },
-  { title: "Auction War Room", desc: "Bids, values & strategy", icon: Gavel, href: "/ai-analyst/auction-war-room", color: "text-yellow-400", bg: "bg-yellow-500/10" },
+const EXPLORE_COVERAGE_CARDS = [
+  { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", href: "/squad", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-500 dark:text-amber-400", icon: Users },
+  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", href: "/auction", img: "/auction-art.jpg", color: "text-amber-500 dark:text-amber-400", icon: Gavel },
+  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", href: "/tactics", img: "/assets/tactical-board-hero.png", color: "text-emerald-500 dark:text-emerald-400", icon: Shield },
+  { id: "stars", title: "STAR WATCH", subtitle: "Rising names to watch", href: "/stars", img: "/milestone-photos/highest-total-2024-srh.jpg", color: "text-rose-500 dark:text-rose-400", icon: Star },
+  { id: "venues", title: "VENUES", subtitle: "Conditions and trends", href: "/venues", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-500 dark:text-sky-400", icon: MapPin },
+  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", href: "/storylines", img: "/milestone-photos/final-2023-csk.jpg", color: "text-orange-500 dark:text-orange-400", icon: Flame },
 ];
 
 interface FranchiseIntelData {
@@ -234,7 +230,7 @@ const LATEST_INSIGHTS = [
     title: "IPL 2027 Auction: 5 Big Questions for Every Franchise",
     date: "Nov 13, 2026",
     img: "/auction-art.jpg",
-    href: "/pulse?season=2027&tab=Live+Blog",
+    href: "/auction",
   },
   {
     id: "ins-2",
@@ -243,7 +239,7 @@ const LATEST_INSIGHTS = [
     title: "The Rise of Matchup-Specific Bowling in T20 Cricket",
     date: "Nov 11, 2026",
     img: "/assets/tactical-board-hero.png",
-    href: "/feed/tactics",
+    href: "/tactics",
   },
   {
     id: "ins-3",
@@ -252,7 +248,7 @@ const LATEST_INSIGHTS = [
     title: "10 Indian Uncapped Players to Watch for IPL 2027",
     date: "Nov 10, 2026",
     img: "/milestone-photos/highest-total-2024-srh.jpg",
-    href: "/feed/stars",
+    href: "/stars",
   },
   {
     id: "ins-4",
@@ -261,7 +257,7 @@ const LATEST_INSIGHTS = [
     title: "How Ground Dimensions Are Shaping T20 Strategy",
     date: "Nov 9, 2026",
     img: "/branding/auth/stadium-sunset-v1.png",
-    href: "/feed/venues",
+    href: "/venues",
   },
   {
     id: "ins-5",
@@ -270,7 +266,7 @@ const LATEST_INSIGHTS = [
     title: "Squad Rebuilding & Retention Geometry: The Core vs Flexibility Dilemma",
     date: "Nov 8, 2026",
     img: "/milestone-photos/final-2024-kkr.jpg",
-    href: "/feed/squad",
+    href: "/squad",
   },
   {
     id: "ins-6",
@@ -279,7 +275,7 @@ const LATEST_INSIGHTS = [
     title: "Purse Dynamics: Inflation, Right-to-Match Cards and Bidding Curves",
     date: "Nov 7, 2026",
     img: "/auction-gavel.jpg",
-    href: "/feed/auction",
+    href: "/auction",
   },
 ];
 
@@ -287,6 +283,7 @@ const CATEGORY_TABS = ["All", "Auction", "Tactics", "Players", "Venues", "Teams"
 
 export default function HomePage() {
   const { selectedTeam } = useTeamTheme();
+  const [captionIdx, setCaptionIdx] = useState(0);
   const [isPhone, setIsPhone] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
@@ -294,6 +291,14 @@ export default function HomePage() {
     const handleResize = () => setIsPhone(window.innerWidth < 768);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Smoothly rotate the headline without causing layout shifts
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCaptionIdx((prev) => (prev + 1) % HEADLINES.length);
+    }, 4000);
+    return () => clearInterval(timer);
   }, []);
 
   // Timezone-aware countdown calculation
@@ -343,6 +348,8 @@ export default function HomePage() {
     ? LATEST_INSIGHTS.slice(0, 4)
     : LATEST_INSIGHTS.filter((ins) => ins.tag.toLowerCase() === selectedCategory.toLowerCase());
 
+  const curHeadline = HEADLINES[captionIdx];
+
   return (
     <Layout hideRightPanel>
       <div className="cricfield-home home-editorial min-h-screen">
@@ -353,7 +360,7 @@ export default function HomePage() {
           ═════════════════════════════════════════════════════════════════════ */}
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
             {/* HERO BANNER (8 cols lg, 9 cols xl) */}
-            <div className="lg:col-span-8 xl:col-span-9 home-main-hero min-h-[400px] lg:min-h-[440px] flex relative overflow-hidden rounded-[24px] border border-white/10 bg-[#050C18] shadow-2xl">
+            <div className="lg:col-span-8 xl:col-span-9 home-main-hero min-h-[380px] lg:min-h-[420px] flex relative overflow-hidden rounded-[24px] border border-white/10 bg-[#050C18] shadow-2xl">
               {/* IMAGE SIDE (RIGHT) */}
               <div className="absolute inset-y-0 right-0 w-full sm:w-[65%] md:w-[60%] lg:w-[58%] pointer-events-none select-none overflow-hidden">
                 <div className="w-full h-full relative">
@@ -370,50 +377,51 @@ export default function HomePage() {
               </div>
 
               {/* TEXT CONTENT (LEFT) */}
-              <div className="home-hero-copy relative z-10 w-full md:w-[70%] lg:w-[64%] xl:w-[60%] flex flex-col justify-between p-6 sm:p-8 lg:p-10">
+              <div className="home-hero-copy relative z-10 w-full md:w-[70%] lg:w-[64%] xl:w-[60%] flex flex-col justify-center p-6 sm:p-8 lg:p-10">
                 <div>
-                  {/* Pills / Badges */}
-                  <div className="flex items-center gap-2.5 mb-4">
-                    <span className="px-2.5 py-1 rounded-md text-[10px] font-mono font-black uppercase tracking-wider text-[#00D2FF] bg-[#00D2FF]/10 border border-[#00D2FF]/30">
-                      IPL OFFSEASON
-                    </span>
-                    <span className="text-[11px] font-mono font-semibold tracking-wider text-slate-400">
-                      IPL 2027
-                    </span>
+                  {/* Min-height headline box with smooth wrapping prevents cutting off words on any screen size */}
+                  <div className="min-h-[110px] sm:min-h-[125px] md:min-h-[140px] flex items-center mb-3">
+                    <AnimatePresence mode="wait">
+                      <motion.h1
+                        key={captionIdx}
+                        initial={{ opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -14 }}
+                        transition={{ duration: 0.35, ease: "easeOut" }}
+                        className="font-black leading-[1.08] text-white uppercase tracking-tight text-2xl sm:text-3xl md:text-[34px] lg:text-[40px] xl:text-[44px] select-none break-words"
+                      >
+                        {curHeadline.prefix === "IPL IS NOT JUST ABOUT" ? (
+                          <span>
+                            <span className="text-[#FF6B00]">IPL</span>{" "}
+                            <span className="text-white">IS NOT JUST ABOUT</span>{" "}
+                            <span className="text-amber-500 font-black inline-block">CRICKET.</span>
+                          </span>
+                        ) : (
+                          <>
+                            <span className="text-white">{curHeadline.prefix}</span>{" "}
+                            <span
+                              className="font-black text-[var(--hl-dark)]"
+                              style={{
+                                "--hl-dark": curHeadline.darkColor,
+                              } as React.CSSProperties}
+                            >
+                              {curHeadline.highlight}
+                            </span>
+                          </>
+                        )}
+                      </motion.h1>
+                    </AnimatePresence>
                   </div>
 
-                  {/* Headline */}
-                  <h1 className="font-black leading-[1.05] tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-[54px] select-none break-words mb-3">
-                    <span className="text-white block">The Road to</span>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00D2FF] via-[#38BDF8] to-[#2563EB] italic block">
-                      IPL 2027
-                    </span>
-                  </h1>
-
-                  <p className="text-slate-300 text-sm md:text-[15px] max-w-[460px] leading-relaxed mb-6 font-normal">
-                    Retentions, auction intelligence, squad needs and emerging talent — all in one place.
+                  <p className="text-slate-300 text-sm md:text-[15px] max-w-[460px] leading-relaxed font-normal">
+                    Data-driven insights across sports, business, fans and the IPL economy.
                   </p>
-                </div>
-
-                {/* Call to Action Buttons */}
-                <div className="flex flex-wrap items-center gap-3 pt-2">
-                  <Link href="/pulse">
-                    <button className="flex items-center gap-2 bg-[#00D2FF] text-slate-950 font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl hover:bg-[#00D2FF]/90 shadow-lg shadow-[#00D2FF]/25 transition-all hover:scale-[1.02] cursor-pointer">
-                      Explore Auction Hub <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </Link>
-
-                  <Link href={selectedTeam ? `/dugout/${selectedTeam}` : "/dugout"}>
-                    <button className="flex items-center gap-2 bg-[#091424] text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl border border-white/15 hover:bg-white/10 transition-all cursor-pointer">
-                      View Franchise Analysis
-                    </button>
-                  </Link>
                 </div>
               </div>
             </div>
 
             {/* AUCTION COUNTDOWN CARD (4 cols lg, 3 cols xl) */}
-            <aside className="lg:col-span-4 xl:col-span-3 rounded-[24px] border border-white/10 bg-[#081322] p-5 shadow-2xl flex flex-col justify-between">
+            <aside className="lg:col-span-4 xl:col-span-3 rounded-[24px] border border-white/10 bg-[#081322] p-5 sm:p-6 shadow-2xl flex flex-col justify-between">
               <div>
                 {/* Header */}
                 <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
@@ -468,10 +476,10 @@ export default function HomePage() {
                 </div>
 
                 {/* Quick Link Navigation */}
-                <div className="flex flex-col gap-1.5 mt-4 pt-3 border-t border-white/10">
+                <div className="flex flex-col gap-2 mt-5 pt-4 border-t border-white/10">
                   <Link
-                    href="/feed/ipl-2027/retentions"
-                    className="group flex items-center justify-between p-2 rounded-xl hover:bg-white/5 transition-colors"
+                    href="/retentions"
+                    className="group flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0">
@@ -491,7 +499,7 @@ export default function HomePage() {
 
                   <Link
                     href="/ai-analyst/squad-dna"
-                    className="group flex items-center justify-between p-2 rounded-xl hover:bg-white/5 transition-colors"
+                    className="group flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="w-7 h-7 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400 shrink-0">
@@ -511,7 +519,7 @@ export default function HomePage() {
 
                   <Link
                     href="/pulse?tab=Player+Pool"
-                    className="group flex items-center justify-between p-2 rounded-xl hover:bg-white/5 transition-colors"
+                    className="group flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 shrink-0">
@@ -530,43 +538,7 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div>
-
-              {/* Bottom Scout Link */}
-              <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-bold text-[#00D2FF]">
-                <Link href="/scout" className="hover:underline flex items-center gap-1.5">
-                  <Compass size={14} />
-                  <span>Open Scout Lab</span>
-                </Link>
-                <Link href="/pulse" className="text-slate-400 hover:text-white transition-colors">
-                  <ArrowUpRight size={14} />
-                </Link>
-              </div>
             </aside>
-          </section>
-
-          {/* ═════════════════════════════════════════════════════════════════════
-              INTELLIGENCE STRIP: 6 QUICK CARDS
-          ═════════════════════════════════════════════════════════════════════ */}
-          <section className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
-            {INTELLIGENCE_STRIP.map((tool) => (
-              <Link
-                key={tool.title}
-                href={tool.href}
-                className="flex items-center gap-3 p-3 rounded-2xl bg-[#081220] border border-white/10 hover:border-white/25 hover:bg-[#0D1A2E] transition-all group shadow-sm"
-              >
-                <div className={`w-9 h-9 rounded-xl ${tool.bg} ${tool.color} flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform`}>
-                  <tool.icon size={18} />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h4 className="text-xs font-bold text-white group-hover:text-primary transition-colors truncate">
-                    {tool.title}
-                  </h4>
-                  <p className="text-[10px] text-slate-400 truncate">
-                    {tool.desc}
-                  </p>
-                </div>
-              </Link>
-            ))}
           </section>
 
           {/* ═════════════════════════════════════════════════════════════════════
@@ -587,7 +559,7 @@ export default function HomePage() {
               {EXPLORE_COVERAGE_CARDS.map((c) => (
                 <Link
                   key={c.id}
-                  href={`/feed/${c.id}`}
+                  href={c.href}
                   className="group overflow-hidden rounded-2xl border border-white/10 bg-[#081220] hover:border-white/30 shadow-xs hover:shadow-md transition-all flex flex-col"
                 >
                   <div className="h-28 overflow-hidden relative bg-slate-900 shrink-0">

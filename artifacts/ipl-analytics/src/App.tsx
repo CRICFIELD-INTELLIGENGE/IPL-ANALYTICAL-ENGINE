@@ -133,7 +133,14 @@ function Router() {
       <Route path="/fan-arena"><Redirect to="/intelligence" /></Route>
       {/* On-Field Panel System */}
       <Route path="/intelligence" component={IntelligencePage} />
-      {/* Top-level destinations. */}
+      {/* Top-level intelligence & coverage categories */}
+      <Route path="/auction" component={() => <FeedCategoryPage params={{ category: "auction" }} />} />
+      <Route path="/tactics" component={() => <FeedCategoryPage params={{ category: "tactics" }} />} />
+      <Route path="/stars" component={() => <FeedCategoryPage params={{ category: "stars" }} />} />
+      <Route path="/venues" component={() => <FeedCategoryPage params={{ category: "venues" }} />} />
+      <Route path="/storylines" component={() => <FeedCategoryPage params={{ category: "storylines" }} />} />
+      <Route path="/retentions" component={Ipl2027RetentionsPage} />
+      <Route path="/squad" component={SquadRedirect} />
       <Route path="/feed/ipl-2027" component={Ipl2027Page} />
       <Route path="/feed/ipl-2027/retentions" component={Ipl2027RetentionsPage} />
       <Route path="/feed/squad" component={SquadRedirect} />
@@ -195,9 +202,6 @@ function Router() {
       <Route path="/blogs" component={BlogsPage} />
       <Route path="/insights">
         <Redirect to="/intelligence?tab=Insights" />
-      </Route>
-<Route path="/auction">
-        <Redirect to="/arcade" />
       </Route>
         <Route path="/scores" component={ScoresPage} />
         <Route path="/ai-analyst/ask" component={AskPage} />

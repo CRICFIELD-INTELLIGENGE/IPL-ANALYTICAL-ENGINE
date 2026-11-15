@@ -51,6 +51,17 @@ export function CricFieldWordmarkSVG({
   const mascotExpression = useMascotExpression(activity, emoji);
   const svgRef = React.useRef<SVGSVGElement>(null);
   const hits = [150, 270, 350, 440, 540, 600, 680, 780, 885];
+  const impactStyles = hits.map((x, i) => {
+    const hit = 18 + i * 5;
+    return `@keyframes cfFall${i} {
+      0%, ${hit}% { transform: translateY(0) rotate(0deg) scaleY(1); }
+      ${hit + 3}% { transform: translateY(4px) rotate(${i % 2 ? -78 : 78}deg) scaleY(.85); }
+      ${hit + 5}%, 73% { transform: translateY(10px) rotate(${i % 2 ? -87 : 87}deg) scaleY(.75); opacity: 1; }
+      84% { transform: translateY(0) rotate(0deg) scaleY(1.06); opacity: 1; }
+      88%, 100% { transform: none; opacity: 1; }
+    }
+    .cf-letter-${i} { transform-origin: ${x}px 368px; animation: cfFall${i} 18s ease-in-out infinite; }`;
+  }).join('');
   const deliveryFrames = hits.map((x, i) => {
     const hit = 18 + i * 5;
     return `${hit - 2}% { transform: translate(${x - 230}px, -40px); opacity: 1; }
@@ -85,6 +96,8 @@ export function CricFieldWordmarkSVG({
 
         {/* Dynamic smooth swinging keyframes for the stump 'I' tilting left and right */}
         <style>{`
+          ${impactStyles}
+          .cf-letter { will-change: transform; }
           @keyframes cfDelivery {
             0%, 10%, 96%, 100% { transform: translate(0, 0); }
             13% { transform: translate(-55px, -40px); }
