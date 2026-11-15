@@ -5,6 +5,7 @@ import { Scale } from "lucide-react";
 import { LeagueValuePanel } from "@/components/intelligence/intel-components";
 import { FeatureSaveButton } from "@/components/feature-save-button";
 import { PressureReliabilityPanel } from "@/components/pressure-reliability-panel";
+import { BatterLensRankings } from "@/components/batter-lens-rankings";
 import { RunFlowSankey, ShotFlowSankey } from "@/components/visualizations/sankey-diagram";
 import React, { useEffect, useMemo, useState } from "react";
 import { Layout } from "@/components/layout";
@@ -55,6 +56,7 @@ const TABS = [
   { id: "stat-builder", label: "Stat Builder", Icon: Filter },
   { id: "scenario-intelligence", label: "Scenario Intelligence", Icon: Cpu },
   { id: "tactics", label: "Tactics & Length", Icon: BarChart2 },
+  { id: "batter-lens", label: "Batter Lens", Icon: Crosshair },
   { id: "ask", label: "Ask AI", Icon: Cpu },
 ] as const;
 type Tab = typeof TABS[number]["id"];
@@ -1876,6 +1878,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                   </div>
                 </div>
               )}
+              {activeTab === "batter-lens" && <BatterLensRankings />}
               {activeTab === "ask" && (
                 <AskAIView />
               )}

@@ -7,7 +7,7 @@ import { teamShort, useTeams, useVenues, venueHref, normalizeVenueName, playerSl
 import type { AnalyticsFilters } from "@/lib/store";
 import { Sheet } from "../shell";
 
-type Tab = "batters" | "bowlers" | "venues" | "teams" | "records" | "head2head" | "stat-builder" | "scenario-intelligence" | "ask" | "tactics";
+type Tab = "batters" | "bowlers" | "venues" | "teams" | "records" | "head2head" | "stat-builder" | "scenario-intelligence" | "ask" | "tactics" | "batter-lens";
 interface Props {
  filters:AnalyticsFilters; setFilter:<K extends keyof AnalyticsFilters>(key:K,value:AnalyticsFilters[K])=>void;
  seasons:string[]; teams:string[]; activeTab:Tab; setActiveTab:(tab:Tab)=>void;

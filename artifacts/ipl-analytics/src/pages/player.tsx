@@ -35,6 +35,7 @@ import { PlayerIntelPanel } from "@/components/decision/intel-panels";
 import { PlayerIntelligenceSection } from "@/components/intelligence/intel-components";
 import { usePlayerIdentityIndex, usePlayerRecentMatches } from "@/lib/player-recent-matches";
 import { resolvePlayerKey, resolveProfileName } from "@/lib/player-key";
+import { BatterLens } from "@/components/batter-lens";
 import {
   useTopBatters, useTopBowlers, usePlayerImages, useSeasons,
   usePlayerSeasonStats, useSquadsBySeason, usePlayerDisplayNames, useCaptains, usePlayerLatestTeams,
@@ -139,7 +140,7 @@ export default function PlayerProfilePage() {
     staleTime: 1000 * 60 * 60,
   });
 
-  const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "intelligence" | "clutch" | "tactical" | "venue" | "recent" | "matchups">("overview");
+  const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "lens" | "intelligence" | "clutch" | "tactical" | "venue" | "recent" | "matchups">("overview");
   const [showCompareModal, setShowCompareModal] = useState(false);
   const [showAskAIModal, setShowAskAIModal] = useState(false);
   const [showAllAuction, setShowAllAuction] = useState(false);
@@ -1215,6 +1216,17 @@ export default function PlayerProfilePage() {
               <span>Vector Metrics</span>
             </button>
             <button
+              onClick={() => setActiveSubTab("lens")}
+              className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
+                activeSubTab === "lens"
+                  ? "bg-primary text-slate-950 font-black shadow-[0_0_20px_-3px_hsl(var(--primary))]"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/5"
+              }`}
+            >
+              <Crosshair className="w-3.5 h-3.5" />
+              <span>Batter Lens</span>
+            </button>
+            <button
               onClick={() => setActiveSubTab("intelligence")}
               className={`px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
                 activeSubTab === "intelligence" || activeSubTab === "clutch" || activeSubTab === "tactical" || activeSubTab === "venue"
@@ -1827,6 +1839,13 @@ export default function PlayerProfilePage() {
             )}
 
             {/* RECENT MATCH PERFORMANCES SUB-TAB */}
+            {/* BATTER LENS SUB-TAB */}
+            {activeSubTab === "lens" && (
+              <div className="lg:col-span-3 min-w-0">
+                <BatterLens names={[bio?.playerName, bio?.fullName]} />
+              </div>
+            )}
+
             {activeSubTab === "recent" && (
               <div className="lg:col-span-3 space-y-6">
                 <PlayerRecentMatchesCard
