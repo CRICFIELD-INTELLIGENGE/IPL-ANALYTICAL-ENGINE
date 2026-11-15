@@ -211,7 +211,21 @@ export default function DugoutPage() {
           switcher={<FranchiseSwitcher activeCode={activeTeamCode} onPick={handlePickFranchise} />}
         />
 
-        {/* ── 1. SQUAD EXPLORER (REDESIGNED STADIUM CARDS) ── */}
+        {/* ── 1. FRANCHISE MILESTONES ── */}
+        <div id="milestones" className="scroll-mt-24">
+          <Suspense fallback={<SectionSkeleton height="h-96" />}>
+            <FranchiseMilestones
+              key={activeTeamCode}
+              team={currentTeam}
+              record={effectiveRecord}
+              matches={matches.data ?? []}
+              loading={record.isLoading || matches.isLoading}
+              onSeason={setChosenSeason}
+            />
+          </Suspense>
+        </div>
+
+        {/* ── 2. SQUAD EXPLORER (REDESIGNED STADIUM CARDS) ── */}
         <section id="squad" className="scroll-mt-24 space-y-3 min-w-0">
           <div className="flex items-center justify-between border-b border-white/10 pb-2">
             <div className="flex items-center gap-2">
@@ -234,16 +248,6 @@ export default function DugoutPage() {
           </Suspense>
         </section>
 
-        {/* ── 2. FRANCHISE INTELLIGENCE ── */}
-        {season && (
-          <div id="intelligence" className="scroll-mt-24 space-y-8">
-            <Suspense fallback={<SectionSkeleton height="h-80" />}>
-              <RetentionFranchisePreview team={activeTeamCode} />
-              <FranchiseIntelligence teamName={currentTeam.name} code={activeTeamCode} season={season} accent={currentTeam.accent} />
-            </Suspense>
-          </div>
-        )}
-
         {/* ── 3. FRANCHISE STORIES: a 10-article preview; the full 100 live on the Intelligence hub ── */}
         <div id="newsroom" className="scroll-mt-24">
           <Suspense fallback={<LibrarySkeleton />}>
@@ -254,19 +258,15 @@ export default function DugoutPage() {
         {/* ── NATIVE AD VESSEL ── */}
         <AdVessel slot="1029384760" format="horizontal" label="Franchise Partner Briefing · Official Dugout Telemetry" />
 
-        {/* ── 4. FRANCHISE MILESTONES ── */}
-        <div id="milestones" className="scroll-mt-24">
-          <Suspense fallback={<SectionSkeleton height="h-96" />}>
-            <FranchiseMilestones
-              key={activeTeamCode}
-              team={currentTeam}
-              record={effectiveRecord}
-              matches={matches.data ?? []}
-              loading={record.isLoading || matches.isLoading}
-              onSeason={setChosenSeason}
-            />
-          </Suspense>
-        </div>
+        {/* ── 4. FRANCHISE INTELLIGENCE ── */}
+        {season && (
+          <div id="intelligence" className="scroll-mt-24 space-y-8">
+            <Suspense fallback={<SectionSkeleton height="h-80" />}>
+              <RetentionFranchisePreview team={activeTeamCode} />
+              <FranchiseIntelligence teamName={currentTeam.name} code={activeTeamCode} season={season} accent={currentTeam.accent} />
+            </Suspense>
+          </div>
+        )}
 
         {/* ── 5. SEASON TIMELINE / HISTORY ── */}
         <div id="history" className="scroll-mt-24">

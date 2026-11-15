@@ -8,11 +8,11 @@ import type { FranchiseRecord } from "@/lib/dugout-api";
 import { ExternalLink, Trophy, Shield, Activity, ArrowRight } from "lucide-react";
 
 export const DUGOUT_SECTIONS = [
+  { id: "milestones", label: "Milestones" },
   { id: "squad", label: "Squad" },
-  { id: "intelligence", label: "Intelligence" },
   { id: "newsroom", label: "Articles" },
-    { id: "milestones", label: "Milestones" },
-    { id: "history", label: "History" },
+  { id: "intelligence", label: "Intelligence" },
+  { id: "history", label: "History" },
 ] as const;
 
 function goTo(id: string) {

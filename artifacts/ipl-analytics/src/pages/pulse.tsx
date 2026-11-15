@@ -8,7 +8,7 @@ import { HUB_EVENTS } from "@/lib/ipl-2027";
 import { stamp, useIpl2027Desk } from "@/lib/ipl-2027-desk";
 import { teamColor, playerSlug } from "@/lib/aggregates";
 import { paletteForCode } from "@/lib/team-palette";
-import { isTeamCode } from "@/lib/team-context";
+import { isTeamCode, TEAM_CODE_TO_SLUG, type TeamCode } from "@/lib/team-context";
 import { AdVessel } from "@/components/ad-vessel";
 import { usePulseAuction, pulseMoney, lotValue, PULSE_TABS, type PulseTab, type PulseLot, type PulseModel, type PulseTeam, type PulseStatus } from "@/lib/pulse-auction";
 import {
@@ -642,11 +642,12 @@ function FranchisePurseBoard({ model }: { model: PulseModel }) {
               ? Math.min(100, Math.round((t.spent / t.startingPurse) * 100))
               : 0;
             const accent = teamHex(t.code);
+            const dugoutSlug = isTeamCode(t.code) ? (TEAM_CODE_TO_SLUG[t.code] ?? t.code.toLowerCase()) : t.code.toLowerCase();
 
             return (
               <Link
                 key={t.code}
-                href={`/dugout/${t.code}`}
+                href={`/dugout/${dugoutSlug}`}
                 className="rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-white/[0.02] hover:bg-slate-100/80 dark:hover:bg-white/[0.05] hover:scale-[1.02] p-2 sm:p-2.5 transition-all flex flex-col justify-between gap-1.5 shadow-2xs group cursor-pointer"
                 style={{ borderLeftColor: accent, borderLeftWidth: "3px" }}
                 title={`Open ${t.code} Dugout & Squad Tab`}
@@ -791,17 +792,34 @@ function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse
 
   return (
     <div className="space-y-6">
-      {/* 1. SIDE-BY-SIDE: FRANCHISE PURSE BOARD (7 cols) + TOP HAMMER BUYS (5 cols) */}
+      {/* 1. SIDE-BY-SIDE: FRANCHISE PURSE BOARD (7-8 cols) + 3 ACTION CARDS (5-4 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-stretch">
         <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
           <FranchisePurseBoard model={model} />
         </div>
-        <div className="lg:col-span-5 xl:col-span-4 flex flex-col">
-          <TopHammerPurchases model={model} />
+        <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4">
+          {steps.map(step => (
+            <button
+              key={step.n}
+              onClick={() => go(step.to)}
+              className={`flex-1 rounded-[20px] p-5 text-left transition-all duration-200 border hover:shadow-md hover:scale-[1.01] active:scale-[0.99] flex items-center justify-between group shadow-sm min-h-[96px] cursor-pointer ${step.cardClasses}`}
+            >
+              <div className="space-y-1.5 min-w-0 pr-3">
+                <div className="flex items-center gap-2.5">
+                  <span className={`text-2xl font-black tracking-tight font-mono shrink-0 ${step.numClass}`}>{step.n}</span>
+                  <span className="font-black text-slate-900 dark:text-white text-base uppercase tracking-wider truncate">{step.t}</span>
+                </div>
+                <div className="text-xs text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white/90 transition-colors line-clamp-2">{step.d}</div>
+              </div>
+              <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-white/5 group-hover:bg-slate-200 dark:group-hover:bg-white/15 flex items-center justify-center shrink-0 border border-slate-200 dark:border-white/10 transition-colors ml-2">
+                <span className="text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white text-base font-bold transition-transform group-hover:translate-x-0.5">→</span>
+              </div>
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* 2. SIDE-BY-SIDE: IPL AT A GLANCE (LEFT) + 3 ACTION CARDS (RIGHT) */}
+      {/* 2. SIDE-BY-SIDE: IPL AT A GLANCE (LEFT) + TOP HAMMER BUYS (RIGHT) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         {/* LEFT: IPL AT A GLANCE (7-8 cols) */}
         <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
@@ -910,26 +928,9 @@ function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse
           </Section>
         </div>
 
-        {/* RIGHT: THE 3 AUCTION LIFECYCLE ACTION CARDS (Stacked vertically) */}
-        <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4">
-          {steps.map(step => (
-            <button
-              key={step.n}
-              onClick={() => go(step.to)}
-              className={`flex-1 rounded-[20px] p-5 text-left transition-all duration-200 border hover:shadow-md hover:scale-[1.01] active:scale-[0.99] flex items-center justify-between group shadow-sm min-h-[96px] cursor-pointer ${step.cardClasses}`}
-            >
-              <div className="space-y-1.5 min-w-0 pr-3">
-                <div className="flex items-center gap-2.5">
-                  <span className={`text-2xl font-black tracking-tight font-mono shrink-0 ${step.numClass}`}>{step.n}</span>
-                  <span className="font-black text-slate-900 dark:text-white text-base uppercase tracking-wider truncate">{step.t}</span>
-                </div>
-                <div className="text-xs text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white/90 transition-colors line-clamp-2">{step.d}</div>
-              </div>
-              <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-white/5 group-hover:bg-slate-200 dark:group-hover:bg-white/15 flex items-center justify-center shrink-0 border border-slate-200 dark:border-white/10 transition-colors ml-2">
-                <span className="text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white text-base font-bold transition-transform group-hover:translate-x-0.5">→</span>
-              </div>
-            </button>
-          ))}
+        {/* RIGHT: TOP HAMMER BUYS */}
+        <div className="lg:col-span-5 xl:col-span-4 flex flex-col">
+          <TopHammerPurchases model={model} />
         </div>
       </div>
 
