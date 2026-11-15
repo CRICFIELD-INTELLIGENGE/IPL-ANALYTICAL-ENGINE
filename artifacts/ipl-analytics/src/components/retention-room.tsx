@@ -501,10 +501,10 @@ export function RetentionRoom() {
   const teamData = SQUADS_BY_TEAM[activeTeam] ?? SQUADS_BY_TEAM.CSK;
   const theme = TEAM_REGISTRY[activeTeam] ?? TEAM_REGISTRY.CSK;
   const editorialStories = [
-    { tab: "Featured", tag: "FEATURE", title: `${theme.shortName}'s retention dilemma: Keep the core or build for the future?`, description: `With a strong Indian spine and proven leadership, ${theme.name} face key calls ahead of the 2026/2027 retention deadline.`, date: "CricField Editorial Desk · 26 Oct · 6 min read", img: activeTeam === "CSK" ? "/csk insight.jpg" : activeTeam === "RCB" ? "/rcb-winner-2026.jpg" : "/venue-images/wankhede stadium.webp" },
-    { tab: "Analysis", tag: "ANALYSIS", title: `Why ${theme.shortName}'s spin core remains their biggest strength`, description: "", date: "26 Oct · 5 min read", img: "/venue-images/ma chidambaram stadium.webp" },
-    { tab: "Team Focus", tag: "TEAM FOCUS", title: `Which young domestic players could shape ${theme.shortName}'s next cycle?`, description: "", date: "25 Oct · 6 min read", img: "/a rahane.jpg" },
-    { tab: "Scouting", tag: "SCOUTING", title: `Five overseas options who could interest ${theme.shortName} in the room`, description: "", date: "24 Oct · 5 min read", img: activeTeam === "RR" ? "/players/rr-2026/yashasvi-jaiswal.webp" : "/players/rr-2026/donovan-ferreira.webp" },
+    { tab: "Featured", tag: "FEATURE", title: `${theme.shortName}'s retention dilemma: Keep the core or build for the future?`, description: `With a strong Indian spine and proven leadership, ${theme.name} face key calls ahead of the 2026/2027 retention deadline.`, date: "CricField Editorial Desk · 26 Oct", img: activeTeam === "CSK" ? "/csk insight.jpg" : activeTeam === "RCB" ? "/rcb-winner-2026.jpg" : "/venue-images/wankhede stadium.webp" },
+    { tab: "Analysis", tag: "ANALYSIS", title: `Why ${theme.shortName}'s spin core remains their biggest strength`, description: "", date: "26 Oct", img: "/venue-images/ma chidambaram stadium.webp" },
+    { tab: "Team Focus", tag: "TEAM FOCUS", title: `Which young domestic players could shape ${theme.shortName}'s next cycle?`, description: "", date: "25 Oct", img: "/a rahane.jpg" },
+    { tab: "Scouting", tag: "SCOUTING", title: `Five overseas options who could interest ${theme.shortName} in the room`, description: "", date: "24 Oct", img: activeTeam === "RR" ? "/players/rr-2026/yashasvi-jaiswal.webp" : "/players/rr-2026/donovan-ferreira.webp" },
   ];
   const leadIndex = Math.max(0, editorialStories.findIndex(story => story.tab === editorialTab));
   const orderedEditorial = [...editorialStories];

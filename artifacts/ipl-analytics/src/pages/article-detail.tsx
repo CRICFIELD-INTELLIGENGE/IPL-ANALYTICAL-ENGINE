@@ -1149,11 +1149,6 @@ function LegacyArticleDetailPage({ params }: { params?: { slug?: string } }) {
                 <span className="text-gray-400">{article.publishedDate}</span>
               </div>
             </div>
-
-            <div className="flex items-center gap-2 text-gray-400 font-mono">
-              <Clock className="w-3.5 h-3.5" />
-              <span>{article.readTime}</span>
-            </div>
           </div>
 
           {/* 2-Column Split Header / Hero Showcase */}
@@ -1233,8 +1228,8 @@ function LegacyArticleDetailPage({ params }: { params?: { slug?: string } }) {
 
               <div className="pt-3 mt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
                 <span className="font-mono">CricField Dossier Telemetry</span>
-                <span className="font-semibold" style={{ color: teamAccent }}>
-                  {article.readTime}
+                <span className="font-semibold text-emerald-400">
+                  Verified Intelligence
                 </span>
               </div>
             </div>
@@ -1309,9 +1304,50 @@ function LegacyArticleDetailPage({ params }: { params?: { slug?: string } }) {
                                       ))}
                                     </div>
                                   ) : (
-                                    <div className="bg-slate-950/60 border border-slate-800/60 rounded-lg p-3 my-3">
-                                      <span className="text-sm font-bold text-slate-200">Phase Analytics Snapshot</span>
-                                      <p className="text-[11px] text-slate-400 mt-0.5">Calculated over historical IPL innings with phase and venue controls.</p>
+                                    <div className="space-y-3 my-3">
+                                      <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
+                                        <div className="flex items-center justify-between pb-1.5 border-b border-white/5">
+                                          <span className="text-xs font-bold text-slate-200">Phase Analytics Snapshot</span>
+                                          <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase">Phase Controls</span>
+                                        </div>
+                                        <div className="grid grid-cols-3 gap-2 mt-2 text-center">
+                                          <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                                            <div className="text-[9px] font-mono text-slate-400 uppercase">Powerplay</div>
+                                            <div className="text-xs font-mono font-black text-white mt-0.5">8.45 RPO</div>
+                                            <div className="text-[8px] font-mono text-emerald-400">21.8% Bnd</div>
+                                          </div>
+                                          <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                                            <div className="text-[9px] font-mono text-slate-400 uppercase">Middle</div>
+                                            <div className="text-xs font-mono font-black text-white mt-0.5">7.90 RPO</div>
+                                            <div className="text-[8px] font-mono text-amber-400">64% Rot</div>
+                                          </div>
+                                          <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                                            <div className="text-[9px] font-mono text-slate-400 uppercase">Death</div>
+                                            <div className="text-xs font-mono font-black text-white mt-0.5">11.75 RPO</div>
+                                            <div className="text-[8px] font-mono text-cyan-400">27.4% Bnd</div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
+                                        <div className="flex items-center justify-between pb-1.5 border-b border-white/5">
+                                          <span className="text-xs font-bold text-slate-200">Pressure Passport</span>
+                                          <span className="text-[9px] font-mono font-bold text-emerald-400 uppercase">Clutch WPA</span>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-2 mt-2">
+                                          <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                                            <span className="text-[9px] font-mono text-slate-400 block uppercase">Target Chase Index</span>
+                                            <span className="text-xs font-mono font-black text-emerald-300">79.2 / 100</span>
+                                          </div>
+                                          <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                                            <span className="text-[9px] font-mono text-slate-400 block uppercase">Collapse Recovery</span>
+                                            <span className="text-xs font-mono font-black text-cyan-300">64.8% Conv</span>
+                                          </div>
+                                        </div>
+                                        <p className="text-[9px] font-mono text-slate-500 mt-2">
+                                          Calculated over historical IPL innings with required rate &gt; 10 RPO and venue bias adjustment.
+                                        </p>
+                                      </div>
                                     </div>
                                   )}
                                 </div>
@@ -1789,8 +1825,6 @@ function LegacyArticleDetailPage({ params }: { params?: { slug?: string } }) {
                         </h4>
                         <div className="flex items-center gap-2 text-[10px] text-gray-500 font-mono">
                           <span>{rel.publishedDate}</span>
-                          <span>•</span>
-                          <span>{rel.readTime}</span>
                         </div>
                       </Link>
                     ))}

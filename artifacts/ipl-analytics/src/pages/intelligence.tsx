@@ -698,16 +698,10 @@ export default function IntelligencePage() {
                     {/* Left text */}
                     <div className="md:col-span-7 space-y-3">
                       <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-widest bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
+                        <span className="px-2.5 py-0.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-widest bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
                           <Compass className="w-3 h-3" />
                           <span>{aspectName(featuredArticle.aspect)}</span>
                         </span>
-                        {featuredArticle.meta && (
-                          <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
-                            <span>{featuredArticle.meta}</span>
-                          </span>
-                        )}
                       </div>
 
                       <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-amber-300 transition-colors">
@@ -786,21 +780,23 @@ export default function IntelligencePage() {
                       key={art.key}
                       href={art.href ?? "#"}
                       onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
-                      className="group flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-white/10 bg-white hover:bg-slate-50 dark:bg-[#0B1220]/70 dark:hover:bg-[#0E1728] hover:border-slate-300 dark:hover:border-white/25 overflow-hidden transition-all duration-300 shadow-md dark:shadow-lg cursor-pointer"
+                      className="group flex flex-col justify-between rounded-2xl border border-white/10 bg-[#0B1220] hover:bg-[#0E1728] hover:border-white/20 overflow-hidden transition-all duration-300 shadow-xl cursor-pointer"
                     >
                       {/* 16:9 cover: the article's header photo, or the CricField illustration */}
-                      <LibraryMedia
-                        imageId={art.imageId}
-                        title={art.title}
-                        accent={franchiseMeta.accent ?? franchiseConfig.accent}
-                        code={activeFranchiseCode}
-                        teamName={franchiseMeta.name}
-                        aspect={art.aspect}
-                      />
+                      <div className="overflow-hidden bg-[#08131F] w-full aspect-video">
+                        <LibraryMedia
+                          imageId={art.imageId}
+                          title={art.title}
+                          accent={franchiseMeta.accent ?? franchiseConfig.accent}
+                          code={activeFranchiseCode}
+                          teamName={franchiseMeta.name}
+                          aspect={art.aspect}
+                        />
+                      </div>
 
                       {/* Body Details */}
                       <div className="p-4 space-y-2.5 flex-1 flex flex-col">
-                        {/* Aspect + read time */}
+                        {/* Aspect tag */}
                         <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
                           <span
                             className="px-2 py-0.5 rounded-md font-bold uppercase tracking-wider truncate max-w-[190px]"
@@ -812,28 +808,22 @@ export default function IntelligencePage() {
                           >
                             {aspectName(art.aspect)}
                           </span>
-                          {art.meta && (
-                            <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1 shrink-0 font-medium text-[11px]">
-                              <Clock className="w-3 h-3 text-slate-400" />
-                              {art.meta}
-                            </span>
-                          )}
                         </div>
 
-                        <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-primary dark:group-hover:text-cyan-300 transition-colors line-clamp-2 leading-snug">
+                        <h4 className="font-bold text-sm text-white group-hover:text-cyan-300 transition-colors line-clamp-2 leading-snug">
                           {art.title}
                         </h4>
 
-                        <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                        <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
                           {art.dek}
                         </p>
 
                         {/* Footer */}
-                        <div className="mt-auto pt-3 border-t border-slate-100 dark:border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                        <div className="mt-auto pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500">
                           <span>{art.number ? `No. ${art.number}` : ""}</span>
-                          <span className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
+                          <span className="flex items-center gap-1 text-slate-400">
                             {art.kind === "legacy" ? "From the archive" : (STORY_TYPE_LABEL[art.storyType ?? ""] ?? "New")}
-                            <ArrowRight className="w-3 h-3 text-cyan-600 dark:text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
+                            <ArrowRight className="w-3 h-3 text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
                           </span>
                         </div>
                       </div>

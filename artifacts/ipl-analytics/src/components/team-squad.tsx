@@ -763,7 +763,7 @@ function SquadCard({ p, name, open, onToggle, onReadMore, captain, jersey, franc
 
   return (
     <div
-      className="group relative h-[420px] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-[#0E1830] dark:to-[#080F1E] shadow-md dark:shadow-none transition-all"
+      className="group relative h-[420px] rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 bg-gradient-to-b from-[#0D1527] via-[#09101F] to-[#050A14] text-white shadow-xl transition-all"
       style={open ? { borderColor: `${accent}88` } : undefined}
     >
       {/* Portrait and jersey number: shrinks upward while the panel is open */}
@@ -779,41 +779,43 @@ function SquadCard({ p, name, open, onToggle, onReadMore, captain, jersey, franc
           {jersey && (
             <span
               aria-hidden
-              className={`absolute left-1/2 -translate-x-1/2 font-display font-black leading-none select-none tabular-nums transition-all duration-500 ${open ? "top-1 text-[64px] opacity-[0.08] dark:opacity-[0.10]" : "top-6 text-[150px] opacity-[0.10] dark:opacity-[0.14]"}`}
-              style={{ color: accent }}
+              className={`absolute left-1/2 -translate-x-1/2 font-display font-black leading-none select-none tabular-nums transition-all duration-500 text-white/[0.04] pointer-events-none ${open ? "top-1 text-[64px]" : "top-6 text-[140px]"}`}
             >
               {jersey}
             </span>
           )}
-          <div className={`absolute inset-x-0 bottom-0 transition-all duration-500 ease-out ${open ? "top-2" : "top-10"}`}>
-            <PlayerAvatar framing="chest"
-              name={p.cricsheetName ?? p.name}
-              teamId={franchise}
-              season={season}
-              playerImages={playerImages}
-              bio={bio}
-              disableHover
-              imgClassName="w-full h-full object-contain object-bottom"
-            />
+          <div className={`absolute inset-x-0 bottom-0 transition-all duration-500 ease-out flex items-end justify-center ${open ? "top-2" : "top-8"}`}>
+            <div className="w-full h-full max-h-[240px] max-w-[200px] mx-auto flex items-end justify-center overflow-hidden">
+              <PlayerAvatar framing="chest"
+                name={p.cricsheetName ?? p.name}
+                teamId={franchise}
+                season={season}
+                playerImages={playerImages}
+                bio={bio}
+                disableHover
+                className="w-full h-full flex items-end justify-center"
+                imgClassName="max-h-[230px] max-w-full w-auto h-auto object-contain object-bottom mx-auto"
+              />
+            </div>
           </div>
           <div className="absolute top-3 inset-x-3 flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.16em]">
             <span style={{ color: accent }}>{open ? "" : roleLabel(p)}</span>
-            {captain && !open && <span className="rounded-full px-1.5 py-0.5 text-[9px] font-bold text-slate-700 dark:text-white/85 border border-slate-300 dark:border-white/25 bg-white/80 dark:bg-black/30 shadow-sm dark:shadow-none">C</span>}
+            {captain && !open && <span className="rounded-full px-1.5 py-0.5 text-[9px] font-bold text-white/85 border border-white/25 bg-black/40 shadow-sm">C</span>}
           </div>
         </div>
 
         {/* Bottom bar: number and role, name */}
         <div
-          className={`absolute inset-x-0 bottom-0 h-[68px] px-3.5 flex items-center justify-between gap-3 border-t bg-white/95 dark:bg-[#070D1A] backdrop-blur-sm transition-opacity duration-300 ${open ? "opacity-0" : "opacity-100"}`}
-          style={{ borderColor: `${accent}55` }}
+          className={`absolute inset-x-0 bottom-0 h-[68px] px-3.5 flex items-center justify-between gap-3 border-t bg-[#070D1A]/95 backdrop-blur-sm transition-opacity duration-300 ${open ? "opacity-0" : "opacity-100"}`}
+          style={{ borderColor: `${accent}33` }}
         >
           <div className="min-w-0">
-            {jersey && <div className="text-xs font-bold text-slate-800 dark:text-white/80 tabular-nums">{jersey}</div>}
-            <div className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-white/45 truncate">{roleLabel(p)}</div>
+            {jersey && <div className="text-xs font-bold text-white/80 tabular-nums">{jersey}</div>}
+            <div className="text-[10px] uppercase tracking-wider text-white/45 truncate">{roleLabel(p)}</div>
           </div>
           <div className="text-right min-w-0 leading-tight">
-            <div className="text-[11px] font-bold uppercase text-slate-600 dark:text-white/70 truncate">{first}</div>
-            <div className="text-base font-black uppercase text-slate-950 dark:text-white truncate">{last || first}</div>
+            <div className="text-[11px] font-bold uppercase text-white/70 truncate">{first}</div>
+            <div className="text-base font-black uppercase text-white truncate">{last || first}</div>
           </div>
         </div>
       </button>
@@ -821,7 +823,7 @@ function SquadCard({ p, name, open, onToggle, onReadMore, captain, jersey, franc
       {/* Details panel: rises from the bottom */}
       <div
         aria-hidden={!open}
-        className={`absolute inset-x-0 bottom-0 flex flex-col px-4 overflow-hidden transition-[height,padding] duration-500 ease-out motion-reduce:transition-none bg-white dark:bg-[#08101F] ${open ? "h-[66%] pt-3 pb-4 border-t" : "h-0 py-0 border-t-0 pointer-events-none"}`}
+        className={`absolute inset-x-0 bottom-0 flex flex-col px-4 overflow-hidden transition-[height,padding] duration-500 ease-out motion-reduce:transition-none bg-[#08101F] text-white ${open ? "h-[66%] pt-3 pb-4 border-t" : "h-0 py-0 border-t-0 pointer-events-none"}`}
         style={{ borderColor: accent, backgroundImage: `radial-gradient(120% 70% at 100% 100%, ${accent}15 0%, transparent 60%)` }}
       >
         <div {...rise(0, "flex items-start justify-between gap-2")}>
@@ -829,40 +831,40 @@ function SquadCard({ p, name, open, onToggle, onReadMore, captain, jersey, franc
             <div className="text-[10px] font-bold uppercase tracking-[0.16em] truncate" style={{ color: accent }}>
               {[nationality, roleLabel(p)].filter(Boolean).join(" · ")}
             </div>
-            <div className="text-base font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight line-clamp-2">
-              {jersey && <span className="text-slate-400 dark:text-white/40 tabular-nums mr-1.5">{jersey}</span>}{name}
+            <div className="text-base font-black uppercase tracking-tight text-white leading-tight line-clamp-2">
+              {jersey && <span className="text-white/40 tabular-nums mr-1.5">{jersey}</span>}{name}
             </div>
-            {captain && <div className="text-[11px] text-slate-600 dark:text-white/60">Captain · {season}</div>}
+            {captain && <div className="text-[11px] text-white/60">Captain · {season}</div>}
           </div>
           <button
             onClick={onToggle}
             tabIndex={tab}
             aria-label="Hide details"
-            className="shrink-0 w-8 h-8 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/70 hover:text-slate-950 dark:hover:text-white flex items-center justify-center cursor-pointer shadow-sm dark:shadow-none"
+            className="shrink-0 w-8 h-8 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-white flex items-center justify-center cursor-pointer shadow-sm"
           >
             <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div {...rise(1, "text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 dark:text-white/35 mt-3 mb-1.5")}>
+        <div {...rise(1, "text-[10px] font-bold uppercase tracking-[0.18em] text-white/35 mt-3 mb-1.5")}>
           {stats.length > 0 ? `IPL ${season} · ${code}` : `IPL Career & Profile · ${code}`}
         </div>
         {stats.length > 0 ? (
           <dl className="grid grid-cols-2 gap-x-4">
             {stats.map((s, i) => (
-              <div key={s.label} style={rise(2 + i).style} className={`${rise(2 + i).className} min-w-0 border-t border-slate-200 dark:border-white/10 py-1.5`}>
-                <dd className="font-display font-black text-xl text-slate-950 dark:text-white tabular-nums leading-none">{s.value}</dd>
-                <dt className="text-[10px] uppercase tracking-wide text-slate-500 dark:text-white/45 mt-1">{s.label}</dt>
+              <div key={s.label} style={rise(2 + i).style} className={`${rise(2 + i).className} min-w-0 border-t border-white/10 py-1.5`}>
+                <dd className="font-display font-black text-xl text-white tabular-nums leading-none">{s.value}</dd>
+                <dt className="text-[10px] uppercase tracking-wide text-white/45 mt-1">{s.label}</dt>
               </div>
             ))}
           </dl>
         ) : (
-          <div {...rise(2, "space-y-1.5 text-xs text-slate-600 dark:text-white/70 leading-relaxed")}>
-            <div className="font-semibold text-slate-800 dark:text-white/90">
+          <div {...rise(2, "space-y-1.5 text-xs text-white/70 leading-relaxed")}>
+            <div className="font-semibold text-white/90">
               {p.acquisition === "retained" ? "Retained Core Asset" : p.acquisition === "auction" ? "Auction Acquisition" : "Franchise Roster Asset"}
               {p.priceDisplay ? ` · ${p.priceDisplay}` : ""}
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-white/50">
+            <p className="text-[11px] text-white/50">
               {bio?.batStyle || bio?.bowlStyle ? [bio.batStyle, bio.bowlStyle].filter(Boolean).join(" · ") : `${roleLabel(p)} registered for ${code}.`}
             </p>
           </div>
@@ -904,19 +906,19 @@ function Spotlight({ player: p, displayName, franchise, code, season, accent, ca
 
   return (
     <article
-      className="relative grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 bg-white dark:bg-[#08101F] shadow-xl dark:shadow-none animate-in fade-in duration-300 motion-reduce:animate-none"
+      className="relative grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] rounded-3xl overflow-hidden border border-white/10 bg-[#08101F] text-white shadow-2xl animate-in fade-in duration-300 motion-reduce:animate-none"
       style={{ backgroundImage: `radial-gradient(90% 90% at 100% 100%, ${accent}15 0%, transparent 60%)` }}
     >
       <button
         onClick={onClose}
         aria-label="Close player details"
-        className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/80 dark:bg-black/40 border border-slate-200 dark:border-white/15 text-slate-700 dark:text-white/75 hover:text-slate-950 dark:hover:text-white hover:bg-white dark:hover:bg-black/60 shadow-md dark:shadow-none flex items-center justify-center cursor-pointer"
+        className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/40 border border-white/15 text-white/75 hover:text-white hover:bg-black/60 shadow-md flex items-center justify-center cursor-pointer"
       >
         <X className="w-4 h-4" />
       </button>
       {/* Portrait */}
-      <div className="relative h-[340px] sm:h-[420px] md:h-[460px] overflow-hidden bg-gradient-to-b from-slate-100 to-slate-200 dark:from-[#0E1830] dark:to-[#08101F]">
-        <div className="absolute inset-x-0 bottom-0 top-4">
+      <div className="relative h-[340px] sm:h-[420px] md:h-[460px] overflow-hidden bg-gradient-to-b from-[#0D1527] to-[#08101F] flex items-end justify-center">
+        <div className="w-full h-full max-h-[380px] max-w-[320px] mx-auto flex items-end justify-center overflow-hidden">
           <PlayerAvatar framing="chest"
             name={p.cricsheetName ?? p.name}
             teamId={franchise}
@@ -924,10 +926,11 @@ function Spotlight({ player: p, displayName, franchise, code, season, accent, ca
             playerImages={playerImages}
             bio={bio}
             disableHover
-            imgClassName="w-full h-full object-contain object-bottom"
+            className="w-full h-full flex items-end justify-center"
+            imgClassName="max-h-[360px] max-w-full w-auto h-auto object-contain object-bottom mx-auto"
           />
         </div>
-        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-200 dark:from-[#08101F] to-transparent md:hidden pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#08101F] to-transparent md:hidden pointer-events-none" />
       </div>
 
       {/* Identity, figures and Read More, over an oversized franchise mark */}

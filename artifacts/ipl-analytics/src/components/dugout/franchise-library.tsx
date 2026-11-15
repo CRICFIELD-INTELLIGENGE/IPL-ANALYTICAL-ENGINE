@@ -74,14 +74,14 @@ export function useFranchiseArticles(code: string, showPlanned = false) {
     const byPlan = new Map<string, IndexEntry>(v2.map((e) => [e.id, e]));
     const out: Item[] = [];
     for (const e of v2) {
-      out.push({ key: e.id, title: e.title, dek: e.dek, aspect: e.aspect, kind: "live", href: `/dugout/articles/${e.slug}`, imageId: e.id, storyType: e.storyType, meta: `${e.readMinutes} min read`, number: own.find((p) => p.planId === e.id)?.franchiseNumber });
+      out.push({ key: e.id, title: e.title, dek: e.dek, aspect: e.aspect, kind: "live", href: `/dugout/articles/${e.slug}`, imageId: e.id, storyType: e.storyType, meta: "", number: own.find((p) => p.planId === e.id)?.franchiseNumber });
     }
     const supersededSlugs = new Set(v2.map((e) => e.supersedes).filter(Boolean));
     for (const art of getArticlesForFranchise(code) as EditorialArticle[]) {
       if (supersededSlugs.has(art.slug)) continue;
       const d = legacyDecisions.decisions.find((x) => x.legacyId === art.id && x.reviewed && x.planId);
       const slot = d?.planId ? own.find((p) => p.planId === d.planId) : undefined;
-      out.push({ key: art.id, title: art.title, dek: art.subtitle, aspect: slot?.aspect ?? PARAM_ASPECT[art.parameter] ?? "history", kind: "legacy", href: `/dugout/articles/${art.slug}`, imageId: art.id, storyType: "archive", meta: art.readTime, number: slot?.franchiseNumber });
+      out.push({ key: art.id, title: art.title, dek: art.subtitle, aspect: slot?.aspect ?? PARAM_ASPECT[art.parameter] ?? "history", kind: "legacy", href: `/dugout/articles/${art.slug}`, imageId: art.id, storyType: "archive", meta: "", number: slot?.franchiseNumber });
     }
     if (import.meta.env.DEV && showPlanned) {
       const taken = new Set([...byPlan.keys(), ...legacyDecisions.decisions.filter((d) => d.reviewed && d.planId).map((d) => d.planId!)]);
@@ -308,7 +308,7 @@ export function LibraryMedia({
   const a = EDITORIAL_ASPECTS.find((x) => x.id === aspect) ?? EDITORIAL_ASPECTS[0];
   const teamCover = code === "CSK" ? "/csk insight.jpg" : code === "RCB" ? "/virat-kohli.png" : code === "MI" ? "/rohit sharma.jpg" : "/TITLE BANNER.png";
   const illustration = (
-    <div className={`${aspectRatio === "square" ? "aspect-square" : aspectRatio === "fill" ? "w-full h-full" : "aspect-video"} w-full h-full overflow-hidden [&>div]:rounded-none [&>div]:border-0`}>
+    <div className={`${aspectRatio === "square" ? "aspect-square" : aspectRatio === "fill" ? "w-full h-full" : "aspect-video"} w-full h-full overflow-hidden [&>div]:rounded-none [&>div]:border-0 bg-[#08131F]`}>
       <EditorialCoverCanvas
         franchiseName={teamName}
         teamCode={code}
@@ -348,7 +348,7 @@ function LibraryCard({ item, accent, code, teamName }: { item: Item; accent: str
         <h4 className="line-clamp-3 text-[15px] font-semibold leading-snug text-slate-100 group-hover:text-white">{item.title}</h4>
         {item.dek && <p className="line-clamp-2 text-sm leading-relaxed text-slate-400">{item.dek}</p>}
         <div className="mt-auto flex items-center justify-between pt-2 text-[11px] border-t border-white/5">
-          <span className="font-mono text-slate-500">{item.number ? `No. ${item.number}` : ""}{item.meta ? `${item.number ? " · " : ""}${item.meta}` : ""}</span>
+          <span className="font-mono text-slate-500">{item.number ? `No. ${item.number}` : ""}</span>
           {item.href && (
             <span className="inline-flex items-center gap-1 font-semibold group-hover:translate-x-0.5 transition-transform" style={{ color: accent }}>
               Read <ArrowRight className="h-3 w-3" />

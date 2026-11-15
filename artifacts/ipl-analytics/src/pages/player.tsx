@@ -1,6 +1,14 @@
 import { PlayerRetentionCard } from "@/components/retention/retention-widgets";
 import {ScoringRing} from '@/components/visualizations/scoring-ring';
 import {PlayerCareerMilestones} from '@/components/player-career-milestones';
+import {
+  PlayerComparisonModal,
+  PlayerAskAIModal,
+  PlayerPressurePassportSection,
+  PlayerTacticalIntelligenceSection,
+  PlayerVenueOppositionSection,
+  EnlargedRadarChartSection,
+} from "@/components/player-intelligence-sections";
 import React, { useState, useMemo } from "react";
 import { useRoute, Link } from "wouter";
 import { useTheme } from "@/lib/theme";
@@ -127,6 +135,9 @@ export default function PlayerProfilePage() {
   });
 
   const [activeSubTab, setActiveSubTab] = useState<"overview" | "metrics" | "recent" | "matchups">("overview");
+  const [showCompareModal, setShowCompareModal] = useState(false);
+  const [showAskAIModal, setShowAskAIModal] = useState(false);
+  const [showAllAuction, setShowAllAuction] = useState(false);
 
   // Exact-only comparison. The previous version also accepted "same first
   // initial + same surname", which merged distinct careers: Rahul Sharma's
@@ -423,6 +434,19 @@ export default function PlayerProfilePage() {
 
   const pColor = useMemo(() => teamColor(primaryTeam), [primaryTeam]);
   const pShort = useMemo(() => teamShort(primaryTeam), [primaryTeam]);
+
+  const recentScores = useMemo(() => {
+    if (!playerRecentMatches || !playerRecentMatches.length) return [];
+    return playerRecentMatches.slice(0, 5).map(m => ({
+      runs: m.batting?.runs ?? 0,
+      notOut: m.batting?.notOut ?? false,
+      balls: m.batting?.balls ?? 0,
+      vsTeam: m.vsTeam ?? "IPL",
+      wickets: m.bowling?.wickets ?? 0,
+      bowlRuns: m.bowling?.runs ?? 0,
+      date: m.date,
+    }));
+  }, [playerRecentMatches]);
 
   const jerseyNo = useMemo(() => {
     const jMap = playerJerseysQuery.data || {};
@@ -804,6 +828,59 @@ export default function PlayerProfilePage() {
                   <p className="text-xs text-white/70 leading-relaxed font-normal mt-3 max-w-2xl">
                     {bio.bio}
                   </p>
+
+                  {/* Recent Form Sparkline & Core Action Buttons */}
+                  <div className="my-3 p-3 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 w-full sm:w-auto">
+                      <div className="text-left">
+                        <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-white/40 block">Recent Form (Last 5)</span>
+                        <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                          {recentScores.length > 0 ? recentScores.map((score, sIdx) => (
+                            <span
+                              key={sIdx}
+                              className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold border ${
+                                score.runs >= 100
+                                  ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
+                                  : score.runs >= 50
+                                  ? "bg-primary/20 text-primary border-primary/40"
+                                  : "bg-white/5 text-white/80 border-white/10"
+                              }`}
+                              title={`${score.runs}${score.notOut ? '*' : ''} vs ${score.vsTeam}`}
+                            >
+                              {score.runs}{score.notOut ? '*' : ''}
+                            </span>
+                          )) : (
+                            <span className="text-xs font-mono text-white/40">Verified IPL archive active</span>
+                          )}
+                        </div>
+                      </div>
+                      {recentScores.length > 0 && (
+                        <div className="border-l border-white/10 pl-3">
+                          <span className="text-[9px] font-mono uppercase text-white/40 block">Form Avg</span>
+                          <span className="text-xs font-mono font-black text-emerald-400">
+                            {(recentScores.reduce((acc, s) => acc + s.runs, 0) / Math.max(1, recentScores.filter(s => !s.notOut).length || 1)).toFixed(1)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
+                      <button
+                        onClick={() => setShowCompareModal(true)}
+                        className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary hover:text-white text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+                      >
+                        <Layers className="w-3.5 h-3.5" />
+                        <span>Compare</span>
+                      </button>
+                      <button
+                        onClick={() => setShowAskAIModal(true)}
+                        className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 hover:text-white text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+                      >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Ask AI</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Quick Physical Archetype Specs Strip */}
@@ -1158,15 +1235,15 @@ export default function PlayerProfilePage() {
                       </span>
                     </div>
 
-                    {/* Radar Chart */}
-                    <div className="h-[175px] sm:h-[190px] w-full flex items-center justify-center relative z-10">
+                    {/* Radar Chart (Enlarged) */}
+                    <div className="h-[270px] sm:h-[290px] w-full flex items-center justify-center relative z-10">
                       <ResponsiveContainer width="100%" height="100%">
-                        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
-                          <PolarGrid stroke="rgba(255,255,255,0.10)" />
+                        <RadarChart cx="50%" cy="50%" outerRadius="82%" data={radarData}>
+                          <PolarGrid stroke="rgba(255,255,255,0.12)" />
                           <PolarAngleAxis
                             dataKey="short"
-                            stroke="rgba(255,255,255,0.75)"
-                            fontSize={8}
+                            stroke="rgba(255,255,255,0.85)"
+                            fontSize={10}
                             tickLine={false}
                           />
                           <PolarRadiusAxis angle={30} domain={[0, 'auto']} stroke="transparent" tick={false} />
@@ -1390,10 +1467,9 @@ export default function PlayerProfilePage() {
               <>
                 {/* Decision Intelligence: pressure, weakness, similar players, auction value */}
                 <PlayerIntelligenceSection player={bio.playerName} className="lg:col-span-3" />
-                  <PlayerRetentionCard player={bio.playerName} className="lg:col-span-3" />
-                  <PlayerIntelPanel player={bio.playerName} className="lg:col-span-3" />
+                <PlayerRetentionCard player={bio.playerName} className="lg:col-span-3" />
+                <PlayerIntelPanel player={bio.playerName} className="lg:col-span-3" />
 
-                <PlayerCareerMilestones key={`${bio.playerName}-${showAsBatter}`} name={bio.fullName || bio.playerName} aliases={[bio.playerName]} seasons={seasonalStats} batting={showAsBatter} accent={pColor} history={squadHistory} captaincy={captaincy} matches={playerRecentMatches}/>
                 {/* Career Seasonal Trend Chart */}
                 <GlassCard className="lg:col-span-2 p-5 flex flex-col self-start">
                   <div className="mb-4 flex items-start justify-between gap-4 flex-wrap">
@@ -1549,7 +1625,40 @@ export default function PlayerProfilePage() {
                   </div>
                 </GlassCard>
 
-                {/* Captaincy — only rendered for players who actually led a side */}
+                {/* ── 3. FORM & PLAYER DNA: ENLARGED RADAR & AXIS GLOSSARY ── */}
+                <div className="lg:col-span-3">
+                  <EnlargedRadarChartSection radarData={radarData} pColor={pColor} isBatter={showAsBatter} />
+                </div>
+
+                {/* ── 4. PRESSURE INTELLIGENCE: PRESSURE PASSPORT & CHASE >10 RPO ── */}
+                <div className="lg:col-span-3">
+                  <PlayerPressurePassportSection playerName={bio.playerName} pColor={pColor} />
+                </div>
+
+                {/* ── 6. TACTICAL INTELLIGENCE: SCORING ACCELERATION & SCENARIO ENGINE ── */}
+                <div className="lg:col-span-3">
+                  <PlayerTacticalIntelligenceSection playerName={bio.playerName} pColor={pColor} />
+                </div>
+
+                {/* ── 7. VENUE & OPPOSITION INTELLIGENCE: GROUNDS & CHASE SPLITS ── */}
+                <div className="lg:col-span-3">
+                  <PlayerVenueOppositionSection playerName={bio.playerName} />
+                </div>
+
+                {/* ── 8. CAREER MILESTONES: 3 FEATURED LANDMARKS & EXPANDABLE TIMELINE ── */}
+                <PlayerCareerMilestones
+                  key={`${bio.playerName}-${showAsBatter}`}
+                  name={bio.fullName || bio.playerName}
+                  aliases={[bio.playerName]}
+                  seasons={seasonalStats}
+                  batting={showAsBatter}
+                  accent={pColor}
+                  history={squadHistory}
+                  captaincy={captaincy}
+                  matches={playerRecentMatches}
+                />
+
+                {/* ── 9. CAPTAINTCY & AUCTION HISTORY ── */}
                 {captaincy && (
                   <GlassCard className="lg:col-span-3 p-5">
                     <div className="mb-4 flex items-start justify-between gap-4 flex-wrap">
@@ -1741,7 +1850,7 @@ export default function PlayerProfilePage() {
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
-                          {squadHistory.map(r => (
+                          {(showAllAuction ? squadHistory : squadHistory.slice(-3).reverse()).map(r => (
                             <tr key={`${r.season}-${r.team}`} className="hover:bg-white/[0.02] transition-colors">
                               <td className="py-2 pr-4 text-[12px] font-black text-white/80 tabular-nums">{r.season}</td>
                               <td className="py-2 pr-4">
@@ -1764,12 +1873,62 @@ export default function PlayerProfilePage() {
                           ))}
                         </tbody>
                       </table>
+                      {squadHistory.length > 3 && (
+                        <div className="mt-3 pt-2 border-t border-white/5 text-center">
+                          <button
+                            onClick={() => setShowAllAuction(!showAllAuction)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-bold text-white transition-all cursor-pointer"
+                          >
+                            <span>{showAllAuction ? "Collapse older seasons" : `Show all ${squadHistory.length} auction transactions`}</span>
+                            {showAllAuction ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                          </button>
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <div className="py-10 text-center text-[11px] font-black uppercase tracking-widest text-white/30">
                       No auction record found for this player
                     </div>
                   )}
+                </GlassCard>
+
+                {/* ── 10. SCOUT REPORT & AI ANALYST CONTEXTUAL Q&A ── */}
+                <GlassCard className="lg:col-span-3 p-5 border border-purple-500/20 bg-gradient-to-r from-purple-950/20 via-[#0B1428] to-[#070D1A]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-purple-400" />
+                      <div>
+                        <span className="text-[10px] font-mono font-black uppercase tracking-widest text-purple-400 block">AI Neural Scout &amp; Telemetry</span>
+                        <h3 className="text-base font-black uppercase text-white">Ask AI About {bio.playerName}</h3>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setShowAskAIModal(true)}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 hover:text-white text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Open AI Analyst Q&amp;A</span>
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-3">
+                    {[
+                      `Explain ${bio.playerName}'s legendary 2016 season (973 runs)`,
+                      `Which bowling styles restrict his scoring recently?`,
+                      `How does he perform when required rate exceeds 10 RPO?`,
+                    ].map((promptText, pIdx) => (
+                      <button
+                        key={pIdx}
+                        onClick={() => setShowAskAIModal(true)}
+                        className="p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-purple-500/30 hover:bg-white/[0.05] text-left transition-all cursor-pointer flex flex-col justify-between"
+                      >
+                        <span className="text-xs font-bold text-white/90">"{promptText}"</span>
+                        <span className="text-[9px] font-mono text-purple-400 mt-2 flex items-center gap-1">
+                          Synthesize Answer →
+                        </span>
+                      </button>
+                    ))}
+                  </div>
                 </GlassCard>
               </>
             )}
@@ -2249,6 +2408,36 @@ export default function PlayerProfilePage() {
             )}
         </motion.div>
       </div>
+
+      {bio && (
+        <>
+          <PlayerComparisonModal
+            isOpen={showCompareModal}
+            onClose={() => setShowCompareModal(false)}
+            currentPlayer={{
+              name: bio.playerName || profileName,
+              fullName: bio.fullName,
+              role: bio.role,
+              runs: activeBatterStats?.runs,
+              strikeRate: activeBatterStats?.strikeRate,
+              average: activeBatterStats?.average,
+              ppSr: activeBatterStats?.ppSr,
+              middleSr: activeBatterStats?.middleSr,
+              deathSr: activeBatterStats?.deathSr,
+            }}
+            primaryTeam={primaryTeam}
+            pColor={pColor}
+            isBatter={showAsBatter}
+          />
+
+          <PlayerAskAIModal
+            isOpen={showAskAIModal}
+            onClose={() => setShowAskAIModal(false)}
+            playerName={bio.playerName || profileName}
+            bio={bio}
+          />
+        </>
+      )}
     </Layout>
   );
 }
