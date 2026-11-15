@@ -85,7 +85,7 @@ export function PlayerComparisonModal({
               <span className="text-[10px] font-mono font-black uppercase tracking-widest text-primary">Contextual Decision Comparison</span>
             </div>
             <h3 className="text-xl font-black uppercase tracking-tight text-white mt-1">
-              {currentPlayer.name} <span className="text-white/40 font-normal">vs</span> {selectedBenchmark.name}
+              {currentPlayer?.name || "Player"} <span className="text-white/40 font-normal">vs</span> {selectedBenchmark?.name || "Benchmark"}
             </h3>
           </div>
           <button
@@ -121,12 +121,12 @@ export function PlayerComparisonModal({
         <div className="grid grid-cols-2 gap-4 my-4 p-4 rounded-2xl bg-white/[0.02] border border-white/10">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-900 border border-primary/40 shrink-0">
-              <PlayerAvatar name={currentPlayer.name} imgClassName="w-full h-full object-cover" />
+              <PlayerAvatar name={currentPlayer?.name || "Player"} imgClassName="w-full h-full object-cover" />
             </div>
             <div>
               <div className="text-xs font-mono font-bold text-primary uppercase">{primaryTeam}</div>
-              <div className="text-sm font-black text-white">{currentPlayer.name}</div>
-              <div className="text-[10px] text-white/50">{currentPlayer.role || "Elite Batter"}</div>
+              <div className="text-sm font-black text-white">{currentPlayer?.name || "Player"}</div>
+              <div className="text-[10px] text-white/50">{currentPlayer?.role || "Elite Batter"}</div>
             </div>
           </div>
 
@@ -147,8 +147,8 @@ export function PlayerComparisonModal({
           <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-white/40 flex items-center justify-between">
             <span>Situational Metric</span>
             <div className="flex gap-16 mr-2">
-              <span>{currentPlayer.name.split(" ").slice(-1)[0]}</span>
-              <span>{selectedBenchmark.name.split(" ").slice(-1)[0]}</span>
+              <span>{(currentPlayer?.name || "Player").split(" ").slice(-1)[0]}</span>
+              <span>{(selectedBenchmark?.name || "Benchmark").split(" ").slice(-1)[0]}</span>
             </div>
           </div>
 
@@ -693,11 +693,11 @@ export function PlayerVenueOppositionSection({
 // 6. ENLARGED RADAR CHART COMPONENT WITH AXIS GLOSSARY
 // ═══════════════════════════════════════════════════════════════════════════
 export function EnlargedRadarChartSection({
-  radarData,
+  radarData = [],
   pColor,
   isBatter = true,
 }: {
-  radarData: any[];
+  radarData?: any[];
   pColor: string;
   isBatter?: boolean;
 }) {
@@ -726,25 +726,29 @@ export function EnlargedRadarChartSection({
 
         {/* 300px High Radar Chart */}
         <div className="h-[300px] w-full flex items-center justify-center my-2">
-          <ResponsiveContainer width="100%" height="100%">
-            <RadarChart cx="50%" cy="50%" outerRadius="82%" data={radarData}>
-              <PolarGrid stroke="rgba(255,255,255,0.12)" />
-              <PolarAngleAxis
-                dataKey="subject"
-                stroke="rgba(255,255,255,0.85)"
-                fontSize={10}
-                tickLine={false}
-              />
-              <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="transparent" tick={false} />
-              <Radar
-                name="Vector Strength"
-                dataKey="value"
-                stroke={pColor || "#00D2FF"}
-                fill={pColor || "#00D2FF"}
-                fillOpacity={0.35}
-              />
-            </RadarChart>
-          </ResponsiveContainer>
+          {radarData && radarData.length > 0 ? (
+            <ResponsiveContainer width="100%" height="100%">
+              <RadarChart cx="50%" cy="50%" outerRadius="82%" data={radarData}>
+                <PolarGrid stroke="rgba(255,255,255,0.12)" />
+                <PolarAngleAxis
+                  dataKey="subject"
+                  stroke="rgba(255,255,255,0.85)"
+                  fontSize={10}
+                  tickLine={false}
+                />
+                <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="transparent" tick={false} />
+                <Radar
+                  name="Vector Strength"
+                  dataKey="value"
+                  stroke={pColor || "#00D2FF"}
+                  fill={pColor || "#00D2FF"}
+                  fillOpacity={0.35}
+                />
+              </RadarChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="text-center text-xs font-mono text-white/40">Radar telemetry computing...</div>
+          )}
         </div>
       </div>
 

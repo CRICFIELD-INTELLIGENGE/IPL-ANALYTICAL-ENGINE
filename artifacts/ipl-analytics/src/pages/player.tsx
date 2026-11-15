@@ -22,7 +22,8 @@ import {
   ArrowLeft, Calendar, MapPin, Award, User, Globe, Target, Flame, Trophy,
   Activity, Zap, Shield, Sparkles, TrendingUp, Cpu, Heart, CheckCircle2,
   CalendarDays, Share2, AwardIcon, Crosshair, Search, SlidersHorizontal,
-  Filter, Layers, Compass, HelpCircle, UserCheck, Crown, RotateCw, ShoppingBag, ArrowUpRight
+  Filter, Layers, Compass, HelpCircle, UserCheck, Crown, RotateCw, ShoppingBag, ArrowUpRight,
+  ChevronUp, ChevronDown
 } from "lucide-react";
 import { CricketStadium3D } from "@/components/cricket3d/CricketStadium3D";
 import { GroundScoringWagonWheel, BowlingHeatmap, DeliveryTypeBreakdown, ShotZoneMap, DismissalZonesMap } from "@/components/visualizations/spatial-analytics";
@@ -1627,22 +1628,22 @@ export default function PlayerProfilePage() {
 
                 {/* ── 3. FORM & PLAYER DNA: ENLARGED RADAR & AXIS GLOSSARY ── */}
                 <div className="lg:col-span-3">
-                  <EnlargedRadarChartSection radarData={radarData} pColor={pColor} isBatter={showAsBatter} />
+                  <EnlargedRadarChartSection radarData={radarData || []} pColor={pColor} isBatter={showAsBatter} />
                 </div>
 
                 {/* ── 4. PRESSURE INTELLIGENCE: PRESSURE PASSPORT & CHASE >10 RPO ── */}
                 <div className="lg:col-span-3">
-                  <PlayerPressurePassportSection playerName={bio.playerName} pColor={pColor} />
+                  <PlayerPressurePassportSection playerName={bio?.playerName || profileName || "Player"} pColor={pColor} />
                 </div>
 
                 {/* ── 6. TACTICAL INTELLIGENCE: SCORING ACCELERATION & SCENARIO ENGINE ── */}
                 <div className="lg:col-span-3">
-                  <PlayerTacticalIntelligenceSection playerName={bio.playerName} pColor={pColor} />
+                  <PlayerTacticalIntelligenceSection playerName={bio?.playerName || profileName || "Player"} pColor={pColor} />
                 </div>
 
                 {/* ── 7. VENUE & OPPOSITION INTELLIGENCE: GROUNDS & CHASE SPLITS ── */}
                 <div className="lg:col-span-3">
-                  <PlayerVenueOppositionSection playerName={bio.playerName} />
+                  <PlayerVenueOppositionSection playerName={bio?.playerName || profileName || "Player"} />
                 </div>
 
                 {/* ── 8. CAREER MILESTONES: 3 FEATURED LANDMARKS & EXPANDABLE TIMELINE ── */}
@@ -1899,7 +1900,7 @@ export default function PlayerProfilePage() {
                       <Sparkles className="w-4 h-4 text-purple-400" />
                       <div>
                         <span className="text-[10px] font-mono font-black uppercase tracking-widest text-purple-400 block">AI Neural Scout &amp; Telemetry</span>
-                        <h3 className="text-base font-black uppercase text-white">Ask AI About {bio.playerName}</h3>
+                        <h3 className="text-base font-black uppercase text-white">Ask AI About {bio?.playerName || profileName || "Player"}</h3>
                       </div>
                     </div>
                     <button
@@ -1913,7 +1914,7 @@ export default function PlayerProfilePage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-3">
                     {[
-                      `Explain ${bio.playerName}'s legendary 2016 season (973 runs)`,
+                      `Explain ${bio?.playerName || profileName || "this player"}'s legendary 2016 season (973 runs)`,
                       `Which bowling styles restrict his scoring recently?`,
                       `How does he perform when required rate exceeds 10 RPO?`,
                     ].map((promptText, pIdx) => (
@@ -2419,8 +2420,8 @@ export default function PlayerProfilePage() {
               fullName: bio.fullName,
               role: bio.role,
               runs: activeBatterStats?.runs,
-              strikeRate: activeBatterStats?.strikeRate,
-              average: activeBatterStats?.average,
+              strikeRate: (activeBatterStats as any)?.sr,
+              average: (activeBatterStats as any)?.avg,
               ppSr: activeBatterStats?.ppSr,
               middleSr: activeBatterStats?.middleSr,
               deathSr: activeBatterStats?.deathSr,
