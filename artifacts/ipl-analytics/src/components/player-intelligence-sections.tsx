@@ -350,7 +350,7 @@ export function PlayerPressurePassportSection({
         <div>
           <span className="text-[10px] font-mono font-black uppercase tracking-widest text-primary flex items-center gap-1.5">
             <Shield className="w-3.5 h-3.5" />
-            SECTION 4 · PRESSURE PASSPORT &amp; CLUTCH TELEMETRY
+            PRESSURE PASSPORT &amp; CLUTCH TELEMETRY
           </span>
           <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white mt-0.5">
             Pressure Passport · {playerName}
@@ -529,7 +529,7 @@ export function PlayerTacticalIntelligenceSection({
         <div>
           <span className="text-[10px] font-mono font-black uppercase tracking-widest text-primary flex items-center gap-1.5">
             <Compass className="w-3.5 h-3.5" />
-            SECTION 6 · TACTICAL INTELLIGENCE &amp; SCENARIO MODELING
+            TACTICAL INTELLIGENCE &amp; SCENARIO MODELING
           </span>
           <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white mt-0.5">
             Tactical DNA · {playerName}
@@ -628,7 +628,7 @@ export function PlayerVenueOppositionSection({
         <div>
           <span className="text-[10px] font-mono font-black uppercase tracking-widest text-primary flex items-center gap-1.5">
             <Activity className="w-3.5 h-3.5" />
-            SECTION 7 · VENUE &amp; OPPOSITION INTELLIGENCE
+            VENUE &amp; OPPOSITION INTELLIGENCE
           </span>
           <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white mt-0.5">
             Ground &amp; Franchise Splits · {playerName}

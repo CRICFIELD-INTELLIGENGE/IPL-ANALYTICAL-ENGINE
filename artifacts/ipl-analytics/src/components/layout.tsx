@@ -19,7 +19,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { CricfieldLogo } from "@/components/cricfield-logo";
 import { AnalystNavigator } from "@/components/analyst-navigator";
 import { TeamSwitcher } from "@/components/team-switcher";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { UniversalHeaderSearch } from "@/components/universal-header-search";
 
 const PLAYER_IMAGES = [
   { src: "/ipl-logo.jpg", alt: "IPL Logo" },
@@ -41,32 +41,7 @@ const PRIMARY_NAV_LINKS = [
   { label: "Games", href: "/arcade" },
 ];
 
-function UniversalSearchInput() {
-  const [query, setQuery] = useState("");
-  const [, setLocation] = useLocation();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
-    setLocation(`/scout/results?q=${encodeURIComponent(query.trim())}`);
-  };
-
-  return (
-    <form onSubmit={handleSearch} className="hidden xl:flex items-center relative w-52 2xl:w-64">
-      <input
-        type="search"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search players, teams, venues..."
-        aria-label="Universal Search"
-        className="w-full h-8 pl-3 pr-8 rounded-full bg-slate-100 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/40 focus:outline-none focus:border-cyan-500/50 transition-colors"
-      />
-      <button type="submit" aria-label="Submit search" className="absolute right-2.5 text-slate-400 hover:text-cyan-500 transition-colors">
-        <Search className="w-3.5 h-3.5" />
-      </button>
-    </form>
-  );
-}
+// Universal search input is powered by UniversalHeaderSearch with active autocomplete dropdown
 
 const SIDEBAR_ITEMS = [
   { icon: Home, label: "Home", href: "/home" },
@@ -220,7 +195,7 @@ export function Layout({
         </div>
 
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5 shrink-0">
-          <UniversalSearchInput />
+          <UniversalHeaderSearch />
           <TeamSwitcher />
           <ThemeToggle />
           <Link

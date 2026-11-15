@@ -779,13 +779,13 @@ function SquadCard({ p, name, open, onToggle, onReadMore, captain, jersey, franc
           {jersey && (
             <span
               aria-hidden
-              className={`absolute left-1/2 -translate-x-1/2 font-display font-black leading-none select-none tabular-nums transition-all duration-500 text-white/[0.04] pointer-events-none ${open ? "top-1 text-[64px]" : "top-6 text-[140px]"}`}
+              className={`absolute left-1/2 -translate-x-1/2 font-display font-black leading-none select-none tabular-nums transition-all duration-500 text-black/40 dark:text-white/[0.035] pointer-events-none ${open ? "top-1 text-[54px]" : "top-6 text-[115px]"}`}
             >
               {jersey}
             </span>
           )}
-          <div className={`absolute inset-x-0 bottom-0 transition-all duration-500 ease-out flex items-end justify-center ${open ? "top-2" : "top-8"}`}>
-            <div className="w-full h-full max-h-[240px] max-w-[200px] mx-auto flex items-end justify-center overflow-hidden">
+          <div className={`absolute inset-x-0 bottom-0 transition-all duration-500 ease-out flex items-end justify-center ${open ? "top-2" : "top-6"}`}>
+            <div className="w-full h-full max-h-[220px] max-w-[190px] mx-auto flex items-end justify-center overflow-hidden">
               <PlayerAvatar framing="chest"
                 name={p.cricsheetName ?? p.name}
                 teamId={franchise}
@@ -794,7 +794,7 @@ function SquadCard({ p, name, open, onToggle, onReadMore, captain, jersey, franc
                 bio={bio}
                 disableHover
                 className="w-full h-full flex items-end justify-center"
-                imgClassName="max-h-[230px] max-w-full w-auto h-auto object-contain object-bottom mx-auto"
+                imgClassName="max-h-[210px] max-w-[85%] w-auto h-auto object-contain object-bottom mx-auto drop-shadow-md"
               />
             </div>
           </div>

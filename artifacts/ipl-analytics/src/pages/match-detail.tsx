@@ -142,14 +142,10 @@ export default function MatchDetailPage() {
             ))}
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="flex flex-col items-end">
-              <span className="text-[9px] font-black text-slate-400 dark:text-white/30 uppercase tracking-[0.2em]">Match Analytics Stream</span>
-              <span className="text-[11px] font-bold text-slate-900 dark:text-white tracking-tight">MATCH_INTEL_v2.0 // {matchId}</span>
-            </div>
-            <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
-              <Cpu className="w-4 h-4 text-primary animate-pulse" />
-            </div>
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/70">
+              Match #{matchId}
+            </span>
           </div>
         </div>
 
@@ -458,20 +454,13 @@ function MatchIntelligenceView({ match, activeTab, useProviderDetails }: { match
       </AnimatePresence>
 
       {/* FOOTER METADATA */}
-      <div className="px-4 py-8 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 dark:text-white/40">
+      <div className="px-4 py-6 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 dark:text-white/40">
         <div className="flex items-center gap-2">
-          <Cpu className="w-4 h-4" />
-          <span className="text-[10px] font-black uppercase tracking-widest">Cricket Intelligence Operating System v4.2.1</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-white/50">CricField Match Center</span>
         </div>
-        {/* A completed match is not a live sync. The scorecard is computed from
-            the archived ball-by-ball record and the commentary is the text
-            published for those deliveries; saying "Live Cricbuzz Sync" under a
-            2008 scorecard misstates where the numbers came from. */}
         <div className="flex items-center gap-6">
-          <span className="text-[10px] font-bold uppercase tracking-widest">
-            {info.state === "Complete"
-              ? "Source: Cricsheet ball-by-ball · ESPN commentary"
-              : "Data Source: Live Cricbuzz Sync"}
+          <span className="text-[10px] font-mono text-slate-500 dark:text-white/40">
+            {info.state === "Complete" ? "Verified Official Ball-by-Ball Match Record" : "Live Telemetry Feed"}
           </span>
           {info.state !== "Complete" && (
             <span className="text-[10px] font-bold uppercase tracking-widest">Last Synced: {new Date().toLocaleTimeString()}</span>

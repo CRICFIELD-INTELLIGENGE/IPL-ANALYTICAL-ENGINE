@@ -261,31 +261,44 @@ export default function FeedPage() {
         <section>
           <SectionHead title="Explore IPL 2027 coverage" sub="Analyses, stories and tools to help you make sense of the road to the auction." />
           <div data-feed-part="coverage" className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
-            {CARDS.map((c) => (
-              <Link
-                key={c.id}
-                href={`/feed/${c.id}`}
-                className="group overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] hover:border-slate-300 dark:hover:border-white/30 shadow-xs hover:shadow-md transition-all flex flex-col"
-              >
-                <div className="h-28 overflow-hidden relative bg-slate-900 shrink-0">
-                  <img
-                    src={c.img}
-                    alt={c.title}
-                    className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-3 flex-1 flex flex-col justify-between bg-white dark:bg-[#0B1020]">
-                  <div className="flex items-center gap-2">
-                    <c.icon className={`hidden sm:block w-4 h-4 shrink-0 ${c.color}`} />
-                    <span className="text-[12px] font-black text-slate-900 dark:text-white leading-tight">{c.title}</span>
+            {CARDS.map((c) => {
+              const cardHref = c.id === "squad" 
+                ? "/retention-room" 
+                : c.id === "auction" 
+                ? "/pulse" 
+                : c.id === "tactics" 
+                ? "/scores" 
+                : c.id === "stars" 
+                ? "/stats" 
+                : c.id === "venues" 
+                ? "/venues" 
+                : "/intelligence";
+              return (
+                <Link
+                  key={c.id}
+                  href={cardHref}
+                  className="group overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] hover:border-slate-300 dark:hover:border-white/30 shadow-xs hover:shadow-md transition-all flex flex-col"
+                >
+                  <div className="h-28 overflow-hidden relative bg-slate-900 shrink-0">
+                    <img
+                      src={c.img}
+                      alt={c.title}
+                      className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
-                  <div className="mt-1 flex items-end justify-between gap-2">
-                    <span className="text-[11px] text-slate-500 dark:text-white/60 line-clamp-1">{c.subtitle}</span>
-                    <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${c.color} transition-transform group-hover:translate-x-0.5`} />
+                  <div className="p-3 flex-1 flex flex-col justify-between bg-white dark:bg-[#0B1020]">
+                    <div className="flex items-center gap-2">
+                      <c.icon className={`hidden sm:block w-4 h-4 shrink-0 ${c.color}`} />
+                      <span className="text-[12px] font-black text-slate-900 dark:text-white leading-tight">{c.title}</span>
+                    </div>
+                    <div className="mt-1 flex items-end justify-between gap-2">
+                      <span className="text-[11px] text-slate-500 dark:text-white/60 line-clamp-1">{c.subtitle}</span>
+                      <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${c.color} transition-transform group-hover:translate-x-0.5`} />
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </section>
 

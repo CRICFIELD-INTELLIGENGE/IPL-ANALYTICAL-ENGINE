@@ -785,11 +785,12 @@ function passesDeliveryTypeFilter(info: BallInfo, deliveryType?: string): boolea
   return have.includes(want) || want.includes(have);
 }
 
-function passesPressureFilter(overNum: number, inningIndex: number, wicketsFallen: number, pressure?: string): boolean {
+function passesPressureFilter(overNum: number, inningIndex: number, wicketsFallen: number, pressure?: string, runsNeeded: number | null = null): boolean {
   if (!pressure || pressure === "Standard" || pressure === "Pressure" || pressure === "All") return true;
   const fPr = pressure.toLowerCase();
   const isHighPressure = (inningIndex === 1 && overNum >= 15) || wicketsFallen >= 4;
-  const isClutch = overNum >= 18;
+  // Matches the UI label: a live chase in the last 3 overs (over index 17–19) needing fewer than 24.
+  const isClutch = inningIndex === 1 && overNum >= 17 && runsNeeded !== null && runsNeeded > 0 && runsNeeded < 24;
   const isPlayoffPressure = wicketsFallen >= 3 && overNum >= 10;
   if (fPr.includes("clutch") || fPr.includes("moment")) return isClutch;
   if (fPr.includes("playoff")) return isPlayoffPressure;
@@ -924,12 +925,17 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
 
       // Track wickets fallen per over for pressure filter
       let wicketsFallenSoFar = 0;
+      let runsSoFar = 0;
+      const firstInnings = matchData.innings?.[0];
+      const chaseTarget: number | null = inningIndex !== 1 ? null : inn.target?.runs ?? (firstInnings?.overs ?? []).reduce((total: number, over: any) =>
+        total + (over.deliveries ?? []).reduce((runs: number, ball: any) => runs + (ball.runs?.total ?? 0), 0), 0) + 1;
 
       inn.overs?.forEach((overObj: any) => {
         const overNum = overObj.over;
         if (!passesOverRangeFilter(overNum, (filters as QueryFilters).overRange)) {
           for (const ball of overObj.deliveries ?? []) {
             wicketsFallenSoFar += (ball.wickets ?? []).filter((w: { kind: string }) => w.kind !== "retired hurt").length;
+            runsSoFar += ball.runs?.total ?? 0;
           }
           return;
         }
@@ -942,6 +948,8 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
 
           const wicketsBefore = wicketsFallenSoFar;
           wicketsFallenSoFar += (d.wickets ?? []).filter((w: { kind: string }) => w.kind !== "retired hurt").length;
+          const runsNeeded = chaseTarget === null ? null : chaseTarget - runsSoFar;
+          runsSoFar += d.runs?.total ?? 0;
 
           // Phase filter
           if (!passesPhaseFilter(overNum, filters)) return;
@@ -960,7 +968,7 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
           if (!passesDeliveryTypeFilter(ballInfo, filters.deliveryType)) return;
 
           // Pressure filter
-          if (!passesPressureFilter(overNum, inningIndex, wicketsBefore, filters.pressure)) return;
+          if (!passesPressureFilter(overNum, inningIndex, wicketsBefore, filters.pressure, runsNeeded)) return;
 
           // Scoring area / fielding position filter
           if (filters.fieldingPosition && filters.fieldingPosition !== "Scoring Area" &&

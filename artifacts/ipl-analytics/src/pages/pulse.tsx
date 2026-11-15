@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { TeamLogo } from "@/components/team-logo";
 import { Layout } from "@/components/layout";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gavel, Radio, Search, ChevronDown, ChevronLeft, ChevronRight, Check, ExternalLink, Wallet, Users, History, Newspaper, Brain, Sparkles, TrendingUp, CheckCircle2, Activity } from "lucide-react";
+import { Gavel, Radio, Search, ChevronDown, ChevronLeft, ChevronRight, Check, ExternalLink, Wallet, Users, History, Newspaper, Brain, Sparkles, TrendingUp, CheckCircle2, Activity, Shuffle, Network } from "lucide-react";
 import { Link } from "wouter";
 import { HUB_EVENTS } from "@/lib/ipl-2027";
 import { stamp, useIpl2027Desk } from "@/lib/ipl-2027-desk";
@@ -11,6 +11,8 @@ import { paletteForCode } from "@/lib/team-palette";
 import { isTeamCode, TEAM_CODE_TO_SLUG, type TeamCode } from "@/lib/team-context";
 import { AdVessel } from "@/components/ad-vessel";
 import { usePulseAuction, pulseMoney, lotValue, PULSE_TABS, type PulseTab, type PulseLot, type PulseModel, type PulseTeam, type PulseStatus } from "@/lib/pulse-auction";
+import { TransferFlowSankey } from "@/components/visualizations/sankey-diagram";
+import { KnowledgeGraphSimple } from "@/components/visualizations/knowledge-graph";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -238,6 +240,52 @@ export default function PulsePage() {
               {tab === "Franchises" && <Franchises model={model} />}
               {tab === "Retentions" && <Retentions model={model} pulse={pulse} />}
               {tab === "Results" && <Results model={model} />}
+              {tab === "Transfers" && (
+                <div className="space-y-4">
+                  <div className="p-5 sm:p-6 rounded-2xl bg-[#081222] border border-emerald-500/25">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
+                      <div>
+                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
+                          <Shuffle className="w-3 h-3 text-emerald-400" />
+                          MODULE 06 • AUCTION DYNAMICS
+                        </span>
+                        <h2 className="text-base sm:text-lg font-black text-white mt-1.5 uppercase tracking-tight">
+                          3D Holographic Player Transfers (2008 – 2026)
+                        </h2>
+                        <p className="text-xs text-white/50 font-mono mt-0.5">
+                          Multi-Dimensional Transfer Constellation — All 832 Movements & Franchise Flow
+                        </p>
+                      </div>
+                    </div>
+                    <div className="min-h-[420px] w-full overflow-hidden">
+                      <TransferFlowSankey />
+                    </div>
+                  </div>
+                </div>
+              )}
+              {tab === "Knowledge Graph" && (
+                <div className="space-y-4">
+                  <div className="p-5 sm:p-6 rounded-2xl bg-[#081222] border border-purple-500/25">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
+                      <div>
+                        <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
+                          <Network className="w-3 h-3 text-purple-400" />
+                          MODULE 10 • KNOWLEDGE GRAPH
+                        </span>
+                        <h2 className="text-base sm:text-lg font-black text-white mt-1.5 uppercase tracking-tight">
+                          Knowledge Graph Entity Map
+                        </h2>
+                        <p className="text-xs text-white/50 font-mono mt-0.5">
+                          Network Topology: Franchise Nodes, Player Transfers, Auction Records & Tactical Clusters
+                        </p>
+                      </div>
+                    </div>
+                    <div className="min-h-[420px] w-full overflow-hidden">
+                      <KnowledgeGraphSimple />
+                    </div>
+                  </div>
+                </div>
+              )}
               {tab === "Live Blog" && <LiveBlog model={model} pulse={pulse} />}
               {tab === "Archive" && <Archive pulse={pulse} active={active} pick={s => { setSeason(s); setTab("Results"); }} />}
             </>

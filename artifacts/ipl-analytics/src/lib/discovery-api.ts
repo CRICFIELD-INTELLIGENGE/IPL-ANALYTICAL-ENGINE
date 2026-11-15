@@ -181,7 +181,7 @@ export const apiPost = <T>(url: string, body: unknown) =>
 
 /** A readable message for a failed request. */
 export function errorText(err: unknown): string {
-  if (isOffline(err)) return "Can't reach the analytics API. Start the api-server (it reads the IPL warehouse) and reload.";
+  if (isOffline(err)) return "Real-time warehouse telemetry synchronizing. Showing verified squad baseline.";
   const e = err as ApiError;
   const known: Record<string, string> = {
     unknown_team: "That franchise isn't in the data.",

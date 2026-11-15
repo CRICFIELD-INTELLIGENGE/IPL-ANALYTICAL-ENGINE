@@ -203,33 +203,88 @@ export function MatchGraphConsole({ card, match }: MatchGraphConsoleProps) {
                 <span>20 OV</span>
               </div>
 
-              {/* Dynamic SVG Curves */}
+              {/* Dynamic Broadcast TV SVG Curves with Neon Glow and Gradient Fills */}
               <svg className="w-full h-full overflow-visible relative z-10" viewBox="0 0 400 100" preserveAspectRatio="none">
-                {/* Team 1 Worm Line */}
+                <defs>
+                  {/* Neon Glow Filter */}
+                  <filter id="neonGlowT1" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor={t1Color} floodOpacity="0.75" />
+                  </filter>
+                  <filter id="neonGlowT2" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor={t2Color} floodOpacity="0.75" />
+                  </filter>
+
+                  {/* Area Gradients */}
+                  <linearGradient id="areaGradT1" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor={t1Color} stopOpacity="0.35" />
+                    <stop offset="70%" stopColor={t1Color} stopOpacity="0.08" />
+                    <stop offset="100%" stopColor={t1Color} stopOpacity="0.00" />
+                  </linearGradient>
+                  <linearGradient id="areaGradT2" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor={t2Color} stopOpacity="0.30" />
+                    <stop offset="70%" stopColor={t2Color} stopOpacity="0.06" />
+                    <stop offset="100%" stopColor={t2Color} stopOpacity="0.00" />
+                  </linearGradient>
+
+                  {/* Manhattan Bar Gradients */}
+                  <linearGradient id="barGradT1" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor={t1Color} stopOpacity="1" />
+                    <stop offset="100%" stopColor={t1Color} stopOpacity="0.45" />
+                  </linearGradient>
+                  <linearGradient id="barGradT2" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor={t2Color} stopOpacity="1" />
+                    <stop offset="100%" stopColor={t2Color} stopOpacity="0.45" />
+                  </linearGradient>
+                </defs>
+
+                {/* Team 1 Gradient Area Fill */}
+                <path
+                  d={`M 0 100 ${overData.map((d, i) => `L ${(i + 1) * 20} ${100 - (d.t1Cum / 200) * 100}`).join(" ")} L 400 100 Z`}
+                  fill="url(#areaGradT1)"
+                />
+
+                {/* Team 2 Gradient Area Fill */}
+                <path
+                  d={`M 0 100 ${overData.slice(0, 18).map((d, i) => `L ${(i + 1) * 20} ${100 - (d.t2Cum / 200) * 100}`).join(" ")} L 360 100 Z`}
+                  fill="url(#areaGradT2)"
+                />
+
+                {/* Team 1 Worm Line with Neon Glow */}
                 <path
                   d={`M 0 100 ${overData.map((d, i) => `L ${(i + 1) * 20} ${100 - (d.t1Cum / 200) * 100}`).join(" ")}`}
                   fill="none"
                   stroke={t1Color}
                   strokeWidth="3.5"
                   strokeLinecap="round"
+                  filter="url(#neonGlowT1)"
                 />
-                {/* Team 2 Worm Line */}
+
+                {/* Team 2 Worm Line with Neon Glow */}
                 <path
                   d={`M 0 100 ${overData.slice(0, 18).map((d, i) => `L ${(i + 1) * 20} ${100 - (d.t2Cum / 200) * 100}`).join(" ")}`}
                   fill="none"
                   stroke={t2Color}
                   strokeWidth="3.5"
                   strokeLinecap="round"
+                  filter="url(#neonGlowT2)"
                 />
 
-                {/* Wicket dots */}
+                {/* Wicket dots with glowing badges and W markers */}
                 {overData.map((d, i) => (
                   <React.Fragment key={i}>
                     {d.t1Wickets > 0 && (
-                      <circle cx={(i + 1) * 20} cy={100 - (d.t1Cum / 200) * 100} r="4.5" fill="#ef4444" stroke="#ffffff" strokeWidth="2" />
+                      <g>
+                        <circle cx={(i + 1) * 20} cy={100 - (d.t1Cum / 200) * 100} r="7" fill="#ef4444" fillOpacity="0.3" className="animate-ping" />
+                        <circle cx={(i + 1) * 20} cy={100 - (d.t1Cum / 200) * 100} r="4.5" fill="#ef4444" stroke="#ffffff" strokeWidth="1.5" />
+                        <text x={(i + 1) * 20} y={96 - (d.t1Cum / 200) * 100} fill="#ef4444" fontSize="6" fontWeight="900" textAnchor="middle">W</text>
+                      </g>
                     )}
                     {d.t2Wickets > 0 && i < 18 && (
-                      <circle cx={(i + 1) * 20} cy={100 - (d.t2Cum / 200) * 100} r="4.5" fill="#ef4444" stroke="#ffffff" strokeWidth="2" />
+                      <g>
+                        <circle cx={(i + 1) * 20} cy={100 - (d.t2Cum / 200) * 100} r="7" fill="#f59e0b" fillOpacity="0.3" className="animate-ping" />
+                        <circle cx={(i + 1) * 20} cy={100 - (d.t2Cum / 200) * 100} r="4.5" fill="#f59e0b" stroke="#ffffff" strokeWidth="1.5" />
+                        <text x={(i + 1) * 20} y={96 - (d.t2Cum / 200) * 100} fill="#f59e0b" fontSize="6" fontWeight="900" textAnchor="middle">W</text>
+                      </g>
                     )}
                   </React.Fragment>
                 ))}
@@ -243,23 +298,41 @@ export function MatchGraphConsole({ card, match }: MatchGraphConsoleProps) {
               <span className="text-xs font-mono font-black text-rose-700 dark:text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
                 <BarChart3 className="w-4 h-4" /> 2. MANHATTAN CHART (RUNS SCORED PER OVER)
               </span>
-              <span className="text-[11px] font-mono text-slate-600 dark:text-slate-400 font-medium">Side-by-Side Over Comparison</span>
+              <span className="text-[11px] font-mono font-medium text-slate-600 dark:text-slate-400">Broadcast High-Fidelity Over Metrics</span>
             </div>
 
             <div className="h-44 flex items-end gap-1.5 sm:gap-2.5 pt-4 px-2 border-b border-slate-300 dark:border-white/10">
               {overData.map(d => (
-                <div key={d.over} className="flex-1 flex flex-col items-center gap-1 h-full justify-end group">
-                  <div className="flex items-end gap-0.5 sm:gap-1 w-full justify-center h-full">
-                    {/* Team 1 Bar */}
+                <div key={d.over} className="flex-1 flex flex-col items-center gap-1 h-full justify-end group relative">
+                  {/* Wicket Indicators above bars */}
+                  <div className="flex items-center gap-0.5 h-3">
+                    {d.t1Wickets > 0 && (
+                      <span className="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]" title={`${t1Code} Wicket in Ov ${d.over}`} />
+                    )}
+                    {d.t2Wickets > 0 && (
+                      <span className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]" title={`${t2Code} Wicket in Ov ${d.over}`} />
+                    )}
+                  </div>
+
+                  <div className="flex items-end gap-0.5 sm:gap-1.5 w-full justify-center h-full">
+                    {/* Team 1 Bar with Rounded Cap & Glow */}
                     <div
-                      className="w-1.5 sm:w-2.5 rounded-t transition-all group-hover:brightness-125 shadow-sm"
-                      style={{ height: `${(d.t1Runs / 24) * 100}%`, backgroundColor: t1Color }}
+                      className="w-2 sm:w-3 rounded-t-md transition-all duration-300 group-hover:scale-y-105 group-hover:brightness-125 shadow-md"
+                      style={{
+                        height: `${Math.max(4, (d.t1Runs / 24) * 100)}%`,
+                        background: `linear-gradient(180deg, ${t1Color} 0%, ${t1Color}99 60%, ${t1Color}40 100%)`,
+                        boxShadow: `0 0 10px ${t1Color}40`,
+                      }}
                       title={`${t1Code} Over ${d.over}: ${d.t1Runs} runs`}
                     />
-                    {/* Team 2 Bar */}
+                    {/* Team 2 Bar with Rounded Cap & Glow */}
                     <div
-                      className="w-1.5 sm:w-2.5 rounded-t transition-all group-hover:brightness-125 shadow-sm"
-                      style={{ height: `${(d.t2Runs / 24) * 100}%`, backgroundColor: t2Color }}
+                      className="w-2 sm:w-3 rounded-t-md transition-all duration-300 group-hover:scale-y-105 group-hover:brightness-125 shadow-md"
+                      style={{
+                        height: `${Math.max(4, (d.t2Runs / 24) * 100)}%`,
+                        background: `linear-gradient(180deg, ${t2Color} 0%, ${t2Color}99 60%, ${t2Color}40 100%)`,
+                        boxShadow: `0 0 10px ${t2Color}40`,
+                      }}
                       title={`${t2Code} Over ${d.over}: ${d.t2Runs} runs`}
                     />
                   </div>

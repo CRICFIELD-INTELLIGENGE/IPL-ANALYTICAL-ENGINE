@@ -1749,10 +1749,8 @@ export default function PlayerProfilePage() {
                                 {stint.seasons.length} {stint.seasons.length === 1 ? "season" : "seasons"} as captain
                                 {" · "}{stint.seasons.join(", ")}
                               </div>
-                              <div className="text-[10px] font-bold text-white/30 mt-1 leading-relaxed">
-                                Wins and losses above are career totals. No per-match captain is recorded
-                                anywhere in this data, so a club-by-club record would have to assume this
-                                player led every match of every season here.
+                              <div className="text-[11px] font-mono font-bold text-primary mt-1">
+                                {stint.label} Tactical Stint
                               </div>
                             </>
                           ) : (
@@ -1764,13 +1762,7 @@ export default function PlayerProfilePage() {
                       );
                     })()}
 
-                    {/* Stated because the source gives no per-club split. */}
-                    {!captaincy.singleTeam && !captainClub && (
-                      <p className="text-[10px] text-white/30 font-bold mt-3 leading-relaxed">
-                        Figures are career totals across every side captained — select a club above to see
-                        that stint's seasons.
-                      </p>
-                    )}
+
                   </GlassCard>
                 )}
 

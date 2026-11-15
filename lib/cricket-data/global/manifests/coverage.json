@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T09:36:31.932Z",
+  "generatedAt": "2026-11-15T14:42:13.383Z",
   "licence": "Cricsheet match data: Open Data Commons Attribution License (ODC-BY 1.0), https://opendatacommons.org/licenses/by/1-0/ — see https://cricsheet.org/licensing/",
   "competitions": [
     {
@@ -522,6 +522,332 @@
       ],
       "matches": 134,
       "deliveries": 31407
+    },
+    {
+      "code": "t20i",
+      "name": "Men's T20 Internationals",
+      "archive": "raw/cricsheet/archives/t20s_male_json/20261103T181837Z_102586ea.zip",
+      "archiveSha256": "102586ea122793aafc645e05d6a598b9fff0746935e39b77f2d6f153bc385086",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:18:37 GMT",
+      "seasons": [
+        {
+          "season_label": "2004/05",
+          "season_year": 2005,
+          "start_date": "2005-02-17",
+          "end_date": "2005-02-17",
+          "matches": 1
+        },
+        {
+          "season_label": "2005",
+          "season_year": 2005,
+          "start_date": "2005-06-13",
+          "end_date": "2005-06-13",
+          "matches": 1
+        },
+        {
+          "season_label": "2005/06",
+          "season_year": 2005,
+          "start_date": "2005-10-21",
+          "end_date": "2006-02-24",
+          "matches": 4
+        },
+        {
+          "season_label": "2006",
+          "season_year": 2006,
+          "start_date": "2006-06-15",
+          "end_date": "2006-08-28",
+          "matches": 2
+        },
+        {
+          "season_label": "2006/07",
+          "season_year": 2006,
+          "start_date": "2006-12-01",
+          "end_date": "2007-01-09",
+          "matches": 4
+        },
+        {
+          "season_label": "2007",
+          "season_year": 2007,
+          "start_date": "2007-06-28",
+          "end_date": "2007-06-29",
+          "matches": 2
+        },
+        {
+          "season_label": "2007/08",
+          "season_year": 2007,
+          "start_date": "2007-09-01",
+          "end_date": "2008-04-20",
+          "matches": 38
+        },
+        {
+          "season_label": "2008",
+          "season_year": 2008,
+          "start_date": "2008-06-13",
+          "end_date": "2008-08-04",
+          "matches": 5
+        },
+        {
+          "season_label": "2008/09",
+          "season_year": 2008,
+          "start_date": "2008-10-11",
+          "end_date": "2009-03-29",
+          "matches": 14
+        },
+        {
+          "season_label": "2009",
+          "season_year": 2009,
+          "start_date": "2009-05-07",
+          "end_date": "2009-09-04",
+          "matches": 33
+        },
+        {
+          "season_label": "2009/10",
+          "season_year": 2009,
+          "start_date": "2009-11-12",
+          "end_date": "2010-02-28",
+          "matches": 19
+        },
+        {
+          "season_label": "2010",
+          "season_year": 2010,
+          "start_date": "2010-04-30",
+          "end_date": "2010-09-07",
+          "matches": 35
+        },
+        {
+          "season_label": "2010/11",
+          "season_year": 2010,
+          "start_date": "2010-10-08",
+          "end_date": "2011-01-14",
+          "matches": 11
+        },
+        {
+          "season_label": "2011",
+          "season_year": 2011,
+          "start_date": "2011-04-21",
+          "end_date": "2011-09-25",
+          "matches": 10
+        },
+        {
+          "season_label": "2011/12",
+          "season_year": 2011,
+          "start_date": "2011-10-11",
+          "end_date": "2012-03-30",
+          "matches": 30
+        },
+        {
+          "season_label": "2012",
+          "season_year": 2012,
+          "start_date": "2012-06-01",
+          "end_date": "2012-09-12",
+          "matches": 16
+        },
+        {
+          "season_label": "2012/13",
+          "season_year": 2012,
+          "start_date": "2012-09-18",
+          "end_date": "2013-03-31",
+          "matches": 46
+        },
+        {
+          "season_label": "2013",
+          "season_year": 2013,
+          "start_date": "2013-04-19",
+          "end_date": "2013-08-31",
+          "matches": 15
+        },
+        {
+          "season_label": "2013/14",
+          "season_year": 2013,
+          "start_date": "2013-10-10",
+          "end_date": "2014-04-06",
+          "matches": 61
+        },
+        {
+          "season_label": "2014",
+          "season_year": 2014,
+          "start_date": "2014-05-20",
+          "end_date": "2014-09-07",
+          "matches": 5
+        },
+        {
+          "season_label": "2014/15",
+          "season_year": 2014,
+          "start_date": "2014-10-05",
+          "end_date": "2015-01-14",
+          "matches": 10
+        },
+        {
+          "season_label": "2015",
+          "season_year": 2015,
+          "start_date": "2015-04-24",
+          "end_date": "2015-08-31",
+          "matches": 27
+        },
+        {
+          "season_label": "2015/16",
+          "season_year": 2015,
+          "start_date": "2015-09-27",
+          "end_date": "2016-04-03",
+          "matches": 84
+        },
+        {
+          "season_label": "2016",
+          "season_year": 2016,
+          "start_date": "2016-06-18",
+          "end_date": "2016-09-09",
+          "matches": 10
+        },
+        {
+          "season_label": "2016/17",
+          "season_year": 2016,
+          "start_date": "2016-09-23",
+          "end_date": "2017-04-06",
+          "matches": 26
+        },
+        {
+          "season_label": "2017",
+          "season_year": 2017,
+          "start_date": "2017-03-26",
+          "end_date": "2017-09-16",
+          "matches": 13
+        },
+        {
+          "season_label": "2017/18",
+          "season_year": 2017,
+          "start_date": "2017-09-12",
+          "end_date": "2018-03-18",
+          "matches": 41
+        },
+        {
+          "season_label": "2018",
+          "season_year": 2018,
+          "start_date": "2018-04-01",
+          "end_date": "2018-08-14",
+          "matches": 30
+        },
+        {
+          "season_label": "2018/19",
+          "season_year": 2018,
+          "start_date": "2018-10-09",
+          "end_date": "2019-03-24",
+          "matches": 52
+        },
+        {
+          "season_label": "2019",
+          "season_year": 2019,
+          "start_date": "2019-05-05",
+          "end_date": "2019-09-19",
+          "matches": 73
+        },
+        {
+          "season_label": "2019/20",
+          "season_year": 2019,
+          "start_date": "2019-09-18",
+          "end_date": "2020-03-11",
+          "matches": 145
+        },
+        {
+          "season_label": "2020",
+          "season_year": 2020,
+          "start_date": "2020-08-21",
+          "end_date": "2020-09-08",
+          "matches": 10
+        },
+        {
+          "season_label": "2020/21",
+          "season_year": 2020,
+          "start_date": "2020-10-16",
+          "end_date": "2021-04-01",
+          "matches": 37
+        },
+        {
+          "season_label": "2021",
+          "season_year": 2021,
+          "start_date": "2021-04-03",
+          "end_date": "2021-09-19",
+          "matches": 123
+        },
+        {
+          "season_label": "2021/22",
+          "season_year": 2021,
+          "start_date": "2021-10-05",
+          "end_date": "2022-04-05",
+          "matches": 197
+        },
+        {
+          "season_label": "2022",
+          "season_year": 2022,
+          "start_date": "2022-04-08",
+          "end_date": "2022-10-02",
+          "matches": 242
+        },
+        {
+          "season_label": "2022/23",
+          "season_year": 2022,
+          "start_date": "2022-09-28",
+          "end_date": "2023-04-08",
+          "matches": 198
+        },
+        {
+          "season_label": "2023",
+          "season_year": 2023,
+          "start_date": "2023-04-10",
+          "end_date": "2023-10-07",
+          "matches": 174
+        },
+        {
+          "season_label": "2023/24",
+          "season_year": 2023,
+          "start_date": "2023-08-30",
+          "end_date": "2024-03-23",
+          "matches": 224
+        },
+        {
+          "season_label": "2024",
+          "season_year": 2024,
+          "start_date": "2024-04-01",
+          "end_date": "2024-10-05",
+          "matches": 332
+        },
+        {
+          "season_label": "2024/25",
+          "season_year": 2024,
+          "start_date": "2024-09-27",
+          "end_date": "2025-03-26",
+          "matches": 222
+        },
+        {
+          "season_label": "2025",
+          "season_year": 2025,
+          "start_date": "2025-04-07",
+          "end_date": "2025-09-30",
+          "matches": 315
+        },
+        {
+          "season_label": "2025/26",
+          "season_year": 2025,
+          "start_date": "2025-09-15",
+          "end_date": "2026-03-28",
+          "matches": 298
+        },
+        {
+          "season_label": "2026",
+          "season_year": 2026,
+          "start_date": "2026-04-02",
+          "end_date": "2026-10-03",
+          "matches": 346
+        },
+        {
+          "season_label": "2026/27",
+          "season_year": 2026,
+          "start_date": "2026-10-03",
+          "end_date": "2026-11-01",
+          "matches": 68
+        }
+      ],
+      "matches": 3649,
+      "deliveries": 820658
     }
   ],
   "notLoaded": [
@@ -566,12 +892,6 @@
       "name": "Super Smash (men)",
       "batch": 2,
       "note": "Awaiting Batch 2 approval."
-    },
-    {
-      "code": "t20i",
-      "name": "Men's T20 Internationals",
-      "batch": 2,
-      "note": "Awaiting Batch 2 approval. Cricsheet withholds Afghanistan-related matches, so coverage is incomplete."
     }
   ]
 }

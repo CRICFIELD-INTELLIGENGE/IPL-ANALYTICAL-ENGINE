@@ -7,7 +7,7 @@ import foundation from "@/data/auction-2026-foundation.json";
 // Lot numbers, auction sets and the 79 unsold players for 2026 (Wikipedia sold tables + Olympics.com unsold list).
 import lotSheet2026 from "@/data/auction-2026-lots.json";
 
-export const PULSE_TABS = ["Overview", "Live Auction", "Player Pool", "Franchises", "Retentions", "Results", "Live Blog", "Archive"] as const;
+export const PULSE_TABS = ["Overview", "Live Auction", "Player Pool", "Franchises", "Retentions", "Results", "Transfers", "Knowledge Graph", "Live Blog", "Archive"] as const;
 export type PulseTab = (typeof PULSE_TABS)[number];
 export type PulseStatus = "registered" | "shortlisted" | "pending" | "on-block" | "sold" | "unsold" | "withdrawn" | "recorded";
 export interface PulseLot {

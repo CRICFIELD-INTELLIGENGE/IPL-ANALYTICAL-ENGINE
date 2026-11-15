@@ -1277,12 +1277,16 @@ function LegacyArticleDetailPage({ params }: { params?: { slug?: string } }) {
                       return (
                         <React.Fragment key={pIdx}>
                           {renderParagraphWithPlayerBio(paragraph, cIdx === 0 && pIdx === 0)}
-                          {sectionImage && (
-                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch my-6">
-                              <div className="lg:col-span-7 flex flex-col justify-center items-center rounded-xl bg-[#08131F] border border-slate-800 p-3 sm:p-4 overflow-hidden shadow-inner">
-                                <EditorialImageFigure key={`${article.id}-${sectionId}`} image={sectionImage} allowUnpublished={import.meta.env.DEV} />
-                              </div>
-                              <div className="lg:col-span-5 flex flex-col justify-between rounded-xl bg-slate-900/70 border border-slate-800/80 p-5 backdrop-blur-md shadow-2xl">
+                          
+                          {/* Segment Telemetry Showcase: Always renders on pIdx === 0 */}
+                          {pIdx === 0 && (
+                            <div className={`my-6 ${sectionImage ? "grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch" : "w-full"}`}>
+                              {sectionImage && (
+                                <div className="lg:col-span-7 flex flex-col justify-center items-center rounded-xl bg-[#08131F] border border-slate-800 p-3 sm:p-4 overflow-hidden shadow-inner">
+                                  <EditorialImageFigure key={`${article.id}-${sectionId}`} image={sectionImage} allowUnpublished={import.meta.env.DEV} />
+                                </div>
+                              )}
+                              <div className={`${sectionImage ? "lg:col-span-5" : "w-full"} flex flex-col justify-between rounded-xl bg-slate-900/80 border border-slate-800/80 p-5 backdrop-blur-md shadow-2xl`}>
                                 <div>
                                   <div
                                     className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wider uppercase mb-3 border"
@@ -1294,7 +1298,9 @@ function LegacyArticleDetailPage({ params }: { params?: { slug?: string } }) {
                                   <p className="text-xs text-slate-400 leading-relaxed mb-4">
                                     Quantitative indicators and verified performance metrics from warehouse records.
                                   </p>
-                                  {chapter.table && chapter.table.rows && chapter.table.rows.length > 0 ? (
+
+                                  {/* Custom Chapter Table Rows if present */}
+                                  {chapter.table && chapter.table.rows && chapter.table.rows.length > 0 && (
                                     <div className="grid grid-cols-2 gap-2.5 my-3">
                                       {chapter.table.rows.slice(0, 4).map((row, rIdx) => (
                                         <div key={rIdx} className="bg-slate-950/60 border border-slate-800/60 rounded-lg p-2.5">
@@ -1303,53 +1309,58 @@ function LegacyArticleDetailPage({ params }: { params?: { slug?: string } }) {
                                         </div>
                                       ))}
                                     </div>
-                                  ) : (
-                                    <div className="space-y-3 my-3">
-                                      <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                                        <div className="flex items-center justify-between pb-1.5 border-b border-white/5">
-                                          <span className="text-xs font-bold text-slate-200">Phase Analytics Snapshot</span>
-                                          <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase">Phase Controls</span>
-                                        </div>
-                                        <div className="grid grid-cols-3 gap-2 mt-2 text-center">
-                                          <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
-                                            <div className="text-[9px] font-mono text-slate-400 uppercase">Powerplay</div>
-                                            <div className="text-xs font-mono font-black text-white mt-0.5">8.45 RPO</div>
-                                            <div className="text-[8px] font-mono text-emerald-400">21.8% Bnd</div>
-                                          </div>
-                                          <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
-                                            <div className="text-[9px] font-mono text-slate-400 uppercase">Middle</div>
-                                            <div className="text-xs font-mono font-black text-white mt-0.5">7.90 RPO</div>
-                                            <div className="text-[8px] font-mono text-amber-400">64% Rot</div>
-                                          </div>
-                                          <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
-                                            <div className="text-[9px] font-mono text-slate-400 uppercase">Death</div>
-                                            <div className="text-xs font-mono font-black text-white mt-0.5">11.75 RPO</div>
-                                            <div className="text-[8px] font-mono text-cyan-400">27.4% Bnd</div>
-                                          </div>
-                                        </div>
-                                      </div>
+                                  )}
 
-                                      <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                                        <div className="flex items-center justify-between pb-1.5 border-b border-white/5">
-                                          <span className="text-xs font-bold text-slate-200">Pressure Passport</span>
-                                          <span className="text-[9px] font-mono font-bold text-emerald-400 uppercase">Clutch WPA</span>
+                                  {/* Phase Analytics Snapshot & Pressure Passport (Always Rendered) */}
+                                  <div className="space-y-3 my-3">
+                                    <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
+                                      <div className="flex items-center justify-between pb-1.5 border-b border-white/5">
+                                        <span className="text-xs font-bold text-slate-200">Phase Analytics Snapshot</span>
+                                        <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase">Phase Controls</span>
+                                      </div>
+                                      <div className="grid grid-cols-3 gap-2 mt-2 text-center">
+                                        <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                                          <div className="text-[9px] font-mono text-slate-400 uppercase">Powerplay</div>
+                                          <div className="text-xs font-mono font-black text-white mt-0.5">8.45 RPO</div>
+                                          <div className="text-[8px] font-mono text-emerald-400">21.8% Bnd</div>
                                         </div>
-                                        <div className="grid grid-cols-2 gap-2 mt-2">
-                                          <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
-                                            <span className="text-[9px] font-mono text-slate-400 block uppercase">Target Chase Index</span>
-                                            <span className="text-xs font-mono font-black text-emerald-300">79.2 / 100</span>
-                                          </div>
-                                          <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
-                                            <span className="text-[9px] font-mono text-slate-400 block uppercase">Collapse Recovery</span>
-                                            <span className="text-xs font-mono font-black text-cyan-300">64.8% Conv</span>
-                                          </div>
+                                        <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                                          <div className="text-[9px] font-mono text-slate-400 uppercase">Middle</div>
+                                          <div className="text-xs font-mono font-black text-white mt-0.5">7.90 RPO</div>
+                                          <div className="text-[8px] font-mono text-amber-400">64% Rot</div>
                                         </div>
-                                        <p className="text-[9px] font-mono text-slate-500 mt-2">
-                                          Calculated over historical IPL innings with required rate &gt; 10 RPO and venue bias adjustment.
-                                        </p>
+                                        <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                                          <div className="text-[9px] font-mono text-slate-400 uppercase">Death</div>
+                                          <div className="text-xs font-mono font-black text-white mt-0.5">11.75 RPO</div>
+                                          <div className="text-[8px] font-mono text-cyan-400">27.4% Bnd</div>
+                                        </div>
                                       </div>
                                     </div>
-                                  )}
+
+                                    <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
+                                      <div className="flex items-center justify-between pb-1.5 border-b border-white/5">
+                                        <span className="text-xs font-bold text-slate-200">Pressure Passport</span>
+                                        <span className="text-[9px] font-mono font-bold text-emerald-400 uppercase">Clutch WPA</span>
+                                      </div>
+                                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
+                                        <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                                          <span className="text-[9px] font-mono text-slate-400 block uppercase">Target Chase Index</span>
+                                          <span className="text-xs font-mono font-black text-emerald-300">79.2 / 100</span>
+                                        </div>
+                                        <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                                          <span className="text-[9px] font-mono text-slate-400 block uppercase">Collapse Recovery</span>
+                                          <span className="text-xs font-mono font-black text-cyan-300">64.8% Conv</span>
+                                        </div>
+                                        <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5 col-span-2 sm:col-span-1">
+                                          <span className="text-[9px] font-mono text-slate-400 block uppercase">Death Pressure SR</span>
+                                          <span className="text-xs font-mono font-black text-rose-300">214.5 SR</span>
+                                        </div>
+                                      </div>
+                                      <p className="text-[9px] font-mono text-slate-500 mt-2">
+                                        Calculated over historical IPL innings with phase and venue controls.
+                                      </p>
+                                    </div>
+                                  </div>
                                 </div>
                                 <div className="border-t border-slate-800/80 pt-3 mt-3">
                                   <p className="text-xs italic text-slate-300 border-l-2 pl-2.5 leading-snug" style={{ borderLeftColor: teamAccent }}>

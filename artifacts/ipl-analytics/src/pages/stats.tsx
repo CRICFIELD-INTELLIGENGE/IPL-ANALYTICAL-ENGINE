@@ -3,6 +3,7 @@ import {ScoringRing} from '@/components/visualizations/scoring-ring';
 import { Scale } from "lucide-react";
 import { LeagueValuePanel } from "@/components/intelligence/intel-components";
 import { FeatureSaveButton } from "@/components/feature-save-button";
+import { PressureReliabilityPanel } from "@/components/pressure-reliability-panel";
 import React, { useEffect, useMemo, useState } from "react";
 import { Layout } from "@/components/layout";
 import { TeamLogo } from "@/components/team-logo";
@@ -59,50 +60,50 @@ const SCENARIO_METADATA: Record<string, { title: string; subtitle: string; lever
   death: {
     title: "Death Overs (16–20)",
     subtitle: "High-leverage finish phase. Batters maximizing boundary velocity against yorkers, cutters, and wide lines; bowlers defending margins.",
-    leverageBadge: "High Finish Leverage (Volatility 3.8x)",
-    parMetric: "Benchmark Death SR: 172.4 | Par Econ: 9.85",
+    leverageBadge: "Overs 16–20",
+    parMetric: "Filter: overs 16–20, both innings",
     successDriver: "Yorker execution, boundary suppression & maximum boundary strike rate",
   },
   powerplay: {
     title: "Powerplay (0–6)",
     subtitle: "Field restriction phase with only two fielders outside 30-yard ring. High boundary extraction against new ball swing and seam.",
     leverageBadge: "Foundation Phase (Innings Base)",
-    parMetric: "Benchmark PP SR: 138.2 | Par Econ: 7.64",
-    successDriver: "Exploiting field restrictions with 60%+ boundary percentage & new-ball wickets",
+    parMetric: "Filter: overs 1–6, both innings",
+    successDriver: "Exploiting field restrictions and taking new-ball wickets",
   },
   clutch: {
     title: "Clutch Moments (< 24 runs needed, last 3 overs)",
     subtitle: "Late-innings psychological pressure. Dot-ball containment, boundary prevention, and high-stakes strike rotation.",
-    leverageBadge: "Extreme Leverage (Win-prob 5.2x)",
-    parMetric: "Boundary Efficiency: > 24% | Dot Target: > 38%",
+    leverageBadge: "Live chase, last 3 overs",
+    parMetric: "Filter: overs 18–20 of a chase, under 24 needed",
     successDriver: "Minimizing pressure mistakes, boundary striking under severe required run rates",
   },
   "high-pressure": {
     title: "High Pressure Situations",
-    subtitle: "High-impact match situations where win probability swings by > 15% per delivery. Critical wickets and game-breaking overs.",
-    leverageBadge: "Critical Leverage (Win Volatility)",
-    parMetric: "Benchmark Dot %: 42.5% | Clutch SR: 165+",
+    subtitle: "Rule-based pressure: overs 16–20 of a chase, or 4+ wickets down. For a leverage-based definition use Pressure Reliability.",
+    leverageBadge: "Rule-based",
+    parMetric: "Filter: chase overs 16–20 or 4+ down",
     successDriver: "Game-breaking breakthrough wickets and nerve-resistant finishing",
   },
   chasing200plus: {
     title: "Chasing 200+ Targets",
     subtitle: "Required run rate starts > 10.0 RPO. Sustained attacking intent, minimal dot-ball wastage, and accelerated boundaries.",
     leverageBadge: "Aggressive Chase (Sustained 10+ RPO)",
-    parMetric: "Target Boundary %: > 65% | Minimal Dot %: < 28%",
+    parMetric: "Filter: chases of 200 or more",
     successDriver: "Sustained high-velocity intent without building dot pressure",
   },
   playoff: {
     title: "Playoff & Knockout Matches",
     subtitle: "High-stakes playoff fixtures (Qualifiers, Eliminators, and Finals) under championship elimination pressure.",
     leverageBadge: "Championship Stakes (Elimination)",
-    parMetric: "Big-Match Performance Index: Elite",
+    parMetric: "Filter: qualifiers, eliminators, finals",
     successDriver: "Clutch temperament, championship experience, and delivering under stadium pressure",
   },
   "death-spin": {
     title: "Death Overs vs Spin",
     subtitle: "Overs 16–20 bowled by spinners. Exploit turn, wrong'uns, and trajectory variations against death hitters.",
     leverageBadge: "Tactical Gambit (High Risk / Reward)",
-    parMetric: "Turn Tolerance | Par Econ: 8.92",
+    parMetric: "Filter: overs 16–20, spin bowling",
     successDriver: "Unorthodox boundary shots, taking down matchup spin, or defending tight lines",
   },
 };
@@ -356,7 +357,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   const [matchupSearchBowler, setMatchupSearchBowler] = useState("");
   const [matchupDrillTab, setMatchupDrillTab] = useState<"phase" | "delivery" | "zone" | "history">("phase");
   // Scenario Intelligence state
-  const [selectedScenario, setSelectedScenario] = useState("death");
+  const [selectedScenario, setSelectedScenario] = useState("pressure-reliability");
   const [scenarioMinBalls, setScenarioMinBalls] = useState(10);
   const [scenarioRange, setScenarioRange] = useState({ from: "", to: "" });
   // Player drilldown state
@@ -618,155 +619,12 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       }
       return null;
     },
-    enabled: activeTab === "scenario-intelligence",
+    enabled: activeTab === "scenario-intelligence" && selectedScenario !== "pressure-reliability",
     staleTime: 1000 * 60 * 5,
   });
 
-  // Resilient Scenario Intelligence 2.0 Engine Fallback
-  const computedScenarioData = useMemo(() => {
-    if (scenarioQuery.data && (scenarioQuery.data.batters?.length > 0 || scenarioQuery.data.bowlers?.length > 0)) {
-      return scenarioQuery.data;
-    }
-
-    const career = playerCareerStats.data;
-    const seasonsData = playerSeasonStats.data;
-    if (!career && !seasonsData) {
-      return { batters: [], bowlers: [] };
-    }
-
-    const minBalls = scenarioMinBalls || 10;
-    const targetTeam = filters.team && filters.team !== "All Teams" && filters.team !== "All" ? filters.team : null;
-    const targetSeason = !hasScenarioRange && filters.season && filters.season !== "All Seasons" ? filters.season : null;
-    const fromYear = scenarioRange.from ? parseInt(scenarioRange.from) : null;
-    const toYear = scenarioRange.to ? parseInt(scenarioRange.to) : null;
-
-    const useSeasonLevel = !!(targetSeason || fromYear || toYear);
-    let rawBatters: any[] = [];
-    let rawBowlers: any[] = [];
-
-    if (useSeasonLevel && seasonsData) {
-      rawBatters = (seasonsData.batters || []).filter((b: any) => {
-        const sYear = parseInt(String(b.season || "").replace(/[^0-9]/g, ""));
-        if (targetSeason && String(b.season) !== String(targetSeason)) return false;
-        if (fromYear && sYear < fromYear) return false;
-        if (toYear && sYear > toYear) return false;
-        if (targetTeam && !isMatchingTeam(b.team || b.teamName || "", targetTeam)) return false;
-        return true;
-      });
-      rawBowlers = (seasonsData.bowlers || []).filter((b: any) => {
-        const sYear = parseInt(String(b.season || "").replace(/[^0-9]/g, ""));
-        if (targetSeason && String(b.season) !== String(targetSeason)) return false;
-        if (fromYear && sYear < fromYear) return false;
-        if (toYear && sYear > toYear) return false;
-        if (targetTeam && !isMatchingTeam(b.team || b.teamName || "", targetTeam)) return false;
-        return true;
-      });
-    } else if (career) {
-      rawBatters = (career.batters || []).filter((b: any) => {
-        if (targetTeam && !isMatchingTeam(b.team || b.teamName || "", targetTeam)) return false;
-        return true;
-      });
-      rawBowlers = (career.bowlers || []).filter((b: any) => {
-        if (targetTeam && !isMatchingTeam(b.team || b.teamName || "", targetTeam)) return false;
-        return true;
-      });
-    }
-
-    const scoredBatters = rawBatters.map((b: any) => {
-      let scenarioSr = b.sr || 130;
-      let scenarioBalls = b.balls || 10;
-      let scenarioRuns = b.runs || 10;
-
-      if (selectedScenario === "death") {
-        scenarioSr = b.deathSr && b.deathSr > 0 ? b.deathSr : Number((b.sr * 1.25).toFixed(1));
-        scenarioBalls = Math.round((b.balls || 0) * 0.28);
-        scenarioRuns = Math.round(scenarioBalls * (scenarioSr / 100));
-      } else if (selectedScenario === "powerplay") {
-        scenarioSr = b.ppSr && b.ppSr > 0 ? b.ppSr : Number((b.sr * 0.95).toFixed(1));
-        scenarioBalls = Math.round((b.balls || 0) * 0.35);
-        scenarioRuns = Math.round(scenarioBalls * (scenarioSr / 100));
-      } else if (selectedScenario === "clutch" || selectedScenario === "high-pressure") {
-        scenarioSr = b.deathSr && b.deathSr > 0 ? Number((b.deathSr * 1.05).toFixed(1)) : Number((b.sr * 1.15).toFixed(1));
-        scenarioBalls = Math.round((b.balls || 0) * 0.22);
-        scenarioRuns = Math.round(scenarioBalls * (scenarioSr / 100));
-      } else if (selectedScenario === "chasing200plus") {
-        scenarioSr = b.sr ? Number((b.sr * 1.18).toFixed(1)) : 140;
-        scenarioBalls = Math.round((b.balls || 0) * 0.30);
-        scenarioRuns = Math.round(scenarioBalls * (scenarioSr / 100));
-      } else if (selectedScenario === "death-spin") {
-        scenarioSr = b.deathSr && b.deathSr > 0 ? Number((b.deathSr * 1.12).toFixed(1)) : Number((b.sr * 1.10).toFixed(1));
-        scenarioBalls = Math.round((b.balls || 0) * 0.15);
-        scenarioRuns = Math.round(scenarioBalls * (scenarioSr / 100));
-      } else if (selectedScenario === "playoff") {
-        scenarioSr = b.sr ? Number(b.sr.toFixed(1)) : 130;
-        scenarioBalls = Math.round((b.balls || 0) * 0.18);
-        scenarioRuns = Math.round(scenarioBalls * (scenarioSr / 100));
-      }
-
-      const calculatedAvg = b.avg && b.avg > 0
-        ? Number(b.avg)
-        : scenarioBalls > 0 ? Number(((scenarioRuns / Math.max(1, (b.innings || 10) - (b.notOuts || 2)))).toFixed(1)) : 25;
-
-      return {
-        ...b,
-        runs: Math.max(scenarioRuns, 1),
-        balls: Math.max(scenarioBalls, 1),
-        sr: scenarioSr,
-        avg: calculatedAvg,
-      };
-    }).filter(b => b.balls >= minBalls && b.runs > 0)
-      .sort((a, b) => (b.sr || 0) - (a.sr || 0) || (b.runs || 0) - (a.runs || 0));
-
-    const scoredBowlers = rawBowlers.map((b: any) => {
-      let scenarioEcon = b.econ || 8.0;
-      let scenarioWkts = b.wickets || 1;
-      let scenarioBalls = b.balls || 10;
-      let scenarioSr = b.sr || 20;
-      let dotPct = b.dotPct || 35;
-
-      if (selectedScenario === "death") {
-        scenarioWkts = b.deathWickets && b.deathWickets > 0 ? b.deathWickets : Math.round((b.wickets || 0) * 0.42);
-        scenarioBalls = Math.round((b.balls || 0) * 0.28);
-        scenarioEcon = b.econ ? Number((b.econ * 1.12).toFixed(2)) : 9.2;
-        scenarioSr = scenarioWkts > 0 ? Number((scenarioBalls / scenarioWkts).toFixed(1)) : 22;
-        dotPct = Math.round(dotPct * 0.9);
-      } else if (selectedScenario === "powerplay") {
-        scenarioWkts = b.ppWickets && b.ppWickets > 0 ? b.ppWickets : Math.round((b.wickets || 0) * 0.35);
-        scenarioBalls = Math.round((b.balls || 0) * 0.38);
-        scenarioEcon = b.econ ? Number((b.econ * 0.88).toFixed(2)) : 7.2;
-        scenarioSr = scenarioWkts > 0 ? Number((scenarioBalls / scenarioWkts).toFixed(1)) : 24;
-        dotPct = Math.round(dotPct * 1.15);
-      } else if (selectedScenario === "clutch" || selectedScenario === "high-pressure") {
-        scenarioWkts = Math.round((b.wickets || 0) * 0.3);
-        scenarioBalls = Math.round((b.balls || 0) * 0.22);
-        scenarioEcon = b.econ ? Number((b.econ * 1.05).toFixed(2)) : 8.5;
-        scenarioSr = scenarioWkts > 0 ? Number((scenarioBalls / scenarioWkts).toFixed(1)) : 18;
-      } else if (selectedScenario === "death-spin") {
-        scenarioWkts = Math.round((b.wickets || 0) * 0.25);
-        scenarioBalls = Math.round((b.balls || 0) * 0.18);
-        scenarioEcon = b.econ ? Number((b.econ * 1.08).toFixed(2)) : 8.8;
-      }
-
-      return {
-        ...b,
-        wickets: Math.max(scenarioWkts, 1),
-        balls: Math.max(scenarioBalls, 1),
-        econ: scenarioEcon,
-        sr: scenarioSr,
-        dotPct: Math.min(65, Math.max(20, dotPct)),
-      };
-    }).filter(b => b.balls >= minBalls && b.wickets > 0)
-      .sort((a, b) => (a.econ || 99) - (b.econ || 99) || (b.wickets || 0) - (a.wickets || 0));
-
-    return {
-      batters: scoredBatters,
-      bowlers: scoredBowlers,
-    };
-  }, [scenarioQuery.data, playerCareerStats.data, playerSeasonStats.data, selectedScenario, scenarioMinBalls, filters.team, filters.season, hasScenarioRange, scenarioRange]);
-
-  const effectiveScenarioData = (scenarioQuery.data && (scenarioQuery.data.batters?.length || scenarioQuery.data.bowlers?.length))
-    ? scenarioQuery.data
-    : computedScenarioData;
+  // Only server-computed scenario stats are shown; an empty result shows the empty state, never estimates.
+  const effectiveScenarioData = scenarioQuery.data ?? { batters: [] as any[], bowlers: [] as any[] };
 
   // Player drilldown query
   const drilldownQuery = useQuery({
@@ -1800,6 +1658,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                   {/* Scenario presets */}
                   <div className="flex flex-wrap gap-2">
                     {[
+                      { id: "pressure-reliability", label: "Pressure Reliability", color: "from-pink-500/25 to-fuchsia-500/10", activeBorder: "border-pink-300 text-white bg-pink-500/25 ring-2 ring-pink-400/50" },
                       { id: "death", label: "Death Overs", color: "from-red-500/20 to-orange-500/10", activeBorder: "border-red-400 text-white bg-red-500/20 ring-2 ring-red-500/40" },
                       { id: "powerplay", label: "Powerplay", color: "from-blue-500/20 to-cyan-500/10", activeBorder: "border-cyan-400 text-white bg-cyan-500/20 ring-2 ring-cyan-500/40" },
                       { id: "clutch", label: "Clutch Moments", color: "from-purple-500/20 to-indigo-500/10", activeBorder: "border-purple-400 text-white bg-purple-500/20 ring-2 ring-purple-500/40" },
@@ -1840,6 +1699,9 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                     </label>
                   </div>
 
+                  {selectedScenario === "pressure-reliability" ? (
+                    <PressureReliabilityPanel seasonFrom={scenarioRange.from} seasonTo={scenarioRange.to} />
+                  ) : (<>
                   {/* Min balls qualifier */}
                   <div className="flex items-center gap-4">
                     <span className="text-[10px] font-black text-white/40 uppercase tracking-wider">Min balls faced:</span>
@@ -1961,6 +1823,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                       </div>
                     </div>
                   )}
+                  </>)}
                 </div>
               )}
 

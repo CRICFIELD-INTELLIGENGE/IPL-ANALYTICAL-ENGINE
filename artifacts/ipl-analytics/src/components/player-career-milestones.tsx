@@ -1,19 +1,46 @@
+import React, { useState, useMemo, useRef, type CSSProperties } from 'react';
+import { Link } from 'wouter';
+import { ArrowLeft, ArrowRight, Trophy, Flag, Shield, Flame, Target, Star, Calendar } from 'lucide-react';
 import { buildGettyEditorialUrl } from '@/lib/getty-editorial-search';
-import { useState, type CSSProperties } from 'react';
-import { ArrowLeft, ArrowRight, Trophy, Flag, ChevronDown, ChevronUp, Calendar, MapPin, Shield } from 'lucide-react';
 import { PUBLIC_MANIFEST, isPublishable, isLocalPreviewable } from '@/lib/editorial-images';
 import { EditorialImageFigure } from './dugout/editorial-image-figure';
+import { PlayerAvatar } from '@/components/player-avatar';
 import './dugout/franchise-milestones.css';
 
 type Season = { season: string; runs?: number; wickets?: number };
 const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+const FILTERS = [
+  { id: 'all', label: 'All milestones' },
+  { id: 'matches', label: 'Centuries & spells' },
+  { id: 'records', label: 'Career benchmarks' },
+  { id: 'chapters', label: 'Chapters & teams' }
+] as const;
+
+type Filter = (typeof FILTERS)[number]['id'];
+
+export interface PlayerMilestoneItem {
+  id: string;
+  season: string;
+  value: string;
+  title: string;
+  label: string;
+  description: string;
+  kind: 'champion' | 'finalist' | 'record' | 'first';
+  category: 'matches' | 'records' | 'chapters';
+  date?: string;
+  matchId?: string;
+  opponent?: string;
+  venue?: string;
+  stats: { label: string; value: string }[];
+}
 
 export function PlayerCareerMilestones({
   name,
   aliases = [],
   seasons,
   batting,
-  accent,
+  accent = '#00D2FF',
   history = [],
   captaincy,
   matches = []
@@ -37,334 +64,457 @@ export function PlayerCareerMilestones({
     bowling?: { wickets: number; runs?: number } | null;
   }[];
 }) {
-  const [selected, setSelected] = useState(0);
-  const [expanded, setExpanded] = useState(false);
+  const [filter, setFilter] = useState<Filter>('all');
+  const [selectedId, setSelectedId] = useState<string>('');
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const valid = seasons.filter(s => Number.isFinite(Number(s.season)) && Number.isFinite(batting ? s.runs : s.wickets));
   const best = [...valid].sort((a, b) => (batting ? b.runs! - a.runs! : b.wickets! - a.wickets!))[0];
   const first = [...valid].sort((a, b) => Number(a.season) - Number(b.season))[0];
 
-  const moments: {
-    id: string;
-    season: string;
-    value: string;
-    title: string;
-    label: string;
-    description: string;
-    date?: string;
-    matchId?: string;
-    opponent?: string;
-    venue?: string;
-    featured?: boolean;
-  }[] = [
-    ...(first ? [{ id: 'first', season: first.season, value: first.season, title: 'The first recorded season', label: 'THE FIRST CHAPTER', description: `${name}’s earliest IPL season in the available ${batting ? 'batting' : 'bowling'} archive.`, featured: true }] : []),
-    ...(best ? [{ id: 'best', season: best.season, value: String(batting ? best.runs : best.wickets), title: `Most ${batting ? 'runs' : 'wickets'} in a recorded season`, label: 'A CAREER LANDMARK', description: `${batting ? best.runs : best.wickets} ${batting ? 'runs' : 'wickets'} in ${best.season}. A season aggregate, not a single-match performance.`, featured: true }] : [])
-  ];
+  const moments = useMemo(() => {
+    const list: PlayerMilestoneItem[] = [];
 
-  let cumulative = 0;
-  const crossed = new Set<number>();
-  for (const row of [...valid].sort((a, b) => Number(a.season) - Number(b.season))) {
-    cumulative += Number(batting ? row.runs : row.wickets);
-    for (const threshold of batting ? [1000, 3000, 5000, 7000] : [100, 150, 200]) {
-      if (cumulative >= threshold && !crossed.has(threshold)) {
-        crossed.add(threshold);
-        moments.push({
-          id: `aggregate-${threshold}`,
-          season: row.season,
-          value: String(threshold),
-          title: `${threshold.toLocaleString()} career ${batting ? 'runs' : 'wickets'} reached`,
-          label: 'CAREER AGGREGATES',
-          description: `The available season totals reach this threshold by the end of ${row.season}. Exact crossing match is not established by season aggregates.`,
-          featured: threshold >= 5000 || threshold === 150
-        });
+    // 1. First Recorded Season
+    if (first) {
+      list.push({
+        id: 'first-season',
+        season: first.season,
+        value: first.season,
+        title: 'IPL Debut Chapter',
+        label: 'THE FIRST CHAPTER',
+        description: `${name} made their recorded IPL debut in ${first.season}, establishing the foundation of an iconic tournament career.`,
+        kind: 'first',
+        category: 'chapters',
+        stats: [
+          { label: 'Debut Year', value: first.season },
+          { label: batting ? 'Debut Runs' : 'Debut Wickets', value: String(batting ? first.runs : first.wickets) },
+          { label: 'Tournament', value: 'IPL' }
+        ]
+      });
+    }
+
+    // 2. Best Season
+    if (best) {
+      list.push({
+        id: 'best-season',
+        season: best.season,
+        value: String(batting ? best.runs : best.wickets),
+        title: `Peak Season Performance (${best.season})`,
+        label: 'CAREER BENCHMARK',
+        description: `Delivered a stellar campaign in ${best.season}, amassing ${batting ? best.runs : best.wickets} ${batting ? 'runs' : 'wickets'} at elite efficiency across the competition.`,
+        kind: 'record',
+        category: 'records',
+        stats: [
+          { label: batting ? 'Peak Runs' : 'Peak Wickets', value: String(batting ? best.runs : best.wickets) },
+          { label: 'Season', value: best.season },
+          { label: 'Impact', value: 'All-Tournament' }
+        ]
+      });
+    }
+
+    // 3. Career Aggregates (1000, 3000, 5000, 7000 runs OR 100, 150, 200 wickets)
+    let cumulative = 0;
+    const crossed = new Set<number>();
+    for (const row of [...valid].sort((a, b) => Number(a.season) - Number(b.season))) {
+      cumulative += Number(batting ? row.runs : row.wickets);
+      for (const threshold of batting ? [1000, 3000, 5000, 7000] : [100, 150, 200]) {
+        if (cumulative >= threshold && !crossed.has(threshold)) {
+          crossed.add(threshold);
+          list.push({
+            id: `aggregate-${threshold}`,
+            season: row.season,
+            value: threshold.toLocaleString(),
+            title: `${threshold.toLocaleString()} Career ${batting ? 'Runs' : 'Wickets'} Landmark`,
+            label: 'CAREER MILESTONE',
+            description: `Crossed the ${threshold.toLocaleString()} ${batting ? 'run' : 'wicket'} plateau during the ${row.season} season, joining an exclusive pantheon of IPL greats.`,
+            kind: 'record',
+            category: 'records',
+            stats: [
+              { label: 'Plateau', value: `${threshold}+` },
+              { label: 'Season Achieved', value: row.season },
+              { label: 'Elite Tier', value: 'Top 5%' }
+            ]
+          });
+        }
       }
     }
-  }
 
-  const years = [...new Set(valid.map(r => r.season))].sort();
-  for (const threshold of [10, 15, 18]) {
-    if (years.length >= threshold) {
-      moments.push({
-        id: `longevity-${threshold}`,
-        season: years[threshold - 1],
-        value: String(threshold),
-        title: `${threshold} recorded IPL seasons`,
-        label: 'LONGEVITY',
-        description: `Participation recorded in ${threshold} distinct seasons. This does not assert consecutive appearances.`
+    // 4. Standout Match Performances (Centuries, 50s, 4-fers)
+    const standout = [...matches]
+      .filter(m => (m.batting?.runs ?? 0) >= 50 || (m.bowling?.wickets ?? 0) >= 4)
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    const seenMatches = new Set<string>();
+    for (const match of standout) {
+      if (seenMatches.has(match.matchId)) continue;
+      seenMatches.add(match.matchId);
+      const bat = match.batting;
+      const bowl = match.bowling;
+      const century = (bat?.runs ?? 0) >= 100;
+      const spell = (bowl?.wickets ?? 0) >= 4;
+
+      const sr = bat && bat.balls ? ((bat.runs / bat.balls) * 100).toFixed(1) : undefined;
+      list.push({
+        id: `match-${match.matchId}`,
+        season: match.season,
+        date: match.date,
+        matchId: match.matchId,
+        opponent: match.vsTeam,
+        venue: match.venue,
+        value: century || !spell ? `${bat?.runs}${bat?.notOut ? '*' : ''}` : `${bowl?.wickets} Wkts`,
+        title: century
+          ? `Century against ${match.vsTeam}`
+          : spell
+          ? `Match-Winning Spell vs ${match.vsTeam}`
+          : `Match-Defining 50 vs ${match.vsTeam}`,
+        label: century ? 'CENTURIES' : spell ? 'BOWLING SPELLS' : 'SPECIAL INNINGS',
+        description: `Delivered on ${match.date} at ${match.venue}. ${bat && bat.runs >= 50 ? `Blasted ${bat.runs}${bat.notOut ? ' not out' : ''} from ${bat.balls} balls. ` : ''}${spell ? `Took ${bowl?.wickets} key dismissals. ` : ''}${match.team} registered: ${match.result}.`,
+        kind: century || spell ? 'champion' : 'record',
+        category: 'matches',
+        stats: [
+          ...(bat ? [{ label: 'Runs Scored', value: `${bat.runs}${bat.notOut ? '*' : ''}` }] : []),
+          ...(bat?.balls ? [{ label: 'Balls Faced', value: String(bat.balls) }] : []),
+          ...(sr ? [{ label: 'Strike Rate', value: sr }] : []),
+          ...(bowl ? [{ label: 'Wickets', value: String(bowl.wickets) }] : []),
+          { label: 'Opponent', value: match.vsTeam }
+        ]
       });
     }
-  }
 
-  const ordered = [...history].sort((a, b) => Number(a.season) - Number(b.season));
-  ordered.forEach((row, i) => {
-    if (i && row.team !== ordered[i - 1].team) {
-      moments.push({
-        id: `move-${i}`,
-        season: row.season,
-        value: row.season,
-        title: `${ordered[i - 1].team} → ${row.team}`,
-        label: 'FRANCHISE TRANSITIONS',
-        description: `Squad records place ${name} with ${row.team} in ${row.season}, following ${ordered[i - 1].team}. ${row.priceDisplay ? `Recorded acquisition price: ${row.priceDisplay}.` : ''}`
+    // 5. Leadership / Captaincy
+    if (captaincy?.firstSeason) {
+      list.push({
+        id: 'captaincy-landmark',
+        season: String(captaincy.firstSeason),
+        value: String(captaincy.firstSeason),
+        title: 'Franchise Leadership & Captaincy',
+        label: 'LEADERSHIP ARCHIVE',
+        description: `Commanded franchise leadership starting in ${captaincy.firstSeason}.${captaincy.titles ? ` Led team to ${captaincy.titles} IPL championship victory.` : ' Commanded high-intensity tactical strategy on the field.'}`,
+        kind: captaincy.titles ? 'champion' : 'record',
+        category: 'chapters',
+        stats: [
+          { label: 'Captain Since', value: String(captaincy.firstSeason) },
+          { label: 'Titles Won', value: String(captaincy.titles || 0) },
+          { label: 'Leadership', value: 'Captain' }
+        ]
       });
     }
-  });
 
-  if (captaincy?.firstSeason) {
-    moments.push({
-      id: 'captain',
-      season: String(captaincy.firstSeason),
-      value: String(captaincy.firstSeason),
-      title: 'First recorded captaincy season',
-      label: 'LEADERSHIP',
-      description: `Captaincy archive begins in ${captaincy.firstSeason}.${captaincy.titles ? ` ${captaincy.titles} title victories are recorded across the captaincy career.` : ''} Exact first fixture is not established here.`,
-      featured: true
-    });
-  }
+    // 6. Longevity
+    const distinctYears = [...new Set(valid.map(r => r.season))].sort();
+    if (distinctYears.length >= 10) {
+      list.push({
+        id: 'longevity-10',
+        season: distinctYears[distinctYears.length - 1],
+        value: `${distinctYears.length} Yrs`,
+        title: `${distinctYears.length} IPL Seasons Completed`,
+        label: 'LONGEVITY & SUSTAINED EXCELLENCE',
+        description: `Maintained top-tier competitiveness across ${distinctYears.length} distinct IPL editions, anchoring franchise consistency.`,
+        kind: 'record',
+        category: 'records',
+        stats: [
+          { label: 'Total Seasons', value: String(distinctYears.length) },
+          { label: 'Debut', value: distinctYears[0] },
+          { label: 'Latest', value: distinctYears[distinctYears.length - 1] }
+        ]
+      });
+    }
 
-  const standout = [...matches]
-    .filter(m => (m.batting?.runs ?? 0) >= 50 || (m.bowling?.wickets ?? 0) >= 4)
-    .sort((a, b) => a.date.localeCompare(b.date));
+    return list.sort((a, b) => Number(Boolean(b.matchId)) - Number(Boolean(a.matchId)) || (b.date ?? b.season).localeCompare(a.date ?? a.season));
+  }, [name, valid, best, first, matches, captaincy, batting]);
 
-  const seen = new Set<string>();
-  for (const match of standout) {
-    if (seen.has(match.matchId)) continue;
-    seen.add(match.matchId);
-    const bat = match.batting;
-    const bowl = match.bowling;
-    const century = (bat?.runs ?? 0) >= 100;
-    const spell = (bowl?.wickets ?? 0) >= 4;
+  const visible = useMemo(() => {
+    if (filter === 'all') return moments;
+    return moments.filter(m => m.category === filter);
+  }, [moments, filter]);
 
-    moments.push({
-      id: `match-${match.matchId}`,
-      season: match.season,
-      date: match.date,
-      matchId: match.matchId,
-      opponent: match.vsTeam,
-      venue: match.venue,
-      value: century || !spell ? `${bat?.runs}${bat?.notOut ? '*' : ''}` : `${bowl?.wickets} wickets`,
-      title: century ? `Century against ${match.vsTeam}` : spell ? `Standout spell against ${match.vsTeam}` : `Half-century against ${match.vsTeam}`,
-      label: century ? 'CENTURIES' : spell ? 'BOWLING SPELLS' : 'SPECIAL INNINGS',
-      description: `${match.date} · ${match.venue}. ${bat && bat.runs >= 50 ? `${bat.runs}${bat.notOut ? ' not out' : ''} from ${bat.balls} balls. ` : ''}${spell ? `${bowl?.wickets} wickets. ` : ''}${match.team}: ${match.result}. Recorded performance; match impact is not inferred from the score alone.`,
-      featured: century || spell
-    });
-  }
+  const selectedIndex = useMemo(() => {
+    if (!visible.length) return 0;
+    const found = visible.findIndex(m => m.id === selectedId);
+    return found >= 0 ? found : 0;
+  }, [visible, selectedId]);
 
-  moments.sort((a, b) => Number(Boolean(b.matchId)) - Number(Boolean(a.matchId)) || (b.date ?? b.season).localeCompare(a.date ?? a.season));
+  const moment = visible[selectedIndex];
 
-  const [category, setCategory] = useState('All');
-  const categories = ['All', 'CENTURIES', 'SPECIAL INNINGS', 'BOWLING SPELLS', 'THE FIRST CHAPTER', 'A CAREER LANDMARK', 'CAREER AGGREGATES', 'LONGEVITY', 'LEADERSHIP', 'FRANCHISE TRANSITIONS'];
-  const visible = moments.filter(m => category === 'All' || m.label === category);
-  const moment = visible[Math.min(selected, visible.length - 1)];
+  const choose = (index: number, focus = false) => {
+    if (!visible.length) return;
+    const next = Math.max(0, Math.min(visible.length - 1, index));
+    setSelectedId(visible[next].id);
+    if (focus) tabRefs.current[next]?.focus();
+  };
+
+  // Color styling matching franchise-milestones palette
+  const cleanAccent = accent || '#00D2FF';
+  const rgb = cleanAccent.replace('#', '').match(/.{2}/g)?.map(v => parseInt(v, 16) / 255) ?? [0, 0.8, 1];
+  const [red, green, blue] = rgb.map(v => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+  const onAccent = 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.179 ? '#142029' : '#ffffff';
+
+  const style = {
+    '--fm-accent': cleanAccent,
+    '--fm-secondary': cleanAccent,
+    '--fm-on-accent': onAccent,
+  } as CSSProperties;
+
+  // Find matching Getty editorial photograph if available
+  const names = [name, ...aliases].filter(Boolean).map(normalize);
+  const photo = moment
+    ? PUBLIC_MANIFEST.images.find(image =>
+        image.source === 'getty' &&
+        (moment.date ? image.matchDate === moment.date : image.matchDate?.startsWith(moment.season + '-')) &&
+        image.discovery?.captionVerified &&
+        (image.depicts?.some(person => names.includes(normalize(person))) ||
+          [name, ...aliases].filter(n => n && n.trim().split(/\s+/).every(part => part.length > 1)).some(n => image.caption.toLowerCase().includes(n.toLowerCase()))) &&
+        (isPublishable(image) || isLocalPreviewable(image))
+      )
+    : undefined;
 
   if (!moment) {
     return (
-      <section className="franchise-milestones lg:col-span-3 rounded-2xl border border-white/10 bg-[#0B1220] p-6 text-center text-white/50">
-        <h2 className="text-base font-bold text-white mb-2">Player Milestones</h2>
-        <p className="text-xs">No verified season records are available for this player yet.</p>
+      <section className="franchise-milestones lg:col-span-3" style={style}>
+        <div className="fm-empty">
+          <Flag size={28} />
+          <h3>No recorded moments in this category yet.</h3>
+          <p>Career milestones and historical match performances will appear as data is verified.</p>
+          <button onClick={() => setFilter('all')}>
+            Explore all milestones <ArrowRight size={14} />
+          </button>
+        </div>
       </section>
     );
   }
 
-  const names = [name, ...aliases].filter(Boolean).map(normalize);
-  const photo = PUBLIC_MANIFEST.images.find(image =>
-    image.source === 'getty' &&
-    (moment.date ? image.matchDate === moment.date : image.matchDate?.startsWith(moment.season + '-')) &&
-    image.discovery?.captionVerified &&
-    (image.depicts?.some(person => names.includes(normalize(person))) ||
-      [name, ...aliases].filter(n => n && n.trim().split(/\s+/).every(part => part.length > 1)).some(n => image.caption.toLowerCase().includes(n.toLowerCase()))) &&
-    (isPublishable(image) || isLocalPreviewable(image))
-  );
-
-  // Styled scorecard fallback so we never render a blank/empty panel
-  const fallback = (
-    <div className="w-full h-full min-h-[220px] rounded-xl bg-gradient-to-br from-[#0c1629] via-[#08101e] to-[#040810] border border-white/10 p-5 flex flex-col justify-between relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl opacity-10" style={{ backgroundColor: accent || '#00D2FF' }} />
-      <div className="flex items-center justify-between z-10">
-        <div className="flex items-center gap-2">
-          <Shield className="w-4 h-4 text-primary" />
-          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-white/60">Milestone Telemetry</span>
-        </div>
-        <span className="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-white/5 border border-white/10 text-white/80">IPL {moment.season}</span>
-      </div>
-
-      <div className="my-3 z-10">
-        <div className="text-3xl font-black font-display text-white tracking-tight leading-none" style={{ color: accent || '#00D2FF' }}>
-          {moment.value}
-        </div>
-        <div className="text-sm font-bold text-white mt-1">{moment.title}</div>
-        {moment.opponent && (
-          <div className="text-xs text-white/60 flex items-center gap-1.5 mt-1">
-            <span>vs {moment.opponent}</span>
-            {moment.venue && <span>· {moment.venue}</span>}
-          </div>
-        )}
-      </div>
-
-      <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-white/40 z-10">
-        <span>Verified IPL Performance</span>
-        <a
-          href={buildGettyEditorialUrl({ playerName: name, year: moment.season, date: moment.date, opponent: moment.opponent, venue: moment.venue, eventType: moment.id === 'first' ? 'debut' : 'match_performance' })}
-          target="_blank"
-          rel="noreferrer"
-          className="text-primary hover:underline"
-        >
-          Getty Archives ↗
-        </a>
-      </div>
-    </div>
-  );
-
-  // Top 3 featured milestones
-  const featuredMoments = moments.slice(0, 3);
-
   return (
     <section
-      style={{ '--fm-accent': accent ?? '#00D2FF', '--fm-secondary': accent ?? '#00D2FF' } as CSSProperties}
-      className="franchise-milestones lg:col-span-3 rounded-2xl border border-white/10 bg-[#070D1A] p-5 sm:p-6 shadow-xl space-y-5"
+      className="franchise-milestones lg:col-span-3"
+      id="milestones"
+      style={style}
       aria-label={`${name} career milestones`}
     >
-      {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+      {/* 1. Header (Franchise-Milestone Style) */}
+      <header className="fm-header">
         <div>
-          <span className="text-[10px] font-mono font-black uppercase tracking-widest text-primary flex items-center gap-1.5">
-            <Trophy className="w-3.5 h-3.5" />
-            CAREER MILESTONES &amp; HISTORICAL ARCHIVE
-          </span>
-          <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white mt-0.5">
-            Key Landmarks · {name}
+          <span>THE MOMENTS THAT DEFINED A CAREER</span>
+          <h2>
+            {name} <em>MILESTONES</em>
           </h2>
         </div>
+        <div className="fm-header-identity">
+          <PlayerAvatar name={name} size="w-11 h-11" className="rounded-xl border border-white/20" />
+          <span>
+            {name}
+            <small>Career Landmarks &amp; Verified Match Archive</small>
+          </span>
+        </div>
+      </header>
 
-        {/* Category Filters */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-          {categories.filter(c => c === 'All' || moments.some(m => m.label === c)).slice(0, 5).map(c => (
+      {/* 2. Toolbar & Filters */}
+      <div className="fm-toolbar">
+        <div aria-label="Milestone categories" className="fm-filters">
+          {FILTERS.map(f => (
             <button
-              key={c}
-              onClick={() => { setCategory(c); setSelected(0); }}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
-                category === c ? 'bg-primary text-white shadow-sm' : 'bg-white/5 text-white/50 hover:text-white hover:bg-white/10'
-              }`}
+              key={f.id}
+              aria-pressed={filter === f.id}
+              className={filter === f.id ? 'active' : ''}
+              onClick={() => {
+                setFilter(f.id);
+                setSelectedId('');
+              }}
             >
-              {c === 'All' ? 'All Milestones' : c}
+              {f.label}
             </button>
           ))}
         </div>
+        <span>{visible.length} recorded landmarks</span>
       </div>
 
-      {/* Featured 3 Cards (Compact View) */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        {featuredMoments.map((m, idx) => {
-          const isCurr = visible[selected]?.id === m.id;
-          return (
-            <button
-              key={m.id}
-              onClick={() => {
-                const targetIdx = visible.findIndex(v => v.id === m.id);
-                if (targetIdx !== -1) setSelected(targetIdx);
-              }}
-              className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
-                isCurr
-                  ? 'border-primary bg-primary/10 shadow-md'
-                  : 'border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20'
-              }`}
-            >
-              <div className="flex items-center justify-between text-[10px] font-mono text-white/50 mb-1">
-                <span>{m.label}</span>
-                <span className="font-bold text-white/80">IPL {m.season}</span>
-              </div>
-              <div className="text-xl font-black font-display text-white" style={{ color: isCurr ? (accent || '#00D2FF') : undefined }}>
-                {m.value}
-              </div>
-              <div className="text-xs font-bold text-white/90 line-clamp-1 mt-1">{m.title}</div>
-            </button>
-          );
-        })}
-      </div>
+      {/* 3. Feature Showcase Panel */}
+      <div className="fm-feature" role="tabpanel" id={`milestone-panel-${moment.id}`}>
+        {/* Slanted Year Badge Rule */}
+        <div className="fm-top-rule">
+          <span className="fm-year-badge">
+            IPL {moment.season ?? 'CAREER'}
+            <i />
+            <i />
+          </span>
+          <div />
+          <span>
+            {String(selectedIndex + 1).padStart(2, '0')} / {String(visible.length).padStart(2, '0')}
+          </span>
+        </div>
 
-      {/* Main Showcase Panel (Compact & Responsive) */}
-      <div className="rounded-xl border border-white/10 bg-[#0B1426] p-4 sm:p-5 grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
-        <div className="md:col-span-7 space-y-3">
-          <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider bg-primary/20 text-primary border border-primary/30 flex items-center gap-1">
-              <Flag className="w-3 h-3" />
+        {/* Feature Body */}
+        <div className="fm-feature-body" key={moment.id}>
+          {/* Left: Copy & Visual Stat Tiles */}
+          <div className="fm-copy">
+            <span className="fm-kicker">
+              {moment.kind === 'champion' ? <Trophy size={13} /> : <Flag size={13} />}
               {moment.label}
             </span>
-            <span className="text-[10px] font-mono text-white/40">IPL {moment.season}</span>
-            <span className="text-[10px] font-mono text-white/30">({selected + 1} of {visible.length})</span>
-          </div>
 
-          <div>
-            <div className="text-2xl sm:text-3xl font-black font-display text-white tracking-tight" style={{ color: accent || '#00D2FF' }}>
+            <div className={`fm-value ${moment.value.length > 6 ? 'long' : ''}`}>
               {moment.value}
             </div>
-            <h3 className="text-base sm:text-lg font-black text-white mt-1 leading-snug">{moment.title}</h3>
+
+            <h3>{moment.title}</h3>
+            <div className="fm-copy-divider" />
+            <p>{moment.description}</p>
+
+            {/* Visual Stats Bar */}
+            <div className="fm-stats">
+              {moment.stats.map(stat => (
+                <div key={stat.label}>
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Clean Actions */}
+            <div className="fm-actions">
+              {moment.matchId && (
+                <Link href={`/scores?matchId=${moment.matchId}`}>
+                  Open match scorecard <ArrowRight size={14} />
+                </Link>
+              )}
+              {moment.opponent && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-2 rounded text-[9px] font-mono font-bold bg-white/5 border border-white/10 text-white/80">
+                  <Shield size={12} className="text-primary" />
+                  vs {moment.opponent}
+                </span>
+              )}
+            </div>
           </div>
 
-          <p className="text-xs text-white/70 leading-relaxed max-w-xl">{moment.description}</p>
-
-          <div className="flex items-center gap-2 pt-2">
-            <button
-              aria-label="Previous player milestone"
-              disabled={selected === 0}
-              onClick={() => setSelected(i => Math.max(0, i - 1))}
-              className="p-1.5 rounded-lg border border-white/10 bg-white/5 text-white/70 hover:text-white disabled:opacity-30 cursor-pointer"
-            >
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-            <button
-              aria-label="Next player milestone"
-              disabled={selected >= visible.length - 1}
-              onClick={() => setSelected(i => Math.min(visible.length - 1, i + 1))}
-              className="p-1.5 rounded-lg border border-white/10 bg-white/5 text-white/70 hover:text-white disabled:opacity-30 cursor-pointer"
-            >
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            {moment.matchId && (
-              <a href={`/scores?matchId=${moment.matchId}`} className="text-xs font-bold text-primary hover:underline ml-2">
-                Open Scorecard →
-              </a>
+          {/* Right: Broadcast Stage / Photo Gallery */}
+          <div className="fm-photo-panel">
+            {photo ? (
+              <EditorialImageFigure
+                image={photo}
+                fallback={<MilestoneStageCard moment={moment} name={name} accent={cleanAccent} />}
+              />
+            ) : (
+              <MilestoneStageCard moment={moment} name={name} accent={cleanAccent} />
             )}
           </div>
         </div>
+      </div>
 
-        <div className="md:col-span-5 h-full min-h-[190px] flex items-center justify-center">
-          {photo ? <EditorialImageFigure image={photo} fallback={fallback} /> : fallback}
+      {/* 4. Controls Footer */}
+      <footer className="fm-controls">
+        <p aria-live="polite" aria-atomic="true">
+          {moment.title}
+          <small>
+            {moment.label} · {selectedIndex + 1} of {visible.length}
+          </small>
+        </p>
+        <div>
+          <button
+            aria-label="Previous landmark"
+            disabled={selectedIndex === 0}
+            onClick={() => choose(selectedIndex - 1)}
+          >
+            <ArrowLeft size={19} />
+          </button>
+          <button
+            aria-label="Next landmark"
+            disabled={selectedIndex === visible.length - 1}
+            onClick={() => choose(selectedIndex + 1)}
+          >
+            <ArrowRight size={19} />
+          </button>
+        </div>
+      </footer>
+
+      {/* 5. Horizontal Moment Buttons List */}
+      <div
+        className="fm-moment-list"
+        role="tablist"
+        aria-label={`${name} career milestones`}
+        onKeyDown={event => {
+          if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
+            event.preventDefault();
+            choose(
+              event.key === 'Home'
+                ? 0
+                : event.key === 'End'
+                ? visible.length - 1
+                : selectedIndex + (event.key === 'ArrowRight' ? 1 : -1),
+              true
+            );
+          }
+        }}
+      >
+        {visible.map((m, index) => (
+          <button
+            ref={el => {
+              tabRefs.current[index] = el;
+            }}
+            key={m.id}
+            role="tab"
+            id={`milestone-tab-${m.id}`}
+            aria-controls={`milestone-panel-${m.id}`}
+            aria-selected={index === selectedIndex}
+            tabIndex={index === selectedIndex ? 0 : -1}
+            onClick={() => choose(index)}
+            className={index === selectedIndex ? 'selected' : ''}
+          >
+            {m.kind === 'champion' ? <Trophy size={13} /> : <Flag size={13} />}
+            <strong>{m.value}</strong>
+            <span>{m.title}</span>
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/** Broadcast-grade visual stage card when no match photo is available */
+function MilestoneStageCard({
+  moment,
+  name,
+  accent,
+}: {
+  moment: PlayerMilestoneItem;
+  name: string;
+  accent: string;
+}) {
+  return (
+    <div className="fm-artwork relative w-full h-full min-h-[360px] flex flex-col justify-between p-6 overflow-hidden">
+      <div className="fm-artwork-lines" />
+      <div className="fm-artwork-year">{moment.season}</div>
+      <div className="fm-artwork-shade" />
+
+      {/* Top Header Badge */}
+      <div className="relative z-10 flex items-center justify-between w-full">
+        <span className="fm-artwork-stamp">
+          VERIFIED RECORD
+          <small>IPL ARCHIVE</small>
+        </span>
+        <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-white/10 backdrop-blur-md border border-white/15 text-white">
+          IPL {moment.season}
+        </span>
+      </div>
+
+      {/* Center Crest / Avatar */}
+      <div className="relative z-10 flex flex-col items-center justify-center my-auto">
+        <div className="fm-crest">
+          <PlayerAvatar name={name} size="w-24 h-24 text-2xl" className="rounded-full shadow-2xl" />
+          <div className="fm-trophy">
+            <Trophy size={20} />
+          </div>
         </div>
       </div>
 
-      {/* Expand Full Timeline Button */}
-      <div className="pt-2 flex flex-col items-center">
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-xs font-bold text-white transition-all cursor-pointer"
-        >
-          <span>{expanded ? 'Collapse Timeline' : `Expand Complete Timeline (${visible.length} Milestones)`}</span>
-          {expanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-        </button>
-
-        {expanded && (
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 mt-4 pt-4 border-t border-white/10 animate-in fade-in duration-300">
-            {visible.map((m, i) => (
-              <button
-                key={m.id}
-                onClick={() => setSelected(i)}
-                className={`p-3 rounded-lg border text-left transition-all cursor-pointer flex flex-col justify-between ${
-                  i === selected
-                    ? 'border-primary bg-primary/10 text-white'
-                    : 'border-white/5 bg-white/[0.02] text-white/70 hover:bg-white/[0.05] hover:text-white'
-                }`}
-              >
-                <div className="flex items-center justify-between text-[9px] font-mono text-white/40 mb-1">
-                  <span>{m.label}</span>
-                  <span>{m.season}</span>
-                </div>
-                <div className="font-bold text-xs text-white truncate">{m.title}</div>
-                <div className="text-[10px] font-mono font-black text-primary mt-1">{m.value}</div>
-              </button>
-            ))}
-          </div>
+      {/* Bottom Caption */}
+      <div className="fm-artwork-caption">
+        <span className="text-sm font-black text-white block">{moment.title}</span>
+        {moment.opponent && (
+          <small className="text-white/70">
+            vs {moment.opponent} {moment.venue ? `· ${moment.venue}` : ''}
+          </small>
         )}
       </div>
-    </section>
+    </div>
   );
 }

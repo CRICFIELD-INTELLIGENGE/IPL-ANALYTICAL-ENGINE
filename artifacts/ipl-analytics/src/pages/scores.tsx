@@ -15,11 +15,12 @@ import { Link } from "wouter";
 import {
   Calendar, Trophy, Users, Activity, Filter, MapPin, Award,
   ArrowUpRight, Search, Sparkles, Shield, Star, Grid, List,
-  ShoppingBag, CheckCircle2, ChevronRight, Zap, Target
+  ShoppingBag, CheckCircle2, ChevronRight, ChevronLeft, Zap, Target, BarChart2
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FixtureTicketCard } from "@/components/fixture-ticket-card";
 import { CricFieldMascot } from "@/components/CricFieldMascot";
+import { RunFlowSankey, ShotFlowSankey } from "@/components/visualizations/sankey-diagram";
 
 /** Helper to generate standard URL slug for a team */
 const teamSlug = (team?: string | null): string =>
@@ -48,12 +49,28 @@ export default function ScoresPage() {
   const leaderColor = leaderTeam ? teamColor(leaderTeam) : "#0ea5e9";
   const playerImages = usePlayerImages();
 
-  // Scroll to top immediately when switching tabs or seasons
+  const seasonList = useMemo(() => seasons.data?.map(s => s.season) || [], [seasons.data]);
+  const currentSeasonIndex = seasonList.indexOf(selectedSeason);
+  const canPrevSeason = currentSeasonIndex > 0;
+  const canNextSeason = currentSeasonIndex !== -1 && currentSeasonIndex < seasonList.length - 1;
+
+  const prevSeason = () => {
+    if (canPrevSeason) {
+      filterStore.setFilter("season", seasonList[currentSeasonIndex - 1]);
+    }
+  };
+  const nextSeason = () => {
+    if (canNextSeason) {
+      filterStore.setFilter("season", seasonList[currentSeasonIndex + 1]);
+    }
+  };
+
+  // Scroll to top only when changing seasons, never on tab switches
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
-  }, [activeTab, selectedSeason]);
+  }, [selectedSeason]);
 
   return (
     <Layout>
@@ -82,18 +99,31 @@ export default function ScoresPage() {
                 <h1 className="text-xl md:text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
                   IPL {selectedSeason} MATCH CENTER &amp; SQUADS
                 </h1>
-                <select
-                  value={selectedSeason}
-                  onChange={(e) => filterStore.setFilter("season", e.target.value)}
-                  className="px-2.5 py-1 text-xs font-bold rounded-lg border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-800 dark:text-white cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary"
-                  aria-label="Select IPL Season"
-                >
-                  {seasons.data?.slice().reverse().map((s) => (
-                    <option key={s.season} value={s.season} className="bg-slate-900 text-white">
-                      IPL {s.season}
-                    </option>
-                  ))}
-                </select>
+                <div className="flex items-center gap-1 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-1 shadow-xs">
+                  <button
+                    type="button"
+                    onClick={prevSeason}
+                    disabled={!canPrevSeason}
+                    className="p-1 rounded-lg hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white disabled:opacity-20 cursor-pointer transition-colors"
+                    title="Previous Season"
+                    aria-label="Previous IPL Season"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <span className="px-2 py-0.5 text-xs font-mono font-black text-slate-900 dark:text-white">
+                    IPL {selectedSeason}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={nextSeason}
+                    disabled={!canNextSeason}
+                    className="p-1 rounded-lg hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white disabled:opacity-20 cursor-pointer transition-colors"
+                    title="Next Season"
+                    aria-label="Next IPL Season"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -165,11 +195,12 @@ export default function ScoresPage() {
         </div>
 
         {/* ─── TAB NAVIGATION ─── */}
-        <div className="flex items-center gap-2 bg-slate-100 dark:bg-white/[0.03] p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 w-fit">
+        <div className="flex items-center gap-2 bg-slate-100 dark:bg-white/[0.03] p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 w-fit flex-wrap">
           {[
             { id: "schedule", label: "Schedule & Results", icon: Calendar, count: seasonMatches.length },
             { id: "points", label: "Points Standings", icon: Trophy, count: standings.length },
             { id: "squad", label: "Squads & Player Cards", icon: Users },
+            { id: "tactics", label: "Tactical Execution & Length Matrix", icon: BarChart2 },
           ].map(tab => (
             <button 
               key={tab.id}
@@ -223,6 +254,51 @@ export default function ScoresPage() {
           {activeTab === "schedule" && <ScheduleView season={selectedSeason} matches={seasonMatches} />}
           {activeTab === "points" && <PointsView season={selectedSeason} standings={standings} />}
           {activeTab === "squad" && <SquadsListView season={selectedSeason} playerImages={playerImages.data} />}
+          {activeTab === "tactics" && (
+            <div className="space-y-6">
+              {/* Module 04: Delivery Length to Shot Type Analysis */}
+              <div className="p-6 rounded-[24px] bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-blue-500/25 shadow-xl">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-200 dark:border-white/10">
+                  <div>
+                    <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-600 dark:text-blue-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
+                      <BarChart2 className="w-3 h-3 text-blue-500" />
+                      MODULE 04 • LENGTH MATRIX
+                    </span>
+                    <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1.5 uppercase tracking-tight">
+                      Delivery Length to Shot Type Analysis (2008 – 2026)
+                    </h2>
+                    <p className="text-xs text-slate-500 dark:text-white/50 font-mono mt-0.5">
+                      Interactive Heatmap Flow &amp; Batter Stance Distribution
+                    </p>
+                  </div>
+                </div>
+                <div className="min-h-[400px] w-full overflow-hidden">
+                  <RunFlowSankey />
+                </div>
+              </div>
+
+              {/* Module 05: Delivery Type to Shot Execution Flow */}
+              <div className="p-6 rounded-[24px] bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-purple-500/25 shadow-xl">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-200 dark:border-white/10">
+                  <div>
+                    <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-600 dark:text-purple-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
+                      <Zap className="w-3 h-3 text-purple-500" />
+                      MODULE 05 • EXECUTION FLOW
+                    </span>
+                    <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1.5 uppercase tracking-tight">
+                      Delivery Type to Shot Execution Flow (2008 – 2026)
+                    </h2>
+                    <p className="text-xs text-slate-500 dark:text-white/50 font-mono mt-0.5">
+                      Multi-Level Hierarchy Analysis: Seam / Spin Release → Shot Execution Outcome
+                    </p>
+                  </div>
+                </div>
+                <div className="min-h-[400px] w-full overflow-hidden">
+                  <ShotFlowSankey />
+                </div>
+              </div>
+            </div>
+          )}
         </motion.div>
 
         {/* Native Ad Vessel - Match Day Telemetry Sponsor */}

@@ -199,7 +199,14 @@ export function PlayerAvatar({
         <img
           key={src}
           src={src}
-          style={{ objectFit: framing === "chest" ? "contain" : "cover", objectPosition: framing === "chest" ? "center bottom" : "center top", width: "100%", height: "100%" }}
+          style={{
+            objectFit: framing === "chest" ? "contain" : "cover",
+            objectPosition: framing === "chest" ? "center bottom" : "center top",
+            width: framing === "chest" ? "auto" : "100%",
+            height: framing === "chest" ? "auto" : "100%",
+            maxWidth: "100%",
+            maxHeight: "100%",
+          }}
           alt={labelName || "Player"}
           className={`${imgClassName} ${!disableHover && framing !== "chest" ? "player-dp-img" : ""} absolute inset-0 z-[1] transition-opacity duration-200 ${loaded ? "opacity-100" : "opacity-0"}`}
           onLoad={() => setLoaded(true)}

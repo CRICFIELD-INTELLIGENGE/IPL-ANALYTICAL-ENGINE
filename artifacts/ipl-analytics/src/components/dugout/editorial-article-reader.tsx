@@ -95,10 +95,6 @@ export function EditorialArticleReader({
                 <Calendar className="w-3.5 h-3.5" />
                 {article.publishedDate}
               </span>
-              <span className="flex items-center gap-1.5 text-xs font-mono text-slate-400">
-                <Clock className="w-3.5 h-3.5" />
-                {article.readTime}
-              </span>
             </div>
 
             {/* Headline & Subtitle */}
@@ -257,7 +253,7 @@ export function EditorialArticleReader({
                         {rel.title}
                       </h4>
                       <div className="mt-2 text-[10px] font-mono text-slate-400 flex items-center justify-between">
-                        <span>{rel.readTime}</span>
+                        <span>Read Analysis</span>
                         <ChevronRight className="w-3 h-3 text-cyan-400 transition-transform group-hover:translate-x-1" />
                       </div>
                     </div>

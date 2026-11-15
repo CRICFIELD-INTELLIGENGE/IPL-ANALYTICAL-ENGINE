@@ -4,7 +4,7 @@ import {RouteHistoryTracker} from '@/lib/route-history';
 import { CricFieldMascot } from "@/components/CricFieldMascot";
 import { UsageTracker } from "@/components/public-metrics";
 import TermsPage from "@/pages/terms";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { Switch, Route, Router as WouterRouter, Redirect, useSearch, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -232,7 +232,9 @@ function Router() {
         <Route path="/teams">
           <Redirect to="/dugout" />
         </Route>
-        <Route path="/visualizations" component={VisualizationsPage} />
+        <Route path="/visualizations">
+          <Redirect to="/pulse" />
+        </Route>
         {/* Shop & merchandise: a commercial zone, so editorial (Getty-sourced) photos never render here. */}
         
         <Route path="/account" component={AccountPage} />
@@ -258,9 +260,17 @@ function Router() {
  */
 function ScrollToTop() {
   const [location] = useLocation();
+  const prevPathRef = useRef<string>("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      const currentPath = (location || "").split("?")[0].replace(/\/+$/, "") || "/";
+      if (prevPathRef.current === currentPath) {
+        // Same route, only internal tab or query string changed — preserve user scroll!
+        return;
+      }
+      prevPathRef.current = currentPath;
+
       if (window.location.hash) {
         const id = window.location.hash.replace("#", "");
         const el = document.getElementById(id);

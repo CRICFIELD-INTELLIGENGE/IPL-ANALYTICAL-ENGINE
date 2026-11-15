@@ -5,6 +5,7 @@ import { getTeamAnalytics, getMatchupOpponents, getVenueAnalytics, NOT_SUPPORTED
 import { getMatchScorecard, getMatchCommentary } from "../services/match-card.js";
 import { getInsightFeed, resolveAndCount, getClickStats } from "../services/insights.js";
 import { getNews } from "../services/news.js";
+import { pressureReliability, pressureModelInfo, pressureCompetitions, TIERS, LENSES, type Tier, type Lens } from "../services/pressure/reliability.js";
 import { getContentHub, getBusinessArticles, type BusinessTag } from "../services/content-hub.js";
 import {
   aggregateQueryStats,
@@ -580,6 +581,41 @@ router.get("/stats/scenario", (req: Request, res: Response): void => {
   })
     .then(data => res.json(data))
     .catch(err  => internalError(res, err));
+});
+
+/** Pressure Reliability: leverage-defined pressure, context value, empirical-Bayes shrinkage. */
+router.get("/stats/pressure-reliability", (req: Request, res: Response): void => {
+  const str = (k: string) => (typeof req.query[k] === "string" ? (req.query[k] as string) : undefined);
+  const int = (k: string, def: number, max: number) => {
+    const v = str(k);
+    if (v === undefined) return def;
+    return /^\d{1,4}$/.test(v) && Number(v) <= max ? Number(v) : NaN;
+  };
+  const known = pressureCompetitions();
+  const comps = (str("comps") ?? "ipl").split(",").filter(Boolean);
+  const role = str("role") ?? "batting";
+  const tier = str("tier") ?? "high";
+  const lens = str("lens") ?? "all";
+  const sort = str("sort") ?? "adjusted";
+  const from = str("seasonFrom") ? int("seasonFrom", 0, 2100) : undefined;
+  const to = str("seasonTo") ? int("seasonTo", 0, 2100) : undefined;
+  const minBalls = int("minBalls", 120, 5000), minMatches = int("minMatches", 10, 500), limit = int("limit", 50, 200);
+  if (!comps.length || comps.some(c => !known.includes(c)) || !["batting", "bowling"].includes(role) ||
+      !(tier in TIERS) || !(LENSES as readonly string[]).includes(lens) || !["adjusted", "conservative"].includes(sort) ||
+      [from, to, minBalls, minMatches, limit].some(v => Number.isNaN(v)) || (from && to && from > to)) {
+    res.status(400).json({ error: "Invalid pressure-reliability query", competitions: known });
+    return;
+  }
+  try {
+    res.json(pressureReliability({
+      comps, from, to, role: role as "batting" | "bowling", tier: tier as Tier, lens: lens as Lens,
+      sort: sort as "adjusted" | "conservative", minBalls, minMatches, limit,
+    }));
+  } catch (err) { internalError(res, err); }
+});
+
+router.get("/stats/pressure-reliability/model", (_req: Request, res: Response): void => {
+  try { res.json(pressureModelInfo()); } catch (err) { internalError(res, err); }
 });
 
 router.get("/stats/player", (req: Request, res: Response): void => {

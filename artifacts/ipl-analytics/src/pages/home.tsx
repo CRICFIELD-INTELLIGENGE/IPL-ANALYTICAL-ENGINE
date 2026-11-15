@@ -34,12 +34,12 @@ const HEADLINES = [
 ];
 
 const EXPLORE_COVERAGE_CARDS = [
-  { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", href: "/squad", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-500 dark:text-amber-400", icon: Users },
-  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", href: "/auction", img: "/auction-art.jpg", color: "text-amber-500 dark:text-amber-400", icon: Gavel },
-  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", href: "/tactics", img: "/assets/tactical-board-hero.png", color: "text-emerald-500 dark:text-emerald-400", icon: Shield },
-  { id: "stars", title: "STAR WATCH", subtitle: "Rising names to watch", href: "/stars", img: "/milestone-photos/highest-total-2024-srh.jpg", color: "text-rose-500 dark:text-rose-400", icon: Star },
-  { id: "venues", title: "VENUES", subtitle: "Conditions and trends", href: "/venues", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-500 dark:text-sky-400", icon: MapPin },
-  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", href: "/storylines", img: "/milestone-photos/final-2023-csk.jpg", color: "text-orange-500 dark:text-orange-400", icon: Flame },
+  { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", href: "/retention-room", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-500 dark:text-amber-400", icon: Users },
+  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", href: "/pulse", img: "/auction-art.jpg", color: "text-amber-500 dark:text-amber-400", icon: Gavel },
+  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", href: "/scores", img: "/assets/tactical-board-hero.png", color: "text-emerald-500 dark:text-emerald-400", icon: Shield },
+  { id: "stars", title: "STAR WATCH", subtitle: "Rising names to watch", href: "/stats", img: "/milestone-photos/highest-total-2024-srh.jpg", color: "text-rose-500 dark:text-rose-400", icon: Star },
+  { id: "venues", title: "VENUES", subtitle: "Conditions and trends", href: "/venues/wankhede-stadium", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-500 dark:text-sky-400", icon: MapPin },
+  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", href: "/intelligence", img: "/milestone-photos/final-2023-csk.jpg", color: "text-orange-500 dark:text-orange-400", icon: Flame },
 ];
 
 interface FranchiseIntelData {

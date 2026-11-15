@@ -76,7 +76,6 @@ function FeaturedCard({ article, accent }: { article: ContentArticle; accent: st
       <p className="text-sm text-white/65 mt-2 leading-relaxed max-w-3xl">{article.summary}</p>
       <div className="mt-3 text-[11px] text-white/40 flex flex-wrap gap-x-3">
         <span>Day {article.day} of the series</span>
-        {article.readTime && <span>{article.readTime}</span>}
       </div>
     </Link>
   );
@@ -88,7 +87,7 @@ function ArticleCard({ article }: { article: ContentArticle }) {
       <div className="text-[9px] font-black uppercase tracking-widest text-white/40">{article.dimension}</div>
       <h4 className="font-display font-bold text-sm text-white mt-1.5 leading-snug group-hover:underline underline-offset-4">{article.title}</h4>
       <p className="text-xs text-white/55 mt-1.5 line-clamp-2">{article.subtitle}</p>
-      <div className="mt-2.5 text-[10px] text-white/40">Day {article.day}{article.readTime ? ` · ${article.readTime}` : ""}</div>
+      <div className="mt-2.5 text-[10px] text-white/40">Day {article.day}</div>
     </Link>
   );
 }

@@ -60,14 +60,10 @@ function CarouselStoryCard({
 
   return (
     <article className={`group flex h-full w-[290px] sm:w-[320px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl ${GLASS} transition-all duration-300 hover:border-white/20 hover:shadow-xl hover:shadow-black/40`}>
-      {/* Card Header: Category & Read Time */}
+      {/* Card Header: Category */}
       <div className="flex items-center justify-between px-3.5 pt-3 pb-2.5 text-[10px] font-mono uppercase tracking-wider">
-        <span className="font-bold truncate max-w-[190px]" style={{ color: accent }}>
+        <span className="font-bold truncate max-w-[240px]" style={{ color: accent }}>
           {art.parameter}
-        </span>
-        <span className="text-slate-500 font-medium shrink-0 flex items-center gap-1">
-          <Clock className="w-2.5 h-2.5" />
-          {art.readTime}
         </span>
       </div>
 
