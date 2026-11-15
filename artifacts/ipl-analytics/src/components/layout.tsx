@@ -9,7 +9,7 @@ import { Link, useLocation } from "wouter";
 import { MobileChromeContext } from "@/mobile/gate";
 import { 
   Home, BarChart2, Briefcase, TrendingUp, Cpu, FileText, Newspaper, Activity, Bell, Star,
-  Zap, Trophy, Sparkles, Gavel, Calendar, List, Radio, ShoppingBag, Shield, Compass, Gamepad2, UserRound
+  Zap, Trophy, Sparkles, Gavel, Calendar, List, Radio, ShoppingBag, Shield, Compass, Gamepad2, UserRound, Search
 } from "lucide-react";
 import { AssistantLauncher } from "@/components/assistant-launcher";
 import { motion, motionValue, useTransform, AnimatePresence } from "framer-motion";
@@ -34,11 +34,39 @@ const PRIMARY_NAV_LINKS = [
   { label: "Home", href: "/home" },
   { label: "Pulse", href: "/pulse" },
   { label: "Scores", href: "/scores" },
-  { label: "My Dugout", href: "/dugout" },
   { label: "Stats", href: "/stats" },
   { label: "Scout Lab", href: "/scout" },
+  { label: "Dugout", href: "/dugout" },
+  { label: "News", href: "/intelligence" },
   { label: "Games", href: "/arcade" },
 ];
+
+function UniversalSearchInput() {
+  const [query, setQuery] = useState("");
+  const [, setLocation] = useLocation();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+    setLocation(`/scout/results?q=${encodeURIComponent(query.trim())}`);
+  };
+
+  return (
+    <form onSubmit={handleSearch} className="hidden xl:flex items-center relative w-52 2xl:w-64">
+      <input
+        type="search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search players, teams, venues..."
+        aria-label="Universal Search"
+        className="w-full h-8 pl-3 pr-8 rounded-full bg-slate-100 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/40 focus:outline-none focus:border-cyan-500/50 transition-colors"
+      />
+      <button type="submit" aria-label="Submit search" className="absolute right-2.5 text-slate-400 hover:text-cyan-500 transition-colors">
+        <Search className="w-3.5 h-3.5" />
+      </button>
+    </form>
+  );
+}
 
 const SIDEBAR_ITEMS = [
   { icon: Home, label: "Home", href: "/home" },
@@ -192,6 +220,7 @@ export function Layout({
         </div>
 
         <div className="ml-auto flex items-center gap-2 sm:gap-2.5 shrink-0">
+          <UniversalSearchInput />
           <TeamSwitcher />
           <ThemeToggle />
           <Link

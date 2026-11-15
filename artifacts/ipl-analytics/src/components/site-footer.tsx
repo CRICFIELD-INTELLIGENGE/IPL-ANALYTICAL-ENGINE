@@ -38,15 +38,7 @@ export function SiteFooter() {
 
   return (
     <footer className="cricfield-footer cf-footer-utility">
-      <div className="cf-footer-container max-w-6xl mx-auto px-4 sm:px-6 pt-10">
-        {/* CricField Brand Hero Showcase Card */}
-        <div className="flex justify-center py-6 mb-8 bg-white dark:bg-[#070e17] rounded-3xl border border-slate-200 dark:border-white/10 p-6 sm:p-10 shadow-lg dark:shadow-2xl">
-          <CricFieldLogo
-            variant="footer"
-            accentColor={accentColor}
-          />
-        </div>
-
+      <div className="cf-footer-container max-w-6xl mx-auto px-4 sm:px-6 pt-6">
         {/* Links Grid: Information, Legal & Privacy, Follow CricField */}
         <div className="cf-footer-links">
           {sections.map((section) => (
