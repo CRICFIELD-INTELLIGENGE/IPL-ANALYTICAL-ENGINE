@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { TeamLogo } from "@/components/team-logo";
 import { Layout } from "@/components/layout";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gavel, Radio, Search, ChevronDown, Check, ExternalLink, Wallet, Users, History, Newspaper, Brain, Sparkles, TrendingUp, CheckCircle2, Activity } from "lucide-react";
+import { Gavel, Radio, Search, ChevronDown, ChevronLeft, ChevronRight, Check, ExternalLink, Wallet, Users, History, Newspaper, Brain, Sparkles, TrendingUp, CheckCircle2, Activity } from "lucide-react";
 import { Link } from "wouter";
 import { HUB_EVENTS } from "@/lib/ipl-2027";
 import { stamp, useIpl2027Desk } from "@/lib/ipl-2027-desk";
@@ -756,35 +756,192 @@ function TopHammerPurchases({ model }: { model: PulseModel }) {
   );
 }
 
+/* LIVE FAN PULSE POLL COMPONENT (FROM DISMANTLED FEED DESK) */
+const FAN_PULSE_QUESTIONS = [
+  {
+    id: "q1",
+    kicker: "Franchise Rebuilding",
+    question: "Which franchise faces the biggest squad overhaul heading into 2027?",
+    options: [
+      { id: "pbks", label: "PBKS (Complete Core Rebuild)", pct: 44 },
+      { id: "dc", label: "DC (Middle-Order Reset)", pct: 26 },
+      { id: "lsg", label: "LSG (Pace Department Overhaul)", pct: 18 },
+      { id: "gt", label: "GT (Power Hitting Rebalance)", pct: 12 },
+    ],
+  },
+  {
+    id: "q2",
+    kicker: "CSK Strategy",
+    question: "Will MS Dhoni play IPL 2027 under the uncapped player retention rule?",
+    options: [
+      { id: "uncapped", label: "Yes, retained in ₹4 Cr bracket", pct: 68 },
+      { id: "auction", label: "Yes, but enters auction paddle", pct: 18 },
+      { id: "mentor", label: "Transitions to dugout mentor role", pct: 14 },
+    ],
+  },
+  {
+    id: "q3",
+    kicker: "Marquee Retentions",
+    question: "Which superstar should command the highest retention fee for 2027?",
+    options: [
+      { id: "bumrah", label: "Jasprit Bumrah (MI)", pct: 41 },
+      { id: "kohli", label: "Virat Kohli (RCB)", pct: 34 },
+      { id: "klaasen", label: "Heinrich Klaasen (SRH)", pct: 15 },
+      { id: "rashid", label: "Rashid Khan (GT)", pct: 10 },
+    ],
+  },
+  {
+    id: "q4",
+    kicker: "Auction Economics",
+    question: "Should franchises exhaust all 6 retention slots or save purse?",
+    options: [
+      { id: "max", label: "Retain 5–6 (Lock core strength)", pct: 52 },
+      { id: "rtm", label: "Retain 3–4 + use RTM cards", pct: 36 },
+      { id: "reset", label: "Heavy purse reset (Retain ≤2)", pct: 12 },
+    ],
+  },
+  {
+    id: "q5",
+    kicker: "Breakout Talent",
+    question: "Who is the top young domestic talent to lock in before auction?",
+    options: [
+      { id: "mayank", label: "Mayank Yadav (LSG Pace)", pct: 45 },
+      { id: "abhishek", label: "Abhishek Sharma (SRH Firepower)", pct: 32 },
+      { id: "shashank", label: "Shashank Singh (PBKS Finisher)", pct: 14 },
+      { id: "harshit", label: "Harshit Rana (KKR Death Overs)", pct: 9 },
+    ],
+  },
+];
+
+function FanPulsePoll() {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [votes, setVotes] = useState<Record<string, string>>({});
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveIdx(prev => (prev + 1) % FAN_PULSE_QUESTIONS.length);
+    }, 7000);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const currentQ = FAN_PULSE_QUESTIONS[activeIdx];
+  const votedOption = votes[currentQ.id];
+
+  const handleVote = (optionId: string) => {
+    setVotes(prev => ({ ...prev, [currentQ.id]: optionId }));
+  };
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveIdx(prev => (prev === 0 ? FAN_PULSE_QUESTIONS.length - 1 : prev - 1));
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveIdx(prev => (prev + 1) % FAN_PULSE_QUESTIONS.length);
+  };
+
+  return (
+    <section
+      className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] p-4 sm:p-5 shadow-sm dark:shadow-xl transition-all flex flex-col justify-between h-full group"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      aria-label="Live Fan Pulse Poll"
+    >
+      <div>
+        <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-200 dark:border-white/10">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+            <h2 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">Fan Pulse</h2>
+            <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 font-bold">
+              {activeIdx + 1}/{FAN_PULSE_QUESTIONS.length}
+            </span>
+          </div>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={handlePrev}
+              aria-label="Previous question"
+              className="p-1 rounded-md text-slate-400 hover:text-slate-900 dark:text-white/50 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              <ChevronLeft className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={handleNext}
+              aria-label="Next question"
+              className="p-1 rounded-md text-slate-400 hover:text-slate-900 dark:text-white/50 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+
+        <div className="text-[9px] font-black uppercase tracking-wider text-orange-600 dark:text-orange-400 mb-1">
+          {currentQ.kicker}
+        </div>
+        <p className="text-xs sm:text-sm text-slate-900 dark:text-white/95 font-bold mb-3 leading-snug min-h-[34px]">
+          {currentQ.question}
+        </p>
+
+        <div className="space-y-2">
+          {currentQ.options.map(opt => {
+            const isSelected = votedOption === opt.id;
+            const displayPct = votedOption ? (isSelected ? opt.pct + 2 : opt.pct) : opt.pct;
+            return (
+              <button
+                key={opt.id}
+                onClick={() => handleVote(opt.id)}
+                className={`w-full text-left p-2.5 rounded-xl border transition-all relative overflow-hidden cursor-pointer ${
+                  isSelected
+                    ? "border-orange-500 bg-orange-500/15 text-slate-900 dark:text-white ring-1 ring-orange-500/40"
+                    : "border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-white/[0.02] hover:border-slate-300 dark:hover:border-white/25 text-slate-700 dark:text-white/80"
+                }`}
+              >
+                {votedOption && (
+                  <div
+                    className="absolute inset-y-0 left-0 bg-orange-500/10 dark:bg-white/[0.08] transition-all duration-500"
+                    style={{ width: `${displayPct}%` }}
+                  />
+                )}
+                <div className="relative z-10 flex items-center justify-between text-xs">
+                  <span className="font-semibold">{opt.label}</span>
+                  {votedOption && (
+                    <span className="font-mono text-[11px] font-black text-orange-600 dark:text-orange-400">
+                      {displayPct}%
+                    </span>
+                  )}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Footer controls: pagination dots & timer status */}
+      <div className="mt-3.5 flex items-center justify-between pt-2.5 border-t border-slate-100 dark:border-white/5 text-[10px]">
+        <div className="flex items-center gap-1.5">
+          {FAN_PULSE_QUESTIONS.map((q, idx) => (
+            <button
+              key={q.id}
+              onClick={() => setActiveIdx(idx)}
+              aria-label={`Jump to question ${idx + 1}`}
+              className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                activeIdx === idx ? "w-4 bg-orange-500" : "w-1.5 bg-slate-300 dark:bg-white/20 hover:bg-slate-400 dark:hover:bg-white/40"
+              }`}
+            />
+          ))}
+        </div>
+        <span className="text-slate-400 dark:text-white/40 text-[9px] font-mono">
+          {isPaused ? "Paused on hover" : "Live poll • Auto-cycle 7s"}
+        </span>
+      </div>
+    </section>
+  );
+}
+
 /* SECTION 3: OVERVIEW TAB CONTENT */
 function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse; phase: string; go: (t: PulseTab) => void }) {
-  const steps = [
-    {
-      n: "01",
-      t: "Retentions",
-      d: "Confirmed squads & retention decisions",
-      to: "Retentions" as PulseTab,
-      cardClasses: "bg-gradient-to-br from-emerald-50 via-teal-50/60 to-white dark:from-emerald-950/40 dark:via-teal-950/20 dark:to-[#0B1020] border-emerald-200/90 hover:border-emerald-400 dark:border-white/10 dark:hover:border-emerald-500/40",
-      numClass: "text-emerald-600 dark:text-emerald-400",
-    },
-    {
-      n: "02",
-      t: "Auction",
-      d: "Live bidding, hammer prices & transactions",
-      to: "Live Auction" as PulseTab,
-      cardClasses: "bg-gradient-to-br from-amber-50 via-orange-50/60 to-white dark:from-amber-950/40 dark:via-orange-950/20 dark:to-[#0B1020] border-amber-200/90 hover:border-amber-400 dark:border-white/10 dark:hover:border-amber-500/40",
-      numClass: "text-amber-600 dark:text-amber-400",
-    },
-    {
-      n: "03",
-      t: "Aftermath",
-      d: "Final squads, compositions & squad analysis",
-      to: "Results" as PulseTab,
-      cardClasses: "bg-gradient-to-br from-violet-50 via-fuchsia-50/60 to-white dark:from-violet-950/40 dark:via-fuchsia-950/20 dark:to-[#0B1020] border-violet-200/90 hover:border-violet-400 dark:border-white/10 dark:hover:border-violet-500/40",
-      numClass: "text-violet-600 dark:text-violet-400",
-    },
-  ];
-
   const totalRegistered = model.rows.length;
   const remPurseTotal = model.teams.reduce((acc, t) => acc + (t.remaining ?? 0), 0);
   const totalRetained = model.teams.reduce((acc, t) => acc + (t.retained ?? 0), 0);
@@ -792,30 +949,13 @@ function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse
 
   return (
     <div className="space-y-6">
-      {/* 1. SIDE-BY-SIDE: FRANCHISE PURSE BOARD (7-8 cols) + 3 ACTION CARDS (5-4 cols) */}
+      {/* 1. SIDE-BY-SIDE: FRANCHISE PURSE BOARD (7-8 cols) + FAN PULSE POLL (5-4 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-stretch">
         <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
           <FranchisePurseBoard model={model} />
         </div>
-        <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4">
-          {steps.map(step => (
-            <button
-              key={step.n}
-              onClick={() => go(step.to)}
-              className={`flex-1 rounded-[20px] p-5 text-left transition-all duration-200 border hover:shadow-md hover:scale-[1.01] active:scale-[0.99] flex items-center justify-between group shadow-sm min-h-[96px] cursor-pointer ${step.cardClasses}`}
-            >
-              <div className="space-y-1.5 min-w-0 pr-3">
-                <div className="flex items-center gap-2.5">
-                  <span className={`text-2xl font-black tracking-tight font-mono shrink-0 ${step.numClass}`}>{step.n}</span>
-                  <span className="font-black text-slate-900 dark:text-white text-base uppercase tracking-wider truncate">{step.t}</span>
-                </div>
-                <div className="text-xs text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white/90 transition-colors line-clamp-2">{step.d}</div>
-              </div>
-              <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-white/5 group-hover:bg-slate-200 dark:group-hover:bg-white/15 flex items-center justify-center shrink-0 border border-slate-200 dark:border-white/10 transition-colors ml-2">
-                <span className="text-slate-600 dark:text-white/60 group-hover:text-slate-900 dark:group-hover:text-white text-base font-bold transition-transform group-hover:translate-x-0.5">→</span>
-              </div>
-            </button>
-          ))}
+        <div className="lg:col-span-5 xl:col-span-4 flex flex-col">
+          <FanPulsePoll />
         </div>
       </div>
 

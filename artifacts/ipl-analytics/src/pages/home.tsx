@@ -275,10 +275,6 @@ export default function HomePage() {
                   Analyses, stories and tools to help you make sense of the road to the auction.
                 </p>
               </div>
-              <Link href="/intelligence" className="text-xs font-bold text-primary hover:underline flex items-center gap-1 self-start sm:self-auto">
-                <span>View Full Intel Desk</span>
-                <ArrowRight size={13} />
-              </Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-3.5">
               {EXPLORE_COVERAGE_CARDS.map((c) => (
