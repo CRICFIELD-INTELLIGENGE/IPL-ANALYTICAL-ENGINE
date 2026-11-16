@@ -26,12 +26,16 @@ export function getProjectRoot(): string {
 let db: DatabaseSync | null = null;
 let dbError: string | null = null;
 
-export function getGlobalDb(): DatabaseSync | null {
-  if (db || dbError) return db;
+export function getScoutDbPath(): string {
   const configuredPath = process.env.CRICFIELD_SCOUT_DB_PATH?.trim();
-  const fp = configuredPath
+  return configuredPath
     ? path.resolve(configuredPath)
     : path.join(getProjectRoot(), "lib", "cricket-data", "global", "warehouse", "global.db");
+}
+
+export function getGlobalDb(): DatabaseSync | null {
+  if (db || dbError) return db;
+  const fp = getScoutDbPath();
   if (!fs.existsSync(fp)) {
     dbError = `global.db not found at ${fp}`;
     return null;

@@ -8,10 +8,25 @@ import router from "./routes";
 import { logger } from "./lib/logger";
 import { rateLimit } from "./lib/rate-limit";
 import { securityHeaders, publicErrorHandler } from "./lib/http-security";
+import { analyticsGate } from "./lib/analytics-gate";
+import { getDbPath } from "@workspace/db";
+import { getScoutDbPath } from "./services/scout/db";
 
 const app: Express = express();
 app.disable("x-powered-by");
 app.use(securityHeaders);
+
+// Hybrid hosting (laptop behind Cloudflare Tunnel): with ANALYTICS_GATE_KEY set, only the keyed, read-only
+// analytics allowlist is answered. Unset (every existing deployment), behaviour is unchanged.
+const gateKey = process.env["ANALYTICS_GATE_KEY"];
+if (gateKey) {
+  if (process.env["CRICFIELD_DB_READONLY"] !== "1") throw new Error("ANALYTICS_GATE_KEY requires CRICFIELD_DB_READONLY=1");
+  const n = Number(process.env["ANALYTICS_MAX_IN_FLIGHT"]);
+  app.use(analyticsGate(gateKey, {
+    maxInFlight: Number.isInteger(n) && n > 0 ? n : 6,
+    dbPaths: [getDbPath(), getScoutDbPath()],
+  }));
+}
 
 // Client IPs for rate limiting. Behind a reverse proxy (production hosting) the
 // real client is in X-Forwarded-For; trusting it without a proxy would let

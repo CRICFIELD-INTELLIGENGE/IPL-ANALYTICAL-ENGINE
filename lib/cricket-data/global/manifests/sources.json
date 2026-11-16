@@ -1,6 +1,6 @@
 {
   "$comment": "Competition catalogue for the global data engine. URLs follow the Cricsheet downloads page (https://cricsheet.org/downloads/). Only entries with enabled=true are downloaded. catalogueMatches is the men's match count shown on that page when the entry was added, used by validation. Batch 2 is listed but disabled until approved.",
-  "catalogueCheckedAt": "2026-10-10",
+  "catalogueCheckedAt": "2026-11-17",
   "licence": "Cricsheet match data: Open Data Commons Attribution License (ODC-BY 1.0), https://opendatacommons.org/licenses/by/1-0/ — see https://cricsheet.org/licensing/",
   "competitions": [
     {
@@ -85,7 +85,7 @@
       "teamType": "club",
       "slug": "psl_json",
       "batch": 2,
-      "enabled": false,
+      "enabled": true,
       "catalogueMatches": 357,
       "note": "Awaiting Batch 2 approval."
     },
@@ -98,7 +98,7 @@
       "teamType": "club",
       "slug": "bpl_json",
       "batch": 2,
-      "enabled": false,
+      "enabled": true,
       "catalogueMatches": 469,
       "note": "Awaiting Batch 2 approval."
     },
@@ -111,7 +111,7 @@
       "teamType": "club",
       "slug": "lpl_json",
       "batch": 2,
-      "enabled": false,
+      "enabled": true,
       "catalogueMatches": 143,
       "note": "Awaiting Batch 2 approval."
     },
@@ -124,7 +124,7 @@
       "teamType": "club",
       "slug": "mlc_json",
       "batch": 2,
-      "enabled": false,
+      "enabled": true,
       "catalogueMatches": 109,
       "note": "Awaiting Batch 2 approval."
     },
@@ -139,7 +139,7 @@
       "batch": 2,
       "enabled": false,
       "catalogueMatches": 201,
-      "note": "Awaiting Batch 2 approval. 5-ball sets."
+      "note": "Excluded: 100-ball format, not standard T20; never aggregated with T20."
     },
     {
       "code": "blast",
@@ -150,7 +150,7 @@
       "teamType": "club",
       "slug": "ntb_json",
       "batch": 2,
-      "enabled": false,
+      "enabled": true,
       "catalogueMatches": 1570,
       "note": "Awaiting Batch 2 approval."
     },
@@ -163,7 +163,7 @@
       "teamType": "club",
       "slug": "ssm_male_json",
       "batch": 2,
-      "enabled": false,
+      "enabled": true,
       "catalogueMatches": 270,
       "note": "Awaiting Batch 2 approval."
     },
@@ -179,6 +179,18 @@
       "enabled": true,
       "catalogueMatches": 3592,
       "note": "Awaiting Batch 2 approval. Cricsheet withholds Afghanistan-related matches, so coverage is incomplete."
+    },
+    {
+      "code": "npl",
+      "name": "Nepal Premier League",
+      "region": "Nepal",
+      "format": "T20",
+      "gender": "male",
+      "teamType": "club",
+      "slug": "npl_json",
+      "batch": 2,
+      "enabled": true,
+      "catalogueMatches": 76
     }
   ],
   "registers": [

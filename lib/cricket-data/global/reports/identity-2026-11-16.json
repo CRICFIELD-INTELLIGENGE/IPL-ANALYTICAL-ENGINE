@@ -1,0 +1,4219 @@
+{
+  "generatedAt": "2026-11-16T20:14:45.251Z",
+  "register": {
+    "file": "raw/cricsheet/register/people/20261103T180907Z_3926fec5.csv",
+    "people": 18698,
+    "sourceIdsLoaded": 28603,
+    "variantNames": 7551,
+    "sourceCoverage": [
+      {
+        "source": "cricinfo",
+        "players": 7803
+      },
+      {
+        "source": "cricketarchive",
+        "players": 1741
+      },
+      {
+        "source": "pulse",
+        "players": 1548
+      },
+      {
+        "source": "bcci",
+        "players": 1310
+      },
+      {
+        "source": "nvplay",
+        "players": 757
+      },
+      {
+        "source": "bigbash",
+        "players": 179
+      },
+      {
+        "source": "cricingif",
+        "players": 129
+      },
+      {
+        "source": "cricketworld",
+        "players": 76
+      },
+      {
+        "source": "opta",
+        "players": 64
+      },
+      {
+        "source": "cricheroes",
+        "players": 61
+      },
+      {
+        "source": "cricbuzz",
+        "players": 50
+      },
+      {
+        "source": "crichq",
+        "players": 7
+      }
+    ]
+  },
+  "matchPlayers": {
+    "total": 7804,
+    "inRegister": 7804,
+    "notInRegister": []
+  },
+  "byCompetition": [
+    {
+      "competition": "ipl",
+      "players": 809,
+      "batted": 736,
+      "bowled": 576
+    },
+    {
+      "competition": "smat",
+      "players": 1489,
+      "batted": 1304,
+      "bowled": 974
+    },
+    {
+      "competition": "bbl",
+      "players": 531,
+      "batted": 502,
+      "bowled": 372
+    },
+    {
+      "competition": "sa20",
+      "players": 213,
+      "batted": 199,
+      "bowled": 144
+    },
+    {
+      "competition": "cpl",
+      "players": 450,
+      "batted": 420,
+      "bowled": 300
+    },
+    {
+      "competition": "ilt20",
+      "players": 275,
+      "batted": 250,
+      "bowled": 177
+    },
+    {
+      "competition": "t20i",
+      "players": 4814,
+      "batted": 4438,
+      "bowled": 3333
+    },
+    {
+      "competition": "psl",
+      "players": 460,
+      "batted": 421,
+      "bowled": 300
+    },
+    {
+      "competition": "bpl",
+      "players": 544,
+      "batted": 513,
+      "bowled": 382
+    },
+    {
+      "competition": "lpl",
+      "players": 264,
+      "batted": 248,
+      "bowled": 180
+    },
+    {
+      "competition": "mlc",
+      "players": 191,
+      "batted": 177,
+      "bowled": 132
+    },
+    {
+      "competition": "blast",
+      "players": 971,
+      "batted": 923,
+      "bowled": 678
+    },
+    {
+      "competition": "supersmash",
+      "players": 259,
+      "batted": 247,
+      "bowled": 176
+    },
+    {
+      "competition": "npl",
+      "players": 226,
+      "batted": 205,
+      "bowled": 159
+    }
+  ],
+  "multiLeague": {
+    "distribution": [
+      {
+        "leagues": 1,
+        "players": 6204
+      },
+      {
+        "leagues": 2,
+        "players": 802
+      },
+      {
+        "leagues": 3,
+        "players": 322
+      },
+      {
+        "leagues": 4,
+        "players": 158
+      },
+      {
+        "leagues": 5,
+        "players": 109
+      },
+      {
+        "leagues": 6,
+        "players": 71
+      },
+      {
+        "leagues": 7,
+        "players": 61
+      },
+      {
+        "leagues": 8,
+        "players": 31
+      },
+      {
+        "leagues": 9,
+        "players": 23
+      },
+      {
+        "leagues": 10,
+        "players": 18
+      },
+      {
+        "leagues": 11,
+        "players": 3
+      },
+      {
+        "leagues": 12,
+        "players": 2
+      }
+    ],
+    "pairs": [
+      {
+        "a": "ipl",
+        "b": "t20i",
+        "players": 457
+      },
+      {
+        "a": "blast",
+        "b": "t20i",
+        "players": 359
+      },
+      {
+        "a": "bpl",
+        "b": "t20i",
+        "players": 342
+      },
+      {
+        "a": "ipl",
+        "b": "smat",
+        "players": 320
+      },
+      {
+        "a": "psl",
+        "b": "t20i",
+        "players": 299
+      },
+      {
+        "a": "cpl",
+        "b": "t20i",
+        "players": 297
+      },
+      {
+        "a": "bbl",
+        "b": "t20i",
+        "players": 266
+      },
+      {
+        "a": "bbl",
+        "b": "blast",
+        "players": 230
+      },
+      {
+        "a": "ilt20",
+        "b": "t20i",
+        "players": 206
+      },
+      {
+        "a": "bbl",
+        "b": "ipl",
+        "players": 203
+      },
+      {
+        "a": "bpl",
+        "b": "psl",
+        "players": 198
+      },
+      {
+        "a": "blast",
+        "b": "ipl",
+        "players": 186
+      },
+      {
+        "a": "blast",
+        "b": "psl",
+        "players": 176
+      },
+      {
+        "a": "lpl",
+        "b": "t20i",
+        "players": 171
+      },
+      {
+        "a": "cpl",
+        "b": "psl",
+        "players": 170
+      },
+      {
+        "a": "bpl",
+        "b": "cpl",
+        "players": 169
+      },
+      {
+        "a": "cpl",
+        "b": "ipl",
+        "players": 168
+      },
+      {
+        "a": "bbl",
+        "b": "psl",
+        "players": 160
+      },
+      {
+        "a": "blast",
+        "b": "bpl",
+        "players": 154
+      },
+      {
+        "a": "ipl",
+        "b": "psl",
+        "players": 146
+      },
+      {
+        "a": "sa20",
+        "b": "t20i",
+        "players": 144
+      },
+      {
+        "a": "blast",
+        "b": "cpl",
+        "players": 142
+      },
+      {
+        "a": "mlc",
+        "b": "t20i",
+        "players": 142
+      },
+      {
+        "a": "blast",
+        "b": "ilt20",
+        "players": 135
+      },
+      {
+        "a": "bpl",
+        "b": "ipl",
+        "players": 133
+      },
+      {
+        "a": "smat",
+        "b": "t20i",
+        "players": 128
+      },
+      {
+        "a": "bbl",
+        "b": "cpl",
+        "players": 128
+      },
+      {
+        "a": "bbl",
+        "b": "bpl",
+        "players": 127
+      },
+      {
+        "a": "ilt20",
+        "b": "psl",
+        "players": 124
+      },
+      {
+        "a": "npl",
+        "b": "t20i",
+        "players": 120
+      },
+      {
+        "a": "cpl",
+        "b": "ilt20",
+        "players": 119
+      },
+      {
+        "a": "ilt20",
+        "b": "ipl",
+        "players": 115
+      },
+      {
+        "a": "bpl",
+        "b": "lpl",
+        "players": 115
+      },
+      {
+        "a": "lpl",
+        "b": "psl",
+        "players": 108
+      },
+      {
+        "a": "bpl",
+        "b": "ilt20",
+        "players": 107
+      },
+      {
+        "a": "blast",
+        "b": "sa20",
+        "players": 106
+      },
+      {
+        "a": "ipl",
+        "b": "sa20",
+        "players": 103
+      },
+      {
+        "a": "supersmash",
+        "b": "t20i",
+        "players": 102
+      },
+      {
+        "a": "bbl",
+        "b": "ilt20",
+        "players": 97
+      },
+      {
+        "a": "ilt20",
+        "b": "lpl",
+        "players": 93
+      },
+      {
+        "a": "cpl",
+        "b": "lpl",
+        "players": 91
+      },
+      {
+        "a": "ipl",
+        "b": "mlc",
+        "players": 89
+      },
+      {
+        "a": "ilt20",
+        "b": "sa20",
+        "players": 84
+      },
+      {
+        "a": "psl",
+        "b": "sa20",
+        "players": 80
+      },
+      {
+        "a": "cpl",
+        "b": "mlc",
+        "players": 79
+      },
+      {
+        "a": "mlc",
+        "b": "psl",
+        "players": 74
+      },
+      {
+        "a": "ipl",
+        "b": "lpl",
+        "players": 74
+      },
+      {
+        "a": "cpl",
+        "b": "sa20",
+        "players": 73
+      },
+      {
+        "a": "blast",
+        "b": "mlc",
+        "players": 70
+      },
+      {
+        "a": "bbl",
+        "b": "mlc",
+        "players": 69
+      },
+      {
+        "a": "blast",
+        "b": "lpl",
+        "players": 68
+      },
+      {
+        "a": "bbl",
+        "b": "sa20",
+        "players": 62
+      },
+      {
+        "a": "bpl",
+        "b": "sa20",
+        "players": 62
+      },
+      {
+        "a": "blast",
+        "b": "supersmash",
+        "players": 62
+      },
+      {
+        "a": "ilt20",
+        "b": "mlc",
+        "players": 59
+      },
+      {
+        "a": "mlc",
+        "b": "sa20",
+        "players": 59
+      },
+      {
+        "a": "bbl",
+        "b": "lpl",
+        "players": 53
+      },
+      {
+        "a": "bpl",
+        "b": "mlc",
+        "players": 48
+      },
+      {
+        "a": "lpl",
+        "b": "sa20",
+        "players": 48
+      },
+      {
+        "a": "bpl",
+        "b": "npl",
+        "players": 45
+      },
+      {
+        "a": "ilt20",
+        "b": "npl",
+        "players": 40
+      },
+      {
+        "a": "ipl",
+        "b": "supersmash",
+        "players": 37
+      },
+      {
+        "a": "blast",
+        "b": "npl",
+        "players": 36
+      },
+      {
+        "a": "cpl",
+        "b": "npl",
+        "players": 34
+      },
+      {
+        "a": "npl",
+        "b": "psl",
+        "players": 31
+      },
+      {
+        "a": "lpl",
+        "b": "mlc",
+        "players": 31
+      },
+      {
+        "a": "bbl",
+        "b": "supersmash",
+        "players": 29
+      },
+      {
+        "a": "ipl",
+        "b": "npl",
+        "players": 28
+      },
+      {
+        "a": "psl",
+        "b": "supersmash",
+        "players": 28
+      },
+      {
+        "a": "cpl",
+        "b": "supersmash",
+        "players": 27
+      },
+      {
+        "a": "lpl",
+        "b": "npl",
+        "players": 26
+      },
+      {
+        "a": "mlc",
+        "b": "npl",
+        "players": 25
+      },
+      {
+        "a": "mlc",
+        "b": "supersmash",
+        "players": 21
+      },
+      {
+        "a": "bbl",
+        "b": "npl",
+        "players": 20
+      },
+      {
+        "a": "ilt20",
+        "b": "supersmash",
+        "players": 20
+      },
+      {
+        "a": "bpl",
+        "b": "supersmash",
+        "players": 15
+      },
+      {
+        "a": "mlc",
+        "b": "smat",
+        "players": 15
+      },
+      {
+        "a": "npl",
+        "b": "sa20",
+        "players": 14
+      },
+      {
+        "a": "npl",
+        "b": "smat",
+        "players": 11
+      },
+      {
+        "a": "sa20",
+        "b": "supersmash",
+        "players": 10
+      },
+      {
+        "a": "lpl",
+        "b": "supersmash",
+        "players": 10
+      },
+      {
+        "a": "ilt20",
+        "b": "smat",
+        "players": 9
+      },
+      {
+        "a": "cpl",
+        "b": "smat",
+        "players": 6
+      },
+      {
+        "a": "lpl",
+        "b": "smat",
+        "players": 5
+      },
+      {
+        "a": "npl",
+        "b": "supersmash",
+        "players": 4
+      },
+      {
+        "a": "bbl",
+        "b": "smat",
+        "players": 3
+      },
+      {
+        "a": "bpl",
+        "b": "smat",
+        "players": 3
+      },
+      {
+        "a": "sa20",
+        "b": "smat",
+        "players": 2
+      },
+      {
+        "a": "blast",
+        "b": "smat",
+        "players": 1
+      }
+    ],
+    "iplPlayersElsewhere": [
+      {
+        "competition": "smat",
+        "players": 320
+      },
+      {
+        "competition": "bbl",
+        "players": 203
+      },
+      {
+        "competition": "sa20",
+        "players": 103
+      },
+      {
+        "competition": "cpl",
+        "players": 168
+      },
+      {
+        "competition": "ilt20",
+        "players": 115
+      },
+      {
+        "competition": "t20i",
+        "players": 457
+      },
+      {
+        "competition": "psl",
+        "players": 146
+      },
+      {
+        "competition": "bpl",
+        "players": 133
+      },
+      {
+        "competition": "lpl",
+        "players": 74
+      },
+      {
+        "competition": "mlc",
+        "players": 89
+      },
+      {
+        "competition": "blast",
+        "players": 186
+      },
+      {
+        "competition": "supersmash",
+        "players": 37
+      },
+      {
+        "competition": "npl",
+        "players": 28
+      }
+    ],
+    "mostTravelled": [
+      {
+        "cricsheet_id": "bbd41817",
+        "name": "AD Russell",
+        "leagues": 12,
+        "detail": "ipl 139, bbl 26, sa20 4, cpl 124, ilt20 38, t20i 84, psl 19, bpl 56, lpl 8, mlc 31, blast 3, npl 4"
+      },
+      {
+        "cricsheet_id": "9219eff0",
+        "name": "JDS Neesham",
+        "leagues": 12,
+        "detail": "ipl 14, bbl 5, sa20 25, cpl 20, ilt20 6, t20i 102, psl 9, bpl 14, lpl 9, blast 78, supersmash 31, npl 16"
+      },
+      {
+        "cricsheet_id": "d1c36f5c",
+        "name": "JJ Roy",
+        "leagues": 11,
+        "detail": "ipl 21, bbl 24, sa20 22, cpl 8, ilt20 19, t20i 63, psl 43, bpl 16, mlc 9, blast 110, npl 3"
+      },
+      {
+        "cricsheet_id": "26d041c4",
+        "name": "Sikandar Raza",
+        "leagues": 11,
+        "detail": "ipl 9, sa20 10, cpl 17, ilt20 43, t20i 125, psl 44, bpl 26, lpl 9, mlc 9, blast 17, npl 1"
+      },
+      {
+        "cricsheet_id": "d014d5ac",
+        "name": "SE Rutherford",
+        "leagues": 11,
+        "detail": "ipl 31, bbl 6, sa20 10, cpl 79, ilt20 39, t20i 58, psl 30, bpl 6, lpl 5, mlc 13, npl 4"
+      },
+      {
+        "cricsheet_id": "a757b0d8",
+        "name": "KA Pollard",
+        "leagues": 10,
+        "detail": "ipl 189, bbl 21, sa20 12, cpl 141, ilt20 35, t20i 98, psl 52, bpl 30, mlc 35, blast 6"
+      },
+      {
+        "cricsheet_id": "9d430b40",
+        "name": "SP Narine",
+        "leagues": 10,
+        "detail": "ipl 201, bbl 12, sa20 4, cpl 134, ilt20 41, t20i 48, psl 17, bpl 48, mlc 28, blast 29"
+      },
+      {
+        "cricsheet_id": "3241e3fd",
+        "name": "N Pooran",
+        "leagues": 10,
+        "detail": "ipl 104, bbl 6, sa20 13, cpl 132, ilt20 40, t20i 105, psl 1, bpl 32, mlc 39, blast 3"
+      },
+      {
+        "cricsheet_id": "92aeac25",
+        "name": "AD Hales",
+        "leagues": 10,
+        "detail": "ipl 6, bbl 76, cpl 41, ilt20 47, t20i 73, psl 46, bpl 16, lpl 10, mlc 7, blast 122"
+      },
+      {
+        "cricsheet_id": "d67d5f00",
+        "name": "DA Miller",
+        "leagues": 10,
+        "detail": "ipl 152, bbl 14, sa20 41, cpl 33, t20i 137, psl 11, bpl 5, lpl 8, mlc 13, blast 6"
+      },
+      {
+        "cricsheet_id": "7dc35884",
+        "name": "Shakib Al Hasan",
+        "leagues": 10,
+        "detail": "ipl 71, bbl 6, cpl 44, ilt20 8, t20i 113, psl 16, bpl 104, lpl 19, mlc 8, npl 3"
+      },
+      {
+        "cricsheet_id": "5f547c8b",
+        "name": "Rashid Khan",
+        "leagues": 10,
+        "detail": "ipl 153, bbl 69, sa20 29, cpl 27, ilt20 7, t20i 1, psl 28, bpl 14, mlc 13, blast 28"
+      },
+      {
+        "cricsheet_id": "7ca5e05d",
+        "name": "RS Bopara",
+        "leagues": 10,
+        "detail": "ipl 24, bbl 5, cpl 5, ilt20 7, t20i 38, psl 37, bpl 64, lpl 15, blast 156, npl 17"
+      },
+      {
+        "cricsheet_id": "bb351c23",
+        "name": "MM Ali",
+        "leagues": 10,
+        "detail": "ipl 73, sa20 17, cpl 31, ilt20 17, t20i 90, psl 19, bpl 29, lpl 7, blast 71, npl 4"
+      },
+      {
+        "cricsheet_id": "3355b542",
+        "name": "F du Plessis",
+        "leagues": 10,
+        "detail": "ipl 154, bbl 8, sa20 39, cpl 42, t20i 49, psl 6, bpl 11, mlc 34, blast 2, npl 4"
+      },
+      {
+        "cricsheet_id": "0f721006",
+        "name": "JO Holder",
+        "leagues": 10,
+        "detail": "ipl 57, bbl 3, sa20 7, cpl 121, ilt20 29, t20i 95, psl 8, bpl 4, mlc 20, supersmash 1"
+      },
+      {
+        "cricsheet_id": "cad00a4d",
+        "name": "RR Rossouw",
+        "leagues": 10,
+        "detail": "ipl 22, bbl 15, sa20 31, cpl 13, t20i 29, psl 104, bpl 36, lpl 11, mlc 15, blast 50"
+      },
+      {
+        "cricsheet_id": "f1f99156",
+        "name": "TH David",
+        "leagues": 10,
+        "detail": "ipl 66, bbl 80, sa20 3, cpl 34, ilt20 15, t20i 73, psl 22, bpl 1, mlc 11, blast 19"
+      },
+      {
+        "cricsheet_id": "2be41edb",
+        "name": "MJ Guptill",
+        "leagues": 10,
+        "detail": "ipl 13, bbl 12, cpl 55, ilt20 7, t20i 121, psl 18, mlc 2, blast 21, supersmash 41, npl 12"
+      },
+      {
+        "cricsheet_id": "4663bd23",
+        "name": "TL Seifert",
+        "leagues": 10,
+        "detail": "ipl 6, bbl 20, cpl 59, ilt20 8, t20i 93, psl 17, lpl 17, mlc 17, blast 4, supersmash 58"
+      },
+      {
+        "cricsheet_id": "aa8d28ae",
+        "name": "D Wiese",
+        "leagues": 10,
+        "detail": "ipl 18, sa20 14, cpl 46, ilt20 11, t20i 51, psl 54, bpl 14, lpl 6, mlc 5, blast 78"
+      },
+      {
+        "cricsheet_id": "c0c411cb",
+        "name": "Naveen-ul-Haq",
+        "leagues": 10,
+        "detail": "ipl 18, bbl 2, sa20 16, cpl 29, ilt20 11, psl 10, bpl 10, lpl 18, mlc 9, blast 33"
+      },
+      {
+        "cricsheet_id": "11614d87",
+        "name": "D Pretorius",
+        "leagues": 10,
+        "detail": "ipl 7, sa20 24, cpl 55, ilt20 7, t20i 30, psl 2, bpl 5, lpl 10, mlc 3, blast 11"
+      },
+      {
+        "cricsheet_id": "87e562a9",
+        "name": "DJ Bravo",
+        "leagues": 9,
+        "detail": "ipl 160, bbl 47, cpl 105, ilt20 18, t20i 90, psl 14, bpl 37, mlc 9, blast 21"
+      },
+      {
+        "cricsheet_id": "af2c687b",
+        "name": "C Munro",
+        "leagues": 9,
+        "detail": "ipl 13, bbl 59, cpl 102, ilt20 22, t20i 65, psl 54, mlc 11, blast 57, supersmash 22"
+      },
+      {
+        "cricsheet_id": "ffe699c0",
+        "name": "CJ Jordan",
+        "leagues": 9,
+        "detail": "ipl 34, bbl 65, cpl 10, ilt20 24, t20i 94, psl 37, bpl 2, blast 116, supersmash 8"
+      },
+      {
+        "cricsheet_id": "dcce6f09",
+        "name": "DA Warner",
+        "leagues": 9,
+        "detail": "ipl 184, bbl 31, cpl 9, ilt20 10, t20i 108, psl 18, bpl 7, mlc 6, npl 1"
+      },
+      {
+        "cricsheet_id": "9cb8d7a6",
+        "name": "Imad Wasim",
+        "leagues": 9,
+        "detail": "bbl 17, cpl 72, ilt20 10, t20i 71, psl 110, bpl 23, lpl 9, mlc 12, blast 28"
+      },
+      {
+        "cricsheet_id": "acee4cc4",
+        "name": "Imran Tahir",
+        "leagues": 9,
+        "detail": "ipl 59, sa20 22, cpl 102, ilt20 7, t20i 37, psl 43, bpl 3, lpl 10, blast 40"
+      },
+      {
+        "cricsheet_id": "9de62878",
+        "name": "Shadab Khan",
+        "leagues": 9,
+        "detail": "bbl 17, cpl 19, ilt20 3, t20i 120, psl 104, bpl 10, lpl 9, mlc 5, blast 30"
+      },
+      {
+        "cricsheet_id": "45eda7c8",
+        "name": "CA Lynn",
+        "leagues": 9,
+        "detail": "ipl 42, bbl 134, cpl 37, ilt20 18, t20i 18, psl 12, lpl 4, blast 41, npl 6"
+      },
+      {
+        "cricsheet_id": "3d284ca3",
+        "name": "PD Salt",
+        "leagues": 9,
+        "detail": "ipl 40, bbl 30, sa20 20, cpl 1, ilt20 15, t20i 65, psl 19, lpl 10, blast 97"
+      },
+      {
+        "cricsheet_id": "ad9c32a2",
+        "name": "DJ Malan",
+        "leagues": 9,
+        "detail": "ipl 1, bbl 10, sa20 10, ilt20 6, t20i 61, psl 24, bpl 46, blast 123, npl 9"
+      },
+      {
+        "cricsheet_id": "18fac429",
+        "name": "SR Patel",
+        "leagues": 9,
+        "detail": "bbl 8, cpl 10, ilt20 2, t20i 17, psl 38, bpl 30, lpl 19, blast 159, supersmash 7"
+      },
+      {
+        "cricsheet_id": "c995d726",
+        "name": "CA Ingram",
+        "leagues": 9,
+        "detail": "ipl 15, bbl 35, sa20 21, cpl 12, ilt20 4, t20i 9, psl 36, bpl 9, blast 126"
+      },
+      {
+        "cricsheet_id": "e342e5fb",
+        "name": "CR Brathwaite",
+        "leagues": 9,
+        "detail": "ipl 16, bbl 23, cpl 78, ilt20 9, t20i 37, psl 18, bpl 17, lpl 8, blast 31"
+      },
+      {
+        "cricsheet_id": "245c97cb",
+        "name": "TS Mills",
+        "leagues": 9,
+        "detail": "ipl 10, bbl 19, sa20 4, cpl 2, ilt20 9, t20i 16, psl 29, bpl 3, blast 125"
+      },
+      {
+        "cricsheet_id": "73c18486",
+        "name": "KR Mayers",
+        "leagues": 9,
+        "detail": "ipl 13, sa20 8, cpl 96, ilt20 15, t20i 41, psl 3, bpl 21, mlc 10, blast 2"
+      },
+      {
+        "cricsheet_id": "7d92277a",
+        "name": "Mujeeb Ur Rahman",
+        "leagues": 9,
+        "detail": "ipl 20, bbl 52, sa20 19, cpl 26, ilt20 10, psl 11, bpl 22, lpl 20, blast 28"
+      },
+      {
+        "cricsheet_id": "3a60e0b5",
+        "name": "WD Parnell",
+        "leagues": 9,
+        "detail": "ipl 33, sa20 17, cpl 15, t20i 56, psl 4, bpl 5, mlc 6, blast 49, npl 3"
+      }
+    ]
+  },
+  "collisions": {
+    "writtenNameSharedByDifferentPeople": [
+      {
+        "name": "A Awasthi",
+        "people": [
+          {
+            "cricsheet_id": "fa62a463",
+            "unique_name": "A Awasthi",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "93544e69",
+            "unique_name": "Abhishek Awasthi",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "A Mishra",
+        "people": [
+          {
+            "cricsheet_id": "6b19d823",
+            "unique_name": "A Mishra",
+            "competitions": "ipl, smat, t20i"
+          },
+          {
+            "cricsheet_id": "54690147",
+            "unique_name": "Ayushmaan Mishra",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "A Shukla",
+        "people": [
+          {
+            "cricsheet_id": "c594137f",
+            "unique_name": "Arpit Shukla",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "a1e80d06",
+            "unique_name": "A Shukla",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "A Tripathi",
+        "people": [
+          {
+            "cricsheet_id": "cbba9e4e",
+            "unique_name": "Aakash Tripathi",
+            "competitions": "npl"
+          },
+          {
+            "cricsheet_id": "07160156",
+            "unique_name": "A Tripathi",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Abdul Samad",
+        "people": [
+          {
+            "cricsheet_id": "8e514b4c",
+            "unique_name": "Abdul Samad",
+            "competitions": "ipl, smat"
+          },
+          {
+            "cricsheet_id": "21dbacff",
+            "unique_name": "Abdul Samad (2)",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "8e554b6b",
+            "unique_name": "Abdul Samad (3)",
+            "competitions": "t20i, psl"
+          }
+        ]
+      },
+      {
+        "name": "Abdul Shakoor",
+        "people": [
+          {
+            "cricsheet_id": "7b9b9aef",
+            "unique_name": "Abdul Shakoor",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "d52b13a6",
+            "unique_name": "Abdul Shakoor (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Abdullah Al Mamun",
+        "people": [
+          {
+            "cricsheet_id": "26ccdb37",
+            "unique_name": "Abdullah Al Mamun",
+            "competitions": "bpl"
+          },
+          {
+            "cricsheet_id": "ea36b0ee",
+            "unique_name": "Abdullah Al Mamun (2)",
+            "competitions": "bpl"
+          }
+        ]
+      },
+      {
+        "name": "Adil Butt",
+        "people": [
+          {
+            "cricsheet_id": "598f5484",
+            "unique_name": "Adil Butt",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "fde53ec1",
+            "unique_name": "Adil Butt (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Aftab Ahmed",
+        "people": [
+          {
+            "cricsheet_id": "53bc7b84",
+            "unique_name": "Aftab Ahmed",
+            "competitions": "t20i, bpl"
+          },
+          {
+            "cricsheet_id": "94ed8d37",
+            "unique_name": "Aftab Ahmed (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Ahmed Hassan",
+        "people": [
+          {
+            "cricsheet_id": "7c885103",
+            "unique_name": "Ahmed Hassan",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "c439461b",
+            "unique_name": "Ahmed Hassan (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Ajay Kumar",
+        "people": [
+          {
+            "cricsheet_id": "ea02d56d",
+            "unique_name": "Ajay Kumar",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "c80b4969",
+            "unique_name": "Ajay Kumar (2)",
+            "competitions": "ilt20, t20i"
+          }
+        ]
+      },
+      {
+        "name": "Ali Raza",
+        "people": [
+          {
+            "cricsheet_id": "db51b9a0",
+            "unique_name": "Ali Raza",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "53834b36",
+            "unique_name": "Ali Raza (2)",
+            "competitions": "psl"
+          }
+        ]
+      },
+      {
+        "name": "Amir Hamza",
+        "people": [
+          {
+            "cricsheet_id": "dca1ac2e",
+            "unique_name": "Amir Hamza",
+            "competitions": "bpl"
+          },
+          {
+            "cricsheet_id": "c78316ab",
+            "unique_name": "Amir Hamza (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Amit Mishra",
+        "people": [
+          {
+            "cricsheet_id": "40792cff",
+            "unique_name": "Amit Mishra (2)",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "1d8388eb",
+            "unique_name": "Amit Mishra",
+            "competitions": "smat"
+          }
+        ]
+      },
+      {
+        "name": "Anamul Haque",
+        "people": [
+          {
+            "cricsheet_id": "72b245dd",
+            "unique_name": "Anamul Haque",
+            "competitions": "t20i, psl, bpl"
+          },
+          {
+            "cricsheet_id": "9fd99cbf",
+            "unique_name": "Anamul Haque (2)",
+            "competitions": "bpl"
+          }
+        ]
+      },
+      {
+        "name": "D Jansen",
+        "people": [
+          {
+            "cricsheet_id": "8dc152d1",
+            "unique_name": "Duan Jansen",
+            "competitions": "ipl, sa20, cpl, t20i, blast"
+          },
+          {
+            "cricsheet_id": "c90346a0",
+            "unique_name": "D Jansen",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "D Johnson",
+        "people": [
+          {
+            "cricsheet_id": "945981e5",
+            "unique_name": "Diyon Johnson",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "d406e303",
+            "unique_name": "D Johnson",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "D Rawat",
+        "people": [
+          {
+            "cricsheet_id": "c6ff5ac2",
+            "unique_name": "Dipendra Rawat",
+            "competitions": "npl"
+          },
+          {
+            "cricsheet_id": "cda3625c",
+            "unique_name": "D Rawat",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Farhan Ahmed",
+        "people": [
+          {
+            "cricsheet_id": "927694f7",
+            "unique_name": "Farhan Ahmed",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "26f1d66c",
+            "unique_name": "Farhan Ahmed (2)",
+            "competitions": "blast"
+          }
+        ]
+      },
+      {
+        "name": "GS Sandhu",
+        "people": [
+          {
+            "cricsheet_id": "1558d83b",
+            "unique_name": "GS Sandhu",
+            "competitions": "ipl, bbl"
+          },
+          {
+            "cricsheet_id": "137b58de",
+            "unique_name": "GS Sandhu (2)",
+            "competitions": "blast"
+          }
+        ]
+      },
+      {
+        "name": "Gagandeep Singh",
+        "people": [
+          {
+            "cricsheet_id": "890de8cb",
+            "unique_name": "Gagandeep Singh",
+            "competitions": "ipl"
+          },
+          {
+            "cricsheet_id": "239197f1",
+            "unique_name": "Gagandeep Singh (4)",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "87046e99",
+            "unique_name": "Gagandeep Singh (2)",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "4a370769",
+            "unique_name": "Gagandeep Singh (3)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Gurpreet Singh",
+        "people": [
+          {
+            "cricsheet_id": "1a5d690f",
+            "unique_name": "Gurpreet Singh",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "f43dcdc1",
+            "unique_name": "Gurpreet Singh (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Haider Ali",
+        "people": [
+          {
+            "cricsheet_id": "c13e34f4",
+            "unique_name": "Haider Ali",
+            "competitions": "cpl, t20i, psl, bpl, blast"
+          },
+          {
+            "cricsheet_id": "dd572696",
+            "unique_name": "Haider Ali (3)",
+            "competitions": "ilt20, t20i"
+          }
+        ]
+      },
+      {
+        "name": "Hardeep Singh",
+        "people": [
+          {
+            "cricsheet_id": "2123d0af",
+            "unique_name": "Hardeep Singh",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "d617f2bf",
+            "unique_name": "Hardeep Singh (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Harmeet Singh",
+        "people": [
+          {
+            "cricsheet_id": "2a72fd4f",
+            "unique_name": "Harmeet Singh",
+            "competitions": "ipl, smat"
+          },
+          {
+            "cricsheet_id": "0bf15e52",
+            "unique_name": "Harmeet Singh (2)",
+            "competitions": "ipl, smat, ilt20, t20i, mlc, npl"
+          }
+        ]
+      },
+      {
+        "name": "Haroon Arshad",
+        "people": [
+          {
+            "cricsheet_id": "be0f9ce9",
+            "unique_name": "Haroon Arshad",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "7992",
+            "unique_name": null,
+            "competitions": ""
+          }
+        ]
+      },
+      {
+        "name": "Hassan Khan",
+        "people": [
+          {
+            "cricsheet_id": "486065b3",
+            "unique_name": "Hassan Khan",
+            "competitions": "bbl, cpl, psl, mlc"
+          },
+          {
+            "cricsheet_id": "8f0c3818",
+            "unique_name": "Mohammad Hassan Khan",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Het Patel",
+        "people": [
+          {
+            "cricsheet_id": "f543b251",
+            "unique_name": "Het Patel",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "000803b1",
+            "unique_name": "Het Patel (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Ibrar Ahmad",
+        "people": [
+          {
+            "cricsheet_id": "aa47439d",
+            "unique_name": "Ibrar Ahmad",
+            "competitions": "ilt20, t20i"
+          },
+          {
+            "cricsheet_id": "9dc8bc5c",
+            "unique_name": "Ibrar Ahmad (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Imran Haider",
+        "people": [
+          {
+            "cricsheet_id": "0226b73a",
+            "unique_name": "Imran Haider",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "1b8242f2",
+            "unique_name": "Imran Haider (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Imran Khan",
+        "people": [
+          {
+            "cricsheet_id": "195fb6db",
+            "unique_name": "Imran Khan (1)",
+            "competitions": "t20i, psl, bpl"
+          },
+          {
+            "cricsheet_id": "2b0f2af3",
+            "unique_name": "Imran Khan (2)",
+            "competitions": "psl"
+          },
+          {
+            "cricsheet_id": "a0a32dd1",
+            "unique_name": "Imran Khan (4)",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "da3b91fd",
+            "unique_name": "Imran Khan (5)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "J Anderson",
+        "people": [
+          {
+            "cricsheet_id": "33001741",
+            "unique_name": "Jehu Anderson",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "d5bbb6a2",
+            "unique_name": "J Anderson",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Jaskaran Singh",
+        "people": [
+          {
+            "cricsheet_id": "d7b3a420",
+            "unique_name": "Jaskaran Singh",
+            "competitions": "ipl, smat, t20i"
+          },
+          {
+            "cricsheet_id": "5efcabe2",
+            "unique_name": "Jaskaran Singh (3)",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "ec178b04",
+            "unique_name": "Jaskaran Singh (2)",
+            "competitions": "blast"
+          }
+        ]
+      },
+      {
+        "name": "Junaid Khan",
+        "people": [
+          {
+            "cricsheet_id": "be0077ba",
+            "unique_name": "J Khan",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "086f5984",
+            "unique_name": "Junaid Khan",
+            "competitions": "t20i, psl, bpl, blast"
+          },
+          {
+            "cricsheet_id": "670e6804",
+            "unique_name": "Junaid Khan (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Junaid Siddique",
+        "people": [
+          {
+            "cricsheet_id": "84dc72db",
+            "unique_name": "Junaid Siddique (2)",
+            "competitions": "ilt20, t20i"
+          },
+          {
+            "cricsheet_id": "62e203d4",
+            "unique_name": "Junaid Siddique",
+            "competitions": "t20i, bpl"
+          }
+        ]
+      },
+      {
+        "name": "Kamran Khan",
+        "people": [
+          {
+            "cricsheet_id": "6ef60d3a",
+            "unique_name": "Kamran Khan",
+            "competitions": "ipl"
+          },
+          {
+            "cricsheet_id": "922e3dcc",
+            "unique_name": "Kamran Khan (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Khurram Shahzad",
+        "people": [
+          {
+            "cricsheet_id": "85b0ccd1",
+            "unique_name": "Khurram Shahzad",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "27c5715d",
+            "unique_name": "Khurram Shahzad (2)",
+            "competitions": "psl, blast"
+          },
+          {
+            "cricsheet_id": "1daf3f74",
+            "unique_name": "Khurram Shahzad (3)",
+            "competitions": "psl"
+          }
+        ]
+      },
+      {
+        "name": "M Clarke",
+        "people": [
+          {
+            "cricsheet_id": "a4ff3629",
+            "unique_name": "McKenny Clarke",
+            "competitions": "cpl"
+          },
+          {
+            "cricsheet_id": "7ea2141b",
+            "unique_name": "Mason Clarke",
+            "competitions": "supersmash"
+          }
+        ]
+      },
+      {
+        "name": "MD Bates",
+        "people": [
+          {
+            "cricsheet_id": "1b3acd33",
+            "unique_name": "MD Bates",
+            "competitions": "t20i, supersmash"
+          },
+          {
+            "cricsheet_id": "f53d6c10",
+            "unique_name": "MD Bates (2)",
+            "competitions": "blast"
+          }
+        ]
+      },
+      {
+        "name": "Maaz Khan",
+        "people": [
+          {
+            "cricsheet_id": "73a0e5d8",
+            "unique_name": "Maaz Khan",
+            "competitions": "psl"
+          },
+          {
+            "cricsheet_id": "6f14ddcb",
+            "unique_name": "Mohammad Maaz Khan",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Mandeep Singh",
+        "people": [
+          {
+            "cricsheet_id": "c3a96caf",
+            "unique_name": "Mandeep Singh",
+            "competitions": "ipl, smat, t20i"
+          },
+          {
+            "cricsheet_id": "dc39e9ab",
+            "unique_name": "Mandeep Singh (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Manish Sharma",
+        "people": [
+          {
+            "cricsheet_id": "b4ff4409",
+            "unique_name": "Manish Sharma",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "5473ec6f",
+            "unique_name": "Manish Sharma (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Mohammad Hamza",
+        "people": [
+          {
+            "cricsheet_id": "cd5be077",
+            "unique_name": "Mohammad Hamza",
+            "competitions": "psl"
+          },
+          {
+            "cricsheet_id": "30adc2fa",
+            "unique_name": "Mohammad Hamza (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Mohammad Imran",
+        "people": [
+          {
+            "cricsheet_id": "65a2fff5",
+            "unique_name": "Mohammad Imran",
+            "competitions": "t20i, psl, bpl"
+          },
+          {
+            "cricsheet_id": "687e20b3",
+            "unique_name": "Mohammad Imran (2)",
+            "competitions": "psl, bpl"
+          }
+        ]
+      },
+      {
+        "name": "Mohammad Irfan",
+        "people": [
+          {
+            "cricsheet_id": "a8e3170f",
+            "unique_name": "Mohammad Irfan",
+            "competitions": "cpl, t20i, psl, bpl"
+          },
+          {
+            "cricsheet_id": "32885b08",
+            "unique_name": "Mohammad Irfan (5)",
+            "competitions": "psl, bpl"
+          }
+        ]
+      },
+      {
+        "name": "Mohammad Shahzad",
+        "people": [
+          {
+            "cricsheet_id": "d6dcb0c9",
+            "unique_name": "Mohammad Shahzad",
+            "competitions": "bpl"
+          },
+          {
+            "cricsheet_id": "4c7df2c8",
+            "unique_name": "Mohammad Shahzad (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Mohsin Khan",
+        "people": [
+          {
+            "cricsheet_id": "c33d8116",
+            "unique_name": "Mohsin Khan (2)",
+            "competitions": "ipl, smat"
+          },
+          {
+            "cricsheet_id": "2669d6b7",
+            "unique_name": "Mohsin Khan",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Muhammad Asim",
+        "people": [
+          {
+            "cricsheet_id": "b424d3d3",
+            "unique_name": "Muhammad Asim",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "8ba04532",
+            "unique_name": "Muhammad Asim (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Muhammad Farooq",
+        "people": [
+          {
+            "cricsheet_id": "8f3c6b8a",
+            "unique_name": "Muhammad Farooq",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "81416a78",
+            "unique_name": "Muhammad Farooq (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Muhammad Naeem",
+        "people": [
+          {
+            "cricsheet_id": "e2f7d34b",
+            "unique_name": "Muhammad Naeem",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "e35b7b91",
+            "unique_name": "Muhammad Naeem (2)",
+            "competitions": "psl"
+          },
+          {
+            "cricsheet_id": "993281c2",
+            "unique_name": "Muhammad Naeem (3)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Muhammad Usman",
+        "people": [
+          {
+            "cricsheet_id": "45642393",
+            "unique_name": "Muhammad Usman",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "b7621723",
+            "unique_name": "Muhammad Usman (3)",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "82a7dfdd",
+            "unique_name": "Muhammad Usman (4)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "N Joshi",
+        "people": [
+          {
+            "cricsheet_id": "cfece11f",
+            "unique_name": "N Joshi",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "58c71b70",
+            "unique_name": "Narayan Joshi",
+            "competitions": "npl"
+          }
+        ]
+      },
+      {
+        "name": "NK Patel",
+        "people": [
+          {
+            "cricsheet_id": "a2870fb7",
+            "unique_name": "Niraj Patel",
+            "competitions": "ipl"
+          },
+          {
+            "cricsheet_id": "c6e10e5c",
+            "unique_name": "NK Patel",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Naeem Islam",
+        "people": [
+          {
+            "cricsheet_id": "02e83ac5",
+            "unique_name": "Naeem Islam",
+            "competitions": "t20i, bpl"
+          },
+          {
+            "cricsheet_id": "185cbde3",
+            "unique_name": "Naeem Islam Jr.",
+            "competitions": "bpl"
+          }
+        ]
+      },
+      {
+        "name": "Nazmus Sakib",
+        "people": [
+          {
+            "cricsheet_id": "53967e23",
+            "unique_name": "Nazmus Sakib",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "d3347684",
+            "unique_name": "Nazmus Sakib (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Parveen Kumar",
+        "people": [
+          {
+            "cricsheet_id": "babc65d3",
+            "unique_name": "Parveen Kumar",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "e6b3c3cc",
+            "unique_name": "Parveen Kumar (2)",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "6fffb04a",
+            "unique_name": "Parveen Kumar (3)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "R Kumar",
+        "people": [
+          {
+            "cricsheet_id": "aba0f4a9",
+            "unique_name": "Ranjit Kumar",
+            "competitions": "npl"
+          },
+          {
+            "cricsheet_id": "2df874e6",
+            "unique_name": "R Kumar",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "R Sharma",
+        "people": [
+          {
+            "cricsheet_id": "5d9a1a73",
+            "unique_name": "R Sharma",
+            "competitions": "ipl, t20i"
+          },
+          {
+            "cricsheet_id": "2278c4ca",
+            "unique_name": "Raoul Sharma",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "R Smith",
+        "people": [
+          {
+            "cricsheet_id": "0b91b5d5",
+            "unique_name": "R Smith",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "02d59576",
+            "unique_name": "R Smith (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "RK Singh",
+        "people": [
+          {
+            "cricsheet_id": "0a509d6b",
+            "unique_name": "RK Singh",
+            "competitions": "ipl, smat, t20i"
+          },
+          {
+            "cricsheet_id": "6e974d8f",
+            "unique_name": "Rupesh Kumar Singh",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Rahat Ali",
+        "people": [
+          {
+            "cricsheet_id": "a63775d6",
+            "unique_name": "Rahat Ali",
+            "competitions": "psl"
+          },
+          {
+            "cricsheet_id": "3cc13c68",
+            "unique_name": "Rahat Ali (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Rahul Singh",
+        "people": [
+          {
+            "cricsheet_id": "adf454e9",
+            "unique_name": "Rahul Singh",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "42df38b0",
+            "unique_name": "Rahul Singh (2)",
+            "competitions": "smat"
+          }
+        ]
+      },
+      {
+        "name": "Rakibul Hasan",
+        "people": [
+          {
+            "cricsheet_id": "b75b7b09",
+            "unique_name": "Rakibul Hasan",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "77768f72",
+            "unique_name": "Rakibul Hasan (2)",
+            "competitions": "t20i, bpl"
+          }
+        ]
+      },
+      {
+        "name": "Rashid Khan",
+        "people": [
+          {
+            "cricsheet_id": "5f547c8b",
+            "unique_name": "Rashid Khan",
+            "competitions": "ipl, bbl, sa20, cpl, ilt20, t20i, psl, bpl, mlc, blast"
+          },
+          {
+            "cricsheet_id": "69cccff3",
+            "unique_name": "Rashid Khan (2)",
+            "competitions": "t20i, npl"
+          },
+          {
+            "cricsheet_id": "1eaac48d",
+            "unique_name": "Rashid Khan (4)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Rohit Sharma",
+        "people": [
+          {
+            "cricsheet_id": "94ed3e4b",
+            "unique_name": "Rohit Sharma",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "a1cbdeeb",
+            "unique_name": "Rohit Sharma (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "S Arora",
+        "people": [
+          {
+            "cricsheet_id": "d7423da1",
+            "unique_name": "Salil Arora",
+            "competitions": "ipl"
+          },
+          {
+            "cricsheet_id": "7aa74830",
+            "unique_name": "S Arora",
+            "competitions": "smat"
+          }
+        ]
+      },
+      {
+        "name": "S Singh",
+        "people": [
+          {
+            "cricsheet_id": "321fcf79",
+            "unique_name": "S Singh",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "612a395c",
+            "unique_name": "Sukhdeep Singh",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "SB Wagh",
+        "people": [
+          {
+            "cricsheet_id": "dddca1d6",
+            "unique_name": "SB Wagh",
+            "competitions": "ipl, smat"
+          },
+          {
+            "cricsheet_id": "acf06e10",
+            "unique_name": "Sanjay Wagh",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Sandeep Goud",
+        "people": [
+          {
+            "cricsheet_id": "4e1c9f6e",
+            "unique_name": "Sandeep Goud",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "c83ef4d6",
+            "unique_name": "Sandeep Goud (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Saurabh Kumar",
+        "people": [
+          {
+            "cricsheet_id": "2a6afc6f",
+            "unique_name": "Saurabh Kumar",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "afb1e61d",
+            "unique_name": "Saurabh Kumar (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Shahab Alam",
+        "people": [
+          {
+            "cricsheet_id": "cdd9fa95",
+            "unique_name": "Shahab Alam",
+            "competitions": "t20i, npl"
+          },
+          {
+            "cricsheet_id": "1b09fbcf",
+            "unique_name": "Shahab Alam (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Shahadat Hossain",
+        "people": [
+          {
+            "cricsheet_id": "090f9211",
+            "unique_name": "Shahadat Hossain",
+            "competitions": "t20i, bpl"
+          },
+          {
+            "cricsheet_id": "69e23303",
+            "unique_name": "Shahadat Hossain Dipu",
+            "competitions": "t20i, bpl"
+          }
+        ]
+      },
+      {
+        "name": "Shahid Afridi",
+        "people": [
+          {
+            "cricsheet_id": "0dc00542",
+            "unique_name": "Shahid Afridi",
+            "competitions": "ipl, bbl, cpl, t20i, psl, bpl, lpl, blast"
+          },
+          {
+            "cricsheet_id": "5b2acc3f",
+            "unique_name": "Shahid Afridi (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Shivam Sharma",
+        "people": [
+          {
+            "cricsheet_id": "6f49cc6e",
+            "unique_name": "Shivam Sharma",
+            "competitions": "ipl, smat"
+          },
+          {
+            "cricsheet_id": "982dc390",
+            "unique_name": "Shivam Sharma (2)",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "5bdeeed4",
+            "unique_name": "Shivam Sharma (3)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Shoaib Khan",
+        "people": [
+          {
+            "cricsheet_id": "03ecfde2",
+            "unique_name": "Shoaib Azam Khan",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "21afb939",
+            "unique_name": "Shoaib Khan",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "fdee4a01",
+            "unique_name": "Shoaib Khan (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Sultan Ahmed",
+        "people": [
+          {
+            "cricsheet_id": "3bf7c034",
+            "unique_name": "Sultan Ahmed",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "07687c15",
+            "unique_name": "Sultan Ahmed (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Sumit Kumar",
+        "people": [
+          {
+            "cricsheet_id": "8998a68f",
+            "unique_name": "Sumit Kumar",
+            "competitions": "ipl, smat"
+          },
+          {
+            "cricsheet_id": "fe180dba",
+            "unique_name": "Sumit Kumar (2)",
+            "competitions": "smat"
+          }
+        ]
+      },
+      {
+        "name": "Sumit Singh",
+        "people": [
+          {
+            "cricsheet_id": "9ad3a550",
+            "unique_name": "Sumit Singh",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "6798b28e",
+            "unique_name": "Sumit Pratap Singh",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Suresh Kumar",
+        "people": [
+          {
+            "cricsheet_id": "177eb92d",
+            "unique_name": "Suresh Kumar",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "1b95b3cd",
+            "unique_name": "Suresh Kumar (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Tarun Sharma",
+        "people": [
+          {
+            "cricsheet_id": "1ba16d18",
+            "unique_name": "Tarun Sharma",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "f915844b",
+            "unique_name": "Tarun Sharma (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Tayyab Abbas",
+        "people": [
+          {
+            "cricsheet_id": "6b972db7",
+            "unique_name": "Tayyab Abbas",
+            "competitions": "psl"
+          },
+          {
+            "cricsheet_id": "9cdc8c06",
+            "unique_name": "Tayyab Abbas (2)",
+            "competitions": "psl"
+          }
+        ]
+      },
+      {
+        "name": "Usman Khan",
+        "people": [
+          {
+            "cricsheet_id": "bafb9238",
+            "unique_name": "Usman Khan (2)",
+            "competitions": "cpl, ilt20, t20i, psl, bpl"
+          },
+          {
+            "cricsheet_id": "e8a552ef",
+            "unique_name": "Usman Khan",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Vishal Sharma",
+        "people": [
+          {
+            "cricsheet_id": "f555bcf4",
+            "unique_name": "Vishal Sharma",
+            "competitions": "smat"
+          },
+          {
+            "cricsheet_id": "b9d8abd3",
+            "unique_name": "Vishal Sharma (2)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Yuvraj Singh",
+        "people": [
+          {
+            "cricsheet_id": "1c914163",
+            "unique_name": "Yuvraj Singh",
+            "competitions": "ipl, smat, t20i"
+          },
+          {
+            "cricsheet_id": "30829ea2",
+            "unique_name": "Yuvraj Singh (2)",
+            "competitions": "smat"
+          }
+        ]
+      },
+      {
+        "name": "Zeeshan Ali",
+        "people": [
+          {
+            "cricsheet_id": "987187b9",
+            "unique_name": "Zeeshan Ali (2)",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "2c89dbf9",
+            "unique_name": "Zeeshan Ali (3)",
+            "competitions": "t20i"
+          }
+        ]
+      },
+      {
+        "name": "Ziaur Rahman",
+        "people": [
+          {
+            "cricsheet_id": "c27518d2",
+            "unique_name": "Ziaur Rahman",
+            "competitions": "t20i, bpl"
+          },
+          {
+            "cricsheet_id": "66272dc4",
+            "unique_name": "Ziaur Rahman (2)",
+            "competitions": "bpl"
+          }
+        ]
+      },
+      {
+        "name": "Zulqarnain Haider",
+        "people": [
+          {
+            "cricsheet_id": "ee9bdbc8",
+            "unique_name": "Zulqarnain Haider",
+            "competitions": "t20i"
+          },
+          {
+            "cricsheet_id": "2d46e8ed",
+            "unique_name": "Zulqarnain Haider (2)",
+            "competitions": "t20i"
+          }
+        ]
+      }
+    ],
+    "registerNameSharedInLoadedData": 86
+  },
+  "nameVariants": [
+    {
+      "cricsheet_id": "21d4e29b",
+      "unique_name": "NA Saini",
+      "names": [
+        "NA Saini",
+        "Navdeep Saini"
+      ]
+    },
+    {
+      "cricsheet_id": "c33d8116",
+      "unique_name": "Mohsin Khan (2)",
+      "names": [
+        "Mohsin Khan",
+        "Mohsin Khan (2)"
+      ]
+    },
+    {
+      "cricsheet_id": "12314277",
+      "unique_name": "Arshad Khan (2)",
+      "names": [
+        "Arshad Khan",
+        "Arshad Khan (2)"
+      ]
+    },
+    {
+      "cricsheet_id": "d7423da1",
+      "unique_name": "Salil Arora",
+      "names": [
+        "S Arora",
+        "Salil Arora"
+      ]
+    },
+    {
+      "cricsheet_id": "0bf15e52",
+      "unique_name": "Harmeet Singh (2)",
+      "names": [
+        "Harmeet Singh",
+        "Harmeet Singh (2)"
+      ]
+    },
+    {
+      "cricsheet_id": "647e7d44",
+      "unique_name": "Josh Brown",
+      "names": [
+        "J Brown",
+        "Josh Brown"
+      ]
+    },
+    {
+      "cricsheet_id": "d52b13a6",
+      "unique_name": "Abdul Shakoor (2)",
+      "names": [
+        "Abdul Shakoor",
+        "Abdul Shakoor (2)"
+      ]
+    },
+    {
+      "cricsheet_id": "5661ef90",
+      "unique_name": "Aryansh Sharma",
+      "names": [
+        "A Sharma",
+        "Aryansh Sharma"
+      ]
+    },
+    {
+      "cricsheet_id": "79a29279",
+      "unique_name": "Ida Bagus Nara",
+      "names": [
+        "Deep Harian",
+        "Ida Bagus Nara"
+      ]
+    },
+    {
+      "cricsheet_id": "195fb6db",
+      "unique_name": "Imran Khan (1)",
+      "names": [
+        "Imran Khan",
+        "Imran Khan (1)"
+      ]
+    },
+    {
+      "cricsheet_id": "2b0f2af3",
+      "unique_name": "Imran Khan (2)",
+      "names": [
+        "Imran Khan",
+        "Imran Khan (2)"
+      ]
+    },
+    {
+      "cricsheet_id": "922e3dcc",
+      "unique_name": "Kamran Khan (2)",
+      "names": [
+        "Kamran Khan",
+        "Kamran Khan (2)"
+      ]
+    },
+    {
+      "cricsheet_id": "96ce6752",
+      "unique_name": "Mirza Tahir Baig",
+      "names": [
+        "Mirza Baig",
+        "Mirza Tahir Baig"
+      ]
+    },
+    {
+      "cricsheet_id": "687e20b3",
+      "unique_name": "Mohammad Imran (2)",
+      "names": [
+        "Mohammad Imran",
+        "Mohammad Imran (2)"
+      ]
+    },
+    {
+      "cricsheet_id": "32885b08",
+      "unique_name": "Mohammad Irfan (5)",
+      "names": [
+        "Mohammad Irfan",
+        "Mohammad Irfan (5)"
+      ]
+    },
+    {
+      "cricsheet_id": "3086f7a4",
+      "unique_name": "Mohammad Nawaz (3)",
+      "names": [
+        "Mohammad Nawaz",
+        "Mohammad Nawaz (3)"
+      ]
+    },
+    {
+      "cricsheet_id": "b7621723",
+      "unique_name": "Muhammad Usman (3)",
+      "names": [
+        "Muhammad Usman",
+        "Muhammad Usman (3)"
+      ]
+    },
+    {
+      "cricsheet_id": "185cbde3",
+      "unique_name": "Naeem Islam Jr.",
+      "names": [
+        "Naeem Islam",
+        "Naeem Islam Jr."
+      ]
+    },
+    {
+      "cricsheet_id": "21bfd654",
+      "unique_name": "P Agnihotri",
+      "names": [
+        "P Agnihotri",
+        "Pratik Agnihotri"
+      ]
+    },
+    {
+      "cricsheet_id": "77768f72",
+      "unique_name": "Rakibul Hasan (2)",
+      "names": [
+        "Rakibul Hasan",
+        "Rakibul Hasan (2)"
+      ]
+    },
+    {
+      "cricsheet_id": "e191bf68",
+      "unique_name": "Rameez Raja (2)",
+      "names": [
+        "Rameez Raja",
+        "Rameez Raja (2)"
+      ]
+    },
+    {
+      "cricsheet_id": "612a395c",
+      "unique_name": "Sukhdeep Singh",
+      "names": [
+        "S Singh",
+        "Sukhdeep Singh"
+      ]
+    }
+  ],
+  "iplWarehouseBridge": {
+    "total": 1141,
+    "linkedExact": 964,
+    "synthetic": 177,
+    "queued": 177,
+    "missingIds": []
+  },
+  "reviewQueue": [
+    {
+      "source_key": "1057",
+      "source_name": "Aaron Varghese",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "969",
+      "source_name": "Aarya Desai",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1834,
+          "cricsheet_id": "8053c798",
+          "unique_name": "Aarya Desai",
+          "evidence": [
+            "played: smat 4 matches (last 2023-10-31)",
+            "match name \"Aarya Desai\"",
+            "register name \"Aarya Desai\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1059",
+      "source_name": "Abdul Bazith",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1034",
+      "source_name": "Abhilash Shetty",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1133",
+      "source_name": "Abhimanyu Easwaran",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1149,
+          "cricsheet_id": "10b58586",
+          "unique_name": "AR Easwaran",
+          "evidence": [
+            "played: smat 21 matches (last 2023-10-31)",
+            "register_variant name \"Abhimanyu Easwaran\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1105",
+      "source_name": "Abhimanyusingh Rajput",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1514,
+          "cricsheet_id": "c1d3515b",
+          "unique_name": "AV Rajput",
+          "evidence": [
+            "played: smat 12 matches (last 2024-12-13)",
+            "register_variant name \"Abhimanyusingh Rajput\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "970",
+      "source_name": "Abhinav Tejrana",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1020",
+      "source_name": "Abid Mushtaq",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1409,
+          "cricsheet_id": "b10e8c85",
+          "unique_name": "Abid Mushtaq (2)",
+          "evidence": [
+            "played: smat 14 matches (last 2023-10-25)",
+            "match name \"Abid Mushtaq\"",
+            "register name \"Abid Mushtaq\""
+          ]
+        },
+        {
+          "player_key": 2940,
+          "cricsheet_id": "f9979b69",
+          "unique_name": "Abid Mushtaq",
+          "evidence": [
+            "no matches in loaded competitions",
+            "register name \"Abid Mushtaq\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "981",
+      "source_name": "Ackeem Auguste",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1054",
+      "source_name": "Ahammed Imran",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1024",
+      "source_name": "Ajitesh Guruswamy",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1104",
+      "source_name": "Akash Pugazhanthi",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1118",
+      "source_name": "Akhil Scaria",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1123",
+      "source_name": "Akshu Bajwa",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "994",
+      "source_name": "Aman Rao Perala",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1099",
+      "source_name": "Aman Shekhawat",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1111",
+      "source_name": "Anuj Thakral",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1031",
+      "source_name": "Arpit Guleria",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1019",
+      "source_name": "Arsh Kabir Ranga",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1107",
+      "source_name": "Aryaman Singh Dhaliwal",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1084",
+      "source_name": "Atal Rai",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1058",
+      "source_name": "Atharva Ankolekar",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1568,
+          "cricsheet_id": "d6cd318e",
+          "unique_name": "Atharva Ankolekar",
+          "evidence": [
+            "played: smat 11 matches (last 2024-12-15)",
+            "match name \"Atharva Ankolekar\"",
+            "register name \"Atharva Ankolekar\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1083",
+      "source_name": "Atif Mushtaq",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1021",
+      "source_name": "Atit Sheth",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1015",
+      "source_name": "Ayush Doseja",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1063",
+      "source_name": "Ayush Vartak",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1007",
+      "source_name": "Bailapudi Yeswanth",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1098",
+      "source_name": "Bayanda Majola",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1011",
+      "source_name": "Beau Webster",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2026,
+          "cricsheet_id": "56b93d46",
+          "unique_name": "BJ Webster",
+          "evidence": [
+            "played: bbl 88 matches (last 2026-01-23), blast 25 matches (last 2026-07-12)",
+            "register_variant name \"Beau Webster\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "967",
+      "source_name": "Ben Duckett",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2135,
+          "cricsheet_id": "5f26f677",
+          "unique_name": "BM Duckett",
+          "evidence": [
+            "played: bbl 19 matches (last 2025-01-12), blast 119 matches (last 2026-05-22), psl 6 matches (last 2022-02-03), t20i 21 matches (last 2026-02-03)",
+            "register_variant name \"Ben Duckett\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1136",
+      "source_name": "Ben Sears",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "984",
+      "source_name": "Benjamin McDermott",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1018",
+      "source_name": "Bhanu Pania",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1513,
+          "cricsheet_id": "af863475",
+          "unique_name": "Bhanu Pania",
+          "evidence": [
+            "played: smat 23 matches (last 2024-12-13)",
+            "match name \"Bhanu Pania\"",
+            "register name \"Bhanu Pania\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1027",
+      "source_name": "Bipin Saurabh",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1642,
+          "cricsheet_id": "4cb5e3d1",
+          "unique_name": "Bipin Saurabh",
+          "evidence": [
+            "played: smat 8 matches (last 2022-10-22)",
+            "match name \"Bipin Saurabh\"",
+            "register name \"Bipin Saurabh\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1085",
+      "source_name": "C.Rakshann Readdi",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1129",
+      "source_name": "Chama Milind",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1043",
+      "source_name": "Charith Asalanka",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2594,
+          "cricsheet_id": "732c038e",
+          "unique_name": "KIC Asalanka",
+          "evidence": [
+            "played: cpl 8 matches (last 2026-09-09), ilt20 10 matches (last 2025-01-26), lpl 54 matches (last 2026-08-08), npl 2 matches (last 2026-10-29), psl 5 matches (last 2026-04-25), t20i 73 matches (last 2026-09-19)",
+            "register_variant name \"Charith Asalanka\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1023",
+      "source_name": "Connor Esterhuizen",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2356,
+          "cricsheet_id": "ef9acbcc",
+          "unique_name": "C Esterhuizen",
+          "evidence": [
+            "played: ilt20 4 matches (last 2023-02-04), mlc 2 matches (last 2026-06-24), sa20 22 matches (last 2026-01-25), t20i 10 matches (last 2026-09-06)",
+            "register_variant name \"Connor Esterhuizen\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1108",
+      "source_name": "Daksh Kamra",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1056",
+      "source_name": "Daniel Lategan",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1009",
+      "source_name": "Daniel Lawrence",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1088",
+      "source_name": "Deependra Singh",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1092",
+      "source_name": "Delano Potgieter",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2319,
+          "cricsheet_id": "60fbf53a",
+          "unique_name": "D Potgieter",
+          "evidence": [
+            "played: blast 3 matches (last 2026-07-15), cpl 6 matches (last 2025-09-13), mlc 2 matches (last 2025-07-06), sa20 33 matches (last 2026-01-19)",
+            "register_variant name \"Delano Potgieter\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1038",
+      "source_name": "Dharmendrasinh Jadeja",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 896,
+          "cricsheet_id": "d330f9b9",
+          "unique_name": "Dharmendrasinh Jadeja",
+          "evidence": [
+            "played: smat 41 matches (last 2024-12-11)",
+            "match name \"Dharmendrasinh Jadeja\"",
+            "register name \"Dharmendrasinh Jadeja\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1126",
+      "source_name": "Dhurmil Matkar",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1125",
+      "source_name": "Dian Forrester",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2393,
+          "cricsheet_id": "23393635",
+          "unique_name": "Dian Forrester",
+          "evidence": [
+            "played: blast 3 matches (last 2026-05-31), mlc 4 matches (last 2026-07-12), psl 6 matches (last 2026-04-26), sa20 10 matches (last 2026-01-22), t20i 5 matches (last 2026-03-25)",
+            "register name \"Dian Forrester\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1033",
+      "source_name": "Divesh Sharma",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1047",
+      "source_name": "Dunith Wellalage",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "971",
+      "source_name": "Edhen Tom",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1065",
+      "source_name": "Esakkimuthu Ayyakutti",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "965",
+      "source_name": "Gus Atkinson",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1028",
+      "source_name": "Hardik Tamore",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1622,
+          "cricsheet_id": "3082eac3",
+          "unique_name": "Hardik Tamore",
+          "evidence": [
+            "played: smat 8 matches (last 2024-12-15)",
+            "match name \"Hardik Tamore\"",
+            "register name \"Hardik Tamore\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "997",
+      "source_name": "Harsh Tyagi",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1116,
+          "cricsheet_id": "4a15018a",
+          "unique_name": "Harsh Tyagi",
+          "evidence": [
+            "played: smat 31 matches (last 2024-12-13)",
+            "match name \"Harsh Tyagi\"",
+            "register name \"Harsh Tyagi\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1100",
+      "source_name": "Himanshu Bisht",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1188,
+          "cricsheet_id": "24d163d7",
+          "unique_name": "Himanshu Bisht",
+          "evidence": [
+            "played: smat 16 matches (last 2022-10-20)",
+            "match name \"Himanshu Bisht\"",
+            "register name \"Himanshu Bisht\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1035",
+      "source_name": "Irfan Umair",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1117",
+      "source_name": "Ishan Mulchandani",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1073",
+      "source_name": "Izaz Sawariya",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "968",
+      "source_name": "Jamie Smith",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1041",
+      "source_name": "Jhathavedh Subramanyan",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1069",
+      "source_name": "Jikku Bright",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1051",
+      "source_name": "Joshua Tongue",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1130",
+      "source_name": "K.L. Shrijith",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1490,
+          "cricsheet_id": "0372c4c5",
+          "unique_name": "K L Shrijith",
+          "evidence": [
+            "played: smat 7 matches (last 2023-10-25)",
+            "match name \"K L Shrijith\"",
+            "register name \"K L Shrijith\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1102",
+      "source_name": "Kanishk Chouhan",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1060",
+      "source_name": "Karan Lal",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1633,
+          "cricsheet_id": "72147266",
+          "unique_name": "Karan Lal",
+          "evidence": [
+            "played: smat 7 matches (last 2024-12-11)",
+            "match name \"Karan Lal\"",
+            "register name \"Karan Lal\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1006",
+      "source_name": "Kartik Chadha",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1091",
+      "source_name": "Khilan Patel",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1078",
+      "source_name": "Krains Fuletra",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "978",
+      "source_name": "Kumar Kartikeya Singh",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 335,
+          "cricsheet_id": "f6d8a7ab",
+          "unique_name": "K Kartikeya",
+          "evidence": [
+            "played: ipl 16 matches (last 2025-05-01), smat 16 matches (last 2024-12-15)",
+            "register_variant name \"Kumar Kartikeya Singh\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1014",
+      "source_name": "Kunal Chandela",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1517,
+          "cricsheet_id": "d38c03d4",
+          "unique_name": "Kunal Chandela",
+          "evidence": [
+            "played: smat 13 matches (last 2022-10-20)",
+            "match name \"Kunal Chandela\"",
+            "register name \"Kunal Chandela\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "985",
+      "source_name": "Kusal Mendis",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 469,
+          "cricsheet_id": "5d1e7582",
+          "unique_name": "BKG Mendis",
+          "evidence": [
+            "played: ilt20 1 matches (last 2025-12-10), ipl 1 matches (last 2025-05-30), lpl 49 matches (last 2026-07-19), psl 19 matches (last 2026-05-03), sa20 7 matches (last 2023-02-11), t20i 105 matches (last 2026-10-13)",
+            "register_variant name \"Kusal Mendis\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "986",
+      "source_name": "Kusal Perera",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 782,
+          "cricsheet_id": "f21043a5",
+          "unique_name": "MDKJ Perera",
+          "evidence": [
+            "played: bpl 1 matches (last 2017-11-18), cpl 3 matches (last 2026-08-23), ilt20 21 matches (last 2025-02-06), ipl 2 matches (last 2013-04-11), lpl 39 matches (last 2026-08-05), npl 2 matches (last 2026-10-29), psl 15 matches (last 2026-05-03), t20i 92 matches (last 2026-02-19)",
+            "register_variant name \"Kusal Perera\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1135",
+      "source_name": "Kyle Verreynne",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2322,
+          "cricsheet_id": "bf814547",
+          "unique_name": "K Verreynne",
+          "evidence": [
+            "played: sa20 28 matches (last 2026-01-23)",
+            "register_variant name \"Kyle Verreynne\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1045",
+      "source_name": "Liam Dawson",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2187,
+          "cricsheet_id": "4a461c24",
+          "unique_name": "LA Dawson",
+          "evidence": [
+            "played: bbl 3 matches (last 2023-12-23), blast 129 matches (last 2026-07-18), bpl 19 matches (last 2019-02-02), ilt20 14 matches (last 2025-12-23), psl 33 matches (last 2023-02-19), sa20 23 matches (last 2025-02-08), t20i 39 matches (last 2026-09-19)",
+            "register_variant name \"Liam Dawson\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1121",
+      "source_name": "Luckyrajsinh Vaghela",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1017",
+      "source_name": "M.Dheeraj Kumar",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1548,
+          "cricsheet_id": "ca81c65c",
+          "unique_name": "M Dheeraj Kumar",
+          "evidence": [
+            "played: smat 8 matches (last 2023-10-17)",
+            "match name \"M Dheeraj Kumar\"",
+            "register name \"M Dheeraj Kumar\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1079",
+      "source_name": "Macneil Noronha",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1122",
+      "source_name": "Madhav Bajaj",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1036",
+      "source_name": "Manan Bhardwaj",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1128",
+      "source_name": "Mani Sankar Mura Singh",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1086",
+      "source_name": "Manish Reddy",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1106",
+      "source_name": "Maramreddy Reddy",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1049",
+      "source_name": "Matthew Potts",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "980",
+      "source_name": "Mayank Agarawal",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1103",
+      "source_name": "Mayank Gusain",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1076",
+      "source_name": "Md Shoriful Islam",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1053",
+      "source_name": "Miles Hammond",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 11776,
+          "cricsheet_id": "c88bc84a",
+          "unique_name": "Miles Hammond",
+          "evidence": [
+            "played: blast 119 matches (last 2026-07-15)",
+            "match name \"Miles Hammond\"",
+            "register name \"Miles Hammond\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1001",
+      "source_name": "Mohammad Izhar",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "989",
+      "source_name": "Mohammad Waqar Salamkheil",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1030",
+      "source_name": "Money Grewal",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1110",
+      "source_name": "Mridul Surroch",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1042",
+      "source_name": "Muhammad Abbas",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 11217,
+          "cricsheet_id": "c3576908",
+          "unique_name": "MA Abbas",
+          "evidence": [
+            "played: supersmash 28 matches (last 2026-01-23)",
+            "register_variant name \"Muhammad Abbas\""
+          ]
+        },
+        {
+          "player_key": 12136,
+          "cricsheet_id": "a089f93f",
+          "unique_name": "Mohammad Abbas",
+          "evidence": [
+            "played: blast 9 matches (last 2018-08-02), psl 3 matches (last 2019-03-11)",
+            "register_variant name \"Muhammad Abbas\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1119",
+      "source_name": "Muhammed Sharafuddeen",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1072",
+      "source_name": "Naman Pushpak",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1116",
+      "source_name": "Nasir Lone",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1046",
+      "source_name": "Nathan Smith",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 12851,
+          "cricsheet_id": "3147131e",
+          "unique_name": "Nathan Smith",
+          "evidence": [
+            "no matches in loaded competitions",
+            "register name \"Nathan Smith\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1013",
+      "source_name": "Naveen Ul Haq",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1081",
+      "source_name": "Ninad Rathva",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1087",
+      "source_name": "Nishanth Saranu",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1113",
+      "source_name": "Nitin Sai Yadav",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1050",
+      "source_name": "Olly Stone",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2189,
+          "cricsheet_id": "3f659464",
+          "unique_name": "OP Stone",
+          "evidence": [
+            "played: bbl 1 matches (last 2023-12-07), blast 88 matches (last 2026-07-18), ilt20 21 matches (last 2026-01-02), psl 1 matches (last 2024-02-20), sa20 8 matches (last 2024-01-23), t20i 1 matches (last 2022-09-25)",
+            "register_variant name \"Olly Stone\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1003",
+      "source_name": "Onkar Tarmale",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1066",
+      "source_name": "Pankaj Jaswal",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 853,
+          "cricsheet_id": "3bc10d5b",
+          "unique_name": "Pankaj Jaswal",
+          "evidence": [
+            "played: smat 30 matches (last 2022-11-03)",
+            "match name \"Pankaj Jaswal\"",
+            "register name \"Pankaj Jaswal\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1037",
+      "source_name": "Parikshit Dhanak",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1127",
+      "source_name": "Parikshit Valsangkar",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 822,
+          "cricsheet_id": "84ba2fbc",
+          "unique_name": "Parikshit Valsangkar",
+          "evidence": [
+            "played: smat 8 matches (last 2019-11-14)",
+            "match name \"Parikshit Valsangkar\"",
+            "register name \"Parikshit Valsangkar\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1094",
+      "source_name": "Parth Rekhade",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1112",
+      "source_name": "Parth Vats",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1114",
+      "source_name": "Prerit Dutta",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1061",
+      "source_name": "Prince Rai",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1004",
+      "source_name": "Prithviraj Yarra",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "992",
+      "source_name": "Pukhraj Mann",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1764,
+          "cricsheet_id": "4a9a8c3d",
+          "unique_name": "Pukhraj Mann",
+          "evidence": [
+            "played: smat 2 matches (last 2022-11-03)",
+            "match name \"Pukhraj Mann\"",
+            "register name \"Pukhraj Mann\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1068",
+      "source_name": "Purav Agarwal",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1016",
+      "source_name": "Qamran Iqbal",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1491,
+          "cricsheet_id": "6375ef6a",
+          "unique_name": "Qamran Iqbal",
+          "evidence": [
+            "played: smat 8 matches (last 2023-10-25)",
+            "match name \"Qamran Iqbal\"",
+            "register name \"Qamran Iqbal\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1080",
+      "source_name": "R Rajkumar",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1077",
+      "source_name": "R.S Ambrish",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "998",
+      "source_name": "Rahul Buddhi",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1508,
+          "cricsheet_id": "70a9b353",
+          "unique_name": "Rahul Buddhi",
+          "evidence": [
+            "played: smat 15 matches (last 2023-10-21)",
+            "match name \"Rahul Buddhi\"",
+            "register name \"Rahul Buddhi\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1132",
+      "source_name": "Rahul Raj Namala",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "976",
+      "source_name": "Raj Limbani",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1089",
+      "source_name": "Rajat Verma",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1137",
+      "source_name": "Rajesh Mohanty",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1133,
+          "cricsheet_id": "a73f1f24",
+          "unique_name": "Rajesh Mohanty",
+          "evidence": [
+            "played: smat 12 matches (last 2021-11-09)",
+            "match name \"Rajesh Mohanty\"",
+            "register name \"Rajesh Mohanty\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1008",
+      "source_name": "Rehan Ahmed",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2220,
+          "cricsheet_id": "0ecb4de6",
+          "unique_name": "Rehan Ahmed",
+          "evidence": [
+            "played: bbl 10 matches (last 2026-01-14), blast 52 matches (last 2026-07-12), ilt20 8 matches (last 2025-01-14), t20i 14 matches (last 2026-07-09)",
+            "match name \"Rehan Ahmed\"",
+            "register name \"Rehan Ahmed\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "988",
+      "source_name": "Rishad Hossain",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2221,
+          "cricsheet_id": "5935d694",
+          "unique_name": "Rishad Hossain",
+          "evidence": [
+            "played: bbl 12 matches (last 2026-01-23), bpl 16 matches (last 2025-02-07), psl 11 matches (last 2026-04-06), t20i 59 matches (last 2026-10-03)",
+            "match name \"Rishad Hossain\"",
+            "register name \"Rishad Hossain\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1120",
+      "source_name": "Ritik Tada",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "991",
+      "source_name": "Rohan Kunnummal",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1293,
+          "cricsheet_id": "a6004ded",
+          "unique_name": "Rohan Kunnummal",
+          "evidence": [
+            "played: smat 13 matches (last 2023-11-02)",
+            "match name \"Rohan Kunnummal\"",
+            "register name \"Rohan Kunnummal\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1074",
+      "source_name": "Roshan Wagshare",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1044",
+      "source_name": "Roston Chase",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2396,
+          "cricsheet_id": "3feda4fa",
+          "unique_name": "RL Chase",
+          "evidence": [
+            "played: bpl 3 matches (last 2024-01-26), cpl 78 matches (last 2026-09-09), ilt20 5 matches (last 2025-02-02), sa20 6 matches (last 2026-01-25), t20i 65 matches (last 2026-10-17)",
+            "register_variant name \"Roston Chase\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "972",
+      "source_name": "Ruchit Ahir",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1052",
+      "source_name": "Sachin Dhas",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1067",
+      "source_name": "Safvan Patel",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 15270,
+          "cricsheet_id": "90839a03",
+          "unique_name": "Safvan Patel",
+          "evidence": [
+            "played: t20i 1 matches (last 2025-10-30)",
+            "match name \"Safvan Patel\"",
+            "register name \"Safvan Patel\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "993",
+      "source_name": "Salman Nizar",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 944,
+          "cricsheet_id": "47ff3985",
+          "unique_name": "Salman Nizar",
+          "evidence": [
+            "played: smat 13 matches (last 2023-11-02)",
+            "match name \"Salman Nizar\"",
+            "register name \"Salman Nizar\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1115",
+      "source_name": "Sammar Gajjar",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1890,
+          "cricsheet_id": "ba19f1be",
+          "unique_name": "Sammar Gajjar",
+          "evidence": [
+            "played: smat 1 matches (last 2024-12-11)",
+            "match name \"Sammar Gajjar\"",
+            "register name \"Sammar Gajjar\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1139",
+      "source_name": "Saransh Jain",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1441,
+          "cricsheet_id": "de33074a",
+          "unique_name": "Saransh Jain",
+          "evidence": [
+            "played: smat 10 matches (last 2023-10-25)",
+            "match name \"Saransh Jain\"",
+            "register name \"Saransh Jain\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1093",
+      "source_name": "Sarthak Ranjan",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1021,
+          "cricsheet_id": "d7cdefa9",
+          "unique_name": "Sarthak Ranjan",
+          "evidence": [
+            "played: smat 4 matches (last 2018-01-16)",
+            "match name \"Sarthak Ranjan\"",
+            "register name \"Sarthak Ranjan\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "995",
+      "source_name": "Satvik Deswal",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1040",
+      "source_name": "Saumy Pandey",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "999",
+      "source_name": "Saurav Chuahan",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1029",
+      "source_name": "Sayan Ghosh",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 965,
+          "cricsheet_id": "d4b8ea98",
+          "unique_name": "Sayan Ghosh",
+          "evidence": [
+            "played: smat 25 matches (last 2024-12-11)",
+            "match name \"Sayan Ghosh\"",
+            "register name \"Sayan Ghosh\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1064",
+      "source_name": "Sayed Irfan Aftab",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "977",
+      "source_name": "Shivam Shukla",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1895,
+          "cricsheet_id": "4de4c0e9",
+          "unique_name": "Shivam Shukla",
+          "evidence": [
+            "played: smat 3 matches (last 2024-12-15)",
+            "match name \"Shivam Shukla\"",
+            "register name \"Shivam Shukla\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1096",
+      "source_name": "Shreevatsha Acharya",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1101",
+      "source_name": "Shreyan Chakraborty",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1005",
+      "source_name": "Shubham Agrawal",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 143,
+          "cricsheet_id": "b51f72a5",
+          "unique_name": "SS Agarwal",
+          "evidence": [
+            "played: ipl 1 matches (last 2017-04-23), smat 9 matches (last 2023-10-25)",
+            "register_variant name \"Shubham Agrawal\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1097",
+      "source_name": "Shubham Kapse",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1090",
+      "source_name": "Shubhang Hegde",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1025",
+      "source_name": "Siddharth Joon",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1140",
+      "source_name": "Sooraj Sangaraju",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1131",
+      "source_name": "Swastik Chikara",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1138",
+      "source_name": "Swastik Samal",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1247,
+          "cricsheet_id": "48cc6100",
+          "unique_name": "Swastik Samal",
+          "evidence": [
+            "played: smat 2 matches (last 2019-02-28)",
+            "match name \"Swastik Samal\"",
+            "register name \"Swastik Samal\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1022",
+      "source_name": "Tanay Thyagarajann",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1141",
+      "source_name": "Tanmay Agarwal",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 936,
+          "cricsheet_id": "e6e9b619",
+          "unique_name": "Tanmay Agarwal",
+          "evidence": [
+            "played: smat 36 matches (last 2023-10-21)",
+            "match name \"Tanmay Agarwal\"",
+            "register name \"Tanmay Agarwal\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1048",
+      "source_name": "Tanzim Hasan Sakib",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 17019,
+          "cricsheet_id": "0b0cc297",
+          "unique_name": "Tanzim Hasan Sakib",
+          "evidence": [
+            "played: bpl 34 matches (last 2026-01-23), t20i 38 matches (last 2026-04-27)",
+            "match name \"Tanzim Hasan Sakib\"",
+            "register name \"Tanzim Hasan Sakib\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1012",
+      "source_name": "Taskin Ahmed",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2719,
+          "cricsheet_id": "ef18b66e",
+          "unique_name": "Taskin Ahmed",
+          "evidence": [
+            "played: bpl 93 matches (last 2026-01-18), ilt20 6 matches (last 2025-12-24), lpl 3 matches (last 2024-07-10), t20i 84 matches (last 2026-07-19)",
+            "match name \"Taskin Ahmed\"",
+            "register name \"Taskin Ahmed\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "975",
+      "source_name": "Tejasvi Singh",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1095",
+      "source_name": "Tiaan Van Vuuren",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2378,
+          "cricsheet_id": "20afc7e7",
+          "unique_name": "T van Vuuren",
+          "evidence": [
+            "played: sa20 2 matches (last 2025-01-18)",
+            "register_variant name \"Tiaan van Vuuren\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "982",
+      "source_name": "Tim Robinson",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 15137,
+          "cricsheet_id": "b143c87d",
+          "unique_name": "RT Robinson",
+          "evidence": [
+            "no matches in loaded competitions",
+            "register_variant name \"Tim Robinson\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1026",
+      "source_name": "Tom Moores",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1071",
+      "source_name": "Traveen Mathew",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1134",
+      "source_name": "Tripuresh Singh",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1894,
+          "cricsheet_id": "3c29632a",
+          "unique_name": "Tripuresh Singh",
+          "evidence": [
+            "played: smat 3 matches (last 2024-12-15)",
+            "match name \"Tripuresh Singh\"",
+            "register name \"Tripuresh Singh\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1032",
+      "source_name": "Tristan Luus",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "974",
+      "source_name": "Tushar Raheja",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1062",
+      "source_name": "Utkarsh Singh",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 1234,
+          "cricsheet_id": "b2a55ac1",
+          "unique_name": "Utkarsh Singh",
+          "evidence": [
+            "played: smat 18 matches (last 2021-11-09)",
+            "match name \"Utkarsh Singh\"",
+            "register name \"Utkarsh Singh\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "973",
+      "source_name": "Vansh Bedi",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1124",
+      "source_name": "Varun Raj Singh Bisht",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "996",
+      "source_name": "Vicky Ostwal",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1002",
+      "source_name": "Vijay Kumar",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1109",
+      "source_name": "Vishal Mandwal",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1039",
+      "source_name": "Vishal Nishad",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1055",
+      "source_name": "Vishvarajsinh Jadeja",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 893,
+          "cricsheet_id": "d30c6f81",
+          "unique_name": "Vishvaraj Jadeja",
+          "evidence": [
+            "played: smat 21 matches (last 2024-12-11)",
+            "register_variant name \"Vishvarajsinh Jadeja\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "990",
+      "source_name": "Viyaskanth Vijayakanth",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "979",
+      "source_name": "Wahidullah Zadran",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 2703,
+          "cricsheet_id": "c6cc27f4",
+          "unique_name": "Wahidullah Zadran",
+          "evidence": [
+            "played: ilt20 2 matches (last 2025-01-19)",
+            "match name \"Wahidullah Zadran\"",
+            "register name \"Wahidullah Zadran\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "966",
+      "source_name": "Wanindu Hasaranga",
+      "status": "open",
+      "candidates": [
+        {
+          "player_key": 289,
+          "cricsheet_id": "a97c8ec2",
+          "unique_name": "PWH de Silva",
+          "evidence": [
+            "played: bpl 1 matches (last 2017-11-11), cpl 12 matches (last 2026-09-10), ilt20 26 matches (last 2025-02-05), ipl 37 matches (last 2025-05-20), lpl 59 matches (last 2026-08-05), t20i 93 matches (last 2026-09-19)",
+            "register_variant name \"Wanindu Hasaranga\""
+          ]
+        }
+      ]
+    },
+    {
+      "source_key": "1082",
+      "source_name": "Waseem Khanday",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1075",
+      "source_name": "Wesley Agar",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "987",
+      "source_name": "William Orourke",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1010",
+      "source_name": "William Sutherland",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1070",
+      "source_name": "Yash Dicholkar",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "1000",
+      "source_name": "Yashvardhan Dalal",
+      "status": "open",
+      "candidates": []
+    },
+    {
+      "source_key": "983",
+      "source_name": "Zak Foulkes",
+      "status": "open",
+      "candidates": []
+    }
+  ]
+}

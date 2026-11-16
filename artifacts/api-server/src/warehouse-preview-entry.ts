@@ -4,15 +4,19 @@ import { rename } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { loadWarehouseSnapshot } from "./services/turso-snapshot.js";
+import { SCOUT_PATHS, IPL_PATHS, ANALYTICS_PATHS, LAPTOP_ONLY_PATHS, ANALYTICS_KEY_HEADER, CLIENT_IP_HEADER } from "./lib/analytics-routes.js";
 import app from "./app.js";
 
-const scoutPaths = new Set(["/api/scout/rankings", "/api/scout/t20/suggestions"]);
-const iplPaths = new Set([
-  "/api/ipl/overview", "/api/ipl/seasons", "/api/ipl/player-career-stats",
-  "/api/ipl/player-season-stats", "/api/ipl/stats/query", "/api/ipl/stats/matchup",
-  "/api/ipl/stats/scenario", "/api/ipl/stats/drilldown",
-  "/api/stats/query", "/api/stats/scenario", "/api/stats/matchup", "/api/stats/drilldown",
-]);
+// Routing switch (Vercel env CRICFIELD_ANALYTICS_MODE):
+//   "turso"  (default, unset) — the existing path: Turso snapshot loaded into the function.
+//   "laptop"                  — forward to CRICFIELD_ANALYTICS_ORIGIN; if it is down, an explicit 503.
+//   "laptop-then-turso"       — forward; if the laptop is down, fall back to the Turso path.
+// Rolling back is unsetting the variable and redeploying.
+const mode = (process.env.CRICFIELD_ANALYTICS_MODE ?? "turso").trim().toLowerCase();
+const laptopOrigin = process.env.CRICFIELD_ANALYTICS_ORIGIN?.trim();
+const laptopKey = process.env.CRICFIELD_ANALYTICS_KEY?.trim();
+const laptopEnabled = (mode === "laptop" || mode === "laptop-then-turso") && !!laptopOrigin && !!laptopKey;
+const LAPTOP_TIMEOUT_MS = 25_000;
 
 const warehouseDirectory = mkdtempSync(join(tmpdir(), "cricfield-preview-"));
 const scoutPath = join(warehouseDirectory, "global.db");
@@ -56,18 +60,60 @@ function json(res: ServerResponse, status: number, error: string) {
   res.end(JSON.stringify({ error }));
 }
 
+/**
+ * One attempt, no retries (a struggling laptop must not be hammered). Returns false when the laptop could not
+ * answer, so the caller decides between the Turso fallback and an explicit 503. Only JSON is relayed: an HTML
+ * error page from the tunnel is a failure, never a "successful" response.
+ */
+async function forwardToLaptop(req: IncomingMessage, res: ServerResponse, pathAndQuery: string): Promise<boolean> {
+  const client = String(req.headers["x-forwarded-for"] ?? "").split(",")[0].trim();
+  try {
+    const upstream = await fetch(new URL(pathAndQuery, laptopOrigin), {
+      headers: { [ANALYTICS_KEY_HEADER]: laptopKey!, ...(client ? { [CLIENT_IP_HEADER]: client } : {}), accept: "application/json" },
+      redirect: "error",
+      signal: AbortSignal.timeout(LAPTOP_TIMEOUT_MS),
+    });
+    const type = upstream.headers.get("content-type") ?? "";
+    if (upstream.status >= 500 || !type.includes("application/json")) {
+      console.error("Laptop analytics backend failed", upstream.status, type.split(";")[0]);
+      await upstream.body?.cancel();
+      return false;
+    }
+    const body = Buffer.from(await upstream.arrayBuffer());
+    // The data is immutable between warehouse rebuilds, so the CDN may hold successes; errors are never cached.
+    const cache = upstream.status === 200 ? "public, max-age=0, s-maxage=600, stale-while-revalidate=86400" : "no-store";
+    const headers: Record<string, string> = { "Content-Type": "application/json", "Cache-Control": cache, "X-CricField-Backend": "laptop" };
+    const retryAfter = upstream.headers.get("retry-after");
+    if (retryAfter) headers["Retry-After"] = retryAfter;
+    res.writeHead(upstream.status, headers);
+    res.end(body);
+    return true;
+  } catch (error) {
+    console.error("Laptop analytics backend unreachable", error instanceof Error ? error.name : "Error");
+    return false;
+  }
+}
+
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   const target = new URL(req.url ?? "/", "http://localhost");
   const path = (target.searchParams.get("__warehouseRoute") ?? target.pathname).replace(/\/$/, "");
   target.searchParams.delete("__warehouseRoute");
   req.url = path + target.search;
-  const isScout = scoutPaths.has(path);
-  if (!isScout && !iplPaths.has(path)) return json(res, 404, "not_found");
+  if (!ANALYTICS_PATHS.has(path)) return json(res, 404, "not_found");
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
     return json(res, 405, "method_not_allowed");
   }
 
+  if (laptopEnabled) {
+    if (await forwardToLaptop(req, res, req.url)) return;
+    if (mode === "laptop" || LAPTOP_ONLY_PATHS.has(path)) return json(res, 503, "analytics_backend_unavailable");
+  } else if (LAPTOP_ONLY_PATHS.has(path)) {
+    return json(res, 404, "not_found"); // unchanged behaviour: these were never served from the Turso path
+  }
+
+  const isScout = SCOUT_PATHS.has(path);
+  if (!isScout && !IPL_PATHS.has(path)) return json(res, 404, "not_found");
   try {
     process.env.CRICFIELD_DB_READONLY = "1";
     process.env.CRICFIELD_SCOUT_DB_PATH = scoutPath;
@@ -81,7 +127,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
     return app(req, res);
   } catch (error) {
-    console.error("Warehouse preview initialization failed", error instanceof Error ? error.name : "Error");
+    // Messages here are this module's own fixed strings (no secrets), so log them: the bare name hid the cause.
+    console.error("Warehouse preview initialization failed", error instanceof Error ? `${error.name}: ${error.message}` : "Error");
     return json(res, 503, isScout ? "global_warehouse_unavailable" : "ipl_warehouse_unavailable");
   }
 }

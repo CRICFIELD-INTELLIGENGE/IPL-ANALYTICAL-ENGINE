@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-15T14:42:13.383Z",
+  "generatedAt": "2026-11-16T20:16:06.068Z",
   "licence": "Cricsheet match data: Open Data Commons Attribution License (ODC-BY 1.0), https://opendatacommons.org/licenses/by/1-0/ — see https://cricsheet.org/licensing/",
   "competitions": [
     {
       "code": "ipl",
       "name": "Indian Premier League",
-      "archive": "raw/cricsheet/archives/ipl_json/20261007T170516Z_5757e042.zip",
-      "archiveSha256": "5757e04287179767ff8495f02902bd13812b9572ec8fa2ac1347ec2e9c6d4709",
-      "archiveLastModified": "Wed, 07 Oct 2026 17:05:16 GMT",
+      "archive": "raw/cricsheet/archives/ipl_json/20261103T181030Z_46ff2f5e.zip",
+      "archiveSha256": "46ff2f5e41147510a55502e52ea8761b216a319974cad907d6ff2d8c2d4be495",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:10:30 GMT",
       "seasons": [
         {
           "season_label": "2007/08",
@@ -149,9 +149,9 @@
     {
       "code": "smat",
       "name": "Syed Mushtaq Ali Trophy",
-      "archive": "raw/cricsheet/archives/sma_json/20261007T170607Z_8e4e376e.zip",
-      "archiveSha256": "8e4e376ec5dc68315c62eb5311b093e1c5910b7a241801cb1470148bec2a4d69",
-      "archiveLastModified": "Wed, 07 Oct 2026 17:06:07 GMT",
+      "archive": "raw/cricsheet/archives/sma_json/20261103T181130Z_21730462.zip",
+      "archiveSha256": "21730462c5fa751eb898df991906abb07c5426d310ef5ee133bc801be1edd7ef",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:11:30 GMT",
       "seasons": [
         {
           "season_label": "2015/16",
@@ -223,9 +223,9 @@
     {
       "code": "bbl",
       "name": "Big Bash League",
-      "archive": "raw/cricsheet/archives/bbl_json/20261007T170410Z_7946b113.zip",
-      "archiveSha256": "7946b113c55ff4be695b2f0f7fccd12b8ce8afd652a67784a81bd6109f9b5907",
-      "archiveLastModified": "Wed, 07 Oct 2026 17:04:10 GMT",
+      "archive": "raw/cricsheet/archives/bbl_json/20261103T180915Z_f1356db6.zip",
+      "archiveSha256": "f1356db6bd48d90282000b4b978f979f529e34001358277695af24dbac236fbf",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:09:15 GMT",
       "seasons": [
         {
           "season_label": "2011/12",
@@ -339,9 +339,9 @@
     {
       "code": "sa20",
       "name": "SA20",
-      "archive": "raw/cricsheet/archives/sat_json/20261007T170600Z_d9a9ec2d.zip",
-      "archiveSha256": "d9a9ec2dc54a54d2ef6c4d4f83f52054fdd923388587cfea4f863ad2ece9e14c",
-      "archiveLastModified": "Wed, 07 Oct 2026 17:06:00 GMT",
+      "archive": "raw/cricsheet/archives/sat_json/20261103T181121Z_6db3a865.zip",
+      "archiveSha256": "6db3a8654554be05d3da5a28e687385c1a494636a741a926abf03cc90383fb55",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:11:21 GMT",
       "seasons": [
         {
           "season_label": "2022/23",
@@ -378,9 +378,9 @@
     {
       "code": "cpl",
       "name": "Caribbean Premier League",
-      "archive": "raw/cricsheet/archives/cpl_json/20261007T170508Z_4b2f090b.zip",
-      "archiveSha256": "4b2f090bea0d3fe3f710cf2331b2f8f4c3435a70675518528d5d0bd234440463",
-      "archiveLastModified": "Wed, 07 Oct 2026 17:05:08 GMT",
+      "archive": "raw/cricsheet/archives/cpl_json/20261103T181021Z_7faf3a13.zip",
+      "archiveSha256": "7faf3a13d85f9f33e9533c69b252a20052171868ea772b08fdfa5bd833f074c9",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:10:21 GMT",
       "seasons": [
         {
           "season_label": "2013",
@@ -487,9 +487,9 @@
     {
       "code": "ilt20",
       "name": "International League T20",
-      "archive": "raw/cricsheet/archives/ilt_json/20261007T170514Z_3d3776c3.zip",
-      "archiveSha256": "3d3776c37d04d5faba14848d5b7853c5bfbb50343587f321466a07f32f99829a",
-      "archiveLastModified": "Wed, 07 Oct 2026 17:05:14 GMT",
+      "archive": "raw/cricsheet/archives/ilt_json/20261103T181029Z_27f59c88.zip",
+      "archiveSha256": "27f59c882daa99186ade2bab29f7c124b088a7fc21b049c41321c0ad7c28859a",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:10:29 GMT",
       "seasons": [
         {
           "season_label": "2022/23",
@@ -848,50 +848,518 @@
       ],
       "matches": 3649,
       "deliveries": 820658
-    }
-  ],
-  "notLoaded": [
+    },
     {
       "code": "psl",
       "name": "Pakistan Super League",
-      "batch": 2,
-      "note": "Awaiting Batch 2 approval."
+      "archive": "raw/cricsheet/archives/psl_json/20261103T181106Z_59222dd5.zip",
+      "archiveSha256": "59222dd5bec34d7a1d4510f49bbfad3a98bed21582865afe061c91defeeabef0",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:11:06 GMT",
+      "seasons": [
+        {
+          "season_label": "2015/16",
+          "season_year": 2016,
+          "start_date": "2016-02-04",
+          "end_date": "2016-02-23",
+          "matches": 23
+        },
+        {
+          "season_label": "2016/17",
+          "season_year": 2017,
+          "start_date": "2017-02-09",
+          "end_date": "2017-03-05",
+          "matches": 24
+        },
+        {
+          "season_label": "2017/18",
+          "season_year": 2018,
+          "start_date": "2018-02-22",
+          "end_date": "2018-03-25",
+          "matches": 33
+        },
+        {
+          "season_label": "2018/19",
+          "season_year": 2019,
+          "start_date": "2019-02-14",
+          "end_date": "2019-03-17",
+          "matches": 34
+        },
+        {
+          "season_label": "2019/20",
+          "season_year": 2020,
+          "start_date": "2020-02-20",
+          "end_date": "2020-03-15",
+          "matches": 28
+        },
+        {
+          "season_label": "2020/21",
+          "season_year": 2020,
+          "start_date": "2020-11-14",
+          "end_date": "2021-03-03",
+          "matches": 18
+        },
+        {
+          "season_label": "2021",
+          "season_year": 2021,
+          "start_date": "2021-06-09",
+          "end_date": "2021-06-24",
+          "matches": 20
+        },
+        {
+          "season_label": "2021/22",
+          "season_year": 2022,
+          "start_date": "2022-01-27",
+          "end_date": "2022-02-27",
+          "matches": 34
+        },
+        {
+          "season_label": "2022/23",
+          "season_year": 2023,
+          "start_date": "2023-02-13",
+          "end_date": "2023-03-18",
+          "matches": 34
+        },
+        {
+          "season_label": "2023/24",
+          "season_year": 2024,
+          "start_date": "2024-02-17",
+          "end_date": "2024-03-18",
+          "matches": 32
+        },
+        {
+          "season_label": "2025",
+          "season_year": 2025,
+          "start_date": "2025-04-11",
+          "end_date": "2025-05-25",
+          "matches": 34
+        },
+        {
+          "season_label": "2026",
+          "season_year": 2026,
+          "start_date": "2026-03-26",
+          "end_date": "2026-05-03",
+          "matches": 43
+        }
+      ],
+      "matches": 357,
+      "deliveries": 83799
     },
     {
       "code": "bpl",
       "name": "Bangladesh Premier League",
-      "batch": 2,
-      "note": "Awaiting Batch 2 approval."
+      "archive": "raw/cricsheet/archives/bpl_json/20261103T180919Z_19507775.zip",
+      "archiveSha256": "1950777526c9dd8f2270f22ff8da389f789a34328bab407783d64fbcf148db3f",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:09:19 GMT",
+      "seasons": [
+        {
+          "season_label": "2011/12",
+          "season_year": 2012,
+          "start_date": "2012-02-11",
+          "end_date": "2012-02-29",
+          "matches": 17
+        },
+        {
+          "season_label": "2012/13",
+          "season_year": 2013,
+          "start_date": "2013-01-18",
+          "end_date": "2013-02-19",
+          "matches": 38
+        },
+        {
+          "season_label": "2015/16",
+          "season_year": 2015,
+          "start_date": "2015-11-22",
+          "end_date": "2015-12-15",
+          "matches": 31
+        },
+        {
+          "season_label": "2016/17",
+          "season_year": 2016,
+          "start_date": "2016-11-08",
+          "end_date": "2016-12-09",
+          "matches": 45
+        },
+        {
+          "season_label": "2017/18",
+          "season_year": 2017,
+          "start_date": "2017-11-04",
+          "end_date": "2017-12-12",
+          "matches": 44
+        },
+        {
+          "season_label": "2018/19",
+          "season_year": 2019,
+          "start_date": "2019-01-05",
+          "end_date": "2019-02-08",
+          "matches": 45
+        },
+        {
+          "season_label": "2019/20",
+          "season_year": 2019,
+          "start_date": "2019-12-11",
+          "end_date": "2020-01-17",
+          "matches": 46
+        },
+        {
+          "season_label": "2021/22",
+          "season_year": 2022,
+          "start_date": "2022-01-21",
+          "end_date": "2022-02-18",
+          "matches": 32
+        },
+        {
+          "season_label": "2022/23",
+          "season_year": 2023,
+          "start_date": "2023-01-06",
+          "end_date": "2023-02-16",
+          "matches": 46
+        },
+        {
+          "season_label": "2023/24",
+          "season_year": 2024,
+          "start_date": "2024-01-19",
+          "end_date": "2024-03-01",
+          "matches": 45
+        },
+        {
+          "season_label": "2024/25",
+          "season_year": 2024,
+          "start_date": "2024-12-30",
+          "end_date": "2025-02-07",
+          "matches": 46
+        },
+        {
+          "season_label": "2025/26",
+          "season_year": 2025,
+          "start_date": "2025-12-26",
+          "end_date": "2026-01-23",
+          "matches": 34
+        }
+      ],
+      "matches": 469,
+      "deliveries": 111232
     },
     {
       "code": "lpl",
       "name": "Lanka Premier League",
-      "batch": 2,
-      "note": "Awaiting Batch 2 approval."
+      "archive": "raw/cricsheet/archives/lpl_json/20261103T181040Z_092323a5.zip",
+      "archiveSha256": "092323a562e616c66cd7ada26b1f77e7f6a712de1ea6ea961b8def4f1431acbb",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:10:40 GMT",
+      "seasons": [
+        {
+          "season_label": "2020/21",
+          "season_year": 2020,
+          "start_date": "2020-11-26",
+          "end_date": "2020-12-16",
+          "matches": 23
+        },
+        {
+          "season_label": "2021/22",
+          "season_year": 2021,
+          "start_date": "2021-12-05",
+          "end_date": "2021-12-23",
+          "matches": 24
+        },
+        {
+          "season_label": "2022/23",
+          "season_year": 2022,
+          "start_date": "2022-12-06",
+          "end_date": "2022-12-23",
+          "matches": 24
+        },
+        {
+          "season_label": "2023",
+          "season_year": 2023,
+          "start_date": "2023-07-30",
+          "end_date": "2023-08-20",
+          "matches": 24
+        },
+        {
+          "season_label": "2024",
+          "season_year": 2024,
+          "start_date": "2024-07-01",
+          "end_date": "2024-07-21",
+          "matches": 24
+        },
+        {
+          "season_label": "2026",
+          "season_year": 2026,
+          "start_date": "2026-07-17",
+          "end_date": "2026-08-08",
+          "matches": 24
+        }
+      ],
+      "matches": 143,
+      "deliveries": 32917
     },
     {
       "code": "mlc",
       "name": "Major League Cricket",
-      "batch": 2,
-      "note": "Awaiting Batch 2 approval."
-    },
-    {
-      "code": "hundred",
-      "name": "The Hundred (men)",
-      "batch": 2,
-      "note": "Awaiting Batch 2 approval. 5-ball sets."
+      "archive": "raw/cricsheet/archives/mlc_json/20261103T181041Z_0e54cad2.zip",
+      "archiveSha256": "0e54cad247f1f26e7ee803f6e69ce6100166e66022f3ac5818e227855502db0b",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:10:41 GMT",
+      "seasons": [
+        {
+          "season_label": "2023",
+          "season_year": 2023,
+          "start_date": "2023-07-13",
+          "end_date": "2023-07-30",
+          "matches": 19
+        },
+        {
+          "season_label": "2024",
+          "season_year": 2024,
+          "start_date": "2024-07-05",
+          "end_date": "2024-07-28",
+          "matches": 23
+        },
+        {
+          "season_label": "2025",
+          "season_year": 2025,
+          "start_date": "2025-06-12",
+          "end_date": "2025-07-13",
+          "matches": 33
+        },
+        {
+          "season_label": "2026",
+          "season_year": 2026,
+          "start_date": "2026-06-18",
+          "end_date": "2026-07-18",
+          "matches": 34
+        }
+      ],
+      "matches": 109,
+      "deliveries": 25529
     },
     {
       "code": "blast",
       "name": "T20 Blast",
-      "batch": 2,
-      "note": "Awaiting Batch 2 approval."
+      "archive": "raw/cricsheet/archives/ntb_json/20261103T181043Z_76d57069.zip",
+      "archiveSha256": "76d57069c4d2db9a844c9a6716f6d350fb9965d91f7889cfdb26d96fb59649ab",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:10:43 GMT",
+      "seasons": [
+        {
+          "season_label": "2014",
+          "season_year": 2014,
+          "start_date": "2014-05-16",
+          "end_date": "2014-08-23",
+          "matches": 122
+        },
+        {
+          "season_label": "2015",
+          "season_year": 2015,
+          "start_date": "2015-05-15",
+          "end_date": "2015-08-29",
+          "matches": 124
+        },
+        {
+          "season_label": "2016",
+          "season_year": 2016,
+          "start_date": "2016-05-20",
+          "end_date": "2016-08-20",
+          "matches": 121
+        },
+        {
+          "season_label": "2017",
+          "season_year": 2017,
+          "start_date": "2017-07-07",
+          "end_date": "2017-09-02",
+          "matches": 121
+        },
+        {
+          "season_label": "2018",
+          "season_year": 2018,
+          "start_date": "2018-07-04",
+          "end_date": "2018-09-15",
+          "matches": 126
+        },
+        {
+          "season_label": "2019",
+          "season_year": 2019,
+          "start_date": "2019-07-18",
+          "end_date": "2019-09-21",
+          "matches": 112
+        },
+        {
+          "season_label": "2020",
+          "season_year": 2020,
+          "start_date": "2020-08-27",
+          "end_date": "2020-10-04",
+          "matches": 89
+        },
+        {
+          "season_label": "2021",
+          "season_year": 2021,
+          "start_date": "2021-06-09",
+          "end_date": "2021-09-18",
+          "matches": 120
+        },
+        {
+          "season_label": "2022",
+          "season_year": 2022,
+          "start_date": "2022-05-25",
+          "end_date": "2022-07-16",
+          "matches": 130
+        },
+        {
+          "season_label": "2023",
+          "season_year": 2023,
+          "start_date": "2023-05-20",
+          "end_date": "2023-07-15",
+          "matches": 132
+        },
+        {
+          "season_label": "2024",
+          "season_year": 2024,
+          "start_date": "2024-05-30",
+          "end_date": "2024-09-14",
+          "matches": 126
+        },
+        {
+          "season_label": "2025",
+          "season_year": 2025,
+          "start_date": "2025-05-29",
+          "end_date": "2025-09-13",
+          "matches": 132
+        },
+        {
+          "season_label": "2026",
+          "season_year": 2026,
+          "start_date": "2026-05-22",
+          "end_date": "2026-07-18",
+          "matches": 115
+        }
+      ],
+      "matches": 1570,
+      "deliveries": 360545
     },
     {
       "code": "supersmash",
       "name": "Super Smash (men)",
+      "archive": "raw/cricsheet/archives/ssm_male_json/20261103T181136Z_4fcbe795.zip",
+      "archiveSha256": "4fcbe7954998f5c969d46c37b19a33b39a80d71eb2a72467d7b1136f1f95222b",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:11:36 GMT",
+      "seasons": [
+        {
+          "season_label": "2012/13",
+          "season_year": 2013,
+          "start_date": "2013-01-20",
+          "end_date": "2013-01-20",
+          "matches": 1
+        },
+        {
+          "season_label": "2013/14",
+          "season_year": 2014,
+          "start_date": "2014-01-03",
+          "end_date": "2014-01-18",
+          "matches": 3
+        },
+        {
+          "season_label": "2017/18",
+          "season_year": 2017,
+          "start_date": "2017-12-13",
+          "end_date": "2018-01-20",
+          "matches": 26
+        },
+        {
+          "season_label": "2018/19",
+          "season_year": 2018,
+          "start_date": "2018-12-22",
+          "end_date": "2019-02-17",
+          "matches": 28
+        },
+        {
+          "season_label": "2019/20",
+          "season_year": 2019,
+          "start_date": "2019-12-13",
+          "end_date": "2020-01-19",
+          "matches": 32
+        },
+        {
+          "season_label": "2020/21",
+          "season_year": 2020,
+          "start_date": "2020-12-24",
+          "end_date": "2021-02-13",
+          "matches": 32
+        },
+        {
+          "season_label": "2021/22",
+          "season_year": 2021,
+          "start_date": "2021-11-26",
+          "end_date": "2022-01-29",
+          "matches": 32
+        },
+        {
+          "season_label": "2022/23",
+          "season_year": 2022,
+          "start_date": "2022-12-23",
+          "end_date": "2023-02-11",
+          "matches": 28
+        },
+        {
+          "season_label": "2023/24",
+          "season_year": 2023,
+          "start_date": "2023-12-19",
+          "end_date": "2024-01-28",
+          "matches": 30
+        },
+        {
+          "season_label": "2024/25",
+          "season_year": 2024,
+          "start_date": "2024-12-27",
+          "end_date": "2025-02-02",
+          "matches": 29
+        },
+        {
+          "season_label": "2025/26",
+          "season_year": 2025,
+          "start_date": "2025-12-26",
+          "end_date": "2026-01-31",
+          "matches": 29
+        }
+      ],
+      "matches": 270,
+      "deliveries": 61502
+    },
+    {
+      "code": "npl",
+      "name": "Nepal Premier League",
+      "archive": "raw/cricsheet/archives/npl_json/20261103T181141Z_c530fd14.zip",
+      "archiveSha256": "c530fd1481260d219f7e100a59a8367c047ea5c0069f728420bd53b732cbb5f6",
+      "archiveLastModified": "Tue, 03 Nov 2026 18:11:41 GMT",
+      "seasons": [
+        {
+          "season_label": "2024/25",
+          "season_year": 2024,
+          "start_date": "2024-11-30",
+          "end_date": "2024-12-21",
+          "matches": 32
+        },
+        {
+          "season_label": "2025/26",
+          "season_year": 2025,
+          "start_date": "2025-11-17",
+          "end_date": "2025-12-13",
+          "matches": 32
+        },
+        {
+          "season_label": "2026/27",
+          "season_year": 2026,
+          "start_date": "2026-10-26",
+          "end_date": "2026-11-03",
+          "matches": 12
+        }
+      ],
+      "matches": 76,
+      "deliveries": 17553
+    }
+  ],
+  "notLoaded": [
+    {
+      "code": "hundred",
+      "name": "The Hundred (men)",
       "batch": 2,
-      "note": "Awaiting Batch 2 approval."
+      "note": "Excluded: 100-ball format, not standard T20; never aggregated with T20."
     }
   ]
 }
