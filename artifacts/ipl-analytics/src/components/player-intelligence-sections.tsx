@@ -1266,8 +1266,9 @@ export function PlayerIntelligenceHub({
   );
 }
 
+
 // ═══════════════════════════════════════════════════════════════════════════
-// 8. HEAD-TO-HEAD SHOT ZONE DISTRIBUTION & GROUND VISUAL CONTROL
+// 8. HEAD-TO-HEAD SHOT ZONE DISTRIBUTION & GROUND VISUAL CONTROL (v2)
 // ═══════════════════════════════════════════════════════════════════════════
 export function HeadToHeadGroundVisual({
   batterName,
@@ -1278,202 +1279,307 @@ export function HeadToHeadGroundVisual({
   bowlerName: string;
   matchupData?: any;
 }) {
-  const [activeZone, setActiveZone] = useState<string>("Mid-Wicket / Long-On");
-  const [viewStyle, setViewStyle] = useState<"ground" | "spatial">("ground");
+  const [activeZone, setActiveZone] = useState<string>("mid-wicket");
+  const [viewStyle, setViewStyle] = useState<"ground" | "heatmap" | "phase">("ground");
 
-  const SECTORS = [
-    { id: "third-man", name: "Third Man / Point", runs: 28, balls: 18, sr: 155.6, color: "#06B6D4" },
-    { id: "cover", name: "Cover / Extra Cover", runs: 42, balls: 29, sr: 144.8, color: "#3B82F6" },
-    { id: "long-off", name: "Long Off", runs: 34, balls: 20, sr: 170.0, color: "#8B5CF6" },
-    { id: "long-on", name: "Long On", runs: 58, balls: 31, sr: 187.1, color: "#10B981" },
-    { id: "mid-wicket", name: "Mid-Wicket / Cow Corner", runs: 64, balls: 34, sr: 188.2, color: "#10B981" },
-    { id: "square-leg", name: "Square Leg", runs: 30, balls: 22, sr: 136.4, color: "#F59E0B" },
-    { id: "fine-leg", name: "Fine Leg", runs: 24, balls: 15, sr: 160.0, color: "#EC4899" },
-    { id: "straight", name: "Straight Down the Ground", runs: 38, balls: 21, sr: 180.9, color: "#6366F1" },
+  const totalRuns   = matchupData?.runs        ?? 318;
+  const totalBalls  = matchupData?.balls       ?? 196;
+  const totalDismissals = matchupData?.dismissals ?? 4;
+  const matchupSR   = matchupData?.sr ? matchupData.sr.toFixed(1) : "162.2";
+  const dotPct      = matchupData?.dotPct      ?? "24.1";
+
+  interface Sector {
+    id: string; name: string; short: string;
+    cx: number; cy: number;
+    runs: number; balls: number; sr: number;
+    color: string; intensity: number;
+  }
+
+  const SECTORS: Sector[] = [
+    { id: "fine-leg",    name: "Fine Leg",           short: "FL",  cx: 120, cy: 95,  runs: 24, balls: 15, sr: 160.0, color: "#EC4899", intensity: 0.38 },
+    { id: "straight",   name: "Straight",            short: "STR", cx: 200, cy: 52,  runs: 38, balls: 21, sr: 180.9, color: "#6366F1", intensity: 0.52 },
+    { id: "third-man",  name: "Third Man",           short: "3M",  cx: 282, cy: 94,  runs: 28, balls: 18, sr: 155.6, color: "#06B6D4", intensity: 0.44 },
+    { id: "cover",      name: "Cover / Extra Cover", short: "COV", cx: 325, cy: 192, runs: 42, balls: 29, sr: 144.8, color: "#3B82F6", intensity: 0.60 },
+    { id: "long-off",   name: "Long Off",            short: "LO",  cx: 285, cy: 304, runs: 34, balls: 20, sr: 170.0, color: "#8B5CF6", intensity: 0.49 },
+    { id: "long-on",    name: "Long On",             short: "LON", cx: 200, cy: 340, runs: 58, balls: 31, sr: 187.1, color: "#10B981", intensity: 0.78 },
+    { id: "mid-wicket", name: "Mid-Wicket",          short: "MW",  cx: 90,  cy: 282, runs: 64, balls: 34, sr: 188.2, color: "#10B981", intensity: 0.92 },
+    { id: "square-leg", name: "Square Leg",          short: "SL",  cx: 68,  cy: 192, runs: 30, balls: 22, sr: 136.4, color: "#F59E0B", intensity: 0.42 },
+  ];
+
+  const activeSector = SECTORS.find(s => s.id === activeZone) ?? SECTORS[6];
+  const maxRuns = Math.max(...SECTORS.map(s => s.runs));
+
+  const PHASES = [
+    { label: "Powerplay", overs: "1–6",   runs: matchupData?.phaseSplit?.powerplay?.runs ?? 68,  balls: matchupData?.phaseSplit?.powerplay?.balls ?? 42, wkts: matchupData?.phaseSplit?.powerplay?.wkts ?? 1,  color: "#10B981" },
+    { label: "Middle",    overs: "7–15",  runs: matchupData?.phaseSplit?.middle?.runs    ?? 142, balls: matchupData?.phaseSplit?.middle?.balls    ?? 88, wkts: matchupData?.phaseSplit?.middle?.wkts    ?? 2,  color: "#6366F1" },
+    { label: "Death",     overs: "16–20", runs: matchupData?.phaseSplit?.death?.runs     ?? 108, balls: matchupData?.phaseSplit?.death?.balls     ?? 66, wkts: matchupData?.phaseSplit?.death?.wkts     ?? 1,  color: "#F59E0B" },
   ];
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-[#08101F] p-5 sm:p-6 shadow-2xl space-y-4">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
-        <div>
+    <div className="rounded-3xl border border-amber-500/20 bg-gradient-to-b from-[#0d1520] to-[#08101F] shadow-2xl overflow-hidden">
+
+      {/* ── Cinematic Header ── */}
+      <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 pt-5 pb-4 border-b border-white/10">
+        <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-transparent to-emerald-500/5 pointer-events-none" />
+        <div className="relative">
           <span className="text-[10px] font-mono font-black uppercase tracking-widest text-amber-400 flex items-center gap-1.5">
             <Target className="w-3.5 h-3.5" />
-            HEAD-TO-HEAD SHOT ZONE DISTRIBUTION
+            HEAD VS HEAD · SHOT ZONE CONTROL
           </span>
           <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-white mt-0.5">
-            {batterName} vs {bowlerName} — Shot Zone Control
+            {batterName} <span className="text-amber-400/60 font-normal">vs</span> {bowlerName}
           </h3>
-          <p className="text-xs text-white/50">
-            Spatial distribution of balls faced, boundary execution, and scoring velocity across ground sectors.
+          <p className="text-[11px] text-white/40 mt-0.5">
+            Spatial distribution · boundary heat · scoring velocity across all ground sectors
           </p>
         </div>
-
-        {/* View Toggle */}
-        <div className="flex items-center gap-1.5 p-1 bg-white/5 border border-white/10 rounded-xl">
-          <button
-            onClick={() => setViewStyle("ground")}
-            className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer ${
-              viewStyle === "ground" ? "bg-amber-400 text-slate-950 font-black shadow-md" : "text-white/50 hover:text-white"
-            }`}
-          >
-            Ground Visual
-          </button>
-          <button
-            onClick={() => setViewStyle("spatial")}
-            className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer ${
-              viewStyle === "spatial" ? "bg-amber-400 text-slate-950 font-black shadow-md" : "text-white/50 hover:text-white"
-            }`}
-          >
-            Density Grid
-          </button>
+        {/* Summary Metrics */}
+        <div className="relative flex items-center gap-3 shrink-0">
+          <div className="text-center px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/10">
+            <div className="text-[8px] font-mono uppercase text-white/40">Balls</div>
+            <div className="text-base font-black font-mono text-white">{totalBalls}</div>
+          </div>
+          <div className="text-center px-3 py-1.5 rounded-xl bg-primary/10 border border-primary/20">
+            <div className="text-[8px] font-mono uppercase text-primary/70">Matchup SR</div>
+            <div className="text-base font-black font-mono text-primary">{matchupSR}</div>
+          </div>
+          <div className="text-center px-3 py-1.5 rounded-xl bg-red-500/10 border border-red-500/20">
+            <div className="text-[8px] font-mono uppercase text-red-400/70">Dismissals</div>
+            <div className="text-base font-black font-mono text-red-400">{totalDismissals}</div>
+          </div>
         </div>
       </div>
 
-      {viewStyle === "ground" ? (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
-          {/* Ground Visual Map (Left, 7 cols) */}
-          <div className="lg:col-span-7 flex flex-col items-center justify-center p-4 bg-gradient-to-b from-emerald-950/20 via-[#06111f] to-[#040914] rounded-2xl border border-emerald-500/20 relative overflow-hidden min-h-[360px]">
-            {/* SVG Cricket Ground with boundary rope and sectors */}
-            <svg viewBox="0 0 400 400" className="w-full max-w-[360px] h-auto select-none">
-              <defs>
-                <radialGradient id="turfGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#064e3b" stopOpacity="0.6" />
-                  <stop offset="70%" stopColor="#022c22" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#021a14" stopOpacity="0.95" />
-                </radialGradient>
-              </defs>
+      {/* ── View Toggle Tabs ── */}
+      <div className="flex items-center gap-0 px-5 pt-3">
+        {(["ground", "heatmap", "phase"] as const).map(v => (
+          <button
+            key={v}
+            onClick={() => setViewStyle(v)}
+            className={`px-4 py-1.5 rounded-t-xl text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer border-b-2 ${
+              viewStyle === v
+                ? "text-amber-400 border-amber-400 bg-amber-400/5"
+                : "text-white/35 border-transparent hover:text-white/70"
+            }`}
+          >
+            {v === "ground" ? "🏟 Ground Visual" : v === "heatmap" ? "🔥 Zone Heat" : "📊 Phase Splits"}
+          </button>
+        ))}
+      </div>
 
-              {/* Outer boundary ring */}
-              <ellipse cx="200" cy="200" rx="180" ry="165" fill="url(#turfGlow)" stroke="rgba(16,185,129,0.3)" strokeWidth="2.5" />
-              {/* Boundary rope marker */}
-              <ellipse cx="200" cy="200" rx="176" ry="161" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" strokeDasharray="4 4" />
+      <div className="p-5 sm:p-6 space-y-4">
 
-              {/* 30-yard circle */}
-              <ellipse cx="200" cy="200" rx="110" ry="98" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeDasharray="6 4" />
+        {/* ── GROUND VISUAL VIEW ── */}
+        {viewStyle === "ground" && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
 
-              {/* Sector Ray Lines */}
-              <line x1="200" y1="200" x2="200" y2="35" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-              <line x1="200" y1="200" x2="330" y2="70" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-              <line x1="200" y1="200" x2="380" y2="200" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-              <line x1="200" y1="200" x2="330" y2="330" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-              <line x1="200" y1="200" x2="200" y2="365" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-              <line x1="200" y1="200" x2="70" y2="330" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-              <line x1="200" y1="200" x2="20" y2="200" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-              <line x1="200" y1="200" x2="70" y2="70" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+            {/* SVG Ground (7 cols) */}
+            <div className="lg:col-span-7">
+              <div className="relative flex flex-col items-center justify-center p-4 bg-gradient-to-b from-emerald-950/25 via-[#060f1c] to-[#040912] rounded-2xl border border-emerald-500/15 overflow-hidden min-h-[380px]">
+                <div className="absolute top-0 left-1/4 w-24 h-24 bg-amber-400/5 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute top-0 right-1/4 w-24 h-24 bg-amber-400/5 rounded-full blur-2xl pointer-events-none" />
 
-              {/* Pitch in center */}
-              <rect x="194" y="170" width="12" height="60" rx="2" fill="#d97706" opacity="0.85" stroke="#b45309" strokeWidth="1" />
-              <line x1="190" y1="178" x2="210" y2="178" stroke="white" strokeWidth="1.5" />
-              <line x1="190" y1="222" x2="210" y2="222" stroke="white" strokeWidth="1.5" />
+                <svg viewBox="0 0 400 400" className="w-full max-w-[370px] h-auto select-none">
+                  <defs>
+                    <radialGradient id="h2hTurf" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#064e3b" stopOpacity="0.65" />
+                      <stop offset="65%" stopColor="#022c22" stopOpacity="0.82" />
+                      <stop offset="100%" stopColor="#011a12" stopOpacity="0.96" />
+                    </radialGradient>
+                  </defs>
 
-              {/* Interactive Shot Hotspots */}
-              {[
-                { name: "Fine Leg", cx: 120, cy: 90, runs: 24 },
-                { name: "Third Man", cx: 280, cy: 90, runs: 28 },
-                { name: "Point / Cover", cx: 320, cy: 190, runs: 42 },
-                { name: "Long Off", cx: 280, cy: 300, runs: 34 },
-                { name: "Long On", cx: 200, cy: 335, runs: 58 },
-                { name: "Mid-Wicket", cx: 90, cy: 280, runs: 64 },
-                { name: "Square Leg", cx: 70, cy: 190, runs: 30 },
-                { name: "Straight", cx: 200, cy: 55, runs: 38 },
-              ].map((spot) => (
-                <g
-                  key={spot.name}
-                  onClick={() => setActiveZone(spot.name)}
-                  className="cursor-pointer group"
+                  {/* Boundary rings */}
+                  <ellipse cx="200" cy="200" rx="183" ry="168" fill="url(#h2hTurf)" stroke="rgba(16,185,129,0.25)" strokeWidth="2" />
+                  <ellipse cx="200" cy="200" rx="179" ry="164" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="5 5" />
+                  <ellipse cx="200" cy="200" rx="112" ry="100" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="1" strokeDasharray="7 5" />
+                  <ellipse cx="200" cy="200" rx="55"  ry="48"  fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+
+                  {/* Sector rays */}
+                  {([[200,200,200,32],[200,200,330,67],[200,200,382,200],[200,200,330,334],[200,200,200,369],[200,200,69,334],[200,200,17,200],[200,200,69,67]] as [number,number,number,number][]).map(([x1,y1,x2,y2], i) => (
+                    <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+                  ))}
+
+                  {/* Pitch strip */}
+                  <rect x="194" y="166" width="12" height="68" rx="2" fill="#b45309" opacity="0.9" stroke="#92400e" strokeWidth="1" />
+                  <line x1="189" y1="174" x2="211" y2="174" stroke="white" strokeWidth="1.5" opacity="0.9" />
+                  <line x1="189" y1="226" x2="211" y2="226" stroke="white" strokeWidth="1.5" opacity="0.9" />
+
+                  {/* Shot Hotspots */}
+                  {SECTORS.map((spot) => {
+                    const isActive = spot.id === activeSector.id;
+                    const r = Math.min(26, Math.max(13, spot.runs / 2.4));
+                    return (
+                      <g key={spot.id} onClick={() => setActiveZone(spot.id)} className="cursor-pointer">
+                        {/* Glow halo */}
+                        <circle cx={spot.cx} cy={spot.cy} r={r + 9} fill={spot.color} fillOpacity={isActive ? 0.22 : spot.intensity * 0.09} className="transition-all" />
+                        {/* Main circle */}
+                        <circle
+                          cx={spot.cx} cy={spot.cy} r={r}
+                          fill={spot.color}
+                          fillOpacity={isActive ? 0.9 : 0.42 + spot.intensity * 0.25}
+                          stroke={isActive ? "white" : spot.color}
+                          strokeWidth={isActive ? 2 : 0.5}
+                          strokeOpacity={isActive ? 1 : 0.5}
+                          className="transition-all"
+                        />
+                        {/* Run count */}
+                        <text x={spot.cx} y={spot.cy + 4} textAnchor="middle" fill="white" fontSize="9" fontWeight="900" fontFamily="monospace">{spot.runs}</text>
+                        {/* Short label */}
+                        <text x={spot.cx} y={spot.cy - r - 4} textAnchor="middle" fill={isActive ? "white" : "rgba(255,255,255,0.55)"} fontSize="6.5" fontWeight="800">{spot.short}</text>
+                      </g>
+                    );
+                  })}
+                </svg>
+
+                {/* Legend */}
+                <div className="flex items-center justify-between w-full mt-2 px-1 text-[8px] font-mono text-white/40 border-t border-white/5 pt-2">
+                  <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" /> High Volume</span>
+                  <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400 inline-block" /> Pitch Axis</span>
+                  <span>Tap circles to inspect</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Panel (5 cols) */}
+            <div className="lg:col-span-5 space-y-3 flex flex-col">
+
+              {/* Active Zone card */}
+              <div
+                className="p-4 rounded-2xl border space-y-2"
+                style={{ background: `linear-gradient(135deg,${activeSector.color}12,#08101f)`, borderColor: `${activeSector.color}40` }}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] font-mono font-black uppercase tracking-wider" style={{ color: activeSector.color }}>Active Zone</span>
+                  <span className="px-2 py-0.5 rounded text-[8px] font-mono font-black text-white/60 bg-white/5">{activeSector.balls} balls</span>
+                </div>
+                <h4 className="text-sm font-black uppercase text-white">{activeSector.name}</h4>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { label: "Runs", value: String(activeSector.runs), color: activeSector.color },
+                    { label: "SR",   value: String(activeSector.sr),   color: "white" },
+                    { label: "Share",value: `${Math.round((activeSector.runs / totalRuns) * 100)}%`, color: "#fbbf24" },
+                  ].map(m => (
+                    <div key={m.label} className="text-center p-1.5 rounded-lg bg-black/30">
+                      <div className="text-[8px] text-white/40 uppercase font-mono">{m.label}</div>
+                      <div className="text-sm font-black font-mono" style={{ color: m.color }}>{m.value}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* All-zone bar chart */}
+              <div className="space-y-1.5 flex-1">
+                <div className="text-[9px] font-mono uppercase tracking-wider text-white/35 mb-1.5">All Zones · Run Volume</div>
+                {SECTORS.map(s => (
+                  <button key={s.id} onClick={() => setActiveZone(s.id)} className="w-full flex items-center gap-2 cursor-pointer group">
+                    <span className="text-[8px] font-mono text-white/45 w-9 text-right shrink-0">{s.short}</span>
+                    <div className="flex-1 h-2.5 bg-white/5 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all"
+                        style={{ width: `${(s.runs / maxRuns) * 100}%`, background: s.color, opacity: s.id === activeSector.id ? 0.9 : 0.42 + s.intensity * 0.2 }}
+                      />
+                    </div>
+                    <span className="text-[8px] font-mono font-black w-6 shrink-0" style={{ color: s.id === activeSector.id ? s.color : "rgba(255,255,255,0.35)" }}>{s.runs}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Quick stat grid */}
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                {[
+                  { label: "Off-Side %",  value: "54.2%", color: "text-cyan-400" },
+                  { label: "On-Side %",   value: "45.8%", color: "text-emerald-400" },
+                  { label: "Bnd Rate",    value: "62.8%", color: "text-amber-400" },
+                  { label: "Dot %",       value: `${dotPct}%`, color: "text-white" },
+                ].map(m => (
+                  <div key={m.label} className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 text-center">
+                    <div className="text-[8px] font-mono uppercase text-white/35">{m.label}</div>
+                    <div className={`text-sm font-black font-mono ${m.color}`}>{m.value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── HEATMAP VIEW ── */}
+        {viewStyle === "heatmap" && (
+          <div className="space-y-3">
+            <div className="text-[10px] font-mono uppercase tracking-wider text-white/40">
+              Zone intensity — size proportional to run volume · color = SR gradient
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {SECTORS.map(s => (
+                <div
+                  key={s.id}
+                  className="relative p-4 rounded-2xl border overflow-hidden cursor-pointer transition-all hover:scale-[1.02]"
+                  style={{ background: `linear-gradient(135deg,${s.color}20,#08101f 70%)`, borderColor: `${s.color}40` }}
+                  onClick={() => { setActiveZone(s.id); setViewStyle("ground"); }}
                 >
-                  <circle
-                    cx={spot.cx} cy={spot.cy}
-                    r={Math.min(22, Math.max(12, spot.runs / 2.5))}
-                    fill="#10B981"
-                    fillOpacity={activeZone === spot.name ? 0.85 : 0.45}
-                    stroke="#10B981"
-                    strokeWidth={activeZone === spot.name ? 2.5 : 1}
-                    className="transition-all hover:fill-opacity-90"
-                  />
-                  <text
-                    x={spot.cx} y={spot.cy + 3}
-                    textAnchor="middle"
-                    fill="white"
-                    fontSize="9"
-                    fontWeight="900"
-                    fontFamily="monospace"
+                  <div className="absolute bottom-0 left-0 right-0 h-1 rounded-b-2xl" style={{ background: s.color, opacity: s.intensity }} />
+                  <div className="text-[8px] font-mono uppercase text-white/50 mb-1 leading-tight">{s.name}</div>
+                  <div className="text-2xl font-black font-mono" style={{ color: s.color }}>{s.runs}</div>
+                  <div className="text-[9px] font-mono text-white/55">SR {s.sr}</div>
+                  <div className="text-[8px] font-mono text-white/30">{s.balls} balls</div>
+                  <div
+                    className="absolute top-2 right-2 text-[7px] font-black font-mono px-1.5 py-0.5 rounded"
+                    style={{ background: `${s.color}28`, color: s.color }}
                   >
-                    {spot.runs}
-                  </text>
-                  <text
-                    x={spot.cx} y={spot.cy - 12}
-                    textAnchor="middle"
-                    fill="rgba(255,255,255,0.7)"
-                    fontSize="7"
-                    fontWeight="700"
-                  >
-                    {spot.name.split(" ")[0]}
-                  </text>
-                </g>
+                    {Math.round(s.intensity * 100)}%
+                  </div>
+                </div>
               ))}
-            </svg>
-
-            {/* Field Legend */}
-            <div className="flex items-center justify-between w-full mt-3 px-2 text-[9px] font-mono text-white/50 border-t border-white/5 pt-2">
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400" /> High Scoring Zone</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400" /> 22-Yard Pitch Axis</span>
-              <span>Tap hotspots to inspect</span>
             </div>
           </div>
+        )}
 
-          {/* Sector Details (Right, 5 cols) */}
-          <div className="lg:col-span-5 space-y-3">
-            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400">Selected Sector</span>
-                <span className="px-2 py-0.5 rounded bg-amber-400/10 text-amber-300 text-[9px] font-mono font-bold">ACTIVE FIELD ZONE</span>
-              </div>
-              <h4 className="text-base font-black uppercase text-white">{activeZone}</h4>
-              <p className="text-xs text-white/60 leading-relaxed">
-                Aggressive scoring trajectory against {bowlerName}. Frequent boundary conversion through lofted drives and pull shots.
-              </p>
+        {/* ── PHASE SPLITS VIEW ── */}
+        {viewStyle === "phase" && (
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {PHASES.map(ph => (
+                <div
+                  key={ph.label}
+                  className="p-4 rounded-2xl border space-y-3"
+                  style={{ background: `linear-gradient(135deg,${ph.color}12,#08101f)`, borderColor: `${ph.color}30` }}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black uppercase" style={{ color: ph.color }}>{ph.label}</span>
+                    <span className="text-[9px] font-mono text-white/40">Overs {ph.overs}</span>
+                  </div>
+                  {ph.balls > 0 ? (
+                    <>
+                      <div className="text-2xl font-black font-mono text-white">{ph.runs} <span className="text-sm font-normal text-white/40">runs</span></div>
+                      <div className="grid grid-cols-3 gap-1.5 text-center">
+                        {[
+                          { label: "Balls", val: String(ph.balls), c: ph.color },
+                          { label: "SR",    val: ph.balls > 0 ? ((ph.runs / ph.balls) * 100).toFixed(1) : "—", c: "white" },
+                          { label: "Wkts",  val: String(ph.wkts), c: "#f87171" },
+                        ].map(m => (
+                          <div key={m.label} className="p-1.5 rounded-lg bg-black/30">
+                            <div className="text-[7px] font-mono uppercase text-white/35">{m.label}</div>
+                            <div className="text-sm font-black font-mono" style={{ color: m.c }}>{m.val}</div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-full rounded-full" style={{ width: `${Math.min(100, (ph.runs / 150) * 100)}%`, background: ph.color }} />
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-xs text-white/30 py-4 text-center">No deliveries in this phase</div>
+                  )}
+                </div>
+              ))}
             </div>
-
-            <div className="grid grid-cols-2 gap-2.5">
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-                <span className="text-[8px] font-mono uppercase text-white/40 block">Off-Side Scoring %</span>
-                <span className="text-lg font-black font-mono text-cyan-400 mt-0.5 block">54.2%</span>
-                <span className="text-[8px] text-white/40">Cover, Point &amp; Long-Off</span>
-              </div>
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-                <span className="text-[8px] font-mono uppercase text-white/40 block">On-Side Scoring %</span>
-                <span className="text-lg font-black font-mono text-emerald-400 mt-0.5 block">45.8%</span>
-                <span className="text-[8px] text-white/40">Mid-Wicket &amp; Long-On</span>
-              </div>
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-                <span className="text-[8px] font-mono uppercase text-white/40 block">Boundary Conversion</span>
-                <span className="text-lg font-black font-mono text-amber-400 mt-0.5 block">62.8%</span>
-                <span className="text-[8px] text-white/40">Runs from 4s &amp; 6s</span>
-              </div>
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-                <span className="text-[8px] font-mono uppercase text-white/40 block">Control Rating</span>
-                <span className="text-lg font-black font-mono text-white mt-0.5 block">89 / 100</span>
-                <span className="text-[8px] text-emerald-400">Low False Shot %</span>
-              </div>
+            <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 text-[11px] text-white/50 leading-relaxed">
+              <span className="text-primary font-bold">Phase Analysis:</span> {batterName} accumulates most runs in the middle overs against {bowlerName}, with a measured powerplay approach transitioning to aggressive targeting in the death. Dot ball exposure is lowest in the death phase.
             </div>
           </div>
-        </div>
-      ) : (
-        /* Spatial Density Matrix View */
-        <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-          <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
-            {SECTORS.map((s) => (
-              <div key={s.id} className="p-2.5 rounded-xl bg-[#0B1426] border border-white/5 space-y-1 text-center">
-                <span className="text-[8px] font-mono text-white/40 uppercase block truncate">{s.name}</span>
-                <span className="text-sm font-black font-mono text-white block">{s.runs} r</span>
-                <span className="text-[9px] font-mono text-emerald-400 block">SR {s.sr}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+        )}
+
+      </div>
     </div>
   );
 }
+
