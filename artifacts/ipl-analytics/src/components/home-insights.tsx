@@ -114,7 +114,7 @@ export default function HomeInsights({ team, limit = 4 }: { team?: string | null
           <Link key={item.key} href={item.href!} className="home-lead-story h-full min-h-0 block">
             <div className="bg-white dark:bg-[#081622] rounded-[14px] border border-slate-200 dark:border-[#19303c] overflow-hidden flex flex-col group hover:border-primary/40 transition-all cursor-pointer min-w-0 shadow-md dark:shadow-xl h-full">
               <div className="home-story-media relative w-full aspect-video overflow-hidden bg-slate-950 dark:bg-[#06111a]">
-                <LibraryMedia imageId={item.imageId} title={item.title} accent={meta.accent} code={code} teamName={meta.name} aspect={item.aspect} preserveAspectRatio={true} />
+                <LibraryMedia title={item.title} accent={meta.accent} code={code} teamName={meta.name} aspect={item.aspect} />
               </div>
               <div className="flex-1 min-h-0 p-4 flex flex-col justify-between border-t border-slate-100 dark:border-white/10 bg-slate-50/50 dark:bg-white/[0.02]">
                 <p className="font-bold text-sm sm:text-base leading-snug text-slate-900 dark:text-white/95 group-hover:text-primary transition-colors line-clamp-2 mb-2 tracking-tight">{item.title}</p>
