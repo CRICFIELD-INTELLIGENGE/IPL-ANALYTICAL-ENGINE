@@ -778,6 +778,24 @@ function getBowlerType(bowlerName: string, people?: Record<string, string>): Bow
   return t;
 }
 
+const bowlStyleCache = new Map<string, string | null>();
+/** Detailed style of a scorecard bowler, resolved the same way as getBowlerType (registry id first); null when unverified. */
+function bowlStyleOf(bowlerName: string, people?: Record<string, string>): string | null {
+  const cid = people?.[bowlerName];
+  const cacheKey = cid ?? `name:${bowlerName}`;
+  if (bowlStyleCache.has(cacheKey)) return bowlStyleCache.get(cacheKey)!;
+  const idx = getBioLookup();
+  let key = cid ? idx.idToKey.get(cid) : undefined;
+  if (!key && cid && idx.nameToIds.get(bowlerName)?.size === 1) {
+    const viaSquad = [...(idx.squadKeys.get(bowlerName) ?? [])];
+    if (viaSquad.length === 1) key = viaSquad[0];
+  }
+  const bio = key ? playerBios[key] : cid ? undefined : getPlayerBio(bowlerName);
+  const style = detailedBowlStyle(bio?.bowlStyle);
+  bowlStyleCache.set(cacheKey, style);
+  return style;
+}
+
 /**
  * Real per-ball detail for the ball at `ballIndex` of `overNum`.
  *
@@ -827,17 +845,60 @@ export interface QueryFilters {
   homeAway?: string;       // "All" | "Home" | "Away"
   chasingDefending?: string; // "All" | "Chasing" | "Defending"
   battingHand?: string;    // "All Batters" | "vs LHB" | "vs RHB" — hand of the batter faced (bowler-side filter)
-  batter?: string;         // filter to specific batter (for matchup)
-  bowler?: string;         // filter to specific bowler (for matchup)
+  batter?: string;         // filter to specific batter(s) (for matchup); several joined with "|"
+  bowler?: string;         // filter to specific bowler(s) (for matchup); several joined with "|"
+  dateFrom?: string;       // YYYY-MM-DD inclusive
+  dateTo?: string;         // YYYY-MM-DD inclusive
+  battingPosition?: string; // "openers" | "1".."11" | "7+" — the striker's position in the actual batting order
+  matchResult?: string;    // "won" | "lost" | "no result" — relative to the side the stat belongs to
+  bowlStyle?: string;      // a DETAILED_BOWL_STYLES id, from the verified bio bowling style
 }
 
 export const matchStateLimits = {
   minRequiredRate: 100,
+  maxRequiredRate: 100,
   minCurrentRate: 100,
+  maxCurrentRate: 100,
   minRunsNeeded: 400,
+  maxRunsNeeded: 400,
   minBallsLeft: 120,
+  maxBallsLeft: 120,
   minWicketsLeft: 10,
+  maxWicketsLeft: 10,
+  minTarget: 400,
+  maxTarget: 400,
+  minScore: 400,
+  maxScore: 400,
 } as const;
+
+/** Multi-select filter values travel as one string joined by "|" (venue names contain commas). */
+export const splitList = (value?: string): string[] =>
+  (value ?? "").split("|").map(s => s.trim()).filter(s => s && !/^all\b/i.test(s));
+
+/**
+ * Detailed bowling styles exposed by the Bowler Type filter. Each id matches a bio `bowlStyle` that names exactly
+ * one style; bios listing several styles ("Right arm Medium, Right arm Offbreak") match none, because the ball-level
+ * style can't be told from the scorecard.
+ */
+export const DETAILED_BOWL_STYLES: Record<string, RegExp> = {
+  "right-arm-fast": /^right[- ]arm fast$/,
+  "right-arm-fast-medium": /^right[- ]arm (fast[- ]medium|medium[- ]fast)$/,
+  "right-arm-medium": /^right[- ]arm medium$/,
+  "left-arm-fast": /^left[- ]arm fast$/,
+  "left-arm-fast-medium": /^left[- ]arm (fast[- ]medium|medium[- ]fast)$/,
+  "left-arm-medium": /^left[- ]arm medium$/,
+  "right-arm-off-spin": /^right[- ]arm off ?break$/,
+  "leg-spin": /^legbreak( googly)?$/,
+  "left-arm-orthodox": /^slow left[- ]arm orthodox$/,
+  "left-arm-wrist-spin": /^left[- ]arm wrist spin$/,
+};
+
+export function detailedBowlStyle(style: unknown): string | null {
+  const s = typeof style === "string" ? style.trim().toLowerCase() : "";
+  if (!s || s.includes(",")) return null;
+  for (const [id, re] of Object.entries(DETAILED_BOWL_STYLES)) if (re.test(s)) return id;
+  return null;
+}
 
 export type MatchStateFilters = Partial<Record<keyof typeof matchStateLimits, number>>;
 
@@ -878,22 +939,18 @@ function filterMatches(filters: QueryFilters | FieldFilters): string[] {
         if (!year || (seasonFrom && year < seasonFrom) || (seasonTo && year > seasonTo)) return false;
       }
 
-      const teamF = (filters as QueryFilters).team;
-      if (teamF && teamF !== "All Teams" && teamF !== "All" && teamF !== "all" && teamF !== "") {
-        if (!isMatchingTeam(m.team1, teamF) && !isMatchingTeam(m.team2, teamF)) return false;
-      }
+      const { dateFrom, dateTo } = filters as QueryFilters;
+      const day = String(m.date || "").slice(0, 10);
+      if ((dateFrom && day < dateFrom) || (dateTo && day > dateTo)) return false;
 
-      const oppF = (filters as QueryFilters).opponent;
-      if (oppF && oppF !== "All Opponents" && oppF !== "All" && oppF !== "all" && oppF !== "") {
-        if (!isMatchingTeam(m.team1, oppF) && !isMatchingTeam(m.team2, oppF)) return false;
-      }
+      const teams = splitList((filters as QueryFilters).team);
+      if (teams.length && !teams.some(t => isMatchingTeam(m.team1, t) || isMatchingTeam(m.team2, t))) return false;
 
-      const venueF = filters.venue;
-      if (venueF && venueF !== "All Venues" && venueF !== "Venue" && venueF !== "All" && venueF !== "all" && venueF !== "") {
-        const vN = normalizeVenueName(venueF).toLowerCase();
-        const mN = normalizeVenueName(m.venue || "").toLowerCase();
-        if (vN !== mN) return false;
-      }
+      const opponents = splitList((filters as QueryFilters).opponent);
+      if (opponents.length && !opponents.some(t => isMatchingTeam(m.team1, t) || isMatchingTeam(m.team2, t))) return false;
+
+      const venues = splitList(filters.venue).filter(v => v !== "Venue").map(v => normalizeVenueName(v).toLowerCase());
+      if (venues.length && !venues.includes(normalizeVenueName(m.venue || "").toLowerCase())) return false;
 
       // Match context: League / Playoffs / Final, resolved from the raw
       // Cricsheet event stage — see getMatchStage() for why m.match_type
@@ -999,12 +1056,17 @@ export async function aggregateQueryStats(filters: QueryFilters) {
 
 async function aggregateQueryStatsUncached(filters: QueryFilters) {
   const resolvedFilters = { ...filters };
+  const resolveList = async (value: string) =>
+    (await Promise.all(splitList(value).map(resolvePlayerDbName))).join("|");
   if (filters.batter && hasDb()) {
-    resolvedFilters.batter = await resolvePlayerDbName(filters.batter);
+    resolvedFilters.batter = await resolveList(filters.batter);
   }
   if (filters.bowler && hasDb()) {
-    resolvedFilters.bowler = await resolvePlayerDbName(filters.bowler);
+    resolvedFilters.bowler = await resolveList(filters.bowler);
   }
+  // The SQL path knows one team / venue / player and none of these dimensions.
+  const jsonOnly = !!(filters.dateFrom || filters.dateTo || filters.battingPosition || filters.matchResult || filters.bowlStyle) ||
+    [filters.team, filters.opponent, filters.venue, filters.batter, filters.bowler].some(v => splitList(v).length > 1);
 
   // The SQL-backed players table has no populated batting_style column, so
   // the "vs LHB"/"vs RHB" filter can only be honored via the JSON path,
@@ -1016,7 +1078,7 @@ async function aggregateQueryStatsUncached(filters: QueryFilters) {
   // the JSON path derives pressure per-ball from over/innings/wickets-fallen.
   const needsPressureFilter = !!filters.pressure && filters.pressure !== "Standard" && filters.pressure !== "Pressure" && filters.pressure !== "All";
 
-  if (hasDb() && !needsHandednessFilter && !needsPressureFilter && !filters.seasonFrom && !filters.seasonTo && !filters.scenarioTarget && !filters.matchState) {
+  if (hasDb() && !jsonOnly && !needsHandednessFilter && !needsPressureFilter && !filters.seasonFrom && !filters.seasonTo && !filters.scenarioTarget && !filters.matchState) {
     try {
       return await aggregateQueryStatsSql(resolvedFilters);
     } catch (err) {
@@ -1031,7 +1093,7 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
   const matchIds = filterMatches(filters);
 
   const batterStats = new Map<string, {
-    runs: number; balls: number; fours: number; sixes: number;
+    runs: number; balls: number; fours: number; sixes: number; dots: number;
     innings: Set<string>; notOuts: Set<string>; matchScores: Map<string, number>;
     ppRuns: number; ppBalls: number; middleRuns: number; middleBalls: number;
     deathRuns: number; deathBalls: number;
@@ -1052,10 +1114,22 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
     deliveryStats: Map<string, { runs: number; balls: number; wickets: number }>;
   }>();
 
-  const selectedTeam = filters.team && filters.team !== "All Teams" ? filters.team : null;
-  const selectedOpponent = filters.opponent && filters.opponent !== "All Opponents" ? filters.opponent : null;
-  const filterBatter = filters.batter ? filters.batter.toLowerCase() : null;
-  const filterBowler = filters.bowler ? filters.bowler.toLowerCase() : null;
+  const teamList = splitList(filters.team);
+  const opponentList = splitList(filters.opponent);
+  // Kept for the row's `team` label; a multi-team slice labels rows by the latest team.
+  const selectedTeam = teamList.length === 1 ? teamList[0] : null;
+  const inTeams = (list: string[], ...names: string[]) => !list.length || list.some(t => names.some(n => isMatchingTeam(n, t)));
+  const batterList = splitList(filters.batter);
+  const bowlerList = splitList(filters.bowler);
+  // Names were resolved to warehouse names upstream, so a list member is matched exactly; one name keeps the old loose match.
+  const inPlayers = (list: string[], name: string) => !list.length ||
+    (list.length === 1 ? playerNamesMatch(name, list[0]) : list.some(p => normalizePlayerName(p) === normalizePlayerName(name)));
+  const wantPosition = (filters.battingPosition ?? "").toLowerCase();
+  const positionOk = (pos: number) => !wantPosition || wantPosition === "all" ||
+    (wantPosition === "openers" ? pos <= 2 : wantPosition === "7+" ? pos >= 7 : pos === Number(wantPosition));
+  const wantResult = (filters.matchResult ?? "").toLowerCase();
+  const resultOk = (winner: string | undefined, side: string) => !wantResult || wantResult === "all" ||
+    (wantResult === "no result" ? !winner : !!winner && (isMatchingTeam(winner, side) === (wantResult === "won")));
 
   for (const matchId of matchIds) {
     const matchData = getMatchData(matchId);
@@ -1103,11 +1177,17 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
         + (firstInnings?.penalty_runs?.pre ?? 0) + (firstInnings?.penalty_runs?.post ?? 0) + 1;
       const scheduledOvers = Number(inn.target?.overs ?? matchData.info?.overs ?? 20);
       const scheduledBalls = Math.floor(scheduledOvers) * 6 + Math.round((scheduledOvers % 1) * 10);
+      const winner: string | undefined = matchData.info?.outcome?.winner;
+      const battingResultOk = resultOk(winner, battingTeam);
+      const bowlingResultOk = resultOk(winner, bowlingTeams[0] || "");
+      // Batting order = order of first appearance at the crease (striker, then non-striker).
+      const battingOrder = new Map<string, number>();
 
       inn.overs?.forEach((overObj: any) => {
         const overNum = overObj.over;
         if (!passesOverRangeFilter(overNum, (filters as QueryFilters).overRange)) {
           for (const ball of overObj.deliveries ?? []) {
+            for (const p of [ball.batter, ball.non_striker]) if (p && !battingOrder.has(p)) battingOrder.set(p, battingOrder.size + 1);
             wicketsFallenSoFar += (ball.wickets ?? []).filter((w: { kind: string }) => w.kind !== "retired hurt").length;
             runsSoFar += ball.runs?.total ?? 0;
             if (!ball.extras?.wides && !ball.extras?.noballs) legalBallsSoFar += 1;
@@ -1120,6 +1200,8 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
           const isWide  = !!ext.wides;
           const isNoball = !!ext.noballs;
           const legalBall = !isWide && !isNoball;
+          for (const p of [d.batter, d.non_striker]) if (p && !battingOrder.has(p)) battingOrder.set(p, battingOrder.size + 1);
+          const scoreBefore = runsSoFar;
 
           const wicketsBefore = wicketsFallenSoFar;
           wicketsFallenSoFar += (d.wickets ?? []).filter((w: { kind: string }) => w.kind !== "retired hurt").length;
@@ -1131,13 +1213,21 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
           if (legalBall) legalBallsSoFar += 1;
 
           const slice = filters.matchState;
+          // A chase-only value (required rate, runs needed, target) is null outside a chase, so any bound on it fails.
+          const outside = (value: number | null, min?: number, max?: number) =>
+            (min !== undefined || max !== undefined) && (value === null || (min !== undefined && value < min) || (max !== undefined && value > max));
           if (slice && (
-            (slice.minRequiredRate !== undefined && (requiredRate === null || requiredRate < slice.minRequiredRate)) ||
-            (slice.minCurrentRate !== undefined && (currentRate === null || currentRate < slice.minCurrentRate)) ||
-            (slice.minRunsNeeded !== undefined && (runsNeeded === null || runsNeeded < slice.minRunsNeeded)) ||
-            (slice.minBallsLeft !== undefined && ballsLeft < slice.minBallsLeft) ||
-            (slice.minWicketsLeft !== undefined && 10 - wicketsBefore < slice.minWicketsLeft)
+            outside(requiredRate, slice.minRequiredRate, slice.maxRequiredRate) ||
+            outside(currentRate, slice.minCurrentRate, slice.maxCurrentRate) ||
+            outside(runsNeeded, slice.minRunsNeeded, slice.maxRunsNeeded) ||
+            outside(ballsLeft, slice.minBallsLeft, slice.maxBallsLeft) ||
+            outside(10 - wicketsBefore, slice.minWicketsLeft, slice.maxWicketsLeft) ||
+            outside(chaseTarget, slice.minTarget, slice.maxTarget) ||
+            outside(scoreBefore, slice.minScore, slice.maxScore)
           )) return;
+
+          if (!positionOk(battingOrder.get(d.batter) ?? 99)) return;
+          if (filters.bowlStyle && filters.bowlStyle !== "all" && bowlStyleOf(d.bowler, matchData.info?.registry?.people) !== filters.bowlStyle) return;
 
           // Phase filter
           if (!passesPhaseFilter(overNum, filters)) return;
@@ -1179,23 +1269,22 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
           if (!passesRepresentationFilter(d.batter, filters, btShort)) return;
           if (!passesRepresentationFilter(d.bowler, filters, blShort)) return;
 
-          // Batter name filter (for matchup)
-          if (filters.batter && !playerNamesMatch(d.batter, filters.batter)) return;
-          // Bowler name filter (for matchup)
-          if (filters.bowler && !playerNamesMatch(d.bowler, filters.bowler)) return;
+          // Batter / bowler name filters (matchups)
+          if (!inPlayers(batterList, d.batter)) return;
+          if (!inPlayers(bowlerList, d.bowler)) return;
 
           const phase = phaseFromOver(overNum);
           const delivType = deliveryLabel(ballInfo);
           const zone = ballInfo.zone;
 
           // ── Accumulate batter stats ──────────────────────────────────────
-          const batterCondition = (!selectedTeam || isMatchingTeam(battingTeam, selectedTeam) || isMatchingTeam(btShort, selectedTeam)) &&
-                                  (!selectedOpponent || isMatchingTeam(blShort, selectedOpponent) || bowlingTeams.some((bt: any) => isMatchingTeam(bt, selectedOpponent)));
+          const batterCondition = battingResultOk && inTeams(teamList, battingTeam, btShort) &&
+                                  inTeams(opponentList, blShort, ...bowlingTeams);
           if (batterCondition) {
             let bs = batterStats.get(d.batter);
             if (!bs) {
               bs = {
-                runs: 0, balls: 0, fours: 0, sixes: 0,
+                runs: 0, balls: 0, fours: 0, sixes: 0, dots: 0,
                 innings: new Set(), notOuts: new Set(), matchScores: new Map(),
                 ppRuns: 0, ppBalls: 0, middleRuns: 0, middleBalls: 0,
                 deathRuns: 0, deathBalls: 0,
@@ -1207,20 +1296,21 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
             }
             const br = d.runs?.batter || 0;
             bs.runs += br;
-            if (legalBall) bs.balls++;
+            if (!isWide) bs.balls++; // a no-ball is a ball faced by the batter; a wide is not
+            if (legalBall && (d.runs?.total || 0) === 0) bs.dots++;
             if (br === 4) bs.fours++;
             if (br === 6) bs.sixes++;
             bs.innings.add(matchId);
             bs.matchScores.set(matchId, (bs.matchScores.get(matchId) || 0) + br);
 
-            if (phase === "powerplay") { bs.ppRuns += br; if (legalBall) bs.ppBalls++; }
-            else if (phase === "middle") { bs.middleRuns += br; if (legalBall) bs.middleBalls++; }
-            else { bs.deathRuns += br; if (legalBall) bs.deathBalls++; }
+            if (phase === "powerplay") { bs.ppRuns += br; if (!isWide) bs.ppBalls++; }
+            else if (phase === "middle") { bs.middleRuns += br; if (!isWide) bs.middleBalls++; }
+            else { bs.deathRuns += br; if (!isWide) bs.deathBalls++; }
 
             // Delivery breakdown — only for balls the commentary described.
             if (delivType) {
               const ds = bs.deliveryStats.get(delivType) || { runs: 0, balls: 0, dismissals: 0, dots: 0 };
-              ds.runs += br; if (legalBall) ds.balls++;
+              ds.runs += br; if (!isWide) ds.balls++;
               if (legalBall && (d.runs?.total || 0) === 0) ds.dots++;
               bs.deliveryStats.set(delivType, ds);
             }
@@ -1228,15 +1318,15 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
             // Scoring zone — likewise, silence is not a zone.
             if (zone) {
               const zs = bs.scoringZones.get(zone) || { runs: 0, balls: 0, boundaries: 0 };
-              zs.runs += br; if (legalBall) zs.balls++;
+              zs.runs += br; if (!isWide) zs.balls++;
               if (br === 4 || br === 6) zs.boundaries++;
               bs.scoringZones.set(zone, zs);
             }
           }
 
 // ── Accumulate bowler stats ──────────────────────────────────────
-          const bowlerCondition = (!selectedTeam || isMatchingTeam(blShort, selectedTeam) || bowlingTeams.some((bt: any) => isMatchingTeam(bt, selectedTeam))) &&
-                                  (!selectedOpponent || isMatchingTeam(battingTeam, selectedOpponent) || isMatchingTeam(btShort, selectedOpponent));
+          const bowlerCondition = bowlingResultOk && inTeams(teamList, blShort, ...bowlingTeams) &&
+                                  inTeams(opponentList, battingTeam, btShort);
           if (bowlerCondition) {
             let ws = bowlerStats.get(d.bowler);
             if (!ws) {
@@ -1315,7 +1405,6 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
   }
 
   // ── Compile batters ────────────────────────────────────────────────────────
-  const filteredMatchList = matchesList.filter(m => matchIds.includes(m.id));
 
   const compiledBatters = Array.from(batterStats.entries()).map(([player, stat]) => {
     const inningsCount   = stat.innings.size;
@@ -1355,11 +1444,11 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
       player,
       season: filters.season || "All",
       team: selectedTeam && selectedTeam !== "All" ? selectedTeam : getPlayerLatestTeam(player),
-      matches: filteredMatchList.filter(m => {
-        const t1 = teamShort(m.team1); const t2 = teamShort(m.team2);
-        return !selectedTeam || t1 === selectedTeam || t2 === selectedTeam;
-      }).length || inningsCount,
+      // Matches in the slice where the batter faced a ball (was the slice's whole fixture count for every batter).
+      matches: inningsCount,
       innings: inningsCount,
+      dismissals: dismissedCount,
+      dotPct: stat.balls > 0 ? Math.round((stat.dots / stat.balls) * 1000) / 10 : 0,
       runs: stat.runs,
       balls: stat.balls,
       avg, sr, fours: stat.fours, sixes: stat.sixes, fifties, hundreds, highest,
