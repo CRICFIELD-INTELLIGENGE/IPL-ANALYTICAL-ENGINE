@@ -22705,7 +22705,7 @@ var require_view = __commonJS({
     "use strict";
     var debug = require_src()("express:view");
     var path29 = __require("node:path");
-    var fs31 = __require("node:fs");
+    var fs32 = __require("node:fs");
     var dirname = path29.dirname;
     var basename = path29.basename;
     var extname = path29.extname;
@@ -22785,7 +22785,7 @@ var require_view = __commonJS({
     function tryStat(path30) {
       debug('stat "%s"', path30);
       try {
-        return fs31.statSync(path30);
+        return fs32.statSync(path30);
       } catch (e) {
         return void 0;
       }
@@ -26663,7 +26663,7 @@ var require_send = __commonJS({
     var escapeHtml = require_escape_html();
     var etag = require_etag();
     var fresh = require_fresh();
-    var fs31 = __require("fs");
+    var fs32 = __require("fs");
     var mime = require_mime_types();
     var ms = require_ms();
     var onFinished = require_on_finished();
@@ -26945,7 +26945,7 @@ var require_send = __commonJS({
       var i = 0;
       var self2 = this;
       debug('stat "%s"', path30);
-      fs31.stat(path30, function onstat(err, stat) {
+      fs32.stat(path30, function onstat(err, stat) {
         var pathEndsWithSep = path30[path30.length - 1] === sep2;
         if (err && err.code === "ENOENT" && !extname(path30) && !pathEndsWithSep) {
           return next(err);
@@ -26962,7 +26962,7 @@ var require_send = __commonJS({
         }
         var p = path30 + "." + self2._extensions[i++];
         debug('stat "%s"', p);
-        fs31.stat(p, function(err2, stat) {
+        fs32.stat(p, function(err2, stat) {
           if (err2) return next(err2);
           if (stat.isDirectory()) return next();
           self2.emit("file", p, stat);
@@ -26980,7 +26980,7 @@ var require_send = __commonJS({
         }
         var p = join5(path30, self2._index[i]);
         debug('stat "%s"', p);
-        fs31.stat(p, function(err2, stat) {
+        fs32.stat(p, function(err2, stat) {
           if (err2) return next(err2);
           if (stat.isDirectory()) return next();
           self2.emit("file", p, stat);
@@ -26992,7 +26992,7 @@ var require_send = __commonJS({
     SendStream.prototype.stream = function stream(path30, options) {
       var self2 = this;
       var res = this.res;
-      var stream2 = fs31.createReadStream(path30, options);
+      var stream2 = fs32.createReadStream(path30, options);
       this.emit("stream", stream2);
       stream2.pipe(res);
       function cleanup() {
@@ -29284,7 +29284,7 @@ var require_atomic_sleep = __commonJS({
 var require_sonic_boom = __commonJS({
   "../../node_modules/.pnpm/sonic-boom@4.2.1/node_modules/sonic-boom/index.js"(exports2, module) {
     "use strict";
-    var fs31 = __require("fs");
+    var fs32 = __require("fs");
     var EventEmitter2 = __require("events");
     var inherits = __require("util").inherits;
     var path29 = __require("path");
@@ -29338,30 +29338,30 @@ var require_sonic_boom = __commonJS({
         }
       }
       const flags = sonic.append ? "a" : "w";
-      const mode = sonic.mode;
+      const mode2 = sonic.mode;
       if (sonic.sync) {
         try {
-          if (sonic.mkdir) fs31.mkdirSync(path29.dirname(file3), { recursive: true });
-          const fd = fs31.openSync(file3, flags, mode);
+          if (sonic.mkdir) fs32.mkdirSync(path29.dirname(file3), { recursive: true });
+          const fd = fs32.openSync(file3, flags, mode2);
           fileOpened(null, fd);
         } catch (err) {
           fileOpened(err);
           throw err;
         }
       } else if (sonic.mkdir) {
-        fs31.mkdir(path29.dirname(file3), { recursive: true }, (err) => {
+        fs32.mkdir(path29.dirname(file3), { recursive: true }, (err) => {
           if (err) return fileOpened(err);
-          fs31.open(file3, flags, mode, fileOpened);
+          fs32.open(file3, flags, mode2, fileOpened);
         });
       } else {
-        fs31.open(file3, flags, mode, fileOpened);
+        fs32.open(file3, flags, mode2, fileOpened);
       }
     }
     function SonicBoom(opts) {
       if (!(this instanceof SonicBoom)) {
         return new SonicBoom(opts);
       }
-      let { fd, dest, minLength, maxLength, maxWrite, periodicFlush, sync, append = true, mkdir, retryEAGAIN, fsync, contentMode, mode } = opts || {};
+      let { fd, dest, minLength, maxLength, maxWrite, periodicFlush, sync, append = true, mkdir, retryEAGAIN, fsync, contentMode, mode: mode2 } = opts || {};
       fd = fd || dest;
       this._len = 0;
       this.fd = -1;
@@ -29384,7 +29384,7 @@ var require_sonic_boom = __commonJS({
       this.writable = true;
       this._fsync = fsync || false;
       this.append = append || false;
-      this.mode = mode;
+      this.mode = mode2;
       this.retryEAGAIN = retryEAGAIN || (() => true);
       this.mkdir = mkdir || false;
       let fsWriteSync;
@@ -29395,8 +29395,8 @@ var require_sonic_boom = __commonJS({
         this.flush = flushBuffer;
         this.flushSync = flushBufferSync;
         this._actualWrite = actualWriteBuffer;
-        fsWriteSync = () => fs31.writeSync(this.fd, this._writingBuf);
-        fsWrite = () => fs31.write(this.fd, this._writingBuf, this.release);
+        fsWriteSync = () => fs32.writeSync(this.fd, this._writingBuf);
+        fsWrite = () => fs32.write(this.fd, this._writingBuf, this.release);
       } else if (contentMode === void 0 || contentMode === kContentModeUtf8) {
         this._writingBuf = "";
         this.write = write;
@@ -29405,15 +29405,15 @@ var require_sonic_boom = __commonJS({
         this._actualWrite = actualWrite;
         fsWriteSync = () => {
           if (Buffer.isBuffer(this._writingBuf)) {
-            return fs31.writeSync(this.fd, this._writingBuf);
+            return fs32.writeSync(this.fd, this._writingBuf);
           }
-          return fs31.writeSync(this.fd, this._writingBuf, "utf8");
+          return fs32.writeSync(this.fd, this._writingBuf, "utf8");
         };
         fsWrite = () => {
           if (Buffer.isBuffer(this._writingBuf)) {
-            return fs31.write(this.fd, this._writingBuf, this.release);
+            return fs32.write(this.fd, this._writingBuf, this.release);
           }
-          return fs31.write(this.fd, this._writingBuf, "utf8", this.release);
+          return fs32.write(this.fd, this._writingBuf, "utf8", this.release);
         };
       } else {
         throw new Error(`SonicBoom supports "${kContentModeUtf8}" and "${kContentModeBuffer}", but passed ${contentMode}`);
@@ -29470,7 +29470,7 @@ var require_sonic_boom = __commonJS({
           }
         }
         if (this._fsync) {
-          fs31.fsyncSync(this.fd);
+          fs32.fsyncSync(this.fd);
         }
         const len = this._len;
         if (this._reopening) {
@@ -29584,7 +29584,7 @@ var require_sonic_boom = __commonJS({
       const onDrain = () => {
         if (!this._fsync) {
           try {
-            fs31.fsync(this.fd, (err) => {
+            fs32.fsync(this.fd, (err) => {
               this._flushPending = false;
               cb(err);
             });
@@ -29686,7 +29686,7 @@ var require_sonic_boom = __commonJS({
       const fd = this.fd;
       this.once("ready", () => {
         if (fd !== this.fd) {
-          fs31.close(fd, (err) => {
+          fs32.close(fd, (err) => {
             if (err) {
               return this.emit("error", err);
             }
@@ -29735,7 +29735,7 @@ var require_sonic_boom = __commonJS({
           buf = this._bufs[0];
         }
         try {
-          const n = Buffer.isBuffer(buf) ? fs31.writeSync(this.fd, buf) : fs31.writeSync(this.fd, buf, "utf8");
+          const n = Buffer.isBuffer(buf) ? fs32.writeSync(this.fd, buf) : fs32.writeSync(this.fd, buf, "utf8");
           const releasedBufObj = releaseWritingBuf(buf, this._len, n);
           buf = releasedBufObj.writingBuf;
           this._len = releasedBufObj.len;
@@ -29751,7 +29751,7 @@ var require_sonic_boom = __commonJS({
         }
       }
       try {
-        fs31.fsyncSync(this.fd);
+        fs32.fsyncSync(this.fd);
       } catch {
       }
     }
@@ -29772,7 +29772,7 @@ var require_sonic_boom = __commonJS({
           buf = mergeBuf(this._bufs[0], this._lens[0]);
         }
         try {
-          const n = fs31.writeSync(this.fd, buf);
+          const n = fs32.writeSync(this.fd, buf);
           buf = buf.subarray(n);
           this._len = Math.max(this._len - n, 0);
           if (buf.length <= 0) {
@@ -29800,13 +29800,13 @@ var require_sonic_boom = __commonJS({
       this._writingBuf = this._writingBuf.length ? this._writingBuf : this._bufs.shift() || "";
       if (this.sync) {
         try {
-          const written = Buffer.isBuffer(this._writingBuf) ? fs31.writeSync(this.fd, this._writingBuf) : fs31.writeSync(this.fd, this._writingBuf, "utf8");
+          const written = Buffer.isBuffer(this._writingBuf) ? fs32.writeSync(this.fd, this._writingBuf) : fs32.writeSync(this.fd, this._writingBuf, "utf8");
           release(null, written);
         } catch (err) {
           release(err);
         }
       } else {
-        fs31.write(this.fd, this._writingBuf, release);
+        fs32.write(this.fd, this._writingBuf, release);
       }
     }
     function actualWriteBuffer() {
@@ -29815,7 +29815,7 @@ var require_sonic_boom = __commonJS({
       this._writingBuf = this._writingBuf.length ? this._writingBuf : mergeBuf(this._bufs.shift(), this._lens.shift());
       if (this.sync) {
         try {
-          const written = fs31.writeSync(this.fd, this._writingBuf);
+          const written = fs32.writeSync(this.fd, this._writingBuf);
           release(null, written);
         } catch (err) {
           release(err);
@@ -29824,7 +29824,7 @@ var require_sonic_boom = __commonJS({
         if (kCopyBuffer) {
           this._writingBuf = Buffer.from(this._writingBuf);
         }
-        fs31.write(this.fd, this._writingBuf, release);
+        fs32.write(this.fd, this._writingBuf, release);
       }
     }
     function actualClose(sonic) {
@@ -29840,12 +29840,12 @@ var require_sonic_boom = __commonJS({
       sonic._lens = [];
       assert2(typeof sonic.fd === "number", `sonic.fd must be a number, got ${typeof sonic.fd}`);
       try {
-        fs31.fsync(sonic.fd, closeWrapped);
+        fs32.fsync(sonic.fd, closeWrapped);
       } catch {
       }
       function closeWrapped() {
         if (sonic.fd !== 1 && sonic.fd !== 2) {
-          fs31.close(sonic.fd, done);
+          fs32.close(sonic.fd, done);
         } else {
           done();
         }
@@ -34708,8 +34708,8 @@ var require_main = __commonJS({
         if (!model.external.tempName) {
           rej("No 'tempName' given. This is necessary to produce a staging file for the solver to operate on");
         }
-        var fs31 = __require("fs");
-        fs31.writeFile(model.external.tempName, data, function(fe, fd) {
+        var fs32 = __require("fs");
+        fs32.writeFile(model.external.tempName, data, function(fe, fd) {
           if (fe) {
             rej(fe);
           } else {
@@ -35013,12 +35013,37 @@ async function loadWarehouseSnapshot(url2, token, filename, requiredTables) {
   }
 }
 
+// src/lib/analytics-routes.ts
+var SCOUT_PATHS = /* @__PURE__ */ new Set(["/api/scout/rankings", "/api/scout/t20/suggestions"]);
+var IPL_PATHS = /* @__PURE__ */ new Set([
+  "/api/ipl/overview",
+  "/api/ipl/seasons",
+  "/api/ipl/player-career-stats",
+  "/api/ipl/player-season-stats",
+  "/api/ipl/stats/query",
+  "/api/ipl/stats/matchup",
+  "/api/ipl/stats/scenario",
+  "/api/ipl/stats/drilldown",
+  "/api/stats/query",
+  "/api/stats/scenario",
+  "/api/stats/matchup",
+  "/api/stats/drilldown"
+]);
+var LAPTOP_ONLY_PATHS = /* @__PURE__ */ new Set([
+  "/api/stats/pressure-reliability",
+  "/api/ipl/team-analytics",
+  "/api/ipl/venue-analytics"
+]);
+var ANALYTICS_PATHS = /* @__PURE__ */ new Set([...SCOUT_PATHS, ...IPL_PATHS, ...LAPTOP_ONLY_PATHS]);
+var ANALYTICS_KEY_HEADER = "x-cricfield-analytics-key";
+var CLIENT_IP_HEADER = "x-cricfield-client-ip";
+
 // src/app.ts
 var import_express19 = __toESM(require_express2(), 1);
 var import_cors = __toESM(require_lib4(), 1);
 var import_pino_http = __toESM(require_logger(), 1);
 import path28 from "node:path";
-import fs30 from "node:fs";
+import fs31 from "node:fs";
 import { fileURLToPath as fileURLToPath3 } from "node:url";
 
 // src/routes/platform.ts
@@ -39102,7 +39127,7 @@ function rateLimit({ max, windowMs, name }) {
   const buckets = /* @__PURE__ */ new Map();
   return function rateLimitMiddleware(req, res, next) {
     const now = Date.now();
-    const key = req.ip ?? req.socket.remoteAddress ?? "unknown";
+    const key = req.clientKey ?? req.ip ?? req.socket.remoteAddress ?? "unknown";
     let b = buckets.get(key);
     if (!b || now >= b.resetAt) {
       if (!b && buckets.size >= MAX_TRACKED_CLIENTS) {
@@ -39820,10 +39845,13 @@ function getProjectRoot() {
 }
 var db = null;
 var dbError = null;
+function getScoutDbPath() {
+  const configuredPath = process.env.CRICFIELD_SCOUT_DB_PATH?.trim();
+  return configuredPath ? path3.resolve(configuredPath) : path3.join(getProjectRoot(), "lib", "cricket-data", "global", "warehouse", "global.db");
+}
 function getGlobalDb() {
   if (db || dbError) return db;
-  const configuredPath = process.env.CRICFIELD_SCOUT_DB_PATH?.trim();
-  const fp = configuredPath ? path3.resolve(configuredPath) : path3.join(getProjectRoot(), "lib", "cricket-data", "global", "warehouse", "global.db");
+  const fp = getScoutDbPath();
   if (!fs3.existsSync(fp)) {
     dbError = `global.db not found at ${fp}`;
     return null;
@@ -57588,9 +57616,9 @@ var SQLiteInteger = class extends SQLiteBaseInteger {
 };
 var SQLiteTimestampBuilder = class extends SQLiteBaseIntegerBuilder {
   static [entityKind] = "SQLiteTimestampBuilder";
-  constructor(name, mode) {
+  constructor(name, mode2) {
     super(name, "date", "SQLiteTimestamp");
-    this.config.mode = mode;
+    this.config.mode = mode2;
   }
   /**
    * @deprecated Use `default()` with your own expression instead.
@@ -57626,9 +57654,9 @@ var SQLiteTimestamp = class extends SQLiteBaseInteger {
 };
 var SQLiteBooleanBuilder = class extends SQLiteBaseIntegerBuilder {
   static [entityKind] = "SQLiteBooleanBuilder";
-  constructor(name, mode) {
+  constructor(name, mode2) {
     super(name, "boolean", "SQLiteBoolean");
-    this.config.mode = mode;
+    this.config.mode = mode2;
   }
   build(table) {
     return new SQLiteBoolean(
@@ -57729,8 +57757,8 @@ var SQLiteNumericBigInt = class extends SQLiteColumn {
 };
 function numeric(a, b) {
   const { name, config: config3 } = getColumnNameAndConfig(a, b);
-  const mode = config3?.mode;
-  return mode === "number" ? new SQLiteNumericNumberBuilder(name) : mode === "bigint" ? new SQLiteNumericBigIntBuilder(name) : new SQLiteNumericBuilder(name);
+  const mode2 = config3?.mode;
+  return mode2 === "number" ? new SQLiteNumericNumberBuilder(name) : mode2 === "bigint" ? new SQLiteNumericBigIntBuilder(name) : new SQLiteNumericBuilder(name);
 }
 
 // ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_9d2d34108a0b91abca64504bbb78a16b/node_modules/drizzle-orm/sqlite-core/columns/real.js
@@ -59976,8 +60004,8 @@ var SQLiteCountBuilder = class _SQLiteCountBuilder extends SQL {
 
 // ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_9d2d34108a0b91abca64504bbb78a16b/node_modules/drizzle-orm/sqlite-core/query-builders/query.js
 var RelationalQueryBuilder = class {
-  constructor(mode, fullSchema, schema, tableNamesMap, table, tableConfig, dialect, session) {
-    this.mode = mode;
+  constructor(mode2, fullSchema, schema, tableNamesMap, table, tableConfig, dialect, session) {
+    this.mode = mode2;
     this.fullSchema = fullSchema;
     this.schema = schema;
     this.tableNamesMap = tableNamesMap;
@@ -60035,7 +60063,7 @@ var RelationalQueryBuilder = class {
   }
 };
 var SQLiteRelationalQuery = class extends QueryPromise {
-  constructor(fullSchema, schema, tableNamesMap, table, tableConfig, dialect, session, config3, mode) {
+  constructor(fullSchema, schema, tableNamesMap, table, tableConfig, dialect, session, config3, mode2) {
     super();
     this.fullSchema = fullSchema;
     this.schema = schema;
@@ -60045,7 +60073,7 @@ var SQLiteRelationalQuery = class extends QueryPromise {
     this.dialect = dialect;
     this.session = session;
     this.config = config3;
-    this.mode = mode;
+    this.mode = mode2;
   }
   static [entityKind] = "SQLiteAsyncRelationalQuery";
   /** @internal */
@@ -60479,8 +60507,8 @@ var ExecuteResultSync = class extends QueryPromise {
   }
 };
 var SQLitePreparedQuery = class {
-  constructor(mode, executeMethod, query, cache9, queryMetadata, cacheConfig) {
-    this.mode = mode;
+  constructor(mode2, executeMethod, query, cache9, queryMetadata, cacheConfig) {
+    this.mode = mode2;
     this.executeMethod = executeMethod;
     this.query = query;
     this.cache = cache9;
@@ -162866,9 +162894,9 @@ var FIELD_MOD = { ring: [1.15, 0.7, 0.8, 1.3, 1.1, 0.95], balanced: [1, 1, 1, 1,
 var EXTRA = { yorker: [0.02, 0.04], wide_yorker: [0.1, 0.02], slower_bouncer: [0.06, 0.02], slower_ball: [0.02, 0.01], length: [0.01, 0.01], bouncer: [0.08, 0.03] };
 var MODE_TARGETS = { easy: 12, balanced: 17, impossible: 24 };
 var PLANS = { easy: [15, 10, 15, 20, 30, 10], balanced: [30, 15, 15, 20, 12, 8], impossible: [40, 20, 15, 15, 5, 5], custom: [30, 15, 15, 20, 12, 8] };
-function newSuperOver(seed, mode, customTarget) {
-  const target2 = mode === "custom" ? Math.max(1, Math.min(36, Math.round(customTarget ?? 15))) : MODE_TARGETS[mode];
-  return { seed, mode, target: target2, runs: 0, wickets: 0, legal: 0, freeHit: false, balls: [], result: null };
+function newSuperOver(seed, mode2, customTarget) {
+  const target2 = mode2 === "custom" ? Math.max(1, Math.min(36, Math.round(customTarget ?? 15))) : MODE_TARGETS[mode2];
+  return { seed, mode: mode2, target: target2, runs: 0, wickets: 0, legal: 0, freeHit: false, balls: [], result: null };
 }
 function nextBall(s) {
   const rng2 = seeded(`${s.seed}|plan|${s.balls.length}`);
@@ -162921,17 +162949,17 @@ function settle(s) {
   return s;
 }
 var isFinalBall = (s) => !s.result && s.legal === 5;
-function replaySuperOver(seed, mode, target2, shots) {
-  let s = newSuperOver(seed, mode, target2);
+function replaySuperOver(seed, mode2, target2, shots) {
+  let s = newSuperOver(seed, mode2, target2);
   for (const shot of shots) {
     if (s.result) break;
     s = playSuperBall(s, shot);
   }
   return s;
 }
-function expectedOdds(mode, field, shot) {
+function expectedOdds(mode2, field, shot) {
   const order = Object.keys(DELIVERIES);
-  const w = PLANS[mode], total = w.reduce((a, b) => a + b, 0);
+  const w = PLANS[mode2], total = w.reduce((a, b) => a + b, 0);
   const out = [0, 0, 0, 0, 0, 0];
   order.forEach((d, i) => shotOdds(d, field, shot).forEach((p, k) => {
     out[k] += p * w[i] / total;
@@ -163349,10 +163377,10 @@ var FRANCHISES = [
   { code: "RCB", name: "Royal Challengers Bengaluru" },
   { code: "SRH", name: "Sunrisers Hyderabad" }
 ];
-function newAuction(seed, mode, humanCode, pool3, start2) {
-  const m = MODES[mode];
+function newAuction(seed, mode2, humanCode, pool3, start2) {
+  const m = MODES[mode2];
   const rng2 = seeded(`${seed}|room`);
-  const lots = mode === "historical" ? pool3.slice(0, m.lots) : shuffle(rng2, pool3).slice(0, m.lots);
+  const lots = mode2 === "historical" ? pool3.slice(0, m.lots) : shuffle(rng2, pool3).slice(0, m.lots);
   const bidders = FRANCHISES.map((f) => {
     const s = start2?.[f.code];
     return {
@@ -163366,7 +163394,7 @@ function newAuction(seed, mode, humanCode, pool3, start2) {
       human: f.code === humanCode
     };
   });
-  return { seed, config: { mode, ...m.config }, lots, bidders, index: 0, results: [], done: lots.length === 0 };
+  return { seed, config: { mode: mode2, ...m.config }, lots, bidders, index: 0, results: [], done: lots.length === 0 };
 }
 var open = (b, cfg) => b.squad.length < cfg.slots;
 var reserve = (b, cfg) => Math.max(0, cfg.minSlots - b.squad.length - 1) * 0.3;
@@ -163542,12 +163570,12 @@ function weekKey(day4 = dailyKey()) {
   return `${d.getUTCFullYear()}-W${String(wk).padStart(2, "0")}`;
 }
 var RUN_TTL = 24 * 36e5;
-function createRun(userId, game, mode, seed, day4, state) {
+function createRun(userId, game, mode2, seed, day4, state) {
   const id = randomUUID3(), now = Date.now();
   const d = db8();
   d.prepare("DELETE FROM arcade_runs WHERE updated < ?").run(now - RUN_TTL);
-  d.prepare("INSERT INTO arcade_runs(id,user_id,game,mode,seed,day,state,created,updated) VALUES(?,?,?,?,?,?,?,?,?)").run(id, userId, game, mode, seed, day4, JSON.stringify(state), now, now);
-  return { id, userId, game, mode, seed, day: day4, state, status: "active", score: 0 };
+  d.prepare("INSERT INTO arcade_runs(id,user_id,game,mode,seed,day,state,created,updated) VALUES(?,?,?,?,?,?,?,?,?)").run(id, userId, game, mode2, seed, day4, JSON.stringify(state), now, now);
+  return { id, userId, game, mode: mode2, seed, day: day4, state, status: "active", score: 0 };
 }
 function getRun(id) {
   const r = db8().prepare("SELECT * FROM arcade_runs WHERE id = ?").get(id);
@@ -163975,10 +164003,10 @@ var GUESS_MODES = {
   current: "Current players \u2014 appeared in 2025 or 2026",
   prospects: "Emerging Indian players \u2014 5\u201330 IPL matches, active since 2024"
 };
-function guessPool(mode) {
+function guessPool(mode2) {
   const last = arcadeData().cutoff.lastSeason;
   const base2 = arcadePlayers().filter((p) => p.country);
-  switch (mode) {
+  switch (mode2) {
     case "legends":
       return base2.filter((p) => p.firstSeason <= 2014 && p.matches >= 60);
     case "current":
@@ -164018,8 +164046,8 @@ function strongClue(p) {
   const best = p.bat && p.bat.highest != null && p.bat.runs >= (p.bowl?.wickets ?? 0) * 20 ? `highest IPL score ${p.bat.highest}` : p.bowl?.best ? `best IPL figures ${p.bowl.best}` : null;
   return `Initials ${initials} \xB7 IPL debut season ${p.firstSeason}${best ? ` \xB7 ${best}` : ""}`;
 }
-function guessPuzzle(seed, mode) {
-  const pool3 = guessPool(mode).filter((p) => portraitFor(p) !== null);
+function guessPuzzle(seed, mode2) {
+  const pool3 = guessPool(mode2).filter((p) => portraitFor(p) !== null);
   const rng2 = seeded(`${seed}|guess`);
   const order = shuffle(rng2, pool3);
   for (const p of order) {
@@ -164168,21 +164196,21 @@ var nameOfWid = (wid) => {
   const p = arcadeData().players.find((x) => x.wid === wid);
   return p?.name ?? getPlayerMeta().get(wid)?.name ?? "Unknown";
 };
-function nbIndex(seed, mode, roundNo) {
+function nbIndex(seed, mode2, roundNo) {
   const c = getBallColumns();
   const rng2 = seeded(`${seed}|nb|${roundNo}`);
   for (let tries = 0; tries < 5e3; tries++) {
     const i = Math.floor(rng2() * c.n);
     const over = c.over[i];
-    if (mode === "death" && over < 15) continue;
-    if (mode === "powerplay" && over > 5) continue;
-    if (mode === "chases" && !(c.inningsNumber[i] === 2 && over >= 17 && c.runsNeeded[i] > 0 && c.runsNeeded[i] <= 30)) continue;
+    if (mode2 === "death" && over < 15) continue;
+    if (mode2 === "powerplay" && over > 5) continue;
+    if (mode2 === "chases" && !(c.inningsNumber[i] === 2 && over >= 17 && c.runsNeeded[i] > 0 && c.runsNeeded[i] <= 30)) continue;
     return i;
   }
   return Math.floor(rng2() * c.n);
 }
-function nbQuestion(seed, mode, roundNo) {
-  const c = getBallColumns(), i = nbIndex(seed, mode, roundNo), m = c.matches[c.match[i]];
+function nbQuestion(seed, mode2, roundNo) {
+  const c = getBallColumns(), i = nbIndex(seed, mode2, roundNo), m = c.matches[c.match[i]];
   const legalInOver = Math.max(0, c.legalBefore[i] - c.over[i] * 6);
   const chase = c.runsNeeded[i] >= 0;
   return {
@@ -164201,8 +164229,8 @@ function nbQuestion(seed, mode, roundNo) {
     need: chase && c.ballsLeft[i] > 0 ? `${c.runsNeeded[i]} from ${c.ballsLeft[i]} (required rate ${(c.runsNeeded[i] / c.ballsLeft[i] * 6).toFixed(2)})` : null
   };
 }
-function gradeNb(seed, mode, roundNo, guess) {
-  const c = getBallColumns(), i = nbIndex(seed, mode, roundNo), actual = outcomeOf2(i);
+function gradeNb(seed, mode2, roundNo, guess) {
+  const c = getBallColumns(), i = nbIndex(seed, mode2, roundNo), actual = outcomeOf2(i);
   const rare = actual === "wicket" || actual === "six";
   const correct = guess === actual;
   const runs = c.totalRuns[i];
@@ -164315,8 +164343,8 @@ function portraitFor(p) {
   }
   return null;
 }
-function mysteryPortrait(seed, mode) {
-  return portraitFor(guessPuzzle(seed, mode).player);
+function mysteryPortrait(seed, mode2) {
+  return portraitFor(guessPuzzle(seed, mode2).player);
 }
 function mysteryCandidates(clues) {
   return guessPool("practice").filter((p) => portraitFor(p) !== null).filter((p) => {
@@ -164767,7 +164795,7 @@ function rateStrength(s) {
   const med = ref[Math.floor(ref.length / 2)], max = ref.at(-1);
   return Math.max(0, Math.min(100, Math.round(60 + 30 * (s - med) / Math.max(0.5, max - med))));
 }
-function evaluateXi(ids2, mode, team4) {
+function evaluateXi(ids2, mode2, team4) {
   const { byId, cands } = squadPool();
   const uniq = [...new Set(ids2)];
   const players = uniq.map((id) => byId.get(id)).filter((p) => Boolean(p));
@@ -164780,9 +164808,9 @@ function evaluateXi(ids2, mode, team4) {
   const bowlers = players.filter((p) => (cands.get(p.id)?.oversCapacity ?? 0) > 0);
   if (bowlers.length < 5) issues.push(`Only ${bowlers.length} bowling options; 5 are needed.`);
   const costCr = round5(players.reduce((s, p) => s + (p.contractCr ?? p.marketCr), 0), 2);
-  const budgetCr = mode === "budget" ? XI_BUDGET_CR : null;
+  const budgetCr = mode2 === "budget" ? XI_BUDGET_CR : null;
   if (budgetCr != null && costCr > budgetCr) issues.push(`\u20B9${costCr} Cr spent; the game budget is \u20B9${budgetCr} Cr.`);
-  if (mode === "rebuild" && team4) {
+  if (mode2 === "rebuild" && team4) {
     const outsiders = players.filter((p) => p.team !== team4);
     if (outsiders.length > 3) issues.push(`Rebuild allows 3 signings from outside ${team4}; you have ${outsiders.length}.`);
     if (outsiders.some((p) => p.team)) issues.push("Rebuild signings must be uncontracted players.");
@@ -164848,10 +164876,10 @@ function greedySeasonXi(pool3) {
   return out;
 }
 var baseFor = (marketCr) => marketCr >= 6 ? 2 : marketCr >= 3 ? 1.5 : marketCr >= 1.5 ? 1 : marketCr >= 0.75 ? 0.5 : 0.3;
-function auctionLots(mode, humanTeam) {
+function auctionLots(mode2, humanTeam) {
   const { players } = squadPool();
   const rated = players.filter((p) => p.evidence);
-  if (mode === "historical") {
+  if (mode2 === "historical") {
     const sales = JSON.parse(fs28.readFileSync(path26.join(getProjectRoot2(), "artifacts", "api-server", "data", "player-auctions.json"), "utf8")).filter((s) => s.season === 2026 && s.soldLakh != null);
     const byName = /* @__PURE__ */ new Map();
     for (const p of rated) {
@@ -164870,7 +164898,7 @@ function auctionLots(mode, humanTeam) {
   let pool3 = rated;
   let start2;
   let retainedCore = [];
-  if (mode === "rebuild") {
+  if (mode2 === "rebuild") {
     const own = rated.filter((p) => p.team === humanTeam).sort((a, b) => b.rating - a.rating);
     const core = [];
     for (const p of own) if (core.length < 4 && (!p.overseas || core.filter((c) => c.overseas).length < 2)) core.push(p);
@@ -164881,7 +164909,7 @@ function auctionLots(mode, humanTeam) {
     start2 = { [humanTeam]: { purseCr: auction_exports.MODES.rebuild.purse, squad: core.map((p) => p.id), roles, overseas: core.filter((p) => p.overseas).length } };
   }
   const lots = pool3.map((p) => ({ id: p.id, name: p.name, role: p.role, overseas: p.overseas, baseCr: baseFor(p.marketCr), valueCr: Math.max(baseFor(p.marketCr), p.marketCr), rating: p.rating, team: p.team }));
-  return { lots, start: start2, retained: mode === "rebuild" ? retainedCore : void 0, note: "Lots are players with an IPL record. Rival valuations start from CRICFIELD's market model; every bid and price in the room is simulated." };
+  return { lots, start: start2, retained: mode2 === "rebuild" ? retainedCore : void 0, note: "Lots are players with an IPL record. Rival valuations start from CRICFIELD's market model; every bid and price in the room is simulated." };
 }
 function squadRatingFromIds(ids2) {
   const { cands } = squadPool();
@@ -165450,17 +165478,17 @@ router13.get("/players/search", wrap((req) => searchPlayers3(String(req.query.q 
 router13.get("/base-rates", wrap(() => ({ rates: phaseBaseRates(), source: "CRICFIELD warehouse \u2014 every IPL delivery 2008\u20132026, innings 1\u20132", data: provenance() })));
 var HL_DAILY_ROUNDS = 10;
 router13.post("/higher-or-lower/start", wrap((req, _res, user) => {
-  const { mode } = body(external_exports.object({ mode: external_exports.enum(["daily", "endless"]) }), req);
+  const { mode: mode2 } = body(external_exports.object({ mode: external_exports.enum(["daily", "endless"]) }), req);
   const day4 = dailyKey();
-  if (mode === "daily" && user) {
+  if (mode2 === "daily" && user) {
     const done = dailyRecord(user.id, "higher-or-lower", day4);
     if (done?.completed) return { alreadyCompleted: true, day: day4, score: done.score };
     const active3 = activeDailyRun(user.id, "higher-or-lower", day4);
     if (active3) return { runId: active3.id, day: day4, streak: active3.state.streak, round: publicHl(hlRound(active3.seed, active3.state.round)), rounds: HL_DAILY_ROUNDS, data: provenance() };
   }
-  const seed = mode === "daily" ? `hl:daily:${day4}` : newSeed("hl");
-  const run = createRun(user?.id ?? null, "higher-or-lower", mode, seed, mode === "daily" ? day4 : null, { round: 0, streak: 0, over: false });
-  return { runId: run.id, day: run.day, streak: 0, round: publicHl(hlRound(seed, 0)), rounds: mode === "daily" ? HL_DAILY_ROUNDS : null, data: provenance() };
+  const seed = mode2 === "daily" ? `hl:daily:${day4}` : newSeed("hl");
+  const run = createRun(user?.id ?? null, "higher-or-lower", mode2, seed, mode2 === "daily" ? day4 : null, { round: 0, streak: 0, over: false });
+  return { runId: run.id, day: run.day, streak: 0, round: publicHl(hlRound(seed, 0)), rounds: mode2 === "daily" ? HL_DAILY_ROUNDS : null, data: provenance() };
 }));
 router13.post("/higher-or-lower/:id/guess", wrap((req, _res, user) => {
   const { guess } = body(external_exports.object({ guess: external_exports.enum(["higher", "lower"]) }), req);
@@ -165480,25 +165508,25 @@ router13.post("/higher-or-lower/:id/guess", wrap((req, _res, user) => {
   }
   return { ...g, streak, done, next: done ? null : publicHl(hlRound(run.seed, run.state.round)), outcome };
 }));
-var guessReveal = (seed, mode) => {
-  const z2 = guessPuzzle(seed, mode);
+var guessReveal = (seed, mode2) => {
+  const z2 = guessPuzzle(seed, mode2);
   const p = z2.player;
   return { id: p.id, name: p.name, country: p.country, franchises: p.franchises, firstSeason: p.firstSeason, lastSeason: p.lastSeason, matches: p.matches, bat: p.bat, bowl: p.bowl, titles: p.titles, history: franchiseHistory(p) };
 };
 router13.get("/guess-cricketer/modes", wrap(() => GUESS_MODES));
 router13.post("/guess-cricketer/start", wrap((req, _res, user) => {
-  const { mode } = body(external_exports.object({ mode: external_exports.enum(["daily", "practice", "legends", "current", "prospects"]) }), req);
+  const { mode: mode2 } = body(external_exports.object({ mode: external_exports.enum(["daily", "practice", "legends", "current", "prospects"]) }), req);
   const day4 = dailyKey();
-  if (mode === "daily" && user) {
+  if (mode2 === "daily" && user) {
     const done = dailyRecord(user.id, "guess-cricketer", day4);
     if (done?.completed) return { alreadyCompleted: true, day: day4, score: done.score };
     const active3 = activeDailyRun(user.id, "guess-cricketer", day4);
-    if (active3) return { runId: active3.id, mode, photoUrl: mysteryPortrait(active3.seed, mode), clues: guessPuzzle(active3.seed, mode).clues.slice(0, active3.state.clues), wrong: active3.state.wrong, guesses: active3.state.guesses, maxWrong: GUESS_MAX_WRONG, data: provenance() };
+    if (active3) return { runId: active3.id, mode: mode2, photoUrl: mysteryPortrait(active3.seed, mode2), clues: guessPuzzle(active3.seed, mode2).clues.slice(0, active3.state.clues), wrong: active3.state.wrong, guesses: active3.state.guesses, maxWrong: GUESS_MAX_WRONG, data: provenance() };
   }
-  const seed = req.arcadeRoomSeed ?? (mode === "daily" ? `guess:daily:${day4}` : newSeed("guess"));
-  const puzzle = guessPuzzle(seed, mode);
-  const run = createRun(user?.id ?? null, "guess-cricketer", mode, seed, mode === "daily" ? day4 : null, { mode, clues: 1, wrong: 0, solved: false, over: false, guesses: [] });
-  return { runId: run.id, mode, modeLabel: GUESS_MODES[mode], photoUrl: mysteryPortrait(seed, mode), clues: puzzle.clues.slice(0, 1), wrong: 0, guesses: [], maxWrong: GUESS_MAX_WRONG, data: provenance() };
+  const seed = req.arcadeRoomSeed ?? (mode2 === "daily" ? `guess:daily:${day4}` : newSeed("guess"));
+  const puzzle = guessPuzzle(seed, mode2);
+  const run = createRun(user?.id ?? null, "guess-cricketer", mode2, seed, mode2 === "daily" ? day4 : null, { mode: mode2, clues: 1, wrong: 0, solved: false, over: false, guesses: [] });
+  return { runId: run.id, mode: mode2, modeLabel: GUESS_MODES[mode2], photoUrl: mysteryPortrait(seed, mode2), clues: puzzle.clues.slice(0, 1), wrong: 0, guesses: [], maxWrong: GUESS_MAX_WRONG, data: provenance() };
 }));
 function guessEnd(run, user) {
   const score = run.state.solved ? guessScore(run.state.clues, run.state.wrong) : 0;
@@ -165540,16 +165568,16 @@ router13.post("/guess-cricketer/:id/give-up", wrap((req, _res, user) => {
   return { done: true, ...guessEnd(run, user) };
 }));
 router13.post("/cricket-grid/start", wrap((req, _res, user) => {
-  const { mode } = body(external_exports.object({ mode: external_exports.enum(["daily", "practice"]) }), req);
+  const { mode: mode2 } = body(external_exports.object({ mode: external_exports.enum(["daily", "practice"]) }), req);
   const day4 = dailyKey();
-  if (mode === "daily" && user) {
+  if (mode2 === "daily" && user) {
     const done = dailyRecord(user.id, "cricket-grid", day4);
     if (done?.completed) return { alreadyCompleted: true, day: day4, score: done.score };
     const active3 = activeDailyRun(user.id, "cricket-grid", day4);
     if (active3) return { runId: active3.id, grid: makeGrid(active3.seed), ...gridView(active3.state), data: provenance() };
   }
-  const seed = req.arcadeRoomSeed ?? (mode === "daily" ? `grid:daily:${day4}` : newSeed("grid"));
-  const run = createRun(user?.id ?? null, "cricket-grid", mode, seed, mode === "daily" ? day4 : null, { filled: Array(9).fill(null), attemptsLeft: GRID_ATTEMPTS, used: [], rarity: Array(9).fill(null) });
+  const seed = req.arcadeRoomSeed ?? (mode2 === "daily" ? `grid:daily:${day4}` : newSeed("grid"));
+  const run = createRun(user?.id ?? null, "cricket-grid", mode2, seed, mode2 === "daily" ? day4 : null, { filled: Array(9).fill(null), attemptsLeft: GRID_ATTEMPTS, used: [], rarity: Array(9).fill(null) });
   return { runId: run.id, grid: makeGrid(seed), ...gridView(run.state), data: provenance() };
 }));
 var gridView = (s) => ({ filled: s.filled.map((id) => id ? { id, name: arcadePlayer(id)?.name ?? id } : null), attemptsLeft: s.attemptsLeft, rarity: s.rarity });
@@ -165625,17 +165653,17 @@ router13.post("/time-machine/:id/answer", wrap((req, _res, user) => {
   return { correct, answer: q.answer, fact: q.fact, score, total: qs.length, done, unlocksNext: done && score >= 3, outcome };
 }));
 router13.post("/next-ball/start", wrap((req, _res, user) => {
-  const { mode } = body(external_exports.object({ mode: external_exports.enum(["quick", "death", "powerplay", "chases", "daily"]) }), req);
+  const { mode: mode2 } = body(external_exports.object({ mode: external_exports.enum(["quick", "death", "powerplay", "chases", "daily"]) }), req);
   const day4 = dailyKey();
-  if (mode === "daily" && user) {
+  if (mode2 === "daily" && user) {
     const done = dailyRecord(user.id, "next-ball", day4);
     if (done?.completed) return { alreadyCompleted: true, day: day4, score: done.score };
     const active3 = activeDailyRun(user.id, "next-ball", day4);
-    if (active3) return { runId: active3.id, ...active3.state, question: nbQuestion(active3.seed, mode, active3.state.round), rounds: NB_ROUNDS, outcomes: NB_OUTCOMES, data: provenance() };
+    if (active3) return { runId: active3.id, ...active3.state, question: nbQuestion(active3.seed, mode2, active3.state.round), rounds: NB_ROUNDS, outcomes: NB_OUTCOMES, data: provenance() };
   }
-  const seed = mode === "daily" ? `nb:daily:${day4}` : newSeed("nb");
-  const run = createRun(user?.id ?? null, "next-ball", mode, seed, mode === "daily" ? day4 : null, { mode, round: 0, points: 0, correct: 0 });
-  return { runId: run.id, mode, modeLabel: NB_MODES[mode], round: 0, points: 0, correct: 0, question: nbQuestion(seed, mode, 0), rounds: NB_ROUNDS, outcomes: NB_OUTCOMES, data: provenance() };
+  const seed = mode2 === "daily" ? `nb:daily:${day4}` : newSeed("nb");
+  const run = createRun(user?.id ?? null, "next-ball", mode2, seed, mode2 === "daily" ? day4 : null, { mode: mode2, round: 0, points: 0, correct: 0 });
+  return { runId: run.id, mode: mode2, modeLabel: NB_MODES[mode2], round: 0, points: 0, correct: 0, question: nbQuestion(seed, mode2, 0), rounds: NB_ROUNDS, outcomes: NB_OUTCOMES, data: provenance() };
 }));
 router13.post("/next-ball/:id/guess", wrap((req, _res, user) => {
   const { guess } = body(external_exports.object({ guess: external_exports.enum(["dot", "single", "twothree", "four", "six", "wicket", "extra"]) }), req);
@@ -165680,25 +165708,25 @@ router13.post("/scout-gem/:id/answer", wrap((req, _res, user) => {
 var SIM_GAMES = ["cup-chase", "hand-cricket", "super-over", "drs", "captains-call", "auction-room"];
 router13.post("/session/start", wrap((req, _res, user) => {
   const b = body(external_exports.object({ game: external_exports.enum(SIM_GAMES), mode: external_exports.string().max(30), params: external_exports.record(external_exports.string(), external_exports.unknown()).optional() }), req);
-  const { game, mode } = b;
+  const { game, mode: mode2 } = b;
   const params = b.params ?? {};
   const seed = req.arcadeRoomSeed ?? newSeed(game);
-  if (game === "hand-cricket") external_exports.enum(["quick", "best-of-three", "tournament"]).parse(mode);
-  if (game === "cup-chase") external_exports.enum(["classic", "easy", "medium", "hard"]).parse(mode);
+  if (game === "hand-cricket") external_exports.enum(["quick", "best-of-three", "tournament"]).parse(mode2);
+  if (game === "cup-chase") external_exports.enum(["classic", "easy", "medium", "hard"]).parse(mode2);
   if (game === "super-over") {
-    external_exports.enum(["easy", "balanced", "impossible", "custom"]).parse(mode);
-    if (mode === "custom") external_exports.number().int().min(1).max(36).parse(params.target);
+    external_exports.enum(["easy", "balanced", "impossible", "custom"]).parse(mode2);
+    if (mode2 === "custom") external_exports.number().int().min(1).max(36).parse(params.target);
   }
   const state = { params };
   if (game === "auction-room") {
-    const m = external_exports.enum(["quick", "full", "rebuild", "historical"]).parse(mode);
+    const m = external_exports.enum(["quick", "full", "rebuild", "historical"]).parse(mode2);
     const team4 = external_exports.string().regex(/^[A-Z]{2,4}$/).parse(params.team ?? "CSK");
     const { lots, start: start2, note, retained } = auctionLots(m, team4);
     state.auction = auction_exports.newAuction(seed, m, team4, lots, start2);
     state.params = { ...params, note, retained: retained ?? [] };
   }
   if (game === "captains-call" && !captains_call_exports.SCENARIOS.some((s) => s.id === params.scenario)) bad2("unknown_scenario");
-  const run = createRun(user?.id ?? null, game, mode, seed, null, state);
+  const run = createRun(user?.id ?? null, game, mode2, seed, null, state);
   return { runId: run.id, seed, auction: state.auction ?? null, note: state.params.note ?? null, retained: state.params.retained ?? [], baseRates: game === "captains-call" ? phaseBaseRates() : void 0 };
 }));
 var handPayload = external_exports.object({ personality: external_exports.enum(["rookie", "pattern", "aggressive", "expert"]), overs: external_exports.union([external_exports.literal(1), external_exports.literal(2), external_exports.literal(5)]), batFirst: external_exports.boolean(), picks: external_exports.array(external_exports.number().int().min(1).max(6)).max(80), matchNo: external_exports.number().int().nonnegative().optional() });
@@ -165738,9 +165766,9 @@ router13.post("/session/:id/submit", wrap((req, _res, user) => {
     }
   } else if (game === "super-over") {
     const p = external_exports.object({ shots: external_exports.array(external_exports.enum(["block", "push", "drive", "loft", "ramp", "slog"])).max(30) }).parse(raw);
-    const mode = external_exports.enum(["easy", "balanced", "impossible", "custom"]).parse(run.mode);
+    const mode2 = external_exports.enum(["easy", "balanced", "impossible", "custom"]).parse(run.mode);
     const target2 = typeof run.state.params.target === "number" ? run.state.params.target : void 0;
-    const s = super_over_exports.replaySuperOver(run.seed, mode, target2, p.shots);
+    const s = super_over_exports.replaySuperOver(run.seed, mode2, target2, p.shots);
     if (!s.result) bad2("over_not_finished");
     won = s.result === "won";
     const lastLegal = s.balls.filter((b) => b.legal).length;
@@ -166372,10 +166400,92 @@ var publicErrorHandler = (error40, req, res, next) => {
   res.status(status).json({ error: status === 413 ? "request_too_large" : status === 400 ? "invalid_request" : "internal_error" });
 };
 
+// src/lib/analytics-gate.ts
+import { timingSafeEqual as timingSafeEqual3, createHash as createHash7 } from "node:crypto";
+import fs30 from "node:fs";
+var sha = (s) => createHash7("sha256").update(s).digest();
+var startedAt = Date.now();
+function analyticsGate(key, opts) {
+  if (key.length < 32) throw new Error("ANALYTICS_GATE_KEY must be at least 32 characters");
+  const want = sha(key);
+  let inFlight2 = 0;
+  let served = 0, rejected = 0, busy = 0;
+  const keyOk = (req) => {
+    const got = req.get(ANALYTICS_KEY_HEADER);
+    return typeof got === "string" && timingSafeEqual3(sha(got), want);
+  };
+  return function gate(req, res, next) {
+    const path29 = req.path.replace(/\/$/, "");
+    if (path29 === "/api/healthz") {
+      res.json({ status: "ok" });
+      return;
+    }
+    if (!keyOk(req)) {
+      rejected++;
+      res.status(401).json({ error: "unauthorized" });
+      return;
+    }
+    if (path29 === "/api/analytics/health") {
+      const dbs = opts.dbPaths.map((p) => ({ file: p.split(/[\\/]/).pop(), present: fs30.existsSync(p), bytes: fs30.existsSync(p) ? fs30.statSync(p).size : 0 }));
+      const mem = process.memoryUsage();
+      res.json({
+        status: dbs.every((d) => d.present) ? "ok" : "degraded",
+        uptimeSeconds: Math.round((Date.now() - startedAt) / 1e3),
+        inFlight: inFlight2,
+        served,
+        rejected,
+        busy,
+        memoryMb: { rss: Math.round(mem.rss / 1048576), heapUsed: Math.round(mem.heapUsed / 1048576) },
+        cpuMicros: process.cpuUsage(),
+        databases: dbs,
+        readOnly: process.env.CRICFIELD_DB_READONLY === "1"
+      });
+      return;
+    }
+    if (req.method !== "GET" || !ANALYTICS_PATHS.has(path29)) {
+      res.status(404).json({ error: "not_found" });
+      return;
+    }
+    if (req.originalUrl.length > 2048) {
+      res.status(414).json({ error: "query_too_long" });
+      return;
+    }
+    if (inFlight2 >= opts.maxInFlight) {
+      busy++;
+      res.setHeader("Retry-After", "5");
+      res.status(503).json({ error: "analytics_backend_busy" });
+      return;
+    }
+    const forwarded = req.get(CLIENT_IP_HEADER);
+    if (forwarded && /^[0-9a-fA-F:.]{3,45}$/.test(forwarded)) req.clientKey = forwarded;
+    inFlight2++;
+    served++;
+    let done = false;
+    const release = () => {
+      if (!done) {
+        done = true;
+        inFlight2--;
+      }
+    };
+    res.on("finish", release);
+    res.on("close", release);
+    next();
+  };
+}
+
 // src/app.ts
 var app = (0, import_express19.default)();
 app.disable("x-powered-by");
 app.use(securityHeaders);
+var gateKey = process.env["ANALYTICS_GATE_KEY"];
+if (gateKey) {
+  if (process.env["CRICFIELD_DB_READONLY"] !== "1") throw new Error("ANALYTICS_GATE_KEY requires CRICFIELD_DB_READONLY=1");
+  const n = Number(process.env["ANALYTICS_MAX_IN_FLIGHT"]);
+  app.use(analyticsGate(gateKey, {
+    maxInFlight: Number.isInteger(n) && n > 0 ? n : 6,
+    dbPaths: [getDbPath(), getScoutDbPath()]
+  }));
+}
 var trustProxy = process.env["TRUST_PROXY"];
 if (trustProxy !== void 0) {
   app.set("trust proxy", /^\d+$/.test(trustProxy) ? Number(trustProxy) : trustProxy === "true");
@@ -166450,11 +166560,11 @@ app.use("/api", (_req, res) => {
 });
 var here = path28.dirname(fileURLToPath3(import.meta.url));
 var frontendDist = path28.resolve(here, "../../ipl-analytics/dist/public");
-if (fs30.existsSync(frontendDist)) {
+if (fs31.existsSync(frontendDist)) {
   const sourceData = path28.resolve(here, "../../ipl-analytics/public/data");
   const stale = ["player-bio.json", "squads-by-season.json", "player-recent-matches/index.json"].filter((f) => {
     const a = path28.join(sourceData, f), b = path28.join(frontendDist, "data", f);
-    return fs30.existsSync(a) && (!fs30.existsSync(b) || !fs30.readFileSync(a).equals(fs30.readFileSync(b)));
+    return fs31.existsSync(a) && (!fs31.existsSync(b) || !fs31.readFileSync(a).equals(fs31.readFileSync(b)));
   });
   if (stale.length) {
     logger.warn({ stale, frontendDist }, "Frontend build is older than the source data: these files differ from ipl-analytics/public/data. Rebuild the frontend before serving.");
@@ -166469,21 +166579,11 @@ app.use(publicErrorHandler);
 var app_default = app;
 
 // src/warehouse-preview-entry.ts
-var scoutPaths = /* @__PURE__ */ new Set(["/api/scout/rankings", "/api/scout/t20/suggestions"]);
-var iplPaths = /* @__PURE__ */ new Set([
-  "/api/ipl/overview",
-  "/api/ipl/seasons",
-  "/api/ipl/player-career-stats",
-  "/api/ipl/player-season-stats",
-  "/api/ipl/stats/query",
-  "/api/ipl/stats/matchup",
-  "/api/ipl/stats/scenario",
-  "/api/ipl/stats/drilldown",
-  "/api/stats/query",
-  "/api/stats/scenario",
-  "/api/stats/matchup",
-  "/api/stats/drilldown"
-]);
+var mode = (process.env.CRICFIELD_ANALYTICS_MODE ?? "turso").trim().toLowerCase();
+var laptopOrigin = process.env.CRICFIELD_ANALYTICS_ORIGIN?.trim();
+var laptopKey = process.env.CRICFIELD_ANALYTICS_KEY?.trim();
+var laptopEnabled = (mode === "laptop" || mode === "laptop-then-turso") && !!laptopOrigin && !!laptopKey;
+var LAPTOP_TIMEOUT_MS = 25e3;
 var warehouseDirectory = mkdtempSync(join4(tmpdir2(), "cricfield-preview-"));
 var scoutPath = join4(warehouseDirectory, "global.db");
 var iplPath = join4(warehouseDirectory, "sqlite.db");
@@ -166531,17 +166631,51 @@ function json2(res, status, error40) {
   res.writeHead(status, { "Content-Type": "application/json", "Cache-Control": "no-store" });
   res.end(JSON.stringify({ error: error40 }));
 }
+async function forwardToLaptop(req, res, pathAndQuery) {
+  const client = String(req.headers["x-forwarded-for"] ?? "").split(",")[0].trim();
+  try {
+    const upstream = await fetch(new URL(pathAndQuery, laptopOrigin), {
+      headers: { [ANALYTICS_KEY_HEADER]: laptopKey, ...client ? { [CLIENT_IP_HEADER]: client } : {}, accept: "application/json" },
+      redirect: "error",
+      signal: AbortSignal.timeout(LAPTOP_TIMEOUT_MS)
+    });
+    const type = upstream.headers.get("content-type") ?? "";
+    if (upstream.status >= 500 || !type.includes("application/json")) {
+      console.error("Laptop analytics backend failed", upstream.status, type.split(";")[0]);
+      await upstream.body?.cancel();
+      return false;
+    }
+    const body2 = Buffer.from(await upstream.arrayBuffer());
+    const cache9 = upstream.status === 200 ? "public, max-age=0, s-maxage=600, stale-while-revalidate=86400" : "no-store";
+    const headers = { "Content-Type": "application/json", "Cache-Control": cache9, "X-CricField-Backend": "laptop" };
+    const retryAfter = upstream.headers.get("retry-after");
+    if (retryAfter) headers["Retry-After"] = retryAfter;
+    res.writeHead(upstream.status, headers);
+    res.end(body2);
+    return true;
+  } catch (error40) {
+    console.error("Laptop analytics backend unreachable", error40 instanceof Error ? error40.name : "Error");
+    return false;
+  }
+}
 async function handler(req, res) {
   const target2 = new URL(req.url ?? "/", "http://localhost");
   const path29 = (target2.searchParams.get("__warehouseRoute") ?? target2.pathname).replace(/\/$/, "");
   target2.searchParams.delete("__warehouseRoute");
   req.url = path29 + target2.search;
-  const isScout = scoutPaths.has(path29);
-  if (!isScout && !iplPaths.has(path29)) return json2(res, 404, "not_found");
+  if (!ANALYTICS_PATHS.has(path29)) return json2(res, 404, "not_found");
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
     return json2(res, 405, "method_not_allowed");
   }
+  if (laptopEnabled) {
+    if (await forwardToLaptop(req, res, req.url)) return;
+    if (mode === "laptop" || LAPTOP_ONLY_PATHS.has(path29)) return json2(res, 503, "analytics_backend_unavailable");
+  } else if (LAPTOP_ONLY_PATHS.has(path29)) {
+    return json2(res, 404, "not_found");
+  }
+  const isScout = SCOUT_PATHS.has(path29);
+  if (!isScout && !IPL_PATHS.has(path29)) return json2(res, 404, "not_found");
   try {
     process.env.CRICFIELD_DB_READONLY = "1";
     process.env.CRICFIELD_SCOUT_DB_PATH = scoutPath;
@@ -166561,7 +166695,7 @@ async function handler(req, res) {
     }
     return app_default(req, res);
   } catch (error40) {
-    console.error("Warehouse preview initialization failed", error40 instanceof Error ? error40.name : "Error");
+    console.error("Warehouse preview initialization failed", error40 instanceof Error ? `${error40.name}: ${error40.message}` : "Error");
     return json2(res, 503, isScout ? "global_warehouse_unavailable" : "ipl_warehouse_unavailable");
   }
 }

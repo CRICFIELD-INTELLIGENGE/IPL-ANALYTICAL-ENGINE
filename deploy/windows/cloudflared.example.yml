@@ -1,0 +1,11 @@
+# Copy to %LOCALAPPDATA%\CricField\cloudflared.yml and replace <TUNNEL-ID> and <USER>.
+# Only the analytics API is published; everything else on the laptop stays unreachable.
+tunnel: <TUNNEL-ID>
+credentials-file: C:\Users\<USER>\.cloudflared\<TUNNEL-ID>.json
+ingress:
+  - hostname: api.cricfield.in
+    service: http://127.0.0.1:5100
+    originRequest:
+      connectTimeout: 10s
+      keepAliveConnections: 20
+  - service: http_status:404

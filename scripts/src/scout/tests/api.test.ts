@@ -10,6 +10,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import path from "node:path";
+import { readFileSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
 import { fileURLToPath } from "node:url";
 
@@ -17,11 +18,13 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(here, "..", "..", "..", "..");
 const globalDbPath = path.join(REPO, "lib", "cricket-data", "global", "warehouse", "global.db");
 
-test("scout service: global.db exists, is valid SQLite and contains all 6 competitions", () => {
+test("scout service: global.db holds exactly the enabled men's T20 competitions, nothing of another format", () => {
   const db = new DatabaseSync(globalDbPath, { readOnly: true });
-  const comps = db.prepare("SELECT code FROM competitions ORDER BY code").all() as { code: string }[];
-  const codes = comps.map((c) => c.code);
-  assert.deepEqual(codes, ["bbl", "cpl", "ilt20", "ipl", "sa20", "smat"]);
+  const comps = db.prepare("SELECT code, format, gender FROM competitions WHERE competition_id IN (SELECT DISTINCT competition_id FROM matches) ORDER BY code").all() as { code: string; format: string; gender: string }[];
+  const manifest = JSON.parse(readFileSync(new URL("../../../../lib/cricket-data/global/manifests/sources.json", import.meta.url), "utf8")) as { competitions: { code: string; enabled: boolean }[] };
+  const enabled = manifest.competitions.filter((c) => c.enabled).map((c) => c.code).sort();
+  assert.deepEqual(comps.map((c) => c.code), enabled);
+  assert.ok(comps.every((c) => (c.format === "T20" || c.format === "T20I") && c.gender === "male"), JSON.stringify(comps));
   db.close();
 });
 

@@ -82,7 +82,7 @@ function resolveScoutPlayerPhoto(name?: string): string {
   return `/players/profiles-2026/${kebab}.webp`;
 }
 
-// 6 Core Scouting Leagues
+// Men's T20 franchise / domestic leagues in global.db (Cricsheet). Map x/y are percentages on the scouting map.
 export const SCOUT_LEAGUES = [
   { code: "ipl", name: "IPL", region: "India", x: 62, y: 38, badge: "IPL" },
   { code: "smat", name: "SMAT", region: "India", x: 74, y: 32, badge: "SMAT" },
@@ -90,6 +90,13 @@ export const SCOUT_LEAGUES = [
   { code: "sa20", name: "SA20", region: "South Africa", x: 68, y: 82, badge: "SA20" },
   { code: "cpl", name: "CPL", region: "Caribbean", x: 38, y: 44, badge: "CPL" },
   { code: "ilt20", name: "ILT20", region: "UAE", x: 50, y: 66, badge: "ILT20" },
+  { code: "psl", name: "PSL", region: "Pakistan", x: 56, y: 32, badge: "PSL" },
+  { code: "bpl", name: "BPL", region: "Bangladesh", x: 80, y: 40, badge: "BPL" },
+  { code: "lpl", name: "LPL", region: "Sri Lanka", x: 66, y: 52, badge: "LPL" },
+  { code: "npl", name: "NPL", region: "Nepal", x: 70, y: 24, badge: "NPL" },
+  { code: "blast", name: "T20 Blast", region: "England", x: 44, y: 18, badge: "BLAST" },
+  { code: "mlc", name: "MLC", region: "United States", x: 24, y: 30, badge: "MLC" },
+  { code: "supersmash", name: "Super Smash", region: "New Zealand", x: 88, y: 76, badge: "SMASH" },
 ];
 
 export function ScoutCinematicRoom({
@@ -735,7 +742,7 @@ export function ScoutCinematicRoom({
                   RADAR ACTIVE
                 </span>
                 <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider">
-                  6 LEAGUES
+                  {SCOUT_LEAGUES.length} LEAGUES
                 </span>
               </div>
               {/* Outer atmospheric aura */}

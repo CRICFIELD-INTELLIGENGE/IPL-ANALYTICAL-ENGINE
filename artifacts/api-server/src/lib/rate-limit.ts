@@ -24,7 +24,8 @@ export function rateLimit({ max, windowMs, name }: RateLimitOptions) {
 
   return function rateLimitMiddleware(req: Request, res: Response, next: NextFunction): void {
     const now = Date.now();
-    const key = req.ip ?? req.socket.remoteAddress ?? "unknown";
+    // clientKey: the browser IP forwarded by the Vercel proxy, set by analytics-gate only after its key check.
+    const key = (req as any).clientKey ?? req.ip ?? req.socket.remoteAddress ?? "unknown";
 
     let b = buckets.get(key);
     if (!b || now >= b.resetAt) {
