@@ -1,6 +1,6 @@
 @echo off
 setlocal
-cd /d "%~dp0artifacts\ipl-analytics"
+cd /d "%~dp0..\..\artifacts\ipl-analytics"
 set "CRICFIELD_API_AUTOSTART=0"
 set "VITE_BACKEND_PORT=5055"
 where node >nul 2>nul

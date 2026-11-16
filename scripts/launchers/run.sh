@@ -1,4 +1,6 @@
 #!/bin/bash
+# Run from the repository root (this file lives in scripts/launchers).
+cd "$(dirname "$0")/../.." || exit 1
 
 # IPL Intelligence OS Bash Launcher
 

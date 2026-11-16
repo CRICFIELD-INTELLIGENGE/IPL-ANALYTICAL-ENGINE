@@ -28,7 +28,7 @@ To run the API on its own:
 pnpm --filter @workspace/api-server run dev
 ```
 
-The API listens on `PORT` (default 5000). Windows users can also double-click `START-CRICFIELD.bat` to get the API on :5000 and the site on :3000.
+The API listens on `PORT` (default 5000). Windows users can also double-click `START-CRICFIELD.bat` (repo root) to get the API on :5000 and the site on :3000. Other launchers are in `scripts/launchers/`: `run.bat`, `run.ps1` and `run.sh` pick free ports automatically; `START.bat` uses :5000 / :3000; `START-MOBILE-PREVIEW.bat` serves the mobile preview on :3068. Each one switches to the repo root itself.
 
 ## Environment
 

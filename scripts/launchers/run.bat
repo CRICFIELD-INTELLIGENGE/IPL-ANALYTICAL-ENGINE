@@ -1,6 +1,8 @@
 @echo off
 title IPL Intelligence OS Launcher
 setlocal enabledelayedexpansion
+:: Run from the repository root (this file lives in scripts\launchers).
+cd /d "%~dp0..\.."
 
 echo ===================================================
 echo   IPL Intelligence OS - Data Insight Engine

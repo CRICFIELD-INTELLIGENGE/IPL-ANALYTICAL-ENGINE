@@ -30,12 +30,12 @@ Write-Host "[Port Detection] Backend:  $backendPort (base: $baseBackendPort)" -F
 Write-Host ""
 
 Write-Host "Starting Express API Server on Port $backendPort..." -ForegroundColor Cyan
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PSScriptRoot'; `$env:PORT='$backendPort'; pnpm --filter @workspace/api-server dev" -WindowStyle Normal
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PSScriptRoot\..\..'; `$env:PORT='$backendPort'; pnpm --filter @workspace/api-server dev" -WindowStyle Normal
 
 Start-Sleep -Seconds 3
 
 Write-Host "Starting React Vite Frontend on Port $frontendPort..." -ForegroundColor Yellow
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PSScriptRoot'; `$env:PORT='$frontendPort'; `$env:VITE_BACKEND_PORT='$backendPort'; pnpm --filter @workspace/ipl-analytics dev" -WindowStyle Normal
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PSScriptRoot\..\..'; `$env:PORT='$frontendPort'; `$env:VITE_BACKEND_PORT='$backendPort'; pnpm --filter @workspace/ipl-analytics dev" -WindowStyle Normal
 
 Write-Host ""
 Write-Host "===================================================" -ForegroundColor Green

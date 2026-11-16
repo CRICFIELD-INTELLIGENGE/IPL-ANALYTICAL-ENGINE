@@ -83,3 +83,12 @@ The branch changes only Markdown, `.env.example` and `.github/` templates. No co
 
 - The branch has not been merged or pushed. To drop it: `git worktree remove ../cricfield-refactor-wt` and then `git branch -D refactor/repository-architecture`.
 - If it is merged later: `git revert -m 1 <merge-sha>` on a branch, then open a PR. Never rewrite `main`'s history.
+
+## Re-validation after the cleanup commits
+
+| Run | Change set | Typechecks / builds | API | web unit | global | step3 | checksums |
+|---|---|---|---|---|---|---|---|
+| after-cleanup | M1, M3, D1–D5 | all pass | 237 / 9 (same) | 2 / 0 | 22 / 1 (same) | 17 / 8 (same) | unchanged |
+| after-launchers | + M4 | all pass | 237 / 9 (same) | 2 / 0 | 22 / 1 (same) | 17 / 8 (same) | unchanged |
+
+The built site still contains the venue and logo images (`dist/public/venue-images/wankhede stadium.webp`, `dist/public/rr logo.png`). The repo-wide Markdown link check finds 0 broken relative links. Commit-level rollback: `git revert <sha>` for any single commit on this branch.

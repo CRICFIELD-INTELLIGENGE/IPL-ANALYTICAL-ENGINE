@@ -114,7 +114,9 @@ The structure already maps onto the three identities. The proposal therefore **k
 ├── assets/source/            # ← 2 unique root images (proposed M3)
 ├── README.md  CONTRIBUTING.md  SECURITY.md  LICENSE  .env.example
 ├── players-data-updated.csv  people.csv  2026 ipl auction player list.*   # stay: read by code at root
-└── configs (package.json, pnpm-workspace.yaml, vercel.json, tsconfig*, START*.bat, run.*)
+├── START-CRICFIELD.bat       # main launcher stays at the root
+├── scripts/launchers/        # ← run.bat, run.ps1, run.sh, START.bat, START-MOBILE-PREVIEW.bat (M4)
+└── configs (package.json, pnpm-workspace.yaml, vercel.json, tsconfig*)
 ```
 
 Not proposed: a deeper monorepo split (for example `apps/` and `packages/`). It would change deploy entry points and launch configs and gain nothing functional.
@@ -126,6 +128,7 @@ Not proposed: a deeper monorepo split (for example `apps/` and `packages/`). It 
 | M1 | 37 historical root `*.md` (`DAY-*`, `*_REPORT`, `MASTER_ARCHITECTURE_HANDBOOK.md`, `PROJECT_TREE.md`, …) | `docs/history/` | Clear the root; these are dated reports | No code reads them. Links to them: `ENGINEERING-SPRINT-SUMMARY.md` and `docs/data-repairs/2026-10-19-day6b/baseline-refresh.md` (would be updated). Low risk. | **applied**, checks match baseline |
 | M2 | `CONTRIBUTING.md`, `SECURITY.md`, `README.md`, `LICENSE` | stay | GitHub expects them at the root | — | n/a |
 | M3 | `manoj_bhandage_toi.jpg`, `mohit_rathee_toi.jpg` | `assets/source/` | Unique images with no code reference | `git grep` shows no reference. Low risk. | **applied**, checks match baseline |
+| M4 | `run.bat`, `run.ps1`, `run.sh`, `START.bat`, `START-MOBILE-PREVIEW.bat` | `scripts/launchers/` | Pasted structure guide, step 3: keep only `START-CRICFIELD.bat` at the root | No code or config references them. Each one gets a `cd` to the repo root (`%~dp0..\..`, `$PSScriptRoot\..\..`, `$(dirname "$0")/../..`). Path resolution and shell/PowerShell syntax were checked; the launchers were not double-clicked. | **applied** |
 | D1 | 41 root images (stadiums, team logos, `rcb winner 2026.jpg`) | delete | Byte-identical copies already in `artifacts/ipl-analytics/public/` | The app maps names to `public/venue-images/` (`src/lib/aggregates.ts`). Vite serves only `public/`. Low risk. | **applied**, checks match baseline |
 | D2 | `.gitignore.tmp`, `temp.json`, `etl_output.log`, `desktop.ini` | delete | Stray files | `git grep` shows no reference. Low risk. | **applied**, checks match baseline |
 | D3 | 5 × `scripts/image_ingestion/**/__pycache__/*.pyc` | delete (`__pycache__/` was already ignored; the files had been force-added) | Compiled Python | Regenerated automatically. Low risk. | **applied**, checks match baseline |
@@ -145,4 +148,15 @@ Rows marked *held* stay unless the user decides otherwise.
 - **M1:** 37 files `X.md` → `docs/history/X.md` (`git mv`, so history follows with `git log --follow`). No relative links needed rewriting. Their only link is an absolute `file://` link, kept as it was. Code comments that name these reports (for example "DAY-05-REPORT.md") still identify them by file name.
 - **M3:** `manoj_bhandage_toi.jpg`, `mohit_rathee_toi.jpg` → `assets/source/`.
 - **D1:** 41 deletions. Each was re-verified byte-identical (`git hash-object`) to its copy in `artifacts/ipl-analytics/public/` (`public/venue-images/<same name>` for stadiums; `public/<same name>` for logos; `public/rcb-winner-2026.jpg`).
+- **M4:** 5 launchers → `scripts/launchers/`, with a one-line repo-root anchor each. `START-CRICFIELD.bat` stays at the root.
 - **D2–D5:** 11 deletions. Added `artifacts/ipl-analytics/test-results/` to `.gitignore`.
+
+## 6. Pasted structure guide: items not adopted
+
+| Guide suggestion | Decision | Why |
+|---|---|---|
+| Move root images to `attached_assets/` or `public/assets/` | Deleted the 41 duplicates instead; moved 2 unique images to `assets/source/` | The frontend already serves byte-identical copies from `public/venue-images/` and `public/`. Moving copies would only duplicate them again. |
+| `data-release/` as a tracked folder | Not adopted | It is the git-ignored output of `scripts/data-release.mjs`. Tracking it would commit dataset snapshots. |
+| Git LFS for datasets and databases | Not adopted | `.gitattributes` already routes `*.db` and `*.db-wal` through LFS for new files. Moving existing blobs into LFS needs a history rewrite, which this task forbids. Vercel deploys LFS pointer files unless LFS is turned on in the project, which could break `/data`. |
+| "React 18 / Vite" and "six-league" labels | Corrected in the docs | The manifests show React 19.1 and Vite 7. `global.db` holds 7 competitions. |
+| `.github/` workflows | Templates added; no workflow | No CI exists yet. Adding one is a separate decision ([TESTING.md](TESTING.md)). |
