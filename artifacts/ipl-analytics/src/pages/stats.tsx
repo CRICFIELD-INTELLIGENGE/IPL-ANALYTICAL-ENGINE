@@ -974,6 +974,9 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     return Array.from(new Set(venues.data?.map(v => getVenueName(v)) || ["Wankhede Stadium", "Eden Gardens", "MA Chidambaram Stadium"]));
   }, [headToHeadVenues, venues.data]);
 
+  const isDimensionalTab = activeTab === "dimensional" || activeTab === "stat-builder" || activeTab === "scenario-intelligence" || activeTab === "batter-lens";
+  const isHead2HeadTab = activeTab === "head2head" || activeTab === "tactics";
+
   const filterControls = (<>
         {/* SMART FILTER BAR */}
         <div className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-2 flex flex-wrap items-center gap-2 relative z-20 shadow-sm dark:shadow-xl">
@@ -1068,9 +1071,82 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
             icon={Shield}
             value={filters.pressure_state}
             options={["Standard", "High Pressure", "Clutch Moment"]}
-              onChange={(v) => handleFilterChange("pressure_state", v)}
+            onChange={(v) => handleFilterChange("pressure_state", v)}
           />
-          {activeTab === "batters" && (
+          <FilterDropdown
+            label="Phase"
+            icon={Activity}
+            value={filters.phase || "All Phases"}
+            options={["All Phases", "Powerplay", "Middle", "Death"]}
+            onChange={(v) => handleFilterChange("phase", v)}
+          />
+          <FilterDropdown
+            label="Situation"
+            icon={Cpu}
+            value={
+              selectedScenario === "death"
+                ? "Death Overs"
+                : selectedScenario === "powerplay"
+                ? "Powerplay Fire"
+                : selectedScenario === "clutch"
+                ? "Clutch Moments"
+                : selectedScenario === "high-pressure"
+                ? "High Pressure"
+                : selectedScenario === "chasing200plus"
+                ? "Chasing 200+"
+                : selectedScenario === "playoff"
+                ? "Playoff Matches"
+                : selectedScenario === "death-spin"
+                ? "Death vs Spin"
+                : selectedScenario === "pressure-reliability"
+                ? "Pressure Reliability"
+                : "All Situations"
+            }
+            options={[
+              "All Situations",
+              "Pressure Reliability",
+              "Death Overs",
+              "Powerplay Fire",
+              "Clutch Moments",
+              "High Pressure",
+              "Chasing 200+",
+              "Playoff Matches",
+              "Death vs Spin",
+            ]}
+            onChange={(v) => {
+              if (v === "All Situations") {
+                setSelectedScenario("pressure-reliability");
+                handleFilterChange("pressure_state", "Standard");
+                handleFilterChange("phase", "All Phases");
+                handleFilterChange("match_context", "All Matches");
+              } else if (v === "Death Overs") {
+                setSelectedScenario("death");
+                handleFilterChange("phase", "Death");
+              } else if (v === "Powerplay Fire") {
+                setSelectedScenario("powerplay");
+                handleFilterChange("phase", "Powerplay");
+              } else if (v === "Clutch Moments") {
+                setSelectedScenario("clutch");
+                handleFilterChange("pressure_state", "Clutch Moment");
+              } else if (v === "High Pressure") {
+                setSelectedScenario("high-pressure");
+                handleFilterChange("pressure_state", "High Pressure");
+              } else if (v === "Chasing 200+") {
+                setSelectedScenario("chasing200plus");
+                handleFilterChange("innings", "2nd Innings (Chasing)");
+              } else if (v === "Playoff Matches") {
+                setSelectedScenario("playoff");
+                handleFilterChange("match_context", "Playoffs");
+              } else if (v === "Death vs Spin") {
+                setSelectedScenario("death-spin");
+                handleFilterChange("phase", "Death");
+                handleFilterChange("bowler_type", "Spinner");
+              } else {
+                setSelectedScenario("pressure-reliability");
+              }
+            }}
+          />
+          {(activeTab === "batters" || isDimensionalTab) && (
             <FilterDropdown
               label="Bowler Type"
               icon={Target}
@@ -1079,7 +1155,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               onChange={(v) => handleFilterChange("bowler_type", v)}
             />
           )}
-          {activeTab === "bowlers" && (
+          {(activeTab === "bowlers" || isDimensionalTab) && (
             <FilterDropdown
               label="Batter Handedness"
               icon={Target}
@@ -1116,8 +1192,64 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   </>);
 
-  const isDimensionalTab = activeTab === "dimensional" || activeTab === "stat-builder" || activeTab === "scenario-intelligence" || activeTab === "batter-lens";
-  const isHead2HeadTab = activeTab === "head2head" || activeTab === "tactics";
+  const telemetryBanner = (
+    <div className="mb-6 bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 p-4 rounded-2xl grid grid-cols-1 md:grid-cols-12 gap-4 items-center animate-fade-in relative overflow-hidden group shadow-sm dark:shadow-none">
+      <img
+        src="/advance stats title image.png"
+        className="absolute right-0 top-0 h-full w-auto object-cover opacity-15 dark:opacity-25 pointer-events-none mix-blend-luminosity group-hover:opacity-25 dark:group-hover:opacity-35 transition-opacity"
+        alt="Advance Stats Banner"
+      />
+      <div className="md:col-span-7 flex items-center gap-3 relative z-10">
+        <div className="p-2 bg-primary/20 rounded-xl text-primary shrink-0">
+          <Activity className="w-5 h-5 animate-pulse" />
+        </div>
+        <div className="min-w-0">
+          <div className="text-[12px] font-black text-slate-900 dark:text-white uppercase tracking-wider truncate">Multidimensional Slicing Telemetry</div>
+          <div className="text-[10px] text-slate-600 dark:text-white/50 font-bold mt-0.5 truncate">
+            {filters.season !== "All Seasons" ? `${filters.season} ` : "All-Time "}
+            {filters.team !== "All Teams" ? `${filters.team} ` : ""}
+            {filters.opposition !== "All Opponents" ? `vs ${filters.opposition} ` : ""}
+            {filters.venue !== "All Venues" ? `at ${filters.venue} ` : ""}
+            {filters.phase && filters.phase !== "All Phases" ? `· Phase: ${filters.phase} ` : ""}
+            {filters.pressure_state && filters.pressure_state !== "Standard" ? `· ${filters.pressure_state} ` : ""}
+          </div>
+        </div>
+      </div>
+      <div className="md:col-span-5 flex items-center justify-start md:justify-end gap-4 relative z-10 flex-wrap">
+        {themeTeam && (
+          <button
+            onClick={() => {
+              if (filters.team === themeTeam) {
+                handleFilterChange("team", "All Teams");
+              } else {
+                handleFilterChange("team", themeTeam);
+              }
+            }}
+            className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer border ${
+              filters.team === themeTeam
+                ? "bg-amber-400 text-black border-amber-300 shadow-md shadow-amber-400/20"
+                : "bg-slate-100 dark:bg-white/5 text-amber-700 dark:text-amber-300 border-amber-400/30 hover:bg-amber-400/10"
+            }`}
+          >
+            <Shield className="w-3.5 h-3.5" />
+            <span>{filters.team === themeTeam ? `✓ My ${themeTeam} Dugout (Reset)` : `Filter to My ${themeTeam} Dugout`}</span>
+          </button>
+        )}
+        <div className="text-right">
+          <div className="text-[8px] font-black text-slate-500 dark:text-white/30 uppercase">Fixtures Sliced</div>
+          <div className="text-xl font-black text-slate-900 dark:text-white mt-0.5">{activeMatches.length} <span className="text-[10px] text-primary font-bold">Matches</span></div>
+        </div>
+        {filters.venue !== "All Venues" && (
+          <div className="text-right">
+            <div className="text-[8px] font-black text-slate-500 dark:text-white/30 uppercase">Venue Scorecards</div>
+            <div className="text-xl font-black text-primary mt-0.5">
+              {activeMatches.filter(m => m.venue && normalizeVenueName(m.venue) === normalizeVenueName(filters.venue)).length} <span className="text-[10px] text-slate-500 dark:text-white/40 font-bold">Fixtures</span>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 
   const selectedTool = isHead2HeadTab
     ? TABS.find(tab => tab.id === "head2head")
@@ -1134,6 +1266,12 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       </header>
       {isDimensionalTab && (
         <div className="flex flex-col gap-6 animate-fade-in">
+          {/* Integrated Dimensional Slicing Filter Deck */}
+          {filterControls}
+
+          {/* Slicing Telemetry */}
+          {telemetryBanner}
+
           {/* Dimensional Slicing Engine Switcher */}
           <div className="stats-tool-panel p-3 flex flex-wrap items-center justify-between gap-3 shadow-xl">
             <div className="flex items-center gap-2">
@@ -1552,65 +1690,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
           </Link>
         </div>
 
-        {filterControls}
-
-        {/* Telemetry Summary Banner */}
-        <div className="mb-6 bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 p-4 rounded-2xl grid grid-cols-1 md:grid-cols-12 gap-4 items-center animate-fade-in relative overflow-hidden group shadow-sm dark:shadow-none">
-          <img
-            src="/advance stats title image.png"
-            className="absolute right-0 top-0 h-full w-auto object-cover opacity-15 dark:opacity-25 pointer-events-none mix-blend-luminosity group-hover:opacity-25 dark:group-hover:opacity-35 transition-opacity"
-            alt="Advance Stats Banner"
-          />
-          <div className="md:col-span-7 flex items-center gap-3 relative z-10">
-            <div className="p-2 bg-primary/20 rounded-xl text-primary shrink-0">
-              <Activity className="w-5 h-5 animate-pulse" />
-            </div>
-            <div className="min-w-0">
-              <div className="text-[12px] font-black text-slate-900 dark:text-white uppercase tracking-wider truncate">Multidimensional Slicing Telemetry</div>
-              <div className="text-[10px] text-slate-600 dark:text-white/50 font-bold mt-0.5 truncate">
-                {filters.season !== "All Seasons" ? `${filters.season} ` : "All-Time "}
-                {filters.team !== "All Teams" ? `${filters.team} ` : ""}
-                {filters.opposition !== "All Opponents" ? `vs ${filters.opposition} ` : ""}
-                {filters.venue !== "All Venues" ? `at ${filters.venue}` : ""}
-              </div>
-            </div>
-          </div>
-          <div className="md:col-span-5 flex items-center justify-start md:justify-end gap-4 relative z-10 flex-wrap">
-            {themeTeam && (
-              <button
-                onClick={() => {
-                  if (filters.team === themeTeam) {
-                    handleFilterChange("team", "All Teams");
-                  } else {
-                    handleFilterChange("team", themeTeam);
-                  }
-                }}
-                className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer border ${
-                  filters.team === themeTeam
-                    ? "bg-amber-400 text-black border-amber-300 shadow-md shadow-amber-400/20"
-                    : "bg-slate-100 dark:bg-white/5 text-amber-700 dark:text-amber-300 border-amber-400/30 hover:bg-amber-400/10"
-                }`}
-              >
-                <Shield className="w-3.5 h-3.5" />
-                <span>{filters.team === themeTeam ? `✓ My ${themeTeam} Dugout (Reset)` : `Filter to My ${themeTeam} Dugout`}</span>
-              </button>
-            )}
-            <div className="text-right">
-              <div className="text-[8px] font-black text-slate-500 dark:text-white/30 uppercase">Fixtures Sliced</div>
-              <div className="text-xl font-black text-slate-900 dark:text-white mt-0.5">{activeMatches.length} <span className="text-[10px] text-primary font-bold">Matches</span></div>
-            </div>
-            {filters.venue !== "All Venues" && (
-              <div className="text-right">
-                <div className="text-[8px] font-black text-slate-500 dark:text-white/30 uppercase">Venue Scorecards</div>
-                <div className="text-xl font-black text-primary mt-0.5">
-                  {activeMatches.filter(m => m.venue && normalizeVenueName(m.venue) === normalizeVenueName(filters.venue)).length} <span className="text-[10px] text-slate-500 dark:text-white/40 font-bold">Fixtures</span>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* TAB BAR */}
+        {/* TAB BAR — ALWAYS AT TOP */}
         <div className="w-full overflow-x-auto no-scrollbar pb-1">
           <div className="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 w-fit max-w-full">
             {TABS.map(t => (
@@ -1628,6 +1708,14 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
             ))}
           </div>
         </div>
+
+        {/* DIMENSIONAL SLICING FILTERS & TELEMETRY — Rendered for tabs using dimensional slices (batters, bowlers, venues, teams) */}
+        {(activeTab === "batters" || activeTab === "bowlers" || activeTab === "venues" || activeTab === "teams") && (
+          <div className="space-y-4">
+            {filterControls}
+            {telemetryBanner}
+          </div>
+        )}
 
         {/* QUERY CHAIN BREADCRUMB TRAIL */}
         {filterChain.length > 0 && (
@@ -4131,11 +4219,20 @@ function ComparisonRow({ label, val1, val2, isHigherBetter }: { label: string, v
 function StatBuilderView({ batters, bowlers, playerImages }: { batters: any[], bowlers: any[], playerImages: Record<string, string> }) {
   const bios = usePlayerBios();
   const displayNames = usePlayerDisplayNames();
+  const filters = useAnalyticsFilterStore(state => state.filters);
+  const setFilter = useAnalyticsFilterStore(state => state.setFilter);
   const [type, setType] = useState<"batters" | "bowlers">("batters");
-  const [phase, setPhase] = useState("All");
-  const [minBalls, setMinBalls] = useState(50);
-  const [sortField, setSortField] = useState<string>("default");
+  const [minBalls, setMinBalls] = useState(30);
+  const [minSr, setMinSr] = useState(0);
+  const [maxEcon, setMaxEcon] = useState(0);
+  const [sortField, setSortField] = useState<string>("phaseSr");
   const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
+
+  // Synchronize phase with global filters.phase
+  const phase = filters.phase && filters.phase !== "All Phases" ? filters.phase : "All";
+  const setPhase = (newPhase: string) => {
+    setFilter("phase", newPhase === "All" ? "All Phases" : newPhase);
+  };
 
   const toggleSort = (field: string) => {
     if (sortField === field) {
@@ -4150,12 +4247,22 @@ function StatBuilderView({ batters, bowlers, playerImages }: { batters: any[], b
   const filteredData = useMemo(() => {
     let data = type === "batters" ? batters : bowlers;
 
-    // Apply delivery threshold according to selected phase
+    // Apply delivery threshold and situation strike rate / economy threshold
     data = data.filter((b: any) => {
-      if (phase === "Powerplay") return (b.ppBalls || b.balls || 0) >= Math.max(10, Math.floor(minBalls / 3));
-      if (phase === "Middle") return (b.middleBalls || b.balls || 0) >= Math.max(10, Math.floor(minBalls / 3));
-      if (phase === "Death") return (b.deathBalls || b.balls || 0) >= Math.max(10, Math.floor(minBalls / 4));
-      return (b.balls || 0) >= minBalls;
+      const bBalls = phase === "Powerplay" ? (b.ppBalls || b.balls || 0) : phase === "Middle" ? (b.middleBalls || b.balls || 0) : phase === "Death" ? (b.deathBalls || b.balls || 0) : (b.balls || 0);
+      if (bBalls < minBalls) return false;
+
+      if (type === "batters" && minSr > 0) {
+        const effectiveSr = phase === "Powerplay" ? (b.ppSr || b.sr || 0) : phase === "Middle" ? (b.middleSr || b.sr || 0) : phase === "Death" ? (b.deathSr || b.sr || 0) : (b.sr || 0);
+        if (effectiveSr < minSr) return false;
+      }
+
+      if (type === "bowlers" && maxEcon > 0) {
+        const effectiveEcon = phase === "Powerplay" ? (b.ppEcon ?? b.econ ?? 99) : phase === "Middle" ? (b.middleEcon ?? b.econ ?? 99) : phase === "Death" ? (b.deathEcon ?? b.econ ?? 99) : (b.econ ?? 99);
+        if (effectiveEcon > maxEcon) return false;
+      }
+
+      return true;
     });
 
     const dir = sortOrder === "desc" ? 1 : -1;
@@ -4166,40 +4273,32 @@ function StatBuilderView({ batters, bowlers, playerImages }: { batters: any[], b
         if (sortField === "avg") return (b.avg - a.avg) * dir;
         if (sortField === "sr") return (b.sr - a.sr) * dir;
         if (sortField === "boundaryPct") return ((b.boundaryPct || 0) - (a.boundaryPct || 0)) * dir;
-        if (sortField === "phaseSr") {
+        if (sortField === "phaseSr" || sortField === "default") {
           const aVal = phase === "Powerplay" ? (a.ppSr || 0) : phase === "Middle" ? (a.middleSr || 0) : phase === "Death" ? (a.deathSr || 0) : a.sr;
           const bVal = phase === "Powerplay" ? (b.ppSr || 0) : phase === "Middle" ? (b.middleSr || 0) : phase === "Death" ? (b.deathSr || 0) : b.sr;
           return (bVal - aVal) * dir;
         }
         if (sortField === "player") return a.player.localeCompare(b.player) * dir;
 
-        // Default phase sort
-        if (phase === "Powerplay") return ((b.ppSr || 0) - (a.ppSr || 0)) * dir;
-        if (phase === "Middle") return ((b.middleSr || 0) - (a.middleSr || 0)) * dir;
-        if (phase === "Death") return ((b.deathSr || 0) - (a.deathSr || 0)) * dir;
         return (b.runs - a.runs) * dir;
       } else {
         if (sortField === "wickets") return (b.wickets - a.wickets) * dir;
         if (sortField === "avg") return (b.avg - a.avg) * dir;
         if (sortField === "econ") return (b.econ - a.econ) * dir;
         if (sortField === "dotPct") return ((b.dotPct || 0) - (a.dotPct || 0)) * dir;
-        if (sortField === "phaseEcon") {
+        if (sortField === "phaseEcon" || sortField === "default") {
           const aVal = phase === "Powerplay" ? (a.ppEcon ?? a.econ) : phase === "Middle" ? (a.middleEcon ?? a.econ) : phase === "Death" ? (a.deathEcon ?? a.econ) : a.econ;
           const bVal = phase === "Powerplay" ? (b.ppEcon ?? b.econ) : phase === "Middle" ? (b.middleEcon ?? b.econ) : phase === "Death" ? (b.deathEcon ?? b.econ) : b.econ;
           return (aVal - bVal) * dir;
         }
         if (sortField === "player") return a.player.localeCompare(b.player) * dir;
 
-        // Default phase sort
-        if (phase === "Powerplay") return ((a.ppEcon ?? a.econ) - (b.ppEcon ?? b.econ)) * dir;
-        if (phase === "Middle") return ((a.middleEcon ?? a.econ) - (b.middleEcon ?? b.econ)) * dir;
-        if (phase === "Death") return ((a.deathEcon ?? a.econ) - (b.deathEcon ?? b.econ)) * dir;
         return (b.wickets - a.wickets) * dir;
       }
     });
 
-    return data.slice(0, 30);
-  }, [batters, bowlers, type, phase, minBalls, sortField, sortOrder]);
+    return data.slice(0, 50);
+  }, [batters, bowlers, type, phase, minBalls, minSr, maxEcon, sortField, sortOrder]);
 
   const renderSortHeader = (label: string, field: string, align: "left" | "center" = "center", isHighlighted = false) => {
     const isActive = sortField === field;
@@ -4231,38 +4330,79 @@ function StatBuilderView({ batters, bowlers, playerImages }: { batters: any[], b
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="p-5 stats-tool-panel flex flex-wrap items-center gap-4 shadow-xl">
-        <div className="flex items-center gap-2 mr-4">
-          <Filter className="w-5 h-5 text-primary" />
-          <span className="text-[14px] font-black uppercase tracking-widest text-white/80">Leaderboard filters</span>
+      <div className="p-4 stats-tool-panel flex flex-wrap items-center justify-between gap-4 shadow-xl">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2 mr-2">
+            <Filter className="w-4 h-4 text-primary" />
+            <span className="text-[12px] font-black uppercase tracking-widest text-white/90">Situation SR Slicer</span>
+          </div>
+
+          <select
+            value={type}
+            onChange={e => { setType(e.target.value as any); setSortField("default"); }}
+            className="bg-[#080B16] border border-white/10 rounded-xl px-3 py-1.5 text-xs font-bold text-white outline-none min-w-[120px] focus:border-primary/50 cursor-pointer shadow-xl transition-all"
+            title="Stat Class Selection"
+          >
+            <option value="batters" className="bg-[#080B16] text-white py-1.5 font-semibold">Batting</option>
+            <option value="bowlers" className="bg-[#080B16] text-white py-1.5 font-semibold">Bowling</option>
+          </select>
+
+          <select
+            value={phase}
+            onChange={e => { setPhase(e.target.value); setSortField("default"); }}
+            className="bg-[#080B16] border border-white/10 rounded-xl px-3 py-1.5 text-xs font-bold text-white outline-none min-w-[130px] focus:border-primary/50 cursor-pointer shadow-xl transition-all"
+            title="Match Phase Selection"
+          >
+            <option value="All" className="bg-[#080B16] text-white py-1.5 font-semibold">All Phases</option>
+            <option value="Powerplay" className="bg-[#080B16] text-white py-1.5 font-semibold">Powerplay (1-6)</option>
+            <option value="Middle" className="bg-[#080B16] text-white py-1.5 font-semibold">Middle Overs (7-15)</option>
+            <option value="Death" className="bg-[#080B16] text-white py-1.5 font-semibold">Death Overs (16-20)</option>
+          </select>
+
+          {/* Situation Strike Rate Presets */}
+          {type === "batters" ? (
+            <div className="flex items-center gap-1.5 p-1 bg-black/40 border border-white/10 rounded-xl">
+              <span className="text-[9px] font-black uppercase tracking-wider text-white/40 px-2">Min SR:</span>
+              {[0, 130, 150, 175, 200].map(sr => (
+                <button
+                  key={sr}
+                  type="button"
+                  onClick={() => setMinSr(sr)}
+                  className={`px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                    minSr === sr
+                      ? "bg-primary text-white shadow-sm font-black"
+                      : "text-white/40 hover:text-white"
+                  }`}
+                >
+                  {sr === 0 ? "All" : `${sr}+`}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5 p-1 bg-black/40 border border-white/10 rounded-xl">
+              <span className="text-[9px] font-black uppercase tracking-wider text-white/40 px-2">Max Eco:</span>
+              {[0, 9.0, 8.0, 7.0].map(eco => (
+                <button
+                  key={eco}
+                  type="button"
+                  onClick={() => setMaxEcon(eco)}
+                  className={`px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                    maxEcon === eco
+                      ? "bg-accent text-white shadow-sm font-black"
+                      : "text-white/40 hover:text-white"
+                  }`}
+                >
+                  {eco === 0 ? "All" : `< ${eco}`}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
-        <select
-          value={type}
-          onChange={e => { setType(e.target.value as any); setSortField("default"); }}
-          className="bg-[#080B16] border border-white/10 rounded-xl p-2.5 text-xs font-bold text-white outline-none min-w-[130px] focus:border-primary/50 cursor-pointer shadow-xl transition-all"
-          title="Stat Class Selection"
-        >
-          <option value="batters" className="bg-[#080B16] text-white py-1.5 font-semibold">Batting</option>
-          <option value="bowlers" className="bg-[#080B16] text-white py-1.5 font-semibold">Bowling</option>
-        </select>
-
-        <select
-          value={phase}
-          onChange={e => { setPhase(e.target.value); setSortField("default"); }}
-          className="bg-[#080B16] border border-white/10 rounded-xl p-2.5 text-xs font-bold text-white outline-none min-w-[130px] focus:border-primary/50 cursor-pointer shadow-xl transition-all"
-          title="Match Phase Selection"
-        >
-          <option value="All" className="bg-[#080B16] text-white py-1.5 font-semibold">All Phases</option>
-          <option value="Powerplay" className="bg-[#080B16] text-white py-1.5 font-semibold">Powerplay</option>
-          <option value="Middle" className="bg-[#080B16] text-white py-1.5 font-semibold">Middle Overs</option>
-          <option value="Death" className="bg-[#080B16] text-white py-1.5 font-semibold">Death Overs</option>
-        </select>
-
-        <div className="ml-auto flex items-center gap-3">
+        <div className="flex items-center gap-3">
           <span className="text-[10px] font-bold text-white/40 uppercase">Min Deliveries:</span>
-          <input type="range" min="10" max="200" step="10" value={minBalls} onChange={e => setMinBalls(Number(e.target.value))} className="w-24 accent-primary" title="Minimum Deliveries Threshold" />
-          <span className="text-[12px] font-black w-8">{minBalls}</span>
+          <input type="range" min="10" max="150" step="10" value={minBalls} onChange={e => setMinBalls(Number(e.target.value))} className="w-24 accent-primary" title="Minimum Deliveries Threshold" />
+          <span className="text-[12px] font-black w-8 text-primary">{minBalls}</span>
         </div>
       </div>
 
