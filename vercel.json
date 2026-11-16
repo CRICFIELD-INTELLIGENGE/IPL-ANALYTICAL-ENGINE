@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "buildCommand": "pnpm --filter @workspace/ipl-analytics run build",
+  "buildCommand": "pnpm --filter @workspace/api-server exec node build.mjs --warehouse-preview && pnpm --filter @workspace/ipl-analytics run build",
   "outputDirectory": "artifacts/ipl-analytics/dist/public",
   "installCommand": "pnpm install",
   "framework": null,
@@ -88,7 +88,7 @@
     }
   ],
   "functions": {
-    "api/warehouse-preview.ts": {
+    "api/warehouse-preview.mjs": {
       "maxDuration": 60,
       "includeFiles": "{artifacts/ipl-analytics/public/data/{overview,seasons,matches,player-bio,players,current-squads,player-latest-teams,player-career-stats,player-season-stats}.json,artifacts/api-server/data/players.json,data/auction-2027-updates.json}"
     }

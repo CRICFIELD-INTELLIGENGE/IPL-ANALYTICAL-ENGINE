@@ -3,7 +3,7 @@ import { mkdtempSync } from "node:fs";
 import { rename } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { loadWarehouseSnapshot } from "../artifacts/api-server/src/services/turso-snapshot";
+import { loadWarehouseSnapshot } from "./services/turso-snapshot";
 
 const scoutPaths = new Set(["/api/scout/rankings", "/api/scout/t20/suggestions"]);
 const iplPaths = new Set([
@@ -68,7 +68,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       ipl ??= configureIpl().catch(error => { ipl = undefined; throw error; });
       await ipl;
     }
-    app ??= import("../artifacts/api-server/src/app.js").then(
+    app ??= import("./app.js").then(
       module => module.default as unknown as (req: IncomingMessage, res: ServerResponse) => void,
     );
     return (await app)(req, res);

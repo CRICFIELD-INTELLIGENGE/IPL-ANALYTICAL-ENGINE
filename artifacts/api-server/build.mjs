@@ -14,8 +14,9 @@ async function buildAll() {
   const distDir = path.resolve(artifactDir, "dist");
   await rm(distDir, { recursive: true, force: true });
 
+  const preview = process.argv.includes("--warehouse-preview");
   await esbuild({
-    entryPoints: [path.resolve(artifactDir, "src/index.ts")],
+    entryPoints: [path.resolve(artifactDir, preview ? "src/warehouse-preview.ts" : "src/index.ts")],
     platform: "node",
     bundle: true,
     format: "esm",
