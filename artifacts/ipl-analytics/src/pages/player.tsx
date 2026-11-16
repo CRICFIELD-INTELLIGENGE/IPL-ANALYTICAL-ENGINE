@@ -728,70 +728,31 @@ export default function PlayerProfilePage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center lg:items-start relative z-10">
               
               {/* 1. ATHLETE SHOWCASE STAGE */}
-              <div className="lg:col-span-3 flex flex-col items-center justify-center">
-                {/* Dynamic Player Aura / Halo */}
+              <div className="lg:col-span-3 flex flex-col items-center justify-center relative min-h-[280px]">
+                {/* Dynamic Player Aura / Halo Plinth */}
                 <div
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-56 md:h-56 rounded-full blur-[65px] opacity-40 pointer-events-none"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-52 h-52 sm:w-60 sm:h-60 rounded-full blur-[70px] opacity-35 pointer-events-none"
                   style={{ background: pColor || "#8B5CF6" }}
                 />
 
-                {/* Showcase Framing Pedestal */}
-                <div 
-                  className="relative w-48 h-56 sm:w-52 sm:h-64 md:w-56 md:h-72 rounded-3xl overflow-hidden border border-white/15 bg-gradient-to-b from-white/[0.08] via-black/40 to-black/90 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl group/hero cursor-pointer transition-all duration-500 hover:border-white/35 hover:-translate-y-1"
-                  style={{
-                    ["--hero-accent" as any]: pColor,
-                  }}
-                >
-                  {/* Interactive Dynamic Background Sweep */}
-                  <div 
-                    className="absolute inset-0 opacity-0 group-hover/hero:opacity-30 transition-opacity duration-700 pointer-events-none z-[1]"
-                    style={{
-                      background: `radial-gradient(circle at 50% 30%, ${pColor} 0%, transparent 75%)`,
-                    }}
+                {/* Showcase Cutout Display (Unconstrained Cinematic Athletic Cutout) */}
+                <div className="relative w-56 sm:w-64 md:w-72 h-64 sm:h-72 md:h-80 flex items-end justify-center select-none group/hero">
+                  <PlayerAvatar
+                    framing="chest"
+                    name={bio.playerName}
+                    teamId={primaryTeam}
+                    season={playerRecentMatches?.[0]?.season ?? (squadHistory?.[squadHistory.length - 1]?.season)}
+                    strictHistoricalJersey={false}
+                    playerImages={playerImages.data}
+                    bio={bio}
+                    imgClassName="w-full h-full object-contain object-bottom filter contrast-[1.06] drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)] transition-transform duration-500 group-hover/hero:scale-105"
                   />
-
-                  {/* Top Left Team Badge */}
-                  <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 shadow-md">
-                    <TeamLogo team={primaryTeam} size="w-4 h-4" />
-                    <span className="text-[9px] font-black uppercase tracking-wider text-white font-mono">{pShort}</span>
-                  </div>
-
-                  {/* Top Right Jersey / ID Tag */}
-                  <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
-                    <span className="text-[10px] font-mono font-black text-white/90">
-                      {jerseyNo ? `#${jerseyNo}` : "—"}
-                    </span>
-                  </div>
-
-                  {/* High-res Player Portrait with Cinematic Pop-Out */}
-                  <div className="w-full h-full relative overflow-hidden flex items-center justify-center">
-                    <PlayerAvatar framing="chest"
-                      name={bio.playerName}
-                      teamId={primaryTeam}
-                      season={playerRecentMatches?.[0]?.season ?? (squadHistory?.[squadHistory.length - 1]?.season)}
-                      strictHistoricalJersey={false}
-                      playerImages={playerImages.data}
-                      bio={bio}
-                      imgClassName="w-full h-full object-cover object-top filter contrast-[1.06]"
-                    />
-                    {/* Seamless Bottom Vignette */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#080c18] via-[#080c18]/25 to-transparent pointer-events-none z-[2]" />
-                  </div>
-
-                  {/* Lower Plate Holographic Telemetry Tag */}
-                  <div className="absolute bottom-2.5 inset-x-2.5 z-20 flex items-center justify-between px-2.5 py-1.5 bg-black/85 backdrop-blur-md rounded-xl border border-white/15 shadow-lg">
-                    <span className="text-[8px] font-black uppercase tracking-widest text-cyan-300 flex items-center gap-1.5 truncate">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shrink-0" />
-                      {bio.role || "Elite Athlete"}
-                    </span>
-                    <span className="text-[8px] font-mono font-bold text-white/40 shrink-0 ml-1">
-                      ID: #{bio.playerId}
-                    </span>
-                  </div>
+                  {/* Seamless Bottom Vignette Fade */}
+                  <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#080c18] via-[#080c18]/50 to-transparent pointer-events-none z-[2]" />
                 </div>
               </div>
 
-              {/* 2. ATHLETE IDENTITY, BIO & ARCHETYPE (Middle Column) */}
+              {/* 2. ATHLETE IDENTITY, BIO & ACTIONS (Middle Column) */}
               <div className="lg:col-span-5 flex flex-col justify-between text-center lg:text-left space-y-4">
                 <div>
                   {/* Badge Row */}
@@ -803,6 +764,11 @@ export default function PlayerProfilePage() {
                       <TeamLogo team={primaryTeam} size="w-3.5 h-3.5" />
                       <span>{primaryTeam} ({pShort})</span>
                     </span>
+                    {jerseyNo && (
+                      <span className="px-2.5 py-1 rounded-full text-[9px] font-mono font-black uppercase tracking-wider bg-white/10 border border-white/15 text-white">
+                        #{jerseyNo}
+                      </span>
+                    )}
                     <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-white/5 border border-white/10 text-white/80">
                       {bio.role}
                     </span>
@@ -812,15 +778,27 @@ export default function PlayerProfilePage() {
                     </span>
                   </div>
 
-                  {/* Player Name Headlines - Redesigned High-Impact Athletic Typography */}
+                  {/* Player Name Headlines */}
                   <div>
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white uppercase leading-none drop-shadow-md font-sans">
                       <span>{profileName}</span>
                     </h1>
-                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-[11px] font-mono font-bold text-white/50 uppercase mt-2">
-                      <span>Full: {bio.fullName}</span>
-                      <span>·</span>
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-[11px] font-mono font-bold text-white/60 uppercase mt-2.5">
                       <span>{bio.country || "India"}</span>
+                      <span>·</span>
+                      <span>{bio.batStyle || "Right-hand Bat"}</span>
+                      {bio.bowlStyle && (
+                        <>
+                          <span>·</span>
+                          <span>{bio.bowlStyle}</span>
+                        </>
+                      )}
+                      {bio.age && (
+                        <>
+                          <span>·</span>
+                          <span className="text-white/80">Age: {bio.age}</span>
+                        </>
+                      )}
                       {bio.iplDebut && (
                         <>
                           <span>·</span>
@@ -831,52 +809,28 @@ export default function PlayerProfilePage() {
                   </div>
 
                   {/* Player Bio Narrative */}
-                  <p className="text-xs sm:text-[13px] text-white/75 leading-relaxed font-normal mt-2.5 max-w-2xl">
-                    {bio.bio}
-                  </p>
+                  {bio.bio && (
+                    <p className="text-xs sm:text-[13px] text-white/75 leading-relaxed font-normal mt-3 max-w-2xl line-clamp-3">
+                      {bio.bio}
+                    </p>
+                  )}
 
-                  {/* Analytical Command Suites & Actions Strip */}
-                  <div className="my-2.5 p-2.5 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md flex items-center justify-between gap-3">
-                    <span className="text-[10px] font-mono font-black uppercase tracking-widest text-cyan-400 flex items-center gap-1.5 pl-1">
-                      <Activity className="w-3.5 h-3.5" />
-                      Analytical Command Suites
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => setShowCompareModal(true)}
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
-                      >
-                        <Layers className="w-3.5 h-3.5" />
-                        <span>Compare</span>
-                      </button>
-                      <button
-                        onClick={() => setShowAskAIModal(true)}
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
-                      >
-                        <Sparkles className="w-3.5 h-3.5" />
-                        <span>Ask AI</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Quick Physical Archetype Specs Strip */}
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-3 border-t border-white/10">
-                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[9px] font-mono text-white/70">
-                    <span className="text-white/40 uppercase mr-1">BAT:</span>
-                    <span className="text-white font-bold">{bio.batStyle || "Right Hand"}</span>
-                  </div>
-                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[9px] font-mono text-white/70">
-                    <span className="text-white/40 uppercase mr-1">BOWL:</span>
-                    <span className="text-white font-bold">{bio.bowlStyle || "Right Arm"}</span>
-                  </div>
-                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[9px] font-mono text-white/70">
-                    <span className="text-white/40 uppercase mr-1">AGE:</span>
-                    <span className="text-white font-bold">{bio.age ? `${bio.age} YRS` : "—"}</span>
-                  </div>
-                  <div className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[9px] font-mono text-white/70">
-                    <span className="text-white/40 uppercase mr-1">ORIGIN:</span>
-                    <span className="text-white font-bold">{bio.birthPlace || bio.country || "—"}</span>
+                  {/* Clean Quick Action Suite Buttons */}
+                  <div className="flex items-center justify-center lg:justify-start gap-2.5 mt-3.5">
+                    <button
+                      onClick={() => setShowCompareModal(true)}
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+                    >
+                      <Layers className="w-3.5 h-3.5" />
+                      <span>Compare</span>
+                    </button>
+                    <button
+                      onClick={() => setShowAskAIModal(true)}
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Ask AI</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1277,10 +1231,6 @@ export default function PlayerProfilePage() {
             {/* OVERVIEW SUB-TAB */}
             {activeSubTab === "overview" && (
               <>
-                                {/* Decision Intelligence: pressure, weakness, similar players, auction value */}
-                <PlayerIntelligenceSection player={bio.playerName} className="lg:col-span-3" />
-                <PlayerRetentionCard player={bio.playerName} className="lg:col-span-3" />
-                <PlayerIntelPanel player={bio.playerName} className="lg:col-span-3" />
 
                 {/* Career Seasonal Trend Chart */}
                 <GlassCard className="lg:col-span-2 p-5 flex flex-col self-start">
@@ -1418,22 +1368,6 @@ export default function PlayerProfilePage() {
                         </div>
                       </div>
                     ))}
-                  </div>
-
-                  
-                  {/* SCORING ZONE & DELIVERY TYPE PROFILE BREAKDOWN */}
-                  <div className="mt-4 pt-3 border-t border-white/10 flex flex-col gap-2">
-                     <div className="text-[10px] font-black uppercase tracking-wider text-amber-400">Scoring & Delivery Profile</div>
-                     <div className="grid grid-cols-2 gap-2 text-center">
-                        <div className="p-2 bg-white/5 rounded-xl border border-white/5">
-                           <span className="text-[8px] font-bold text-white/40 uppercase block">Top Sector</span>
-                           <span className="text-[11px] font-black text-white">Long Off (168.4 SR)</span>
-                        </div>
-                        <div className="p-2 bg-white/5 rounded-xl border border-white/5">
-                           <span className="text-[8px] font-bold text-white/40 uppercase block">Best Delivery</span>
-                           <span className="text-[11px] font-black text-emerald-400">Yorker 6.23 Eco</span>
-                        </div>
-                     </div>
                   </div>
                 </GlassCard>
 

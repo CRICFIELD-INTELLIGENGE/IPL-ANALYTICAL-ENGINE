@@ -237,10 +237,20 @@ export function PlayerCareerMilestones({
     return moments.filter(m => m.category === filter);
   }, [moments, filter]);
 
+  const names = useMemo(() => [name, ...(Array.isArray(aliases) ? aliases : [])].filter(Boolean).map(normalize), [name, aliases]);
+
   const selectedIndex = useMemo(() => {
     if (!visible.length) return 0;
     const found = visible.findIndex(m => m.id === selectedId);
-    return found >= 0 ? found : 0;
+    if (found >= 0) return found;
+    // Default to first moment that matches an exact match date in Getty manifest
+    const firstWithPhoto = visible.findIndex(m => {
+      if (m.date && PUBLIC_MANIFEST && Array.isArray(PUBLIC_MANIFEST.images)) {
+        return PUBLIC_MANIFEST.images.some(img => img.matchDate === m.date && (isPublishable(img) || isLocalPreviewable(img)));
+      }
+      return false;
+    });
+    return firstWithPhoto >= 0 ? firstWithPhoto : 0;
   }, [visible, selectedId]);
 
   const moment = visible[selectedIndex];
@@ -271,26 +281,54 @@ export function PlayerCareerMilestones({
     '--fm-on-accent': onAccent,
   } as CSSProperties;
 
-  // Find matching Getty editorial photograph if available
-  const names = [name, ...(Array.isArray(aliases) ? aliases : [])].filter(Boolean).map(normalize);
-  const photo = moment && PUBLIC_MANIFEST && Array.isArray(PUBLIC_MANIFEST.images)
-    ? PUBLIC_MANIFEST.images.find(image => {
-        if (!image || image.source !== 'getty') return false;
-        if (!image.discovery?.captionVerified) return false;
-        if (moment.date) {
-          if (image.matchDate !== moment.date) return false;
-        } else if (moment.season) {
-          if (!image.matchDate?.startsWith(moment.season + '-')) return false;
-        }
+  // Find matching Getty editorial photograph with robust cascade:
+  // 1. Exact match date -> 2. Match season -> 3. Match opponent -> 4. Player landmark/celebration fallback
+  const photo = useMemo(() => {
+    if (!moment || !PUBLIC_MANIFEST || !Array.isArray(PUBLIC_MANIFEST.images)) return undefined;
+
+    // Helper to verify if an image depicts or references the player
+    const isPlayerImage = (image: any) => {
+      if (!image || image.source !== 'getty') return false;
+      if (!image.discovery?.captionVerified) return false;
+      if (!isPublishable(image) && !isLocalPreviewable(image)) return false;
+      const cap = typeof image.caption === 'string' ? image.caption.toLowerCase() : '';
+      const depictsMatch = Array.isArray(image.depicts) && image.depicts.some((person: string) => person && names.includes(normalize(person)));
+      const captionMatch = [name, ...(Array.isArray(aliases) ? aliases : [])]
+        .filter(n => n && n.trim().split(/\s+/).every(part => part.length > 1))
+        .some(n => cap.includes(n.toLowerCase()));
+      return depictsMatch || captionMatch;
+    };
+
+    // 1. Exact match by date
+    if (moment.date) {
+      const exact = PUBLIC_MANIFEST.images.find(image => isPlayerImage(image) && image.matchDate === moment.date);
+      if (exact) return exact;
+    }
+
+    // 2. Exact match by season
+    if (moment.season) {
+      const seasonMatch = PUBLIC_MANIFEST.images.find(image => isPlayerImage(image) && image.matchDate?.startsWith(moment.season + '-'));
+      if (seasonMatch) return seasonMatch;
+    }
+
+    // 3. Match against opponent
+    if (moment.opponent) {
+      const oppClean = moment.opponent.toLowerCase();
+      const oppMatch = PUBLIC_MANIFEST.images.find(image => {
+        if (!isPlayerImage(image)) return false;
         const cap = typeof image.caption === 'string' ? image.caption.toLowerCase() : '';
-        const depictsMatch = Array.isArray(image.depicts) && image.depicts.some(person => person && names.includes(normalize(person)));
-        const captionMatch = [name, ...(Array.isArray(aliases) ? aliases : [])]
-          .filter(n => n && n.trim().split(/\s+/).every(part => part.length > 1))
-          .some(n => cap.includes(n.toLowerCase()));
-        if (!depictsMatch && !captionMatch) return false;
-        return isPublishable(image) || isLocalPreviewable(image);
-      })
-    : undefined;
+        return cap.includes(oppClean);
+      });
+      if (oppMatch) return oppMatch;
+    }
+
+    // 4. Milestone celebration or iconic match action editorial fallback
+    return PUBLIC_MANIFEST.images.find(image => {
+      if (!isPlayerImage(image)) return false;
+      const cap = typeof image.caption === 'string' ? image.caption.toLowerCase() : '';
+      return cap.includes('celebrat') || cap.includes('century') || cap.includes('fifty') || cap.includes('shot') || cap.includes('bat');
+    }) || PUBLIC_MANIFEST.images.find(image => isPlayerImage(image));
+  }, [moment, name, aliases, names]);
 
   if (!moment) {
     return (
@@ -522,7 +560,7 @@ function MilestoneStageCard({
       {/* Center Crest / Avatar */}
       <div className="relative z-10 flex flex-col items-center justify-center my-auto">
         <div className="fm-crest">
-          <PlayerAvatar name={name} className="w-24 h-24 text-2xl rounded-full shadow-2xl" />
+          <PlayerAvatar name={name} framing="chest" className="w-24 h-24 text-2xl rounded-full shadow-2xl overflow-hidden" />
           <div className="fm-trophy">
             <Trophy size={20} />
           </div>
