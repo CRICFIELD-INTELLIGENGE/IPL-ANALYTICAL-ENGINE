@@ -7,7 +7,7 @@
   "framework": null,
   "rewrites": [
     {
-      "source": "/((?!api/turso-preview$).*)",
+      "source": "/((?!api/(?:turso-preview|scout/t20/coverage)/?$).*)",
       "destination": "/index.html"
     }
   ],
