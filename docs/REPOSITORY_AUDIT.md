@@ -1,6 +1,6 @@
 # Repository audit and restructure proposal
 
-Audited on 2026-11-16 at `main` commit `5e71e6d`, on branch `refactor/repository-architecture`. **No code or data has been moved.** Section 4 is a proposal that needs approval. Section 5 is the migration manifest; every row in it is *proposed*.
+Audited on 2026-11-16 at `main` commit `5e71e6d`, on branch `refactor/repository-architecture`. Section 4 is the proposal. Section 5 is the migration manifest. On 2026-11-16 the user approved **M1, M3 and D1–D5**, and those rows are now applied and validated. Every other row is still held. No code, data, route or config path was moved.
 
 ## 1. Inventory
 
@@ -119,18 +119,18 @@ The structure already maps onto the three identities. The proposal therefore **k
 
 Not proposed: a deeper monorepo split (for example `apps/` and `packages/`). It would change deploy entry points and launch configs and gain nothing functional.
 
-## 5. Migration manifest (proposed; nothing applied)
+## 5. Migration manifest
 
 | ID | Old path | New path | Reason | Evidence / risk | Validation status |
 |---|---|---|---|---|---|
-| M1 | 37 historical root `*.md` (`DAY-*`, `*_REPORT`, `MASTER_ARCHITECTURE_HANDBOOK.md`, `PROJECT_TREE.md`, …) | `docs/history/` | Clear the root; these are dated reports | No code reads them. Links to them: `ENGINEERING-SPRINT-SUMMARY.md` and `docs/data-repairs/2026-10-19-day6b/baseline-refresh.md` (would be updated). Low risk. | not applied |
+| M1 | 37 historical root `*.md` (`DAY-*`, `*_REPORT`, `MASTER_ARCHITECTURE_HANDBOOK.md`, `PROJECT_TREE.md`, …) | `docs/history/` | Clear the root; these are dated reports | No code reads them. Links to them: `ENGINEERING-SPRINT-SUMMARY.md` and `docs/data-repairs/2026-10-19-day6b/baseline-refresh.md` (would be updated). Low risk. | **applied**, checks match baseline |
 | M2 | `CONTRIBUTING.md`, `SECURITY.md`, `README.md`, `LICENSE` | stay | GitHub expects them at the root | — | n/a |
-| M3 | `manoj_bhandage_toi.jpg`, `mohit_rathee_toi.jpg` | `assets/source/` | Unique images with no code reference | `git grep` shows no reference. Low risk. | not applied |
-| D1 | 41 root images (stadiums, team logos, `rcb winner 2026.jpg`) | delete | Byte-identical copies already in `artifacts/ipl-analytics/public/` | The app maps names to `public/venue-images/` (`src/lib/aggregates.ts`). Vite serves only `public/`. Low risk. | not applied |
-| D2 | `.gitignore.tmp`, `temp.json`, `etl_output.log`, `desktop.ini` | delete | Stray files | `git grep` shows no reference. Low risk. | not applied |
-| D3 | 5 × `scripts/image_ingestion/**/__pycache__/*.pyc` | delete, and add `__pycache__/` to `.gitignore` | Compiled Python | Regenerated automatically. Low risk. | not applied |
-| D4 | `artifacts/ipl-analytics/test-results/.last-run.json` | delete, and ignore `test-results/` | Playwright output | Generated. Low risk. | not applied |
-| D5 | `scratch/player-bio.json.bak` | delete | Backup file (`*.bak` is already ignored) | No reference. Low risk. | not applied |
+| M3 | `manoj_bhandage_toi.jpg`, `mohit_rathee_toi.jpg` | `assets/source/` | Unique images with no code reference | `git grep` shows no reference. Low risk. | **applied**, checks match baseline |
+| D1 | 41 root images (stadiums, team logos, `rcb winner 2026.jpg`) | delete | Byte-identical copies already in `artifacts/ipl-analytics/public/` | The app maps names to `public/venue-images/` (`src/lib/aggregates.ts`). Vite serves only `public/`. Low risk. | **applied**, checks match baseline |
+| D2 | `.gitignore.tmp`, `temp.json`, `etl_output.log`, `desktop.ini` | delete | Stray files | `git grep` shows no reference. Low risk. | **applied**, checks match baseline |
+| D3 | 5 × `scripts/image_ingestion/**/__pycache__/*.pyc` | delete (`__pycache__/` was already ignored; the files had been force-added) | Compiled Python | Regenerated automatically. Low risk. | **applied**, checks match baseline |
+| D4 | `artifacts/ipl-analytics/test-results/.last-run.json` | delete, and ignore `test-results/` | Playwright output | Generated. Low risk. | **applied**, checks match baseline |
+| D5 | `scratch/player-bio.json.bak` | delete | Backup file (`*.bak` is already ignored) | No reference. Low risk. | **applied**, checks match baseline |
 | H1 | `data/ipl.db` (0 bytes), `data/platform.sqlite` + `-wal`/`-shm` | untrack (`git rm --cached`), keep on disk | Stray database files; `.gitignore` already names `data/platform.sqlite` | No code reference to `data/ipl.db`. `platform.sqlite` is recreated when the API runs from the repo root. **Touches database files, so it needs explicit approval.** | held |
 | H2 | `image players/` (45) | keep for now | All duplicated in the frontend | Referenced by `scratch/*.py` photo scripts. Uncertain dependency. | held |
 | H3 | `scratch/`, top-level `scripts/*` | keep | Some generated production `public/data` files | Provenance would be lost. Review each script first. | held |
@@ -138,4 +138,11 @@ Not proposed: a deeper monorepo split (for example `apps/` and `packages/`). It 
 | H5 | saved third-party pages `scripts/*.html`, `*_rsc.txt` | candidates to untrack | Scrape inputs containing page tokens | Possibly read by scrape scripts. Needs review. | held |
 | H6 | 8 differing JSON pairs in `api-server/data` vs `public/data` | no change | A data decision, not a cleanup | Changing either copy changes analytics output, which this task forbids | held |
 
-Approve by ID (for example "M1, M3, D1–D5"). Rows marked *held* stay unless the user decides otherwise.
+Rows marked *held* stay unless the user decides otherwise.
+
+### Applied file list
+
+- **M1:** 37 files `X.md` → `docs/history/X.md` (`git mv`, so history follows with `git log --follow`). No relative links needed rewriting. Their only link is an absolute `file://` link, kept as it was. Code comments that name these reports (for example "DAY-05-REPORT.md") still identify them by file name.
+- **M3:** `manoj_bhandage_toi.jpg`, `mohit_rathee_toi.jpg` → `assets/source/`.
+- **D1:** 41 deletions. Each was re-verified byte-identical (`git hash-object`) to its copy in `artifacts/ipl-analytics/public/` (`public/venue-images/<same name>` for stadiums; `public/<same name>` for logos; `public/rcb-winner-2026.jpg`).
+- **D2–D5:** 11 deletions. Added `artifacts/ipl-analytics/test-results/` to `.gitignore`.

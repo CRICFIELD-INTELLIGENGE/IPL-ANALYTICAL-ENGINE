@@ -79,7 +79,7 @@ The dev server proxies `/api` and starts the API if none is running. Most API fe
 | Checks and test suites | [docs/TESTING.md](docs/TESTING.md) |
 | Repository audit and restructure proposal | [docs/REPOSITORY_AUDIT.md](docs/REPOSITORY_AUDIT.md) |
 
-Older reports (`DAY-*-REPORT.md`, `MASTER_ARCHITECTURE_HANDBOOK.md` and others at the root) are historical records. Where they disagree with the docs above, the docs above were checked against the code on 2026-11-16.
+Older reports (`DAY-*-REPORT.md`, `MASTER_ARCHITECTURE_HANDBOOK.md` and others), now in [docs/history/](docs/history/), are historical records. Where they disagree with the docs above, the docs above were checked against the code on 2026-11-16.
 
 ## Data and licence
 

@@ -118,3 +118,6 @@ docs/data-repairs/**/backup/
 # SupeRR Selector official data pack (challenge data, not for publication)
 lib/cricket-data/official/
 artifacts/api-server/data/pressure-official/
+
+# Playwright last-run output (repository cleanup D4)
+artifacts/ipl-analytics/test-results/
