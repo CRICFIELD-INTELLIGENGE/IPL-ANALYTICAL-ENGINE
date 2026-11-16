@@ -1205,6 +1205,30 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               className="w-full bg-white/5 border border-white/5 rounded-xl py-2 pl-9 pr-4 text-[10px] font-bold focus:outline-none focus:border-primary/40 focus:bg-white/10 transition-all text-white"
             />
           </div>
+          {!mobilePresentation && (
+            <div role="group" aria-label="Multidimensional Slicing Engines" className="mt-1 flex w-full flex-wrap gap-2 border-t border-slate-200 px-1 pt-2 dark:border-white/10">
+              {([
+                { id: "stat-builder", label: "Stat Builder (Situation SR)", Icon: Filter },
+                { id: "scenario-intelligence", label: "Scenario Intelligence", Icon: Cpu },
+                { id: "batter-lens", label: "Batter Lens", Icon: Crosshair },
+              ] as const).map(({ id, label, Icon }) => (
+                <button
+                  key={id}
+                  type="button"
+                  aria-pressed={isDimensionalTab && dimSlicingView === id}
+                  onClick={() => { if (!isDimensionalTab || dimSlicingView !== id) rememberStatsScroll(); setDimSlicingView(id); setActiveTab("dimensional"); }}
+                  className={`flex min-h-9 items-center gap-1.5 rounded-lg px-3 py-1.5 text-[10px] font-black uppercase tracking-wider transition-colors ${
+                    isDimensionalTab && dimSlicingView === id
+                      ? "bg-primary text-white shadow-sm"
+                      : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-white/5 dark:text-white/70 dark:hover:bg-white/10"
+                  }`}
+                >
+                  <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
   </>);
@@ -1687,7 +1711,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         {activeTab !== "ask" && (
           <div className="space-y-4">
             {filterControls}
-            {telemetryBanner}
+            {mobilePresentation && telemetryBanner}
           </div>
         )}
 
