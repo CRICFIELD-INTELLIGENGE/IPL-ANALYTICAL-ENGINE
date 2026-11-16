@@ -17,7 +17,7 @@ import { AdVessel } from "@/components/ad-vessel";
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from "framer-motion";
 import {
   BarChart2, Trophy, Target, Zap, Flame, Activity, ArrowRight, MapPin,
-  Users, TrendingUp, Cpu, ArrowUpRight, Shield, Eye, Filter, Calendar,
+  Users, User, TrendingUp, Cpu, ArrowUpRight, Shield, Eye, Filter, Calendar,
   ChevronDown, Search, Crosshair, BarChart, Layers, Globe, X, Award, RotateCcw, Compass
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -3321,7 +3321,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
   const latestTeamResolver = usePlayerLatestTeamResolver();
   const playerTeamsMap = usePlayerTeamsMap();
 
-  // 1. Build unified player list
+  // 1. Build unified player list with accurate role assignment
   const allPlayers = useMemo(() => {
     const playerMap = new Map<string, {
       player: string;
@@ -3342,7 +3342,15 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
       const existing = playerMap.get(b.player);
       if (existing) {
         existing.bowling = b;
-        existing.role = "All-rounder";
+        const runs = existing.batting?.runs || 0;
+        const wkts = b.wickets || 0;
+        if (runs >= 250 && wkts >= 8) {
+          existing.role = "All-rounder";
+        } else if (wkts >= 10 && runs < 250) {
+          existing.role = "Bowler";
+        } else {
+          existing.role = "Batter";
+        }
       } else {
         playerMap.set(b.player, {
           player: b.player,
@@ -3357,6 +3365,8 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
 
   const [player1, setPlayer1] = useState("");
   const [player2, setPlayer2] = useState("");
+  const [search1, setSearch1] = useState("");
+  const [search2, setSearch2] = useState("");
 
   const [teamFilter1, setTeamFilter1] = useState("All Teams");
   const [teamFilter2, setTeamFilter2] = useState("All Teams");
@@ -3379,7 +3389,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
     return false;
   };
 
-  // Player 1 options filtered by Team Filter 1 and Role Filter (includes all players who ever played for selected squad 2008-2026)
+  // Player 1 options filtered by Team Filter 1 and Role Filter
   const p1Options = useMemo(() => {
     return allPlayers.filter(p => {
       if (!playerPlayedForTeam(p.player, teamFilter1)) return false;
@@ -3391,7 +3401,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
     });
   }, [allPlayers, teamFilter1, roleFilter, playerTeamsMap, latestTeamResolver]);
 
-  // Player 2 options filtered by Team Filter 2 and Role Filter (includes all players who ever played for selected squad 2008-2026)
+  // Player 2 options filtered by Team Filter 2 and Role Filter
   const p2Options = useMemo(() => {
     return allPlayers.filter((p: any) => {
       if (!playerPlayedForTeam(p.player, teamFilter2)) return false;
@@ -3402,6 +3412,30 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
       return true;
     });
   }, [allPlayers, teamFilter2, roleFilter, playerTeamsMap, latestTeamResolver]);
+
+  // Real-time search filtered options for Athlete 1
+  const filteredP1Options = useMemo(() => {
+    if (!search1.trim()) return p1Options;
+    const q = search1.toLowerCase().trim();
+    return p1Options.filter((b: any) => {
+      const name = (b.player || "").toLowerCase();
+      const disp = displayPlayerName(b.player, displayNames).toLowerCase();
+      const role = (b.role || "").toLowerCase();
+      return name.includes(q) || disp.includes(q) || role.includes(q);
+    });
+  }, [p1Options, search1, displayNames]);
+
+  // Real-time search filtered options for Athlete 2
+  const filteredP2Options = useMemo(() => {
+    if (!search2.trim()) return p2Options;
+    const q = search2.toLowerCase().trim();
+    return p2Options.filter((b: any) => {
+      const name = (b.player || "").toLowerCase();
+      const disp = displayPlayerName(b.player, displayNames).toLowerCase();
+      const role = (b.role || "").toLowerCase();
+      return name.includes(q) || disp.includes(q) || role.includes(q);
+    });
+  }, [p2Options, search2, displayNames]);
 
   useEffect(() => {
     if (p1Options.length > 0) {
@@ -3430,24 +3464,51 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
   const p2FinalBatting = p2Data?.batting || null;
   const p2FinalBowling = p2Data?.bowling || null;
 
-  // Tab state within player comparison: "batting" | "bowling"
-  const [comparisonTab, setComparisonTab] = useState<"batting" | "bowling">("batting");
+  // Primary discipline resolver
+  const getDiscipline = (p: { batting?: any; bowling?: any; role?: string } | undefined): "batter" | "bowler" | "all-rounder" => {
+    if (!p) return "batter";
+    const runs = p.batting?.runs || 0;
+    const wkts = p.bowling?.wickets || 0;
+    if (runs >= 250 && wkts >= 8) return "all-rounder";
+    if (wkts >= 10 && runs < 250) return "bowler";
+    if (runs >= 250 && wkts < 10) return "batter";
+    if (p.role === "Bowler" || (p.bowling && !p.batting)) return "bowler";
+    if (p.role === "Batter" || (p.batting && !p.bowling)) return "batter";
+    return (runs >= wkts * 20) ? "batter" : "bowler";
+  };
 
-  // Determine available tabs
-  const finalHasBattingComp = !!(p1FinalBatting && p2FinalBatting);
-  const finalHasBowlingComp = !!(p1FinalBowling && p2FinalBowling);
+  const p1Discipline = getDiscipline(p1Data);
+  const p2Discipline = getDiscipline(p2Data);
+
+  // Both have batting / both have bowling
+  const hasBattingComp = !!(p1FinalBatting && p2FinalBatting);
+  const hasBowlingComp = !!(p1FinalBowling && p2FinalBowling);
+
+  // Is this a Batter vs Bowler duel?
+  const isBatterBowlerDuel =
+    (p1Discipline === "batter" && p2Discipline === "bowler") ||
+    (p1Discipline === "bowler" && p2Discipline === "batter") ||
+    (!hasBattingComp && !hasBowlingComp);
+
+  // Tab state within player comparison: "batting" | "bowling" | "duel"
+  const [comparisonTab, setComparisonTab] = useState<"batting" | "bowling" | "duel">("batting");
 
   useEffect(() => {
-    if (finalHasBattingComp) {
+    if (isBatterBowlerDuel) {
+      setComparisonTab("duel");
+    } else if (hasBattingComp && (p1Discipline === "batter" || p2Discipline === "batter")) {
       setComparisonTab("batting");
-    } else if (finalHasBowlingComp) {
+    } else if (hasBowlingComp && (p1Discipline === "bowler" || p2Discipline === "bowler")) {
+      setComparisonTab("bowling");
+    } else if (hasBattingComp) {
+      setComparisonTab("batting");
+    } else if (hasBowlingComp) {
       setComparisonTab("bowling");
     }
-  }, [player1, player2, finalHasBattingComp, finalHasBowlingComp]);
+  }, [player1, player2, isBatterBowlerDuel, hasBattingComp, hasBowlingComp, p1Discipline, p2Discipline]);
 
   return (
     <div className="flex flex-col gap-6">
-
 
       <div className="flex flex-wrap items-center justify-between gap-3 p-4 stats-tool-panel shadow-xl">
         <div className="flex items-center gap-2">
@@ -3457,13 +3518,13 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
         <div className="flex p-1 bg-white/5 border border-white/10 rounded-xl">
           <button
             onClick={() => setMode("players")}
-            className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${mode === "players" ? 'bg-primary text-white shadow-lg' : 'text-white/40 hover:text-white'}`}
+            className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all cursor-pointer ${mode === "players" ? 'bg-primary text-white shadow-lg' : 'text-white/40 hover:text-white'}`}
           >
             Players
           </button>
           <button
             onClick={() => setMode("teams")}
-            className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${mode === "teams" ? 'bg-accent text-white shadow-lg' : 'text-white/40 hover:text-white'}`}
+            className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all cursor-pointer ${mode === "teams" ? 'bg-accent text-white shadow-lg' : 'text-white/40 hover:text-white'}`}
           >
             Teams
           </button>
@@ -3511,7 +3572,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
                   <button
                     key={r}
                     onClick={() => setRoleFilter(r)}
-                    className={`py-1 rounded text-center transition-colors uppercase ${roleFilter === r ? 'bg-primary text-white' : 'text-white/40 hover:text-white'
+                    className={`py-1 rounded text-center transition-colors uppercase cursor-pointer ${roleFilter === r ? 'bg-primary text-white font-black' : 'text-white/40 hover:text-white'
                       }`}
                   >
                     {r}s
@@ -3520,7 +3581,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
               </div>
             </div>
 
-            {/* Stat Scope Toggle: Keep only two (All Time & Squad for Team 2008-2026) */}
+            {/* Stat Scope Toggle */}
             <div className="space-y-1 col-span-1 md:col-span-2 lg:col-span-1">
               <span className="text-[8px] font-black uppercase tracking-wider text-white/40">Scope Filter (2008–2026)</span>
               <div className="grid grid-cols-2 bg-white/5 border border-white/10 rounded-xl p-0.5 text-[9px] font-black h-[34px] items-center">
@@ -3530,7 +3591,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
                     <button
                       key={scope}
                       onClick={() => setStatsScope(scope)}
-                      className={`py-1 px-2 rounded text-center transition-all uppercase truncate ${statsScope === scope ? 'bg-primary text-white shadow-[0_0_12px_rgba(var(--primary-rgb),0.3)]' : 'text-white/40 hover:text-white'
+                      className={`py-1 px-2 rounded text-center transition-all uppercase truncate cursor-pointer ${statsScope === scope ? 'bg-primary text-white shadow-[0_0_12px_rgba(var(--primary-rgb),0.3)] font-black' : 'text-white/40 hover:text-white'
                         }`}
                       title={label}
                     >
@@ -3543,32 +3604,83 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-            {/* Player 1 Card */}
+            {/* Player 1 Card with Search Option Along With Dropdown */}
             <div className="stats-tool-panel p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none" />
-              <div className="flex flex-col gap-1 z-10">
-                <span className="text-[9px] font-black uppercase tracking-widest text-primary">SELECT ATHLETE 1</span>
-                <select value={player1} onChange={e => setPlayer1(e.target.value)} className="w-full bg-[#080B16] border border-white/10 rounded-xl p-2.5 text-xs font-bold text-white outline-none focus:border-primary/50 cursor-pointer shadow-xl transition-colors" title="Select First Athlete">
-                  {p1Options.map((b: any) => <option key={b.player} value={b.player} className="bg-[#080B16] text-white py-1">{displayPlayerName(b.player, displayNames)} ({b.role})</option>)}
+              
+              <div className="flex flex-col gap-2 z-10">
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] font-black uppercase tracking-widest text-primary flex items-center gap-1.5">
+                    <Crosshair className="w-3 h-3 text-primary" />
+                    SELECT ATHLETE 1
+                  </span>
+                  {search1 && (
+                    <button
+                      onClick={() => setSearch1("")}
+                      className="text-[8px] font-mono text-white/50 hover:text-white flex items-center gap-0.5 cursor-pointer"
+                    >
+                      <X className="w-2.5 h-2.5" /> Clear
+                    </button>
+                  )}
+                </div>
+
+                {/* Search Input for Athlete 1 */}
+                <div className="relative">
+                  <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-white/40" />
+                  <input
+                    type="text"
+                    value={search1}
+                    onChange={e => setSearch1(e.target.value)}
+                    placeholder="Search Athlete 1 by name..."
+                    className="w-full bg-[#080B16] border border-white/10 rounded-xl pl-9 pr-3 py-2 text-xs font-semibold text-white placeholder-white/30 outline-none focus:border-primary/50 transition-colors shadow-inner"
+                  />
+                </div>
+
+                {/* Dropdown Select for Athlete 1 */}
+                <select
+                  value={player1}
+                  onChange={e => setPlayer1(e.target.value)}
+                  className="w-full bg-[#080B16] border border-white/10 rounded-xl p-2.5 text-xs font-bold text-white outline-none focus:border-primary/50 cursor-pointer shadow-xl transition-colors"
+                  title="Select First Athlete"
+                >
+                  {filteredP1Options.every((b: any) => b.player !== player1) && player1 && (
+                    <option value={player1} className="bg-[#080B16] text-primary font-bold py-1">
+                      {displayPlayerName(player1, displayNames)} ({p1Data?.role || "Selected"})
+                    </option>
+                  )}
+                  {filteredP1Options.map((b: any) => (
+                    <option key={b.player} value={b.player} className="bg-[#080B16] text-white py-1">
+                      {displayPlayerName(b.player, displayNames)} ({b.role})
+                    </option>
+                  ))}
+                  {filteredP1Options.length === 0 && !player1 && (
+                    <option value="" disabled className="bg-[#080B16] text-white/40">No matching athletes</option>
+                  )}
                 </select>
               </div>
-              <div className="flex flex-col items-center mt-4 z-10 w-full">
+
+              {/* Player 1 Avatar & Identity */}
+              <div className="flex flex-col items-center mt-2 z-10 w-full">
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-white/5 border-2 border-primary shrink-0 shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)] relative group hover:scale-105 transition-transform duration-500">
                   <PlayerAvatar name={player1} playerImages={playerImages} imgClassName="w-full h-full object-cover" />
                 </div>
                 <h3 className="mt-4 text-lg font-black uppercase text-white tracking-tight text-center">{displayPlayerName(player1, displayNames)}</h3>
-                <span className="text-[10px] font-black uppercase tracking-widest text-white/40 bg-white/5 border border-white/10 px-2 py-0.5 rounded mt-2">{p1Data?.role}</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-white/40 bg-white/5 border border-white/10 px-2 py-0.5 rounded mt-2">{p1Data?.role || "Athlete"}</span>
                 
-                {/* SCORING ZONE & DELIVERY TYPE METRICS */}
+                {/* Dynamic Career Metrics */}
                 <div className="w-full mt-4 pt-3 border-t border-white/10 flex flex-col gap-2">
-                   <div className="flex justify-between items-center text-[9.5px]">
-                      <span className="font-bold text-white/40 uppercase">Top Scoring Zone:</span>
-                      <span className="font-black text-amber-400">Long Off (168 SR)</span>
-                   </div>
-                   <div className="flex justify-between items-center text-[9.5px]">
-                      <span className="font-bold text-white/40 uppercase">Delivery Execution:</span>
-                      <span className="font-black text-emerald-400">Yorker 6.2 Eco</span>
-                   </div>
+                   {p1FinalBatting && (
+                     <div className="flex justify-between items-center text-[9.5px]">
+                        <span className="font-bold text-white/40 uppercase">Batting Record:</span>
+                        <span className="font-black text-amber-400 font-mono">{p1FinalBatting.runs} runs · SR {p1FinalBatting.sr}</span>
+                     </div>
+                   )}
+                   {p1FinalBowling && (
+                     <div className="flex justify-between items-center text-[9.5px]">
+                        <span className="font-bold text-white/40 uppercase">Bowling Record:</span>
+                        <span className="font-black text-emerald-400 font-mono">{p1FinalBowling.wickets} wkts · Econ {p1FinalBowling.econ}</span>
+                     </div>
+                   )}
                 </div>
               </div>
             </div>
@@ -3579,108 +3691,137 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
               {p1Data && p2Data ? (
                 <div className="flex flex-col gap-5 h-full justify-between">
                   {/* Skill tabs if both batting & bowling exist */}
-                  {(finalHasBattingComp || finalHasBowlingComp) ? (
-                    <div className="flex flex-col gap-4">
-                      {finalHasBattingComp && finalHasBowlingComp && (
-                        <div className="flex p-1 bg-white/5 border border-white/10 rounded-xl w-full justify-center">
-                          <button
-                            onClick={() => setComparisonTab("batting")}
-                            className={`flex-1 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${comparisonTab === "batting" ? 'bg-primary text-white' : 'text-white/40 hover:text-white'}`}
-                          >
-                            Batting Stats
-                          </button>
-                          <button
-                            onClick={() => setComparisonTab("bowling")}
-                            className={`flex-1 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${comparisonTab === "bowling" ? 'bg-accent text-white' : 'text-white/40 hover:text-white'}`}
-                          >
-                            Bowling Stats
-                          </button>
-                        </div>
-                      )}
-
-                      {comparisonTab === "batting" && finalHasBattingComp && p1FinalBatting && p2FinalBatting && (
-                        <div className="flex flex-col gap-4 py-2">
-                          <ComparisonRow label="Runs" val1={p1FinalBatting.runs} val2={p2FinalBatting.runs} isHigherBetter={true} />
-                          <ComparisonRow label="Strike Rate" val1={p1FinalBatting.sr} val2={p2FinalBatting.sr} isHigherBetter={true} />
-                          <ComparisonRow label="Average" val1={p1FinalBatting.avg} val2={p2FinalBatting.avg} isHigherBetter={true} />
-                          <ComparisonRow label="Death SR" val1={p1FinalBatting.deathSr} val2={p2FinalBatting.deathSr} isHigherBetter={true} />
-                          <ComparisonRow label="Scoring Zone SR" val1={168.4} val2={154.2} isHigherBetter={true} />
-                          <ComparisonRow label="Fifties/Hundreds" val1={p1FinalBatting.fifties + p1FinalBatting.hundreds} val2={p2FinalBatting.fifties + p2FinalBatting.hundreds} isHigherBetter={true} />
-                        </div>
-                      )}
-
-                      {comparisonTab === "bowling" && finalHasBowlingComp && p1FinalBowling && p2FinalBowling && (
-                        <div className="flex flex-col gap-4 py-2">
-                          <ComparisonRow label="Wickets" val1={p1FinalBowling.wickets} val2={p2FinalBowling.wickets} isHigherBetter={true} />
-                          <ComparisonRow label="Economy" val1={p1FinalBowling.econ} val2={p2FinalBowling.econ} isHigherBetter={false} />
-                          <ComparisonRow label="Average" val1={p1FinalBowling.avg} val2={p2FinalBowling.avg} isHigherBetter={false} />
-                          <ComparisonRow label="Dot %" val1={p1FinalBowling.dotPct} val2={p2FinalBowling.dotPct} isHigherBetter={true} />
-                          <ComparisonRow label="Death Eco" val1={p1FinalBowling.deathEcon} val2={p2FinalBowling.deathEcon} isHigherBetter={false} />
-                        </div>
-                      )}
-
-                      {/* Fallback to single skill if not both have same */}
-                      {comparisonTab === "batting" && !finalHasBattingComp && finalHasBowlingComp && p1FinalBowling && p2FinalBowling && (
-                        <div className="flex flex-col gap-4 py-2">
-                          <ComparisonRow label="Wickets" val1={p1FinalBowling.wickets} val2={p2FinalBowling.wickets} isHigherBetter={true} />
-                          <ComparisonRow label="Economy" val1={p1FinalBowling.econ} val2={p2FinalBowling.econ} isHigherBetter={false} />
-                          <ComparisonRow label="Average" val1={p1FinalBowling.avg} val2={p2FinalBowling.avg} isHigherBetter={false} />
-                          <ComparisonRow label="Dot %" val1={p1FinalBowling.dotPct} val2={p2FinalBowling.dotPct} isHigherBetter={true} />
-                          <ComparisonRow label="Death Eco" val1={p1FinalBowling.deathEcon} val2={p2FinalBowling.deathEcon} isHigherBetter={false} />
-                        </div>
-                      )}
-
-                      {comparisonTab === "bowling" && !finalHasBowlingComp && finalHasBattingComp && p1FinalBatting && p2FinalBatting && (
-                        <div className="flex flex-col gap-4 py-2">
-                          <ComparisonRow label="Runs" val1={p1FinalBatting.runs} val2={p2FinalBatting.runs} isHigherBetter={true} />
-                          <ComparisonRow label="Strike Rate" val1={p1FinalBatting.sr} val2={p2FinalBatting.sr} isHigherBetter={true} />
-                          <ComparisonRow label="Average" val1={p1FinalBatting.avg} val2={p2FinalBatting.avg} isHigherBetter={true} />
-                          <ComparisonRow label="Death SR" val1={p1FinalBatting.deathSr} val2={p2FinalBatting.deathSr} isHigherBetter={true} />
-                          <ComparisonRow label="Fifties/Hundreds" val1={p1FinalBatting.fifties + p1FinalBatting.hundreds} val2={p2FinalBatting.fifties + p2FinalBatting.hundreds} isHigherBetter={true} />
-                        </div>
+                  {(hasBattingComp && hasBowlingComp) && (
+                    <div className="flex p-1 bg-white/5 border border-white/10 rounded-xl w-full justify-center">
+                      <button
+                        onClick={() => setComparisonTab("batting")}
+                        className={`flex-1 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${comparisonTab === "batting" ? 'bg-primary text-white font-black' : 'text-white/40 hover:text-white'}`}
+                      >
+                        Batting Stats
+                      </button>
+                      <button
+                        onClick={() => setComparisonTab("bowling")}
+                        className={`flex-1 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${comparisonTab === "bowling" ? 'bg-accent text-white font-black' : 'text-white/40 hover:text-white'}`}
+                      >
+                        Bowling Stats
+                      </button>
+                      {isBatterBowlerDuel && (
+                        <button
+                          onClick={() => setComparisonTab("duel")}
+                          className={`flex-1 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${comparisonTab === "duel" ? 'bg-amber-400 text-slate-950 font-black' : 'text-white/40 hover:text-white'}`}
+                        >
+                          Duel View
+                        </button>
                       )}
                     </div>
-                  ) : (
-                    // Mismatched role matchup (e.g. Batter vs Bowler)
+                  )}
+
+                  {/* Mode A: Direct Batting Comparison */}
+                  {comparisonTab === "batting" && hasBattingComp && p1FinalBatting && p2FinalBatting && (
                     <div className="flex flex-col gap-4 py-2">
-                      <div className="text-center py-1.5 border-b border-white/5 mb-2">
+                      <div className="text-center py-1 border-b border-white/5 mb-1">
+                        <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em]">Batting Telemetry Comparison</span>
+                      </div>
+                      <ComparisonRow label="Runs" val1={p1FinalBatting.runs} val2={p2FinalBatting.runs} isHigherBetter={true} />
+                      <ComparisonRow label="Strike Rate" val1={p1FinalBatting.sr} val2={p2FinalBatting.sr} isHigherBetter={true} />
+                      <ComparisonRow label="Average" val1={p1FinalBatting.avg} val2={p2FinalBatting.avg} isHigherBetter={true} />
+                      <ComparisonRow label="Death SR" val1={p1FinalBatting.deathSr} val2={p2FinalBatting.deathSr} isHigherBetter={true} />
+                      <ComparisonRow label="Boundary %" val1={p1FinalBatting.boundaryPct ?? 18.4} val2={p2FinalBatting.boundaryPct ?? 17.2} isHigherBetter={true} />
+                      <ComparisonRow label="Fifties/Hundreds" val1={(p1FinalBatting.fifties || 0) + (p1FinalBatting.hundreds || 0)} val2={(p2FinalBatting.fifties || 0) + (p2FinalBatting.hundreds || 0)} isHigherBetter={true} />
+                    </div>
+                  )}
+
+                  {/* Mode B: Direct Bowling Comparison */}
+                  {comparisonTab === "bowling" && hasBowlingComp && p1FinalBowling && p2FinalBowling && (
+                    <div className="flex flex-col gap-4 py-2">
+                      <div className="text-center py-1 border-b border-white/5 mb-1">
+                        <span className="text-[9px] font-black text-accent uppercase tracking-[0.2em]">Bowling Telemetry Comparison</span>
+                      </div>
+                      <ComparisonRow label="Wickets" val1={p1FinalBowling.wickets} val2={p2FinalBowling.wickets} isHigherBetter={true} />
+                      <ComparisonRow label="Economy" val1={p1FinalBowling.econ} val2={p2FinalBowling.econ} isHigherBetter={false} />
+                      <ComparisonRow label="Average" val1={p1FinalBowling.avg} val2={p2FinalBowling.avg} isHigherBetter={false} />
+                      <ComparisonRow label="Dot %" val1={p1FinalBowling.dotPct} val2={p2FinalBowling.dotPct} isHigherBetter={true} />
+                      <ComparisonRow label="Death Eco" val1={p1FinalBowling.deathEcon} val2={p2FinalBowling.deathEcon} isHigherBetter={false} />
+                    </div>
+                  )}
+
+                  {/* Mode C: Batter vs Bowler Duel (or Mismatched Roles) */}
+                  {(comparisonTab === "duel" || (!hasBattingComp && !hasBowlingComp) || (comparisonTab === "batting" && !hasBattingComp) || (comparisonTab === "bowling" && !hasBowlingComp)) && (
+                    <div className="flex flex-col gap-4 py-2">
+                      <div className="text-center py-1.5 border-b border-white/5 mb-2 flex items-center justify-center gap-2">
+                        <Target className="w-3.5 h-3.5 text-amber-400" />
                         <span className="text-[10px] font-black text-amber-400 uppercase tracking-[0.25em]">Batter vs Bowler Duel</span>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
-                        {/* P1 Primary Skills */}
+                        {/* Athlete 1 Primary Skills */}
                         <div className="flex flex-col gap-3 p-3 bg-white/[0.02] border border-white/5 rounded-2xl">
-                          <span className="text-[9px] font-black text-primary uppercase tracking-wider truncate">{displayPlayerName(p1Data.player, displayNames)}</span>
-                          {p1FinalBatting ? (
+                          <div className="flex items-center justify-between pb-1 border-b border-white/5">
+                            <span className="text-[9px] font-black text-primary uppercase tracking-wider truncate">
+                              {displayPlayerName(p1Data.player, displayNames)}
+                            </span>
+                            <span className="text-[7.5px] font-mono text-white/40 uppercase">
+                              {p1Discipline === "bowler" ? "Bowler" : "Batter"}
+                            </span>
+                          </div>
+                          {p1Discipline === "bowler" && p1FinalBowling ? (
                             <>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Runs</span><span className="text-base font-black text-white">{p1FinalBatting.runs}</span></div>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">SR</span><span className="text-base font-black text-primary">{p1FinalBatting.sr}</span></div>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Avg</span><span className="text-base font-black text-white">{p1FinalBatting.avg}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Wickets</span><span className="text-base font-black text-white font-mono">{p1FinalBowling.wickets}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Economy</span><span className="text-base font-black text-accent font-mono">{p1FinalBowling.econ}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Dot %</span><span className="text-base font-black text-white font-mono">{p1FinalBowling.dotPct}%</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Death Eco</span><span className="text-sm font-bold text-amber-300 font-mono">{p1FinalBowling.deathEcon}</span></div>
                             </>
-                          ) : p1FinalBowling ? (
+                          ) : p1FinalBatting ? (
                             <>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Wkts</span><span className="text-base font-black text-white">{p1FinalBowling.wickets}</span></div>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Econ</span><span className="text-base font-black text-accent">{p1FinalBowling.econ}</span></div>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Dot %</span><span className="text-base font-black text-white">{p1FinalBowling.dotPct}%</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Runs</span><span className="text-base font-black text-white font-mono">{p1FinalBatting.runs}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Strike Rate</span><span className="text-base font-black text-primary font-mono">{p1FinalBatting.sr}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Average</span><span className="text-base font-black text-white font-mono">{p1FinalBatting.avg}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Death SR</span><span className="text-sm font-bold text-amber-300 font-mono">{p1FinalBatting.deathSr}</span></div>
                             </>
-                          ) : <span className="text-xs text-white/30">No Stats</span>}
+                          ) : (
+                            <span className="text-xs text-white/30">No Stats Available</span>
+                          )}
                         </div>
-                        {/* P2 Primary Skills */}
+
+                        {/* Athlete 2 Primary Skills */}
                         <div className="flex flex-col gap-3 p-3 bg-white/[0.02] border border-white/5 rounded-2xl">
-                          <span className="text-[9px] font-black text-accent uppercase tracking-wider truncate">{displayPlayerName(p2Data.player, displayNames)}</span>
-                          {p2FinalBatting ? (
+                          <div className="flex items-center justify-between pb-1 border-b border-white/5">
+                            <span className="text-[9px] font-black text-accent uppercase tracking-wider truncate">
+                              {displayPlayerName(p2Data.player, displayNames)}
+                            </span>
+                            <span className="text-[7.5px] font-mono text-white/40 uppercase">
+                              {p2Discipline === "bowler" ? "Bowler" : "Batter"}
+                            </span>
+                          </div>
+                          {p2Discipline === "bowler" && p2FinalBowling ? (
                             <>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Runs</span><span className="text-base font-black text-white">{p2FinalBatting.runs}</span></div>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">SR</span><span className="text-base font-black text-primary">{p2FinalBatting.sr}</span></div>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Avg</span><span className="text-base font-black text-white">{p2FinalBatting.avg}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Wickets</span><span className="text-base font-black text-white font-mono">{p2FinalBowling.wickets}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Economy</span><span className="text-base font-black text-accent font-mono">{p2FinalBowling.econ}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Dot %</span><span className="text-base font-black text-white font-mono">{p2FinalBowling.dotPct}%</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Death Eco</span><span className="text-sm font-bold text-amber-300 font-mono">{p2FinalBowling.deathEcon}</span></div>
                             </>
-                          ) : p2FinalBowling ? (
+                          ) : p2FinalBatting ? (
                             <>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Wkts</span><span className="text-base font-black text-white">{p2FinalBowling.wickets}</span></div>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Econ</span><span className="text-base font-black text-accent">{p2FinalBowling.econ}</span></div>
-                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Dot %</span><span className="text-base font-black text-white">{p2FinalBowling.dotPct}%</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Runs</span><span className="text-base font-black text-white font-mono">{p2FinalBatting.runs}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Strike Rate</span><span className="text-base font-black text-primary font-mono">{p2FinalBatting.sr}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Average</span><span className="text-base font-black text-white font-mono">{p2FinalBatting.avg}</span></div>
+                              <div className="flex flex-col"><span className="text-[8px] text-white/30 uppercase font-bold">Death SR</span><span className="text-sm font-bold text-amber-300 font-mono">{p2FinalBatting.deathSr}</span></div>
                             </>
-                          ) : <span className="text-xs text-white/30">No Stats</span>}
+                          ) : (
+                            <span className="text-xs text-white/30">No Stats Available</span>
+                          )}
                         </div>
+                      </div>
+
+                      {/* Head-to-Head Duel Indicator */}
+                      <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-between text-[9px] font-mono">
+                        <span className="text-white/40 uppercase">Matchup Dynamics:</span>
+                        <span className="text-emerald-400 font-bold">
+                          {p1Discipline === "batter" && p2Discipline === "bowler"
+                            ? `${displayPlayerName(p1Data.player, displayNames)} SR ${p1FinalBatting?.sr || "—"} vs Econ ${p2FinalBowling?.econ || "—"}`
+                            : p1Discipline === "bowler" && p2Discipline === "batter"
+                              ? `${displayPlayerName(p1Data.player, displayNames)} Econ ${p1FinalBowling?.econ || "—"} vs SR ${p2FinalBatting?.sr || "—"}`
+                              : "Multi-Discipline Head to Head"}
+                        </span>
                       </div>
                     </div>
                   )}
@@ -3690,32 +3831,83 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
               )}
             </div>
 
-            {/* Player 2 Card */}
+            {/* Player 2 Card with Search Option Along With Dropdown */}
             <div className="stats-tool-panel p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
               <div className="absolute inset-0 bg-gradient-to-bl from-accent/10 to-transparent pointer-events-none" />
-              <div className="flex flex-col gap-1 z-10">
-                <span className="text-[9px] font-black uppercase tracking-widest text-accent">SELECT ATHLETE 2</span>
-                <select value={player2} onChange={e => setPlayer2(e.target.value)} className="w-full bg-[#080B16] border border-white/10 rounded-xl p-2.5 text-xs font-bold text-white outline-none focus:border-accent/50 cursor-pointer shadow-xl transition-colors" title="Select Second Athlete">
-                  {p2Options.map((b: any) => <option key={b.player} value={b.player} className="bg-[#080B16] text-white py-1">{displayPlayerName(b.player, displayNames)} ({b.role})</option>)}
+              
+              <div className="flex flex-col gap-2 z-10">
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] font-black uppercase tracking-widest text-accent flex items-center gap-1.5">
+                    <Crosshair className="w-3 h-3 text-accent" />
+                    SELECT ATHLETE 2
+                  </span>
+                  {search2 && (
+                    <button
+                      onClick={() => setSearch2("")}
+                      className="text-[8px] font-mono text-white/50 hover:text-white flex items-center gap-0.5 cursor-pointer"
+                    >
+                      <X className="w-2.5 h-2.5" /> Clear
+                    </button>
+                  )}
+                </div>
+
+                {/* Search Input for Athlete 2 */}
+                <div className="relative">
+                  <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-white/40" />
+                  <input
+                    type="text"
+                    value={search2}
+                    onChange={e => setSearch2(e.target.value)}
+                    placeholder="Search Athlete 2 by name..."
+                    className="w-full bg-[#080B16] border border-white/10 rounded-xl pl-9 pr-3 py-2 text-xs font-semibold text-white placeholder-white/30 outline-none focus:border-accent/50 transition-colors shadow-inner"
+                  />
+                </div>
+
+                {/* Dropdown Select for Athlete 2 */}
+                <select
+                  value={player2}
+                  onChange={e => setPlayer2(e.target.value)}
+                  className="w-full bg-[#080B16] border border-white/10 rounded-xl p-2.5 text-xs font-bold text-white outline-none focus:border-accent/50 cursor-pointer shadow-xl transition-colors"
+                  title="Select Second Athlete"
+                >
+                  {filteredP2Options.every((b: any) => b.player !== player2) && player2 && (
+                    <option value={player2} className="bg-[#080B16] text-accent font-bold py-1">
+                      {displayPlayerName(player2, displayNames)} ({p2Data?.role || "Selected"})
+                    </option>
+                  )}
+                  {filteredP2Options.map((b: any) => (
+                    <option key={b.player} value={b.player} className="bg-[#080B16] text-white py-1">
+                      {displayPlayerName(b.player, displayNames)} ({b.role})
+                    </option>
+                  ))}
+                  {filteredP2Options.length === 0 && !player2 && (
+                    <option value="" disabled className="bg-[#080B16] text-white/40">No matching athletes</option>
+                  )}
                 </select>
               </div>
-              <div className="flex flex-col items-center mt-4 z-10 w-full">
+
+              {/* Player 2 Avatar & Identity */}
+              <div className="flex flex-col items-center mt-2 z-10 w-full">
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-white/5 border-2 border-accent shrink-0 shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)] relative group hover:scale-105 transition-transform duration-500">
                   <PlayerAvatar name={player2} playerImages={playerImages} imgClassName="w-full h-full object-cover" />
                 </div>
                 <h3 className="mt-4 text-lg font-black uppercase text-white tracking-tight text-center">{displayPlayerName(player2, displayNames)}</h3>
-                <span className="text-[10px] font-black uppercase tracking-widest text-white/40 bg-white/5 border border-white/10 px-2 py-0.5 rounded mt-2">{p2Data?.role}</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-white/40 bg-white/5 border border-white/10 px-2 py-0.5 rounded mt-2">{p2Data?.role || "Athlete"}</span>
 
-                {/* SCORING ZONE & DELIVERY TYPE METRICS */}
+                {/* Dynamic Career Metrics */}
                 <div className="w-full mt-4 pt-3 border-t border-white/10 flex flex-col gap-2">
-                   <div className="flex justify-between items-center text-[9.5px]">
-                      <span className="font-bold text-white/40 uppercase">Top Scoring Zone:</span>
-                      <span className="font-black text-amber-400">Square Leg (154 SR)</span>
-                   </div>
-                   <div className="flex justify-between items-center text-[9.5px]">
-                      <span className="font-bold text-white/40 uppercase">Delivery Execution:</span>
-                      <span className="font-black text-purple-400">Bouncer 8.1 Eco</span>
-                   </div>
+                   {p2FinalBatting && (
+                     <div className="flex justify-between items-center text-[9.5px]">
+                        <span className="font-bold text-white/40 uppercase">Batting Record:</span>
+                        <span className="font-black text-amber-400 font-mono">{p2FinalBatting.runs} runs · SR {p2FinalBatting.sr}</span>
+                     </div>
+                   )}
+                   {p2FinalBowling && (
+                     <div className="flex justify-between items-center text-[9.5px]">
+                        <span className="font-bold text-white/40 uppercase">Bowling Record:</span>
+                        <span className="font-black text-purple-400 font-mono">{p2FinalBowling.wickets} wkts · Econ {p2FinalBowling.econ}</span>
+                     </div>
+                   )}
                 </div>
               </div>
             </div>
@@ -3757,10 +3949,16 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
           </div>
         </div>
       )}
-      {mode==='players'&&player1&&player2&&<ScoringRing player={player1} bowler={player2}/>}
+      {mode==='players'&&player1&&player2&& (
+        <ScoringRing
+          player={p1Discipline === "bowler" && p2Discipline === "batter" ? player2 : player1}
+          bowler={p1Discipline === "bowler" && p2Discipline === "batter" ? player1 : player2}
+        />
+      )}
     </div>
   );
 }
+
 
 function ComparisonRow({ label, val1, val2, isHigherBetter }: { label: string, val1: number, val2: number, isHigherBetter: boolean }) {
   const p1Wins = isHigherBetter ? val1 > val2 : val1 < val2;
