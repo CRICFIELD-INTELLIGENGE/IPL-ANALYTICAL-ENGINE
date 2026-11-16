@@ -5,9 +5,27 @@
   "outputDirectory": "artifacts/ipl-analytics/dist/public",
   "installCommand": "pnpm install",
   "framework": null,
+  "functions": {
+    "api/warehouse-preview.ts": {
+      "maxDuration": 60,
+      "memory": 1024
+    }
+  },
   "rewrites": [
     {
-      "source": "/((?!api/turso-preview$).*)",
+      "source": "/api/stats/:path*",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/stats/:path*"
+    },
+    {
+      "source": "/api/ipl/:path*",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/ipl/:path*"
+    },
+    {
+      "source": "/api/scout/:path*",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/scout/:path*"
+    },
+    {
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ],

@@ -54,10 +54,9 @@ const TABS = [
   { id: "teams", label: "Teams", Icon: Users },
   { id: "records", label: "Record Book", Icon: Trophy },
   { id: "head2head", label: "Head to Head", Icon: Crosshair },
-  { id: "dimensional", label: "Dimensional Slicing", Icon: Layers },
   { id: "ask", label: "Ask AI", Icon: Cpu },
 ] as const;
-type Tab = typeof TABS[number]["id"] | "stat-builder" | "scenario-intelligence" | "tactics" | "batter-lens";
+type Tab = typeof TABS[number]["id"] | "dimensional" | "stat-builder" | "scenario-intelligence" | "tactics" | "batter-lens";
 
 const SCENARIO_METADATA: Record<string, { title: string; subtitle: string; leverageBadge: string; parMetric: string; successDriver: string }> = {
   death: {
@@ -1438,7 +1437,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   const selectedTool = isHead2HeadTab
     ? TABS.find(tab => tab.id === "head2head")
     : isDimensionalTab
-    ? TABS.find(tab => tab.id === "dimensional")
+    ? { id: "dimensional" as const, label: "Dimensional Slicing", Icon: Layers }
     : undefined;
   const activeTool = selectedTool ? (
     <section className="stats-tool grid min-w-0 gap-4">
@@ -1842,10 +1841,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                 key={t.id}
                 type="button"
                 onClick={() => {
-                  if (!mobilePresentation && t.id === "dimensional") {
-                    filterPanelRef.current?.focus({ preventScroll: true });
-                    return;
-                  }
                   if (activeTab !== t.id) rememberStatsScroll();
                   setActiveTab(t.id);
                 }}
