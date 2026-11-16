@@ -7,6 +7,8 @@ if (-not $cloudflared) { throw 'cloudflared is not installed: winget install --i
 $config = Join-Path $StateDir 'cloudflared.yml'
 if (-not (Test-Path $config)) { throw "Missing $config. Copy deploy\windows\cloudflared.example.yml there and fill in the tunnel id." }
 
+# cloudflared logs to stderr; under 'Stop' PowerShell 5.1 would treat its first line as fatal.
+$ErrorActionPreference = 'Continue'
 $delay = 5
 while ($true) {
     $log = Join-Path $LogDir "tunnel-$(Get-Date -Format yyyyMMdd).log"
