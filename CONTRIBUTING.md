@@ -1,25 +1,27 @@
-# Contributing to CRICFIELD — IPL Analytical Engine
+# Contributing to CricField
 
-Thank you for your interest in contributing to CRICFIELD.
+## Workflow
 
-## Code of Conduct
+1. Branch from `main` (`feat/…`, `fix/…`, `docs/…`, `refactor/…`). **Never push to `main` directly**, because every push to `main` deploys production (see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)).
+2. Set up locally with [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
+3. Keep the change small and stage only your own files.
+4. Run the checks in [docs/TESTING.md](docs/TESTING.md). At minimum, the typechecks and the web build must match the baseline: no new errors.
+5. Use Conventional Commits (`feat(scope): …`, `fix: …`, `docs: …`).
+6. Open a PR with the template filled in.
 
-All contributors and maintainers are expected to maintain a professional, respectful, and collaborative environment.
+## Data rules
 
-## Development Workflow
+- Do not change raw datasets, player IDs or the warehouses (`sqlite.db`, `global.db`) without a written repair plan, a backup and before/after checksums. Past repairs are under `docs/data-repairs/`.
+- Test against database **copies** (`CRICFIELD_DB_PATH`) and keep `CRICFIELD_DB_READONLY=1` everywhere else.
+- If you edit a JSON file that exists in both `artifacts/api-server/data/` and `artifacts/ipl-analytics/public/data/`, update both copies or explain in the PR why only one changed.
+- Cricsheet data is ODC-BY 1.0. Keep attribution.
+- The official challenge data (`lib/cricket-data/official/`, `artifacts/api-server/data/pressure-official/`) must never be committed.
+- `scripts/data-release.mjs` can fingerprint datasets. Its output folder `data-release/` is git-ignored.
 
-1. Fork or branch from `main`.
-2. Create a descriptive feature or bugfix branch: `feature/your-feature-name` or `fix/your-fix-name`.
-3. Adhere to TypeScript and Drizzle ORM typing conventions.
-4. Ensure all non-destructive typechecks pass:
-   ```bash
-   pnpm run typecheck
-   ```
-5. Do NOT mutate or rewrite existing historical cricket datasets or warehouse tables without an approved data repair migration plan.
-6. Open a Pull Request referencing the relevant issue and detailing the changes made.
+## Secrets
 
-## Datasets and Integrity
+Never commit `.env` files, `env/*.env`, API keys or tokens. Server credentials must never use the `VITE_` prefix. `.env.example` lists names only. See [SECURITY.md](SECURITY.md).
 
-- Cricket match data is derived from Cricsheet records (ODC-BY 1.0).
-- Datasets must maintain cryptographic integrity against manifests in `data-release/`.
-- Never commit raw `.env` files or credentials.
+## UI changes
+
+Desktop (≥1024px) and the mobile shell (`artifacts/ipl-analytics/src/mobile`) are separate trees. A desktop change must leave the mobile shell unchanged unless the PR says otherwise. Attach screenshots for both.

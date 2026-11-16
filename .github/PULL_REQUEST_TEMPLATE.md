@@ -1,18 +1,25 @@
-## Summary of Changes
+## Summary
 
-A concise description of the problem solved or feature introduced.
+What changed and why.
 
-## Type of Change
+## Type of change
 
-- [ ] Bug fix (non-breaking change fixing an issue)
-- [ ] New feature (non-breaking change adding functionality)
-- [ ] Breaking change (fix or feature causing existing functionality to break)
-- [ ] Data / Analytics update (warehouse schema or derived statistics)
-- [ ] Documentation update
+- [ ] Bug fix
+- [ ] Feature
+- [ ] Data / analytics change (warehouse, `public/data`, model snapshot)
+- [ ] Refactor / file move (no behaviour change)
+- [ ] Documentation
 
-## Verification & Integrity
+## Checks (see docs/TESTING.md)
 
-- [ ] `pnpm run typecheck` passes with zero errors
-- [ ] Dataset fingerprints unchanged or validated against `scripts/data-release.mjs verify`
-- [ ] No private environment files or credentials staged
-- [ ] Desktop and mobile views verified
+- [ ] Typechecks: no new errors compared with the baseline
+- [ ] `pnpm --filter @workspace/ipl-analytics run build` passes (Vercel runs this)
+- [ ] API tests: no new failures (if API code changed)
+- [ ] Desktop and mobile shell checked (if UI changed); screenshots attached
+
+## Data and safety
+
+- [ ] No raw dataset, player ID or database file changed. If one did, the repair plan and before/after checksums are linked.
+- [ ] Both copies of any JSON in `api-server/data` and `ipl-analytics/public/data` are updated or explained
+- [ ] No `.env`, `env/*.env`, credentials or official challenge data staged
+- [ ] No route, URL or API contract changed. If one did, it is listed here.
