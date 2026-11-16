@@ -1,4 +1,4 @@
-import { TeamT20Scouting } from "@/components/scout/t20-scouting";
+import "./stats-tools.css";
 import { MobileStatsPresentation } from "@/mobile/screens/stats-presentation";
 import {ScoringRing} from '@/components/visualizations/scoring-ring';
 import { Scale } from "lucide-react";
@@ -610,19 +610,15 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       if (!hasScenarioRange && filters.season && filters.season !== "All Seasons") params.set("season", filters.season);
       if (filters.team && filters.team !== "All Teams") params.set("team", filters.team);
       if (filters.nationality && filters.nationality !== "all") params.set("nationality", filters.nationality);
-      try {
-        const res = await fetch(`/api/stats/scenario?${params}`);
-        const ct = res.headers.get("content-type") || "";
-        if (res.ok && !ct.includes("text/html")) {
-          const result = await res.json() as { batters: any[]; bowlers: any[] };
-          if (Array.isArray(result.batters) && Array.isArray(result.bowlers) && (result.batters.length > 0 || result.bowlers.length > 0)) {
-            return result;
-          }
-        }
-      } catch {
-        // Fallback to client warehouse computation
+      const res = await fetch(`/api/stats/scenario?${params}`);
+      if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
+        throw new Error("Scenario data could not be loaded");
       }
-      return null;
+      const result = await res.json();
+      if (!Array.isArray(result?.batters) || !Array.isArray(result?.bowlers)) {
+        throw new Error("Invalid scenario response");
+      }
+      return { batters: result.batters, bowlers: result.bowlers };
     },
     enabled: activeTab === "scenario-intelligence" && selectedScenario !== "pressure-reliability",
     staleTime: 1000 * 60 * 5,
@@ -1058,6 +1054,251 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   </>);
 
+  const selectedTool = activeTab === "head2head" || activeTab === "stat-builder"
+    || activeTab === "scenario-intelligence" || activeTab === "tactics" || activeTab === "batter-lens"
+    ? TABS.find(tab => tab.id === activeTab) : undefined;
+  const activeTool = selectedTool ? (
+    <section className="stats-tool grid min-w-0 gap-4">
+      <header className="stats-tool-panel flex items-center gap-3 px-4 py-4 sm:px-5">
+        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+          <selectedTool.Icon className="h-5 w-5" aria-hidden="true" />
+        </span>
+        <h2 className="text-lg font-black tracking-tight">{selectedTool.label}</h2>
+      </header>
+      {activeTab === "scenario-intelligence" && (
+        <div className="flex flex-col gap-6 animate-fade-in">
+          {/* Scenario presets */}
+          <div className="stats-tool-panel flex flex-wrap gap-2 p-3">
+            {[
+              { id: "pressure-reliability", label: "Pressure Reliability", color: "from-pink-500/25 to-fuchsia-500/10", activeBorder: "border-pink-300 text-white bg-pink-500/25 ring-2 ring-pink-400/50" },
+              { id: "death", label: "Death Overs", color: "from-red-500/20 to-orange-500/10", activeBorder: "border-red-400 text-white bg-red-500/20 ring-2 ring-red-500/40" },
+              { id: "powerplay", label: "Powerplay", color: "from-blue-500/20 to-cyan-500/10", activeBorder: "border-cyan-400 text-white bg-cyan-500/20 ring-2 ring-cyan-500/40" },
+              { id: "clutch", label: "Clutch Moments", color: "from-purple-500/20 to-indigo-500/10", activeBorder: "border-purple-400 text-white bg-purple-500/20 ring-2 ring-purple-500/40" },
+              { id: "high-pressure", label: "High Pressure", color: "from-pink-500/20 to-rose-500/10", activeBorder: "border-pink-400 text-white bg-pink-500/20 ring-2 ring-pink-500/40" },
+              { id: "chasing200plus", label: "Chasing 200+", color: "from-emerald-500/20 to-teal-500/10", activeBorder: "border-emerald-400 text-white bg-emerald-500/20 ring-2 ring-emerald-500/40" },
+              { id: "playoff", label: "Playoff Matches", color: "from-amber-500/20 to-yellow-500/10", activeBorder: "border-amber-400 text-white bg-amber-500/20 ring-2 ring-amber-500/40" },
+              { id: "death-spin", label: "Death vs Spin", color: "from-violet-500/20 to-purple-500/10", activeBorder: "border-violet-400 text-white bg-violet-500/20 ring-2 ring-violet-500/40" },
+            ].map(s => (
+              <button key={s.id}
+                type="button"
+                aria-pressed={selectedScenario === s.id}
+                onClick={() => setSelectedScenario(s.id)}
+                className={`px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all duration-200 cursor-pointer bg-gradient-to-br ${s.color} ${
+                  selectedScenario === s.id
+                    ? `${s.activeBorder} shadow-sm`
+                    : "stats-tool-chip"
+                }`}>
+                {s.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="stats-tool-panel flex flex-wrap items-center gap-3 p-3 text-xs">
+            <label className="flex items-center gap-2">
+              From season
+              <select className="rounded-lg border border-white/10 bg-background px-2 py-1" value={scenarioRange.from}
+                onChange={e => setScenarioRange(range => ({ ...range, from: e.target.value }))}>
+                <option value="">Any</option>
+                {scenarioYears.filter(year => !scenarioRange.to || year <= scenarioRange.to).map(year => <option key={year}>{year}</option>)}
+              </select>
+            </label>
+            <label className="flex items-center gap-2">
+              To season
+              <select className="rounded-lg border border-white/10 bg-background px-2 py-1" value={scenarioRange.to}
+                onChange={e => setScenarioRange(range => ({ ...range, to: e.target.value }))}>
+                <option value="">Any</option>
+                {scenarioYears.filter(year => !scenarioRange.from || year >= scenarioRange.from).map(year => <option key={year}>{year}</option>)}
+              </select>
+            </label>
+          </div>
+
+          {selectedScenario === "pressure-reliability" ? (
+            <PressureReliabilityPanel seasonFrom={scenarioRange.from} seasonTo={scenarioRange.to} />
+          ) : (<>
+          {/* Min balls qualifier */}
+          <div className="stats-tool-panel flex flex-wrap items-center gap-2 p-3">
+            <span className="text-[10px] font-black text-white/40 uppercase tracking-wider">Min balls faced:</span>
+            {[5, 10, 20, 30, 50].map(n => (
+              <button key={n} onClick={() => setScenarioMinBalls(n)}
+                className={`px-3 py-1 rounded-lg text-[10px] font-black transition-all ${
+                  scenarioMinBalls === n ? "bg-primary/20 text-primary border border-primary/30" : "bg-white/5 text-white/40 border border-white/10 hover:text-white"
+                }`}>
+                {n}
+              </button>
+            ))}
+          </div>
+
+          {/* Scenario Intelligence 2.0 Tactical Context Card */}
+          {SCENARIO_METADATA[selectedScenario] && (
+            <div className="rounded-xl border border-white/10 bg-gradient-to-r from-white/[0.04] to-primary/[0.04] p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black uppercase text-white tracking-wider">
+                    {SCENARIO_METADATA[selectedScenario].title}
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-primary/20 text-primary border border-primary/30">
+                    {SCENARIO_METADATA[selectedScenario].leverageBadge}
+                  </span>
+                </div>
+                <p className="text-[11px] text-white/70 max-w-2xl leading-relaxed">
+                  {SCENARIO_METADATA[selectedScenario].subtitle}
+                </p>
+                <div className="text-[10px] text-amber-400 font-bold flex items-center gap-1.5 mt-0.5">
+                  <span className="text-white/40 font-mono">Success Driver:</span> {SCENARIO_METADATA[selectedScenario].successDriver}
+                </div>
+              </div>
+              <div className="shrink-0 flex md:flex-col items-end gap-1 border-t md:border-t-0 md:border-l border-white/10 pt-2 md:pt-0 md:pl-4">
+                <span className="text-[9px] font-mono uppercase tracking-wider text-white/40">Benchmark Target</span>
+                <span className="text-[11px] font-mono font-bold text-emerald-400">{SCENARIO_METADATA[selectedScenario].parMetric}</span>
+                <span className="text-[10px] font-mono text-white/40">
+                  {effectiveScenarioData.batters.length} batters • {effectiveScenarioData.bowlers.length} bowlers
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Results */}
+          {scenarioQuery.isLoading && !effectiveScenarioData.batters.length && !effectiveScenarioData.bowlers.length ? (
+            <div className="text-center py-12 text-white/40 font-mono text-sm">Loading scenario data...</div>
+          ) : scenarioQuery.isError ? (
+            <div role="alert" className="stats-tool-panel p-5 text-sm">
+              Scenario data is unavailable. <button type="button" className="font-bold text-primary underline" onClick={() => void scenarioQuery.refetch()}>Retry</button>
+            </div>
+          ) : !effectiveScenarioData.batters.length && !effectiveScenarioData.bowlers.length ? (
+            <div role="status" className="text-center py-12 text-white/60 text-sm">No players meet these scenario filters.</div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Batters leaderboard */}
+              <div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-primary/60 mb-3">Top Batters</div>
+                <div className="rounded-xl border border-white/10 overflow-hidden">
+                  <table className="w-full">
+                    <thead className="bg-white/5 border-b border-white/10">
+                      <tr>
+                        {["Batter","Runs","SR","Avg","Balls"].map(h => (
+                          <th key={h} className="px-3 py-3 text-[9px] font-black text-white/40 uppercase tracking-wider text-left">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {(effectiveScenarioData.batters || []).slice(0, 15).map((b: any, i: number) => (
+                        <tr key={b.player} className="hover:bg-white/5">
+                          <td className="px-3 py-3">
+                            <Link href={`/players/${playerSlug(b.player)}`} className="flex items-center gap-2 group/p cursor-pointer hover:opacity-90">
+                              <span className="text-[9px] font-black text-amber-400/40 w-4">#{i+1}</span>
+                              <PlayerAvatar name={b.player} className="w-6 h-6 shrink-0" />
+                              <span className="text-[12px] font-bold text-white group-hover/p:text-primary transition-colors underline-offset-2 hover:underline">{displayPlayerName(b.player, displayNames)}</span>
+                              <span className="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-white/5 border border-white/10 text-white/60 ml-auto">
+                                {getPlayerTeam(b.player, b)}
+                              </span>
+                            </Link>
+                          </td>
+                          <td className="px-3 py-3 font-black text-primary text-[13px]">{b.runs}</td>
+                          <td className="px-3 py-3 font-bold text-amber-400 text-[12px]">{b.sr ? Number(b.sr).toFixed(1) : "—"}</td>
+                          <td className="px-3 py-3 font-bold text-white/60 text-[12px]">{b.avg ? Number(b.avg).toFixed(1) : "—"}</td>
+                          <td className="px-3 py-3 text-white/40 text-[11px]">{b.balls}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              {/* Bowlers leaderboard */}
+              <div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-amber-400/60 mb-3">Top Bowlers</div>
+                <div className="rounded-xl border border-white/10 overflow-hidden">
+                  <table className="w-full">
+                    <thead className="bg-white/5 border-b border-white/10">
+                      <tr>
+                        {["Bowler","Wkts","Econ","SR","Dot%"].map(h => (
+                          <th key={h} className="px-3 py-3 text-[9px] font-black text-white/40 uppercase tracking-wider text-left">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {(effectiveScenarioData.bowlers || []).slice(0, 15).map((b: any, i: number) => (
+                        <tr key={b.player} className="hover:bg-white/5">
+                          <td className="px-3 py-3">
+                            <Link href={`/players/${playerSlug(b.player)}`} className="flex items-center gap-2 group/p cursor-pointer hover:opacity-90">
+                              <span className="text-[9px] font-black text-amber-400/40 w-4">#{i+1}</span>
+                              <PlayerAvatar name={b.player} className="w-6 h-6 shrink-0" />
+                              <span className="text-[12px] font-bold text-white group-hover/p:text-primary transition-colors underline-offset-2 hover:underline">{displayPlayerName(b.player, displayNames)}</span>
+                              <span className="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-white/5 border border-white/10 text-white/60 ml-auto">
+                                {getPlayerTeam(b.player, b)}
+                              </span>
+                            </Link>
+                          </td>
+                          <td className="px-3 py-3 font-black text-amber-400 text-[13px]">{b.wickets}</td>
+                          <td className="px-3 py-3 font-bold text-emerald-400 text-[12px]">{b.econ ? Number(b.econ).toFixed(2) : "—"}</td>
+                          <td className="px-3 py-3 font-bold text-white/60 text-[12px]">{b.sr ? Number(b.sr).toFixed(1) : "—"}</td>
+                          <td className="px-3 py-3 text-white/40 text-[11px]">{b.dotPct != null ? `${Number(b.dotPct).toFixed(0)}%` : "—"}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+          </>)}
+        </div>
+      )}
+
+      {activeTab === "head2head" && (
+        <HeadToHeadView batters={activeData.batters} bowlers={activeData.bowlers} teams={teams.data || []} playerImages={playerImages.data ?? {}} />
+      )}
+      {activeTab === "stat-builder" && (
+        <StatBuilderView batters={activeData.batters} bowlers={activeData.bowlers} playerImages={playerImages.data ?? {}} />
+      )}
+      {activeTab === "tactics" && (
+        <div className="flex flex-col gap-6 animate-fade-in">
+          {/* Delivery Length to Shot Type Matrix */}
+          <div className="stats-tool-panel p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
+              <div>
+                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
+                  <BarChart2 className="w-3 h-3 text-blue-400" />
+                  LENGTH MATRIX &amp; SHOT HEATMAP
+                </span>
+                <h2 className="text-base sm:text-lg font-black mt-1.5 tracking-tight">
+                  Delivery Length to Shot Type Matrix
+                </h2>
+                <p className="text-xs text-white/50 font-mono mt-0.5">
+                  Interactive length distribution across all IPL seasons (2008 – 2026)
+                </p>
+              </div>
+            </div>
+            <div className="w-full overflow-x-auto">
+              <div className="min-w-[520px]"><RunFlowSankey /></div>
+            </div>
+          </div>
+
+          {/* Shot Execution Flow */}
+          <div className="stats-tool-panel p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
+              <div>
+                <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
+                  <Zap className="w-3 h-3 text-purple-400" />
+                  BALL RELEASE TO OUTCOME FLOW
+                </span>
+                <h2 className="text-base sm:text-lg font-black mt-1.5 tracking-tight">
+                  Shot Execution Flow
+                </h2>
+                <p className="text-xs text-white/50 font-mono mt-0.5">
+                  Delivery Seam / Spin Release to Shot Execution Outcome (2008 – 2026)
+                </p>
+              </div>
+            </div>
+            <div className="w-full overflow-x-auto">
+              <div className="min-w-[520px]"><ShotFlowSankey /></div>
+            </div>
+          </div>
+        </div>
+      )}
+      {activeTab === "batter-lens" && <BatterLensRankings />}
+    </section>
+  ) : null;
+
   const desktopContent = (
     <Layout><FeatureSaveButton feature="stats"/>
       {/* ═════════════════════════════════════════════════════════════════════
@@ -1213,7 +1454,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
       {/* STATIC DATA SECTION */}
       <div className="space-y-4 px-2.5 pb-6 mt-4">
-        {!mobilePresentation && <TeamT20Scouting />}
         {/* CROSS-LINK TO GLOBAL SCOUT LAB */}
         <div className="rounded-2xl bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-sm dark:shadow-lg">
           <div className="flex items-center gap-3">
@@ -1641,244 +1881,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               )}
 
               {/* Scenario Intelligence */}
-              {activeTab === "scenario-intelligence" && (
-                <div className="flex flex-col gap-6 animate-fade-in">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-1 h-8 bg-gradient-to-b from-amber-400 to-orange-600 rounded-full" />
-                    <div>
-                      <div className="text-sm font-black uppercase tracking-widest text-white">Scenario Intelligence</div>
-                      <div className="text-[10px] text-white/40 font-bold">Who performs best under specific match conditions?</div>
-                    </div>
-                  </div>
-
-                  {/* Scenario presets */}
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      { id: "pressure-reliability", label: "Pressure Reliability", color: "from-pink-500/25 to-fuchsia-500/10", activeBorder: "border-pink-300 text-white bg-pink-500/25 ring-2 ring-pink-400/50" },
-                      { id: "death", label: "Death Overs", color: "from-red-500/20 to-orange-500/10", activeBorder: "border-red-400 text-white bg-red-500/20 ring-2 ring-red-500/40" },
-                      { id: "powerplay", label: "Powerplay", color: "from-blue-500/20 to-cyan-500/10", activeBorder: "border-cyan-400 text-white bg-cyan-500/20 ring-2 ring-cyan-500/40" },
-                      { id: "clutch", label: "Clutch Moments", color: "from-purple-500/20 to-indigo-500/10", activeBorder: "border-purple-400 text-white bg-purple-500/20 ring-2 ring-purple-500/40" },
-                      { id: "high-pressure", label: "High Pressure", color: "from-pink-500/20 to-rose-500/10", activeBorder: "border-pink-400 text-white bg-pink-500/20 ring-2 ring-pink-500/40" },
-                      { id: "chasing200plus", label: "Chasing 200+", color: "from-emerald-500/20 to-teal-500/10", activeBorder: "border-emerald-400 text-white bg-emerald-500/20 ring-2 ring-emerald-500/40" },
-                      { id: "playoff", label: "Playoff Matches", color: "from-amber-500/20 to-yellow-500/10", activeBorder: "border-amber-400 text-white bg-amber-500/20 ring-2 ring-amber-500/40" },
-                      { id: "death-spin", label: "Death vs Spin", color: "from-violet-500/20 to-purple-500/10", activeBorder: "border-violet-400 text-white bg-violet-500/20 ring-2 ring-violet-500/40" },
-                    ].map(s => (
-                      <button key={s.id}
-                        type="button"
-                        onClick={() => setSelectedScenario(s.id)}
-                        className={`px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all duration-200 cursor-pointer bg-gradient-to-br ${s.color} ${
-                          selectedScenario === s.id
-                            ? `${s.activeBorder} scale-105 shadow-xl`
-                            : "border-white/10 text-white/60 hover:text-white hover:border-white/30 hover:bg-white/5"
-                        }`}>
-                        {s.label}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-3 text-[11px] text-white/60">
-                    <label className="flex items-center gap-2">
-                      From season
-                      <select className="rounded-lg border border-white/10 bg-background px-2 py-1" value={scenarioRange.from}
-                        onChange={e => setScenarioRange(range => ({ ...range, from: e.target.value }))}>
-                        <option value="">Any</option>
-                        {scenarioYears.filter(year => !scenarioRange.to || year <= scenarioRange.to).map(year => <option key={year}>{year}</option>)}
-                      </select>
-                    </label>
-                    <label className="flex items-center gap-2">
-                      To season
-                      <select className="rounded-lg border border-white/10 bg-background px-2 py-1" value={scenarioRange.to}
-                        onChange={e => setScenarioRange(range => ({ ...range, to: e.target.value }))}>
-                        <option value="">Any</option>
-                        {scenarioYears.filter(year => !scenarioRange.from || year >= scenarioRange.from).map(year => <option key={year}>{year}</option>)}
-                      </select>
-                    </label>
-                  </div>
-
-                  {selectedScenario === "pressure-reliability" ? (
-                    <PressureReliabilityPanel seasonFrom={scenarioRange.from} seasonTo={scenarioRange.to} />
-                  ) : (<>
-                  {/* Min balls qualifier */}
-                  <div className="flex items-center gap-4">
-                    <span className="text-[10px] font-black text-white/40 uppercase tracking-wider">Min balls faced:</span>
-                    {[5, 10, 20, 30, 50].map(n => (
-                      <button key={n} onClick={() => setScenarioMinBalls(n)}
-                        className={`px-3 py-1 rounded-lg text-[10px] font-black transition-all ${
-                          scenarioMinBalls === n ? "bg-primary/20 text-primary border border-primary/30" : "bg-white/5 text-white/40 border border-white/10 hover:text-white"
-                        }`}>
-                        {n}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Scenario Intelligence 2.0 Tactical Context Card */}
-                  {SCENARIO_METADATA[selectedScenario] && (
-                    <div className="rounded-xl border border-white/10 bg-gradient-to-r from-white/[0.04] to-primary/[0.04] p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
-                      <div className="flex flex-col gap-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-black uppercase text-white tracking-wider">
-                            {SCENARIO_METADATA[selectedScenario].title}
-                          </span>
-                          <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-primary/20 text-primary border border-primary/30">
-                            {SCENARIO_METADATA[selectedScenario].leverageBadge}
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-white/70 max-w-2xl leading-relaxed">
-                          {SCENARIO_METADATA[selectedScenario].subtitle}
-                        </p>
-                        <div className="text-[10px] text-amber-400 font-bold flex items-center gap-1.5 mt-0.5">
-                          <span className="text-white/40 font-mono">Success Driver:</span> {SCENARIO_METADATA[selectedScenario].successDriver}
-                        </div>
-                      </div>
-                      <div className="shrink-0 flex md:flex-col items-end gap-1 border-t md:border-t-0 md:border-l border-white/10 pt-2 md:pt-0 md:pl-4">
-                        <span className="text-[9px] font-mono uppercase tracking-wider text-white/40">Benchmark Target</span>
-                        <span className="text-[11px] font-mono font-bold text-emerald-400">{SCENARIO_METADATA[selectedScenario].parMetric}</span>
-                        <span className="text-[10px] font-mono text-white/40">
-                          {effectiveScenarioData.batters.length} batters • {effectiveScenarioData.bowlers.length} bowlers
-                        </span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Results */}
-                  {scenarioQuery.isLoading && !effectiveScenarioData.batters.length && !effectiveScenarioData.bowlers.length ? (
-                    <div className="text-center py-12 text-white/40 font-mono text-sm">Loading scenario data...</div>
-                  ) : !effectiveScenarioData.batters.length && !effectiveScenarioData.bowlers.length ? (
-                    <div role="status" className="text-center py-12 text-white/60 text-sm">No players meet these scenario filters.</div>
-                  ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                      {/* Batters leaderboard */}
-                      <div>
-                        <div className="text-[10px] font-black uppercase tracking-widest text-primary/60 mb-3">Top Batters</div>
-                        <div className="rounded-xl border border-white/10 overflow-hidden">
-                          <table className="w-full">
-                            <thead className="bg-white/5 border-b border-white/10">
-                              <tr>
-                                {["Batter","Runs","SR","Avg","Balls"].map(h => (
-                                  <th key={h} className="px-3 py-3 text-[9px] font-black text-white/40 uppercase tracking-wider text-left">{h}</th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/5">
-                              {(effectiveScenarioData.batters || []).slice(0, 15).map((b: any, i: number) => (
-                                <tr key={b.player} className="hover:bg-white/5">
-                                  <td className="px-3 py-3">
-                                    <Link href={`/players/${playerSlug(b.player)}`} className="flex items-center gap-2 group/p cursor-pointer hover:opacity-90">
-                                      <span className="text-[9px] font-black text-amber-400/40 w-4">#{i+1}</span>
-                                      <PlayerAvatar name={b.player} className="w-6 h-6 shrink-0" />
-                                      <span className="text-[12px] font-bold text-white group-hover/p:text-primary transition-colors underline-offset-2 hover:underline">{displayPlayerName(b.player, displayNames)}</span>
-                                      <span className="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-white/5 border border-white/10 text-white/60 ml-auto">
-                                        {getPlayerTeam(b.player, b)}
-                                      </span>
-                                    </Link>
-                                  </td>
-                                  <td className="px-3 py-3 font-black text-primary text-[13px]">{b.runs}</td>
-                                  <td className="px-3 py-3 font-bold text-amber-400 text-[12px]">{b.sr ? Number(b.sr).toFixed(1) : "—"}</td>
-                                  <td className="px-3 py-3 font-bold text-white/60 text-[12px]">{b.avg ? Number(b.avg).toFixed(1) : "—"}</td>
-                                  <td className="px-3 py-3 text-white/40 text-[11px]">{b.balls}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                      {/* Bowlers leaderboard */}
-                      <div>
-                        <div className="text-[10px] font-black uppercase tracking-widest text-amber-400/60 mb-3">Top Bowlers</div>
-                        <div className="rounded-xl border border-white/10 overflow-hidden">
-                          <table className="w-full">
-                            <thead className="bg-white/5 border-b border-white/10">
-                              <tr>
-                                {["Bowler","Wkts","Econ","SR","Dot%"].map(h => (
-                                  <th key={h} className="px-3 py-3 text-[9px] font-black text-white/40 uppercase tracking-wider text-left">{h}</th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/5">
-                              {(effectiveScenarioData.bowlers || []).slice(0, 15).map((b: any, i: number) => (
-                                <tr key={b.player} className="hover:bg-white/5">
-                                  <td className="px-3 py-3">
-                                    <Link href={`/players/${playerSlug(b.player)}`} className="flex items-center gap-2 group/p cursor-pointer hover:opacity-90">
-                                      <span className="text-[9px] font-black text-amber-400/40 w-4">#{i+1}</span>
-                                      <PlayerAvatar name={b.player} className="w-6 h-6 shrink-0" />
-                                      <span className="text-[12px] font-bold text-white group-hover/p:text-primary transition-colors underline-offset-2 hover:underline">{displayPlayerName(b.player, displayNames)}</span>
-                                      <span className="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-white/5 border border-white/10 text-white/60 ml-auto">
-                                        {getPlayerTeam(b.player, b)}
-                                      </span>
-                                    </Link>
-                                  </td>
-                                  <td className="px-3 py-3 font-black text-amber-400 text-[13px]">{b.wickets}</td>
-                                  <td className="px-3 py-3 font-bold text-emerald-400 text-[12px]">{b.econ ? Number(b.econ).toFixed(2) : "—"}</td>
-                                  <td className="px-3 py-3 font-bold text-white/60 text-[12px]">{b.sr ? Number(b.sr).toFixed(1) : "—"}</td>
-                                  <td className="px-3 py-3 text-white/40 text-[11px]">{b.dotPct != null ? `${Number(b.dotPct).toFixed(0)}%` : "—"}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  </>)}
-                </div>
-              )}
-
-              
               {activeTab === "records" && (
                 <RecordBookView activeData={activeData} playerImages={playerImages.data ?? {}} matches={matches} />
               )}
-              {activeTab === "head2head" && (
-                <HeadToHeadView batters={activeData.batters} bowlers={activeData.bowlers} teams={teams.data || []} playerImages={playerImages.data ?? {}} />
-              )}
-              {activeTab === "stat-builder" && (
-                <StatBuilderView batters={activeData.batters} bowlers={activeData.bowlers} playerImages={playerImages.data ?? {}} />
-              )}
-              {activeTab === "tactics" && (
-                <div className="flex flex-col gap-6 animate-fade-in">
-                  {/* Delivery Length to Shot Type Matrix */}
-                  <div className="p-6 rounded-[24px] bg-[#0B1020] border border-white/10 shadow-xl">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
-                      <div>
-                        <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
-                          <BarChart2 className="w-3 h-3 text-blue-400" />
-                          LENGTH MATRIX &amp; SHOT HEATMAP
-                        </span>
-                        <h2 className="text-base sm:text-lg font-black text-white mt-1.5 uppercase tracking-tight">
-                          Delivery Length to Shot Type Matrix
-                        </h2>
-                        <p className="text-xs text-white/50 font-mono mt-0.5">
-                          Interactive length distribution across all IPL seasons (2008 – 2026)
-                        </p>
-                      </div>
-                    </div>
-                    <div className="min-h-[400px] w-full overflow-hidden">
-                      <RunFlowSankey />
-                    </div>
-                  </div>
-
-                  {/* Shot Execution Flow */}
-                  <div className="p-6 rounded-[24px] bg-[#0B1020] border border-white/10 shadow-xl">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
-                      <div>
-                        <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
-                          <Zap className="w-3 h-3 text-purple-400" />
-                          BALL RELEASE TO OUTCOME FLOW
-                        </span>
-                        <h2 className="text-base sm:text-lg font-black text-white mt-1.5 uppercase tracking-tight">
-                          Shot Execution Flow
-                        </h2>
-                        <p className="text-xs text-white/50 font-mono mt-0.5">
-                          Delivery Seam / Spin Release to Shot Execution Outcome (2008 – 2026)
-                        </p>
-                      </div>
-                    </div>
-                    <div className="min-h-[400px] w-full overflow-hidden">
-                      <ShotFlowSankey />
-                    </div>
-                  </div>
-                </div>
-              )}
-              {activeTab === "batter-lens" && <BatterLensRankings />}
+              {activeTool}
               {activeTab === "ask" && (
                 <AskAIView />
               )}
@@ -2289,7 +2295,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     rows={activeTab === "bowlers" ? activeData.bowlers : activeData.batters}
     images={playerImages.data} getBio={getBioFor} getTeam={getPlayerTeam}
     displayName={name => displayPlayerName(name, displayNames)} filterControls={filterControls}
-    tools={desktopContent} trend={seasons.data ?? []}
+    tools={activeTool ?? desktopContent} trend={seasons.data ?? []}
     loading={isDefaultCareerView ? playerCareerStats.isLoading : dynamicStatsQuery.isLoading}
     slicedUnavailable={!isDefaultCareerView && !dynamicStatsQuery.isLoading && !dynamicStatsQuery.data?.batters?.length && !dynamicStatsQuery.data?.bowlers?.length}
     onSort={(field) => activeTab === "bowlers" ? handleBowlerSort(field as typeof bowlerSortField) : handleBatterSort(field as typeof batterSortField)}
@@ -3443,10 +3449,10 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
     <div className="flex flex-col gap-6">
 
 
-      <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-[#0B1020] rounded-[24px] border border-white/10 shadow-xl">
+      <div className="flex flex-wrap items-center justify-between gap-3 p-4 stats-tool-panel shadow-xl">
         <div className="flex items-center gap-2">
           <Crosshair className="w-5 h-5 text-primary" />
-          <span className="text-[14px] font-black uppercase tracking-widest text-white/80">Head-to-Head Comparison Engine</span>
+          <span className="text-[14px] font-black uppercase tracking-widest text-white/80">Compare</span>
         </div>
         <div className="flex p-1 bg-white/5 border border-white/10 rounded-xl">
           <button
@@ -3468,7 +3474,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
         <div className="flex flex-col gap-4">
 
           {/* Sub Filters Row */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-[24px]">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 stats-tool-panel">
             {/* Team A Filter */}
             <div className="space-y-1">
               <span className="text-[8px] font-black uppercase tracking-wider text-white/40">Team A Filter (Athlete 1)</span>
@@ -3538,7 +3544,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
             {/* Player 1 Card */}
-            <div className="bg-[#0B1020] rounded-[24px] border border-white/10 p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
+            <div className="stats-tool-panel p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none" />
               <div className="flex flex-col gap-1 z-10">
                 <span className="text-[9px] font-black uppercase tracking-widest text-primary">SELECT ATHLETE 1</span>
@@ -3568,7 +3574,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
             </div>
 
             {/* Comparison Metrics Panel */}
-            <div className="bg-[#0B1020] rounded-[24px] border border-white/10 p-6 flex flex-col justify-center shadow-xl relative overflow-hidden">
+            <div className="stats-tool-panel p-6 flex flex-col justify-center shadow-xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-b from-white/[0.01] to-transparent pointer-events-none" />
               {p1Data && p2Data ? (
                 <div className="flex flex-col gap-5 h-full justify-between">
@@ -3685,7 +3691,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
             </div>
 
             {/* Player 2 Card */}
-            <div className="bg-[#0B1020] rounded-[24px] border border-white/10 p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
+            <div className="stats-tool-panel p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
               <div className="absolute inset-0 bg-gradient-to-bl from-accent/10 to-transparent pointer-events-none" />
               <div className="flex flex-col gap-1 z-10">
                 <span className="text-[9px] font-black uppercase tracking-widest text-accent">SELECT ATHLETE 2</span>
@@ -3719,7 +3725,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
 
       {mode === "teams" && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-          <div className="bg-[#0B1020] rounded-[24px] border border-white/10 p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
+          <div className="stats-tool-panel p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
             <select value={team1} onChange={e => setTeam1(e.target.value)} className="w-full bg-[#080B16] border border-white/10 rounded-xl p-2.5 text-xs font-bold text-white outline-none cursor-pointer shadow-xl" title="Select First Team Franchise">
               {teams.map(t => <option key={t.team} value={t.team} className="bg-[#080B16] text-white py-1">{t.team}</option>)}
             </select>
@@ -3729,7 +3735,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
             </div>
           </div>
 
-          <div className="bg-[#0B1020] rounded-[24px] border border-white/10 p-6 flex flex-col justify-center shadow-xl">
+          <div className="stats-tool-panel p-6 flex flex-col justify-center shadow-xl">
             {t1Data && t2Data && (
               <div className="flex flex-col gap-4">
                 <ComparisonRow label="Matches" val1={t1Data.matches} val2={t2Data.matches} isHigherBetter={true} />
@@ -3740,7 +3746,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
             )}
           </div>
 
-          <div className="bg-[#0B1020] rounded-[24px] border border-white/10 p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
+          <div className="stats-tool-panel p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
             <select value={team2} onChange={e => setTeam2(e.target.value)} className="w-full bg-[#080B16] border border-white/10 rounded-xl p-2.5 text-xs font-bold text-white outline-none cursor-pointer shadow-xl" title="Select Second Team Franchise">
               {teams.map(t => <option key={t.team} value={t.team} className="bg-[#080B16] text-white py-1">{t.team}</option>)}
             </select>
@@ -3878,10 +3884,10 @@ function StatBuilderView({ batters, bowlers, playerImages }: { batters: any[], b
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="p-5 bg-[#0B1020] rounded-[24px] border border-white/10 flex flex-wrap items-center gap-4 shadow-xl">
+      <div className="p-5 stats-tool-panel flex flex-wrap items-center gap-4 shadow-xl">
         <div className="flex items-center gap-2 mr-4">
           <Filter className="w-5 h-5 text-primary" />
-          <span className="text-[14px] font-black uppercase tracking-widest text-white/80">Stat Builder</span>
+          <span className="text-[14px] font-black uppercase tracking-widest text-white/80">Leaderboard filters</span>
         </div>
 
         <select
@@ -3909,11 +3915,11 @@ function StatBuilderView({ batters, bowlers, playerImages }: { batters: any[], b
         <div className="ml-auto flex items-center gap-3">
           <span className="text-[10px] font-bold text-white/40 uppercase">Min Deliveries:</span>
           <input type="range" min="10" max="200" step="10" value={minBalls} onChange={e => setMinBalls(Number(e.target.value))} className="w-24 accent-primary" title="Minimum Deliveries Threshold" />
-          <span className="text-[12px] font-black text-white w-8">{minBalls}</span>
+          <span className="text-[12px] font-black w-8">{minBalls}</span>
         </div>
       </div>
 
-      <div className="bg-[#0B1020] rounded-[24px] border border-white/10 overflow-hidden shadow-2xl">
+      <div className="stats-tool-panel overflow-hidden shadow-2xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead className="bg-white/[0.03] border-b border-white/5">

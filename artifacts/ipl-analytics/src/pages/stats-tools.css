@@ -1,0 +1,63 @@
+.stats-tool {
+  --tool-ink: #0f172a;
+  --tool-muted: #475569;
+  --tool-surface: #fff;
+  --tool-subtle: #f8fafc;
+  --tool-border: #e2e8f0;
+  color: var(--tool-ink);
+}
+
+.dark .stats-tool {
+  --tool-ink: #f1f5f9;
+  --tool-muted: #a5b4c6;
+  --tool-surface: #0b1020;
+  --tool-subtle: #151d30;
+  --tool-border: rgb(255 255 255 / 0.12);
+}
+
+.stats-tool-panel {
+  min-width: 0;
+  border: 1px solid var(--tool-border);
+  border-radius: 24px;
+  background: var(--tool-surface);
+  color: var(--tool-ink);
+  box-shadow: 0 1px 3px rgb(15 23 42 / 0.08);
+}
+
+.stats-tool-panel :is([class*="text-white/"], .stats-tool-muted) {
+  color: var(--tool-muted);
+}
+
+.stats-tool-panel thead {
+  background: var(--tool-subtle);
+}
+
+.stats-tool :is(select, .stats-tool-chip) {
+  border-color: var(--tool-border);
+  background-color: var(--tool-subtle);
+  color: var(--tool-ink);
+}
+
+.stats-tool select option {
+  background: var(--tool-surface);
+  color: var(--tool-ink);
+}
+
+.stats-tool :is(button, select, a, input):focus-visible,
+.stats-mobile-tools button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.stats-mobile-tools button {
+  border: 1px solid currentColor;
+  border-radius: 10px;
+  padding: .45rem .65rem;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.stats-mobile-tools button[aria-pressed="true"] {
+  color: var(--color-primary);
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}

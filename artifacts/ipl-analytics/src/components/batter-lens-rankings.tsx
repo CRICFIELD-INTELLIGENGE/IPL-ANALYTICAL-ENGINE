@@ -29,18 +29,17 @@ export function BatterLensRankings() {
     return list.sort((x, y) => (sort === "balls" ? y.balls - x.balls : sort === "sr" ? y.runs / y.balls - x.runs / x.balls : y.raa - x.raa));
   }, [q.data, from, to, type, phase, minBalls, sort]);
 
-  const chip = (on: boolean) => `px-2.5 py-1 rounded-lg text-[10px] font-black border ${on ? "bg-emerald-500/20 text-emerald-200 border-emerald-400/50" : "bg-white/5 text-white/50 border-white/10 hover:text-white"}`;
+  const chip = (on: boolean) => `px-2.5 py-1 rounded-lg text-[10px] font-black border ${on ? "bg-emerald-500/20 text-emerald-800 dark:text-emerald-200 border-emerald-400/50" : "stats-tool-chip"}`;
   return (
     <div className="flex flex-col gap-4">
-      <div className="rounded-xl border border-white/10 bg-gradient-to-r from-white/[0.04] to-emerald-500/[0.05] p-4">
-        <div className="text-xs font-black uppercase text-white tracking-wider">Batter Lens rankings</div>
+      <div className="stats-tool-panel p-4">
         <p className="text-[11px] text-white/60 mt-1 max-w-3xl">
           Every IPL ball faced, scored against the average for that innings, over and wickets-down state (season-adjusted). A dismissal costs
           the runs it removes from the innings. RAA / 100 = runs above average per 100 balls. Open a player for the pitch grid, wagon wheel and
           impact trajectory.
         </p>
       </div>
-      <div className="flex flex-col gap-2 text-[11px] text-white/60">
+      <div className="stats-tool-panel grid gap-3 p-4 text-xs sm:grid-cols-2">
         <div className="flex flex-wrap items-center gap-2">
           <span className="w-20 text-[10px] font-black uppercase text-white/40">Seasons</span>
           <select aria-label="From season" className="rounded-lg border border-white/10 bg-slate-950 px-2 py-1 text-white" value={from} onChange={e => setFrom(Number(e.target.value))}>{seasons.filter(s => s <= to).map(s => <option key={s}>{s}</option>)}</select>
@@ -60,10 +59,10 @@ export function BatterLensRankings() {
           {([["raa", "RAA / 100"], ["sr", "Strike rate"], ["balls", "Balls faced"]] as const).map(([k, l]) => <button key={k} type="button" aria-pressed={sort === k} className={chip(sort === k)} onClick={() => setSort(k)}>{l}</button>)}
         </div>
       </div>
-      {q.isError ? <p role="alert" className="text-sm text-rose-300/80">Rankings could not be loaded.</p>
+      {q.isError ? <p role="alert" className="text-sm text-rose-300/80">Rankings could not be loaded. <button type="button" className="font-bold text-primary underline" onClick={() => void q.refetch()}>Retry</button></p>
         : !q.data ? <p className="text-sm text-white/40 font-mono">Crunching deliveries…</p>
         : !rows.length ? <p role="status" className="text-sm text-white/60">No batter meets these filters. Lower the minimum balls.</p> : (
-          <div className="rounded-xl border border-white/10 overflow-x-auto">
+          <div className="stats-tool-panel overflow-x-auto">
             <table className="w-full min-w-[640px] text-[12px]">
               <caption className="sr-only">Batters ranked on runs above average</caption>
               <thead className="bg-white/5 border-b border-white/10">
@@ -73,7 +72,7 @@ export function BatterLensRankings() {
                 {rows.slice(0, 50).map((r, i) => (
                   <tr key={r.name} className="hover:bg-white/5">
                     <td className="px-3 py-2 text-[10px] text-amber-400/60 font-black">{i + 1}</td>
-                    <td className="px-3 py-2"><Link href={`/players/${playerSlug(r.name)}`} className="font-bold text-white hover:underline">{displayPlayerName(r.name, displayNames)}</Link></td>
+                    <td className="px-3 py-2"><Link href={`/players/${playerSlug(r.name)}`} className="font-bold hover:underline">{displayPlayerName(r.name, displayNames)}</Link></td>
                     <td className="px-3 py-2 text-white/60">{r.balls}</td><td className="px-3 py-2 text-white/60">{r.runs}</td>
                     <td className="px-3 py-2 text-amber-300 font-bold">{((r.runs / r.balls) * 100).toFixed(1)}</td>
                     <td className="px-3 py-2 text-white/60">{r.outs}</td><td className="px-3 py-2 text-white/60">{r.outs ? (r.runs / r.outs).toFixed(1) : "—"}</td>
