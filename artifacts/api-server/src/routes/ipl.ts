@@ -9,6 +9,8 @@ import { pressureReliability, pressureModelInfo, pressureCompetitions, DEFINITIO
 import { getContentHub, getBusinessArticles, type BusinessTag } from "../services/content-hub.js";
 import {
   aggregateQueryStats,
+  matchStateLimits,
+  type MatchStateFilters,
   aggregateFieldStats,
   aggregateMatchupStats,
   aggregateScenarioStats,
@@ -461,8 +463,27 @@ router.get("/ipl/stats/drilldown", (req: Request, res: Response): void => {
 //  CONSOLIDATED ANALYTICS API ENDPOINTS
 // ─────────────────────────────────────────────────────────────────────────────
 
+function readMatchState(req: Request): MatchStateFilters | null {
+  const filters: MatchStateFilters = {};
+  for (const key of Object.keys(matchStateLimits) as (keyof MatchStateFilters)[]) {
+    const raw = req.query[key];
+    if (raw === undefined) continue;
+    const value = typeof raw === "string" && /^\d+(?:\.\d)?$/.test(raw) ? Number(raw) : NaN;
+    const isRate = key === "minRequiredRate" || key === "minCurrentRate";
+    if (!Number.isFinite(value) || value > matchStateLimits[key] || (!isRate && !Number.isInteger(value))) return null;
+    filters[key] = value;
+  }
+  return filters;
+}
+
 router.get("/stats/query", (req: Request, res: Response): void => {
   const q = getStatsQuery(req);
+  const matchState = readMatchState(req);
+  if (!matchState) {
+    res.status(400).json({ error: "Invalid match-state threshold" });
+    return;
+  }
+  const hasMatchState = Object.keys(matchState).length > 0;
 
   const isDefault =
     (!q.season || q.season === "All" || q.season === "All Seasons") &&
@@ -479,7 +500,7 @@ router.get("/stats/query", (req: Request, res: Response): void => {
     (!q.representation || q.representation === "overall") &&
     !q.batter && !q.bowler && !q.battingHand && !q.deliveryType && !q.overRange && !q.homeAway && !q.chasingDefending;
 
-  if (isDefault) {
+  if (isDefault && !hasMatchState) {
     getPlayerCareerStats()
       .then(stats => res.json(stats))
       .catch(err => internalError(res, err));
@@ -504,6 +525,7 @@ router.get("/stats/query", (req: Request, res: Response): void => {
     matchContext: q.matchContext, homeAway: q.homeAway || q.home_away,
     chasingDefending: q.chasingDefending, battingHand: q.battingHand,
     batter: q.batter, bowler: q.bowler,
+    matchState: hasMatchState ? matchState : undefined,
   })
     .then(stats => {
       const battersCount = Array.isArray((stats as any)?.batters) ? (stats as any).batters.length : 0;
@@ -563,6 +585,11 @@ router.get("/stats/matchup", (req: Request, res: Response): void => {
 
 router.get("/stats/scenario", (req: Request, res: Response): void => {
   const q = getStatsQuery(req);
+  const matchState = readMatchState(req);
+  if (!matchState) {
+    res.status(400).json({ error: "Invalid match-state threshold" });
+    return;
+  }
   const { seasonFrom, seasonTo } = req.query;
   if ([seasonFrom, seasonTo].some(year => year !== undefined && (typeof year !== "string" || !/^\d{4}$/.test(year))) ||
       (typeof seasonFrom === "string" && typeof seasonTo === "string" && seasonFrom > seasonTo)) {
@@ -578,6 +605,8 @@ router.get("/stats/scenario", (req: Request, res: Response): void => {
     representation: q.representation, fieldingPosition: q.fieldingPosition,
     minBalls: q.minBalls ? parseInt(q.minBalls) : 10,
     minRuns:  q.minRuns  ? parseInt(q.minRuns)  : 0,
+    matchState: Object.keys(matchState).length ? matchState : undefined,
+    batter: q.batter, bowler: q.bowler, battingHand: q.battingHand,
   })
     .then(data => res.json(data))
     .catch(err  => internalError(res, err));

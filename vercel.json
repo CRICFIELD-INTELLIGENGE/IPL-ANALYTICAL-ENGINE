@@ -30,5 +30,10 @@
         }
       ]
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "codex/unified-desktop-stats-slicing": false
+    }
+  }
 }

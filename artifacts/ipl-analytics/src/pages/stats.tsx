@@ -12,7 +12,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "re
 import { Layout } from "@/components/layout";
 import { TeamLogo } from "@/components/team-logo";
 import { PlayerAvatar } from "@/components/player-avatar";
-import { useAnalyticsFilterStore, buildDimensionalPayload } from "@/lib/store";
+import { useAnalyticsFilterStore, buildDimensionalPayload, defaultAnalyticsFilters, type AnalyticsFilters } from "@/lib/store";
 import { GlassCard } from "@/components/glass-card";
 import { AdVessel } from "@/components/ad-vessel";
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from "framer-motion";
@@ -241,11 +241,27 @@ function TablePaginationBar({
   );
 }
 
+const matchStateControls = {
+  minRequiredRate: { label: "Required rate ≥", max: 100, step: 0.1 },
+  minCurrentRate: { label: "Current rate ≥", max: 100, step: 0.1 },
+  minRunsNeeded: { label: "Runs needed ≥", max: 400, step: 1 },
+  minBallsLeft: { label: "Balls left ≥", max: 120, step: 1 },
+  minWicketsLeft: { label: "Wickets left ≥", max: 10, step: 1 },
+} as const;
+
 export default function StatsPage({ mobilePresentation = false }: { mobilePresentation?: boolean } = {}) {
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState<Tab>("batters");
   const [dimSlicingView, setDimSlicingView] = useState<"stat-builder" | "scenario-intelligence" | "batter-lens">("stat-builder");
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [minSliceBalls, setMinSliceBalls] = useState(0);
+  const [matchState, setMatchState] = useState<Partial<Record<keyof typeof matchStateControls, number>>>({});
+  useEffect(() => {
+    if (mobilePresentation) return;
+    const timer = window.setTimeout(() => setDebouncedSearch(searchQuery), 220);
+    return () => window.clearTimeout(timer);
+  }, [mobilePresentation, searchQuery]);
   const [selectedVenue, setSelectedVenue] = useState<string | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
   const [pageSize, setPageSize] = useState<number>(20);
@@ -361,7 +377,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   const [matchupSearchBowler, setMatchupSearchBowler] = useState("");
   const [matchupDrillTab, setMatchupDrillTab] = useState<"phase" | "delivery" | "zone" | "history">("phase");
   // Scenario Intelligence state
-  const [selectedScenario, setSelectedScenario] = useState("pressure-reliability");
+  const [selectedScenario, setSelectedScenario] = useState(mobilePresentation ? "pressure-reliability" : "all");
   const [scenarioMinBalls, setScenarioMinBalls] = useState(10);
   const [scenarioRange, setScenarioRange] = useState({ from: "", to: "" });
   // Player drilldown state
@@ -461,16 +477,29 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     });
   }, [slicedTeams, teams.data]);
   const slicedVenues = useMemo(() => {
-    const records = new Map<string, { venue: string; matches: number; avgRunRate: number }>();
-    activeMatches.forEach(m => {
-      const venue = normalizeVenueName(m.venue || "All Venues");
-      const rec = records.get(venue) || { venue, matches: 0, avgRunRate: 0 };
-      rec.matches += 1;
-      rec.avgRunRate = rec.matches ? Math.round(((parseInt(m.team1Score?.split("/")[0] || "0") + parseInt(m.team2Score?.split("/")[0] || "0")) / 20) * 100) / 100 : 0;
-      records.set(venue, rec);
+    const records = new Map<string, { venue: string; matches: number; runs: number; balls: number; avgRunRate: number }>();
+    activeMatches.forEach(match => {
+      if (!match.venue) return;
+      const venue = normalizeVenueName(match.venue);
+      const record = records.get(venue) ?? { venue, matches: 0, runs: 0, balls: 0, avgRunRate: 0 };
+      record.matches += 1;
+      if (mobilePresentation) {
+        record.avgRunRate = (Number.parseInt(match.team1Score ?? "0", 10) + Number.parseInt(match.team2Score ?? "0", 10)) / 20;
+      } else {
+        for (const score of [match.team1Score, match.team2Score]) {
+          const innings = /^(\d+)(?:\/\d+)?\s+\((\d+)(?:\.([0-5]))?\)$/.exec(score ?? "");
+          if (!innings) continue;
+          const balls = Number(innings[2]) * 6 + Number(innings[3] ?? 0);
+          if (!balls) continue;
+          record.runs += Number(innings[1]);
+          record.balls += balls;
+        }
+        record.avgRunRate = record.balls ? record.runs * 6 / record.balls : 0;
+      }
+      records.set(venue, record);
     });
     return Array.from(records.values()).sort((a, b) => b.matches - a.matches || a.venue.localeCompare(b.venue));
-  }, [activeMatches]);
+  }, [activeMatches, mobilePresentation]);
 
   const isVenueFiltered = useMemo(() => {
     return filters.season !== "All Seasons" || filters.team !== "All Teams" || filters.opposition !== "All Opponents" || filters.venue !== "All Venues" || filters.match_context !== "All Matches";
@@ -483,7 +512,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       byVenueName.set(vName.toLowerCase(), v);
     }
 
-    if (!isVenueFiltered) {
+    if (!isVenueFiltered && mobilePresentation) {
       return (venues.data ?? []).map((v: any) => {
         const venueName = getVenueName(v);
         const cityName = getVenueCity(v);
@@ -513,12 +542,26 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         venueName: sv.venue,
         cityName,
         matches: sv.matches,
-        avgRunRate: sv.avgRunRate || 8.24,
-        isSliced: true,
+        avgRunRate: mobilePresentation ? sv.avgRunRate || 8.24 : sv.balls ? sv.avgRunRate : null,
+        isSliced: isVenueFiltered,
       };
     });
-  }, [venues.data, slicedVenues, isVenueFiltered, filters.venue]);
+  }, [venues.data, slicedVenues, isVenueFiltered, filters.venue, mobilePresentation]);
+  const sliceKeys = (Object.keys(defaultAnalyticsFilters) as (keyof AnalyticsFilters)[])
+    .filter(key => filters[key] !== defaultAnalyticsFilters[key]);
+  const chasePreset = !mobilePresentation && selectedScenario === "chasing200plus";
+  const fixtureViews = activeTab === "venues" || activeTab === "teams";
+  const fixtureSearch = !mobilePresentation && fixtureViews ? debouncedSearch.trim().toLowerCase() : "";
+  const visibleVenueCards = fixtureSearch ? venueCards.filter(venue => venue.venueName.toLowerCase().includes(fixtureSearch)) : venueCards;
+  const visibleTeamCards = fixtureSearch ? teamCards.filter(team => team.name.toLowerCase().includes(fixtureSearch) || team.short.toLowerCase() === fixtureSearch) : teamCards;
+  const fixtureKeys = new Set(["season", "team", "opposition", "venue", "match_context"]);
+  const hasMatchState = !mobilePresentation && Object.keys(matchState).length > 0;
+  const deliveryScopeActive = hasMatchState || chasePreset || sliceKeys.some(key => !fixtureKeys.has(key));
+  const cachedSeasonSlice = !hasMatchState && !chasePreset && filters.season !== "All Seasons" &&
+    sliceKeys.every(key => key === "season" || key === "team" || (key === "representation" && filters.representation === "franchise-legacy"));
+
   const isDefaultCareerView = useMemo(() => {
+    if (!mobilePresentation) return sliceKeys.length === 0 && !chasePreset && !hasMatchState;
     const dim = buildDimensionalPayload(filters);
     return (
       (dim.season === "All Seasons" || dim.season === "All" || !dim.season) &&
@@ -533,7 +576,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       (!filters.match_context || filters.match_context === "All Matches" || filters.match_context === "All") &&
       (!filters.representation || filters.representation === "overall")
     );
-  }, [filters]);
+  }, [filters, mobilePresentation, chasePreset, hasMatchState]);
 
   const dynamicStatsQuery = useQuery({
     queryKey: [
@@ -543,9 +586,9 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       filters.pressure_state, filters.nationality, filters.representation,
       filters.fieldingPosition || "Scoring Area", filters.innings, filters.match_context,
       filters.required_rr, filters.current_rr, filters.home_away, filters.playoff,
-      filters.batterHandedness,
+      filters.batterHandedness, filters.batter, filters.bowler, chasePreset, mobilePresentation, matchState,
     ],
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       const params = new URLSearchParams();
       if (filters.season) params.append("season", filters.season);
       if (filters.team) params.append("team", filters.team);
@@ -565,22 +608,33 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       if (filters.home_away && filters.home_away !== "All") params.append("homeAway", filters.home_away);
       if (filters.playoff && filters.playoff !== "All") params.append("playoff", filters.playoff);
 
-      const url = `/api/stats/query?${params.toString()}`;
+      if (!mobilePresentation && filters.batter !== "All Batters") params.set("batter", filters.batter);
+      if (!mobilePresentation && filters.bowler !== "All Bowlers") params.set("bowler", filters.bowler);
+      for (const [key, value] of Object.entries(matchState)) params.set(key, String(value));
+      if (chasePreset) {
+        params.set("scenario", "chasing200plus");
+        params.set("minBalls", "0");
+      }
+      const route = chasePreset ? "scenario" : "query";
+      const url = `/api/stats/${route}?${params.toString()}`;
       try {
-        const res = await fetch(url);
+        const res = await fetch(url, { signal });
         if (!res.ok) {
           const text = await res.text().catch(() => "");
           throw new Error(`Failed to query stats (${res.status}): ${text}`);
         }
-        return (await res.json()) as { batters: any[]; bowlers: any[] };
+        const result = await res.json();
+        if (!Array.isArray(result?.batters) || !Array.isArray(result?.bowlers)) throw new Error("Invalid statistics response");
+        return result as { batters: any[]; bowlers: any[] };
       } catch (err) {
+        if (!mobilePresentation || signal.aborted) throw err;
         console.warn("/api/stats/query fallback to cached stats:", err);
         return { batters: [], bowlers: [] };
       }
     },
-    enabled: !isDefaultCareerView,
+    enabled: !isDefaultCareerView && (mobilePresentation || !fixtureViews),
     staleTime: 1000 * 60 * 5,
-    placeholderData: (prev: any) => prev,
+    placeholderData: mobilePresentation ? (prev: any) => prev : undefined,
   });
 
   // ── Field Positions Query ──────────────────────────────────────────────────
@@ -711,7 +765,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     const dimTeam = dim.team;
     const cleanS = String(dim.season).replace(/[^0-9]/g, "");
 
-    const isDefaultCareerView =
+    const useCareerTotals = mobilePresentation ?
       (dim.season === "All Seasons" || dim.season === "All" || !dim.season) &&
       (dim.team === "All Teams" || dim.team === "All" || !dim.team) &&
       (!dim.opponent || dim.opponent === "All Opponents" || dim.opponent === "All") &&
@@ -727,15 +781,15 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       (!filters.fieldingPosition || filters.fieldingPosition === "Scoring Area" || filters.fieldingPosition === "All Areas" || filters.fieldingPosition === "All Positions") &&
       (!filters.innings || filters.innings === "All Innings" || filters.innings === "Innings") &&
       (!filters.match_context || filters.match_context === "All Matches" || filters.match_context === "All") &&
-      (!filters.representation || filters.representation === "overall");
+      (!filters.representation || filters.representation === "overall") : isDefaultCareerView;
 
-    if (isDefaultCareerView && playerCareerStats.data?.batters?.length) {
+    if (useCareerTotals && playerCareerStats.data?.batters?.length) {
       batters = playerCareerStats.data.batters;
       bowlers = playerCareerStats.data.bowlers;
     } else if (Array.isArray(data?.batters) && (data.batters.length > 0 || Array.isArray(data?.bowlers))) {
       batters = data.batters || [];
       bowlers = data.bowlers || [];
-    } else {
+    } else if (mobilePresentation || cachedSeasonSlice) {
       if (dim.season !== "All") {
         const sBatters = playerSeasonStats.data?.batters ?? [];
         const sBowlers = playerSeasonStats.data?.bowlers ?? [];
@@ -761,7 +815,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     batters = normalizeName(batters);
     bowlers = normalizeName(bowlers);
 
-    const q = searchQuery.trim().toLowerCase();
+    const q = (mobilePresentation ? searchQuery : debouncedSearch).trim().toLowerCase();
     const playerMatch = (name: string, query: string) => {
       if (!query) return true;
       const n = (name || "").toLowerCase().trim();
@@ -774,8 +828,9 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       }
       return false;
     };
-    const filteredBatters = q ? batters.filter((b: any) => playerMatch(b.player, q)) : batters;
-    const filteredBowlers = q ? bowlers.filter((b: any) => playerMatch(b.player, q)) : bowlers;
+    const passesSample = (row: { balls?: number }) => mobilePresentation || minSliceBalls === 0 || (row.balls ?? 0) >= minSliceBalls;
+    const filteredBatters = batters.filter(row => passesSample(row) && playerMatch(row.player, q));
+    const filteredBowlers = bowlers.filter(row => passesSample(row) && playerMatch(row.player, q));
 
     const sortBatters = [...filteredBatters].sort((a: any, b: any) => {
       let comparison = 0;
@@ -814,8 +869,8 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     return { batters: sortBatters, bowlers: sortBowlers };
   }, [
     dynamicStatsQuery.data, playerSeasonStats.data, playerCareerStats.data,
-    filters.season, filters.team, filters.opposition, filters.venue,
-    searchQuery, batterSortField, batterSortOrder, bowlerSortField, bowlerSortOrder
+    filters, mobilePresentation, isDefaultCareerView, cachedSeasonSlice, minSliceBalls,
+    searchQuery, debouncedSearch, batterSortField, batterSortOrder, bowlerSortField, bowlerSortOrder
   ]);
 
   const totalBatterCount = activeData.batters.length;
@@ -853,7 +908,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     if (statsScrollPosition.current === null) return;
     window.scrollTo({ top: statsScrollPosition.current, behavior: "instant" });
     statsScrollPosition.current = null;
-  }, [activeTab, filters, dimSlicingView]);
+  }, [activeTab, filters, dimSlicingView, selectedScenario, minSliceBalls, debouncedSearch, matchState]);
 
   const handleFilterChange = <K extends keyof typeof filters>(key: K, value: typeof filters[K]) => {
     if (filters[key] !== value) rememberStatsScroll();
@@ -873,24 +928,34 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       const queryTab = params.get("tab");
       if (queryTab) {
         if (queryTab === "scenario" || queryTab === "scenario-intelligence") {
-          setActiveTab("dimensional");
+          setActiveTab(mobilePresentation ? "dimensional" : "batters");
           setDimSlicingView("scenario-intelligence");
         } else if (queryTab === "stat-builder") {
-          setActiveTab("dimensional");
+          setActiveTab(mobilePresentation ? "dimensional" : "batters");
           setDimSlicingView("stat-builder");
         } else if (queryTab === "batter-lens") {
-          setActiveTab("dimensional");
+          setActiveTab(mobilePresentation ? "dimensional" : "batters");
           setDimSlicingView("batter-lens");
         } else if (queryTab === "tactics") {
           setActiveTab("head2head");
-        } else if (TABS.some(t => t.id === queryTab)) {
+        } else if ((mobilePresentation || queryTab !== "dimensional") && TABS.some(t => t.id === queryTab)) {
           setActiveTab(queryTab as any);
         }
       }
     }
   }, []);
 
-  const clearFilterChain = () => resetFilters();
+  const clearFilterChain = () => {
+    if (!mobilePresentation) {
+      rememberStatsScroll();
+      setSelectedScenario("all");
+      setSearchQuery("");
+      setDebouncedSearch("");
+      setMinSliceBalls(0);
+      setMatchState({});
+    }
+    resetFilters();
+  };
 
   const removeChainFilter = (key: string) => clearFilter(key as keyof typeof filters);
 
@@ -994,9 +1059,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   const isDimensionalTab = activeTab === "dimensional" || activeTab === "stat-builder" || activeTab === "scenario-intelligence" || activeTab === "batter-lens";
   const isHead2HeadTab = activeTab === "head2head" || activeTab === "tactics";
 
+  const filterPanelRef = useRef<HTMLDivElement>(null);
   const filterControls = (<>
         {/* SMART FILTER BAR */}
-        <div className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-2 flex flex-wrap items-center gap-2 relative z-20 shadow-sm dark:shadow-xl">
+        <div ref={filterPanelRef} tabIndex={mobilePresentation ? undefined : -1} className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-2 flex flex-wrap items-center gap-2 relative z-20 shadow-sm dark:shadow-xl">
 
           <div className="flex items-center gap-2 px-3 py-2 bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/5 mr-2">
             <Filter className="w-3.5 h-3.5 text-primary" />
@@ -1121,7 +1187,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
             }
             options={[
               "All Situations",
-              "Pressure Reliability",
+              ...(mobilePresentation ? ["Pressure Reliability"] : []),
               "Death Overs",
               "Powerplay Fire",
               "Clutch Moments",
@@ -1131,8 +1197,37 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               "Death vs Spin",
             ]}
             onChange={(v) => {
+              if (!mobilePresentation) {
+                rememberStatsScroll();
+                const presets: Record<string, Partial<Pick<AnalyticsFilters, "phase" | "pressure_state" | "innings" | "match_context" | "bowler_type">>> = {
+                  death: { phase: "Death" },
+                  powerplay: { phase: "Powerplay" },
+                  clutch: { pressure_state: "Clutch Moment" },
+                  "high-pressure": { pressure_state: "High Pressure" },
+                  chasing200plus: { innings: "2nd Innings (Chasing)" },
+                  playoff: { match_context: "Playoffs" },
+                  "death-spin": { phase: "Death", bowler_type: "Spinner" },
+                };
+                const scenarios: Record<string, string> = {
+                  "Death Overs": "death", "Powerplay Fire": "powerplay", "Clutch Moments": "clutch",
+                  "High Pressure": "high-pressure", "Chasing 200+": "chasing200plus",
+                  "Playoff Matches": "playoff", "Death vs Spin": "death-spin",
+                };
+                const next = scenarios[v] ?? "all";
+                const previousScope = presets[selectedScenario] ?? {};
+                const nextScope = presets[next] ?? {};
+                for (const key of Object.keys(previousScope) as (keyof typeof previousScope)[]) {
+                  if (nextScope[key] === undefined && filters[key] === previousScope[key]) clearFilter(key);
+                }
+                for (const key of Object.keys(nextScope) as (keyof typeof nextScope)[]) {
+                  const value = nextScope[key];
+                  if (value !== undefined) setFilter(key, value);
+                }
+                setSelectedScenario(next);
+                return;
+              }
               if (v === "All Situations") {
-                setSelectedScenario("pressure-reliability");
+                setSelectedScenario(mobilePresentation ? "pressure-reliability" : "all");
                 handleFilterChange("pressure_state", "Standard");
                 handleFilterChange("phase", "All Phases");
                 handleFilterChange("match_context", "All Matches");
@@ -1163,7 +1258,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               }
             }}
           />
-          {(activeTab === "batters" || isDimensionalTab) && (
+          {(!mobilePresentation || activeTab === "batters" || isDimensionalTab) && (
             <FilterDropdown
               label="Bowler Type"
               icon={Target}
@@ -1205,29 +1300,53 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               className="w-full bg-white/5 border border-white/5 rounded-xl py-2 pl-9 pr-4 text-[10px] font-bold focus:outline-none focus:border-primary/40 focus:bg-white/10 transition-all text-white"
             />
           </div>
-          {!mobilePresentation && (
-            <div role="group" aria-label="Multidimensional Slicing Engines" className="mt-1 flex w-full flex-wrap gap-2 border-t border-slate-200 px-1 pt-2 dark:border-white/10">
-              {([
-                { id: "stat-builder", label: "Stat Builder (Situation SR)", Icon: Filter },
-                { id: "scenario-intelligence", label: "Scenario Intelligence", Icon: Cpu },
-                { id: "batter-lens", label: "Batter Lens", Icon: Crosshair },
-              ] as const).map(({ id, label, Icon }) => (
-                <button
-                  key={id}
-                  type="button"
-                  aria-pressed={isDimensionalTab && dimSlicingView === id}
-                  onClick={() => { if (!isDimensionalTab || dimSlicingView !== id) rememberStatsScroll(); setDimSlicingView(id); setActiveTab("dimensional"); }}
-                  className={`flex min-h-9 items-center gap-1.5 rounded-lg px-3 py-1.5 text-[10px] font-black uppercase tracking-wider transition-colors ${
-                    isDimensionalTab && dimSlicingView === id
-                      ? "bg-primary text-white shadow-sm"
-                      : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-white/5 dark:text-white/70 dark:hover:bg-white/10"
-                  }`}
-                >
-                  <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                  {label}
-                </button>
-              ))}
-            </div>
+          {!mobilePresentation && !fixtureViews && (
+            <label className="flex items-center gap-2 px-3 text-[10px] font-bold text-slate-600 dark:text-white/70">
+              Minimum balls
+              <input type="number" min={0} max={10000} step={1} value={minSliceBalls}
+                onChange={event => {
+                  rememberStatsScroll();
+                  setMinSliceBalls(Math.min(10000, Math.max(0, Math.trunc(Number(event.target.value)))));
+                }}
+                className="w-20 rounded-lg border border-slate-200 bg-transparent p-1 dark:border-white/10" />
+            </label>
+          )}
+          {!mobilePresentation && !fixtureViews && (
+            <details className="relative rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[10px] font-bold dark:border-white/10 dark:bg-white/5">
+              <summary className="cursor-pointer">Match state{hasMatchState ? " · Filtered" : ""}</summary>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {(Object.keys(matchStateControls) as (keyof typeof matchStateControls)[]).map(key => {
+                  const control = matchStateControls[key];
+                  return (
+                    <label key={key} className="flex items-center gap-1.5">
+                      {control.label}
+                      <input type="number" min={0} max={control.max} step={control.step} value={matchState[key] ?? ""}
+                        onChange={event => {
+                          const { value, valueAsNumber } = event.currentTarget;
+                          if (value !== "" && (!Number.isFinite(valueAsNumber) || !event.currentTarget.validity.valid)) return;
+                          rememberStatsScroll();
+                          setMatchState(previous => {
+                            const next = { ...previous };
+                            if (value === "") delete next[key];
+                            else next[key] = valueAsNumber;
+                            return next;
+                          });
+                        }}
+                        className="w-20 rounded border border-slate-200 bg-transparent px-1 dark:border-white/10" />
+                    </label>
+                  );
+                })}
+              </div>
+            </details>
+          )}
+          {!mobilePresentation && activeTab === "batters" && (
+            <FilterDropdown
+              label="Bowler faced"
+              icon={Crosshair}
+              value={filters.bowler}
+              options={["All Bowlers", ...new Set((playerCareerStats.data?.bowlers ?? []).map(row => row.player).filter(Boolean))]}
+              onChange={value => handleFilterChange("bowler", value)}
+            />
           )}
         </div>
 
@@ -1524,7 +1643,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       )}
 
       {isHead2HeadTab && (
-        <HeadToHeadView batters={activeData.batters} bowlers={activeData.bowlers} teams={mobilePresentation || !isVenueFiltered ? teams.data ?? [] : teamCards.map(team => ({ ...team, team: team.name }))} isSliced={!mobilePresentation && !isDefaultCareerView} matchIds={!mobilePresentation && isVenueFiltered ? slicedMatchIds : undefined} playerImages={playerImages.data ?? {}} />
+        <HeadToHeadView batters={activeData.batters} bowlers={activeData.bowlers} teams={mobilePresentation || !isVenueFiltered ? teams.data ?? [] : teamCards.map(team => ({ ...team, team: team.name }))} isSliced={!mobilePresentation && !isDefaultCareerView} matchIds={!mobilePresentation && isVenueFiltered ? slicedMatchIds : undefined} showTacticalLab={mobilePresentation || !deliveryScopeActive} playerImages={playerImages.data ?? {}} />
       )}
     </section>
   ) : null;
@@ -1708,7 +1827,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         </div>
 
         {/* Shared slicing filters and telemetry sit above the tab bar. */}
-        {activeTab !== "ask" && (
+        {(!mobilePresentation || activeTab !== "ask") && (
           <div className="space-y-4">
             {filterControls}
             {mobilePresentation && telemetryBanner}
@@ -1722,7 +1841,14 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               <button
                 key={t.id}
                 type="button"
-                onClick={() => { if (activeTab !== t.id) rememberStatsScroll(); setActiveTab(t.id); }}
+                onClick={() => {
+                  if (!mobilePresentation && t.id === "dimensional") {
+                    filterPanelRef.current?.focus({ preventScroll: true });
+                    return;
+                  }
+                  if (activeTab !== t.id) rememberStatsScroll();
+                  setActiveTab(t.id);
+                }}
                 className={`px-4 py-2 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-all shrink-0 cursor-pointer ${activeTab === t.id
                   ? "bg-gradient-to-r from-primary/80 to-blue-600/80 text-white shadow-md"
                   : "text-slate-600 hover:text-slate-900 hover:bg-white dark:text-white/40 dark:hover:text-white dark:hover:bg-white/5"
@@ -1756,6 +1882,12 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         {/* TAB CONTENT */}
             <div id="stats-table-anchor" className="scroll-mt-28" />
             <div className="min-h-[600px]">
+          {!mobilePresentation && fixtureViews && (deliveryScopeActive || minSliceBalls > 0) && (
+            <p role="status" className="stats-tool-panel p-3 text-sm">Team and venue summaries use season, team, opponent, venue and match type. Delivery filters and sample thresholds are retained for player analysis.</p>
+          )}
+          {!mobilePresentation && activeTab === "head2head" && deliveryScopeActive && (
+            <p role="status" className="stats-tool-panel p-3 text-sm">Player comparisons use delivery filters. Team summaries use fixtures. The tactical charts are unavailable for delivery-level slices.</p>
+          )}
           {!dynamicStatsQuery.isLoading && !isDefaultCareerView && dynamicStatsQuery.isError && activeData.batters.length === 0 && activeData.bowlers.length === 0 && (
             <div className="mb-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 mx-2">
               <div className="text-[11px] font-black text-amber-300 uppercase tracking-widest">No Sliced Telemetry Found</div>
@@ -1943,7 +2075,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                     </div>
                   )}
 
-                  {venueCards.length === 0 ? (
+                  {visibleVenueCards.length === 0 ? (
                     <div className="col-span-full text-center py-16 bg-white/[0.02] border border-white/5 rounded-3xl p-6">
                       <MapPin className="w-8 h-8 text-white/20 mx-auto mb-2" />
                       <div className="text-sm font-bold text-white">No venue fixtures match this dimensional slice</div>
@@ -1957,7 +2089,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                       </button>
                     </div>
                   ) : (
-                    venueCards.map((v: any) => {
+                    visibleVenueCards.map((v) => {
                       const venueName = v.venueName;
                       const cityName = v.cityName;
                       const avgRunRate = v.avgRunRate;
@@ -2008,7 +2140,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                             </div>
                             <div>
                               <div className="text-[8px] font-bold text-white/30 uppercase">Avg Run Rate</div>
-                              <div className="text-xl font-black text-primary mt-0.5">{Number(avgRunRate).toFixed(2)}</div>
+                              <div className="text-xl font-black text-primary mt-0.5">{avgRunRate == null ? "—" : avgRunRate.toFixed(2)}</div>
                             </div>
                           </div>
                           <div className="mt-4 pt-2 flex items-center justify-between text-[10px] font-black text-primary uppercase tracking-wider relative z-10 group-hover:translate-x-1 transition-transform">
@@ -2044,7 +2176,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                     </div>
                   )}
 
-                  {teamCards.length === 0 ? (
+                  {visibleTeamCards.length === 0 ? (
                     <div className="col-span-full text-center py-16 bg-white/[0.02] border border-white/5 rounded-3xl p-6">
                       <Users className="w-8 h-8 text-white/20 mx-auto mb-2" />
                       <div className="text-sm font-bold text-white">No team fixtures match this dimensional slice</div>
@@ -2058,7 +2190,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                       </button>
                     </div>
                   ) : (
-                    teamCards.map((t) => {
+                    visibleTeamCards.map((t) => {
                       const accent = teamColor(t.name);
                       const isSelected = filters.team !== "All Teams" && (isMatchingTeam(t.name, filters.team) || t.short === filters.team);
                       return (
@@ -2133,11 +2265,13 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
               {/* Scenario Intelligence */}
               {activeTab === "records" && (
-                <RecordBookView activeData={activeData} playerImages={playerImages.data ?? {}} matches={mobilePresentation ? matches : activeMatches} isSliced={!mobilePresentation && !isDefaultCareerView} fixtureRecordsAvailable={!mobilePresentation && isVenueFiltered} />
+                <RecordBookView activeData={activeData} playerImages={playerImages.data ?? {}} matches={mobilePresentation ? matches : activeMatches} isSliced={!mobilePresentation && (!isDefaultCareerView || minSliceBalls > 0 || !!debouncedSearch.trim())} fixtureRecordsAvailable={!mobilePresentation && isVenueFiltered && !deliveryScopeActive} />
               )}
               {activeTool}
               {activeTab === "ask" && (
-                <AskAIView />
+                <AskAIView data={activeData} filters={[...filterChain.map(item => item.label), ...Object.entries(matchState).map(([key, value]) => matchStateControls[key as keyof typeof matchStateControls].label + " " + value), ...(chasePreset ? ["Chasing 200+"] : [])]}
+                  loading={dynamicStatsQuery.isFetching || (isDefaultCareerView && playerCareerStats.isLoading)}
+                  unavailable={dynamicStatsQuery.isError && !cachedSeasonSlice} minBalls={minSliceBalls} />
               )}
             </motion.div>
         </div>
@@ -3602,7 +3736,7 @@ function MiniStat({ label, value }: { label: string; value: string }) {
   );
 }
 
-function HeadToHeadView({ batters, bowlers, teams, playerImages, isSliced, matchIds }: { batters: any[], bowlers: any[], teams: any[], playerImages: Record<string, string>, isSliced: boolean, matchIds?: ReadonlySet<string> }) {
+function HeadToHeadView({ batters, bowlers, teams, playerImages, isSliced, matchIds, showTacticalLab }: { batters: any[], bowlers: any[], teams: any[], playerImages: Record<string, string>, isSliced: boolean, matchIds?: ReadonlySet<string>, showTacticalLab: boolean }) {
   const displayNames = usePlayerDisplayNames();
   const [mode, setMode] = useState<"players" | "teams">("players");
   const latestTeamResolver = usePlayerLatestTeamResolver();
@@ -4238,7 +4372,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages, isSliced, match
           </div>
         </div>
       )}
-      {mode === 'players' && p1Data && p2Data && (
+      {showTacticalLab && mode === 'players' && p1Data && p2Data && (
         <HeadToHeadTacticalLab
           player1={player1}
           player2={player2}
@@ -4532,73 +4666,68 @@ function StatBuilderView({ batters, bowlers, playerImages }: { batters: any[], b
   );
 }
 
-function AskAIView() {
-  const [query, setQuery] = useState("");
-  const [isAsking, setIsAsking] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+type EvidenceRow = { player: string; balls?: number; runs?: number; sr?: number; wickets?: number; econ?: number; sixes?: number };
 
-  const handleAsk = () => {
-    if (!query) return;
-    setIsAsking(true);
-    setResult(null);
-    // Simulate AI parsing delay
-    setTimeout(() => {
-      setIsAsking(false);
-      setResult("Based on the database, Jasprit Bumrah has the best death over economy in the IPL since 2020 at 7.34 runs per over, closely followed by Sunil Narine (7.88) and Rashid Khan (7.91).");
-    }, 1500);
-  };
+function AskAIView({ data, filters, loading, unavailable, minBalls }: {
+  data: { batters: EvidenceRow[]; bowlers: EvidenceRow[] };
+  filters: string[];
+  loading: boolean;
+  unavailable: boolean;
+  minBalls: number;
+}) {
+  const [question, setQuestion] = useState("");
+  const [submitted, setSubmitted] = useState("");
+  const rankedByRuns = /^who performed best(?: in this situation)?\??$/i.test(submitted);
+  const metric = rankedByRuns ? "most runs" : /^(?:who has (?:the )?)?(most runs|most wickets|best strike rate|best economy|most sixes)\??$/i
+    .exec(submitted)?.[1].toLowerCase();
+  const choices = {
+    "most runs": { key: "runs", bowling: false, lower: false },
+    "most wickets": { key: "wickets", bowling: true, lower: false },
+    "best strike rate": { key: "sr", bowling: false, lower: false },
+    "best economy": { key: "econ", bowling: true, lower: true },
+    "most sixes": { key: "sixes", bowling: false, lower: false },
+  } as const;
+  const selection = metric ? choices[metric as keyof typeof choices] : undefined;
+  const rows = selection
+    ? (selection.bowling ? data.bowlers : data.batters)
+        .flatMap(row => {
+          const value = row[selection.key];
+          return typeof value === "number" && Number.isFinite(value) && (row.balls ?? 0) >= Math.max(1, minBalls)
+            ? [{ player: row.player, balls: row.balls, value }]
+            : [];
+        })
+        .sort((a, b) => (selection.lower ? a.value - b.value : b.value - a.value) || a.player.localeCompare(b.player))
+        .slice(0, 3)
+    : [];
 
   return (
-    <div className="flex flex-col gap-6 items-center pt-8">
-      <div className="text-center mb-4">
-        <Cpu className="w-12 h-12 text-primary mx-auto mb-4 drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]" />
-        <h2 className="text-[24px] font-black uppercase tracking-tight text-white mb-2">Ask the Database</h2>
-        <p className="text-[13px] text-white/50 max-w-md mx-auto">Type a question in plain English and get an answer pulled directly from the ball-by-ball telemetry database. No menus, no filters.</p>
-      </div>
-
-      <div className="w-full max-w-2xl relative">
-        <input
-          type="text"
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && handleAsk()}
-          placeholder="e.g. 'Who has the best death over economy in the IPL since 2020?'"
-          className="w-full bg-[#0B1020] border-2 border-white/10 focus:border-primary/50 rounded-2xl p-4 pl-6 pr-16 text-sm font-bold text-white outline-none shadow-xl transition-all"
-        />
-        <button onClick={handleAsk} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-primary text-white rounded-xl hover:bg-primary/80 transition-colors" title="Submit Search Query">
-          <ArrowUpRight className="w-4 h-4" />
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {isAsking && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center gap-3 mt-8">
-            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-primary">Querying 5.4M Deliveries...</span>
-          </motion.div>
-        )}
-
-        {result && !isAsking && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-2xl bg-[#0B1020] rounded-[24px] border border-primary/20 p-6 shadow-[0_0_30px_rgba(var(--primary-rgb),0.1)] relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-4 opacity-10"><Cpu className="w-16 h-16 text-primary" /></div>
-            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-3">AI Response</div>
-            <p className="text-[16px] leading-relaxed font-medium text-white/90 relative z-10">{result}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="mt-8 flex flex-wrap gap-2 justify-center max-w-2xl">
-        {["Which batter has hit the most sixes in the powerplay?", "What is Virat Kohli's strike rate vs Rashid Khan?", "Highest chase win rate venue?"].map(q => (
-          <button key={q} onClick={() => setQuery(q)} className="px-4 py-2 bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 rounded-full text-[11px] font-bold text-white/60 transition-colors">
-            {q}
-          </button>
+    <div className="mx-auto flex max-w-2xl flex-col gap-4 pt-8">
+      <h2 className="text-[24px] font-black uppercase tracking-tight">Ask the Database</h2>
+      <p className="text-sm text-slate-600 dark:text-white/60">AI is unavailable in Stats Centre. Statistical search uses the active Dimensional Slicing results.</p>
+      <p className="text-xs font-bold">{filters.length ? filters.join(" · ") : "All-time IPL"} · Minimum {Math.max(1, minBalls)} balls</p>
+      <form className="flex gap-2" onSubmit={event => { event.preventDefault(); setSubmitted(question.trim()); }}>
+        <input aria-label="Statistical question" value={question} onChange={event => setQuestion(event.target.value)}
+          placeholder="Who has the best economy?" className="stats-tool-panel min-w-0 flex-1 px-4 py-2 text-sm" />
+        <button className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white" type="submit">Search</button>
+      </form>
+      <div className="flex flex-wrap gap-2">
+        {Object.keys(choices).map(label => (
+          <button key={label} type="button" className="stats-tool-chip rounded-lg px-3 py-1 text-xs" onClick={() => { setQuestion(label); setSubmitted(label); }}>{label}</button>
         ))}
       </div>
+      {submitted && (
+        <div role="status" className="stats-tool-panel p-4 text-sm">
+          {!selection ? <p>Choose a supported metric above. Use the filters to narrow the question.</p>
+            : loading ? <p>Loading matching statistics…</p>
+              : unavailable ? <p>Filtered statistics are unavailable for this selection.</p>
+                : rows.length ? <><p className="mb-2 font-bold">Ranked by {metric}</p><ol className="list-decimal space-y-1 pl-5">{rows.map(row => <li key={row.player}>{row.player} · {row.value.toLocaleString()} · {row.balls} balls</li>)}</ol></>
+                  : <p>No verified samples meet the selected filters.</p>}
+        </div>
+      )}
     </div>
   );
 }
 
-// ── Field Positions View -----------------------------------------------------
 interface FPField { position: string; zone: string; color: string }
 interface FPRow { position: string; zone: string; balls: number; runs: number; wickets: number; boundaries: number; dotBalls: number }
 
