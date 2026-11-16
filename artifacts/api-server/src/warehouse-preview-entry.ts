@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, existsSync, copyFileSync } from "node:fs";
 import { rename } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -22,6 +22,12 @@ let scout: Promise<void> | undefined;
 let ipl: Promise<void> | undefined;
 
 function configureScout() {
+  if (existsSync(scoutPath)) return Promise.resolve();
+  const fallback = process.env.CRICFIELD_LOCAL_SCOUT_PATH;
+  if (fallback && existsSync(fallback)) {
+    copyFileSync(fallback, scoutPath);
+    return Promise.resolve();
+  }
   const url = process.env.TURSO_SCOUT_DATABASE_URL;
   const token = process.env.TURSO_SCOUT_AUTH_TOKEN;
   if (!url || !token) throw new Error("Scout credentials missing");
@@ -31,6 +37,12 @@ function configureScout() {
 }
 
 function configureIpl() {
+  if (existsSync(iplPath)) return Promise.resolve();
+  const fallback = process.env.CRICFIELD_LOCAL_DB_PATH || process.env.CRICFIELD_FALLBACK_DB_PATH;
+  if (fallback && existsSync(fallback)) {
+    copyFileSync(fallback, iplPath);
+    return Promise.resolve();
+  }
   const url = process.env.TURSO_IPL_DATABASE_URL;
   const token = process.env.TURSO_IPL_AUTH_TOKEN;
   if (!url || !token) throw new Error("IPL credentials missing");

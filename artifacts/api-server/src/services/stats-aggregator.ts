@@ -7,6 +7,7 @@ import { queryAll } from "./decision/db.js";
 import {
   db,
   hasDb,
+  getSqliteClient,
   playersTable,
   teamsTable,
   venuesTable,
@@ -20,17 +21,22 @@ import {
   batterBowlerMatchupStatsTable,
 } from "@workspace/db";
 import { sql, eq, and, type SQL } from "drizzle-orm";
+import defaultMatches from "../../data/matches.json";
+import defaultBios from "../../data/player-bio.json";
+import defaultSquads from "../../data/current-squads.json";
+import defaultLatestTeams from "../../data/player-latest-teams.json";
+import defaultPlayers from "../../data/players.json";
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  MEMORY CACHE — parse each match JSON only once per server process
 // ─────────────────────────────────────────────────────────────────────────────
 
 const matchCache = new Map<string, any>();
-let matchesList: any[] = [];
-let playerBios: Record<string, any> = {};
-let playersRegistry: any[] = [];
-let playerLatestTeams: Record<string, string> = {};
-let currentSquads: any[] = [];
+let matchesList: any[] = defaultMatches as any[];
+let playerBios: Record<string, any> = defaultBios as any;
+let playersRegistry: any[] = defaultPlayers as any[];
+let playerLatestTeams: Record<string, string> = defaultLatestTeams as any;
+let currentSquads: any[] = defaultSquads as any[];
 let _projectRoot: string | null = null;
 let _initialized = false;
 
@@ -66,6 +72,31 @@ function ensureInit() {
   if (fs.existsSync(playersPath))  playersRegistry   = JSON.parse(fs.readFileSync(playersPath,    "utf8"));
   if (fs.existsSync(currentSquadsPath)) currentSquads = JSON.parse(fs.readFileSync(currentSquadsPath, "utf8"));
   if (fs.existsSync(latestTeamsPath))   playerLatestTeams = JSON.parse(fs.readFileSync(latestTeamsPath, "utf8"));
+
+  if ((!matchesList || matchesList.length === 0) && hasDb()) {
+    try {
+      const sqlite = getSqliteClient();
+      matchesList = sqlite.prepare(`
+        SELECT
+          m.match_id as id,
+          m.season_id as season,
+          m.date as date,
+          v.name as venue,
+          t1.name as team1,
+          t2.name as team2,
+          tw.name as winner,
+          m.margin_type as margin,
+          m.match_type as matchType
+        FROM matches m
+        LEFT JOIN venues v ON m.venue_id = v.venue_id
+        LEFT JOIN teams t1 ON m.team1_id = t1.team_id
+        LEFT JOIN teams t2 ON m.team2_id = t2.team_id
+        LEFT JOIN teams tw ON m.winner_id = tw.team_id
+      `).all() as any[];
+    } catch (e) {
+      console.warn("Failed to load matches from SQLite:", e);
+    }
+  }
 }
 
 export function getPlayerLatestTeam(playerName: string): string {
@@ -80,14 +111,142 @@ export function getPlayerLatestTeam(playerName: string): string {
   return "All";
 }
 
+function getMatchDataFromDb(matchId: string): any | null {
+  try {
+    const sqlite = getSqliteClient();
+    const matchRow = sqlite.prepare(`
+      SELECT m.match_id, m.date, m.match_type,
+             t1.name as team1, t2.name as team2,
+             v.name as venue
+      FROM matches m
+      LEFT JOIN teams t1 ON m.team1_id = t1.team_id
+      LEFT JOIN teams t2 ON m.team2_id = t2.team_id
+      LEFT JOIN venues v ON m.venue_id = v.venue_id
+      WHERE m.match_id = ?
+    `).get(matchId) as any;
+    if (!matchRow) return null;
+
+    const inningsRows = sqlite.prepare(`
+      SELECT i.innings_id, i.innings_number, t.name as batting_team
+      FROM innings i
+      LEFT JOIN teams t ON i.batting_team_id = t.team_id
+      WHERE i.match_id = ?
+      ORDER BY i.innings_number
+    `).all(matchId) as any[];
+
+    const deliveryRows = sqlite.prepare(`
+      SELECT d.innings_id, d.over_num, d.ball_num,
+             p1.name as batter, p2.name as bowler, p3.name as non_striker,
+             d.batter_runs, d.extra_runs, d.total_runs,
+             d.is_wide, d.is_noball, d.is_bye, d.is_legbye, d.is_penalty,
+             d.delivery_type, d.scoring_area,
+             dis.kind as dismissal_kind, pout.name as player_out
+      FROM deliveries d
+      LEFT JOIN players p1 ON d.batter_id = p1.player_id
+      LEFT JOIN players p2 ON d.bowler_id = p2.player_id
+      LEFT JOIN players p3 ON d.non_striker_id = p3.player_id
+      LEFT JOIN dismissals dis ON d.delivery_id = dis.delivery_id
+      LEFT JOIN players pout ON dis.player_out_id = pout.player_id
+      WHERE d.match_id = ?
+      ORDER BY d.innings_id, d.over_num, d.ball_num, d.delivery_id
+    `).all(matchId) as any[];
+
+    const inningsMap = new Map<number, any>();
+    for (const inn of inningsRows) {
+      inningsMap.set(inn.innings_id, {
+        team: inn.batting_team,
+        overs: [],
+      });
+    }
+
+    const overMaps = new Map<number, Map<number, any>>();
+    for (const d of deliveryRows) {
+      const inn = inningsMap.get(d.innings_id);
+      if (!inn) continue;
+
+      let overMap = overMaps.get(d.innings_id);
+      if (!overMap) {
+        overMap = new Map<number, any>();
+        overMaps.set(d.innings_id, overMap);
+      }
+
+      let overObj = overMap.get(d.over_num);
+      if (!overObj) {
+        overObj = {
+          over: d.over_num,
+          deliveries: [],
+        };
+        overMap.set(d.over_num, overObj);
+        inn.overs.push(overObj);
+      }
+
+      const ball: any = {
+        batter: d.batter,
+        bowler: d.bowler,
+        non_striker: d.non_striker,
+        runs: {
+          batter: d.batter_runs,
+          extras: d.extra_runs,
+          total: d.total_runs,
+        },
+      };
+
+      if (d.is_wide || d.is_noball || d.is_bye || d.is_legbye || d.is_penalty) {
+        ball.extras = {};
+        if (d.is_wide) ball.extras.wides = 1;
+        if (d.is_noball) ball.extras.noballs = 1;
+        if (d.is_bye) ball.extras.byes = d.extra_runs;
+        if (d.is_legbye) ball.extras.legbyes = d.extra_runs;
+        if (d.is_penalty) ball.extras.penalty = d.extra_runs;
+      }
+
+      if (d.dismissal_kind) {
+        ball.wickets = [{
+          kind: d.dismissal_kind,
+          player_out: d.player_out,
+        }];
+      }
+
+      overObj.deliveries.push(ball);
+    }
+
+    return {
+      info: {
+        teams: [matchRow.team1, matchRow.team2],
+        overs: 20,
+        event: {
+          stage: matchRow.match_type !== "T20" ? matchRow.match_type : undefined,
+        },
+      },
+      innings: Array.from(inningsMap.values()),
+    };
+  } catch (err) {
+    console.error(`Failed to load match ${matchId} from db:`, err);
+    return null;
+  }
+}
+
 function getMatchData(matchId: string): any | null {
   if (matchCache.has(matchId)) return matchCache.get(matchId);
   const root = getProjectRoot();
   const fp = path.resolve(root, "lib", "cricket-data", "raw", `${matchId}.json`);
-  if (!fs.existsSync(fp)) return null;
-  const data = JSON.parse(fs.readFileSync(fp, "utf8"));
-  matchCache.set(matchId, data);
-  return data;
+  if (fs.existsSync(fp)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(fp, "utf8"));
+      matchCache.set(matchId, data);
+      return data;
+    } catch { /* fallback to db */ }
+  }
+
+  if (hasDb()) {
+    const data = getMatchDataFromDb(matchId);
+    if (data) {
+      matchCache.set(matchId, data);
+      return data;
+    }
+  }
+
+  return null;
 }
 
 /**

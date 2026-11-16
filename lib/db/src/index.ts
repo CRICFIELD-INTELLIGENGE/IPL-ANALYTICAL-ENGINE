@@ -19,6 +19,17 @@ let dbInstance: any = null;
 
 export const hasDb = () => true;
 
+export function getSqliteClient(): DatabaseSync {
+  if (!sqliteClient) {
+    const readOnly = process.env.CRICFIELD_DB_READONLY === "1";
+    sqliteClient = new DatabaseSync(getDbPath(), { readOnly });
+    sqliteClient.exec("PRAGMA foreign_keys = ON");
+    if (!readOnly) sqliteClient.exec("PRAGMA journal_mode = WAL");
+    sqliteClient.exec("PRAGMA busy_timeout = 5000");
+  }
+  return sqliteClient;
+}
+
 // Mock Pool proxy to prevent compile breakage in case some other module references it
 export const pool = new Proxy({} as any, {
   get(target, prop) {
@@ -29,15 +40,7 @@ export const pool = new Proxy({} as any, {
 export const db = new Proxy({} as any, {
   get(target, prop) {
     if (!sqliteClient) {
-      // CRICFIELD_DB_READONLY=1 (the deployed API, which only reads): open read-only and do not switch the
-      // journal mode, so serving never writes the warehouse or creates -wal/-shm files (works on a read-only or
-      // shared filesystem). Unset, behaviour is unchanged (offline scripts such as compute_analytics write).
-      const readOnly = process.env.CRICFIELD_DB_READONLY === "1";
-      sqliteClient = new DatabaseSync(getDbPath(), { readOnly });
-      // Enable foreign key constraints in SQLite
-      sqliteClient.exec("PRAGMA foreign_keys = ON");
-      if (!readOnly) sqliteClient.exec("PRAGMA journal_mode = WAL");
-      sqliteClient.exec("PRAGMA busy_timeout = 5000");
+      sqliteClient = getSqliteClient();
     }
     if (!dbInstance) {
       dbInstance = drizzle(async (sql, params, method) => {
