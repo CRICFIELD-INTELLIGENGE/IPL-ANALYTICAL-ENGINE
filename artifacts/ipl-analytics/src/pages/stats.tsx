@@ -8,6 +8,12 @@ import { LeagueValuePanel } from "@/components/intelligence/intel-components";
 import { FeatureSaveButton } from "@/components/feature-save-button";
 import { PressureReliabilityPanel } from "@/components/pressure-reliability-panel";
 import { BatterLensRankings } from "@/components/batter-lens-rankings";
+import { SelectPopover, SeasonPopover, type SeasonValue, type Option } from "@/components/stats-slicing/slicing-popover";
+import { MatchStatePopover, MATCH_STATE_FIELDS, type MatchState } from "@/components/stats-slicing/match-state";
+import { MoreFiltersPopover } from "@/components/stats-slicing/more-filters";
+import { sliceToSearch, sliceFromSearch, toCsv, downloadCsv } from "@/components/stats-slicing/slice-url";
+import { AskEngineView } from "@/components/stats-slicing/ask-engine";
+import { DETAILED_STYLE_OPTIONS, SITUATIONS, DESKTOP_FILTERS, sliceList, situationLabel } from "@/components/stats-slicing/config";
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Layout } from "@/components/layout";
 import { TeamLogo } from "@/components/team-logo";
@@ -108,6 +114,10 @@ const SCENARIO_METADATA: Record<string, { title: string; subtitle: string; lever
     parMetric: "Filter: overs 16–20, spin bowling",
     successDriver: "Unorthodox boundary shots, taking down matchup spin, or defending tight lines",
   },
+};
+
+const ANALYSIS_LABELS: Record<string, string> = {
+  "stat-builder": "Stat Builder (Situation SR)", "scenario-intelligence": "Scenario Intelligence", "batter-lens": "Batter Lens",
 };
 
 const getVenueName = (v: any): string => normalizeVenueName(v?.venue || v?.name || "All Venues");
@@ -240,22 +250,22 @@ function TablePaginationBar({
   );
 }
 
-const matchStateControls = {
-  minRequiredRate: { label: "Required rate ≥", max: 100, step: 0.1 },
-  minCurrentRate: { label: "Current rate ≥", max: 100, step: 0.1 },
-  minRunsNeeded: { label: "Runs needed ≥", max: 400, step: 1 },
-  minBallsLeft: { label: "Balls left ≥", max: 120, step: 1 },
-  minWicketsLeft: { label: "Wickets left ≥", max: 10, step: 1 },
-} as const;
-
 export default function StatsPage({ mobilePresentation = false }: { mobilePresentation?: boolean } = {}) {
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState<Tab>("batters");
   const [dimSlicingView, setDimSlicingView] = useState<"stat-builder" | "scenario-intelligence" | "batter-lens">("stat-builder");
+  const setDesktopAnalysis = (mode: "standard" | "stat-builder" | "scenario-intelligence" | "batter-lens") => {
+    setDesktopAnalysisState(mode);
+    if (mode !== "standard") setDimSlicingView(mode);
+  };
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [minSliceBalls, setMinSliceBalls] = useState(0);
-  const [matchState, setMatchState] = useState<Partial<Record<keyof typeof matchStateControls, number>>>({});
+  const [matchState, setMatchState] = useState<MatchState>({});
+  // Desktop: the three analytical engines run inside Dimensional Slicing on the Batters / Bowlers tabs.
+  const [desktopAnalysis, setDesktopAnalysisState] = useState<"standard" | "stat-builder" | "scenario-intelligence" | "batter-lens">("standard");
+  const [minInnings, setMinInnings] = useState(0);
+  const [minMatches, setMinMatches] = useState(0);
   useEffect(() => {
     if (mobilePresentation) return;
     const timer = window.setTimeout(() => setDebouncedSearch(searchQuery), 220);
@@ -377,6 +387,8 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   const [matchupDrillTab, setMatchupDrillTab] = useState<"phase" | "delivery" | "zone" | "history">("phase");
   // Scenario Intelligence state
   const [selectedScenario, setSelectedScenario] = useState(mobilePresentation ? "pressure-reliability" : "all");
+  const desktopEngineOn = !mobilePresentation && desktopAnalysis !== "standard" &&
+    (activeTab === "batters" || (activeTab === "bowlers" && desktopAnalysis !== "batter-lens"));
   const [scenarioMinBalls, setScenarioMinBalls] = useState(10);
   const [scenarioRange, setScenarioRange] = useState({ from: "", to: "" });
   // Player drilldown state
@@ -407,23 +419,28 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   const matches = matchesQuery.data ?? [];
   const activeMatches = useMemo(() => {
     const dim = buildDimensionalPayload(filters);
+    const teamSel = sliceList(filters.team), oppSel = sliceList(filters.opposition);
+    const venueSel = sliceList(filters.venue).map(v => normalizeVenueName(v).toLowerCase());
     return matches.filter(m => {
+      const day = String(m.date || "");
+      if ((filters.seasonFrom && day.slice(0, 4) < filters.seasonFrom) || (filters.seasonTo && day.slice(0, 4) > filters.seasonTo)) return false;
+      if ((filters.dateFrom && day < filters.dateFrom) || (filters.dateTo && day.slice(0, 10) > filters.dateTo)) return false;
+      if (teamSel.length && !teamSel.some(t => isMatchingTeam(m.team1, t) || isMatchingTeam(m.team2, t))) return false;
+      if (oppSel.length && !oppSel.some(t => isMatchingTeam(m.team1, t) || isMatchingTeam(m.team2, t))) return false;
+      if (venueSel.length && !venueSel.includes(normalizeVenueName(m.venue || "").toLowerCase())) return false;
       const s = dim.season;
       if (s && s !== "All Seasons" && s !== "All" && s !== "all" && s !== "") {
         const cleanS = String(s).replace(/[^0-9]/g, "");
         const cleanM = String(m.season || "").replace(/[^0-9]/g, "");
         if (cleanM !== cleanS && String(m.season) !== String(s)) return false;
       }
-      if (dim.team !== "All" && !isMatchingTeam(m.team1, dim.team) && !isMatchingTeam(m.team2, dim.team)) return false;
-      if (dim.opponent !== "All" && !isMatchingTeam(m.team1, dim.opponent) && !isMatchingTeam(m.team2, dim.opponent)) return false;
-      if (dim.venue !== "All" && !normalizeVenueName(m.venue || "").toLowerCase().includes(normalizeVenueName(dim.venue || "").toLowerCase())) return false;
       const stage = (matchStages as Record<string, string>)[m.id];
       if (filters.match_context === "Final") return stage === "Final";
       if (filters.match_context === "Playoffs") return !!stage;
       if (filters.match_context === "League Stage") return !stage;
       return true;
     });
-  }, [matches, filters.season, filters.team, filters.opposition, filters.venue, filters.match_context]);
+  }, [matches, filters.season, filters.team, filters.opposition, filters.venue, filters.match_context, filters.seasonFrom, filters.seasonTo, filters.dateFrom, filters.dateTo]);
   const slicedMatchIds = useMemo(() => new Set(activeMatches.map(match => String(match.id))), [activeMatches]);
   const slicedTeams = useMemo(() => {
     const records = new Map<string, { team: string; matches: number; wins: number; noResult: number; winPct: number }>();
@@ -501,8 +518,9 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   }, [activeMatches, mobilePresentation]);
 
   const isVenueFiltered = useMemo(() => {
-    return filters.season !== "All Seasons" || filters.team !== "All Teams" || filters.opposition !== "All Opponents" || filters.venue !== "All Venues" || filters.match_context !== "All Matches";
-  }, [filters.season, filters.team, filters.opposition, filters.venue, filters.match_context]);
+    return filters.season !== "All Seasons" || filters.team !== "All Teams" || filters.opposition !== "All Opponents" || filters.venue !== "All Venues" || filters.match_context !== "All Matches" ||
+      !!(filters.seasonFrom || filters.seasonTo || filters.dateFrom || filters.dateTo);
+  }, [filters.season, filters.team, filters.opposition, filters.venue, filters.match_context, filters.seasonFrom, filters.seasonTo, filters.dateFrom, filters.dateTo]);
 
   const venueCards = useMemo(() => {
     const byVenueName = new Map<string, any>();
@@ -530,8 +548,8 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
     let filteredSliced = slicedVenues;
     if (filters.venue !== "All Venues") {
-      const target = normalizeVenueName(filters.venue).toLowerCase();
-      filteredSliced = slicedVenues.filter(sv => sv.venue.toLowerCase().includes(target) || target.includes(sv.venue.toLowerCase()));
+      const targets = sliceList(filters.venue).map(v => normalizeVenueName(v).toLowerCase());
+      filteredSliced = slicedVenues.filter(sv => targets.some(target => sv.venue.toLowerCase().includes(target) || target.includes(sv.venue.toLowerCase())));
     }
 
     return filteredSliced.map(sv => {
@@ -548,12 +566,12 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   }, [venues.data, slicedVenues, isVenueFiltered, filters.venue, mobilePresentation]);
   const sliceKeys = (Object.keys(defaultAnalyticsFilters) as (keyof AnalyticsFilters)[])
     .filter(key => filters[key] !== defaultAnalyticsFilters[key]);
-  const chasePreset = !mobilePresentation && selectedScenario === "chasing200plus";
+  const chasePreset = false; // desktop "Chasing 200+" now sets 2nd innings + Target ≥ 200 through the shared filters
   const fixtureViews = activeTab === "venues" || activeTab === "teams";
   const fixtureSearch = !mobilePresentation && fixtureViews ? debouncedSearch.trim().toLowerCase() : "";
   const visibleVenueCards = fixtureSearch ? venueCards.filter(venue => venue.venueName.toLowerCase().includes(fixtureSearch)) : venueCards;
   const visibleTeamCards = fixtureSearch ? teamCards.filter(team => team.name.toLowerCase().includes(fixtureSearch) || team.short.toLowerCase() === fixtureSearch) : teamCards;
-  const fixtureKeys = new Set(["season", "team", "opposition", "venue", "match_context"]);
+  const fixtureKeys = new Set(["season", "team", "opposition", "venue", "match_context", "seasonFrom", "seasonTo", "dateFrom", "dateTo"]);
   const hasMatchState = !mobilePresentation && Object.keys(matchState).length > 0;
   const deliveryScopeActive = hasMatchState || chasePreset || sliceKeys.some(key => !fixtureKeys.has(key));
   const cachedSeasonSlice = !hasMatchState && !chasePreset && filters.season !== "All Seasons" &&
@@ -577,45 +595,48 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     );
   }, [filters, mobilePresentation, chasePreset, hasMatchState]);
 
-  const dynamicStatsQuery = useQuery({
-    queryKey: [
-      "stats-query",
-      filters.season, filters.team, filters.opposition, filters.venue,
-      filters.phase, filters.bowler_type,
-      filters.pressure_state, filters.nationality, filters.representation,
-      filters.fieldingPosition || "Scoring Area", filters.innings, filters.match_context,
-      filters.required_rr, filters.current_rr, filters.home_away, filters.playoff,
-      filters.batterHandedness, filters.batter, filters.bowler, chasePreset, mobilePresentation, matchState,
-    ],
-    queryFn: async ({ signal }) => {
-      const params = new URLSearchParams();
-      if (filters.season) params.append("season", filters.season);
-      if (filters.team) params.append("team", filters.team);
-      if (filters.opposition) params.append("opponent", filters.opposition);
-      if (filters.venue) params.append("venue", filters.venue);
-      if (filters.phase) params.append("phase", filters.phase);
-      if (filters.bowler_type) params.append("bowlerType", filters.bowler_type);
-      if (filters.pressure_state) params.append("pressure", filters.pressure_state);
-      if (filters.nationality) params.append("nationality", filters.nationality);
-      if (filters.representation) params.append("representation", filters.representation);
-      if (filters.fieldingPosition || filters.fieldingPosition !== undefined) params.append("fieldingPosition", filters.fieldingPosition || "Scoring Area");
-      if (filters.innings) params.append("innings", filters.innings);
-      if (filters.match_context && filters.match_context !== "All Matches") params.append("matchContext", filters.match_context);
-      if (filters.batterHandedness && filters.batterHandedness !== "All Batters") params.append("battingHand", filters.batterHandedness);
-      if (filters.required_rr && filters.required_rr !== "All") params.append("requiredRr", filters.required_rr);
-      if (filters.current_rr && filters.current_rr !== "All") params.append("currentRr", filters.current_rr);
-      if (filters.home_away && filters.home_away !== "All") params.append("homeAway", filters.home_away);
-      if (filters.playoff && filters.playoff !== "All") params.append("playoff", filters.playoff);
+  const statsParams = useMemo(() => {
+    const params = new URLSearchParams();
+    if (filters.season) params.append("season", filters.season);
+    if (filters.team) params.append("team", filters.team);
+    if (filters.opposition) params.append("opponent", filters.opposition);
+    if (filters.venue) params.append("venue", filters.venue);
+    if (filters.phase) params.append("phase", filters.phase);
+    if (filters.bowler_type) params.append("bowlerType", filters.bowler_type);
+    if (filters.pressure_state) params.append("pressure", filters.pressure_state);
+    if (filters.nationality) params.append("nationality", filters.nationality);
+    if (filters.representation) params.append("representation", filters.representation);
+    if (filters.fieldingPosition || filters.fieldingPosition !== undefined) params.append("fieldingPosition", filters.fieldingPosition || "Scoring Area");
+    if (filters.innings) params.append("innings", filters.innings);
+    if (filters.match_context && filters.match_context !== "All Matches") params.append("matchContext", filters.match_context);
+    if (filters.batterHandedness && filters.batterHandedness !== "All Batters") params.append("battingHand", filters.batterHandedness);
+    if (filters.required_rr && filters.required_rr !== "All") params.append("requiredRr", filters.required_rr);
+    if (filters.current_rr && filters.current_rr !== "All") params.append("currentRr", filters.current_rr);
+    if (filters.home_away && filters.home_away !== "All") params.append("homeAway", filters.home_away);
+    if (filters.playoff && filters.playoff !== "All") params.append("playoff", filters.playoff);
 
-      if (!mobilePresentation && filters.batter !== "All Batters") params.set("batter", filters.batter);
-      if (!mobilePresentation && filters.bowler !== "All Bowlers") params.set("bowler", filters.bowler);
-      for (const [key, value] of Object.entries(matchState)) params.set(key, String(value));
-      if (chasePreset) {
-        params.set("scenario", "chasing200plus");
-        params.set("minBalls", "0");
-      }
+    if (!mobilePresentation && filters.batter !== "All Batters") params.set("batter", filters.batter);
+    if (!mobilePresentation && filters.bowler !== "All Bowlers") params.set("bowler", filters.bowler);
+    for (const [key, value] of Object.entries(matchState)) params.set(key, String(value));
+    if (chasePreset) {
+      params.set("scenario", "chasing200plus");
+      params.set("minBalls", "0");
+    }
+    if (!mobilePresentation) {
+      const extra: [string, string, string][] = [
+        ["seasonFrom", filters.seasonFrom, ""], ["seasonTo", filters.seasonTo, ""], ["dateFrom", filters.dateFrom, ""], ["dateTo", filters.dateTo, ""],
+        ["battingPosition", filters.battingPosition, "all"], ["matchResult", filters.matchResult, "all"], ["bowlStyle", filters.bowlStyle, "all"], ["overRange", filters.overRange, "All"],
+      ];
+      for (const [key, value, unset] of extra) if (value && value !== unset) params.set(key, value);
+    }
+    return params.toString();
+  }, [filters, mobilePresentation, matchState, chasePreset]);
+
+  const dynamicStatsQuery = useQuery({
+    queryKey: ["stats-query", chasePreset ? "scenario" : "query", statsParams],
+    queryFn: async ({ signal }) => {
       const route = chasePreset ? "scenario" : "query";
-      const url = `/api/stats/${route}?${params.toString()}`;
+      const url = `/api/stats/${route}?${statsParams}`;
       try {
         const res = await fetch(url, { signal });
         if (!res.ok) {
@@ -632,48 +653,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       }
     },
     enabled: !isDefaultCareerView && (mobilePresentation || !fixtureViews),
-    staleTime: 1000 * 60 * 5,
-    placeholderData: mobilePresentation ? (prev: any) => prev : undefined,
-  });
-
-  // ── Field Positions Query ──────────────────────────────────────────────────
-  interface FieldPositionRow {
-    position: string;
-    zone: string;
-    balls: number;
-    runs: number;
-    wickets: number;
-    boundaries: number;
-    dotBalls: number;
-  }
-
-  const fieldPositionsData = useQuery<FieldPositionRow[]>({
-    queryKey: [
-      "stats-field-positions",
-      filters.season, filters.team, filters.opposition, filters.venue,
-      filters.bowler_type, filters.innings,
-      filters.phase, filters.pressure_state,
-    ],
-    queryFn: async () => {
-      const params = new URLSearchParams();
-      if (filters.season)   params.append("season",       filters.season);
-      if (filters.team)     params.append("team",         filters.team);
-      if (filters.opposition) params.append("opponent",     filters.opposition);
-      if (filters.venue)    params.append("venue",        filters.venue);
-      if (filters.bowler_type)   params.append("bowlerType",   filters.bowler_type);
-      if (filters.innings)  params.append("innings",      filters.innings);
-      if (filters.phase) params.append("phase", filters.phase);
-      if (filters.pressure_state) params.append("pressure", filters.pressure_state);
-      params.append("dimension", "scoring-zone");
-      try {
-        const res = await fetch(`/api/stats/drilldown?${params.toString()}`);
-        const ct = res.headers.get("content-type") || "";
-        if (!res.ok || ct.includes("text/html")) return [];
-        return (await res.json()) as FieldPositionRow[];
-      } catch {
-        return [];
-      }
-    },
     staleTime: 1000 * 60 * 5,
     placeholderData: (prev: any) => prev,
   });
@@ -704,13 +683,17 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   // Scenario Intelligence query
   const scenarioYears = [...new Set((seasons.data ?? []).map(s => s.season).filter(year => /^\d{4}$/.test(year)))].sort();
-  const hasScenarioRange = !!(scenarioRange.from || scenarioRange.to);
+  const effectiveScenarioRange = mobilePresentation ? scenarioRange : {
+    from: filters.seasonFrom || (filters.season !== "All Seasons" ? filters.season : ""),
+    to: filters.seasonTo || (filters.season !== "All Seasons" ? filters.season : ""),
+  };
+  const hasScenarioRange = !!(effectiveScenarioRange.from || effectiveScenarioRange.to);
   const scenarioQuery = useQuery({
-    queryKey: ["ipl-scenario", selectedScenario, hasScenarioRange ? null : filters.season, filters.team, filters.nationality, scenarioMinBalls, scenarioRange],
+    queryKey: ["ipl-scenario", selectedScenario, hasScenarioRange ? null : filters.season, filters.team, filters.nationality, scenarioMinBalls, effectiveScenarioRange.from, effectiveScenarioRange.to],
     queryFn: async () => {
       const params = new URLSearchParams({ scenario: selectedScenario, minBalls: String(scenarioMinBalls) });
-      if (scenarioRange.from) params.set("seasonFrom", scenarioRange.from);
-      if (scenarioRange.to) params.set("seasonTo", scenarioRange.to);
+      if (effectiveScenarioRange.from) params.set("seasonFrom", effectiveScenarioRange.from);
+      if (effectiveScenarioRange.to) params.set("seasonTo", effectiveScenarioRange.to);
       if (!hasScenarioRange && filters.season && filters.season !== "All Seasons") params.set("season", filters.season);
       if (filters.team && filters.team !== "All Teams") params.set("team", filters.team);
       if (filters.nationality && filters.nationality !== "all") params.set("nationality", filters.nationality);
@@ -724,7 +707,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       }
       return { batters: result.batters, bowlers: result.bowlers };
     },
-    enabled: ((activeTab === "dimensional" && dimSlicingView === "scenario-intelligence") || activeTab === "scenario-intelligence") && selectedScenario !== "pressure-reliability",
+    enabled: ((activeTab === "dimensional" && dimSlicingView === "scenario-intelligence") || activeTab === "scenario-intelligence" || (desktopEngineOn && dimSlicingView === "scenario-intelligence")) && selectedScenario !== "pressure-reliability",
     staleTime: 1000 * 60 * 5,
   });
 
@@ -827,7 +810,8 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       }
       return false;
     };
-    const passesSample = (row: { balls?: number }) => mobilePresentation || minSliceBalls === 0 || (row.balls ?? 0) >= minSliceBalls;
+    const passesSample = (row: { balls?: number; innings?: number; matches?: number }) => mobilePresentation ||
+      ((row.balls ?? 0) >= minSliceBalls && (row.innings ?? 0) >= minInnings && (row.matches ?? 0) >= minMatches);
     const filteredBatters = batters.filter(row => passesSample(row) && playerMatch(row.player, q));
     const filteredBowlers = bowlers.filter(row => passesSample(row) && playerMatch(row.player, q));
 
@@ -868,7 +852,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     return { batters: sortBatters, bowlers: sortBowlers };
   }, [
     dynamicStatsQuery.data, playerSeasonStats.data, playerCareerStats.data,
-    filters, mobilePresentation, isDefaultCareerView, cachedSeasonSlice, minSliceBalls,
+    filters, mobilePresentation, isDefaultCareerView, cachedSeasonSlice, minSliceBalls, minInnings, minMatches,
     searchQuery, debouncedSearch, batterSortField, batterSortOrder, bowlerSortField, bowlerSortOrder
   ]);
 
@@ -907,7 +891,16 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     if (statsScrollPosition.current === null) return;
     window.scrollTo({ top: statsScrollPosition.current, behavior: "instant" });
     statsScrollPosition.current = null;
-  }, [activeTab, filters, dimSlicingView, selectedScenario, minSliceBalls, debouncedSearch, matchState]);
+  }, [activeTab, filters, dimSlicingView, selectedScenario, minSliceBalls, debouncedSearch, matchState, desktopAnalysis, minInnings, minMatches]);
+
+  // Shareable URL: replaceState (no navigation, no remount, no scroll jump) after the first hydration pass.
+  const urlHydrated = useRef(false);
+  useEffect(() => {
+    if (mobilePresentation || !urlHydrated.current) return;
+    const search = sliceToSearch(filters, { tab: activeTab, analysis: desktopAnalysis, minBalls: minSliceBalls, minInnings, minMatches, matchState });
+    const next = `${window.location.pathname}${search ? `?${search}` : ""}${window.location.hash}`;
+    if (next !== `${window.location.pathname}${window.location.search}${window.location.hash}`) window.history.replaceState(window.history.state, "", next);
+  }, [mobilePresentation, filters, activeTab, desktopAnalysis, minSliceBalls, minInnings, minMatches, matchState]);
 
   const handleFilterChange = <K extends keyof typeof filters>(key: K, value: typeof filters[K]) => {
     if (filters[key] !== value) rememberStatsScroll();
@@ -920,6 +913,16 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
+      if (!mobilePresentation) {
+        const { filters: fromUrl, extras } = sliceFromSearch(window.location.search);
+        if (Object.keys(fromUrl).length) useAnalyticsFilterStore.getState().setFilters(fromUrl);
+        if (extras.minBalls) setMinSliceBalls(extras.minBalls);
+        if (extras.minInnings) setMinInnings(extras.minInnings);
+        if (extras.minMatches) setMinMatches(extras.minMatches);
+        if (extras.matchState && Object.keys(extras.matchState).length) setMatchState(extras.matchState);
+        if (extras.analysis === "stat-builder" || extras.analysis === "scenario-intelligence" || extras.analysis === "batter-lens") setDesktopAnalysis(extras.analysis);
+        urlHydrated.current = true;
+      }
       const queryTeam = params.get("team");
       if (queryTeam && queryTeam !== filters.team) {
         handleFilterChange("team", queryTeam);
@@ -929,12 +932,15 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         if (queryTab === "scenario" || queryTab === "scenario-intelligence") {
           setActiveTab(mobilePresentation ? "dimensional" : "batters");
           setDimSlicingView("scenario-intelligence");
+          if (!mobilePresentation) setDesktopAnalysis("scenario-intelligence");
         } else if (queryTab === "stat-builder") {
           setActiveTab(mobilePresentation ? "dimensional" : "batters");
           setDimSlicingView("stat-builder");
+          if (!mobilePresentation) setDesktopAnalysis("stat-builder");
         } else if (queryTab === "batter-lens") {
           setActiveTab(mobilePresentation ? "dimensional" : "batters");
           setDimSlicingView("batter-lens");
+          if (!mobilePresentation) setDesktopAnalysis("batter-lens");
         } else if (queryTab === "tactics") {
           setActiveTab("head2head");
         } else if ((mobilePresentation || queryTab !== "dimensional") && TABS.some(t => t.id === queryTab)) {
@@ -951,6 +957,8 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       setSearchQuery("");
       setDebouncedSearch("");
       setMinSliceBalls(0);
+      setMinInnings(0);
+      setMinMatches(0);
       setMatchState({});
     }
     resetFilters();
@@ -1004,11 +1012,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   // Drop team/opponent selections that no longer played in a newly picked season.
   useEffect(() => {
     if (!validTeamsForSeason) return;
-    if (filters.team !== "All Teams" && !validTeamsForSeason.has(filters.team)) {
-      setFilter("team", "All Teams");
-    }
-    if (filters.opposition && filters.opposition !== "All Opponents" && !validTeamsForSeason.has(filters.opposition)) {
-      setFilter("opposition", "All Opponents");
+    for (const [key, all] of [["team", "All Teams"], ["opposition", "All Opponents"]] as const) {
+      const picked = sliceList(filters[key]);
+      const kept = picked.filter(code => validTeamsForSeason.has(code));
+      if (kept.length !== picked.length) setFilter(key, kept.join("|") || all);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [validTeamsForSeason]);
@@ -1029,8 +1036,8 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   // Venues where the selected Team and Opponent have actually faced each
   // other — null means "no restriction" (one or both sides still "All").
   const headToHeadVenues = useMemo(() => {
-    if (!filters.team || filters.team === "All Teams") return null;
-    if (!filters.opposition || filters.opposition === "All Opponents") return null;
+    if (!filters.team || filters.team === "All Teams" || filters.team.includes("|")) return null;
+    if (!filters.opposition || filters.opposition === "All Opponents" || filters.opposition.includes("|")) return null;
     const set = new Set<string>();
     matches.forEach(m => {
       const t1 = teamShort(m.team1 || "");
@@ -1044,7 +1051,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   // Drop a venue selection that isn't part of this team/opponent's head-to-head.
   useEffect(() => {
     if (!headToHeadVenues) return;
-    if (filters.venue !== "All Venues" && !headToHeadVenues.has(filters.venue)) {
+    if (filters.venue !== "All Venues" && !sliceList(filters.venue).every(v => headToHeadVenues.has(v))) {
       setFilter("venue", "All Venues");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1299,57 +1306,174 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               className="w-full bg-white/5 border border-white/5 rounded-xl py-2 pl-9 pr-4 text-[10px] font-bold focus:outline-none focus:border-primary/40 focus:bg-white/10 transition-all text-white"
             />
           </div>
-          {!mobilePresentation && !fixtureViews && (
-            <label className="flex items-center gap-2 px-3 text-[10px] font-bold text-slate-600 dark:text-white/70">
-              Minimum balls
-              <input type="number" min={0} max={10000} step={1} value={minSliceBalls}
-                onChange={event => {
-                  rememberStatsScroll();
-                  setMinSliceBalls(Math.min(10000, Math.max(0, Math.trunc(Number(event.target.value)))));
-                }}
-                className="w-20 rounded-lg border border-slate-200 bg-transparent p-1 dark:border-white/10" />
-            </label>
-          )}
-          {!mobilePresentation && !fixtureViews && (
-            <details className="relative rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-[10px] font-bold dark:border-white/10 dark:bg-white/5">
-              <summary className="cursor-pointer">Match state{hasMatchState ? " · Filtered" : ""}</summary>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {(Object.keys(matchStateControls) as (keyof typeof matchStateControls)[]).map(key => {
-                  const control = matchStateControls[key];
-                  return (
-                    <label key={key} className="flex items-center gap-1.5">
-                      {control.label}
-                      <input type="number" min={0} max={control.max} step={control.step} value={matchState[key] ?? ""}
-                        onChange={event => {
-                          const { value, valueAsNumber } = event.currentTarget;
-                          if (value !== "" && (!Number.isFinite(valueAsNumber) || !event.currentTarget.validity.valid)) return;
-                          rememberStatsScroll();
-                          setMatchState(previous => {
-                            const next = { ...previous };
-                            if (value === "") delete next[key];
-                            else next[key] = valueAsNumber;
-                            return next;
-                          });
-                        }}
-                        className="w-20 rounded border border-slate-200 bg-transparent px-1 dark:border-white/10" />
-                    </label>
-                  );
-                })}
-              </div>
-            </details>
-          )}
-          {!mobilePresentation && activeTab === "batters" && (
-            <FilterDropdown
-              label="Bowler faced"
-              icon={Crosshair}
-              value={filters.bowler}
-              options={["All Bowlers", ...new Set((playerCareerStats.data?.bowlers ?? []).map(row => row.player).filter(Boolean))]}
-              onChange={value => handleFilterChange("bowler", value)}
-            />
-          )}
         </div>
 
   </>);
+
+  // ── Desktop Dimensional Slicing: compact popovers, category-specific controls (mobile keeps filterControls) ──
+  const shows = new Set(DESKTOP_FILTERS[activeTab] ?? DESKTOP_FILTERS.batters);
+  const batterOptionNames = useMemo(() => [...(playerCareerStats.data?.batters ?? [])].filter((r: any) => r.player)
+    .sort((a: any, b: any) => (b.balls ?? 0) - (a.balls ?? 0)).map((r: any) => String(r.player)), [playerCareerStats.data]);
+  const bowlerOptionNames = useMemo(() => [...(playerCareerStats.data?.bowlers ?? [])].filter((r: any) => r.player)
+    .sort((a: any, b: any) => (b.balls ?? 0) - (a.balls ?? 0)).map((r: any) => String(r.player)), [playerCareerStats.data]);
+  const batterOpts = useMemo<Option[]>(() => batterOptionNames.map(n => ({ value: n, label: displayPlayerName(n, displayNames) })), [batterOptionNames, displayNames]);
+  const bowlerOpts = useMemo<Option[]>(() => bowlerOptionNames.map(n => ({ value: n, label: displayPlayerName(n, displayNames) })), [bowlerOptionNames, displayNames]);
+  const teamOpts = useMemo<Option[]>(() => teamOptions.map(t => ({ value: t, label: t })), [teamOptions]);
+  const venueOpts = useMemo<Option[]>(() => venueOptions.map(v => ({ value: v, label: v })), [venueOptions]);
+  const seasonValue: SeasonValue = filters.seasonFrom || filters.seasonTo
+    ? { mode: "range", from: filters.seasonFrom || scenarioYears[0] || "", to: filters.seasonTo || scenarioYears[scenarioYears.length - 1] || "" }
+    : filters.season !== "All Seasons" ? { mode: "single", season: filters.season } : { mode: "all" };
+  const applySlice = (patch: Partial<AnalyticsFilters>) => { rememberStatsScroll(); useAnalyticsFilterStore.getState().setFilters(patch); };
+  const one = (value: string, unset: string) => (value && value !== unset ? [value] : []);
+  const applySituation = (id: string) => {
+    const prev = SITUATIONS.find(s => s.id === selectedScenario);
+    const next = SITUATIONS.find(s => s.id === id);
+    const patch: Partial<AnalyticsFilters> = {};
+    for (const [key, value] of Object.entries(prev?.scope ?? {})) {
+      if ((filters as any)[key] === value && !(next && key in next.scope)) (patch as any)[key] = (defaultAnalyticsFilters as any)[key];
+    }
+    Object.assign(patch, next?.scope ?? {});
+    const ms: MatchState = { ...matchState };
+    for (const key of Object.keys(prev?.ms ?? {})) delete (ms as any)[key];
+    Object.assign(ms, next?.ms ?? {});
+    applySlice(patch);
+    setMatchState(ms);
+    setSelectedScenario(next ? id : "all");
+  };
+  const bowlerTypeOpts: Option[] = [
+    { value: "type:Pacer", label: "Pace (all)" }, { value: "type:Spinner", label: "Spin (all)" },
+    ...DETAILED_STYLE_OPTIONS.map(([value, label]) => ({ value: `style:${value}`, label, hint: "verified bio" })),
+  ];
+  const bowlerTypeValue = filters.bowlStyle !== "all" ? [`style:${filters.bowlStyle}`] : one(filters.bowler_type, "All Bowlers").map(v => `type:${v}`);
+  const analysisModes = ([
+    ["standard", "Standard"], ["stat-builder", "Situation SR"], ["scenario-intelligence", "Scenario Intelligence"], ["batter-lens", "Batter Lens"],
+  ] as const).filter(([id]) => activeTab === "batters" || id !== "batter-lens");
+
+  const desktopFilterControls = (
+    <div ref={filterPanelRef} tabIndex={-1} role="region" aria-label="Dimensional Slicing"
+      className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-2 flex flex-col gap-2 relative z-20 shadow-sm dark:shadow-xl">
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="flex items-center gap-2 px-3 py-2 bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/5">
+          <Filter className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
+          <span className="text-[10px] font-black uppercase tracking-widest text-slate-800 dark:text-white/80">Dimensional Slicing</span>
+        </div>
+        {shows.has("season") && <SeasonPopover years={scenarioYears} value={seasonValue} icon={Calendar}
+          onChange={v => applySlice(v.mode === "all" ? { season: "All Seasons", seasonFrom: "", seasonTo: "" }
+            : v.mode === "single" ? { season: v.season, seasonFrom: "", seasonTo: "" }
+            : { season: "All Seasons", seasonFrom: v.from, seasonTo: v.to })} />}
+        {shows.has("team") && <SelectPopover label="Team" icon={Users} multiple allLabel="All Teams" options={teamOpts}
+          value={sliceList(filters.team)} onChange={v => applySlice({ team: v.join("|") || "All Teams" })} />}
+        {shows.has("opponent") && <SelectPopover label="Opponent" icon={Target} multiple allLabel="All Opponents"
+          options={teamOpts.filter(o => !sliceList(filters.team).includes(o.value))}
+          value={sliceList(filters.opposition)} onChange={v => applySlice({ opposition: v.join("|") || "All Opponents" })} />}
+        {shows.has("venue") && <SelectPopover label="Venue" icon={MapPin} multiple searchable allLabel="All Venues" options={venueOpts}
+          value={sliceList(filters.venue)} onChange={v => applySlice({ venue: v.join("|") || "All Venues" })} />}
+        {shows.has("nationality") && <SelectPopover label="Nationality" icon={Globe} allLabel="All" options={[{ value: "indian", label: "Indian" }, { value: "overseas", label: "Overseas" }]}
+          value={one(filters.nationality, "all")} onChange={([v]) => applySlice({ nationality: v || "all" })} />}
+        {shows.has("phase") && <SelectPopover label="Phase" icon={Activity} allLabel="All Phases"
+          options={[{ value: "Powerplay", label: "Powerplay (1–6)" }, { value: "Middle", label: "Middle (7–15)" }, { value: "Death", label: "Death (16–20)" }]}
+          value={one(filters.phase, "All Phases")} onChange={([v]) => applySlice({ phase: v || "All Phases" })} />}
+        {shows.has("situation") && <SelectPopover label="Situation" icon={Cpu} allLabel="All Situations"
+          options={SITUATIONS.map(s => ({ value: s.id, label: s.label }))}
+          value={SITUATIONS.some(s => s.id === selectedScenario) ? [selectedScenario] : []}
+          display={situationLabel(selectedScenario, filters, matchState)} onChange={([v]) => applySituation(v ?? "")} />}
+        {shows.has("bowlerType") && <SelectPopover label={activeTab === "bowlers" ? "Bowling style" : "Bowler type faced"} icon={Target} allLabel="All bowlers" options={bowlerTypeOpts}
+          value={bowlerTypeValue} onChange={([v]) => applySlice(!v ? { bowler_type: "All Bowlers", bowlStyle: "all" }
+            : v.startsWith("type:") ? { bowler_type: v.slice(5), bowlStyle: "all" } : { bowler_type: "All Bowlers", bowlStyle: v.slice(6) })} />}
+        <div className="ml-auto flex items-center gap-2">
+          {(activeTab === "batters" || activeTab === "bowlers") && (
+            <button type="button" title="IPL + men's T20Is, 2022–2026, empirical-Bayes Pressure Reliability"
+              onClick={() => { applySlice({ season: "All Seasons", seasonFrom: "2022", seasonTo: "2026" }); setSelectedScenario("pressure-reliability"); setDesktopAnalysis("scenario-intelligence"); }}
+              className="px-3 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border border-pink-400/40 bg-pink-500/10 text-pink-700 dark:text-pink-200 hover:bg-pink-500/20 cursor-pointer">
+              RR Pressure Scouting
+            </button>
+          )}
+          <button type="button" onClick={clearFilterChain} title="Reset all filters"
+            className="flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-red-50 dark:bg-white/5 dark:hover:bg-red-500/10 border border-slate-200 dark:border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:text-red-600 dark:text-white/50 dark:hover:text-red-400 cursor-pointer">
+            <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" /> Reset
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        {shows.has("pressure") && <SelectPopover label="Pressure" icon={Shield} allLabel="All balls"
+          options={[{ value: "High Pressure", label: "High pressure (chase overs 16–20 or 4+ down)" }, { value: "Clutch Moment", label: "Clutch (chase, overs 18–20, < 24 needed)" }]}
+          value={one(filters.pressure_state, "Standard")} onChange={([v]) => applySlice({ pressure_state: v || "Standard" })} />}
+        {shows.has("handedness") && <SelectPopover label="Batter hand" icon={Target} allLabel="All batters"
+          options={[{ value: "vs RHB", label: "Right-handed" }, { value: "vs LHB", label: "Left-handed" }]}
+          value={one(filters.batterHandedness, "All Batters")} onChange={([v]) => applySlice({ batterHandedness: v || "All Batters" })} />}
+        {shows.has("innings") && <SelectPopover label="Innings" icon={Activity} allLabel="All innings"
+          options={[{ value: "1st Innings (Setting)", label: "1st innings (batting first)" }, { value: "2nd Innings (Chasing)", label: "2nd innings (chasing)" }]}
+          value={one(filters.innings, "All Innings")} onChange={([v]) => applySlice({ innings: v || "All Innings" })} />}
+        {shows.has("matchType") && <SelectPopover label="Match type" icon={Trophy} allLabel="All matches"
+          options={["League Stage", "Playoffs", "Final"].map(v => ({ value: v, label: v }))}
+          value={one(filters.match_context, "All Matches")} onChange={([v]) => applySlice({ match_context: v || "All Matches" })} />}
+        {shows.has("matchState") && <MatchStatePopover value={matchState} innings={filters.innings}
+          onApply={ms => { rememberStatsScroll(); setMatchState(ms); }} overRange={filters.overRange} onOverRange={r => applySlice({ overRange: r })} />}
+        {shows.has("bowlerFaced") && <SelectPopover label="Bowler faced" icon={Crosshair} multiple searchable allLabel="Any bowler" options={bowlerOpts}
+          value={sliceList(filters.bowler)} onChange={v => applySlice({ bowler: v.join("|") || "All Bowlers" })} />}
+        {shows.has("batterFaced") && <SelectPopover label="Batter faced" icon={Crosshair} multiple searchable allLabel="Any batter" options={batterOpts}
+          value={sliceList(filters.batter)} onChange={v => applySlice({ batter: v.join("|") || "All Batters" })} />}
+        {shows.has("more") && <MoreFiltersPopover showPosition showResult
+          value={{ battingPosition: filters.battingPosition, matchResult: filters.matchResult, dateFrom: filters.dateFrom, dateTo: filters.dateTo, minBalls: minSliceBalls, minInnings, minMatches }}
+          onApply={v => {
+            applySlice({ battingPosition: v.battingPosition, matchResult: v.matchResult, dateFrom: v.dateFrom, dateTo: v.dateTo });
+            setMinSliceBalls(v.minBalls); setMinInnings(v.minInnings); setMinMatches(v.minMatches);
+          }} />}
+        {shows.has("analysis") && (activeTab === "batters" || activeTab === "bowlers") && (
+          <div role="radiogroup" aria-label="Analysis mode" className="flex items-center gap-0.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/[0.03] p-0.5">
+            {analysisModes.map(([id, label]) => {
+              const on = (desktopEngineOn ? dimSlicingView : "standard") === id;
+              return (
+                <button key={id} type="button" role="radio" aria-checked={on} onClick={() => { rememberStatsScroll(); setDesktopAnalysis(id); }}
+                  className={`px-2.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider cursor-pointer ${on ? "bg-primary text-white shadow-sm" : "text-slate-600 dark:text-white/60 hover:bg-white dark:hover:bg-white/5"}`}>
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+        {shows.has("search") && (
+          <div className="ml-auto relative min-w-[180px] max-w-[260px] flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 dark:text-white/30" aria-hidden="true" />
+            <input type="search" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search players, venues, teams…" aria-label="Search results"
+              className="w-full rounded-xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5 py-2 pl-9 pr-3 text-[11px] font-bold text-slate-800 dark:text-white focus:outline-none focus:border-primary/40" />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  const [linkCopied, setLinkCopied] = useState(false);
+  const toolbarRows: any[] = activeTab === "bowlers" ? activeData.bowlers : activeData.batters;
+  const exportLeaderboard = () => {
+    const columns = activeTab === "bowlers"
+      ? ["player", "matches", "innings", "balls", "wickets", "econ", "avg", "sr", "dotPct", "boundaryPct", "trueEconomy", "bowlerType"]
+      : ["player", "matches", "innings", "runs", "balls", "dismissals", "avg", "sr", "dotPct", "boundaryPct", "fours", "sixes", "fifties", "hundreds", "highest"];
+    const meta = [
+      `CricField Stats Centre, ${activeTab}, exported ${new Date().toISOString().slice(0, 10)}`,
+      `Filters: ${filterChain.map(f => f.label).join("; ") || "none (all-time IPL)"}`,
+      ...(Object.keys(matchState).length ? [`Match state: ${Object.entries(matchState).map(([k, v]) => `${k}=${v}`).join(", ")}`] : []),
+      `Minimums: ${minSliceBalls} balls, ${minInnings} innings, ${minMatches} matches`,
+      "Source: CricField warehouse (Cricsheet ball-by-ball, IPL)",
+    ];
+    downloadCsv(`cricfield-${activeTab}.csv`, toCsv(toolbarRows, columns, meta));
+  };
+  const resultsToolbar = (
+    <div className="mb-3 flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] px-3 py-2 text-[11px]">
+      <span className="font-black text-slate-900 dark:text-white">{toolbarRows.length.toLocaleString("en-IN")} {activeTab}</span>
+      {dynamicStatsQuery.isFetching && <span role="status" className="font-bold text-amber-600 dark:text-amber-300">Updating…</span>}
+      {(minSliceBalls > 0 || minInnings > 0 || minMatches > 0) && (
+        <span className="text-slate-500 dark:text-white/50">Min {minSliceBalls} balls · {minInnings} inns · {minMatches} matches</span>
+      )}
+      <span className="text-slate-400 dark:text-white/30">Sort by clicking a column header</span>
+      <div className="ml-auto flex items-center gap-1.5">
+        <button type="button" onClick={exportLeaderboard} disabled={!toolbarRows.length} className="rounded-lg border border-slate-200 dark:border-white/10 px-2.5 py-1 font-bold hover:bg-slate-100 dark:hover:bg-white/5 disabled:opacity-40">Export CSV</button>
+        <button type="button" onClick={() => { void navigator.clipboard?.writeText(window.location.href).then(() => { setLinkCopied(true); window.setTimeout(() => setLinkCopied(false), 1500); }); }}
+          className="rounded-lg border border-slate-200 dark:border-white/10 px-2.5 py-1 font-bold hover:bg-slate-100 dark:hover:bg-white/5">{linkCopied ? "Link copied" : "Copy link"}</button>
+        <button type="button" onClick={clearFilterChain} className="rounded-lg border border-slate-200 dark:border-white/10 px-2.5 py-1 font-bold hover:bg-slate-100 dark:hover:bg-white/5">Reset filters</button>
+      </div>
+    </div>
+  );
 
   const telemetryBanner = (
     <div className="mb-6 bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 p-4 rounded-2xl grid grid-cols-1 md:grid-cols-12 gap-4 items-center animate-fade-in relative overflow-hidden group shadow-sm dark:shadow-none">
@@ -1436,8 +1560,8 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   const selectedTool = isHead2HeadTab
     ? TABS.find(tab => tab.id === "head2head")
-    : isDimensionalTab
-    ? { id: "dimensional" as const, label: "Dimensional Slicing", Icon: Layers }
+    : isDimensionalTab || desktopEngineOn
+    ? { id: "dimensional" as const, label: mobilePresentation ? "Dimensional Slicing" : `Dimensional Slicing · ${ANALYSIS_LABELS[dimSlicingView]}`, Icon: Layers }
     : undefined;
   const activeTool = selectedTool ? (
     <section className="stats-tool grid min-w-0 gap-4">
@@ -1447,7 +1571,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         </span>
         <h2 className="text-lg font-black tracking-tight">{selectedTool.label}</h2>
       </header>
-      {isDimensionalTab && (
+      {(isDimensionalTab || desktopEngineOn) && (
         <div className="flex flex-col gap-6 animate-fade-in">
           {/* Engine 1: Stat Builder */}
           {dimSlicingView === "stat-builder" && (
@@ -1472,7 +1596,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               <button key={s.id}
                 type="button"
                 aria-pressed={selectedScenario === s.id}
-                onClick={() => setSelectedScenario(s.id)}
+                onClick={() => (mobilePresentation || !SITUATIONS.some(x => x.id === s.id) ? setSelectedScenario(s.id) : applySituation(s.id))}
                 className={`px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all duration-200 cursor-pointer bg-gradient-to-br ${s.color} ${
                   selectedScenario === s.id
                     ? `${s.activeBorder} shadow-sm`
@@ -1483,6 +1607,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
             ))}
           </div>
 
+          {mobilePresentation && (
           <div className="stats-tool-panel flex flex-wrap items-center gap-3 p-3 text-xs">
             <label className="flex items-center gap-2">
               From season
@@ -1501,9 +1626,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               </select>
             </label>
           </div>
+          )}
 
           {selectedScenario === "pressure-reliability" ? (
-            <PressureReliabilityPanel seasonFrom={scenarioRange.from} seasonTo={scenarioRange.to} />
+            <PressureReliabilityPanel seasonFrom={effectiveScenarioRange.from} seasonTo={effectiveScenarioRange.to} />
           ) : (<>
           {/* Min balls qualifier */}
           <div className="stats-tool-panel flex flex-wrap items-center gap-2 p-3">
@@ -1636,7 +1762,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
           {/* Engine 3: Batter Lens */}
           {dimSlicingView === "batter-lens" && (
-            <BatterLensRankings />
+            <BatterLensRankings {...(mobilePresentation ? {} : { seasonFrom: effectiveScenarioRange.from, seasonTo: effectiveScenarioRange.to, bowlerType: filters.bowler_type, phase: filters.phase })} />
           )}
         </div>
       )}
@@ -1828,7 +1954,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         {/* Shared slicing filters and telemetry sit above the tab bar. */}
         {(!mobilePresentation || activeTab !== "ask") && (
           <div className="space-y-4">
-            {filterControls}
+            {mobilePresentation ? filterControls : desktopFilterControls}
             {mobilePresentation && telemetryBanner}
           </div>
         )}
@@ -1887,7 +2013,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
             <div className="mb-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 mx-2">
               <div className="text-[11px] font-black text-amber-300 uppercase tracking-widest">No Sliced Telemetry Found</div>
               <div className="text-[12px] font-mono text-white/70 mt-1">
-                No telemetry records found for the selected dimensional filters. Try expanding your filter scope.
+                {mobilePresentation ? "No telemetry records found for the selected dimensional filters. Try expanding your filter scope." : `The statistics query failed: ${(dynamicStatsQuery.error as Error)?.message ?? "unknown error"}`}
               </div>
             </div>
           )}
@@ -1902,7 +2028,8 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
             >
-              {activeTab === "batters" && (
+              {!mobilePresentation && (activeTab === "batters" || activeTab === "bowlers") && !desktopEngineOn && resultsToolbar}
+              {activeTab === "batters" && !desktopEngineOn && (
                 <div className="bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 overflow-hidden shadow-sm dark:shadow-2xl">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
@@ -1975,7 +2102,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                 </div>
               )}
 
-              {activeTab === "bowlers" && (
+              {activeTab === "bowlers" && !desktopEngineOn && (
                 <div className="bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 overflow-hidden shadow-sm dark:shadow-2xl animate-fade-in">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
@@ -2263,8 +2390,20 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                 <RecordBookView activeData={activeData} playerImages={playerImages.data ?? {}} matches={mobilePresentation ? matches : activeMatches} isSliced={!mobilePresentation && (!isDefaultCareerView || minSliceBalls > 0 || !!debouncedSearch.trim())} fixtureRecordsAvailable={!mobilePresentation && isVenueFiltered && !deliveryScopeActive} />
               )}
               {activeTool}
-              {activeTab === "ask" && (
-                <AskAIView data={activeData} filters={[...filterChain.map(item => item.label), ...Object.entries(matchState).map(([key, value]) => matchStateControls[key as keyof typeof matchStateControls].label + " " + value), ...(chasePreset ? ["Chasing 200+"] : [])]}
+              {activeTab === "ask" && !mobilePresentation && (
+                <AskEngineView sliceFilters={filters} sliceMatchState={matchState} minBalls={minSliceBalls}
+                  batterNames={batterOptionNames} bowlerNames={bowlerOptionNames} venues={venueOptions}
+                  onApply={(patch, ms, tab, engine) => {
+                    rememberStatsScroll();
+                    useAnalyticsFilterStore.getState().setFilters(patch);
+                    setMatchState(ms);
+                    setActiveTab(tab);
+                    if (engine === "pressure") { setSelectedScenario("pressure-reliability"); setDesktopAnalysis("scenario-intelligence"); }
+                    else setDesktopAnalysis(engine === "batter-lens" ? "batter-lens" : "standard");
+                  }} />
+              )}
+              {activeTab === "ask" && mobilePresentation && (
+                <AskAIView data={activeData} filters={[...filterChain.map(item => item.label), ...Object.entries(matchState).map(([key, value]) => `${key} ${value}`), ...(chasePreset ? ["Chasing 200+"] : [])]}
                   loading={dynamicStatsQuery.isFetching || (isDefaultCareerView && playerCareerStats.isLoading)}
                   unavailable={dynamicStatsQuery.isError && !cachedSeasonSlice} minBalls={minSliceBalls} />
               )}

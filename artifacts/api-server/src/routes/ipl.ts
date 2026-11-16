@@ -10,6 +10,7 @@ import { getContentHub, getBusinessArticles, type BusinessTag } from "../service
 import {
   aggregateQueryStats,
   matchStateLimits,
+  DETAILED_BOWL_STYLES,
   type MatchStateFilters,
   aggregateFieldStats,
   aggregateMatchupStats,
@@ -469,11 +470,26 @@ function readMatchState(req: Request): MatchStateFilters | null {
     const raw = req.query[key];
     if (raw === undefined) continue;
     const value = typeof raw === "string" && /^\d+(?:\.\d)?$/.test(raw) ? Number(raw) : NaN;
-    const isRate = key === "minRequiredRate" || key === "minCurrentRate";
+    const isRate = key.endsWith("Rate");
     if (!Number.isFinite(value) || value > matchStateLimits[key] || (!isRate && !Number.isInteger(value))) return null;
     filters[key] = value;
   }
   return filters;
+}
+
+/** Validates the slicing params added for the unified Dimensional Slicing panel; returns an error message or null. */
+function invalidSliceParams(q: Record<string, string>): string | null {
+  const year = /^\d{4}$/, day = /^\d{4}-\d{2}-\d{2}$/;
+  if ([q.seasonFrom, q.seasonTo].some(v => v !== undefined && !year.test(v))) return "Invalid season range";
+  if (q.seasonFrom && q.seasonTo && q.seasonFrom > q.seasonTo) return "Season range is reversed";
+  if ([q.dateFrom, q.dateTo].some(v => v !== undefined && !day.test(v))) return "Invalid date range";
+  if (q.dateFrom && q.dateTo && q.dateFrom > q.dateTo) return "Date range is reversed";
+  if (q.battingPosition !== undefined && !/^(all|openers|7\+|[1-9]|1[01])$/i.test(q.battingPosition)) return "Invalid batting position";
+  if (q.matchResult !== undefined && !/^(all|won|lost|no result)$/i.test(q.matchResult)) return "Invalid match result";
+  if (q.bowlStyle !== undefined && q.bowlStyle !== "all" && !(q.bowlStyle in DETAILED_BOWL_STYLES)) return "Unknown bowling style";
+  if (q.overRange !== undefined && q.overRange !== "All" && !/^([1-9]|1\d|20)-([1-9]|1\d|20)$/.test(q.overRange)) return "Invalid over range";
+  if ([q.team, q.opponent, q.venue, q.batter, q.bowler].some(v => (v ?? "").split("|").length > 25)) return "Too many selections";
+  return null;
 }
 
 router.get("/stats/query", (req: Request, res: Response): void => {
@@ -481,6 +497,11 @@ router.get("/stats/query", (req: Request, res: Response): void => {
   const matchState = readMatchState(req);
   if (!matchState) {
     res.status(400).json({ error: "Invalid match-state threshold" });
+    return;
+  }
+  const invalid = invalidSliceParams(q);
+  if (invalid) {
+    res.status(400).json({ error: invalid });
     return;
   }
   const hasMatchState = Object.keys(matchState).length > 0;
@@ -498,7 +519,8 @@ router.get("/stats/query", (req: Request, res: Response): void => {
     (!q.innings || q.innings === "All" || q.innings === "All Innings") &&
     (!q.matchContext || q.matchContext === "All" || q.matchContext === "All Matches") &&
     (!q.representation || q.representation === "overall") &&
-    !q.batter && !q.bowler && !q.battingHand && !q.deliveryType && !q.overRange && !q.homeAway && !q.chasingDefending;
+    !q.batter && !q.bowler && !q.battingHand && !q.deliveryType && !q.overRange && !q.homeAway && !q.chasingDefending &&
+    !q.seasonFrom && !q.seasonTo && !q.dateFrom && !q.dateTo && !q.battingPosition && !q.matchResult && !q.bowlStyle;
 
   if (isDefault && !hasMatchState) {
     getPlayerCareerStats()
@@ -525,6 +547,8 @@ router.get("/stats/query", (req: Request, res: Response): void => {
     matchContext: q.matchContext, homeAway: q.homeAway || q.home_away,
     chasingDefending: q.chasingDefending, battingHand: q.battingHand,
     batter: q.batter, bowler: q.bowler,
+    seasonFrom: q.seasonFrom, seasonTo: q.seasonTo, dateFrom: q.dateFrom, dateTo: q.dateTo,
+    battingPosition: q.battingPosition, matchResult: q.matchResult, bowlStyle: q.bowlStyle,
     matchState: hasMatchState ? matchState : undefined,
   })
     .then(stats => {

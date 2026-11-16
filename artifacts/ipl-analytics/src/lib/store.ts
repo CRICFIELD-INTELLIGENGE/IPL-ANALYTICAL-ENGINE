@@ -29,6 +29,15 @@ export interface AnalyticsFilters {
   fieldingPosition: string;
   batterHandedness: string;
   representation: RepresentationMode;
+  // Desktop Dimensional Slicing. Team / opponent / venue / batter / bowler may hold several values joined by "|".
+  seasonFrom: string;
+  seasonTo: string;
+  dateFrom: string;
+  dateTo: string;
+  battingPosition: string;
+  matchResult: string;
+  bowlStyle: string;
+  overRange: string;
 }
 
 export interface PrimaryFilters {
@@ -84,6 +93,14 @@ export const defaultAnalyticsFilters: AnalyticsFilters = {
   fieldingPosition: "Scoring Area",
   batterHandedness: "All Batters",
   representation: "overall",
+  seasonFrom: "",
+  seasonTo: "",
+  dateFrom: "",
+  dateTo: "",
+  battingPosition: "all",
+  matchResult: "all",
+  bowlStyle: "all",
+  overRange: "All",
 };
 
 const filterDefaults: Record<keyof AnalyticsFilters, string> = {
@@ -106,6 +123,19 @@ const filterDefaults: Record<keyof AnalyticsFilters, string> = {
   fieldingPosition: "Scoring Area",
   batterHandedness: "All Batters",
   representation: "overall",
+  seasonFrom: "",
+  seasonTo: "",
+  dateFrom: "",
+  dateTo: "",
+  battingPosition: "all",
+  matchResult: "all",
+  bowlStyle: "all",
+  overRange: "All",
+};
+
+const CHAIN_PREFIX: Partial<Record<keyof AnalyticsFilters, string>> = {
+  seasonFrom: "From ", seasonTo: "To ", dateFrom: "From ", dateTo: "To ", battingPosition: "Batting position ",
+  matchResult: "Result: ", bowlStyle: "Style: ", overRange: "Overs ",
 };
 
 interface AnalyticsFilterState {
@@ -113,6 +143,8 @@ interface AnalyticsFilterState {
   chain: FilterChainItem[];
   setFilter: <K extends keyof AnalyticsFilters>(key: K, value: AnalyticsFilters[K]) => void;
   setRepresentation: (representation: RepresentationMode) => void;
+  /** Atomic multi-key update (presets, URL hydration, Ask AI "Apply"): one render, one refetch. */
+  setFilters: (patch: Partial<AnalyticsFilters>) => void;
   clearFilter: (key: keyof AnalyticsFilters) => void;
   resetFilters: () => void;
 }
@@ -124,7 +156,7 @@ export const useAnalyticsFilterStore = create<AnalyticsFilterState>((set) => ({
     const nextFilters = { ...state.filters, [key]: value };
     const def = filterDefaults[key];
     const chainItem = value && value !== def && value !== "" && value !== "all"
-      ? { key, label: value as string, value: value as string }
+      ? { key, label: (CHAIN_PREFIX[key] ?? "") + String(value).split("|").join(", "), value: value as string }
       : null;
     return {
       filters: nextFilters,
@@ -133,6 +165,9 @@ export const useAnalyticsFilterStore = create<AnalyticsFilterState>((set) => ({
         : state.chain.filter(item => item.key !== key),
     };
   }),
+  setFilters: (patch) => {
+    for (const [key, value] of Object.entries(patch)) useAnalyticsFilterStore.getState().setFilter(key as keyof AnalyticsFilters, value as any);
+  },
   setRepresentation: (representation) => set((state) => ({
     filters: { ...state.filters, representation },
     chain: [

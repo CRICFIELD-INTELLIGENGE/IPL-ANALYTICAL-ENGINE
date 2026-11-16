@@ -1,13 +1,14 @@
 // Stats → Batter Lens: every IPL batter ranked on runs above average, filtered by seasons,
 // pace / spin and phase. Same RAA as the player-page Batter Lens (one build, one definition).
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { useLensRankings } from "@/lib/batter-lens-data";
 import { playerSlug, usePlayerDisplayNames, displayPlayerName } from "@/lib/aggregates";
 
 const PHASES = ["Powerplay", "Middle", "Death"];
 
-export function BatterLensRankings() {
+/** The optional props come from Dimensional Slicing; the panel's own controls still override them. */
+export function BatterLensRankings({ seasonFrom, seasonTo, bowlerType, phase: slicePhase }: { seasonFrom?: string; seasonTo?: string; bowlerType?: string; phase?: string } = {}) {
   const q = useLensRankings();
   const displayNames = usePlayerDisplayNames();
   const seasons = useMemo(() => (q.data ? [...new Set(q.data.rows.map(r => r[1]))].sort((a, b) => a - b) : []), [q.data]);
@@ -16,6 +17,9 @@ export function BatterLensRankings() {
   const [phase, setPhase] = useState(-1);
   const [minBalls, setMinBalls] = useState(500);
   const [sort, setSort] = useState<"raa" | "balls" | "sr">("raa");
+  useEffect(() => { if (seasonFrom) setFrom(Number(seasonFrom)); if (seasonTo) setTo(Number(seasonTo)); }, [seasonFrom, seasonTo]);
+  useEffect(() => { if (bowlerType) setType(/spin/i.test(bowlerType) ? 2 : /pace/i.test(bowlerType) ? 1 : 0); }, [bowlerType]);
+  useEffect(() => { if (slicePhase) setPhase(PHASES.indexOf(slicePhase)); }, [slicePhase]);
 
   const rows = useMemo(() => {
     if (!q.data) return [];
