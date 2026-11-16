@@ -1,4 +1,5 @@
 import "./stats-tools.css";
+import matchStages from "@/data/ipl-match-stages.json";
 import { MobileStatsPresentation } from "@/mobile/screens/stats-presentation";
 import {ScoringRing} from '@/components/visualizations/scoring-ring';
 import { HeadToHeadTacticalLab } from "@/components/head-to-head-tactical-lab";
@@ -7,7 +8,7 @@ import { LeagueValuePanel } from "@/components/intelligence/intel-components";
 import { FeatureSaveButton } from "@/components/feature-save-button";
 import { PressureReliabilityPanel } from "@/components/pressure-reliability-panel";
 import { BatterLensRankings } from "@/components/batter-lens-rankings";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Layout } from "@/components/layout";
 import { TeamLogo } from "@/components/team-logo";
 import { PlayerAvatar } from "@/components/player-avatar";
@@ -401,9 +402,14 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       if (dim.team !== "All" && !isMatchingTeam(m.team1, dim.team) && !isMatchingTeam(m.team2, dim.team)) return false;
       if (dim.opponent !== "All" && !isMatchingTeam(m.team1, dim.opponent) && !isMatchingTeam(m.team2, dim.opponent)) return false;
       if (dim.venue !== "All" && !normalizeVenueName(m.venue || "").toLowerCase().includes(normalizeVenueName(dim.venue || "").toLowerCase())) return false;
+      const stage = (matchStages as Record<string, string>)[m.id];
+      if (filters.match_context === "Final") return stage === "Final";
+      if (filters.match_context === "Playoffs") return !!stage;
+      if (filters.match_context === "League Stage") return !stage;
       return true;
     });
-  }, [matches, filters.season, filters.team, filters.opposition, filters.venue]);
+  }, [matches, filters.season, filters.team, filters.opposition, filters.venue, filters.match_context]);
+  const slicedMatchIds = useMemo(() => new Set(activeMatches.map(match => String(match.id))), [activeMatches]);
   const slicedTeams = useMemo(() => {
     const records = new Map<string, { team: string; matches: number; wins: number; noResult: number; winPct: number }>();
     activeMatches.forEach(m => {
@@ -839,7 +845,18 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
 
 
+  const statsScrollPosition = useRef<number | null>(null);
+  const rememberStatsScroll = () => {
+    if (!mobilePresentation) statsScrollPosition.current = window.scrollY;
+  };
+  useLayoutEffect(() => {
+    if (statsScrollPosition.current === null) return;
+    window.scrollTo({ top: statsScrollPosition.current, behavior: "instant" });
+    statsScrollPosition.current = null;
+  }, [activeTab, filters, dimSlicingView]);
+
   const handleFilterChange = <K extends keyof typeof filters>(key: K, value: typeof filters[K]) => {
+    if (filters[key] !== value) rememberStatsScroll();
     setFilter(key, value);
   };
 
@@ -1248,6 +1265,30 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
           </div>
         )}
       </div>
+      {isDimensionalTab && (
+        <div role="group" aria-label="Multidimensional Slicing Engines" className="relative z-10 flex flex-wrap gap-2 border-t border-slate-200 pt-3 dark:border-white/10 md:col-span-12">
+          {([
+            { id: "stat-builder", label: "Stat Builder (Situation SR)", Icon: Filter },
+            { id: "scenario-intelligence", label: "Scenario Intelligence", Icon: Cpu },
+            { id: "batter-lens", label: "Batter Lens", Icon: Crosshair },
+          ] as const).map(({ id, label, Icon }) => (
+            <button
+              key={id}
+              type="button"
+              aria-pressed={dimSlicingView === id}
+              onClick={() => { if (dimSlicingView !== id) rememberStatsScroll(); setDimSlicingView(id); }}
+              className={`flex min-h-9 items-center gap-1.5 rounded-lg px-3 py-1.5 text-[10px] font-black uppercase tracking-wider transition-colors ${
+                dimSlicingView === id
+                  ? "bg-primary text-white shadow-sm"
+                  : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-white/5 dark:text-white/70 dark:hover:bg-white/10"
+              }`}
+            >
+              <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 
@@ -1266,54 +1307,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       </header>
       {isDimensionalTab && (
         <div className="flex flex-col gap-6 animate-fade-in">
-          {/* Integrated Dimensional Slicing Filter Deck */}
-          {filterControls}
-
-          {/* Slicing Telemetry */}
-          {telemetryBanner}
-
-          {/* Dimensional Slicing Engine Switcher */}
-          <div className="stats-tool-panel p-3 flex flex-wrap items-center justify-between gap-3 shadow-xl">
-            <div className="flex items-center gap-2">
-              <Layers className="w-4 h-4 text-primary" />
-              <span className="text-[11px] font-black uppercase tracking-widest text-white">
-                Multidimensional Slicing Engines
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5 p-1 bg-black/40 border border-white/10 rounded-xl">
-              <button
-                type="button"
-                onClick={() => setDimSlicingView("stat-builder")}
-                className={`px-3.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                  dimSlicingView === "stat-builder" ? "bg-primary text-white shadow-md font-black" : "text-white/40 hover:text-white"
-                }`}
-              >
-                <Filter className="w-3 h-3" />
-                Stat Builder (Situation SR)
-              </button>
-              <button
-                type="button"
-                onClick={() => setDimSlicingView("scenario-intelligence")}
-                className={`px-3.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                  dimSlicingView === "scenario-intelligence" ? "bg-primary text-white shadow-md font-black" : "text-white/40 hover:text-white"
-                }`}
-              >
-                <Cpu className="w-3 h-3" />
-                Scenario Intelligence
-              </button>
-              <button
-                type="button"
-                onClick={() => setDimSlicingView("batter-lens")}
-                className={`px-3.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                  dimSlicingView === "batter-lens" ? "bg-primary text-white shadow-md font-black" : "text-white/40 hover:text-white"
-                }`}
-              >
-                <Crosshair className="w-3 h-3" />
-                Batter Lens
-              </button>
-            </div>
-          </div>
-
           {/* Engine 1: Stat Builder */}
           {dimSlicingView === "stat-builder" && (
             <StatBuilderView batters={activeData.batters} bowlers={activeData.bowlers} playerImages={playerImages.data ?? {}} />
@@ -1507,7 +1500,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       )}
 
       {isHead2HeadTab && (
-        <HeadToHeadView batters={activeData.batters} bowlers={activeData.bowlers} teams={teams.data || []} playerImages={playerImages.data ?? {}} />
+        <HeadToHeadView batters={activeData.batters} bowlers={activeData.bowlers} teams={mobilePresentation || !isVenueFiltered ? teams.data ?? [] : teamCards.map(team => ({ ...team, team: team.name }))} isSliced={!mobilePresentation && !isDefaultCareerView} matchIds={!mobilePresentation && isVenueFiltered ? slicedMatchIds : undefined} playerImages={playerImages.data ?? {}} />
       )}
     </section>
   ) : null;
@@ -1666,7 +1659,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       </div>
 
       {/* STATIC DATA SECTION */}
-      <div className="space-y-4 px-2.5 pb-6 mt-4">
+      <div className="space-y-4 px-2.5 pb-6 mt-4 [overflow-anchor:none]">
         {/* CROSS-LINK TO GLOBAL SCOUT LAB */}
         <div className="rounded-2xl bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-sm dark:shadow-lg">
           <div className="flex items-center gap-3">
@@ -1690,13 +1683,22 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
           </Link>
         </div>
 
-        {/* TAB BAR — ALWAYS AT TOP */}
+        {/* Shared slicing filters and telemetry sit above the tab bar. */}
+        {activeTab !== "ask" && (
+          <div className="space-y-4">
+            {filterControls}
+            {telemetryBanner}
+          </div>
+        )}
+
+        {/* TAB BAR */}
         <div className="w-full overflow-x-auto no-scrollbar pb-1">
           <div className="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 w-fit max-w-full">
             {TABS.map(t => (
               <button
                 key={t.id}
-                onClick={() => setActiveTab(t.id)}
+                type="button"
+                onClick={() => { if (activeTab !== t.id) rememberStatsScroll(); setActiveTab(t.id); }}
                 className={`px-4 py-2 rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-all shrink-0 cursor-pointer ${activeTab === t.id
                   ? "bg-gradient-to-r from-primary/80 to-blue-600/80 text-white shadow-md"
                   : "text-slate-600 hover:text-slate-900 hover:bg-white dark:text-white/40 dark:hover:text-white dark:hover:bg-white/5"
@@ -1708,14 +1710,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
             ))}
           </div>
         </div>
-
-        {/* DIMENSIONAL SLICING FILTERS & TELEMETRY — Rendered for tabs using dimensional slices (batters, bowlers, venues, teams) */}
-        {(activeTab === "batters" || activeTab === "bowlers" || activeTab === "venues" || activeTab === "teams") && (
-          <div className="space-y-4">
-            {filterControls}
-            {telemetryBanner}
-          </div>
-        )}
 
         {/* QUERY CHAIN BREADCRUMB TRAIL */}
         {filterChain.length > 0 && (
@@ -2115,7 +2109,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
               {/* Scenario Intelligence */}
               {activeTab === "records" && (
-                <RecordBookView activeData={activeData} playerImages={playerImages.data ?? {}} matches={matches} />
+                <RecordBookView activeData={activeData} playerImages={playerImages.data ?? {}} matches={mobilePresentation ? matches : activeMatches} isSliced={!mobilePresentation && !isDefaultCareerView} fixtureRecordsAvailable={!mobilePresentation && isVenueFiltered} />
               )}
               {activeTool}
               {activeTab === "ask" && (
@@ -2537,7 +2531,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
 // fmt helper declared safely at top of module
 
-function RecordBookView({ activeData, playerImages, matches }: { activeData: any, playerImages: Record<string, string>, matches?: any[] }) {
+function RecordBookView({ activeData, playerImages, matches, isSliced, fixtureRecordsAvailable }: { activeData: any, playerImages: Record<string, string>, matches: any[], isSliced: boolean, fixtureRecordsAvailable: boolean }) {
   const [recordTab, setRecordTab] = useState("batting"); // "team", "batting", "bowling", "keepers", "partnerships"
   const [expandedRecord, setExpandedRecord] = useState<string | null>(null);
   const latestTeamResolver = usePlayerLatestTeamResolver();
@@ -2577,7 +2571,7 @@ function RecordBookView({ activeData, playerImages, matches }: { activeData: any
       }
     }
 
-    return pool[0] ? pool[0].id : null;
+    return null;
   };
 
   const RECORD_CATEGORIES = [
@@ -3218,8 +3212,41 @@ function RecordBookView({ activeData, playerImages, matches }: { activeData: any
     partnerships: ["highest_partnership", "highest_1st", "highest_5th", "most_100_partnerships"]
   };
 
+  if (fixtureRecordsAvailable) {
+    const innings = matches.flatMap(match => [
+      { team: match.team1, opponent: match.team2, score: match.team1Score, match },
+      { team: match.team2, opponent: match.team1, score: match.team2Score, match },
+    ]).flatMap(row => {
+      const runs = Number.parseInt(row.score ?? "", 10);
+      return Number.isFinite(runs) ? [{ ...row, runs }] : [];
+    });
+    const updateRecord = (key: string, rows: typeof innings, order: number) => {
+      const ranked = [...rows].sort((a, b) => order * (a.runs - b.runs)).slice(0, 20);
+      if (!ranked.length) return;
+      const list = ranked.map(row => ({
+        player: row.team,
+        team: teamShort(row.team),
+        value: row.score,
+        innings: `vs ${row.opponent}, ${row.match.season}`,
+        matchId: row.match.id,
+      }));
+      recordsMap[key] = {
+        ...recordsMap[key],
+        isHistorical: false,
+        value: list[0].value,
+        holder: list[0].player,
+        context: list[0].innings,
+        list,
+      };
+    };
+    updateRecord("highest_total", innings, -1);
+    updateRecord("lowest_total", innings, 1);
+  }
+
+  const recordKeys = (tabsConfig[recordTab] ?? []).filter(key => !isSliced || !recordsMap[key].isHistorical);
+
   // Render the expanded leaderboard if active
-  if (expandedRecord && recordsMap[expandedRecord]) {
+  if (expandedRecord && recordKeys.includes(expandedRecord)) {
     const current = recordsMap[expandedRecord];
     return (
       <div className="flex flex-col gap-6">
@@ -3360,7 +3387,8 @@ return (
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {tabsConfig[recordTab]?.map(key => {
+        {recordKeys.length === 0 && <p className="col-span-full text-sm text-slate-500 dark:text-white/60">This category has all-time records only. Reset the slicing filters to view it.</p>}
+        {recordKeys.map(key => {
           const rec = recordsMap[key];
           if (!rec) return null;
           const cardMatchId = findMatchId({ player: rec.holder, context: rec.context, innings: rec.context });
@@ -3505,6 +3533,7 @@ function FilterDropdown({ label, icon: Icon, value, options, onChange }: { label
   return (
     <div className="relative">
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-2 px-3 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-xl dark:hover:bg-white/5 transition-all group cursor-pointer ${isOpen ? 'border-primary/50 bg-slate-100 dark:bg-white/5' : ''}`}
         title={label}
@@ -3524,6 +3553,8 @@ function FilterDropdown({ label, icon: Icon, value, options, onChange }: { label
             {options.map(opt => (
               <button
                 key={opt}
+                type="button"
+                onMouseDown={event => event.preventDefault()}
                 onClick={() => { onChange(opt); setIsOpen(false); }}
                 className={`w-full text-left px-4 py-2 text-[10px] font-bold transition-colors cursor-pointer ${value === opt ? 'bg-primary/20 text-primary font-black' : 'text-slate-700 hover:bg-slate-100 dark:text-white/60 dark:hover:bg-white/5 dark:hover:text-white'}`}
                 title={opt}
@@ -3547,7 +3578,7 @@ function MiniStat({ label, value }: { label: string; value: string }) {
   );
 }
 
-function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: any[], bowlers: any[], teams: any[], playerImages: Record<string, string> }) {
+function HeadToHeadView({ batters, bowlers, teams, playerImages, isSliced, matchIds }: { batters: any[], bowlers: any[], teams: any[], playerImages: Record<string, string>, isSliced: boolean, matchIds?: ReadonlySet<string> }) {
   const displayNames = usePlayerDisplayNames();
   const [mode, setMode] = useState<"players" | "teams">("players");
   const latestTeamResolver = usePlayerLatestTeamResolver();
@@ -3605,8 +3636,10 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
   const [roleFilter, setRoleFilter] = useState<"All" | "Batter" | "Bowler">("All");
   const [statsScope, setStatsScope] = useState<"all_time" | "squad">("all_time");
 
-  const [team1, setTeam1] = useState(teams[0]?.team || "");
-  const [team2, setTeam2] = useState(teams[1]?.team || "");
+  const [selectedTeam1, setTeam1] = useState("");
+  const [selectedTeam2, setTeam2] = useState("");
+  const team1 = teams.some(t => t.team === selectedTeam1) ? selectedTeam1 : teams[0]?.team ?? "";
+  const team2 = teams.some(t => t.team === selectedTeam2) ? selectedTeam2 : teams.find(t => t.team !== team1)?.team ?? "";
 
   // Helper to check if a player ever played at least once in a squad / franchise (2008-2026)
   const playerPlayedForTeam = (player: string, teamFilter: string): boolean => {
@@ -4165,7 +4198,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
                 <ComparisonRow label="Matches" val1={t1Data.matches} val2={t2Data.matches} isHigherBetter={true} />
                 <ComparisonRow label="Wins" val1={t1Data.wins} val2={t2Data.wins} isHigherBetter={true} />
                 <ComparisonRow label="Win %" val1={t1Data.winPct} val2={t2Data.winPct} isHigherBetter={true} />
-                <ComparisonRow label="Titles" val1={t1Data.titles} val2={t2Data.titles} isHigherBetter={true} />
+                {!isSliced && <ComparisonRow label="Titles" val1={t1Data.titles} val2={t2Data.titles} isHigherBetter={true} />}
               </div>
             )}
           </div>
@@ -4181,12 +4214,13 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
           </div>
         </div>
       )}
-      {mode === 'players' && player1 && player2 && (
+      {mode === 'players' && p1Data && p2Data && (
         <HeadToHeadTacticalLab
           player1={player1}
           player2={player2}
           p1Role={p1Data?.role || (p1Discipline === "bowler" ? "Bowler" : "Batter")}
           p2Role={p2Data?.role || (p2Discipline === "bowler" ? "Bowler" : "Batter")}
+          matchIds={matchIds}
           p1Stats={p1FinalBatting || p1FinalBowling}
           p2Stats={p2FinalBowling || p2FinalBatting}
           playerImages={playerImages}

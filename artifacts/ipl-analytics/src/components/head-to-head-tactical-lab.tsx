@@ -16,6 +16,7 @@ interface HeadToHeadTacticalLabProps {
   p1Stats?: any;
   p2Stats?: any;
   playerImages?: Record<string, string>;
+  matchIds?: ReadonlySet<string>;
 }
 
 // 8 Ground Sectors for the 360° Wagon Wheel
@@ -73,6 +74,7 @@ export function HeadToHeadTacticalLab({
   p1Stats,
   p2Stats,
   playerImages = {},
+  matchIds,
 }: HeadToHeadTacticalLabProps) {
   const displayNames = usePlayerDisplayNames();
   const bios = usePlayerBios();
@@ -100,11 +102,11 @@ export function HeadToHeadTacticalLab({
     if (!bowlerName) return [];
     const bClean = bowlerName.toLowerCase().trim();
     return allBatterDeliveries.filter(b => {
-      if (!b.bowler) return false;
+      if (!b.bowler || (matchIds && !matchIds.has(String(b.matchId)))) return false;
       const bBowl = b.bowler.toLowerCase().trim();
       return bBowl === bClean || bBowl.includes(bClean) || bClean.includes(bBowl);
     });
-  }, [allBatterDeliveries, bowlerName]);
+  }, [allBatterDeliveries, bowlerName, matchIds]);
 
   const hasRecordedMatchup = matchupDeliveries.length > 0;
 
@@ -127,7 +129,7 @@ export function HeadToHeadTacticalLab({
         dots,
         fours,
         sixes,
-        dismissals: Math.max(dismissals, p1Stats?.dismissals ?? 0),
+        dismissals: matchIds ? dismissals : Math.max(dismissals, p1Stats?.dismissals ?? 0),
         sr: sr.toFixed(1),
         dotPct: dotPct.toFixed(1),
         boundaryPct: boundaryPct.toFixed(1),
@@ -154,7 +156,7 @@ export function HeadToHeadTacticalLab({
       boundaryPct: "68.3",
       isProjected: true,
     };
-  }, [matchupDeliveries, hasRecordedMatchup, p1Stats, p2Stats]);
+  }, [matchupDeliveries, hasRecordedMatchup, p1Stats, p2Stats, matchIds]);
 
   // Aggregate Tactical Length Breakdown
   const tacticalLengths = useMemo(() => {
@@ -402,6 +404,10 @@ export function HeadToHeadTacticalLab({
       };
     });
   }, [matchupDeliveries, hasRecordedMatchup, matchupSummary.runs]);
+
+  if (matchIds && !hasRecordedMatchup) {
+    return <p role="status" className="stats-tool-panel p-4 text-sm">{deliveriesQuery.isLoading ? "Loading recorded deliveries…" : "No recorded deliveries for this matchup in the selected fixtures."}</p>;
+  }
 
   return (
     <div className="w-full bg-[#080B16] rounded-3xl border border-white/10 overflow-hidden shadow-2xl flex flex-col gap-0 animate-fade-in mt-6">
