@@ -1,5 +1,5 @@
 // CRICFIELD Mobile shell: contextual top bar, bottom tabs, bottom sheets and the global search sheet.
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { ArrowLeft, Compass, Gamepad2, House, Search, Sparkles, UserRound, X, ChevronRight, Menu, Bell, Grid2X2, Shield } from "lucide-react";
 import { useTeamTheme, TEAM_REGISTRY, TEAM_CODE_TO_SLUG, type TeamCode } from "@/lib/team-context";
@@ -8,12 +8,12 @@ import { playerSlug } from "@/lib/aggregates";
 import { CricfieldLogo } from "@/components/cricfield-logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-export const TABS: { href: string; label: string; icon: typeof House; match: (p: string) => boolean; cls?: string }[] = [
- { href: "/home", label: "Home", icon: House, match: (p: string) => p === "/" || p === "/home" },
- { href: "/dugout", label: "Dugout", icon: Shield, match: (p: string) => p.startsWith("/dugout") || p.startsWith("/account") },
- { href: "/feed", label: "Feed", icon: Compass, match: (p: string) => /^\/(discover|scout|teams|feed|intelligence|arcade|reports|retention-room|scores)/.test(p) },
- { href: "/stats", label: "Stats", icon: Grid2X2, match: (p: string) => /^\/(stats|players)/.test(p) },
- { href: "/ai-analyst", label: "AI Analyst", icon: Sparkles, match: (p: string) => p.startsWith("/ai-analyst") },
+export const TABS: { href: string; label: string; icon: typeof House; match: (p: string) => boolean; color: string; cls?: string }[] = [
+ { href: "/home", label: "Home", icon: House, color: "#ff8c00", match: (p: string) => p === "/" || p === "/home" },
+ { href: "/dugout", label: "Dugout", icon: Shield, color: "#f54888", match: (p: string) => p.startsWith("/dugout") || p.startsWith("/account") },
+ { href: "/feed", label: "Feed", icon: Compass, color: "#4343f5", match: (p: string) => /^\/(discover|scout|teams|feed|intelligence|arcade|reports|retention-room|scores)/.test(p) },
+ { href: "/stats", label: "Stats", icon: Grid2X2, color: "#e0b115", match: (p: string) => /^\/(stats|players)/.test(p) },
+ { href: "/ai-analyst", label: "AI Analyst", icon: Sparkles, color: "#65ddb7", match: (p: string) => p.startsWith("/ai-analyst") },
 ];
 const TITLES: [RegExp, string][] = [
   [/^\/discover/, "Discover"], [/^\/stats/, "Stats"], [/^\/scout\/player/, "Scout Report"], [/^\/scout\/compare/, "Compare"], [/^\/scout/, "Scout Lab"],
@@ -90,13 +90,93 @@ export function TopBar() {
 export function BottomTabs() {
   const [location] = useLocation();
   const path = location.split("?")[0];
+  const rawId = useId();
+  const clipId = `cfm-menu-clip-${rawId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
+  const navRef = useRef<HTMLElement>(null);
+  const borderRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const mountedRef = useRef(false);
+
+  const activeIndex = TABS.findIndex((t) => t.match(path));
+
+  useLayoutEffect(() => {
+    const nav = navRef.current;
+    const border = borderRef.current;
+    const activeEl = activeIndex >= 0 ? itemRefs.current[activeIndex] : null;
+    if (!nav || !border || !activeEl) return;
+
+    const positionBorder = (instant: boolean) => {
+      if (instant) {
+        nav.style.setProperty("--timeOut", "none");
+      } else {
+        nav.style.removeProperty("--timeOut");
+      }
+      const navRect = nav.getBoundingClientRect();
+      const itemRect = activeEl.getBoundingClientRect();
+      const left = Math.round(itemRect.left - navRect.left - (border.offsetWidth - itemRect.width) / 2);
+      border.style.transform = `translate3d(${left}px, 0, 0)`;
+    };
+
+    // Place synchronously without a slide-from-left flash on first mount; animate smoothly on tab switches.
+    positionBorder(!mountedRef.current);
+    mountedRef.current = true;
+
+    const onResize = () => positionBorder(true);
+    window.addEventListener("resize", onResize);
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(onResize) : null;
+    ro?.observe(nav);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      ro?.disconnect();
+    };
+  }, [activeIndex, path]);
+
   return (
-    <nav className="cfm-tabs" aria-label="CRICFIELD sections">
-      {TABS.map((t) => { const on = t.match(path); return (
-        <Link key={t.href} href={t.href} className={`cfm-tab ${t.cls ?? ""}`} aria-current={on ? "page" : undefined}>
-          <t.icon aria-hidden="true" />{t.label}
-        </Link>
-      ); })}
+    <nav
+      ref={navRef}
+      className={`cfm-tabs ${activeIndex < 0 ? "cfm-tabs--none" : ""}`}
+      aria-label="CRICFIELD sections"
+    >
+      <div className="cfm-tabs-notch-clip" aria-hidden="true">
+        <div
+          ref={borderRef}
+          className="cfm-menu__border"
+          style={{ clipPath: `url(#${clipId})` }}
+        />
+      </div>
+
+      {TABS.map((t, index) => {
+        const on = index === activeIndex;
+        return (
+          <Link
+            key={t.href}
+            ref={(el: HTMLAnchorElement | null) => {
+              itemRefs.current[index] = el;
+            }}
+            href={t.href}
+            className={`cfm-tab ${on ? "active" : ""} ${t.cls ?? ""}`}
+            style={{ "--bgColorItem": t.color } as CSSProperties}
+            aria-current={on ? "page" : undefined}
+          >
+            <span className="cfm-tab-orb" aria-hidden="true">
+              <t.icon className="cfm-tab-icon" />
+            </span>
+            <span className="cfm-tab-label">{t.label}</span>
+          </Link>
+        );
+      })}
+
+      <div className="cfm-svg-container" aria-hidden="true">
+        <svg viewBox="0 0 202.9 45.5" focusable="false">
+          <clipPath
+            id={clipId}
+            clipPathUnits="objectBoundingBox"
+            transform="scale(0.0049285362247413 0.021978021978022)"
+          >
+            <path d="M6.7,45.5c5.7,0.1,14.1-0.4,23.3-4c5.7-2.3,9.9-5,18.1-10.5c10.7-7.1,11.8-9.2,20.6-14.3c5-2.9,9.2-5.2,15.2-7 c7.1-2.1,13.3-2.3,17.6-2.1c4.2-0.2,10.5,0.1,17.6,2.1c6.1,1.8,10.2,4.1,15.2,7c8.8,5,9.9,7.1,20.6,14.3c8.3,5.5,12.4,8.2,18.1,10.5 c9.2,3.6,17.6,4.2,23.3,4H6.7z" />
+          </clipPath>
+        </svg>
+      </div>
     </nav>
   );
 }
