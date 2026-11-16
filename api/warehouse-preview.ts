@@ -19,7 +19,7 @@ const iplPath = join(warehouseDirectory, "sqlite.db");
 
 let scout: Promise<void> | undefined;
 let ipl: Promise<void> | undefined;
-let app: Promise<typeof import("../artifacts/api-server/src/app").default> | undefined;
+let app: Promise<(req: IncomingMessage, res: ServerResponse) => void> | undefined;
 
 function configureScout() {
   const url = process.env.TURSO_SCOUT_DATABASE_URL;
@@ -68,7 +68,9 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       ipl ??= configureIpl().catch(error => { ipl = undefined; throw error; });
       await ipl;
     }
-    app ??= import("../artifacts/api-server/src/app").then(module => module.default);
+    app ??= import("../artifacts/api-server/src/app.js").then(
+      module => module.default as unknown as (req: IncomingMessage, res: ServerResponse) => void,
+    );
     return (await app)(req, res);
   } catch (error) {
     // Provider URLs and authorization details must never enter the response.
