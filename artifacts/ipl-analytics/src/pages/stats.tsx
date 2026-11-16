@@ -1,12 +1,12 @@
 import "./stats-tools.css";
 import { MobileStatsPresentation } from "@/mobile/screens/stats-presentation";
 import {ScoringRing} from '@/components/visualizations/scoring-ring';
+import { HeadToHeadTacticalLab } from "@/components/head-to-head-tactical-lab";
 import { Scale } from "lucide-react";
 import { LeagueValuePanel } from "@/components/intelligence/intel-components";
 import { FeatureSaveButton } from "@/components/feature-save-button";
 import { PressureReliabilityPanel } from "@/components/pressure-reliability-panel";
 import { BatterLensRankings } from "@/components/batter-lens-rankings";
-import { RunFlowSankey, ShotFlowSankey } from "@/components/visualizations/sankey-diagram";
 import React, { useEffect, useMemo, useState } from "react";
 import { Layout } from "@/components/layout";
 import { TeamLogo } from "@/components/team-logo";
@@ -53,13 +53,10 @@ const TABS = [
   { id: "teams", label: "Teams", Icon: Users },
   { id: "records", label: "Record Book", Icon: Trophy },
   { id: "head2head", label: "Head to Head", Icon: Crosshair },
-  { id: "stat-builder", label: "Stat Builder", Icon: Filter },
-  { id: "scenario-intelligence", label: "Scenario Intelligence", Icon: Cpu },
-  { id: "tactics", label: "Tactics & Length", Icon: BarChart2 },
-  { id: "batter-lens", label: "Batter Lens", Icon: Crosshair },
+  { id: "dimensional", label: "Dimensional Slicing", Icon: Layers },
   { id: "ask", label: "Ask AI", Icon: Cpu },
 ] as const;
-type Tab = typeof TABS[number]["id"];
+type Tab = typeof TABS[number]["id"] | "stat-builder" | "scenario-intelligence" | "tactics" | "batter-lens";
 
 const SCENARIO_METADATA: Record<string, { title: string; subtitle: string; leverageBadge: string; parMetric: string; successDriver: string }> = {
   death: {
@@ -246,6 +243,7 @@ function TablePaginationBar({
 export default function StatsPage({ mobilePresentation = false }: { mobilePresentation?: boolean } = {}) {
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState<Tab>("batters");
+  const [dimSlicingView, setDimSlicingView] = useState<"stat-builder" | "scenario-intelligence" | "batter-lens">("stat-builder");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedVenue, setSelectedVenue] = useState<string | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
@@ -467,6 +465,53 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     });
     return Array.from(records.values()).sort((a, b) => b.matches - a.matches || a.venue.localeCompare(b.venue));
   }, [activeMatches]);
+
+  const isVenueFiltered = useMemo(() => {
+    return filters.season !== "All Seasons" || filters.team !== "All Teams" || filters.opposition !== "All Opponents" || filters.venue !== "All Venues" || filters.match_context !== "All Matches";
+  }, [filters.season, filters.team, filters.opposition, filters.venue, filters.match_context]);
+
+  const venueCards = useMemo(() => {
+    const byVenueName = new Map<string, any>();
+    for (const v of venues.data ?? []) {
+      const vName = getVenueName(v);
+      byVenueName.set(vName.toLowerCase(), v);
+    }
+
+    if (!isVenueFiltered) {
+      return (venues.data ?? []).map((v: any) => {
+        const venueName = getVenueName(v);
+        const cityName = getVenueCity(v);
+        const avg1st = Number(v.avg1stInn ?? v.avgFirstInnings ?? 0);
+        const avg2nd = Number(v.avg2ndInn ?? v.avgSecondInnings ?? 0);
+        const avgRunRate = (avg1st && avg2nd) ? ((avg1st + avg2nd) / 40) : 8.24;
+        return {
+          venueName,
+          cityName,
+          matches: v.matches || 14,
+          avgRunRate,
+          isSliced: false,
+        };
+      });
+    }
+
+    let filteredSliced = slicedVenues;
+    if (filters.venue !== "All Venues") {
+      const target = normalizeVenueName(filters.venue).toLowerCase();
+      filteredSliced = slicedVenues.filter(sv => sv.venue.toLowerCase().includes(target) || target.includes(sv.venue.toLowerCase()));
+    }
+
+    return filteredSliced.map(sv => {
+      const meta = byVenueName.get(sv.venue.toLowerCase()) || {};
+      const cityName = getVenueCity(meta);
+      return {
+        venueName: sv.venue,
+        cityName,
+        matches: sv.matches,
+        avgRunRate: sv.avgRunRate || 8.24,
+        isSliced: true,
+      };
+    });
+  }, [venues.data, slicedVenues, isVenueFiltered, filters.venue]);
   const isDefaultCareerView = useMemo(() => {
     const dim = buildDimensionalPayload(filters);
     return (
@@ -620,7 +665,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       }
       return { batters: result.batters, bowlers: result.bowlers };
     },
-    enabled: activeTab === "scenario-intelligence" && selectedScenario !== "pressure-reliability",
+    enabled: ((activeTab === "dimensional" && dimSlicingView === "scenario-intelligence") || activeTab === "scenario-intelligence") && selectedScenario !== "pressure-reliability",
     staleTime: 1000 * 60 * 5,
   });
 
@@ -800,13 +845,30 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   const { selectedTeam: themeTeam } = useTeamTheme();
 
-  // Listen for query parameter ?team=... on URL mount
+  // Listen for query parameter ?team=... or ?tab=... on URL mount
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const queryTeam = params.get("team");
       if (queryTeam && queryTeam !== filters.team) {
         handleFilterChange("team", queryTeam);
+      }
+      const queryTab = params.get("tab");
+      if (queryTab) {
+        if (queryTab === "scenario" || queryTab === "scenario-intelligence") {
+          setActiveTab("dimensional");
+          setDimSlicingView("scenario-intelligence");
+        } else if (queryTab === "stat-builder") {
+          setActiveTab("dimensional");
+          setDimSlicingView("stat-builder");
+        } else if (queryTab === "batter-lens") {
+          setActiveTab("dimensional");
+          setDimSlicingView("batter-lens");
+        } else if (queryTab === "tactics") {
+          setActiveTab("head2head");
+        } else if (TABS.some(t => t.id === queryTab)) {
+          setActiveTab(queryTab as any);
+        }
       }
     }
   }, []);
@@ -1054,9 +1116,14 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   </>);
 
-  const selectedTool = activeTab === "head2head" || activeTab === "stat-builder"
-    || activeTab === "scenario-intelligence" || activeTab === "tactics" || activeTab === "batter-lens"
-    ? TABS.find(tab => tab.id === activeTab) : undefined;
+  const isDimensionalTab = activeTab === "dimensional" || activeTab === "stat-builder" || activeTab === "scenario-intelligence" || activeTab === "batter-lens";
+  const isHead2HeadTab = activeTab === "head2head" || activeTab === "tactics";
+
+  const selectedTool = isHead2HeadTab
+    ? TABS.find(tab => tab.id === "head2head")
+    : isDimensionalTab
+    ? TABS.find(tab => tab.id === "dimensional")
+    : undefined;
   const activeTool = selectedTool ? (
     <section className="stats-tool grid min-w-0 gap-4">
       <header className="stats-tool-panel flex items-center gap-3 px-4 py-4 sm:px-5">
@@ -1065,8 +1132,58 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         </span>
         <h2 className="text-lg font-black tracking-tight">{selectedTool.label}</h2>
       </header>
-      {activeTab === "scenario-intelligence" && (
+      {isDimensionalTab && (
         <div className="flex flex-col gap-6 animate-fade-in">
+          {/* Dimensional Slicing Engine Switcher */}
+          <div className="stats-tool-panel p-3 flex flex-wrap items-center justify-between gap-3 shadow-xl">
+            <div className="flex items-center gap-2">
+              <Layers className="w-4 h-4 text-primary" />
+              <span className="text-[11px] font-black uppercase tracking-widest text-white">
+                Multidimensional Slicing Engines
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 p-1 bg-black/40 border border-white/10 rounded-xl">
+              <button
+                type="button"
+                onClick={() => setDimSlicingView("stat-builder")}
+                className={`px-3.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                  dimSlicingView === "stat-builder" ? "bg-primary text-white shadow-md font-black" : "text-white/40 hover:text-white"
+                }`}
+              >
+                <Filter className="w-3 h-3" />
+                Stat Builder (Situation SR)
+              </button>
+              <button
+                type="button"
+                onClick={() => setDimSlicingView("scenario-intelligence")}
+                className={`px-3.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                  dimSlicingView === "scenario-intelligence" ? "bg-primary text-white shadow-md font-black" : "text-white/40 hover:text-white"
+                }`}
+              >
+                <Cpu className="w-3 h-3" />
+                Scenario Intelligence
+              </button>
+              <button
+                type="button"
+                onClick={() => setDimSlicingView("batter-lens")}
+                className={`px-3.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                  dimSlicingView === "batter-lens" ? "bg-primary text-white shadow-md font-black" : "text-white/40 hover:text-white"
+                }`}
+              >
+                <Crosshair className="w-3 h-3" />
+                Batter Lens
+              </button>
+            </div>
+          </div>
+
+          {/* Engine 1: Stat Builder */}
+          {dimSlicingView === "stat-builder" && (
+            <StatBuilderView batters={activeData.batters} bowlers={activeData.bowlers} playerImages={playerImages.data ?? {}} />
+          )}
+
+          {/* Engine 2: Scenario Intelligence */}
+          {dimSlicingView === "scenario-intelligence" && (
+            <div className="flex flex-col gap-6 animate-fade-in">
           {/* Scenario presets */}
           <div className="stats-tool-panel flex flex-wrap gap-2 p-3">
             {[
@@ -1241,61 +1358,19 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
             </div>
           )}
           </>)}
+            </div>
+          )}
+
+          {/* Engine 3: Batter Lens */}
+          {dimSlicingView === "batter-lens" && (
+            <BatterLensRankings />
+          )}
         </div>
       )}
 
-      {activeTab === "head2head" && (
+      {isHead2HeadTab && (
         <HeadToHeadView batters={activeData.batters} bowlers={activeData.bowlers} teams={teams.data || []} playerImages={playerImages.data ?? {}} />
       )}
-      {activeTab === "stat-builder" && (
-        <StatBuilderView batters={activeData.batters} bowlers={activeData.bowlers} playerImages={playerImages.data ?? {}} />
-      )}
-      {activeTab === "tactics" && (
-        <div className="flex flex-col gap-6 animate-fade-in">
-          {/* Delivery Length to Shot Type Matrix */}
-          <div className="stats-tool-panel p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
-              <div>
-                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
-                  <BarChart2 className="w-3 h-3 text-blue-400" />
-                  LENGTH MATRIX &amp; SHOT HEATMAP
-                </span>
-                <h2 className="text-base sm:text-lg font-black mt-1.5 tracking-tight">
-                  Delivery Length to Shot Type Matrix
-                </h2>
-                <p className="text-xs text-white/50 font-mono mt-0.5">
-                  Interactive length distribution across all IPL seasons (2008 – 2026)
-                </p>
-              </div>
-            </div>
-            <div className="w-full overflow-x-auto">
-              <div className="min-w-[520px]"><RunFlowSankey /></div>
-            </div>
-          </div>
-
-          {/* Shot Execution Flow */}
-          <div className="stats-tool-panel p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
-              <div>
-                <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 w-max">
-                  <Zap className="w-3 h-3 text-purple-400" />
-                  BALL RELEASE TO OUTCOME FLOW
-                </span>
-                <h2 className="text-base sm:text-lg font-black mt-1.5 tracking-tight">
-                  Shot Execution Flow
-                </h2>
-                <p className="text-xs text-white/50 font-mono mt-0.5">
-                  Delivery Seam / Spin Release to Shot Execution Outcome (2008 – 2026)
-                </p>
-              </div>
-            </div>
-            <div className="w-full overflow-x-auto">
-              <div className="min-w-[520px]"><ShotFlowSankey /></div>
-            </div>
-          </div>
-        </div>
-      )}
-      {activeTab === "batter-lens" && <BatterLensRankings />}
     </section>
   ) : null;
 
@@ -1741,142 +1816,212 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
               {activeTab === "venues" && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
-                  {venues.data?.map((v: any) => {
-                    const venueName = getVenueName(v);
-                    const cityName = getVenueCity(v);
-                    const avg1st = Number(v.avg1stInn ?? v.avgFirstInnings ?? 0);
-                    const avg2nd = Number(v.avg2ndInn ?? v.avgSecondInnings ?? 0);
-                    const avgRunRate = (avg1st && avg2nd) ? ((avg1st + avg2nd) / 40) : 8.24;
-                    return (
-                      <GlassCard
-                        key={venueName}
-                        className="p-6 relative overflow-hidden group hover:border-primary/30 transition-all duration-300 cursor-pointer flex flex-col justify-between"
-                        onClick={() => setSelectedVenue(venueName)}
+                  {isVenueFiltered && (
+                    <div className="col-span-full p-4 rounded-2xl bg-primary/10 border border-primary/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+                      <div className="flex items-center gap-2.5 text-xs font-mono text-white">
+                        <Filter className="w-4 h-4 text-primary shrink-0" />
+                        <span>
+                          <strong>Dimensional Slicing Active:</strong> Showing {venueCards.length} venue(s) across {activeMatches.length} sliced matches
+                          {filters.season !== "All Seasons" ? ` (${filters.season})` : ""}
+                          {filters.team !== "All Teams" ? ` · Team: ${filters.team}` : ""}
+                          {filters.venue !== "All Venues" ? ` · Venue: ${filters.venue}` : ""}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={clearFilterChain}
+                        className="text-[10px] font-mono text-primary hover:underline cursor-pointer shrink-0"
                       >
-                        {/* Full-bleed photo banner. The previous corner
-                            treatment cut the image into a quarter-circle in the
-                            top-right, which clipped the stadium and read as a
-                            stray wedge over the stats. */}
-                        <div className="absolute inset-x-0 top-0 h-24 pointer-events-none overflow-hidden">
-                          {venueImage(venueName) ? (
-                            <img
-                              src={venueImage(venueName)!}
-                              className="w-full h-full object-cover opacity-40 group-hover:opacity-55 group-hover:scale-105 transition-all duration-500"
-                              alt=""
-                              loading="lazy"
-                            />
-                          ) : (
-                            <div
-                              className="w-full h-full opacity-50"
-                              style={{ background: `linear-gradient(135deg, hsl(${venueHue(venueName)} 50% 32%), transparent)` }}
-                            />
-                          )}
-                          {/* Fades the photo into the card so text stays legible. */}
-                          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B1020]/60 to-[#0B1020]" />
-                        </div>
-                        <div className="flex items-center gap-3 mb-4 relative z-10 pt-6">
-                          <div className="w-11 h-11 rounded-xl overflow-hidden shrink-0 border border-white/15 shadow-lg">
+                        Reset Slicing
+                      </button>
+                    </div>
+                  )}
+
+                  {venueCards.length === 0 ? (
+                    <div className="col-span-full text-center py-16 bg-white/[0.02] border border-white/5 rounded-3xl p-6">
+                      <MapPin className="w-8 h-8 text-white/20 mx-auto mb-2" />
+                      <div className="text-sm font-bold text-white">No venue fixtures match this dimensional slice</div>
+                      <p className="text-xs text-white/50 mt-1">Try expanding your season or team filter parameters to discover matches.</p>
+                      <button
+                        type="button"
+                        onClick={clearFilterChain}
+                        className="mt-4 px-4 py-2 rounded-xl bg-primary text-white text-xs font-black uppercase tracking-wider cursor-pointer"
+                      >
+                        Reset All Filters
+                      </button>
+                    </div>
+                  ) : (
+                    venueCards.map((v: any) => {
+                      const venueName = v.venueName;
+                      const cityName = v.cityName;
+                      const avgRunRate = v.avgRunRate;
+                      return (
+                        <GlassCard
+                          key={venueName}
+                          className="p-6 relative overflow-hidden group hover:border-primary/30 transition-all duration-300 cursor-pointer flex flex-col justify-between"
+                          onClick={() => setSelectedVenue(venueName)}
+                        >
+                          <div className="absolute inset-x-0 top-0 h-24 pointer-events-none overflow-hidden">
                             {venueImage(venueName) ? (
-                              <img src={venueImage(venueName)!} className="w-full h-full object-cover" alt={venueName} loading="lazy" />
+                              <img
+                                src={venueImage(venueName)!}
+                                className="w-full h-full object-cover opacity-40 group-hover:opacity-55 group-hover:scale-105 transition-all duration-500"
+                                alt=""
+                                loading="lazy"
+                              />
                             ) : (
                               <div
-                                className="w-full h-full flex items-center justify-center"
-                                style={{ background: `linear-gradient(135deg, hsl(${venueHue(venueName)} 45% 24%), hsl(${venueHue(venueName)} 40% 12%))` }}
-                              >
-                                <MapPin className="w-5 h-5" style={{ color: `hsl(${venueHue(venueName)} 70% 65%)` }} />
-                              </div>
+                                className="w-full h-full opacity-50"
+                                style={{ background: `linear-gradient(135deg, hsl(${venueHue(venueName)} 50% 32%), transparent)` }}
+                              />
                             )}
+                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B1020]/60 to-[#0B1020]" />
                           </div>
-                          <div className="min-w-0">
-                            <div className="text-sm font-black text-white group-hover:text-primary transition-colors truncate">{venueName}</div>
-                            <div className="text-[10px] text-white/40 font-bold">{cityName}</div>
+                          <div className="flex items-center gap-3 mb-4 relative z-10 pt-6">
+                            <div className="w-11 h-11 rounded-xl overflow-hidden shrink-0 border border-white/15 shadow-lg">
+                              {venueImage(venueName) ? (
+                                <img src={venueImage(venueName)!} className="w-full h-full object-cover" alt={venueName} loading="lazy" />
+                              ) : (
+                                <div
+                                  className="w-full h-full flex items-center justify-center"
+                                  style={{ background: `linear-gradient(135deg, hsl(${venueHue(venueName)} 45% 24%), hsl(${venueHue(venueName)} 40% 12%))` }}
+                                >
+                                  <MapPin className="w-5 h-5" style={{ color: `hsl(${venueHue(venueName)} 70% 65%)` }} />
+                                </div>
+                              )}
+                            </div>
+                            <div className="min-w-0">
+                              <div className="text-sm font-black text-white group-hover:text-primary transition-colors truncate">{venueName}</div>
+                              <div className="text-[10px] text-white/40 font-bold">{cityName}</div>
+                            </div>
                           </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-4 pt-3 border-t border-white/5 relative z-10">
-                          <div>
-                            <div className="text-[8px] font-bold text-white/30 uppercase">Total Matches</div>
-                            <div className="text-xl font-black text-white mt-0.5">{v.matches || 14}</div>
+                          <div className="grid grid-cols-2 gap-4 pt-3 border-t border-white/5 relative z-10">
+                            <div>
+                              <div className="text-[8px] font-bold text-white/30 uppercase">{v.isSliced ? "Sliced Fixtures" : "Total Matches"}</div>
+                              <div className="text-xl font-black text-white mt-0.5">{v.matches}</div>
+                            </div>
+                            <div>
+                              <div className="text-[8px] font-bold text-white/30 uppercase">Avg Run Rate</div>
+                              <div className="text-xl font-black text-primary mt-0.5">{Number(avgRunRate).toFixed(2)}</div>
+                            </div>
                           </div>
-                          <div>
-                            <div className="text-[8px] font-bold text-white/30 uppercase">Avg Run Rate</div>
-                            <div className="text-xl font-black text-primary mt-0.5">{avgRunRate.toFixed(2)}</div>
+                          <div className="mt-4 pt-2 flex items-center justify-between text-[10px] font-black text-primary uppercase tracking-wider relative z-10 group-hover:translate-x-1 transition-transform">
+                            <span>Inspect Pitch Telemetry</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
                           </div>
-                        </div>
-                        <div className="mt-4 pt-2 flex items-center justify-between text-[10px] font-black text-primary uppercase tracking-wider relative z-10 group-hover:translate-x-1 transition-transform">
-                          <span>Inspect Pitch Telemetry</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </div>
-                      </GlassCard>
-                    );
-                  })}
+                        </GlassCard>
+                      );
+                    })
+                  )}
                 </div>
               )}
 
               {activeTab === "teams" && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
-                  {teamCards.map((t) => {
-                    const accent = teamColor(t.name);
-                    return (
-                    <GlassCard
-                      key={t.short}
-                      className="p-6 relative overflow-hidden group hover:border-primary/30 transition-all duration-300 cursor-pointer"
-                      onClick={() => {
-                        const slug = t.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-                        setLocation(`/teams/${slug}`);
-                        window.scrollTo({ top: 0, behavior: "smooth" });
-                      }}
-                    >
-                      {/* Wash tinted with the franchise's own colour rather than
-                          a single shared accent, so cards read apart at a glance. */}
-                      <div
-                        className="absolute top-0 right-0 w-28 h-28 rounded-bl-full -mr-8 -mt-8 opacity-25 group-hover:scale-110 group-hover:opacity-40 transition-all duration-300"
-                        style={{ background: `radial-gradient(circle at 70% 30%, ${accent}, transparent 70%)` }}
-                      />
-                      <div className="flex items-center gap-3 mb-4 relative z-10">
-                        <TeamLogo team={t.name} size="w-11 h-11" />
-                        <div className="min-w-0">
-                          <div className="text-sm font-black text-white group-hover:text-primary transition-colors truncate">{t.name}</div>
-                          <div className="text-[10px] text-white/40 font-bold flex items-center gap-1.5">
-                            <span>{t.short}</span>
-                            {t.titles > 0 && (
-                              <span className="inline-flex items-center gap-1 text-amber-300/80">
-                                <Trophy className="w-2.5 h-2.5" />
-                                {t.titles} {t.titles === 1 ? "title" : "titles"}
-                              </span>
-                            )}
+                  {(filters.team !== "All Teams" || filters.season !== "All Seasons" || filters.opposition !== "All Opponents" || filters.venue !== "All Venues") && (
+                    <div className="col-span-full p-4 rounded-2xl bg-primary/10 border border-primary/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+                      <div className="flex items-center gap-2.5 text-xs font-mono text-white">
+                        <Filter className="w-4 h-4 text-primary shrink-0" />
+                        <span>
+                          <strong>Dimensional Slicing Active:</strong> Showing {teamCards.length} franchise standings across {activeMatches.length} sliced fixtures
+                          {filters.season !== "All Seasons" ? ` (${filters.season})` : ""}
+                          {filters.team !== "All Teams" ? ` · Franchise: ${filters.team}` : ""}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={clearFilterChain}
+                        className="text-[10px] font-mono text-primary hover:underline cursor-pointer shrink-0"
+                      >
+                        Reset Slicing
+                      </button>
+                    </div>
+                  )}
+
+                  {teamCards.length === 0 ? (
+                    <div className="col-span-full text-center py-16 bg-white/[0.02] border border-white/5 rounded-3xl p-6">
+                      <Users className="w-8 h-8 text-white/20 mx-auto mb-2" />
+                      <div className="text-sm font-bold text-white">No team fixtures match this dimensional slice</div>
+                      <p className="text-xs text-white/50 mt-1">Try expanding your season or opponent filter parameters to discover matches.</p>
+                      <button
+                        type="button"
+                        onClick={clearFilterChain}
+                        className="mt-4 px-4 py-2 rounded-xl bg-primary text-white text-xs font-black uppercase tracking-wider cursor-pointer"
+                      >
+                        Reset All Filters
+                      </button>
+                    </div>
+                  ) : (
+                    teamCards.map((t) => {
+                      const accent = teamColor(t.name);
+                      const isSelected = filters.team !== "All Teams" && (isMatchingTeam(t.name, filters.team) || t.short === filters.team);
+                      return (
+                      <GlassCard
+                        key={t.short}
+                        className={`p-6 relative overflow-hidden group hover:border-primary/30 transition-all duration-300 cursor-pointer ${
+                          isSelected ? "ring-2 ring-primary border-primary shadow-2xl" : ""
+                        }`}
+                        onClick={() => {
+                          const slug = t.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                          setLocation(`/teams/${slug}`);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                      >
+                        <div
+                          className="absolute top-0 right-0 w-28 h-28 rounded-bl-full -mr-8 -mt-8 opacity-25 group-hover:scale-110 group-hover:opacity-40 transition-all duration-300"
+                          style={{ background: `radial-gradient(circle at 70% 30%, ${accent}, transparent 70%)` }}
+                        />
+                        <div className="flex items-center gap-3 mb-4 relative z-10">
+                          <TeamLogo team={t.name} size="w-11 h-11" />
+                          <div className="min-w-0">
+                            <div className="text-sm font-black text-white group-hover:text-primary transition-colors truncate">{t.name}</div>
+                            <div className="text-[10px] text-white/40 font-bold flex items-center gap-1.5">
+                              <span>{t.short}</span>
+                              {t.titles > 0 && (
+                                <span className="inline-flex items-center gap-1 text-amber-300/80">
+                                  <Trophy className="w-2.5 h-2.5" />
+                                  {t.titles} {t.titles === 1 ? "title" : "titles"}
+                                </span>
+                              )}
+                              {isSelected && (
+                                <span className="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-primary/20 text-primary border border-primary/30">
+                                  Selected
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Win share bar — proportion of the sliced fixtures won. */}
-                      <div className="h-1.5 rounded-full bg-white/5 overflow-hidden mb-3 relative z-10">
-                        <div
-                          className="h-full rounded-full transition-all duration-500"
-                          style={{ width: `${Math.min(100, t.winPct)}%`, background: accent }}
-                        />
-                      </div>
+                        {/* Win share bar */}
+                        <div className="h-1.5 rounded-full bg-white/5 overflow-hidden mb-3 relative z-10">
+                          <div
+                            className="h-full rounded-full transition-all duration-500"
+                            style={{ width: `${Math.min(100, t.winPct)}%`, background: accent }}
+                          />
+                        </div>
 
-                      <div className="grid grid-cols-4 gap-2 pt-2 border-t border-white/5 relative z-10">
-                        <div>
-                          <div className="text-[8px] font-bold text-white/30 uppercase">Played</div>
-                          <div className="text-base font-black text-white mt-0.5">{t.matches}</div>
+                        <div className="grid grid-cols-4 gap-2 pt-2 border-t border-white/5 relative z-10">
+                          <div>
+                            <div className="text-[8px] font-bold text-white/30 uppercase">Played</div>
+                            <div className="text-base font-black text-white mt-0.5">{t.matches}</div>
+                          </div>
+                          <div>
+                            <div className="text-[8px] font-bold text-white/30 uppercase">Won</div>
+                            <div className="text-base font-black text-emerald-400 mt-0.5">{t.wins}</div>
+                          </div>
+                          <div>
+                            <div className="text-[8px] font-bold text-white/30 uppercase">Lost</div>
+                            <div className="text-base font-black text-red-400 mt-0.5">{t.losses}</div>
+                          </div>
+                          <div>
+                            <div className="text-[8px] font-bold text-white/30 uppercase">Win %</div>
+                            <div className="text-base font-black text-primary mt-0.5">{t.winPct.toFixed(1)}%</div>
+                          </div>
                         </div>
-                        <div>
-                          <div className="text-[8px] font-bold text-white/30 uppercase">Won</div>
-                          <div className="text-base font-black text-emerald-400 mt-0.5">{t.wins}</div>
-                        </div>
-                        <div>
-                          <div className="text-[8px] font-bold text-white/30 uppercase">Lost</div>
-                          <div className="text-base font-black text-red-400 mt-0.5">{t.losses}</div>
-                        </div>
-                        <div>
-                          <div className="text-[8px] font-bold text-white/30 uppercase">Win %</div>
-                          <div className="text-base font-black text-primary mt-0.5">{t.winPct.toFixed(1)}%</div>
-                        </div>
-                      </div>
-                    </GlassCard>
-                    );
-                  })}
+                      </GlassCard>
+                      );
+                    })
+                  )}
                 </div>
               )}
 
@@ -3201,7 +3346,6 @@ function PhaseSpecialistsView({ activeData, playerImages }: { activeData: any, p
 
   return (
     <div className="flex flex-col gap-6">
-<ScoringRing/>
 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -3949,10 +4093,15 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages }: { batters: an
           </div>
         </div>
       )}
-      {mode==='players'&&player1&&player2&& (
-        <ScoringRing
-          player={p1Discipline === "bowler" && p2Discipline === "batter" ? player2 : player1}
-          bowler={p1Discipline === "bowler" && p2Discipline === "batter" ? player1 : player2}
+      {mode === 'players' && player1 && player2 && (
+        <HeadToHeadTacticalLab
+          player1={player1}
+          player2={player2}
+          p1Role={p1Data?.role || (p1Discipline === "bowler" ? "Bowler" : "Batter")}
+          p2Role={p2Data?.role || (p2Discipline === "bowler" ? "Bowler" : "Batter")}
+          p1Stats={p1FinalBatting || p1FinalBowling}
+          p2Stats={p2FinalBowling || p2FinalBatting}
+          playerImages={playerImages}
         />
       )}
     </div>
