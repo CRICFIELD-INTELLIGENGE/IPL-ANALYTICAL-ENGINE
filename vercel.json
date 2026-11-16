@@ -7,7 +7,63 @@
   "framework": null,
   "rewrites": [
     {
-      "source": "/((?!api/(?:turso-preview|scout/t20/coverage)/?$).*)",
+      "source": "/api/scout/rankings",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/scout/rankings"
+    },
+    {
+      "source": "/api/scout/t20/suggestions",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/scout/t20/suggestions"
+    },
+    {
+      "source": "/api/ipl/overview",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/ipl/overview"
+    },
+    {
+      "source": "/api/ipl/seasons",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/ipl/seasons"
+    },
+    {
+      "source": "/api/ipl/player-career-stats",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/ipl/player-career-stats"
+    },
+    {
+      "source": "/api/ipl/player-season-stats",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/ipl/player-season-stats"
+    },
+    {
+      "source": "/api/ipl/stats/query",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/ipl/stats/query"
+    },
+    {
+      "source": "/api/ipl/stats/matchup",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/ipl/stats/matchup"
+    },
+    {
+      "source": "/api/ipl/stats/scenario",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/ipl/stats/scenario"
+    },
+    {
+      "source": "/api/ipl/stats/drilldown",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/ipl/stats/drilldown"
+    },
+    {
+      "source": "/api/stats/query",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/stats/query"
+    },
+    {
+      "source": "/api/stats/scenario",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/stats/scenario"
+    },
+    {
+      "source": "/api/stats/matchup",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/stats/matchup"
+    },
+    {
+      "source": "/api/stats/drilldown",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/stats/drilldown"
+    },
+    {
+      "source": "/((?!api/(?:turso-preview|warehouse-preview|scout/t20/coverage)/?$).*)",
       "destination": "/index.html"
     }
   ],
@@ -30,5 +86,11 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/warehouse-preview.ts": {
+      "maxDuration": 60,
+      "includeFiles": "{artifacts/ipl-analytics/public/data/{overview,seasons,matches,player-bio,players,current-squads,player-latest-teams,player-career-stats,player-season-stats}.json,artifacts/api-server/data/players.json,data/auction-2027-updates.json}"
+    }
+  }
 }
