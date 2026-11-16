@@ -1,252 +1,88 @@
-# CRICFIELD — IPL ANALYTICAL ENGINE
-> **"IPL is not cricket. It is a product, a media empire, and an economic ecosystem."**
+# CricField: IPL Analytical Engine
 
-An enterprise-grade sports intelligence, analytical calculations, and decision-support platform for the Indian Premier League (IPL). Built with 19 seasons of granular ball-by-ball delivery data, multi-tiered scouting models, interactive stadium telemetry, and real-time predictive simulations.
+CricField is an IPL analytics website (https://www.cricfield.in) with the data pipeline and analytics engine behind it. The repository has three parts:
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](package.json)
-[![React](https://img.shields.io/badge/React-18-61dafb.svg)](artifacts/ipl-analytics/package.json)
-[![Vite](https://img.shields.io/badge/Vite-6-646cff.svg)](artifacts/ipl-analytics/vite.config.ts)
-[![Express](https://img.shields.io/badge/Express-5-green.svg)](artifacts/api-server/package.json)
-[![SQLite](https://img.shields.io/badge/SQLite-Warehouse-003B57.svg)](schema.sql)
+| Part | What it is | Code |
+|---|---|---|
+| **CricField product** | React single-page site: stats, players, venues, teams, Dugout articles, Scout, Arcade, Retention Room | `artifacts/ipl-analytics` |
+| **Analytics engine** | Express API and models: decision intelligence, player intelligence, pressure reliability, retention, scouting | `artifacts/api-server`, `lib/arcade-rules` |
+| **Cricket data pipeline** | Builds the warehouses and the static JSON the site serves | `scripts/`, `lib/cricket-data/`, `artifacts/api-server/scripts/` |
 
----
+> **How production works:** Vercel deploys only the static frontend. No API runs in production. Pages read committed JSON from `artifacts/ipl-analytics/public/data/`, and every API-only feature needs a separately running API. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
-## 1. Project Overview
+## Features
 
-CRICFIELD transforms raw cricket delivery records into deep actionable intelligence. It powers player evaluations, squad compositions, match-scenario simulations, auction strategy rooms, and cinematic match centers.
+### Implemented (in production, static)
 
-The system serves both modern analytical operators (franchise scouts, analysts, tacticians) and public cricket fans through high-performance desktop and responsive mobile interfaces.
+- IPL statistics, records, season, team, venue and player pages, built from Cricsheet ball-by-ball data covering 2008–2026 (1,243 matches in the local warehouse)
+- Pressure Reliability rankings, from the published snapshot `public/data/pressure-reliability.json`
+- Batter Lens explorer (`public/data/batter-lens/`)
+- Dugout editorial articles, the Feed / Pulse desk and Retention Room views that read committed data (for example `public/data/retention-intelligence-master.json`)
+- A separate mobile shell below 1024px (`src/mobile`)
 
----
+### Implemented (requires the API; not available on the static site)
 
-## 2. Branding & Identity
+- Decision Intelligence: natural-language stat questions (`/api/ask`), playing-XI optimiser, strategy simulator, alternate-universe what-ifs, opposition map, squad DNA, auction war room ([docs/SCENARIO_INTELLIGENCE.md](docs/SCENARIO_INTELLIGENCE.md))
+- Scenario statistics (`/api/scenario-intelligence`)
+- Player Intelligence: price, value and franchise fit from published model snapshots
+- Scout over the multi-league warehouse: IPL, SMAT, BBL, CPL, SA20, ILT20 and men's T20Is (`global.db`)
+- Arcade games, with live rooms served by the API
+- Admin-only routes (data sync, retention freeze, video catalogue), guarded by `ADMIN_API_TOKEN`
 
-- **Platform Name:** CRICFIELD
-- **Sub-Engine:** IPL ANALYTICAL ENGINE
-- **Tagline:** Intelligence & Decision Architecture for Professional Cricket
-- **Design Language:** Cinematic dark stadium palette, franchise color tokens, high-density telemetry grids, and responsive data cards.
+### Experimental (off by default)
 
----
+- **AI Analyst and Scout AI:** an LLM answers using only CricField tool evidence. Needs `AI_ANALYST_ENABLED=true` and a provider ([docs/AI_ANALYST.md](docs/AI_ANALYST.md)).
+- AI ball commentary (`AI_COMMENTARY_ENABLED`)
+- Platform notifications worker (`PLATFORM_WORKER_ENABLED`) and the WhatsApp prototype (`integrations/whatsapp-prototype`)
 
-## 3. Major Platform Features
+### Not available: failed validation
 
-### A. Intelligence & Match Analytics
-- **Ball-by-Ball Warehouse:** Comprehensive delivery commentary, phases (Powerplay, Middle, Death), ball types, and pressure metrics across 19 IPL seasons (2008–2026).
-- **Match Center & Replay:** Ball context, momentum index, win probability charts, and interactive delivery maps.
-- **Cinematic Dugout:** Franchise intelligence hubs, head-to-head rivalry records, and squad timelines.
+- The retention-probability forecast fails its calibration gate, so no percentages are published.
+- Season simulation failed its gate and is switched off.
 
-### B. Scout Lab & Player Evaluation
-- **Global Data Engine:** Six-league scouting database (IPL, BBL, PSL, CPL, SA20, The Hundred) powered by SQLite and statistical engines.
-- **Player Profiles & DNA:** Batter/bowler radar charts, phase splits, boundary percentages, and matchup matrices.
-- **Player Photo Registry:** Centralized, multi-alias indexed player portrait pipeline with official jersey representations.
+See [docs/ANALYTICS_METHODOLOGY.md](docs/ANALYTICS_METHODOLOGY.md).
 
-### C. Decision & Auction War Room
-- **Auction Strategy Simulator:** Linear programming optimization (`javascript-lp-solver`) for squad budget allocations and player valuations.
-- **Playing XI Optimizer:** Tactical depth calculators, bowler quota validations, and squad composition balance ratings.
-- **Retention Room:** Franchise retention matrices, price tier allocations, and purse tracker.
+### Planned / open
 
-### D. Fan Arena & CricArcade
-- **Interactive Challenges:** Cricket tactical decision games, scenario forecasts, and interactive fan engagement.
+- Re-test the retention forecast after the 2027 retentions ([docs/player-intelligence/README.md](docs/player-intelligence/README.md) §9)
+- No hosted production API and no CI exist yet ([docs/TESTING.md](docs/TESTING.md))
 
----
+## Tech stack
 
-## 4. Technology Stack (Verified from Source)
+From the package manifests: React 19.1 · Vite 7 · Tailwind CSS 4 · wouter · TanStack Query · Recharts · Express 5 · Node `node:sqlite` · Drizzle (`sqlite-proxy`) · zod · pino · `javascript-lp-solver` · Playwright · pnpm 11 workspace · TypeScript 5.9. Python is used for model fitting and some data scripts.
 
-| Tier | Technology | Version / Notes |
-| :--- | :--- | :--- |
-| **Frontend Framework** | React 18 | `react`, `react-dom` (React 18.3) |
-| **Build Tool & Bundler** | Vite | Vite 6 with custom route splitting & alias resolution |
-| **Styling & Design** | Tailwind CSS v4 | `@tailwindcss/vite`, Radix UI primitives, Lucide React icons |
-| **Visualizations** | Recharts & Canvas | High-performance SVG charts, heatmaps, and spatial ground deck |
-| **Backend API** | Node.js / Express 5 | TypeScript REST API with Pino structured logging |
-| **Database & ORM** | SQLite / Drizzle ORM | Native `node:sqlite` in read-only production mode + Drizzle ORM |
-| **Optimization Solvers** | `javascript-lp-solver` | Linear programming auction solver for roster construction |
-| **Package Manager** | pnpm Workspaces | Monorepo structured with `pnpm@11.1.2` (`artifacts/*`, `lib/*`, `scripts`) |
-| **Language** | TypeScript 5.9 | Strict type checking across monorepo packages |
+## Quick start
 
----
-
-## 5. Project Architecture
-
-```mermaid
-graph TD
-    Client["CRICFIELD Frontend<br/>(React 18 + Vite)"] -->|REST / JSON| APIServer["API Server (:5000)<br/>(Express 5 + TypeScript)"]
-    APIServer -->|Read-Only Query| SQLiteDB[("IPL Warehouse<br/>(sqlite.db)")]
-    APIServer -->|Analytical Models| ScoutEngine["Scout Lab & Strategy Engine"]
-    ScoutEngine -->|Global Data| GlobalDB[("Six-League DB<br/>(global.db)")]
-    Client -->|Static Assets| PhotoRegistry["Player Photo Registry & Media Assets"]
-```
-
-The monorepo is split into distinct concerns:
-- **`artifacts/ipl-analytics/`**: Responsive web application client.
-- **`artifacts/api-server/`**: Express REST API server providing intelligence, player data, and auction simulations.
-- **`lib/db/`**: Drizzle schema definitions and database client connectors.
-- **`lib/cricket-data/`**: Processed global league datasets and warehouse models.
-- **`scripts/`**: Data ingestion, checksum verification, and release automation tools.
-- **`data-release/`**: Checksummed dataset release packages.
-
----
-
-## 6. Installation & Prerequisites
-
-### Prerequisites
-- **Node.js:** `>= 24.0.0 < 25.0.0`
-- **pnpm:** `11.1.2`
-- **Git & Git LFS:** `git-lfs` (required for repository binary tracking)
-
-### Clone & Setup
 ```bash
-git clone https://github.com/CRICFIELD-INTELLIGENGE/IPL-ANALYTICAL-ENGINE.git
-cd IPL-ANALYTICAL-ENGINE
-
-# Ensure Git LFS pulls warehouse databases
-git lfs pull
-
-# Install all workspace dependencies
 pnpm install
 ```
 
----
-
-## 7. Environment Setup
-
-Create an environment configuration file for the frontend:
-
 ```bash
-cp artifacts/ipl-analytics/.env.example artifacts/ipl-analytics/.env.local
-```
-
-Populate the required ports and variables:
-```env
-# Backend API Port
-VITE_BACKEND_PORT=5000
-
-# Base URL Path
-BASE_PATH=/
-```
-
----
-
-## 8. Development Commands
-
-### Windows One-Click Launcher
-Run the root batch file:
-```cmd
-START-CRICFIELD.bat
-```
-This starts both the API server on `http://localhost:5000` (read-only SQLite mode) and the frontend on `http://localhost:3000`.
-
-### Manual Workspace Commands
-```bash
-# Start API Server (:5000)
-pnpm --filter @workspace/api-server run dev
-
-# Start Frontend Client (:3000)
 pnpm --filter @workspace/ipl-analytics run dev
 ```
 
----
+The dev server proxies `/api` and starts the API if none is running. Most API features need the git-ignored `sqlite.db` at the repo root. Full setup: [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
 
-## 9. Build Commands
+## Documentation
 
-```bash
-# Typecheck entire workspace
-pnpm run typecheck
+| Topic | Doc |
+|---|---|
+| System design, packages, request flow | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| Pipelines and where data comes from | [docs/DATA_PIPELINE.md](docs/DATA_PIPELINE.md) |
+| SQLite stores, tables, IDs | [docs/DATABASE.md](docs/DATABASE.md) |
+| All 241 API routes | [docs/API_REFERENCE.md](docs/API_REFERENCE.md) |
+| Models and validation status | [docs/ANALYTICS_METHODOLOGY.md](docs/ANALYTICS_METHODOLOGY.md) |
+| AI Analyst | [docs/AI_ANALYST.md](docs/AI_ANALYST.md) |
+| Scenario statistics and simulators | [docs/SCENARIO_INTELLIGENCE.md](docs/SCENARIO_INTELLIGENCE.md) |
+| Local setup | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) |
+| Vercel and releases | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) |
+| Checks and test suites | [docs/TESTING.md](docs/TESTING.md) |
+| Repository audit and restructure proposal | [docs/REPOSITORY_AUDIT.md](docs/REPOSITORY_AUDIT.md) |
 
-# Build frontend production bundle
-pnpm --filter @workspace/ipl-analytics run build
+Older reports (`DAY-*-REPORT.md`, `MASTER_ARCHITECTURE_HANDBOOK.md` and others), now in [docs/history/](docs/history/), are historical records. Where they disagree with the docs above, the docs above were checked against the code on 2026-11-16.
 
-# Build backend API production distribution
-pnpm --filter @workspace/api-server run build
-```
+## Data and licence
 
-The compiled frontend output is placed in `artifacts/ipl-analytics/dist/public/`.
+Match data is derived from [Cricsheet](https://cricsheet.org) under ODC-BY 1.0. The code is licensed under the MIT License (see [LICENSE](LICENSE)). Player photos and editorial images have their own rights and are not covered by the code licence.
 
----
-
-## 10. Testing & Verification
-
-```bash
-# Run backend test suite
-pnpm --filter @workspace/api-server run test
-
-# Verify cricket datasets integrity
-node scripts/data-release.mjs verify data-release/cricfield-data-2026.10.14
-```
-
----
-
-## 11. Data Sources & Provenance
-
-- **Cricsheet Data:** Ball-by-ball matches sourced from [Cricsheet](https://cricsheet.org/) under the Open Data Commons Attribution License (ODC-BY 1.0).
-- **IPL Match Coverage:** 1,243 IPL match files with standardized delivery indexes (`actual_delivery`).
-- **Warehouse Corrections:** Standardized dismissal definitions (retired-out vs retired-hurt), penalty run accounting, extras taxonomy, and super-over resolutions (Day 4.5 integrity specifications).
-
----
-
-## 12. Deployment Instructions
-
-### Vercel (Frontend & Analytics UI)
-The repository includes an optimized root `vercel.json` configured for pnpm builds:
-1. Connect this repository to your Vercel organization account.
-2. Root Directory: `./`
-3. Output Directory: `artifacts/ipl-analytics/dist/public`
-4. Custom Domain: Configure `cricfield.in` in Vercel project domain settings.
-
-### API Server (Docker / Linux Server)
-The API server can be executed in production with Node.js 24+:
-```bash
-cd artifacts/api-server
-set PORT=5000
-set CRICFIELD_DB_READONLY=1
-node --enable-source-maps ./dist/index.mjs
-```
-
----
-
-## 13. Security Considerations
-
-- **Secrets Handling:** Private environment files (`.env`, `.env.*`, `env/*.env`) are strictly excluded via `.gitignore`.
-- **Database Access:** Production servers operate against `sqlite.db` strictly in read-only mode (`CRICFIELD_DB_READONLY=1`). Schema mutations are blocked by Drizzle production guards.
-- **Reporting:** Please review [SECURITY.md](SECURITY.md) for vulnerability disclosure guidelines.
-
----
-
-## 14. Contribution Guidelines
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for code styling, pull request workflows, and dataset preservation policies.
-
----
-
-## 15. Repository Structure
-
-```
-IPL-ANALYTICAL-ENGINE/
-├── artifacts/
-│   ├── api-server/             # Express 5 REST API & Decision Services
-│   ├── image-ingestion/        # Player photograph extraction & processing
-│   └── ipl-analytics/          # React 18 / Vite / Tailwind UI Application
-├── data-release/               # Versioned, checksummed dataset snapshots
-├── docs/                       # Architecture handbooks, data repair reports, launch audits
-├── lib/
-│   ├── api-zod/                # Shared Zod validation schemas
-│   ├── arcade-rules/           # CricArcade game rules & scoring
-│   ├── cricket-data/           # Six-league datasets and manifests
-│   └── db/                     # Drizzle ORM schema & SQLite config
-├── scripts/                    # Data maintenance, verification, and ingestion scripts
-├── attached_assets/            # Design specifications and architecture blueprints
-├── schema.sql                  # Comprehensive SQLite warehouse schema
-├── START-CRICFIELD.bat         # Windows dual-server development launcher
-├── vercel.json                 # Vercel deployment configuration
-├── .gitattributes              # Git LFS & line ending definitions
-├── .gitignore                  # Enterprise ignore rules (secrets & temp caches)
-└── package.json                # Monorepo workspace configuration (pnpm)
-```
-
----
-
-## License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.  
-Match data is attributed to [Cricsheet](https://cricsheet.org/) under [ODC-BY 1.0](https://opendatacommons.org/licenses/by/1-0/).
+Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md)

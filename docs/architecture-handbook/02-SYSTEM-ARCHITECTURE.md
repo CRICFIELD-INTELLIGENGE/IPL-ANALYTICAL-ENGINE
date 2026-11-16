@@ -91,7 +91,7 @@ Cricbuzz (scraped), Google News & ESPN RSS, Gemini (optional), GA4 + AdSense (en
 
 - **Replit** (`.replit`): `deploymentTarget = "autoscale"`, ports 8080→80 etc., post-merge hook `pnpm install && drizzle-kit push`. Commit messages show three “Published your App” events in May 2026.
 - **Production process:** `node dist/index.mjs` serves `/api/*` and, if `ipl-analytics/dist/public` exists, the SPA with an index.html fallback (`app.ts:43-58`).
-- **Local:** `START.bat`, `run.sh`, `run.ps1` start API (:5000) and Vite (:3000) together; Vite proxies `/api`.
+- **Local:** `START-CRICFIELD.bat` (root), or `scripts/launchers/START.bat`, `run.sh`, `run.ps1` start API (:5000) and Vite (:3000) together; Vite proxies `/api`.
 - **Not present:** Vercel config, Docker, CI, IaC, environment-specific config files, secrets manager. Deploying anywhere else would require shipping `sqlite.db` (+WAL), the raw JSON folder and `global.db` with the build.
 
 **Known run-path defect:** the documented source-run (`pnpm exec tsx src/index.ts`, used by `.claude/launch.json`) crashes with `ReferenceError: __dirname is not defined in ES module scope` at `app.ts:46` (uncommitted change). The esbuild bundle works because its banner defines `__dirname`.
