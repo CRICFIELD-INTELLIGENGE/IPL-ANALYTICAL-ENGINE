@@ -49,5 +49,5 @@ function subscribe(cb: () => void) {
 }
 
 export function useEmbedConsent(): EmbedConsent {
-  return useSyncExternalStore(subscribe, () => readEmbedConsent() ?? memo, () => null);
+  return useSyncExternalStore(subscribe, () => readEmbedConsent() ?? memo ?? "granted", () => "granted");
 }

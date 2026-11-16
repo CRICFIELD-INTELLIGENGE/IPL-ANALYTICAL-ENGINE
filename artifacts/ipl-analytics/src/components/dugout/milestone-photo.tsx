@@ -39,8 +39,7 @@ export function MilestonePhotoGallery({ frames, moment, team }: { frames: Milest
   const teamKeywords = [team.id, team.shortName, team.name].map(t => t.toLowerCase());
   const gettyPhoto = PUBLIC_MANIFEST.images.find(image =>
     mapped?.candidates.some(candidate => candidate.assetId === image.assetId) &&
-    (isPublishable(image) || isLocalPreviewable(image)) &&
-    (image.depicts?.some(d => teamKeywords.some(kw => d.toLowerCase().includes(kw))) ?? true)
+    (isPublishable(image) || isLocalPreviewable(image))
   );
   const showcase = photo.presentation !== "landscape";
 
