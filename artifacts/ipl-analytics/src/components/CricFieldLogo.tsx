@@ -60,7 +60,7 @@ export function CricFieldWordmarkSVG({
       84% { transform: translateY(0) rotate(0deg) scaleY(1.06); opacity: 1; }
       88%, 100% { transform: none; opacity: 1; }
     }
-    .cf-letter-${i} { transform-origin: ${x}px 368px; animation: cfFall${i} 18s ease-in-out infinite; }`;
+    .cf-letter-${i} { transform-box: fill-box; transform-origin: 50% 100%; animation: cfFall${i} 18s ease-in-out infinite; }`;
   }).join('');
   const deliveryFrames = hits.map((x, i) => {
     const hit = 18 + i * 5;
@@ -142,7 +142,8 @@ export function CricFieldWordmarkSVG({
             100% { transform: rotate(-8.5deg); }
           }
           .cf-stump-static {
-            transform-origin: 11px 165px;
+            transform-box: fill-box;
+            transform-origin: 50% 100%;
             animation: cfStumpTiltAnim 18s ease-in-out infinite;
           }
           @media (prefers-reduced-motion: reduce) {

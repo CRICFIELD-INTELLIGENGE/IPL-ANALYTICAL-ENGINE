@@ -43,14 +43,14 @@ export default function MobileAi() {
           <div className="ma-intro">
             <div className="cfm-kicker">CRICFIELD AI analyst</div>
             <h1>Ask the press box</h1>
-            <p className="cfm-small" style={{ fontSize: 14 }}>Plain-English questions become exact queries over every IPL ball. Answers show the qualification used, so you can trust the number.</p>
+            <p className="cfm-small ma-sub">Plain-English questions become exact queries over every IPL ball. Answers show the qualification used, so you can trust the number.</p>
             <div className="ma-suggest">{SUGGEST.map((s) => <button key={s} type="button" onClick={() => void ask(s)}>{s}</button>)}</div>
-            <div className="cfm-kicker" style={{ marginTop: 22 }}>Analyst tools</div>
-            <div className="cfm-strip" style={{ marginTop: 8 }}>{TOOLS.map(([l, h]) => <Link key={h} href={h} className="cfm-chip">{l}</Link>)}</div>
+            <div className="cfm-kicker" style={{ marginTop: "clamp(16px, 4.5vw, 22px)" }}>Analyst tools</div>
+            <div className="cfm-strip ma-tools" style={{ marginTop: 8 }}>{TOOLS.map(([l, h]) => <Link key={h} href={h} className="cfm-chip">{l}</Link>)}</div>
           </div>
         )}
         {turns.map((t, i) => (
-          <div key={i} style={{ display: "grid", gap: 8 }}>
+          <div key={i} className="ma-turn" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: 8, minWidth: 0 }}>
             <div className="ma-q">{t.q}</div>
             {t.error ? <div className="ma-a" role="alert"><p>{t.error}</p></div> : !t.a ? <div className="ma-a"><div className="cfm-skel" style={{ height: 70 }} /></div> : t.a.understood ? (
               <div className="ma-a">
