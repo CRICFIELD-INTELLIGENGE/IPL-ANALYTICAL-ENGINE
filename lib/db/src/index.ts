@@ -11,8 +11,8 @@ const __dirname = path.dirname(__filename);
 const PRODUCTION_DB = path.resolve(__dirname, "..", "..", "..", "sqlite.db");
 // CRICFIELD_DB_PATH points offline scripts (e.g. compute_analytics) at a database copy. Unset, every
 // caller uses the production warehouse exactly as before.
-const dbPath = process.env.CRICFIELD_DB_PATH ? path.resolve(process.env.CRICFIELD_DB_PATH) : PRODUCTION_DB;
-export const isProductionDb = () => dbPath === PRODUCTION_DB;
+export const getDbPath = () => process.env.CRICFIELD_DB_PATH ? path.resolve(process.env.CRICFIELD_DB_PATH) : PRODUCTION_DB;
+export const isProductionDb = () => getDbPath() === PRODUCTION_DB;
 
 let sqliteClient: DatabaseSync | null = null;
 let dbInstance: any = null;
@@ -33,7 +33,7 @@ export const db = new Proxy({} as any, {
       // journal mode, so serving never writes the warehouse or creates -wal/-shm files (works on a read-only or
       // shared filesystem). Unset, behaviour is unchanged (offline scripts such as compute_analytics write).
       const readOnly = process.env.CRICFIELD_DB_READONLY === "1";
-      sqliteClient = new DatabaseSync(dbPath, { readOnly });
+      sqliteClient = new DatabaseSync(getDbPath(), { readOnly });
       // Enable foreign key constraints in SQLite
       sqliteClient.exec("PRAGMA foreign_keys = ON");
       if (!readOnly) sqliteClient.exec("PRAGMA journal_mode = WAL");

@@ -3,7 +3,8 @@ import { mkdtempSync } from "node:fs";
 import { rename } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { loadWarehouseSnapshot } from "../artifacts/api-server/src/services/turso-snapshot.js";
+import { loadWarehouseSnapshot } from "./services/turso-snapshot.js";
+import app from "./app.js";
 
 const scoutPaths = new Set(["/api/scout/rankings", "/api/scout/t20/suggestions"]);
 const iplPaths = new Set([
@@ -19,7 +20,6 @@ const iplPath = join(warehouseDirectory, "sqlite.db");
 
 let scout: Promise<void> | undefined;
 let ipl: Promise<void> | undefined;
-let app: Promise<(req: IncomingMessage, res: ServerResponse) => void> | undefined;
 
 function configureScout() {
   const url = process.env.TURSO_SCOUT_DATABASE_URL;
@@ -57,7 +57,6 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   }
 
   try {
-    // Set stable cache paths before Express imports the SQLite adapters.
     process.env.CRICFIELD_DB_READONLY = "1";
     process.env.CRICFIELD_SCOUT_DB_PATH = scoutPath;
     process.env.CRICFIELD_DB_PATH = iplPath;
@@ -68,12 +67,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       ipl ??= configureIpl().catch(error => { ipl = undefined; throw error; });
       await ipl;
     }
-    app ??= import("../artifacts/api-server/src/app.js").then(
-      module => module.default as unknown as (req: IncomingMessage, res: ServerResponse) => void,
-    );
-    return (await app)(req, res);
+    return app(req, res);
   } catch (error) {
-    // Provider URLs and authorization details must never enter the response.
     console.error("Warehouse preview initialization failed", error instanceof Error ? error.name : "Error");
     return json(res, 503, isScout ? "global_warehouse_unavailable" : "ipl_warehouse_unavailable");
   }

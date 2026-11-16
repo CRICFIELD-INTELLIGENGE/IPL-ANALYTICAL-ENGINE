@@ -6,7 +6,7 @@
   "installCommand": "pnpm install",
   "framework": null,
   "functions": {
-    "api/warehouse-preview.ts": {
+    "api/warehouse-preview.mjs": {
       "maxDuration": 60,
       "memory": 1024
     }
