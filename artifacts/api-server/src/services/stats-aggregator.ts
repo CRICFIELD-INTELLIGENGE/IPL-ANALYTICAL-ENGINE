@@ -651,6 +651,7 @@ export interface QueryFilters {
   seasonFrom?: string;
   seasonTo?: string;
   scenarioTarget?: "high" | "low";
+  matchState?: MatchStateFilters;
   team?: string;
   opponent?: string;
   venue?: string;
@@ -670,6 +671,16 @@ export interface QueryFilters {
   batter?: string;         // filter to specific batter (for matchup)
   bowler?: string;         // filter to specific bowler (for matchup)
 }
+
+export const matchStateLimits = {
+  minRequiredRate: 100,
+  minCurrentRate: 100,
+  minRunsNeeded: 400,
+  minBallsLeft: 120,
+  minWicketsLeft: 10,
+} as const;
+
+export type MatchStateFilters = Partial<Record<keyof typeof matchStateLimits, number>>;
 
 export interface FieldFilters {
   season?: string;
@@ -846,7 +857,7 @@ async function aggregateQueryStatsUncached(filters: QueryFilters) {
   // the JSON path derives pressure per-ball from over/innings/wickets-fallen.
   const needsPressureFilter = !!filters.pressure && filters.pressure !== "Standard" && filters.pressure !== "Pressure" && filters.pressure !== "All";
 
-  if (hasDb() && !needsHandednessFilter && !needsPressureFilter && !filters.seasonFrom && !filters.seasonTo && !filters.scenarioTarget) {
+  if (hasDb() && !needsHandednessFilter && !needsPressureFilter && !filters.seasonFrom && !filters.seasonTo && !filters.scenarioTarget && !filters.matchState) {
     try {
       return await aggregateQueryStatsSql(resolvedFilters);
     } catch (err) {
@@ -925,10 +936,14 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
 
       // Track wickets fallen per over for pressure filter
       let wicketsFallenSoFar = 0;
-      let runsSoFar = 0;
+      let legalBallsSoFar = 0;
+      let runsSoFar = inn.penalty_runs?.pre ?? 0;
       const firstInnings = matchData.innings?.[0];
       const chaseTarget: number | null = inningIndex !== 1 ? null : inn.target?.runs ?? (firstInnings?.overs ?? []).reduce((total: number, over: any) =>
-        total + (over.deliveries ?? []).reduce((runs: number, ball: any) => runs + (ball.runs?.total ?? 0), 0), 0) + 1;
+        total + (over.deliveries ?? []).reduce((runs: number, ball: any) => runs + (ball.runs?.total ?? 0), 0), 0)
+        + (firstInnings?.penalty_runs?.pre ?? 0) + (firstInnings?.penalty_runs?.post ?? 0) + 1;
+      const scheduledOvers = Number(inn.target?.overs ?? matchData.info?.overs ?? 20);
+      const scheduledBalls = Math.floor(scheduledOvers) * 6 + Math.round((scheduledOvers % 1) * 10);
 
       inn.overs?.forEach((overObj: any) => {
         const overNum = overObj.over;
@@ -936,6 +951,7 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
           for (const ball of overObj.deliveries ?? []) {
             wicketsFallenSoFar += (ball.wickets ?? []).filter((w: { kind: string }) => w.kind !== "retired hurt").length;
             runsSoFar += ball.runs?.total ?? 0;
+            if (!ball.extras?.wides && !ball.extras?.noballs) legalBallsSoFar += 1;
           }
           return;
         }
@@ -949,7 +965,20 @@ async function aggregateQueryStatsJson(filters: QueryFilters) {
           const wicketsBefore = wicketsFallenSoFar;
           wicketsFallenSoFar += (d.wickets ?? []).filter((w: { kind: string }) => w.kind !== "retired hurt").length;
           const runsNeeded = chaseTarget === null ? null : chaseTarget - runsSoFar;
+          const ballsLeft = scheduledBalls - legalBallsSoFar;
+          const currentRate = legalBallsSoFar > 0 ? runsSoFar * 6 / legalBallsSoFar : null;
+          const requiredRate = runsNeeded !== null && ballsLeft > 0 ? runsNeeded * 6 / ballsLeft : null;
           runsSoFar += d.runs?.total ?? 0;
+          if (legalBall) legalBallsSoFar += 1;
+
+          const slice = filters.matchState;
+          if (slice && (
+            (slice.minRequiredRate !== undefined && (requiredRate === null || requiredRate < slice.minRequiredRate)) ||
+            (slice.minCurrentRate !== undefined && (currentRate === null || currentRate < slice.minCurrentRate)) ||
+            (slice.minRunsNeeded !== undefined && (runsNeeded === null || runsNeeded < slice.minRunsNeeded)) ||
+            (slice.minBallsLeft !== undefined && ballsLeft < slice.minBallsLeft) ||
+            (slice.minWicketsLeft !== undefined && 10 - wicketsBefore < slice.minWicketsLeft)
+          )) return;
 
           // Phase filter
           if (!passesPhaseFilter(overNum, filters)) return;
