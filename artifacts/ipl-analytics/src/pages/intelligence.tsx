@@ -27,11 +27,24 @@ import {
   SEASONS,
 } from "@/data/franchise-intelligence";
 import {
-  Search, ArrowRight, ChevronRight, Shield, Sparkles, Filter, Flame, Compass, Activity, Cpu
+  Search,
+  ArrowRight,
+  ChevronRight,
+  Shield,
+  Sparkles,
+  Filter,
+  Flame,
+  Compass,
+  Activity,
+  Cpu,
 } from "lucide-react";
 import {
-  useTeamTheme, CANONICAL_TEAM_CODES, getFranchisePageTeam,
-  setFranchisePageTeam, isTeamCode, type TeamCode
+  useTeamTheme,
+  CANONICAL_TEAM_CODES,
+  getFranchisePageTeam,
+  setFranchisePageTeam,
+  isTeamCode,
+  type TeamCode,
 } from "@/lib/team-context";
 import { FranchiseSwitcher } from "@/components/dugout/franchise-hero";
 

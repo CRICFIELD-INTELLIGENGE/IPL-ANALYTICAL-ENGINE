@@ -7,7 +7,7 @@ import { GlassCard } from "@/components/glass-card";
 import { TeamSquad } from "@/components/team-squad";
 import {
   ArrowLeft, ArrowRight, Users, Activity, Calendar, Trophy,
-  TrendingUp, Shield, Target, Medal, BarChart2
+  TrendingUp, Shield, Target, Medal, BarChart2, ListFilter, ChevronDown, ChevronLeft, ChevronRight, Check
 } from "lucide-react";
 import {
   useTeams, useMatches, teamColor, teamShort, usePointsTables,
@@ -20,6 +20,20 @@ import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Cell, AreaChart, Area
 } from "recharts";
 
+const PERF_INDEX_SECTIONS = [
+  { id: "1", num: "01", label: "Season Win %", sub: "Win rate trend by year" },
+  { id: "2", num: "02", label: "Extremes & Runs", sub: "Highest, lowest & run tally" },
+  { id: "3", num: "03", label: "Phase Breakdown", sub: "Powerplay, Middle & Death" },
+  { id: "4", num: "04", label: "Phase Profile", sub: "Boundary vs dot % radar" },
+  { id: "5", num: "05", label: "Toss Impact", sub: "Won vs lost toss win %" },
+  { id: "6", num: "06", label: "Conditions", sub: "Bat 1st, chasing, home/away" },
+  { id: "7", num: "07", label: "Pace vs Spin", sub: "Bowling attack returns" },
+  { id: "8", num: "08", label: "Clutch & Collapse", sub: "Tight finishes & clusters" },
+  { id: "9", num: "09", label: "Venue Record", sub: "Win % across grounds" },
+  { id: "10", num: "10", label: "Captaincy", sub: "Skippers record & titles" },
+  { id: "11", num: "11", label: "Head to Head", sub: "Rival records & last 5" },
+] as const;
+
 export default function TeamProfilePage() {
   const [, params] = useRoute("/teams/:slug");
   const slug = params?.slug || "";
@@ -30,6 +44,8 @@ export default function TeamProfilePage() {
   const pointsTables = usePointsTables();
 
   const [activeSubTab, setActiveSubTab] = useState<"overview" | "squad" | "history">("overview");
+  const [mobileSection, setMobileSection] = useState<string>("1");
+  const [indexOpen, setIndexOpen] = useState(false);
 
   // Find the exact matching team from the slug
   /**
@@ -344,11 +360,139 @@ export default function TeamProfilePage() {
             transition={{ duration: 0.2 }}
           >
             
-            {activeSubTab === "overview" && (
-              <div className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {activeSubTab === "overview" && (() => {
+              const showAllMobile = !mobileShell || mobileSection === "all";
+              const showOverview1 = showAllMobile || mobileSection === "1";
+              const showOverview2 = showAllMobile || mobileSection === "2";
+              const currentMeta = PERF_INDEX_SECTIONS.find(s => s.id === mobileSection);
+              const currentIdx = PERF_INDEX_SECTIONS.findIndex(s => s.id === mobileSection);
+              const stepMobileSection = (delta: -1 | 1) => {
+                if (mobileSection === "all") {
+                  setMobileSection(delta > 0 ? PERF_INDEX_SECTIONS[0].id : PERF_INDEX_SECTIONS[PERF_INDEX_SECTIONS.length - 1].id);
+                  return;
+                }
+                const next = (currentIdx + delta + PERF_INDEX_SECTIONS.length) % PERF_INDEX_SECTIONS.length;
+                setMobileSection(PERF_INDEX_SECTIONS[next].id);
+                setIndexOpen(false);
+              };
+
+              return (
+              <div className="space-y-3.5 sm:space-y-6">
+                {mobileShell && (
+                  <div className="relative z-30">
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        data-testid="perf-index-toggle"
+                        aria-expanded={indexOpen}
+                        onClick={() => setIndexOpen(o => !o)}
+                        className="flex-1 min-w-0 flex items-center justify-between gap-2 px-3 py-2.5 rounded-xl bg-white/[0.04] border border-white/15 hover:border-white/30 transition-all cursor-pointer shadow-sm"
+                        style={{ borderColor: indexOpen ? `${pColor}80` : undefined }}
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span
+                            className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0"
+                            style={{ backgroundColor: `${pColor}22`, color: pColor }}
+                          >
+                            <ListFilter className="w-3.5 h-3.5" />
+                          </span>
+                          <div className="min-w-0 text-left">
+                            <span className="text-[8.5px] font-black uppercase tracking-widest text-white/45 block leading-none">
+                              {mobileSection === "all" ? "Index Menu · All 11 Points" : `Index ${currentMeta?.num ?? "01"} / 11`}
+                            </span>
+                            <span className="text-xs font-black text-white truncate block leading-tight mt-0.5">
+                              {mobileSection === "all" ? "Showing All Sections" : currentMeta?.label}
+                            </span>
+                          </div>
+                        </div>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white/60 shrink-0 transition-transform duration-200 ${indexOpen ? "rotate-180" : ""}`}
+                        />
+                      </button>
+
+                      <button
+                        type="button"
+                        aria-label="Previous section"
+                        data-testid="perf-index-prev"
+                        onClick={() => stepMobileSection(-1)}
+                        className="w-10 h-11 rounded-xl bg-white/[0.04] border border-white/10 hover:border-white/25 flex items-center justify-center text-white/75 shrink-0 cursor-pointer"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="Next section"
+                        data-testid="perf-index-next"
+                        onClick={() => stepMobileSection(1)}
+                        className="w-10 h-11 rounded-xl bg-white/[0.04] border border-white/10 hover:border-white/25 flex items-center justify-center text-white/75 shrink-0 cursor-pointer"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    {indexOpen && (
+                      <div
+                        data-testid="perf-index-menu"
+                        className="mt-2 rounded-2xl bg-[#0A0F1E] border border-white/15 shadow-2xl p-2 grid grid-cols-1 gap-1 max-h-[60vh] overflow-y-auto"
+                      >
+                        <button
+                          type="button"
+                          data-testid="perf-index-option-all"
+                          onClick={() => { setMobileSection("all"); setIndexOpen(false); }}
+                          className={`w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-left transition-colors ${
+                            mobileSection === "all" ? "bg-white/10" : "hover:bg-white/[0.04]"
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <span className="text-[10px] font-mono font-black px-1.5 py-0.5 rounded bg-white/10 text-white/80 shrink-0">
+                              ALL
+                            </span>
+                            <div className="min-w-0">
+                              <span className="text-xs font-black text-white block leading-tight">Show All 11 Sections</span>
+                              <span className="text-[10px] font-semibold text-white/45 block">Full scrollable view</span>
+                            </div>
+                          </div>
+                          {mobileSection === "all" && <Check className="w-4 h-4 shrink-0" style={{ color: pColor }} />}
+                        </button>
+
+                        {PERF_INDEX_SECTIONS.map(sec => {
+                          const selected = mobileSection === sec.id;
+                          return (
+                            <button
+                              key={sec.id}
+                              type="button"
+                              data-testid={`perf-index-option-${sec.id}`}
+                              onClick={() => { setMobileSection(sec.id); setIndexOpen(false); }}
+                              className={`w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-left transition-colors ${
+                                selected ? "bg-white/10" : "hover:bg-white/[0.04]"
+                              }`}
+                            >
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <span
+                                  className="text-[10px] font-mono font-black px-1.5 py-0.5 rounded shrink-0"
+                                  style={selected ? { backgroundColor: `${pColor}30`, color: pColor } : { backgroundColor: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.65)" }}
+                                >
+                                  {sec.num}
+                                </span>
+                                <div className="min-w-0">
+                                  <span className="text-xs font-black text-white block leading-tight truncate">{sec.label}</span>
+                                  <span className="text-[10px] font-semibold text-white/45 block truncate">{sec.sub}</span>
+                                </div>
+                              </div>
+                              {selected && <Check className="w-4 h-4 shrink-0" style={{ color: pColor }} />}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+              {(showOverview1 || showOverview2) && (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                 
                 {/* Win Rate Trend Chart */}
+                {showOverview1 && (
                 <GlassCard className="lg:col-span-2 p-4 sm:p-6">
                   <div className="mb-4 sm:mb-6 flex items-start justify-between gap-4 flex-wrap">
                     <div>
@@ -402,8 +546,10 @@ export default function TeamProfilePage() {
                     </ResponsiveContainer>
                   </div>
                 </GlassCard>
+                )}
 
                 {/* Extremes & Records */}
+                {showOverview2 && (
                 <div className="space-y-3.5 sm:space-y-6">
                   <GlassCard className="p-3.5 sm:p-6">
                     <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-white/80 mb-2.5 sm:mb-4 flex items-center gap-2">
@@ -449,16 +595,22 @@ export default function TeamProfilePage() {
                     </div>
                   </GlassCard>
                 </div>
+                )}
               </div>
+              )}
                 {/* Analyst dashboard: phase, toss, venue, rivalry and clutch
                     breakdowns computed from the ball-by-ball tables. */}
-                <TeamAnalyticsDashboard
-                  team={teamData.team}
-                  accent={pColor}
-                  matches={matches.data ?? []}
-                />
+                {(showAllMobile || Number(mobileSection) >= 3) && (
+                  <TeamAnalyticsDashboard
+                    team={teamData.team}
+                    accent={pColor}
+                    matches={matches.data ?? []}
+                    mobileSection={mobileShell ? mobileSection : "all"}
+                  />
+                )}
               </div>
-            )}
+              );
+            })()}
 
             {activeSubTab === "squad" && <TeamSquad franchise={teamData.team} accent={pColor} />}
 

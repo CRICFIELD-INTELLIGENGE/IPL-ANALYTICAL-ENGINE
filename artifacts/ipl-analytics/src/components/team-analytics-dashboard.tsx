@@ -58,13 +58,16 @@ function SectionHeading({ icon: Icon, title, subtitle, accent, right }: {
 }
 
 export function TeamAnalyticsDashboard({
-  team, accent, matches,
+  team, accent, matches, mobileSection = "all",
 }: {
   team: string;
   accent: string;
   /** All matches, used for the close-finish record the API does not carry. */
   matches: MatchSummary[];
+  /** Optional index selector for compact mobile viewing ("1".."11" or "all"). */
+  mobileSection?: string;
 }) {
+  const showSec = (id: string) => mobileSection === "all" || mobileSection === id;
   const [era, setEra] = useState(0);
   const preset = ERA_PRESETS[era];
   const analytics = useTeamAnalytics(team, preset.from, preset.to);
@@ -388,7 +391,9 @@ export function TeamAnalyticsDashboard({
       </div>
 
       {/* Phase analytics */}
+      {(showSec("3") || showSec("4")) && (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        {showSec("3") && (
         <GlassCard className="lg:col-span-2 p-3.5 sm:p-6">
           <SectionHeading
             icon={Zap} accent={accent}
@@ -422,7 +427,9 @@ export function TeamAnalyticsDashboard({
             ))}
           </div>
         </GlassCard>
+        )}
 
+        {showSec("4") && (
         <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading
             icon={Target} accent={accent}
@@ -443,10 +450,14 @@ export function TeamAnalyticsDashboard({
             </ResponsiveContainer>
           </div>
         </GlassCard>
+        )}
       </div>
+      )}
 
       {/* Toss, innings order, pace vs spin */}
+      {(showSec("5") || showSec("6") || showSec("7")) && (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        {showSec("5") && (
         <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading icon={TrendingUp} accent={accent} title="Toss Impact" subtitle="Win rate by toss outcome" />
           <div className="space-y-3">
@@ -469,7 +480,9 @@ export function TeamAnalyticsDashboard({
             </div>
           </div>
         </GlassCard>
+        )}
 
+        {showSec("6") && (
         <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading icon={Target} accent={accent} title="Conditions" subtitle="Innings order, ground and time of day" />
           <div className="space-y-3">
@@ -501,7 +514,9 @@ export function TeamAnalyticsDashboard({
             )}
           </div>
         </GlassCard>
+        )}
 
+        {showSec("7") && (
         <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading icon={Zap} accent={accent} title="Pace vs Spin" subtitle="This attack's own returns" />
           <div className="space-y-4">
@@ -518,10 +533,14 @@ export function TeamAnalyticsDashboard({
             ))}
           </div>
         </GlassCard>
+        )}
       </div>
+      )}
 
       {/* Clutch + venues */}
+      {(showSec("8") || showSec("9")) && (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        {showSec("8") && (
         <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading icon={AlertTriangle} accent={accent} title="Clutch & Collapse" subtitle="Tight finishes and wicket clusters" />
           <div className="grid grid-cols-2 gap-3">
@@ -534,7 +553,9 @@ export function TeamAnalyticsDashboard({
             A close finish is under 10 runs or 2 wickets or fewer. A collapse is three wickets inside fifteen deliveries.
           </p>
         </GlassCard>
+        )}
 
+        {showSec("9") && (
         <GlassCard className="lg:col-span-2 p-3.5 sm:p-6">
           <SectionHeading icon={MapPin} accent={accent} title="Venue Record" subtitle="Grounds with the most fixtures in this era" />
           <div className="space-y-2 max-h-[280px] overflow-y-auto pr-1">
@@ -550,10 +571,12 @@ export function TeamAnalyticsDashboard({
             ))}
           </div>
         </GlassCard>
+        )}
       </div>
+      )}
 
       {/* Captains */}
-      {d.captains?.length > 0 && (
+      {showSec("10") && (d.captains?.length > 0 ? (
         <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading
             icon={Crown} accent={accent}
@@ -597,9 +620,14 @@ export function TeamAnalyticsDashboard({
             </p>
           )}
         </GlassCard>
-      )}
+      ) : mobileSection === "10" ? (
+        <GlassCard className="p-4 text-center text-xs font-bold text-white/45">
+          No captaincy records available for this franchise in the selected era.
+        </GlassCard>
+      ) : null)}
 
       {/* Head to head */}
+      {showSec("11") && (
       <GlassCard className="p-3.5 sm:p-6">
         <SectionHeading
           icon={Swords} accent={accent}
@@ -677,6 +705,7 @@ export function TeamAnalyticsDashboard({
           </div>
         )}
       </GlassCard>
+      )}
 
       {/* The API still reports `notSupported` and it stays documented in
           team-analytics.ts, but it is not surfaced to readers. */}

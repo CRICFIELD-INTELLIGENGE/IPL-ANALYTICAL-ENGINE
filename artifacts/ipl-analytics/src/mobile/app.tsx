@@ -10,6 +10,7 @@ import "./mobile.css";
 
 const MHome = lazy(() => import("./screens/home"));
 const MDiscover = lazy(() => import("./screens/discover"));
+const MNews = lazy(() => import("./screens/news"));
 const MPlay = lazy(() => import("./screens/play"));
 const MDugout = lazy(() => import("./screens/franchise-dugout"));
 const MStats = lazy(() => import("./screens/stats"));
@@ -50,6 +51,9 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
               <MHome />
             </Route>
             <Route path="/discover" component={MDiscover} />
+            <Route path="/intelligence">
+              <MNews />
+            </Route>
             <Route path="/feed">
               <Redirect to="/intelligence" replace />
             </Route>
