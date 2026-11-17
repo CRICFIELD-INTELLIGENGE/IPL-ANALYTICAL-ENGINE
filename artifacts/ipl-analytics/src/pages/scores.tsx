@@ -48,6 +48,32 @@ export default function ScoresPage() {
   const leaderColor = leaderTeam ? teamColor(leaderTeam) : "#0ea5e9";
   const playerImages = usePlayerImages();
 
+  const { selectedTeam } = useTeamTheme();
+  const defaultFranchise = useMemo(() => {
+    if (!selectedTeam || !TEAM_REGISTRY[selectedTeam]) return "all";
+    return TEAM_REGISTRY[selectedTeam].name;
+  }, [selectedTeam]);
+
+  const [selectedFranchise, setSelectedFranchise] = useState<string>(defaultFranchise);
+  useEffect(() => {
+    setSelectedFranchise(defaultFranchise);
+  }, [defaultFranchise]);
+
+  const seasonFranchises = useMemo(() => {
+    const set = new Set<string>();
+    seasonMatches.forEach((m) => {
+      if (m.team1) set.add(m.team1);
+      if (m.team2) set.add(m.team2);
+    });
+    if (set.size > 0) return Array.from(set).sort();
+    return Object.values(TEAM_REGISTRY).map((t) => t.name).sort();
+  }, [seasonMatches]);
+
+  const activeTeamCode = selectedFranchise !== "all" ? teamShort(selectedFranchise) : null;
+  const activeTeamMeta = activeTeamCode ? TEAM_REGISTRY[activeTeamCode as keyof typeof TEAM_REGISTRY] : null;
+  const topAccent = activeTeamMeta?.accent || (selectedFranchise !== "all" ? teamColor(selectedFranchise) : "#38BDF8");
+  const topBanner = activeTeamMeta?.bannerImg || "/ipl-2027-banner.jpg";
+
   const seasonList = useMemo(() => seasons.data?.map(s => s.season) || [], [seasons.data]);
   const currentSeasonIndex = seasonList.indexOf(selectedSeason);
   const canPrevSeason = currentSeasonIndex > 0;
@@ -64,6 +90,25 @@ export default function ScoresPage() {
     }
   };
 
+  const [stickyTop, setStickyTop] = useState(66);
+
+  useEffect(() => {
+    const navEl = document.querySelector<HTMLElement>(".cfm-top");
+    if (!navEl) return;
+    const syncTop = () => {
+      const h = navEl.getBoundingClientRect().height;
+      if (h > 0) setStickyTop(Math.round(h));
+    };
+    syncTop();
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(syncTop) : null;
+    ro?.observe(navEl);
+    window.addEventListener("resize", syncTop);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", syncTop);
+    };
+  }, []);
+
   // Scroll to top only when changing seasons, never on tab switches
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -73,10 +118,104 @@ export default function ScoresPage() {
 
   return (
     <Layout>
-      <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#050816] text-slate-900 dark:text-white p-4 md:p-8 gap-6">
-        
-        {/* ─── BROADCAST TELEMETRY & ARCHIVE FILTER BAR ─── */}
-        <div className="bg-white/95 dark:bg-[#0B1020]/90 rounded-[28px] border border-slate-200 dark:border-white/10 p-6 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-sm dark:shadow-2xl relative z-10 backdrop-blur-xl">
+      <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#050816] text-slate-900 dark:text-white p-4 md:p-8 gap-4 lg:gap-6">
+
+        {/* ─── MOBILE DUGOUT-STYLE STICKY TOP BOX (<1024px) ─── */}
+        <header
+          style={{ top: `${stickyTop}px` }}
+          className="lg:hidden sticky z-30 -mx-4 -mt-4 overflow-hidden border-b border-slate-200 dark:border-white/10 bg-white dark:bg-[#030f17] shadow-md"
+        >
+          <img
+            src={topBanner}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover opacity-15 dark:opacity-30 pointer-events-none"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-white/70 dark:from-[#030f17]/95 dark:via-[#030f17]/80 dark:to-[#030f17]/40 pointer-events-none"
+          />
+          <div className="relative z-10 flex items-center gap-3 px-4 py-3">
+            <div
+              className="w-[56px] h-[56px] rounded-full p-2 shrink-0 flex items-center justify-center bg-slate-100 dark:bg-[#070e1b]/90 shadow-inner"
+              style={{ border: `2px solid ${topAccent}` }}
+            >
+              {selectedFranchise === "all" ? (
+                <img
+                  src="/ipl-logo-transparent.png"
+                  alt="IPL Tournament Logo"
+                  className="w-full h-full object-contain"
+                />
+              ) : (
+                <TeamLogo team={selectedFranchise} size="w-9 h-9" />
+              )}
+            </div>
+
+            <div className="min-w-0 flex-1">
+              <small
+                className="block text-[9.5px] font-bold tracking-[0.09em] uppercase leading-tight truncate"
+                style={{ color: topAccent }}
+              >
+                IPL {selectedSeason} · MATCH CENTER
+              </small>
+              <h1 className="text-[18px] font-extrabold leading-tight truncate mt-0.5 text-slate-900 dark:text-white">
+                {selectedFranchise === "all" ? "All Franchises" : selectedFranchise}
+              </h1>
+
+              <div className="flex items-center gap-1.5 mt-1.5 min-w-0">
+                <label className="min-w-0 flex-1">
+                  <span className="sr-only">Choose franchise</span>
+                  <select
+                    aria-label="Choose franchise"
+                    value={selectedFranchise}
+                    onChange={(e) => setSelectedFranchise(e.target.value)}
+                    className="w-full text-[11px] font-semibold bg-white/90 dark:bg-[#071321]/90 border border-slate-300 dark:border-white/20 rounded-lg px-2 py-1 text-slate-900 dark:text-white outline-none truncate"
+                  >
+                    <option value="all" className="bg-white text-slate-900 dark:bg-slate-900 dark:text-white">
+                      All Franchises ({seasonMatches.length})
+                    </option>
+                    {seasonFranchises.map((team) => (
+                      <option
+                        key={team}
+                        value={team}
+                        className="bg-white text-slate-900 dark:bg-slate-900 dark:text-white"
+                      >
+                        {team}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label className="shrink-0">
+                  <span className="sr-only">Choose season</span>
+                  <select
+                    aria-label="Choose season"
+                    value={selectedSeason}
+                    onChange={(e) => filterStore.setFilter("season", e.target.value)}
+                    className="text-[11px] font-bold font-mono bg-white/90 dark:bg-[#071321]/90 border border-slate-300 dark:border-white/20 rounded-lg px-2 py-1 text-slate-900 dark:text-white outline-none"
+                  >
+                    {[...seasonList].reverse().map((yr) => (
+                      <option
+                        key={yr}
+                        value={yr}
+                        className="bg-white text-slate-900 dark:bg-slate-900 dark:text-white"
+                      >
+                        {yr}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <p className="text-[10px] text-slate-500 dark:text-slate-300/80 mt-1 truncate">
+                Schedule · Standings · Squads · Match Center
+              </p>
+            </div>
+          </div>
+        </header>
+
+        {/* ─── BROADCAST TELEMETRY & ARCHIVE FILTER BAR (Desktop >=1024px) ─── */}
+        <div className="hidden lg:flex bg-white/95 dark:bg-[#0B1020]/90 rounded-[28px] border border-slate-200 dark:border-white/10 p-6 flex-col lg:flex-row items-center justify-between gap-6 shadow-sm dark:shadow-2xl relative z-10 backdrop-blur-xl">
           <div className="flex items-center gap-4">
             <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-blue-700 p-0.5 shadow-lg shadow-blue-500/25 flex items-center justify-center shrink-0 group">
               <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center p-1.5 shadow-inner">
@@ -168,20 +307,20 @@ export default function ScoresPage() {
         </div>
 
         {/* ─── TOURNAMENT TELEMETRY STRIP ─── */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="bg-white dark:bg-[#0B1020]/80 rounded-2xl border border-slate-200 dark:border-white/10 p-4 flex items-center gap-3 shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-              <Calendar className="w-5 h-5" />
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
+          <div className="bg-white dark:bg-[#0B1020]/80 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-white/10 p-2.5 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center gap-1.5 sm:gap-3 shadow-sm min-w-0">
+            <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+              <Calendar className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <span className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 block">Season Fixtures</span>
-              <span className="text-base font-black text-slate-900 dark:text-white">{seasonMatches.length} Matches</span>
+            <div className="min-w-0 w-full">
+              <span className="text-[8.5px] sm:text-[9px] font-extrabold sm:font-black uppercase tracking-normal sm:tracking-widest text-slate-500 dark:text-white/50 block truncate">Season Fixtures</span>
+              <span className="text-[13px] sm:text-base font-black text-slate-900 dark:text-white block truncate leading-tight mt-0.5">{seasonMatches.length} Matches</span>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#0B1020]/80 rounded-2xl border border-slate-200 dark:border-white/10 p-4 flex items-center gap-3 shadow-sm">
+          <div className="bg-white dark:bg-[#0B1020]/80 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-white/10 p-2.5 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center gap-1.5 sm:gap-3 shadow-sm min-w-0">
             <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center transition-colors"
+              className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center transition-colors shrink-0"
               style={{
                 backgroundColor: `${leaderColor}20`,
                 borderColor: `${leaderColor}40`,
@@ -189,12 +328,12 @@ export default function ScoresPage() {
                 color: leaderColor,
               }}
             >
-              <Trophy className="w-5 h-5" />
+              <Trophy className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <span className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 block">Table Leader</span>
+            <div className="min-w-0 w-full">
+              <span className="text-[8.5px] sm:text-[9px] font-extrabold sm:font-black uppercase tracking-normal sm:tracking-widest text-slate-500 dark:text-white/50 block truncate">Table Leader</span>
               <span
-                className="text-base font-black truncate max-w-[130px] block"
+                className="text-[13px] sm:text-base font-black truncate block leading-tight mt-0.5"
                 style={{ color: leaderColor }}
               >
                 {leaderTeam ? teamShort(leaderTeam) : "—"}
@@ -202,39 +341,38 @@ export default function ScoresPage() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#0B1020]/80 rounded-2xl border border-slate-200 dark:border-white/10 p-4 flex items-center gap-3 shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 dark:text-emerald-400">
-              <Users className="w-5 h-5" />
+          <div className="bg-white dark:bg-[#0B1020]/80 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-white/10 p-2.5 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center gap-1.5 sm:gap-3 shadow-sm min-w-0">
+            <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 dark:text-emerald-400 shrink-0">
+              <Users className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <span className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40 block">Franchises</span>
-              <span className="text-base font-black text-slate-900 dark:text-white">{standings.length || 10} Teams</span>
+            <div className="min-w-0 w-full">
+              <span className="text-[8.5px] sm:text-[9px] font-extrabold sm:font-black uppercase tracking-normal sm:tracking-widest text-slate-500 dark:text-white/50 block truncate">Franchises</span>
+              <span className="text-[13px] sm:text-base font-black text-slate-900 dark:text-white block truncate leading-tight mt-0.5">{standings.length || 10} Teams</span>
             </div>
           </div>
-
-          
         </div>
 
         {/* ─── TAB NAVIGATION ─── */}
-        <div className="flex items-center gap-2 bg-slate-100 dark:bg-white/[0.03] p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 w-fit flex-wrap">
+        <div className="grid grid-cols-[1.06fr_1.14fr_0.8fr] sm:inline-flex items-center gap-1 sm:gap-2 bg-slate-100 dark:bg-white/[0.03] p-1 sm:p-1.5 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-white/10 w-full sm:w-fit">
           {[
-            { id: "schedule", label: "Schedule & Results", icon: Calendar, count: seasonMatches.length },
-            { id: "points", label: "Points Standings", icon: Trophy, count: standings.length },
-            { id: "squad", label: "Squads & Player Cards", icon: Users },
+            { id: "schedule", label: "Schedule & Results", shortLabel: "Schedule", icon: Calendar, count: seasonMatches.length },
+            { id: "points", label: "Points Standings", shortLabel: "Standings", icon: Trophy, count: standings.length },
+            { id: "squad", label: "Squads & Player Cards", shortLabel: "Squads", icon: Users },
           ].map(tab => (
-            <button 
+            <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all ${
-                activeTab === tab.id 
-                  ? 'bg-gradient-to-r from-primary to-blue-600 text-white shadow-lg shadow-primary/25 border border-primary/40' 
-                  : 'text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/5'
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2 py-2.5 sm:px-5 sm:py-2.5 min-h-[38px] sm:min-h-0 rounded-lg sm:rounded-xl whitespace-nowrap min-w-0 transition-all ${
+                activeTab === tab.id
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/25 border border-blue-400/40'
+                  : 'text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/5 border border-transparent'
               }`}
             >
-              <tab.icon className="w-4 h-4" />
-              <span>{tab.label}</span>
+              <tab.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+              <span className="sm:hidden text-[11px] font-bold tracking-normal leading-none">{tab.shortLabel}</span>
+              <span className="hidden sm:inline text-[11px] font-black uppercase tracking-wider leading-none">{tab.label}</span>
               {tab.count !== undefined && tab.count > 0 && (
-                <span className={`text-[9px] px-1.5 py-0.2 rounded-md ${activeTab === tab.id ? 'bg-black/30 text-white' : 'bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-white/50'}`}>
+                <span className={`text-[9.5px] sm:text-[9px] font-bold sm:font-black px-1.5 py-0.5 leading-none rounded-md shrink-0 ${activeTab === tab.id ? 'bg-black/30 text-white' : 'bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-white/60'}`}>
                   {tab.count}
                 </span>
               )}
@@ -271,9 +409,22 @@ export default function ScoresPage() {
               })}
             </section>
           )}
-          {activeTab === "schedule" && <ScheduleView season={selectedSeason} matches={seasonMatches} />}
+          {activeTab === "schedule" && (
+            <ScheduleView
+              season={selectedSeason}
+              matches={seasonMatches}
+              selectedFranchise={selectedFranchise}
+              onSelectFranchise={setSelectedFranchise}
+            />
+          )}
           {activeTab === "points" && <PointsView season={selectedSeason} standings={standings} />}
-          {activeTab === "squad" && <SquadsListView season={selectedSeason} playerImages={playerImages.data} />}
+          {activeTab === "squad" && (
+            <SquadsListView
+              season={selectedSeason}
+              playerImages={playerImages.data}
+              selectedFranchise={selectedFranchise}
+            />
+          )}
         </motion.div>
 
         {/* Native Ad Vessel - Match Day Telemetry Sponsor */}
@@ -297,21 +448,19 @@ function getContrastTextColor(hex: string): string {
   return yiq >= 140 ? "#0f172a" : "#ffffff";
 }
 
-function ScheduleView({ season, matches }: { season: string; matches: MatchSummary[] }) {
-  const { selectedTeam } = useTeamTheme();
-  const defaultFranchise = useMemo(() => {
-    if (!selectedTeam || !TEAM_REGISTRY[selectedTeam]) return "all";
-    return TEAM_REGISTRY[selectedTeam].name;
-  }, [selectedTeam]);
-
-  const [selectedFranchise, setSelectedFranchise] = useState<string>(defaultFranchise);
+function ScheduleView({
+  season,
+  matches,
+  selectedFranchise,
+  onSelectFranchise,
+}: {
+  season: string;
+  matches: MatchSummary[];
+  selectedFranchise: string;
+  onSelectFranchise: (team: string) => void;
+}) {
   const [matchStatusFilter, setMatchStatusFilter] = useState<"all" | "completed" | "upcoming">("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
-
-  // Keep in sync when the user changes master franchise in the header dropdown
-  useEffect(() => {
-    setSelectedFranchise(defaultFranchise);
-  }, [defaultFranchise]);
 
   // Extract unique franchises playing in this season's matches
   const franchises = useMemo(() => {
@@ -367,42 +516,44 @@ function ScheduleView({ season, matches }: { season: string; matches: MatchSumma
   return (
     <div className="flex flex-col gap-6">
       {/* ─── FIXTURES CONTROL STRIP (SRH INSPIRED FRANCHISE FILTER & SEARCH) ─── */}
-      <div className="bg-white/95 dark:bg-[#0B1020]/90 backdrop-blur-xl rounded-2xl border border-slate-200 dark:border-white/10 p-4 flex flex-col gap-4 shadow-sm dark:shadow-xl">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-white/95 dark:bg-[#0B1020]/90 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-slate-200 dark:border-white/10 p-2.5 sm:p-4 flex flex-col gap-2.5 sm:gap-4 shadow-sm dark:shadow-xl">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-4">
           {/* Search Input */}
           <div className="relative w-full md:w-80">
-            <Search className="w-4 h-4 text-slate-400 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 dark:text-white/40 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search fixture, team, venue, match #…"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/30 focus:outline-none focus:border-primary/50 transition-colors"
+              className="w-full h-9 bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 rounded-xl pl-9 pr-3 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/30 focus:outline-none focus:border-primary/50 transition-colors"
             />
           </div>
 
           {/* Status Filter Toggle */}
-          <div className="flex items-center gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-xl border border-slate-200 dark:border-white/10 shrink-0 self-end md:self-auto">
+          <div className="grid grid-cols-[1.16fr_0.9fr_0.94fr] md:flex items-center gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-xl border border-slate-200 dark:border-white/10 shrink-0 w-full md:w-auto">
             {(["all", "completed", "upcoming"] as const).map(st => (
               <button
                 key={st}
                 onClick={() => setMatchStatusFilter(st)}
-                className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${
+                className={`px-2 sm:px-3 py-2 sm:py-1.5 min-h-[34px] sm:min-h-0 rounded-lg transition-all flex items-center justify-center whitespace-nowrap ${
                   matchStatusFilter === st
-                    ? "bg-primary text-white font-black shadow-md"
-                    : "text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white"
+                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/20 border border-blue-400/30"
+                    : "text-slate-500 dark:text-white/55 hover:text-slate-900 dark:hover:text-white border border-transparent"
                 }`}
               >
-                {st === "all" ? "All Fixtures" : st === "completed" ? "Results" : "Upcoming"}
+                <span className="text-[11px] sm:text-[10px] font-bold sm:font-black sm:uppercase tracking-normal sm:tracking-wider leading-none">
+                  {st === "all" ? "All Fixtures" : st === "completed" ? "Results" : "Upcoming"}
+                </span>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Franchise Filter Pills Strip with Team Logos & Colors */}
-        <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 no-scrollbar">
+        {/* Franchise Filter Pills Strip (Desktop >=1024px; mobile uses sticky top box dropdown) */}
+        <div className="hidden lg:flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 no-scrollbar">
           <button
-            onClick={() => setSelectedFranchise("all")}
+            onClick={() => onSelectFranchise("all")}
             className={`flex items-center gap-1.5 h-8 px-3.5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer shrink-0 border ${
               selectedFranchise === "all"
                 ? "bg-slate-900 text-white border-slate-900 shadow-sm dark:bg-white dark:text-slate-950 dark:border-white font-black forced-white"
@@ -420,7 +571,7 @@ function ScheduleView({ season, matches }: { season: string; matches: MatchSumma
             return (
               <button
                 key={team}
-                onClick={() => setSelectedFranchise(team)}
+                onClick={() => onSelectFranchise(team)}
                 style={
                   isSelected
                     ? {
@@ -599,7 +750,15 @@ function PointsView({ season, standings }: { season: string; standings: any[] })
    3. SQUADS & SHOP-STYLE COLLECTOR PLAYER CARDS VIEW
    ══════════════════════════════════════════════════════════════════════════ */
 
-function SquadsListView({ season, playerImages }: { season: string; playerImages?: Record<string, string> }) {
+function SquadsListView({
+  season,
+  playerImages,
+  selectedFranchise,
+}: {
+  season: string;
+  playerImages?: Record<string, string>;
+  selectedFranchise?: string;
+}) {
   const squads = useSquadsBySeason();
   const bios = usePlayerBios();
   const { resolvedTheme } = useTheme();
@@ -617,17 +776,21 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
     [seasonSquads],
   );
 
-  // Sync with master team dropdown when it changes
+  // Sync with sticky header / master team dropdown when it changes
   useEffect(() => {
+    if (selectedFranchise && selectedFranchise !== "all" && teamNames.includes(selectedFranchise)) {
+      setSelectedTeamFilter(selectedFranchise);
+      return;
+    }
     if (selectedTeam && TEAM_REGISTRY[selectedTeam]) {
       const masterName = TEAM_REGISTRY[selectedTeam].name;
       if (teamNames.includes(masterName)) {
         setSelectedTeamFilter(masterName);
+        return;
       }
-    } else {
-      setSelectedTeamFilter("");
     }
-  }, [selectedTeam, teamNames]);
+    setSelectedTeamFilter("");
+  }, [selectedFranchise, selectedTeam, teamNames]);
 
   // Active single selected team
   const activeTeam = useMemo(() => {
@@ -746,8 +909,8 @@ function SquadsListView({ season, playerImages }: { season: string; playerImages
           </div>
         </div>
 
-        {/* Team Selector Pills Strip with Dynamic Franchise Logo & Colors */}
-        <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 no-scrollbar">
+        {/* Team Selector Pills Strip (Desktop >=1024px; mobile uses top box dropdown) */}
+        <div className="hidden lg:flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 no-scrollbar">
           {teamNames.filter(Boolean).map(team => {
             const tColor = teamColor(team);
             const isSelected = activeTeam === team;

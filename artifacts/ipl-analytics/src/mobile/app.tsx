@@ -9,13 +9,11 @@ import { UsageTracker } from "./usage";
 import "./mobile.css";
 
 const MHome = lazy(() => import("./screens/home"));
-const MNews = lazy(() => import("./screens/news"));
 const MDiscover = lazy(() => import("./screens/discover"));
 const MPlay = lazy(() => import("./screens/play"));
 const MDugout = lazy(() => import("./screens/franchise-dugout"));
 const MStats = lazy(() => import("./screens/stats"));
 const MPlayer = lazy(() => import("./screens/player"));
-const MTeam = lazy(() => import("./screens/team"));
 const MTeams = lazy(() => import("./screens/teams"));
 const MScout = lazy(() => import("./screens/scout"));
 const MAi = lazy(() => import("./screens/ai"));
@@ -52,11 +50,18 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
               <MHome />
             </Route>
             <Route path="/discover" component={MDiscover} />
-            <Route path="/feed"><Redirect to="/intelligence" replace /></Route>
-            <Route path="/intelligence" component={MNews} />
-            <Route path="/arcade"><MPlay /></Route>
-            <Route path="/dugout"><MDugout /></Route>
-            <Route path="/dugout/articles/:slug"><Legacy legacy={legacy} /></Route>
+            <Route path="/feed">
+              <Redirect to="/intelligence" replace />
+            </Route>
+            <Route path="/arcade">
+              <MPlay />
+            </Route>
+            <Route path="/dugout">
+              <MDugout />
+            </Route>
+            <Route path="/dugout/articles/:slug">
+              <Legacy legacy={legacy} />
+            </Route>
             <Route path="/dugout/:team" component={MDugout} />
             <Route path="/stats">
               <MStats />
@@ -66,7 +71,7 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
             </Route>
             <Route path="/teams" component={MTeams} />
             <Route path="/teams/:slug">
-              <MTeam />
+              <Legacy legacy={legacy} />
             </Route>
             <Route path="/scout">
               <MScout />

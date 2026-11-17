@@ -305,18 +305,18 @@ export function CinematicForecastView({ card, match }: CinematicForecastViewProp
   const windAngleDeg = Math.min(28, Math.max(8, Math.round(current.windSpeed * 0.75)));
 
   return (
-    <div className="w-full flex flex-col gap-6">
+    <div className="w-full flex flex-col gap-4 sm:gap-6">
       {/* ─── SCENARIO SWITCHER PILLS ─── */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-md">
-        <div className="flex items-center gap-2">
-          <Activity className="w-4 h-4 text-sky-600 dark:text-cyan-400" />
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5 sm:gap-3 p-3 rounded-2xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-md">
+        <div className="flex items-center gap-2 shrink-0">
+          <Activity className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-600 dark:text-cyan-400 shrink-0" />
+          <span className="text-[10.5px] sm:text-xs font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
             ATMOSPHERIC SCENARIO:
           </span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5">
-          {(["match_day", "sunny", "evening", "windy", "rain"] as WeatherScenarioKey[]).map((key) => {
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-1.5 w-full lg:w-auto">
+          {(["match_day", "sunny", "evening", "windy", "rain"] as WeatherScenarioKey[]).map((key, idx) => {
             const p = presets[key];
             const isActive = activeScenario === key;
             return (
@@ -324,7 +324,7 @@ export function CinematicForecastView({ card, match }: CinematicForecastViewProp
                 key={key}
                 type="button"
                 onClick={() => setActiveScenario(key)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold tracking-tight transition-all flex items-center gap-1.5 ${
+                className={`${idx === 0 ? "col-span-2 sm:col-span-1" : ""} px-2.5 py-2 sm:px-3 sm:py-1.5 rounded-xl transition-all flex items-center justify-center sm:justify-start gap-1.5 min-w-0 ${
                   isActive
                     ? isLight
                       ? "bg-sky-600 text-white shadow-md shadow-sky-600/25 ring-2 ring-sky-600/20"
@@ -334,9 +334,11 @@ export function CinematicForecastView({ card, match }: CinematicForecastViewProp
                     : "bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/10"
                 }`}
               >
-                <p.icon className="w-3.5 h-3.5" />
-                <span>{p.label}</span>
-                {isActive && <CheckCircle2 className="w-3 h-3 ml-0.5 opacity-90" />}
+                <p.icon className="w-3.5 h-3.5 shrink-0" />
+                <span className="text-[10.5px] sm:text-xs font-mono font-bold tracking-tight truncate leading-none">
+                  {p.label}
+                </span>
+                {isActive && <CheckCircle2 className="w-3 h-3 shrink-0 opacity-90" />}
               </button>
             );
           })}

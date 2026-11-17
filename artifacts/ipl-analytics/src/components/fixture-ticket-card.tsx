@@ -114,13 +114,218 @@ export function FixtureTicketCard({ match }: FixtureTicketCardProps) {
         style={{ backgroundColor: theme.primary }}
       />
 
-      {/* 
-        Ticket Shell with Perforated Fish-Tail Cutout Notches:
-        - Symmetrical circular ticket notch cutouts on top and bottom border boundaries
-        - Sleek compact padding and structured depth 
+      {/*
+        Mobile Compact Ticket Card (<768px): dense scoreboard + single action row
       */}
       <div
-        className="relative w-full rounded-2xl bg-white dark:bg-[#090d16] border border-slate-200 dark:border-white/10 backdrop-blur-xl shadow-md dark:shadow-2xl p-4 sm:p-5 grid grid-cols-1 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1.5fr)_minmax(0,1.25fr)] gap-4 md:gap-0 items-center transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20"
+        className="md:hidden relative w-full rounded-2xl bg-white dark:bg-[#090d16] border border-slate-200 dark:border-white/10 backdrop-blur-xl shadow-md dark:shadow-2xl p-3 flex flex-col gap-2.5"
+        style={{
+          boxShadow: `0 6px 24px -8px rgba(0,0,0,0.12), 0 0 16px -6px ${theme.glow}`,
+        }}
+      >
+        {/* Top Meta Strip: Date/Time + Venue */}
+        <div className="flex items-center justify-between gap-2 min-w-0 text-[10px] font-mono">
+          <div className="flex items-center gap-1.5 shrink-0">
+            <span className="font-black text-slate-900 dark:text-white uppercase tracking-wide">
+              {month} {day}
+            </span>
+            <span className="text-slate-400 dark:text-slate-500">· {weekday}</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] ml-0.5" />
+            <span className="text-slate-500 dark:text-slate-400 font-semibold">19:30</span>
+          </div>
+
+          <Link
+            href={venueHref(match.venue)}
+            className="flex items-center gap-1 text-slate-500 dark:text-slate-400 hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors min-w-0"
+            title={`View Venue Profile: ${canonicalVenue}`}
+          >
+            <MapPin className="w-2.5 h-2.5 shrink-0 text-slate-400 dark:text-slate-500" />
+            <span className="truncate font-medium">{canonicalVenue}</span>
+          </Link>
+        </div>
+
+        {/* Scoreboard Row: Team 1 vs Team 2 */}
+        <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 py-2 border-y border-slate-200 dark:border-white/10">
+          {/* Team 1 */}
+          <div className="flex items-center gap-2 min-w-0">
+            <Link
+              href={`/teams/${t1Slug}`}
+              className={`w-9 h-9 rounded-xl flex items-center justify-center p-1 shrink-0 transition-transform active:scale-95 ${
+                isT1Winner
+                  ? "border-2 bg-slate-100 dark:bg-slate-900/80 shadow-sm"
+                  : "border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0d1424]/80"
+              }`}
+              style={
+                isT1Winner
+                  ? { borderColor: t1Theme.primary, boxShadow: `0 0 12px ${t1Theme.glow}` }
+                  : undefined
+              }
+              title={match.team1}
+            >
+              <TeamLogo team={match.team1} size="w-7 h-7" />
+            </Link>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1">
+                <Link
+                  href={`/teams/${t1Slug}`}
+                  className={`font-mono text-xs font-black uppercase tracking-tight leading-none ${
+                    isT1Winner ? "" : "text-slate-900 dark:text-white"
+                  }`}
+                  style={isT1Winner ? { color: t1Theme.primary } : undefined}
+                >
+                  {homeCode}
+                </Link>
+                {isT1Winner && (
+                  <span className="font-mono text-[8px] font-black uppercase px-1 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 leading-none">
+                    WIN
+                  </span>
+                )}
+              </div>
+              <div className="flex items-baseline gap-1 mt-1 whitespace-nowrap">
+                {t1ScoreParsed.runsWkts ? (
+                  <>
+                    <span className="font-mono text-sm font-black text-cyan-600 dark:text-cyan-400 tabular-nums leading-none">
+                      {t1ScoreParsed.runsWkts}
+                    </span>
+                    {t1ScoreParsed.overs && (
+                      <span className="font-mono text-[9.5px] text-slate-500 dark:text-slate-400 tabular-nums leading-none">
+                        {t1ScoreParsed.overs}
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span className="font-mono text-[9.5px] text-slate-500 font-semibold uppercase">
+                    Upcoming
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* VS */}
+          <span className="text-[9px] font-mono font-bold text-slate-400 uppercase px-1">
+            VS
+          </span>
+
+          {/* Team 2 */}
+          <div className="flex items-center justify-end gap-2 min-w-0 text-right">
+            <div className="min-w-0">
+              <div className="flex items-center justify-end gap-1">
+                {isT2Winner && (
+                  <span className="font-mono text-[8px] font-black uppercase px-1 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 leading-none">
+                    WIN
+                  </span>
+                )}
+                <Link
+                  href={`/teams/${t2Slug}`}
+                  className={`font-mono text-xs font-black uppercase tracking-tight leading-none ${
+                    isT2Winner ? "" : "text-slate-900 dark:text-white"
+                  }`}
+                  style={isT2Winner ? { color: t2Theme.primary } : undefined}
+                >
+                  {awayCode}
+                </Link>
+              </div>
+              <div className="flex items-baseline justify-end gap-1 mt-1 whitespace-nowrap">
+                {t2ScoreParsed.runsWkts ? (
+                  <>
+                    <span className="font-mono text-sm font-black text-emerald-600 dark:text-emerald-400 tabular-nums leading-none">
+                      {t2ScoreParsed.runsWkts}
+                    </span>
+                    {t2ScoreParsed.overs && (
+                      <span className="font-mono text-[9.5px] text-slate-500 dark:text-slate-400 tabular-nums leading-none">
+                        {t2ScoreParsed.overs}
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span className="font-mono text-[9.5px] text-slate-500 font-semibold uppercase">
+                    Upcoming
+                  </span>
+                )}
+              </div>
+            </div>
+            <Link
+              href={`/teams/${t2Slug}`}
+              className={`w-9 h-9 rounded-xl flex items-center justify-center p-1 shrink-0 transition-transform active:scale-95 ${
+                isT2Winner
+                  ? "border-2 bg-slate-100 dark:bg-slate-900/80 shadow-sm"
+                  : "border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0d1424]/80"
+              }`}
+              style={
+                isT2Winner
+                  ? { borderColor: t2Theme.primary, boxShadow: `0 0 12px ${t2Theme.glow}` }
+                  : undefined
+              }
+              title={match.team2}
+            >
+              <TeamLogo team={match.team2} size="w-7 h-7" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Result + POTM compact bar */}
+        <div className="flex items-center justify-between gap-2 min-w-0 text-[10px]">
+          <div className="flex items-center gap-1 min-w-0 font-black uppercase tracking-tight">
+            <Trophy className="w-3 h-3 shrink-0" style={{ color: theme.primary }} />
+            {match.winner ? (
+              <span className="truncate">
+                <span style={{ color: theme.primary }}>{winnerCode}</span>{" "}
+                <span className="text-slate-800 dark:text-white">WON BY {match.margin}</span>
+              </span>
+            ) : match.margin === "tie" ? (
+              <span className="text-amber-500 dark:text-amber-400 truncate">MATCH TIED</span>
+            ) : (
+              <span className="text-slate-500 dark:text-slate-400 font-mono truncate">
+                {match.margin || "SCHEDULED"}
+              </span>
+            )}
+          </div>
+
+          {match.mom && (
+            <Link
+              href={`/players/${playerSlug(match.mom)}`}
+              className="flex items-center gap-1 font-mono text-[10px] text-cyan-600 dark:text-cyan-400 font-bold shrink-0 max-w-[44%] truncate"
+              title={`POTM: ${match.mom}`}
+            >
+              <Award className="w-3 h-3 shrink-0" />
+              <span className="truncate">{match.mom}</span>
+            </Link>
+          )}
+        </div>
+
+        {/* Single-Line Action Bar */}
+        <div className="grid grid-cols-[1.35fr_1fr_1fr] gap-1.5 w-full">
+          <Link
+            href={`/match/${match.id}`}
+            style={{ backgroundColor: winnerTheme.primary, color: "#FFFFFF" }}
+            className="h-8 px-2 rounded-lg text-[10px] font-mono font-black uppercase tracking-wide shadow-sm transition-all active:scale-[0.98] flex items-center justify-center gap-1 forced-white whitespace-nowrap"
+          >
+            <Play className="w-2.5 h-2.5 fill-current shrink-0" />
+            <span>{match.winner || match.margin ? "Match Center" : "Preview"}</span>
+          </Link>
+          <Link
+            href={`/match/${match.id}?tab=scorecard`}
+            className="h-8 px-2 rounded-lg text-[10px] font-mono font-bold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 transition-all active:scale-[0.98] flex items-center justify-center gap-0.5 whitespace-nowrap"
+          >
+            <span>Scorecard</span>
+            <ChevronRight className="w-2.5 h-2.5 text-slate-400 shrink-0" />
+          </Link>
+          <Link
+            href={`/match/${match.id}?tab=squads`}
+            className="h-8 px-2 rounded-lg text-[10px] font-mono font-bold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 transition-all active:scale-[0.98] flex items-center justify-center gap-1 whitespace-nowrap"
+          >
+            <Users className="w-2.5 h-2.5 text-slate-400 shrink-0" />
+            <span>Squads</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* 
+        Desktop Ticket Shell with Perforated Fish-Tail Cutout Notches (>=768px)
+      */}
+      <div
+        className="hidden md:grid relative w-full rounded-2xl bg-white dark:bg-[#090d16] border border-slate-200 dark:border-white/10 backdrop-blur-xl shadow-md dark:shadow-2xl p-4 sm:p-5 grid-cols-[minmax(0,1.15fr)_minmax(0,1.5fr)_minmax(0,1.25fr)] gap-0 items-center transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20"
         style={{
           boxShadow: `0 8px 32px -8px rgba(0,0,0,0.12), 0 0 20px -6px ${theme.glow}`,
         }}

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { TeamLogo } from "@/components/team-logo";
 import { PlayerAvatar } from "@/components/player-avatar";
@@ -21,6 +21,8 @@ import {
   TrendingUp,
   Sparkles,
   Shield,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 export interface MatchCinematicHeroProps {
@@ -305,6 +307,25 @@ export function MatchCinematicHero({ match, card }: MatchCinematicHeroProps) {
   const t1Percent = Math.min(85, Math.max(15, Math.round((t1Runs / totalBothRuns) * 100)));
   const t2Percent = 100 - t1Percent;
 
+  // Mobile horizontal slide state for the 3-card showdown area
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const goToSlide = (idx: number) => {
+    const clamped = Math.max(0, Math.min(2, idx));
+    setActiveSlide(clamped);
+    const el = carouselRef.current;
+    if (!el) return;
+    el.scrollTo({ left: clamped * el.clientWidth, behavior: "smooth" });
+  };
+
+  const handleCarouselScroll = () => {
+    const el = carouselRef.current;
+    if (!el || el.clientWidth <= 0) return;
+    const idx = Math.max(0, Math.min(2, Math.round(el.scrollLeft / el.clientWidth)));
+    if (idx !== activeSlide) setActiveSlide(idx);
+  };
+
   return (
     <div className="relative w-full rounded-[28px] md:rounded-[36px] bg-[#070b14] border border-white/10 shadow-2xl overflow-hidden p-5 sm:p-7 lg:p-8 flex flex-col gap-6">
       {/* Volumetric Franchise Neon Flares */}
@@ -346,14 +367,66 @@ export function MatchCinematicHero({ match, card }: MatchCinematicHeroProps) {
         </Link>
       </div>
 
-      {/* ─── 3-COLUMN SHOWDOWN GRID ─── */}
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1.15fr_1.1fr_1.15fr] gap-6 items-stretch">
+      {/* ─── MOBILE SLIDE SWITCHER BAR (<1024px) ─── */}
+      <div className="lg:hidden relative z-10 flex items-center justify-between gap-1.5 bg-white/[0.04] border border-white/10 rounded-xl p-1">
+        <button
+          type="button"
+          onClick={() => goToSlide(activeSlide - 1)}
+          disabled={activeSlide === 0}
+          aria-label="Previous match card"
+          className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white disabled:opacity-25 shrink-0 transition-opacity"
+        >
+          <ChevronLeft className="w-3.5 h-3.5" />
+        </button>
+
+        <div className="grid grid-cols-3 gap-1 flex-1 min-w-0">
+          {[
+            { idx: 0, label: `${team1Code} 1st` },
+            { idx: 1, label: "Showdown" },
+            { idx: 2, label: `${team2Code} Chase` },
+          ].map((item) => {
+            const active = activeSlide === item.idx;
+            return (
+              <button
+                key={item.idx}
+                type="button"
+                onClick={() => goToSlide(item.idx)}
+                aria-pressed={active}
+                className={`h-7 px-1.5 rounded-lg transition-all flex items-center justify-center whitespace-nowrap min-w-0 ${
+                  active
+                    ? "bg-white/15 border border-white/25 text-white shadow-sm"
+                    : "text-slate-400 hover:text-white border border-transparent"
+                }`}
+              >
+                <span className="text-[10px] font-bold tracking-wide truncate">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => goToSlide(activeSlide + 1)}
+          disabled={activeSlide === 2}
+          aria-label="Next match card"
+          className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white disabled:opacity-25 shrink-0 transition-opacity"
+        >
+          <ChevronRight className="w-3.5 h-3.5" />
+        </button>
+      </div>
+
+      {/* ─── 3-COLUMN SHOWDOWN GRID (Swipeable 1-card carousel on mobile, 3-col grid on lg+) ─── */}
+      <div
+        ref={carouselRef}
+        onScroll={handleCarouselScroll}
+        className="relative z-10 grid grid-flow-col auto-cols-[100%] gap-3 overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-[1.15fr_1.1fr_1.15fr] lg:gap-6 lg:overflow-visible items-stretch"
+      >
         
         {/* ═══════════════════════════════════════════════════════════
             COLUMN 1: TEAM 1 (GUJARAT TITANS)
             ═══════════════════════════════════════════════════════════ */}
         <div
-          className={`flex flex-col justify-between rounded-2xl p-5 border transition-all ${
+          className={`snap-center min-w-0 flex flex-col justify-between rounded-2xl p-4 sm:p-5 border transition-all ${
             isT1Winner
               ? "bg-slate-900/60 border-amber-500/40 shadow-[0_0_24px_rgba(245,158,11,0.15)]"
               : "bg-white/[0.03] border-white/10"
@@ -468,7 +541,7 @@ export function MatchCinematicHero({ match, card }: MatchCinematicHeroProps) {
         {/* ═══════════════════════════════════════════════════════════
             COLUMN 2: CENTER CLASH & DECISIVE RESULT
             ═══════════════════════════════════════════════════════════ */}
-        <div className="flex flex-col items-center justify-between rounded-2xl p-5 bg-white/[0.02] border border-white/10 text-center">
+        <div className="snap-center min-w-0 flex flex-col items-center justify-between rounded-2xl p-4 sm:p-5 bg-white/[0.02] border border-white/10 text-center">
           {/* Duel Header with Franchise Colors Arc */}
           <div className="w-full flex items-center justify-center gap-4">
             <div
@@ -548,7 +621,7 @@ export function MatchCinematicHero({ match, card }: MatchCinematicHeroProps) {
             COLUMN 3: TEAM 2 (ROYAL CHALLENGERS BENGALURU)
             ═══════════════════════════════════════════════════════════ */}
         <div
-          className={`flex flex-col justify-between rounded-2xl p-5 border transition-all ${
+          className={`snap-center min-w-0 flex flex-col justify-between rounded-2xl p-4 sm:p-5 border transition-all ${
             isT2Winner
               ? "bg-slate-900/60 border-rose-500/40 shadow-[0_0_24px_rgba(244,63,94,0.15)]"
               : "bg-white/[0.03] border-white/10"
@@ -665,8 +738,8 @@ export function MatchCinematicHero({ match, card }: MatchCinematicHeroProps) {
         </div>
       </div>
 
-      {/* ─── BOTTOM TELEMETRY RIBBON & COMPARISON METER ─── */}
-      <div className="relative z-10 pt-4 border-t border-white/10 flex flex-col gap-4">
+      {/* ─── BOTTOM TELEMETRY RIBBON & COMPARISON METER (Desktop >=1024px only) ─── */}
+      <div className="hidden lg:flex relative z-10 pt-4 border-t border-white/10 flex-col gap-4">
         {/* Dual-Innings Score Comparison Bar */}
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-300">

@@ -65,7 +65,7 @@ export function InningsScorecardView({ card, isLoading }: InningsScorecardViewPr
   return (
     <div className="flex flex-col gap-6 w-full">
       {/* ─── CRICBUZZ STYLE TOP NAVIGATOR BUTTONS ─── */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {innings.map((inn, idx) => {
           const isActive = selectedInnings === idx;
           const tColor = teamColor(inn.team);
@@ -73,29 +73,29 @@ export function InningsScorecardView({ card, isLoading }: InningsScorecardViewPr
             <button
               key={idx}
               onClick={() => setSelectedInnings(idx)}
-              className={`flex items-center gap-2.5 px-4 py-2.5 rounded-2xl border font-mono text-xs transition-all whitespace-nowrap cursor-pointer ${
+              className={`flex items-center gap-1.5 sm:gap-2.5 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-2xl border transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 isActive
-                  ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-black shadow-md border-transparent"
+                  ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-md border-transparent"
                   : "bg-white dark:bg-white/[0.03] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20"
               }`}
             >
-              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: tColor }} />
-              <span className="font-bold uppercase tracking-wider">{teamShort(inn.team)}</span>
-              <span className="font-black tabular-nums">{inn.runs}/{inn.wickets}</span>
-              <span className="text-[10px] opacity-75">({inn.overs} ov)</span>
+              <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full shrink-0" style={{ backgroundColor: tColor }} />
+              <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider leading-none">{teamShort(inn.team)}</span>
+              <span className="text-[11px] sm:text-xs font-mono font-black tabular-nums leading-none">{inn.runs}/{inn.wickets}</span>
+              <span className="text-[9.5px] sm:text-[10px] font-mono opacity-75 leading-none">({inn.overs} ov)</span>
             </button>
           );
         })}
         {innings.length > 1 && (
           <button
             onClick={() => setSelectedInnings("both")}
-            className={`px-4 py-2.5 rounded-2xl border font-mono text-xs transition-all whitespace-nowrap cursor-pointer font-bold ${
+            className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-2xl border transition-all whitespace-nowrap shrink-0 cursor-pointer flex items-center justify-center ${
               selectedInnings === "both"
-                ? "bg-cyan-600 text-white dark:bg-cyan-500 dark:text-slate-950 font-black shadow-md border-transparent"
+                ? "bg-cyan-600 text-white dark:bg-cyan-500 dark:text-slate-950 shadow-md border-transparent"
                 : "bg-white dark:bg-white/[0.03] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20"
             }`}
           >
-            Both Innings
+            <span className="text-[11px] sm:text-xs font-mono font-bold leading-none">Both Innings</span>
           </button>
         )}
       </div>
@@ -188,7 +188,10 @@ function SingleInningsPanel({
       </div>
 
       {/* ─── INNINGS SUB-NAVIGATION CONTROLS ─── */}
-      <div className="px-5 pt-3 border-b border-slate-200 dark:border-white/5 flex items-center gap-1.5 overflow-x-auto scrollbar-thin bg-slate-100 dark:bg-black/20">
+      <div
+        data-testid="scorecard-subtabs"
+        className="px-2.5 sm:px-5 pt-2.5 sm:pt-3 border-b border-slate-200 dark:border-white/5 flex items-center justify-between sm:justify-start gap-1 sm:gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden bg-slate-100 dark:bg-black/20"
+      >
         {[
           { id: "batting", label: "BATTING" },
           { id: "bowling", label: "BOWLING" },
@@ -198,13 +201,15 @@ function SingleInningsPanel({
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as typeof activeTab)}
-            className={`px-3.5 py-2 text-[10px] font-mono font-black uppercase tracking-wider rounded-t-xl transition-all border-b-2 whitespace-nowrap ${
+            className={`px-2 sm:px-3.5 py-2 rounded-t-xl transition-all border-b-2 whitespace-nowrap shrink-0 flex items-center justify-center ${
               activeTab === tab.id
-                ? "text-cyan-700 dark:text-cyan-300 border-cyan-500 dark:border-cyan-400 bg-white dark:bg-white/5 font-black shadow-sm"
+                ? "text-cyan-700 dark:text-cyan-300 border-cyan-500 dark:border-cyan-400 bg-white dark:bg-white/5 shadow-sm"
                 : "text-slate-600 dark:text-slate-400 border-transparent hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-white/[0.02]"
             }`}
           >
-            {tab.label}
+            <span className="text-[9.5px] sm:text-[10px] font-mono font-black uppercase tracking-wide sm:tracking-wider leading-none">
+              {tab.label}
+            </span>
           </button>
         ))}
       </div>

@@ -29,12 +29,12 @@ const tooltipStyle = {
 
 function StatTile({ label, value, sub, accent }: { label: string; value: string; sub?: string; accent?: string }) {
   return (
-    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
-      <div className="text-[9px] font-black uppercase tracking-widest text-white/30">{label}</div>
-      <div className="text-[20px] font-black mt-1 tabular-nums" style={accent ? { color: accent } : undefined}>
+    <div className="bg-white/[0.02] border border-white/5 rounded-xl sm:rounded-2xl p-2.5 sm:p-4">
+      <div className="text-[8.5px] sm:text-[9px] font-black uppercase tracking-wider sm:tracking-widest text-white/30 truncate">{label}</div>
+      <div className="text-base sm:text-[20px] font-black mt-0.5 sm:mt-1 tabular-nums leading-tight" style={accent ? { color: accent } : undefined}>
         {value}
       </div>
-      {sub && <div className="text-[10px] font-bold text-white/35 mt-0.5">{sub}</div>}
+      {sub && <div className="text-[9.5px] sm:text-[10px] font-bold text-white/35 mt-0.5 truncate">{sub}</div>}
     </div>
   );
 }
@@ -44,13 +44,13 @@ function SectionHeading({ icon: Icon, title, subtitle, accent, right }: {
   title: string; subtitle?: string; accent: string; right?: React.ReactNode;
 }) {
   return (
-    <div className="flex items-start justify-between gap-4 flex-wrap mb-5">
-      <div>
-        <h3 className="text-sm font-black uppercase tracking-widest text-white/80 flex items-center gap-2">
-          <Icon className="w-4 h-4" style={{ color: accent }} />
+    <div className="flex items-start justify-between gap-2.5 sm:gap-4 flex-wrap mb-3.5 sm:mb-5">
+      <div className="min-w-0">
+        <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-white/80 flex items-center gap-1.5 sm:gap-2">
+          <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" style={{ color: accent }} />
           {title}
         </h3>
-        {subtitle && <p className="text-[10px] text-white/40 font-bold mt-0.5">{subtitle}</p>}
+        {subtitle && <p className="text-[9.5px] sm:text-[10px] text-white/40 font-bold mt-0.5">{subtitle}</p>}
       </div>
       {right}
     </div>
@@ -350,35 +350,37 @@ export function TeamAnalyticsDashboard({
   }));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Era filter + export */}
-      <GlassCard className="p-4 flex items-center justify-between gap-4 flex-wrap">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[9px] font-black uppercase tracking-widest text-white/30 mr-1">Era</span>
+      <GlassCard className="p-3 sm:p-4 flex items-center justify-between gap-2.5 sm:gap-4 flex-wrap">
+        <div className="flex items-center gap-1 sm:gap-2 flex-wrap w-full sm:w-auto">
+          <span className="text-[9px] font-black uppercase tracking-widest text-white/30 mr-0.5 sm:mr-1 shrink-0">Era</span>
           {ERA_PRESETS.map((p, i) => (
             <button
               key={p.label}
               onClick={() => setEra(i)}
-              className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${
+              className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg transition-all shrink-0 whitespace-nowrap flex items-center justify-center ${
                 era === i ? "text-white" : "text-white/40 hover:text-white hover:bg-white/5"
               }`}
               style={era === i ? { background: `${accent}30`, boxShadow: `0 0 14px -4px ${accent}` } : {}}
             >
-              {p.label}
+              <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wide sm:tracking-widest leading-none">
+                {p.label}
+              </span>
             </button>
           ))}
         </div>
         <button
           onClick={exportCsv}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white border border-white/10 hover:border-white/25 transition-all"
+          className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-white/60 hover:text-white border border-white/10 hover:border-white/25 transition-all shrink-0"
         >
-          <Download className="w-3.5 h-3.5" />
-          Export CSV
+          <Download className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+          <span className="text-[9.5px] sm:text-[10px] font-black uppercase tracking-widest leading-none">Export CSV</span>
         </button>
       </GlassCard>
 
       {/* Headline for the selected era */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-4 gap-1.5 sm:gap-3">
         <StatTile label="Played" value={String(d.record.played)} sub={preset.label} />
         <StatTile label="Won" value={String(d.record.wins)} accent="#34d399" />
         <StatTile label="Lost" value={String(d.record.losses)} accent="#f87171" />
@@ -386,14 +388,14 @@ export function TeamAnalyticsDashboard({
       </div>
 
       {/* Phase analytics */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <GlassCard className="lg:col-span-2 p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <GlassCard className="lg:col-span-2 p-3.5 sm:p-6">
           <SectionHeading
             icon={Zap} accent={accent}
             title="Phase Breakdown"
             subtitle="Batting run rate against bowling economy, by phase of the innings"
           />
-          <div className="h-[260px] w-full">
+          <div className="h-[200px] sm:h-[260px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={phaseChart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" vertical={false} />
@@ -406,26 +408,28 @@ export function TeamAnalyticsDashboard({
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <div className="grid grid-cols-3 gap-3 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 mt-3 sm:mt-4">
             {d.battingPhases.map((p, i) => (
-              <div key={p.phase} className="bg-white/[0.02] border border-white/5 rounded-xl p-3">
-                <div className="text-[9px] font-black uppercase tracking-widest text-white/30">{p.phase}</div>
-                <div className="text-[11px] font-bold text-white/70 mt-1">Bat {p.runRate} rpo · {p.boundaryPct}% bdry</div>
-                <div className="text-[11px] font-bold text-white/45">
-                  Bowl {d.bowlingPhases[i]?.dotPct ?? 0}% dots · {d.bowlingPhases[i]?.wickets ?? 0} wkts
+              <div key={p.phase} className="bg-white/[0.02] border border-white/5 rounded-xl p-2.5 sm:p-3 flex sm:block items-center justify-between gap-2">
+                <div className="text-[9px] font-black uppercase tracking-widest text-white/30 shrink-0">{p.phase}</div>
+                <div className="text-right sm:text-left">
+                  <div className="text-[10.5px] sm:text-[11px] font-bold text-white/70 sm:mt-1">Bat {p.runRate} rpo · {p.boundaryPct}% bdry</div>
+                  <div className="text-[10px] sm:text-[11px] font-bold text-white/45">
+                    Bowl {d.bowlingPhases[i]?.dotPct ?? 0}% dots · {d.bowlingPhases[i]?.wickets ?? 0} wkts
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         </GlassCard>
 
-        <GlassCard className="p-6">
+        <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading
             icon={Target} accent={accent}
             title="Phase Profile"
             subtitle="Boundary share batting vs dot share bowling"
           />
-          <div className="h-[260px] w-full">
+          <div className="h-[210px] sm:h-[260px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={radarData} outerRadius="72%">
                 <PolarGrid stroke="rgba(255,255,255,0.08)" />
@@ -442,8 +446,8 @@ export function TeamAnalyticsDashboard({
       </div>
 
       {/* Toss, innings order, pace vs spin */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <GlassCard className="p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading icon={TrendingUp} accent={accent} title="Toss Impact" subtitle="Win rate by toss outcome" />
           <div className="space-y-3">
             {[
@@ -466,7 +470,7 @@ export function TeamAnalyticsDashboard({
           </div>
         </GlassCard>
 
-        <GlassCard className="p-6">
+        <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading icon={Target} accent={accent} title="Conditions" subtitle="Innings order, ground and time of day" />
           <div className="space-y-3">
             {[
@@ -498,7 +502,7 @@ export function TeamAnalyticsDashboard({
           </div>
         </GlassCard>
 
-        <GlassCard className="p-6">
+        <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading icon={Zap} accent={accent} title="Pace vs Spin" subtitle="This attack's own returns" />
           <div className="space-y-4">
             {d.bowlerSplit.map(b => (
@@ -517,8 +521,8 @@ export function TeamAnalyticsDashboard({
       </div>
 
       {/* Clutch + venues */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <GlassCard className="p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading icon={AlertTriangle} accent={accent} title="Clutch & Collapse" subtitle="Tight finishes and wicket clusters" />
           <div className="grid grid-cols-2 gap-3">
             <StatTile label="Close finishes" value={`${clutch.closeWinPct}%`} sub={`${clutch.closeWon} of ${clutch.closePlayed} won`} accent={accent} />
@@ -531,7 +535,7 @@ export function TeamAnalyticsDashboard({
           </p>
         </GlassCard>
 
-        <GlassCard className="lg:col-span-2 p-6">
+        <GlassCard className="lg:col-span-2 p-3.5 sm:p-6">
           <SectionHeading icon={MapPin} accent={accent} title="Venue Record" subtitle="Grounds with the most fixtures in this era" />
           <div className="space-y-2 max-h-[280px] overflow-y-auto pr-1">
             {d.venues.slice(0, 12).map(v => (
@@ -550,7 +554,7 @@ export function TeamAnalyticsDashboard({
 
       {/* Captains */}
       {d.captains?.length > 0 && (
-        <GlassCard className="p-6">
+        <GlassCard className="p-3.5 sm:p-6">
           <SectionHeading
             icon={Crown} accent={accent}
             title="Captaincy"
@@ -596,7 +600,7 @@ export function TeamAnalyticsDashboard({
       )}
 
       {/* Head to head */}
-      <GlassCard className="p-6">
+      <GlassCard className="p-3.5 sm:p-6">
         <SectionHeading
           icon={Swords} accent={accent}
           title="Head to Head"
@@ -623,7 +627,7 @@ export function TeamAnalyticsDashboard({
                 <div className="text-sm font-black text-white">{h2hRow.opponent}</div>
                 <div className="text-[11px] font-bold text-white/40">{h2hRow.played} matches in this era</div>
               </div>
-              <div className="grid grid-cols-3 gap-3 ml-auto">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 w-full sm:w-auto sm:ml-auto">
                 <StatTile label="Won" value={String(h2hRow.wins)} accent="#34d399" />
                 <StatTile label="Lost" value={String(h2hRow.losses)} accent="#f87171" />
                 <StatTile label="Win %" value={`${h2hRow.winPct}%`} accent={accent} />

@@ -101,25 +101,25 @@ export function MatchGraphConsole({ card, match }: MatchGraphConsoleProps) {
   }, [overData]);
 
   return (
-    <div className="w-full bg-white dark:bg-[#080d1a] border border-slate-200 dark:border-white/10 rounded-[28px] p-5 sm:p-7 shadow-xl dark:shadow-2xl flex flex-col gap-6">
+    <div className="w-full bg-white dark:bg-[#080d1a] border border-slate-200 dark:border-white/10 rounded-2xl sm:rounded-[28px] p-3.5 sm:p-7 shadow-xl dark:shadow-2xl flex flex-col gap-4 sm:gap-6">
       {/* ─── GRAPH CONSOLE HEADER & CATEGORY TABS ─── */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/10 pb-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="text-lg sm:text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4 border-b border-slate-200 dark:border-white/10 pb-3.5 sm:pb-4">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-base sm:text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
               INTERACTIVE MATCH INTELLIGENCE
             </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-100 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/30 text-cyan-800 dark:text-cyan-300 font-bold uppercase">
+            <span className="text-[9.5px] sm:text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-100 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/30 text-cyan-800 dark:text-cyan-300 font-bold uppercase shrink-0">
               10-VECTOR LAB
             </span>
           </div>
-          <span className="text-xs font-mono text-slate-600 dark:text-slate-400 mt-1 block">
+          <span className="text-[11px] sm:text-xs font-mono text-slate-600 dark:text-slate-400 mt-1 block">
             {t1Code} vs {t2Code} · Cumulative Run-Worm, Manhattan Bar, Phase Comparison & Matchups
           </span>
         </div>
 
         {/* Categories Tab Strip */}
-        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-thin bg-slate-100 dark:bg-black/30 p-1.5 rounded-xl border border-slate-200 dark:border-white/5">
+        <div className="flex items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden bg-slate-100 dark:bg-black/30 p-1 sm:p-1.5 rounded-xl border border-slate-200 dark:border-white/5 w-full lg:w-auto min-w-0">
           {[
             { id: "progression", label: "PROGRESSION & WORM", icon: TrendingUp },
             { id: "phases", label: "PHASE COMPARISON", icon: Layers },
@@ -130,14 +130,16 @@ export function MatchGraphConsole({ card, match }: MatchGraphConsoleProps) {
             <button
               key={tab.id}
               onClick={() => setActiveCategory(tab.id as typeof activeCategory)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-black uppercase tracking-wider transition-all whitespace-nowrap ${
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 rounded-lg transition-all whitespace-nowrap shrink-0 ${
                 activeCategory === tab.id
-                  ? "bg-cyan-600 text-white dark:bg-cyan-500 dark:text-black shadow-md font-black"
+                  ? "bg-cyan-600 text-white dark:bg-cyan-500 dark:text-black shadow-md"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-white/5"
               }`}
             >
-              <tab.icon className="w-3.5 h-3.5" />
-              <span>{tab.label}</span>
+              <tab.icon className="w-3.5 h-3.5 shrink-0" />
+              <span className="text-[10.5px] sm:text-[10px] font-mono font-black uppercase tracking-wide leading-none">
+                {tab.label}
+              </span>
             </button>
           ))}
         </div>
@@ -168,156 +170,179 @@ export function MatchGraphConsole({ card, match }: MatchGraphConsoleProps) {
           </div>
 
           {/* Dual Graph: 1. Cumulative Worm */}
-          <div className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono font-black text-cyan-800 dark:text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
-                <TrendingUp className="w-4 h-4" /> 1. CUMULATIVE RUN-RATE WORM
-              </span>
-              <span className="text-[11px] font-mono font-medium text-slate-600 dark:text-slate-400">Total Runs vs Overs</span>
-            </div>
+          {(() => {
+            const wormYMax = Math.max(200, Math.ceil(Math.max(t1RunsTotal, t2RunsTotal) / 50) * 50);
+            const wormYTicks = [wormYMax, Math.round(wormYMax * 0.75), Math.round(wormYMax * 0.5), Math.round(wormYMax * 0.25), 0];
+            const t2MaxOvers = Math.min(20, Math.max(1, Math.ceil(Number(t2OversTotal) || 18)));
+            const toSvgY = (runs: number) => 200 - (Math.min(wormYMax, runs) / wormYMax) * 200;
 
-            <div className="h-64 relative border-l border-b border-slate-300 dark:border-white/10 ml-8 mb-4 flex items-end pt-4 pr-4">
-              {/* Subtle horizontal grid lines */}
-              <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-40">
-                <div className="w-full border-b border-dashed border-slate-300 dark:border-white/10" />
-                <div className="w-full border-b border-dashed border-slate-300 dark:border-white/10" />
-                <div className="w-full border-b border-dashed border-slate-300 dark:border-white/10" />
-                <div className="w-full border-b border-dashed border-slate-300 dark:border-white/10" />
-                <div className="w-full" />
+            return (
+              <div className="p-3.5 sm:p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 flex flex-col gap-3 overflow-hidden">
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <span className="text-[11px] sm:text-xs font-mono font-black text-cyan-800 dark:text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <TrendingUp className="w-4 h-4 shrink-0" /> 1. CUMULATIVE RUN-RATE WORM
+                  </span>
+                  <span className="text-[10.5px] sm:text-[11px] font-mono font-medium text-slate-600 dark:text-slate-400">
+                    Total Runs vs Overs
+                  </span>
+                </div>
+
+                <div className="h-52 sm:h-64 relative border-l border-b border-slate-300 dark:border-white/10 ml-7 sm:ml-8 mr-2 mb-5 mt-2">
+                  {/* Subtle horizontal grid lines */}
+                  <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-40">
+                    <div className="w-full border-t border-dashed border-slate-300 dark:border-white/10" />
+                    <div className="w-full border-t border-dashed border-slate-300 dark:border-white/10" />
+                    <div className="w-full border-t border-dashed border-slate-300 dark:border-white/10" />
+                    <div className="w-full border-t border-dashed border-slate-300 dark:border-white/10" />
+                    <div className="w-full" />
+                  </div>
+
+                  {/* Y Axis ticks */}
+                  <div className="absolute -left-7 sm:-left-8 -top-1.5 -bottom-1.5 flex flex-col justify-between text-[9.5px] sm:text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 pointer-events-none select-none">
+                    {wormYTicks.map(tick => (
+                      <span key={tick} className="leading-none">{tick}</span>
+                    ))}
+                  </div>
+                  {/* X Axis ticks */}
+                  <div className="absolute left-0 right-0 -bottom-5 flex justify-between text-[9.5px] sm:text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 pointer-events-none select-none">
+                    <span>0</span>
+                    <span>5 OV</span>
+                    <span>10 OV</span>
+                    <span>15 OV</span>
+                    <span>20 OV</span>
+                  </div>
+
+                  {/* Dynamic Broadcast TV SVG Curves with Gradient Fills */}
+                  <svg className="w-full h-full block relative z-10 overflow-visible" viewBox="0 0 400 200" preserveAspectRatio="none">
+                    <defs>
+                      {/* Area Gradients */}
+                      <linearGradient id="areaGradT1" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor={t1Color} stopOpacity="0.32" />
+                        <stop offset="75%" stopColor={t1Color} stopOpacity="0.06" />
+                        <stop offset="100%" stopColor={t1Color} stopOpacity="0.00" />
+                      </linearGradient>
+                      <linearGradient id="areaGradT2" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor={t2Color} stopOpacity="0.28" />
+                        <stop offset="75%" stopColor={t2Color} stopOpacity="0.05" />
+                        <stop offset="100%" stopColor={t2Color} stopOpacity="0.00" />
+                      </linearGradient>
+
+                      {/* Manhattan Bar Gradients */}
+                      <linearGradient id="barGradT1" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor={t1Color} stopOpacity="1" />
+                        <stop offset="100%" stopColor={t1Color} stopOpacity="0.45" />
+                      </linearGradient>
+                      <linearGradient id="barGradT2" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor={t2Color} stopOpacity="1" />
+                        <stop offset="100%" stopColor={t2Color} stopOpacity="0.45" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Team 1 Gradient Area Fill */}
+                    <path
+                      d={`M 0 200 ${overData.map((d, i) => `L ${(i + 1) * 20} ${toSvgY(d.t1Cum)}`).join(" ")} L 400 200 Z`}
+                      fill="url(#areaGradT1)"
+                    />
+
+                    {/* Team 2 Gradient Area Fill */}
+                    <path
+                      d={`M 0 200 ${overData.slice(0, t2MaxOvers).map((d, i) => `L ${(i + 1) * 20} ${toSvgY(d.t2Cum)}`).join(" ")} L ${t2MaxOvers * 20} 200 Z`}
+                      fill="url(#areaGradT2)"
+                    />
+
+                    {/* Team 1 Worm Line */}
+                    <path
+                      d={`M 0 200 ${overData.map((d, i) => `L ${(i + 1) * 20} ${toSvgY(d.t1Cum)}`).join(" ")}`}
+                      fill="none"
+                      stroke={t1Color}
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      vectorEffect="non-scaling-stroke"
+                    />
+
+                    {/* Team 2 Worm Line */}
+                    <path
+                      d={`M 0 200 ${overData.slice(0, t2MaxOvers).map((d, i) => `L ${(i + 1) * 20} ${toSvgY(d.t2Cum)}`).join(" ")}`}
+                      fill="none"
+                      stroke={t2Color}
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      vectorEffect="non-scaling-stroke"
+                    />
+                  </svg>
+
+                  {/* Crisp undistorted HTML wicket pins anchored directly on the plot */}
+                  <div className="absolute inset-0 z-20 pointer-events-none" data-testid="worm-wicket-markers">
+                    {overData.map((d, i) => {
+                      const leftPct = ((i + 1) / 20) * 100;
+                      const t1TopPct = (1 - Math.min(wormYMax, d.t1Cum) / wormYMax) * 100;
+                      const t2TopPct = (1 - Math.min(wormYMax, d.t2Cum) / wormYMax) * 100;
+
+                      return (
+                        <React.Fragment key={d.over}>
+                          {d.t1Wickets > 0 && (
+                            <div
+                              data-testid="worm-wicket-pin"
+                              className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
+                              style={{ left: `${leftPct}%`, top: `${t1TopPct}%` }}
+                            >
+                              <span className="text-[7px] font-mono font-black leading-none text-rose-500 dark:text-rose-400 -mt-3 mb-0.5 select-none">
+                                W
+                              </span>
+                              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 border-[1.5px] border-white shadow-[0_0_6px_rgba(244,63,94,0.65)] ring-2 ring-rose-500/25" />
+                            </div>
+                          )}
+                          {d.t2Wickets > 0 && i < t2MaxOvers && (
+                            <div
+                              data-testid="worm-wicket-pin"
+                              className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
+                              style={{ left: `${leftPct}%`, top: `${t2TopPct}%` }}
+                            >
+                              <span className="text-[7px] font-mono font-black leading-none text-amber-500 dark:text-amber-400 -mt-3 mb-0.5 select-none">
+                                W
+                              </span>
+                              <span className="w-2.5 h-2.5 rounded-full bg-amber-500 border-[1.5px] border-white shadow-[0_0_6px_rgba(245,158,11,0.65)] ring-2 ring-amber-500/25" />
+                            </div>
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-
-              {/* Y Axis ticks */}
-              <div className="absolute -left-8 top-0 bottom-0 flex flex-col justify-between text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 py-1">
-                <span>200</span>
-                <span>150</span>
-                <span>100</span>
-                <span>50</span>
-                <span>0</span>
-              </div>
-              {/* X Axis ticks */}
-              <div className="absolute left-0 right-0 -bottom-6 flex justify-between text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 px-1">
-                <span>0</span>
-                <span>5 OV</span>
-                <span>10 OV</span>
-                <span>15 OV</span>
-                <span>20 OV</span>
-              </div>
-
-              {/* Dynamic Broadcast TV SVG Curves with Neon Glow and Gradient Fills */}
-              <svg className="w-full h-full overflow-visible relative z-10" viewBox="0 0 400 100" preserveAspectRatio="none">
-                <defs>
-                  {/* Neon Glow Filter */}
-                  <filter id="neonGlowT1" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor={t1Color} floodOpacity="0.75" />
-                  </filter>
-                  <filter id="neonGlowT2" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor={t2Color} floodOpacity="0.75" />
-                  </filter>
-
-                  {/* Area Gradients */}
-                  <linearGradient id="areaGradT1" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor={t1Color} stopOpacity="0.35" />
-                    <stop offset="70%" stopColor={t1Color} stopOpacity="0.08" />
-                    <stop offset="100%" stopColor={t1Color} stopOpacity="0.00" />
-                  </linearGradient>
-                  <linearGradient id="areaGradT2" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor={t2Color} stopOpacity="0.30" />
-                    <stop offset="70%" stopColor={t2Color} stopOpacity="0.06" />
-                    <stop offset="100%" stopColor={t2Color} stopOpacity="0.00" />
-                  </linearGradient>
-
-                  {/* Manhattan Bar Gradients */}
-                  <linearGradient id="barGradT1" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor={t1Color} stopOpacity="1" />
-                    <stop offset="100%" stopColor={t1Color} stopOpacity="0.45" />
-                  </linearGradient>
-                  <linearGradient id="barGradT2" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor={t2Color} stopOpacity="1" />
-                    <stop offset="100%" stopColor={t2Color} stopOpacity="0.45" />
-                  </linearGradient>
-                </defs>
-
-                {/* Team 1 Gradient Area Fill */}
-                <path
-                  d={`M 0 100 ${overData.map((d, i) => `L ${(i + 1) * 20} ${100 - (d.t1Cum / 200) * 100}`).join(" ")} L 400 100 Z`}
-                  fill="url(#areaGradT1)"
-                />
-
-                {/* Team 2 Gradient Area Fill */}
-                <path
-                  d={`M 0 100 ${overData.slice(0, 18).map((d, i) => `L ${(i + 1) * 20} ${100 - (d.t2Cum / 200) * 100}`).join(" ")} L 360 100 Z`}
-                  fill="url(#areaGradT2)"
-                />
-
-                {/* Team 1 Worm Line with Neon Glow */}
-                <path
-                  d={`M 0 100 ${overData.map((d, i) => `L ${(i + 1) * 20} ${100 - (d.t1Cum / 200) * 100}`).join(" ")}`}
-                  fill="none"
-                  stroke={t1Color}
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                  filter="url(#neonGlowT1)"
-                />
-
-                {/* Team 2 Worm Line with Neon Glow */}
-                <path
-                  d={`M 0 100 ${overData.slice(0, 18).map((d, i) => `L ${(i + 1) * 20} ${100 - (d.t2Cum / 200) * 100}`).join(" ")}`}
-                  fill="none"
-                  stroke={t2Color}
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                  filter="url(#neonGlowT2)"
-                />
-
-                {/* Wicket dots with glowing badges and W markers */}
-                {overData.map((d, i) => (
-                  <React.Fragment key={i}>
-                    {d.t1Wickets > 0 && (
-                      <g>
-                        <circle cx={(i + 1) * 20} cy={100 - (d.t1Cum / 200) * 100} r="7" fill="#ef4444" fillOpacity="0.3" className="animate-ping" />
-                        <circle cx={(i + 1) * 20} cy={100 - (d.t1Cum / 200) * 100} r="4.5" fill="#ef4444" stroke="#ffffff" strokeWidth="1.5" />
-                        <text x={(i + 1) * 20} y={96 - (d.t1Cum / 200) * 100} fill="#ef4444" fontSize="6" fontWeight="900" textAnchor="middle">W</text>
-                      </g>
-                    )}
-                    {d.t2Wickets > 0 && i < 18 && (
-                      <g>
-                        <circle cx={(i + 1) * 20} cy={100 - (d.t2Cum / 200) * 100} r="7" fill="#f59e0b" fillOpacity="0.3" className="animate-ping" />
-                        <circle cx={(i + 1) * 20} cy={100 - (d.t2Cum / 200) * 100} r="4.5" fill="#f59e0b" stroke="#ffffff" strokeWidth="1.5" />
-                        <text x={(i + 1) * 20} y={96 - (d.t2Cum / 200) * 100} fill="#f59e0b" fontSize="6" fontWeight="900" textAnchor="middle">W</text>
-                      </g>
-                    )}
-                  </React.Fragment>
-                ))}
-              </svg>
-            </div>
-          </div>
+            );
+          })()}
 
           {/* Dual Graph: 2. Manhattan Chart (Runs Per Over) */}
-          <div className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono font-black text-rose-700 dark:text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
-                <BarChart3 className="w-4 h-4" /> 2. MANHATTAN CHART (RUNS SCORED PER OVER)
+          <div className="p-3.5 sm:p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 flex flex-col gap-3 overflow-hidden">
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <span className="text-[11px] sm:text-xs font-mono font-black text-rose-700 dark:text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
+                <BarChart3 className="w-4 h-4 shrink-0" /> 2. MANHATTAN CHART (RUNS SCORED PER OVER)
               </span>
-              <span className="text-[11px] font-mono font-medium text-slate-600 dark:text-slate-400">Broadcast High-Fidelity Over Metrics</span>
+              <span className="text-[10.5px] sm:text-[11px] font-mono font-medium text-slate-600 dark:text-slate-400">
+                Broadcast High-Fidelity Over Metrics
+              </span>
             </div>
 
-            <div className="h-44 flex items-end gap-1.5 sm:gap-2.5 pt-4 px-2 border-b border-slate-300 dark:border-white/10">
+            <div className="h-40 sm:h-44 flex items-end gap-[2px] sm:gap-2 pt-3 px-0.5 sm:px-2 border-b border-slate-300 dark:border-white/10 w-full min-w-0">
               {overData.map(d => (
-                <div key={d.over} className="flex-1 flex flex-col items-center gap-1 h-full justify-end group relative">
+                <div key={d.over} className="flex-1 min-w-0 flex flex-col items-center gap-1 h-full justify-end group relative">
                   {/* Wicket Indicators above bars */}
-                  <div className="flex items-center gap-0.5 h-3">
+                  <div className="flex items-center gap-0.5 h-3 shrink-0">
                     {d.t1Wickets > 0 && (
-                      <span className="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]" title={`${t1Code} Wicket in Ov ${d.over}`} />
+                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]" title={`${t1Code} Wicket in Ov ${d.over}`} />
                     )}
                     {d.t2Wickets > 0 && (
-                      <span className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]" title={`${t2Code} Wicket in Ov ${d.over}`} />
+                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]" title={`${t2Code} Wicket in Ov ${d.over}`} />
                     )}
                   </div>
 
-                  <div className="flex items-end gap-0.5 sm:gap-1.5 w-full justify-center h-full">
+                  <div className="flex items-end gap-[1px] sm:gap-1.5 w-full justify-center flex-1 min-h-0">
                     {/* Team 1 Bar with Rounded Cap & Glow */}
                     <div
-                      className="w-2 sm:w-3 rounded-t-md transition-all duration-300 group-hover:scale-y-105 group-hover:brightness-125 shadow-md"
+                      className="w-[4px] sm:w-3 rounded-t-sm sm:rounded-t-md transition-all duration-300 group-hover:scale-y-105 group-hover:brightness-125 shadow-md"
                       style={{
                         height: `${Math.max(4, (d.t1Runs / 24) * 100)}%`,
                         background: `linear-gradient(180deg, ${t1Color} 0%, ${t1Color}99 60%, ${t1Color}40 100%)`,
@@ -327,7 +352,7 @@ export function MatchGraphConsole({ card, match }: MatchGraphConsoleProps) {
                     />
                     {/* Team 2 Bar with Rounded Cap & Glow */}
                     <div
-                      className="w-2 sm:w-3 rounded-t-md transition-all duration-300 group-hover:scale-y-105 group-hover:brightness-125 shadow-md"
+                      className="w-[4px] sm:w-3 rounded-t-sm sm:rounded-t-md transition-all duration-300 group-hover:scale-y-105 group-hover:brightness-125 shadow-md"
                       style={{
                         height: `${Math.max(4, (d.t2Runs / 24) * 100)}%`,
                         background: `linear-gradient(180deg, ${t2Color} 0%, ${t2Color}99 60%, ${t2Color}40 100%)`,
@@ -336,7 +361,9 @@ export function MatchGraphConsole({ card, match }: MatchGraphConsoleProps) {
                       title={`${t2Code} Over ${d.over}: ${d.t2Runs} runs`}
                     />
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-slate-600 dark:text-slate-400">{d.over}</span>
+                  <span className="text-[7.5px] sm:text-[9px] font-mono font-bold text-slate-600 dark:text-slate-400 leading-none">
+                    {d.over}
+                  </span>
                 </div>
               ))}
             </div>
