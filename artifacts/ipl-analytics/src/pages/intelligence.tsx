@@ -11,24 +11,47 @@ import { Link, useLocation } from "wouter";
 import { Layout } from "@/components/layout";
 import { TeamLogo } from "@/components/team-logo";
 import { FRANCHISE_METADATA } from "@/data/editorial-magazine-data";
-import { LibraryMedia, useFranchiseArticles } from "@/components/dugout/franchise-library";
-import { EDITORIAL_ASPECTS, type EditorialAspectId } from "@/data/editorial/schema";
+import {
+  LibraryMedia,
+  useFranchiseArticles,
+} from "@/components/dugout/franchise-library";
+import {
+  EDITORIAL_ASPECTS,
+  type EditorialAspectId,
+} from "@/data/editorial/schema";
 import { STORY_TYPE_LABEL } from "@/lib/editorial-v2";
+import {
+  ANGLE_TO_ASPECT,
+  FRANCHISE_INTELLIGENCE,
+  INTELLIGENCE_ANGLES,
+  SEASONS,
+} from "@/data/franchise-intelligence";
+import {
+  Search,
+  ArrowRight,
+  ChevronRight,
+  Shield,
+  Sparkles,
+  Filter,
+  Flame,
+  Compass,
+  Activity,
+  Cpu,
+} from "lucide-react";
+import {
+  useTeamTheme,
+  CANONICAL_TEAM_CODES,
+  getFranchisePageTeam,
+  setFranchisePageTeam,
+  isTeamCode,
+  type TeamCode,
+} from "@/lib/team-context";
+import { FranchiseSwitcher } from "@/components/dugout/franchise-hero";
 
-// Intelligence angles → the editorial aspects used by the 100-article franchise library.
-const ANGLE_TO_ASPECT: Record<string, EditorialAspectId> = {
-  batting: "batting",
-  bowling: "bowling-fielding",
-  tactical: "tactical",
-  auction: "auction-economics",
-  business: "business",
-  culture: "fan-culture",
-  history: "history",
-  development: "scouting",
-  datascience: "data-science",
-  future: "future",
-};
-const aspectName = (id: EditorialAspectId) => EDITORIAL_ASPECTS.find((a) => a.id === id)?.name ?? "";
+export { FRANCHISE_INTELLIGENCE };
+
+const aspectName = (id: EditorialAspectId) =>
+  EDITORIAL_ASPECTS.find((a) => a.id === id)?.name ?? "";
 
 function isLightHex(hex: string): boolean {
   const clean = (hex || "").replace("#", "");
@@ -39,270 +62,14 @@ function isLightHex(hex: string): boolean {
   const yiq = (r * 299 + g * 587 + b * 114) / 1000;
   return yiq >= 150;
 }
-import {
-  BookOpen, Search, ArrowRight, ChevronDown, ChevronRight,
-  TrendingUp, Users, Target, Shield, Sparkles, Filter, Clock,
-  Award, Flame, Compass, Activity, ShieldCheck, GraduationCap,
-  Brain, Rocket, Cpu
-} from "lucide-react";
-import { 
-  useTeamTheme, CANONICAL_TEAM_CODES, getFranchisePageTeam, 
-  setFranchisePageTeam, isTeamCode, type TeamCode 
-} from "@/lib/team-context";
-import { FranchiseSwitcher } from "@/components/dugout/franchise-hero";
-
-// 11 Intelligence Angles with custom badge styling and icons
-interface AngleCategory {
-  id: string;
-  label: string;
-  badgeCount: number;
-  icon: React.ElementType;
-  color: string;
-  borderColor: string;
-  bgActive: string;
-}
-
-const INTELLIGENCE_ANGLES: AngleCategory[] = [
-  { id: "all", label: "All Articles", badgeCount: 100, icon: BookOpen, color: "text-cyan-400", borderColor: "border-cyan-500/30", bgActive: "bg-cyan-500/20" },
-  { id: "batting", label: "Batting Intelligence", badgeCount: 10, icon: Flame, color: "text-rose-400", borderColor: "border-rose-500/30", bgActive: "bg-rose-500/20" },
-  { id: "bowling", label: "Bowling & Fielding", badgeCount: 10, icon: Target, color: "text-blue-400", borderColor: "border-blue-500/30", bgActive: "bg-blue-500/20" },
-  { id: "tactical", label: "Tactical & Match", badgeCount: 10, icon: Compass, color: "text-purple-400", borderColor: "border-purple-500/30", bgActive: "bg-purple-500/20" },
-  { id: "auction", label: "Auction & Economics", badgeCount: 10, icon: Award, color: "text-pink-400", borderColor: "border-pink-500/30", bgActive: "bg-pink-500/20" },
-  { id: "business", label: "Business & Revenue", badgeCount: 10, icon: TrendingUp, color: "text-emerald-400", borderColor: "border-emerald-500/30", bgActive: "bg-emerald-500/20" },
-  { id: "culture", label: "Fan Culture", badgeCount: 10, icon: Users, color: "text-amber-400", borderColor: "border-amber-500/30", bgActive: "bg-amber-500/20" },
-  { id: "history", label: "History & Legacy", badgeCount: 10, icon: ShieldCheck, color: "text-teal-400", borderColor: "border-teal-500/30", bgActive: "bg-teal-500/20" },
-  { id: "development", label: "Player Development", badgeCount: 10, icon: GraduationCap, color: "text-cyan-400", borderColor: "border-cyan-500/30", bgActive: "bg-cyan-500/20" },
-  { id: "datascience", label: "Data Science", badgeCount: 10, icon: Brain, color: "text-indigo-400", borderColor: "border-indigo-500/30", bgActive: "bg-indigo-500/20" },
-  { id: "future", label: "Future Strategy", badgeCount: 10, icon: Rocket, color: "text-lime-400", borderColor: "border-lime-500/30", bgActive: "bg-lime-500/20" },
-];
-
-interface FranchiseIntelligenceData {
-  code: string;
-  name: string;
-  motto: string;
-  heroImage: string;
-  stadiumImage: string;
-  featuredPlayer: string;
-  accent: string;
-  venue: string;
-  players: string[];
-  popularTags: string[];
-  trendingTopics: Array<{ rank: number; title: string; cat: string; views: string }>;
-}
-
-export const FRANCHISE_INTELLIGENCE: Record<string, FranchiseIntelligenceData> = {
-  SRH: {
-    code: "SRH",
-    name: "Sunrisers Hyderabad",
-    motto: "Orange Army",
-    heroImage: "/abhisek sharma.jpg",
-    stadiumImage: "/rajiv gandhi hyderabad stadium.webp",
-    featuredPlayer: "Abhishek Sharma",
-    accent: "#F26522",
-    venue: "Rajiv Gandhi International Stadium, Uppal",
-    players: ["Pat Cummins", "Travis Head", "Heinrich Klaasen", "Abhishek Sharma", "Bhuvneshwar Kumar", "Nitish Kumar Reddy", "T Natarajan"],
-    popularTags: ["Pat Cummins", "Travis Head", "Heinrich Klaasen", "Uppal", "Powerplay 125", "Death Overs", "Abhishek Sharma", "Orange Army"],
-    trendingTopics: [
-      { rank: 1, title: "SRH's 125-Run Powerplay Blueprint", cat: "Batting Intelligence", views: "14.2K" },
-      { rank: 2, title: "Uppal: Turning Hyderabad into a 250+ Fortress", cat: "Tactical & Match", views: "11.8K" },
-      { rank: 3, title: "Head & Abhishek: The Geometry of Destruction", cat: "Batting Intelligence", views: "10.4K" },
-      { rank: 4, title: "Pat Cummins' Bowling Changes Under Pressure", cat: "Tactical & Match", views: "8.9K" },
-      { rank: 5, title: "Klaasen's Spin Punishment Thresholds", cat: "Data Science", views: "7.6K" },
-    ],
-  },
-  RCB: {
-    code: "RCB",
-    name: "Royal Challengers Bengaluru",
-    motto: "Play Bold",
-    heroImage: "/virat kohli.jpg",
-    stadiumImage: "/chinnaswamy stadium.webp",
-    featuredPlayer: "Virat Kohli",
-    accent: "#E01E37",
-    venue: "M. Chinnaswamy Stadium, Bengaluru",
-    players: ["Virat Kohli", "Faf du Plessis", "Rajat Patidar", "Glenn Maxwell", "Mohammed Siraj", "Dinesh Karthik", "Cameron Green"],
-    popularTags: ["Virat Kohli", "Faf du Plessis", "Chinnaswamy", "Middle Order", "Death Overs", "Rajat Patidar", "Playoffs", "Superstar Culture"],
-    trendingTopics: [
-      { rank: 1, title: "RCB's Middle-Order Evolution", cat: "Batting Intelligence", views: "12.4K" },
-      { rank: 2, title: "Chinnaswamy: Fortress or False Advantage?", cat: "Tactical & Match", views: "9.8K" },
-      { rank: 3, title: "Why RCB Still Chases 200", cat: "Data Science", views: "8.1K" },
-      { rank: 4, title: "The Auction Strategy Dilemma", cat: "Auction & Economics", views: "7.5K" },
-      { rank: 5, title: "RCB's Global Fan Phenomenon", cat: "Fan Culture", views: "6.3K" },
-    ],
-  },
-  CSK: {
-    code: "CSK",
-    name: "Chennai Super Kings",
-    motto: "Whistle Podu",
-    heroImage: "/msd.jpg",
-    stadiumImage: "/ma chidambaram stadium.webp",
-    featuredPlayer: "MS Dhoni",
-    accent: "#F9CD05",
-    venue: "M.A. Chidambaram Stadium, Chepauk, Chennai",
-    players: ["MS Dhoni", "Ruturaj Gaikwad", "Ravindra Jadeja", "Shivam Dube", "Matheesha Pathirana", "Suresh Raina"],
-    popularTags: ["MS Dhoni", "Chepauk", "Spin Choke", "Ruturaj Gaikwad", "Yellow Army", "Whistle Podu", "Calculated Chase", "Finishing Mastery"],
-    trendingTopics: [
-      { rank: 1, title: "The Chepauk Spin Choke: Mathematical Analysis", cat: "Bowling & Fielding", views: "13.6K" },
-      { rank: 2, title: "Dhoni's Endgame: Run-Chase Calculations", cat: "Tactical & Match", views: "12.1K" },
-      { rank: 3, title: "Ruturaj's Captaincy Transition & Stability", cat: "Player Development", views: "9.4K" },
-      { rank: 4, title: "CSK's Retention Economics: Loyalty vs Peak Value", cat: "Auction & Economics", views: "8.7K" },
-      { rank: 5, title: "Whistle Podu: Tribal Loyalty in Modern Sport", cat: "Fan Culture", views: "7.9K" },
-    ],
-  },
-  MI: {
-    code: "MI",
-    name: "Mumbai Indians",
-    motto: "One Family",
-    heroImage: "/rohit sharma.jpg",
-    stadiumImage: "/wankhede stadium.webp",
-    featuredPlayer: "Rohit Sharma",
-    accent: "#004BA0",
-    venue: "Wankhede Stadium, Mumbai",
-    players: ["Rohit Sharma", "Jasprit Bumrah", "Suryakumar Yadav", "Hardik Pandya", "Tilak Varma", "Lasith Malinga"],
-    popularTags: ["Rohit Sharma", "Wankhede", "Bumrah Yorker", "Scouting Engine", "Championship Pedigree", "Suryakumar Yadav", "Pace Battery", "One Family"],
-    trendingTopics: [
-      { rank: 1, title: "Jasprit Bumrah's Phase-Wise Economy Suppression", cat: "Bowling & Fielding", views: "15.1K" },
-      { rank: 2, title: "Wankhede Red-Soil Dynamics: Batting Par Scores", cat: "Tactical & Match", views: "11.2K" },
-      { rank: 3, title: "Rohit Sharma's Powerplay Aggression Shift", cat: "Batting Intelligence", views: "10.8K" },
-      { rank: 4, title: "The MI Scouting Machine: Finding Gems", cat: "Player Development", views: "9.1K" },
-      { rank: 5, title: "Auction Room Mastery: Building 5-Title Cores", cat: "Auction & Economics", views: "8.3K" },
-    ],
-  },
-  KKR: {
-    code: "KKR",
-    name: "Kolkata Knight Riders",
-    motto: "Korbo Lorbo Jeetbo",
-    heroImage: "/s narine.jpg",
-    stadiumImage: "/eden gardens stadium.webp",
-    featuredPlayer: "Sunil Narine",
-    accent: "#3A225D",
-    venue: "Eden Gardens, Kolkata",
-    players: ["Sunil Narine", "Andre Russell", "Shreyas Iyer", "Rinku Singh", "Varun Chakravarthy", "Mitchell Starc"],
-    popularTags: ["Sunil Narine", "Eden Gardens", "Spin Web", "Andre Russell", "Fearless Batting", "Shreyas Iyer", "Boundary Rate", "Purple Haze"],
-    trendingTopics: [
-      { rank: 1, title: "Sunil Narine: The Opener Renaissance Model", cat: "Batting Intelligence", views: "13.9K" },
-      { rank: 2, title: "Eden Gardens Spin Web: Pitch Degradation Matrix", cat: "Tactical & Match", views: "10.5K" },
-      { rank: 3, title: "Russell's Muscle: Bat Velocity vs High Pace", cat: "Data Science", views: "9.2K" },
-      { rank: 4, title: "Aggressive Intent Over Anchor Archetypes", cat: "Tactical & Match", views: "8.4K" },
-      { rank: 5, title: "KKR Fanbase: Passion & Kolkata Cricket Soul", cat: "Fan Culture", views: "7.1K" },
-    ],
-  },
-  RR: {
-    code: "RR",
-    name: "Rajasthan Royals",
-    motto: "Halla Bol",
-    heroImage: "/players/rr-2026/riyan-parag.webp",
-    stadiumImage: "/venue-images/sawai mansingh jaipur stadium.webp",
-    featuredPlayer: "Riyan Parag",
-    accent: "#EA1A85",
-    venue: "Sawai Mansingh Stadium, Jaipur",
-    players: ["Yashasvi Jaiswal", "Riyan Parag", "Shimron Hetmyer", "Sandeep Sharma", "Donovan Ferreira", "Trent Boult"],
-    popularTags: ["Yashasvi Jaiswal", "SMS Jaipur", "Moneyball", "Riyan Parag", "Tactical Innovation", "Death Overs", "Powerplay Fire", "Halla Bol"],
-    trendingTopics: [
-      { rank: 1, title: "Yashasvi Jaiswal's Front-Foot Dominance", cat: "Batting Intelligence", views: "11.7K" },
-      { rank: 2, title: "SMS Jaipur: Long Boundaries and Spin Suffocation", cat: "Tactical & Match", views: "9.6K" },
-      { rank: 3, title: "Riyan Parag's Middle-Overs Anchor & Finishing", cat: "Tactical & Match", views: "8.8K" },
-      { rank: 4, title: "The Rajasthan Scouting Pipeline: Uncapped Gems", cat: "Player Development", views: "7.9K" },
-      { rank: 5, title: "Boult & Sandeep: Powerplay & Death Symmetry", cat: "Bowling & Fielding", views: "7.4K" },
-    ],
-  },
-  DC: {
-    code: "DC",
-    name: "Delhi Capitals",
-    motto: "Roar Macha",
-    heroImage: "/players/dc-2026/kl-rahul.webp",
-    stadiumImage: "/arun jaitely stadium.webp",
-    featuredPlayer: "KL Rahul",
-    accent: "#0078BC",
-    venue: "Arun Jaitley Stadium, Kotla, Delhi",
-    players: ["Rishabh Pant", "Axar Patel", "Kuldeep Yadav", "Tristan Stubbs", "Jake Fraser-McGurk", "David Warner"],
-    popularTags: ["Rishabh Pant", "Kotla", "Young Core", "Axar Patel", "Squad Construction", "Powerplay Hitting", "Kuldeep Magic", "Roar Macha"],
-    trendingTopics: [
-      { rank: 1, title: "Rishabh Pant's Comeback & Batting Impact", cat: "Batting Intelligence", views: "12.8K" },
-      { rank: 2, title: "Kotla's Shorter Fences & Run Spikes", cat: "Tactical & Match", views: "9.3K" },
-      { rank: 3, title: "Axar Patel's Elite T20 Value: Underrated All-Rounder", cat: "Data Science", views: "8.5K" },
-      { rank: 4, title: "DC's Overseas Core: Strategy & Stability", cat: "Auction & Economics", views: "7.2K" },
-      { rank: 5, title: "Youth Reconstruction in Capital City", cat: "Player Development", views: "6.8K" },
-    ],
-  },
-  PBKS: {
-    code: "PBKS",
-    name: "Punjab Kings",
-    motto: "Sadda Punjab",
-    heroImage: "/players/pbks-2026/shreyas-iyer.webp",
-    stadiumImage: "/is bindra stadium.jpg",
-    featuredPlayer: "Shreyas Iyer",
-    accent: "#DD1F2D",
-    venue: "PCA New Stadium, Mullanpur / Dharamshala",
-    players: ["Shikhar Dhawan", "Shashank Singh", "Ashutosh Sharma", "Arshdeep Singh", "Sam Curran", "Liam Livingstone"],
-    popularTags: ["Shikhar Dhawan", "Mullanpur", "High-Risk Batting", "Arshdeep Singh", "Shashank Singh", "Chaos Theory", "Death Bowling", "Sadda Punjab"],
-    trendingTopics: [
-      { rank: 1, title: "Shashank & Ashutosh: The Death Overs Miracle", cat: "Batting Intelligence", views: "12.2K" },
-      { rank: 2, title: "Mullanpur Pitch Dynamics: Pace, Bounce & Drift", cat: "Tactical & Match", views: "8.9K" },
-      { rank: 3, title: "Arshdeep Singh's Death Yorkers Precision Matrix", cat: "Bowling & Fielding", views: "8.3K" },
-      { rank: 4, title: "Punjab's Chasing Psychology: Closing Tight Games", cat: "Fan Culture", views: "7.5K" },
-      { rank: 5, title: "Rebuilding PBKS: The Search for Season Stability", cat: "Future Strategy", views: "6.9K" },
-    ],
-  },
-  GT: {
-    code: "GT",
-    name: "Gujarat Titans",
-    motto: "Aava De",
-    heroImage: "/players/gt-2026/shubman-gill.webp",
-    stadiumImage: "/narendra modi stadium.webp",
-    featuredPlayer: "Shubman Gill",
-    accent: "#1B2133",
-    venue: "Narendra Modi Stadium, Ahmedabad",
-    players: ["Shubman Gill", "Rashid Khan", "David Miller", "Sai Sudharsan", "Mohammed Shami", "Rahul Tewatia"],
-    popularTags: ["Shubman Gill", "Narendra Modi Stadium", "Efficiency", "Rashid Khan", "Match Control", "Sai Sudharsan", "Bowling Depth", "Aava De"],
-    trendingTopics: [
-      { rank: 1, title: "Shubman Gill's Controlled Aggression Metric", cat: "Batting Intelligence", views: "13.1K" },
-      { rank: 2, title: "Narendra Modi Stadium: Dew and Dimension Dynamics", cat: "Tactical & Match", views: "10.1K" },
-      { rank: 3, title: "Rashid Khan's Bowling Impact in Tight Spells", cat: "Bowling & Fielding", views: "9.7K" },
-      { rank: 4, title: "GT's Match-Winning Efficiency: The Calm Under Pressure", cat: "Data Science", views: "8.2K" },
-      { rank: 5, title: "Building a Modern Franchise Identity in 3 Years", cat: "Business & Revenue", views: "7.3K" },
-    ],
-  },
-  LSG: {
-    code: "LSG",
-    name: "Lucknow Super Giants",
-    motto: "Gazab Andaz",
-    heroImage: "/players/lsg-2026/nicholas-pooran.webp",
-    stadiumImage: "/lucknow stadium.webp",
-    featuredPlayer: "Nicholas Pooran",
-    accent: "#22D3EE",
-    venue: "BRSABV Ekana Cricket Stadium, Lucknow",
-    players: ["KL Rahul", "Nicholas Pooran", "Marcus Stoinis", "Mayank Yadav", "Ravi Bishnoi", "Ayush Badoni"],
-    popularTags: ["KL Rahul", "Ekana", "Anchor Strategy", "Nicholas Pooran", "Mayank Yadav Pace", "Matchups", "Target Defending", "Gazab Andaz"],
-    trendingTopics: [
-      { rank: 1, title: "Mayank Yadav: The 156.7 KPH Phenomenon", cat: "Bowling & Fielding", views: "14.5K" },
-      { rank: 2, title: "Ekana's Twin Soils: Red vs Black Pitch Behaviour", cat: "Tactical & Match", views: "10.6K" },
-      { rank: 3, title: "Nicholas Pooran: The Pure Striking Velocity Index", cat: "Batting Intelligence", views: "9.9K" },
-      { rank: 4, title: "Defending 160+: Lucknow's Tactical Template", cat: "Tactical & Match", views: "8.7K" },
-      { rank: 5, title: "KL Rahul's Accumulation vs Strike Rate Tradeoff", cat: "Data Science", views: "8.0K" },
-    ],
-  },
-};
-
-const ALL_FRANCHISES = [
-  { code: "RCB", name: "Royal Challengers Bengaluru" },
-  { code: "CSK", name: "Chennai Super Kings" },
-  { code: "MI", name: "Mumbai Indians" },
-  { code: "KKR", name: "Kolkata Knight Riders" },
-  { code: "SRH", name: "Sunrisers Hyderabad" },
-  { code: "RR", name: "Rajasthan Royals" },
-  { code: "DC", name: "Delhi Capitals" },
-  { code: "PBKS", name: "Punjab Kings" },
-  { code: "GT", name: "Gujarat Titans" },
-  { code: "LSG", name: "Lucknow Super Giants" },
-];
-
-const SEASONS = ["2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017"];
 
 export default function IntelligencePage() {
   const { selectedTeam } = useTeamTheme();
 
   // Active search query params
-  const [searchParamStr, setSearchParamStr] = useState(() => (typeof window !== "undefined" ? window.location.search : ""));
+  const [searchParamStr, setSearchParamStr] = useState(() =>
+    typeof window !== "undefined" ? window.location.search : "",
+  );
 
   useEffect(() => {
     const onPop = () => setSearchParamStr(window.location.search);
@@ -310,10 +77,14 @@ export default function IntelligencePage() {
     return () => window.removeEventListener("popstate", onPop);
   }, []);
 
-  const searchParams = useMemo(() => new URLSearchParams(searchParamStr), [searchParamStr]);
+  const searchParams = useMemo(
+    () => new URLSearchParams(searchParamStr),
+    [searchParamStr],
+  );
   const activeFranchiseCode = useMemo(() => {
     const raw = searchParams.get("franchise");
-    if (raw && isTeamCode(raw.toUpperCase())) return raw.toUpperCase() as TeamCode;
+    if (raw && isTeamCode(raw.toUpperCase()))
+      return raw.toUpperCase() as TeamCode;
     if (selectedTeam && isTeamCode(selectedTeam)) return selectedTeam;
     return getFranchisePageTeam();
   }, [searchParams, selectedTeam]);
@@ -347,7 +118,9 @@ export default function IntelligencePage() {
   }, [activeFranchiseCode, franchiseConfig]);
 
   // Local Filter States — Automatically derived and reset when activeFranchiseCode changes
-  const [selectedAngle, setSelectedAngle] = useState<string>(() => searchParams.get("angle") || "all");
+  const [selectedAngle, setSelectedAngle] = useState<string>(
+    () => searchParams.get("angle") || "all",
+  );
   const [selectedSeason, setSelectedSeason] = useState<string>("All Seasons");
   const [selectedPlayer, setSelectedPlayer] = useState<string>("All Players");
   const [searchQuery, setSearchQuery] = useState("");
@@ -372,31 +145,46 @@ export default function IntelligencePage() {
     setFranchisePickerOpen(false);
     const nextParams = new URLSearchParams(window.location.search);
     nextParams.set("franchise", code.toLowerCase());
-    window.history.pushState(null, "", `${window.location.pathname}?${nextParams.toString()}`);
+    window.history.pushState(
+      null,
+      "",
+      `${window.location.pathname}?${nextParams.toString()}`,
+    );
     setSearchParamStr(window.location.search);
   };
 
   // Every readable article for this franchise — the same list as the Dugout library (new + legacy).
-  const { items: libraryItems, featured: featuredEntry } = useFranchiseArticles(activeFranchiseCode);
-  const franchiseArticles = useMemo(() => libraryItems.filter((i) => i.kind !== "planned"), [libraryItems]);
+  const { items: libraryItems, featured: featuredEntry } =
+    useFranchiseArticles(activeFranchiseCode);
+  const franchiseArticles = useMemo(
+    () => libraryItems.filter((i) => i.kind !== "planned"),
+    [libraryItems],
+  );
 
   // Featured article: the franchise's featured investigation, else the first article
   const featuredArticle = useMemo(
-    () => franchiseArticles.find((i) => i.key === featuredEntry?.id) ?? franchiseArticles[0],
+    () =>
+      franchiseArticles.find((i) => i.key === featuredEntry?.id) ??
+      franchiseArticles[0],
     [franchiseArticles, featuredEntry],
   );
 
   // Real per-angle counts for the angle cards
   const angleCounts = useMemo(() => {
     const c: Record<string, number> = { all: franchiseArticles.length };
-    for (const [angle, aspect] of Object.entries(ANGLE_TO_ASPECT)) c[angle] = franchiseArticles.filter((i) => i.aspect === aspect).length;
+    for (const [angle, aspect] of Object.entries(ANGLE_TO_ASPECT))
+      c[angle] = franchiseArticles.filter((i) => i.aspect === aspect).length;
     return c;
   }, [franchiseArticles]);
 
   // Filtered Articles based on angle, search, season, and player dropdowns
   const filteredArticles = useMemo(() => {
     return franchiseArticles.filter((art) => {
-      if (selectedAngle !== "all" && art.aspect !== ANGLE_TO_ASPECT[selectedAngle]) return false;
+      if (
+        selectedAngle !== "all" &&
+        art.aspect !== ANGLE_TO_ASPECT[selectedAngle]
+      )
+        return false;
 
       // Filter by season
       if (selectedSeason !== "All Seasons") {
@@ -468,7 +256,10 @@ export default function IntelligencePage() {
 
   return (
     <Layout>
-      <main key={activeFranchiseCode} className="min-h-screen bg-slate-50 dark:bg-[#070C16] text-slate-900 dark:text-[#F3F4F6] pb-24 font-sans selection:bg-lime-400 selection:text-black">
+      <main
+        key={activeFranchiseCode}
+        className="min-h-screen bg-slate-50 dark:bg-[#070C16] text-slate-900 dark:text-[#F3F4F6] pb-24 font-sans selection:bg-lime-400 selection:text-black"
+      >
         {/* ── BREADCRUMBS & FRANCHISE SWITCHER ROW ── */}
         <div className="border-b border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#070C16]/95 backdrop-blur-xl px-4 sm:px-6 lg:px-8 py-3">
           <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
@@ -481,12 +272,14 @@ export default function IntelligencePage() {
                 </span>
               </Link>
               <span>›</span>
-              <span className="text-slate-800 dark:text-white font-bold">{franchiseMeta.name}</span>
+              <span className="text-slate-800 dark:text-white font-bold">
+                {franchiseMeta.name}
+              </span>
               <span>›</span>
-              <span className="text-cyan-600 dark:text-cyan-300 font-black">Intelligence Hub</span>
+              <span className="text-cyan-600 dark:text-cyan-300 font-black">
+                Intelligence Hub
+              </span>
             </div>
-
-
           </div>
         </div>
 
@@ -498,28 +291,37 @@ export default function IntelligencePage() {
             {/* Ambient Background Light Flares */}
             <div
               className="absolute top-0 right-1/4 w-[450px] h-[450px] rounded-full blur-3xl opacity-20 pointer-events-none"
-              style={{ backgroundColor: franchiseMeta.accent || franchiseConfig.accent }}
+              style={{
+                backgroundColor: franchiseMeta.accent || franchiseConfig.accent,
+              }}
             />
             <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
 
             {/* Top Bar with Team Switcher */}
-            <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-5 mb-6 border-b border-slate-200/80 dark:border-white/10">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-white/40">
-                  Select Franchise Intelligence:
+            <div className="relative z-10 flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3 sm:gap-4 pb-5 mb-6 border-b border-slate-200/80 dark:border-white/10">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 min-w-0">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-white/40 whitespace-nowrap">
+                  Select Franchise Intelligence
+                  <span className="hidden sm:inline">:</span>
                 </span>
                 <span className="text-xs font-mono font-black uppercase text-slate-900 dark:text-white">
                   {franchiseMeta.name} ({activeFranchiseCode})
                 </span>
               </div>
-              <FranchiseSwitcher activeCode={activeFranchiseCode} onPick={handleSelectFranchise} />
+              <FranchiseSwitcher
+                activeCode={activeFranchiseCode}
+                onPick={handleSelectFranchise}
+              />
             </div>
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Left Content (8 cols) */}
               <div className="lg:col-span-8 space-y-5">
                 <div className="flex items-center gap-4">
-                  <TeamLogo team={activeFranchiseCode} size="w-16 h-16 sm:w-20 sm:h-20" />
+                  <TeamLogo
+                    team={activeFranchiseCode}
+                    size="w-16 h-16 sm:w-20 sm:h-20"
+                  />
                   <div>
                     <span
                       className="px-2.5 py-0.5 rounded-full text-[9px] font-mono font-black uppercase tracking-widest border"
@@ -542,34 +344,58 @@ export default function IntelligencePage() {
                     {franchiseMeta.name}
                   </h1>
                   <p className="text-sm sm:text-base font-semibold text-slate-700 dark:text-slate-300">
-                    100 Deep-Dive Articles. 10 Angles. One Complete Franchise Story.
+                    100 Deep-Dive Articles. 10 Angles. One Complete Franchise
+                    Story.
                   </p>
                   <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl">
-                    Explore {activeFranchiseCode}'s batting firepower, tactical evolution, auction strategy, fan culture, historical moments, data-driven analysis and future roadmap — all in one place.
+                    Explore {activeFranchiseCode}'s batting firepower, tactical
+                    evolution, auction strategy, fan culture, historical
+                    moments, data-driven analysis and future roadmap — all in
+                    one place.
                   </p>
                 </div>
 
                 {/* Stat Counters Ribbon */}
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2">
                   <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-left font-mono">
-                    <div className="text-2xl font-black text-slate-900 dark:text-white">100</div>
-                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">Intelligence Articles</div>
+                    <div className="text-2xl font-black text-slate-900 dark:text-white">
+                      100
+                    </div>
+                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">
+                      Intelligence Articles
+                    </div>
                   </div>
                   <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-left font-mono">
-                    <div className="text-2xl font-black text-amber-500 dark:text-amber-400">10</div>
-                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">Editorial Angles</div>
+                    <div className="text-2xl font-black text-amber-500 dark:text-amber-400">
+                      10
+                    </div>
+                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">
+                      Editorial Angles
+                    </div>
                   </div>
                   <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-left font-mono">
-                    <div className="text-2xl font-black text-cyan-600 dark:text-cyan-400">15</div>
-                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">Seasons Covered</div>
+                    <div className="text-2xl font-black text-cyan-600 dark:text-cyan-400">
+                      15
+                    </div>
+                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">
+                      Seasons Covered
+                    </div>
                   </div>
                   <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-left font-mono">
-                    <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400">50+</div>
-                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">Players Analysed</div>
+                    <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400">
+                      50+
+                    </div>
+                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">
+                      Players Analysed
+                    </div>
                   </div>
                   <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-left font-mono col-span-2 sm:col-span-1">
-                    <div className="text-2xl font-black text-purple-600 dark:text-purple-400">∞</div>
-                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">Stories to Explore</div>
+                    <div className="text-2xl font-black text-purple-600 dark:text-purple-400">
+                      ∞
+                    </div>
+                    <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">
+                      Stories to Explore
+                    </div>
                   </div>
                 </div>
               </div>
@@ -583,10 +409,14 @@ export default function IntelligencePage() {
                     className="w-full h-full object-cover rounded-2xl opacity-90 shadow-2xl filter contrast-110"
                     onError={(e) => {
                       const img = e.target as HTMLImageElement;
-                      if (!img.src.endsWith("kl%20rahul.jpg") && !img.src.endsWith("kl rahul.jpg")) {
+                      if (
+                        !img.src.endsWith("kl%20rahul.jpg") &&
+                        !img.src.endsWith("kl rahul.jpg")
+                      ) {
                         img.src = "/kl rahul.jpg";
                       } else {
-                        img.src = franchiseConfig.stadiumImage || "/hero-players.png";
+                        img.src =
+                          franchiseConfig.stadiumImage || "/hero-players.png";
                       }
                     }}
                   />
@@ -609,11 +439,16 @@ export default function IntelligencePage() {
              ═════════════════════════════════════════════════════════════════ */}
           <section className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono font-black uppercase tracking-widest flex items-center gap-1.5" style={{ color: franchiseMeta.accent }}>
+              <span
+                className="text-xs font-mono font-black uppercase tracking-widest flex items-center gap-1.5"
+                style={{ color: franchiseMeta.accent }}
+              >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>EXPLORE BY INTELLIGENCE ANGLE</span>
               </span>
-              <span className="text-xs font-mono text-slate-500">11 Strategic Pillars</span>
+              <span className="text-xs font-mono text-slate-500">
+                11 Strategic Pillars
+              </span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-11 gap-2.5">
@@ -636,10 +471,14 @@ export default function IntelligencePage() {
                   >
                     {/* Top Row: Icon + Badge Count */}
                     <div className="flex items-center justify-between w-full">
-                      <div className={`w-7 h-7 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/10 ${angle.color}`}>
+                      <div
+                        className={`w-7 h-7 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/10 ${angle.color}`}
+                      >
                         <IconComponent className="w-3.5 h-3.5" />
                       </div>
-                      <span className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-full bg-slate-100 dark:bg-white/10 ${isActive ? "text-white font-black" : "text-slate-600 dark:text-slate-400"}`}>
+                      <span
+                        className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-full bg-slate-100 dark:bg-white/10 ${isActive ? "text-white font-black" : "text-slate-600 dark:text-slate-400"}`}
+                      >
                         {angleCounts[angle.id] ?? 0}
                       </span>
                     </div>
@@ -667,12 +506,17 @@ export default function IntelligencePage() {
                     <span>ALL {activeFranchiseCode} INTELLIGENCE ARTICLES</span>
                   </h2>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                    A complete library of analytical, tactical and storytelling articles on {franchiseMeta.name}.
+                    A complete library of analytical, tactical and storytelling
+                    articles on {franchiseMeta.name}.
                   </p>
                 </div>
                 <div className="text-[11px] font-mono text-slate-500 shrink-0">
-                  Showing {filteredArticles.length > 0 ? (currentPage - 1) * pageSize + 1 : 0}-
-                  {Math.min(currentPage * pageSize, filteredArticles.length)} of {filteredArticles.length}
+                  Showing{" "}
+                  {filteredArticles.length > 0
+                    ? (currentPage - 1) * pageSize + 1
+                    : 0}
+                  -{Math.min(currentPage * pageSize, filteredArticles.length)}{" "}
+                  of {filteredArticles.length}
                 </div>
               </div>
 
@@ -709,7 +553,9 @@ export default function IntelligencePage() {
                   >
                     <option value="All Seasons">All Seasons</option>
                     {SEASONS.map((s) => (
-                      <option key={s} value={s}>{s} Season</option>
+                      <option key={s} value={s}>
+                        {s} Season
+                      </option>
                     ))}
                   </select>
 
@@ -719,9 +565,13 @@ export default function IntelligencePage() {
                     onChange={(e) => setSelectedPlayer(e.target.value)}
                     className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-800 dark:text-white focus:outline-none focus:border-cyan-400 cursor-pointer"
                   >
-                    <option value="All Players">All Players ({activeFranchiseCode})</option>
+                    <option value="All Players">
+                      All Players ({activeFranchiseCode})
+                    </option>
                     {franchiseConfig.players.map((p) => (
-                      <option key={p} value={p}>{p}</option>
+                      <option key={p} value={p}>
+                        {p}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -845,7 +695,9 @@ export default function IntelligencePage() {
                             className="px-4 py-2 rounded-xl font-mono text-xs font-black uppercase tracking-wider flex items-center gap-2 transition-all shadow-md hover:brightness-110 active:scale-[0.98] cursor-pointer"
                             style={{
                               backgroundColor: franchiseMeta.accent,
-                              color: isLightHex(franchiseMeta.accent) ? "#0A101D" : "#FFFFFF",
+                              color: isLightHex(franchiseMeta.accent)
+                                ? "#0A101D"
+                                : "#FFFFFF",
                               boxShadow: `0 4px 16px -2px ${franchiseMeta.accent}40`,
                             }}
                           >
@@ -854,7 +706,9 @@ export default function IntelligencePage() {
                           </button>
                         </Link>
 
-                        <Link href={`/dugout/${activeFranchiseCode.toLowerCase()}`}>
+                        <Link
+                          href={`/dugout/${activeFranchiseCode.toLowerCase()}`}
+                        >
                           <button
                             type="button"
                             className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-white/5 dark:hover:bg-white/10 dark:text-white font-mono text-xs font-bold uppercase tracking-wider border border-slate-200 dark:border-white/10 transition-all flex items-center gap-1.5 cursor-pointer"
@@ -872,7 +726,9 @@ export default function IntelligencePage() {
                         <LibraryMedia
                           imageId={featuredArticle.imageId}
                           title={featuredArticle.title}
-                          accent={franchiseMeta.accent ?? franchiseConfig.accent}
+                          accent={
+                            franchiseMeta.accent ?? franchiseConfig.accent
+                          }
                           code={activeFranchiseCode}
                           teamName={franchiseMeta.name}
                           aspect={featuredArticle.aspect}
@@ -887,7 +743,9 @@ export default function IntelligencePage() {
               {/* ── 3-COLUMN ARTICLES GRID ── */}
               {displayedArticles.length === 0 ? (
                 <div className="p-12 rounded-3xl border border-dashed border-white/10 text-center space-y-2">
-                  <div className="text-sm font-mono text-slate-400">No articles match your selected filter criteria.</div>
+                  <div className="text-sm font-mono text-slate-400">
+                    No articles match your selected filter criteria.
+                  </div>
                   <button
                     onClick={() => {
                       setSelectedAngle("all");
@@ -906,7 +764,9 @@ export default function IntelligencePage() {
                     <Link
                       key={art.key}
                       href={art.href ?? "#"}
-                      onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
+                      onClick={() =>
+                        window.scrollTo({ top: 0, behavior: "instant" })
+                      }
                       className="group flex flex-col justify-between rounded-2xl border border-white/10 bg-[#0B1220] hover:bg-[#0E1728] hover:border-white/20 overflow-hidden transition-all duration-300 shadow-xl cursor-pointer"
                     >
                       {/* 16:9 cover: the article's header photo, or the CricField illustration */}
@@ -914,7 +774,9 @@ export default function IntelligencePage() {
                         <LibraryMedia
                           imageId={art.imageId}
                           title={art.title}
-                          accent={franchiseMeta.accent ?? franchiseConfig.accent}
+                          accent={
+                            franchiseMeta.accent ?? franchiseConfig.accent
+                          }
                           code={activeFranchiseCode}
                           teamName={franchiseMeta.name}
                           aspect={art.aspect}
@@ -949,7 +811,10 @@ export default function IntelligencePage() {
                         <div className="mt-auto pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500">
                           <span>{art.number ? `No. ${art.number}` : ""}</span>
                           <span className="flex items-center gap-1 text-slate-400">
-                            {art.kind === "legacy" ? "From the archive" : (STORY_TYPE_LABEL[art.storyType ?? ""] ?? "New")}
+                            {art.kind === "legacy"
+                              ? "From the archive"
+                              : (STORY_TYPE_LABEL[art.storyType ?? ""] ??
+                                "New")}
                             <ArrowRight className="w-3 h-3 text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
                           </span>
                         </div>
@@ -969,31 +834,37 @@ export default function IntelligencePage() {
                   >
                     ‹
                   </button>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
-                    <button
-                      key={num}
-                      onClick={() => setCurrentPage(num)}
-                      className={`w-8 h-8 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
-                        currentPage === num
-                          ? "font-black shadow-md"
-                          : "border border-white/10 bg-white/5 text-white/70 hover:text-white hover:bg-white/10"
-                      }`}
-                      style={
-                        currentPage === num
-                          ? {
-                              backgroundColor: franchiseMeta.accent,
-                              color: isLightHex(franchiseMeta.accent) ? "#0A101D" : "#FFFFFF",
-                              boxShadow: `0 4px 12px -2px ${franchiseMeta.accent}40`,
-                            }
-                          : undefined
-                      }
-                    >
-                      {num}
-                    </button>
-                  ))}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (num) => (
+                      <button
+                        key={num}
+                        onClick={() => setCurrentPage(num)}
+                        className={`w-8 h-8 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
+                          currentPage === num
+                            ? "font-black shadow-md"
+                            : "border border-white/10 bg-white/5 text-white/70 hover:text-white hover:bg-white/10"
+                        }`}
+                        style={
+                          currentPage === num
+                            ? {
+                                backgroundColor: franchiseMeta.accent,
+                                color: isLightHex(franchiseMeta.accent)
+                                  ? "#0A101D"
+                                  : "#FFFFFF",
+                                boxShadow: `0 4px 12px -2px ${franchiseMeta.accent}40`,
+                              }
+                            : undefined
+                        }
+                      >
+                        {num}
+                      </button>
+                    ),
+                  )}
                   <button
                     disabled={currentPage === totalPages}
-                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                    onClick={() =>
+                      setCurrentPage((p) => Math.min(totalPages, p + 1))
+                    }
                     className="px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 disabled:opacity-30 text-xs font-mono text-white cursor-pointer"
                   >
                     ›
@@ -1006,7 +877,10 @@ export default function IntelligencePage() {
             <div className="lg:col-span-4 space-y-6">
               {/* CARD 1: TRENDING TOPICS (DYNAMIC PER FRANCHISE) */}
               <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1220]/80 p-5 space-y-4 shadow-sm dark:shadow-xl">
-                <div className="flex items-center gap-2 text-xs font-mono font-black uppercase tracking-widest" style={{ color: franchiseMeta.accent }}>
+                <div
+                  className="flex items-center gap-2 text-xs font-mono font-black uppercase tracking-widest"
+                  style={{ color: franchiseMeta.accent }}
+                >
                   <Flame className="w-4 h-4 text-orange-400" />
                   <span>TRENDING TOPICS</span>
                 </div>
@@ -1055,7 +929,8 @@ export default function IntelligencePage() {
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {franchiseConfig.popularTags.map((tag) => {
-                        const isSelected = searchQuery.toLowerCase() === tag.toLowerCase();
+                        const isSelected =
+                          searchQuery.toLowerCase() === tag.toLowerCase();
                         return (
                           <button
                             key={tag}
@@ -1152,7 +1027,8 @@ export default function IntelligencePage() {
                   Explore Rival Dugouts &amp; League Intel
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-                  Track tactical evolutions, auction blue-prints, and squad telemetry across all 10 IPL franchises.
+                  Track tactical evolutions, auction blue-prints, and squad
+                  telemetry across all 10 IPL franchises.
                 </p>
               </div>
 
@@ -1172,7 +1048,10 @@ export default function IntelligencePage() {
             {/* Quick-Jump Franchise Pills */}
             <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2.5 pt-2 border-t border-slate-100 dark:border-white/10">
               {CANONICAL_TEAM_CODES.map((code) => {
-                const conf = FRANCHISE_INTELLIGENCE[code] ?? { name: code, accent: "#FFD11A" };
+                const conf = FRANCHISE_INTELLIGENCE[code] ?? {
+                  name: code,
+                  accent: "#FFD11A",
+                };
                 const isActive = activeFranchiseCode === code;
                 return (
                   <button
@@ -1187,7 +1066,9 @@ export default function IntelligencePage() {
                         ? "border-primary/40 bg-primary/10 dark:border-white/40 dark:bg-white/10 shadow-md"
                         : "border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/[0.02] hover:border-slate-300 dark:hover:border-white/20 hover:bg-slate-100 dark:hover:bg-white/[0.06]"
                     }`}
-                    style={isActive ? { borderColor: `${conf.accent}90` } : undefined}
+                    style={
+                      isActive ? { borderColor: `${conf.accent}90` } : undefined
+                    }
                     title={`Switch intelligence view to ${conf.name}`}
                   >
                     <div className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/10 flex items-center justify-center p-1 group-hover:scale-105 transition-transform">
@@ -1199,7 +1080,12 @@ export default function IntelligencePage() {
                       </div>
                       <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate max-w-[80px]">
                         {isActive ? (
-                          <span className="font-semibold" style={{ color: conf.accent }}>Active</span>
+                          <span
+                            className="font-semibold"
+                            style={{ color: conf.accent }}
+                          >
+                            Active
+                          </span>
                         ) : (
                           conf.name.split(" ").slice(-1)[0]
                         )}

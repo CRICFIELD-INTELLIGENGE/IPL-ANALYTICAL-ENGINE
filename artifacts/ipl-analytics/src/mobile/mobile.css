@@ -92,6 +92,10 @@ html:not(.dark) .cfm-icon, [data-theme="light"] .cfm-icon {
 .cfm-teamdot { width: 28px; height: 28px; border-radius: 50%; background: var(--m-accent); display: grid; place-items: center; font: 800 9px var(--m-ui); color: #050816; }
 .cfm-main { padding-bottom: calc(var(--m-tabs) + var(--m-safe-b) + 38px); min-width: 0; overflow-x: clip; }
 .cfm-legacy-wrap { min-width: 0; }
+.cfm-legacy-wrap .vd-breadcrumb,
+.cfm-legacy-wrap .vh-breadcrumb,
+.cfm-legacy-wrap .tb-breadcrumb,
+.cfm-legacy-wrap [aria-label="breadcrumb" i] { display: none; }
 .cfm-fullbar { display: block; margin: 10px 12px 0; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--m-line); background: var(--m-card); font: 600 13px var(--m-ui); color: var(--m-accent-ink); text-align: center; }
 .cfm-fullbar-bottom { margin-top: 24px; }
 
@@ -386,11 +390,154 @@ html:not(.dark) .ma-compose, [data-theme="light"] .ma-compose { background: rgba
 .cfm .cfm-top { padding-left: max(var(--m-pad), env(safe-area-inset-left, 0px)); padding-right: max(var(--m-pad), env(safe-area-inset-right, 0px)); }
 .cfm .cfm-top-root { grid-template-columns: minmax(0, 1fr) auto; min-height: calc(clamp(62px, 17vw, 76px) + env(safe-area-inset-top, 0px)); height: auto; }
 .cfm .cfm-top-root .cfm-top-title { padding: clamp(5px, 1.5vw, 8px) 4px !important; }
-.cfm .cfm-logo { width: clamp(118px, 36vw, 180px); max-width: 100%; min-width: 0; overflow: hidden; }
+.cfm .cfm-logo { width: clamp(104px, 28vw, 152px); max-width: 100%; min-width: 0; overflow: hidden; }
 .cfm .cfm-brand-art { display: block; width: 100%; max-width: 100%; height: auto; overflow: visible; }
 html:not(.dark) .cfm .cfm-brand-art text[fill="#ffffff"],
 [data-theme="light"] .cfm .cfm-brand-art text[fill="#ffffff"] { fill: #0f172a; }
-.cfm .cfm-top-actions { flex-shrink: 0; gap: 0; }
+.cfm .cfm-top-actions { flex-shrink: 0; gap: 3px; align-items: center; }
+.cfm .cfm-top-actions .cfm-icon { width: 34px; height: 34px; border-radius: 10px; }
+
+/* Global Navbar Franchise Dropdown (mirrors laptop TeamSwitcher) */
+.cfm-nav-team {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 8px 0 6px;
+  border-radius: 999px;
+  border: 1px solid var(--m-line);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--m-text);
+  font: 800 10.5px/1 var(--m-mono);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+}
+
+.cfm-nav-team:active { transform: scale(0.95); }
+
+html:not(.dark) .cfm-nav-team,
+[data-theme="light"] .cfm-nav-team {
+  background: rgba(15, 23, 42, 0.05);
+  border-color: rgba(148, 163, 184, 0.4);
+  color: #0f172a;
+}
+
+.cfm-nav-team-crest {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 1px;
+}
+
+.cfm-team-drop-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(2, 6, 23, 0.65);
+  backdrop-filter: blur(3px);
+  animation: cfm-fade 0.16s ease both;
+}
+
+.cfm-team-drop {
+  position: fixed;
+  top: calc(var(--m-top) + env(safe-area-inset-top, 0px) + 6px);
+  left: 10px;
+  right: 10px;
+  max-width: 420px;
+  margin-left: auto;
+  z-index: 81;
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid var(--m-line);
+  background: #0b1224;
+  box-shadow: 0 24px 54px -10px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  animation: cfm-drop-in 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+html:not(.dark) .cfm-team-drop,
+[data-theme="light"] .cfm-team-drop {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(203, 213, 225, 0.9);
+  box-shadow: 0 22px 48px -12px rgba(15, 23, 42, 0.22);
+}
+
+@keyframes cfm-drop-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.cfm-team-drop-all {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 11px;
+  border: 1px solid var(--m-line);
+  background: rgba(255, 255, 255, 0.04);
+  font: 700 11.5px/1.2 var(--m-mono);
+  color: var(--m-text);
+  text-align: left;
+}
+
+html:not(.dark) .cfm-team-drop-all,
+[data-theme="light"] .cfm-team-drop-all {
+  background: rgba(241, 245, 249, 0.85);
+}
+
+.cfm-team-drop-all[aria-pressed="true"] {
+  border-color: var(--m-accent);
+  background: var(--m-accent-soft);
+}
+
+.cfm-team-drop-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.cfm-team-drop-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 7px 3px;
+  border-radius: 11px;
+  border: 1px solid var(--m-line-soft);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--m-muted);
+  font: 800 10px/1 var(--m-mono);
+  min-width: 0;
+  transition: transform 0.14s ease, border-color 0.16s ease, color 0.16s ease;
+}
+
+.cfm-team-drop-item:active { transform: scale(0.94); }
+
+html:not(.dark) .cfm-team-drop-item,
+[data-theme="light"] .cfm-team-drop-item {
+  background: rgba(248, 250, 252, 0.9);
+}
+
+.cfm-team-drop-item img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 1px;
+}
+
+.cfm-team-drop-item[aria-pressed="true"] {
+  color: var(--m-text);
+}
 .cfm .cfm-main { width: 100%; max-width: 100%; min-width: 0; overflow-x: clip; padding-bottom: calc(var(--m-tabs) + var(--m-safe-b) + var(--m-tabs-bump, 24px) + 14px); }
 .cfm .cfm-tabs {
   --duration: 0.7s;

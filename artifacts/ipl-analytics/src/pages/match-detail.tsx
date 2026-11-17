@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Layout } from "@/components/layout";
+import { MobileChromeContext } from "@/mobile/gate";
 import { 
   useLiveAllMatches, useLiveWinProbability, useLiveVenueInsights, 
   getMatchScoreLine, getMatchStateColor, startTime, type LiveMatch 
@@ -104,6 +105,27 @@ export default function MatchDetailPage() {
   }
 
   const requestedTab = new URLSearchParams(useSearch()).get("tab")?.toLowerCase();
+  const mobileShell = useContext(MobileChromeContext);
+  const [stickyTop, setStickyTop] = useState(56);
+
+  useEffect(() => {
+    if (!mobileShell) return;
+    const navEl = document.querySelector<HTMLElement>(".cfm-top");
+    if (!navEl) return;
+    const syncTop = () => {
+      const h = navEl.getBoundingClientRect().height;
+      if (h > 0) setStickyTop(Math.round(h));
+    };
+    syncTop();
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(syncTop) : null;
+    ro?.observe(navEl);
+    window.addEventListener("resize", syncTop);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", syncTop);
+    };
+  }, [mobileShell]);
+
   const [activeTab, setActiveTab] = useState("summary");
   useEffect(() => {
     if (requestedTab === "scorecard" || requestedTab === "commentary" || requestedTab === "squads" || requestedTab === "graph" || requestedTab === "overs" || requestedTab === "forecast") {
@@ -120,36 +142,50 @@ export default function MatchDetailPage() {
 
   return (
     <Layout hideRightPanel>
-      <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#050816] text-slate-900 dark:text-white overflow-x-hidden transition-colors duration-200">
+      <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#050816] text-slate-900 dark:text-white overflow-x-clip transition-colors duration-200">
         {/* TOP NAV BAR */}
-        <div className="sticky top-0 z-[100] px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-y-3 bg-white/80 dark:bg-[#050816]/80 backdrop-blur-md border-b border-slate-200 dark:border-white/5">
-          <Link href="/scores">
-            <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary hover:text-slate-900 dark:hover:text-white transition-colors group">
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Global Hub
-            </button>
-          </Link>
+        <div
+          data-testid="match-detail-tab-strip"
+          style={mobileShell ? { top: `${stickyTop}px` } : undefined}
+          className={`sticky ${mobileShell ? "z-[35] px-3 py-2.5" : "top-0 z-[100] px-4 sm:px-6 py-4 gap-y-3"} flex flex-wrap items-center justify-between gap-y-2.5 bg-white/95 dark:bg-[#050816]/95 backdrop-blur-md border-b border-slate-200 dark:border-white/5`}
+        >
+          {!mobileShell && (
+            <Link href="/scores">
+              <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary hover:text-slate-900 dark:hover:text-white transition-colors group">
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Global Hub
+              </button>
+            </Link>
+          )}
 
           {/* Tab Navigation */}
-          <div className="order-last lg:order-none flex w-full lg:w-auto min-w-0 items-center gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-xl border border-slate-200 dark:border-white/10 overflow-x-auto hide-scrollbar">
+          <div className="order-last lg:order-none flex w-full lg:w-auto min-w-0 items-center gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-xl border border-slate-200 dark:border-white/10 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {["Summary", "Scorecard", "Commentary", "Graph", "Squads", "Overs", "Forecast"].map(tab => (
-              <button 
-                key={tab} 
+              <button
+                key={tab}
                 onClick={() => setActiveTab(tab.toLowerCase())}
-                className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === tab.toLowerCase() ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-white/5'}`}
+                className={`px-3 py-1.5 sm:px-4 rounded-lg transition-all shrink-0 whitespace-nowrap flex items-center justify-center ${
+                  activeTab === tab.toLowerCase()
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/20 border border-blue-400/30'
+                    : 'text-slate-600 dark:text-white/55 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-white/5 border border-transparent'
+                }`}
               >
-                {tab}
+                <span className="text-[11px] sm:text-[10px] font-bold sm:font-black sm:uppercase tracking-normal sm:tracking-widest leading-none">
+                  {tab}
+                </span>
               </button>
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/70">
-              Match #{matchId}
-            </span>
-          </div>
+          {!mobileShell && (
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/70">
+                Match #{matchId}
+              </span>
+            </div>
+          )}
         </div>
 
-        <motion.div style={{ scale: masterScale }} className="flex-1 flex flex-col p-6 gap-6">
+        <motion.div style={{ scale: masterScale }} className="flex-1 flex flex-col p-3.5 sm:p-6 gap-4 sm:gap-6">
           {q.isLoading && !match ? (
             <div className="flex-1 flex items-center justify-center">
               <div className="flex flex-col items-center gap-4">
@@ -215,8 +251,8 @@ function MatchIntelligenceView({ match, activeTab, useProviderDetails }: { match
 
             {/* OFFICIAL BROADCASTER HIGHLIGHT LINK (IF VERIFIED DESTINATION EXISTS) */}
             
-            {/* TELEMETRY GRID */}
-            <div className="grid grid-cols-12 gap-6">
+            {/* TELEMETRY GRID (Desktop >=1024px) */}
+            <div className="hidden lg:grid grid-cols-12 gap-6">
               {/* WIN PROBABILITY CARD */}
               <motion.div className="col-span-12 lg:col-span-4 bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 p-6 flex flex-col justify-between gap-5 shadow-md dark:shadow-xl relative overflow-hidden transition-colors">
                 <div className="absolute top-0 right-0 p-4">

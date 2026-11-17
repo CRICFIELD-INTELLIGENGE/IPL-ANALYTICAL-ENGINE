@@ -329,7 +329,7 @@ export function FranchiseHero({ team, record, loading, seasons, season, onSeason
             </div>
           </div>
 
-          <div className="flex flex-col items-start md:items-end gap-3 shrink-0">
+          <div className="flex flex-col items-start md:items-end gap-3 shrink-0 w-full md:w-auto">
             {switcher}
             
             <div className="flex items-center gap-2 flex-wrap">
@@ -390,15 +390,21 @@ export function FranchiseHero({ team, record, loading, seasons, season, onSeason
 
 export function FranchiseSwitcher({ activeCode, onPick }: { activeCode: string; onPick: (code: TeamCode) => void }) {
   return (
-    <div role="group" aria-label="Switch franchise" className="flex items-center gap-1.5 flex-wrap justify-end">
+    <div
+      role="group"
+      aria-label="Switch franchise"
+      className="grid grid-cols-5 sm:flex sm:items-center gap-2 sm:gap-1.5 sm:flex-wrap sm:justify-end w-full sm:w-auto"
+    >
       {Object.values(TEAM_REGISTRY).map((t) => (
         <button
           key={t.id}
           onClick={() => onPick(t.id)}
           aria-pressed={t.id === activeCode}
           title={`${t.name} (${t.shortName})`}
-          className={`w-8 h-8 rounded-lg p-1 border transition-all flex items-center justify-center cursor-pointer ${
-            t.id === activeCode ? "scale-110 shadow-md" : "opacity-55 hover:opacity-100 bg-white/5 border-white/10"
+          className={`w-full h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg p-1.5 sm:p-1 border transition-all flex items-center justify-center cursor-pointer ${
+            t.id === activeCode
+              ? "sm:scale-110 shadow-md"
+              : "opacity-60 hover:opacity-100 bg-slate-100/70 dark:bg-white/5 border-slate-200 dark:border-white/10"
           }`}
           style={t.id === activeCode ? { borderColor: t.accent, backgroundColor: t.surfaceTint } : undefined}
         >

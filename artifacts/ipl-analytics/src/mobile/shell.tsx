@@ -11,6 +11,8 @@ import {
 import { Link, useLocation } from "wouter";
 import {
   ArrowLeft,
+  Check,
+  ChevronDown,
   Compass,
   Gamepad2,
   House,
@@ -23,6 +25,8 @@ import {
   Bell,
   Grid2X2,
   Shield,
+  Radio,
+  Zap,
 } from "lucide-react";
 import {
   useTeamTheme,
@@ -51,23 +55,6 @@ export const TABS: {
     match: (p: string) => p === "/" || p === "/home",
   },
   {
-    href: "/dugout",
-    label: "Dugout",
-    icon: Shield,
-    color: "#f54888",
-    match: (p: string) => p.startsWith("/dugout") || p.startsWith("/account"),
-  },
-  {
-    href: "/feed",
-    label: "Feed",
-    icon: Compass,
-    color: "#4343f5",
-    match: (p: string) =>
-      /^\/(discover|scout|teams|feed|intelligence|arcade|reports|retention-room|scores)/.test(
-        p,
-      ),
-  },
-  {
     href: "/stats",
     label: "Stats",
     icon: Grid2X2,
@@ -75,11 +62,29 @@ export const TABS: {
     match: (p: string) => /^\/(stats|players)/.test(p),
   },
   {
-    href: "/ai-analyst",
-    label: "AI Analyst",
-    icon: Sparkles,
+    href: "/pulse",
+    label: "Pulse",
+    icon: Radio,
+    color: "#4343f5",
+    match: (p: string) => /^\/(pulse|visualizations|scout|ai-analyst)/.test(p),
+  },
+  {
+    href: "/scores",
+    label: "Scores",
+    icon: Zap,
     color: "#65ddb7",
-    match: (p: string) => p.startsWith("/ai-analyst"),
+    match: (p: string) => /^\/(scores|match|venues)/.test(p),
+  },
+  {
+    href: "/dugout",
+    label: "Dugout",
+    icon: Shield,
+    color: "#f54888",
+    match: (p: string) =>
+      p.startsWith("/dugout") ||
+      p.startsWith("/account") ||
+      p.startsWith("/teams") ||
+      p.startsWith("/retention-room"),
   },
 ];
 const TITLES: [RegExp, string][] = [
@@ -102,8 +107,8 @@ const TITLES: [RegExp, string][] = [
   [/^\/dugout\/./, "Franchise Hub"],
   [/^\/dugout/, "Dugout"],
   [/^\/account/, "Your Dugout"],
-  [/^\/feed/, "Feed"],
-  [/^\/intelligence/, "IPL Intelligence"],
+  [/^\/feed/, "News"],
+  [/^\/intelligence/, "News"],
   [/^\/scores/, "Scores"],
   [/^\/match\//, "Match"],
   [/^\/venues\//, "Venue"],
@@ -113,22 +118,118 @@ const TITLES: [RegExp, string][] = [
 const ROOTS = new Set([
   "/",
   "/home",
+  "/stats",
+  "/pulse",
+  "/scores",
+  "/dugout",
   "/discover",
   "/arcade",
   "/ai-analyst",
-  "/dugout",
-  "/stats",
-  "/feed",
 ]);
+
+export function MobileNavTeamPanel({ onClose }: { onClose: () => void }) {
+  const { selectedTeam, allTeams, setSelectedTeam, clearTeam } = useTeamTheme();
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  const clearFranchiseQuery = () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("franchise")) {
+      params.delete("franchise");
+      const q = params.toString();
+      window.history.replaceState(null, "", q ? `${window.location.pathname}?${q}` : window.location.pathname);
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    }
+  };
+
+  return (
+    <>
+      <div className="cfm-team-drop-backdrop" onClick={onClose} />
+      <div
+        className="cfm-team-drop"
+        role="dialog"
+        aria-label="Choose franchise theme"
+      >
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 11, fontFamily: "var(--m-mono)", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--m-muted)" }}>
+          <span>Select Franchise</span>
+          <button
+            type="button"
+            aria-label="Close franchise selector"
+            onClick={onClose}
+            style={{ background: "transparent", border: 0, color: "var(--m-muted)", display: "grid", placeItems: "center", width: 24, height: 24 }}
+          >
+            <X size={15} />
+          </button>
+        </div>
+
+        <button
+          type="button"
+          className="cfm-team-drop-all"
+          aria-pressed={!selectedTeam}
+          onClick={() => {
+            clearTeam();
+            clearFranchiseQuery();
+            onClose();
+          }}
+        >
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <Shield size={14} style={{ color: "var(--m-accent)" }} />
+            <span>ALL · Neutral IPL View</span>
+          </span>
+          {!selectedTeam && <Check size={14} style={{ color: "var(--m-accent)" }} />}
+        </button>
+
+        <div className="cfm-team-drop-grid" role="group" aria-label="IPL franchises">
+          {allTeams.map((t) => {
+            const active = selectedTeam === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                className="cfm-team-drop-item"
+                aria-label={t.name}
+                aria-pressed={active}
+                onClick={() => {
+                  setSelectedTeam(t.id);
+                  clearFranchiseQuery();
+                  onClose();
+                }}
+                style={
+                  active
+                    ? {
+                        borderColor: t.accent,
+                        backgroundColor: `${t.accent}24`,
+                        boxShadow: `0 4px 12px -4px ${t.accent}66`,
+                      }
+                    : undefined
+                }
+              >
+                <img src={t.logoImg} alt="" />
+                <span>{t.shortName}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+}
 
 export function TopBar() {
   const [location] = useLocation();
   const path = location.split("?")[0];
   const { theme } = useTeamTheme();
   const [search, setSearch] = useState(false);
-  const [notifications, setNotifications] = useState(false);
+  const [teamMenu, setTeamMenu] = useState(false);
   const title = TITLES.find(([re]) => re.test(path))?.[1];
   const root = ROOTS.has(path);
+  const onNews = path.startsWith("/feed") || path.startsWith("/intelligence") || path.startsWith("/reports");
   return (
     <>
       <header className={`cfm-top ${root ? "cfm-top-root" : ""}`}>
@@ -169,65 +270,68 @@ export function TopBar() {
             type="button"
             className="cfm-icon"
             aria-label="Search players and teams"
-            onClick={() => setSearch(true)}
+            onClick={() => {
+              setTeamMenu(false);
+              setSearch(true);
+            }}
           >
-            <Search size={20} />
-          </button>
-          <button
-            type="button"
-            className="cfm-icon relative"
-            aria-label="Notifications"
-            onClick={() => setNotifications(!notifications)}
-          >
-            <Bell size={20} />
-            <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-amber-400 ring-2 ring-[#020617]" />
+            <Search size={19} />
           </button>
           <Link
-            href="/dugout"
-            className="cfm-icon"
-            aria-label={theme ? `Your franchise: ${theme.name}` : "Your Dugout"}
+            href="/intelligence"
+            className="cfm-icon relative"
+            aria-label="News"
+            aria-current={onNews ? "page" : undefined}
+            style={onNews ? { color: "var(--m-accent)" } : undefined}
+          >
+            <Bell size={19} />
+            <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-400 ring-2 ring-[#020617]" />
+          </Link>
+          <button
+            type="button"
+            className="cfm-nav-team"
+            aria-label={`Choose franchise. Current: ${theme?.name ?? "ALL"}`}
+            aria-expanded={teamMenu}
+            aria-haspopup="dialog"
+            onClick={() => {
+              setSearch(false);
+              setTeamMenu((v) => !v);
+            }}
+            style={
+              theme
+                ? {
+                    borderColor: `${theme.accent}70`,
+                    backgroundColor: `${theme.accent}20`,
+                  }
+                : undefined
+            }
           >
             {theme ? (
-              <span className="cfm-teamdot">{theme.shortName}</span>
+              <img src={theme.logoImg} alt="" className="cfm-nav-team-crest" />
             ) : (
-              <UserRound size={21} />
+              <Shield size={13} style={{ color: "var(--m-accent)" }} />
             )}
+            <span>{theme ? theme.shortName : "ALL"}</span>
+            <ChevronDown
+              size={11}
+              style={{
+                transform: teamMenu ? "rotate(180deg)" : "rotate(0deg)",
+                transition: "transform 0.18s ease",
+                opacity: 0.75,
+              }}
+            />
+          </button>
+          <Link
+            href="/account"
+            className="cfm-icon"
+            aria-label="Account"
+          >
+            <UserRound size={19} />
           </Link>
         </div>
       </header>
+      {teamMenu && <MobileNavTeamPanel onClose={() => setTeamMenu(false)} />}
       {search && <SearchSheet onClose={() => setSearch(false)} />}
-      {notifications && (
-        <Sheet
-          title="Match Center Alerts"
-          onClose={() => setNotifications(false)}
-        >
-          <div className="cfm-notifications-list space-y-3 pt-2">
-            <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
-              <span className="w-2 h-2 rounded-full bg-amber-400 mt-1.5 shrink-0" />
-              <div>
-                <strong className="text-xs text-white block">
-                  IPL 2026 Season Simulation Ready
-                </strong>
-                <p className="text-[11px] text-slate-400 mt-0.5">
-                  Scout Lab has updated under-23 projections and purse
-                  scenarios.
-                </p>
-              </div>
-            </div>
-            <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
-              <div>
-                <strong className="text-xs text-white block">
-                  Retention Room Final Calls
-                </strong>
-                <p className="text-[11px] text-slate-400 mt-0.5">
-                  Review 5 mandatory retentions before the auction deadline.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Sheet>
-      )}
     </>
   );
 }

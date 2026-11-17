@@ -53,24 +53,24 @@ export function CinematicCommentaryView({
   return (
     <div className="flex flex-col gap-5">
       {/* ─── COMMENTARY CONTROL HEADER ─── */}
-      <div className="p-5 bg-[#080d1a] rounded-[24px] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
+      <div className="p-3.5 sm:p-5 bg-[#080d1a] rounded-2xl sm:rounded-[24px] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 shadow-xl">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
             <CricFieldMascot activity="commentary" size={36} />
           </div>
-          <div>
-            <span className="font-mono font-black uppercase text-sm text-white tracking-wider block">
+          <div className="min-w-0">
+            <span className="font-mono font-black uppercase text-xs sm:text-sm text-white tracking-wider block leading-tight">
               BALL-BY-BALL BROADCAST TELEMETRY
             </span>
-            <span className="text-[10px] font-mono text-slate-400">
+            <span className="text-[10px] font-mono text-slate-400 block truncate mt-0.5">
               {current.balls.length} deliveries registered · Line, length, speeds & shots
             </span>
           </div>
         </div>
 
         {/* Innings Selector & Event Filter */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full md:w-auto min-w-0">
+          <div className="grid grid-cols-2 sm:flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10 w-full sm:w-auto min-w-0">
             {innings.map((inn, i) => (
               <button
                 key={i}
@@ -78,25 +78,29 @@ export function CinematicCommentaryView({
                   setActiveInnings(i);
                   setLimit(60);
                 }}
-                className={`px-3 py-1.5 rounded-lg text-[10px] font-mono font-black uppercase tracking-wider transition-all ${
+                className={`px-2.5 sm:px-3 py-1.5 rounded-lg transition-all min-w-0 flex items-center justify-center ${
                   activeInnings === i ? "bg-cyan-500 text-black shadow-md" : "text-slate-400 hover:text-white"
                 }`}
               >
-                {inn.team ?? `Innings ${inn.innings}`}
+                <span className="text-[10.5px] sm:text-[10px] font-mono font-black uppercase tracking-tight sm:tracking-wider truncate leading-none">
+                  {inn.team ?? `Innings ${inn.innings}`}
+                </span>
               </button>
             ))}
           </div>
 
-          <div className="flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10">
+          <div className="grid grid-cols-4 sm:flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10 w-full sm:w-auto min-w-0">
             {(["all", "wickets", "boundaries", "sixes"] as const).map(st => (
               <button
                 key={st}
                 onClick={() => setFilterType(st)}
-                className={`px-2.5 py-1.5 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider transition-all ${
+                className={`px-1.5 sm:px-2.5 py-1.5 rounded-lg transition-all min-w-0 flex items-center justify-center ${
                   filterType === st ? "bg-white/20 text-white" : "text-slate-400 hover:text-white"
                 }`}
               >
-                {st}
+                <span className="text-[10px] font-mono font-bold uppercase tracking-tight sm:tracking-wider whitespace-nowrap leading-none">
+                  {st}
+                </span>
               </button>
             ))}
           </div>

@@ -1,12 +1,13 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import { useRoute, Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { Layout } from "@/components/layout";
+import { MobileChromeContext } from "@/mobile/gate";
 import { GlassCard } from "@/components/glass-card";
 import { TeamSquad } from "@/components/team-squad";
 import {
   ArrowLeft, ArrowRight, Users, Activity, Calendar, Trophy,
-  TrendingUp, Shield, Target, Medal, BarChart2
+  TrendingUp, Shield, Target, Medal, BarChart2, ListFilter, ChevronDown, ChevronLeft, ChevronRight, Check
 } from "lucide-react";
 import {
   useTeams, useMatches, teamColor, teamShort, usePointsTables,
@@ -19,6 +20,20 @@ import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Cell, AreaChart, Area
 } from "recharts";
 
+const PERF_INDEX_SECTIONS = [
+  { id: "1", num: "01", label: "Season Win %", sub: "Win rate trend by year" },
+  { id: "2", num: "02", label: "Extremes & Runs", sub: "Highest, lowest & run tally" },
+  { id: "3", num: "03", label: "Phase Breakdown", sub: "Powerplay, Middle & Death" },
+  { id: "4", num: "04", label: "Phase Profile", sub: "Boundary vs dot % radar" },
+  { id: "5", num: "05", label: "Toss Impact", sub: "Won vs lost toss win %" },
+  { id: "6", num: "06", label: "Conditions", sub: "Bat 1st, chasing, home/away" },
+  { id: "7", num: "07", label: "Pace vs Spin", sub: "Bowling attack returns" },
+  { id: "8", num: "08", label: "Clutch & Collapse", sub: "Tight finishes & clusters" },
+  { id: "9", num: "09", label: "Venue Record", sub: "Win % across grounds" },
+  { id: "10", num: "10", label: "Captaincy", sub: "Skippers record & titles" },
+  { id: "11", num: "11", label: "Head to Head", sub: "Rival records & last 5" },
+] as const;
+
 export default function TeamProfilePage() {
   const [, params] = useRoute("/teams/:slug");
   const slug = params?.slug || "";
@@ -29,6 +44,8 @@ export default function TeamProfilePage() {
   const pointsTables = usePointsTables();
 
   const [activeSubTab, setActiveSubTab] = useState<"overview" | "squad" | "history">("overview");
+  const [mobileSection, setMobileSection] = useState<string>("1");
+  const [indexOpen, setIndexOpen] = useState(false);
 
   // Find the exact matching team from the slug
   /**
@@ -136,106 +153,134 @@ export default function TeamProfilePage() {
 
   const teamCode = resolveTeamCode(slug) ?? (teamData ? resolveTeamCode(teamData.team) : null);
   const dugoutSlug = (teamCode && TEAM_CODE_TO_SLUG[teamCode]) ? TEAM_CODE_TO_SLUG[teamCode] : slug;
+  const mobileShell = useContext(MobileChromeContext);
 
   const pColor = teamColor(teamData.team);
   const pShort = teamShort(teamData.team);
 
   return (
     <Layout>
-      <div className="space-y-6 pb-12 px-4 max-w-7xl mx-auto animate-fade-in">
+      <div className={`max-w-7xl mx-auto animate-fade-in overflow-x-clip ${mobileShell ? "space-y-4 pb-8 px-3 pt-2" : "space-y-6 pb-12 px-4"}`}>
         
         {/* HEADER NAVIGATION */}
-        <div className="flex items-center justify-between shrink-0">
-          <Link href="/stats">
-            <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/5 hover:border-primary/20 hover:bg-white/10 text-[11px] font-black uppercase tracking-widest text-white transition-all cursor-pointer">
-              <ArrowLeft className="w-4 h-4 text-primary" />
-              Back to stats center
-            </button>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <Link href={`/dugout/${dugoutSlug}`}>
-              <button 
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all hover:scale-105 cursor-pointer shadow-md"
-                style={{ backgroundColor: `${pColor}15`, borderColor: `${pColor}40`, color: pColor }}
-              >
-                <Shield className="w-3.5 h-3.5" />
-                <span>My {pShort} Dugout</span>
-                <ArrowRight className="w-3 h-3" />
+        {!mobileShell && (
+          <div className="flex items-center justify-between shrink-0">
+            <Link href="/stats">
+              <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/5 hover:border-primary/20 hover:bg-white/10 text-[11px] font-black uppercase tracking-widest text-white transition-all cursor-pointer">
+                <ArrowLeft className="w-4 h-4 text-primary" />
+                Back to stats center
               </button>
             </Link>
-            <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ backgroundColor: pColor }} />
+
+            <div className="flex items-center gap-3">
+              <Link href={`/dugout/${dugoutSlug}`}>
+                <button 
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all hover:scale-105 cursor-pointer shadow-md"
+                  style={{ backgroundColor: `${pColor}15`, borderColor: `${pColor}40`, color: pColor }}
+                >
+                  <Shield className="w-3.5 h-3.5" />
+                  <span>My {pShort} Dugout</span>
+                  <ArrowRight className="w-3 h-3" />
+                </button>
+              </Link>
+              <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ backgroundColor: pColor }} />
+            </div>
           </div>
-        </div>
+        )}
 
         {/* HERO CINEMATIC HEADER */}
         <div className="rounded-[16px] overflow-hidden" style={{ borderLeft: `4px solid ${pColor}` }}>
-          <GlassCard className="p-6 relative overflow-hidden group">
+          <GlassCard className="p-3.5 sm:p-6 relative overflow-hidden group">
             {/* Decorative Glow */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[160px] opacity-20 pointer-events-none -mr-40 -mt-40 transition-colors duration-1000" style={{ backgroundColor: pColor }} />
             
-            <div className="flex flex-col md:flex-row gap-6 items-center relative z-10">
-              {/* Franchise crest — the real logo rather than a generic shield. */}
-              <div className="w-36 h-36 md:w-40 md:h-40 rounded-[28px] border-2 shrink-0 shadow-2xl flex flex-col items-center justify-center gap-2 relative overflow-hidden" style={{ borderColor: `${pColor}40`, background: `linear-gradient(135deg, ${pColor}20, transparent)` }}>
-                <TeamLogo team={teamData.team} size="w-20 h-20 md:w-24 md:h-24" />
-                <span className="text-xl font-black uppercase tracking-widest relative z-10" style={{ color: pColor }}>{pShort}</span>
-                <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
-              </div>
-
-              {/* Profile Summary Column */}
-              <div className="flex-1 min-w-0 text-center md:text-left space-y-3">
-                <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
-                  <span className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-white/5 border border-white/10 text-white/80 flex items-center gap-1.5">
-                    <Medal className="w-3 h-3" style={{ color: pColor }} />
-                    IPL Franchise
+            <div className="flex flex-col md:flex-row gap-3 sm:gap-6 md:items-center relative z-10">
+              <div className="flex items-center gap-3 sm:gap-5 flex-1 min-w-0">
+                {/* Franchise crest — compact on mobile, full card on desktop */}
+                <div
+                  className="w-16 h-16 sm:w-28 sm:h-28 md:w-40 md:h-40 rounded-2xl sm:rounded-[28px] border-2 shrink-0 shadow-xl flex flex-col items-center justify-center gap-0.5 sm:gap-2 relative overflow-hidden"
+                  style={{ borderColor: `${pColor}40`, background: `linear-gradient(135deg, ${pColor}20, transparent)` }}
+                >
+                  <TeamLogo team={teamData.team} size="w-9 h-9 sm:w-16 sm:h-16 md:w-24 md:h-24" />
+                  <span className="text-[10px] sm:text-base md:text-xl font-black uppercase tracking-widest relative z-10 leading-none" style={{ color: pColor }}>
+                    {pShort}
                   </span>
-                  {teamData.titles > 0 && (
-                    <span className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center gap-1">
-                      <Trophy className="w-3 h-3" />
-                      {teamData.titles}x Champions
+                  <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
+                </div>
+
+                {/* Profile Summary Column */}
+                <div className="flex-1 min-w-0 text-left space-y-1.5 sm:space-y-3">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                    <span className="px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[8.5px] sm:text-[9px] font-black uppercase tracking-wider bg-white/5 border border-white/10 text-white/80 flex items-center gap-1">
+                      <Medal className="w-2.5 h-2.5 sm:w-3 sm:h-3" style={{ color: pColor }} />
+                      IPL Franchise
                     </span>
-                  )}
-                </div>
+                    {teamData.titles > 0 && (
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[8.5px] sm:text-[9px] font-black uppercase tracking-wider bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center gap-1">
+                        <Trophy className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                        {teamData.titles}x Champ
+                      </span>
+                    )}
+                  </div>
 
-                <div>
-                  <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white mb-2">{teamData.team}</h1>
-                  <p className="text-sm font-bold text-white/50 tracking-wide flex items-center justify-center md:justify-start gap-2 uppercase">
-                    All-Time Win Rate: {teamData.winPct.toFixed(1)}%
-                  </p>
-                </div>
+                  <div>
+                    <h1 className="text-xl sm:text-3xl md:text-5xl font-black tracking-tight text-white leading-tight truncate">
+                      {teamData.team}
+                    </h1>
+                    <p className="text-[11px] sm:text-sm font-bold text-white/50 tracking-wide uppercase mt-0.5">
+                      All-Time Win Rate: {teamData.winPct.toFixed(1)}%
+                    </p>
+                  </div>
 
-                {/* Direct Dugout Navigation Action */}
-                <div className="pt-1 flex items-center justify-center md:justify-start gap-3">
-                  <Link href={`/dugout/${dugoutSlug}`}>
-                    <button 
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all border shadow-lg hover:scale-105 cursor-pointer"
-                      style={{ backgroundColor: `${pColor}20`, borderColor: `${pColor}50`, color: pColor }}
-                    >
-                      <Shield className="w-3.5 h-3.5" />
-                      <span>Enter {pShort} Dugout Headquarters</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </Link>
+                  {/* Direct Dugout Navigation Action (desktop inline; mobile below) */}
+                  <div className="hidden md:flex pt-1 items-center gap-3">
+                    <Link href={`/dugout/${dugoutSlug}`}>
+                      <button
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl transition-all border shadow-lg hover:scale-105 cursor-pointer"
+                        style={{ backgroundColor: `${pColor}20`, borderColor: `${pColor}50`, color: pColor }}
+                      >
+                        <Shield className="w-3.5 h-3.5 shrink-0" />
+                        <span className="text-xs font-black uppercase tracking-wider leading-none">
+                          Enter {pShort} Dugout Headquarters
+                        </span>
+                        <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               </div>
+
+              {/* Mobile Dugout CTA bar */}
+              <Link href={`/dugout/${dugoutSlug}`} className="md:hidden w-full">
+                <button
+                  className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl transition-all border shadow-md cursor-pointer"
+                  style={{ backgroundColor: `${pColor}18`, borderColor: `${pColor}45`, color: pColor }}
+                >
+                  <Shield className="w-3.5 h-3.5 shrink-0" />
+                  <span className="text-[10.5px] font-black uppercase tracking-wider leading-none">
+                    Enter {pShort} Dugout HQ
+                  </span>
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                </button>
+              </Link>
 
               {/* High-fidelity Highlights Banner */}
-              <div className="grid grid-cols-2 lg:grid-cols-2 gap-3 w-full md:w-[320px] shrink-0">
-                <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center text-center hover:bg-white/[0.04] transition-colors">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Total Matches</span>
-                  <span className="text-2xl font-black text-white mt-1">{teamData.matches}</span>
+              <div className="grid grid-cols-4 md:grid-cols-2 gap-1.5 sm:gap-3 w-full md:w-[320px] shrink-0">
+                <div className="bg-white/[0.02] border border-white/5 rounded-xl sm:rounded-2xl p-2 sm:p-4 flex flex-col items-center justify-center text-center hover:bg-white/[0.04] transition-colors">
+                  <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider sm:tracking-widest text-white/40 leading-tight">Matches</span>
+                  <span className="text-sm sm:text-2xl font-black text-white mt-0.5 sm:mt-1 tabular-nums">{teamData.matches}</span>
                 </div>
-                <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center text-center hover:bg-white/[0.04] transition-colors">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Wins</span>
-                  <span className="text-2xl font-black mt-1" style={{ color: pColor }}>{teamData.wins}</span>
+                <div className="bg-white/[0.02] border border-white/5 rounded-xl sm:rounded-2xl p-2 sm:p-4 flex flex-col items-center justify-center text-center hover:bg-white/[0.04] transition-colors">
+                  <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider sm:tracking-widest text-white/40 leading-tight">Wins</span>
+                  <span className="text-sm sm:text-2xl font-black mt-0.5 sm:mt-1 tabular-nums" style={{ color: pColor }}>{teamData.wins}</span>
                 </div>
-                <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center text-center hover:bg-white/[0.04] transition-colors">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Batting SR</span>
-                  <span className="text-2xl font-black text-white/80 mt-1">{teamData.battingSr.toFixed(1)}</span>
+                <div className="bg-white/[0.02] border border-white/5 rounded-xl sm:rounded-2xl p-2 sm:p-4 flex flex-col items-center justify-center text-center hover:bg-white/[0.04] transition-colors">
+                  <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider sm:tracking-widest text-white/40 leading-tight">Bat SR</span>
+                  <span className="text-sm sm:text-2xl font-black text-white/80 mt-0.5 sm:mt-1 tabular-nums">{teamData.battingSr.toFixed(1)}</span>
                 </div>
-                <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center text-center hover:bg-white/[0.04] transition-colors">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Bowling Econ</span>
-                  <span className="text-2xl font-black text-white/80 mt-1">{teamData.bowlingEcon.toFixed(2)}</span>
+                <div className="bg-white/[0.02] border border-white/5 rounded-xl sm:rounded-2xl p-2 sm:p-4 flex flex-col items-center justify-center text-center hover:bg-white/[0.04] transition-colors">
+                  <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider sm:tracking-widest text-white/40 leading-tight">Econ</span>
+                  <span className="text-sm sm:text-2xl font-black text-white/80 mt-0.5 sm:mt-1 tabular-nums">{teamData.bowlingEcon.toFixed(2)}</span>
                 </div>
               </div>
             </div>
@@ -246,48 +291,59 @@ export default function TeamProfilePage() {
         <TeamIntelPanel team={teamData.team} />
 
         {/* SUB TAB BAR */}
-        <div className="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 w-fit shadow-sm dark:shadow-none">
+        <div
+          data-testid="team-profile-subtabs"
+          className="grid grid-cols-4 sm:flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 w-full sm:w-fit shadow-sm dark:shadow-none"
+        >
           <button
             onClick={() => setActiveSubTab("overview")}
-            className={`px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all cursor-pointer ${
+            className={`px-1.5 sm:px-5 py-2 sm:py-2.5 rounded-lg flex items-center justify-center gap-1 sm:gap-2 transition-all cursor-pointer min-w-0 whitespace-nowrap ${
               activeSubTab === "overview"
                 ? "text-slate-900 dark:text-white bg-white dark:bg-white/10 shadow-sm dark:shadow-none"
                 : "text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5"
             }`}
             style={activeSubTab === "overview" ? { boxShadow: `0 0 16px -4px ${pColor}80`, backgroundImage: `linear-gradient(to right, ${pColor}25, transparent)` } : {}}
           >
-            <Activity className="w-4 h-4" />
-            Performance
+            <Activity className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+            <span className="text-[9.5px] sm:text-[11px] font-black uppercase tracking-tight sm:tracking-widest leading-none truncate">
+              Perf<span className="hidden sm:inline">ormance</span>
+            </span>
           </button>
           <button
             onClick={() => setActiveSubTab("squad")}
-            className={`px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all cursor-pointer ${
+            className={`px-1.5 sm:px-5 py-2 sm:py-2.5 rounded-lg flex items-center justify-center gap-1 sm:gap-2 transition-all cursor-pointer min-w-0 whitespace-nowrap ${
               activeSubTab === "squad"
                 ? "text-slate-900 dark:text-white bg-white dark:bg-white/10 shadow-sm dark:shadow-none"
                 : "text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5"
             }`}
             style={activeSubTab === "squad" ? { boxShadow: `0 0 16px -4px ${pColor}80`, backgroundImage: `linear-gradient(to right, ${pColor}25, transparent)` } : {}}
           >
-            <Users className="w-4 h-4" />
-            Current Squad
+            <Users className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+            <span className="text-[9.5px] sm:text-[11px] font-black uppercase tracking-tight sm:tracking-widest leading-none truncate">
+              <span className="hidden sm:inline">Current </span>Squad
+            </span>
           </button>
           <button
             onClick={() => setActiveSubTab("history")}
-            className={`px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all cursor-pointer ${
+            className={`px-1.5 sm:px-5 py-2 sm:py-2.5 rounded-lg flex items-center justify-center gap-1 sm:gap-2 transition-all cursor-pointer min-w-0 whitespace-nowrap ${
               activeSubTab === "history"
                 ? "text-slate-900 dark:text-white bg-white dark:bg-white/10 shadow-sm dark:shadow-none"
                 : "text-slate-600 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5"
             }`}
             style={activeSubTab === "history" ? { boxShadow: `0 0 16px -4px ${pColor}80`, backgroundImage: `linear-gradient(to right, ${pColor}25, transparent)` } : {}}
           >
-            <Calendar className="w-4 h-4" />
-            Match History
+            <Calendar className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+            <span className="text-[9.5px] sm:text-[11px] font-black uppercase tracking-tight sm:tracking-widest leading-none truncate">
+              <span className="hidden sm:inline">Match </span>History
+            </span>
           </button>
-          <Link href={`/dugout/${dugoutSlug}`}>
-            <button className="px-5 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all text-slate-600 dark:text-white/50 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/10 cursor-pointer">
-              <Shield className="w-4 h-4" style={{ color: pColor }} />
-              Dugout HQ
-              <ArrowRight className="w-3 h-3 text-slate-400 dark:text-white/40" />
+          <Link href={`/dugout/${dugoutSlug}`} className="min-w-0 flex">
+            <button className="w-full px-1.5 sm:px-5 py-2 sm:py-2.5 rounded-lg flex items-center justify-center gap-1 sm:gap-2 transition-all text-slate-600 dark:text-white/50 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/10 cursor-pointer whitespace-nowrap min-w-0">
+              <Shield className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" style={{ color: pColor }} />
+              <span className="text-[9.5px] sm:text-[11px] font-black uppercase tracking-tight sm:tracking-widest leading-none truncate">
+                Dugout<span className="hidden sm:inline"> HQ</span>
+              </span>
+              <ArrowRight className="w-3 h-3 text-slate-400 dark:text-white/40 shrink-0 hidden sm:inline" />
             </button>
           </Link>
         </div>
@@ -304,16 +360,144 @@ export default function TeamProfilePage() {
             transition={{ duration: 0.2 }}
           >
             
-            {activeSubTab === "overview" && (
-              <div className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {activeSubTab === "overview" && (() => {
+              const showAllMobile = !mobileShell || mobileSection === "all";
+              const showOverview1 = showAllMobile || mobileSection === "1";
+              const showOverview2 = showAllMobile || mobileSection === "2";
+              const currentMeta = PERF_INDEX_SECTIONS.find(s => s.id === mobileSection);
+              const currentIdx = PERF_INDEX_SECTIONS.findIndex(s => s.id === mobileSection);
+              const stepMobileSection = (delta: -1 | 1) => {
+                if (mobileSection === "all") {
+                  setMobileSection(delta > 0 ? PERF_INDEX_SECTIONS[0].id : PERF_INDEX_SECTIONS[PERF_INDEX_SECTIONS.length - 1].id);
+                  return;
+                }
+                const next = (currentIdx + delta + PERF_INDEX_SECTIONS.length) % PERF_INDEX_SECTIONS.length;
+                setMobileSection(PERF_INDEX_SECTIONS[next].id);
+                setIndexOpen(false);
+              };
+
+              return (
+              <div className="space-y-3.5 sm:space-y-6">
+                {mobileShell && (
+                  <div className="relative z-30">
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        data-testid="perf-index-toggle"
+                        aria-expanded={indexOpen}
+                        onClick={() => setIndexOpen(o => !o)}
+                        className="flex-1 min-w-0 flex items-center justify-between gap-2 px-3 py-2.5 rounded-xl bg-white/[0.04] border border-white/15 hover:border-white/30 transition-all cursor-pointer shadow-sm"
+                        style={{ borderColor: indexOpen ? `${pColor}80` : undefined }}
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span
+                            className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0"
+                            style={{ backgroundColor: `${pColor}22`, color: pColor }}
+                          >
+                            <ListFilter className="w-3.5 h-3.5" />
+                          </span>
+                          <div className="min-w-0 text-left">
+                            <span className="text-[8.5px] font-black uppercase tracking-widest text-white/45 block leading-none">
+                              {mobileSection === "all" ? "Index Menu · All 11 Points" : `Index ${currentMeta?.num ?? "01"} / 11`}
+                            </span>
+                            <span className="text-xs font-black text-white truncate block leading-tight mt-0.5">
+                              {mobileSection === "all" ? "Showing All Sections" : currentMeta?.label}
+                            </span>
+                          </div>
+                        </div>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white/60 shrink-0 transition-transform duration-200 ${indexOpen ? "rotate-180" : ""}`}
+                        />
+                      </button>
+
+                      <button
+                        type="button"
+                        aria-label="Previous section"
+                        data-testid="perf-index-prev"
+                        onClick={() => stepMobileSection(-1)}
+                        className="w-10 h-11 rounded-xl bg-white/[0.04] border border-white/10 hover:border-white/25 flex items-center justify-center text-white/75 shrink-0 cursor-pointer"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="Next section"
+                        data-testid="perf-index-next"
+                        onClick={() => stepMobileSection(1)}
+                        className="w-10 h-11 rounded-xl bg-white/[0.04] border border-white/10 hover:border-white/25 flex items-center justify-center text-white/75 shrink-0 cursor-pointer"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    {indexOpen && (
+                      <div
+                        data-testid="perf-index-menu"
+                        className="mt-2 rounded-2xl bg-[#0A0F1E] border border-white/15 shadow-2xl p-2 grid grid-cols-1 gap-1 max-h-[60vh] overflow-y-auto"
+                      >
+                        <button
+                          type="button"
+                          data-testid="perf-index-option-all"
+                          onClick={() => { setMobileSection("all"); setIndexOpen(false); }}
+                          className={`w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-left transition-colors ${
+                            mobileSection === "all" ? "bg-white/10" : "hover:bg-white/[0.04]"
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <span className="text-[10px] font-mono font-black px-1.5 py-0.5 rounded bg-white/10 text-white/80 shrink-0">
+                              ALL
+                            </span>
+                            <div className="min-w-0">
+                              <span className="text-xs font-black text-white block leading-tight">Show All 11 Sections</span>
+                              <span className="text-[10px] font-semibold text-white/45 block">Full scrollable view</span>
+                            </div>
+                          </div>
+                          {mobileSection === "all" && <Check className="w-4 h-4 shrink-0" style={{ color: pColor }} />}
+                        </button>
+
+                        {PERF_INDEX_SECTIONS.map(sec => {
+                          const selected = mobileSection === sec.id;
+                          return (
+                            <button
+                              key={sec.id}
+                              type="button"
+                              data-testid={`perf-index-option-${sec.id}`}
+                              onClick={() => { setMobileSection(sec.id); setIndexOpen(false); }}
+                              className={`w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-left transition-colors ${
+                                selected ? "bg-white/10" : "hover:bg-white/[0.04]"
+                              }`}
+                            >
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <span
+                                  className="text-[10px] font-mono font-black px-1.5 py-0.5 rounded shrink-0"
+                                  style={selected ? { backgroundColor: `${pColor}30`, color: pColor } : { backgroundColor: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.65)" }}
+                                >
+                                  {sec.num}
+                                </span>
+                                <div className="min-w-0">
+                                  <span className="text-xs font-black text-white block leading-tight truncate">{sec.label}</span>
+                                  <span className="text-[10px] font-semibold text-white/45 block truncate">{sec.sub}</span>
+                                </div>
+                              </div>
+                              {selected && <Check className="w-4 h-4 shrink-0" style={{ color: pColor }} />}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+              {(showOverview1 || showOverview2) && (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                 
                 {/* Win Rate Trend Chart */}
-                <GlassCard className="lg:col-span-2 p-6">
-                  <div className="mb-6 flex items-start justify-between gap-4 flex-wrap">
+                {showOverview1 && (
+                <GlassCard className="lg:col-span-2 p-4 sm:p-6">
+                  <div className="mb-4 sm:mb-6 flex items-start justify-between gap-4 flex-wrap">
                     <div>
-                      <h3 className="text-sm font-black uppercase tracking-widest text-white/80 flex items-center gap-2">
-                        <TrendingUp className="w-4 h-4" style={{ color: pColor }} />
+                      <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-white/80 flex items-center gap-2">
+                        <TrendingUp className="w-4 h-4 shrink-0" style={{ color: pColor }} />
                         Season-by-Season Win Percentage
                       </h3>
                       <p className="text-[10px] text-white/40 font-bold mt-0.5">All matches including playoffs — same basis as the all-time rate above</p>
@@ -333,9 +517,9 @@ export default function TeamProfilePage() {
                       </div>
                     )}
                   </div>
-                  <div className="h-[280px] w-full">
+                  <div className="h-[190px] sm:h-[280px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={seasonTrendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                      <AreaChart data={seasonTrendData} margin={{ top: 10, right: 16, left: -20, bottom: 0 }}>
                         <defs>
                           <linearGradient id="teamChartGlow" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor={pColor} stopOpacity={0.6}/>
@@ -362,30 +546,34 @@ export default function TeamProfilePage() {
                     </ResponsiveContainer>
                   </div>
                 </GlassCard>
+                )}
 
                 {/* Extremes & Records */}
-                <div className="space-y-6">
-                  <GlassCard className="p-6">
-                    <h3 className="text-sm font-black uppercase tracking-widest text-white/80 mb-4 flex items-center gap-2">
-                      <Target className="w-4 h-4" style={{ color: pColor }} />
+                {showOverview2 && (
+                <div className="space-y-3.5 sm:space-y-6">
+                  <GlassCard className="p-3.5 sm:p-6">
+                    <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-white/80 mb-2.5 sm:mb-4 flex items-center gap-2">
+                      <Target className="w-4 h-4 shrink-0" style={{ color: pColor }} />
                       Record Extremes
                     </h3>
-                    <div className="flex justify-between items-center bg-white/5 p-4 rounded-xl mb-3 border border-white/5">
-                      <span className="text-xs font-bold text-white/60">Highest Total</span>
-                      <span className="text-xl font-black text-white">{teamData.highest}</span>
-                    </div>
-                    <div className="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/5">
-                      <span className="text-xs font-bold text-white/60">Lowest Total</span>
-                      <span className="text-xl font-black text-white/50">{teamData.lowest || "-"}</span>
+                    <div className="grid grid-cols-2 sm:grid-cols-1 gap-2 sm:gap-3">
+                      <div className="flex justify-between items-center bg-white/5 px-3 py-2.5 sm:p-4 rounded-xl border border-white/5">
+                        <span className="text-[11px] sm:text-xs font-bold text-white/60">Highest Total</span>
+                        <span className="text-base sm:text-xl font-black text-white tabular-nums">{teamData.highest}</span>
+                      </div>
+                      <div className="flex justify-between items-center bg-white/5 px-3 py-2.5 sm:p-4 rounded-xl border border-white/5">
+                        <span className="text-[11px] sm:text-xs font-bold text-white/60">Lowest Total</span>
+                        <span className="text-base sm:text-xl font-black text-white/50 tabular-nums">{teamData.lowest || "-"}</span>
+                      </div>
                     </div>
                   </GlassCard>
 
-                  <GlassCard className="p-6">
-                    <h3 className="text-sm font-black uppercase tracking-widest text-white/80 mb-4 flex items-center gap-2">
-                      <BarChart2 className="w-4 h-4" style={{ color: pColor }} />
+                  <GlassCard className="p-3.5 sm:p-6">
+                    <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-white/80 mb-2.5 sm:mb-4 flex items-center gap-2">
+                      <BarChart2 className="w-4 h-4 shrink-0" style={{ color: pColor }} />
                       Net Run Accumulation
                     </h3>
-                    <div className="space-y-4">
+                    <div className="space-y-3 sm:space-y-4">
                       <div>
                         <div className="flex justify-between text-[10px] font-bold text-white/50 mb-1 uppercase">
                           <span>Runs Scored</span>
@@ -407,16 +595,22 @@ export default function TeamProfilePage() {
                     </div>
                   </GlassCard>
                 </div>
+                )}
               </div>
+              )}
                 {/* Analyst dashboard: phase, toss, venue, rivalry and clutch
                     breakdowns computed from the ball-by-ball tables. */}
-                <TeamAnalyticsDashboard
-                  team={teamData.team}
-                  accent={pColor}
-                  matches={matches.data ?? []}
-                />
+                {(showAllMobile || Number(mobileSection) >= 3) && (
+                  <TeamAnalyticsDashboard
+                    team={teamData.team}
+                    accent={pColor}
+                    matches={matches.data ?? []}
+                    mobileSection={mobileShell ? mobileSection : "all"}
+                  />
+                )}
               </div>
-            )}
+              );
+            })()}
 
             {activeSubTab === "squad" && <TeamSquad franchise={teamData.team} accent={pColor} />}
 
@@ -452,28 +646,28 @@ export default function TeamProfilePage() {
                         {/* Result Indicator border */}
                         <div className={`absolute left-0 top-0 bottom-0 w-1 ${hasResult ? (isWinner ? "bg-emerald-500" : "bg-red-500") : "bg-white/20"}`} />
                         
-                        <div className="flex items-center gap-6 flex-1 mb-4 md:mb-0 pl-3">
+                        <div className="flex items-center gap-3 sm:gap-6 flex-1 min-w-0 mb-3 md:mb-0 pl-2 sm:pl-3">
                           {/* Date Block */}
-                          <div className="flex flex-col text-center w-16 shrink-0 border-r border-white/10 pr-4">
-                            <span className="text-[10px] font-black uppercase text-white/40">{new Date(match.date).toLocaleString('default', { month: 'short' })}</span>
-                            <span className="text-xl font-black text-white">{new Date(match.date).getDate()}</span>
-                            <span className="text-[10px] font-bold text-white/40">{new Date(match.date).getFullYear()}</span>
+                          <div className="flex flex-col text-center w-12 sm:w-16 shrink-0 border-r border-white/10 pr-2.5 sm:pr-4">
+                            <span className="text-[9px] sm:text-[10px] font-black uppercase text-white/40">{new Date(match.date).toLocaleString('default', { month: 'short' })}</span>
+                            <span className="text-lg sm:text-xl font-black text-white">{new Date(match.date).getDate()}</span>
+                            <span className="text-[9px] sm:text-[10px] font-bold text-white/40">{new Date(match.date).getFullYear()}</span>
                           </div>
                           
                           {/* Teams */}
-                          <div className="flex items-center gap-4 flex-1">
-                            <div className="flex flex-col items-end flex-1">
-                              <span className={`text-xs md:text-sm font-bold line-clamp-1 text-right ${isTeam1 ? "text-white" : "text-white/60"}`}>{match.team1}</span>
-                              <span className="text-[10px] font-black text-white/40">{match.team1Score || "-"}</span>
+                          <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
+                            <div className="flex flex-col items-end flex-1 min-w-0">
+                              <span className={`text-[11px] sm:text-xs md:text-sm font-bold line-clamp-1 text-right w-full truncate ${isTeam1 ? "text-white" : "text-white/60"}`}>{match.team1}</span>
+                              <span className="text-[9.5px] sm:text-[10px] font-black text-white/40 truncate">{match.team1Score || "-"}</span>
                             </div>
                             
-                            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                              <span className="text-[9px] font-black text-white/50">VS</span>
+                            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                              <span className="text-[8px] sm:text-[9px] font-black text-white/50">VS</span>
                             </div>
                             
-                            <div className="flex flex-col items-start flex-1">
-                              <span className={`text-xs md:text-sm font-bold line-clamp-1 ${!isTeam1 ? "text-white" : "text-white/60"}`}>{match.team2}</span>
-                              <span className="text-[10px] font-black text-white/40">{match.team2Score || "-"}</span>
+                            <div className="flex flex-col items-start flex-1 min-w-0">
+                              <span className={`text-[11px] sm:text-xs md:text-sm font-bold line-clamp-1 w-full truncate ${!isTeam1 ? "text-white" : "text-white/60"}`}>{match.team2}</span>
+                              <span className="text-[9.5px] sm:text-[10px] font-black text-white/40 truncate">{match.team2Score || "-"}</span>
                             </div>
                           </div>
                         </div>

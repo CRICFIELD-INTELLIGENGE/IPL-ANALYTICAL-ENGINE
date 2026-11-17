@@ -2,6 +2,7 @@
 // one request to /api/intel/*, renders nothing while the warehouse API is
 // unreachable or has no record, and links into the matching AI Analyst module.
 
+import { useState } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { BrainCircuit, Dna, Eye, Gavel, GitBranch, HeartPulse, MapPin, Network, Rewind, Shield, Swords } from "lucide-react";
@@ -10,7 +11,7 @@ import { fetchMatchIntel, fetchPlayerIntel, fetchTeamIntel, fetchVenueIntel, mon
 
 function Shell({ title, sub, children, className = "" }: { title: string; sub: string; children: React.ReactNode; className?: string }) {
   return (
-    <section className={`rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-600/10 via-violet-500/5 to-transparent p-4 space-y-3 min-w-0 ${className}`}>
+    <section className={`rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-600/10 via-violet-500/5 to-transparent p-3.5 sm:p-4 space-y-2.5 sm:space-y-3 min-w-0 ${className}`}>
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <div className="flex items-baseline gap-2 flex-wrap">
           <BrainCircuit className="w-4 h-4 text-violet-600 dark:text-violet-300 self-center" />
@@ -152,20 +153,44 @@ export function VenueIntelPanel({ venue, className }: { venue: string | null | u
 
 export function MatchIntelPanel({ matchId, className }: { matchId: string | number | null | undefined; className?: string }) {
   const q = useQuery({ queryKey: ["intel-match", matchId], queryFn: () => fetchMatchIntel(matchId!), enabled: matchId !== null && matchId !== undefined, retry: false, staleTime: Infinity });
+  const [selectedLegal, setSelectedLegal] = useState<number | null>(null);
   const d = q.data;
   if (!d || d.curve.length < 2) return null;
+  const activeLegal = selectedLegal ?? d.turningPoints[0]?.legal ?? null;
   return (
     <Shell title="Chase win probability" sub={`${d.chasing} chasing ${d.target} · calibrated state model, league-average players`} className={className}>
-      <WinProbChart label={`${d.chasing} chance of completing the chase, ball by ball`} points={d.curve} markers={d.turningPoints.map((t) => ({ legal: t.legal, label: t.ball }))} />
-      <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-2">
-        {d.turningPoints.map((t) => (
-          <div key={t.legal} className="rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-xs">
-            <div className="font-semibold tabular-nums">Ball {t.ball}{t.event ? ` · ${t.event === "W" ? "wicket" : t.event}` : ""}</div>
-            <div className={`tabular-nums ${t.swing < 0 ? "text-rose-300" : "text-sky-300"}`}>{signed(t.swing)} pts → {t.winProb.toFixed(0)}%</div>
-          </div>
-        ))}
+      <WinProbChart
+        label={`${d.chasing} chance of completing the chase, ball by ball`}
+        points={d.curve}
+        markers={d.turningPoints.map((t) => ({ legal: t.legal, label: t.ball }))}
+        activeLegal={activeLegal}
+        onSelectLegal={setSelectedLegal}
+      />
+      <div className="flex overflow-x-auto snap-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 lg:grid-cols-5 gap-2 pb-0.5 sm:pb-0">
+        {d.turningPoints.map((t) => {
+          const isActive = activeLegal === t.legal;
+          return (
+            <button
+              key={t.legal}
+              type="button"
+              onClick={() => setSelectedLegal(t.legal)}
+              className={`min-w-[134px] shrink-0 snap-start sm:min-w-0 rounded-xl border px-2.5 py-2 text-left transition-colors ${
+                isActive
+                  ? "border-amber-400/60 bg-amber-500/10"
+                  : "border-white/10 bg-white/[0.03] hover:bg-white/[0.06]"
+              }`}
+            >
+              <div className="text-[11px] font-bold text-slate-900 dark:text-white tabular-nums leading-tight truncate">
+                Ball {t.ball}{t.event ? ` · ${t.event === "W" ? "wicket" : t.event}` : ""}
+              </div>
+              <div className={`text-[11px] font-semibold tabular-nums mt-0.5 leading-tight ${t.swing < 0 ? "text-rose-300" : "text-sky-300"}`}>
+                {signed(t.swing)} pts → {t.winProb.toFixed(0)}%
+              </div>
+            </button>
+          );
+        })}
       </div>
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-3 pt-0.5">
         {d.replayable && <Link href={`/ai-analyst/decision-replay?match=${d.match.matchId}`} className={`${linkCls} text-indigo-300`}><Rewind className="w-3.5 h-3.5" /> Replay the captain's decisions</Link>}
         <Link href={`/ai-analyst/alt-universe?match=${d.match.matchId}`} className={`${linkCls} text-violet-300`}><GitBranch className="w-3.5 h-3.5" /> Alternate universe</Link>
       </div>
