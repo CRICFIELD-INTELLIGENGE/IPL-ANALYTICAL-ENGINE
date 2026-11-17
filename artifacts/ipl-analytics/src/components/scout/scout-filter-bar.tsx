@@ -17,7 +17,6 @@ interface ScoutFilterBarProps {
 
 const COMPS = [
   { code: "ipl", name: "IPL" },
-  { code: "smat", name: "SMAT" },
   { code: "bbl", name: "BBL" },
   { code: "sa20", name: "SA20" },
   { code: "cpl", name: "CPL" },

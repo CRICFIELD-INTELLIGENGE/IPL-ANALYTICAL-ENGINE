@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { loadWarehouseSnapshot } from "./services/turso-snapshot.js";
 import { scoutPostgresConfigured, loadScoutFromPostgres } from "./services/scout/scout-postgres.js";
-import { SCOUT_PATHS, IPL_PATHS, ANALYTICS_PATHS, LAPTOP_ONLY_PATHS, ANALYTICS_KEY_HEADER, CLIENT_IP_HEADER } from "./lib/analytics-routes.js";
+import { isScoutPath, IPL_PATHS, isAnalyticsPath, LAPTOP_ONLY_PATHS, ANALYTICS_KEY_HEADER, CLIENT_IP_HEADER } from "./lib/analytics-routes.js";
 import app from "./app.js";
 
 // Routing switch (Vercel env CRICFIELD_ANALYTICS_MODE):
@@ -105,26 +105,31 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   const path = (target.searchParams.get("__warehouseRoute") ?? target.pathname).replace(/\/$/, "");
   target.searchParams.delete("__warehouseRoute");
   req.url = path + target.search;
-  if (!ANALYTICS_PATHS.has(path)) return json(res, 404, "not_found");
-  if (req.method !== "GET") {
-    res.setHeader("Allow", "GET");
+  // The AI route has its own rate limits and runs locally in the function.
+  const isScoutAnalyst = path === "/api/scout/analyst";
+  if (path === "/api/scout/analyst/status" && req.method === "GET") return app(req, res);
+  if (!isScoutAnalyst && !isAnalyticsPath(path)) return json(res, 404, "not_found");
+  const allowedMethod = isScoutAnalyst ? "POST" : "GET";
+  if (req.method !== allowedMethod) {
+    res.setHeader("Allow", allowedMethod);
     return json(res, 405, "method_not_allowed");
   }
 
-  if (laptopEnabled) {
+  if (!isScoutAnalyst && laptopEnabled) {
     if (await forwardToLaptop(req, res, req.url)) return;
     if (mode === "laptop" || LAPTOP_ONLY_PATHS.has(path)) return json(res, 503, "analytics_backend_unavailable");
   } else if (LAPTOP_ONLY_PATHS.has(path)) {
     return json(res, 404, "not_found"); // unchanged behaviour: these were never served from the Turso path
   }
 
-  const isScout = SCOUT_PATHS.has(path);
+  const isScout = isScoutAnalyst || isScoutPath(path);
   if (!isScout && !IPL_PATHS.has(path)) return json(res, 404, "not_found");
   try {
     process.env.CRICFIELD_DB_READONLY = "1";
     process.env.CRICFIELD_SCOUT_DB_PATH = scoutPath;
     process.env.CRICFIELD_DB_PATH = iplPath;
     if (isScout) {
+      if (isScoutAnalyst && process.env.AI_ANALYST_ENABLED !== "true") return app(req, res);
       scout ??= configureScout().catch(error => { scout = undefined; throw error; });
       await scout;
     } else {

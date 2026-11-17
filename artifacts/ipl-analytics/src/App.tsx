@@ -83,14 +83,6 @@ const ScoutHomePage = lazy(() => import("@/pages/scout-home"));
 const ScoutPlayerPage = lazy(() => import("@/pages/scout-player"));
 const ScoutComparePage = lazy(() => import("@/pages/scout-compare"));
 const ScoutRolesPage = lazy(() => import("@/pages/scout-roles"));
-const CupChaseGame = lazy(() => import('@/pages/arcade/cup-chase-game'));
-const ArcadeHomePage = lazy(() => import("@/pages/arcade/arcade-home"));
-const HandCricketGame = lazy(() => import("@/pages/arcade/hand-cricket-game"));
-const GuessCricketerGame = lazy(() => import("@/pages/arcade/guess-cricketer-game"));
-const SuperOverGame = lazy(() => import("@/pages/arcade/super-over-game"));
-const AuctionRoomGame = lazy(() => import("@/pages/arcade/auction-room-game"));
-const CricketGridGame = lazy(() => import("@/pages/arcade/cricket-grid-game"));
-
 
 // Internal pages (photo pipeline) are hidden from production builds unless
 // VITE_ENABLE_ADMIN_PAGES=true is set at build time.
@@ -163,14 +155,9 @@ function Router() {
         <Redirect to="/intelligence" />
       </Route>
 
-      {/* CricField Arcade: Cricket Mini-Games */}
-      <Route path="/arcade" component={ArcadeHomePage} />
-      <Route path="/arcade/cup-chase" component={CupChaseGame}/>
-      <Route path="/arcade/hand-cricket" component={HandCricketGame} />
-      <Route path="/arcade/guess-cricketer" component={GuessCricketerGame} />
-      <Route path="/arcade/super-over" component={SuperOverGame} />
-      <Route path="/arcade/auction-room" component={AuctionRoomGame} />
-      <Route path="/arcade/cricket-grid" component={CricketGridGame} />
+      {/* Games section removed - redirect to home */}
+      <Route path="/arcade*"><Redirect to="/home" /></Route>
+      <Route path="/games*"><Redirect to="/home" /></Route>
       {/* The former /on-field/* paths, kept as redirects so anything already
           bookmarked or shared keeps working rather than 404ing. */}
       <Route path="/on-field/feed">
@@ -204,7 +191,7 @@ function Router() {
         <Redirect to="/intelligence?tab=Insights" />
       </Route>
         <Route path="/scores" component={ScoresPage} />
-        <Route path="/ai-analyst/ask" component={AskPage} />
+        <Route path="/ai-analyst/ask"><Redirect to="/intelligence" /></Route>
         <Route path="/ai-analyst/weakness" component={WeaknessPage} />
         <Route path="/ai-analyst/playing-xi" component={PlayingXiPage} />
         <Route path="/ai-analyst/pressure" component={PressurePage} />

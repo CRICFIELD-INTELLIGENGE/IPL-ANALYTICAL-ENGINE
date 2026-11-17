@@ -27,7 +27,7 @@ const QUICK_INSIGHTS = [
 const POPULAR_LEAGUES = [
   { code: "ipl", name: "IPL", color: "#F97316", abbr: "IPL" },
   { code: "bbl", name: "BBL", color: "#38BDF8", abbr: "BBL" },
-  { code: "smat", name: "PSL", color: "#A78BFA", abbr: "PSL" },
+  { code: "psl", name: "PSL", color: "#A78BFA", abbr: "PSL" },
   { code: "cpl", name: "CPL", color: "#F59E0B", abbr: "CPL" },
   { code: "sa20", name: "SA20", color: "#FB7185", abbr: "SA20" },
   { code: "ilt20", name: "ILT20", color: "#34D399", abbr: "ILT" },

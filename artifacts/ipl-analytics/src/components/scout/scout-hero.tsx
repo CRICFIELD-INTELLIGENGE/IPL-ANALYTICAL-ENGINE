@@ -19,7 +19,6 @@ interface ScoutHeroProps {
 
 const COMPETITIONS = [
   { code: "ipl", name: "IPL", label: "Indian Premier League", country: "India" },
-  { code: "smat", name: "SMAT", label: "Syed Mushtaq Ali Trophy", country: "India Domestic" },
   { code: "bbl", name: "BBL", label: "Big Bash League", country: "Australia" },
   { code: "sa20", name: "SA20", label: "SA20 Tournament", country: "South Africa" },
   { code: "cpl", name: "CPL", label: "Caribbean Premier League", country: "West Indies" },

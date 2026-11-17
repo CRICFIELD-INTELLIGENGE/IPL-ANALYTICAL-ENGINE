@@ -25,8 +25,12 @@ import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent }
 import {
   BarChart2, Trophy, Target, Zap, Flame, Activity, ArrowRight, MapPin,
   Users, User, TrendingUp, Cpu, ArrowUpRight, Shield, Eye, Filter, Calendar,
-  ChevronDown, Search, Crosshair, BarChart, Layers, Globe, X, Award, RotateCcw, Compass
+  ChevronDown, Search, Crosshair, BarChart, Layers, Globe, X, Award, RotateCcw, Compass,
+  Newspaper, BookOpen, Clock
 } from "lucide-react";
+import { getV2ForFranchise, STORY_TYPE_LABEL } from "@/lib/editorial-v2";
+import { EDITORIAL_ASPECTS, type EditorialAspectId } from "@/data/editorial/schema";
+import { LibraryMedia } from "@/components/dugout/franchise-library";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "wouter";
 import {
@@ -60,7 +64,6 @@ const TABS = [
   { id: "teams", label: "Teams", Icon: Users },
   { id: "records", label: "Record Book", Icon: Trophy },
   { id: "head2head", label: "Head to Head", Icon: Crosshair },
-  { id: "ask", label: "Ask AI", Icon: Cpu },
 ] as const;
 type Tab = typeof TABS[number]["id"] | "dimensional" | "stat-builder" | "scenario-intelligence" | "tactics" | "batter-lens";
 
@@ -266,6 +269,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   const [desktopAnalysis, setDesktopAnalysisState] = useState<"standard" | "stat-builder" | "scenario-intelligence" | "batter-lens">("standard");
   const [minInnings, setMinInnings] = useState(0);
   const [minMatches, setMinMatches] = useState(0);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [tacticalDeliveryType, setTacticalDeliveryType] = useState<string | undefined>(undefined);
+  const [tacticalSubTab, setTacticalSubTab] = useState<"tactics" | "pitch" | "wagon" | "ledger" | undefined>(undefined);
+  const [tacticalPlayer, setTacticalPlayer] = useState<string | undefined>(undefined);
   useEffect(() => {
     if (mobilePresentation) return;
     const timer = window.setTimeout(() => setDebouncedSearch(searchQuery), 220);
@@ -927,6 +934,20 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       if (queryTeam && queryTeam !== filters.team) {
         handleFilterChange("team", queryTeam);
       }
+      const queryDeliveryType = params.get("deliveryType");
+      const querySubTab = params.get("subTab");
+      const queryPlayer = params.get("player") || params.get("p1");
+      if (queryDeliveryType) {
+        setTacticalDeliveryType(queryDeliveryType);
+        setActiveTab("head2head");
+      }
+      if (querySubTab) {
+        setTacticalSubTab(querySubTab as any);
+        setActiveTab("head2head");
+      }
+      if (queryPlayer) {
+        setTacticalPlayer(queryPlayer);
+      }
       const queryTab = params.get("tab");
       if (queryTab) {
         if (queryTab === "scenario" || queryTab === "scenario-intelligence") {
@@ -941,7 +962,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
           setActiveTab(mobilePresentation ? "dimensional" : "batters");
           setDimSlicingView("batter-lens");
           if (!mobilePresentation) setDesktopAnalysis("batter-lens");
-        } else if (queryTab === "tactics") {
+        } else if (queryTab === "tactics" || queryTab === "head2head") {
           setActiveTab("head2head");
         } else if ((mobilePresentation || queryTab !== "dimensional") && TABS.some(t => t.id === queryTab)) {
           setActiveTab(queryTab as any);
@@ -1346,17 +1367,60 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
   ];
   const bowlerTypeValue = filters.bowlStyle !== "all" ? [`style:${filters.bowlStyle}`] : one(filters.bowler_type, "All Bowlers").map(v => `type:${v}`);
   const analysisModes = ([
-    ["standard", "Standard"], ["stat-builder", "Situation SR"], ["scenario-intelligence", "Scenario Intelligence"], ["batter-lens", "Batter Lens"],
+    ["standard", "Standard"], ["batter-lens", "Batter Lens"],
   ] as const).filter(([id]) => activeTab === "batters" || id !== "batter-lens");
+  const activeFilterCount = filterChain.length + (Object.keys(matchState).length ? 1 : 0);
+  const analysisOn = desktopEngineOn ? dimSlicingView : "standard";
 
   const desktopFilterControls = (
     <div ref={filterPanelRef} tabIndex={-1} role="region" aria-label="Dimensional Slicing"
-      className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-2 flex flex-col gap-2 relative z-20 shadow-sm dark:shadow-xl">
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="flex items-center gap-2 px-3 py-2 bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/5">
+      className="bg-white dark:bg-[#0B1020] rounded-2xl border border-slate-200 dark:border-white/10 p-2 flex flex-col relative z-20 shadow-sm dark:shadow-xl">
+      <div className="flex items-center gap-2">
+        <button type="button" onClick={() => setFiltersOpen(o => !o)} aria-expanded={filtersOpen} aria-controls="slicing-filters"
+          className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-[10px] font-black uppercase tracking-widest cursor-pointer transition-colors ${filtersOpen
+            ? "bg-primary/10 border-primary/40 text-slate-900 dark:text-white"
+            : "bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/5 text-slate-800 dark:text-white/80 hover:bg-slate-200 dark:hover:bg-white/10"}`}>
           <Filter className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
-          <span className="text-[10px] font-black uppercase tracking-widest text-slate-800 dark:text-white/80">Dimensional Slicing</span>
-        </div>
+          Filters
+          {activeFilterCount > 0 && (
+            <span className="min-w-[16px] h-4 px-1 rounded-full bg-amber-400 text-black text-[9px] leading-4 text-center">{activeFilterCount}</span>
+          )}
+          <motion.span animate={{ rotate: filtersOpen ? 180 : 0 }} transition={{ duration: 0.25 }} className="flex">
+            <ChevronDown className="w-3 h-3 opacity-60" aria-hidden="true" />
+          </motion.span>
+        </button>
+        {shows.has("analysis") && analysisModes.length > 1 && (
+          <div role="radiogroup" aria-label="Analysis mode" className="relative flex items-center rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/[0.03] p-0.5">
+            {analysisModes.map(([id, label]) => {
+              const on = analysisOn === id;
+              return (
+                <button key={id} type="button" role="radio" aria-checked={on} onClick={() => { rememberStatsScroll(); setDesktopAnalysis(id); }}
+                  className={`relative px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider cursor-pointer transition-colors ${on ? "text-white" : "text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white"}`}>
+                  {on && <motion.span layoutId="analysis-slider" className="absolute inset-0 rounded-lg bg-primary shadow-sm" transition={{ type: "spring", stiffness: 420, damping: 34 }} />}
+                  <span className="relative">{label}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+        {shows.has("search") && (
+          <div className="relative min-w-[180px] max-w-[320px] flex-1 ml-auto">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 dark:text-white/30" aria-hidden="true" />
+            <input type="search" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search players, venues, teams…" aria-label="Search results"
+              className="w-full rounded-xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5 py-2 pl-9 pr-3 text-[11px] font-bold text-slate-800 dark:text-white focus:outline-none focus:border-primary/40" />
+          </div>
+        )}
+        <button type="button" onClick={clearFilterChain} title="Reset all filters"
+          className={`${shows.has("search") ? "" : "ml-auto "}flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-red-50 dark:bg-white/5 dark:hover:bg-red-500/10 border border-slate-200 dark:border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:text-red-600 dark:text-white/50 dark:hover:text-red-400 cursor-pointer`}>
+          <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" /> Reset
+        </button>
+      </div>
+      <AnimatePresence initial={false}>
+        {filtersOpen && (
+          <motion.div id="slicing-filters" key="slicing-filters"
+            initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden">
+      <div className="flex flex-wrap items-center gap-2 pt-2 mt-2 border-t border-slate-200 dark:border-white/10">
         {shows.has("season") && <SeasonPopover years={scenarioYears} value={seasonValue} icon={Calendar}
           onChange={v => applySlice(v.mode === "all" ? { season: "All Seasons", seasonFrom: "", seasonTo: "" }
             : v.mode === "single" ? { season: v.season, seasonFrom: "", seasonTo: "" }
@@ -1380,21 +1444,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         {shows.has("bowlerType") && <SelectPopover label={activeTab === "bowlers" ? "Bowling style" : "Bowler type faced"} icon={Target} allLabel="All bowlers" options={bowlerTypeOpts}
           value={bowlerTypeValue} onChange={([v]) => applySlice(!v ? { bowler_type: "All Bowlers", bowlStyle: "all" }
             : v.startsWith("type:") ? { bowler_type: v.slice(5), bowlStyle: "all" } : { bowler_type: "All Bowlers", bowlStyle: v.slice(6) })} />}
-        <div className="ml-auto flex items-center gap-2">
-          {(activeTab === "batters" || activeTab === "bowlers") && (
-            <button type="button" title="IPL + men's T20Is, 2022–2026, empirical-Bayes Pressure Reliability"
-              onClick={() => { applySlice({ season: "All Seasons", seasonFrom: "2022", seasonTo: "2026" }); setSelectedScenario("pressure-reliability"); setDesktopAnalysis("scenario-intelligence"); }}
-              className="px-3 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border border-pink-400/40 bg-pink-500/10 text-pink-700 dark:text-pink-200 hover:bg-pink-500/20 cursor-pointer">
-              RR Pressure Scouting
-            </button>
-          )}
-          <button type="button" onClick={clearFilterChain} title="Reset all filters"
-            className="flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-red-50 dark:bg-white/5 dark:hover:bg-red-500/10 border border-slate-200 dark:border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:text-red-600 dark:text-white/50 dark:hover:text-red-400 cursor-pointer">
-            <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" /> Reset
-          </button>
-        </div>
-      </div>
-      <div className="flex flex-wrap items-center gap-2">
         {shows.has("pressure") && <SelectPopover label="Pressure" icon={Shield} allLabel="All balls"
           options={[{ value: "High Pressure", label: "High pressure (chase overs 16–20 or 4+ down)" }, { value: "Clutch Moment", label: "Clutch (chase, overs 18–20, < 24 needed)" }]}
           value={one(filters.pressure_state, "Standard")} onChange={([v]) => applySlice({ pressure_state: v || "Standard" })} />}
@@ -1419,61 +1468,16 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
             applySlice({ battingPosition: v.battingPosition, matchResult: v.matchResult, dateFrom: v.dateFrom, dateTo: v.dateTo });
             setMinSliceBalls(v.minBalls); setMinInnings(v.minInnings); setMinMatches(v.minMatches);
           }} />}
-        {shows.has("analysis") && (activeTab === "batters" || activeTab === "bowlers") && (
-          <div role="radiogroup" aria-label="Analysis mode" className="flex items-center gap-0.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/[0.03] p-0.5">
-            {analysisModes.map(([id, label]) => {
-              const on = (desktopEngineOn ? dimSlicingView : "standard") === id;
-              return (
-                <button key={id} type="button" role="radio" aria-checked={on} onClick={() => { rememberStatsScroll(); setDesktopAnalysis(id); }}
-                  className={`px-2.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider cursor-pointer ${on ? "bg-primary text-white shadow-sm" : "text-slate-600 dark:text-white/60 hover:bg-white dark:hover:bg-white/5"}`}>
-                  {label}
-                </button>
-              );
-            })}
-          </div>
-        )}
-        {shows.has("search") && (
-          <div className="ml-auto relative min-w-[180px] max-w-[260px] flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 dark:text-white/30" aria-hidden="true" />
-            <input type="search" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search players, venues, teams…" aria-label="Search results"
-              className="w-full rounded-xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5 py-2 pl-9 pr-3 text-[11px] font-bold text-slate-800 dark:text-white focus:outline-none focus:border-primary/40" />
-          </div>
-        )}
       </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 
   const [linkCopied, setLinkCopied] = useState(false);
   const toolbarRows: any[] = activeTab === "bowlers" ? activeData.bowlers : activeData.batters;
-  const exportLeaderboard = () => {
-    const columns = activeTab === "bowlers"
-      ? ["player", "matches", "innings", "balls", "wickets", "econ", "avg", "sr", "dotPct", "boundaryPct", "trueEconomy", "bowlerType"]
-      : ["player", "matches", "innings", "runs", "balls", "dismissals", "avg", "sr", "dotPct", "boundaryPct", "fours", "sixes", "fifties", "hundreds", "highest"];
-    const meta = [
-      `CricField Stats Centre, ${activeTab}, exported ${new Date().toISOString().slice(0, 10)}`,
-      `Filters: ${filterChain.map(f => f.label).join("; ") || "none (all-time IPL)"}`,
-      ...(Object.keys(matchState).length ? [`Match state: ${Object.entries(matchState).map(([k, v]) => `${k}=${v}`).join(", ")}`] : []),
-      `Minimums: ${minSliceBalls} balls, ${minInnings} innings, ${minMatches} matches`,
-      "Source: CricField warehouse (Cricsheet ball-by-ball, IPL)",
-    ];
-    downloadCsv(`cricfield-${activeTab}.csv`, toCsv(toolbarRows, columns, meta));
-  };
-  const resultsToolbar = (
-    <div className="mb-3 flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] px-3 py-2 text-[11px]">
-      <span className="font-black text-slate-900 dark:text-white">{toolbarRows.length.toLocaleString("en-IN")} {activeTab}</span>
-      {dynamicStatsQuery.isFetching && <span role="status" className="font-bold text-amber-600 dark:text-amber-300">Updating…</span>}
-      {(minSliceBalls > 0 || minInnings > 0 || minMatches > 0) && (
-        <span className="text-slate-500 dark:text-white/50">Min {minSliceBalls} balls · {minInnings} inns · {minMatches} matches</span>
-      )}
-      <span className="text-slate-400 dark:text-white/30">Sort by clicking a column header</span>
-      <div className="ml-auto flex items-center gap-1.5">
-        <button type="button" onClick={exportLeaderboard} disabled={!toolbarRows.length} className="rounded-lg border border-slate-200 dark:border-white/10 px-2.5 py-1 font-bold hover:bg-slate-100 dark:hover:bg-white/5 disabled:opacity-40">Export CSV</button>
-        <button type="button" onClick={() => { void navigator.clipboard?.writeText(window.location.href).then(() => { setLinkCopied(true); window.setTimeout(() => setLinkCopied(false), 1500); }); }}
-          className="rounded-lg border border-slate-200 dark:border-white/10 px-2.5 py-1 font-bold hover:bg-slate-100 dark:hover:bg-white/5">{linkCopied ? "Link copied" : "Copy link"}</button>
-        <button type="button" onClick={clearFilterChain} className="rounded-lg border border-slate-200 dark:border-white/10 px-2.5 py-1 font-bold hover:bg-slate-100 dark:hover:bg-white/5">Reset filters</button>
-      </div>
-    </div>
-  );
+  const resultsToolbar = null;
 
   const telemetryBanner = (
     <div className="mb-6 bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 p-4 rounded-2xl grid grid-cols-1 md:grid-cols-12 gap-4 items-center animate-fade-in relative overflow-hidden group shadow-sm dark:shadow-none">
@@ -1768,7 +1772,18 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       )}
 
       {isHead2HeadTab && (
-        <HeadToHeadView batters={activeData.batters} bowlers={activeData.bowlers} teams={mobilePresentation || !isVenueFiltered ? teams.data ?? [] : teamCards.map(team => ({ ...team, team: team.name }))} isSliced={!mobilePresentation && !isDefaultCareerView} matchIds={!mobilePresentation && isVenueFiltered ? slicedMatchIds : undefined} showTacticalLab={mobilePresentation || !deliveryScopeActive} playerImages={playerImages.data ?? {}} />
+        <HeadToHeadView
+          batters={activeData.batters}
+          bowlers={activeData.bowlers}
+          teams={mobilePresentation || !isVenueFiltered ? teams.data ?? [] : teamCards.map(team => ({ ...team, team: team.name }))}
+          isSliced={!mobilePresentation && !isDefaultCareerView}
+          matchIds={!mobilePresentation && isVenueFiltered ? slicedMatchIds : undefined}
+          showTacticalLab={mobilePresentation || !deliveryScopeActive}
+          playerImages={playerImages.data ?? {}}
+          initialSubTab={tacticalSubTab}
+          initialDeliveryType={tacticalDeliveryType}
+          initialPlayer={tacticalPlayer}
+        />
       )}
     </section>
   ) : null;
@@ -1952,12 +1967,10 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
         </div>
 
         {/* Shared slicing filters and telemetry sit above the tab bar. */}
-        {(!mobilePresentation || activeTab !== "ask") && (
-          <div className="space-y-4">
-            {mobilePresentation ? filterControls : desktopFilterControls}
-            {mobilePresentation && telemetryBanner}
-          </div>
-        )}
+        <div className="space-y-4">
+          {mobilePresentation ? filterControls : desktopFilterControls}
+          {mobilePresentation && telemetryBanner}
+        </div>
 
         {/* TAB BAR */}
         <div className="w-full overflow-x-auto no-scrollbar pb-1">
@@ -2028,7 +2041,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
             >
-              {!mobilePresentation && (activeTab === "batters" || activeTab === "bowlers") && !desktopEngineOn && resultsToolbar}
               {activeTab === "batters" && !desktopEngineOn && (
                 <div className="bg-white dark:bg-[#0B1020] rounded-[24px] border border-slate-200 dark:border-white/10 overflow-hidden shadow-sm dark:shadow-2xl">
                   <div className="overflow-x-auto">
@@ -2390,23 +2402,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                 <RecordBookView activeData={activeData} playerImages={playerImages.data ?? {}} matches={mobilePresentation ? matches : activeMatches} isSliced={!mobilePresentation && (!isDefaultCareerView || minSliceBalls > 0 || !!debouncedSearch.trim())} fixtureRecordsAvailable={!mobilePresentation && isVenueFiltered && !deliveryScopeActive} />
               )}
               {activeTool}
-              {activeTab === "ask" && !mobilePresentation && (
-                <AskEngineView sliceFilters={filters} sliceMatchState={matchState} minBalls={minSliceBalls}
-                  batterNames={batterOptionNames} bowlerNames={bowlerOptionNames} venues={venueOptions}
-                  onApply={(patch, ms, tab, engine) => {
-                    rememberStatsScroll();
-                    useAnalyticsFilterStore.getState().setFilters(patch);
-                    setMatchState(ms);
-                    setActiveTab(tab);
-                    if (engine === "pressure") { setSelectedScenario("pressure-reliability"); setDesktopAnalysis("scenario-intelligence"); }
-                    else setDesktopAnalysis(engine === "batter-lens" ? "batter-lens" : "standard");
-                  }} />
-              )}
-              {activeTab === "ask" && mobilePresentation && (
-                <AskAIView data={activeData} filters={[...filterChain.map(item => item.label), ...Object.entries(matchState).map(([key, value]) => `${key} ${value}`), ...(chasePreset ? ["Chasing 200+"] : [])]}
-                  loading={dynamicStatsQuery.isFetching || (isDefaultCareerView && playerCareerStats.isLoading)}
-                  unavailable={dynamicStatsQuery.isError && !cachedSeasonSlice} minBalls={minSliceBalls} />
-              )}
             </motion.div>
         </div>
 
@@ -2668,141 +2663,17 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
           }) : [];
 
           return (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto"
-              onClick={() => setSelectedTeam(null)}
-            >
-              <motion.div
-                initial={{ scale: 0.95, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.95, y: 20 }}
-                className="bg-[#0B1020] border border-white/10 w-full max-w-4xl rounded-[32px] overflow-hidden shadow-2xl flex flex-col md:flex-row relative z-10"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button
-                  onClick={() => setSelectedTeam(null)}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors z-20 text-white/60 hover:text-white"
-                  title="Close Details"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-
-                <div className="w-full md:w-[320px] bg-slate-950/50 p-6 border-b md:border-b-0 md:border-r border-white/10 flex flex-col gap-6">
-                  <div className="flex items-center gap-4">
-                    <TeamLogo team={tVal.team} size="w-16 h-16 shadow-2xl shrink-0" />
-                    <div className="min-w-0">
-                      <span className="px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-wider bg-primary/10 border border-primary/20 text-primary">
-                        {teamShort(tVal.team)} Franchise
-                      </span>
-                      <h2 className="text-xl font-black text-white leading-tight mt-1 truncate">{tVal.team}</h2>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2.5 flex flex-col items-center justify-center text-center">
-                      <span className="text-[7.5px] font-black uppercase tracking-widest text-white/30">Matches</span>
-                      <span className="text-[13px] font-black text-white mt-0.5">{tVal.matches}</span>
-                    </div>
-                    <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2.5 flex flex-col items-center justify-center text-center">
-                      <span className="text-[7.5px] font-black uppercase tracking-widest text-white/30">Wins</span>
-                      <span className="text-[13px] font-black text-white mt-0.5">{tVal.wins}</span>
-                    </div>
-                    <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2.5 flex flex-col items-center justify-center text-center">
-                      <span className="text-[7.5px] font-black uppercase tracking-widest text-white/30">Win %</span>
-                      <span className="text-[13px] font-black text-emerald-400 mt-0.5">{tVal.winPct.toFixed(1)}%</span>
-                    </div>
-                  </div>
-
-                  {titles > 0 && (
-                    <div className="p-3.5 bg-gradient-to-r from-amber-400/10 to-amber-500/5 border border-amber-400/20 rounded-2xl flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Trophy className="w-5 h-5 text-amber-400 animate-pulse" />
-                        <div className="flex flex-col">
-                          <span className="text-[11px] font-black text-amber-400 uppercase tracking-widest">IPL Champion</span>
-                          <span className="text-[9px] font-bold text-white/50 mt-0.5">{titles} Championships</span>
-                        </div>
-                      </div>
-                      <span className="text-xl font-black text-amber-400">{titles}x</span>
-                    </div>
-                  )}
-
-                  <div>
-                    <h3 className="text-[9px] font-black text-white/40 uppercase tracking-widest mb-2.5">Recent Form</h3>
-                    <div className="flex items-center gap-2.5">
-                      {last5.length === 0 ? (
-                        <span className="text-[10px] text-white/20 font-bold uppercase">No Match Logs</span>
-                      ) : (
-                        last5.map((m, idx) => {
-                          const isWin = m.winner === selectedTeam;
-                          const isLoss = m.winner && m.winner !== selectedTeam;
-                          return (
-                            <div
-                              key={m.id || idx}
-                              className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-[11px] border shadow-md relative group/form cursor-default transition-all duration-300 ${isWin ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20' : isLoss ? 'bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20' : 'bg-white/5 border-white/10 text-white/40'}`}
-                            >
-                              {isWin ? 'W' : isLoss ? 'L' : 'NR'}
-
-                              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-48 p-2 rounded-xl bg-slate-900 border border-white/10 text-[9.5px] text-white font-bold opacity-0 pointer-events-none group-hover/form:opacity-100 transition-opacity z-50 text-center shadow-2xl">
-                                <div>vs {teamShort(m.team1 === selectedTeam || teamShort(m.team1) === selectedTeam ? m.team2 : m.team1)}</div>
-                                <div className="text-[8px] text-white/40 mt-0.5">{m.team1Score} vs {m.team2Score}</div>
-                                <div className="text-[7.5px] text-emerald-400 mt-0.5">{m.winner ? `${teamShort(m.winner)} Won` : 'No Result'}</div>
-                              </div>
-                            </div>
-                          );
-                        })
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex-1 p-6 md:p-8 flex flex-col gap-6 max-h-[85vh] overflow-y-auto">
-                  <div>
-                    <div className="flex justify-between items-center border-b border-white/5 pb-2 mb-3">
-                      <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">
-                        Current Squad & Profile Bios
-                      </h4>
-                      <span className="text-[9px] font-black text-white/30 uppercase tracking-wider">{teamPlayers.length} Active Profiles</span>
-                    </div>
-
-                    {teamPlayers.length === 0 ? (
-                      <div className="p-12 text-center border border-white/5 rounded-2xl bg-white/[0.01]">
-                        <Users className="w-8 h-8 text-white/20 mx-auto mb-2" />
-                        <div className="text-[11px] text-white/40 font-bold uppercase tracking-wider">No Player Profiles Loaded</div>
-                        <div className="text-[9px] text-white/20 mt-1">No active players mapped.</div>
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[420px] overflow-y-auto pr-1">
-                        {teamPlayers.map((pVal) => (
-                          <Link
-                            key={pVal.playerId}
-                            href={`/players/${pVal.playerName.toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}`}
-                            className="group/player"
-                          >
-                            <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white/[0.01] border border-white/5 hover:bg-white/[0.03] hover:border-primary/30 transition-all duration-300 cursor-pointer">
-                              <div className="w-11 h-11 rounded-full overflow-hidden bg-slate-950 border border-white/10 shrink-0 shadow-md">
-                                <PlayerAvatar name={pVal.playerName} playerImages={playerImages.data} bio={pVal} imgClassName="w-full h-full object-cover group-hover/player:scale-105 transition-transform duration-500" />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <span className="text-[12px] font-black text-white group-hover/player:text-primary transition-colors duration-300 block truncate">
-                                  {displayPlayerName(pVal.playerName, displayNames)}
-                                </span>
-                                <span className="text-[8.5px] font-black text-white/30 uppercase tracking-wider block mt-0.5">
-                                  {pVal.role} • {pVal.nationality}
-                                </span>
-                              </div>
-                              <ArrowUpRight className="w-4 h-4 text-white/20 group-hover/player:text-primary group-hover/player:translate-x-0.5 group-hover/player:-translate-y-0.5 transition-all duration-300 shrink-0" />
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
+            <TeamDetailModalView
+              tVal={tVal}
+              selectedTeam={selectedTeam}
+              onClose={() => setSelectedTeam(null)}
+              titles={titles}
+              last5={last5}
+              targetAbbrev={targetAbbrev}
+              teamPlayers={teamPlayers}
+              playerImages={playerImages}
+              displayNames={displayNames}
+            />
           );
         })()}
       </AnimatePresence>
@@ -2819,6 +2690,367 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     slicedUnavailable={!isDefaultCareerView && !dynamicStatsQuery.isLoading && !dynamicStatsQuery.data?.batters?.length && !dynamicStatsQuery.data?.bowlers?.length}
     onSort={(field) => activeTab === "bowlers" ? handleBowlerSort(field as typeof bowlerSortField) : handleBatterSort(field as typeof batterSortField)}
   /> : desktopContent;
+}
+
+function TeamDetailModalView({
+  tVal,
+  selectedTeam,
+  onClose,
+  titles,
+  last5,
+  targetAbbrev,
+  teamPlayers,
+  playerImages,
+  displayNames,
+}: {
+  tVal: any;
+  selectedTeam: string;
+  onClose: () => void;
+  titles: number;
+  last5: any[];
+  targetAbbrev: string;
+  teamPlayers: any[];
+  playerImages: any;
+  displayNames: any;
+}) {
+  const [modalTab, setModalTab] = useState<"articles" | "squad">("articles");
+  const [articleQuery, setArticleQuery] = useState("");
+  const [aspectFilter, setAspectFilter] = useState("all");
+  const teamAccent = teamColor(selectedTeam);
+
+  const franchiseArticles = useMemo(() => getV2ForFranchise(targetAbbrev), [targetAbbrev]);
+
+  const filteredArticles = useMemo(() => {
+    return franchiseArticles.filter(art => {
+      if (aspectFilter !== "all" && art.aspect !== aspectFilter) return false;
+      if (articleQuery.trim()) {
+        const q = articleQuery.toLowerCase().trim();
+        const t = art.title.toLowerCase();
+        const d = (art.dek || "").toLowerCase();
+        if (!t.includes(q) && !d.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [franchiseArticles, aspectFilter, articleQuery]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md overflow-y-auto"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.95, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.95, y: 20 }}
+        className="bg-[#0B1020] border border-white/10 w-full max-w-6xl xl:max-w-7xl rounded-[32px] overflow-hidden shadow-2xl flex flex-col lg:flex-row relative z-10 my-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors z-20 text-white/60 hover:text-white cursor-pointer"
+          title="Close Details"
+        >
+          <X className="w-4 h-4" />
+        </button>
+
+        {/* ── LEFT SIDEBAR: FRANCHISE OVERVIEW & RECENT FORM ── */}
+        <div className="w-full lg:w-[320px] bg-slate-950/60 p-6 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col gap-6 shrink-0">
+          <div className="flex items-center gap-4">
+            <TeamLogo team={tVal.team} size="w-16 h-16 shadow-2xl shrink-0" />
+            <div className="min-w-0">
+              <span className="px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-wider bg-primary/10 border border-primary/20 text-primary">
+                {teamShort(tVal.team)} Franchise
+              </span>
+              <h2 className="text-xl font-black text-white leading-tight mt-1 truncate">{tVal.team}</h2>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2">
+            <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2.5 flex flex-col items-center justify-center text-center">
+              <span className="text-[7.5px] font-black uppercase tracking-widest text-white/30">Matches</span>
+              <span className="text-[13px] font-black text-white mt-0.5">{tVal.matches}</span>
+            </div>
+            <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2.5 flex flex-col items-center justify-center text-center">
+              <span className="text-[7.5px] font-black uppercase tracking-widest text-white/30">Wins</span>
+              <span className="text-[13px] font-black text-white mt-0.5">{tVal.wins}</span>
+            </div>
+            <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2.5 flex flex-col items-center justify-center text-center">
+              <span className="text-[7.5px] font-black uppercase tracking-widest text-white/30">Win %</span>
+              <span className="text-[13px] font-black text-emerald-400 mt-0.5">{tVal.winPct.toFixed(1)}%</span>
+            </div>
+          </div>
+
+          {titles > 0 && (
+            <div className="p-3.5 bg-gradient-to-r from-amber-400/10 to-amber-500/5 border border-amber-400/20 rounded-2xl flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Trophy className="w-5 h-5 text-amber-400 animate-pulse" />
+                <div className="flex flex-col">
+                  <span className="text-[11px] font-black text-amber-400 uppercase tracking-widest">IPL Champion</span>
+                  <span className="text-[9px] font-bold text-white/50 mt-0.5">{titles} Championships</span>
+                </div>
+              </div>
+              <span className="text-xl font-black text-amber-400">{titles}x</span>
+            </div>
+          )}
+
+          {/* RECENT FORM SECTION */}
+          <div>
+            <div className="flex items-center justify-between mb-2.5">
+              <h3 className="text-[9px] font-black text-white/40 uppercase tracking-widest">Recent Form</h3>
+              <span className="text-[8px] font-mono text-white/30">Last 5 Matches</span>
+            </div>
+            <div className="flex items-center gap-2.5">
+              {last5.length === 0 ? (
+                <span className="text-[10px] text-white/20 font-bold uppercase">No Match Logs</span>
+              ) : (
+                last5.map((m, idx) => {
+                  const isWin = m.winner === selectedTeam;
+                  const isLoss = m.winner && m.winner !== selectedTeam;
+                  return (
+                    <div
+                      key={m.id || idx}
+                      className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-[11px] border shadow-md relative group/form cursor-default transition-all duration-300 ${isWin ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20' : isLoss ? 'bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20' : 'bg-white/5 border-white/10 text-white/40'}`}
+                    >
+                      {isWin ? 'W' : isLoss ? 'L' : 'NR'}
+
+                      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-48 p-2.5 rounded-xl bg-slate-900 border border-white/10 text-[9.5px] text-white font-bold opacity-0 pointer-events-none group-hover/form:opacity-100 transition-opacity z-50 text-center shadow-2xl">
+                        <div>vs {teamShort(m.team1 === selectedTeam || teamShort(m.team1) === selectedTeam ? m.team2 : m.team1)}</div>
+                        <div className="text-[8px] text-white/40 mt-0.5">{m.team1Score} vs {m.team2Score}</div>
+                        <div className="text-[7.5px] text-emerald-400 mt-0.5">{m.winner ? `${teamShort(m.winner)} Won` : 'No Result'}</div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+
+          <div className="mt-auto pt-4 border-t border-white/5 flex flex-col gap-2">
+            <Link
+              href={`/dugout/${targetAbbrev.toLowerCase()}`}
+              className="w-full py-2.5 px-3 rounded-xl bg-amber-400/10 hover:bg-amber-400/20 border border-amber-400/30 text-center text-xs font-black uppercase tracking-wider text-amber-300 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <Newspaper className="w-3.5 h-3.5" />
+              <span>Open {targetAbbrev} Dugout Hub ➔</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* ── RIGHT PANEL (BESIDE RECENT FORM): NEWS ARTICLES & SQUAD BIOS ── */}
+        <div className="flex-1 p-5 sm:p-7 flex flex-col gap-5 max-h-[85vh] overflow-y-auto">
+          {/* Header Switcher */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30 text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shadow-sm">
+                  <Newspaper className="w-3 h-3 text-amber-400" />
+                  Dugout Media &amp; Performance Dossier
+                </span>
+                <span className="text-[10px] font-mono text-white/40">Verified Franchise Articles</span>
+              </div>
+              <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-white">
+                {tVal.team} Intelligence
+              </h3>
+            </div>
+
+            <div className="flex items-center bg-black/60 rounded-xl p-1 border border-white/10 self-start sm:self-auto">
+              <button
+                onClick={() => setModalTab("articles")}
+                className={`px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
+                  modalTab === "articles"
+                    ? "bg-amber-400 text-slate-950 font-black shadow-md"
+                    : "text-white/45 hover:text-white"
+                }`}
+              >
+                <Newspaper className="w-3.5 h-3.5" />
+                <span>News Articles ({franchiseArticles.length})</span>
+              </button>
+              <button
+                onClick={() => setModalTab("squad")}
+                className={`px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
+                  modalTab === "squad"
+                    ? "bg-primary text-slate-950 font-black shadow-md"
+                    : "text-white/45 hover:text-white"
+                }`}
+              >
+                <Users className="w-3.5 h-3.5" />
+                <span>Squad Bios ({teamPlayers.length})</span>
+              </button>
+            </div>
+          </div>
+
+          {/* TAB 1: NEWS ARTICLES (WITH DUGOUT PICTURES VIA LibraryMedia) */}
+          {modalTab === "articles" && (
+            <div className="flex flex-col gap-4 animate-fade-in">
+              {/* Filter controls */}
+              <div className="bg-black/40 border border-white/5 rounded-2xl p-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+                <div className="relative flex-1 min-w-[180px]">
+                  <Search className="w-3.5 h-3.5 text-white/40 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={articleQuery}
+                    onChange={e => setArticleQuery(e.target.value)}
+                    placeholder={`Search ${targetAbbrev} articles by title or keyword...`}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-white/40 focus:outline-none focus:border-amber-400 transition-colors"
+                  />
+                </div>
+
+                <div className="flex items-center gap-2 flex-wrap">
+                  <select
+                    value={aspectFilter}
+                    onChange={e => setAspectFilter(e.target.value)}
+                    className="bg-[#090d16] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white/80 focus:outline-none focus:border-amber-400 cursor-pointer"
+                  >
+                    <option value="all">All Editorial Aspects</option>
+                    {EDITORIAL_ASPECTS.map(asp => (
+                      <option key={asp.id} value={asp.id}>{asp.name}</option>
+                    ))}
+                  </select>
+
+                  {(articleQuery || aspectFilter !== "all") && (
+                    <button
+                      onClick={() => { setArticleQuery(""); setAspectFilter("all"); }}
+                      className="px-2.5 py-1 rounded-xl bg-white/10 hover:bg-white/15 text-[10px] font-mono text-cyan-300 uppercase tracking-wider transition-all cursor-pointer"
+                    >
+                      Reset
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Articles Grid with Pictures */}
+              {filteredArticles.length === 0 ? (
+                <div className="py-12 text-center text-[11px] font-black uppercase tracking-widest text-white/30 bg-black/30 rounded-2xl border border-white/5">
+                  No news articles matched the filter
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[560px] overflow-y-auto pr-1">
+                  {filteredArticles.map(art => {
+                    const aspectName = EDITORIAL_ASPECTS.find(a => a.id === art.aspect)?.name || "Intelligence";
+                    return (
+                      <Link
+                        key={art.id}
+                        href={`/dugout/articles/${art.slug}`}
+                        className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#070C15] hover:border-amber-400/50 hover:bg-white/[0.03] transition-all duration-300 shadow-xl cursor-pointer"
+                      >
+                        {/* Dugout Picture Header */}
+                        <div className="relative aspect-video w-full overflow-hidden bg-slate-950">
+                          <LibraryMedia
+                            imageId={art.id}
+                            title={art.title}
+                            accent={teamAccent}
+                            code={targetAbbrev}
+                            teamName={selectedTeam}
+                            aspect={art.aspect}
+                          />
+                        </div>
+
+                        {/* Article Info */}
+                        <div className="flex flex-1 flex-col gap-2 p-4">
+                          <div className="flex items-center justify-between gap-1.5 text-[9.5px] font-mono uppercase tracking-wider">
+                            <span className="truncate font-black" style={{ color: teamAccent }}>{aspectName}</span>
+                            <span
+                              className="shrink-0 rounded px-1.5 py-0.5 border text-[8.5px] font-mono uppercase font-black"
+                              style={{ backgroundColor: `${teamAccent}15`, borderColor: `${teamAccent}40`, color: teamAccent }}
+                            >
+                              {STORY_TYPE_LABEL[art.storyType ?? ""] ?? "Intelligence"}
+                            </span>
+                          </div>
+
+                          <h4 className="line-clamp-2 text-xs font-bold leading-snug text-white group-hover:text-amber-300 transition-colors">
+                            {art.title}
+                          </h4>
+
+                          {art.dek && (
+                            <p className="line-clamp-2 text-[10.5px] leading-relaxed text-white/50">
+                              {art.dek}
+                            </p>
+                          )}
+
+                          {art.headlineStat && (
+                            <div className="mt-1 p-2 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-between">
+                              <span className="text-[8.5px] font-mono uppercase text-white/40 truncate max-w-[150px]">{art.headlineStat.label}</span>
+                              <span className="text-[11px] font-black font-mono text-cyan-300">{art.headlineStat.display}</span>
+                            </div>
+                          )}
+
+                          <div className="mt-auto flex items-center justify-between pt-2.5 text-[10px] font-mono border-t border-white/5">
+                            <span className="text-white/40">{art.readMinutes} min read</span>
+                            <span className="inline-flex items-center gap-1 font-bold group-hover:translate-x-0.5 transition-transform" style={{ color: teamAccent }}>
+                              Read Story <ArrowRight className="w-3 h-3" />
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div className="flex items-center justify-between pt-2 text-[10px] font-mono text-white/40 border-t border-white/5">
+                <span>Showing {filteredArticles.length} of {franchiseArticles.length} Dugout articles for {targetAbbrev}</span>
+                <Link
+                  href={`/dugout/${targetAbbrev.toLowerCase()}`}
+                  className="text-amber-300 hover:underline flex items-center gap-1 cursor-pointer font-bold"
+                >
+                  <span>Explore All {targetAbbrev} Dugout Coverage</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: CURRENT SQUAD & PROFILES */}
+          {modalTab === "squad" && (
+            <div className="flex flex-col gap-4 animate-fade-in">
+              <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">
+                  Current Squad &amp; Profile Bios
+                </h4>
+                <span className="text-[9px] font-black text-white/30 uppercase tracking-wider">{teamPlayers.length} Active Profiles</span>
+              </div>
+
+              {teamPlayers.length === 0 ? (
+                <div className="p-12 text-center border border-white/5 rounded-2xl bg-white/[0.01]">
+                  <Users className="w-8 h-8 text-white/20 mx-auto mb-2" />
+                  <div className="text-[11px] text-white/40 font-bold uppercase tracking-wider">No Player Profiles Loaded</div>
+                  <div className="text-[9px] text-white/20 mt-1">No active players mapped.</div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[560px] overflow-y-auto pr-1">
+                  {teamPlayers.map((pVal) => (
+                    <Link
+                      key={pVal.playerId}
+                      href={`/players/${pVal.playerName.toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}`}
+                      className="group/player"
+                    >
+                      <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white/[0.01] border border-white/5 hover:bg-white/[0.03] hover:border-primary/30 transition-all duration-300 cursor-pointer">
+                        <div className="w-11 h-11 rounded-full overflow-hidden bg-slate-950 border border-white/10 shrink-0 shadow-md">
+                          <PlayerAvatar name={pVal.playerName} playerImages={playerImages.data} bio={pVal} imgClassName="w-full h-full object-cover group-hover/player:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="text-[12px] font-black text-white group-hover/player:text-primary transition-colors duration-300 block truncate">
+                            {displayPlayerName(pVal.playerName, displayNames)}
+                          </span>
+                          <span className="text-[8.5px] font-black text-white/30 uppercase tracking-wider block mt-0.5">
+                            {pVal.role} • {pVal.nationality}
+                          </span>
+                        </div>
+                        <ArrowUpRight className="w-4 h-4 text-white/20 group-hover/player:text-primary group-hover/player:translate-x-0.5 group-hover/player:-translate-y-0.5 transition-all duration-300 shrink-0" />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
 }
 
 // fmt helper declared safely at top of module
@@ -3870,7 +4102,29 @@ function MiniStat({ label, value }: { label: string; value: string }) {
   );
 }
 
-function HeadToHeadView({ batters, bowlers, teams, playerImages, isSliced, matchIds, showTacticalLab }: { batters: any[], bowlers: any[], teams: any[], playerImages: Record<string, string>, isSliced: boolean, matchIds?: ReadonlySet<string>, showTacticalLab: boolean }) {
+function HeadToHeadView({
+  batters,
+  bowlers,
+  teams,
+  playerImages,
+  isSliced,
+  matchIds,
+  showTacticalLab,
+  initialSubTab,
+  initialDeliveryType,
+  initialPlayer,
+}: {
+  batters: any[];
+  bowlers: any[];
+  teams: any[];
+  playerImages: Record<string, string>;
+  isSliced: boolean;
+  matchIds?: ReadonlySet<string>;
+  showTacticalLab: boolean;
+  initialSubTab?: "tactics" | "pitch" | "wagon" | "ledger";
+  initialDeliveryType?: string;
+  initialPlayer?: string;
+}) {
   const displayNames = usePlayerDisplayNames();
   const [mode, setMode] = useState<"players" | "teams">("players");
   const latestTeamResolver = usePlayerLatestTeamResolver();
@@ -3918,7 +4172,7 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages, isSliced, match
     return Array.from(playerMap.values()).sort((a, b) => a.player.localeCompare(b.player));
   }, [batters, bowlers]);
 
-  const [player1, setPlayer1] = useState("");
+  const [player1, setPlayer1] = useState(initialPlayer || "");
   const [player2, setPlayer2] = useState("");
   const [search1, setSearch1] = useState("");
   const [search2, setSearch2] = useState("");
@@ -4516,6 +4770,8 @@ function HeadToHeadView({ batters, bowlers, teams, playerImages, isSliced, match
           p1Stats={p1FinalBatting || p1FinalBowling}
           p2Stats={p2FinalBowling || p2FinalBatting}
           playerImages={playerImages}
+          initialSubTab={initialSubTab}
+          initialDeliveryType={initialDeliveryType}
         />
       )}
     </div>

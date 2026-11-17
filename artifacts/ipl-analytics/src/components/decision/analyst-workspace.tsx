@@ -3,7 +3,7 @@ import {useState} from 'react';
 import {Link,useLocation} from 'wouter';
 import {useTeamTheme} from '@/lib/team-context';
 import './analyst-workspace.css';
-export const ANALYST_TOOLS=[['Overview','/ai-analyst'],['Ask AI','/ai-analyst/ask'],['Weakness','/ai-analyst/weakness'],['Pressure','/ai-analyst/pressure'],['Insights','/ai-analyst/feed'],['Strategy','/ai-analyst/strategy-sim'],['What if','/ai-analyst/alt-universe'],['Opposition','/ai-analyst/opposition-map'],['Replay','/ai-analyst/decision-replay'],['Playing XI','/ai-analyst/playing-xi'],['Squad DNA','/ai-analyst/squad-dna'],['Auction','/ai-analyst/auction-war-room'],['Player Pool','/ai-analyst/player-pool']];
+export const ANALYST_TOOLS=[['Overview','/ai-analyst'],['Weakness','/ai-analyst/weakness'],['Pressure','/ai-analyst/pressure'],['Insights','/ai-analyst/feed'],['Strategy','/ai-analyst/strategy-sim'],['What if','/ai-analyst/alt-universe'],['Opposition','/ai-analyst/opposition-map'],['Replay','/ai-analyst/decision-replay'],['Playing XI','/ai-analyst/playing-xi'],['Squad DNA','/ai-analyst/squad-dna'],['Auction','/ai-analyst/auction-war-room'],['Player Pool','/ai-analyst/player-pool']];
 export function AnalystWorkspace(){
  const [location,navigate]=useLocation();const {selectedTeam,theme}=useTeamTheme();const [question,setQuestion]=useState('');
  const player=typeof window==='undefined'?null:new URLSearchParams(window.location.search).get('player');

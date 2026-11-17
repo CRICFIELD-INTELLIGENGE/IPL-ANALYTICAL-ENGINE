@@ -119,12 +119,6 @@ export default function ScoutPlayerPage() {
                 <span>Compare Player</span>
               </button>
             </Link>
-            <Link href="/ai-analyst">
-              <button className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/10 text-xs font-bold transition-all flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-primary" />
-                <span>Ask AI Analyst</span>
-              </button>
-            </Link>
           </div>
         </div>
 

@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
-import { Zap, Target, Flame, Shield, Activity, CircleDot, Compass, Eye, Tv, Sparkles, Radio } from "lucide-react";
+import { Zap, Target, Flame, Shield, Activity, CircleDot, Compass, Eye, Tv, Sparkles, Radio, ArrowUpRight, ChevronRight, Layers } from "lucide-react";
+import { Link } from "wouter";
 import { CricketStadium3D } from "@/components/cricket3d/CricketStadium3D";
 
 interface ShotZone {
@@ -86,14 +87,89 @@ export function ShotZoneMap({ data, player, title }: ShotZoneMapProps) {
 // --- 1. DELIVERY TYPE BREAKDOWN COMPONENT ---
 export function DeliveryTypeBreakdown({ player }: { player?: string }) {
   const [selectedType, setSelectedType] = useState<string>("ALL");
+  const [expandedPreview, setExpandedPreview] = useState<string | null>(null);
+
+  const cleanPlayer = player?.includes(" vs ") ? player.split(" vs ")[0].trim() : player;
 
   const deliveries = [
-    { type: "Yorker Length", balls: 412, runs: 428, wickets: 38, econ: 6.23, sr: 168.4, dotPct: 52.4, color: "border-red-500/50 text-red-400" },
-    { type: "Bouncer / Short", balls: 580, runs: 792, wickets: 45, econ: 8.19, sr: 142.1, dotPct: 41.2, color: "border-purple-500/50 text-purple-400" },
-    { type: "Good Length", balls: 1240, runs: 1420, wickets: 88, econ: 6.87, sr: 135.6, dotPct: 48.6, color: "border-amber-400/50 text-amber-400" },
-    { type: "Slower Change-up", balls: 360, runs: 410, wickets: 29, econ: 6.83, sr: 128.9, dotPct: 44.5, color: "border-cyan-400/50 text-cyan-400" },
-    { type: "Full Toss", balls: 180, runs: 312, wickets: 8, econ: 10.40, sr: 198.5, dotPct: 18.2, color: "border-rose-400/50 text-rose-400" },
-    { type: "Off Cutter / Spinner", balls: 840, runs: 960, wickets: 54, econ: 6.85, sr: 138.2, dotPct: 46.8, color: "border-emerald-400/50 text-emerald-400" },
+    {
+      type: "Yorker Length",
+      balls: 412,
+      runs: 428,
+      wickets: 38,
+      econ: 6.23,
+      sr: 168.4,
+      dotPct: 52.4,
+      color: "border-red-500/50 text-red-400",
+      primaryShot: "Dig-out to Long-Off / Squeeze to Third Man",
+      shotZones: "Straight & Third Man Corridor",
+      topSectors: ["Straight (35%)", "Third Man (25%)", "Long-Off (20%)"],
+    },
+    {
+      type: "Bouncer / Short",
+      balls: 580,
+      runs: 792,
+      wickets: 45,
+      econ: 8.19,
+      sr: 142.1,
+      dotPct: 41.2,
+      color: "border-purple-500/50 text-purple-400",
+      primaryShot: "Hook & Pull to Deep Mid-Wicket / Upper Cut",
+      shotZones: "Mid-Wicket & Square Leg Arc",
+      topSectors: ["Mid-Wicket (40%)", "Square Leg (30%)", "Third Man (20%)"],
+    },
+    {
+      type: "Good Length",
+      balls: 1240,
+      runs: 1420,
+      wickets: 88,
+      econ: 6.87,
+      sr: 135.6,
+      dotPct: 48.6,
+      color: "border-amber-400/50 text-amber-400",
+      primaryShot: "Front-Foot Punch / Drive Through Covers",
+      shotZones: "Point, Extra Cover & Straight Channel",
+      topSectors: ["Point & Cover (30%)", "Extra Cover (28%)", "Straight (16%)"],
+    },
+    {
+      type: "Slower Change-up",
+      balls: 360,
+      runs: 410,
+      wickets: 29,
+      econ: 6.83,
+      sr: 128.9,
+      dotPct: 44.5,
+      color: "border-cyan-400/50 text-cyan-400",
+      primaryShot: "Lofted Drive to Long-On / Dragged to Cow Corner",
+      shotZones: "Long-On & Mid-Wicket Launch Sector",
+      topSectors: ["Mid-Wicket (35%)", "Long-On (30%)", "Extra Cover (20%)"],
+    },
+    {
+      type: "Full Toss",
+      balls: 180,
+      runs: 312,
+      wickets: 8,
+      econ: 10.40,
+      sr: 198.5,
+      dotPct: 18.2,
+      color: "border-rose-400/50 text-rose-400",
+      primaryShot: "Slog Sweep to Deep Square / Drive Down Ground",
+      shotZones: "Long-On & Deep Mid-Wicket High Velocity Arc",
+      topSectors: ["Long-On (35%)", "Mid-Wicket (35%)", "Straight (20%)"],
+    },
+    {
+      type: "Off Cutter / Spinner",
+      balls: 840,
+      runs: 960,
+      wickets: 54,
+      econ: 6.85,
+      sr: 138.2,
+      dotPct: 46.8,
+      color: "border-emerald-400/50 text-emerald-400",
+      primaryShot: "Square Cut Past Point / Sweep to Fine Leg",
+      shotZones: "Point, Cover & Square-of-the-Wicket",
+      topSectors: ["Point & Cover (32%)", "Mid-Wicket (28%)", "Square Leg (24%)"],
+    },
   ];
 
   const filtered = selectedType === "ALL" ? deliveries : deliveries.filter(d => d.type === selectedType);
@@ -103,9 +179,14 @@ export function DeliveryTypeBreakdown({ player }: { player?: string }) {
        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 pb-3 mb-4">
           <div className="flex items-center gap-2">
              <Target className="w-5 h-5 text-amber-400" />
-             <span className="text-sm font-black text-white uppercase tracking-wider">
-               {player ? `${player} — Delivery Type Playing Analysis` : "Delivery Type Execution Matrix"}
-             </span>
+             <div>
+               <span className="text-sm font-black text-white uppercase tracking-wider block">
+                 {player ? `${player} — Delivery Type Playing Analysis` : "Delivery Type Execution Matrix"}
+               </span>
+               <span className="text-[10px] font-mono text-white/40">
+                 Linked to 360° Ground Wagon Wheel &amp; Shot Execution Zoom
+               </span>
+             </div>
           </div>
           
           <div className="flex items-center gap-1.5 overflow-x-auto custom-scrollbar">
@@ -135,7 +216,10 @@ export function DeliveryTypeBreakdown({ player }: { player?: string }) {
           {filtered.map(d => (
              <div key={d.type} className={`p-4 rounded-xl bg-white/[0.02] border ${d.color} flex flex-col justify-between gap-3 shadow-lg hover:border-white/40 transition-all`}>
                 <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                   <span className="text-xs font-black text-white uppercase">{d.type}</span>
+                   <div>
+                     <span className="text-xs font-black text-white uppercase block">{d.type}</span>
+                     <span className="text-[9px] font-mono text-cyan-300 font-bold">{d.shotZones}</span>
+                   </div>
                    <span className="text-[10px] font-mono text-white/50">{d.balls} Balls</span>
                 </div>
 
@@ -154,10 +238,33 @@ export function DeliveryTypeBreakdown({ player }: { player?: string }) {
                    </div>
                 </div>
 
-                <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-bold">
-                   <span className="text-white/50">Strike Rate vs Ball:</span>
-                   <span className="text-purple-300 font-mono">{d.sr} SR</span>
+                <div className="p-2 bg-white/[0.02] rounded-xl border border-white/5 flex flex-col gap-1 text-[9.5px]">
+                  <div className="flex items-center justify-between font-mono">
+                    <span className="text-white/40 uppercase text-[8px] font-bold">Primary Execution:</span>
+                    <span className="text-purple-300 font-bold">{d.sr} SR</span>
+                  </div>
+                  <span className="text-white/80 font-medium leading-tight">{d.primaryShot}</span>
+                  <div className="flex items-center gap-1 flex-wrap mt-1">
+                    {d.topSectors.map((sec, i) => (
+                      <span key={i} className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[8px] font-mono text-white/60">
+                        {sec}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+
+                {/* Direct Link to Shot Zoom Analysis in Stats */}
+                <Link
+                  href={`/stats?tab=head2head&subTab=wagon&deliveryType=${encodeURIComponent(d.type)}${cleanPlayer ? `&player=${encodeURIComponent(cleanPlayer)}` : ""}`}
+                  className="w-full mt-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-amber-400/15 border border-white/10 hover:border-amber-400/40 text-amber-300 font-mono text-[10px] font-bold flex items-center justify-between transition-all shadow-sm group/btn cursor-pointer"
+                  title={`Zoom into ${d.type} shot execution in Stats Centre`}
+                >
+                  <span className="flex items-center gap-1.5">
+                    <Compass className="w-3.5 h-3.5 text-amber-400 group-hover/btn:rotate-45 transition-transform" />
+                    <span>Shot Zoom Analysis in Stats</span>
+                  </span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-white/40 group-hover/btn:text-white" />
+                </Link>
              </div>
           ))}
        </div>

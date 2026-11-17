@@ -393,27 +393,70 @@ export default function IntelligencePage() {
     return c;
   }, [franchiseArticles]);
 
-  // Filtered Articles based on angle, search, and dropdowns
+  // Filtered Articles based on angle, search, season, and player dropdowns
   const filteredArticles = useMemo(() => {
     return franchiseArticles.filter((art) => {
       if (selectedAngle !== "all" && art.aspect !== ANGLE_TO_ASPECT[selectedAngle]) return false;
 
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase().trim();
-        const matchesExact = art.title.toLowerCase().includes(q) || art.dek.toLowerCase().includes(q) || aspectName(art.aspect).toLowerCase().includes(q);
-        const tokens = q.split(/\s+/).filter(t => t.length > 2);
-        const matchesTokens = tokens.length > 0 && tokens.every(t => art.title.toLowerCase().includes(t) || art.dek.toLowerCase().includes(t));
-        if (!matchesExact && !matchesTokens) return false;
+      // Filter by season
+      if (selectedSeason !== "All Seasons") {
+        const s = selectedSeason;
+        const y = parseInt(s, 10);
+        const seasons = art.seasons || [];
+        const inSeasons = seasons.some((sea) => {
+          if (sea.includes(s)) return true;
+          const parts = sea.split(/[–-]/).map((p) => parseInt(p.trim(), 10)).filter((n) => !isNaN(n));
+          if (parts.length === 2 && !isNaN(y) && y >= parts[0] && y <= parts[1]) return true;
+          return false;
+        });
+        const matchesSeason = inSeasons || art.title.includes(s) || art.dek.includes(s) || (art.meta && art.meta.includes(s));
+        if (!matchesSeason) return false;
       }
 
+      // Filter by search / quick filter tag
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        const title = art.title.toLowerCase();
+        const dek = art.dek.toLowerCase();
+        const aspect = aspectName(art.aspect).toLowerCase();
+        const artAspect = (art.aspect || "").toLowerCase();
+        const playersStr = (art.players || []).join(" ").toLowerCase();
+        const combined = `${title} ${dek} ${aspect} ${artAspect} ${playersStr}`;
+
+        let matched = combined.includes(q);
+
+        if (!matched) {
+          const tokens = q.split(/\s+/).filter((t) => t.length > 2);
+          if (tokens.length > 0 && tokens.some((t) => combined.includes(t))) {
+            matched = true;
+          }
+        }
+
+        if (!matched && (q.includes("army") || q.includes("podu") || q.includes("family") || q.includes("punjab") || q.includes("bol") || q.includes("macha") || q.includes("aava") || q.includes("andaz") || q.includes("culture") || q.includes("superstar"))) {
+          if (artAspect.includes("culture") || artAspect.includes("fan") || title.includes("culture") || dek.includes("culture") || aspect.includes("culture")) {
+            matched = true;
+          }
+        }
+
+        if (!matched) return false;
+      }
+
+      // Filter by player
       if (selectedPlayer !== "All Players") {
         const q = selectedPlayer.toLowerCase();
-        if (!art.title.toLowerCase().includes(q) && !art.dek.toLowerCase().includes(q)) return false;
+        const playersStr = (art.players || []).join(" ").toLowerCase();
+        const qTokens = q.split(/\s+/).filter((t) => t.length > 2);
+        const matchesPlayer =
+          art.title.toLowerCase().includes(q) ||
+          art.dek.toLowerCase().includes(q) ||
+          playersStr.includes(q) ||
+          (qTokens.length > 0 && qTokens.some((t) => playersStr.includes(t) || art.title.toLowerCase().includes(t)));
+        if (!matchesPlayer) return false;
       }
 
       return true;
     });
-  }, [franchiseArticles, selectedAngle, searchQuery, selectedPlayer]);
+  }, [franchiseArticles, selectedAngle, searchQuery, selectedPlayer, selectedSeason]);
 
   // Pagination (9 articles per page)
   const pageSize = 9;
@@ -699,6 +742,81 @@ export default function IntelligencePage() {
                 </div>
               </div>
 
+              {/* ── ACTIVE QUICK FILTERS STRIP ── */}
+              {(searchQuery.trim() || selectedSeason !== "All Seasons" || selectedAngle !== "all" || selectedPlayer !== "All Players") && (
+                <div className="flex flex-wrap items-center gap-2 p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono animate-fade-in shadow-xs">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-300 flex items-center gap-1.5">
+                    <Filter className="w-3.5 h-3.5" />
+                    <span>Active Filter:</span>
+                  </span>
+                  {searchQuery.trim() && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-cyan-500 text-slate-950 font-black text-[11px] shadow-xs">
+                      <span>✓ {searchQuery}</span>
+                      <button
+                        type="button"
+                        onClick={() => { setSearchQuery(""); setCurrentPage(1); }}
+                        className="hover:opacity-75 cursor-pointer ml-1 p-0.5 rounded-full"
+                        aria-label="Remove filter"
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  )}
+                  {selectedSeason !== "All Seasons" && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-cyan-500 text-slate-950 font-black text-[11px] shadow-xs">
+                      <span>✓ Season {selectedSeason}</span>
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedSeason("All Seasons"); setCurrentPage(1); }}
+                        className="hover:opacity-75 cursor-pointer ml-1 p-0.5 rounded-full"
+                        aria-label="Remove season filter"
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  )}
+                  {selectedAngle !== "all" && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-cyan-500/20 text-cyan-800 dark:text-cyan-300 border border-cyan-500/40 text-[11px] font-bold">
+                      <span>Angle: {INTELLIGENCE_ANGLES.find((a) => a.id === selectedAngle)?.label || selectedAngle}</span>
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedAngle("all"); setCurrentPage(1); }}
+                        className="hover:opacity-75 cursor-pointer ml-1"
+                        aria-label="Remove angle filter"
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  )}
+                  {selectedPlayer !== "All Players" && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-cyan-500/20 text-cyan-800 dark:text-cyan-300 border border-cyan-500/40 text-[11px] font-bold">
+                      <span>Player: {selectedPlayer}</span>
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedPlayer("All Players"); setCurrentPage(1); }}
+                        className="hover:opacity-75 cursor-pointer ml-1"
+                        aria-label="Remove player filter"
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery("");
+                      setSelectedSeason("All Seasons");
+                      setSelectedAngle("all");
+                      setSelectedPlayer("All Players");
+                      setCurrentPage(1);
+                    }}
+                    className="ml-auto text-[11px] font-bold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white underline cursor-pointer"
+                  >
+                    Clear all
+                  </button>
+                </div>
+              )}
+
               {/* ── FEATURED ARTICLE HERO CARD ── */}
               {featuredArticle && (
                 <div className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 bg-white dark:bg-gradient-to-r dark:from-[#0C1426] dark:via-[#101C34] dark:to-[#1C1226] p-6 sm:p-7 shadow-lg dark:shadow-2xl group hover:border-slate-300 dark:hover:border-white/20 transition-all">
@@ -774,6 +892,7 @@ export default function IntelligencePage() {
                     onClick={() => {
                       setSelectedAngle("all");
                       setSearchQuery("");
+                      setSelectedSeason("All Seasons");
                       setSelectedPlayer("All Players");
                     }}
                     className="text-xs font-mono text-cyan-400 underline cursor-pointer"
@@ -946,11 +1065,11 @@ export default function IntelligencePage() {
                             }}
                             className={`px-2.5 py-1 rounded-xl text-[11px] font-mono transition-all cursor-pointer border ${
                               isSelected
-                                ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/50 font-bold shadow-xs"
-                                : "bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.03] dark:hover:bg-white/10 border-slate-200 dark:border-white/10 text-slate-700 hover:text-slate-900 dark:text-white/80 dark:hover:text-white"
+                                ? "bg-cyan-500 text-slate-950 border-cyan-400 font-black shadow-md ring-2 ring-cyan-400/40"
+                                : "bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.04] dark:hover:bg-white/10 border-slate-200 dark:border-white/10 text-slate-700 hover:text-slate-900 dark:text-white/80 dark:hover:text-white"
                             }`}
                           >
-                            {tag}
+                            {isSelected ? `✓ ${tag}` : tag}
                           </button>
                         );
                       })}
@@ -962,22 +1081,25 @@ export default function IntelligencePage() {
                       Seasons
                     </span>
                     <div className="grid grid-cols-4 gap-1.5">
-                      {SEASONS.map((s) => (
-                        <button
-                          key={s}
-                          onClick={() => {
-                            setSelectedSeason(s);
-                            setCurrentPage(1);
-                          }}
-                          className={`py-1 rounded-xl text-[10px] font-mono font-bold transition-all cursor-pointer ${
-                            selectedSeason === s
-                              ? "bg-cyan-500 text-black font-black"
-                              : "bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.03] dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 text-slate-700 dark:text-slate-300"
-                          }`}
-                        >
-                          {s}
-                        </button>
-                      ))}
+                      {SEASONS.map((s) => {
+                        const isSelected = selectedSeason === s;
+                        return (
+                          <button
+                            key={s}
+                            onClick={() => {
+                              setSelectedSeason(isSelected ? "All Seasons" : s);
+                              setCurrentPage(1);
+                            }}
+                            className={`py-1 rounded-xl text-[10px] font-mono font-bold transition-all cursor-pointer border ${
+                              isSelected
+                                ? "bg-cyan-500 text-slate-950 border-cyan-400 font-black shadow-md ring-2 ring-cyan-400/40"
+                                : "bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.04] dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 text-slate-700 dark:text-slate-300"
+                            }`}
+                          >
+                            {isSelected ? `✓ ${s}` : s}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -995,7 +1117,6 @@ export default function IntelligencePage() {
                     { label: `${activeFranchiseCode} Squad Explorer`, sub: "Current squad, roles and player profiles", href: `/dugout/${activeFranchiseCode.toLowerCase()}#squad` },
                     { label: `${activeFranchiseCode} Match Analysis`, sub: "Detailed match reports and insights", href: "/feed" },
                     { label: "Player Comparisons", sub: "Compare players with league stars", href: "/scout/compare" },
-                    { label: `${activeFranchiseCode} Auction Strategy`, sub: "Past auctions, value and retention analysis", href: "/arcade/auction-room" },
                     { label: "Franchise Timeline", sub: "Key moments across IPL seasons", href: `/dugout/${activeFranchiseCode.toLowerCase()}#history` },
                   ].map((tool) => (
                     <Link key={tool.label} href={tool.href}>

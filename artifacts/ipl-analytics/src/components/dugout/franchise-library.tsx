@@ -50,6 +50,8 @@ export type FranchiseArticleItem = {
   storyType?: string;
   meta?: string;
   number?: number;
+  seasons?: string[];
+  players?: string[];
 };
 type Item = FranchiseArticleItem;
 
@@ -74,14 +76,14 @@ export function useFranchiseArticles(code: string, showPlanned = false) {
     const byPlan = new Map<string, IndexEntry>(v2.map((e) => [e.id, e]));
     const out: Item[] = [];
     for (const e of v2) {
-      out.push({ key: e.id, title: e.title, dek: e.dek, aspect: e.aspect, kind: "live", href: `/dugout/articles/${e.slug}`, imageId: e.id, storyType: e.storyType, meta: "", number: own.find((p) => p.planId === e.id)?.franchiseNumber });
+      out.push({ key: e.id, title: e.title, dek: e.dek, aspect: e.aspect, kind: "live", href: `/dugout/articles/${e.slug}`, imageId: e.id, storyType: e.storyType, meta: "", number: own.find((p) => p.planId === e.id)?.franchiseNumber, seasons: e.seasons, players: e.players });
     }
     const supersededSlugs = new Set(v2.map((e) => e.supersedes).filter(Boolean));
     for (const art of getArticlesForFranchise(code) as EditorialArticle[]) {
       if (supersededSlugs.has(art.slug)) continue;
       const d = legacyDecisions.decisions.find((x) => x.legacyId === art.id && x.reviewed && x.planId);
       const slot = d?.planId ? own.find((p) => p.planId === d.planId) : undefined;
-      out.push({ key: art.id, title: art.title, dek: art.subtitle, aspect: slot?.aspect ?? PARAM_ASPECT[art.parameter] ?? "history", kind: "legacy", href: `/dugout/articles/${art.slug}`, imageId: art.id, storyType: "archive", meta: "", number: slot?.franchiseNumber });
+      out.push({ key: art.id, title: art.title, dek: art.subtitle, aspect: slot?.aspect ?? PARAM_ASPECT[art.parameter] ?? "history", kind: "legacy", href: `/dugout/articles/${art.slug}`, imageId: art.id, storyType: "archive", meta: "", number: slot?.franchiseNumber, seasons: art.publishedDate ? [art.publishedDate.slice(0, 4)] : undefined });
     }
     if (import.meta.env.DEV && showPlanned) {
       const taken = new Set([...byPlan.keys(), ...legacyDecisions.decisions.filter((d) => d.reviewed && d.planId).map((d) => d.planId!)]);

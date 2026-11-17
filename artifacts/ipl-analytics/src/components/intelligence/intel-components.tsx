@@ -198,7 +198,6 @@ export function PlayerIntelligenceSection({ player, className = "" }: { player: 
           <PlayerValuationCard d={d} />
           <AuctionPriceForecast market={d.market} sold={d.soldLikelihood} value={d.value} />
           <RetentionOutlook r={d.retention} />
-          {d.franchise && <FranchiseFitMatrix fit={d.franchise} />}
           <ValuationHistoryChart history={d.history} />
           {d.comparables && d.comparables.length > 0 && (
             <Panel title="Comparable players" className="lg:col-span-3">
@@ -423,11 +422,10 @@ export function ScoutValueBoard() {
   const teams: [string, string][] = INTEL_TEAMS.map((t) => [t, t]);
   return (
     <section className="w-full max-w-7xl mx-auto px-4 py-6 space-y-3 min-w-0" aria-label="Value board">
-      <div className="flex items-center gap-2 flex-wrap"><Gauge className="w-4 h-4 text-violet-300" /><h2 className="font-display font-bold text-sm uppercase tracking-wider text-white">IPL value board</h2><span className="text-[11px] text-[#8FA6B2]">Performance, expected price and franchise fit</span></div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2 items-end">
+      <div className="flex items-center gap-2 flex-wrap"><Gauge className="w-4 h-4 text-violet-300" /><h2 className="font-display font-bold text-sm uppercase tracking-wider text-white">IPL value board</h2><span className="text-[11px] text-[#8FA6B2]">Performance and expected price</span></div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 items-end">
         <Sel label="Role" value={role} onChange={setRole} options={[["", "Any"], ["batter", "Batter"], ["wicketkeeper", "Wicketkeeper"], ["all-rounder", "All-rounder"], ["bowler", "Bowler"]]} />
         <Sel label="Current team" value={team} onChange={setTeam} options={[["", "Any"], ...teams]} />
-        <Sel label="Fit for" value={fitTeam} onChange={setFitTeam} options={[["", "No team"], ...teams]} />
         <Sel label="Overseas" value={overseas} onChange={(v) => setOverseas(v as typeof overseas)} options={[["", "All"], ["only", "Overseas"], ["exclude", "Indian"]]} />
         <Sel label="Price band" value={band} onChange={(v) => setBand(Number(v))} options={BANDS.map((x, i) => [i, x.label])} />
         <Sel label="Rank by phase" value={phase} onChange={setPhase} options={[["", "Overall"], ["powerplay", "Powerplay"], ["middle", "Middle"], ["death", "Death"]]} />

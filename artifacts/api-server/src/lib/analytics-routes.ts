@@ -2,7 +2,16 @@
 // Shared by the Vercel function (what it may forward) and the laptop gate (what it will answer),
 // so the two can never disagree. Every path here is a GET over immutable cricket data.
 
-export const SCOUT_PATHS = new Set(["/api/scout/rankings", "/api/scout/t20/suggestions"]);
+const SCOUT_PATHS = new Set([
+  "/api/scout/rankings", "/api/scout/search", "/api/scout/compare",
+  "/api/scout/roles", "/api/scout/win-probability", "/api/scout/bayes-calculator",
+  "/api/scout/t20/coverage", "/api/scout/t20/suggestions",
+]);
+
+export function isScoutPath(path: string): boolean {
+  return SCOUT_PATHS.has(path)
+    || /^\/api\/scout\/(?:t20\/player\/[^/]+|player\/[^/]+(?:\/recent-form)?)$/.test(path);
+}
 
 export const IPL_PATHS = new Set([
   "/api/ipl/overview", "/api/ipl/seasons", "/api/ipl/player-career-stats",
@@ -16,7 +25,9 @@ export const LAPTOP_ONLY_PATHS = new Set([
   "/api/stats/pressure-reliability", "/api/ipl/team-analytics", "/api/ipl/venue-analytics",
 ]);
 
-export const ANALYTICS_PATHS = new Set([...SCOUT_PATHS, ...IPL_PATHS, ...LAPTOP_ONLY_PATHS]);
+export function isAnalyticsPath(path: string): boolean {
+  return isScoutPath(path) || IPL_PATHS.has(path) || LAPTOP_ONLY_PATHS.has(path);
+}
 
 /** Header carrying the shared secret from Vercel to the laptop. */
 export const ANALYTICS_KEY_HEADER = "x-cricfield-analytics-key";

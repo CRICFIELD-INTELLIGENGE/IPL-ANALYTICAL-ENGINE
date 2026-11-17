@@ -32,6 +32,11 @@ import { CricFieldMascot } from "@/components/CricFieldMascot";
 import { type Discipline, type MatchPhase, type ScoutRating } from "@/lib/scout-api";
 
 interface ScoutCinematicRoomProps {
+  selectedCountry: string;
+  setSelectedCountry: (country: string) => void;
+  selectedAge: string;
+  setSelectedAge: (age: string) => void;
+  recentSeasons?: number;
   discipline: Discipline;
   setDiscipline: (d: Discipline) => void;
   role: string;
@@ -46,6 +51,8 @@ interface ScoutCinematicRoomProps {
   results: ScoutRating[];
   searching: boolean;
   searchFailed: boolean;
+  needsFullSearch: boolean;
+  onRetrySearch: () => void;
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   selectedPlayer: ScoutRating | null;
@@ -84,22 +91,22 @@ function resolveScoutPlayerPhoto(name?: string): string {
 
 // Men's T20 franchise / domestic leagues in global.db (Cricsheet). Map x/y are percentages on the scouting map.
 export const SCOUT_LEAGUES = [
-  { code: "ipl", name: "IPL", region: "India", x: 62, y: 38, badge: "IPL" },
-  { code: "smat", name: "SMAT", region: "India", x: 74, y: 32, badge: "SMAT" },
-  { code: "bbl", name: "BBL", region: "Australia", x: 76, y: 64, badge: "BBL" },
-  { code: "sa20", name: "SA20", region: "South Africa", x: 68, y: 82, badge: "SA20" },
-  { code: "cpl", name: "CPL", region: "Caribbean", x: 38, y: 44, badge: "CPL" },
-  { code: "ilt20", name: "ILT20", region: "UAE", x: 50, y: 66, badge: "ILT20" },
-  { code: "psl", name: "PSL", region: "Pakistan", x: 56, y: 32, badge: "PSL" },
-  { code: "bpl", name: "BPL", region: "Bangladesh", x: 80, y: 40, badge: "BPL" },
-  { code: "lpl", name: "LPL", region: "Sri Lanka", x: 66, y: 52, badge: "LPL" },
-  { code: "npl", name: "NPL", region: "Nepal", x: 70, y: 24, badge: "NPL" },
-  { code: "blast", name: "T20 Blast", region: "England", x: 44, y: 18, badge: "BLAST" },
-  { code: "mlc", name: "MLC", region: "United States", x: 24, y: 30, badge: "MLC" },
-  { code: "supersmash", name: "Super Smash", region: "New Zealand", x: 88, y: 76, badge: "SMASH" },
+  { code: "ipl", name: "IPL", region: "India", x: 62, y: 38, badge: "IPL", logo: "/ipl-logo-transparent.png" },
+  { code: "bbl", name: "BBL", region: "Australia", x: 76, y: 64, badge: "BBL", logo: "https://seeklogo.com/images/T/t20-bbl-big-bash-league-logo-F993CF186D-seeklogo.com.png" },
+  { code: "sa20", name: "SA20", region: "South Africa", x: 68, y: 82, badge: "SA20", logo: "https://www.sasportspress.co.za/images/logos/XX-SA20_Logo_RGB_Full_On_White_BG.jpg" },
+  { code: "cpl", name: "CPL", region: "Caribbean", x: 38, y: 44, badge: "CPL", logo: "https://emonewsdm.com/wp-content/uploads/2023/12/CPLT20_Logo_Col_Stacked_Pos_RGB-1.jpg" },
+  { code: "ilt20", name: "ILT20", region: "UAE", x: 50, y: 66, badge: "ILT20", logo: "https://www.emiratescricket.com/storage/uploads/news/1671444604.png" },
+  { code: "psl", name: "PSL", region: "Pakistan", x: 56, y: 32, badge: "PSL", logo: "https://seeklogo.com/images/P/pakistan-super-league-psl-logo-E6096FE061-seeklogo.com.png" },
+  { code: "bpl", name: "BPL", region: "Bangladesh", x: 80, y: 40, badge: "BPL", logo: "https://indiantvinfo.com/media/2023/01/BPL_2023.png" },
+  { code: "lpl", name: "LPL", region: "Sri Lanka", x: 66, y: 52, badge: "LPL", logo: "https://upload.wikimedia.org/wikipedia/commons/c/c0/LPL_T20.svg" },
+  { code: "npl", name: "NPL", region: "Nepal", x: 70, y: 24, badge: "NPL", logo: "https://r2.thesportsdb.com/images/media/league/badge/8b0ary1734168233.png" },
+  { code: "blast", name: "T20 Blast", region: "England", x: 44, y: 18, badge: "BLAST", logo: "https://www.keithprowse.co.uk/-/media/tournament/2022/t20-vitality-blast/t20_vitalityblast.png?h=163&hash=9E6E299795F21E87F94E9D3DD91910B75FAD6A6B&la=en&w=300" },
+  { code: "mlc", name: "MLC", region: "United States", x: 24, y: 30, badge: "MLC", logo: "https://staticg.sportskeeda.com/editor/2023/03/782d4-16792854625270-1920.jpg" },
+  { code: "supersmash", name: "Super Smash", region: "New Zealand", x: 88, y: 76, badge: "SMASH", logo: "https://r2.thesportsdb.com/images/media/league/badge/3d5cld1645179187.png" },
 ];
 
 export function ScoutCinematicRoom({
+  selectedCountry, setSelectedCountry, selectedAge, setSelectedAge, recentSeasons,
   discipline,
   setDiscipline,
   role,
@@ -110,7 +117,7 @@ export function ScoutCinematicRoom({
   setPhase,
   minBalls,
   setMinBalls,
-  onAiCandidates, results, searching, searchFailed,
+  onAiCandidates, results, searching, searchFailed, needsFullSearch, onRetrySearch,
   searchQuery,
   setSearchQuery,
   selectedPlayer,
@@ -132,8 +139,6 @@ export function ScoutCinematicRoom({
   const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
   const [ageDropdownOpen, setAgeDropdownOpen] = useState(false);
   const [leagueDropdownOpen, setLeagueDropdownOpen] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState<string>("All");
-  const [selectedAge, setSelectedAge] = useState<string>("All");
 
   const [analystAnswer, setAnalystAnswer] = useState<ScoutConversationReply | null>(null);
   const [analystBusy, setAnalystBusy] = useState(false);
@@ -141,11 +146,34 @@ export function ScoutCinematicRoom({
   const [conversation, setConversation] = useState<ScoutTurn[]>([]);
   useEffect(() => { setConversation([]); setAnalystAnswer(null); onAiCandidates([]); }, [localTeam]);
   const [, navigateToResults] = useLocation();
-  const askScout = async () => {
-    const question = searchQuery.trim();
-    if (question.length < 3) return;
+  const openResults = (preset: string, question = "") => {
+    const params = new URLSearchParams({ preset, q: question, discipline, phase, minBalls: String(minBalls) });
+    if (localTeam) params.set("team", localTeam);
+    if (selectedCountry !== "All") params.set("country", selectedCountry);
+    if (selectedAge !== "All") params.set("age", selectedAge);
+    if (recentSeasons) params.set("recentSeasons", String(recentSeasons));
+    if (preset === "search" && role) params.set("role", role);
+    if (selectedComps.length) params.set("competitions", selectedComps.join(","));
+    if (preset === "finisher") {
+      params.set("discipline", "batting");
+      params.set("phase", "death");
+      params.set("role", "finisher");
+    } else if (preset === "pace") {
+      params.set("discipline", "bowling");
+      params.set("phase", "death");
+      params.set("role", "death_specialist");
+    } else if (preset === "young") {
+      params.set("minBalls", "60");
+      params.set("phase", "all");
+    } else if (preset === "replacement") {
+      params.set("phase", "all");
+    }
     setSuggestionsOpen(false);
-    navigateToResults(`/scout/results?q=${encodeURIComponent(question)}${localTeam ? `&team=${localTeam}` : ''}`);
+    navigateToResults(`/scout/results?${params}`);
+  };
+  const askScout = () => {
+    const question = searchQuery.trim();
+    if (question) openResults("search", question);
   };
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(0);
@@ -174,7 +202,7 @@ export function ScoutCinematicRoom({
     flag: "🇮🇳",
     country: "India",
     roleSpec: "Right Hand Bat | Right Arm Medium Fast",
-    meta: "Age 22 | India | SMAT, IPL, SA20",
+    meta: "Age 22 | India | IPL, SA20",
     photo: "/arjun-menon.jpg",
     strengths: [
       "Finishes games well",
@@ -182,7 +210,7 @@ export function ScoutCinematicRoom({
       "Good fielding",
     ],
     whyConsider:
-      "Consistent in last 2 seasons across SMAT and SA20. High strike rate in death overs. Good fit for a middle-order / finisher role.",
+      "Consistent in last 2 seasons across IPL and SA20. High strike rate in death overs. Good fit for a middle-order / finisher role.",
     srDeath: "168",
     avgT20: "32.4",
     recentForm: [70, 85, 60, 92, 80],
@@ -192,8 +220,8 @@ export function ScoutCinematicRoom({
     ? {
         cricsheet_id: selectedPlayer.cricsheet_id,
         name: selectedPlayer.name.toUpperCase(),
-        flag: selectedPlayer.competition === "ipl" || selectedPlayer.competition === "smat" ? "🇮🇳" : "🌐",
-        country: selectedPlayer.competition === "ipl" || selectedPlayer.competition === "smat" ? "India" : "Overseas",
+        flag: selectedPlayer.competition === "ipl" ? "🇮🇳" : "🌐",
+        country: selectedPlayer.competition === "ipl" ? "India" : "Overseas",
         roleSpec: selectedPlayer.discipline === "batting" 
           ? (selectedPlayer.role?.label || "Middle-order Batter") 
           : (selectedPlayer.role?.label || "Pace / Death Bowler"),
@@ -228,7 +256,7 @@ export function ScoutCinematicRoom({
 
   // Recent tactical searches from reference image
   const RECENT_SEARCHES = [
-    { label: "Indian pace bowlers under 26", action: () => { setDiscipline("bowling"); setSearchQuery(""); setSelectedComps(["ipl", "smat"]); } },
+    { label: "Indian pace bowlers under 26", action: () => { setDiscipline("bowling"); setSearchQuery(""); setSelectedComps(["ipl"]); } },
     { label: "Left arm spin allrounders", action: () => { setDiscipline("bowling"); setSearchQuery(""); } },
     { label: "Death over specialists", action: () => { setDiscipline("bowling"); setPhase("death"); setRole("death_specialist"); } },
     { label: "Uncapped overseas batters", action: () => { setDiscipline("batting"); setSelectedComps(["bbl", "sa20", "cpl", "ilt20"]); } },
@@ -243,12 +271,7 @@ export function ScoutCinematicRoom({
       img: "/msd.jpg",
       role: "Death Overs",
       icon: Zap,
-      action: () => {
-        setDiscipline("batting");
-        setPhase("death");
-        setRole("finisher");
-        setSearchQuery("");
-      },
+      action: () => openResults("finisher"),
     },
     {
       title: "Fast Bowler",
@@ -256,11 +279,7 @@ export function ScoutCinematicRoom({
       img: "/bumrah.jpg",
       role: "Pace / Death",
       icon: Flame,
-      action: () => {
-        setDiscipline("bowling");
-        setRole("death_specialist");
-        setSearchQuery("");
-      },
+      action: () => openResults("pace"),
     },
     {
       title: "Young Talent",
@@ -268,10 +287,7 @@ export function ScoutCinematicRoom({
       img: "/abhisek sharma.jpg",
       role: "High Ceiling",
       icon: Sparkles,
-      action: () => {
-        setMinBalls(60);
-        setSearchQuery("young");
-      },
+      action: () => openResults("young"),
     },
     {
       title: "a Player",
@@ -279,10 +295,7 @@ export function ScoutCinematicRoom({
       img: "/virat kohli.jpg",
       role: "Role Fit Swap",
       icon: RotateCcw,
-      action: () => {
-        const el = document.getElementById("scout-workspace");
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-      },
+      action: () => openResults("replacement"),
     },
   ];
 
@@ -384,6 +397,23 @@ export function ScoutCinematicRoom({
           </div>
         </div>
 
+        <div role="group" aria-label="Scout league selection" className="relative z-10 mb-4 flex flex-wrap items-center gap-1.5">
+          <button type="button" aria-pressed={!selectedComps.length} onClick={() => setSelectedComps([])}
+            className="rounded-lg border border-current/25 bg-slate-900 px-3 py-1.5 text-xs font-bold text-sky-100">
+            All leagues
+          </button>
+          {SCOUT_LEAGUES.map(league => (
+            <button key={league.code} type="button" title={league.name} aria-label={league.name}
+              aria-pressed={selectedComps.includes(league.code)} onClick={() => toggleLeague(league.code)}
+              className="relative grid h-8 min-w-9 place-items-center rounded-md border border-slate-500/45 bg-slate-900 px-1 text-[9px] font-bold text-sky-100 aria-pressed:border-sky-400">
+              <span>{league.badge}</span>
+              <img src={league.logo} alt="" referrerPolicy="no-referrer"
+                className="absolute inset-0 h-full w-full rounded-md bg-white p-0.5 object-contain"
+                onError={event => { event.currentTarget.style.display = "none"; }} />
+            </button>
+          ))}
+        </div>
+
         {/* Top-Right Warm Lamp Flare & Franchise Ambient Glow */}
         <div 
           className="absolute -top-10 right-10 w-[600px] h-[600px] rounded-full blur-[150px] opacity-30 transition-all duration-700 pointer-events-none"
@@ -393,6 +423,9 @@ export function ScoutCinematicRoom({
           className="absolute top-1/4 left-1/4 w-[450px] h-[450px] rounded-full blur-[160px] opacity-15 transition-all duration-700 pointer-events-none"
           style={{ backgroundColor: secondaryColor }}
         />
+
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-56 opacity-20 dark:opacity-45"
+          style={{ background: "linear-gradient(to bottom, #07121e, transparent 65%, #07121e), url('/branding/auth/stadium-sunset-v1.png') center 58% / cover" }} />
 
         {/* Ambient Stadium Window Night Lighting Effect */}
         <div className="absolute top-0 right-1/4 w-[600px] h-[350px] bg-gradient-to-b from-[#142636]/20 to-transparent blur-3xl pointer-events-none" />
@@ -437,8 +470,8 @@ export function ScoutCinematicRoom({
               </div>
               <p className="text-[11px] sm:text-xs text-slate-600 dark:text-[#70828F] pt-0.5">
                 {theme 
-                  ? `One search. Six leagues. Scout players matching ${theme.shortName}'s tactical requirements.` 
-                  : "One search. Six leagues. Find your next match-winner."}
+                  ? `Scout players matching ${theme.shortName}'s tactical requirements.`
+                  : "Find your next match-winner."}
               </p>
             </div>
 
@@ -460,8 +493,11 @@ export function ScoutCinematicRoom({
                 </> : <p role="alert" className="text-slate-500 dark:text-slate-400">{analystAnswer?.error ?? 'Unable to answer this question. Try again.'}</p>}
               </section>}
               {suggestionsOpen && <div id="scout-search-results" role="listbox" aria-label="Scout suggestions" className="absolute top-full left-0 right-0 z-[60] mt-1 max-h-60 overflow-y-auto rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-[#0c121a] p-1 shadow-2xl text-slate-800 dark:text-slate-100">
-                {searching ? <div role="status" className="flex items-center gap-3 p-3 text-xs"><span className="scout-eye-ball"><Eye size={17}/></span>Scouting matching players…</div> : searchFailed ? <p role="alert" className="p-3 text-xs text-slate-500">Search unavailable. Please try again.</p> : <>
-                  {searchQuery.trim().length >= 3 && <button type="button" onMouseDown={e => e.preventDefault()} onClick={() => void askScout()} className="block w-full rounded-lg px-3 py-2 text-left text-xs hover:bg-slate-100 dark:hover:bg-white/5 text-slate-800 dark:text-white">Ask Scout AI: “{searchQuery}”<small className="block text-[10px] text-slate-500">Natural-language answer from warehouse evidence · Enter</small></button>}
+                  {searchQuery.trim().length > 0 && <button type="button" onMouseDown={e => e.preventDefault()} onClick={() => void askScout()} className="block w-full rounded-lg px-3 py-2 text-left text-xs hover:bg-slate-100 dark:hover:bg-white/5 text-slate-800 dark:text-white">Search Scout Lab for “{searchQuery}”<small className="block text-[10px] text-slate-500">Open the scouting workspace · Enter</small></button>}
+                {searching ? <div role="status" className="flex items-center gap-3 p-3 text-xs"><span className="scout-eye-ball"><Eye size={17}/></span>Scouting matching players…</div> : searchFailed ? <div role="alert" className="flex items-center justify-between gap-2 p-3 text-xs text-slate-500">
+                  <span>Couldn’t load player suggestions.</span>
+                  <button type="button" className="shrink-0 underline" onMouseDown={event => event.preventDefault()} onClick={onRetrySearch}>Retry</button>
+                </div> : needsFullSearch ? <p className="p-3 text-xs text-slate-500">Open the workspace to search with your full question.</p> : <>
                   <p className="px-2 py-1 text-[10px] text-slate-500">{searchQuery ? 'Matching players in the database' : 'Players matching your current filters'}</p>
                   {discoveryResults.slice(0,3).map((player,index) => <div key={player.cricsheet_id} className="flex items-center"><button type="button" role="option" aria-selected={index === highlightedSuggestion} key={player.cricsheet_id} onMouseDown={e => e.preventDefault()} onClick={() => selectResult(player)} className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-xs ${index === highlightedSuggestion ? 'bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-semibold' : 'hover:bg-slate-50 dark:hover:bg-white/5 text-slate-700 dark:text-slate-200'}`}><span>{player.name}<small className="block text-[10px] text-slate-500">{player.role?.label} · {player.competition.toUpperCase()}</small></span><ArrowRight size={14}/></button><button type="button" aria-label={`${isShortlisted(player.cricsheet_id) ? 'Remove' : 'Shortlist'} ${player.name}`} onMouseDown={e => e.preventDefault()} onClick={() => saveTarget(player.cricsheet_id)} className="px-2 text-slate-400 hover:text-slate-700 dark:hover:text-white">{isShortlisted(player.cricsheet_id) ? <BookmarkCheck size={15}/> : <Bookmark size={15}/>}</button></div>)}
                   {searchQuery && !discoveryResults.length && <p className="p-3 text-xs text-slate-500 dark:text-slate-400">No players match these filters. Try another name or relax the requirements.</p>}
@@ -572,11 +608,7 @@ export function ScoutCinematicRoom({
                         onClick={() => {
                           setSelectedCountry(c);
                           setCountryDropdownOpen(false);
-                          if (c === "India") setSelectedComps(["ipl", "smat"]);
-                          else if (c === "Australia") setSelectedComps(["bbl"]);
-                          else if (c === "South Africa") setSelectedComps(["sa20"]);
-                          else if (c === "West Indies") setSelectedComps(["cpl"]);
-                          else setSelectedComps([]);
+
                         }}
                         className={`w-full text-left px-2 py-1 rounded text-xs ${
                           selectedCountry === c ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-bold" : "text-slate-600 dark:text-[#8E9FA9] hover:bg-slate-50 dark:hover:bg-white/5"
@@ -609,7 +641,6 @@ export function ScoutCinematicRoom({
                         onClick={() => {
                           setSelectedAge(a);
                           setAgeDropdownOpen(false);
-                          if (a === "< 23") setMinBalls(60);
                         }}
                         className={`w-full text-left px-2 py-1 rounded text-xs ${
                           selectedAge === a ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-bold" : "text-slate-600 dark:text-[#8E9FA9] hover:bg-slate-50 dark:hover:bg-white/5"
@@ -661,7 +692,10 @@ export function ScoutCinematicRoom({
                             : "text-slate-600 dark:text-[#8E9FA9] hover:bg-slate-50 dark:hover:bg-white/5"
                         }`}
                       >
-                        <span>{l.name}</span>
+                        <span className="flex items-center gap-2">
+                          {"logo" in l && <img src={l.logo} alt="" width={24} height={18} className="h-[18px] w-6 rounded-sm bg-white object-contain" onError={event => { event.currentTarget.style.display = "none"; }} />}
+                          {l.name}
+                        </span>
                         {selectedComps.includes(l.code) && <span style={{ color: accentColor }}>✓</span>}
                       </button>
                     ))}
@@ -858,14 +892,6 @@ export function ScoutCinematicRoom({
                   <text x="194" y="121" fill="#7E909D" fontSize="6.5" fontFamily="sans-serif">INDIA</text>
                 </g>
 
-                {/* 2. SMAT (India) */}
-                <g className="cursor-pointer group/node" onClick={() => toggleLeague("smat")}>
-                  <circle cx="210" cy="98" r="9" fill={selectedComps.includes("smat") ? accentColor : "#0B1A28"} stroke={accentColor} strokeWidth="1.5" />
-                  <circle cx="210" cy="98" r="3.5" fill={selectedComps.includes("smat") ? "#050B11" : accentColor} />
-                  <text x="223" y="96" fill="#FFFFFF" fontSize="8.5" fontFamily="monospace" fontWeight="bold">SMAT</text>
-                  <text x="223" y="104" fill="#7E909D" fontSize="6.5" fontFamily="sans-serif">INDIA</text>
-                </g>
-
                 {/* 3. BBL (Australia) */}
                 <g className="cursor-pointer group/node" onClick={() => toggleLeague("bbl")}>
                   <circle cx="215" cy="200" r="11" fill={selectedComps.includes("bbl") ? accentColor : "#0B1A28"} stroke={accentColor} strokeWidth="2" />
@@ -912,7 +938,7 @@ export function ScoutCinematicRoom({
                   <span className="tracking-wider uppercase">SCOUTING NETWORK</span>
                 </div>
 
-                <span className="text-[9px] font-bold text-emerald-600 dark:text-emerald-400">6 CONNECTED</span>
+                <span className="text-[9px] font-bold text-emerald-600 dark:text-emerald-400">{SCOUT_LEAGUES.filter(league => !selectedComps.length || selectedComps.includes(league.code)).length} SELECTED</span>
               </div>
 
               <div className="space-y-1.5 pt-2">
@@ -921,6 +947,8 @@ export function ScoutCinematicRoom({
                   return (
                     <button
                       key={league.code}
+                      type="button"
+                      aria-pressed={isActive}
                       onClick={() => toggleLeague(league.code)}
                       className="w-full flex items-center justify-between text-[11px] font-mono py-0.5 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                     >
@@ -931,6 +959,7 @@ export function ScoutCinematicRoom({
                           }`}
                         />
                         <span className={isActive ? "text-slate-900 dark:text-white font-bold" : "text-slate-500 dark:text-[#758694]"}>
+                          <img src={league.logo} alt="" referrerPolicy="no-referrer" loading="lazy" width={24} height={18} className="inline-block mr-2 h-[18px] w-6 rounded-sm bg-white object-contain" onError={event => { event.currentTarget.style.display = "none"; }} />
                           {league.name}
                         </span>
                       </div>
@@ -940,7 +969,7 @@ export function ScoutCinematicRoom({
                           isActive ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-slate-500"
                         }`}
                       >
-                        {isActive ? "Connected" : "Standby"}
+                        {isActive ? "Included" : "Excluded"}
                       </span>
                     </button>
                   );

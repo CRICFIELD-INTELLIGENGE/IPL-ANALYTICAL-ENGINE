@@ -11,6 +11,7 @@ import {
   type Category, type Scenario, type SavedBallot, type Simulation,
 } from "@/lib/retention-api";
 import "./retention.css";
+import { fetchOfficialRoom, fetchOfficialLeague, formatPurse } from "@/lib/retention-official-api";
 
 export const LIVE_SEASON = 2027;
 
@@ -84,7 +85,6 @@ export function PlayerRetentionCard({ player, className = "" }: { player: string
       <div className="rr-card-grid">
         <div><h4>Retention rating (CRR)</h4><p className="rr-big">{d.pick.index.toFixed(1)}<small>/100</small></p><CategoryTag category={d.pick.category} /><p className="rr-note">{d.pick.granularRole} · {d.pick.confidence} confidence</p><p className="rr-note">{d.pick.reason}</p></div>
         <div><h4>Retention forecast</h4>{d.forecast.kind === "decision" ? <p className="rr-big rr-small">{d.forecast.band}</p> : <><p className="rr-note">{d.forecast.status.message ?? "Forecast available in the room."}</p>{d.forecast.band && <p className="rr-note">Provisional rank: {d.forecast.band}. Not a forecast.</p>}</>}</div>
-        <div><h4>Franchise fit</h4>{d.pick.fitIncrement === null ? <p className="rr-note">No record to measure.</p> : <p className="rr-big">{signed(d.pick.fitIncrement)}<small> runs/match</small></p>}</div>
         <div><h4>Fan votes</h4>{d.fans.retainPct === null ? <p className="rr-note">No votes yet.</p> : <p className="rr-big">{d.fans.retainPct}%<small> retain</small></p>}<p className="rr-note">{d.fans.totalBallots} ballot{d.fans.totalBallots === 1 ? "" : "s"}. Votes, not odds.</p></div>
       </div>
       <p className="rr-foot">The rating is a recommendation, not a chance of being retained. {d.indexVersion}, model {d.modelVersion}, data to {d.dataCutoff}.</p>
@@ -94,28 +94,29 @@ export function PlayerRetentionCard({ player, className = "" }: { player: string
 
 /** Franchise page preview. */
 export function RetentionFranchisePreview({ team }: { team: string }) {
-  const q = useQuery({ queryKey: ["retention-summary"], queryFn: fetchSummary, staleTime: 5 * 60_000, retry: false });
-  const t = q.data?.teams.find((x) => x.team === team);
+  const q = useQuery({ queryKey: ["retention-official",LIVE_SEASON,team], queryFn: ()=>fetchOfficialRoom(LIVE_SEASON,team), staleTime: 5 * 60_000, retry: false });
+  const t = q.data;
   if (!t) return null;
   return (
     <section className="rr-card">
-      <header><h3>Retention Room · {q.data!.season}</h3><Link href={`/retention-room/${team}`}>Who stays, who goes</Link></header>
-      <p className="rr-note">CRICFIELD would prioritise {t.priority.slice(0, 3).join(", ") || "nobody yet"}. {t.dilemmas} dilemma{t.dilemmas === 1 ? "" : "s"}, {t.releaseCandidates} release option{t.releaseCandidates === 1 ? "" : "s"}, {t.ballots} fan ballot{t.ballots === 1 ? "" : "s"}. A recommendation, not a franchise decision.</p>
+        <header><h3>Retention Room · {t.season}</h3><Link href={`/retention-room/${team}`}>View decisions and sources</Link></header>
+        <p className="rr-note">{t.summary.retained} players in the pre-auction squad · {t.summary.released} released · {t.summary.slots} slots available. Purse {formatPurse(t.purse.valueLakh)} ({t.purse.status}).</p>
+        <details className="rr-note"><summary className="cursor-pointer">Current IPL {t.season} squad</summary><p className="mt-2">{t.players.filter(p=>["retained","traded_in"].includes(p.decision)).map(p=>`${p.name}${p.verification==="reported"?" (reported)":""}`).join(" · ")}</p></details>
+        <p className="rr-foot">{t.status==="verified"?"Decisions verified with primary sources.":"Partial primary verification. Reported entries are marked."} Historical season squads remain in the season explorer.</p>
     </section>
   );
 }
 
 /** Feed and Auction Intelligence: league state with real timestamps. */
 export function RetentionFeedCard() {
-  const q = useQuery({ queryKey: ["retention-summary"], queryFn: fetchSummary, staleTime: 5 * 60_000, retry: false });
+  const q = useQuery({ queryKey: ["retention-official-league",LIVE_SEASON], queryFn: ()=>fetchOfficialLeague(LIVE_SEASON), staleTime: 5 * 60_000, retry: false });
   const d = q.data;
   if (!d) return null;
-  const deadline = d.rules.retentionDeadline;
   return (
     <section className="rr-card">
       <header><h3>Retention Room</h3><Link href="/retention-room">Who stays, who goes</Link></header>
-      <p className="rr-note">Toughest calls on CRICFIELD's index: {d.toughest.map((t) => `${t.team} (${t.dilemmas})`).join(", ")}.{deadline.date ? ` Deadline ${deadline.date} (${deadline.status}).` : ""}</p>
-      <p className="rr-foot">Model output, updated {d.generatedAt.slice(0, 10)}.{d.lastFreeze ? ` Predictions frozen ${d.lastFreeze.at.slice(0, 16).replace("T", " ")} UTC.` : ""} {d.forecastStatus.message ?? ""}</p>
+        <p className="rr-note">IPL {d.season} retentions announced {d.announcedOn}. Explore all ten squads, releases, completed trades and the roles each team needs next.</p>
+        <p className="rr-foot">{d.teams.filter(t=>t.status==="verified").length} teams have fully verified decision lists. Each record carries its source status. Reviewed {d.reviewedAt.slice(0,10)}.</p>
     </section>
   );
 }

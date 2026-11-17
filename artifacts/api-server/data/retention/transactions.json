@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04",
+  "updatedAt": "2026-11-18",
   "note": "Player movement between franchises after the IPL 2026 season. Only entries marked Completed or Officially Confirmed change a squad. Everything else is a scenario.",
   "entries": [
     {
@@ -8,12 +8,46 @@
       "status": "Completed",
       "announcedOn": "2026-06-23",
       "moves": [
-        { "player": "Rishabh Pant", "from": "LSG", "to": "DC", "feeLakh": 1500 },
-        { "player": "Kuldeep Yadav", "from": "DC", "to": "LSG", "feeLakh": 1350 }
+        {
+          "player": "Rishabh Pant",
+          "from": "LSG",
+          "to": "DC",
+          "feeLakh": 1500
+        },
+        {
+          "player": "Kuldeep Yadav",
+          "from": "DC",
+          "to": "LSG",
+          "feeLakh": 1350
+        }
       ],
-      "history": [{ "status": "Completed", "on": "2026-06-23", "sourceUrl": "https://www.iplt20.com/news/4379/rishabh-pant-and-kuldeep-yadav-complete-high-profile-trade-between-dc-and-lsg" }],
-      "sources": [{ "publisher": "IPL (iplt20.com)", "official": true, "url": "https://www.iplt20.com/news/4379/rishabh-pant-and-kuldeep-yadav-complete-high-profile-trade-between-dc-and-lsg", "publishedOn": "2026-06-23" }],
-      "lastChecked": "2026-11-04"
+      "history": [
+        {
+          "status": "Completed",
+          "on": "2026-06-23",
+          "sourceUrl": "https://www.iplt20.com/news/4379/rishabh-pant-and-kuldeep-yadav-complete-high-profile-trade-between-dc-and-lsg"
+        },
+        {
+          "status": "Completed",
+          "on": "2026-06-23",
+          "sourceUrl": "https://www.iplt20.com/news/article/rishabh-pant-and-kuldeep-yadav-complete-high-profile-trade-between-dc-and-lsg"
+        }
+      ],
+      "sources": [
+        {
+          "publisher": "IPL",
+          "official": true,
+          "url": "https://www.iplt20.com/news/article/rishabh-pant-and-kuldeep-yadav-complete-high-profile-trade-between-dc-and-lsg",
+          "publishedOn": "2026-06-23"
+        },
+        {
+          "publisher": "IPL (iplt20.com)",
+          "official": true,
+          "url": "https://www.iplt20.com/news/4379/rishabh-pant-and-kuldeep-yadav-complete-high-profile-trade-between-dc-and-lsg",
+          "publishedOn": "2026-06-23"
+        }
+      ],
+      "lastChecked": "2026-11-18"
     },
     {
       "id": "2027-natarajan-zeeshan",
@@ -21,47 +55,266 @@
       "status": "Completed",
       "announcedOn": "2026-10-14",
       "moves": [
-        { "player": "T Natarajan", "from": "DC", "to": "SRH", "feeLakh": 500 },
-        { "player": "Zeeshan Ansari", "from": "SRH", "to": "DC", "feeLakh": 40 }
+        {
+          "player": "T Natarajan",
+          "from": "DC",
+          "to": "SRH",
+          "feeLakh": 500
+        },
+        {
+          "player": "Zeeshan Ansari",
+          "from": "SRH",
+          "to": "DC",
+          "feeLakh": 40
+        }
       ],
-      "history": [{ "status": "Completed", "on": "2026-10-14", "sourceUrl": "https://www.crictracker.com/cricket-news/t-natarajan-reunites-with-srh-as-zeeshan-ansari-moves-to-dc-in-player-trade/" }],
+      "history": [
+        {
+          "status": "Completed",
+          "on": "2026-10-14",
+          "sourceUrl": "https://www.crictracker.com/cricket-news/t-natarajan-reunites-with-srh-as-zeeshan-ansari-moves-to-dc-in-player-trade/"
+        },
+        {
+          "status": "Completed",
+          "on": "2026-10-14",
+          "sourceUrl": "https://www.iplt20.com/news/article/t-natarajan-returns-to-sunrisers-hyderabad-zeeshan-ansari-moves-to-delhi-capitals"
+        }
+      ],
       "sources": [
-        { "publisher": "CricTracker", "official": false, "url": "https://www.crictracker.com/cricket-news/t-natarajan-reunites-with-srh-as-zeeshan-ansari-moves-to-dc-in-player-trade/", "publishedOn": "2026-10-14" }
+        {
+          "publisher": "IPL",
+          "official": true,
+          "url": "https://www.iplt20.com/news/article/t-natarajan-returns-to-sunrisers-hyderabad-zeeshan-ansari-moves-to-delhi-capitals",
+          "publishedOn": "2026-10-14"
+        },
+        {
+          "publisher": "CricTracker",
+          "official": false,
+          "url": "https://www.crictracker.com/cricket-news/t-natarajan-reunites-with-srh-as-zeeshan-ansari-moves-to-dc-in-player-trade/",
+          "publishedOn": "2026-10-14"
+        }
       ],
-      "lastChecked": "2026-11-04"
+      "lastChecked": "2026-11-18"
     },
     {
       "id": "2027-hardik-arshdeep",
       "kind": "trade",
-      "status": "Negotiations Reported",
-      "announcedOn": null,
+      "status": "Completed",
+      "announcedOn": "2026-11-11",
       "moves": [
-        { "player": "Hardik Pandya", "from": "MI", "to": "PBKS", "feeLakh": null },
-        { "player": "Arshdeep Singh", "from": "PBKS", "to": "MI", "feeLakh": null },
-        { "player": "Vishnu Vinod", "from": "PBKS", "to": "MI", "feeLakh": null }
+        {
+          "player": "Hardik Pandya",
+          "from": "MI",
+          "to": "PBKS",
+          "feeLakh": 1800
+        },
+        {
+          "player": "Arshdeep Singh",
+          "from": "PBKS",
+          "to": "MI",
+          "feeLakh": 1800
+        }
       ],
       "history": [
-        { "status": "Denied", "on": "2026-08-01", "sourceUrl": "https://www.crictracker.com/cricket-news/mumbai-indians-official-provides-huge-update-on-hardik-pandya-player-trade-ahead-of-ipl-2027/" },
-        { "status": "Negotiations Reported", "on": "2026-11-03", "sourceUrl": "https://thefederal.com/sports/cricket/ipl-2027-trade-hardik-set-to-join-pbks-report-261701" }
+        {
+          "status": "Denied",
+          "on": "2026-08-01",
+          "sourceUrl": "https://www.crictracker.com/cricket-news/mumbai-indians-official-provides-huge-update-on-hardik-pandya-player-trade-ahead-of-ipl-2027/"
+        },
+        {
+          "status": "Negotiations Reported",
+          "on": "2026-11-03",
+          "sourceUrl": "https://thefederal.com/sports/cricket/ipl-2027-trade-hardik-set-to-join-pbks-report-261701"
+        },
+        {
+          "status": "Completed",
+          "on": "2026-11-11",
+          "sourceUrl": "https://www.iplt20.com/news/article/hardik-pandya-and-arshdeep-singh-complete-major-trade-between-pbks-and-mi"
+        }
       ],
       "sources": [
-        { "publisher": "The Federal, citing Sportstar", "official": false, "url": "https://thefederal.com/sports/cricket/ipl-2027-trade-hardik-set-to-join-pbks-report-261701", "publishedOn": "2026-11-03" },
-        { "publisher": "CricTracker, quoting an MI official", "official": false, "url": "https://www.crictracker.com/cricket-news/mumbai-indians-official-provides-huge-update-on-hardik-pandya-player-trade-ahead-of-ipl-2027/", "publishedOn": "2026-08-01" }
+        {
+          "publisher": "IPL",
+          "official": true,
+          "url": "https://www.iplt20.com/news/article/hardik-pandya-and-arshdeep-singh-complete-major-trade-between-pbks-and-mi",
+          "publishedOn": "2026-11-11"
+        },
+        {
+          "publisher": "The Federal, citing Sportstar",
+          "official": false,
+          "url": "https://thefederal.com/sports/cricket/ipl-2027-trade-hardik-set-to-join-pbks-report-261701",
+          "publishedOn": "2026-11-03"
+        },
+        {
+          "publisher": "CricTracker, quoting an MI official",
+          "official": false,
+          "url": "https://www.crictracker.com/cricket-news/mumbai-indians-official-provides-huge-update-on-hardik-pandya-player-trade-ahead-of-ipl-2027/",
+          "publishedOn": "2026-08-01"
+        }
       ],
-      "lastChecked": "2026-11-04"
+      "lastChecked": "2026-11-18"
     },
     {
       "id": "2027-stoinis-mohsin",
       "kind": "trade",
-      "status": "Rumour",
+      "status": "Superseded",
       "announcedOn": null,
       "moves": [
-        { "player": "Marcus Stoinis", "from": "PBKS", "to": "LSG", "feeLakh": null },
-        { "player": "Mohsin Khan", "from": "LSG", "to": "PBKS", "feeLakh": null }
+        {
+          "player": "Marcus Stoinis",
+          "from": "PBKS",
+          "to": "LSG",
+          "feeLakh": null
+        },
+        {
+          "player": "Mohsin Khan",
+          "from": "LSG",
+          "to": "PBKS",
+          "feeLakh": null
+        }
       ],
-      "history": [{ "status": "Rumour", "on": "2026-11-01", "sourceUrl": "https://khelnow.com/cricket/marcus-stoinis-mohsin-khan-likely-swapped-ipl-2027-202611" }],
-      "sources": [{ "publisher": "Khel Now", "official": false, "url": "https://khelnow.com/cricket/marcus-stoinis-mohsin-khan-likely-swapped-ipl-2027-202611", "publishedOn": "2026-11", "note": "Headline only. CricField has not read the article, and the publication date is the month in its URL." }],
+      "history": [
+        {
+          "status": "Rumour",
+          "on": "2026-11-01",
+          "sourceUrl": "https://khelnow.com/cricket/marcus-stoinis-mohsin-khan-likely-swapped-ipl-2027-202611"
+        },
+        {
+          "status": "Superseded",
+          "on": "2026-11-17",
+          "sourceUrl": "https://www.punjabkingsipl.in/news/ipl-2027-meet-our-retained-shers"
+        }
+      ],
+      "sources": [
+        {
+          "publisher": "Khel Now",
+          "official": false,
+          "url": "https://khelnow.com/cricket/marcus-stoinis-mohsin-khan-likely-swapped-ipl-2027-202611",
+          "publishedOn": "2026-11",
+          "note": "Headline only. CricField has not read the article, and the publication date is the month in its URL."
+        }
+      ],
       "lastChecked": "2026-11-04"
+    },
+    {
+      "id": "2027-csk-srh",
+      "kind": "trade",
+      "status": "Completed",
+      "announcedOn": "2026-11-05",
+      "moves": [
+        {
+          "player": "Liam Livingstone",
+          "from": "SRH",
+          "to": "CSK",
+          "feeLakh": 600
+        },
+        {
+          "player": "Jack Edwards",
+          "from": "SRH",
+          "to": "CSK",
+          "feeLakh": 300
+        },
+        {
+          "player": "Khaleel Ahmed",
+          "from": "CSK",
+          "to": "SRH",
+          "feeLakh": 480
+        },
+        {
+          "player": "Nathan Ellis",
+          "from": "CSK",
+          "to": "SRH",
+          "feeLakh": 200
+        }
+      ],
+      "history": [
+        {
+          "status": "Completed",
+          "on": "2026-11-05",
+          "sourceUrl": "https://www.iplt20.com/news/article/csk-and-srh-agree-to-four-player-trade"
+        }
+      ],
+      "sources": [
+        {
+          "publisher": "IPL",
+          "official": true,
+          "url": "https://www.iplt20.com/news/article/csk-and-srh-agree-to-four-player-trade",
+          "publishedOn": "2026-11-05"
+        }
+      ],
+      "lastChecked": "2026-11-18"
+    },
+    {
+      "id": "2027-harshal",
+      "kind": "trade",
+      "status": "Completed",
+      "announcedOn": "2026-11-17",
+      "moves": [
+        {
+          "player": "Harshal Patel",
+          "from": "SRH",
+          "to": "GT",
+          "feeLakh": 400
+        }
+      ],
+      "history": [
+        {
+          "status": "Completed",
+          "on": "2026-11-17",
+          "sourceUrl": "https://www.iplt20.com/news/article/harshal-patel-traded-to-gujarat-titans-from-sunrisers-hyderabad"
+        }
+      ],
+      "sources": [
+        {
+          "publisher": "IPL",
+          "official": true,
+          "url": "https://www.iplt20.com/news/article/harshal-patel-traded-to-gujarat-titans-from-sunrisers-hyderabad",
+          "publishedOn": "2026-11-17"
+        }
+      ],
+      "lastChecked": "2026-11-18"
+    },
+    {
+      "id": "2027-shami-curran",
+      "kind": "trade",
+      "status": "Completed",
+      "announcedOn": "2026-11-17",
+      "moves": [
+        {
+          "player": "Mohammed Shami",
+          "from": "LSG",
+          "to": "RR",
+          "feeLakh": 800
+        },
+        {
+          "player": "Manimaran Siddharth",
+          "from": "LSG",
+          "to": "RR",
+          "feeLakh": 75
+        },
+        {
+          "player": "Sam Curran",
+          "from": "RR",
+          "to": "LSG",
+          "feeLakh": 240
+        }
+      ],
+      "history": [
+        {
+          "status": "Completed",
+          "on": "2026-11-17",
+          "sourceUrl": "https://www.iplt20.com/news/article/mohd-shami-and-m-siddharth-traded-to-rajasthan-royals-sam-curran-traded-to-lucknow-super-giants"
+        }
+      ],
+      "sources": [
+        {
+          "publisher": "IPL",
+          "official": true,
+          "url": "https://www.iplt20.com/news/article/mohd-shami-and-m-siddharth-traded-to-rajasthan-royals-sam-curran-traded-to-lucknow-super-giants",
+          "publishedOn": "2026-11-17"
+        }
+      ],
+      "lastChecked": "2026-11-18"
     }
   ]
 }

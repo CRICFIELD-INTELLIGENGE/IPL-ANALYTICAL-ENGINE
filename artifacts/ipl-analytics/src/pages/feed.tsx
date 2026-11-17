@@ -42,7 +42,6 @@ export const CARDS: CardDef[] = [
 const TOOLS = [
   { label: "Retention Lab", desc: "Model retain/release calls against each squad", href: "/feed/ipl-2027?module=retention", icon: ShieldCheck, tint: "bg-violet-600" },
   { label: "Auction War Room", desc: "Purse, needs and targets by franchise", href: "/ai-analyst/auction-war-room", icon: Wallet, tint: "bg-lime-500" },
-  { label: "Playing XI Builder", desc: "Create balanced combinations", href: "/arcade/build-your-xi", icon: Shirt, tint: "bg-sky-500" },
   { label: "Scout Engine", desc: "Find players by role, league and metrics", href: "/scout", icon: Search, tint: "bg-fuchsia-600" },
 ];
 
@@ -458,19 +457,6 @@ export default function FeedPage() {
                   </li>
                 ))}
               </ul>
-            </RailCard>
-
-            <RailCard title="Ask the AI Analyst">
-              <div className="rounded-xl border border-violet-400/30 bg-violet-600/10 p-3">
-                <Sparkles className="w-4 h-4 text-[var(--team-accent)]" />
-                <p className="mt-1.5 text-xs text-white/85">Which teams most need an Indian death bowler going into the auction?</p>
-                <Link
-                  href={`/ai-analyst/ask?q=${encodeURIComponent("Which teams most need an Indian death bowler going into the auction?")}`}
-                  className="mt-2.5 inline-flex items-center gap-1.5 rounded-lg border border-violet-400/40 px-3 py-1.5 text-xs font-bold text-white hover:bg-violet-600/30"
-                >
-                  Ask AI Analyst <ArrowRight className="w-3 h-3" />
-                </Link>
-              </div>
             </RailCard>
 
             {/* MEGA AUCTION BRIEFING */}

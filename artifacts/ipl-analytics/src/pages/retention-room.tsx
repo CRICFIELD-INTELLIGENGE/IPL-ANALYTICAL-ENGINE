@@ -28,9 +28,12 @@ import { signed } from "@/components/decision/module-shell";
 import { isTeamCode, TEAM_REGISTRY, useTeamTheme, type TeamCode } from "@/lib/team-context";
 import { CALL, PLAIN, PLAN, RELEASE_TIERS, TIER_RANK, TOP_TIERS, callOf, coreFive, firstSentence, genuineDoubt, isCore, likelyReleases, meter, plainAgainst, strongOn } from "@/lib/retention-summary";
 import { readSaved, retentionKey, type RetentionSnapshot } from "@/lib/auction-plan";
+import { fetchOfficialRoom, type OfficialRoom } from "@/lib/retention-official-api";
+import { OfficialStage, OfficialSquad, OfficialNeeds, OfficialProvenance, OfficialDecisionReview } from "@/components/retention/official-overview";
+import { OfficialBoard, PredictionReality, type BoardFilters } from "@/components/retention/official-board";
 
-type Tab = "picks" | "forecast" | "fans" | "impact" | "trades";
-const TABS: [Tab, string][] = [["picks", "CRICFIELD Picks"], ["forecast", "Retention Forecast"], ["fans", "Fan Picks"], ["impact", "Squad Impact"], ["trades", "Trade Intelligence"]];
+type Tab = "official" | "comparison" | "picks" | "forecast" | "fans" | "impact" | "trades";
+const TABS: [Tab, string][] = [["official", "Official Decisions"], ["comparison", "Prediction vs Reality"], ["picks", "CRICFIELD Assessments"], ["forecast", "Forecast Archive"], ["fans", "Fan Picks"], ["impact", "Squad Simulator"], ["trades", "Trade Intelligence"]];
 const EDITOR = import.meta.env.DEV || import.meta.env.VITE_ENABLE_ADMIN_PAGES === "true";
 // min-w-0 lets a grid cell shrink, so wide tables scroll inside it instead of widening the page.
 const card = "rounded-2xl border border-white/10 bg-[#0B1226]/80 p-5 backdrop-blur-xl min-w-0";
@@ -42,24 +45,29 @@ export default function RetentionRoomPage() {
   const [, params] = useRoute("/retention-room/:team");
   const [, go] = useLocation();
   const requested = params?.team?.toUpperCase() ?? "";
-  const { selectedTeam } = useTeamTheme();
+  const { selectedTeam, setSelectedTeam } = useTeamTheme();
   const team = isTeamCode(requested) ? requested : selectedTeam ?? "RCB";
   const [season, setSeason] = useState(LIVE_SEASON);
-  const [tab, setTab] = useState<Tab>(new URLSearchParams(window.location.search).get("tab") === "fans" ? "fans" : "picks");
+  const [tab, setTab] = useState<Tab>(new URLSearchParams(window.location.search).get("tab") === "fans" ? "fans" : "official");
+  const [boardFilters,setBoardFilters] = useState<BoardFilters>({decision:"all",group:"all"});
   const [choices, setChoices] = useState<Choices>({});
   useEffect(() => setChoices({}), [team]);
+  useEffect(() => { setBoardFilters({decision:"all",group:"all"}); if (selectedTeam !== team) setSelectedTeam(team); }, [team,selectedTeam,setSelectedTeam]);
   const seasons = useQuery({ queryKey: ["retention-seasons"], queryFn: fetchSeasons, staleTime: 3_600_000 });
   const live = season === LIVE_SEASON;
+  const official = useQuery({queryKey:["retention-official",season,team],queryFn:()=>fetchOfficialRoom(season,team),enabled:live,staleTime:300_000,retry:false});
   const room = useQuery({ queryKey: ["retention-room", season, team, RETENTION_INDEX_VERSION], queryFn: () => fetchRoom(season, team), enabled: live, retry: false });
   const picks = useQuery({ queryKey: ["retention-picks", team, RETENTION_INDEX_VERSION], queryFn: () => fetchPicks(LIVE_SEASON, team), enabled: live, retry: false });
   const theme = TEAM_REGISTRY[team];
   const d = room.data;
   const active = tab;
   const openTab = (t: Tab) => { setTab(t); document.getElementById("room-tabs")?.scrollIntoView({ behavior: "smooth", block: "start" }); };
+  const openBoard = (decision="all",group="all") => {setBoardFilters({decision,group});openTab("official");};
+  const openNeeds = () => {document.getElementById("retention-needs")?.scrollIntoView({behavior:"smooth",block:"center"});document.getElementById("retention-needs")?.focus({preventScroll:true});};
   return (
     <Layout hideRightPanel>
       <div className="space-y-6 p-4 sm:p-6 bg-[#040814] min-h-screen text-white font-sans" style={{ "--team-accent": theme.accent } as React.CSSProperties}>
-        <Header d={d} season={season} setSeason={setSeason} seasons={seasons.data?.seasons.filter(s => s.live)} />
+        <Header d={d} official={official.data} season={season} setSeason={setSeason} seasons={seasons.data?.seasons.filter(s => s.live)} />
 
         <nav aria-label="Franchise selector" className="-mx-4 overflow-x-auto px-4 py-1 no-scrollbar">
           <div className="flex items-center gap-2 w-max">
@@ -72,23 +80,27 @@ export default function RetentionRoomPage() {
           </div>
         </nav>
 
-        {room.isError && <p className="text-xs text-rose-300">{errorText(room.error)}</p>}
-        {live && <Stage team={team} d={d} picks={picks.data} openTab={openTab} />}
-        {live && picks.data && <SquadDna team={team} picks={picks.data} />}
+        {official.isPending && <div className="ret-panel ret-skeleton" role="status" aria-busy="true">Loading sourced retention decisions…</div>}
+        {official.isError && <div className="ret-panel" role="alert"><h2>Retention data could not be loaded</h2><p>{errorText(official.error)}</p><button className="ret-action" onClick={()=>void official.refetch()}>Retry official data</button></div>}
+        {official.data && <><OfficialStage team={team} data={official.data} onBoard={openBoard} onNeeds={openNeeds}/><OfficialSquad data={official.data} onGroup={group=>openBoard("squad",group)}/></>}
 
-        <div id="room-tabs" className="scroll-mt-20 flex flex-wrap gap-1.5" role="tablist">
+        <div id="room-tabs" className="scroll-mt-20 flex flex-wrap gap-1.5" aria-label="Retention views">
           {TABS.map(([id, text]) => (
-            <button key={id} role="tab" type="button" aria-selected={active === id} disabled={!live} onClick={() => setTab(id)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all disabled:opacity-40 ${active === id ? "bg-violet-600 text-white shadow" : "bg-white/[0.04] text-white/60 hover:text-white border border-white/5"}`}>{text}</button>
+            <button key={id} type="button" aria-pressed={active === id} disabled={!live} onClick={() => setTab(id)}
+              className={`px-3.5 py-2 rounded-lg text-xs font-black transition-all disabled:opacity-40 border ${active === id ? "border-[var(--team-accent)] bg-white/10 text-white" : "bg-white/[0.04] text-white/60 hover:text-white border-white/10"}`}>{text}</button>
           ))}
         </div>
+        {active === "official" && official.data && <OfficialBoard key={team} data={official.data} picks={picks.data} filters={boardFilters} setFilters={setBoardFilters}/>}
+        {active === "comparison" && <PredictionReality key={team} team={team}/>}
+        {["picks","forecast","fans","impact"].includes(active) && <p className="text-xs text-amber-200/90 border border-amber-300/20 rounded-lg p-3">Historical model and fan workspace. These assessments use the published pre-retention snapshot. Official decisions and the current squad are in the Official Decisions view.</p>}
         {active === "picks" && <PicksTab team={team} q={picks} />}
         {active === "forecast" && <ForecastTab team={team} />}
         {active === "fans" && <FansTab team={team} choices={choices} setChoices={setChoices} />}
         {active === "impact" && <ImpactTab team={team} choices={choices} />}
         {active === "trades" && <TradesTab team={team} />}
 
-        {live && (
+        {live && official.data && <><OfficialNeeds data={official.data}/><OfficialDecisionReview data={official.data} picks={picks.data}/><OfficialProvenance data={official.data}/></>}
+        {live && active !== "official" && active !== "comparison" && (
           <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr] items-start">
             <Dilemmas team={team} picks={picks.data} />
             <div className="space-y-6">
@@ -98,7 +110,7 @@ export default function RetentionRoomPage() {
           </div>
         )}
 
-        {d && (
+        {d && active !== "official" && active !== "comparison" && (
           <footer className="text-[11px] text-white/45 space-y-1">
             <p>Model {d.modelVersion}, index {d.indexVersion}, data to {d.dataCutoff}. {d.provenance}</p>
             <details><summary className="cursor-pointer text-white/60">Rules assumptions and sources</summary><ul className="list-disc pl-5 mt-1">{d.rules.assumptions.map((a) => <li key={a}>{a}</li>)}</ul><ul className="list-disc pl-5 mt-1">{d.rules.sources.map((s) => <li key={s.url}><a href={s.url} target="_blank" rel="noreferrer" className="text-violet-300 hover:underline">{s.label}</a></li>)}</ul></details>
@@ -109,15 +121,15 @@ export default function RetentionRoomPage() {
   );
 }
 
-function Header({ d, season, setSeason, seasons }: { d?: FranchiseRoom; season: number; setSeason: (s: number) => void; seasons?: { season: number; cycle: string }[] }) {
+function Header({ d, official, season, setSeason, seasons }: { d?: FranchiseRoom; official?: OfficialRoom; season: number; setSeason: (s: number) => void; seasons?: { season: number; cycle: string }[] }) {
   const rules = d?.rules;
   const deadline = rules?.retentionDeadline.date ?? null;
   const past = (iso: string | null) => Boolean(iso) && Date.now() >= Date.parse(`${iso}T23:59:59+05:30`);
   const steps = [
     { title: "Pre-Retention", sub: "Picks, forecast and votes", when: d ? `Data to ${day(d.dataCutoff)}` : "", done: true },
     { title: "Retention Deadline", sub: rules?.retentionDeadline.status === "reported" ? "Reported date" : "Deadline", when: day(deadline), done: past(deadline) },
-    { title: "Official Lists", sub: "Announcement", when: "After the deadline", done: false },
-    { title: "Auction", sub: rules?.cycle === "mega" ? "Mega auction" : "Mini-auction", when: day(rules?.auction.date ?? null), done: past(rules?.auction.date ?? null) },
+    { title: "Official Lists", sub: official?.status === "verified" ? "Primary verified" : official ? "Source review" : "Awaiting data", when: official ? day(official.announcedOn) : "Loading", done: Boolean(official) },
+    { title: "Auction", sub: "Mini-auction · pending", when: day(rules?.auction.date ?? null), done: false },
   ];
   return (
     <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr] items-start">
@@ -126,12 +138,12 @@ function Header({ d, season, setSeason, seasons }: { d?: FranchiseRoom; season: 
           <Link href="/feed" className="hover:text-white transition-colors">Feed</Link><span>›</span><span className="franchise-eyebrow font-medium">Squad Building</span>
         </div>
         <div className="inline-block px-2.5 py-0.5 rounded-md bg-[var(--team-accent)]/15 border border-[var(--team-accent)]/30 text-[10px] font-mono uppercase tracking-widest text-[var(--team-accent)] font-bold">
-          IPL {season} · {rules?.cycle === "mega" ? "Mega auction" : "Mini-auction"}
+          IPL {season} · {official ? "Retentions announced · 17 Nov 2026" : "Retention review"}
         </div>
         <h1 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-none">The Retention <span className="text-[var(--team-accent)]">Room</span></h1>
         <p className="text-sm sm:text-base font-bold text-white/90">Who Stays. Who Goes. Who Should Stay.</p>
         <p className="text-xs sm:text-sm text-white/60 max-w-xl leading-relaxed">
-          CRICFIELD's recommendation, the franchise forecast and the fans' vote, side by side and never mixed, with what each decision does to the squad.
+          Official decisions. The squad that remains. Your next auction move — backed by sources and CricField's existing IPL intelligence.
         </p>
       </div>
       <div className="rounded-2xl border border-white/10 bg-[#0B1226]/80 p-5 backdrop-blur-xl space-y-4">

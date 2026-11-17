@@ -26,8 +26,11 @@ import {
   Activity, Zap, Shield, Sparkles, TrendingUp, Cpu, Heart, CheckCircle2,
   CalendarDays, Share2, AwardIcon, Crosshair, Search, SlidersHorizontal,
   Filter, Layers, Compass, HelpCircle, UserCheck, Crown, RotateCw, ShoppingBag, ArrowUpRight,
-  ChevronUp, ChevronDown, X
+  ChevronUp, ChevronDown, X, Newspaper, BookOpen, Clock, FileText
 } from "lucide-react";
+import { getV2Index, STORY_TYPE_LABEL } from "@/lib/editorial-v2";
+import { EDITORIAL_ASPECTS, type IndexEntry } from "@/data/editorial/schema";
+import { LibraryMedia } from "@/components/dugout/franchise-library";
 import { CricketStadium3D } from "@/components/cricket3d/CricketStadium3D";
 import { GroundScoringWagonWheel, BowlingHeatmap, DeliveryTypeBreakdown, ShotZoneMap, DismissalZonesMap } from "@/components/visualizations/spatial-analytics";
 import { PlayerIntelPanel } from "@/components/decision/intel-panels";
@@ -440,6 +443,55 @@ export default function PlayerProfilePage() {
   const pColor = useMemo(() => teamColor(primaryTeam), [primaryTeam]);
   const pShort = useMemo(() => teamShort(primaryTeam), [primaryTeam]);
 
+  // Query Intelligence Hub Articles related to this player
+  const playerArticles = useMemo(() => {
+    const allArticles = getV2Index();
+    const pName = (bio?.playerName || profileName || "").toLowerCase().trim();
+    const fName = (bio?.fullName || "").toLowerCase().trim();
+    const parts = (bio?.fullName || bio?.playerName || profileName || "").trim().split(/\s+/);
+    const first = parts[0] ? parts[0].toLowerCase() : "";
+    const last = parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
+    const initialPlusLast = first && last ? `${first[0]} ${last}` : "";
+
+    const matched = allArticles.filter(art => {
+      if (art.players && art.players.length > 0) {
+        for (const rawP of art.players) {
+          const p = rawP.toLowerCase().trim();
+          if (p === pName || p === fName) return true;
+          if (initialPlusLast && p === initialPlusLast) return true;
+          if (p.includes(pName) || pName.includes(p)) return true;
+          if (fName && (p.includes(fName) || fName.includes(p))) return true;
+          if (last.length > 3 && p.endsWith(last)) return true;
+        }
+      }
+      const title = (art.title || "").toLowerCase();
+      const dek = (art.dek || "").toLowerCase();
+      if (title.includes(pName) || (fName && title.includes(fName))) return true;
+      if (initialPlusLast && (title.includes(initialPlusLast) || dek.includes(initialPlusLast))) return true;
+      if (last.length > 3 && (title.includes(last) || dek.includes(last))) return true;
+      return false;
+    });
+
+    if (matched.length >= 3) return matched;
+
+    // Supplement with franchise intelligence articles if under 3
+    const fCode = primaryTeam ? teamShort(primaryTeam) : "";
+    if (fCode) {
+      const franchiseMatches = allArticles.filter(a => a.franchise.toUpperCase() === fCode.toUpperCase());
+      const set = new Set(matched.map(m => m.id));
+      const res = [...matched];
+      for (const a of franchiseMatches) {
+        if (!set.has(a.id)) {
+          res.push(a);
+          set.add(a.id);
+        }
+        if (res.length >= 6) break;
+      }
+      return res;
+    }
+    return matched;
+  }, [bio?.playerName, bio?.fullName, profileName, primaryTeam]);
+
   const recentScores = useMemo(() => {
     if (!playerRecentMatches || !playerRecentMatches.length) return [];
     return playerRecentMatches.slice(0, 5).map(m => ({
@@ -823,13 +875,6 @@ export default function PlayerProfilePage() {
                     >
                       <Layers className="w-3.5 h-3.5" />
                       <span>Compare</span>
-                    </button>
-                    <button
-                      onClick={() => setShowAskAIModal(true)}
-                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
-                    >
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Ask AI</span>
                     </button>
                   </div>
                 </div>
@@ -1612,44 +1657,14 @@ export default function PlayerProfilePage() {
                   )}
                 </GlassCard>
 
-                {/* ── 10. SCOUT REPORT & AI ANALYST CONTEXTUAL Q&A ── */}
-                <GlassCard className="lg:col-span-3 p-5 border border-purple-500/20 bg-gradient-to-r from-purple-950/20 via-[#0B1428] to-[#070D1A]">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-purple-400" />
-                      <div>
-                        <span className="text-[10px] font-mono font-black uppercase tracking-widest text-purple-400 block">AI Neural Scout &amp; Telemetry</span>
-                        <h3 className="text-base font-black uppercase text-white">Ask AI About {bio?.playerName || profileName || "Player"}</h3>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setShowAskAIModal(true)}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-300 hover:text-white text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
-                    >
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Open AI Analyst Q&amp;A</span>
-                    </button>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-3">
-                    {[
-                      `Explain ${bio?.playerName || profileName || "this player"}'s legendary 2016 season (973 runs)`,
-                      `Which bowling styles restrict his scoring recently?`,
-                      `How does he perform when required rate exceeds 10 RPO?`,
-                    ].map((promptText, pIdx) => (
-                      <button
-                        key={pIdx}
-                        onClick={() => setShowAskAIModal(true)}
-                        className="p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-purple-500/30 hover:bg-white/[0.05] text-left transition-all cursor-pointer flex flex-col justify-between"
-                      >
-                        <span className="text-xs font-bold text-white/90">"{promptText}"</span>
-                        <span className="text-[9px] font-mono text-purple-400 mt-2 flex items-center gap-1">
-                          Synthesize Answer →
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </GlassCard>
+                {/* ── INTELLIGENCE HUB: EDITORIAL & MATCH ANALYSIS ARTICLES ── */}
+                {playerArticles.length > 0 && (
+                  <PlayerIntelligenceArticlesCard
+                    playerName={bio?.playerName || profileName}
+                    articles={playerArticles}
+                    pColor={pColor}
+                  />
+                )}
               </>
             )}
 
@@ -1765,6 +1780,14 @@ export default function PlayerProfilePage() {
                     />
                   </div>
                 )}
+                {/* ── INTELLIGENCE HUB: EDITORIAL & MATCH ANALYSIS ARTICLES ── */}
+                {playerArticles.length > 0 && (
+                  <PlayerIntelligenceArticlesCard
+                    playerName={bio?.playerName || profileName}
+                    articles={playerArticles}
+                    pColor={pColor}
+                  />
+                )}
               </>
             )}
 
@@ -1782,6 +1805,7 @@ export default function PlayerProfilePage() {
                   matches={playerRecentMatches}
                   playerName={profileName}
                   pColor={pColor}
+                  articles={playerArticles}
                 />
               </div>
             )}
@@ -2196,16 +2220,111 @@ export default function PlayerProfilePage() {
             pColor={pColor}
             isBatter={showAsBatter}
           />
-
-          <PlayerAskAIModal
-            isOpen={showAskAIModal}
-            onClose={() => setShowAskAIModal(false)}
-            playerName={bio.playerName || profileName}
-            bio={bio}
-          />
         </>
       )}
     </Layout>
+  );
+}
+
+function PlayerIntelligenceArticlesCard({
+  playerName,
+  articles,
+  pColor,
+}: {
+  playerName: string;
+  articles: IndexEntry[];
+  pColor: string;
+}) {
+  return (
+    <GlassCard className="lg:col-span-3 p-5 flex flex-col gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-3">
+        <div className="flex items-center gap-2.5">
+          <div className="p-2 rounded-xl bg-amber-400/10 border border-amber-400/30 text-amber-400">
+            <Newspaper className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-sm md:text-base font-black uppercase tracking-wider text-white flex items-center gap-2">
+              Intelligence Hub · Match Analysis &amp; Feature Dossiers
+            </h3>
+            <p className="text-[10px] text-white/40 font-bold mt-0.5">
+              Verified investigative reporting, tactical telemetry &amp; predictive coverage featuring {playerName}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[10px] font-mono font-bold">
+            {articles.length} Available Reports
+          </span>
+          <Link
+            href={`/intelligence?search=${encodeURIComponent(playerName)}`}
+            className="text-xs font-mono text-amber-400 hover:underline flex items-center gap-1 cursor-pointer"
+          >
+            <span>Intelligence Hub</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {articles.slice(0, 6).map(art => {
+          const aspect = EDITORIAL_ASPECTS.find(a => a.id === art.aspect);
+          const fAccent = teamColor(art.franchise);
+          return (
+            <Link
+              key={art.id}
+              href={`/dugout/articles/${art.slug}`}
+              className="group rounded-2xl bg-[#090d16]/95 border border-white/10 hover:border-amber-400/50 hover:bg-white/[0.03] overflow-hidden flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-2xl cursor-pointer"
+            >
+              {/* Picture just like in Dugouts */}
+              <div className="relative aspect-video w-full overflow-hidden bg-slate-950">
+                <LibraryMedia
+                  imageId={art.id}
+                  title={art.title}
+                  accent={fAccent}
+                  code={art.franchise}
+                  teamName={art.franchise}
+                  aspect={art.aspect}
+                />
+              </div>
+
+              <div className="p-4 flex flex-col gap-2 flex-1">
+                <div className="flex items-center justify-between text-[9px] font-mono mb-1">
+                  <span className="px-2 py-0.5 rounded-full bg-white/5 text-amber-300 border border-white/10 uppercase font-black">
+                    {aspect?.name || "Intelligence"}
+                  </span>
+                  <span className="text-white/40 flex items-center gap-1 font-mono">
+                    <Clock className="w-3 h-3 text-cyan-400" />
+                    {art.readMinutes} min read
+                  </span>
+                </div>
+
+                <h4 className="text-xs font-black text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-snug">
+                  {art.title}
+                </h4>
+
+                <p className="text-[11px] text-white/50 line-clamp-2 leading-relaxed">
+                  {art.dek}
+                </p>
+
+                {art.headlineStat && (
+                  <div className="mt-1 p-2 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-between">
+                    <span className="text-[8.5px] font-mono uppercase text-white/40 truncate max-w-[140px]">{art.headlineStat.label}</span>
+                    <span className="text-xs font-black font-mono text-cyan-300">{art.headlineStat.display}</span>
+                  </div>
+                )}
+
+                <div className="mt-auto pt-2.5 border-t border-white/5 flex items-center justify-between text-[10px] font-mono">
+                  <span className="text-white/40">{art.franchise} Archive · {art.publishedDate}</span>
+                  <span className="text-amber-400 group-hover:translate-x-1 transition-transform font-bold flex items-center gap-0.5">
+                    Read Article ➔
+                  </span>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </GlassCard>
   );
 }
 
@@ -2213,17 +2332,36 @@ function PlayerRecentMatchesCard({
   matches,
   playerName,
   pColor,
+  articles = [],
 }: {
   matches: any[];
   playerName: string;
   pColor: string;
+  articles?: IndexEntry[];
 }) {
+  const [activeSection, setActiveSection] = useState<"split" | "matches" | "articles">("split");
+  const [articleAspectFilter, setArticleAspectFilter] = useState("all");
+  const [articleSearchQuery, setArticleSearchQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFranchise, setSelectedFranchise] = useState("all");
   const [selectedSeason, setSelectedSeason] = useState("all");
   const [selectedResult, setSelectedResult] = useState<"all" | "won" | "lost">("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [visibleCount, setVisibleCount] = useState(12);
+
+  // Filtered Articles
+  const filteredArticles = useMemo(() => {
+    return articles.filter(art => {
+      if (articleAspectFilter !== "all" && art.aspect !== articleAspectFilter) return false;
+      if (articleSearchQuery.trim()) {
+        const q = articleSearchQuery.toLowerCase().trim();
+        const t = art.title.toLowerCase();
+        const d = (art.dek || "").toLowerCase();
+        if (!t.includes(q) && !d.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [articles, articleAspectFilter, articleSearchQuery]);
 
   // Distinct Opponent Franchises
   const availableFranchises = useMemo(() => {
@@ -2292,46 +2430,143 @@ function PlayerRecentMatchesCard({
 
   return (
     <GlassCard className="p-5 flex flex-col gap-5">
-      {/* Header Bar */}
+      {/* Header Bar with Matches vs Articles Switcher */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shadow-sm">
               <Award className="w-3 h-3 text-cyan-400" />
-              Official Match Performance Tickets
+              Official Match Performance &amp; News Intelligence
             </span>
-            <span className="text-[10px] font-mono text-white/40">Verified Cricsheet Telemetry</span>
+            <span className="text-[10px] font-mono text-white/40">Verified Cricsheet &amp; Dugout Media</span>
           </div>
           <h3 className="text-base md:text-lg font-black uppercase tracking-tight text-white flex items-center gap-2">
             Match Performance Dossier · {playerName}
           </h3>
         </div>
 
-        {formStreak.length > 0 && (
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-white/40">Recent Form:</span>
-            <div className="flex items-center gap-1">
-              {formStreak.map((f, i) => (
-                <span
-                  key={i}
-                  className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-black font-mono shadow-sm ${
-                    f === "W"
-                      ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                      : f === "L"
-                      ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
-                      : "bg-white/10 text-white/60 border border-white/15"
-                  }`}
-                >
-                  {f}
-                </span>
-              ))}
+        <div className="flex items-center gap-3 flex-wrap">
+          {formStreak.length > 0 && (
+            <div className="hidden lg:flex items-center gap-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-white/40">Recent Form:</span>
+              <div className="flex items-center gap-1">
+                {formStreak.map((f, i) => (
+                  <span
+                    key={i}
+                    className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-black font-mono shadow-sm ${
+                      f === "W"
+                        ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                        : f === "L"
+                        ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
+                        : "bg-white/10 text-white/60 border border-white/15"
+                    }`}
+                  >
+                    {f}
+                  </span>
+                ))}
+              </div>
             </div>
+          )}
+
+          {/* Section Mode Toggle: Split Side-by-Side vs Match Dossier vs Intelligence Articles */}
+          <div className="flex items-center bg-black/60 rounded-xl p-1 border border-white/10">
+            <button
+              onClick={() => setActiveSection("split")}
+              className={`px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
+                activeSection === "split"
+                  ? "bg-cyan-500 text-slate-950 font-black shadow-md"
+                  : "text-white/45 hover:text-white"
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span>Side-by-Side</span>
+            </button>
+            <button
+              onClick={() => setActiveSection("matches")}
+              className={`px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
+                activeSection === "matches"
+                  ? "bg-primary text-slate-950 font-black shadow-md"
+                  : "text-white/45 hover:text-white"
+              }`}
+            >
+              <Award className="w-3.5 h-3.5" />
+              <span>Match Tickets ({matches.length})</span>
+            </button>
+            <button
+              onClick={() => setActiveSection("articles")}
+              className={`px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
+                activeSection === "articles"
+                  ? "bg-amber-400 text-slate-950 font-black shadow-md"
+                  : "text-white/45 hover:text-white"
+              }`}
+            >
+              <Newspaper className="w-3.5 h-3.5" />
+              <span>News Articles ({articles.length})</span>
+            </button>
           </div>
-        )}
+        </div>
       </div>
 
-      {/* TOP DIMENSION: SEASON SELECTOR & SUMMARY HORIZONTAL STRIP */}
-      <div className="flex flex-col gap-2 bg-slate-950/60 border border-white/5 rounded-2xl p-3">
+      {/* ── SECTION MODE 1: MATCH PERFORMANCE TICKETS & SIDE-BY-SIDE ── */}
+      {(activeSection === "matches" || activeSection === "split") && (
+        <>
+          {/* Featured Intelligence Hub Stories Strip */}
+          {articles.length > 0 && activeSection === "matches" && (
+            <div className="bg-gradient-to-r from-amber-500/10 via-slate-900/60 to-cyan-500/10 border border-amber-400/20 rounded-2xl p-4 flex flex-col gap-3 shadow-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Newspaper className="w-4 h-4 text-amber-400" />
+                  <span className="text-xs font-black uppercase tracking-wider text-white">
+                    Intelligence Hub · Match Reports &amp; In-Depth Coverage
+                  </span>
+                  <span className="text-[9px] font-mono text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                    {articles.length} Stories Featuring {playerName}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setActiveSection("articles")}
+                  className="text-[10px] font-mono text-cyan-300 hover:underline flex items-center gap-1 cursor-pointer"
+                >
+                  <span>View All News Articles</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </button>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {articles.slice(0, 3).map(art => {
+                  const aspectName = EDITORIAL_ASPECTS.find(a => a.id === art.aspect)?.name || "Match Intelligence";
+                  return (
+                    <Link
+                      key={art.id}
+                      href={`/dugout/articles/${art.slug}`}
+                      className="group/art p-3 rounded-xl bg-black/50 border border-white/5 hover:border-amber-400/40 hover:bg-white/[0.04] transition-all flex flex-col justify-between gap-2 cursor-pointer"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between gap-1 text-[8.5px] font-mono mb-1">
+                          <span className="text-amber-400 font-bold uppercase truncate">{aspectName}</span>
+                          <span className="text-white/40 shrink-0">{art.readMinutes}m read</span>
+                        </div>
+                        <h4 className="text-xs font-bold text-white group-hover/art:text-amber-300 transition-colors line-clamp-2">
+                          {art.title}
+                        </h4>
+                        <p className="text-[10px] text-white/50 line-clamp-2 mt-1 leading-relaxed">
+                          {art.dek}
+                        </p>
+                      </div>
+                      <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[9px] font-mono">
+                        <span className="text-cyan-300/80">{art.franchise} Intelligence</span>
+                        <span className="text-amber-400 group-hover/art:translate-x-0.5 transition-transform flex items-center gap-0.5 font-bold">
+                          Read Story ➔
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* TOP DIMENSION: SEASON SELECTOR & SUMMARY HORIZONTAL STRIP */}
+          <div className="flex flex-col gap-2 bg-slate-950/60 border border-white/5 rounded-2xl p-3">
         <div className="flex items-center justify-between">
           <span className="text-[10px] font-mono font-bold text-white/50 uppercase tracking-wider flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-amber-400" />
@@ -2500,14 +2735,15 @@ function PlayerRecentMatchesCard({
             : "No match records match the selected franchise or season filters"}
         </div>
       ) : (
-        <>
-          <div
-            className={`${
-              viewMode === "grid"
-              ? "grid grid-cols-1 md:grid-cols-2 gap-4"
-              : "flex flex-col gap-3"
-          } max-h-[720px] overflow-y-auto pr-1.5 scrollbar-thin scrollbar-thumb-white/20 hover:scrollbar-thumb-white/40 scrollbar-track-transparent`}
-        >
+        <div className={activeSection === "split" ? "grid grid-cols-1 xl:grid-cols-12 gap-6 items-start" : "w-full"}>
+          <div className={activeSection === "split" ? "xl:col-span-7 flex flex-col gap-4" : "w-full flex flex-col gap-4"}>
+            <div
+              className={`${
+                viewMode === "grid" && activeSection !== "split"
+                ? "grid grid-cols-1 md:grid-cols-2 gap-4"
+                : "flex flex-col gap-3"
+              } max-h-[720px] overflow-y-auto pr-1.5 scrollbar-thin scrollbar-thumb-white/20 hover:scrollbar-thumb-white/40 scrollbar-track-transparent`}
+            >
           {displayMatches.map((m, idx) => {
             const isWon = m.result === "Won";
             const isLost = m.result === "Lost";
@@ -2515,6 +2751,10 @@ function PlayerRecentMatchesCard({
             const day = matchDate.getDate() || "—";
             const month = matchDate.toLocaleDateString("en-GB", { month: "short" }).toUpperCase();
             const year = matchDate.getFullYear() || m.season;
+            const matchArticle = articles.find(a =>
+              (m.season && a.seasons && a.seasons.includes(String(m.season))) ||
+              (m.vsTeam && a.franchise && teamShort(m.vsTeam) === a.franchise)
+            ) || articles[0];
             
             // REFINED DARK-SHADE COLOR PALETTE:
             // Won matches: Deep burnt bronze / dark amber (#9a3412) with dark slate base
@@ -2650,13 +2890,26 @@ function PlayerRecentMatchesCard({
 
                   {/* 4. Footer: Action Buttons */}
                   <div className="flex items-center justify-between pt-2 border-t border-dashed border-white/10 gap-2">
-                    <Link
-                      href={m.matchId ? `/scores?matchId=${m.matchId}` : "/scores"}
-                      className="text-[10px] font-mono text-cyan-300/80 hover:text-cyan-300 hover:underline flex items-center gap-1"
-                    >
-                      <span>Scores Tab</span>
-                      <span>➔</span>
-                    </Link>
+                    <div className="flex items-center gap-2.5">
+                      <Link
+                        href={m.matchId ? `/scores?matchId=${m.matchId}` : "/scores"}
+                        className="text-[10px] font-mono text-cyan-300/80 hover:text-cyan-300 hover:underline flex items-center gap-1"
+                      >
+                        <span>Scores Tab</span>
+                        <span>➔</span>
+                      </Link>
+
+                      {matchArticle && (
+                        <Link
+                          href={`/dugout/articles/${matchArticle.slug}`}
+                          className="text-[9.5px] font-mono text-amber-300/90 hover:text-amber-300 hover:underline flex items-center gap-1"
+                          title={`Read Intelligence Hub analysis: ${matchArticle.title}`}
+                        >
+                          <Newspaper className="w-3 h-3 text-amber-400" />
+                          <span>Match Intel ➔</span>
+                        </Link>
+                      )}
+                    </div>
 
                     <Link
                       href={m.matchId ? `/match/${m.matchId}` : "/scores"}
@@ -2785,13 +3038,26 @@ function PlayerRecentMatchesCard({
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </Link>
 
-                    <Link
-                      href={m.matchId ? `/scores?matchId=${m.matchId}` : "/scores"}
-                      className="text-[9px] font-mono text-cyan-300/80 hover:text-cyan-300 hover:underline flex items-center gap-1"
-                    >
-                      <span>Open in Scores Tab</span>
-                      <span>➔</span>
-                    </Link>
+                    <div className="flex items-center gap-2.5">
+                      <Link
+                        href={m.matchId ? `/scores?matchId=${m.matchId}` : "/scores"}
+                        className="text-[9px] font-mono text-cyan-300/80 hover:text-cyan-300 hover:underline flex items-center gap-1"
+                      >
+                        <span>Scores Tab</span>
+                        <span>➔</span>
+                      </Link>
+
+                      {matchArticle && (
+                        <Link
+                          href={`/dugout/articles/${matchArticle.slug}`}
+                          className="text-[9px] font-mono text-amber-300/90 hover:text-amber-300 hover:underline flex items-center gap-1"
+                          title={`Read Intelligence Hub report: ${matchArticle.title}`}
+                        >
+                          <Newspaper className="w-3 h-3 text-amber-400" />
+                          <span>Match Intel ➔</span>
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2811,7 +3077,236 @@ function PlayerRecentMatchesCard({
               </button>
             )}
           </div>
-        </>
+        </div>
+
+        {/* ── RIGHT COLUMN: NEWS ARTICLES BESIDE RECENT FORM (IN SPLIT MODE) ── */}
+        {activeSection === "split" && (
+          <div className="xl:col-span-5 flex flex-col gap-4 border-t xl:border-t-0 xl:border-l border-white/10 pt-5 xl:pt-0 xl:pl-6">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <Newspaper className="w-4 h-4 text-amber-400" />
+                <span className="text-xs font-black uppercase tracking-wider text-white">
+                  News Articles &amp; Dugout Media
+                </span>
+              </div>
+              <span className="text-[10px] font-mono text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                {filteredArticles.length} Stories
+              </span>
+            </div>
+
+            {/* Quick Filter in Split view */}
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1">
+                <Search className="w-3.5 h-3.5 text-white/40 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={articleSearchQuery}
+                  onChange={e => setArticleSearchQuery(e.target.value)}
+                  placeholder="Filter news &amp; tactical stories..."
+                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-8 pr-2.5 py-1 text-xs text-white placeholder-white/40 focus:outline-none focus:border-amber-400"
+                />
+              </div>
+              {articleSearchQuery && (
+                <button
+                  onClick={() => setArticleSearchQuery("")}
+                  className="px-2 py-1 rounded-lg bg-white/10 text-[9px] font-mono text-cyan-300 uppercase cursor-pointer"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+
+            {/* Side-by-Side News Articles with Dugout Pictures */}
+            {filteredArticles.length === 0 ? (
+              <div className="py-8 text-center text-[10px] font-mono text-white/40 bg-black/20 rounded-xl border border-white/5">
+                No matching news articles
+              </div>
+            ) : (
+              <div className="flex flex-col gap-3.5 max-h-[660px] overflow-y-auto pr-1">
+                {filteredArticles.slice(0, 8).map(art => {
+                  const aspect = EDITORIAL_ASPECTS.find(a => a.id === art.aspect);
+                  const fAccent = teamColor(art.franchise);
+                  return (
+                    <Link
+                      key={art.id}
+                      href={`/dugout/articles/${art.slug}`}
+                      className="group rounded-2xl bg-[#090d16]/95 border border-white/10 hover:border-amber-400/50 hover:bg-white/[0.03] overflow-hidden flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-2xl cursor-pointer"
+                    >
+                      {/* Pictures just like in Dugouts */}
+                      <div className="relative aspect-video w-full overflow-hidden bg-slate-950">
+                        <LibraryMedia
+                          imageId={art.id}
+                          title={art.title}
+                          accent={fAccent}
+                          code={art.franchise}
+                          teamName={art.franchise}
+                          aspect={art.aspect}
+                        />
+                      </div>
+                      <div className="p-3.5 flex flex-col gap-1.5">
+                        <div className="flex items-center justify-between text-[9px] font-mono">
+                          <span className="px-2 py-0.5 rounded-full bg-white/5 text-amber-300 border border-white/10 uppercase font-black">
+                            {aspect?.name || "Intelligence"}
+                          </span>
+                          <span className="text-white/40 flex items-center gap-1 font-mono">
+                            <Clock className="w-3 h-3 text-cyan-400" />
+                            {art.readMinutes} min read
+                          </span>
+                        </div>
+                        <h4 className="text-xs font-black text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-snug">
+                          {art.title}
+                        </h4>
+                        <p className="text-[10px] text-white/50 line-clamp-2 leading-relaxed">
+                          {art.dek}
+                        </p>
+                        <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[9.5px] font-mono">
+                          <span className="text-white/40 font-bold">{art.franchise} Archive · {art.publishedDate}</span>
+                          <span className="text-amber-400 group-hover:translate-x-1 transition-transform font-bold flex items-center gap-1">
+                            Read Story ➔
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+
+            <div className="pt-2 border-t border-white/5 text-center">
+              <button
+                onClick={() => setActiveSection("articles")}
+                className="text-xs font-mono text-cyan-300 hover:underline flex items-center justify-center gap-1 cursor-pointer mx-auto"
+              >
+                <span>Expand to Full-Width News Articles Grid</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    )}
+  </>
+)}
+
+      {/* ── SECTION MODE 2: INTELLIGENCE HUB NEWS ARTICLES ── */}
+      {activeSection === "articles" && (
+        <div className="flex flex-col gap-5 animate-fade-in">
+          {/* Article Filters Bar */}
+          <div className="bg-black/40 border border-white/5 rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+            <div className="relative flex-1 min-w-[180px]">
+              <Search className="w-3.5 h-3.5 text-white/40 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={articleSearchQuery}
+                onChange={e => setArticleSearchQuery(e.target.value)}
+                placeholder="Search articles by title, key phrase or tactic..."
+                className="w-full bg-white/5 border border-white/10 rounded-xl pl-8 pr-3 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-amber-400 transition-colors"
+              />
+            </div>
+
+            <div className="flex items-center gap-2 flex-wrap">
+              <select
+                value={articleAspectFilter}
+                onChange={e => setArticleAspectFilter(e.target.value)}
+                className="bg-[#090d16] border border-white/10 rounded-xl px-3 py-2 text-xs text-white/80 focus:outline-none focus:border-amber-400 cursor-pointer"
+              >
+                <option value="all">All Editorial Aspects</option>
+                {EDITORIAL_ASPECTS.map(asp => (
+                  <option key={asp.id} value={asp.id}>{asp.name}</option>
+                ))}
+              </select>
+
+              {(articleSearchQuery || articleAspectFilter !== "all") && (
+                <button
+                  onClick={() => { setArticleSearchQuery(""); setArticleAspectFilter("all"); }}
+                  className="px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-[10px] font-mono text-cyan-300 uppercase tracking-wider transition-all cursor-pointer"
+                >
+                  Reset
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Articles Grid */}
+          {filteredArticles.length === 0 ? (
+            <div className="py-12 text-center text-[11px] font-black uppercase tracking-widest text-white/30 bg-black/30 rounded-2xl border border-white/5">
+              No intelligence articles matched the query
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredArticles.map(art => {
+                const aspect = EDITORIAL_ASPECTS.find(a => a.id === art.aspect);
+                const fAccent = teamColor(art.franchise);
+                return (
+                  <Link
+                    key={art.id}
+                    href={`/dugout/articles/${art.slug}`}
+                    className="group rounded-2xl bg-[#090d16]/95 border border-white/10 hover:border-amber-400/50 hover:bg-white/[0.03] overflow-hidden flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-2xl cursor-pointer"
+                  >
+                    {/* Picture just like in Dugouts */}
+                    <div className="relative aspect-video w-full overflow-hidden bg-slate-950">
+                      <LibraryMedia
+                        imageId={art.id}
+                        title={art.title}
+                        accent={fAccent}
+                        code={art.franchise}
+                        teamName={art.franchise}
+                        aspect={art.aspect}
+                      />
+                    </div>
+
+                    <div className="p-4 sm:p-5 flex flex-col justify-between gap-3.5 flex-1">
+                      <div>
+                        <div className="flex items-center justify-between text-[9px] font-mono mb-2">
+                          <span className="px-2.5 py-0.5 rounded-full bg-white/5 text-amber-300 border border-white/10 uppercase font-black">
+                            {aspect?.name || "Intelligence"}
+                          </span>
+                          <span className="text-white/40 flex items-center gap-1 font-mono">
+                            <Clock className="w-3 h-3 text-cyan-400" />
+                            {art.readMinutes} min read
+                          </span>
+                        </div>
+
+                        <h4 className="text-sm font-black text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-snug">
+                          {art.title}
+                        </h4>
+
+                        <p className="text-xs text-white/50 line-clamp-3 mt-2 leading-relaxed">
+                          {art.dek}
+                        </p>
+
+                        {art.headlineStat && (
+                          <div className="mt-3 p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-between">
+                            <span className="text-[9px] font-mono uppercase text-white/40">{art.headlineStat.label}</span>
+                            <span className="text-xs font-black font-mono text-cyan-300">{art.headlineStat.display}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="pt-3 border-t border-dashed border-white/10 flex items-center justify-between text-[10px] font-mono">
+                        <span className="text-white/40 font-bold">{art.franchise} Archive · {art.publishedDate}</span>
+                        <span className="text-amber-400 group-hover:translate-x-1 transition-transform font-bold flex items-center gap-1">
+                          Read Story ➔
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 text-[10px] font-mono text-white/40 border-t border-white/5">
+            <span>Showing {filteredArticles.length} of {articles.length} news &amp; analysis articles from Intelligence Hub</span>
+            <Link
+              href={`/intelligence?search=${encodeURIComponent(playerName)}`}
+              className="text-cyan-300 hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              <span>Explore All Intelligence Articles</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
       )}
     </GlassCard>
   );

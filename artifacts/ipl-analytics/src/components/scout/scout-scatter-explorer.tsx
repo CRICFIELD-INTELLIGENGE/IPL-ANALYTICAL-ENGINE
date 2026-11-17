@@ -22,7 +22,6 @@ interface ScoutScatterExplorerProps {
 
 const LEAGUE_COLORS: Record<string, string> = {
   ipl: "#F97316",   // Warm Orange
-  smat: "#F59E0B",  // Amber
   bbl: "#0284C7",   // Sky Blue
   sa20: "#38BDF8",  // Light Cyan
   cpl: "#A855F7",   // Purple

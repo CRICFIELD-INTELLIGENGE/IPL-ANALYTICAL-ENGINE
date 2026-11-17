@@ -177,6 +177,10 @@ const rankingsQuerySchema = z.object({
   sortBy: z.string().default("shrunk"),
   sortOrder: z.enum(["asc", "desc"]).default("desc"),
   search: z.string().max(60).optional(),
+  minAge: z.coerce.number().int().min(0).max(100).optional(),
+  maxAge: z.coerce.number().int().min(0).max(100).optional(),
+  country: z.string().trim().min(1).max(60).optional(),
+  bowlingType: z.enum(["pace", "spin"]).optional(),
 }).superRefine((q, ctx) => {
   // Unknown sort keys used to be accepted and silently left the list unsorted.
   if (!rankingSortKeys(q.discipline).includes(q.sortBy)) {
@@ -209,6 +213,10 @@ router.get("/rankings", (req: Request, res: Response): void => {
     sortBy,
     sortOrder,
     search,
+    minAge,
+    maxAge,
+    country,
+    bowlingType,
   } = parsed.data;
 
   const targetComps = selectRatingCompetitions(compsParam);
@@ -234,8 +242,46 @@ router.get("/rankings", (req: Request, res: Response): void => {
   let filtered = eligible;
   if (search && search.trim()) {
     const term = search.trim().toLowerCase();
-    // `name` is the register's unique_name when one exists (COALESCE in the service).
-    filtered = eligible.filter((r) => r.name.toLowerCase().includes(term));
+    const matches = new Set(searchPlayers(term, 500).map(player => player.player_key));
+    const parts = term.split(/\s+/);
+    const abbreviated = parts.length > 1
+      ? `${parts.slice(0, -1).map(part => part[0]).join("")} ${parts.at(-1)}`
+      : term;
+    filtered = eligible.filter(row => {
+      const name = row.name.toLowerCase();
+      return matches.has(row.player_key) || name.includes(term) || (matches.size === 0 && name === abbreviated);
+    });
+  }
+
+  const attributesByPlayer = new Map<number, ReturnType<typeof playerAttributes>>();
+  const attributesFor = (playerKey: number) => {
+    let attributes = attributesByPlayer.get(playerKey);
+    if (!attributes) {
+      attributes = playerAttributes(playerKey);
+      attributesByPlayer.set(playerKey, attributes);
+    }
+    return attributes;
+  };
+  if (minAge !== undefined || maxAge !== undefined || country || bowlingType) {
+    const countryFilter = country?.toLowerCase();
+    const today = new Date().toISOString().slice(0, 10);
+    filtered = filtered.filter(row => {
+      const attributes = attributesFor(row.player_key);
+      if (bowlingType && attributes.bowling.type !== bowlingType) return false;
+      if (countryFilter) {
+        const nationality = attributes.nationality?.value.trim().toLowerCase();
+        if (!nationality || (countryFilter === "overseas" ? nationality === "india" : nationality !== countryFilter)) return false;
+      }
+      if (minAge === undefined && maxAge === undefined) return true;
+      const dates = [...new Set(attributes.provenance
+        .filter(item => item.attribute === "date_of_birth")
+        .map(item => item.value.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/, "$3-$2-$1")))];
+      if (dates.length !== 1 || !/^\d{4}-\d{2}-\d{2}$/.test(dates[0]) || dates[0] > today) return false;
+      const birth = new Date(dates[0]);
+      if (Number.isNaN(+birth) || birth.toISOString().slice(0, 10) !== dates[0]) return false;
+      const age = Number(today.slice(0, 4)) - Number(dates[0].slice(0, 4)) - Number(today.slice(5) < dates[0].slice(5));
+      return age >= (minAge ?? 0) && age <= (maxAge ?? Infinity);
+    });
   }
 
   // Sorting: metric sorts respect each metric's direction ("desc" = best first).
@@ -248,6 +294,7 @@ router.get("/rankings", (req: Request, res: Response): void => {
     const sw = strengthsAndWeaknesses(r);
     return {
       ...r,
+      verifiedAttributes: attributesFor(r.player_key),
       strengths: sw.strengths,
       weaknesses: sw.weaknesses,
     };

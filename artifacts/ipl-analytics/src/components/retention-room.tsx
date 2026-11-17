@@ -863,7 +863,7 @@ export function RetentionRoom() {
               </div>
 
               <Link
-                href="/arcade/build-your-xi"
+                href="/ai-analyst/playing-xi"
                 className="w-full py-2 rounded-xl bg-sky-500/20 border border-sky-400 text-sky-300 hover:bg-sky-500/30 text-center text-xs font-black transition-all flex items-center justify-center gap-1.5"
               >
                 Build Your XI <ArrowRight className="w-3.5 h-3.5" />

@@ -30,7 +30,10 @@ const needs = {
 };
 const phases: Record<string, string> = { all: "All overs", powerplay: "Powerplay", middle: "Middle overs", death: "Death overs" };
 const panel = "rounded-2xl border border-slate-200 bg-white p-4 text-slate-900 dark:border-white/10 dark:bg-[#0B1020] dark:text-slate-100 sm:p-5";
-const selectStyle = "block w-full rounded-lg border border-slate-300 bg-transparent p-2 dark:border-slate-600";
+// Explicit colours on the select and its options: a transparent select leaves the open list white with light text in dark mode.
+const selectStyle = "block w-full cursor-pointer rounded-lg border border-slate-300 bg-white p-2 text-slate-900 disabled:cursor-not-allowed disabled:opacity-60 "
+  + "dark:border-slate-600 dark:bg-[#0B1020] dark:text-slate-100 dark:[color-scheme:dark] "
+  + "[&>option]:bg-white [&>option]:text-slate-900 dark:[&>option]:bg-[#0B1020] dark:[&>option]:text-slate-100";
 const quiet = "text-sm text-slate-600 dark:text-slate-400";
 
 async function fetchT20<T>(path: string, signal: AbortSignal): Promise<T> {

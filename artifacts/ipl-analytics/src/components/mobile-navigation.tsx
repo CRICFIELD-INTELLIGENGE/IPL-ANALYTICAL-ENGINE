@@ -8,7 +8,6 @@ const destinations = [
   { href: "/home", label: "Home", icon: Home, detail: "Your cricket, all together" },
   { href: "/feed", label: "Feed", icon: Newspaper, detail: "Stories & 2027 intel" },
   { href: "/scout", label: "Scout Lab", icon: Compass, detail: "Find your next match-winner" },
-  { href: "/arcade", label: "Arcade", icon: Gamepad2, detail: "A little cricket. A lot of rivalry." },
   { href: "/scores", label: "Scores", icon: Zap, detail: "Follow the action" },
   { href: "/stats", label: "Stats Centre", icon: List, detail: "Go beyond the scorecard" },
   { href: "/dugout", label: "My Dugout", icon: Shield, detail: "Your franchise headquarters" },

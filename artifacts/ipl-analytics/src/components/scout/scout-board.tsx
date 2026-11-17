@@ -23,7 +23,7 @@ export function ScoutBoard({ onApplyPreset, activePresetId, onClearPreset }: Sco
       id: "hidden_gems",
       tag: "Stream 01",
       title: "Hidden Gems",
-      desc: "Emerging breakout talents across domestic SMAT and CPL circuits with sample >= 60b.",
+      desc: "Emerging breakout talents across IPL and CPL with sample >= 60b.",
       cta: "Inspect Scatter Plot →",
       icon: Sparkles,
       color: "text-[#FF982E]",

@@ -38,7 +38,6 @@ const PRIMARY_NAV_LINKS: Array<{ label: string; href: string; hideOnMd?: boolean
   { label: "Scout Lab", href: "/scout" },
   { label: "Dugout", href: "/dugout" },
   { label: "News", href: "/intelligence" },
-  { label: "Games", href: "/arcade" },
 ];
 
 // Universal search input is powered by UniversalHeaderSearch with active autocomplete dropdown
@@ -53,7 +52,6 @@ const SIDEBAR_ITEMS = [
   { icon: List, label: "Stats Centre", href: "/stats" },
   { icon: Zap, label: "Scores", href: "/scores" },
   { icon: BarChart2, label: "Visuals", href: "/visualizations" },
-  { icon: Gamepad2, label: "Arcade Games", href: "/arcade" },
 ];
 
 function LiveScoreSnippet() {

@@ -1,10 +1,10 @@
-import { TeamT20Scouting } from "@/components/scout/t20-scouting";
 import "./scout-terminal.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import {
   fetchScoutRankings,
+  scoutAgeRange,
   type Discipline,
   type MatchPhase,
   type ScoutRating,
@@ -26,6 +26,8 @@ export default function ScoutHomePage() {
   const [phase, setPhase] = useState<MatchPhase>(
     (sp.get("phase") as MatchPhase) || "all"
   );
+  const [country, setCountry] = useState(sp.get("country") ?? "All");
+  const [age, setAge] = useState(sp.get("age") ?? "All");
   const [role, setRole] = useState<string>(sp.get("role") || "");
   const [minBalls, setMinBalls] = useState<number>(Math.max(0, Number(sp.get("minBalls")) || 120));
   const [recentSeasons] = useState<number | undefined>(Number(sp.get("recentSeasons")) > 0 ? Number(sp.get("recentSeasons")) : undefined);
@@ -48,6 +50,13 @@ export default function ScoutHomePage() {
 
   const compsParam = selectedComps.length > 0 ? selectedComps.join(",") : undefined;
 
+  const rankingSearch = debouncedSearch.trim();
+  const needsFullSearch = rankingSearch.length > 60;
+  const rankingRole = (discipline === "bowling"
+    ? ["powerplay_specialist", "middle_specialist", "death_specialist", "multi_phase", "part_time", "insufficient", "none"]
+    : ["opener", "top_order", "middle_order", "finisher", "lower_order", "insufficient"]
+  ).includes(role) ? role : undefined;
+
   // React Query fetching verified rankings
   const { data, isLoading, isFetching, isError, error, refetch } = useQuery({
     queryKey: [
@@ -55,13 +64,15 @@ export default function ScoutHomePage() {
       discipline,
       compsParam,
       phase,
-      role,
+      rankingRole,
+      country,
+      age,
       minBalls,
       page,
       25,
       sortBy,
       sortOrder,
-      debouncedSearch,
+      rankingSearch,
       recentSeasons,
     ],
     queryFn: () =>
@@ -69,22 +80,26 @@ export default function ScoutHomePage() {
         discipline,
         competitions: compsParam,
         phase,
-        role: role || undefined,
+        role: rankingRole,
+        country: country === "All" ? undefined : country,
+        ...scoutAgeRange(age),
         minBalls,
         recentSeasons,
         page,
         limit: 25,
         sortBy,
         sortOrder,
-        search: debouncedSearch || undefined,
+        search: rankingSearch || undefined,
       }),
+    enabled: !needsFullSearch,
+    retry: false,
     staleTime: 5 * 60_000,
   });
 
   // Reset page when core filters change
   useEffect(() => {
     setPage(1);
-  }, [discipline, compsParam, phase, role, minBalls, searchQuery]);
+  }, [discipline, compsParam, phase, role, country, age, minBalls, searchQuery]);
 
   // Sync URL search params
   useEffect(() => {
@@ -92,7 +107,9 @@ export default function ScoutHomePage() {
     if (discipline !== "batting") params.set("discipline", discipline);
     if (selectedComps.length > 0) params.set("competitions", selectedComps.join(","));
     if (phase !== "all") params.set("phase", phase);
-    if (role) params.set("role", role);
+    if (rankingRole) params.set("role", rankingRole);
+    if (country !== "All") params.set("country", country);
+    if (age !== "All") params.set("age", age);
     params.set("minBalls", String(minBalls));
     if (recentSeasons) params.set("recentSeasons", String(recentSeasons));
     if (searchQuery) params.set("search", searchQuery);
@@ -104,7 +121,7 @@ export default function ScoutHomePage() {
     const str = params.toString();
     const newUrl = str ? `${window.location.pathname}?${str}` : window.location.pathname;
     window.history.replaceState(null, "", newUrl);
-  }, [discipline, selectedComps, phase, role, minBalls, recentSeasons, searchQuery, franchiseContext, selectedTeam]);
+  }, [discipline, selectedComps, phase, rankingRole, country, age, minBalls, recentSeasons, searchQuery, franchiseContext, selectedTeam]);
 
   const toggleCompare = useCallback(
     (id: string) =>
@@ -153,11 +170,15 @@ export default function ScoutHomePage() {
   return (
     <Layout>
       <div className="scout-terminal scout-notebook w-full max-w-full min-h-[calc(100vh-56px)] bg-slate-50 dark:bg-[#050B11] text-slate-900 dark:text-[#EFF5F7] transition-colors">
-        <div className="mx-auto max-w-7xl px-4 pt-5"><TeamT20Scouting /></div>
         {/* CINEMATIC SCOUT COMMAND ROOM (Matches Lovable Format 1:1 with Dynamic Team Dugout Palette) */}
         <ScoutCinematicRoom
           discipline={discipline}
           setDiscipline={setDiscipline}
+          selectedCountry={country}
+          setSelectedCountry={setCountry}
+          selectedAge={age}
+          setSelectedAge={setAge}
+          recentSeasons={recentSeasons}
           role={role}
           setRole={setRole}
           selectedComps={selectedComps}
@@ -174,6 +195,8 @@ export default function ScoutHomePage() {
           results={data?.data ?? []}
           searching={isFetching || searchQuery !== debouncedSearch}
           searchFailed={isError}
+          needsFullSearch={needsFullSearch}
+          onRetrySearch={() => void refetch()}
           shortlist={shortlist}
           onToggleShortlist={(id) => { const player = selectedPlayer?.cricsheet_id === id ? selectedPlayer : aiCandidates.find(p => p.cricsheet_id === id) ?? data?.data.find(p => p.cricsheet_id === id) ?? shortlist.find(p => p.cricsheet_id === id); if (player) toggleShortlist(player); }}
           isShortlisted={isShortlisted}

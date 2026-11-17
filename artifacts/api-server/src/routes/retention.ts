@@ -10,6 +10,7 @@ import {
 } from "../services/retention/service";
 import { CATEGORIES } from "../services/retention/crr";
 import { entrySchema, upsertEntry } from "../services/retention/ledger";
+import { officialRoom, officialLeague, officialComparison } from "../services/retention/official";
 
 // CRICFIELD Retention Room API. Picks, Forecast and Fan Picks are separate outputs and
 // keep separate routes. Ballots need a verified account; editorial writes and freezes
@@ -41,6 +42,24 @@ const respond = (res: Response, body: unknown) => {
 };
 
 router.get("/retention/seasons", (_req, res) => { res.json(seasons()); });
+router.get("/retention/:season/official", (req, res) => {
+  const s = season.safeParse(req.params.season);
+  if (!s.success) { res.status(400).json({error:"invalid_season"}); return; }
+  const data = officialLeague(s.data);
+  if (!data) { res.status(404).json({error:"official_snapshot_unavailable"}); return; }
+  res.setHeader("Cache-Control", "public, max-age=60, s-maxage=300");
+  res.json(data);
+});
+router.get("/retention/:season/franchises/:team/official", (req, res) => {
+  const s = scope(req,res); if (!s) return;
+  const data = officialRoom(s.season,s.team);
+  if (!data) { res.status(404).json({error:"official_snapshot_unavailable"}); return; }
+  res.setHeader("Cache-Control", "public, max-age=60, s-maxage=300");
+  res.json(data);
+});
+router.get("/retention/:season/franchises/:team/comparison", (req, res) => {
+  const s = scope(req,res); if (s) respond(res,officialComparison(s.season,s.team));
+});
 router.get("/retention/summary", (_req, res) => respond(res, leagueSummary()));
 router.get("/retention/history", (_req, res) => { res.json(history()); });
 router.get("/retention/freezes/:id", (req, res) => {

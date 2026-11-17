@@ -39907,7 +39907,19 @@ async function copyRows(client, db9, table) {
 }
 
 // src/lib/analytics-routes.ts
-var SCOUT_PATHS = /* @__PURE__ */ new Set(["/api/scout/rankings", "/api/scout/t20/suggestions"]);
+var SCOUT_PATHS = /* @__PURE__ */ new Set([
+  "/api/scout/rankings",
+  "/api/scout/search",
+  "/api/scout/compare",
+  "/api/scout/roles",
+  "/api/scout/win-probability",
+  "/api/scout/bayes-calculator",
+  "/api/scout/t20/coverage",
+  "/api/scout/t20/suggestions"
+]);
+function isScoutPath(path29) {
+  return SCOUT_PATHS.has(path29) || /^\/api\/scout\/(?:t20\/player\/[^/]+|player\/[^/]+(?:\/recent-form)?)$/.test(path29);
+}
 var IPL_PATHS = /* @__PURE__ */ new Set([
   "/api/ipl/overview",
   "/api/ipl/seasons",
@@ -39927,7 +39939,9 @@ var LAPTOP_ONLY_PATHS = /* @__PURE__ */ new Set([
   "/api/ipl/team-analytics",
   "/api/ipl/venue-analytics"
 ]);
-var ANALYTICS_PATHS = /* @__PURE__ */ new Set([...SCOUT_PATHS, ...IPL_PATHS, ...LAPTOP_ONLY_PATHS]);
+function isAnalyticsPath(path29) {
+  return isScoutPath(path29) || IPL_PATHS.has(path29) || LAPTOP_ONLY_PATHS.has(path29);
+}
 var ANALYTICS_KEY_HEADER = "x-cricfield-analytics-key";
 var CLIENT_IP_HEADER = "x-cricfield-client-ip";
 
@@ -58705,11 +58719,11 @@ function computePicks(s, rules) {
       futureParts.length / 2,
       [trendValue === null ? null : `rating moved ${trendValue >= 0 ? "+" : ""}${trendValue.toFixed(1)} on last season`, age === null ? "age not verified" : `age ${age} in ${s.targetSeason}`].filter(Boolean).join("; ") || "No trend or age on file."
     ));
-    const group = rated.filter((q) => q.role === p.role && q.overseas === p.overseas);
-    const better = hasRating ? group.filter((q) => q.performance.rar > f.rar).length : null;
+    const group2 = rated.filter((q) => q.role === p.role && q.overseas === p.overseas);
+    const better = hasRating ? group2.filter((q) => q.performance.rar > f.rar).length : null;
     const supply = s.scarcity[p.role];
-    const scarcity = better === null || !supply ? null : 0.7 * (1 - better / Math.max(1, group.length)) + 0.3 * (1 - supply.strong / Math.max(1, supply.players));
-    metrics.push(metric("scarcity", scarcity, 1, scarcity === null ? "No comparable rating." : `${better} of ${group.length} comparable ${p.overseas ? "overseas" : "Indian"} ${p.role}s rate higher`));
+    const scarcity = better === null || !supply ? null : 0.7 * (1 - better / Math.max(1, group2.length)) + 0.3 * (1 - supply.strong / Math.max(1, supply.players));
+    metrics.push(metric("scarcity", scarcity, 1, scarcity === null ? "No comparable rating." : `${better} of ${group2.length} comparable ${p.overseas ? "overseas" : "Indian"} ${p.role}s rate higher`));
     const share = sel?.teamMatches ? sel.matchesForTeam / sel.teamMatches : null;
     const sdRank = hasRating ? 1 - rank(f.rarSd ?? 0, sds) : null;
     const spread2 = sel && sel.seasonRate.length >= 2 ? Math.sqrt(sel.seasonRate.reduce((a, x, _i, all) => a + (x - all.reduce((m, y) => m + y, 0) / all.length) ** 2, 0) / sel.seasonRate.length) : null;
@@ -77755,7 +77769,7 @@ var db4 = new Proxy({}, {
   }
 });
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/entity.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/entity.js
 var entityKind2 = /* @__PURE__ */ Symbol.for("drizzle:entityKind");
 function is2(value2, type) {
   if (!value2 || typeof value2 !== "object") {
@@ -77781,7 +77795,7 @@ function is2(value2, type) {
   return false;
 }
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/column.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/column.js
 var Column2 = class {
   constructor(table, config3) {
     this.table = table;
@@ -77832,7 +77846,7 @@ var Column2 = class {
   }
 };
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/column-builder.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/column-builder.js
 var ColumnBuilder2 = class {
   static [entityKind2] = "ColumnBuilder";
   config;
@@ -77935,10 +77949,10 @@ var ColumnBuilder2 = class {
   }
 };
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/table.utils.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/table.utils.js
 var TableName2 = /* @__PURE__ */ Symbol.for("drizzle:Name");
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/pg-core/foreign-keys.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/pg-core/foreign-keys.js
 var ForeignKeyBuilder3 = class {
   static [entityKind2] = "PgForeignKeyBuilder";
   /** @internal */
@@ -77995,12 +78009,12 @@ var ForeignKey3 = class {
   }
 };
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/tracing-utils.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/tracing-utils.js
 function iife2(fn, ...args) {
   return fn(...args);
 }
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/pg-core/unique-constraint.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/pg-core/unique-constraint.js
 function uniqueKeyName3(table, columns2) {
   return `${table[TableName2]}_${columns2.join("_")}_unique`;
 }
@@ -78050,7 +78064,7 @@ var UniqueConstraint3 = class {
   }
 };
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/pg-core/utils/array.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/pg-core/utils/array.js
 function parsePgArrayValue2(arrayString, startFrom, inQuotes) {
   for (let i = startFrom; i < arrayString.length; i++) {
     const char = arrayString[i];
@@ -78126,7 +78140,7 @@ function makePgArray2(array2) {
   }).join(",")}}`;
 }
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/pg-core/columns/common.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/pg-core/columns/common.js
 var PgColumnBuilder2 = class extends ColumnBuilder2 {
   foreignKeyConfigs = [];
   static [entityKind2] = "PgColumnBuilder";
@@ -78310,7 +78324,7 @@ var PgArray2 = class _PgArray extends PgColumn2 {
   }
 };
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/pg-core/columns/enum.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/pg-core/columns/enum.js
 var PgEnumObjectColumnBuilder2 = class extends PgColumnBuilder2 {
   static [entityKind2] = "PgEnumObjectColumnBuilder";
   constructor(name, enumInstance) {
@@ -78368,7 +78382,7 @@ var PgEnumColumn2 = class extends PgColumn2 {
   }
 };
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/subquery.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/subquery.js
 var Subquery2 = class {
   static [entityKind2] = "Subquery";
   constructor(sql3, fields, alias, isWith = false, usedTables = []) {
@@ -78389,10 +78403,10 @@ var WithSubquery2 = class extends Subquery2 {
   static [entityKind2] = "WithSubquery";
 };
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/version.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/version.js
 var version3 = "0.45.2";
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/tracing.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/tracing.js
 var otel2;
 var rawTracer2;
 var tracer2 = {
@@ -78427,10 +78441,10 @@ var tracer2 = {
   }
 };
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/view-common.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/view-common.js
 var ViewBaseConfig2 = /* @__PURE__ */ Symbol.for("drizzle:ViewBaseConfig");
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/table.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/table.js
 var Schema2 = /* @__PURE__ */ Symbol.for("drizzle:Schema");
 var Columns2 = /* @__PURE__ */ Symbol.for("drizzle:Columns");
 var ExtraConfigColumns2 = /* @__PURE__ */ Symbol.for("drizzle:ExtraConfigColumns");
@@ -78486,7 +78500,7 @@ var Table2 = class {
   }
 };
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/sql/sql.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/sql/sql.js
 var FakePrimitiveParam2 = class {
   static [entityKind2] = "FakePrimitiveParam";
 };
@@ -78863,7 +78877,7 @@ Subquery2.prototype.getSQL = function() {
   return new SQL2([this]);
 };
 
-// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/sql/expressions/conditions.js
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.11.10_pg@8.13.1/node_modules/drizzle-orm/sql/expressions/conditions.js
 function bindIfParam2(value2, column) {
   if (isDriverValueEncoder2(column) && !isSQLWrapper2(value2) && !is2(value2, Param2) && !is2(value2, Placeholder2) && !is2(value2, Column2) && !is2(value2, Table2) && !is2(value2, View2)) {
     return new Param2(value2, column);
@@ -118038,8 +118052,8 @@ var normalizeVenueName = (v) => {
   const raw = String(v || "").trim();
   if (!raw) return "";
   const n = raw.toLowerCase();
-  for (const [pattern, canonical] of VENUE_RULES) {
-    if (pattern.test(n)) return canonical;
+  for (const [pattern, canonical2] of VENUE_RULES) {
+    if (pattern.test(n)) return canonical2;
   }
   return raw.split(",")[0].trim();
 };
@@ -120583,11 +120597,11 @@ async function getVenues() {
       const round13 = (n) => Math.round(n * 10) / 10;
       const grouped = /* @__PURE__ */ new Map();
       for (const r of res.rows) {
-        const canonical = normalizeVenueName(r.name || "");
-        if (!canonical) continue;
+        const canonical2 = normalizeVenueName(r.name || "");
+        if (!canonical2) continue;
         const matches2 = Number(r.matches || 0);
-        const acc = grouped.get(canonical) || {
-          name: canonical,
+        const acc = grouped.get(canonical2) || {
+          name: canonical2,
           city: null,
           pitchType: null,
           matches: 0,
@@ -120617,7 +120631,7 @@ async function getVenues() {
         }
         if (!acc.city && r.city) acc.city = r.city;
         if (!acc.pitchType && r.pitch_type) acc.pitchType = r.pitch_type;
-        grouped.set(canonical, acc);
+        grouped.set(canonical2, acc);
       }
       const rows = Array.from(grouped.values()).map((acc) => {
         const avgFirst = acc.firstWeight > 0 ? round13(acc.firstRunsWeighted / acc.firstWeight) : 0;
@@ -120909,8 +120923,8 @@ async function getTeamAnalytics(params) {
   }
   const inningsBatted = num2(battingOrder?.batFirst) + num2(battingOrder?.chased);
   const captainsFile = readDataJson("captains.json") ?? {};
-  const canonical = canonicalTeamName(franchiseKey(params.team), params.team);
-  const captains2 = (captainsFile.byFranchise?.[canonical] ?? []).map((c) => ({
+  const canonical2 = canonicalTeamName(franchiseKey(params.team), params.team);
+  const captains2 = (captainsFile.byFranchise?.[canonical2] ?? []).map((c) => ({
     player: c.player,
     country: c.country ?? null,
     firstSeason: c.firstSeason ?? null,
@@ -167786,7 +167800,11 @@ var rankingsQuerySchema = external_exports.object({
   limit: external_exports.coerce.number().int().min(1).max(100).default(25),
   sortBy: external_exports.string().default("shrunk"),
   sortOrder: external_exports.enum(["asc", "desc"]).default("desc"),
-  search: external_exports.string().max(60).optional()
+  search: external_exports.string().max(60).optional(),
+  minAge: external_exports.coerce.number().int().min(0).max(100).optional(),
+  maxAge: external_exports.coerce.number().int().min(0).max(100).optional(),
+  country: external_exports.string().trim().min(1).max(60).optional(),
+  bowlingType: external_exports.enum(["pace", "spin"]).optional()
 }).superRefine((q, ctx) => {
   if (!rankingSortKeys(q.discipline).includes(q.sortBy)) {
     ctx.addIssue({ code: external_exports.ZodIssueCode.custom, path: ["sortBy"], message: `sortBy must be one of: ${rankingSortKeys(q.discipline).join(", ")}` });
@@ -167813,7 +167831,11 @@ router11.get("/rankings", (req, res) => {
     limit,
     sortBy,
     sortOrder,
-    search
+    search,
+    minAge,
+    maxAge,
+    country,
+    bowlingType
   } = parsed.data;
   const targetComps = selectRatingCompetitions(compsParam);
   if (!targetComps) {
@@ -167832,7 +167854,41 @@ router11.get("/rankings", (req, res) => {
   let filtered = eligible;
   if (search && search.trim()) {
     const term = search.trim().toLowerCase();
-    filtered = eligible.filter((r) => r.name.toLowerCase().includes(term));
+    const matches2 = new Set(searchPlayers(term, 500).map((player) => player.player_key));
+    const parts = term.split(/\s+/);
+    const abbreviated = parts.length > 1 ? `${parts.slice(0, -1).map((part) => part[0]).join("")} ${parts.at(-1)}` : term;
+    filtered = eligible.filter((row) => {
+      const name = row.name.toLowerCase();
+      return matches2.has(row.player_key) || name.includes(term) || matches2.size === 0 && name === abbreviated;
+    });
+  }
+  const attributesByPlayer = /* @__PURE__ */ new Map();
+  const attributesFor = (playerKey) => {
+    let attributes = attributesByPlayer.get(playerKey);
+    if (!attributes) {
+      attributes = playerAttributes(playerKey);
+      attributesByPlayer.set(playerKey, attributes);
+    }
+    return attributes;
+  };
+  if (minAge !== void 0 || maxAge !== void 0 || country || bowlingType) {
+    const countryFilter = country?.toLowerCase();
+    const today = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+    filtered = filtered.filter((row) => {
+      const attributes = attributesFor(row.player_key);
+      if (bowlingType && attributes.bowling.type !== bowlingType) return false;
+      if (countryFilter) {
+        const nationality = attributes.nationality?.value.trim().toLowerCase();
+        if (!nationality || (countryFilter === "overseas" ? nationality === "india" : nationality !== countryFilter)) return false;
+      }
+      if (minAge === void 0 && maxAge === void 0) return true;
+      const dates = [...new Set(attributes.provenance.filter((item) => item.attribute === "date_of_birth").map((item) => item.value.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/, "$3-$2-$1")))];
+      if (dates.length !== 1 || !/^\d{4}-\d{2}-\d{2}$/.test(dates[0]) || dates[0] > today) return false;
+      const birth = new Date(dates[0]);
+      if (Number.isNaN(+birth) || birth.toISOString().slice(0, 10) !== dates[0]) return false;
+      const age = Number(today.slice(0, 4)) - Number(dates[0].slice(0, 4)) - Number(today.slice(5) < dates[0].slice(5));
+      return age >= (minAge ?? 0) && age <= (maxAge ?? Infinity);
+    });
   }
   const sorted = sortRatings(filtered, sortBy, sortOrder, discipline);
   const total = sorted.length;
@@ -167842,6 +167898,7 @@ router11.get("/rankings", (req, res) => {
     const sw = strengthsAndWeaknesses(r);
     return {
       ...r,
+      verifiedAttributes: attributesFor(r.player_key),
       strengths: sw.strengths,
       weaknesses: sw.weaknesses
     };
@@ -172203,6 +172260,2766 @@ var intelligence_default = router15;
 
 // src/routes/retention.ts
 var import_express17 = __toESM(require_express2(), 1);
+
+// data/retention/official-2027.json
+var official_2027_default = {
+  version: "retentions-2027.20261118.1",
+  season: 2027,
+  announcedOn: "2026-11-17",
+  reviewedAt: "2026-11-17T18:49:43.510Z",
+  comparisonCutoff: "2026-11-16T18:30:00.000Z",
+  sources: {
+    cricbuzz: {
+      publisher: "Cricbuzz",
+      official: false,
+      url: "https://www.cricbuzz.com/cricket-news/140949/ipl-2027-all-retentions-and-releases",
+      publishedOn: "2026-11-17"
+    },
+    toi: {
+      publisher: "Times of India",
+      official: false,
+      url: "https://timesofindia.indiatimes.com/sports/cricket/news/ipl-2027-retention-list-full-list-of-retained-and-released-players-remaining-purse-of-all-10-teams/articleshow/135926264.cms",
+      publishedOn: "2026-11-17"
+    },
+    indiaToday: {
+      publisher: "India Today",
+      official: false,
+      url: "https://www.indiatoday.in/sports/cricket/story/ipl-2027-retention-full-list-players-released-retained-remaining-purse-3041045-2026-11-17",
+      publishedOn: "2026-11-17"
+    },
+    rr: {
+      publisher: "Rajasthan Royals",
+      official: true,
+      url: "https://www.rajasthanroyals.com/latest-news/ipl-2027-rr-players-retention-list-retained-released",
+      publishedOn: "2026-11-17"
+    },
+    gt: {
+      publisher: "Gujarat Titans",
+      official: true,
+      url: "https://www.gujarattitansipl.com/news/gujarat-titans-retained-players-tata-ipl-2027",
+      publishedOn: "2026-11-17"
+    },
+    pbks: {
+      publisher: "Punjab Kings",
+      official: true,
+      url: "https://www.punjabkingsipl.in/news/ipl-2027-meet-our-retained-shers",
+      publishedOn: "2026-11-17"
+    },
+    dc: {
+      publisher: "Delhi Capitals",
+      official: true,
+      url: "https://www.delhicapitals.in/news/sourav-ganguly-confident-of-turning-delhi-capitals-fortunes-around-as-franchise-retains-16-players-ahead-of-ipl-2027-auction",
+      publishedOn: "2026-11-17"
+    },
+    kkr: {
+      publisher: "Kolkata Knight Riders",
+      official: true,
+      url: "https://www.kkr.in/news/kolkata-knight-riders-announce-retained-players-ahead-of-tata-ipl-2027-auction",
+      publishedOn: "2026-11-17"
+    },
+    rcb: {
+      publisher: "Royal Challengers Bengaluru",
+      official: true,
+      url: "https://www.royalchallengers.com/rcb-cricket-news/news/rcb-retain-20-players-ahead-of-ipl-2027-auction",
+      publishedOn: "2026-11-17"
+    }
+  },
+  teams: [
+    {
+      team: "CSK",
+      retained: [
+        "Ruturaj Gaikwad",
+        "Sanju Samson",
+        "Ayush Mhatre",
+        "Urvil Patel",
+        "Dewald Brevis",
+        "Liam Livingstone",
+        "Jack Edwards",
+        "Akeal Hosein",
+        "Noor Ahmad",
+        "Kartik Sharma",
+        "Shivam Dube",
+        "Gurjapneet Singh",
+        "Anshul Kamboj",
+        "Sarfaraz Khan",
+        "Jamie Overton",
+        "Mukesh Choudhary",
+        "Rahul Chahar",
+        "Ramakrishna Ghosh",
+        "Shreyas Gopal"
+      ],
+      released: [
+        "MS Dhoni",
+        "Prashant Veer",
+        "Spencer Johnson",
+        "Akash Madhwal",
+        "Aman Khan",
+        "Dian Forrester",
+        "Kuldip Yadav",
+        "Macneil Noronha",
+        "Matt Henry",
+        "Matthew Short",
+        "Zak Foulkes"
+      ],
+      retainedSources: [
+        "cricbuzz"
+      ],
+      releasedSources: [
+        "cricbuzz"
+      ],
+      purseClaims: [
+        {
+          valueLakh: 2805,
+          source: "cricbuzz"
+        },
+        {
+          valueLakh: 2805,
+          source: "toi"
+        },
+        {
+          valueLakh: 3515,
+          source: "indiaToday"
+        }
+      ],
+      overseasSlots: 2,
+      notes: [
+        "CSK official site was inaccessible at review. Retentions and releases remain reported. Conflicting purse reports require confirmation."
+      ]
+    },
+    {
+      team: "DC",
+      retained: [
+        "Ashutosh Sharma",
+        "Madhav Tiwari",
+        "Vipraj Nigam",
+        "Auqib Nabi",
+        "Mukesh Kumar",
+        "Zeeshan Ansari",
+        "Axar Patel",
+        "Prithvi Shaw",
+        "David Miller",
+        "Rishabh Pant",
+        "KL Rahul",
+        "Sameer Rizvi",
+        "Kyle Jamieson",
+        "Tripurana Vijay",
+        "Lungi Ngidi",
+        "Tristan Stubbs"
+      ],
+      released: [
+        "Mitchell Starc",
+        "Nitish Rana",
+        "Abishek Porel",
+        "Pathum Nissanka",
+        "Karun Nair",
+        "Sahil Parakh",
+        "Ajay Mandal",
+        "Rehan Ahmed",
+        "Dushmantha Chameera"
+      ],
+      retainedSources: [
+        "dc",
+        "cricbuzz"
+      ],
+      releasedSources: [
+        "dc",
+        "cricbuzz"
+      ],
+      purseClaims: [
+        {
+          valueLakh: 3950,
+          source: "cricbuzz"
+        },
+        {
+          valueLakh: 3950,
+          source: "toi"
+        }
+      ],
+      overseasSlots: 4,
+      notes: [
+        "The official nine-player release list takes precedence over a report that additionally lists Ben Duckett."
+      ]
+    },
+    {
+      team: "GT",
+      retained: [
+        "Anuj Rawat",
+        "Kagiso Rabada",
+        "Rahul Tewatia",
+        "Ashok Sharma",
+        "Kumar Kushagra",
+        "Rashid Khan",
+        "Glenn Phillips",
+        "Manav Suthar",
+        "Sai Sudharsan",
+        "Gurnoor Brar",
+        "Mohammed Siraj",
+        "Shubman Gill",
+        "Harshal Patel",
+        "Arshad Khan",
+        "Tom Banton",
+        "Jason Holder",
+        "Nishant Sindhu",
+        "Washington Sundar",
+        "Jayant Yadav",
+        "Prasidh Krishna",
+        "Jos Buttler",
+        "R Sai Kishore"
+      ],
+      released: [
+        "Shahrukh Khan",
+        "Ishant Sharma",
+        "Luke Wood",
+        "Kulwant Khejroliya",
+        "Connor Esterhuizen",
+        "Prithviraj Yarra"
+      ],
+      retainedSources: [
+        "gt",
+        "cricbuzz"
+      ],
+      releasedSources: [
+        "cricbuzz"
+      ],
+      purseClaims: [
+        {
+          valueLakh: 875,
+          source: "cricbuzz"
+        },
+        {
+          valueLakh: 875,
+          source: "toi"
+        },
+        {
+          valueLakh: 375,
+          source: "indiaToday"
+        }
+      ],
+      overseasSlots: 2,
+      notes: [
+        "Retained squad confirmed by GT. Releases and conflicting purse values await primary confirmation."
+      ]
+    },
+    {
+      team: "KKR",
+      retained: [
+        "Anukul Roy",
+        "Angkrish Raghuvanshi",
+        "Cameron Green",
+        "Finn Allen",
+        "Harshit Rana",
+        "Kartik Tyagi",
+        "Manish Pandey",
+        "Prashant Solanki",
+        "Ramandeep Singh",
+        "Rinku Singh",
+        "Rovman Powell",
+        "Sarthak Ranjan",
+        "Saurabh Dubey",
+        "Sunil Narine",
+        "Tim Seifert",
+        "Vaibhav Arora",
+        "Varun Chakaravarthy"
+      ],
+      released: [
+        "Ajinkya Rahane",
+        "Akash Deep",
+        "Blessing Muzarabani",
+        "Daksh Kamra",
+        "Luvnith Sisodia",
+        "Matheesha Pathirana",
+        "Mustafizur Rahman",
+        "Navdeep Saini",
+        "Rachin Ravindra",
+        "Rahul Tripathi",
+        "Tejasvi Singh",
+        "Umran Malik"
+      ],
+      retainedSources: [
+        "kkr",
+        "cricbuzz"
+      ],
+      releasedSources: [
+        "cricbuzz"
+      ],
+      purseClaims: [
+        {
+          valueLakh: 4165,
+          source: "kkr"
+        },
+        {
+          valueLakh: 4165,
+          source: "cricbuzz"
+        }
+      ],
+      overseasSlots: 3,
+      notes: []
+    },
+    {
+      team: "LSG",
+      retained: [
+        "Abdul Samad",
+        "Aiden Markram",
+        "Akash Singh",
+        "Akshat Raghuwanshi",
+        "Arjun Tendulkar",
+        "Arshin Kulkarni",
+        "Ayush Badoni",
+        "Digvesh Rathi",
+        "Josh Inglis",
+        "Kuldeep Yadav",
+        "Mayank Yadav",
+        "Mitchell Marsh",
+        "Mohsin Khan",
+        "Mukul Choudhary",
+        "Nicholas Pooran",
+        "Prince Yadav",
+        "Sam Curran",
+        "Shahbaz Ahmed"
+      ],
+      released: [
+        "Avesh Khan",
+        "Matthew Breetzke",
+        "Wanindu Hasaranga",
+        "George Linde",
+        "Anrich Nortje",
+        "Naman Tiwari",
+        "Himmat Singh"
+      ],
+      retainedSources: [
+        "cricbuzz"
+      ],
+      releasedSources: [
+        "cricbuzz"
+      ],
+      purseClaims: [
+        {
+          valueLakh: 4745,
+          source: "cricbuzz"
+        },
+        {
+          valueLakh: 4745,
+          source: "toi"
+        }
+      ],
+      overseasSlots: 3,
+      notes: [
+        "TOI lists Arshin Kulkarni among both retained and released. Cricbuzz and India Today agree he is retained and Himmat Singh is released. Primary confirmation is pending."
+      ]
+    },
+    {
+      team: "MI",
+      retained: [
+        "Rohit Sharma",
+        "Suryakumar Yadav",
+        "Jasprit Bumrah",
+        "Tilak Varma",
+        "Naman Dhir",
+        "Arshdeep Singh",
+        "Corbin Bosch",
+        "Mitchell Santner",
+        "Sherfane Rutherford",
+        "Will Jacks",
+        "Ryan Rickelton",
+        "Quinton de Kock",
+        "Shardul Thakur",
+        "Ashwani Kumar",
+        "Raj Angad Bawa",
+        "Raghu Sharma"
+      ],
+      released: [
+        "Trent Boult",
+        "Deepak Chahar",
+        "AM Ghazanfar",
+        "Atharva Ankolekar",
+        "Keshav Maharaj",
+        "Mohammed Izhar",
+        "Danish Malewar",
+        "Mayank Markande",
+        "Mayank Rawat",
+        "Krish Bhagat",
+        "Mahipal Lomror",
+        "Robin Minz",
+        "Ruchit Ahir"
+      ],
+      retainedSources: [
+        "cricbuzz"
+      ],
+      releasedSources: [
+        "cricbuzz"
+      ],
+      purseClaims: [
+        {
+          valueLakh: 3260,
+          source: "cricbuzz"
+        },
+        {
+          valueLakh: 3260,
+          source: "toi"
+        }
+      ],
+      overseasSlots: 2,
+      notes: []
+    },
+    {
+      team: "PBKS",
+      retained: [
+        "Shreyas Iyer",
+        "Marcus Stoinis",
+        "Hardik Pandya",
+        "Marco Jansen",
+        "Shashank Singh",
+        "Prabhsimran Singh",
+        "Priyansh Arya",
+        "Yuzvendra Chahal",
+        "Azmatullah Omarzai",
+        "Vishnu Vinod",
+        "Xavier Bartlett",
+        "Vijaykumar Vyshak",
+        "Yash Thakur",
+        "Cooper Connolly",
+        "Musheer Khan",
+        "Ben Dwarshuis",
+        "Harpreet Brar",
+        "Suryansh Shedge",
+        "Harnoor Singh"
+      ],
+      released: [
+        "Nehal Wadhera",
+        "Lockie Ferguson",
+        "Pyla Avinash",
+        "Mitchell Owen",
+        "Pravin Dubey",
+        "Vishal Nishad"
+      ],
+      retainedSources: [
+        "pbks",
+        "cricbuzz"
+      ],
+      releasedSources: [
+        "pbks",
+        "cricbuzz"
+      ],
+      purseClaims: [
+        {
+          valueLakh: 1860,
+          source: "cricbuzz"
+        },
+        {
+          valueLakh: 1860,
+          source: "toi"
+        }
+      ],
+      overseasSlots: 2,
+      notes: []
+    },
+    {
+      team: "RCB",
+      retained: [
+        "Rajat Patidar",
+        "Virat Kohli",
+        "Jitesh Sharma",
+        "Bhuvneshwar Kumar",
+        "Krunal Pandya",
+        "Josh Hazlewood",
+        "Phil Salt",
+        "Tim David",
+        "Romario Shepherd",
+        "Devdutt Padikkal",
+        "Nuwan Thushara",
+        "Venkatesh Iyer",
+        "Jacob Duffy",
+        "Jordan Cox",
+        "Rasikh Dar",
+        "Suyash Sharma",
+        "Vicky Ostwal",
+        "Abhinandan Singh",
+        "Kanishk Chouhan",
+        "Yash Dayal"
+      ],
+      released: [
+        "Jacob Bethell",
+        "Richard Gleeson",
+        "Mangesh Yadav",
+        "Vihaan Malhotra",
+        "Satvik Deswal",
+        "Swapnil Singh"
+      ],
+      retainedSources: [
+        "cricbuzz"
+      ],
+      releasedSources: [
+        "rcb",
+        "cricbuzz"
+      ],
+      purseClaims: [
+        {
+          valueLakh: 1415,
+          source: "rcb"
+        },
+        {
+          valueLakh: 1415,
+          source: "cricbuzz"
+        }
+      ],
+      overseasSlots: 1,
+      notes: [
+        "RCB confirms the retained count, overseas count, purse and all six releases. Individual retained names are sourced to Cricbuzz; the official article does not enumerate them."
+      ]
+    },
+    {
+      team: "RR",
+      retained: [
+        "Aman Rao Perala",
+        "Brijesh Sharma",
+        "Dasun Shanaka",
+        "Dhruv Jurel",
+        "Donovan Ferreira",
+        "Jofra Archer",
+        "Lhuan-dre Pretorius",
+        "Manimaran Siddharth",
+        "Mohammed Shami",
+        "Nandre Burger",
+        "Ravi Bishnoi",
+        "Ravindra Jadeja",
+        "Riyan Parag",
+        "Sandeep Sharma",
+        "Shubham Dubey",
+        "Sushant Mishra",
+        "Vaibhav Sooryavanshi",
+        "Yash Raj Punja",
+        "Yashasvi Jaiswal"
+      ],
+      released: [
+        "Adam Milne",
+        "Emanjot Singh Chahal",
+        "Kuldeep Sen",
+        "Kwena Maphaka",
+        "Ravi Singh",
+        "Shimron Hetmyer",
+        "Tushar Deshpande",
+        "Vignesh Puthur",
+        "Yudhvir Singh Charak"
+      ],
+      retainedSources: [
+        "rr",
+        "cricbuzz"
+      ],
+      releasedSources: [
+        "rr",
+        "cricbuzz"
+      ],
+      purseClaims: [
+        {
+          valueLakh: 2705,
+          source: "rr"
+        },
+        {
+          valueLakh: 2705,
+          source: "cricbuzz"
+        },
+        {
+          valueLakh: 2205,
+          source: "indiaToday"
+        }
+      ],
+      overseasSlots: 3,
+      notes: [
+        "RR's official INR 27.05 Cr purse supersedes the conflicting INR 22.05 Cr secondary report."
+      ]
+    },
+    {
+      team: "SRH",
+      retained: [
+        "Pat Cummins",
+        "Abhishek Sharma",
+        "Ishan Kishan",
+        "Heinrich Klaasen",
+        "Nitish Kumar Reddy",
+        "Brydon Carse",
+        "Salil Arora",
+        "Aniket Verma",
+        "Harsh Dubey",
+        "Smaran Ravichandran",
+        "Praful Hinge",
+        "Sakib Hussain",
+        "Shivang Kumar",
+        "Krains Fuletra",
+        "Eshan Malinga",
+        "T Natarajan",
+        "Nathan Ellis",
+        "Khaleel Ahmed"
+      ],
+      released: [
+        "Travis Head",
+        "Jaydev Unadkat",
+        "Gerald Coetzee",
+        "Dilshan Madushanka",
+        "David Payne",
+        "Amit Kumar",
+        "Kamindu Mendis",
+        "Onkar Tarmale",
+        "RS Ambrish",
+        "Shivam Mavi"
+      ],
+      retainedSources: [
+        "cricbuzz"
+      ],
+      releasedSources: [
+        "cricbuzz"
+      ],
+      purseClaims: [
+        {
+          valueLakh: 4015,
+          source: "cricbuzz"
+        },
+        {
+          valueLakh: 4015,
+          source: "toi"
+        }
+      ],
+      overseasSlots: 3,
+      notes: []
+    }
+  ],
+  aliases: {
+    "Sahil Parakh": "cs:926c7443",
+    "Blessing Muzarabani": "cs:449f4e3c",
+    "George Linde": "cs:e5437608",
+    "Mohammed Izhar": "sq:mohammad-izhar|india",
+    "Aman Rao Perala": "sq:aman-rao|india",
+    "David Payne": "cs:6c79c098"
+  },
+  availability: [
+    {
+      name: "MS Dhoni",
+      status: "retired",
+      note: "Reported retirement and move to a mentor role.",
+      sources: [
+        "cricbuzz"
+      ]
+    },
+    {
+      name: "Ajinkya Rahane",
+      status: "retired",
+      note: "Reported IPL retirement.",
+      sources: [
+        "cricbuzz"
+      ]
+    },
+    {
+      name: "Mitchell Starc",
+      status: "unavailable",
+      note: "DC confirms he notified the franchise and BCCI of unavailability for IPL 2027.",
+      sources: [
+        "dc"
+      ]
+    },
+    {
+      name: "Travis Head",
+      status: "unavailable",
+      note: "Reported unavailability for IPL 2027.",
+      sources: [
+        "cricbuzz"
+      ]
+    },
+    {
+      name: "Jacob Bethell",
+      status: "uncertain",
+      note: "RCB cites a recurring knee injury and uncertainty over his return.",
+      sources: [
+        "rcb"
+      ]
+    }
+  ],
+  auctionRegistrations: [],
+  notes: [
+    "No official IPL 2027 auction registration list has been verified. A release does not establish auction eligibility.",
+    "Historical contracts and statistical assessments are joined from the existing warehouse and are not treated as verified 2027 contracts.",
+    "Overseas slot counts are reported by Cricbuzz unless separately confirmed by a primary source."
+  ],
+  identities: {
+    "Ruturaj Gaikwad": {
+      canonicalId: "cs:45a43fe2",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Sanju Samson": {
+      canonicalId: "cs:a4cc73aa",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Ayush Mhatre": {
+      canonicalId: "cs:b2b4f545",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Urvil Patel": {
+      canonicalId: "cs:cf59b3f0",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Dewald Brevis": {
+      canonicalId: "cs:844e79d1",
+      country: "South Africa",
+      overseas: true,
+      role: "batter",
+      bowlingStyle: "Legbreak"
+    },
+    "Liam Livingstone": {
+      canonicalId: "cs:50c6bc2b",
+      country: "England",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Offbreak, Legbreak"
+    },
+    "Jack Edwards": {
+      canonicalId: "sq:jack-edwards|australia",
+      country: "Australia",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Akeal Hosein": {
+      canonicalId: "cs:4d7f517e",
+      country: "West Indies",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Noor Ahmad": {
+      canonicalId: "cs:efc04be7",
+      country: "Afghanistan",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Left arm Wrist spin"
+    },
+    "Kartik Sharma": {
+      canonicalId: "cs:7b679de5",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Shivam Dube": {
+      canonicalId: "cs:a4e37e47",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Gurjapneet Singh": {
+      canonicalId: "cs:cc61ee8f",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Anshul Kamboj": {
+      canonicalId: "cs:fcc21ace",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Sarfaraz Khan": {
+      canonicalId: "cs:f088b960",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Legbreak"
+    },
+    "Jamie Overton": {
+      canonicalId: "cs:59559bc2",
+      country: "England",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Mukesh Choudhary": {
+      canonicalId: "cs:765a4731",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: "Left arm Medium"
+    },
+    "Rahul Chahar": {
+      canonicalId: "cs:2ed569a0",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Legbreak Googly"
+    },
+    "Ramakrishna Ghosh": {
+      canonicalId: "cs:dee07622",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Shreyas Gopal": {
+      canonicalId: "cs:7a8bd078",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Legbreak"
+    },
+    "MS Dhoni": {
+      canonicalId: "cs:4a8a2e3b",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Prashant Veer": {
+      canonicalId: "cs:e148e6bd",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "LEFT ARM Slow Orthodox"
+    },
+    "Spencer Johnson": {
+      canonicalId: "cs:83c3e8e3",
+      country: "Australia",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Left arm Fast"
+    },
+    "Akash Madhwal": {
+      canonicalId: "cs:4bd09374",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Aman Khan": {
+      canonicalId: "cs:378daa89",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Dian Forrester": {
+      canonicalId: "sq:dian-forrester|west-indies",
+      country: "West Indies",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Kuldip Yadav": {
+      canonicalId: "cs:030f3089",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left arm Fast medium"
+    },
+    "Macneil Noronha": {
+      canonicalId: "sq:macneil-noronha|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Matt Henry": {
+      canonicalId: "cs:e84ac20c",
+      country: "New Zealand",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Matthew Short": {
+      canonicalId: "cs:a90e53ec",
+      country: "Australia",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Zak Foulkes": {
+      canonicalId: "sq:zak-foulkes|new-zealand",
+      country: "New Zealand",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Ashutosh Sharma": {
+      canonicalId: "cs:84d9c311",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Madhav Tiwari": {
+      canonicalId: "cs:fb5f69e4",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Vipraj Nigam": {
+      canonicalId: "cs:5ffc0565",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Legbreak"
+    },
+    "Auqib Nabi": {
+      canonicalId: "cs:7c3c0337",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Mukesh Kumar": {
+      canonicalId: "cs:2cffab74",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Zeeshan Ansari": {
+      canonicalId: "cs:36619795",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Legbreak Googly"
+    },
+    "Axar Patel": {
+      canonicalId: "cs:2e171977",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Prithvi Shaw": {
+      canonicalId: "cs:8b3e9c7c",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "David Miller": {
+      canonicalId: "cs:d67d5f00",
+      country: "South Africa",
+      overseas: true,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Rishabh Pant": {
+      canonicalId: "cs:919a3be2",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "KL Rahul": {
+      canonicalId: "cs:b17e2f24",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Sameer Rizvi": {
+      canonicalId: "cs:f89d3b11",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Kyle Jamieson": {
+      canonicalId: "cs:68c56d09",
+      country: "New Zealand",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Tripurana Vijay": {
+      canonicalId: "cs:51ec3919",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Lungi Ngidi": {
+      canonicalId: "cs:f834dcfc",
+      country: "South Africa",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Tristan Stubbs": {
+      canonicalId: "cs:85b3fab2",
+      country: "South Africa",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Mitchell Starc": {
+      canonicalId: "cs:3fb19989",
+      country: "Australia",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Left arm Fast"
+    },
+    "Nitish Rana": {
+      canonicalId: "cs:fb2d1dda",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium, Right arm Offbreak, Legbreak"
+    },
+    "Abishek Porel": {
+      canonicalId: "cs:ad3b6e95",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Pathum Nissanka": {
+      canonicalId: "cs:8ee36b18",
+      country: "Sri Lanka",
+      overseas: true,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Karun Nair": {
+      canonicalId: "cs:944533a5",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Sahil Parakh": {
+      canonicalId: "cs:926c7443",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Ajay Mandal": {
+      canonicalId: "sq:ajay-mandal|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Rehan Ahmed": {
+      canonicalId: "sq:rehan-ahmed|england",
+      country: "England",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Dushmantha Chameera": {
+      canonicalId: "sq:dushmantha-chameera|sri-lanka",
+      country: "Sri Lanka",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Anuj Rawat": {
+      canonicalId: "cs:c8f5f961",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Kagiso Rabada": {
+      canonicalId: "cs:e62dd25d",
+      country: "South Africa",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Rahul Tewatia": {
+      canonicalId: "cs:39a2dfa8",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Legbreak"
+    },
+    "Ashok Sharma": {
+      canonicalId: "cs:50c09020",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "RIGHT ARM Fast"
+    },
+    "Kumar Kushagra": {
+      canonicalId: "cs:57ca01b3",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Rashid Khan": {
+      canonicalId: "cs:5f547c8b",
+      country: "Afghanistan",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Legbreak Googly"
+    },
+    "Glenn Phillips": {
+      canonicalId: "cs:9a46c4e5",
+      country: "New Zealand",
+      overseas: true,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Manav Suthar": {
+      canonicalId: "cs:025c4400",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Sai Sudharsan": {
+      canonicalId: "sq:sai-sudharsan|india",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Gurnoor Brar": {
+      canonicalId: "cs:99258814",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Mohammed Siraj": {
+      canonicalId: "cs:2f49c897",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Shubman Gill": {
+      canonicalId: "cs:b4b99816",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Harshal Patel": {
+      canonicalId: "cs:f986ca1a",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Arshad Khan": {
+      canonicalId: "cs:12314277",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Left arm Medium"
+    },
+    "Tom Banton": {
+      canonicalId: "cs:25f7b7d6",
+      country: "England",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Jason Holder": {
+      canonicalId: "cs:0f721006",
+      country: "West Indies",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Nishant Sindhu": {
+      canonicalId: "cs:3cea23da",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow left-arm orthodox"
+    },
+    "Washington Sundar": {
+      canonicalId: "cs:f19ccfad",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Jayant Yadav": {
+      canonicalId: "cs:81049310",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Prasidh Krishna": {
+      canonicalId: "sq:prasidh-krishna|india",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Jos Buttler": {
+      canonicalId: "cs:99b75528",
+      country: "England",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "R Sai Kishore": {
+      canonicalId: "cs:c7a995d3",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Shahrukh Khan": {
+      canonicalId: "sq:shahrukh-khan|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Ishant Sharma": {
+      canonicalId: "cs:5bb1a1c4",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Luke Wood": {
+      canonicalId: "cs:65b6943c",
+      country: "England",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Left arm Fast medium"
+    },
+    "Kulwant Khejroliya": {
+      canonicalId: "cs:fa2f1dde",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left arm Medium fast"
+    },
+    "Connor Esterhuizen": {
+      canonicalId: "sq:connor-esterhuizen|south-africa",
+      country: "South Africa",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Prithviraj Yarra": {
+      canonicalId: null,
+      country: null,
+      overseas: null,
+      role: null,
+      bowlingStyle: null
+    },
+    "Anukul Roy": {
+      canonicalId: "cs:e4cdf230",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Angkrish Raghuvanshi": {
+      canonicalId: "cs:d7017798",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Cameron Green": {
+      canonicalId: "cs:eaa76d3c",
+      country: "Australia",
+      overseas: true,
+      role: "batter",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Finn Allen": {
+      canonicalId: "cs:bf74b130",
+      country: "New Zealand",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Harshit Rana": {
+      canonicalId: "cs:77b1aa15",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Kartik Tyagi": {
+      canonicalId: "cs:5d2eea49",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Manish Pandey": {
+      canonicalId: "cs:93b4fc78",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Prashant Solanki": {
+      canonicalId: "cs:c695b423",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Legbreak"
+    },
+    "Ramandeep Singh": {
+      canonicalId: "cs:be24ead0",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Rinku Singh": {
+      canonicalId: "cs:0a509d6b",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Rovman Powell": {
+      canonicalId: "cs:650d5e49",
+      country: "West Indies",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Sarthak Ranjan": {
+      canonicalId: "sq:sarthak-ranjan|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Saurabh Dubey": {
+      canonicalId: "sq:saurabh-dubey|india",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Sunil Narine": {
+      canonicalId: "cs:9d430b40",
+      country: "West Indies",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Tim Seifert": {
+      canonicalId: "cs:4663bd23",
+      country: "New Zealand",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Vaibhav Arora": {
+      canonicalId: "cs:7c3b3b78",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Varun Chakaravarthy": {
+      canonicalId: "sq:varun-chakaravarthy|india",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Ajinkya Rahane": {
+      canonicalId: "cs:29e95537",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Akash Deep": {
+      canonicalId: "cs:0a67aec0",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Blessing Muzarabani": {
+      canonicalId: "cs:449f4e3c",
+      country: "Zimbabwe",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Daksh Kamra": {
+      canonicalId: "sq:daksh-kamra|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Luvnith Sisodia": {
+      canonicalId: "sq:luvnith-sisodia|india",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Matheesha Pathirana": {
+      canonicalId: "cs:64839cb3",
+      country: "Sri Lanka",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Mustafizur Rahman": {
+      canonicalId: "cs:0a8fce53",
+      country: "Bangladesh",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Left arm Fast medium"
+    },
+    "Navdeep Saini": {
+      canonicalId: "cs:21d4e29b",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Rachin Ravindra": {
+      canonicalId: "cs:ba5e1069",
+      country: "New Zealand",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Rahul Tripathi": {
+      canonicalId: "cs:77255a9e",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Tejasvi Singh": {
+      canonicalId: "sq:tejasvi-singh|india",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Umran Malik": {
+      canonicalId: "cs:81c08fa3",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Abdul Samad": {
+      canonicalId: "cs:8e514b4c",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Legbreak"
+    },
+    "Aiden Markram": {
+      canonicalId: "cs:6a26221c",
+      country: "South Africa",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Akash Singh": {
+      canonicalId: "cs:b483905d",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left arm Medium fast"
+    },
+    "Akshat Raghuwanshi": {
+      canonicalId: "cs:d8d67045",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Arjun Tendulkar": {
+      canonicalId: "cs:44aac2f0",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left arm Medium fast"
+    },
+    "Arshin Kulkarni": {
+      canonicalId: "cs:2d140b79",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Ayush Badoni": {
+      canonicalId: "cs:872b03f7",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Digvesh Rathi": {
+      canonicalId: "cs:13fc5c6d",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Legbreak"
+    },
+    "Josh Inglis": {
+      canonicalId: "cs:989889ff",
+      country: "Australia",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Kuldeep Yadav": {
+      canonicalId: "cs:8d2c70ad",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left arm Wrist spin"
+    },
+    "Mayank Yadav": {
+      canonicalId: "cs:b1ad996b",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Mitchell Marsh": {
+      canonicalId: "cs:3d8feaf8",
+      country: "Australia",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Mohsin Khan": {
+      canonicalId: "cs:c33d8116",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left arm Medium fast"
+    },
+    "Mukul Choudhary": {
+      canonicalId: "cs:1c84109e",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Nicholas Pooran": {
+      canonicalId: "cs:3241e3fd",
+      country: "West Indies",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Prince Yadav": {
+      canonicalId: "cs:80b2fb19",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Sam Curran": {
+      canonicalId: "cs:e94915e6",
+      country: "England",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Left arm Medium fast"
+    },
+    "Shahbaz Ahmed": {
+      canonicalId: "cs:f9e6e7ef",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Avesh Khan": {
+      canonicalId: "cs:eef2536f",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Matthew Breetzke": {
+      canonicalId: "cs:35f173a0",
+      country: "South Africa",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Wanindu Hasaranga": {
+      canonicalId: "cs:a97c8ec2",
+      country: "Sri Lanka",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Legbreak"
+    },
+    "George Linde": {
+      canonicalId: "cs:e5437608",
+      country: "South Africa",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Anrich Nortje": {
+      canonicalId: "cs:acdc62f5",
+      country: "South Africa",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Naman Tiwari": {
+      canonicalId: "sq:naman-tiwari|india",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Himmat Singh": {
+      canonicalId: "cs:ebcfef83",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Rohit Sharma": {
+      canonicalId: "cs:740742ef",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Suryakumar Yadav": {
+      canonicalId: "cs:271f83cd",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Medium, Right arm Offbreak"
+    },
+    "Jasprit Bumrah": {
+      canonicalId: "cs:462411b3",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Tilak Varma": {
+      canonicalId: "cs:b0482a1d",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Naman Dhir": {
+      canonicalId: "cs:fffa744b",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Arshdeep Singh": {
+      canonicalId: "cs:244048f6",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left arm Medium fast"
+    },
+    "Corbin Bosch": {
+      canonicalId: "cs:172dff15",
+      country: "South Africa",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Mitchell Santner": {
+      canonicalId: "cs:e4a0deae",
+      country: "New Zealand",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Sherfane Rutherford": {
+      canonicalId: "cs:d014d5ac",
+      country: "West Indies",
+      overseas: true,
+      role: "batter",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Will Jacks": {
+      canonicalId: "cs:9caf69a1",
+      country: "England",
+      overseas: true,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Ryan Rickelton": {
+      canonicalId: "cs:e66732f8",
+      country: "South Africa",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Quinton de Kock": {
+      canonicalId: "cs:372455c4",
+      country: "South Africa",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Shardul Thakur": {
+      canonicalId: "cs:1abb78f8",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Ashwani Kumar": {
+      canonicalId: "cs:d45c29b1",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left arm Medium"
+    },
+    "Raj Angad Bawa": {
+      canonicalId: "cs:ba6b2f91",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Raghu Sharma": {
+      canonicalId: "cs:5b615e7c",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Trent Boult": {
+      canonicalId: "cs:a818c1be",
+      country: "New Zealand",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Left arm Fast medium"
+    },
+    "Deepak Chahar": {
+      canonicalId: "cs:23eeb873",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Medium"
+    },
+    "AM Ghazanfar": {
+      canonicalId: "cs:9ca68676",
+      country: "Afghanistan",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right-arm offbreak"
+    },
+    "Atharva Ankolekar": {
+      canonicalId: "sq:atharva-ankolekar|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Keshav Maharaj": {
+      canonicalId: "sq:keshav-maharaj|south-africa",
+      country: "South Africa",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Mohammed Izhar": {
+      canonicalId: "sq:mohammad-izhar|india",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Danish Malewar": {
+      canonicalId: "cs:9e6032fa",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "RIGHT ARM Leg Spin"
+    },
+    "Mayank Markande": {
+      canonicalId: "cs:a9fd84fb",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Legbreak"
+    },
+    "Mayank Rawat": {
+      canonicalId: "cs:2b801189",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "RIGHT ARM Off Spin"
+    },
+    "Krish Bhagat": {
+      canonicalId: "cs:e48a4814",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "RIGHT ARM Fast"
+    },
+    "Mahipal Lomror": {
+      canonicalId: "cs:da934ee8",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Robin Minz": {
+      canonicalId: "cs:bafd0398",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: "Slow left-arm orthodox"
+    },
+    "Ruchit Ahir": {
+      canonicalId: "sq:ruchit-ahir|india",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Shreyas Iyer": {
+      canonicalId: "cs:85ec8e33",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak, Legbreak Googly"
+    },
+    "Marcus Stoinis": {
+      canonicalId: "cs:d9273ee7",
+      country: "Australia",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Hardik Pandya": {
+      canonicalId: "cs:dbe50b21",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Marco Jansen": {
+      canonicalId: "cs:81c36ee9",
+      country: "South Africa",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Left arm Medium fast"
+    },
+    "Shashank Singh": {
+      canonicalId: "cs:26989d80",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium, Right arm Offbreak"
+    },
+    "Prabhsimran Singh": {
+      canonicalId: "cs:9418198b",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Priyansh Arya": {
+      canonicalId: "cs:b5797845",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Yuzvendra Chahal": {
+      canonicalId: "cs:57ee1fde",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Legbreak Googly"
+    },
+    "Azmatullah Omarzai": {
+      canonicalId: "cs:8f6dd463",
+      country: "Afghanistan",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Vishnu Vinod": {
+      canonicalId: "cs:0494fa6e",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Xavier Bartlett": {
+      canonicalId: "cs:3b53243a",
+      country: "Australia",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Vijaykumar Vyshak": {
+      canonicalId: "cs:54e52590",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Yash Thakur": {
+      canonicalId: "cs:4b31f3a3",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Cooper Connolly": {
+      canonicalId: "cs:fe366f34",
+      country: "Australia",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "LEFT ARM Slow Orthodox"
+    },
+    "Musheer Khan": {
+      canonicalId: "cs:d621b427",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Ben Dwarshuis": {
+      canonicalId: "cs:e1b9f3a9",
+      country: "Australia",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "LEFT ARM Fast Medium"
+    },
+    "Harpreet Brar": {
+      canonicalId: "cs:c05edf8e",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Suryansh Shedge": {
+      canonicalId: "cs:970ddd24",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Harnoor Singh": {
+      canonicalId: "sq:harnoor-singh|india",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Nehal Wadhera": {
+      canonicalId: "cs:d1a60072",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Legbreak"
+    },
+    "Lockie Ferguson": {
+      canonicalId: "cs:2f9d0389",
+      country: "New Zealand",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Pyla Avinash": {
+      canonicalId: "sq:pyla-avinash|india",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Mitchell Owen": {
+      canonicalId: "sq:mitchell-owen|australia",
+      country: "Australia",
+      overseas: true,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Pravin Dubey": {
+      canonicalId: "sq:pravin-dubey|india",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Vishal Nishad": {
+      canonicalId: "sq:vishal-nishad|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Rajat Patidar": {
+      canonicalId: "cs:c740ea83",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Virat Kohli": {
+      canonicalId: "cs:ba607b88",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Jitesh Sharma": {
+      canonicalId: "cs:800d2d97",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Bhuvneshwar Kumar": {
+      canonicalId: "cs:2e81a32d",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Krunal Pandya": {
+      canonicalId: "cs:5b8c830e",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Josh Hazlewood": {
+      canonicalId: "cs:03806cf8",
+      country: "Australia",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Phil Salt": {
+      canonicalId: "cs:3d284ca3",
+      country: "England",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Tim David": {
+      canonicalId: "cs:f1f99156",
+      country: "Australia",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Romario Shepherd": {
+      canonicalId: "cs:c5aef772",
+      country: "West Indies",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Devdutt Padikkal": {
+      canonicalId: "cs:2c25d4f5",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Nuwan Thushara": {
+      canonicalId: "cs:ee1b6c27",
+      country: "Sri Lanka",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Venkatesh Iyer": {
+      canonicalId: "cs:a24be938",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Jacob Duffy": {
+      canonicalId: "cs:dadbdb68",
+      country: "New Zealand",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "RIGHT ARM Fast Medium"
+    },
+    "Jordan Cox": {
+      canonicalId: "sq:jordan-cox|england",
+      country: "England",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Rasikh Dar": {
+      canonicalId: "cs:b8527c3d",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Suyash Sharma": {
+      canonicalId: "cs:9440ef41",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Legbreak Googly"
+    },
+    "Vicky Ostwal": {
+      canonicalId: "sq:vicky-ostwal|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Abhinandan Singh": {
+      canonicalId: "cs:82c10dac",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Kanishk Chouhan": {
+      canonicalId: "sq:kanishk-chouhan|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Yash Dayal": {
+      canonicalId: "cs:7210d461",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left arm Medium fast"
+    },
+    "Jacob Bethell": {
+      canonicalId: "cs:3c55c703",
+      country: "England",
+      overseas: true,
+      role: "batter",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Richard Gleeson": {
+      canonicalId: "cs:402f8494",
+      country: "England",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast Medium"
+    },
+    "Mangesh Yadav": {
+      canonicalId: "sq:mangesh-yadav|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Vihaan Malhotra": {
+      canonicalId: "sq:vihaan-malhotra|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Satvik Deswal": {
+      canonicalId: "sq:satvik-deswal|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Swapnil Singh": {
+      canonicalId: "cs:983f2f61",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Aman Rao Perala": {
+      canonicalId: "sq:aman-rao|india",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Brijesh Sharma": {
+      canonicalId: "cs:133bbd61",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "RIGHT ARM Fast"
+    },
+    "Dasun Shanaka": {
+      canonicalId: "sq:dasun-shanaka|sri-lanka",
+      country: "Sri Lanka",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Dhruv Jurel": {
+      canonicalId: "cs:bcf325d2",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Donovan Ferreira": {
+      canonicalId: "cs:f0af99a7",
+      country: "South Africa",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Jofra Archer": {
+      canonicalId: "cs:5574750c",
+      country: "England",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Lhuan-dre Pretorius": {
+      canonicalId: "cs:60aa2db3",
+      country: "South Africa",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Manimaran Siddharth": {
+      canonicalId: "cs:cf0ccafa",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Mohammed Shami": {
+      canonicalId: "cs:8cf9814c",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Nandre Burger": {
+      canonicalId: "cs:465aa633",
+      country: "South Africa",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Left arm Fast medium"
+    },
+    "Ravi Bishnoi": {
+      canonicalId: "cs:df064e1a",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Legbreak Googly"
+    },
+    "Ravindra Jadeja": {
+      canonicalId: "cs:fe93fd9d",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Riyan Parag": {
+      canonicalId: "cs:04a418e8",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Legbreak"
+    },
+    "Sandeep Sharma": {
+      canonicalId: "cs:ce820073",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Shubham Dubey": {
+      canonicalId: "cs:6b2ff18f",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Sushant Mishra": {
+      canonicalId: "cs:92500ad5",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left-arm medium-fast"
+    },
+    "Vaibhav Sooryavanshi": {
+      canonicalId: "cs:470f446b",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Yash Raj Punja": {
+      canonicalId: "cs:02dfebbe",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "RIGHT ARM Leg Spin"
+    },
+    "Yashasvi Jaiswal": {
+      canonicalId: "cs:6c19c6e5",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Legbreak"
+    },
+    "Adam Milne": {
+      canonicalId: "cs:350bb1b1",
+      country: "New Zealand",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Emanjot Singh Chahal": {
+      canonicalId: "sq:emanjot-singh-chahal|india",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Kuldeep Sen": {
+      canonicalId: "cs:2e78f685",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Kwena Maphaka": {
+      canonicalId: "cs:107c26fb",
+      country: "South Africa",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Left arm Fast"
+    },
+    "Ravi Singh": {
+      canonicalId: "cs:548516a6",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Shimron Hetmyer": {
+      canonicalId: "cs:48a1d7b7",
+      country: "West Indies",
+      overseas: true,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Tushar Deshpande": {
+      canonicalId: "cs:46a9bea1",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Medium"
+    },
+    "Vignesh Puthur": {
+      canonicalId: "cs:1e030637",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left arm Wrist spin"
+    },
+    "Yudhvir Singh Charak": {
+      canonicalId: "cs:4885bbe6",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Pat Cummins": {
+      canonicalId: "cs:ded9240e",
+      country: "Australia",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Abhishek Sharma": {
+      canonicalId: "cs:f29185a1",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Ishan Kishan": {
+      canonicalId: "cs:752f7486",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Heinrich Klaasen": {
+      canonicalId: "cs:235c2bb6",
+      country: "South Africa",
+      overseas: true,
+      role: "wicketkeeper",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Nitish Kumar Reddy": {
+      canonicalId: "cs:aad0c365",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Brydon Carse": {
+      canonicalId: "sq:brydon-carse|england",
+      country: "England",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Salil Arora": {
+      canonicalId: "cs:d7423da1",
+      country: "India",
+      overseas: false,
+      role: "wicketkeeper",
+      bowlingStyle: null
+    },
+    "Aniket Verma": {
+      canonicalId: "cs:a3b0600d",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: "Right arm Medium fast"
+    },
+    "Harsh Dubey": {
+      canonicalId: "cs:25228673",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Slow Left arm Orthodox"
+    },
+    "Smaran Ravichandran": {
+      canonicalId: "sq:smaran-ravichandran|india",
+      country: "India",
+      overseas: false,
+      role: "batter",
+      bowlingStyle: null
+    },
+    "Praful Hinge": {
+      canonicalId: "cs:ece7b6b3",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "RIGHT ARM Fast"
+    },
+    "Sakib Hussain": {
+      canonicalId: "cs:280fff14",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right-arm medium"
+    },
+    "Shivang Kumar": {
+      canonicalId: "cs:7b44eb3e",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "LEFT ARM Slow Unorthodox"
+    },
+    "Krains Fuletra": {
+      canonicalId: "sq:krains-fuletra|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Eshan Malinga": {
+      canonicalId: "cs:5750bcb4",
+      country: "Sri Lanka",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "T Natarajan": {
+      canonicalId: "cs:ce794613",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Left arm Medium"
+    },
+    "Nathan Ellis": {
+      canonicalId: "cs:9eb1455b",
+      country: "Australia",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast medium"
+    },
+    "Khaleel Ahmed": {
+      canonicalId: "cs:a2f46292",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Left arm Medium"
+    },
+    "Travis Head": {
+      canonicalId: "cs:12b610c2",
+      country: "Australia",
+      overseas: true,
+      role: "batter",
+      bowlingStyle: "Right arm Offbreak"
+    },
+    "Jaydev Unadkat": {
+      canonicalId: "cs:1e66c162",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: "Left arm Medium"
+    },
+    "Gerald Coetzee": {
+      canonicalId: "cs:3204c99f",
+      country: "South Africa",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast"
+    },
+    "Dilshan Madushanka": {
+      canonicalId: "cs:de7d833e",
+      country: "Sri Lanka",
+      overseas: true,
+      role: "bowler",
+      bowlingStyle: "Left-arm fast-medium"
+    },
+    "David Payne": {
+      canonicalId: "cs:6c79c098",
+      country: null,
+      overseas: null,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Amit Kumar": {
+      canonicalId: "sq:amit-kumar|india",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "Kamindu Mendis": {
+      canonicalId: "cs:08548b13",
+      country: "Sri Lanka",
+      overseas: true,
+      role: "all-rounder",
+      bowlingStyle: "Right arm Offbreak, Slow Left arm Orthodox"
+    },
+    "Onkar Tarmale": {
+      canonicalId: "sq:onkar-tarmale|india",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: null
+    },
+    "RS Ambrish": {
+      canonicalId: "sq:rs-ambrish|india",
+      country: "India",
+      overseas: false,
+      role: "all-rounder",
+      bowlingStyle: null
+    },
+    "Shivam Mavi": {
+      canonicalId: "cs:c38d3503",
+      country: "India",
+      overseas: false,
+      role: "bowler",
+      bowlingStyle: "Right arm Fast medium"
+    }
+  }
+};
+
+// src/services/retention/official.ts
+var sourceSchema = external_exports.object({ publisher: external_exports.string(), official: external_exports.boolean(), url: external_exports.string().url(), publishedOn: external_exports.string() });
+var identitySchema = external_exports.object({ canonicalId: external_exports.string().nullable(), country: external_exports.string().nullable(), overseas: external_exports.boolean().nullable(), role: external_exports.string().nullable(), bowlingStyle: external_exports.string().nullable() });
+var officialReleaseSchema = external_exports.object({
+  version: external_exports.string(),
+  season: external_exports.number().int(),
+  announcedOn: external_exports.string(),
+  reviewedAt: external_exports.string().datetime(),
+  comparisonCutoff: external_exports.string().datetime(),
+  sources: external_exports.record(sourceSchema),
+  aliases: external_exports.record(external_exports.string()),
+  identities: external_exports.record(identitySchema),
+  teams: external_exports.array(external_exports.object({ team: external_exports.enum(TEAMS2), retained: external_exports.array(external_exports.string()), released: external_exports.array(external_exports.string()), retainedSources: external_exports.array(external_exports.string()).min(1), releasedSources: external_exports.array(external_exports.string()).min(1), purseClaims: external_exports.array(external_exports.object({ valueLakh: external_exports.number().nonnegative(), source: external_exports.string() })), overseasSlots: external_exports.number().int().min(0).max(8), notes: external_exports.array(external_exports.string()) })),
+  availability: external_exports.array(external_exports.object({ name: external_exports.string(), status: external_exports.enum(["retired", "unavailable", "uncertain"]), note: external_exports.string(), sources: external_exports.array(external_exports.string()) })),
+  auctionRegistrations: external_exports.array(external_exports.object({ canonicalId: external_exports.string(), source: external_exports.string(), basePriceLakh: external_exports.number().positive() })),
+  notes: external_exports.array(external_exports.string())
+}).superRefine((d, ctx) => {
+  const fail5 = (message) => ctx.addIssue({ code: "custom", message });
+  if (d.teams.length !== TEAMS2.length || new Set(d.teams.map((t) => t.team)).size !== TEAMS2.length) fail5("Exactly ten distinct franchises are required");
+  const owners = /* @__PURE__ */ new Set();
+  for (const t of d.teams) {
+    const seen = /* @__PURE__ */ new Set();
+    for (const name of [...t.retained, ...t.released]) {
+      const key = d.identities[name]?.canonicalId ?? name;
+      if (seen.has(key)) fail5(`${t.team}: duplicate or conflicting decision for ${name}`);
+      seen.add(key);
+      if (!d.identities[name]) fail5(`Missing identity review for ${name}`);
+    }
+    for (const name of t.retained) {
+      const id = d.identities[name]?.canonicalId ?? name;
+      if (owners.has(id)) fail5(`Retained by more than one franchise: ${name}`);
+      owners.add(id);
+    }
+    if (t.retained.length > 25) fail5(`${t.team}: retained squad exceeds 25`);
+    for (const id of [...t.retainedSources, ...t.releasedSources, ...t.purseClaims.map((p) => p.source)]) if (!d.sources[id]) fail5(`Unknown source ${id}`);
+  }
+  for (const a of [...d.availability, ...d.auctionRegistrations.map((r) => ({ sources: [r.source] }))]) for (const id of a.sources) if (!d.sources[id]) fail5(`Unknown source ${id}`);
+});
+var officialRelease = officialReleaseSchema.parse(official_2027_default);
+function resolvePurse(claims, sources = officialRelease.sources) {
+  const official = claims.filter((c) => sources[c.source]?.official);
+  const preferred = official.length ? official : claims;
+  const distinct = new Set(preferred.map((c) => c.valueLakh));
+  const status = !preferred.length ? "unavailable" : distinct.size > 1 ? "conflict" : official.length ? "verified" : "reported";
+  return { valueLakh: status === "conflict" || status === "unavailable" ? null : preferred[0].valueLakh, status, claims: claims.map((c) => ({ ...c, source: sources[c.source] })), hasDisagreement: new Set(claims.map((c) => c.valueLakh)).size > 1 };
+}
+function scoutLink(team4, role, phase = "all", discipline = "batting") {
+  const p = new URLSearchParams({ team: team4.toLowerCase(), preset: role === "finisher" ? "finisher" : discipline === "bowling" ? "pace" : "search", discipline, phase, minBalls: "60", recentSeasons: "3" });
+  if (role) p.set("role", role);
+  return `/scout/results?${p}`;
+}
+var canonical = (name, data) => data.identities[name]?.canonicalId ?? data.aliases[name] ?? null;
+var verification = (ids2, data) => ids2.some((id) => data.sources[id]?.official) ? "verified" : "reported";
+function group(p, role, style) {
+  const r = p?.role ?? role;
+  if (r === "wicketkeeper" || /keeper/i.test(r ?? "")) return "wicketkeeper";
+  if (r === "all-rounder" || /allround|all.round/i.test(r ?? "")) return "all-rounder";
+  if (r === "batter" || /batsman/i.test(r ?? "")) return "batter";
+  if (p?.candidate.bowlingType === "spin" || /spin|break|orthodox/i.test(style ?? "")) return "spin";
+  if (p?.candidate.bowlingType === "pace" || /pace|fast|medium/i.test(style ?? "")) return "pace";
+  return r === "bowler" ? "bowler" : "unknown";
+}
+function buildOfficialRoom(team4, data, ledger, snapshot) {
+  const t = data.teams.find((t2) => t2.team === team4);
+  const src = (ids2) => ids2.map((id) => data.sources[id]);
+  const moves = ledger.filter((e) => e.id.startsWith(`${data.season}-`) && SQUAD_CHANGING.has(e.status) && e.sources.some((s) => s.official)).flatMap((e) => e.moves.map((m) => ({ ...m, id: e.id, sources: e.sources.filter((s) => s.official), announcedOn: e.announcedOn, canonicalId: canonical(m.player, data) })));
+  const byId = new Map(snapshot?.players.map((p) => [p.id, p]) ?? []);
+  const records = [
+    ...t.retained.map((name) => ({ name, decision: "retained", ids: t.retainedSources })),
+    ...t.released.map((name) => ({ name, decision: "released", ids: t.releasedSources })),
+    ...moves.filter((m) => m.from === team4).map((m) => ({ name: m.player, decision: "traded_out", ids: [] }))
+  ];
+  const players = records.map((r) => {
+    const id = canonical(r.name, data), identity = data.identities[r.name];
+    const p = id ? byId.get(id) : void 0;
+    const trade = moves.find((m) => (id ? m.canonicalId === id : m.player === r.name) && (r.decision === "traded_out" ? m.from === team4 : m.to === team4));
+    const decision = trade && r.decision === "retained" ? "traded_in" : r.decision;
+    const sources = trade ? trade.sources : src(r.ids);
+    const availability = data.availability.find((a) => canonical(a.name, data) === id && id !== null || a.name === r.name);
+    const g = group(p, identity?.role, identity?.bowlingStyle);
+    const battingSlot = p?.candidate.battingSlot;
+    const phaseBalls = p?.retentionV2?.seasons.reduce((a, s) => a.map((v, i) => v + (s.phaseBallsBowled[i] ?? 0)), [0, 0, 0]) ?? [0, 0, 0];
+    const bowling = g === "pace" || g === "spin" || g === "bowler";
+    const phase = bowling ? phaseBalls[2] >= 120 && phaseBalls[2] >= phaseBalls[0] ? "death" : g === "spin" ? "middle" : "powerplay" : battingSlot === "finish" ? "death" : "all";
+    const scoutRole = bowling ? `${phase === "powerplay" ? "powerplay" : phase === "death" ? "death" : "middle"}_specialist` : battingSlot === "top" ? "opener" : battingSlot === "finish" ? "finisher" : "middle_order";
+    return {
+      id: id ?? `unresolved:${r.name}`,
+      canonicalId: id,
+      name: r.name,
+      identityStatus: id ? "matched" : "unresolved",
+      team: team4,
+      decision,
+      verification: trade ? "verified" : verification(r.ids, data),
+      announcedOn: trade?.announcedOn ?? data.announcedOn,
+      sources,
+      role: p?.role ?? identity?.role ?? null,
+      group: g,
+      country: identity?.country ?? null,
+      overseas: identity?.overseas ?? p?.overseas ?? null,
+      contractLakh: trade?.feeLakh ?? null,
+      contractStatus: trade?.feeLakh != null ? "verified" : "unavailable",
+      historicalContractLakh: p?.contractLakh ?? null,
+      trade: trade ? { from: trade.from, to: trade.to, feeLakh: trade.feeLakh } : null,
+      availability: availability ? { ...availability, sources: src(availability.sources), verification: verification(availability.sources, data) } : { status: "unknown", note: "Availability has not been verified.", sources: [], verification: "unavailable" },
+      performance: p?.retentionV2 ? { seasons: p.retentionV2.seasons.filter((s) => s.season >= 2024), projection: p.retentionV2.projection, phase: p.performance, dataCutoff: snapshot.dataCutoff, modelVersion: snapshot.version } : null,
+      scoutUrl: scoutLink(team4, scoutRole, phase, bowling ? "bowling" : "batting"),
+      auctionEligibility: data.auctionRegistrations.some((a) => a.canonicalId === id && data.sources[a.source]?.official) && (!availability || availability.status === "uncertain") ? "registered" : "unverified"
+    };
+  });
+  const squad = players.filter((p) => p.decision === "retained" || p.decision === "traded_in");
+  const groups = ["batter", "wicketkeeper", "all-rounder", "pace", "spin", "bowler", "unknown"].map((key) => ({ key, count: squad.filter((p) => p.group === key).length }));
+  const outgoing = players.filter((p) => p.decision === "released" || p.decision === "traded_out");
+  const needs = groups.filter((g) => outgoing.some((p) => p.group === g.key)).map((g) => {
+    const lost = outgoing.filter((p) => p.group === g.key), evidence = lost.map((p) => ({ name: p.name, decision: p.decision, verification: p.verification }));
+    return { role: g.key, remaining: g.count, departures: lost.length, priority: g.count === 0 ? "high" : "review", evidence, scoutUrl: lost[0].scoutUrl, note: `${lost.length} departure${lost.length === 1 ? "" : "s"}; ${g.count} player${g.count === 1 ? "" : "s"} remain in this role group. Review coverage before recruiting.` };
+  });
+  const purse = resolvePurse(t.purseClaims, data.sources);
+  const unknownNationality = squad.filter((p) => p.overseas === null).length;
+  const verified = squad.every((p) => p.verification === "verified");
+  return {
+    season: data.season,
+    team: team4,
+    version: data.version,
+    announcedOn: data.announcedOn,
+    reviewedAt: data.reviewedAt,
+    status: verified && outgoing.every((p) => p.verification === "verified") ? "verified" : "partial",
+    players,
+    composition: groups,
+    summary: { retained: squad.length, released: players.filter((p) => p.decision === "released").length, tradedIn: players.filter((p) => p.decision === "traded_in").length, tradedOut: players.filter((p) => p.decision === "traded_out").length, indian: squad.filter((p) => p.overseas === false).length, overseas: squad.filter((p) => p.overseas === true).length, unknownNationality, slots: 25 - squad.length, overseasSlots: unknownNationality ? null : 8 - squad.filter((p) => p.overseas === true).length, reportedOverseasSlots: t.overseasSlots, slotBasis: "Maximum squad 25, overseas 8; current-cycle reported limits.", verifiedDecisions: players.filter((p) => p.verification === "verified").length },
+    purse,
+    needs,
+    notes: [...t.notes, ...data.notes],
+    sources: [...new Map([...src([...t.retainedSources, ...t.releasedSources, ...t.purseClaims.map((p) => p.source)]), ...players.flatMap((p) => p.sources)].map((s) => [s.url, s])).values()],
+    auction: { canInitialize: verified && purse.status === "verified" && !unknownNationality && squad.every((p) => p.canonicalId !== null), purseLakh: purse.status === "verified" ? purse.valueLakh : null, retainedIds: squad.filter((p) => p.verification === "verified" && p.canonicalId).map((p) => p.canonicalId), registeredPool: data.auctionRegistrations.filter((p) => data.sources[p.source]?.official && !players.some((r) => r.canonicalId === p.canonicalId && ["retained", "traded_in"].includes(r.decision))), note: "Released players enter an auction pool only after official registration is verified." }
+  };
+}
+function officialRoom(season2, team4) {
+  return season2 === officialRelease.season ? buildOfficialRoom(team4, officialRelease, readLedger().entries, getSnapshot()) : null;
+}
+function officialLeague(season2) {
+  if (season2 !== officialRelease.season) return null;
+  const ledger = readLedger().entries, snapshot = getSnapshot();
+  return { season: season2, version: officialRelease.version, announcedOn: officialRelease.announcedOn, reviewedAt: officialRelease.reviewedAt, teams: TEAMS2.map((team4) => {
+    const r = buildOfficialRoom(team4, officialRelease, ledger, snapshot);
+    return { team: team4, status: r.status, summary: r.summary, purse: r.purse };
+  }) };
+}
+function compareFrozen(room2, payload2, frozenAt, intact, cutoff = officialRelease.comparisonCutoff) {
+  const eligible = Boolean(payload2 && frozenAt && intact && frozenAt < Date.parse(cutoff) && payload2.season === room2.season);
+  const frozen = eligible ? payload2.teams.find((t) => t.team === room2.team)?.picks ?? [] : [];
+  const rows = room2.players.map((p) => {
+    const prediction = frozen.find((f) => f.id === p.canonicalId);
+    const status = !eligible ? "unscored" : p.verification !== "verified" ? "unverified" : p.decision.startsWith("traded_") ? "unscored" : !prediction || !["retain", "release"].includes(prediction.recommendation) ? "unscored" : prediction.recommendation === "retain" === (p.decision === "retained") ? p.decision === "retained" ? "correct_retain" : "correct_release" : "disagreement";
+    return { id: p.id, name: p.name, decision: p.decision, prediction: prediction?.recommendation ?? null, category: prediction?.category ?? null, status };
+  });
+  const counts = Object.fromEntries(["correct_retain", "correct_release", "disagreement", "unverified", "unscored"].map((s) => [s, rows.filter((r) => r.status === s).length]));
+  const scored = counts.correct_retain + counts.correct_release + counts.disagreement;
+  return { eligible, frozenAt: eligible ? new Date(frozenAt).toISOString() : null, cutoff, counts, scored, accuracy: scored ? Math.round((counts.correct_retain + counts.correct_release) / scored * 1e3) / 10 : null, rows, note: eligible ? "Only verified retain/release decisions are scored. Trades, undecided calls and reported records are excluded." : "No intact prediction snapshot from before the announcement cutoff is available. Accuracy is not calculated." };
+}
+function officialComparison(season2, team4) {
+  const room2 = officialRoom(season2, team4);
+  if (!room2) return null;
+  const eligible = listFreezes(season2).filter((f) => f.frozenAt < Date.parse(officialRelease.comparisonCutoff)).map((f) => freezePayload(f.id)).find((f) => f?.intact);
+  return compareFrozen(room2, eligible?.payload ?? null, eligible?.row.frozenAt ?? null, eligible?.intact ?? false);
+}
+
+// src/routes/retention.ts
 var router16 = (0, import_express17.Router)();
 var team3 = external_exports.enum(TEAMS2);
 var season = external_exports.coerce.number().int().min(2008).max(2100);
@@ -172227,6 +175044,35 @@ var respond = (res, body2) => {
 };
 router16.get("/retention/seasons", (_req, res) => {
   res.json(seasons());
+});
+router16.get("/retention/:season/official", (req, res) => {
+  const s = season.safeParse(req.params.season);
+  if (!s.success) {
+    res.status(400).json({ error: "invalid_season" });
+    return;
+  }
+  const data = officialLeague(s.data);
+  if (!data) {
+    res.status(404).json({ error: "official_snapshot_unavailable" });
+    return;
+  }
+  res.setHeader("Cache-Control", "public, max-age=60, s-maxage=300");
+  res.json(data);
+});
+router16.get("/retention/:season/franchises/:team/official", (req, res) => {
+  const s = scope(req, res);
+  if (!s) return;
+  const data = officialRoom(s.season, s.team);
+  if (!data) {
+    res.status(404).json({ error: "official_snapshot_unavailable" });
+    return;
+  }
+  res.setHeader("Cache-Control", "public, max-age=60, s-maxage=300");
+  res.json(data);
+});
+router16.get("/retention/:season/franchises/:team/comparison", (req, res) => {
+  const s = scope(req, res);
+  if (s) respond(res, officialComparison(s.season, s.team));
 });
 router16.get("/retention/summary", (_req, res) => respond(res, leagueSummary()));
 router16.get("/retention/history", (_req, res) => {
@@ -172470,7 +175316,7 @@ function analyticsGate(key, opts) {
       });
       return;
     }
-    if (req.method !== "GET" || !ANALYTICS_PATHS.has(path29)) {
+    if (req.method !== "GET" || !isAnalyticsPath(path29)) {
       res.status(404).json({ error: "not_found" });
       return;
     }
@@ -172696,24 +175542,28 @@ async function handler(req, res) {
   const path29 = (target2.searchParams.get("__warehouseRoute") ?? target2.pathname).replace(/\/$/, "");
   target2.searchParams.delete("__warehouseRoute");
   req.url = path29 + target2.search;
-  if (!ANALYTICS_PATHS.has(path29)) return json2(res, 404, "not_found");
-  if (req.method !== "GET") {
-    res.setHeader("Allow", "GET");
+  const isScoutAnalyst = path29 === "/api/scout/analyst";
+  if (path29 === "/api/scout/analyst/status" && req.method === "GET") return app_default(req, res);
+  if (!isScoutAnalyst && !isAnalyticsPath(path29)) return json2(res, 404, "not_found");
+  const allowedMethod = isScoutAnalyst ? "POST" : "GET";
+  if (req.method !== allowedMethod) {
+    res.setHeader("Allow", allowedMethod);
     return json2(res, 405, "method_not_allowed");
   }
-  if (laptopEnabled) {
+  if (!isScoutAnalyst && laptopEnabled) {
     if (await forwardToLaptop(req, res, req.url)) return;
     if (mode === "laptop" || LAPTOP_ONLY_PATHS.has(path29)) return json2(res, 503, "analytics_backend_unavailable");
   } else if (LAPTOP_ONLY_PATHS.has(path29)) {
     return json2(res, 404, "not_found");
   }
-  const isScout = SCOUT_PATHS.has(path29);
+  const isScout = isScoutAnalyst || isScoutPath(path29);
   if (!isScout && !IPL_PATHS.has(path29)) return json2(res, 404, "not_found");
   try {
     process.env.CRICFIELD_DB_READONLY = "1";
     process.env.CRICFIELD_SCOUT_DB_PATH = scoutPath;
     process.env.CRICFIELD_DB_PATH = iplPath;
     if (isScout) {
+      if (isScoutAnalyst && process.env.AI_ANALYST_ENABLED !== "true") return app_default(req, res);
       scout ??= configureScout().catch((error40) => {
         scout = void 0;
         throw error40;

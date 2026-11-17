@@ -7,6 +7,8 @@ import { auction as A } from "@workspace/arcade-rules";
 import { GameShell } from "@/components/arcade/kit";
 import { api } from "@/lib/arcade/client";
 import "./auction-workspace.css";
+import { useSearch } from "wouter";
+import { OfficialAuctionReadiness } from "@/components/retention/auction-readiness";
 type Player = {
   id: string;
   name: string;
@@ -132,6 +134,11 @@ function BidClock({
 }
 
 export default function AuctionRoomGame() {
+  const params=new URLSearchParams(useSearch());
+  return params.get("season")==="2027" ? <OfficialAuctionReadiness team={(params.get("team")??"RCB").toUpperCase()}/> : <HistoricalAuctionRoom/>;
+}
+
+function HistoricalAuctionRoom() {
   const [draft, setDraft] = useState<Draft | null>(null),
     [token, setToken] = useState(""),
     [pool, setPool] = useState<Player[]>([]),

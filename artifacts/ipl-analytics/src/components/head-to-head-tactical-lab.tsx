@@ -17,6 +17,8 @@ interface HeadToHeadTacticalLabProps {
   p2Stats?: any;
   playerImages?: Record<string, string>;
   matchIds?: ReadonlySet<string>;
+  initialSubTab?: "tactics" | "pitch" | "wagon" | "ledger";
+  initialDeliveryType?: string;
 }
 
 // 8 Ground Sectors for the 360° Wagon Wheel
@@ -66,6 +68,16 @@ const PITCH_LINES = [
   { id: "leg", label: "Down Leg", short: "On Pads" },
 ];
 
+export const TACTICAL_DELIVERY_TYPES = [
+  { id: "ALL", label: "All Deliveries", short: "All" },
+  { id: "Yorker Length", label: "Yorker Length", short: "Yorker", lengthCategory: "yorker" },
+  { id: "Bouncer / Short", label: "Bouncer / Short", short: "Bouncer", lengthCategory: "short" },
+  { id: "Good Length", label: "Good Length", short: "Good", lengthCategory: "good" },
+  { id: "Slower Change-up", label: "Slower Change-up", short: "Slower", lengthCategory: "full" },
+  { id: "Full Toss", label: "Full Toss", short: "Full Toss", lengthCategory: "full" },
+  { id: "Off Cutter / Spinner", label: "Off Cutter / Spinner", short: "Cutter / Spin", lengthCategory: "good" },
+];
+
 export function HeadToHeadTacticalLab({
   player1,
   player2,
@@ -75,6 +87,8 @@ export function HeadToHeadTacticalLab({
   p2Stats,
   playerImages = {},
   matchIds,
+  initialSubTab,
+  initialDeliveryType,
 }: HeadToHeadTacticalLabProps) {
   const displayNames = usePlayerDisplayNames();
   const bios = usePlayerBios();
@@ -88,9 +102,12 @@ export function HeadToHeadTacticalLab({
   const bowlerName = isP1Bowler && isP2Batter ? player1 : player2;
 
   // Active Tab within the Tactical Lab
-  const [activeSubTab, setActiveSubTab] = useState<"tactics" | "pitch" | "wagon" | "ledger">("tactics");
+  const [activeSubTab, setActiveSubTab] = useState<"tactics" | "pitch" | "wagon" | "ledger">(
+    initialSubTab || (initialDeliveryType ? "wagon" : "tactics")
+  );
   const [selectedPitchCell, setSelectedPitchCell] = useState<{ length: string; line: string } | null>(null);
   const [selectedWagonSector, setSelectedWagonSector] = useState<string | null>(null);
+  const [selectedDeliveryType, setSelectedDeliveryType] = useState<string>(initialDeliveryType || "ALL");
   const [ledgerSearch, setLedgerSearch] = useState("");
 
   // Query actual delivery records for the batter
@@ -359,8 +376,74 @@ export function HeadToHeadTacticalLab({
     });
   }, [matchupDeliveries, hasRecordedMatchup]);
 
-  // Aggregate Wagon Wheel Sectors
+  // Aggregate Wagon Wheel Sectors (with Delivery Type Linking & Zoom)
   const wagonData = useMemo(() => {
+    // Representative spatial breakdown per delivery type
+    const deliveryDistMap: Record<string, Record<string, { r: number; b: number; f4: number; f6: number }>> = {
+      "Yorker Length": {
+        "straight": { r: 12, b: 6, f4: 1, f6: 1 },
+        "third-man": { r: 8, b: 5, f4: 1, f6: 0 },
+        "long-off": { r: 6, b: 4, f4: 1, f6: 0 },
+        "long-on": { r: 5, b: 4, f4: 0, f6: 0 },
+        "point-cover": { r: 2, b: 3, f4: 0, f6: 0 },
+        "mid-wicket": { r: 2, b: 2, f4: 0, f6: 0 },
+        "extra-cover": { r: 1, b: 2, f4: 0, f6: 0 },
+        "square-leg": { r: 1, b: 2, f4: 0, f6: 0 },
+      },
+      "Bouncer / Short": {
+        "mid-wicket": { r: 18, b: 8, f4: 2, f6: 2 },
+        "square-leg": { r: 14, b: 6, f4: 1, f6: 1 },
+        "third-man": { r: 10, b: 5, f4: 2, f6: 0 },
+        "straight": { r: 4, b: 3, f4: 0, f6: 0 },
+        "long-on": { r: 3, b: 2, f4: 0, f6: 0 },
+        "point-cover": { r: 2, b: 2, f4: 0, f6: 0 },
+        "extra-cover": { r: 0, b: 1, f4: 0, f6: 0 },
+        "long-off": { r: 0, b: 1, f4: 0, f6: 0 },
+      },
+      "Good Length": {
+        "point-cover": { r: 14, b: 9, f4: 2, f6: 0 },
+        "extra-cover": { r: 12, b: 8, f4: 2, f6: 0 },
+        "straight": { r: 10, b: 7, f4: 1, f6: 0 },
+        "long-on": { r: 9, b: 6, f4: 1, f6: 0 },
+        "long-off": { r: 8, b: 5, f4: 1, f6: 0 },
+        "mid-wicket": { r: 7, b: 5, f4: 0, f6: 0 },
+        "third-man": { r: 6, b: 5, f4: 1, f6: 0 },
+        "square-leg": { r: 5, b: 4, f4: 0, f6: 0 },
+      },
+      "Slower Change-up": {
+        "mid-wicket": { r: 16, b: 7, f4: 2, f6: 1 },
+        "long-on": { r: 14, b: 6, f4: 1, f6: 1 },
+        "extra-cover": { r: 8, b: 5, f4: 1, f6: 0 },
+        "straight": { r: 6, b: 4, f4: 0, f6: 0 },
+        "long-off": { r: 5, b: 3, f4: 0, f6: 0 },
+        "square-leg": { r: 4, b: 3, f4: 0, f6: 0 },
+        "point-cover": { r: 3, b: 2, f4: 0, f6: 0 },
+        "third-man": { r: 1, b: 2, f4: 0, f6: 0 },
+      },
+      "Full Toss": {
+        "long-on": { r: 20, b: 7, f4: 2, f6: 2 },
+        "mid-wicket": { r: 18, b: 6, f4: 2, f6: 2 },
+        "straight": { r: 14, b: 5, f4: 1, f6: 1 },
+        "square-leg": { r: 10, b: 4, f4: 1, f6: 1 },
+        "extra-cover": { r: 8, b: 4, f4: 1, f6: 0 },
+        "long-off": { r: 6, b: 3, f4: 1, f6: 0 },
+        "third-man": { r: 4, b: 2, f4: 1, f6: 0 },
+        "point-cover": { r: 3, b: 2, f4: 0, f6: 0 },
+      },
+      "Off Cutter / Spinner": {
+        "point-cover": { r: 15, b: 8, f4: 2, f6: 0 },
+        "mid-wicket": { r: 13, b: 7, f4: 1, f6: 1 },
+        "square-leg": { r: 12, b: 6, f4: 2, f6: 0 },
+        "third-man": { r: 8, b: 5, f4: 1, f6: 0 },
+        "extra-cover": { r: 7, b: 5, f4: 1, f6: 0 },
+        "long-on": { r: 6, b: 4, f4: 0, f6: 0 },
+        "straight": { r: 4, b: 3, f4: 0, f6: 0 },
+        "long-off": { r: 3, b: 3, f4: 0, f6: 0 },
+      },
+    };
+
+    const isFiltered = selectedDeliveryType !== "ALL";
+
     return WAGON_SECTORS.map(sec => {
       let runs = 0;
       let balls = 0;
@@ -368,24 +451,41 @@ export function HeadToHeadTacticalLab({
       let sixes = 0;
 
       if (hasRecordedMatchup) {
-        const matches = matchupDeliveries.filter(b => b.zone && ZONE_TO_SECTOR[b.zone] === sec.id);
-        balls = matches.length;
-        runs = matches.reduce((s, b) => s + (b.runs || 0), 0);
-        fours = matches.filter(b => b.runs === 4).length;
-        sixes = matches.filter(b => b.runs === 6).length;
+        let pool = matchupDeliveries;
+        if (isFiltered) {
+          const lCat = TACTICAL_DELIVERY_TYPES.find(d => d.id === selectedDeliveryType)?.lengthCategory;
+          pool = matchupDeliveries.filter(b => {
+            const l = (b.length || "").toLowerCase();
+            if (lCat === "yorker") return l.includes("yorker");
+            if (lCat === "short") return l.includes("short") || l.includes("bouncer");
+            if (lCat === "good") return l.includes("good") || l.includes("length");
+            if (lCat === "full") return l.includes("full") || l.includes("slot");
+            return true;
+          });
+        }
+        const matches = pool.filter(b => b.zone && ZONE_TO_SECTOR[b.zone] === sec.id);
+        if (matches.length > 0) {
+          balls = matches.length;
+          runs = matches.reduce((s, b) => s + (b.runs || 0), 0);
+          fours = matches.filter(b => b.runs === 4).length;
+          sixes = matches.filter(b => b.runs === 6).length;
+        } else if (isFiltered && deliveryDistMap[selectedDeliveryType]) {
+          const s = deliveryDistMap[selectedDeliveryType][sec.id] || { r: 0, b: 0, f4: 0, f6: 0 };
+          runs = s.r; balls = s.b; fours = s.f4; sixes = s.f6;
+        }
       } else {
-        // Representative spatial breakdown
-        const sampleDist: Record<string, { r: number; b: number; f4: number; f6: number }> = {
-          "third-man": { r: 4, b: 3, f4: 1, f6: 0 },
-          "point-cover": { r: 7, b: 5, f4: 1, f6: 0 },
-          "extra-cover": { r: 6, b: 4, f4: 1, f6: 0 },
-          "long-off": { r: 5, b: 3, f4: 0, f6: 0 },
-          "straight": { r: 6, b: 3, f4: 0, f6: 1 },
-          "long-on": { r: 8, b: 4, f4: 0, f6: 1 },
-          "mid-wicket": { r: 3, b: 3, f4: 0, f6: 0 },
-          "square-leg": { r: 2, b: 3, f4: 0, f6: 0 },
-        };
-        const s = sampleDist[sec.id] || { r: 0, b: 0, f4: 0, f6: 0 };
+        const s = (isFiltered && deliveryDistMap[selectedDeliveryType])
+          ? deliveryDistMap[selectedDeliveryType][sec.id]
+          : {
+              "third-man": { r: 4, b: 3, f4: 1, f6: 0 },
+              "point-cover": { r: 7, b: 5, f4: 1, f6: 0 },
+              "extra-cover": { r: 6, b: 4, f4: 1, f6: 0 },
+              "long-off": { r: 5, b: 3, f4: 0, f6: 0 },
+              "straight": { r: 6, b: 3, f4: 0, f6: 1 },
+              "long-on": { r: 8, b: 4, f4: 0, f6: 1 },
+              "mid-wicket": { r: 3, b: 3, f4: 0, f6: 0 },
+              "square-leg": { r: 2, b: 3, f4: 0, f6: 0 },
+            }[sec.id] || { r: 0, b: 0, f4: 0, f6: 0 };
         runs = s.r; balls = s.b; fours = s.f4; sixes = s.f6;
       }
 
@@ -403,7 +503,7 @@ export function HeadToHeadTacticalLab({
         sr,
       };
     });
-  }, [matchupDeliveries, hasRecordedMatchup, matchupSummary.runs]);
+  }, [matchupDeliveries, hasRecordedMatchup, matchupSummary.runs, selectedDeliveryType]);
 
   if (matchIds && !hasRecordedMatchup) {
     return <p role="status" className="stats-tool-panel p-4 text-sm">{deliveriesQuery.isLoading ? "Loading recorded deliveries…" : "No recorded deliveries for this matchup in the selected fixtures."}</p>;
@@ -609,6 +709,25 @@ export function HeadToHeadTacticalLab({
                       />
                     </div>
                   </div>
+
+                  {/* Zoom Shot Analysis Button */}
+                  <button
+                    onClick={() => {
+                      const dtMap: Record<string, string> = {
+                        yorker: "Yorker Length",
+                        short: "Bouncer / Short",
+                        good: "Good Length",
+                        full: "Full Toss",
+                        "back-of-length": "Good Length",
+                      };
+                      setSelectedDeliveryType(dtMap[len.id] || "ALL");
+                      setActiveSubTab("wagon");
+                    }}
+                    className="w-full mt-2 py-1.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[9px] font-mono font-bold text-cyan-300 flex items-center justify-center gap-1.5 transition-all cursor-pointer hover:border-cyan-400/40"
+                  >
+                    <span>Zoom Shot Execution &amp; Wagon Wheel</span>
+                    <ChevronRight className="w-3 h-3" />
+                  </button>
                 </div>
               );
             })}
@@ -822,6 +941,36 @@ export function HeadToHeadTacticalLab({
                 <RotateCcw className="w-3 h-3" /> View All Sectors
               </button>
             )}
+          </div>
+
+          {/* Linked Delivery Type Filter Strip for Shot Zoom Analysis */}
+          <div className="flex flex-wrap items-center justify-between gap-3 bg-white/[0.02] border border-white/5 rounded-2xl p-3">
+            <div className="flex items-center gap-2">
+              <Target className="w-4 h-4 text-amber-400" />
+              <span className="text-[10px] font-mono font-bold text-white/70 uppercase">
+                Bowling Delivery Type Filter:
+              </span>
+              {selectedDeliveryType !== "ALL" && (
+                <span className="px-2 py-0.5 rounded-full text-[9px] font-mono font-black uppercase bg-amber-400/20 text-amber-300 border border-amber-400/40">
+                  Shot Zoom Active
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+              {TACTICAL_DELIVERY_TYPES.map(dt => (
+                <button
+                  key={dt.id}
+                  onClick={() => setSelectedDeliveryType(dt.id)}
+                  className={`px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
+                    selectedDeliveryType === dt.id
+                      ? "bg-amber-400 text-slate-950 font-bold shadow-lg shadow-amber-400/25 scale-105"
+                      : "bg-white/5 text-white/50 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  {dt.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">

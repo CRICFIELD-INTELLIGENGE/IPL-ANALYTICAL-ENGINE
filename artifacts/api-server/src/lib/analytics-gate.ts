@@ -5,7 +5,7 @@
 import { timingSafeEqual, createHash } from "node:crypto";
 import fs from "node:fs";
 import type { NextFunction, Request, Response } from "express";
-import { ANALYTICS_PATHS, ANALYTICS_KEY_HEADER, CLIENT_IP_HEADER } from "./analytics-routes";
+import { isAnalyticsPath, ANALYTICS_KEY_HEADER, CLIENT_IP_HEADER } from "./analytics-routes";
 
 const sha = (s: string) => createHash("sha256").update(s).digest();
 const startedAt = Date.now();
@@ -41,7 +41,7 @@ export function analyticsGate(key: string, opts: { maxInFlight: number; dbPaths:
       });
       return;
     }
-    if (req.method !== "GET" || !ANALYTICS_PATHS.has(path)) { res.status(404).json({ error: "not_found" }); return; }
+    if (req.method !== "GET" || !isAnalyticsPath(path)) { res.status(404).json({ error: "not_found" }); return; }
     if (req.originalUrl.length > 2048) { res.status(414).json({ error: "query_too_long" }); return; }
     if (inFlight >= opts.maxInFlight) {
       busy++;

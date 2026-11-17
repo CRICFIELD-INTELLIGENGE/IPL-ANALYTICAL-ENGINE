@@ -21,7 +21,7 @@ export function ScoutFeatureBanner() {
 
           <p className="font-body text-xs sm:text-sm text-[#9BAAB5] leading-relaxed">
             Move beyond raw franchise statistics. Our multi-league intelligence engine evaluates players across
-            <strong> 6 premier competitions</strong> (IPL, SMAT, BBL, SA20, CPL, ILT20) with normalized phase ratings,
+            <strong> multiple competitions</strong> (IPL, BBL, SA20, CPL, ILT20) with normalized phase ratings,
             multi-league form comparisons, and head-to-head radar analysis.
           </p>
 

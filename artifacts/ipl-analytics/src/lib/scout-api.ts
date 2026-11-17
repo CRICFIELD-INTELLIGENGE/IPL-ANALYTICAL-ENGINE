@@ -118,6 +118,21 @@ export interface ScoutRankingsFilters {
   sortBy?: string;
   sortOrder?: "asc" | "desc";
   search?: string;
+  minAge?: number;
+  maxAge?: number;
+  country?: string;
+  bowlingType?: "pace" | "spin";
+}
+
+const scoutAgeRanges: Record<string, Pick<ScoutRankingsFilters, "minAge" | "maxAge">> = {
+  "< 23": { maxAge: 22 },
+  "23-26": { minAge: 23, maxAge: 26 },
+  "27-30": { minAge: 27, maxAge: 30 },
+  "31+": { minAge: 31 },
+};
+
+export function scoutAgeRange(label: string) {
+  return Object.hasOwn(scoutAgeRanges, label) ? scoutAgeRanges[label] : {};
 }
 
 export interface ScoutRankingsResponse {
@@ -313,6 +328,10 @@ export async function fetchScoutRankings(filters: ScoutRankingsFilters = {}): Pr
   if (filters.sortBy) params.set("sortBy", filters.sortBy);
   if (filters.sortOrder) params.set("sortOrder", filters.sortOrder);
   if (filters.search) params.set("search", filters.search);
+  if (filters.minAge != null) params.set("minAge", String(filters.minAge));
+  if (filters.country) params.set("country", filters.country);
+  if (filters.maxAge != null) params.set("maxAge", String(filters.maxAge));
+  if (filters.bowlingType) params.set("bowlingType", filters.bowlingType);
 
   const query = params.toString();
   return getJson<ScoutRankingsResponse>(`/api/scout/rankings${query ? `?${query}` : ""}`);
