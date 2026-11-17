@@ -3,10 +3,9 @@
 // Until someone has a few visits, a fixed prior (a typical cricket-app order) fills the ranking.
 import { useEffect } from "react";
 import { useLocation } from "wouter";
-import { Activity, BarChart3, BookOpen, Gamepad2, Gavel, GitCompare, Lightbulb, Radio, Search, Shield, Sparkles, Users, CalendarClock, type LucideIcon } from "lucide-react";
-import { GAMES, dailyKey, hashString, type GameId } from "@workspace/arcade-rules";
+import { Activity, BarChart3, BookOpen, Gavel, GitCompare, Lightbulb, Radio, Search, Shield, Sparkles, Users, CalendarClock, type LucideIcon } from "lucide-react";
 
-export type FeatureId = "scores" | "stats" | "scout" | "compare" | "ai" | "arcade" | "teams" | "journal" | "intel" | "auction" | "retention" | "squad" | "ipl2027";
+export type FeatureId = "scores" | "stats" | "scout" | "compare" | "ai" | "teams" | "journal" | "intel" | "auction" | "retention" | "squad" | "ipl2027";
 export type Feature = { id: FeatureId; label: string; line: string; href: string; icon: LucideIcon; prior: number; match: RegExp };
 
 // Order matters: the first match wins, so the specific routes come before the general ones.
@@ -19,14 +18,13 @@ export const FEATURES: Feature[] = [
   { id: "stats", label: "Stats", line: "Leaders, seasons and records", href: "/stats", icon: BarChart3, prior: 5, match: /^\/stats/ },
   { id: "scout", label: "Scout Lab", line: "Every player, ranked and searchable", href: "/scout", icon: Search, prior: 4, match: /^\/(scout|players\/)/ },
   { id: "ai", label: "AI Analyst", line: "Ask the data in plain English", href: "/ai-analyst", icon: Sparkles, prior: 3.5, match: /^\/ai-analyst/ },
-  { id: "arcade", label: "Arcade", line: "Quick cricket games", href: "/arcade", icon: Gamepad2, prior: 3, match: /^\/arcade/ },
   { id: "teams", label: "Teams", line: "Squads, titles and form", href: "/teams", icon: Shield, prior: 2.5, match: /^\/(teams|dugout\/(?!articles)[a-z-]+$)/ },
   { id: "journal", label: "Journal", line: "Long-form franchise analysis", href: "/reports", icon: BookOpen, prior: 2, match: /^\/(reports|dugout\/articles|articles|blogs)/ },
   { id: "intel", label: "Intelligence", line: "Computed insights, samples shown", href: "/intelligence", icon: Lightbulb, prior: 2, match: /^\/(intelligence|feed|pulse)/ },
   { id: "retention", label: "Retention Room", line: "Retain or release, explained", href: "/retention-room", icon: Activity, prior: 1.5, match: /^\/retention-room/ },
 ];
 
-export type Recent = { href: string; label: string; kind: "player" | "team" | "game" };
+export type Recent = { href: string; label: string; kind: "player" | "team" };
 type Store = { f: Partial<Record<FeatureId, { s: number; at: number }>>; visits: number; recent: Recent[] };
 
 const KEY = "cfm-usage-v1";
@@ -37,22 +35,22 @@ export function featureFor(path: string) { return FEATURES.find((f) => f.match.t
 
 const titleCase = (slug: string) => decodeURIComponent(slug).split("-").filter(Boolean).map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
 
-/** The entity a path points at (a player, a franchise or a game), for the "pick up where you left off" strip. */
+/** The entity a path points at (a player or franchise), for the "pick up where you left off" strip. */
 export function recentFor(path: string): Recent | null {
   let m = path.match(/^\/players\/([^/?#]+)$/);
   if (m) return { href: path, label: titleCase(m[1]), kind: "player" };
   m = path.match(/^\/teams\/([^/?#]+)$/);
   if (m) return { href: path, label: titleCase(m[1]), kind: "team" };
-  m = path.match(/^\/arcade\/([^/?#]+)$/);
-  const game = m && GAMES.find((g) => g.id === m![1]);
-  if (game) return { href: path, label: game.title, kind: "game" };
   return null;
 }
 
 function read(): Store {
   try {
     const v = JSON.parse(localStorage.getItem(KEY) ?? "null");
-    if (v && typeof v === "object" && v.f) return { f: v.f, visits: Number(v.visits) || 0, recent: Array.isArray(v.recent) ? v.recent : [] };
+    if (v && typeof v === "object" && v.f) {
+      const recent = Array.isArray(v.recent) ? v.recent.filter((r: any) => r?.kind !== "game" && !String(r?.href ?? "").startsWith("/arcade")) : [];
+      return { f: v.f, visits: Number(v.visits) || 0, recent };
+    }
   } catch { /* private window or blocked storage: fall back to the prior */ }
   return { f: {}, visits: 0, recent: [] };
 }
@@ -85,11 +83,4 @@ export function UsageTracker() {
     try { localStorage.setItem(KEY, JSON.stringify(record(read(), location.split("?")[0], Date.now()))); } catch { /* storage unavailable: ranking stays on the prior */ }
   }, [location]);
   return null;
-}
-
-/** The six playable Arcade games, and today's featured one (same pick on Home and in Play). */
-export const LIVE_GAMES: GameId[] = ["cup-chase", "super-over", "hand-cricket", "cricket-grid", "auction-room", "guess-cricketer"];
-export function featuredGame() {
-  const games = GAMES.filter((g) => LIVE_GAMES.includes(g.id));
-  return games[hashString(`m-featured|${dailyKey()}`) % games.length];
 }

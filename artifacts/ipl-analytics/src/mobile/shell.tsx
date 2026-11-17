@@ -96,8 +96,6 @@ const TITLES: [RegExp, string][] = [
   [/^\/players\//, "Player"],
   [/^\/teams\/?$/, "Teams"],
   [/^\/teams\//, "Franchise"],
-  [/^\/arcade\/./, "Arcade"],
-  [/^\/arcade/, "Play"],
   [/^\/ai-analyst\/auction-war-room/, "Auction"],
   [/^\/ai-analyst\/squad-builder/, "Squad Builder"],
   [/^\/ai-analyst/, "AI Analyst"],
@@ -123,7 +121,6 @@ const ROOTS = new Set([
   "/scores",
   "/dugout",
   "/discover",
-  "/arcade",
   "/ai-analyst",
 ]);
 
@@ -509,7 +506,6 @@ const FEATURES = [
   ["Journal", "/reports"],
   ["IPL Intelligence", "/intelligence"],
   ["Scores", "/scores"],
-  ["Arcade", "/arcade"],
 ] as const;
 
 export function SearchSheet({ onClose }: { onClose: () => void }) {

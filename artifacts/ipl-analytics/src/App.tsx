@@ -154,7 +154,6 @@ function Router() {
       <Route path="/watch-and-analyze">
         <Redirect to="/intelligence" />
       </Route>
-
       {/* Games section removed - redirect to home */}
       <Route path="/arcade*"><Redirect to="/home" /></Route>
       <Route path="/games*"><Redirect to="/home" /></Route>

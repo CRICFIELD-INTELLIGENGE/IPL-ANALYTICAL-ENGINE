@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Filter, Calendar, Users, Target, Zap, Activity, ArrowUpRight, Flame, Shield } from "lucide-react";
 import { useSquadsBySeason } from "../../lib/aggregates";
 
-const TEAM_NAMES: Record<string, string> = {
+export const TRANSFER_TEAM_NAMES: Record<string, string> = {
   "CSK": "Chennai Super Kings",
   "MI": "Mumbai Indians",
   "RCB": "Royal Challengers Bengaluru",
@@ -14,12 +14,13 @@ const TEAM_NAMES: Record<string, string> = {
   "GT": "Gujarat Titans",
   "LSG": "Lucknow Super Giants"
 };
+const TEAM_NAMES = TRANSFER_TEAM_NAMES;
 
 export function SankeyDiagram(props: any) {
   return <TransferFlowSankey onSelectPlayer={props.onSelectPlayer} />;
 }
 
-function getPlayerTransferBackstory(name: string, link: any) {
+export function getPlayerTransferBackstory(name: string, link: any) {
   const cleanName = name.toLowerCase();
 
   if (cleanName.includes("jadeja")) {

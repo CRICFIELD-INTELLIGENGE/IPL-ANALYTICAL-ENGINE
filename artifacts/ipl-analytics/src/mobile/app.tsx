@@ -11,7 +11,7 @@ import "./mobile.css";
 const MHome = lazy(() => import("./screens/home"));
 const MDiscover = lazy(() => import("./screens/discover"));
 const MNews = lazy(() => import("./screens/news"));
-const MPlay = lazy(() => import("./screens/play"));
+const MPulse = lazy(() => import("./screens/pulse"));
 const MDugout = lazy(() => import("./screens/franchise-dugout"));
 const MStats = lazy(() => import("./screens/stats"));
 const MPlayer = lazy(() => import("./screens/player"));
@@ -57,9 +57,6 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
             <Route path="/feed">
               <Redirect to="/intelligence" replace />
             </Route>
-            <Route path="/arcade">
-              <MPlay />
-            </Route>
             <Route path="/dugout">
               <MDugout />
             </Route>
@@ -79,6 +76,9 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
             </Route>
             <Route path="/scout">
               <MScout />
+            </Route>
+            <Route path="/pulse">
+              <MPulse />
             </Route>
             <Route path="/ai-analyst">
               <MAi />

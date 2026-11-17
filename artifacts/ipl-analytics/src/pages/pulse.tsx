@@ -1224,6 +1224,7 @@ function Insight({ lot, model }: { lot: PulseLot; model: PulseModel }) {
     ["Price context · Auction War Room", `/ai-analyst/auction-war-room?team=${lot.team}&player=${encodeURIComponent(lot.player)}`],
     ["Similar players · Player Pool Graph", `/ai-analyst/player-pool?player=${stats}`],
     ["Pressure Genome", `/ai-analyst/pressure?player=${stats}`],
+    ["XI impact · Build Playing XI", `/ai-analyst/playing-xi?team=${lot.team}`],
     ["Franchise strategy · Opposition Map", `/ai-analyst/opposition-map?team=${lot.team}`],
   ];
   return (

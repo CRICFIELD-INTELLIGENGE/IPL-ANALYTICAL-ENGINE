@@ -32,7 +32,7 @@ export function MobileHome() {
     </section>
 
     <div className="mh-shortcuts" aria-label="Quick destinations">
-      {[{ href:"/scores", label:"Scores", icon:Radio },{ href:"/stats", label:"Numbers", icon:BarChart3 },{ href:"/scout", label:"Scout", icon:Compass }].map(({href,label,icon:Icon}) => <Link key={href} href={href}><span><Icon size={22}/></span>{label}</Link>)}
+      {[{ href:"/scores", label:"Scores", icon:Radio },{ href:"/stats", label:"Numbers", icon:BarChart3 },{ href:"/scout", label:"Scout", icon:Compass },{ href:"/dugout", label:"Dugout", icon:Shield }].map(({href,label,icon:Icon}) => <Link key={href} href={href}><span><Icon size={22}/></span>{label}</Link>)}
     </div>
 
     {match && <Link href="/scores" className="mh-live"><span className="mh-live-label">● LIVE</span><strong>{match.matchInfo.team1.teamSName} <span>{getMatchScoreLine(match).team1}</span></strong><strong>{match.matchInfo.team2.teamSName} <span>{getMatchScoreLine(match).team2}</span></strong><small>{match.matchInfo.status}</small></Link>}

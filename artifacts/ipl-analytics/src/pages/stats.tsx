@@ -11,7 +11,7 @@ import { BatterLensRankings } from "@/components/batter-lens-rankings";
 import { SelectPopover, SeasonPopover, type SeasonValue, type Option } from "@/components/stats-slicing/slicing-popover";
 import { MatchStatePopover, MATCH_STATE_FIELDS, type MatchState } from "@/components/stats-slicing/match-state";
 import { MoreFiltersPopover } from "@/components/stats-slicing/more-filters";
-import { sliceToSearch, sliceFromSearch, toCsv, downloadCsv } from "@/components/stats-slicing/slice-url";
+import { sliceToSearch, sliceFromSearch } from "@/components/stats-slicing/slice-url";
 import { AskEngineView } from "@/components/stats-slicing/ask-engine";
 import { DETAILED_STYLE_OPTIONS, SITUATIONS, DESKTOP_FILTERS, sliceList, situationLabel } from "@/components/stats-slicing/config";
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";

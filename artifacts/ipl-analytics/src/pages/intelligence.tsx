@@ -989,10 +989,31 @@ export default function IntelligencePage() {
 
                 <div className="space-y-2">
                   {[
-                    { label: `${activeFranchiseCode} Squad Explorer`, sub: "Current squad, roles and player profiles", href: `/dugout/${activeFranchiseCode.toLowerCase()}#squad` },
-                    { label: `${activeFranchiseCode} Match Analysis`, sub: "Detailed match reports and insights", href: "/feed" },
-                    { label: "Player Comparisons", sub: "Compare players with league stars", href: "/scout/compare" },
-                    { label: "Franchise Timeline", sub: "Key moments across IPL seasons", href: `/dugout/${activeFranchiseCode.toLowerCase()}#history` },
+                    {
+                      label: `${activeFranchiseCode} Squad Explorer`,
+                      sub: "Current squad, roles and player profiles",
+                      href: `/dugout/${activeFranchiseCode.toLowerCase()}#squad`,
+                    },
+                    {
+                      label: `${activeFranchiseCode} Match Analysis`,
+                      sub: "Detailed match reports and insights",
+                      href: "/feed",
+                    },
+                    {
+                      label: "Player Comparisons",
+                      sub: "Compare players with league stars",
+                      href: "/scout/compare",
+                    },
+                    {
+                      label: `${activeFranchiseCode} Auction Strategy`,
+                      sub: "Past auctions, value and retention analysis",
+                      href: `/ai-analyst/auction-war-room?team=${activeFranchiseCode}`,
+                    },
+                    {
+                      label: "Franchise Timeline",
+                      sub: "Key moments across IPL seasons",
+                      href: `/dugout/${activeFranchiseCode.toLowerCase()}#history`,
+                    },
                   ].map((tool) => (
                     <Link key={tool.label} href={tool.href}>
                       <div className="p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 dark:bg-white/[0.03] dark:hover:bg-white/[0.07] dark:border-white/5 dark:hover:border-white/20 transition-all flex items-center justify-between cursor-pointer group">
