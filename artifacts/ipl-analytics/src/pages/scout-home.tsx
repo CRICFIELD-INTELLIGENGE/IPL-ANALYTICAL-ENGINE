@@ -12,6 +12,7 @@ import {
 import { Layout } from "@/components/layout";
 import type { ScoutingBoardFilters } from "@/components/scout/scout-board";
 import { ScoutCinematicRoom } from "@/components/scout/scout-cinematic-room";
+import { ScoutPressureLab } from "@/components/scout/scout-pressure-lab";
 import { useScoutShortlist } from "@/lib/scout-shortlist";
 import { useTeamTheme, resolveTeamCode, type TeamCode } from "@/lib/team-context";
 
@@ -202,6 +203,7 @@ export default function ScoutHomePage() {
           isShortlisted={isShortlisted}
           onApplyPreset={applyPreset}
         />
+        <ScoutPressureLab />
       </div>
     </Layout>
   );
