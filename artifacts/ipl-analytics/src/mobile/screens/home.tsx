@@ -1,6 +1,6 @@
 import { useState, type CSSProperties } from "react";
 import { Link } from "wouter";
-import { Trophy, Plus, Gavel, Gamepad2, ClipboardList, BarChart3, Shield, ChevronRight, ChevronDown, ChevronUp, ArrowRight, Radio, Bookmark } from "lucide-react";
+import { Gavel, Gamepad2, BarChart3, Shield, ChevronRight, ArrowRight, Radio, Bookmark } from "lucide-react";
 import { useTeamTheme, TEAM_CODE_TO_SLUG } from "@/lib/team-context";
 import HomeInsights from "@/components/home-insights";
 import { HOME_ARCADE_GAMES, ARCADE_ART } from "@/lib/arcade-catalog";
@@ -11,43 +11,12 @@ export default function MobileHome() {
  const { theme } = useTeamTheme();
  const [filter,setFilter] = useState("All");
  const [saved,setSaved] = useState(false);
- const [moreShortcuts,setMoreShortcuts] = useState(false);
  const live = useLiveIplMatches();
  const matches = live.data?.matches ?? [];
 
  const team = theme?.shortName ?? "RR";
  const destination = theme ? `/dugout/${TEAM_CODE_TO_SLUG[theme.id]}` : "/dugout/rajasthan-royals";
- const shortcuts = [["Your Dugout","/dugout",Plus],["IPL","/intelligence",Trophy],["Auction","/ai-analyst/auction-war-room",Gavel],["Scout Lab","/scout",Gamepad2],[`${team} 2027`,destination,Shield],["Reports","/reports",ClipboardList],["Games","/arcade",Gamepad2]] as const;
- const primaryShortcuts = shortcuts.slice(0, 4);
- const extraShortcuts = shortcuts.slice(4);
- const renderShortcut = ([label,href,Icon]: (typeof shortcuts)[number], extraClass?: string) => (
-  <Link key={label} href={href} className={extraClass}>
-   <span>{label.includes("2027") && theme ? <img src={theme.logoImg} alt=""/> : <Icon size={24}/>}</span>
-   <small>{label}</small>
-  </Link>
- );
  return <div className="ref-home" style={{"--ref-accent":theme?.accent ?? "#ffda7c","--ref-secondary":theme?.secondary ?? "#f4b547"} as CSSProperties}>
-  <nav className="ref-shortcuts" aria-label="Quick destinations">
-   <div className="ref-shortcuts-row">
-    {primaryShortcuts.map((item) => renderShortcut(item))}
-    {extraShortcuts.map((item) => renderShortcut(item, "ref-shortcut-wide-only"))}
-    <button
-     type="button"
-     className="ref-shortcut-toggle"
-     aria-expanded={moreShortcuts}
-     aria-controls="ref-shortcuts-more"
-     onClick={() => setMoreShortcuts((v) => !v)}
-    >
-     <span>{moreShortcuts ? <ChevronUp size={24}/> : <ChevronDown size={24}/>}</span>
-     <small>{moreShortcuts ? "Less" : "More"}</small>
-    </button>
-   </div>
-   {moreShortcuts && (
-    <div id="ref-shortcuts-more" className="ref-shortcuts-more">
-     {extraShortcuts.map((item) => renderShortcut(item))}
-    </div>
-   )}
-  </nav>
   <section className="ref-hero">
    <img src={theme?.bannerImg ?? "/rr insight.jpg"} alt="" onError={e=>{e.currentTarget.src="/ipl-2027-banner.jpg";}}/>
    <div className="ref-hero-copy"><small>FEATURED INTELLIGENCE</small><h1>{team} 2027:<br/><em>The Next Blueprint</em></h1><p>Retention, targets, squad balance and how {theme?.name ?? "Rajasthan Royals"} can build a contender for 2027.</p><div><Link className="ref-cta" href={destination}>▶ Explore Analysis</Link><button aria-label="Save featured analysis" aria-pressed={saved} onClick={()=>setSaved(!saved)}><Bookmark size={20} fill={saved?"currentColor":"none"}/></button></div></div>
