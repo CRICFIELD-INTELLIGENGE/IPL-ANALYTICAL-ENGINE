@@ -42,6 +42,4835 @@ var __toESM = (mod, isNodeMode, target2) => (target2 = mod != null ? __create(__
   mod
 ));
 
+// ../../node_modules/.pnpm/postgres-array@2.0.0/node_modules/postgres-array/index.js
+var require_postgres_array = __commonJS({
+  "../../node_modules/.pnpm/postgres-array@2.0.0/node_modules/postgres-array/index.js"(exports2) {
+    "use strict";
+    exports2.parse = function(source2, transform2) {
+      return new ArrayParser(source2, transform2).parse();
+    };
+    var ArrayParser = class _ArrayParser {
+      constructor(source2, transform2) {
+        this.source = source2;
+        this.transform = transform2 || identity;
+        this.position = 0;
+        this.entries = [];
+        this.recorded = [];
+        this.dimension = 0;
+      }
+      isEof() {
+        return this.position >= this.source.length;
+      }
+      nextCharacter() {
+        var character = this.source[this.position++];
+        if (character === "\\") {
+          return {
+            value: this.source[this.position++],
+            escaped: true
+          };
+        }
+        return {
+          value: character,
+          escaped: false
+        };
+      }
+      record(character) {
+        this.recorded.push(character);
+      }
+      newEntry(includeEmpty) {
+        var entry;
+        if (this.recorded.length > 0 || includeEmpty) {
+          entry = this.recorded.join("");
+          if (entry === "NULL" && !includeEmpty) {
+            entry = null;
+          }
+          if (entry !== null) entry = this.transform(entry);
+          this.entries.push(entry);
+          this.recorded = [];
+        }
+      }
+      consumeDimensions() {
+        if (this.source[0] === "[") {
+          while (!this.isEof()) {
+            var char = this.nextCharacter();
+            if (char.value === "=") break;
+          }
+        }
+      }
+      parse(nested) {
+        var character, parser2, quote2;
+        this.consumeDimensions();
+        while (!this.isEof()) {
+          character = this.nextCharacter();
+          if (character.value === "{" && !quote2) {
+            this.dimension++;
+            if (this.dimension > 1) {
+              parser2 = new _ArrayParser(this.source.substr(this.position - 1), this.transform);
+              this.entries.push(parser2.parse(true));
+              this.position += parser2.position - 2;
+            }
+          } else if (character.value === "}" && !quote2) {
+            this.dimension--;
+            if (!this.dimension) {
+              this.newEntry();
+              if (nested) return this.entries;
+            }
+          } else if (character.value === '"' && !character.escaped) {
+            if (quote2) this.newEntry(true);
+            quote2 = !quote2;
+          } else if (character.value === "," && !quote2) {
+            this.newEntry();
+          } else {
+            this.record(character.value);
+          }
+        }
+        if (this.dimension !== 0) {
+          throw new Error("array dimension not balanced");
+        }
+        return this.entries;
+      }
+    };
+    function identity(value2) {
+      return value2;
+    }
+  }
+});
+
+// ../../node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/arrayParser.js
+var require_arrayParser = __commonJS({
+  "../../node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/arrayParser.js"(exports2, module) {
+    var array2 = require_postgres_array();
+    module.exports = {
+      create: function(source2, transform2) {
+        return {
+          parse: function() {
+            return array2.parse(source2, transform2);
+          }
+        };
+      }
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/postgres-date@1.0.7/node_modules/postgres-date/index.js
+var require_postgres_date = __commonJS({
+  "../../node_modules/.pnpm/postgres-date@1.0.7/node_modules/postgres-date/index.js"(exports2, module) {
+    "use strict";
+    var DATE_TIME = /(\d{1,})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})(\.\d{1,})?.*?( BC)?$/;
+    var DATE = /^(\d{1,})-(\d{2})-(\d{2})( BC)?$/;
+    var TIME_ZONE = /([Z+-])(\d{2})?:?(\d{2})?:?(\d{2})?/;
+    var INFINITY = /^-?infinity$/;
+    module.exports = function parseDate(isoDate2) {
+      if (INFINITY.test(isoDate2)) {
+        return Number(isoDate2.replace("i", "I"));
+      }
+      var matches2 = DATE_TIME.exec(isoDate2);
+      if (!matches2) {
+        return getDate(isoDate2) || null;
+      }
+      var isBC = !!matches2[8];
+      var year2 = parseInt(matches2[1], 10);
+      if (isBC) {
+        year2 = bcYearToNegativeYear(year2);
+      }
+      var month = parseInt(matches2[2], 10) - 1;
+      var day4 = matches2[3];
+      var hour = parseInt(matches2[4], 10);
+      var minute = parseInt(matches2[5], 10);
+      var second = parseInt(matches2[6], 10);
+      var ms = matches2[7];
+      ms = ms ? 1e3 * parseFloat(ms) : 0;
+      var date5;
+      var offset = timeZoneOffset(isoDate2);
+      if (offset != null) {
+        date5 = new Date(Date.UTC(year2, month, day4, hour, minute, second, ms));
+        if (is0To99(year2)) {
+          date5.setUTCFullYear(year2);
+        }
+        if (offset !== 0) {
+          date5.setTime(date5.getTime() - offset);
+        }
+      } else {
+        date5 = new Date(year2, month, day4, hour, minute, second, ms);
+        if (is0To99(year2)) {
+          date5.setFullYear(year2);
+        }
+      }
+      return date5;
+    };
+    function getDate(isoDate2) {
+      var matches2 = DATE.exec(isoDate2);
+      if (!matches2) {
+        return;
+      }
+      var year2 = parseInt(matches2[1], 10);
+      var isBC = !!matches2[4];
+      if (isBC) {
+        year2 = bcYearToNegativeYear(year2);
+      }
+      var month = parseInt(matches2[2], 10) - 1;
+      var day4 = matches2[3];
+      var date5 = new Date(year2, month, day4);
+      if (is0To99(year2)) {
+        date5.setFullYear(year2);
+      }
+      return date5;
+    }
+    function timeZoneOffset(isoDate2) {
+      if (isoDate2.endsWith("+00")) {
+        return 0;
+      }
+      var zone = TIME_ZONE.exec(isoDate2.split(" ")[1]);
+      if (!zone) return;
+      var type = zone[1];
+      if (type === "Z") {
+        return 0;
+      }
+      var sign2 = type === "-" ? -1 : 1;
+      var offset = parseInt(zone[2], 10) * 3600 + parseInt(zone[3] || 0, 10) * 60 + parseInt(zone[4] || 0, 10);
+      return offset * sign2 * 1e3;
+    }
+    function bcYearToNegativeYear(year2) {
+      return -(year2 - 1);
+    }
+    function is0To99(num3) {
+      return num3 >= 0 && num3 < 100;
+    }
+  }
+});
+
+// ../../node_modules/.pnpm/xtend@4.0.2/node_modules/xtend/mutable.js
+var require_mutable = __commonJS({
+  "../../node_modules/.pnpm/xtend@4.0.2/node_modules/xtend/mutable.js"(exports2, module) {
+    module.exports = extend2;
+    var hasOwnProperty = Object.prototype.hasOwnProperty;
+    function extend2(target2) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source2 = arguments[i];
+        for (var key in source2) {
+          if (hasOwnProperty.call(source2, key)) {
+            target2[key] = source2[key];
+          }
+        }
+      }
+      return target2;
+    }
+  }
+});
+
+// ../../node_modules/.pnpm/postgres-interval@1.2.0/node_modules/postgres-interval/index.js
+var require_postgres_interval = __commonJS({
+  "../../node_modules/.pnpm/postgres-interval@1.2.0/node_modules/postgres-interval/index.js"(exports2, module) {
+    "use strict";
+    var extend2 = require_mutable();
+    module.exports = PostgresInterval;
+    function PostgresInterval(raw) {
+      if (!(this instanceof PostgresInterval)) {
+        return new PostgresInterval(raw);
+      }
+      extend2(this, parse4(raw));
+    }
+    var properties = ["seconds", "minutes", "hours", "days", "months", "years"];
+    PostgresInterval.prototype.toPostgres = function() {
+      var filtered = properties.filter(this.hasOwnProperty, this);
+      if (this.milliseconds && filtered.indexOf("seconds") < 0) {
+        filtered.push("seconds");
+      }
+      if (filtered.length === 0) return "0";
+      return filtered.map(function(property) {
+        var value2 = this[property] || 0;
+        if (property === "seconds" && this.milliseconds) {
+          value2 = (value2 + this.milliseconds / 1e3).toFixed(6).replace(/\.?0+$/, "");
+        }
+        return value2 + " " + property;
+      }, this).join(" ");
+    };
+    var propertiesISOEquivalent = {
+      years: "Y",
+      months: "M",
+      days: "D",
+      hours: "H",
+      minutes: "M",
+      seconds: "S"
+    };
+    var dateProperties = ["years", "months", "days"];
+    var timeProperties = ["hours", "minutes", "seconds"];
+    PostgresInterval.prototype.toISOString = PostgresInterval.prototype.toISO = function() {
+      var datePart = dateProperties.map(buildProperty, this).join("");
+      var timePart = timeProperties.map(buildProperty, this).join("");
+      return "P" + datePart + "T" + timePart;
+      function buildProperty(property) {
+        var value2 = this[property] || 0;
+        if (property === "seconds" && this.milliseconds) {
+          value2 = (value2 + this.milliseconds / 1e3).toFixed(6).replace(/0+$/, "");
+        }
+        return value2 + propertiesISOEquivalent[property];
+      }
+    };
+    var NUMBER = "([+-]?\\d+)";
+    var YEAR2 = NUMBER + "\\s+years?";
+    var MONTH = NUMBER + "\\s+mons?";
+    var DAY = NUMBER + "\\s+days?";
+    var TIME = "([+-])?([\\d]*):(\\d\\d):(\\d\\d)\\.?(\\d{1,6})?";
+    var INTERVAL = new RegExp([YEAR2, MONTH, DAY, TIME].map(function(regexString) {
+      return "(" + regexString + ")?";
+    }).join("\\s*"));
+    var positions = {
+      years: 2,
+      months: 4,
+      days: 6,
+      hours: 9,
+      minutes: 10,
+      seconds: 11,
+      milliseconds: 12
+    };
+    var negatives = ["hours", "minutes", "seconds", "milliseconds"];
+    function parseMilliseconds(fraction) {
+      var microseconds = fraction + "000000".slice(fraction.length);
+      return parseInt(microseconds, 10) / 1e3;
+    }
+    function parse4(interval2) {
+      if (!interval2) return {};
+      var matches2 = INTERVAL.exec(interval2);
+      var isNegative = matches2[8] === "-";
+      return Object.keys(positions).reduce(function(parsed, property) {
+        var position = positions[property];
+        var value2 = matches2[position];
+        if (!value2) return parsed;
+        value2 = property === "milliseconds" ? parseMilliseconds(value2) : parseInt(value2, 10);
+        if (!value2) return parsed;
+        if (isNegative && ~negatives.indexOf(property)) {
+          value2 *= -1;
+        }
+        parsed[property] = value2;
+        return parsed;
+      }, {});
+    }
+  }
+});
+
+// ../../node_modules/.pnpm/postgres-bytea@1.0.1/node_modules/postgres-bytea/index.js
+var require_postgres_bytea = __commonJS({
+  "../../node_modules/.pnpm/postgres-bytea@1.0.1/node_modules/postgres-bytea/index.js"(exports2, module) {
+    "use strict";
+    var bufferFrom = Buffer.from || Buffer;
+    module.exports = function parseBytea(input2) {
+      if (/^\\x/.test(input2)) {
+        return bufferFrom(input2.substr(2), "hex");
+      }
+      var output = "";
+      var i = 0;
+      while (i < input2.length) {
+        if (input2[i] !== "\\") {
+          output += input2[i];
+          ++i;
+        } else {
+          if (/[0-7]{3}/.test(input2.substr(i + 1, 3))) {
+            output += String.fromCharCode(parseInt(input2.substr(i + 1, 3), 8));
+            i += 4;
+          } else {
+            var backslashes = 1;
+            while (i + backslashes < input2.length && input2[i + backslashes] === "\\") {
+              backslashes++;
+            }
+            for (var k = 0; k < Math.floor(backslashes / 2); ++k) {
+              output += "\\";
+            }
+            i += Math.floor(backslashes / 2) * 2;
+          }
+        }
+      }
+      return bufferFrom(output, "binary");
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/textParsers.js
+var require_textParsers = __commonJS({
+  "../../node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/textParsers.js"(exports2, module) {
+    var array2 = require_postgres_array();
+    var arrayParser = require_arrayParser();
+    var parseDate = require_postgres_date();
+    var parseInterval = require_postgres_interval();
+    var parseByteA = require_postgres_bytea();
+    function allowNull(fn) {
+      return function nullAllowed(value2) {
+        if (value2 === null) return value2;
+        return fn(value2);
+      };
+    }
+    function parseBool(value2) {
+      if (value2 === null) return value2;
+      return value2 === "TRUE" || value2 === "t" || value2 === "true" || value2 === "y" || value2 === "yes" || value2 === "on" || value2 === "1";
+    }
+    function parseBoolArray(value2) {
+      if (!value2) return null;
+      return array2.parse(value2, parseBool);
+    }
+    function parseBaseTenInt(string4) {
+      return parseInt(string4, 10);
+    }
+    function parseIntegerArray(value2) {
+      if (!value2) return null;
+      return array2.parse(value2, allowNull(parseBaseTenInt));
+    }
+    function parseBigIntegerArray(value2) {
+      if (!value2) return null;
+      return array2.parse(value2, allowNull(function(entry) {
+        return parseBigInteger(entry).trim();
+      }));
+    }
+    var parsePointArray = function(value2) {
+      if (!value2) {
+        return null;
+      }
+      var p = arrayParser.create(value2, function(entry) {
+        if (entry !== null) {
+          entry = parsePoint(entry);
+        }
+        return entry;
+      });
+      return p.parse();
+    };
+    var parseFloatArray = function(value2) {
+      if (!value2) {
+        return null;
+      }
+      var p = arrayParser.create(value2, function(entry) {
+        if (entry !== null) {
+          entry = parseFloat(entry);
+        }
+        return entry;
+      });
+      return p.parse();
+    };
+    var parseStringArray = function(value2) {
+      if (!value2) {
+        return null;
+      }
+      var p = arrayParser.create(value2);
+      return p.parse();
+    };
+    var parseDateArray = function(value2) {
+      if (!value2) {
+        return null;
+      }
+      var p = arrayParser.create(value2, function(entry) {
+        if (entry !== null) {
+          entry = parseDate(entry);
+        }
+        return entry;
+      });
+      return p.parse();
+    };
+    var parseIntervalArray = function(value2) {
+      if (!value2) {
+        return null;
+      }
+      var p = arrayParser.create(value2, function(entry) {
+        if (entry !== null) {
+          entry = parseInterval(entry);
+        }
+        return entry;
+      });
+      return p.parse();
+    };
+    var parseByteAArray = function(value2) {
+      if (!value2) {
+        return null;
+      }
+      return array2.parse(value2, allowNull(parseByteA));
+    };
+    var parseInteger = function(value2) {
+      return parseInt(value2, 10);
+    };
+    var parseBigInteger = function(value2) {
+      var valStr = String(value2);
+      if (/^\d+$/.test(valStr)) {
+        return valStr;
+      }
+      return value2;
+    };
+    var parseJsonArray = function(value2) {
+      if (!value2) {
+        return null;
+      }
+      return array2.parse(value2, allowNull(JSON.parse));
+    };
+    var parsePoint = function(value2) {
+      if (value2[0] !== "(") {
+        return null;
+      }
+      value2 = value2.substring(1, value2.length - 1).split(",");
+      return {
+        x: parseFloat(value2[0]),
+        y: parseFloat(value2[1])
+      };
+    };
+    var parseCircle = function(value2) {
+      if (value2[0] !== "<" && value2[1] !== "(") {
+        return null;
+      }
+      var point = "(";
+      var radius = "";
+      var pointParsed = false;
+      for (var i = 2; i < value2.length - 1; i++) {
+        if (!pointParsed) {
+          point += value2[i];
+        }
+        if (value2[i] === ")") {
+          pointParsed = true;
+          continue;
+        } else if (!pointParsed) {
+          continue;
+        }
+        if (value2[i] === ",") {
+          continue;
+        }
+        radius += value2[i];
+      }
+      var result = parsePoint(point);
+      result.radius = parseFloat(radius);
+      return result;
+    };
+    var init = function(register) {
+      register(20, parseBigInteger);
+      register(21, parseInteger);
+      register(23, parseInteger);
+      register(26, parseInteger);
+      register(700, parseFloat);
+      register(701, parseFloat);
+      register(16, parseBool);
+      register(1082, parseDate);
+      register(1114, parseDate);
+      register(1184, parseDate);
+      register(600, parsePoint);
+      register(651, parseStringArray);
+      register(718, parseCircle);
+      register(1e3, parseBoolArray);
+      register(1001, parseByteAArray);
+      register(1005, parseIntegerArray);
+      register(1007, parseIntegerArray);
+      register(1028, parseIntegerArray);
+      register(1016, parseBigIntegerArray);
+      register(1017, parsePointArray);
+      register(1021, parseFloatArray);
+      register(1022, parseFloatArray);
+      register(1231, parseFloatArray);
+      register(1014, parseStringArray);
+      register(1015, parseStringArray);
+      register(1008, parseStringArray);
+      register(1009, parseStringArray);
+      register(1040, parseStringArray);
+      register(1041, parseStringArray);
+      register(1115, parseDateArray);
+      register(1182, parseDateArray);
+      register(1185, parseDateArray);
+      register(1186, parseInterval);
+      register(1187, parseIntervalArray);
+      register(17, parseByteA);
+      register(114, JSON.parse.bind(JSON));
+      register(3802, JSON.parse.bind(JSON));
+      register(199, parseJsonArray);
+      register(3807, parseJsonArray);
+      register(3907, parseStringArray);
+      register(2951, parseStringArray);
+      register(791, parseStringArray);
+      register(1183, parseStringArray);
+      register(1270, parseStringArray);
+    };
+    module.exports = {
+      init
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/pg-int8@1.0.1/node_modules/pg-int8/index.js
+var require_pg_int8 = __commonJS({
+  "../../node_modules/.pnpm/pg-int8@1.0.1/node_modules/pg-int8/index.js"(exports2, module) {
+    "use strict";
+    var BASE = 1e6;
+    function readInt8(buffer) {
+      var high = buffer.readInt32BE(0);
+      var low = buffer.readUInt32BE(4);
+      var sign2 = "";
+      if (high < 0) {
+        high = ~high + (low === 0);
+        low = ~low + 1 >>> 0;
+        sign2 = "-";
+      }
+      var result = "";
+      var carry;
+      var t;
+      var digits;
+      var pad;
+      var l;
+      var i;
+      {
+        carry = high % BASE;
+        high = high / BASE >>> 0;
+        t = 4294967296 * carry + low;
+        low = t / BASE >>> 0;
+        digits = "" + (t - BASE * low);
+        if (low === 0 && high === 0) {
+          return sign2 + digits + result;
+        }
+        pad = "";
+        l = 6 - digits.length;
+        for (i = 0; i < l; i++) {
+          pad += "0";
+        }
+        result = pad + digits + result;
+      }
+      {
+        carry = high % BASE;
+        high = high / BASE >>> 0;
+        t = 4294967296 * carry + low;
+        low = t / BASE >>> 0;
+        digits = "" + (t - BASE * low);
+        if (low === 0 && high === 0) {
+          return sign2 + digits + result;
+        }
+        pad = "";
+        l = 6 - digits.length;
+        for (i = 0; i < l; i++) {
+          pad += "0";
+        }
+        result = pad + digits + result;
+      }
+      {
+        carry = high % BASE;
+        high = high / BASE >>> 0;
+        t = 4294967296 * carry + low;
+        low = t / BASE >>> 0;
+        digits = "" + (t - BASE * low);
+        if (low === 0 && high === 0) {
+          return sign2 + digits + result;
+        }
+        pad = "";
+        l = 6 - digits.length;
+        for (i = 0; i < l; i++) {
+          pad += "0";
+        }
+        result = pad + digits + result;
+      }
+      {
+        carry = high % BASE;
+        t = 4294967296 * carry + low;
+        digits = "" + t % BASE;
+        return sign2 + digits + result;
+      }
+    }
+    module.exports = readInt8;
+  }
+});
+
+// ../../node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/binaryParsers.js
+var require_binaryParsers = __commonJS({
+  "../../node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/binaryParsers.js"(exports2, module) {
+    var parseInt64 = require_pg_int8();
+    var parseBits = function(data, bits, offset, invert, callback) {
+      offset = offset || 0;
+      invert = invert || false;
+      callback = callback || function(lastValue, newValue, bits2) {
+        return lastValue * Math.pow(2, bits2) + newValue;
+      };
+      var offsetBytes = offset >> 3;
+      var inv = function(value2) {
+        if (invert) {
+          return ~value2 & 255;
+        }
+        return value2;
+      };
+      var mask = 255;
+      var firstBits = 8 - offset % 8;
+      if (bits < firstBits) {
+        mask = 255 << 8 - bits & 255;
+        firstBits = bits;
+      }
+      if (offset) {
+        mask = mask >> offset % 8;
+      }
+      var result = 0;
+      if (offset % 8 + bits >= 8) {
+        result = callback(0, inv(data[offsetBytes]) & mask, firstBits);
+      }
+      var bytes = bits + offset >> 3;
+      for (var i = offsetBytes + 1; i < bytes; i++) {
+        result = callback(result, inv(data[i]), 8);
+      }
+      var lastBits = (bits + offset) % 8;
+      if (lastBits > 0) {
+        result = callback(result, inv(data[bytes]) >> 8 - lastBits, lastBits);
+      }
+      return result;
+    };
+    var parseFloatFromBits = function(data, precisionBits, exponentBits) {
+      var bias = Math.pow(2, exponentBits - 1) - 1;
+      var sign2 = parseBits(data, 1);
+      var exponent = parseBits(data, exponentBits, 1);
+      if (exponent === 0) {
+        return 0;
+      }
+      var precisionBitsCounter = 1;
+      var parsePrecisionBits = function(lastValue, newValue, bits) {
+        if (lastValue === 0) {
+          lastValue = 1;
+        }
+        for (var i = 1; i <= bits; i++) {
+          precisionBitsCounter /= 2;
+          if ((newValue & 1 << bits - i) > 0) {
+            lastValue += precisionBitsCounter;
+          }
+        }
+        return lastValue;
+      };
+      var mantissa = parseBits(data, precisionBits, exponentBits + 1, false, parsePrecisionBits);
+      if (exponent == Math.pow(2, exponentBits + 1) - 1) {
+        if (mantissa === 0) {
+          return sign2 === 0 ? Infinity : -Infinity;
+        }
+        return NaN;
+      }
+      return (sign2 === 0 ? 1 : -1) * Math.pow(2, exponent - bias) * mantissa;
+    };
+    var parseInt16 = function(value2) {
+      if (parseBits(value2, 1) == 1) {
+        return -1 * (parseBits(value2, 15, 1, true) + 1);
+      }
+      return parseBits(value2, 15, 1);
+    };
+    var parseInt32 = function(value2) {
+      if (parseBits(value2, 1) == 1) {
+        return -1 * (parseBits(value2, 31, 1, true) + 1);
+      }
+      return parseBits(value2, 31, 1);
+    };
+    var parseFloat32 = function(value2) {
+      return parseFloatFromBits(value2, 23, 8);
+    };
+    var parseFloat64 = function(value2) {
+      return parseFloatFromBits(value2, 52, 11);
+    };
+    var parseNumeric = function(value2) {
+      var sign2 = parseBits(value2, 16, 32);
+      if (sign2 == 49152) {
+        return NaN;
+      }
+      var weight = Math.pow(1e4, parseBits(value2, 16, 16));
+      var result = 0;
+      var digits = [];
+      var ndigits = parseBits(value2, 16);
+      for (var i = 0; i < ndigits; i++) {
+        result += parseBits(value2, 16, 64 + 16 * i) * weight;
+        weight /= 1e4;
+      }
+      var scale = Math.pow(10, parseBits(value2, 16, 48));
+      return (sign2 === 0 ? 1 : -1) * Math.round(result * scale) / scale;
+    };
+    var parseDate = function(isUTC, value2) {
+      var sign2 = parseBits(value2, 1);
+      var rawValue = parseBits(value2, 63, 1);
+      var result = new Date((sign2 === 0 ? 1 : -1) * rawValue / 1e3 + 9466848e5);
+      if (!isUTC) {
+        result.setTime(result.getTime() + result.getTimezoneOffset() * 6e4);
+      }
+      result.usec = rawValue % 1e3;
+      result.getMicroSeconds = function() {
+        return this.usec;
+      };
+      result.setMicroSeconds = function(value3) {
+        this.usec = value3;
+      };
+      result.getUTCMicroSeconds = function() {
+        return this.usec;
+      };
+      return result;
+    };
+    var parseArray = function(value2) {
+      var dim = parseBits(value2, 32);
+      var flags = parseBits(value2, 32, 32);
+      var elementType = parseBits(value2, 32, 64);
+      var offset = 96;
+      var dims2 = [];
+      for (var i = 0; i < dim; i++) {
+        dims2[i] = parseBits(value2, 32, offset);
+        offset += 32;
+        offset += 32;
+      }
+      var parseElement = function(elementType2) {
+        var length = parseBits(value2, 32, offset);
+        offset += 32;
+        if (length == 4294967295) {
+          return null;
+        }
+        var result;
+        if (elementType2 == 23 || elementType2 == 20) {
+          result = parseBits(value2, length * 8, offset);
+          offset += length * 8;
+          return result;
+        } else if (elementType2 == 25) {
+          result = value2.toString(this.encoding, offset >> 3, (offset += length << 3) >> 3);
+          return result;
+        } else {
+          console.log("ERROR: ElementType not implemented: " + elementType2);
+        }
+      };
+      var parse4 = function(dimension, elementType2) {
+        var array2 = [];
+        var i2;
+        if (dimension.length > 1) {
+          var count = dimension.shift();
+          for (i2 = 0; i2 < count; i2++) {
+            array2[i2] = parse4(dimension, elementType2);
+          }
+          dimension.unshift(count);
+        } else {
+          for (i2 = 0; i2 < dimension[0]; i2++) {
+            array2[i2] = parseElement(elementType2);
+          }
+        }
+        return array2;
+      };
+      return parse4(dims2, elementType);
+    };
+    var parseText = function(value2) {
+      return value2.toString("utf8");
+    };
+    var parseBool = function(value2) {
+      if (value2 === null) return null;
+      return parseBits(value2, 8) > 0;
+    };
+    var init = function(register) {
+      register(20, parseInt64);
+      register(21, parseInt16);
+      register(23, parseInt32);
+      register(26, parseInt32);
+      register(1700, parseNumeric);
+      register(700, parseFloat32);
+      register(701, parseFloat64);
+      register(16, parseBool);
+      register(1114, parseDate.bind(null, false));
+      register(1184, parseDate.bind(null, true));
+      register(1e3, parseArray);
+      register(1007, parseArray);
+      register(1016, parseArray);
+      register(1008, parseArray);
+      register(1009, parseArray);
+      register(25, parseText);
+    };
+    module.exports = {
+      init
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/builtins.js
+var require_builtins = __commonJS({
+  "../../node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/builtins.js"(exports2, module) {
+    module.exports = {
+      BOOL: 16,
+      BYTEA: 17,
+      CHAR: 18,
+      INT8: 20,
+      INT2: 21,
+      INT4: 23,
+      REGPROC: 24,
+      TEXT: 25,
+      OID: 26,
+      TID: 27,
+      XID: 28,
+      CID: 29,
+      JSON: 114,
+      XML: 142,
+      PG_NODE_TREE: 194,
+      SMGR: 210,
+      PATH: 602,
+      POLYGON: 604,
+      CIDR: 650,
+      FLOAT4: 700,
+      FLOAT8: 701,
+      ABSTIME: 702,
+      RELTIME: 703,
+      TINTERVAL: 704,
+      CIRCLE: 718,
+      MACADDR8: 774,
+      MONEY: 790,
+      MACADDR: 829,
+      INET: 869,
+      ACLITEM: 1033,
+      BPCHAR: 1042,
+      VARCHAR: 1043,
+      DATE: 1082,
+      TIME: 1083,
+      TIMESTAMP: 1114,
+      TIMESTAMPTZ: 1184,
+      INTERVAL: 1186,
+      TIMETZ: 1266,
+      BIT: 1560,
+      VARBIT: 1562,
+      NUMERIC: 1700,
+      REFCURSOR: 1790,
+      REGPROCEDURE: 2202,
+      REGOPER: 2203,
+      REGOPERATOR: 2204,
+      REGCLASS: 2205,
+      REGTYPE: 2206,
+      UUID: 2950,
+      TXID_SNAPSHOT: 2970,
+      PG_LSN: 3220,
+      PG_NDISTINCT: 3361,
+      PG_DEPENDENCIES: 3402,
+      TSVECTOR: 3614,
+      TSQUERY: 3615,
+      GTSVECTOR: 3642,
+      REGCONFIG: 3734,
+      REGDICTIONARY: 3769,
+      JSONB: 3802,
+      REGNAMESPACE: 4089,
+      REGROLE: 4096
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/index.js
+var require_pg_types = __commonJS({
+  "../../node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/index.js"(exports2) {
+    var textParsers = require_textParsers();
+    var binaryParsers = require_binaryParsers();
+    var arrayParser = require_arrayParser();
+    var builtinTypes = require_builtins();
+    exports2.getTypeParser = getTypeParser;
+    exports2.setTypeParser = setTypeParser;
+    exports2.arrayParser = arrayParser;
+    exports2.builtins = builtinTypes;
+    var typeParsers = {
+      text: {},
+      binary: {}
+    };
+    function noParse(val) {
+      return String(val);
+    }
+    function getTypeParser(oid, format) {
+      format = format || "text";
+      if (!typeParsers[format]) {
+        return noParse;
+      }
+      return typeParsers[format][oid] || noParse;
+    }
+    function setTypeParser(oid, format, parseFn) {
+      if (typeof format == "function") {
+        parseFn = format;
+        format = "text";
+      }
+      typeParsers[format][oid] = parseFn;
+    }
+    textParsers.init(function(oid, converter) {
+      typeParsers.text[oid] = converter;
+    });
+    binaryParsers.init(function(oid, converter) {
+      typeParsers.binary[oid] = converter;
+    });
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/defaults.js
+var require_defaults = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/defaults.js"(exports2, module) {
+    "use strict";
+    module.exports = {
+      // database host. defaults to localhost
+      host: "localhost",
+      // database user's name
+      user: process.platform === "win32" ? process.env.USERNAME : process.env.USER,
+      // name of database to connect
+      database: void 0,
+      // database user's password
+      password: null,
+      // a Postgres connection string to be used instead of setting individual connection items
+      // NOTE:  Setting this value will cause it to override any other value (such as database or user) defined
+      // in the defaults object.
+      connectionString: void 0,
+      // database port
+      port: 5432,
+      // number of rows to return at a time from a prepared statement's
+      // portal. 0 will return all rows at once
+      rows: 0,
+      // binary result mode
+      binary: false,
+      // Connection pool options - see https://github.com/brianc/node-pg-pool
+      // number of connections to use in connection pool
+      // 0 will disable connection pooling
+      max: 10,
+      // max milliseconds a client can go unused before it is removed
+      // from the pool and destroyed
+      idleTimeoutMillis: 3e4,
+      client_encoding: "",
+      ssl: false,
+      application_name: void 0,
+      fallback_application_name: void 0,
+      options: void 0,
+      parseInputDatesAsUTC: false,
+      // max milliseconds any query using this connection will execute for before timing out in error.
+      // false=unlimited
+      statement_timeout: false,
+      // Abort any statement that waits longer than the specified duration in milliseconds while attempting to acquire a lock.
+      // false=unlimited
+      lock_timeout: false,
+      // Terminate any session with an open transaction that has been idle for longer than the specified duration in milliseconds
+      // false=unlimited
+      idle_in_transaction_session_timeout: false,
+      // max milliseconds to wait for query to complete (client side)
+      query_timeout: false,
+      connect_timeout: 0,
+      keepalives: 1,
+      keepalives_idle: 0
+    };
+    var pgTypes = require_pg_types();
+    var parseBigInteger = pgTypes.getTypeParser(20, "text");
+    var parseBigIntegerArray = pgTypes.getTypeParser(1016, "text");
+    module.exports.__defineSetter__("parseInt8", function(val) {
+      pgTypes.setTypeParser(20, "text", val ? pgTypes.getTypeParser(23, "text") : parseBigInteger);
+      pgTypes.setTypeParser(1016, "text", val ? pgTypes.getTypeParser(1007, "text") : parseBigIntegerArray);
+    });
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/utils.js
+var require_utils = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/utils.js"(exports2, module) {
+    "use strict";
+    var defaults = require_defaults();
+    function escapeElement(elementRepresentation) {
+      var escaped = elementRepresentation.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+      return '"' + escaped + '"';
+    }
+    function arrayString(val) {
+      var result = "{";
+      for (var i = 0; i < val.length; i++) {
+        if (i > 0) {
+          result = result + ",";
+        }
+        if (val[i] === null || typeof val[i] === "undefined") {
+          result = result + "NULL";
+        } else if (Array.isArray(val[i])) {
+          result = result + arrayString(val[i]);
+        } else if (ArrayBuffer.isView(val[i])) {
+          var item = val[i];
+          if (!(item instanceof Buffer)) {
+            var buf = Buffer.from(item.buffer, item.byteOffset, item.byteLength);
+            if (buf.length === item.byteLength) {
+              item = buf;
+            } else {
+              item = buf.slice(item.byteOffset, item.byteOffset + item.byteLength);
+            }
+          }
+          result += "\\\\x" + item.toString("hex");
+        } else {
+          result += escapeElement(prepareValue(val[i]));
+        }
+      }
+      result = result + "}";
+      return result;
+    }
+    var prepareValue = function(val, seen) {
+      if (val == null) {
+        return null;
+      }
+      if (val instanceof Buffer) {
+        return val;
+      }
+      if (ArrayBuffer.isView(val)) {
+        var buf = Buffer.from(val.buffer, val.byteOffset, val.byteLength);
+        if (buf.length === val.byteLength) {
+          return buf;
+        }
+        return buf.slice(val.byteOffset, val.byteOffset + val.byteLength);
+      }
+      if (val instanceof Date) {
+        if (defaults.parseInputDatesAsUTC) {
+          return dateToStringUTC(val);
+        } else {
+          return dateToString(val);
+        }
+      }
+      if (Array.isArray(val)) {
+        return arrayString(val);
+      }
+      if (typeof val === "object") {
+        return prepareObject(val, seen);
+      }
+      return val.toString();
+    };
+    function prepareObject(val, seen) {
+      if (val && typeof val.toPostgres === "function") {
+        seen = seen || [];
+        if (seen.indexOf(val) !== -1) {
+          throw new Error('circular reference detected while preparing "' + val + '" for query');
+        }
+        seen.push(val);
+        return prepareValue(val.toPostgres(prepareValue), seen);
+      }
+      return JSON.stringify(val);
+    }
+    function pad(number4, digits) {
+      number4 = "" + number4;
+      while (number4.length < digits) {
+        number4 = "0" + number4;
+      }
+      return number4;
+    }
+    function dateToString(date5) {
+      var offset = -date5.getTimezoneOffset();
+      var year2 = date5.getFullYear();
+      var isBCYear = year2 < 1;
+      if (isBCYear) year2 = Math.abs(year2) + 1;
+      var ret = pad(year2, 4) + "-" + pad(date5.getMonth() + 1, 2) + "-" + pad(date5.getDate(), 2) + "T" + pad(date5.getHours(), 2) + ":" + pad(date5.getMinutes(), 2) + ":" + pad(date5.getSeconds(), 2) + "." + pad(date5.getMilliseconds(), 3);
+      if (offset < 0) {
+        ret += "-";
+        offset *= -1;
+      } else {
+        ret += "+";
+      }
+      ret += pad(Math.floor(offset / 60), 2) + ":" + pad(offset % 60, 2);
+      if (isBCYear) ret += " BC";
+      return ret;
+    }
+    function dateToStringUTC(date5) {
+      var year2 = date5.getUTCFullYear();
+      var isBCYear = year2 < 1;
+      if (isBCYear) year2 = Math.abs(year2) + 1;
+      var ret = pad(year2, 4) + "-" + pad(date5.getUTCMonth() + 1, 2) + "-" + pad(date5.getUTCDate(), 2) + "T" + pad(date5.getUTCHours(), 2) + ":" + pad(date5.getUTCMinutes(), 2) + ":" + pad(date5.getUTCSeconds(), 2) + "." + pad(date5.getUTCMilliseconds(), 3);
+      ret += "+00:00";
+      if (isBCYear) ret += " BC";
+      return ret;
+    }
+    function normalizeQueryConfig(config3, values, callback) {
+      config3 = typeof config3 === "string" ? { text: config3 } : config3;
+      if (values) {
+        if (typeof values === "function") {
+          config3.callback = values;
+        } else {
+          config3.values = values;
+        }
+      }
+      if (callback) {
+        config3.callback = callback;
+      }
+      return config3;
+    }
+    var escapeIdentifier = function(str) {
+      return '"' + str.replace(/"/g, '""') + '"';
+    };
+    var escapeLiteral = function(str) {
+      var hasBackslash = false;
+      var escaped = "'";
+      for (var i = 0; i < str.length; i++) {
+        var c = str[i];
+        if (c === "'") {
+          escaped += c + c;
+        } else if (c === "\\") {
+          escaped += c + c;
+          hasBackslash = true;
+        } else {
+          escaped += c;
+        }
+      }
+      escaped += "'";
+      if (hasBackslash === true) {
+        escaped = " E" + escaped;
+      }
+      return escaped;
+    };
+    module.exports = {
+      prepareValue: function prepareValueWrapper(value2) {
+        return prepareValue(value2);
+      },
+      normalizeQueryConfig,
+      escapeIdentifier,
+      escapeLiteral
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/crypto/utils-legacy.js
+var require_utils_legacy = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/crypto/utils-legacy.js"(exports2, module) {
+    "use strict";
+    var nodeCrypto = __require("crypto");
+    function md5(string4) {
+      return nodeCrypto.createHash("md5").update(string4, "utf-8").digest("hex");
+    }
+    function postgresMd5PasswordHash(user, password, salt) {
+      var inner = md5(password + user);
+      var outer = md5(Buffer.concat([Buffer.from(inner), salt]));
+      return "md5" + outer;
+    }
+    function sha256(text2) {
+      return nodeCrypto.createHash("sha256").update(text2).digest();
+    }
+    function hmacSha256(key, msg) {
+      return nodeCrypto.createHmac("sha256", key).update(msg).digest();
+    }
+    async function deriveKey(password, salt, iterations) {
+      return nodeCrypto.pbkdf2Sync(password, salt, iterations, 32, "sha256");
+    }
+    module.exports = {
+      postgresMd5PasswordHash,
+      randomBytes: nodeCrypto.randomBytes,
+      deriveKey,
+      sha256,
+      hmacSha256,
+      md5
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/crypto/utils-webcrypto.js
+var require_utils_webcrypto = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/crypto/utils-webcrypto.js"(exports2, module) {
+    var nodeCrypto = __require("crypto");
+    module.exports = {
+      postgresMd5PasswordHash,
+      randomBytes: randomBytes3,
+      deriveKey,
+      sha256,
+      hmacSha256,
+      md5
+    };
+    var webCrypto = nodeCrypto.webcrypto || globalThis.crypto;
+    var subtleCrypto = webCrypto.subtle;
+    var textEncoder = new TextEncoder();
+    function randomBytes3(length) {
+      return webCrypto.getRandomValues(Buffer.alloc(length));
+    }
+    async function md5(string4) {
+      try {
+        return nodeCrypto.createHash("md5").update(string4, "utf-8").digest("hex");
+      } catch (e) {
+        const data = typeof string4 === "string" ? textEncoder.encode(string4) : string4;
+        const hash = await subtleCrypto.digest("MD5", data);
+        return Array.from(new Uint8Array(hash)).map((b) => b.toString(16).padStart(2, "0")).join("");
+      }
+    }
+    async function postgresMd5PasswordHash(user, password, salt) {
+      var inner = await md5(password + user);
+      var outer = await md5(Buffer.concat([Buffer.from(inner), salt]));
+      return "md5" + outer;
+    }
+    async function sha256(text2) {
+      return await subtleCrypto.digest("SHA-256", text2);
+    }
+    async function hmacSha256(keyBuffer, msg) {
+      const key = await subtleCrypto.importKey("raw", keyBuffer, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+      return await subtleCrypto.sign("HMAC", key, textEncoder.encode(msg));
+    }
+    async function deriveKey(password, salt, iterations) {
+      const key = await subtleCrypto.importKey("raw", textEncoder.encode(password), "PBKDF2", false, ["deriveBits"]);
+      const params = { name: "PBKDF2", hash: "SHA-256", salt, iterations };
+      return await subtleCrypto.deriveBits(params, key, 32 * 8, ["deriveBits"]);
+    }
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/crypto/utils.js
+var require_utils2 = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/crypto/utils.js"(exports2, module) {
+    "use strict";
+    var useLegacyCrypto = parseInt(process.versions && process.versions.node && process.versions.node.split(".")[0]) < 15;
+    if (useLegacyCrypto) {
+      module.exports = require_utils_legacy();
+    } else {
+      module.exports = require_utils_webcrypto();
+    }
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/crypto/sasl.js
+var require_sasl = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/crypto/sasl.js"(exports2, module) {
+    "use strict";
+    var crypto2 = require_utils2();
+    function startSession(mechanisms) {
+      if (mechanisms.indexOf("SCRAM-SHA-256") === -1) {
+        throw new Error("SASL: Only mechanism SCRAM-SHA-256 is currently supported");
+      }
+      const clientNonce = crypto2.randomBytes(18).toString("base64");
+      return {
+        mechanism: "SCRAM-SHA-256",
+        clientNonce,
+        response: "n,,n=*,r=" + clientNonce,
+        message: "SASLInitialResponse"
+      };
+    }
+    async function continueSession(session, password, serverData) {
+      if (session.message !== "SASLInitialResponse") {
+        throw new Error("SASL: Last message was not SASLInitialResponse");
+      }
+      if (typeof password !== "string") {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string");
+      }
+      if (password === "") {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a non-empty string");
+      }
+      if (typeof serverData !== "string") {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: serverData must be a string");
+      }
+      const sv = parseServerFirstMessage(serverData);
+      if (!sv.nonce.startsWith(session.clientNonce)) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: server nonce does not start with client nonce");
+      } else if (sv.nonce.length === session.clientNonce.length) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: server nonce is too short");
+      }
+      var clientFirstMessageBare = "n=*,r=" + session.clientNonce;
+      var serverFirstMessage = "r=" + sv.nonce + ",s=" + sv.salt + ",i=" + sv.iteration;
+      var clientFinalMessageWithoutProof = "c=biws,r=" + sv.nonce;
+      var authMessage = clientFirstMessageBare + "," + serverFirstMessage + "," + clientFinalMessageWithoutProof;
+      var saltBytes = Buffer.from(sv.salt, "base64");
+      var saltedPassword = await crypto2.deriveKey(password, saltBytes, sv.iteration);
+      var clientKey = await crypto2.hmacSha256(saltedPassword, "Client Key");
+      var storedKey = await crypto2.sha256(clientKey);
+      var clientSignature = await crypto2.hmacSha256(storedKey, authMessage);
+      var clientProof = xorBuffers(Buffer.from(clientKey), Buffer.from(clientSignature)).toString("base64");
+      var serverKey = await crypto2.hmacSha256(saltedPassword, "Server Key");
+      var serverSignatureBytes = await crypto2.hmacSha256(serverKey, authMessage);
+      session.message = "SASLResponse";
+      session.serverSignature = Buffer.from(serverSignatureBytes).toString("base64");
+      session.response = clientFinalMessageWithoutProof + ",p=" + clientProof;
+    }
+    function finalizeSession(session, serverData) {
+      if (session.message !== "SASLResponse") {
+        throw new Error("SASL: Last message was not SASLResponse");
+      }
+      if (typeof serverData !== "string") {
+        throw new Error("SASL: SCRAM-SERVER-FINAL-MESSAGE: serverData must be a string");
+      }
+      const { serverSignature } = parseServerFinalMessage(serverData);
+      if (serverSignature !== session.serverSignature) {
+        throw new Error("SASL: SCRAM-SERVER-FINAL-MESSAGE: server signature does not match");
+      }
+    }
+    function isPrintableChars(text2) {
+      if (typeof text2 !== "string") {
+        throw new TypeError("SASL: text must be a string");
+      }
+      return text2.split("").map((_, i) => text2.charCodeAt(i)).every((c) => c >= 33 && c <= 43 || c >= 45 && c <= 126);
+    }
+    function isBase64(text2) {
+      return /^(?:[a-zA-Z0-9+/]{4})*(?:[a-zA-Z0-9+/]{2}==|[a-zA-Z0-9+/]{3}=)?$/.test(text2);
+    }
+    function parseAttributePairs(text2) {
+      if (typeof text2 !== "string") {
+        throw new TypeError("SASL: attribute pairs text must be a string");
+      }
+      return new Map(
+        text2.split(",").map((attrValue) => {
+          if (!/^.=/.test(attrValue)) {
+            throw new Error("SASL: Invalid attribute pair entry");
+          }
+          const name = attrValue[0];
+          const value2 = attrValue.substring(2);
+          return [name, value2];
+        })
+      );
+    }
+    function parseServerFirstMessage(data) {
+      const attrPairs = parseAttributePairs(data);
+      const nonce = attrPairs.get("r");
+      if (!nonce) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: nonce missing");
+      } else if (!isPrintableChars(nonce)) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: nonce must only contain printable characters");
+      }
+      const salt = attrPairs.get("s");
+      if (!salt) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: salt missing");
+      } else if (!isBase64(salt)) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: salt must be base64");
+      }
+      const iterationText = attrPairs.get("i");
+      if (!iterationText) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: iteration missing");
+      } else if (!/^[1-9][0-9]*$/.test(iterationText)) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: invalid iteration count");
+      }
+      const iteration = parseInt(iterationText, 10);
+      return {
+        nonce,
+        salt,
+        iteration
+      };
+    }
+    function parseServerFinalMessage(serverData) {
+      const attrPairs = parseAttributePairs(serverData);
+      const serverSignature = attrPairs.get("v");
+      if (!serverSignature) {
+        throw new Error("SASL: SCRAM-SERVER-FINAL-MESSAGE: server signature is missing");
+      } else if (!isBase64(serverSignature)) {
+        throw new Error("SASL: SCRAM-SERVER-FINAL-MESSAGE: server signature must be base64");
+      }
+      return {
+        serverSignature
+      };
+    }
+    function xorBuffers(a, b) {
+      if (!Buffer.isBuffer(a)) {
+        throw new TypeError("first argument must be a Buffer");
+      }
+      if (!Buffer.isBuffer(b)) {
+        throw new TypeError("second argument must be a Buffer");
+      }
+      if (a.length !== b.length) {
+        throw new Error("Buffer lengths must match");
+      }
+      if (a.length === 0) {
+        throw new Error("Buffers cannot be empty");
+      }
+      return Buffer.from(a.map((_, i) => a[i] ^ b[i]));
+    }
+    module.exports = {
+      startSession,
+      continueSession,
+      finalizeSession
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/type-overrides.js
+var require_type_overrides = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/type-overrides.js"(exports2, module) {
+    "use strict";
+    var types = require_pg_types();
+    function TypeOverrides(userTypes) {
+      this._types = userTypes || types;
+      this.text = {};
+      this.binary = {};
+    }
+    TypeOverrides.prototype.getOverrides = function(format) {
+      switch (format) {
+        case "text":
+          return this.text;
+        case "binary":
+          return this.binary;
+        default:
+          return {};
+      }
+    };
+    TypeOverrides.prototype.setTypeParser = function(oid, format, parseFn) {
+      if (typeof format === "function") {
+        parseFn = format;
+        format = "text";
+      }
+      this.getOverrides(format)[oid] = parseFn;
+    };
+    TypeOverrides.prototype.getTypeParser = function(oid, format) {
+      format = format || "text";
+      return this.getOverrides(format)[oid] || this._types.getTypeParser(oid, format);
+    };
+    module.exports = TypeOverrides;
+  }
+});
+
+// ../../node_modules/.pnpm/pg-connection-string@2.12.0/node_modules/pg-connection-string/index.js
+var require_pg_connection_string = __commonJS({
+  "../../node_modules/.pnpm/pg-connection-string@2.12.0/node_modules/pg-connection-string/index.js"(exports2, module) {
+    "use strict";
+    function parse4(str, options = {}) {
+      if (str.charAt(0) === "/") {
+        const config4 = str.split(" ");
+        return { host: config4[0], database: config4[1] };
+      }
+      const config3 = {};
+      let result;
+      let dummyHost = false;
+      if (/ |%[^a-f0-9]|%[a-f0-9][^a-f0-9]/i.test(str)) {
+        str = encodeURI(str).replace(/%25(\d\d)/g, "%$1");
+      }
+      try {
+        try {
+          result = new URL(str, "postgres://base");
+        } catch (e) {
+          result = new URL(str.replace("@/", "@___DUMMY___/"), "postgres://base");
+          dummyHost = true;
+        }
+      } catch (err) {
+        err.input && (err.input = "*****REDACTED*****");
+        throw err;
+      }
+      for (const entry of result.searchParams.entries()) {
+        config3[entry[0]] = entry[1];
+      }
+      config3.user = config3.user || decodeURIComponent(result.username);
+      config3.password = config3.password || decodeURIComponent(result.password);
+      if (result.protocol == "socket:") {
+        config3.host = decodeURI(result.pathname);
+        config3.database = result.searchParams.get("db");
+        config3.client_encoding = result.searchParams.get("encoding");
+        return config3;
+      }
+      const hostname2 = dummyHost ? "" : result.hostname;
+      if (!config3.host) {
+        config3.host = decodeURIComponent(hostname2);
+      } else if (hostname2 && /^%2f/i.test(hostname2)) {
+        result.pathname = hostname2 + result.pathname;
+      }
+      if (!config3.port) {
+        config3.port = result.port;
+      }
+      const pathname = result.pathname.slice(1) || null;
+      config3.database = pathname ? decodeURI(pathname) : null;
+      if (config3.ssl === "true" || config3.ssl === "1") {
+        config3.ssl = true;
+      }
+      if (config3.ssl === "0") {
+        config3.ssl = false;
+      }
+      if (config3.sslcert || config3.sslkey || config3.sslrootcert || config3.sslmode) {
+        config3.ssl = {};
+      }
+      const fs32 = config3.sslcert || config3.sslkey || config3.sslrootcert ? __require("fs") : null;
+      if (config3.sslcert) {
+        config3.ssl.cert = fs32.readFileSync(config3.sslcert).toString();
+      }
+      if (config3.sslkey) {
+        config3.ssl.key = fs32.readFileSync(config3.sslkey).toString();
+      }
+      if (config3.sslrootcert) {
+        config3.ssl.ca = fs32.readFileSync(config3.sslrootcert).toString();
+      }
+      if (options.useLibpqCompat && config3.uselibpqcompat) {
+        throw new Error("Both useLibpqCompat and uselibpqcompat are set. Please use only one of them.");
+      }
+      if (config3.uselibpqcompat === "true" || options.useLibpqCompat) {
+        switch (config3.sslmode) {
+          case "disable": {
+            config3.ssl = false;
+            break;
+          }
+          case "prefer": {
+            config3.ssl.rejectUnauthorized = false;
+            break;
+          }
+          case "require": {
+            if (config3.sslrootcert) {
+              config3.ssl.checkServerIdentity = function() {
+              };
+            } else {
+              config3.ssl.rejectUnauthorized = false;
+            }
+            break;
+          }
+          case "verify-ca": {
+            if (!config3.ssl.ca) {
+              throw new Error(
+                "SECURITY WARNING: Using sslmode=verify-ca requires specifying a CA with sslrootcert. If a public CA is used, verify-ca allows connections to a server that somebody else may have registered with the CA, making you vulnerable to Man-in-the-Middle attacks. Either specify a custom CA certificate with sslrootcert parameter or use sslmode=verify-full for proper security."
+              );
+            }
+            config3.ssl.checkServerIdentity = function() {
+            };
+            break;
+          }
+          case "verify-full": {
+            break;
+          }
+        }
+      } else {
+        switch (config3.sslmode) {
+          case "disable": {
+            config3.ssl = false;
+            break;
+          }
+          case "prefer":
+          case "require":
+          case "verify-ca":
+          case "verify-full": {
+            if (config3.sslmode !== "verify-full") {
+              deprecatedSslModeWarning(config3.sslmode);
+            }
+            break;
+          }
+          case "no-verify": {
+            config3.ssl.rejectUnauthorized = false;
+            break;
+          }
+        }
+      }
+      return config3;
+    }
+    function toConnectionOptions(sslConfig) {
+      const connectionOptions = Object.entries(sslConfig).reduce((c, [key, value2]) => {
+        if (value2 !== void 0 && value2 !== null) {
+          c[key] = value2;
+        }
+        return c;
+      }, {});
+      return connectionOptions;
+    }
+    function toClientConfig(config3) {
+      const poolConfig = Object.entries(config3).reduce((c, [key, value2]) => {
+        if (key === "ssl") {
+          const sslConfig = value2;
+          if (typeof sslConfig === "boolean") {
+            c[key] = sslConfig;
+          }
+          if (typeof sslConfig === "object") {
+            c[key] = toConnectionOptions(sslConfig);
+          }
+        } else if (value2 !== void 0 && value2 !== null) {
+          if (key === "port") {
+            if (value2 !== "") {
+              const v = parseInt(value2, 10);
+              if (isNaN(v)) {
+                throw new Error(`Invalid ${key}: ${value2}`);
+              }
+              c[key] = v;
+            }
+          } else {
+            c[key] = value2;
+          }
+        }
+        return c;
+      }, {});
+      return poolConfig;
+    }
+    function parseIntoClientConfig(str) {
+      return toClientConfig(parse4(str));
+    }
+    function deprecatedSslModeWarning(sslmode) {
+      if (!deprecatedSslModeWarning.warned && typeof process !== "undefined" && process.emitWarning) {
+        deprecatedSslModeWarning.warned = true;
+        process.emitWarning(`SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=${sslmode}'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.`);
+      }
+    }
+    module.exports = parse4;
+    parse4.parse = parse4;
+    parse4.toClientConfig = toClientConfig;
+    parse4.parseIntoClientConfig = parseIntoClientConfig;
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/connection-parameters.js
+var require_connection_parameters = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/connection-parameters.js"(exports2, module) {
+    "use strict";
+    var dns = __require("dns");
+    var defaults = require_defaults();
+    var parse4 = require_pg_connection_string().parse;
+    var val = function(key, config3, envVar) {
+      if (envVar === void 0) {
+        envVar = process.env["PG" + key.toUpperCase()];
+      } else if (envVar === false) {
+      } else {
+        envVar = process.env[envVar];
+      }
+      return config3[key] || envVar || defaults[key];
+    };
+    var readSSLConfigFromEnvironment = function() {
+      switch (process.env.PGSSLMODE) {
+        case "disable":
+          return false;
+        case "prefer":
+        case "require":
+        case "verify-ca":
+        case "verify-full":
+          return true;
+        case "no-verify":
+          return { rejectUnauthorized: false };
+      }
+      return defaults.ssl;
+    };
+    var quoteParamValue = function(value2) {
+      return "'" + ("" + value2).replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'";
+    };
+    var add = function(params, config3, paramName) {
+      var value2 = config3[paramName];
+      if (value2 !== void 0 && value2 !== null) {
+        params.push(paramName + "=" + quoteParamValue(value2));
+      }
+    };
+    var ConnectionParameters = class {
+      constructor(config3) {
+        config3 = typeof config3 === "string" ? parse4(config3) : config3 || {};
+        if (config3.connectionString) {
+          config3 = Object.assign({}, config3, parse4(config3.connectionString));
+        }
+        this.user = val("user", config3);
+        this.database = val("database", config3);
+        if (this.database === void 0) {
+          this.database = this.user;
+        }
+        this.port = parseInt(val("port", config3), 10);
+        this.host = val("host", config3);
+        Object.defineProperty(this, "password", {
+          configurable: true,
+          enumerable: false,
+          writable: true,
+          value: val("password", config3)
+        });
+        this.binary = val("binary", config3);
+        this.options = val("options", config3);
+        this.ssl = typeof config3.ssl === "undefined" ? readSSLConfigFromEnvironment() : config3.ssl;
+        if (typeof this.ssl === "string") {
+          if (this.ssl === "true") {
+            this.ssl = true;
+          }
+        }
+        if (this.ssl === "no-verify") {
+          this.ssl = { rejectUnauthorized: false };
+        }
+        if (this.ssl && this.ssl.key) {
+          Object.defineProperty(this.ssl, "key", {
+            enumerable: false
+          });
+        }
+        this.client_encoding = val("client_encoding", config3);
+        this.replication = val("replication", config3);
+        this.isDomainSocket = !(this.host || "").indexOf("/");
+        this.application_name = val("application_name", config3, "PGAPPNAME");
+        this.fallback_application_name = val("fallback_application_name", config3, false);
+        this.statement_timeout = val("statement_timeout", config3, false);
+        this.lock_timeout = val("lock_timeout", config3, false);
+        this.idle_in_transaction_session_timeout = val("idle_in_transaction_session_timeout", config3, false);
+        this.query_timeout = val("query_timeout", config3, false);
+        if (config3.connectionTimeoutMillis === void 0) {
+          this.connect_timeout = process.env.PGCONNECT_TIMEOUT || 0;
+        } else {
+          this.connect_timeout = Math.floor(config3.connectionTimeoutMillis / 1e3);
+        }
+        if (config3.keepAlive === false) {
+          this.keepalives = 0;
+        } else if (config3.keepAlive === true) {
+          this.keepalives = 1;
+        }
+        if (typeof config3.keepAliveInitialDelayMillis === "number") {
+          this.keepalives_idle = Math.floor(config3.keepAliveInitialDelayMillis / 1e3);
+        }
+      }
+      getLibpqConnectionString(cb) {
+        var params = [];
+        add(params, this, "user");
+        add(params, this, "password");
+        add(params, this, "port");
+        add(params, this, "application_name");
+        add(params, this, "fallback_application_name");
+        add(params, this, "connect_timeout");
+        add(params, this, "options");
+        var ssl = typeof this.ssl === "object" ? this.ssl : this.ssl ? { sslmode: this.ssl } : {};
+        add(params, ssl, "sslmode");
+        add(params, ssl, "sslca");
+        add(params, ssl, "sslkey");
+        add(params, ssl, "sslcert");
+        add(params, ssl, "sslrootcert");
+        if (this.database) {
+          params.push("dbname=" + quoteParamValue(this.database));
+        }
+        if (this.replication) {
+          params.push("replication=" + quoteParamValue(this.replication));
+        }
+        if (this.host) {
+          params.push("host=" + quoteParamValue(this.host));
+        }
+        if (this.isDomainSocket) {
+          return cb(null, params.join(" "));
+        }
+        if (this.client_encoding) {
+          params.push("client_encoding=" + quoteParamValue(this.client_encoding));
+        }
+        dns.lookup(this.host, function(err, address) {
+          if (err) return cb(err, null);
+          params.push("hostaddr=" + quoteParamValue(address));
+          return cb(null, params.join(" "));
+        });
+      }
+    };
+    module.exports = ConnectionParameters;
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/result.js
+var require_result = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/result.js"(exports2, module) {
+    "use strict";
+    var types = require_pg_types();
+    var matchRegexp = /^([A-Za-z]+)(?: (\d+))?(?: (\d+))?/;
+    var Result = class {
+      constructor(rowMode, types2) {
+        this.command = null;
+        this.rowCount = null;
+        this.oid = null;
+        this.rows = [];
+        this.fields = [];
+        this._parsers = void 0;
+        this._types = types2;
+        this.RowCtor = null;
+        this.rowAsArray = rowMode === "array";
+        if (this.rowAsArray) {
+          this.parseRow = this._parseRowAsArray;
+        }
+        this._prebuiltEmptyResultObject = null;
+      }
+      // adds a command complete message
+      addCommandComplete(msg) {
+        var match;
+        if (msg.text) {
+          match = matchRegexp.exec(msg.text);
+        } else {
+          match = matchRegexp.exec(msg.command);
+        }
+        if (match) {
+          this.command = match[1];
+          if (match[3]) {
+            this.oid = parseInt(match[2], 10);
+            this.rowCount = parseInt(match[3], 10);
+          } else if (match[2]) {
+            this.rowCount = parseInt(match[2], 10);
+          }
+        }
+      }
+      _parseRowAsArray(rowData) {
+        var row = new Array(rowData.length);
+        for (var i = 0, len = rowData.length; i < len; i++) {
+          var rawValue = rowData[i];
+          if (rawValue !== null) {
+            row[i] = this._parsers[i](rawValue);
+          } else {
+            row[i] = null;
+          }
+        }
+        return row;
+      }
+      parseRow(rowData) {
+        var row = { ...this._prebuiltEmptyResultObject };
+        for (var i = 0, len = rowData.length; i < len; i++) {
+          var rawValue = rowData[i];
+          var field = this.fields[i].name;
+          if (rawValue !== null) {
+            row[field] = this._parsers[i](rawValue);
+          } else {
+            row[field] = null;
+          }
+        }
+        return row;
+      }
+      addRow(row) {
+        this.rows.push(row);
+      }
+      addFields(fieldDescriptions) {
+        this.fields = fieldDescriptions;
+        if (this.fields.length) {
+          this._parsers = new Array(fieldDescriptions.length);
+        }
+        var row = {};
+        for (var i = 0; i < fieldDescriptions.length; i++) {
+          var desc2 = fieldDescriptions[i];
+          row[desc2.name] = null;
+          if (this._types) {
+            this._parsers[i] = this._types.getTypeParser(desc2.dataTypeID, desc2.format || "text");
+          } else {
+            this._parsers[i] = types.getTypeParser(desc2.dataTypeID, desc2.format || "text");
+          }
+        }
+        this._prebuiltEmptyResultObject = { ...row };
+      }
+    };
+    module.exports = Result;
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/query.js
+var require_query = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/query.js"(exports2, module) {
+    "use strict";
+    var { EventEmitter: EventEmitter2 } = __require("events");
+    var Result = require_result();
+    var utils = require_utils();
+    var Query = class extends EventEmitter2 {
+      constructor(config3, values, callback) {
+        super();
+        config3 = utils.normalizeQueryConfig(config3, values, callback);
+        this.text = config3.text;
+        this.values = config3.values;
+        this.rows = config3.rows;
+        this.types = config3.types;
+        this.name = config3.name;
+        this.queryMode = config3.queryMode;
+        this.binary = config3.binary;
+        this.portal = config3.portal || "";
+        this.callback = config3.callback;
+        this._rowMode = config3.rowMode;
+        if (process.domain && config3.callback) {
+          this.callback = process.domain.bind(config3.callback);
+        }
+        this._result = new Result(this._rowMode, this.types);
+        this._results = this._result;
+        this._canceledDueToError = false;
+      }
+      requiresPreparation() {
+        if (this.queryMode === "extended") {
+          return true;
+        }
+        if (this.name) {
+          return true;
+        }
+        if (this.rows) {
+          return true;
+        }
+        if (!this.text) {
+          return false;
+        }
+        if (!this.values) {
+          return false;
+        }
+        return this.values.length > 0;
+      }
+      _checkForMultirow() {
+        if (this._result.command) {
+          if (!Array.isArray(this._results)) {
+            this._results = [this._result];
+          }
+          this._result = new Result(this._rowMode, this._result._types);
+          this._results.push(this._result);
+        }
+      }
+      // associates row metadata from the supplied
+      // message with this query object
+      // metadata used when parsing row results
+      handleRowDescription(msg) {
+        this._checkForMultirow();
+        this._result.addFields(msg.fields);
+        this._accumulateRows = this.callback || !this.listeners("row").length;
+      }
+      handleDataRow(msg) {
+        let row;
+        if (this._canceledDueToError) {
+          return;
+        }
+        try {
+          row = this._result.parseRow(msg.fields);
+        } catch (err) {
+          this._canceledDueToError = err;
+          return;
+        }
+        this.emit("row", row, this._result);
+        if (this._accumulateRows) {
+          this._result.addRow(row);
+        }
+      }
+      handleCommandComplete(msg, connection) {
+        this._checkForMultirow();
+        this._result.addCommandComplete(msg);
+        if (this.rows) {
+          connection.sync();
+        }
+      }
+      // if a named prepared statement is created with empty query text
+      // the backend will send an emptyQuery message but *not* a command complete message
+      // since we pipeline sync immediately after execute we don't need to do anything here
+      // unless we have rows specified, in which case we did not pipeline the intial sync call
+      handleEmptyQuery(connection) {
+        if (this.rows) {
+          connection.sync();
+        }
+      }
+      handleError(err, connection) {
+        if (this._canceledDueToError) {
+          err = this._canceledDueToError;
+          this._canceledDueToError = false;
+        }
+        if (this.callback) {
+          return this.callback(err);
+        }
+        this.emit("error", err);
+      }
+      handleReadyForQuery(con) {
+        if (this._canceledDueToError) {
+          return this.handleError(this._canceledDueToError, con);
+        }
+        if (this.callback) {
+          try {
+            this.callback(null, this._results);
+          } catch (err) {
+            process.nextTick(() => {
+              throw err;
+            });
+          }
+        }
+        this.emit("end", this._results);
+      }
+      submit(connection) {
+        if (typeof this.text !== "string" && typeof this.name !== "string") {
+          return new Error("A query must have either text or a name. Supplying neither is unsupported.");
+        }
+        const previous = connection.parsedStatements[this.name];
+        if (this.text && previous && this.text !== previous) {
+          return new Error(`Prepared statements must be unique - '${this.name}' was used for a different statement`);
+        }
+        if (this.values && !Array.isArray(this.values)) {
+          return new Error("Query values must be an array");
+        }
+        if (this.requiresPreparation()) {
+          this.prepare(connection);
+        } else {
+          connection.query(this.text);
+        }
+        return null;
+      }
+      hasBeenParsed(connection) {
+        return this.name && connection.parsedStatements[this.name];
+      }
+      handlePortalSuspended(connection) {
+        this._getRows(connection, this.rows);
+      }
+      _getRows(connection, rows) {
+        connection.execute({
+          portal: this.portal,
+          rows
+        });
+        if (!rows) {
+          connection.sync();
+        } else {
+          connection.flush();
+        }
+      }
+      // http://developer.postgresql.org/pgdocs/postgres/protocol-flow.html#PROTOCOL-FLOW-EXT-QUERY
+      prepare(connection) {
+        if (!this.hasBeenParsed(connection)) {
+          connection.parse({
+            text: this.text,
+            name: this.name,
+            types: this.types
+          });
+        }
+        try {
+          connection.bind({
+            portal: this.portal,
+            statement: this.name,
+            values: this.values,
+            binary: this.binary,
+            valueMapper: utils.prepareValue
+          });
+        } catch (err) {
+          this.handleError(err, connection);
+          return;
+        }
+        connection.describe({
+          type: "P",
+          name: this.portal || ""
+        });
+        this._getRows(connection, this.rows);
+      }
+      handleCopyInResponse(connection) {
+        connection.sendCopyFail("No source stream defined");
+      }
+      // eslint-disable-next-line no-unused-vars
+      handleCopyData(msg, connection) {
+      }
+    };
+    module.exports = Query;
+  }
+});
+
+// ../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/messages.js
+var require_messages = __commonJS({
+  "../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/messages.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.NoticeMessage = exports2.DataRowMessage = exports2.CommandCompleteMessage = exports2.ReadyForQueryMessage = exports2.NotificationResponseMessage = exports2.BackendKeyDataMessage = exports2.AuthenticationMD5Password = exports2.ParameterStatusMessage = exports2.ParameterDescriptionMessage = exports2.RowDescriptionMessage = exports2.Field = exports2.CopyResponse = exports2.CopyDataMessage = exports2.DatabaseError = exports2.copyDone = exports2.emptyQuery = exports2.replicationStart = exports2.portalSuspended = exports2.noData = exports2.closeComplete = exports2.bindComplete = exports2.parseComplete = void 0;
+    exports2.parseComplete = {
+      name: "parseComplete",
+      length: 5
+    };
+    exports2.bindComplete = {
+      name: "bindComplete",
+      length: 5
+    };
+    exports2.closeComplete = {
+      name: "closeComplete",
+      length: 5
+    };
+    exports2.noData = {
+      name: "noData",
+      length: 5
+    };
+    exports2.portalSuspended = {
+      name: "portalSuspended",
+      length: 5
+    };
+    exports2.replicationStart = {
+      name: "replicationStart",
+      length: 4
+    };
+    exports2.emptyQuery = {
+      name: "emptyQuery",
+      length: 4
+    };
+    exports2.copyDone = {
+      name: "copyDone",
+      length: 4
+    };
+    var DatabaseError = class extends Error {
+      constructor(message, length, name) {
+        super(message);
+        this.length = length;
+        this.name = name;
+      }
+    };
+    exports2.DatabaseError = DatabaseError;
+    var CopyDataMessage = class {
+      constructor(length, chunk) {
+        this.length = length;
+        this.chunk = chunk;
+        this.name = "copyData";
+      }
+    };
+    exports2.CopyDataMessage = CopyDataMessage;
+    var CopyResponse = class {
+      constructor(length, name, binary, columnCount) {
+        this.length = length;
+        this.name = name;
+        this.binary = binary;
+        this.columnTypes = new Array(columnCount);
+      }
+    };
+    exports2.CopyResponse = CopyResponse;
+    var Field = class {
+      constructor(name, tableID, columnID, dataTypeID, dataTypeSize, dataTypeModifier, format) {
+        this.name = name;
+        this.tableID = tableID;
+        this.columnID = columnID;
+        this.dataTypeID = dataTypeID;
+        this.dataTypeSize = dataTypeSize;
+        this.dataTypeModifier = dataTypeModifier;
+        this.format = format;
+      }
+    };
+    exports2.Field = Field;
+    var RowDescriptionMessage = class {
+      constructor(length, fieldCount) {
+        this.length = length;
+        this.fieldCount = fieldCount;
+        this.name = "rowDescription";
+        this.fields = new Array(this.fieldCount);
+      }
+    };
+    exports2.RowDescriptionMessage = RowDescriptionMessage;
+    var ParameterDescriptionMessage = class {
+      constructor(length, parameterCount) {
+        this.length = length;
+        this.parameterCount = parameterCount;
+        this.name = "parameterDescription";
+        this.dataTypeIDs = new Array(this.parameterCount);
+      }
+    };
+    exports2.ParameterDescriptionMessage = ParameterDescriptionMessage;
+    var ParameterStatusMessage = class {
+      constructor(length, parameterName, parameterValue) {
+        this.length = length;
+        this.parameterName = parameterName;
+        this.parameterValue = parameterValue;
+        this.name = "parameterStatus";
+      }
+    };
+    exports2.ParameterStatusMessage = ParameterStatusMessage;
+    var AuthenticationMD5Password = class {
+      constructor(length, salt) {
+        this.length = length;
+        this.salt = salt;
+        this.name = "authenticationMD5Password";
+      }
+    };
+    exports2.AuthenticationMD5Password = AuthenticationMD5Password;
+    var BackendKeyDataMessage = class {
+      constructor(length, processID, secretKey) {
+        this.length = length;
+        this.processID = processID;
+        this.secretKey = secretKey;
+        this.name = "backendKeyData";
+      }
+    };
+    exports2.BackendKeyDataMessage = BackendKeyDataMessage;
+    var NotificationResponseMessage = class {
+      constructor(length, processId, channel, payload2) {
+        this.length = length;
+        this.processId = processId;
+        this.channel = channel;
+        this.payload = payload2;
+        this.name = "notification";
+      }
+    };
+    exports2.NotificationResponseMessage = NotificationResponseMessage;
+    var ReadyForQueryMessage = class {
+      constructor(length, status) {
+        this.length = length;
+        this.status = status;
+        this.name = "readyForQuery";
+      }
+    };
+    exports2.ReadyForQueryMessage = ReadyForQueryMessage;
+    var CommandCompleteMessage = class {
+      constructor(length, text2) {
+        this.length = length;
+        this.text = text2;
+        this.name = "commandComplete";
+      }
+    };
+    exports2.CommandCompleteMessage = CommandCompleteMessage;
+    var DataRowMessage = class {
+      constructor(length, fields) {
+        this.length = length;
+        this.fields = fields;
+        this.name = "dataRow";
+        this.fieldCount = fields.length;
+      }
+    };
+    exports2.DataRowMessage = DataRowMessage;
+    var NoticeMessage = class {
+      constructor(length, message) {
+        this.length = length;
+        this.message = message;
+        this.name = "notice";
+      }
+    };
+    exports2.NoticeMessage = NoticeMessage;
+  }
+});
+
+// ../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/buffer-writer.js
+var require_buffer_writer = __commonJS({
+  "../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/buffer-writer.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.Writer = void 0;
+    var Writer = class {
+      constructor(size = 256) {
+        this.size = size;
+        this.offset = 5;
+        this.headerPosition = 0;
+        this.buffer = Buffer.allocUnsafe(size);
+      }
+      ensure(size) {
+        const remaining = this.buffer.length - this.offset;
+        if (remaining < size) {
+          const oldBuffer = this.buffer;
+          const newSize = oldBuffer.length + (oldBuffer.length >> 1) + size;
+          this.buffer = Buffer.allocUnsafe(newSize);
+          oldBuffer.copy(this.buffer);
+        }
+      }
+      addInt32(num3) {
+        this.ensure(4);
+        this.buffer[this.offset++] = num3 >>> 24 & 255;
+        this.buffer[this.offset++] = num3 >>> 16 & 255;
+        this.buffer[this.offset++] = num3 >>> 8 & 255;
+        this.buffer[this.offset++] = num3 >>> 0 & 255;
+        return this;
+      }
+      addInt16(num3) {
+        this.ensure(2);
+        this.buffer[this.offset++] = num3 >>> 8 & 255;
+        this.buffer[this.offset++] = num3 >>> 0 & 255;
+        return this;
+      }
+      addCString(string4) {
+        if (!string4) {
+          this.ensure(1);
+        } else {
+          const len = Buffer.byteLength(string4);
+          this.ensure(len + 1);
+          this.buffer.write(string4, this.offset, "utf-8");
+          this.offset += len;
+        }
+        this.buffer[this.offset++] = 0;
+        return this;
+      }
+      addString(string4 = "") {
+        const len = Buffer.byteLength(string4);
+        this.ensure(len);
+        this.buffer.write(string4, this.offset);
+        this.offset += len;
+        return this;
+      }
+      add(otherBuffer) {
+        this.ensure(otherBuffer.length);
+        otherBuffer.copy(this.buffer, this.offset);
+        this.offset += otherBuffer.length;
+        return this;
+      }
+      join(code) {
+        if (code) {
+          this.buffer[this.headerPosition] = code;
+          const length = this.offset - (this.headerPosition + 1);
+          this.buffer.writeInt32BE(length, this.headerPosition + 1);
+        }
+        return this.buffer.slice(code ? 0 : 5, this.offset);
+      }
+      flush(code) {
+        const result = this.join(code);
+        this.offset = 5;
+        this.headerPosition = 0;
+        this.buffer = Buffer.allocUnsafe(this.size);
+        return result;
+      }
+    };
+    exports2.Writer = Writer;
+  }
+});
+
+// ../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/serializer.js
+var require_serializer = __commonJS({
+  "../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/serializer.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.serialize = void 0;
+    var buffer_writer_1 = require_buffer_writer();
+    var writer = new buffer_writer_1.Writer();
+    var startup = (opts) => {
+      writer.addInt16(3).addInt16(0);
+      for (const key of Object.keys(opts)) {
+        writer.addCString(key).addCString(opts[key]);
+      }
+      writer.addCString("client_encoding").addCString("UTF8");
+      const bodyBuffer = writer.addCString("").flush();
+      const length = bodyBuffer.length + 4;
+      return new buffer_writer_1.Writer().addInt32(length).add(bodyBuffer).flush();
+    };
+    var requestSsl = () => {
+      const response = Buffer.allocUnsafe(8);
+      response.writeInt32BE(8, 0);
+      response.writeInt32BE(80877103, 4);
+      return response;
+    };
+    var password = (password2) => {
+      return writer.addCString(password2).flush(
+        112
+        /* code.startup */
+      );
+    };
+    var sendSASLInitialResponseMessage = function(mechanism, initialResponse) {
+      writer.addCString(mechanism).addInt32(Buffer.byteLength(initialResponse)).addString(initialResponse);
+      return writer.flush(
+        112
+        /* code.startup */
+      );
+    };
+    var sendSCRAMClientFinalMessage = function(additionalData) {
+      return writer.addString(additionalData).flush(
+        112
+        /* code.startup */
+      );
+    };
+    var query = (text2) => {
+      return writer.addCString(text2).flush(
+        81
+        /* code.query */
+      );
+    };
+    var emptyArray = [];
+    var parse4 = (query2) => {
+      const name = query2.name || "";
+      if (name.length > 63) {
+        console.error("Warning! Postgres only supports 63 characters for query names.");
+        console.error("You supplied %s (%s)", name, name.length);
+        console.error("This can cause conflicts and silent errors executing queries");
+      }
+      const types = query2.types || emptyArray;
+      const len = types.length;
+      const buffer = writer.addCString(name).addCString(query2.text).addInt16(len);
+      for (let i = 0; i < len; i++) {
+        buffer.addInt32(types[i]);
+      }
+      return writer.flush(
+        80
+        /* code.parse */
+      );
+    };
+    var paramWriter = new buffer_writer_1.Writer();
+    var writeValues = function(values, valueMapper) {
+      for (let i = 0; i < values.length; i++) {
+        const mappedVal = valueMapper ? valueMapper(values[i], i) : values[i];
+        if (mappedVal == null) {
+          writer.addInt16(
+            0
+            /* ParamType.STRING */
+          );
+          paramWriter.addInt32(-1);
+        } else if (mappedVal instanceof Buffer) {
+          writer.addInt16(
+            1
+            /* ParamType.BINARY */
+          );
+          paramWriter.addInt32(mappedVal.length);
+          paramWriter.add(mappedVal);
+        } else {
+          writer.addInt16(
+            0
+            /* ParamType.STRING */
+          );
+          paramWriter.addInt32(Buffer.byteLength(mappedVal));
+          paramWriter.addString(mappedVal);
+        }
+      }
+    };
+    var bind = (config3 = {}) => {
+      const portal = config3.portal || "";
+      const statement = config3.statement || "";
+      const binary = config3.binary || false;
+      const values = config3.values || emptyArray;
+      const len = values.length;
+      writer.addCString(portal).addCString(statement);
+      writer.addInt16(len);
+      writeValues(values, config3.valueMapper);
+      writer.addInt16(len);
+      writer.add(paramWriter.flush());
+      writer.addInt16(1);
+      writer.addInt16(
+        binary ? 1 : 0
+        /* ParamType.STRING */
+      );
+      return writer.flush(
+        66
+        /* code.bind */
+      );
+    };
+    var emptyExecute = Buffer.from([69, 0, 0, 0, 9, 0, 0, 0, 0, 0]);
+    var execute = (config3) => {
+      if (!config3 || !config3.portal && !config3.rows) {
+        return emptyExecute;
+      }
+      const portal = config3.portal || "";
+      const rows = config3.rows || 0;
+      const portalLength = Buffer.byteLength(portal);
+      const len = 4 + portalLength + 1 + 4;
+      const buff = Buffer.allocUnsafe(1 + len);
+      buff[0] = 69;
+      buff.writeInt32BE(len, 1);
+      buff.write(portal, 5, "utf-8");
+      buff[portalLength + 5] = 0;
+      buff.writeUInt32BE(rows, buff.length - 4);
+      return buff;
+    };
+    var cancel = (processID, secretKey) => {
+      const buffer = Buffer.allocUnsafe(16);
+      buffer.writeInt32BE(16, 0);
+      buffer.writeInt16BE(1234, 4);
+      buffer.writeInt16BE(5678, 6);
+      buffer.writeInt32BE(processID, 8);
+      buffer.writeInt32BE(secretKey, 12);
+      return buffer;
+    };
+    var cstringMessage = (code, string4) => {
+      const stringLen = Buffer.byteLength(string4);
+      const len = 4 + stringLen + 1;
+      const buffer = Buffer.allocUnsafe(1 + len);
+      buffer[0] = code;
+      buffer.writeInt32BE(len, 1);
+      buffer.write(string4, 5, "utf-8");
+      buffer[len] = 0;
+      return buffer;
+    };
+    var emptyDescribePortal = writer.addCString("P").flush(
+      68
+      /* code.describe */
+    );
+    var emptyDescribeStatement = writer.addCString("S").flush(
+      68
+      /* code.describe */
+    );
+    var describe = (msg) => {
+      return msg.name ? cstringMessage(68, `${msg.type}${msg.name || ""}`) : msg.type === "P" ? emptyDescribePortal : emptyDescribeStatement;
+    };
+    var close = (msg) => {
+      const text2 = `${msg.type}${msg.name || ""}`;
+      return cstringMessage(67, text2);
+    };
+    var copyData = (chunk) => {
+      return writer.add(chunk).flush(
+        100
+        /* code.copyFromChunk */
+      );
+    };
+    var copyFail = (message) => {
+      return cstringMessage(102, message);
+    };
+    var codeOnlyBuffer = (code) => Buffer.from([code, 0, 0, 0, 4]);
+    var flushBuffer = codeOnlyBuffer(
+      72
+      /* code.flush */
+    );
+    var syncBuffer = codeOnlyBuffer(
+      83
+      /* code.sync */
+    );
+    var endBuffer = codeOnlyBuffer(
+      88
+      /* code.end */
+    );
+    var copyDoneBuffer = codeOnlyBuffer(
+      99
+      /* code.copyDone */
+    );
+    var serialize = {
+      startup,
+      password,
+      requestSsl,
+      sendSASLInitialResponseMessage,
+      sendSCRAMClientFinalMessage,
+      query,
+      parse: parse4,
+      bind,
+      execute,
+      describe,
+      close,
+      flush: () => flushBuffer,
+      sync: () => syncBuffer,
+      end: () => endBuffer,
+      copyData,
+      copyDone: () => copyDoneBuffer,
+      copyFail,
+      cancel
+    };
+    exports2.serialize = serialize;
+  }
+});
+
+// ../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/buffer-reader.js
+var require_buffer_reader = __commonJS({
+  "../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/buffer-reader.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.BufferReader = void 0;
+    var BufferReader = class {
+      constructor(offset = 0) {
+        this.offset = offset;
+        this.buffer = Buffer.allocUnsafe(0);
+        this.encoding = "utf-8";
+      }
+      setBuffer(offset, buffer) {
+        this.offset = offset;
+        this.buffer = buffer;
+      }
+      int16() {
+        const result = this.buffer.readInt16BE(this.offset);
+        this.offset += 2;
+        return result;
+      }
+      byte() {
+        const result = this.buffer[this.offset];
+        this.offset++;
+        return result;
+      }
+      int32() {
+        const result = this.buffer.readInt32BE(this.offset);
+        this.offset += 4;
+        return result;
+      }
+      uint32() {
+        const result = this.buffer.readUInt32BE(this.offset);
+        this.offset += 4;
+        return result;
+      }
+      string(length) {
+        const result = this.buffer.toString(this.encoding, this.offset, this.offset + length);
+        this.offset += length;
+        return result;
+      }
+      cstring() {
+        const start2 = this.offset;
+        let end = start2;
+        while (this.buffer[end++] !== 0) {
+        }
+        this.offset = end;
+        return this.buffer.toString(this.encoding, start2, end - 1);
+      }
+      bytes(length) {
+        const result = this.buffer.slice(this.offset, this.offset + length);
+        this.offset += length;
+        return result;
+      }
+    };
+    exports2.BufferReader = BufferReader;
+  }
+});
+
+// ../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/parser.js
+var require_parser = __commonJS({
+  "../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/parser.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.Parser = void 0;
+    var messages_1 = require_messages();
+    var buffer_reader_1 = require_buffer_reader();
+    var CODE_LENGTH = 1;
+    var LEN_LENGTH = 4;
+    var HEADER_LENGTH = CODE_LENGTH + LEN_LENGTH;
+    var LATEINIT_LENGTH = -1;
+    var emptyBuffer = Buffer.allocUnsafe(0);
+    var Parser = class {
+      constructor(opts) {
+        this.buffer = emptyBuffer;
+        this.bufferLength = 0;
+        this.bufferOffset = 0;
+        this.reader = new buffer_reader_1.BufferReader();
+        if ((opts === null || opts === void 0 ? void 0 : opts.mode) === "binary") {
+          throw new Error("Binary mode not supported yet");
+        }
+        this.mode = (opts === null || opts === void 0 ? void 0 : opts.mode) || "text";
+      }
+      parse(buffer, callback) {
+        this.mergeBuffer(buffer);
+        const bufferFullLength = this.bufferOffset + this.bufferLength;
+        let offset = this.bufferOffset;
+        while (offset + HEADER_LENGTH <= bufferFullLength) {
+          const code = this.buffer[offset];
+          const length = this.buffer.readUInt32BE(offset + CODE_LENGTH);
+          const fullMessageLength = CODE_LENGTH + length;
+          if (fullMessageLength + offset <= bufferFullLength) {
+            const message = this.handlePacket(offset + HEADER_LENGTH, code, length, this.buffer);
+            callback(message);
+            offset += fullMessageLength;
+          } else {
+            break;
+          }
+        }
+        if (offset === bufferFullLength) {
+          this.buffer = emptyBuffer;
+          this.bufferLength = 0;
+          this.bufferOffset = 0;
+        } else {
+          this.bufferLength = bufferFullLength - offset;
+          this.bufferOffset = offset;
+        }
+      }
+      mergeBuffer(buffer) {
+        if (this.bufferLength > 0) {
+          const newLength = this.bufferLength + buffer.byteLength;
+          const newFullLength = newLength + this.bufferOffset;
+          if (newFullLength > this.buffer.byteLength) {
+            let newBuffer;
+            if (newLength <= this.buffer.byteLength && this.bufferOffset >= this.bufferLength) {
+              newBuffer = this.buffer;
+            } else {
+              let newBufferLength = this.buffer.byteLength * 2;
+              while (newLength >= newBufferLength) {
+                newBufferLength *= 2;
+              }
+              newBuffer = Buffer.allocUnsafe(newBufferLength);
+            }
+            this.buffer.copy(newBuffer, 0, this.bufferOffset, this.bufferOffset + this.bufferLength);
+            this.buffer = newBuffer;
+            this.bufferOffset = 0;
+          }
+          buffer.copy(this.buffer, this.bufferOffset + this.bufferLength);
+          this.bufferLength = newLength;
+        } else {
+          this.buffer = buffer;
+          this.bufferOffset = 0;
+          this.bufferLength = buffer.byteLength;
+        }
+      }
+      handlePacket(offset, code, length, bytes) {
+        const { reader } = this;
+        reader.setBuffer(offset, bytes);
+        let message;
+        switch (code) {
+          case 50:
+            message = messages_1.bindComplete;
+            break;
+          case 49:
+            message = messages_1.parseComplete;
+            break;
+          case 51:
+            message = messages_1.closeComplete;
+            break;
+          case 110:
+            message = messages_1.noData;
+            break;
+          case 115:
+            message = messages_1.portalSuspended;
+            break;
+          case 99:
+            message = messages_1.copyDone;
+            break;
+          case 87:
+            message = messages_1.replicationStart;
+            break;
+          case 73:
+            message = messages_1.emptyQuery;
+            break;
+          case 68:
+            message = parseDataRowMessage(reader);
+            break;
+          case 67:
+            message = parseCommandCompleteMessage(reader);
+            break;
+          case 90:
+            message = parseReadyForQueryMessage(reader);
+            break;
+          case 65:
+            message = parseNotificationMessage(reader);
+            break;
+          case 82:
+            message = parseAuthenticationResponse(reader, length);
+            break;
+          case 83:
+            message = parseParameterStatusMessage(reader);
+            break;
+          case 75:
+            message = parseBackendKeyData(reader);
+            break;
+          case 69:
+            message = parseErrorMessage(reader, "error");
+            break;
+          case 78:
+            message = parseErrorMessage(reader, "notice");
+            break;
+          case 84:
+            message = parseRowDescriptionMessage(reader);
+            break;
+          case 116:
+            message = parseParameterDescriptionMessage(reader);
+            break;
+          case 71:
+            message = parseCopyInMessage(reader);
+            break;
+          case 72:
+            message = parseCopyOutMessage(reader);
+            break;
+          case 100:
+            message = parseCopyData(reader, length);
+            break;
+          default:
+            return new messages_1.DatabaseError("received invalid response: " + code.toString(16), length, "error");
+        }
+        reader.setBuffer(0, emptyBuffer);
+        message.length = length;
+        return message;
+      }
+    };
+    exports2.Parser = Parser;
+    var parseReadyForQueryMessage = (reader) => {
+      const status = reader.string(1);
+      return new messages_1.ReadyForQueryMessage(LATEINIT_LENGTH, status);
+    };
+    var parseCommandCompleteMessage = (reader) => {
+      const text2 = reader.cstring();
+      return new messages_1.CommandCompleteMessage(LATEINIT_LENGTH, text2);
+    };
+    var parseCopyData = (reader, length) => {
+      const chunk = reader.bytes(length - 4);
+      return new messages_1.CopyDataMessage(LATEINIT_LENGTH, chunk);
+    };
+    var parseCopyInMessage = (reader) => parseCopyMessage(reader, "copyInResponse");
+    var parseCopyOutMessage = (reader) => parseCopyMessage(reader, "copyOutResponse");
+    var parseCopyMessage = (reader, messageName) => {
+      const isBinary = reader.byte() !== 0;
+      const columnCount = reader.int16();
+      const message = new messages_1.CopyResponse(LATEINIT_LENGTH, messageName, isBinary, columnCount);
+      for (let i = 0; i < columnCount; i++) {
+        message.columnTypes[i] = reader.int16();
+      }
+      return message;
+    };
+    var parseNotificationMessage = (reader) => {
+      const processId = reader.int32();
+      const channel = reader.cstring();
+      const payload2 = reader.cstring();
+      return new messages_1.NotificationResponseMessage(LATEINIT_LENGTH, processId, channel, payload2);
+    };
+    var parseRowDescriptionMessage = (reader) => {
+      const fieldCount = reader.int16();
+      const message = new messages_1.RowDescriptionMessage(LATEINIT_LENGTH, fieldCount);
+      for (let i = 0; i < fieldCount; i++) {
+        message.fields[i] = parseField(reader);
+      }
+      return message;
+    };
+    var parseField = (reader) => {
+      const name = reader.cstring();
+      const tableID = reader.uint32();
+      const columnID = reader.int16();
+      const dataTypeID = reader.uint32();
+      const dataTypeSize = reader.int16();
+      const dataTypeModifier = reader.int32();
+      const mode2 = reader.int16() === 0 ? "text" : "binary";
+      return new messages_1.Field(name, tableID, columnID, dataTypeID, dataTypeSize, dataTypeModifier, mode2);
+    };
+    var parseParameterDescriptionMessage = (reader) => {
+      const parameterCount = reader.int16();
+      const message = new messages_1.ParameterDescriptionMessage(LATEINIT_LENGTH, parameterCount);
+      for (let i = 0; i < parameterCount; i++) {
+        message.dataTypeIDs[i] = reader.int32();
+      }
+      return message;
+    };
+    var parseDataRowMessage = (reader) => {
+      const fieldCount = reader.int16();
+      const fields = new Array(fieldCount);
+      for (let i = 0; i < fieldCount; i++) {
+        const len = reader.int32();
+        fields[i] = len === -1 ? null : reader.string(len);
+      }
+      return new messages_1.DataRowMessage(LATEINIT_LENGTH, fields);
+    };
+    var parseParameterStatusMessage = (reader) => {
+      const name = reader.cstring();
+      const value2 = reader.cstring();
+      return new messages_1.ParameterStatusMessage(LATEINIT_LENGTH, name, value2);
+    };
+    var parseBackendKeyData = (reader) => {
+      const processID = reader.int32();
+      const secretKey = reader.int32();
+      return new messages_1.BackendKeyDataMessage(LATEINIT_LENGTH, processID, secretKey);
+    };
+    var parseAuthenticationResponse = (reader, length) => {
+      const code = reader.int32();
+      const message = {
+        name: "authenticationOk",
+        length
+      };
+      switch (code) {
+        case 0:
+          break;
+        case 3:
+          if (message.length === 8) {
+            message.name = "authenticationCleartextPassword";
+          }
+          break;
+        case 5:
+          if (message.length === 12) {
+            message.name = "authenticationMD5Password";
+            const salt = reader.bytes(4);
+            return new messages_1.AuthenticationMD5Password(LATEINIT_LENGTH, salt);
+          }
+          break;
+        case 10:
+          {
+            message.name = "authenticationSASL";
+            message.mechanisms = [];
+            let mechanism;
+            do {
+              mechanism = reader.cstring();
+              if (mechanism) {
+                message.mechanisms.push(mechanism);
+              }
+            } while (mechanism);
+          }
+          break;
+        case 11:
+          message.name = "authenticationSASLContinue";
+          message.data = reader.string(length - 8);
+          break;
+        case 12:
+          message.name = "authenticationSASLFinal";
+          message.data = reader.string(length - 8);
+          break;
+        default:
+          throw new Error("Unknown authenticationOk message type " + code);
+      }
+      return message;
+    };
+    var parseErrorMessage = (reader, name) => {
+      const fields = {};
+      let fieldType = reader.string(1);
+      while (fieldType !== "\0") {
+        fields[fieldType] = reader.cstring();
+        fieldType = reader.string(1);
+      }
+      const messageValue = fields.M;
+      const message = name === "notice" ? new messages_1.NoticeMessage(LATEINIT_LENGTH, messageValue) : new messages_1.DatabaseError(messageValue, LATEINIT_LENGTH, name);
+      message.severity = fields.S;
+      message.code = fields.C;
+      message.detail = fields.D;
+      message.hint = fields.H;
+      message.position = fields.P;
+      message.internalPosition = fields.p;
+      message.internalQuery = fields.q;
+      message.where = fields.W;
+      message.schema = fields.s;
+      message.table = fields.t;
+      message.column = fields.c;
+      message.dataType = fields.d;
+      message.constraint = fields.n;
+      message.file = fields.F;
+      message.line = fields.L;
+      message.routine = fields.R;
+      return message;
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/index.js
+var require_dist = __commonJS({
+  "../../node_modules/.pnpm/pg-protocol@1.13.0/node_modules/pg-protocol/dist/index.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.DatabaseError = exports2.serialize = exports2.parse = void 0;
+    var messages_1 = require_messages();
+    Object.defineProperty(exports2, "DatabaseError", { enumerable: true, get: function() {
+      return messages_1.DatabaseError;
+    } });
+    var serializer_1 = require_serializer();
+    Object.defineProperty(exports2, "serialize", { enumerable: true, get: function() {
+      return serializer_1.serialize;
+    } });
+    var parser_1 = require_parser();
+    function parse4(stream, callback) {
+      const parser2 = new parser_1.Parser();
+      stream.on("data", (buffer) => parser2.parse(buffer, callback));
+      return new Promise((resolve2) => stream.on("end", () => resolve2()));
+    }
+    exports2.parse = parse4;
+  }
+});
+
+// ../../node_modules/.pnpm/pg-cloudflare@1.3.0/node_modules/pg-cloudflare/dist/empty.js
+var require_empty = __commonJS({
+  "../../node_modules/.pnpm/pg-cloudflare@1.3.0/node_modules/pg-cloudflare/dist/empty.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.default = {};
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/stream.js
+var require_stream = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/stream.js"(exports2, module) {
+    var { getStream, getSecureStream } = getStreamFuncs();
+    module.exports = {
+      /**
+       * Get a socket stream compatible with the current runtime environment.
+       * @returns {Duplex}
+       */
+      getStream,
+      /**
+       * Get a TLS secured socket, compatible with the current environment,
+       * using the socket and other settings given in `options`.
+       * @returns {Duplex}
+       */
+      getSecureStream
+    };
+    function getNodejsStreamFuncs() {
+      function getStream2(ssl) {
+        const net = __require("net");
+        return new net.Socket();
+      }
+      function getSecureStream2(options) {
+        var tls = __require("tls");
+        return tls.connect(options);
+      }
+      return {
+        getStream: getStream2,
+        getSecureStream: getSecureStream2
+      };
+    }
+    function getCloudflareStreamFuncs() {
+      function getStream2(ssl) {
+        const { CloudflareSocket } = require_empty();
+        return new CloudflareSocket(ssl);
+      }
+      function getSecureStream2(options) {
+        options.socket.startTls(options);
+        return options.socket;
+      }
+      return {
+        getStream: getStream2,
+        getSecureStream: getSecureStream2
+      };
+    }
+    function isCloudflareRuntime() {
+      if (typeof navigator === "object" && navigator !== null && typeof navigator.userAgent === "string") {
+        return navigator.userAgent === "Cloudflare-Workers";
+      }
+      if (typeof Response === "function") {
+        const resp = new Response(null, { cf: { thing: true } });
+        if (typeof resp.cf === "object" && resp.cf !== null && resp.cf.thing) {
+          return true;
+        }
+      }
+      return false;
+    }
+    function getStreamFuncs() {
+      if (isCloudflareRuntime()) {
+        return getCloudflareStreamFuncs();
+      }
+      return getNodejsStreamFuncs();
+    }
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/connection.js
+var require_connection = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/connection.js"(exports2, module) {
+    "use strict";
+    var EventEmitter2 = __require("events").EventEmitter;
+    var { parse: parse4, serialize } = require_dist();
+    var { getStream, getSecureStream } = require_stream();
+    var flushBuffer = serialize.flush();
+    var syncBuffer = serialize.sync();
+    var endBuffer = serialize.end();
+    var Connection = class extends EventEmitter2 {
+      constructor(config3) {
+        super();
+        config3 = config3 || {};
+        this.stream = config3.stream || getStream(config3.ssl);
+        if (typeof this.stream === "function") {
+          this.stream = this.stream(config3);
+        }
+        this._keepAlive = config3.keepAlive;
+        this._keepAliveInitialDelayMillis = config3.keepAliveInitialDelayMillis;
+        this.lastBuffer = false;
+        this.parsedStatements = {};
+        this.ssl = config3.ssl || false;
+        this._ending = false;
+        this._emitMessage = false;
+        var self2 = this;
+        this.on("newListener", function(eventName) {
+          if (eventName === "message") {
+            self2._emitMessage = true;
+          }
+        });
+      }
+      connect(port, host) {
+        var self2 = this;
+        this._connecting = true;
+        this.stream.setNoDelay(true);
+        this.stream.connect(port, host);
+        this.stream.once("connect", function() {
+          if (self2._keepAlive) {
+            self2.stream.setKeepAlive(true, self2._keepAliveInitialDelayMillis);
+          }
+          self2.emit("connect");
+        });
+        const reportStreamError = function(error40) {
+          if (self2._ending && (error40.code === "ECONNRESET" || error40.code === "EPIPE")) {
+            return;
+          }
+          self2.emit("error", error40);
+        };
+        this.stream.on("error", reportStreamError);
+        this.stream.on("close", function() {
+          self2.emit("end");
+        });
+        if (!this.ssl) {
+          return this.attachListeners(this.stream);
+        }
+        this.stream.once("data", function(buffer) {
+          var responseCode = buffer.toString("utf8");
+          switch (responseCode) {
+            case "S":
+              break;
+            case "N":
+              self2.stream.end();
+              return self2.emit("error", new Error("The server does not support SSL connections"));
+            default:
+              self2.stream.end();
+              return self2.emit("error", new Error("There was an error establishing an SSL connection"));
+          }
+          const options = {
+            socket: self2.stream
+          };
+          if (self2.ssl !== true) {
+            Object.assign(options, self2.ssl);
+            if ("key" in self2.ssl) {
+              options.key = self2.ssl.key;
+            }
+          }
+          var net = __require("net");
+          if (net.isIP && net.isIP(host) === 0) {
+            options.servername = host;
+          }
+          try {
+            self2.stream = getSecureStream(options);
+          } catch (err) {
+            return self2.emit("error", err);
+          }
+          self2.attachListeners(self2.stream);
+          self2.stream.on("error", reportStreamError);
+          self2.emit("sslconnect");
+        });
+      }
+      attachListeners(stream) {
+        parse4(stream, (msg) => {
+          var eventName = msg.name === "error" ? "errorMessage" : msg.name;
+          if (this._emitMessage) {
+            this.emit("message", msg);
+          }
+          this.emit(eventName, msg);
+        });
+      }
+      requestSsl() {
+        this.stream.write(serialize.requestSsl());
+      }
+      startup(config3) {
+        this.stream.write(serialize.startup(config3));
+      }
+      cancel(processID, secretKey) {
+        this._send(serialize.cancel(processID, secretKey));
+      }
+      password(password) {
+        this._send(serialize.password(password));
+      }
+      sendSASLInitialResponseMessage(mechanism, initialResponse) {
+        this._send(serialize.sendSASLInitialResponseMessage(mechanism, initialResponse));
+      }
+      sendSCRAMClientFinalMessage(additionalData) {
+        this._send(serialize.sendSCRAMClientFinalMessage(additionalData));
+      }
+      _send(buffer) {
+        if (!this.stream.writable) {
+          return false;
+        }
+        return this.stream.write(buffer);
+      }
+      query(text2) {
+        this._send(serialize.query(text2));
+      }
+      // send parse message
+      parse(query) {
+        this._send(serialize.parse(query));
+      }
+      // send bind message
+      bind(config3) {
+        this._send(serialize.bind(config3));
+      }
+      // send execute message
+      execute(config3) {
+        this._send(serialize.execute(config3));
+      }
+      flush() {
+        if (this.stream.writable) {
+          this.stream.write(flushBuffer);
+        }
+      }
+      sync() {
+        this._ending = true;
+        this._send(syncBuffer);
+      }
+      ref() {
+        this.stream.ref();
+      }
+      unref() {
+        this.stream.unref();
+      }
+      end() {
+        this._ending = true;
+        if (!this._connecting || !this.stream.writable) {
+          this.stream.end();
+          return;
+        }
+        return this.stream.write(endBuffer, () => {
+          this.stream.end();
+        });
+      }
+      close(msg) {
+        this._send(serialize.close(msg));
+      }
+      describe(msg) {
+        this._send(serialize.describe(msg));
+      }
+      sendCopyFromChunk(chunk) {
+        this._send(serialize.copyData(chunk));
+      }
+      endCopyFrom() {
+        this._send(serialize.copyDone());
+      }
+      sendCopyFail(msg) {
+        this._send(serialize.copyFail(msg));
+      }
+    };
+    module.exports = Connection;
+  }
+});
+
+// ../../node_modules/.pnpm/split2@4.2.0/node_modules/split2/index.js
+var require_split2 = __commonJS({
+  "../../node_modules/.pnpm/split2@4.2.0/node_modules/split2/index.js"(exports2, module) {
+    "use strict";
+    var { Transform: Transform2 } = __require("stream");
+    var { StringDecoder } = __require("string_decoder");
+    var kLast = /* @__PURE__ */ Symbol("last");
+    var kDecoder = /* @__PURE__ */ Symbol("decoder");
+    function transform2(chunk, enc, cb) {
+      let list;
+      if (this.overflow) {
+        const buf = this[kDecoder].write(chunk);
+        list = buf.split(this.matcher);
+        if (list.length === 1) return cb();
+        list.shift();
+        this.overflow = false;
+      } else {
+        this[kLast] += this[kDecoder].write(chunk);
+        list = this[kLast].split(this.matcher);
+      }
+      this[kLast] = list.pop();
+      for (let i = 0; i < list.length; i++) {
+        try {
+          push(this, this.mapper(list[i]));
+        } catch (error40) {
+          return cb(error40);
+        }
+      }
+      this.overflow = this[kLast].length > this.maxLength;
+      if (this.overflow && !this.skipOverflow) {
+        cb(new Error("maximum buffer reached"));
+        return;
+      }
+      cb();
+    }
+    function flush(cb) {
+      this[kLast] += this[kDecoder].end();
+      if (this[kLast]) {
+        try {
+          push(this, this.mapper(this[kLast]));
+        } catch (error40) {
+          return cb(error40);
+        }
+      }
+      cb();
+    }
+    function push(self2, val) {
+      if (val !== void 0) {
+        self2.push(val);
+      }
+    }
+    function noop(incoming) {
+      return incoming;
+    }
+    function split2(matcher, mapper, options) {
+      matcher = matcher || /\r?\n/;
+      mapper = mapper || noop;
+      options = options || {};
+      switch (arguments.length) {
+        case 1:
+          if (typeof matcher === "function") {
+            mapper = matcher;
+            matcher = /\r?\n/;
+          } else if (typeof matcher === "object" && !(matcher instanceof RegExp) && !matcher[Symbol.split]) {
+            options = matcher;
+            matcher = /\r?\n/;
+          }
+          break;
+        case 2:
+          if (typeof matcher === "function") {
+            options = mapper;
+            mapper = matcher;
+            matcher = /\r?\n/;
+          } else if (typeof mapper === "object") {
+            options = mapper;
+            mapper = noop;
+          }
+      }
+      options = Object.assign({}, options);
+      options.autoDestroy = true;
+      options.transform = transform2;
+      options.flush = flush;
+      options.readableObjectMode = true;
+      const stream = new Transform2(options);
+      stream[kLast] = "";
+      stream[kDecoder] = new StringDecoder("utf8");
+      stream.matcher = matcher;
+      stream.mapper = mapper;
+      stream.maxLength = options.maxLength;
+      stream.skipOverflow = options.skipOverflow || false;
+      stream.overflow = false;
+      stream._destroy = function(err, cb) {
+        this._writableState.errorEmitted = false;
+        cb(err);
+      };
+      return stream;
+    }
+    module.exports = split2;
+  }
+});
+
+// ../../node_modules/.pnpm/pgpass@1.0.5/node_modules/pgpass/lib/helper.js
+var require_helper = __commonJS({
+  "../../node_modules/.pnpm/pgpass@1.0.5/node_modules/pgpass/lib/helper.js"(exports2, module) {
+    "use strict";
+    var path29 = __require("path");
+    var Stream = __require("stream").Stream;
+    var split2 = require_split2();
+    var util2 = __require("util");
+    var defaultPort = 5432;
+    var isWin = process.platform === "win32";
+    var warnStream = process.stderr;
+    var S_IRWXG = 56;
+    var S_IRWXO = 7;
+    var S_IFMT = 61440;
+    var S_IFREG = 32768;
+    function isRegFile(mode2) {
+      return (mode2 & S_IFMT) == S_IFREG;
+    }
+    var fieldNames = ["host", "port", "database", "user", "password"];
+    var nrOfFields = fieldNames.length;
+    var passKey = fieldNames[nrOfFields - 1];
+    function warn() {
+      var isWritable = warnStream instanceof Stream && true === warnStream.writable;
+      if (isWritable) {
+        var args = Array.prototype.slice.call(arguments).concat("\n");
+        warnStream.write(util2.format.apply(util2, args));
+      }
+    }
+    Object.defineProperty(module.exports, "isWin", {
+      get: function() {
+        return isWin;
+      },
+      set: function(val) {
+        isWin = val;
+      }
+    });
+    module.exports.warnTo = function(stream) {
+      var old = warnStream;
+      warnStream = stream;
+      return old;
+    };
+    module.exports.getFileName = function(rawEnv) {
+      var env = rawEnv || process.env;
+      var file3 = env.PGPASSFILE || (isWin ? path29.join(env.APPDATA || "./", "postgresql", "pgpass.conf") : path29.join(env.HOME || "./", ".pgpass"));
+      return file3;
+    };
+    module.exports.usePgPass = function(stats2, fname) {
+      if (Object.prototype.hasOwnProperty.call(process.env, "PGPASSWORD")) {
+        return false;
+      }
+      if (isWin) {
+        return true;
+      }
+      fname = fname || "<unkn>";
+      if (!isRegFile(stats2.mode)) {
+        warn('WARNING: password file "%s" is not a plain file', fname);
+        return false;
+      }
+      if (stats2.mode & (S_IRWXG | S_IRWXO)) {
+        warn('WARNING: password file "%s" has group or world access; permissions should be u=rw (0600) or less', fname);
+        return false;
+      }
+      return true;
+    };
+    var matcher = module.exports.match = function(connInfo, entry) {
+      return fieldNames.slice(0, -1).reduce(function(prev, field, idx2) {
+        if (idx2 == 1) {
+          if (Number(connInfo[field] || defaultPort) === Number(entry[field])) {
+            return prev && true;
+          }
+        }
+        return prev && (entry[field] === "*" || entry[field] === connInfo[field]);
+      }, true);
+    };
+    module.exports.getPassword = function(connInfo, stream, cb) {
+      var pass;
+      var lineStream = stream.pipe(split2());
+      function onLine(line2) {
+        var entry = parseLine(line2);
+        if (entry && isValidEntry(entry) && matcher(connInfo, entry)) {
+          pass = entry[passKey];
+          lineStream.end();
+        }
+      }
+      var onEnd = function() {
+        stream.destroy();
+        cb(pass);
+      };
+      var onErr = function(err) {
+        stream.destroy();
+        warn("WARNING: error on reading file: %s", err);
+        cb(void 0);
+      };
+      stream.on("error", onErr);
+      lineStream.on("data", onLine).on("end", onEnd).on("error", onErr);
+    };
+    var parseLine = module.exports.parseLine = function(line2) {
+      if (line2.length < 11 || line2.match(/^\s+#/)) {
+        return null;
+      }
+      var curChar = "";
+      var prevChar = "";
+      var fieldIdx = 0;
+      var startIdx = 0;
+      var endIdx = 0;
+      var obj = {};
+      var isLastField = false;
+      var addToObj = function(idx2, i0, i1) {
+        var field = line2.substring(i0, i1);
+        if (!Object.hasOwnProperty.call(process.env, "PGPASS_NO_DEESCAPE")) {
+          field = field.replace(/\\([:\\])/g, "$1");
+        }
+        obj[fieldNames[idx2]] = field;
+      };
+      for (var i = 0; i < line2.length - 1; i += 1) {
+        curChar = line2.charAt(i + 1);
+        prevChar = line2.charAt(i);
+        isLastField = fieldIdx == nrOfFields - 1;
+        if (isLastField) {
+          addToObj(fieldIdx, startIdx);
+          break;
+        }
+        if (i >= 0 && curChar == ":" && prevChar !== "\\") {
+          addToObj(fieldIdx, startIdx, i + 1);
+          startIdx = i + 2;
+          fieldIdx += 1;
+        }
+      }
+      obj = Object.keys(obj).length === nrOfFields ? obj : null;
+      return obj;
+    };
+    var isValidEntry = module.exports.isValidEntry = function(entry) {
+      var rules = {
+        // host
+        0: function(x) {
+          return x.length > 0;
+        },
+        // port
+        1: function(x) {
+          if (x === "*") {
+            return true;
+          }
+          x = Number(x);
+          return isFinite(x) && x > 0 && x < 9007199254740992 && Math.floor(x) === x;
+        },
+        // database
+        2: function(x) {
+          return x.length > 0;
+        },
+        // username
+        3: function(x) {
+          return x.length > 0;
+        },
+        // password
+        4: function(x) {
+          return x.length > 0;
+        }
+      };
+      for (var idx2 = 0; idx2 < fieldNames.length; idx2 += 1) {
+        var rule2 = rules[idx2];
+        var value2 = entry[fieldNames[idx2]] || "";
+        var res = rule2(value2);
+        if (!res) {
+          return false;
+        }
+      }
+      return true;
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/pgpass@1.0.5/node_modules/pgpass/lib/index.js
+var require_lib = __commonJS({
+  "../../node_modules/.pnpm/pgpass@1.0.5/node_modules/pgpass/lib/index.js"(exports2, module) {
+    "use strict";
+    var path29 = __require("path");
+    var fs32 = __require("fs");
+    var helper = require_helper();
+    module.exports = function(connInfo, cb) {
+      var file3 = helper.getFileName();
+      fs32.stat(file3, function(err, stat) {
+        if (err || !helper.usePgPass(stat, file3)) {
+          return cb(void 0);
+        }
+        var st = fs32.createReadStream(file3);
+        helper.getPassword(connInfo, st, cb);
+      });
+    };
+    module.exports.warnTo = helper.warnTo;
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/client.js
+var require_client = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/client.js"(exports2, module) {
+    "use strict";
+    var EventEmitter2 = __require("events").EventEmitter;
+    var utils = require_utils();
+    var sasl = require_sasl();
+    var TypeOverrides = require_type_overrides();
+    var ConnectionParameters = require_connection_parameters();
+    var Query = require_query();
+    var defaults = require_defaults();
+    var Connection = require_connection();
+    var crypto2 = require_utils2();
+    var Client = class extends EventEmitter2 {
+      constructor(config3) {
+        super();
+        this.connectionParameters = new ConnectionParameters(config3);
+        this.user = this.connectionParameters.user;
+        this.database = this.connectionParameters.database;
+        this.port = this.connectionParameters.port;
+        this.host = this.connectionParameters.host;
+        Object.defineProperty(this, "password", {
+          configurable: true,
+          enumerable: false,
+          writable: true,
+          value: this.connectionParameters.password
+        });
+        this.replication = this.connectionParameters.replication;
+        var c = config3 || {};
+        this._Promise = c.Promise || global.Promise;
+        this._types = new TypeOverrides(c.types);
+        this._ending = false;
+        this._ended = false;
+        this._connecting = false;
+        this._connected = false;
+        this._connectionError = false;
+        this._queryable = true;
+        this.connection = c.connection || new Connection({
+          stream: c.stream,
+          ssl: this.connectionParameters.ssl,
+          keepAlive: c.keepAlive || false,
+          keepAliveInitialDelayMillis: c.keepAliveInitialDelayMillis || 0,
+          encoding: this.connectionParameters.client_encoding || "utf8"
+        });
+        this.queryQueue = [];
+        this.binary = c.binary || defaults.binary;
+        this.processID = null;
+        this.secretKey = null;
+        this.ssl = this.connectionParameters.ssl || false;
+        if (this.ssl && this.ssl.key) {
+          Object.defineProperty(this.ssl, "key", {
+            enumerable: false
+          });
+        }
+        this._connectionTimeoutMillis = c.connectionTimeoutMillis || 0;
+      }
+      _errorAllQueries(err) {
+        const enqueueError = (query) => {
+          process.nextTick(() => {
+            query.handleError(err, this.connection);
+          });
+        };
+        if (this.activeQuery) {
+          enqueueError(this.activeQuery);
+          this.activeQuery = null;
+        }
+        this.queryQueue.forEach(enqueueError);
+        this.queryQueue.length = 0;
+      }
+      _connect(callback) {
+        var self2 = this;
+        var con = this.connection;
+        this._connectionCallback = callback;
+        if (this._connecting || this._connected) {
+          const err = new Error("Client has already been connected. You cannot reuse a client.");
+          process.nextTick(() => {
+            callback(err);
+          });
+          return;
+        }
+        this._connecting = true;
+        if (this._connectionTimeoutMillis > 0) {
+          this.connectionTimeoutHandle = setTimeout(() => {
+            con._ending = true;
+            con.stream.destroy(new Error("timeout expired"));
+          }, this._connectionTimeoutMillis);
+        }
+        if (this.host && this.host.indexOf("/") === 0) {
+          con.connect(this.host + "/.s.PGSQL." + this.port);
+        } else {
+          con.connect(this.port, this.host);
+        }
+        con.on("connect", function() {
+          if (self2.ssl) {
+            con.requestSsl();
+          } else {
+            con.startup(self2.getStartupConf());
+          }
+        });
+        con.on("sslconnect", function() {
+          con.startup(self2.getStartupConf());
+        });
+        this._attachListeners(con);
+        con.once("end", () => {
+          const error40 = this._ending ? new Error("Connection terminated") : new Error("Connection terminated unexpectedly");
+          clearTimeout(this.connectionTimeoutHandle);
+          this._errorAllQueries(error40);
+          this._ended = true;
+          if (!this._ending) {
+            if (this._connecting && !this._connectionError) {
+              if (this._connectionCallback) {
+                this._connectionCallback(error40);
+              } else {
+                this._handleErrorEvent(error40);
+              }
+            } else if (!this._connectionError) {
+              this._handleErrorEvent(error40);
+            }
+          }
+          process.nextTick(() => {
+            this.emit("end");
+          });
+        });
+      }
+      connect(callback) {
+        if (callback) {
+          this._connect(callback);
+          return;
+        }
+        return new this._Promise((resolve2, reject) => {
+          this._connect((error40) => {
+            if (error40) {
+              reject(error40);
+            } else {
+              resolve2();
+            }
+          });
+        });
+      }
+      _attachListeners(con) {
+        con.on("authenticationCleartextPassword", this._handleAuthCleartextPassword.bind(this));
+        con.on("authenticationMD5Password", this._handleAuthMD5Password.bind(this));
+        con.on("authenticationSASL", this._handleAuthSASL.bind(this));
+        con.on("authenticationSASLContinue", this._handleAuthSASLContinue.bind(this));
+        con.on("authenticationSASLFinal", this._handleAuthSASLFinal.bind(this));
+        con.on("backendKeyData", this._handleBackendKeyData.bind(this));
+        con.on("error", this._handleErrorEvent.bind(this));
+        con.on("errorMessage", this._handleErrorMessage.bind(this));
+        con.on("readyForQuery", this._handleReadyForQuery.bind(this));
+        con.on("notice", this._handleNotice.bind(this));
+        con.on("rowDescription", this._handleRowDescription.bind(this));
+        con.on("dataRow", this._handleDataRow.bind(this));
+        con.on("portalSuspended", this._handlePortalSuspended.bind(this));
+        con.on("emptyQuery", this._handleEmptyQuery.bind(this));
+        con.on("commandComplete", this._handleCommandComplete.bind(this));
+        con.on("parseComplete", this._handleParseComplete.bind(this));
+        con.on("copyInResponse", this._handleCopyInResponse.bind(this));
+        con.on("copyData", this._handleCopyData.bind(this));
+        con.on("notification", this._handleNotification.bind(this));
+      }
+      // TODO(bmc): deprecate pgpass "built in" integration since this.password can be a function
+      // it can be supplied by the user if required - this is a breaking change!
+      _checkPgPass(cb) {
+        const con = this.connection;
+        if (typeof this.password === "function") {
+          this._Promise.resolve().then(() => this.password()).then((pass) => {
+            if (pass !== void 0) {
+              if (typeof pass !== "string") {
+                con.emit("error", new TypeError("Password must be a string"));
+                return;
+              }
+              this.connectionParameters.password = this.password = pass;
+            } else {
+              this.connectionParameters.password = this.password = null;
+            }
+            cb();
+          }).catch((err) => {
+            con.emit("error", err);
+          });
+        } else if (this.password !== null) {
+          cb();
+        } else {
+          try {
+            const pgPass = require_lib();
+            pgPass(this.connectionParameters, (pass) => {
+              if (void 0 !== pass) {
+                this.connectionParameters.password = this.password = pass;
+              }
+              cb();
+            });
+          } catch (e) {
+            this.emit("error", e);
+          }
+        }
+      }
+      _handleAuthCleartextPassword(msg) {
+        this._checkPgPass(() => {
+          this.connection.password(this.password);
+        });
+      }
+      _handleAuthMD5Password(msg) {
+        this._checkPgPass(async () => {
+          try {
+            const hashedPassword = await crypto2.postgresMd5PasswordHash(this.user, this.password, msg.salt);
+            this.connection.password(hashedPassword);
+          } catch (e) {
+            this.emit("error", e);
+          }
+        });
+      }
+      _handleAuthSASL(msg) {
+        this._checkPgPass(() => {
+          try {
+            this.saslSession = sasl.startSession(msg.mechanisms);
+            this.connection.sendSASLInitialResponseMessage(this.saslSession.mechanism, this.saslSession.response);
+          } catch (err) {
+            this.connection.emit("error", err);
+          }
+        });
+      }
+      async _handleAuthSASLContinue(msg) {
+        try {
+          await sasl.continueSession(this.saslSession, this.password, msg.data);
+          this.connection.sendSCRAMClientFinalMessage(this.saslSession.response);
+        } catch (err) {
+          this.connection.emit("error", err);
+        }
+      }
+      _handleAuthSASLFinal(msg) {
+        try {
+          sasl.finalizeSession(this.saslSession, msg.data);
+          this.saslSession = null;
+        } catch (err) {
+          this.connection.emit("error", err);
+        }
+      }
+      _handleBackendKeyData(msg) {
+        this.processID = msg.processID;
+        this.secretKey = msg.secretKey;
+      }
+      _handleReadyForQuery(msg) {
+        if (this._connecting) {
+          this._connecting = false;
+          this._connected = true;
+          clearTimeout(this.connectionTimeoutHandle);
+          if (this._connectionCallback) {
+            this._connectionCallback(null, this);
+            this._connectionCallback = null;
+          }
+          this.emit("connect");
+        }
+        const { activeQuery } = this;
+        this.activeQuery = null;
+        this.readyForQuery = true;
+        if (activeQuery) {
+          activeQuery.handleReadyForQuery(this.connection);
+        }
+        this._pulseQueryQueue();
+      }
+      // if we receieve an error event or error message
+      // during the connection process we handle it here
+      _handleErrorWhileConnecting(err) {
+        if (this._connectionError) {
+          return;
+        }
+        this._connectionError = true;
+        clearTimeout(this.connectionTimeoutHandle);
+        if (this._connectionCallback) {
+          return this._connectionCallback(err);
+        }
+        this.emit("error", err);
+      }
+      // if we're connected and we receive an error event from the connection
+      // this means the socket is dead - do a hard abort of all queries and emit
+      // the socket error on the client as well
+      _handleErrorEvent(err) {
+        if (this._connecting) {
+          return this._handleErrorWhileConnecting(err);
+        }
+        this._queryable = false;
+        this._errorAllQueries(err);
+        this.emit("error", err);
+      }
+      // handle error messages from the postgres backend
+      _handleErrorMessage(msg) {
+        if (this._connecting) {
+          return this._handleErrorWhileConnecting(msg);
+        }
+        const activeQuery = this.activeQuery;
+        if (!activeQuery) {
+          this._handleErrorEvent(msg);
+          return;
+        }
+        this.activeQuery = null;
+        activeQuery.handleError(msg, this.connection);
+      }
+      _handleRowDescription(msg) {
+        this.activeQuery.handleRowDescription(msg);
+      }
+      _handleDataRow(msg) {
+        this.activeQuery.handleDataRow(msg);
+      }
+      _handlePortalSuspended(msg) {
+        this.activeQuery.handlePortalSuspended(this.connection);
+      }
+      _handleEmptyQuery(msg) {
+        this.activeQuery.handleEmptyQuery(this.connection);
+      }
+      _handleCommandComplete(msg) {
+        if (this.activeQuery == null) {
+          const error40 = new Error("Received unexpected commandComplete message from backend.");
+          this._handleErrorEvent(error40);
+          return;
+        }
+        this.activeQuery.handleCommandComplete(msg, this.connection);
+      }
+      _handleParseComplete() {
+        if (this.activeQuery == null) {
+          const error40 = new Error("Received unexpected parseComplete message from backend.");
+          this._handleErrorEvent(error40);
+          return;
+        }
+        if (this.activeQuery.name) {
+          this.connection.parsedStatements[this.activeQuery.name] = this.activeQuery.text;
+        }
+      }
+      _handleCopyInResponse(msg) {
+        this.activeQuery.handleCopyInResponse(this.connection);
+      }
+      _handleCopyData(msg) {
+        this.activeQuery.handleCopyData(msg, this.connection);
+      }
+      _handleNotification(msg) {
+        this.emit("notification", msg);
+      }
+      _handleNotice(msg) {
+        this.emit("notice", msg);
+      }
+      getStartupConf() {
+        var params = this.connectionParameters;
+        var data = {
+          user: params.user,
+          database: params.database
+        };
+        var appName = params.application_name || params.fallback_application_name;
+        if (appName) {
+          data.application_name = appName;
+        }
+        if (params.replication) {
+          data.replication = "" + params.replication;
+        }
+        if (params.statement_timeout) {
+          data.statement_timeout = String(parseInt(params.statement_timeout, 10));
+        }
+        if (params.lock_timeout) {
+          data.lock_timeout = String(parseInt(params.lock_timeout, 10));
+        }
+        if (params.idle_in_transaction_session_timeout) {
+          data.idle_in_transaction_session_timeout = String(parseInt(params.idle_in_transaction_session_timeout, 10));
+        }
+        if (params.options) {
+          data.options = params.options;
+        }
+        return data;
+      }
+      cancel(client, query) {
+        if (client.activeQuery === query) {
+          var con = this.connection;
+          if (this.host && this.host.indexOf("/") === 0) {
+            con.connect(this.host + "/.s.PGSQL." + this.port);
+          } else {
+            con.connect(this.port, this.host);
+          }
+          con.on("connect", function() {
+            con.cancel(client.processID, client.secretKey);
+          });
+        } else if (client.queryQueue.indexOf(query) !== -1) {
+          client.queryQueue.splice(client.queryQueue.indexOf(query), 1);
+        }
+      }
+      setTypeParser(oid, format, parseFn) {
+        return this._types.setTypeParser(oid, format, parseFn);
+      }
+      getTypeParser(oid, format) {
+        return this._types.getTypeParser(oid, format);
+      }
+      // escapeIdentifier and escapeLiteral moved to utility functions & exported
+      // on PG
+      // re-exported here for backwards compatibility
+      escapeIdentifier(str) {
+        return utils.escapeIdentifier(str);
+      }
+      escapeLiteral(str) {
+        return utils.escapeLiteral(str);
+      }
+      _pulseQueryQueue() {
+        if (this.readyForQuery === true) {
+          this.activeQuery = this.queryQueue.shift();
+          if (this.activeQuery) {
+            this.readyForQuery = false;
+            this.hasExecuted = true;
+            const queryError = this.activeQuery.submit(this.connection);
+            if (queryError) {
+              process.nextTick(() => {
+                this.activeQuery.handleError(queryError, this.connection);
+                this.readyForQuery = true;
+                this._pulseQueryQueue();
+              });
+            }
+          } else if (this.hasExecuted) {
+            this.activeQuery = null;
+            this.emit("drain");
+          }
+        }
+      }
+      query(config3, values, callback) {
+        var query;
+        var result;
+        var readTimeout;
+        var readTimeoutTimer;
+        var queryCallback;
+        if (config3 === null || config3 === void 0) {
+          throw new TypeError("Client was passed a null or undefined query");
+        } else if (typeof config3.submit === "function") {
+          readTimeout = config3.query_timeout || this.connectionParameters.query_timeout;
+          result = query = config3;
+          if (typeof values === "function") {
+            query.callback = query.callback || values;
+          }
+        } else {
+          readTimeout = config3.query_timeout || this.connectionParameters.query_timeout;
+          query = new Query(config3, values, callback);
+          if (!query.callback) {
+            result = new this._Promise((resolve2, reject) => {
+              query.callback = (err, res) => err ? reject(err) : resolve2(res);
+            }).catch((err) => {
+              Error.captureStackTrace(err);
+              throw err;
+            });
+          }
+        }
+        if (readTimeout) {
+          queryCallback = query.callback;
+          readTimeoutTimer = setTimeout(() => {
+            var error40 = new Error("Query read timeout");
+            process.nextTick(() => {
+              query.handleError(error40, this.connection);
+            });
+            queryCallback(error40);
+            query.callback = () => {
+            };
+            var index2 = this.queryQueue.indexOf(query);
+            if (index2 > -1) {
+              this.queryQueue.splice(index2, 1);
+            }
+            this._pulseQueryQueue();
+          }, readTimeout);
+          query.callback = (err, res) => {
+            clearTimeout(readTimeoutTimer);
+            queryCallback(err, res);
+          };
+        }
+        if (this.binary && !query.binary) {
+          query.binary = true;
+        }
+        if (query._result && !query._result._types) {
+          query._result._types = this._types;
+        }
+        if (!this._queryable) {
+          process.nextTick(() => {
+            query.handleError(new Error("Client has encountered a connection error and is not queryable"), this.connection);
+          });
+          return result;
+        }
+        if (this._ending) {
+          process.nextTick(() => {
+            query.handleError(new Error("Client was closed and is not queryable"), this.connection);
+          });
+          return result;
+        }
+        this.queryQueue.push(query);
+        this._pulseQueryQueue();
+        return result;
+      }
+      ref() {
+        this.connection.ref();
+      }
+      unref() {
+        this.connection.unref();
+      }
+      end(cb) {
+        this._ending = true;
+        if (!this.connection._connecting || this._ended) {
+          if (cb) {
+            cb();
+          } else {
+            return this._Promise.resolve();
+          }
+        }
+        if (this.activeQuery || !this._queryable) {
+          this.connection.stream.destroy();
+        } else {
+          this.connection.end();
+        }
+        if (cb) {
+          this.connection.once("end", cb);
+        } else {
+          return new this._Promise((resolve2) => {
+            this.connection.once("end", resolve2);
+          });
+        }
+      }
+    };
+    Client.Query = Query;
+    module.exports = Client;
+  }
+});
+
+// ../../node_modules/.pnpm/pg-pool@3.13.0_pg@8.13.1/node_modules/pg-pool/index.js
+var require_pg_pool = __commonJS({
+  "../../node_modules/.pnpm/pg-pool@3.13.0_pg@8.13.1/node_modules/pg-pool/index.js"(exports2, module) {
+    "use strict";
+    var EventEmitter2 = __require("events").EventEmitter;
+    var NOOP = function() {
+    };
+    var removeWhere = (list, predicate) => {
+      const i = list.findIndex(predicate);
+      return i === -1 ? void 0 : list.splice(i, 1)[0];
+    };
+    var IdleItem = class {
+      constructor(client, idleListener, timeoutId) {
+        this.client = client;
+        this.idleListener = idleListener;
+        this.timeoutId = timeoutId;
+      }
+    };
+    var PendingItem = class {
+      constructor(callback) {
+        this.callback = callback;
+      }
+    };
+    function throwOnDoubleRelease() {
+      throw new Error("Release called on client which has already been released to the pool.");
+    }
+    function promisify(Promise2, callback) {
+      if (callback) {
+        return { callback, result: void 0 };
+      }
+      let rej;
+      let res;
+      const cb = function(err, client) {
+        err ? rej(err) : res(client);
+      };
+      const result = new Promise2(function(resolve2, reject) {
+        res = resolve2;
+        rej = reject;
+      }).catch((err) => {
+        Error.captureStackTrace(err);
+        throw err;
+      });
+      return { callback: cb, result };
+    }
+    function makeIdleListener(pool3, client) {
+      return function idleListener(err) {
+        err.client = client;
+        client.removeListener("error", idleListener);
+        client.on("error", () => {
+          pool3.log("additional client error after disconnection due to error", err);
+        });
+        pool3._remove(client);
+        pool3.emit("error", err, client);
+      };
+    }
+    var Pool = class extends EventEmitter2 {
+      constructor(options, Client) {
+        super();
+        this.options = Object.assign({}, options);
+        if (options != null && "password" in options) {
+          Object.defineProperty(this.options, "password", {
+            configurable: true,
+            enumerable: false,
+            writable: true,
+            value: options.password
+          });
+        }
+        if (options != null && options.ssl && options.ssl.key) {
+          Object.defineProperty(this.options.ssl, "key", {
+            enumerable: false
+          });
+        }
+        this.options.max = this.options.max || this.options.poolSize || 10;
+        this.options.min = this.options.min || 0;
+        this.options.maxUses = this.options.maxUses || Infinity;
+        this.options.allowExitOnIdle = this.options.allowExitOnIdle || false;
+        this.options.maxLifetimeSeconds = this.options.maxLifetimeSeconds || 0;
+        this.log = this.options.log || function() {
+        };
+        this.Client = this.options.Client || Client || require_lib2().Client;
+        this.Promise = this.options.Promise || global.Promise;
+        if (typeof this.options.idleTimeoutMillis === "undefined") {
+          this.options.idleTimeoutMillis = 1e4;
+        }
+        this._clients = [];
+        this._idle = [];
+        this._expired = /* @__PURE__ */ new WeakSet();
+        this._pendingQueue = [];
+        this._endCallback = void 0;
+        this.ending = false;
+        this.ended = false;
+      }
+      _promiseTry(f) {
+        const Promise2 = this.Promise;
+        if (typeof Promise2.try === "function") {
+          return Promise2.try(f);
+        }
+        return new Promise2((resolve2) => resolve2(f()));
+      }
+      _isFull() {
+        return this._clients.length >= this.options.max;
+      }
+      _isAboveMin() {
+        return this._clients.length > this.options.min;
+      }
+      _pulseQueue() {
+        this.log("pulse queue");
+        if (this.ended) {
+          this.log("pulse queue ended");
+          return;
+        }
+        if (this.ending) {
+          this.log("pulse queue on ending");
+          if (this._idle.length) {
+            this._idle.slice().map((item) => {
+              this._remove(item.client);
+            });
+          }
+          if (!this._clients.length) {
+            this.ended = true;
+            this._endCallback();
+          }
+          return;
+        }
+        if (!this._pendingQueue.length) {
+          this.log("no queued requests");
+          return;
+        }
+        if (!this._idle.length && this._isFull()) {
+          return;
+        }
+        const pendingItem = this._pendingQueue.shift();
+        if (this._idle.length) {
+          const idleItem = this._idle.pop();
+          clearTimeout(idleItem.timeoutId);
+          const client = idleItem.client;
+          client.ref && client.ref();
+          const idleListener = idleItem.idleListener;
+          return this._acquireClient(client, pendingItem, idleListener, false);
+        }
+        if (!this._isFull()) {
+          return this.newClient(pendingItem);
+        }
+        throw new Error("unexpected condition");
+      }
+      _remove(client, callback) {
+        const removed = removeWhere(this._idle, (item) => item.client === client);
+        if (removed !== void 0) {
+          clearTimeout(removed.timeoutId);
+        }
+        this._clients = this._clients.filter((c) => c !== client);
+        const context = this;
+        client.end(() => {
+          context.emit("remove", client);
+          if (typeof callback === "function") {
+            callback();
+          }
+        });
+      }
+      connect(cb) {
+        if (this.ending) {
+          const err = new Error("Cannot use a pool after calling end on the pool");
+          return cb ? cb(err) : this.Promise.reject(err);
+        }
+        const response = promisify(this.Promise, cb);
+        const result = response.result;
+        if (this._isFull() || this._idle.length) {
+          if (this._idle.length) {
+            process.nextTick(() => this._pulseQueue());
+          }
+          if (!this.options.connectionTimeoutMillis) {
+            this._pendingQueue.push(new PendingItem(response.callback));
+            return result;
+          }
+          const queueCallback = (err, res, done) => {
+            clearTimeout(tid);
+            response.callback(err, res, done);
+          };
+          const pendingItem = new PendingItem(queueCallback);
+          const tid = setTimeout(() => {
+            removeWhere(this._pendingQueue, (i) => i.callback === queueCallback);
+            pendingItem.timedOut = true;
+            response.callback(new Error("timeout exceeded when trying to connect"));
+          }, this.options.connectionTimeoutMillis);
+          if (tid.unref) {
+            tid.unref();
+          }
+          this._pendingQueue.push(pendingItem);
+          return result;
+        }
+        this.newClient(new PendingItem(response.callback));
+        return result;
+      }
+      newClient(pendingItem) {
+        const client = new this.Client(this.options);
+        this._clients.push(client);
+        const idleListener = makeIdleListener(this, client);
+        this.log("checking client timeout");
+        let tid;
+        let timeoutHit = false;
+        if (this.options.connectionTimeoutMillis) {
+          tid = setTimeout(() => {
+            if (client.connection) {
+              this.log("ending client due to timeout");
+              timeoutHit = true;
+              client.connection.stream.destroy();
+            } else if (!client.isConnected()) {
+              this.log("ending client due to timeout");
+              timeoutHit = true;
+              client.end();
+            }
+          }, this.options.connectionTimeoutMillis);
+        }
+        this.log("connecting new client");
+        client.connect((err) => {
+          if (tid) {
+            clearTimeout(tid);
+          }
+          client.on("error", idleListener);
+          if (err) {
+            this.log("client failed to connect", err);
+            this._clients = this._clients.filter((c) => c !== client);
+            if (timeoutHit) {
+              err = new Error("Connection terminated due to connection timeout", { cause: err });
+            }
+            this._pulseQueue();
+            if (!pendingItem.timedOut) {
+              pendingItem.callback(err, void 0, NOOP);
+            }
+          } else {
+            this.log("new client connected");
+            if (this.options.onConnect) {
+              this._promiseTry(() => this.options.onConnect(client)).then(
+                () => {
+                  this._afterConnect(client, pendingItem, idleListener);
+                },
+                (hookErr) => {
+                  this._clients = this._clients.filter((c) => c !== client);
+                  client.end(() => {
+                    this._pulseQueue();
+                    if (!pendingItem.timedOut) {
+                      pendingItem.callback(hookErr, void 0, NOOP);
+                    }
+                  });
+                }
+              );
+              return;
+            }
+            return this._afterConnect(client, pendingItem, idleListener);
+          }
+        });
+      }
+      _afterConnect(client, pendingItem, idleListener) {
+        if (this.options.maxLifetimeSeconds !== 0) {
+          const maxLifetimeTimeout = setTimeout(() => {
+            this.log("ending client due to expired lifetime");
+            this._expired.add(client);
+            const idleIndex = this._idle.findIndex((idleItem) => idleItem.client === client);
+            if (idleIndex !== -1) {
+              this._acquireClient(
+                client,
+                new PendingItem((err, client2, clientRelease) => clientRelease()),
+                idleListener,
+                false
+              );
+            }
+          }, this.options.maxLifetimeSeconds * 1e3);
+          maxLifetimeTimeout.unref();
+          client.once("end", () => clearTimeout(maxLifetimeTimeout));
+        }
+        return this._acquireClient(client, pendingItem, idleListener, true);
+      }
+      // acquire a client for a pending work item
+      _acquireClient(client, pendingItem, idleListener, isNew) {
+        if (isNew) {
+          this.emit("connect", client);
+        }
+        this.emit("acquire", client);
+        client.release = this._releaseOnce(client, idleListener);
+        client.removeListener("error", idleListener);
+        if (!pendingItem.timedOut) {
+          if (isNew && this.options.verify) {
+            this.options.verify(client, (err) => {
+              if (err) {
+                client.release(err);
+                return pendingItem.callback(err, void 0, NOOP);
+              }
+              pendingItem.callback(void 0, client, client.release);
+            });
+          } else {
+            pendingItem.callback(void 0, client, client.release);
+          }
+        } else {
+          if (isNew && this.options.verify) {
+            this.options.verify(client, client.release);
+          } else {
+            client.release();
+          }
+        }
+      }
+      // returns a function that wraps _release and throws if called more than once
+      _releaseOnce(client, idleListener) {
+        let released = false;
+        return (err) => {
+          if (released) {
+            throwOnDoubleRelease();
+          }
+          released = true;
+          this._release(client, idleListener, err);
+        };
+      }
+      // release a client back to the poll, include an error
+      // to remove it from the pool
+      _release(client, idleListener, err) {
+        client.on("error", idleListener);
+        client._poolUseCount = (client._poolUseCount || 0) + 1;
+        this.emit("release", err, client);
+        if (err || this.ending || !client._queryable || client._ending || client._poolUseCount >= this.options.maxUses) {
+          if (client._poolUseCount >= this.options.maxUses) {
+            this.log("remove expended client");
+          }
+          return this._remove(client, this._pulseQueue.bind(this));
+        }
+        const isExpired = this._expired.has(client);
+        if (isExpired) {
+          this.log("remove expired client");
+          this._expired.delete(client);
+          return this._remove(client, this._pulseQueue.bind(this));
+        }
+        let tid;
+        if (this.options.idleTimeoutMillis && this._isAboveMin()) {
+          tid = setTimeout(() => {
+            if (this._isAboveMin()) {
+              this.log("remove idle client");
+              this._remove(client, this._pulseQueue.bind(this));
+            }
+          }, this.options.idleTimeoutMillis);
+          if (this.options.allowExitOnIdle) {
+            tid.unref();
+          }
+        }
+        if (this.options.allowExitOnIdle) {
+          client.unref();
+        }
+        this._idle.push(new IdleItem(client, idleListener, tid));
+        this._pulseQueue();
+      }
+      query(text2, values, cb) {
+        if (typeof text2 === "function") {
+          const response2 = promisify(this.Promise, text2);
+          setImmediate(function() {
+            return response2.callback(new Error("Passing a function as the first parameter to pool.query is not supported"));
+          });
+          return response2.result;
+        }
+        if (typeof values === "function") {
+          cb = values;
+          values = void 0;
+        }
+        const response = promisify(this.Promise, cb);
+        cb = response.callback;
+        this.connect((err, client) => {
+          if (err) {
+            return cb(err);
+          }
+          let clientReleased = false;
+          const onError = (err2) => {
+            if (clientReleased) {
+              return;
+            }
+            clientReleased = true;
+            client.release(err2);
+            cb(err2);
+          };
+          client.once("error", onError);
+          this.log("dispatching query");
+          try {
+            client.query(text2, values, (err2, res) => {
+              this.log("query dispatched");
+              client.removeListener("error", onError);
+              if (clientReleased) {
+                return;
+              }
+              clientReleased = true;
+              client.release(err2);
+              if (err2) {
+                return cb(err2);
+              }
+              return cb(void 0, res);
+            });
+          } catch (err2) {
+            client.release(err2);
+            return cb(err2);
+          }
+        });
+        return response.result;
+      }
+      end(cb) {
+        this.log("ending");
+        if (this.ending) {
+          const err = new Error("Called end on pool more than once");
+          return cb ? cb(err) : this.Promise.reject(err);
+        }
+        this.ending = true;
+        const promised = promisify(this.Promise, cb);
+        this._endCallback = promised.callback;
+        this._pulseQueue();
+        return promised.result;
+      }
+      get waitingCount() {
+        return this._pendingQueue.length;
+      }
+      get idleCount() {
+        return this._idle.length;
+      }
+      get expiredCount() {
+        return this._clients.reduce((acc, client) => acc + (this._expired.has(client) ? 1 : 0), 0);
+      }
+      get totalCount() {
+        return this._clients.length;
+      }
+    };
+    module.exports = Pool;
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/native/query.js
+var require_query2 = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/native/query.js"(exports2, module) {
+    "use strict";
+    var EventEmitter2 = __require("events").EventEmitter;
+    var util2 = __require("util");
+    var utils = require_utils();
+    var NativeQuery = module.exports = function(config3, values, callback) {
+      EventEmitter2.call(this);
+      config3 = utils.normalizeQueryConfig(config3, values, callback);
+      this.text = config3.text;
+      this.values = config3.values;
+      this.name = config3.name;
+      this.queryMode = config3.queryMode;
+      this.callback = config3.callback;
+      this.state = "new";
+      this._arrayMode = config3.rowMode === "array";
+      this._emitRowEvents = false;
+      this.on(
+        "newListener",
+        function(event) {
+          if (event === "row") this._emitRowEvents = true;
+        }.bind(this)
+      );
+    };
+    util2.inherits(NativeQuery, EventEmitter2);
+    var errorFieldMap = {
+      /* eslint-disable quote-props */
+      sqlState: "code",
+      statementPosition: "position",
+      messagePrimary: "message",
+      context: "where",
+      schemaName: "schema",
+      tableName: "table",
+      columnName: "column",
+      dataTypeName: "dataType",
+      constraintName: "constraint",
+      sourceFile: "file",
+      sourceLine: "line",
+      sourceFunction: "routine"
+    };
+    NativeQuery.prototype.handleError = function(err) {
+      var fields = this.native.pq.resultErrorFields();
+      if (fields) {
+        for (var key in fields) {
+          var normalizedFieldName = errorFieldMap[key] || key;
+          err[normalizedFieldName] = fields[key];
+        }
+      }
+      if (this.callback) {
+        this.callback(err);
+      } else {
+        this.emit("error", err);
+      }
+      this.state = "error";
+    };
+    NativeQuery.prototype.then = function(onSuccess, onFailure) {
+      return this._getPromise().then(onSuccess, onFailure);
+    };
+    NativeQuery.prototype.catch = function(callback) {
+      return this._getPromise().catch(callback);
+    };
+    NativeQuery.prototype._getPromise = function() {
+      if (this._promise) return this._promise;
+      this._promise = new Promise(
+        function(resolve2, reject) {
+          this._once("end", resolve2);
+          this._once("error", reject);
+        }.bind(this)
+      );
+      return this._promise;
+    };
+    NativeQuery.prototype.submit = function(client) {
+      this.state = "running";
+      var self2 = this;
+      this.native = client.native;
+      client.native.arrayMode = this._arrayMode;
+      var after = function(err, rows, results) {
+        client.native.arrayMode = false;
+        setImmediate(function() {
+          self2.emit("_done");
+        });
+        if (err) {
+          return self2.handleError(err);
+        }
+        if (self2._emitRowEvents) {
+          if (results.length > 1) {
+            rows.forEach((rowOfRows, i) => {
+              rowOfRows.forEach((row) => {
+                self2.emit("row", row, results[i]);
+              });
+            });
+          } else {
+            rows.forEach(function(row) {
+              self2.emit("row", row, results);
+            });
+          }
+        }
+        self2.state = "end";
+        self2.emit("end", results);
+        if (self2.callback) {
+          self2.callback(null, results);
+        }
+      };
+      if (process.domain) {
+        after = process.domain.bind(after);
+      }
+      if (this.name) {
+        if (this.name.length > 63) {
+          console.error("Warning! Postgres only supports 63 characters for query names.");
+          console.error("You supplied %s (%s)", this.name, this.name.length);
+          console.error("This can cause conflicts and silent errors executing queries");
+        }
+        var values = (this.values || []).map(utils.prepareValue);
+        if (client.namedQueries[this.name]) {
+          if (this.text && client.namedQueries[this.name] !== this.text) {
+            const err = new Error(`Prepared statements must be unique - '${this.name}' was used for a different statement`);
+            return after(err);
+          }
+          return client.native.execute(this.name, values, after);
+        }
+        return client.native.prepare(this.name, this.text, values.length, function(err) {
+          if (err) return after(err);
+          client.namedQueries[self2.name] = self2.text;
+          return self2.native.execute(self2.name, values, after);
+        });
+      } else if (this.values) {
+        if (!Array.isArray(this.values)) {
+          const err = new Error("Query values must be an array");
+          return after(err);
+        }
+        var vals = this.values.map(utils.prepareValue);
+        client.native.query(this.text, vals, after);
+      } else if (this.queryMode === "extended") {
+        client.native.query(this.text, [], after);
+      } else {
+        client.native.query(this.text, after);
+      }
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/native/client.js
+var require_client2 = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/native/client.js"(exports2, module) {
+    "use strict";
+    var Native;
+    try {
+      Native = __require("pg-native");
+    } catch (e) {
+      throw e;
+    }
+    var TypeOverrides = require_type_overrides();
+    var EventEmitter2 = __require("events").EventEmitter;
+    var util2 = __require("util");
+    var ConnectionParameters = require_connection_parameters();
+    var NativeQuery = require_query2();
+    var Client = module.exports = function(config3) {
+      EventEmitter2.call(this);
+      config3 = config3 || {};
+      this._Promise = config3.Promise || global.Promise;
+      this._types = new TypeOverrides(config3.types);
+      this.native = new Native({
+        types: this._types
+      });
+      this._queryQueue = [];
+      this._ending = false;
+      this._connecting = false;
+      this._connected = false;
+      this._queryable = true;
+      var cp = this.connectionParameters = new ConnectionParameters(config3);
+      if (config3.nativeConnectionString) cp.nativeConnectionString = config3.nativeConnectionString;
+      this.user = cp.user;
+      Object.defineProperty(this, "password", {
+        configurable: true,
+        enumerable: false,
+        writable: true,
+        value: cp.password
+      });
+      this.database = cp.database;
+      this.host = cp.host;
+      this.port = cp.port;
+      this.namedQueries = {};
+    };
+    Client.Query = NativeQuery;
+    util2.inherits(Client, EventEmitter2);
+    Client.prototype._errorAllQueries = function(err) {
+      const enqueueError = (query) => {
+        process.nextTick(() => {
+          query.native = this.native;
+          query.handleError(err);
+        });
+      };
+      if (this._hasActiveQuery()) {
+        enqueueError(this._activeQuery);
+        this._activeQuery = null;
+      }
+      this._queryQueue.forEach(enqueueError);
+      this._queryQueue.length = 0;
+    };
+    Client.prototype._connect = function(cb) {
+      var self2 = this;
+      if (this._connecting) {
+        process.nextTick(() => cb(new Error("Client has already been connected. You cannot reuse a client.")));
+        return;
+      }
+      this._connecting = true;
+      this.connectionParameters.getLibpqConnectionString(function(err, conString) {
+        if (self2.connectionParameters.nativeConnectionString) conString = self2.connectionParameters.nativeConnectionString;
+        if (err) return cb(err);
+        self2.native.connect(conString, function(err2) {
+          if (err2) {
+            self2.native.end();
+            return cb(err2);
+          }
+          self2._connected = true;
+          self2.native.on("error", function(err3) {
+            self2._queryable = false;
+            self2._errorAllQueries(err3);
+            self2.emit("error", err3);
+          });
+          self2.native.on("notification", function(msg) {
+            self2.emit("notification", {
+              channel: msg.relname,
+              payload: msg.extra
+            });
+          });
+          self2.emit("connect");
+          self2._pulseQueryQueue(true);
+          cb();
+        });
+      });
+    };
+    Client.prototype.connect = function(callback) {
+      if (callback) {
+        this._connect(callback);
+        return;
+      }
+      return new this._Promise((resolve2, reject) => {
+        this._connect((error40) => {
+          if (error40) {
+            reject(error40);
+          } else {
+            resolve2();
+          }
+        });
+      });
+    };
+    Client.prototype.query = function(config3, values, callback) {
+      var query;
+      var result;
+      var readTimeout;
+      var readTimeoutTimer;
+      var queryCallback;
+      if (config3 === null || config3 === void 0) {
+        throw new TypeError("Client was passed a null or undefined query");
+      } else if (typeof config3.submit === "function") {
+        readTimeout = config3.query_timeout || this.connectionParameters.query_timeout;
+        result = query = config3;
+        if (typeof values === "function") {
+          config3.callback = values;
+        }
+      } else {
+        readTimeout = config3.query_timeout || this.connectionParameters.query_timeout;
+        query = new NativeQuery(config3, values, callback);
+        if (!query.callback) {
+          let resolveOut, rejectOut;
+          result = new this._Promise((resolve2, reject) => {
+            resolveOut = resolve2;
+            rejectOut = reject;
+          }).catch((err) => {
+            Error.captureStackTrace(err);
+            throw err;
+          });
+          query.callback = (err, res) => err ? rejectOut(err) : resolveOut(res);
+        }
+      }
+      if (readTimeout) {
+        queryCallback = query.callback;
+        readTimeoutTimer = setTimeout(() => {
+          var error40 = new Error("Query read timeout");
+          process.nextTick(() => {
+            query.handleError(error40, this.connection);
+          });
+          queryCallback(error40);
+          query.callback = () => {
+          };
+          var index2 = this._queryQueue.indexOf(query);
+          if (index2 > -1) {
+            this._queryQueue.splice(index2, 1);
+          }
+          this._pulseQueryQueue();
+        }, readTimeout);
+        query.callback = (err, res) => {
+          clearTimeout(readTimeoutTimer);
+          queryCallback(err, res);
+        };
+      }
+      if (!this._queryable) {
+        query.native = this.native;
+        process.nextTick(() => {
+          query.handleError(new Error("Client has encountered a connection error and is not queryable"));
+        });
+        return result;
+      }
+      if (this._ending) {
+        query.native = this.native;
+        process.nextTick(() => {
+          query.handleError(new Error("Client was closed and is not queryable"));
+        });
+        return result;
+      }
+      this._queryQueue.push(query);
+      this._pulseQueryQueue();
+      return result;
+    };
+    Client.prototype.end = function(cb) {
+      var self2 = this;
+      this._ending = true;
+      if (!this._connected) {
+        this.once("connect", this.end.bind(this, cb));
+      }
+      var result;
+      if (!cb) {
+        result = new this._Promise(function(resolve2, reject) {
+          cb = (err) => err ? reject(err) : resolve2();
+        });
+      }
+      this.native.end(function() {
+        self2._errorAllQueries(new Error("Connection terminated"));
+        process.nextTick(() => {
+          self2.emit("end");
+          if (cb) cb();
+        });
+      });
+      return result;
+    };
+    Client.prototype._hasActiveQuery = function() {
+      return this._activeQuery && this._activeQuery.state !== "error" && this._activeQuery.state !== "end";
+    };
+    Client.prototype._pulseQueryQueue = function(initialConnection) {
+      if (!this._connected) {
+        return;
+      }
+      if (this._hasActiveQuery()) {
+        return;
+      }
+      var query = this._queryQueue.shift();
+      if (!query) {
+        if (!initialConnection) {
+          this.emit("drain");
+        }
+        return;
+      }
+      this._activeQuery = query;
+      query.submit(this);
+      var self2 = this;
+      query.once("_done", function() {
+        self2._pulseQueryQueue();
+      });
+    };
+    Client.prototype.cancel = function(query) {
+      if (this._activeQuery === query) {
+        this.native.cancel(function() {
+        });
+      } else if (this._queryQueue.indexOf(query) !== -1) {
+        this._queryQueue.splice(this._queryQueue.indexOf(query), 1);
+      }
+    };
+    Client.prototype.ref = function() {
+    };
+    Client.prototype.unref = function() {
+    };
+    Client.prototype.setTypeParser = function(oid, format, parseFn) {
+      return this._types.setTypeParser(oid, format, parseFn);
+    };
+    Client.prototype.getTypeParser = function(oid, format) {
+      return this._types.getTypeParser(oid, format);
+    };
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/native/index.js
+var require_native = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/native/index.js"(exports2, module) {
+    "use strict";
+    module.exports = require_client2();
+  }
+});
+
+// ../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/index.js
+var require_lib2 = __commonJS({
+  "../../node_modules/.pnpm/pg@8.13.1/node_modules/pg/lib/index.js"(exports2, module) {
+    "use strict";
+    var Client = require_client();
+    var defaults = require_defaults();
+    var Connection = require_connection();
+    var Pool = require_pg_pool();
+    var { DatabaseError } = require_dist();
+    var { escapeIdentifier, escapeLiteral } = require_utils();
+    var poolFactory = (Client2) => {
+      return class BoundPool extends Pool {
+        constructor(options) {
+          super(options, Client2);
+        }
+      };
+    };
+    var PG = function(clientConstructor) {
+      this.defaults = defaults;
+      this.Client = clientConstructor;
+      this.Query = this.Client.Query;
+      this.Pool = poolFactory(this.Client);
+      this._pools = [];
+      this.Connection = Connection;
+      this.types = require_pg_types();
+      this.DatabaseError = DatabaseError;
+      this.escapeIdentifier = escapeIdentifier;
+      this.escapeLiteral = escapeLiteral;
+    };
+    if (typeof process.env.NODE_PG_FORCE_NATIVE !== "undefined") {
+      module.exports = new PG(require_native());
+    } else {
+      module.exports = new PG(Client);
+      Object.defineProperty(module.exports, "native", {
+        configurable: true,
+        enumerable: false,
+        get() {
+          var native = null;
+          try {
+            native = new PG(require_native());
+          } catch (err) {
+            if (err.code !== "MODULE_NOT_FOUND") {
+              throw err;
+            }
+          }
+          Object.defineProperty(module.exports, "native", {
+            value: native
+          });
+          return native;
+        }
+      });
+    }
+  }
+});
+
 // ../../node_modules/.pnpm/ms@2.1.3/node_modules/ms/index.js
 var require_ms = __commonJS({
   "../../node_modules/.pnpm/ms@2.1.3/node_modules/ms/index.js"(exports2, module) {
@@ -5121,7 +9950,7 @@ var require_streams = __commonJS({
 });
 
 // ../../node_modules/.pnpm/iconv-lite@0.7.2/node_modules/iconv-lite/lib/index.js
-var require_lib = __commonJS({
+var require_lib3 = __commonJS({
   "../../node_modules/.pnpm/iconv-lite@0.7.2/node_modules/iconv-lite/lib/index.js"(exports2, module) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
@@ -5297,7 +10126,7 @@ var require_raw_body = __commonJS({
     var asyncHooks = tryRequireAsyncHooks();
     var bytes = require_bytes();
     var createError = require_http_errors();
-    var iconv = require_lib();
+    var iconv = require_lib3();
     var unpipe = require_unpipe();
     module.exports = getRawBody;
     var ICONV_ENCODING_MESSAGE_REGEXP = /^Encoding not recognized: /;
@@ -9068,7 +13897,7 @@ var require_streams2 = __commonJS({
 });
 
 // ../../node_modules/.pnpm/iconv-lite@0.7.3/node_modules/iconv-lite/lib/index.js
-var require_lib2 = __commonJS({
+var require_lib4 = __commonJS({
   "../../node_modules/.pnpm/iconv-lite@0.7.3/node_modules/iconv-lite/lib/index.js"(exports2, module) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
@@ -9360,7 +14189,7 @@ var require_on_finished = __commonJS({
 });
 
 // ../../node_modules/.pnpm/content-type@2.1.0/node_modules/content-type/dist/index.js
-var require_dist = __commonJS({
+var require_dist2 = __commonJS({
   "../../node_modules/.pnpm/content-type@2.1.0/node_modules/content-type/dist/index.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -19077,7 +23906,7 @@ var require_media_typer = __commonJS({
 var require_type_is = __commonJS({
   "../../node_modules/.pnpm/type-is@2.1.0/node_modules/type-is/index.js"(exports2, module) {
     "use strict";
-    var contentType = require_dist();
+    var contentType = require_dist2();
     var mime = require_mime_types();
     var typer = require_media_typer();
     module.exports = typeofrequest;
@@ -19170,11 +23999,11 @@ var require_read = __commonJS({
     "use strict";
     var createError = require_http_errors();
     var getBody = require_raw_body();
-    var iconv = require_lib2();
+    var iconv = require_lib4();
     var onFinished = require_on_finished();
     var zlib = __require("node:zlib");
     var hasBody = require_type_is().hasBody;
-    var contentType = require_dist();
+    var contentType = require_dist2();
     module.exports = read3;
     var hasZstandardSupport = "createZstdDecompress" in zlib;
     function read3(req, res, next, parse4, debug, options) {
@@ -19336,7 +24165,7 @@ var require_read = __commonJS({
 });
 
 // ../../node_modules/.pnpm/body-parser@2.4.0/node_modules/body-parser/lib/utils.js
-var require_utils = __commonJS({
+var require_utils3 = __commonJS({
   "../../node_modules/.pnpm/body-parser@2.4.0/node_modules/body-parser/lib/utils.js"(exports2, module) {
     "use strict";
     var bytes = require_bytes();
@@ -19386,7 +24215,7 @@ var require_json = __commonJS({
     "use strict";
     var debug = require_src()("body-parser:json");
     var read3 = require_read();
-    var { normalizeOptions } = require_utils();
+    var { normalizeOptions } = require_utils3();
     module.exports = json3;
     var FIRST_NON_WHITESPACE_REGEXP = /^[\x20\x09\x0a\x0d]*([^\x20\x09\x0a\x0d]|$)/;
     var JSON_SYNTAX_CHAR = "#";
@@ -19487,7 +24316,7 @@ var require_raw = __commonJS({
     "use strict";
     var debug = require_src()("body-parser:raw");
     var read3 = require_read();
-    var { normalizeOptions, passthrough } = require_utils();
+    var { normalizeOptions, passthrough } = require_utils3();
     module.exports = raw;
     function raw(options) {
       const normalizedOptions = normalizeOptions(options, "application/octet-stream");
@@ -19509,7 +24338,7 @@ var require_text = __commonJS({
     "use strict";
     var debug = require_src()("body-parser:text");
     var read3 = require_read();
-    var { normalizeOptions, passthrough } = require_utils();
+    var { normalizeOptions, passthrough } = require_utils3();
     module.exports = text2;
     function text2(options) {
       const normalizedOptions = normalizeOptions(options, "text/plain");
@@ -19686,7 +24515,7 @@ var require_object_inspect = __commonJS({
         var s = "<" + $toLowerCase.call(String(obj.nodeName));
         var attrs = obj.attributes || [];
         for (var i = 0; i < attrs.length; i++) {
-          s += " " + attrs[i].name + "=" + wrapQuotes(quote(attrs[i].value), "double", opts);
+          s += " " + attrs[i].name + "=" + wrapQuotes(quote2(attrs[i].value), "double", opts);
         }
         s += ">";
         if (obj.childNodes && obj.childNodes.length) {
@@ -19789,7 +24618,7 @@ var require_object_inspect = __commonJS({
       var quoteChar = quotes[style];
       return quoteChar + s + quoteChar;
     }
-    function quote(s) {
+    function quote2(s) {
       return $replace.call(String(s), /"/g, "&quot;");
     }
     function canTrustToString(obj) {
@@ -20862,8 +25691,8 @@ var require_get_intrinsic = __commonJS({
         throw new $SyntaxError("invalid intrinsic syntax, expected opening `%`");
       }
       var result = [];
-      $replace(string4, rePropName, function(match, number4, quote, subString) {
-        result[result.length] = quote ? $replace(subString, reEscapeChar, "$1") : number4 || match;
+      $replace(string4, rePropName, function(match, number4, quote2, subString) {
+        result[result.length] = quote2 ? $replace(subString, reEscapeChar, "$1") : number4 || match;
       });
       return result;
     };
@@ -21178,7 +26007,7 @@ var require_formats = __commonJS({
 });
 
 // ../../node_modules/.pnpm/qs@6.17.0/node_modules/qs/lib/utils.js
-var require_utils2 = __commonJS({
+var require_utils4 = __commonJS({
   "../../node_modules/.pnpm/qs@6.17.0/node_modules/qs/lib/utils.js"(exports2, module) {
     "use strict";
     var formats = require_formats();
@@ -21593,7 +26422,7 @@ var require_stringify = __commonJS({
   "../../node_modules/.pnpm/qs@6.17.0/node_modules/qs/lib/stringify.js"(exports2, module) {
     "use strict";
     var getSideChannel = require_side_channel();
-    var utils = require_utils2();
+    var utils = require_utils4();
     var formats = require_formats();
     var has = Object.prototype.hasOwnProperty;
     var arrayPrefixGenerators = {
@@ -21890,7 +26719,7 @@ var require_parse = __commonJS({
   "../../node_modules/.pnpm/qs@6.17.0/node_modules/qs/lib/parse.js"(exports2, module) {
     "use strict";
     var getSideChannel = require_side_channel();
-    var utils = require_utils2();
+    var utils = require_utils4();
     var has = Object.prototype.hasOwnProperty;
     var isArray = Array.isArray;
     var getPrototypeOf = Object.getPrototypeOf;
@@ -22288,7 +27117,7 @@ var require_parse = __commonJS({
 });
 
 // ../../node_modules/.pnpm/qs@6.17.0/node_modules/qs/lib/index.js
-var require_lib3 = __commonJS({
+var require_lib5 = __commonJS({
   "../../node_modules/.pnpm/qs@6.17.0/node_modules/qs/lib/index.js"(exports2, module) {
     "use strict";
     var stringify = require_stringify();
@@ -22309,8 +27138,8 @@ var require_urlencoded = __commonJS({
     var createError = require_http_errors();
     var debug = require_src()("body-parser:urlencoded");
     var read3 = require_read();
-    var qs = require_lib3();
-    var { normalizeOptions } = require_utils();
+    var qs = require_lib5();
+    var { normalizeOptions } = require_utils3();
     module.exports = urlencoded;
     function urlencoded(options) {
       const normalizedOptions = normalizeOptions(options, "application/x-www-form-urlencoded");
@@ -22711,8 +27540,8 @@ var require_view = __commonJS({
     var extname = path29.extname;
     var join5 = path29.join;
     var resolve2 = path29.resolve;
-    module.exports = View2;
-    function View2(name, options) {
+    module.exports = View3;
+    function View3(name, options) {
       var opts = options || {};
       this.defaultEngine = opts.defaultEngine;
       this.ext = extname(name);
@@ -22738,7 +27567,7 @@ var require_view = __commonJS({
       this.engine = opts.engines[this.ext];
       this.path = this.lookup(fileName);
     }
-    View2.prototype.lookup = function lookup(name) {
+    View3.prototype.lookup = function lookup(name) {
       var path30;
       var roots = [].concat(this.root);
       debug('lookup "%s"', name);
@@ -22751,7 +27580,7 @@ var require_view = __commonJS({
       }
       return path30;
     };
-    View2.prototype.render = function render(options, callback) {
+    View3.prototype.render = function render(options, callback) {
       var sync = true;
       debug('render "%s"', this.path);
       this.engine(this.path, options, function onRender() {
@@ -22769,7 +27598,7 @@ var require_view = __commonJS({
       });
       sync = false;
     };
-    View2.prototype.resolve = function resolve3(dir2, file3) {
+    View3.prototype.resolve = function resolve3(dir2, file3) {
       var ext = this.ext;
       var path30 = join5(dir2, file3);
       var stat = tryStat(path30);
@@ -23784,7 +28613,7 @@ var require_proxy_addr = __commonJS({
 });
 
 // ../../node_modules/.pnpm/express@5.2.1/node_modules/express/lib/utils.js
-var require_utils3 = __commonJS({
+var require_utils5 = __commonJS({
   "../../node_modules/.pnpm/express@5.2.1/node_modules/express/lib/utils.js"(exports2) {
     "use strict";
     var { METHODS } = __require("node:http");
@@ -23792,7 +28621,7 @@ var require_utils3 = __commonJS({
     var etag = require_etag();
     var mime = require_mime_types();
     var proxyaddr = require_proxy_addr();
-    var qs = require_lib3();
+    var qs = require_lib5();
     var querystring = __require("node:querystring");
     var { Buffer: Buffer2 } = __require("node:buffer");
     exports2.methods = METHODS.map((method) => method.toLowerCase());
@@ -23996,7 +28825,7 @@ var require_is_promise = __commonJS({
 });
 
 // ../../node_modules/.pnpm/path-to-regexp@8.4.0/node_modules/path-to-regexp/dist/index.js
-var require_dist2 = __commonJS({
+var require_dist3 = __commonJS({
   "../../node_modules/.pnpm/path-to-regexp@8.4.0/node_modules/path-to-regexp/dist/index.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -24393,7 +29222,7 @@ var require_layer = __commonJS({
   "../../node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js"(exports2, module) {
     "use strict";
     var isPromise = require_is_promise();
-    var pathRegexp = require_dist2();
+    var pathRegexp = require_dist3();
     var debug = require_src()("router:layer");
     var deprecate = require_depd()("router");
     var TRAILING_SLASH_REGEXP = /\/+$/;
@@ -25062,12 +29891,12 @@ var require_application = __commonJS({
     "use strict";
     var finalhandler = require_finalhandler();
     var debug = require_src()("express:application");
-    var View2 = require_view();
+    var View3 = require_view();
     var http = __require("node:http");
-    var methods = require_utils3().methods;
-    var compileETag = require_utils3().compileETag;
-    var compileQueryParser = require_utils3().compileQueryParser;
-    var compileTrust = require_utils3().compileTrust;
+    var methods = require_utils5().methods;
+    var compileETag = require_utils5().compileETag;
+    var compileQueryParser = require_utils5().compileQueryParser;
+    var compileTrust = require_utils5().compileTrust;
     var resolve2 = __require("node:path").resolve;
     var once = require_once();
     var Router19 = require_router();
@@ -25121,7 +29950,7 @@ var require_application = __commonJS({
       this.locals = /* @__PURE__ */ Object.create(null);
       this.mountpath = "/";
       this.locals.settings = this.settings;
-      this.set("view", View2);
+      this.set("view", View3);
       this.set("views", resolve2("views"));
       this.set("jsonp callback name", "callback");
       if (env === "production") {
@@ -25277,8 +30106,8 @@ var require_application = __commonJS({
         view4 = cache9[name];
       }
       if (!view4) {
-        var View3 = this.get("view");
-        view4 = new View3(name, {
+        var View4 = this.get("view");
+        view4 = new View4(name, {
           defaultEngine: this.get("view engine"),
           root: this.get("views"),
           engines
@@ -26216,7 +31045,7 @@ var require_request = __commonJS({
       var querystring = parse4(this).query;
       return queryparse(querystring);
     });
-    req.is = function is2(types) {
+    req.is = function is3(types) {
       var arr = types;
       if (!Array.isArray(types)) {
         arr = new Array(arguments.length);
@@ -27225,9 +32054,9 @@ var require_response = __commonJS({
     var pathIsAbsolute = __require("node:path").isAbsolute;
     var statuses = require_statuses();
     var sign2 = require_cookie_signature().sign;
-    var normalizeType = require_utils3().normalizeType;
-    var normalizeTypes = require_utils3().normalizeTypes;
-    var setCharset = require_utils3().setCharset;
+    var normalizeType = require_utils5().normalizeType;
+    var normalizeTypes = require_utils5().normalizeTypes;
+    var setCharset = require_utils5().setCharset;
     var cookie = require_cookie();
     var send = require_send();
     var extname = path29.extname;
@@ -27902,7 +32731,7 @@ var require_object_assign = __commonJS({
 });
 
 // ../../node_modules/.pnpm/cors@2.8.6/node_modules/cors/lib/index.js
-var require_lib4 = __commonJS({
+var require_lib6 = __commonJS({
   "../../node_modules/.pnpm/cors@2.8.6/node_modules/cors/lib/index.js"(exports2, module) {
     (function() {
       "use strict";
@@ -30099,7 +34928,7 @@ var require_indexes = __commonJS({
 var require_thread_stream = __commonJS({
   "../../node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/index.js"(exports2, module) {
     "use strict";
-    var { version: version3 } = require_package();
+    var { version: version4 } = require_package();
     var { EventEmitter: EventEmitter2 } = __require("events");
     var { Worker } = __require("worker_threads");
     var { join: join5 } = __require("path");
@@ -30148,7 +34977,7 @@ var require_thread_stream = __commonJS({
           stateBuf: stream[kImpl].stateBuf,
           workerData: {
             $context: {
-              threadStreamVersion: version3
+              threadStreamVersion: version4
             },
             ...workerData
           }
@@ -31258,7 +36087,7 @@ var require_proto = __commonJS({
       noop
     } = require_tools();
     var {
-      version: version3
+      version: version4
     } = require_meta();
     var redaction = require_redaction();
     var constructor = class Pino {
@@ -31270,7 +36099,7 @@ var require_proto = __commonJS({
       setBindings,
       flush,
       isLevelEnabled,
-      version: version3,
+      version: version4,
       get level() {
         return this[getLevelSym]();
       },
@@ -32227,7 +37056,7 @@ var require_pino = __commonJS({
       normalizeDestFileDescriptor,
       noop
     } = require_tools();
-    var { version: version3 } = require_meta();
+    var { version: version4 } = require_meta();
     var {
       chindingsSym,
       redactFmtSym,
@@ -32408,7 +37237,7 @@ var require_pino = __commonJS({
     module.exports.stdSerializers = serializers;
     module.exports.stdTimeFunctions = Object.assign({}, time3);
     module.exports.symbols = symbols;
-    module.exports.version = version3;
+    module.exports.version = version4;
     module.exports.default = pino2;
     module.exports.pino = pino2;
   }
@@ -34935,7 +39764,7 @@ var require_main3 = __commonJS({
 });
 
 // src/warehouse-preview-entry.ts
-import { mkdtempSync, existsSync, copyFileSync } from "node:fs";
+import { mkdtempSync, existsSync, copyFileSync, rmSync } from "node:fs";
 import { rename } from "node:fs/promises";
 import { tmpdir as tmpdir2 } from "node:os";
 import { join as join4 } from "node:path";
@@ -35013,6 +39842,70 @@ async function loadWarehouseSnapshot(url2, token, filename, requiredTables) {
   }
 }
 
+// src/services/scout/scout-postgres.ts
+var import_pg = __toESM(require_lib2(), 1);
+import { DatabaseSync as DatabaseSync2 } from "node:sqlite";
+
+// src/services/scout/supabase-ca.ts
+var SUPABASE_CA = "-----BEGIN CERTIFICATE-----\nMIIDxDCCAqygAwIBAgIUbLxMod62P2ktCiAkxnKJwtE9VPYwDQYJKoZIhvcNAQEL\nBQAwazELMAkGA1UEBhMCVVMxEDAOBgNVBAgMB0RlbHdhcmUxEzARBgNVBAcMCk5l\ndyBDYXN0bGUxFTATBgNVBAoMDFN1cGFiYXNlIEluYzEeMBwGA1UEAwwVU3VwYWJh\nc2UgUm9vdCAyMDIxIENBMB4XDTIxMDQyODEwNTY1M1oXDTMxMDQyNjEwNTY1M1ow\nazELMAkGA1UEBhMCVVMxEDAOBgNVBAgMB0RlbHdhcmUxEzARBgNVBAcMCk5ldyBD\nYXN0bGUxFTATBgNVBAoMDFN1cGFiYXNlIEluYzEeMBwGA1UEAwwVU3VwYWJhc2Ug\nUm9vdCAyMDIxIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqQXW\nQyHOB+qR2GJobCq/CBmQ40G0oDmCC3mzVnn8sv4XNeWtE5XcEL0uVih7Jo4Dkx1Q\nDmGHBH1zDfgs2qXiLb6xpw/CKQPypZW1JssOTMIfQppNQ87K75Ya0p25Y3ePS2t2\nGtvHxNjUV6kjOZjEn2yWEcBdpOVCUYBVFBNMB4YBHkNRDa/+S4uywAoaTWnCJLUi\ncvTlHmMw6xSQQn1UfRQHk50DMCEJ7Cy1RxrZJrkXXRP3LqQL2ijJ6F4yMfh+Gyb4\nO4XajoVj/+R4GwywKYrrS8PrSNtwxr5StlQO8zIQUSMiq26wM8mgELFlS/32Uclt\nNaQ1xBRizkzpZct9DwIDAQABo2AwXjALBgNVHQ8EBAMCAQYwHQYDVR0OBBYEFKjX\nuXY32CztkhImng4yJNUtaUYsMB8GA1UdIwQYMBaAFKjXuXY32CztkhImng4yJNUt\naUYsMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAB8spzNn+4VU\ntVxbdMaX+39Z50sc7uATmus16jmmHjhIHz+l/9GlJ5KqAMOx26mPZgfzG7oneL2b\nVW+WgYUkTT3XEPFWnTp2RJwQao8/tYPXWEJDc0WVQHrpmnWOFKU/d3MqBgBm5y+6\njB81TU/RG2rVerPDWP+1MMcNNy0491CTL5XQZ7JfDJJ9CCmXSdtTl4uUQnSuv/Qx\nCea13BX2ZgJc7Au30vihLhub52De4P/4gonKsNHYdbWjg7OWKwNv/zitGDVDB9Y2\nCMTyZKG3XEu5Ghl1LEnI3QmEKsqaCLv12BnVjbkSeZsMnevJPs1Ye6TjjJwdik5P\no/bKiIz+Fq8=\n-----END CERTIFICATE-----\n";
+
+// src/services/scout/scout-postgres.ts
+var SCOUT_SCHEMA = "scout";
+var ROWID_COLUMN = "__rowid";
+var STAT_TABLE = "sqlite_stat1";
+function scoutPostgresConfigured() {
+  return !!process.env.PGHOST?.trim() && !!process.env.PGPASSWORD;
+}
+function scoutPostgresClient() {
+  const host = process.env.PGHOST?.trim() ?? "";
+  const client = new import_pg.default.Client({
+    // Supabase signs with its own root CA; any other host must present a publicly trusted certificate.
+    // A local test server (localhost) has no certificate; everything else is verified.
+    ssl: host === "localhost" || host === "127.0.0.1" ? false : host.endsWith(".supabase.com") || host.endsWith(".supabase.co") ? { ca: SUPABASE_CA, rejectUnauthorized: true } : { rejectUnauthorized: true },
+    connectionTimeoutMillis: 2e4,
+    // int8 arrives as a string by default; every Scout integer fits in a JS number.
+    types: { getTypeParser: ((oid, format) => oid === 20 ? Number : import_pg.default.types.getTypeParser(oid, format)) }
+  });
+  client.on("error", (error40) => console.error("Scout Postgres connection error", error40.message));
+  return client;
+}
+var quote = (name) => `"${name.replace(/"/g, '""')}"`;
+async function loadScoutFromPostgres(file3) {
+  const client = scoutPostgresClient();
+  await client.connect();
+  const db9 = new DatabaseSync2(file3);
+  try {
+    await client.query("SET extra_float_digits = 3");
+    const schema = (await client.query(
+      `SELECT type, name, sql FROM ${SCOUT_SCHEMA}._sqlite_schema ORDER BY seq`
+    )).rows;
+    if (!schema.some((s) => s.type === "table")) throw new Error("Postgres scout schema is empty");
+    db9.exec("PRAGMA journal_mode = OFF; PRAGMA synchronous = OFF;");
+    for (const t of schema.filter((s) => s.type === "table" && s.sql && s.name !== STAT_TABLE)) {
+      db9.exec(t.sql);
+      await copyRows(client, db9, t.name);
+    }
+    for (const s of schema.filter((s2) => s2.type !== "table" && s2.sql)) db9.exec(s.sql);
+    if (schema.some((s) => s.name === STAT_TABLE)) {
+      db9.exec(`ANALYZE; DELETE FROM ${STAT_TABLE};`);
+      await copyRows(client, db9, STAT_TABLE);
+    }
+  } finally {
+    db9.close();
+    await client.end();
+  }
+}
+async function copyRows(client, db9, table) {
+  const { rows, fields } = await client.query({ text: `SELECT * FROM ${SCOUT_SCHEMA}.${quote(table)}`, rowMode: "array" });
+  if (!rows.length) return;
+  const insert = db9.prepare(
+    `INSERT INTO ${quote(table)} (${fields.map((f) => f.name === ROWID_COLUMN ? "rowid" : quote(f.name)).join(", ")}) VALUES (${fields.map(() => "?").join(", ")})`
+  );
+  db9.exec("BEGIN");
+  for (const row of rows) insert.run(...row);
+  db9.exec("COMMIT");
+}
+
 // src/lib/analytics-routes.ts
 var SCOUT_PATHS = /* @__PURE__ */ new Set(["/api/scout/rankings", "/api/scout/t20/suggestions"]);
 var IPL_PATHS = /* @__PURE__ */ new Set([
@@ -35040,7 +39933,7 @@ var CLIENT_IP_HEADER = "x-cricfield-client-ip";
 
 // src/app.ts
 var import_express19 = __toESM(require_express2(), 1);
-var import_cors = __toESM(require_lib4(), 1);
+var import_cors = __toESM(require_lib6(), 1);
 var import_pino_http = __toESM(require_logger(), 1);
 import path28 from "node:path";
 import fs31 from "node:fs";
@@ -36027,11 +40920,11 @@ function datetimeRegex(args) {
   regex = `${regex}(${opts.join("|")})`;
   return new RegExp(`^${regex}$`);
 }
-function isValidIP(ip, version3) {
-  if ((version3 === "v4" || !version3) && ipv4Regex.test(ip)) {
+function isValidIP(ip, version4) {
+  if ((version4 === "v4" || !version4) && ipv4Regex.test(ip)) {
     return true;
   }
-  if ((version3 === "v6" || !version3) && ipv6Regex.test(ip)) {
+  if ((version4 === "v6" || !version4) && ipv6Regex.test(ip)) {
     return true;
   }
   return false;
@@ -36058,11 +40951,11 @@ function isValidJWT(jwt2, alg) {
     return false;
   }
 }
-function isValidCidr(ip, version3) {
-  if ((version3 === "v4" || !version3) && ipv4CidrRegex.test(ip)) {
+function isValidCidr(ip, version4) {
+  if ((version4 === "v4" || !version4) && ipv4CidrRegex.test(ip)) {
     return true;
   }
-  if ((version3 === "v6" || !version3) && ipv6CidrRegex.test(ip)) {
+  if ((version4 === "v6" || !version4) && ipv6CidrRegex.test(ip)) {
     return true;
   }
   return false;
@@ -39151,7 +44044,7 @@ function rateLimit({ max, windowMs, name }) {
 }
 
 // src/services/platform/store.ts
-import { DatabaseSync as DatabaseSync2 } from "node:sqlite";
+import { DatabaseSync as DatabaseSync3 } from "node:sqlite";
 import fs from "node:fs";
 import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
@@ -39159,7 +44052,7 @@ var PlatformStore = class {
   db;
   constructor(file3) {
     if (file3 !== ":memory:") fs.mkdirSync(path.dirname(file3), { recursive: true });
-    this.db = new DatabaseSync2(file3);
+    this.db = new DatabaseSync3(file3);
     this.db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
       CREATE TABLE IF NOT EXISTS preferences(user_id TEXT PRIMARY KEY,email TEXT NOT NULL,topics TEXT NOT NULL,channels TEXT NOT NULL,phone TEXT,phone_verified INTEGER NOT NULL DEFAULT 0,created_at INTEGER NOT NULL,consent_at INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY,kind TEXT NOT NULL,title TEXT NOT NULL,body TEXT NOT NULL,source TEXT NOT NULL,occurred_at INTEGER NOT NULL);
@@ -39341,12 +44234,12 @@ Unsubscribe: ${origin}/api/notifications/unsubscribe?token=${token2}` }) });
       store3.finish(job.id, "sent");
       return true;
     }
-    const token = process.env.META_ACCESS_TOKEN, phoneId = process.env.META_PHONE_NUMBER_ID, template = process.env.META_NOTIFICATION_TEMPLATE, version3 = process.env.META_GRAPH_VERSION;
-    if (process.env.WHATSAPP_ALERTS_ENABLED !== "true" || !preference.phone_verified || !preference.phone || !token || !phoneId || !template || !/^v\d+\.\d+$/.test(version3 ?? "")) {
+    const token = process.env.META_ACCESS_TOKEN, phoneId = process.env.META_PHONE_NUMBER_ID, template = process.env.META_NOTIFICATION_TEMPLATE, version4 = process.env.META_GRAPH_VERSION;
+    if (process.env.WHATSAPP_ALERTS_ENABLED !== "true" || !preference.phone_verified || !preference.phone || !token || !phoneId || !template || !/^v\d+\.\d+$/.test(version4 ?? "")) {
       store3.finish(job.id, "blocked", "whatsapp_not_verified_or_configured");
       return true;
     }
-    const response = await fetcher(`https://graph.facebook.com/${version3}/${phoneId}/messages`, { method: "POST", signal: AbortSignal.timeout(15e3), headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ messaging_product: "whatsapp", to: preference.phone, type: "template", template: { name: template, language: { code: process.env.META_TEMPLATE_LANGUAGE || "en" }, components: [{ type: "body", parameters: [{ type: "text", text: job.event.body.slice(0, 900) }] }] } }) });
+    const response = await fetcher(`https://graph.facebook.com/${version4}/${phoneId}/messages`, { method: "POST", signal: AbortSignal.timeout(15e3), headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ messaging_product: "whatsapp", to: preference.phone, type: "template", template: { name: template, language: { code: process.env.META_TEMPLATE_LANGUAGE || "en" }, components: [{ type: "body", parameters: [{ type: "text", text: job.event.body.slice(0, 900) }] }] } }) });
     store3.finish(job.id, response.ok ? "sent" : response.status === 429 ? "retry" : response.status >= 500 ? "uncertain" : "dead", response.ok ? null : "whatsapp_provider_error");
     return true;
   } catch {
@@ -39828,7 +44721,7 @@ async function aiCompletion(options) {
 // src/services/scout/db.ts
 import fs3 from "node:fs";
 import path3 from "node:path";
-import { DatabaseSync as DatabaseSync3 } from "node:sqlite";
+import { DatabaseSync as DatabaseSync4 } from "node:sqlite";
 var projectRoot = null;
 function getProjectRoot() {
   if (projectRoot) return projectRoot;
@@ -39857,7 +44750,7 @@ function getGlobalDb() {
     return null;
   }
   try {
-    db = new DatabaseSync3(fp, { readOnly: true });
+    db = new DatabaseSync4(fp, { readOnly: true });
     db.exec("PRAGMA query_only = ON; PRAGMA temp_store = MEMORY;");
     db.prepare("SELECT player_key FROM players LIMIT 1").get();
     db.prepare("SELECT competition_id FROM competitions LIMIT 1").get();
@@ -39874,15 +44767,15 @@ function isGlobalDbReady() {
 function getGlobalDbError() {
   return dbError;
 }
-function queryAll(sql2, ...params) {
+function queryAll(sql3, ...params) {
   const conn = getGlobalDb();
   if (!conn) return [];
-  return conn.prepare(sql2).all(...params);
+  return conn.prepare(sql3).all(...params);
 }
-function queryOne(sql2, ...params) {
+function queryOne(sql3, ...params) {
   const conn = getGlobalDb();
   if (!conn) return void 0;
-  return conn.prepare(sql2).get(...params);
+  return conn.prepare(sql3).get(...params);
 }
 
 // src/services/scout/true-talent-model.ts
@@ -40232,10 +45125,10 @@ function competitionRatingsUncached(code, q) {
   const bat = q.discipline === "batting";
   const wantPercentiles = q.percentiles !== false;
   const subsetKeys = wantPercentiles ? void 0 : q.playerKeys;
-  const sql2 = bat ? `SELECT player_key, season_label, matches, innings, balls_faced balls, runs a, fours + sixes b, dots c, dismissals d, 0 e
+  const sql3 = bat ? `SELECT player_key, season_label, matches, innings, balls_faced balls, runs a, fours + sixes b, dots c, dismissals d, 0 e
        FROM agg_batting WHERE competition_id = ? AND phase = ? AND season_label IN (${inList(seasons2)})` : `SELECT player_key, season_label, matches, innings, legal_balls balls, runs_conceded a, wickets b, dots c, fours + sixes d, balls e
        FROM agg_bowling WHERE competition_id = ? AND phase = ? AND season_label IN (${inList(seasons2)})`;
-  const rows = queryAll(sql2, cid, phase, ...seasons2);
+  const rows = queryAll(sql3, cid, phase, ...seasons2);
   const league2 = /* @__PURE__ */ new Map();
   for (const r of rows) {
     const l = league2.get(r.season_label) ?? league2.set(r.season_label, { balls: 0, a: 0, b: 0, c: 0, d: 0, e: 0 }).get(r.season_label);
@@ -41117,7 +46010,7 @@ import path5 from "path";
 // src/services/decision/db.ts
 import fs4 from "fs";
 import path4 from "path";
-import { DatabaseSync as DatabaseSync4 } from "node:sqlite";
+import { DatabaseSync as DatabaseSync5 } from "node:sqlite";
 var projectRoot2 = null;
 function getProjectRoot2() {
   if (projectRoot2) return projectRoot2;
@@ -41145,7 +46038,7 @@ function getDecisionDb() {
     return null;
   }
   try {
-    db2 = new DatabaseSync4(fp, { readOnly: true });
+    db2 = new DatabaseSync5(fp, { readOnly: true });
   } catch (err) {
     dbError2 = err instanceof Error ? err.message : String(err);
     db2 = null;
@@ -41155,10 +46048,10 @@ function getDecisionDb() {
 function getDecisionDbError() {
   return dbError2;
 }
-function queryAll2(sql2, ...params) {
+function queryAll2(sql3, ...params) {
   const conn = getDecisionDb();
   if (!conn) return [];
-  return conn.prepare(sql2).all(...params);
+  return conn.prepare(sql3).all(...params);
 }
 var SEASON_ALIASES = {
   "2007/08": "2008",
@@ -41851,8 +46744,8 @@ function playerIdsWhere(pred) {
 var Where = class {
   parts = [];
   params = [];
-  add(sql2, ...params) {
-    this.parts.push(sql2);
+  add(sql3, ...params) {
+    this.parts.push(sql3);
     this.params.push(...params);
   }
   inList(col, values) {
@@ -43845,7 +48738,7 @@ function getPlayerSummary(playerId) {
     bowlingWickets: p.bowling_wickets,
     bowlingEconomy: ratio(p.bowling_runs, p.bowling_balls, 6)
   }));
-  const matchups = (sql2) => queryAll2(sql2, playerId).map((r) => ({
+  const matchups = (sql3) => queryAll2(sql3, playerId).map((r) => ({
     opponentId: r.id,
     opponentName: r.name,
     balls: r.balls,
@@ -53013,30 +57906,30 @@ function readPointer() {
   return JSON.parse(fs8.readFileSync(fp, "utf8")).version;
 }
 var safeVersion = (v) => /^cf-intel-[0-9a-z.]+$/.test(v);
-function readSnapshot(version3) {
-  if (!safeVersion(version3)) return null;
-  const fp = path8.join(dir(), version3, "snapshot.json");
+function readSnapshot(version4) {
+  if (!safeVersion(version4)) return null;
+  const fp = path8.join(dir(), version4, "snapshot.json");
   return fs8.existsSync(fp) ? JSON.parse(fs8.readFileSync(fp, "utf8")) : null;
 }
 function getSnapshot() {
   const now = Date.now();
   if (current && now - current.checkedAt < CHECK_MS) return current.snapshot;
-  const version3 = readPointer();
-  if (!version3) return current = null;
-  if (current?.version === version3) {
+  const version4 = readPointer();
+  if (!version4) return current = null;
+  if (current?.version === version4) {
     current.checkedAt = now;
     return current.snapshot;
   }
-  const snapshot = readSnapshot(version3);
+  const snapshot = readSnapshot(version4);
   if (!snapshot) return current = null;
-  current = { version: version3, snapshot, byId: new Map(snapshot.players.map((p) => [p.id, p])), checkedAt: now };
+  current = { version: version4, snapshot, byId: new Map(snapshot.players.map((p) => [p.id, p])), checkedAt: now };
   return snapshot;
 }
-function getSnapshotVersion(version3) {
-  if (current?.version === version3) return current.snapshot;
-  if (archived.has(version3)) return archived.get(version3);
-  const s = readSnapshot(version3);
-  if (s) archived.set(version3, s);
+function getSnapshotVersion(version4) {
+  if (current?.version === version4) return current.snapshot;
+  if (archived.has(version4)) return archived.get(version4);
+  const s = readSnapshot(version4);
+  if (s) archived.set(version4, s);
   return s;
 }
 var snapshotPlayer = (id) => {
@@ -53560,8 +58453,8 @@ function simulateAuction(team4, players, purseLakh) {
     caveat: FIT_CAVEAT
   };
 }
-function modelStatus(version3) {
-  const s = version3 ? getSnapshotVersion(version3) : getSnapshot();
+function modelStatus(version4) {
+  const s = version4 ? getSnapshotVersion(version4) : getSnapshot();
   if (!s) return null;
   const v = s.governance.validation;
   return {
@@ -53643,8 +58536,8 @@ function insights(limit = 8) {
     teams: TEAMS2.map((t) => s.teams[t]).filter(Boolean).map((t) => ({ team: t.team, strength: t.strength, contractLakh: t.contractLakh, gaps: t.gaps, battingDepth: t.composition.battingDepth, phaseCoverage: t.composition.phaseCoverage }))
   };
 }
-function citation(key, version3) {
-  const s = version3 ? getSnapshotVersion(version3) : getSnapshot();
+function citation(key, version4) {
+  const s = version4 ? getSnapshotVersion(version4) : getSnapshot();
   if (!s) return null;
   const { lookup } = resolve(key);
   if (!lookup.player) return null;
@@ -56090,10 +60983,10 @@ var PgEnumColumn = class extends PgColumn {
 // ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_9d2d34108a0b91abca64504bbb78a16b/node_modules/drizzle-orm/subquery.js
 var Subquery = class {
   static [entityKind] = "Subquery";
-  constructor(sql2, fields, alias, isWith = false, usedTables = []) {
+  constructor(sql3, fields, alias, isWith = false, usedTables = []) {
     this._ = {
       brand: "Subquery",
-      sql: sql2,
+      sql: sql3,
       selectedFields: fields,
       alias,
       isWith,
@@ -56123,14 +61016,14 @@ var tracer = {
       rawTracer = otel.trace.getTracer("drizzle-orm", version);
     }
     return iife(
-      (otel2, rawTracer2) => rawTracer2.startActiveSpan(
+      (otel22, rawTracer22) => rawTracer22.startActiveSpan(
         name,
         (span) => {
           try {
             return fn(span);
           } catch (e) {
             span.setStatus({
-              code: otel2.SpanStatusCode.ERROR,
+              code: otel22.SpanStatusCode.ERROR,
               message: e instanceof Error ? e.message : "Unknown error"
               // eslint-disable-line no-instanceof/no-instanceof
             });
@@ -56429,19 +61322,19 @@ function sql(strings, ...params) {
   }
   return new SQL(queryChunks);
 }
-((sql2) => {
+((sql22) => {
   function empty() {
     return new SQL([]);
   }
-  sql2.empty = empty;
+  sql22.empty = empty;
   function fromList(list) {
     return new SQL(list);
   }
-  sql2.fromList = fromList;
+  sql22.fromList = fromList;
   function raw(str) {
     return new SQL([new StringChunk(str)]);
   }
-  sql2.raw = raw;
+  sql22.raw = raw;
   function join5(chunks, separator) {
     const result = [];
     for (const [i, chunk] of chunks.entries()) {
@@ -56452,24 +61345,24 @@ function sql(strings, ...params) {
     }
     return new SQL(result);
   }
-  sql2.join = join5;
+  sql22.join = join5;
   function identifier(value2) {
     return new Name(value2);
   }
-  sql2.identifier = identifier;
+  sql22.identifier = identifier;
   function placeholder2(name2) {
     return new Placeholder(name2);
   }
-  sql2.placeholder = placeholder2;
+  sql22.placeholder = placeholder2;
   function param2(value2, encoder) {
     return new Param(value2, encoder);
   }
-  sql2.param = param2;
+  sql22.param = param2;
 })(sql || (sql = {}));
-((SQL2) => {
+((SQL22) => {
   class Aliased {
-    constructor(sql2, fieldAlias) {
-      this.sql = sql2;
+    constructor(sql22, fieldAlias) {
+      this.sql = sql22;
       this.fieldAlias = fieldAlias;
     }
     static [entityKind] = "SQL.Aliased";
@@ -56483,7 +61376,7 @@ function sql(strings, ...params) {
       return new Aliased(this.sql, this.fieldAlias);
     }
   }
-  SQL2.Aliased = Aliased;
+  SQL22.Aliased = Aliased;
 })(SQL || (SQL = {}));
 var Placeholder = class {
   constructor(name2) {
@@ -58560,8 +63453,8 @@ var SQLiteDialect = class {
     const onConflictSql = onConflict?.length ? sql.join(onConflict) : void 0;
     return sql`${withSql}insert into ${table} ${insertOrder} ${valuesSql}${onConflictSql}${returningSql}`;
   }
-  sqlToQuery(sql2, invokeSource) {
-    return sql2.toQuery({
+  sqlToQuery(sql22, invokeSource) {
+    return sql22.toQuery({
       casing: this.casing,
       escapeName: this.escapeName,
       escapeParam: this.escapeParam,
@@ -60482,8 +65375,8 @@ var NoopCache = class extends Cache {
   async onMutate(_params) {
   }
 };
-async function hashQuery(sql2, params) {
-  const dataToHash = `${sql2}-${JSON.stringify(params)}`;
+async function hashQuery(sql3, params) {
+  const dataToHash = `${sql3}-${JSON.stringify(params)}`;
   const encoder = new TextEncoder();
   const data = encoder.encode(dataToHash);
   const hashBuffer = await crypto.subtle.digest("SHA-256", data);
@@ -60667,8 +65560,8 @@ var SQLiteSession = class {
   values(query) {
     return this.prepareOneTimeQuery(this.dialect.sqlToQuery(query), void 0, "run", false).values();
   }
-  async count(sql2) {
-    const result = await this.values(sql2);
+  async count(sql3) {
+    const result = await this.values(sql3);
     return result[0][0];
   }
   /** @internal */
@@ -60908,7 +65801,7 @@ function drizzle(callback, batchCallback, config3) {
 }
 
 // ../../lib/db/src/index.ts
-import { DatabaseSync as DatabaseSync5 } from "node:sqlite";
+import { DatabaseSync as DatabaseSync6 } from "node:sqlite";
 
 // ../../lib/db/src/schema/index.ts
 var schema_exports = {};
@@ -62263,10 +67156,10 @@ var nanoid = /^[a-zA-Z0-9_-]{21}$/;
 var duration = /^P(?:(\d+W)|(?!.*W)(?=\d|T\d)(\d+Y)?(\d+M)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+([.,]\d+)?S)?)?)$/;
 var extendedDuration = /^[-+]?P(?!$)(?:(?:[-+]?\d+Y)|(?:[-+]?\d+[.,]\d+Y$))?(?:(?:[-+]?\d+M)|(?:[-+]?\d+[.,]\d+M$))?(?:(?:[-+]?\d+W)|(?:[-+]?\d+[.,]\d+W$))?(?:(?:[-+]?\d+D)|(?:[-+]?\d+[.,]\d+D$))?(?:T(?=[\d+-])(?:(?:[-+]?\d+H)|(?:[-+]?\d+[.,]\d+H$))?(?:(?:[-+]?\d+M)|(?:[-+]?\d+[.,]\d+M$))?(?:[-+]?\d+(?:[.,]\d+)?S)?)??$/;
 var guid = /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$/;
-var uuid = (version3) => {
-  if (!version3)
+var uuid = (version4) => {
+  if (!version4)
     return /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000)$/;
-  return new RegExp(`^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-${version3}[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$`);
+  return new RegExp(`^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-${version4}[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$`);
 };
 var uuid4 = /* @__PURE__ */ uuid(4);
 var uuid6 = /* @__PURE__ */ uuid(6);
@@ -72796,7 +77689,7 @@ var hasDb = () => true;
 function getSqliteClient() {
   if (!sqliteClient) {
     const readOnly = process.env.CRICFIELD_DB_READONLY === "1";
-    sqliteClient = new DatabaseSync5(getDbPath(), { readOnly });
+    sqliteClient = new DatabaseSync6(getDbPath(), { readOnly });
     sqliteClient.exec("PRAGMA foreign_keys = ON");
     if (!readOnly) sqliteClient.exec("PRAGMA journal_mode = WAL");
     sqliteClient.exec("PRAGMA busy_timeout = 5000");
@@ -72814,9 +77707,9 @@ var db4 = new Proxy({}, {
       sqliteClient = getSqliteClient();
     }
     if (!dbInstance) {
-      dbInstance = drizzle(async (sql2, params, method) => {
+      dbInstance = drizzle(async (sql3, params, method) => {
         try {
-          const stmt = sqliteClient.prepare(sql2);
+          const stmt = sqliteClient.prepare(sql3);
           if (method === "run") {
             stmt.run(...params);
             return { rows: [] };
@@ -72833,7 +77726,7 @@ var db4 = new Proxy({}, {
             return { rows: values };
           }
         } catch (err) {
-          console.error("Database Error:", err, "SQL:", sql2, "params:", params);
+          console.error("Database Error:", err, "SQL:", sql3, "params:", params);
           throw err;
         }
       }, { schema: schema_exports });
@@ -72861,6 +77754,1141 @@ var db4 = new Proxy({}, {
     return dbInstance[prop];
   }
 });
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/entity.js
+var entityKind2 = /* @__PURE__ */ Symbol.for("drizzle:entityKind");
+function is2(value2, type) {
+  if (!value2 || typeof value2 !== "object") {
+    return false;
+  }
+  if (value2 instanceof type) {
+    return true;
+  }
+  if (!Object.prototype.hasOwnProperty.call(type, entityKind2)) {
+    throw new Error(
+      `Class "${type.name ?? "<unknown>"}" doesn't look like a Drizzle entity. If this is incorrect and the class is provided by Drizzle, please report this as a bug.`
+    );
+  }
+  let cls = Object.getPrototypeOf(value2).constructor;
+  if (cls) {
+    while (cls) {
+      if (entityKind2 in cls && cls[entityKind2] === type[entityKind2]) {
+        return true;
+      }
+      cls = Object.getPrototypeOf(cls);
+    }
+  }
+  return false;
+}
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/column.js
+var Column2 = class {
+  constructor(table, config3) {
+    this.table = table;
+    this.config = config3;
+    this.name = config3.name;
+    this.keyAsName = config3.keyAsName;
+    this.notNull = config3.notNull;
+    this.default = config3.default;
+    this.defaultFn = config3.defaultFn;
+    this.onUpdateFn = config3.onUpdateFn;
+    this.hasDefault = config3.hasDefault;
+    this.primary = config3.primaryKey;
+    this.isUnique = config3.isUnique;
+    this.uniqueName = config3.uniqueName;
+    this.uniqueType = config3.uniqueType;
+    this.dataType = config3.dataType;
+    this.columnType = config3.columnType;
+    this.generated = config3.generated;
+    this.generatedIdentity = config3.generatedIdentity;
+  }
+  static [entityKind2] = "Column";
+  name;
+  keyAsName;
+  primary;
+  notNull;
+  default;
+  defaultFn;
+  onUpdateFn;
+  hasDefault;
+  isUnique;
+  uniqueName;
+  uniqueType;
+  dataType;
+  columnType;
+  enumValues = void 0;
+  generated = void 0;
+  generatedIdentity = void 0;
+  config;
+  mapFromDriverValue(value2) {
+    return value2;
+  }
+  mapToDriverValue(value2) {
+    return value2;
+  }
+  // ** @internal */
+  shouldDisableInsert() {
+    return this.config.generated !== void 0 && this.config.generated.type !== "byDefault";
+  }
+};
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/column-builder.js
+var ColumnBuilder2 = class {
+  static [entityKind2] = "ColumnBuilder";
+  config;
+  constructor(name, dataType, columnType) {
+    this.config = {
+      name,
+      keyAsName: name === "",
+      notNull: false,
+      default: void 0,
+      hasDefault: false,
+      primaryKey: false,
+      isUnique: false,
+      uniqueName: void 0,
+      uniqueType: void 0,
+      dataType,
+      columnType,
+      generated: void 0
+    };
+  }
+  /**
+   * Changes the data type of the column. Commonly used with `json` columns. Also, useful for branded types.
+   *
+   * @example
+   * ```ts
+   * const users = pgTable('users', {
+   * 	id: integer('id').$type<UserId>().primaryKey(),
+   * 	details: json('details').$type<UserDetails>().notNull(),
+   * });
+   * ```
+   */
+  $type() {
+    return this;
+  }
+  /**
+   * Adds a `not null` clause to the column definition.
+   *
+   * Affects the `select` model of the table - columns *without* `not null` will be nullable on select.
+   */
+  notNull() {
+    this.config.notNull = true;
+    return this;
+  }
+  /**
+   * Adds a `default <value>` clause to the column definition.
+   *
+   * Affects the `insert` model of the table - columns *with* `default` are optional on insert.
+   *
+   * If you need to set a dynamic default value, use {@link $defaultFn} instead.
+   */
+  default(value2) {
+    this.config.default = value2;
+    this.config.hasDefault = true;
+    return this;
+  }
+  /**
+   * Adds a dynamic default value to the column.
+   * The function will be called when the row is inserted, and the returned value will be used as the column value.
+   *
+   * **Note:** This value does not affect the `drizzle-kit` behavior, it is only used at runtime in `drizzle-orm`.
+   */
+  $defaultFn(fn) {
+    this.config.defaultFn = fn;
+    this.config.hasDefault = true;
+    return this;
+  }
+  /**
+   * Alias for {@link $defaultFn}.
+   */
+  $default = this.$defaultFn;
+  /**
+   * Adds a dynamic update value to the column.
+   * The function will be called when the row is updated, and the returned value will be used as the column value if none is provided.
+   * If no `default` (or `$defaultFn`) value is provided, the function will be called when the row is inserted as well, and the returned value will be used as the column value.
+   *
+   * **Note:** This value does not affect the `drizzle-kit` behavior, it is only used at runtime in `drizzle-orm`.
+   */
+  $onUpdateFn(fn) {
+    this.config.onUpdateFn = fn;
+    this.config.hasDefault = true;
+    return this;
+  }
+  /**
+   * Alias for {@link $onUpdateFn}.
+   */
+  $onUpdate = this.$onUpdateFn;
+  /**
+   * Adds a `primary key` clause to the column definition. This implicitly makes the column `not null`.
+   *
+   * In SQLite, `integer primary key` implicitly makes the column auto-incrementing.
+   */
+  primaryKey() {
+    this.config.primaryKey = true;
+    this.config.notNull = true;
+    return this;
+  }
+  /** @internal Sets the name of the column to the key within the table definition if a name was not given. */
+  setName(name) {
+    if (this.config.name !== "") return;
+    this.config.name = name;
+  }
+};
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/table.utils.js
+var TableName2 = /* @__PURE__ */ Symbol.for("drizzle:Name");
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/pg-core/foreign-keys.js
+var ForeignKeyBuilder3 = class {
+  static [entityKind2] = "PgForeignKeyBuilder";
+  /** @internal */
+  reference;
+  /** @internal */
+  _onUpdate = "no action";
+  /** @internal */
+  _onDelete = "no action";
+  constructor(config3, actions) {
+    this.reference = () => {
+      const { name, columns: columns2, foreignColumns } = config3();
+      return { name, columns: columns2, foreignTable: foreignColumns[0].table, foreignColumns };
+    };
+    if (actions) {
+      this._onUpdate = actions.onUpdate;
+      this._onDelete = actions.onDelete;
+    }
+  }
+  onUpdate(action3) {
+    this._onUpdate = action3 === void 0 ? "no action" : action3;
+    return this;
+  }
+  onDelete(action3) {
+    this._onDelete = action3 === void 0 ? "no action" : action3;
+    return this;
+  }
+  /** @internal */
+  build(table) {
+    return new ForeignKey3(table, this);
+  }
+};
+var ForeignKey3 = class {
+  constructor(table, builder) {
+    this.table = table;
+    this.reference = builder.reference;
+    this.onUpdate = builder._onUpdate;
+    this.onDelete = builder._onDelete;
+  }
+  static [entityKind2] = "PgForeignKey";
+  reference;
+  onUpdate;
+  onDelete;
+  getName() {
+    const { name, columns: columns2, foreignColumns } = this.reference();
+    const columnNames = columns2.map((column) => column.name);
+    const foreignColumnNames = foreignColumns.map((column) => column.name);
+    const chunks = [
+      this.table[TableName2],
+      ...columnNames,
+      foreignColumns[0].table[TableName2],
+      ...foreignColumnNames
+    ];
+    return name ?? `${chunks.join("_")}_fk`;
+  }
+};
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/tracing-utils.js
+function iife2(fn, ...args) {
+  return fn(...args);
+}
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/pg-core/unique-constraint.js
+function uniqueKeyName3(table, columns2) {
+  return `${table[TableName2]}_${columns2.join("_")}_unique`;
+}
+var UniqueConstraintBuilder3 = class {
+  constructor(columns2, name) {
+    this.name = name;
+    this.columns = columns2;
+  }
+  static [entityKind2] = "PgUniqueConstraintBuilder";
+  /** @internal */
+  columns;
+  /** @internal */
+  nullsNotDistinctConfig = false;
+  nullsNotDistinct() {
+    this.nullsNotDistinctConfig = true;
+    return this;
+  }
+  /** @internal */
+  build(table) {
+    return new UniqueConstraint3(table, this.columns, this.nullsNotDistinctConfig, this.name);
+  }
+};
+var UniqueOnConstraintBuilder3 = class {
+  static [entityKind2] = "PgUniqueOnConstraintBuilder";
+  /** @internal */
+  name;
+  constructor(name) {
+    this.name = name;
+  }
+  on(...columns2) {
+    return new UniqueConstraintBuilder3(columns2, this.name);
+  }
+};
+var UniqueConstraint3 = class {
+  constructor(table, columns2, nullsNotDistinct, name) {
+    this.table = table;
+    this.columns = columns2;
+    this.name = name ?? uniqueKeyName3(this.table, this.columns.map((column) => column.name));
+    this.nullsNotDistinct = nullsNotDistinct;
+  }
+  static [entityKind2] = "PgUniqueConstraint";
+  columns;
+  name;
+  nullsNotDistinct = false;
+  getName() {
+    return this.name;
+  }
+};
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/pg-core/utils/array.js
+function parsePgArrayValue2(arrayString, startFrom, inQuotes) {
+  for (let i = startFrom; i < arrayString.length; i++) {
+    const char = arrayString[i];
+    if (char === "\\") {
+      i++;
+      continue;
+    }
+    if (char === '"') {
+      return [arrayString.slice(startFrom, i).replace(/\\/g, ""), i + 1];
+    }
+    if (inQuotes) {
+      continue;
+    }
+    if (char === "," || char === "}") {
+      return [arrayString.slice(startFrom, i).replace(/\\/g, ""), i];
+    }
+  }
+  return [arrayString.slice(startFrom).replace(/\\/g, ""), arrayString.length];
+}
+function parsePgNestedArray2(arrayString, startFrom = 0) {
+  const result = [];
+  let i = startFrom;
+  let lastCharIsComma = false;
+  while (i < arrayString.length) {
+    const char = arrayString[i];
+    if (char === ",") {
+      if (lastCharIsComma || i === startFrom) {
+        result.push("");
+      }
+      lastCharIsComma = true;
+      i++;
+      continue;
+    }
+    lastCharIsComma = false;
+    if (char === "\\") {
+      i += 2;
+      continue;
+    }
+    if (char === '"') {
+      const [value22, startFrom2] = parsePgArrayValue2(arrayString, i + 1, true);
+      result.push(value22);
+      i = startFrom2;
+      continue;
+    }
+    if (char === "}") {
+      return [result, i + 1];
+    }
+    if (char === "{") {
+      const [value22, startFrom2] = parsePgNestedArray2(arrayString, i + 1);
+      result.push(value22);
+      i = startFrom2;
+      continue;
+    }
+    const [value2, newStartFrom] = parsePgArrayValue2(arrayString, i, false);
+    result.push(value2);
+    i = newStartFrom;
+  }
+  return [result, i];
+}
+function parsePgArray2(arrayString) {
+  const [result] = parsePgNestedArray2(arrayString, 1);
+  return result;
+}
+function makePgArray2(array2) {
+  return `{${array2.map((item) => {
+    if (Array.isArray(item)) {
+      return makePgArray2(item);
+    }
+    if (typeof item === "string") {
+      return `"${item.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+    }
+    return `${item}`;
+  }).join(",")}}`;
+}
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/pg-core/columns/common.js
+var PgColumnBuilder2 = class extends ColumnBuilder2 {
+  foreignKeyConfigs = [];
+  static [entityKind2] = "PgColumnBuilder";
+  array(size) {
+    return new PgArrayBuilder2(this.config.name, this, size);
+  }
+  references(ref, actions = {}) {
+    this.foreignKeyConfigs.push({ ref, actions });
+    return this;
+  }
+  unique(name, config3) {
+    this.config.isUnique = true;
+    this.config.uniqueName = name;
+    this.config.uniqueType = config3?.nulls;
+    return this;
+  }
+  generatedAlwaysAs(as) {
+    this.config.generated = {
+      as,
+      type: "always",
+      mode: "stored"
+    };
+    return this;
+  }
+  /** @internal */
+  buildForeignKeys(column, table) {
+    return this.foreignKeyConfigs.map(({ ref, actions }) => {
+      return iife2(
+        (ref2, actions2) => {
+          const builder = new ForeignKeyBuilder3(() => {
+            const foreignColumn = ref2();
+            return { columns: [column], foreignColumns: [foreignColumn] };
+          });
+          if (actions2.onUpdate) {
+            builder.onUpdate(actions2.onUpdate);
+          }
+          if (actions2.onDelete) {
+            builder.onDelete(actions2.onDelete);
+          }
+          return builder.build(table);
+        },
+        ref,
+        actions
+      );
+    });
+  }
+  /** @internal */
+  buildExtraConfigColumn(table) {
+    return new ExtraConfigColumn2(table, this.config);
+  }
+};
+var PgColumn2 = class extends Column2 {
+  constructor(table, config3) {
+    if (!config3.uniqueName) {
+      config3.uniqueName = uniqueKeyName3(table, [config3.name]);
+    }
+    super(table, config3);
+    this.table = table;
+  }
+  static [entityKind2] = "PgColumn";
+};
+var ExtraConfigColumn2 = class extends PgColumn2 {
+  static [entityKind2] = "ExtraConfigColumn";
+  getSQLType() {
+    return this.getSQLType();
+  }
+  indexConfig = {
+    order: this.config.order ?? "asc",
+    nulls: this.config.nulls ?? "last",
+    opClass: this.config.opClass
+  };
+  defaultConfig = {
+    order: "asc",
+    nulls: "last",
+    opClass: void 0
+  };
+  asc() {
+    this.indexConfig.order = "asc";
+    return this;
+  }
+  desc() {
+    this.indexConfig.order = "desc";
+    return this;
+  }
+  nullsFirst() {
+    this.indexConfig.nulls = "first";
+    return this;
+  }
+  nullsLast() {
+    this.indexConfig.nulls = "last";
+    return this;
+  }
+  /**
+   * ### PostgreSQL documentation quote
+   *
+   * > An operator class with optional parameters can be specified for each column of an index.
+   * The operator class identifies the operators to be used by the index for that column.
+   * For example, a B-tree index on four-byte integers would use the int4_ops class;
+   * this operator class includes comparison functions for four-byte integers.
+   * In practice the default operator class for the column's data type is usually sufficient.
+   * The main point of having operator classes is that for some data types, there could be more than one meaningful ordering.
+   * For example, we might want to sort a complex-number data type either by absolute value or by real part.
+   * We could do this by defining two operator classes for the data type and then selecting the proper class when creating an index.
+   * More information about operator classes check:
+   *
+   * ### Useful links
+   * https://www.postgresql.org/docs/current/sql-createindex.html
+   *
+   * https://www.postgresql.org/docs/current/indexes-opclass.html
+   *
+   * https://www.postgresql.org/docs/current/xindex.html
+   *
+   * ### Additional types
+   * If you have the `pg_vector` extension installed in your database, you can use the
+   * `vector_l2_ops`, `vector_ip_ops`, `vector_cosine_ops`, `vector_l1_ops`, `bit_hamming_ops`, `bit_jaccard_ops`, `halfvec_l2_ops`, `sparsevec_l2_ops` options, which are predefined types.
+   *
+   * **You can always specify any string you want in the operator class, in case Drizzle doesn't have it natively in its types**
+   *
+   * @param opClass
+   * @returns
+   */
+  op(opClass) {
+    this.indexConfig.opClass = opClass;
+    return this;
+  }
+};
+var IndexedColumn2 = class {
+  static [entityKind2] = "IndexedColumn";
+  constructor(name, keyAsName, type, indexConfig) {
+    this.name = name;
+    this.keyAsName = keyAsName;
+    this.type = type;
+    this.indexConfig = indexConfig;
+  }
+  name;
+  keyAsName;
+  type;
+  indexConfig;
+};
+var PgArrayBuilder2 = class extends PgColumnBuilder2 {
+  static [entityKind2] = "PgArrayBuilder";
+  constructor(name, baseBuilder, size) {
+    super(name, "array", "PgArray");
+    this.config.baseBuilder = baseBuilder;
+    this.config.size = size;
+  }
+  /** @internal */
+  build(table) {
+    const baseColumn = this.config.baseBuilder.build(table);
+    return new PgArray2(
+      table,
+      this.config,
+      baseColumn
+    );
+  }
+};
+var PgArray2 = class _PgArray extends PgColumn2 {
+  constructor(table, config3, baseColumn, range) {
+    super(table, config3);
+    this.baseColumn = baseColumn;
+    this.range = range;
+    this.size = config3.size;
+  }
+  size;
+  static [entityKind2] = "PgArray";
+  getSQLType() {
+    return `${this.baseColumn.getSQLType()}[${typeof this.size === "number" ? this.size : ""}]`;
+  }
+  mapFromDriverValue(value2) {
+    if (typeof value2 === "string") {
+      value2 = parsePgArray2(value2);
+    }
+    return value2.map((v) => this.baseColumn.mapFromDriverValue(v));
+  }
+  mapToDriverValue(value2, isNestedArray = false) {
+    const a = value2.map(
+      (v) => v === null ? null : is2(this.baseColumn, _PgArray) ? this.baseColumn.mapToDriverValue(v, true) : this.baseColumn.mapToDriverValue(v)
+    );
+    if (isNestedArray) return a;
+    return makePgArray2(a);
+  }
+};
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/pg-core/columns/enum.js
+var PgEnumObjectColumnBuilder2 = class extends PgColumnBuilder2 {
+  static [entityKind2] = "PgEnumObjectColumnBuilder";
+  constructor(name, enumInstance) {
+    super(name, "string", "PgEnumObjectColumn");
+    this.config.enum = enumInstance;
+  }
+  /** @internal */
+  build(table) {
+    return new PgEnumObjectColumn2(
+      table,
+      this.config
+    );
+  }
+};
+var PgEnumObjectColumn2 = class extends PgColumn2 {
+  static [entityKind2] = "PgEnumObjectColumn";
+  enum;
+  enumValues = this.config.enum.enumValues;
+  constructor(table, config3) {
+    super(table, config3);
+    this.enum = config3.enum;
+  }
+  getSQLType() {
+    return this.enum.enumName;
+  }
+};
+var isPgEnumSym2 = /* @__PURE__ */ Symbol.for("drizzle:isPgEnum");
+function isPgEnum2(obj) {
+  return !!obj && typeof obj === "function" && isPgEnumSym2 in obj && obj[isPgEnumSym2] === true;
+}
+var PgEnumColumnBuilder2 = class extends PgColumnBuilder2 {
+  static [entityKind2] = "PgEnumColumnBuilder";
+  constructor(name, enumInstance) {
+    super(name, "string", "PgEnumColumn");
+    this.config.enum = enumInstance;
+  }
+  /** @internal */
+  build(table) {
+    return new PgEnumColumn2(
+      table,
+      this.config
+    );
+  }
+};
+var PgEnumColumn2 = class extends PgColumn2 {
+  static [entityKind2] = "PgEnumColumn";
+  enum = this.config.enum;
+  enumValues = this.config.enum.enumValues;
+  constructor(table, config3) {
+    super(table, config3);
+    this.enum = config3.enum;
+  }
+  getSQLType() {
+    return this.enum.enumName;
+  }
+};
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/subquery.js
+var Subquery2 = class {
+  static [entityKind2] = "Subquery";
+  constructor(sql3, fields, alias, isWith = false, usedTables = []) {
+    this._ = {
+      brand: "Subquery",
+      sql: sql3,
+      selectedFields: fields,
+      alias,
+      isWith,
+      usedTables
+    };
+  }
+  // getSQL(): SQL<unknown> {
+  // 	return new SQL([this]);
+  // }
+};
+var WithSubquery2 = class extends Subquery2 {
+  static [entityKind2] = "WithSubquery";
+};
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/version.js
+var version3 = "0.45.2";
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/tracing.js
+var otel2;
+var rawTracer2;
+var tracer2 = {
+  startActiveSpan(name, fn) {
+    if (!otel2) {
+      return fn();
+    }
+    if (!rawTracer2) {
+      rawTracer2 = otel2.trace.getTracer("drizzle-orm", version3);
+    }
+    return iife2(
+      (otel22, rawTracer22) => rawTracer22.startActiveSpan(
+        name,
+        (span) => {
+          try {
+            return fn(span);
+          } catch (e) {
+            span.setStatus({
+              code: otel22.SpanStatusCode.ERROR,
+              message: e instanceof Error ? e.message : "Unknown error"
+              // eslint-disable-line no-instanceof/no-instanceof
+            });
+            throw e;
+          } finally {
+            span.end();
+          }
+        }
+      ),
+      otel2,
+      rawTracer2
+    );
+  }
+};
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/view-common.js
+var ViewBaseConfig2 = /* @__PURE__ */ Symbol.for("drizzle:ViewBaseConfig");
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/table.js
+var Schema2 = /* @__PURE__ */ Symbol.for("drizzle:Schema");
+var Columns2 = /* @__PURE__ */ Symbol.for("drizzle:Columns");
+var ExtraConfigColumns2 = /* @__PURE__ */ Symbol.for("drizzle:ExtraConfigColumns");
+var OriginalName2 = /* @__PURE__ */ Symbol.for("drizzle:OriginalName");
+var BaseName2 = /* @__PURE__ */ Symbol.for("drizzle:BaseName");
+var IsAlias2 = /* @__PURE__ */ Symbol.for("drizzle:IsAlias");
+var ExtraConfigBuilder2 = /* @__PURE__ */ Symbol.for("drizzle:ExtraConfigBuilder");
+var IsDrizzleTable2 = /* @__PURE__ */ Symbol.for("drizzle:IsDrizzleTable");
+var Table2 = class {
+  static [entityKind2] = "Table";
+  /** @internal */
+  static Symbol = {
+    Name: TableName2,
+    Schema: Schema2,
+    OriginalName: OriginalName2,
+    Columns: Columns2,
+    ExtraConfigColumns: ExtraConfigColumns2,
+    BaseName: BaseName2,
+    IsAlias: IsAlias2,
+    ExtraConfigBuilder: ExtraConfigBuilder2
+  };
+  /**
+   * @internal
+   * Can be changed if the table is aliased.
+   */
+  [TableName2];
+  /**
+   * @internal
+   * Used to store the original name of the table, before any aliasing.
+   */
+  [OriginalName2];
+  /** @internal */
+  [Schema2];
+  /** @internal */
+  [Columns2];
+  /** @internal */
+  [ExtraConfigColumns2];
+  /**
+   *  @internal
+   * Used to store the table name before the transformation via the `tableCreator` functions.
+   */
+  [BaseName2];
+  /** @internal */
+  [IsAlias2] = false;
+  /** @internal */
+  [IsDrizzleTable2] = true;
+  /** @internal */
+  [ExtraConfigBuilder2] = void 0;
+  constructor(name, schema, baseName) {
+    this[TableName2] = this[OriginalName2] = name;
+    this[Schema2] = schema;
+    this[BaseName2] = baseName;
+  }
+};
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/sql/sql.js
+var FakePrimitiveParam2 = class {
+  static [entityKind2] = "FakePrimitiveParam";
+};
+function isSQLWrapper2(value2) {
+  return value2 !== null && value2 !== void 0 && typeof value2.getSQL === "function";
+}
+function mergeQueries2(queries) {
+  const result = { sql: "", params: [] };
+  for (const query of queries) {
+    result.sql += query.sql;
+    result.params.push(...query.params);
+    if (query.typings?.length) {
+      if (!result.typings) {
+        result.typings = [];
+      }
+      result.typings.push(...query.typings);
+    }
+  }
+  return result;
+}
+var StringChunk2 = class {
+  static [entityKind2] = "StringChunk";
+  value;
+  constructor(value2) {
+    this.value = Array.isArray(value2) ? value2 : [value2];
+  }
+  getSQL() {
+    return new SQL2([this]);
+  }
+};
+var SQL2 = class _SQL {
+  constructor(queryChunks) {
+    this.queryChunks = queryChunks;
+    for (const chunk of queryChunks) {
+      if (is2(chunk, Table2)) {
+        const schemaName = chunk[Table2.Symbol.Schema];
+        this.usedTables.push(
+          schemaName === void 0 ? chunk[Table2.Symbol.Name] : schemaName + "." + chunk[Table2.Symbol.Name]
+        );
+      }
+    }
+  }
+  static [entityKind2] = "SQL";
+  /** @internal */
+  decoder = noopDecoder2;
+  shouldInlineParams = false;
+  /** @internal */
+  usedTables = [];
+  append(query) {
+    this.queryChunks.push(...query.queryChunks);
+    return this;
+  }
+  toQuery(config3) {
+    return tracer2.startActiveSpan("drizzle.buildSQL", (span) => {
+      const query = this.buildQueryFromSourceParams(this.queryChunks, config3);
+      span?.setAttributes({
+        "drizzle.query.text": query.sql,
+        "drizzle.query.params": JSON.stringify(query.params)
+      });
+      return query;
+    });
+  }
+  buildQueryFromSourceParams(chunks, _config) {
+    const config3 = Object.assign({}, _config, {
+      inlineParams: _config.inlineParams || this.shouldInlineParams,
+      paramStartIndex: _config.paramStartIndex || { value: 0 }
+    });
+    const {
+      casing,
+      escapeName,
+      escapeParam,
+      prepareTyping,
+      inlineParams,
+      paramStartIndex
+    } = config3;
+    return mergeQueries2(chunks.map((chunk) => {
+      if (is2(chunk, StringChunk2)) {
+        return { sql: chunk.value.join(""), params: [] };
+      }
+      if (is2(chunk, Name2)) {
+        return { sql: escapeName(chunk.value), params: [] };
+      }
+      if (chunk === void 0) {
+        return { sql: "", params: [] };
+      }
+      if (Array.isArray(chunk)) {
+        const result = [new StringChunk2("(")];
+        for (const [i, p] of chunk.entries()) {
+          result.push(p);
+          if (i < chunk.length - 1) {
+            result.push(new StringChunk2(", "));
+          }
+        }
+        result.push(new StringChunk2(")"));
+        return this.buildQueryFromSourceParams(result, config3);
+      }
+      if (is2(chunk, _SQL)) {
+        return this.buildQueryFromSourceParams(chunk.queryChunks, {
+          ...config3,
+          inlineParams: inlineParams || chunk.shouldInlineParams
+        });
+      }
+      if (is2(chunk, Table2)) {
+        const schemaName = chunk[Table2.Symbol.Schema];
+        const tableName = chunk[Table2.Symbol.Name];
+        return {
+          sql: schemaName === void 0 || chunk[IsAlias2] ? escapeName(tableName) : escapeName(schemaName) + "." + escapeName(tableName),
+          params: []
+        };
+      }
+      if (is2(chunk, Column2)) {
+        const columnName = casing.getColumnCasing(chunk);
+        if (_config.invokeSource === "indexes") {
+          return { sql: escapeName(columnName), params: [] };
+        }
+        const schemaName = chunk.table[Table2.Symbol.Schema];
+        return {
+          sql: chunk.table[IsAlias2] || schemaName === void 0 ? escapeName(chunk.table[Table2.Symbol.Name]) + "." + escapeName(columnName) : escapeName(schemaName) + "." + escapeName(chunk.table[Table2.Symbol.Name]) + "." + escapeName(columnName),
+          params: []
+        };
+      }
+      if (is2(chunk, View2)) {
+        const schemaName = chunk[ViewBaseConfig2].schema;
+        const viewName = chunk[ViewBaseConfig2].name;
+        return {
+          sql: schemaName === void 0 || chunk[ViewBaseConfig2].isAlias ? escapeName(viewName) : escapeName(schemaName) + "." + escapeName(viewName),
+          params: []
+        };
+      }
+      if (is2(chunk, Param2)) {
+        if (is2(chunk.value, Placeholder2)) {
+          return { sql: escapeParam(paramStartIndex.value++, chunk), params: [chunk], typings: ["none"] };
+        }
+        const mappedValue = chunk.value === null ? null : chunk.encoder.mapToDriverValue(chunk.value);
+        if (is2(mappedValue, _SQL)) {
+          return this.buildQueryFromSourceParams([mappedValue], config3);
+        }
+        if (inlineParams) {
+          return { sql: this.mapInlineParam(mappedValue, config3), params: [] };
+        }
+        let typings = ["none"];
+        if (prepareTyping) {
+          typings = [prepareTyping(chunk.encoder)];
+        }
+        return { sql: escapeParam(paramStartIndex.value++, mappedValue), params: [mappedValue], typings };
+      }
+      if (is2(chunk, Placeholder2)) {
+        return { sql: escapeParam(paramStartIndex.value++, chunk), params: [chunk], typings: ["none"] };
+      }
+      if (is2(chunk, _SQL.Aliased) && chunk.fieldAlias !== void 0) {
+        return { sql: escapeName(chunk.fieldAlias), params: [] };
+      }
+      if (is2(chunk, Subquery2)) {
+        if (chunk._.isWith) {
+          return { sql: escapeName(chunk._.alias), params: [] };
+        }
+        return this.buildQueryFromSourceParams([
+          new StringChunk2("("),
+          chunk._.sql,
+          new StringChunk2(") "),
+          new Name2(chunk._.alias)
+        ], config3);
+      }
+      if (isPgEnum2(chunk)) {
+        if (chunk.schema) {
+          return { sql: escapeName(chunk.schema) + "." + escapeName(chunk.enumName), params: [] };
+        }
+        return { sql: escapeName(chunk.enumName), params: [] };
+      }
+      if (isSQLWrapper2(chunk)) {
+        if (chunk.shouldOmitSQLParens?.()) {
+          return this.buildQueryFromSourceParams([chunk.getSQL()], config3);
+        }
+        return this.buildQueryFromSourceParams([
+          new StringChunk2("("),
+          chunk.getSQL(),
+          new StringChunk2(")")
+        ], config3);
+      }
+      if (inlineParams) {
+        return { sql: this.mapInlineParam(chunk, config3), params: [] };
+      }
+      return { sql: escapeParam(paramStartIndex.value++, chunk), params: [chunk], typings: ["none"] };
+    }));
+  }
+  mapInlineParam(chunk, { escapeString }) {
+    if (chunk === null) {
+      return "null";
+    }
+    if (typeof chunk === "number" || typeof chunk === "boolean") {
+      return chunk.toString();
+    }
+    if (typeof chunk === "string") {
+      return escapeString(chunk);
+    }
+    if (typeof chunk === "object") {
+      const mappedValueAsString = chunk.toString();
+      if (mappedValueAsString === "[object Object]") {
+        return escapeString(JSON.stringify(chunk));
+      }
+      return escapeString(mappedValueAsString);
+    }
+    throw new Error("Unexpected param value: " + chunk);
+  }
+  getSQL() {
+    return this;
+  }
+  as(alias) {
+    if (alias === void 0) {
+      return this;
+    }
+    return new _SQL.Aliased(this, alias);
+  }
+  mapWith(decoder) {
+    this.decoder = typeof decoder === "function" ? { mapFromDriverValue: decoder } : decoder;
+    return this;
+  }
+  inlineParams() {
+    this.shouldInlineParams = true;
+    return this;
+  }
+  /**
+   * This method is used to conditionally include a part of the query.
+   *
+   * @param condition - Condition to check
+   * @returns itself if the condition is `true`, otherwise `undefined`
+   */
+  if(condition) {
+    return condition ? this : void 0;
+  }
+};
+var Name2 = class {
+  constructor(value2) {
+    this.value = value2;
+  }
+  static [entityKind2] = "Name";
+  brand;
+  getSQL() {
+    return new SQL2([this]);
+  }
+};
+function isDriverValueEncoder2(value2) {
+  return typeof value2 === "object" && value2 !== null && "mapToDriverValue" in value2 && typeof value2.mapToDriverValue === "function";
+}
+var noopDecoder2 = {
+  mapFromDriverValue: (value2) => value2
+};
+var noopEncoder2 = {
+  mapToDriverValue: (value2) => value2
+};
+var noopMapper2 = {
+  ...noopDecoder2,
+  ...noopEncoder2
+};
+var Param2 = class {
+  /**
+   * @param value - Parameter value
+   * @param encoder - Encoder to convert the value to a driver parameter
+   */
+  constructor(value2, encoder = noopEncoder2) {
+    this.value = value2;
+    this.encoder = encoder;
+  }
+  static [entityKind2] = "Param";
+  brand;
+  getSQL() {
+    return new SQL2([this]);
+  }
+};
+function sql2(strings, ...params) {
+  const queryChunks = [];
+  if (params.length > 0 || strings.length > 0 && strings[0] !== "") {
+    queryChunks.push(new StringChunk2(strings[0]));
+  }
+  for (const [paramIndex, param2] of params.entries()) {
+    queryChunks.push(param2, new StringChunk2(strings[paramIndex + 1]));
+  }
+  return new SQL2(queryChunks);
+}
+((sql22) => {
+  function empty() {
+    return new SQL2([]);
+  }
+  sql22.empty = empty;
+  function fromList(list) {
+    return new SQL2(list);
+  }
+  sql22.fromList = fromList;
+  function raw(str) {
+    return new SQL2([new StringChunk2(str)]);
+  }
+  sql22.raw = raw;
+  function join5(chunks, separator) {
+    const result = [];
+    for (const [i, chunk] of chunks.entries()) {
+      if (i > 0 && separator !== void 0) {
+        result.push(separator);
+      }
+      result.push(chunk);
+    }
+    return new SQL2(result);
+  }
+  sql22.join = join5;
+  function identifier(value2) {
+    return new Name2(value2);
+  }
+  sql22.identifier = identifier;
+  function placeholder2(name2) {
+    return new Placeholder2(name2);
+  }
+  sql22.placeholder = placeholder2;
+  function param2(value2, encoder) {
+    return new Param2(value2, encoder);
+  }
+  sql22.param = param2;
+})(sql2 || (sql2 = {}));
+((SQL22) => {
+  class Aliased {
+    constructor(sql22, fieldAlias) {
+      this.sql = sql22;
+      this.fieldAlias = fieldAlias;
+    }
+    static [entityKind2] = "SQL.Aliased";
+    /** @internal */
+    isSelectionField = false;
+    getSQL() {
+      return this.sql;
+    }
+    /** @internal */
+    clone() {
+      return new Aliased(this.sql, this.fieldAlias);
+    }
+  }
+  SQL22.Aliased = Aliased;
+})(SQL2 || (SQL2 = {}));
+var Placeholder2 = class {
+  constructor(name2) {
+    this.name = name2;
+  }
+  static [entityKind2] = "Placeholder";
+  getSQL() {
+    return new SQL2([this]);
+  }
+};
+var IsDrizzleView2 = /* @__PURE__ */ Symbol.for("drizzle:IsDrizzleView");
+var View2 = class {
+  static [entityKind2] = "View";
+  /** @internal */
+  [ViewBaseConfig2];
+  /** @internal */
+  [IsDrizzleView2] = true;
+  constructor({ name: name2, schema, selectedFields, query }) {
+    this[ViewBaseConfig2] = {
+      name: name2,
+      originalName: name2,
+      schema,
+      selectedFields,
+      query,
+      isExisting: !query,
+      isAlias: false
+    };
+  }
+  getSQL() {
+    return new SQL2([this]);
+  }
+};
+Column2.prototype.getSQL = function() {
+  return new SQL2([this]);
+};
+Table2.prototype.getSQL = function() {
+  return new SQL2([this]);
+};
+Subquery2.prototype.getSQL = function() {
+  return new SQL2([this]);
+};
+
+// ../../node_modules/.pnpm/drizzle-orm@0.45.2_@types+b_26a69bb0d15be23b2dc64bde4d5df2a4/node_modules/drizzle-orm/sql/expressions/conditions.js
+function bindIfParam2(value2, column) {
+  if (isDriverValueEncoder2(column) && !isSQLWrapper2(value2) && !is2(value2, Param2) && !is2(value2, Placeholder2) && !is2(value2, Column2) && !is2(value2, Table2) && !is2(value2, View2)) {
+    return new Param2(value2, column);
+  }
+  return value2;
+}
+var eq2 = (left, right) => {
+  return sql2`${left} = ${bindIfParam2(right, left)}`;
+};
+function and2(...unfilteredConditions) {
+  const conditions = unfilteredConditions.filter(
+    (c) => c !== void 0
+  );
+  if (conditions.length === 0) {
+    return void 0;
+  }
+  if (conditions.length === 1) {
+    return new SQL2(conditions);
+  }
+  return new SQL2([
+    new StringChunk2("("),
+    sql2.join(conditions, new StringChunk2(" and ")),
+    new StringChunk2(")")
+  ]);
+}
 
 // src/services/stats-aggregator.ts
 import fs12 from "fs";
@@ -113313,8 +119341,8 @@ var venueRowCache = null;
 var bowlerTypeIdCache = null;
 var isDimensionSet = (value2, allLabel) => !!value2 && value2 !== allLabel && value2 !== "All" && value2 !== "all" && value2 !== "";
 function inIdList(column, ids2) {
-  if (!ids2 || ids2.length === 0) return sql`1 = 0`;
-  return sql`${column} IN (${sql.join(ids2.map((id) => sql`${id}`), sql`, `)})`;
+  if (!ids2 || ids2.length === 0) return sql2`1 = 0`;
+  return sql2`${column} IN (${sql2.join(ids2.map((id) => sql2`${id}`), sql2`, `)})`;
 }
 function resolveMatchContextIds(matchContext) {
   ensureInit();
@@ -113387,30 +119415,30 @@ async function resolveRefs(filters) {
   return refs;
 }
 function buildWhereClauseSql(filters, isBowler = false, refs = {}) {
-  const conditions = [sql`1 = 1`];
+  const conditions = [sql2`1 = 1`];
   if (isDimensionSet(filters.season, "All Seasons")) {
     const wanted = String(filters.season).trim();
-    conditions.push(isPlainSeasonYear(wanted) ? sql`(m.season_id = ${wanted} OR substr(m.date, 1, 4) = ${wanted})` : sql`m.season_id = ${wanted}`);
+    conditions.push(isPlainSeasonYear(wanted) ? sql2`(m.season_id = ${wanted} OR substr(m.date, 1, 4) = ${wanted})` : sql2`m.season_id = ${wanted}`);
   }
   if (isDimensionSet(filters.team, "All Teams")) {
-    const column = isBowler ? sql`i.bowling_team_id` : sql`i.batting_team_id`;
+    const column = isBowler ? sql2`i.bowling_team_id` : sql2`i.batting_team_id`;
     conditions.push(inIdList(column, refs.teamIds));
   }
   if (isDimensionSet(filters.opponent, "All Opponents")) {
-    const column = isBowler ? sql`i.batting_team_id` : sql`i.bowling_team_id`;
+    const column = isBowler ? sql2`i.batting_team_id` : sql2`i.bowling_team_id`;
     conditions.push(inIdList(column, refs.opponentIds));
   }
   if (isDimensionSet(filters.venue, "All Venues") && filters.venue !== "Venue") {
-    conditions.push(inIdList(sql`m.venue_id`, refs.venueIds));
+    conditions.push(inIdList(sql2`m.venue_id`, refs.venueIds));
   }
   if (filters.phase && filters.phase !== "All Phases" && filters.phase !== "Phase") {
     const p = filters.phase.toLowerCase();
     if (p.includes("powerplay") || p.includes("pp") || p.includes("0-6")) {
-      conditions.push(sql`d.over_num < 6`);
+      conditions.push(sql2`d.over_num < 6`);
     } else if (p.includes("middle") || p.includes("7-15")) {
-      conditions.push(sql`d.over_num >= 6 AND d.over_num < 15`);
+      conditions.push(sql2`d.over_num >= 6 AND d.over_num < 15`);
     } else if (p.includes("death") || p.includes("16-20")) {
-      conditions.push(sql`d.over_num >= 15`);
+      conditions.push(sql2`d.over_num >= 15`);
     }
   }
   if (filters.overRange && filters.overRange !== "All Overs" && filters.overRange !== "All") {
@@ -113418,63 +119446,63 @@ function buildWhereClauseSql(filters, isBowler = false, refs = {}) {
     if (match) {
       const lo = parseInt(match[1]) - 1;
       const hi = parseInt(match[2]) - 1;
-      conditions.push(sql`d.over_num >= ${lo}`);
-      conditions.push(sql`d.over_num <= ${hi}`);
+      conditions.push(sql2`d.over_num >= ${lo}`);
+      conditions.push(sql2`d.over_num <= ${hi}`);
     }
   }
   if (filters.bowlerType && filters.bowlerType !== "All Bowlers") {
-    conditions.push(inIdList(sql`p_bowl.player_id`, refs.bowlerTypeIds));
+    conditions.push(inIdList(sql2`p_bowl.player_id`, refs.bowlerTypeIds));
   }
   if (filters.deliveryType && filters.deliveryType !== "Delivery Type" && filters.deliveryType !== "Delivery" && filters.deliveryType !== "All Deliveries") {
-    conditions.push(sql`LOWER(d.delivery_type) LIKE LOWER(${`%${filters.deliveryType}%`})`);
+    conditions.push(sql2`LOWER(d.delivery_type) LIKE LOWER(${`%${filters.deliveryType}%`})`);
   }
   if (filters.pressure && filters.pressure !== "Standard" && filters.pressure !== "Pressure" && filters.pressure !== "All") {
     const pr = filters.pressure.toLowerCase();
     if (pr.includes("clutch")) {
-      conditions.push(sql`d.pressure_state = 'Clutch'`);
+      conditions.push(sql2`d.pressure_state = 'Clutch'`);
     } else if (pr.includes("playoff")) {
-      conditions.push(sql`d.pressure_state = 'Playoff'`);
+      conditions.push(sql2`d.pressure_state = 'Playoff'`);
     } else if (pr.includes("high")) {
-      conditions.push(sql`d.pressure_state = 'High'`);
+      conditions.push(sql2`d.pressure_state = 'High'`);
     }
   }
   if (filters.fieldingPosition && filters.fieldingPosition !== "Scoring Area" && filters.fieldingPosition !== "All Positions" && filters.fieldingPosition !== "All Areas") {
-    conditions.push(sql`LOWER(d.scoring_area) LIKE LOWER(${`%${filters.fieldingPosition}%`})`);
+    conditions.push(sql2`LOWER(d.scoring_area) LIKE LOWER(${`%${filters.fieldingPosition}%`})`);
   }
   const representation = normalizeRepresentation(filters.representation);
   if (representation && representation !== "overall") {
-    const playerId = isBowler ? sql`p_bowl.player_id` : sql`p_bat.player_id`;
-    const teamId2 = isBowler ? sql`bl.team_id` : sql`bt.team_id`;
+    const playerId = isBowler ? sql2`p_bowl.player_id` : sql2`p_bat.player_id`;
+    const teamId2 = isBowler ? sql2`bl.team_id` : sql2`bt.team_id`;
     if (representation === "current-squad-career") {
-      conditions.push(sql`EXISTS (SELECT 1 FROM current_squad cs WHERE cs.player_id = ${playerId})`);
+      conditions.push(sql2`EXISTS (SELECT 1 FROM current_squad cs WHERE cs.player_id = ${playerId})`);
     } else if (representation === "current-squad-for-franchise") {
-      conditions.push(sql`EXISTS (SELECT 1 FROM current_squad cs WHERE cs.player_id = ${playerId} AND cs.team_id = ${teamId2})`);
+      conditions.push(sql2`EXISTS (SELECT 1 FROM current_squad cs WHERE cs.player_id = ${playerId} AND cs.team_id = ${teamId2})`);
     } else if (representation === "franchise-legacy") {
-      conditions.push(sql`EXISTS (SELECT 1 FROM player_team_history pth WHERE pth.player_id = ${playerId} AND pth.team_id = ${teamId2})`);
+      conditions.push(sql2`EXISTS (SELECT 1 FROM player_team_history pth WHERE pth.player_id = ${playerId} AND pth.team_id = ${teamId2})`);
     }
   }
   if (filters.innings && filters.innings !== "All Innings" && filters.innings !== "Innings") {
     if (filters.innings.toLowerCase().includes("1st")) {
-      conditions.push(sql`i.innings_number = 1`);
+      conditions.push(sql2`i.innings_number = 1`);
     } else if (filters.innings.toLowerCase().includes("2nd")) {
-      conditions.push(sql`i.innings_number = 2`);
+      conditions.push(sql2`i.innings_number = 2`);
     }
   }
   if (isDimensionSet(filters.matchContext, "All Matches")) {
-    conditions.push(inIdList(sql`m.match_id`, refs.matchIds));
+    conditions.push(inIdList(sql2`m.match_id`, refs.matchIds));
   }
   if (filters.batter) {
-    conditions.push(sql`LOWER(p_bat.name) LIKE LOWER(${`%${filters.batter}%`})`);
+    conditions.push(sql2`LOWER(p_bat.name) LIKE LOWER(${`%${filters.batter}%`})`);
   }
   if (filters.bowler) {
-    conditions.push(sql`LOWER(p_bowl.name) LIKE LOWER(${`%${filters.bowler}%`})`);
+    conditions.push(sql2`LOWER(p_bowl.name) LIKE LOWER(${`%${filters.bowler}%`})`);
   }
-  return sql.join(conditions, sql` AND `);
+  return sql2.join(conditions, sql2` AND `);
 }
 async function aggregateQueryStatsSql(filters) {
   const refs = await resolveRefs(filters);
   const batterWhere = buildWhereClauseSql(filters, false, refs);
-  const batterQuery = sql`
+  const batterQuery = sql2`
     WITH match_scores AS (
       SELECT
         d.batter_id,
@@ -113537,7 +119565,7 @@ async function aggregateQueryStatsSql(filters) {
       GROUP BY batter_id
     ) m ON o.batter_id = m.batter_id
   `;
-  const batterDelivQuery = sql`
+  const batterDelivQuery = sql2`
     SELECT
       d.batter_id,
       d.delivery_type as type,
@@ -113556,7 +119584,7 @@ async function aggregateQueryStatsSql(filters) {
     WHERE ${batterWhere} AND d.delivery_type IS NOT NULL
     GROUP BY d.batter_id, d.delivery_type
   `;
-  const batterZoneQuery = sql`
+  const batterZoneQuery = sql2`
     SELECT
       d.batter_id,
       d.scoring_area as zone,
@@ -113675,7 +119703,7 @@ async function aggregateQueryStatsSql(filters) {
     return true;
   });
   const bowlerWhere = buildWhereClauseSql(filters, true, refs);
-  const bowlerQuery = sql`
+  const bowlerQuery = sql2`
     SELECT
       d.bowler_id,
       p_bowl.name as player,
@@ -113709,7 +119737,7 @@ async function aggregateQueryStatsSql(filters) {
     WHERE ${bowlerWhere}
     GROUP BY d.bowler_id, p_bowl.name, p_bowl.country, p_bowl.bowling_style
   `;
-  const bowlerDelivQuery = sql`
+  const bowlerDelivQuery = sql2`
     SELECT
       d.bowler_id,
       d.delivery_type as type,
@@ -113728,7 +119756,7 @@ async function aggregateQueryStatsSql(filters) {
     WHERE ${bowlerWhere} AND d.delivery_type IS NOT NULL
     GROUP BY d.bowler_id, d.delivery_type
   `;
-  const bowlerHandQuery = sql`
+  const bowlerHandQuery = sql2`
     SELECT
       d.bowler_id,
       p_bat.batting_style,
@@ -113747,7 +119775,7 @@ async function aggregateQueryStatsSql(filters) {
     WHERE ${bowlerWhere}
     GROUP BY d.bowler_id, p_bat.batting_style
   `;
-  const bowlerBestQuery = sql`
+  const bowlerBestQuery = sql2`
     WITH bowler_match_stats AS (
       SELECT
         d.bowler_id,
@@ -113776,7 +119804,7 @@ async function aggregateQueryStatsSql(filters) {
     )
     SELECT bowler_id, wickets, conceded_runs FROM ranked_performances WHERE rn = 1
   `;
-  const bowlerBaselineQuery = sql`
+  const bowlerBaselineQuery = sql2`
     WITH bm AS (
       SELECT DISTINCT d.bowler_id, d.match_id
       FROM deliveries d
@@ -113907,7 +119935,7 @@ async function aggregateQueryStatsSql(filters) {
 }
 async function aggregateFieldStatsSql(filters) {
   const where = buildWhereClauseSql(filters, false, await resolveRefs(filters));
-  const query = sql`
+  const query = sql2`
     SELECT
       d.scoring_area as position,
       sum(d.batter_runs) as runs,
@@ -113980,16 +120008,16 @@ async function aggregateMatchupStatsSql(batter, bowler, filters) {
   let overallStats = null;
   if (!hasExtraFilters) {
     const res = await db4.select().from(batterBowlerMatchupStatsTable).where(
-      and(
-        eq(batterBowlerMatchupStatsTable.batterId, sql`(SELECT player_id FROM players WHERE player_name = ${batter} LIMIT 1)`),
-        eq(batterBowlerMatchupStatsTable.bowlerId, sql`(SELECT player_id FROM players WHERE player_name = ${bowler} LIMIT 1)`)
+      and2(
+        eq2(batterBowlerMatchupStatsTable.batterId, sql2`(SELECT player_id FROM players WHERE player_name = ${batter} LIMIT 1)`),
+        eq2(batterBowlerMatchupStatsTable.bowlerId, sql2`(SELECT player_id FROM players WHERE player_name = ${bowler} LIMIT 1)`)
       )
     ).limit(1);
     if (res.length > 0) {
       overallStats = res[0];
     }
   }
-  const queryOverall = sql`
+  const queryOverall = sql2`
     SELECT
       sum(d.batter_runs) as runs,
       count(case when d.is_wide = false then 1 end) as balls,
@@ -114009,7 +120037,7 @@ async function aggregateMatchupStatsSql(batter, bowler, filters) {
     WHERE ${where}
     HAVING count(case when d.is_wide = false then 1 end) >= 6
   `;
-  const queryPhase = sql`
+  const queryPhase = sql2`
     SELECT
       case when d.over_num < 6 then 'powerplay' when d.over_num >= 15 then 'death' else 'middle' end as phase,
       sum(d.batter_runs) as runs,
@@ -114027,7 +120055,7 @@ async function aggregateMatchupStatsSql(batter, bowler, filters) {
     WHERE ${where}
     GROUP BY case when d.over_num < 6 then 'powerplay' when d.over_num >= 15 then 'death' else 'middle' end
   `;
-  const queryDeliv = sql`
+  const queryDeliv = sql2`
     SELECT
       d.delivery_type as type,
       sum(d.batter_runs) as runs,
@@ -114046,7 +120074,7 @@ async function aggregateMatchupStatsSql(batter, bowler, filters) {
     WHERE ${where} AND d.delivery_type IS NOT NULL
     GROUP BY d.delivery_type
   `;
-  const queryZone = sql`
+  const queryZone = sql2`
     SELECT
       d.scoring_area as zone,
       sum(d.batter_runs) as runs,
@@ -114063,7 +120091,7 @@ async function aggregateMatchupStatsSql(batter, bowler, filters) {
     WHERE ${where} AND d.scoring_area IS NOT NULL
     GROUP BY d.scoring_area
   `;
-  const queryDetail = sql`
+  const queryDetail = sql2`
     SELECT
       count(case when d.is_wide = false then 1 end) as total,
       count(case when d.is_wide = false and (d.delivery_type IS NOT NULL OR d.scoring_area IS NOT NULL) then 1 end) as described
@@ -114077,7 +120105,7 @@ async function aggregateMatchupStatsSql(batter, bowler, filters) {
     LEFT JOIN venues v ON m.venue_id = v.venue_id
     WHERE ${where}
   `;
-  const queryHistory = sql`
+  const queryHistory = sql2`
     SELECT
       d.match_id,
       m.season_id as season,
@@ -114247,22 +120275,22 @@ async function aggregateDrilldownSql(player, dimension, filters) {
   let labelExpression;
   switch (dimension) {
     case "phase":
-      labelExpression = sql`case when d.over_num < 6 then 'powerplay' when d.over_num >= 15 then 'death' else 'middle' end`;
+      labelExpression = sql2`case when d.over_num < 6 then 'powerplay' when d.over_num >= 15 then 'death' else 'middle' end`;
       break;
     case "delivery":
-      labelExpression = sql`d.delivery_type`;
+      labelExpression = sql2`d.delivery_type`;
       break;
     case "scoring-zone":
-      labelExpression = sql`d.scoring_area`;
+      labelExpression = sql2`d.scoring_area`;
       break;
     case "bowler":
-      labelExpression = sql`p_bowl.name`;
+      labelExpression = sql2`p_bowl.name`;
       break;
     case "over":
-      labelExpression = sql`'Over ' || CAST(d.over_num + 1 AS TEXT)`;
+      labelExpression = sql2`'Over ' || CAST(d.over_num + 1 AS TEXT)`;
       break;
   }
-  const query = sql`
+  const query = sql2`
     SELECT
       ${labelExpression} as label,
       sum(d.batter_runs) as runs,
@@ -114316,19 +120344,19 @@ async function getOverview() {
   if (overviewMemo) return overviewMemo;
   if (hasDb()) {
     try {
-      const matchCount = await db4.select({ count: sql`count(*)` }).from(matchesTable);
+      const matchCount = await db4.select({ count: sql2`count(*)` }).from(matchesTable);
       if (Number(matchCount[0]?.count || 0) > 0) {
-        const runSum = await db4.select({ runs: sql`sum(runs)` }).from(inningsTable);
-        const wicketSum = await db4.select({ wickets: sql`sum(wickets)` }).from(inningsTable);
-        const ballSum = await db4.select({ balls: sql`count(*)` }).from(deliveriesTable);
-        const boundaryCount = await db4.select({ count: sql`count(*)` }).from(deliveriesTable).where(eq(deliveriesTable.isBoundary, true));
-        const firstSeasonRow = await db4.select({ season: seasonsTable.seasonId }).from(seasonsTable).orderBy(sql`season_id ASC`).limit(1);
-        const lastSeasonRow = await db4.select({ season: seasonsTable.seasonId }).from(seasonsTable).orderBy(sql`season_id DESC`).limit(1);
-        const sixesCount = await db4.select({ count: sql`count(*)` }).from(deliveriesTable).where(eq(deliveriesTable.batterRuns, 6));
-        const foursCount = await db4.select({ count: sql`count(*)` }).from(deliveriesTable).where(eq(deliveriesTable.batterRuns, 4));
-        const seasonsCount = await db4.select({ count: sql`count(*)` }).from(seasonsTable);
-        const avgFirstInn = await db4.select({ avg: sql`avg(runs)` }).from(inningsTable).where(eq(inningsTable.inningsNumber, 1));
-        const live2 = (await db4.execute(sql.raw(`
+        const runSum = await db4.select({ runs: sql2`sum(runs)` }).from(inningsTable);
+        const wicketSum = await db4.select({ wickets: sql2`sum(wickets)` }).from(inningsTable);
+        const ballSum = await db4.select({ balls: sql2`count(*)` }).from(deliveriesTable);
+        const boundaryCount = await db4.select({ count: sql2`count(*)` }).from(deliveriesTable).where(eq2(deliveriesTable.isBoundary, true));
+        const firstSeasonRow = await db4.select({ season: seasonsTable.seasonId }).from(seasonsTable).orderBy(sql2`season_id ASC`).limit(1);
+        const lastSeasonRow = await db4.select({ season: seasonsTable.seasonId }).from(seasonsTable).orderBy(sql2`season_id DESC`).limit(1);
+        const sixesCount = await db4.select({ count: sql2`count(*)` }).from(deliveriesTable).where(eq2(deliveriesTable.batterRuns, 6));
+        const foursCount = await db4.select({ count: sql2`count(*)` }).from(deliveriesTable).where(eq2(deliveriesTable.batterRuns, 4));
+        const seasonsCount = await db4.select({ count: sql2`count(*)` }).from(seasonsTable);
+        const avgFirstInn = await db4.select({ avg: sql2`avg(runs)` }).from(inningsTable).where(eq2(inningsTable.inningsNumber, 1));
+        const live2 = (await db4.execute(sql2.raw(`
           SELECT
             (SELECT avg(runs) FROM innings WHERE innings_number = 2) AS avg_second,
             (SELECT sum(CASE WHEN is_wide = 0 AND is_noball = 0 THEN 1 ELSE 0 END) FROM deliveries) AS legal_balls,
@@ -114408,7 +120436,7 @@ async function getTossAnalysis() {
   if (tossMemo) return tossMemo;
   if (hasDb()) {
     try {
-      const r = (await db4.execute(sql.raw(`
+      const r = (await db4.execute(sql2.raw(`
         SELECT
           (SELECT count(*) FROM matches WHERE toss_decision IS NOT NULL) AS tosses,
           (SELECT count(*) FROM matches WHERE toss_decision = 'bat') AS toss_bat,
@@ -114418,7 +120446,7 @@ async function getTossAnalysis() {
           (SELECT count(*) FROM matches m JOIN innings i ON i.match_id = m.match_id AND i.innings_number = 1 WHERE m.winner_id IS NOT NULL) AS decided,
           (SELECT count(*) FROM matches m JOIN innings i ON i.match_id = m.match_id AND i.innings_number = 1 WHERE m.winner_id = i.batting_team_id) AS bat_first_wins
       `))).rows[0];
-      const venueRows = (await db4.execute(sql.raw(`
+      const venueRows = (await db4.execute(sql2.raw(`
         SELECT v.name AS venue, count(*) AS matches,
           sum(CASE WHEN m.winner_id = i.batting_team_id THEN 1 ELSE 0 END) AS bat_first_wins
         FROM matches m JOIN innings i ON i.match_id = m.match_id AND i.innings_number = 1 JOIN venues v ON v.venue_id = m.venue_id
@@ -114466,7 +120494,7 @@ async function getPhaseAnalysis() {
   if (phaseMemo) return phaseMemo;
   if (hasDb()) {
     try {
-      const rows = (await db4.execute(sql.raw(`
+      const rows = (await db4.execute(sql2.raw(`
         SELECT CASE WHEN d.over_num < 6 THEN 'powerplay' WHEN d.over_num < 15 THEN 'middleOvers' ELSE 'deathOvers' END AS phase,
           sum(d.total_runs) AS runs,
           sum(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) AS legal,
@@ -114479,7 +120507,7 @@ async function getPhaseAnalysis() {
         WHERE i.innings_number IN (1, 2)
         GROUP BY 1
       `))).rows;
-      const matches2 = Number((await db4.execute(sql.raw("SELECT count(*) AS n FROM matches"))).rows[0].n || 0);
+      const matches2 = Number((await db4.execute(sql2.raw("SELECT count(*) AS n FROM matches"))).rows[0].n || 0);
       const labels = { powerplay: "Powerplay (overs 1-6)", middleOvers: "Middle Overs (7-15)", deathOvers: "Death Overs (16-20)" };
       const out = {};
       for (const key of ["powerplay", "middleOvers", "deathOvers"]) {
@@ -114530,7 +120558,7 @@ async function getChampionships() {
 async function getVenues() {
   if (hasDb()) {
     try {
-      const res = await db4.execute(sql`
+      const res = await db4.execute(sql2`
         SELECT
           v.venue_id,
           v.name,
@@ -114728,7 +120756,7 @@ async function getTeamAnalytics(params) {
   const to = params.toSeason ? parseInt(String(params.toSeason).replace(/[^0-9]/g, ""), 10) : null;
   const seasonWhere = (Number.isFinite(from) ? ` AND CAST(m.season_id AS INTEGER) >= ${from}` : "") + (Number.isFinite(to) ? ` AND CAST(m.season_id AS INTEGER) <= ${to}` : "");
   const involved = `(m.team1_id IN (${ids2}) OR m.team2_id IN (${ids2}))${seasonWhere}`;
-  const record2 = (await db4.execute(sql.raw(`
+  const record2 = (await db4.execute(sql2.raw(`
     SELECT
       count(*) AS played,
       sum(CASE WHEN m.winner_id IN (${ids2}) THEN 1 ELSE 0 END) AS wins,
@@ -114736,7 +120764,7 @@ async function getTeamAnalytics(params) {
       sum(CASE WHEN m.winner_id IS NULL THEN 1 ELSE 0 END) AS noResult
     FROM matches m WHERE ${involved}
   `))).rows?.[0];
-  const toss = (await db4.execute(sql.raw(`
+  const toss = (await db4.execute(sql2.raw(`
     SELECT
       sum(CASE WHEN m.toss_winner_id IN (${ids2}) THEN 1 ELSE 0 END) AS tossWon,
       sum(CASE WHEN m.toss_winner_id IN (${ids2}) AND m.winner_id IN (${ids2}) THEN 1 ELSE 0 END) AS tossWonMatchWon,
@@ -114746,7 +120774,7 @@ async function getTeamAnalytics(params) {
       sum(CASE WHEN m.toss_winner_id IN (${ids2}) AND m.toss_decision = 'field' THEN 1 ELSE 0 END) AS choseField
     FROM matches m WHERE ${involved}
   `))).rows?.[0];
-  const battingOrder = (await db4.execute(sql.raw(`
+  const battingOrder = (await db4.execute(sql2.raw(`
     SELECT
       sum(CASE WHEN i.innings_number = 1 THEN 1 ELSE 0 END) AS batFirst,
       sum(CASE WHEN i.innings_number = 1 AND m.winner_id IN (${ids2}) THEN 1 ELSE 0 END) AS batFirstWon,
@@ -114785,13 +120813,13 @@ async function getTeamAnalytics(params) {
       wickets: num2(r.wickets)
     };
   };
-  const battingPhaseRows = (await db4.execute(sql.raw(phaseSql("batting")))).rows;
-  const bowlingPhaseRows = (await db4.execute(sql.raw(phaseSql("bowling")))).rows;
+  const battingPhaseRows = (await db4.execute(sql2.raw(phaseSql("batting")))).rows;
+  const bowlingPhaseRows = (await db4.execute(sql2.raw(phaseSql("bowling")))).rows;
   const PHASES2 = ["Powerplay", "Middle", "Death"];
   const { pacerIds, spinnerIds } = await bowlerTypeIdSets();
   const paceList = idList(pacerIds);
   const spinList = idList(spinnerIds);
-  const bowlerSplit = paceList && spinList ? (await db4.execute(sql.raw(`
+  const bowlerSplit = paceList && spinList ? (await db4.execute(sql2.raw(`
         SELECT
           CASE WHEN d.bowler_id IN (${spinList}) THEN 'Spin' WHEN d.bowler_id IN (${paceList}) THEN 'Pace' ELSE 'Unknown' END AS bowler_kind,
           sum(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) AS balls,
@@ -114805,7 +120833,7 @@ async function getTeamAnalytics(params) {
         WHERE i.bowling_team_id IN (${ids2}) AND ${involved}
         GROUP BY bowler_kind
       `))).rows : [];
-  const homeAway = (await db4.execute(sql.raw(`
+  const homeAway = (await db4.execute(sql2.raw(`
     SELECT
       sum(CASE WHEN m.team1_id IN (${ids2}) THEN 1 ELSE 0 END) AS homePlayed,
       sum(CASE WHEN m.team1_id IN (${ids2}) AND m.winner_id IN (${ids2}) THEN 1 ELSE 0 END) AS homeWon,
@@ -114814,7 +120842,7 @@ async function getTeamAnalytics(params) {
     FROM matches m WHERE ${involved}
   `))).rows?.[0];
   const conditions = readDataJson("match-conditions.json") ?? {};
-  const playedRows = (await db4.execute(sql.raw(`
+  const playedRows = (await db4.execute(sql2.raw(`
     SELECT m.match_id AS matchId,
            CASE WHEN m.winner_id IN (${ids2}) THEN 1 ELSE 0 END AS won,
            CASE WHEN m.winner_id IS NULL THEN 1 ELSE 0 END AS noResult
@@ -114831,7 +120859,7 @@ async function getTeamAnalytics(params) {
     bucket.played++;
     if (num2(r.won) === 1) bucket.wins++;
   }
-  const venues = (await db4.execute(sql.raw(`
+  const venues = (await db4.execute(sql2.raw(`
     SELECT v.name AS venue,
       count(*) AS played,
       sum(CASE WHEN m.winner_id IN (${ids2}) THEN 1 ELSE 0 END) AS wins
@@ -114841,7 +120869,7 @@ async function getTeamAnalytics(params) {
     GROUP BY v.name
     ORDER BY played DESC
   `))).rows;
-  const h2h = (await db4.execute(sql.raw(`
+  const h2h = (await db4.execute(sql2.raw(`
     SELECT
       CASE WHEN m.team1_id IN (${ids2}) THEN t2.name ELSE t1.name END AS opponent,
       count(*) AS played,
@@ -114854,7 +120882,7 @@ async function getTeamAnalytics(params) {
     GROUP BY opponent
     ORDER BY played DESC
   `))).rows;
-  const wicketBalls = (await db4.execute(sql.raw(`
+  const wicketBalls = (await db4.execute(sql2.raw(`
     SELECT d.innings_id AS inningsId, d.over_num AS overNum, d.ball_num AS ballNum
     FROM deliveries d
     JOIN dismissals dm ON dm.delivery_id = d.delivery_id
@@ -115006,15 +121034,15 @@ async function getMatchupOpponents(player, role) {
   if (!hasDb()) return null;
   const viewedCol = role === "batter" ? "d.batter_id" : "d.bowler_id";
   const otherCol = role === "batter" ? "d.bowler_id" : "d.batter_id";
-  const rows = (await db4.execute(sql`
+  const rows = (await db4.execute(sql2`
     SELECT
       other.name AS opponent,
       count(*) AS balls,
       sum(d.batter_runs) AS runs,
       count(dm.dismissal_id) AS dismissals
     FROM deliveries d
-    JOIN players self ON self.player_id = ${sql.raw(viewedCol)}
-    JOIN players other ON other.player_id = ${sql.raw(otherCol)}
+    JOIN players self ON self.player_id = ${sql2.raw(viewedCol)}
+    JOIN players other ON other.player_id = ${sql2.raw(otherCol)}
     LEFT JOIN dismissals dm
       ON dm.delivery_id = d.delivery_id AND dm.player_out_id = d.batter_id
     WHERE self.name = ${player}
@@ -115038,7 +121066,7 @@ async function getMatchupOpponents(player, role) {
 async function getVenueAnalytics(params) {
   if (!hasDb()) return null;
   const wanted = normalizeVenueName(params.venue).toLowerCase();
-  const venueRows = (await db4.execute(sql`SELECT venue_id, name FROM venues`)).rows;
+  const venueRows = (await db4.execute(sql2`SELECT venue_id, name FROM venues`)).rows;
   const venueIds = venueRows.filter((v) => normalizeVenueName(String(v.name ?? "")).toLowerCase() === wanted).map((v) => Number(v.venue_id));
   if (venueIds.length === 0) return null;
   const vids = idList(venueIds);
@@ -115054,17 +121082,17 @@ async function getVenueAnalytics(params) {
     timeWhere = ids2.length > 0 ? ` AND m.match_id IN (${idList(ids2)})` : " AND 1 = 0";
   }
   const atVenue = `m.venue_id IN (${vids})${seasonWhere}${timeWhere}`;
-  const head = (await db4.execute(sql.raw(`
+  const head = (await db4.execute(sql2.raw(`
     SELECT count(DISTINCT m.match_id) AS matches, count(DISTINCT m.season_id) AS seasons
     FROM matches m WHERE ${atVenue}
   `))).rows?.[0];
-  const inningsRows = (await db4.execute(sql.raw(`
+  const inningsRows = (await db4.execute(sql2.raw(`
     SELECT i.innings_number AS inn, avg(i.runs) AS avgRuns, avg(i.wickets) AS avgWkts
     FROM innings i JOIN matches m ON m.match_id = i.match_id
     WHERE ${atVenue} GROUP BY i.innings_number
   `))).rows;
   const inn = (n) => inningsRows.find((r) => Number(r.inn) === n) ?? {};
-  const phaseRows = (await db4.execute(sql.raw(`
+  const phaseRows = (await db4.execute(sql2.raw(`
     SELECT d.phase AS phase,
       sum(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) AS balls,
       sum(d.total_runs) AS runs,
@@ -115092,7 +121120,7 @@ async function getVenueAnalytics(params) {
   const { pacerIds: venuePacerIds, spinnerIds } = await bowlerTypeIdSets();
   const spinList = idList(spinnerIds);
   const venuePaceList = idList(venuePacerIds);
-  const surfaceRows = spinList && venuePaceList ? (await db4.execute(sql.raw(`
+  const surfaceRows = spinList && venuePaceList ? (await db4.execute(sql2.raw(`
         SELECT CASE WHEN d.bowler_id IN (${spinList}) THEN 'Spin' WHEN d.bowler_id IN (${venuePaceList}) THEN 'Pace' ELSE 'Unknown' END AS bowler_kind,
           sum(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) AS balls,
           sum(d.total_runs) AS runs,
@@ -115105,7 +121133,7 @@ async function getVenueAnalytics(params) {
       `))).rows : [];
   const splitFor = async (ids2) => {
     if (ids2.length === 0) return { first: 0, second: 0, matches: 0 };
-    const r = (await db4.execute(sql.raw(`
+    const r = (await db4.execute(sql2.raw(`
       SELECT avg(CASE WHEN i.innings_number = 1 THEN i.runs END) AS a,
              avg(CASE WHEN i.innings_number = 2 THEN i.runs END) AS b,
              count(DISTINCT m.match_id) AS n
@@ -115117,7 +121145,7 @@ async function getVenueAnalytics(params) {
   const nightIds = Object.entries(conditions).filter(([, c]) => c.isNight).map(([id]) => Number(id));
   const dayIds = Object.entries(conditions).filter(([, c]) => !c.isNight).map(([id]) => Number(id));
   const [evening, afternoon] = await Promise.all([splitFor(nightIds), splitFor(dayIds)]);
-  const battersRows = (await db4.execute(sql.raw(`
+  const battersRows = (await db4.execute(sql2.raw(`
     SELECT p.name AS player, sum(d.batter_runs) AS runs,
       sum(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) AS balls,
       count(DISTINCT m.match_id) AS matches
@@ -115126,7 +121154,7 @@ async function getVenueAnalytics(params) {
     JOIN matches m ON m.match_id = d.match_id
     WHERE ${atVenue} GROUP BY p.name ORDER BY runs DESC LIMIT 5
   `))).rows;
-  const bowlersRows = (await db4.execute(sql.raw(`
+  const bowlersRows = (await db4.execute(sql2.raw(`
     SELECT p.name AS player, count(dm.dismissal_id) AS wickets,
       sum(CASE WHEN d.is_wide = 0 AND d.is_noball = 0 THEN 1 ELSE 0 END) AS balls,
       sum(d.total_runs) AS runs, count(DISTINCT m.match_id) AS matches
@@ -115136,7 +121164,7 @@ async function getVenueAnalytics(params) {
     JOIN matches m ON m.match_id = d.match_id
     WHERE ${atVenue} GROUP BY p.name ORDER BY wickets DESC LIMIT 5
   `))).rows;
-  const parRows = (await db4.execute(sql.raw(`
+  const parRows = (await db4.execute(sql2.raw(`
     SELECT d.over_num AS overNum, sum(d.total_runs) AS runs,
            count(DISTINCT i.innings_id) AS n
     FROM deliveries d
@@ -115211,7 +121239,7 @@ async function getVenueAnalytics(params) {
 // src/services/match-card.ts
 import fs13 from "fs";
 import path14 from "path";
-import { DatabaseSync as DatabaseSync6 } from "node:sqlite";
+import { DatabaseSync as DatabaseSync7 } from "node:sqlite";
 function getRoot() {
   return getProjectRoot2();
 }
@@ -115396,7 +121424,7 @@ function getDb() {
   const fp = warehousePath();
   if (!fs13.existsSync(fp)) return null;
   try {
-    db5 = new DatabaseSync6(fp, { readOnly: true });
+    db5 = new DatabaseSync7(fp, { readOnly: true });
   } catch {
     db5 = null;
   }
@@ -115791,7 +121819,7 @@ function getMatchCommentary(matchId) {
 
 // src/services/insights.ts
 import fs14 from "fs";
-import { DatabaseSync as DatabaseSync7 } from "node:sqlite";
+import { DatabaseSync as DatabaseSync8 } from "node:sqlite";
 var db6 = null;
 var dbTried2 = false;
 function getDb2() {
@@ -115801,10 +121829,10 @@ function getDb2() {
   if (!fs14.existsSync(fp)) return null;
   try {
     if (process.env.CRICFIELD_DB_READONLY === "1") {
-      db6 = new DatabaseSync7(fp, { readOnly: true });
+      db6 = new DatabaseSync8(fp, { readOnly: true });
       return db6;
     }
-    db6 = new DatabaseSync7(fp);
+    db6 = new DatabaseSync8(fp);
     db6.exec(`CREATE TABLE IF NOT EXISTS insight_clicks (
       slug TEXT PRIMARY KEY,
       clicks INTEGER NOT NULL DEFAULT 0,
@@ -116715,8 +122743,8 @@ var EntityDecoder = class {
    * Call this as soon as the document's `<?xml version="...">` declaration is parsed.
    * @param {1.0|1.1|number} version
    */
-  setXmlVersion(version3) {
-    this._ncrXmlVersion = version3 === 1.1 ? 1.1 : 1;
+  setXmlVersion(version4) {
+    this._ncrXmlVersion = version4 === 1.1 ? 1.1 : 1;
   }
   // -------------------------------------------------------------------------
   // Primary API
@@ -127004,8 +133032,8 @@ function fmt2(d, v) {
   return `${v.toFixed(d.dp)}${d.unit === "%" ? "%" : ""}`;
 }
 function percentileOf(values, v) {
-  const below = values.filter((x) => x < v).length, eq2 = values.filter((x) => x === v).length;
-  return Math.round((below + eq2 / 2) / values.length * 100);
+  const below = values.filter((x) => x < v).length, eq3 = values.filter((x) => x === v).length;
+  return Math.round((below + eq3 / 2) / values.length * 100);
 }
 function squadProfile(teamKey, seasonIn) {
   const st = build();
@@ -163592,8 +169620,8 @@ function activeDailyRun(userId, game, day4) {
 function dailyRecord(userId, game, day4) {
   return db8().prepare("SELECT score, attempts, completed, version FROM arcade_daily WHERE user_id=? AND game=? AND day=?").get(userId, game, day4);
 }
-function markDaily(userId, game, day4, score, attempts, completed, version3) {
-  db8().prepare("INSERT INTO arcade_daily VALUES(?,?,?,?,?,?,?) ON CONFLICT(user_id,game,day) DO UPDATE SET score=excluded.score, attempts=excluded.attempts, completed=MAX(completed, excluded.completed)").run(userId, game, day4, score, attempts, Number(completed), version3);
+function markDaily(userId, game, day4, score, attempts, completed, version4) {
+  db8().prepare("INSERT INTO arcade_daily VALUES(?,?,?,?,?,?,?) ON CONFLICT(user_id,game,day) DO UPDATE SET score=excluded.score, attempts=excluded.attempts, completed=MAX(completed, excluded.completed)").run(userId, game, day4, score, attempts, Number(completed), version4);
 }
 function dailyStreak(userId) {
   const days = new Set(db8().prepare("SELECT DISTINCT day FROM arcade_daily WHERE user_id=? AND completed=1").all(userId).map((r) => r.day));
@@ -164783,11 +170811,11 @@ var XI_BUDGET_CR = 100;
 var XI_RULES = ["11 players", "At most 4 overseas players (IPL playing-XI rule)", "At least 1 wicketkeeper (game rule)", "At least 5 bowling options (game rule)"];
 var refCache = null;
 function franchiseXiStrengths() {
-  const { version: version3, cands } = squadPool();
-  if (refCache?.version === version3) return refCache.strengths;
+  const { version: version4, cands } = squadPool();
+  if (refCache?.version === version4) return refCache.strengths;
   const snap2 = getSnapshot();
   const strengths = Object.values(snap2.teams).map((t) => bestSide([...t.xii, ...t.bench].map((x) => cands.get(x.id)).filter(Boolean), 11).strength).filter((s) => s > 0).sort((a, b) => a - b);
-  refCache = { version: version3, strengths };
+  refCache = { version: version4, strengths };
   return strengths;
 }
 function rateStrength(s) {
@@ -166595,6 +172623,11 @@ function configureScout() {
   if (fallback && existsSync(fallback)) {
     copyFileSync(fallback, scoutPath);
     return Promise.resolve();
+  }
+  if (scoutPostgresConfigured()) {
+    const staging = `${scoutPath}.loading`;
+    rmSync(staging, { force: true });
+    return loadScoutFromPostgres(staging).then(() => rename(staging, scoutPath));
   }
   const url2 = process.env.TURSO_SCOUT_DATABASE_URL;
   const token = process.env.TURSO_SCOUT_AUTH_TOKEN;

@@ -28,8 +28,11 @@ app.listen(port, (err) => {
   }
 
   logger.info({ port }, "Server listening");
-  startPlatformWorker();
-  startRetentionFreeze();
+  // A gated analytics host serves read-only data only: these background writers have nothing to do there.
+  if (!process.env["ANALYTICS_GATE_KEY"]) {
+    startPlatformWorker();
+    startRetentionFreeze();
+  }
 
   setImmediate(() => {
     const t0 = Date.now();

@@ -28,7 +28,8 @@
     "scout:build": "tsx ./src/scout/build.ts",
     "scout:demo": "tsx ./src/scout/demos.ts",
     "test:step3": "tsx --import ./src/test-readonly-env.mjs --test src/step3/tests/*.test.ts",
-    "global:coverage": "tsx ./src/global/coverage.ts"
+    "global:coverage": "tsx ./src/global/coverage.ts",
+    "global:scout-serving": "tsx ./src/global/build-scout-serving-db.ts"
   },
   "dependencies": {
     "@workspace/db": "workspace:*",
