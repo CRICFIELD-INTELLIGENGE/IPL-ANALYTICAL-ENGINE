@@ -145,7 +145,7 @@ function Router() {
       <Route path="/feed/ipl-2027/retentions" component={Ipl2027RetentionsPage} />
       <Route path="/feed/squad" component={SquadRedirect} />
       <Route path="/feed/:category" component={FeedCategoryPage} />
-      <Route path="/feed"><Redirect to="/home" /></Route>
+      <Route path="/feed"><Redirect to="/intelligence" /></Route>
       <Route path="/stats"><StatsPage /></Route>
       <Route path="/pulse" component={PulsePage} />
       {/* Scout Lab: Global T20 Talent Intelligence */}

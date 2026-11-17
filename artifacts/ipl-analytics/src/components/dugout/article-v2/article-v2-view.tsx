@@ -1,9 +1,10 @@
 // Dugout v2 article page: five-section structure, evidence-backed prose, charts, editorial
 // photography from the rights-gated manifest, verified JioHotstar "Watch the Moment" links.
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { ArrowRight, BookOpen, Clock, ExternalLink, FlaskConical, Lightbulb, PlayCircle, ShieldCheck } from "lucide-react";
 import { Layout } from "@/components/layout";
+import { MobileChromeContext } from "@/mobile/gate";
 import { AdVessel } from "@/components/ad-vessel";
 import { EditorialCoverCanvas } from "@/components/dugout/editorial-cover-canvas";
 import { EditorialImageFigure } from "@/components/dugout/editorial-image-figure";
@@ -438,6 +439,7 @@ export function ArticleV2View({ entry }: { entry: IndexEntry }) {
   const aspectName = EDITORIAL_ASPECTS.find((x) => x.id === entry.aspect)?.name ?? entry.aspect;
 
   const franchiseArticles = useMemo(() => getV2ForFranchise(entry.franchise), [entry.franchise]);
+  const mobileShell = useContext(MobileChromeContext);
 
   if (failed) {
     return (
@@ -469,6 +471,7 @@ export function ArticleV2View({ entry }: { entry: IndexEntry }) {
     <Layout hideRightPanel>
       <div className="min-h-screen w-full bg-slate-50 dark:bg-[#08131F] text-slate-800 dark:text-[#EFF5F7] antialiased" data-article-v2={a.id}>
         {/* Breadcrumbs */}
+        {!mobileShell && (
         <div className="sticky top-0 z-30 border-b border-slate-200 dark:border-[#2A4050] bg-white/95 dark:bg-[#08131F]/95 px-4 py-2.5 backdrop-blur-md">
           <div className="mx-auto flex max-w-7xl items-center gap-2 truncate text-xs text-slate-600 dark:text-[#8A9EA8]">
             <Link href="/home" className="transition hover:text-slate-950 dark:hover:text-white">Home</Link>
@@ -482,6 +485,7 @@ export function ArticleV2View({ entry }: { entry: IndexEntry }) {
             <span className="hidden truncate text-slate-900 dark:text-[#EFF5F7] font-semibold sm:inline">{aspectName}</span>
           </div>
         </div>
+        )}
 
         {/* Header */}
         <header className="mx-auto max-w-7xl px-4 pb-3 pt-6 sm:px-6 sm:pt-8 lg:px-8">
