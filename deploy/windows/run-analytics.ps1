@@ -5,6 +5,9 @@ Import-CricFieldEnv
 if (-not (Test-Path $ApiEntry)) { throw "Build first: pnpm --filter @workspace/api-server run build (missing $ApiEntry)" }
 foreach ($db in $IplDb, $ScoutDb) { if (-not (Test-Path $db)) { throw "Database missing: $db" } }
 
+# PowerShell 5.1 turns a native program's stderr lines into error records; with 'Stop' (common.ps1) the first
+# warning Node prints would kill this supervisor. Checks above ran under 'Stop'; the loop must not.
+$ErrorActionPreference = 'Continue'
 $delay = 5
 while ($true) {
     Remove-OldLogs

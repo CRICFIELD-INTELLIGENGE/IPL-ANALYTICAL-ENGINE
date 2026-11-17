@@ -6,27 +6,30 @@ Import-CricFieldEnv
 $local = "http://127.0.0.1:$env:PORT"
 $headers = @{ 'x-cricfield-analytics-key' = $env:ANALYTICS_GATE_KEY }
 
-function Probe([string]$Label, [string]$Url, [hashtable]$H = @{}) {
+# Prints one PASS/FAIL line (Write-Host, so it is never swallowed) and returns the body.
+function Probe([string]$Label, [string]$Url, [hashtable]$H = @{}, [int]$Expect = 200) {
     $sw = [Diagnostics.Stopwatch]::StartNew()
+    $code = 'no response'; $body = $null
     try {
         $r = Invoke-WebRequest -Uri $Url -Headers $H -UseBasicParsing -TimeoutSec 30
-        '{0,-28} {1} in {2} ms' -f $Label, $r.StatusCode, $sw.ElapsedMilliseconds
-        return $r.Content
+        $code = [int]$r.StatusCode; $body = $r.Content
     } catch {
-        $code = if ($_.Exception.Response) { [int]$_.Exception.Response.StatusCode } else { 'no response' }
-        '{0,-28} FAIL ({1}) after {2} ms' -f $Label, $code, $sw.ElapsedMilliseconds
+        if ($_.Exception.Response) { $code = [int]$_.Exception.Response.StatusCode }
     }
+    $verdict = if ($code -eq $Expect) { 'PASS' } else { 'FAIL' }
+    Write-Host ('{0} {1,-26} {2} in {3} ms' -f $verdict, $Label, $code, $sw.ElapsedMilliseconds)
+    return $body
 }
 
 '--- Endpoints'
-Probe 'Local liveness' "$local/api/healthz" | Out-Null
+$null = Probe 'Local liveness' "$local/api/healthz"
 $h = Probe 'Local analytics health' "$local/api/analytics/health" $headers
 if ($h -and $h -match '^\{') { $j = $h | ConvertFrom-Json; '  status={0} inFlight={1} served={2} rejected={3} busy={4} rssMB={5} readOnly={6}' -f $j.status, $j.inFlight, $j.served, $j.rejected, $j.busy, $j.memoryMb.rss, $j.readOnly }
-Probe 'Local sample query' "$local/api/stats/query?season=2024&phase=Death" $headers | Out-Null
-Probe 'Unkeyed query refused' "$local/api/stats/query?season=2024" | Out-Null
+$null = Probe 'Local sample query' "$local/api/stats/query?season=2024&phase=Death" $headers
+$null = Probe 'Unkeyed query refused' "$local/api/stats/query?season=2024" @{} 401
 if ($env:CRICFIELD_PUBLIC_URL) {
-    Probe 'Tunnel liveness' "$env:CRICFIELD_PUBLIC_URL/api/healthz" | Out-Null
-    Probe 'Tunnel keyed query' "$env:CRICFIELD_PUBLIC_URL/api/stats/query?season=2024&phase=Death" $headers | Out-Null
+    $null = Probe 'Tunnel liveness' "$env:CRICFIELD_PUBLIC_URL/api/healthz"
+    $null = Probe 'Tunnel keyed query' "$env:CRICFIELD_PUBLIC_URL/api/stats/query?season=2024&phase=Death" $headers
 }
 
 '--- Scheduled tasks'

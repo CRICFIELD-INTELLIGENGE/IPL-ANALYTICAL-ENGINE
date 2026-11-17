@@ -1,9 +1,10 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { mkdtempSync, existsSync, copyFileSync } from "node:fs";
+import { mkdtempSync, existsSync, copyFileSync, rmSync } from "node:fs";
 import { rename } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { loadWarehouseSnapshot } from "./services/turso-snapshot.js";
+import { scoutPostgresConfigured, loadScoutFromPostgres } from "./services/scout/scout-postgres.js";
 import { SCOUT_PATHS, IPL_PATHS, ANALYTICS_PATHS, LAPTOP_ONLY_PATHS, ANALYTICS_KEY_HEADER, CLIENT_IP_HEADER } from "./lib/analytics-routes.js";
 import app from "./app.js";
 
@@ -31,6 +32,11 @@ function configureScout() {
   if (fallback && existsSync(fallback)) {
     copyFileSync(fallback, scoutPath);
     return Promise.resolve();
+  }
+  if (scoutPostgresConfigured()) {
+    const staging = `${scoutPath}.loading`;
+    rmSync(staging, { force: true });
+    return loadScoutFromPostgres(staging).then(() => rename(staging, scoutPath));
   }
   const url = process.env.TURSO_SCOUT_DATABASE_URL;
   const token = process.env.TURSO_SCOUT_AUTH_TOKEN;
