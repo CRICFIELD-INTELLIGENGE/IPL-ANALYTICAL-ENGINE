@@ -7,7 +7,6 @@ import { defaultAnalyticsFilters, type AnalyticsFilters } from "@/lib/store";
 import { playerSlug, usePlayerDisplayNames, displayPlayerName } from "@/lib/aggregates";
 import { parseAsk, askParams, METRIC_FIELD, METRIC_LABEL, type AskContext, type AskQuery, type Metric } from "./ask-parser";
 import type { MatchState } from "./match-state";
-import { downloadCsv, toCsv } from "./slice-url";
 
 type Turn = { question: string; query: AskQuery };
 
@@ -224,8 +223,6 @@ export function AskEngineView({ sliceFilters, sliceMatchState, minBalls, batterN
               </p>
               <div className="flex flex-wrap gap-2">
                 <button type="button" className="rounded-lg bg-amber-400 px-3 py-1.5 text-xs font-black text-black" onClick={() => onApply(effective!.filters, effective!.matchState, current.role)}>Apply to Stats Centre</button>
-                <button type="button" className="rounded-lg border border-slate-200 dark:border-white/10 px-3 py-1.5 text-xs font-bold"
-                  onClick={() => downloadCsv("cricfield-ask.csv", toCsv(rows, ["player", ...cols.map(([k]) => k)], [`Question: ${turns[turns.length - 1].question}`, `Query: /api/stats/query?${params}`]))}>Export CSV</button>
               </div>
             </>)}
 

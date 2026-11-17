@@ -4,7 +4,7 @@ import {
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, Cell,
 } from "recharts";
 import {
-  Zap, Target, MapPin, Swords, AlertTriangle, Download, TrendingUp, Crown, Trophy,
+  Zap, Target, MapPin, Swords, AlertTriangle, TrendingUp, Crown, Trophy,
 } from "lucide-react";
 import { GlassCard } from "@/components/glass-card";
 import { TeamLogo } from "@/components/team-logo";
@@ -58,16 +58,13 @@ function SectionHeading({ icon: Icon, title, subtitle, accent, right }: {
 }
 
 export function TeamAnalyticsDashboard({
-  team, accent, matches, mobileSection = "all",
+  team, accent, matches,
 }: {
   team: string;
   accent: string;
   /** All matches, used for the close-finish record the API does not carry. */
   matches: MatchSummary[];
-  /** Optional index selector for compact mobile viewing ("1".."11" or "all"). */
-  mobileSection?: string;
 }) {
-  const showSec = (id: string) => mobileSection === "all" || mobileSection === id;
   const [era, setEra] = useState(0);
   const preset = ERA_PRESETS[era];
   const analytics = useTeamAnalytics(team, preset.from, preset.to);
@@ -279,60 +276,6 @@ export function TeamAnalyticsDashboard({
       .slice(0, 5);
   }, [matches, team, opponent, preset.from, preset.to]);
 
-  const exportCsv = () => {
-    if (!d) return;
-    const rows: string[][] = [
-      ["Franchise", d.team],
-      ["Season range", `${d.seasonRange.from ?? "2008"}-${d.seasonRange.to ?? "2026"}`],
-      [],
-      ["Record", "Played", "Won", "Lost", "No result", "Win %"],
-      ["", String(d.record.played), String(d.record.wins), String(d.record.losses), String(d.record.noResult), String(d.record.winPct)],
-      [],
-      ["Batting phase", "Balls", "Runs", "Run rate", "Boundary %", "Dot %", "Wickets lost"],
-      ...d.battingPhases.map(p => ["", String(p.balls), String(p.runs), String(p.runRate), String(p.boundaryPct), String(p.dotPct), String(p.wickets)].map((v, i) => i === 0 ? p.phase : v)),
-      [],
-      ["Bowling phase", "Balls", "Runs", "Economy", "Dot %", "Wickets"],
-      ...d.bowlingPhases.map(p => [p.phase, String(p.balls), String(p.runs), String(p.balls ? Math.round((p.runs / p.balls) * 600) / 100 : 0), String(p.dotPct), String(p.wickets)]),
-      [],
-      ["Toss", "Matches", "Win %"],
-      ["Won toss", String(d.toss.tossWon), String(d.toss.tossWonWinPct)],
-      ["Lost toss", String(d.toss.tossLost), String(d.toss.tossLostWinPct)],
-      [],
-      ["Innings", "Matches", "Win %"],
-      ["Batting first", String(d.battingOrder.batFirst), String(d.battingOrder.batFirstWinPct)],
-      ["Chasing", String(d.battingOrder.chased), String(d.battingOrder.chasedWinPct)],
-      [],
-      ["Conditions", "Matches", "Win %"],
-      ["Home", String(d.homeAway.homePlayed), String(d.homeAway.homeWinPct)],
-      ["Away", String(d.homeAway.awayPlayed), String(d.homeAway.awayWinPct)],
-      ["Evening", String(d.dayNight.nightPlayed), String(d.dayNight.nightWinPct)],
-      ["Afternoon", String(d.dayNight.dayPlayed), String(d.dayNight.dayWinPct)],
-      ["No published start time", String(d.dayNight.unknownStartTime), ""],
-      [],
-      ["Head to head", "Played", "Won", "Lost", "Win %"],
-      ...d.headToHead.map(h => [h.opponent, String(h.played), String(h.wins), String(h.losses), String(h.winPct)]),
-      [],
-      ["Venue", "Played", "Won", "Win %"],
-      ...d.venues.map(v => [v.venue, String(v.played), String(v.wins), String(v.winPct)]),
-      [],
-      ["Captain", "From", "To", "Matches", "Won", "Win %", "Titles", "Totals"],
-      ...d.captains.map(c => [
-        c.player, String(c.firstSeason ?? ""), String(c.lastSeason ?? ""),
-        String(c.matches), String(c.won), String(c.winPct), String(c.titles),
-        c.exact ? "this club" : `career (also ${c.alsoLed.join("; ")})`,
-      ]),
-    ];
-    const csv = rows
-      .map(r => r.map(cell => /[",\n]/.test(cell) ? `"${cell.replace(/"/g, '""')}"` : cell).join(","))
-      .join("\n");
-    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${teamShort(team)}-analytics-${preset.label.replace(/[^0-9A-Za-z]+/g, "")}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
   if (analytics.isLoading && !d) {
     return <div className="py-20 text-center text-white/40 font-black uppercase tracking-widest">Computing franchise analytics…</div>;
   }
@@ -354,7 +297,7 @@ export function TeamAnalyticsDashboard({
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Era filter + export */}
+      {/* Era filter */}
       <GlassCard className="p-3 sm:p-4 flex items-center justify-between gap-2.5 sm:gap-4 flex-wrap">
         <div className="flex items-center gap-1 sm:gap-2 flex-wrap w-full sm:w-auto">
           <span className="text-[9px] font-black uppercase tracking-widest text-white/30 mr-0.5 sm:mr-1 shrink-0">Era</span>
@@ -373,13 +316,6 @@ export function TeamAnalyticsDashboard({
             </button>
           ))}
         </div>
-        <button
-          onClick={exportCsv}
-          className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-white/60 hover:text-white border border-white/10 hover:border-white/25 transition-all shrink-0"
-        >
-          <Download className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
-          <span className="text-[9.5px] sm:text-[10px] font-black uppercase tracking-widest leading-none">Export CSV</span>
-        </button>
       </GlassCard>
 
       {/* Headline for the selected era */}
@@ -391,10 +327,8 @@ export function TeamAnalyticsDashboard({
       </div>
 
       {/* Phase analytics */}
-      {(showSec("3") || showSec("4")) && (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        {showSec("3") && (
-        <GlassCard className="lg:col-span-2 p-3.5 sm:p-6">
+        <GlassCard id="team-sec-3" className="lg:col-span-2 p-3.5 sm:p-6">
           <SectionHeading
             icon={Zap} accent={accent}
             title="Phase Breakdown"
@@ -427,10 +361,8 @@ export function TeamAnalyticsDashboard({
             ))}
           </div>
         </GlassCard>
-        )}
 
-        {showSec("4") && (
-        <GlassCard className="p-3.5 sm:p-6">
+        <GlassCard id="team-sec-4" className="p-3.5 sm:p-6">
           <SectionHeading
             icon={Target} accent={accent}
             title="Phase Profile"
@@ -450,15 +382,11 @@ export function TeamAnalyticsDashboard({
             </ResponsiveContainer>
           </div>
         </GlassCard>
-        )}
       </div>
-      )}
 
       {/* Toss, innings order, pace vs spin */}
-      {(showSec("5") || showSec("6") || showSec("7")) && (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        {showSec("5") && (
-        <GlassCard className="p-3.5 sm:p-6">
+        <GlassCard id="team-sec-5" className="p-3.5 sm:p-6">
           <SectionHeading icon={TrendingUp} accent={accent} title="Toss Impact" subtitle="Win rate by toss outcome" />
           <div className="space-y-3">
             {[
@@ -480,10 +408,8 @@ export function TeamAnalyticsDashboard({
             </div>
           </div>
         </GlassCard>
-        )}
 
-        {showSec("6") && (
-        <GlassCard className="p-3.5 sm:p-6">
+        <GlassCard id="team-sec-6" className="p-3.5 sm:p-6">
           <SectionHeading icon={Target} accent={accent} title="Conditions" subtitle="Innings order, ground and time of day" />
           <div className="space-y-3">
             {[
@@ -514,10 +440,8 @@ export function TeamAnalyticsDashboard({
             )}
           </div>
         </GlassCard>
-        )}
 
-        {showSec("7") && (
-        <GlassCard className="p-3.5 sm:p-6">
+        <GlassCard id="team-sec-7" className="p-3.5 sm:p-6">
           <SectionHeading icon={Zap} accent={accent} title="Pace vs Spin" subtitle="This attack's own returns" />
           <div className="space-y-4">
             {d.bowlerSplit.map(b => (
@@ -533,15 +457,11 @@ export function TeamAnalyticsDashboard({
             ))}
           </div>
         </GlassCard>
-        )}
       </div>
-      )}
 
       {/* Clutch + venues */}
-      {(showSec("8") || showSec("9")) && (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        {showSec("8") && (
-        <GlassCard className="p-3.5 sm:p-6">
+        <GlassCard id="team-sec-8" className="p-3.5 sm:p-6">
           <SectionHeading icon={AlertTriangle} accent={accent} title="Clutch & Collapse" subtitle="Tight finishes and wicket clusters" />
           <div className="grid grid-cols-2 gap-3">
             <StatTile label="Close finishes" value={`${clutch.closeWinPct}%`} sub={`${clutch.closeWon} of ${clutch.closePlayed} won`} accent={accent} />
@@ -553,10 +473,8 @@ export function TeamAnalyticsDashboard({
             A close finish is under 10 runs or 2 wickets or fewer. A collapse is three wickets inside fifteen deliveries.
           </p>
         </GlassCard>
-        )}
 
-        {showSec("9") && (
-        <GlassCard className="lg:col-span-2 p-3.5 sm:p-6">
+        <GlassCard id="team-sec-9" className="lg:col-span-2 p-3.5 sm:p-6">
           <SectionHeading icon={MapPin} accent={accent} title="Venue Record" subtitle="Grounds with the most fixtures in this era" />
           <div className="space-y-2 max-h-[280px] overflow-y-auto pr-1">
             {d.venues.slice(0, 12).map(v => (
@@ -571,13 +489,11 @@ export function TeamAnalyticsDashboard({
             ))}
           </div>
         </GlassCard>
-        )}
       </div>
-      )}
 
       {/* Captains */}
-      {showSec("10") && (d.captains?.length > 0 ? (
-        <GlassCard className="p-3.5 sm:p-6">
+      {d.captains?.length > 0 && (
+        <GlassCard id="team-sec-10" className="p-3.5 sm:p-6">
           <SectionHeading
             icon={Crown} accent={accent}
             title="Captaincy"
@@ -620,15 +536,10 @@ export function TeamAnalyticsDashboard({
             </p>
           )}
         </GlassCard>
-      ) : mobileSection === "10" ? (
-        <GlassCard className="p-4 text-center text-xs font-bold text-white/45">
-          No captaincy records available for this franchise in the selected era.
-        </GlassCard>
-      ) : null)}
+      )}
 
       {/* Head to head */}
-      {showSec("11") && (
-      <GlassCard className="p-3.5 sm:p-6">
+      <GlassCard id="team-sec-11" className="p-3.5 sm:p-6">
         <SectionHeading
           icon={Swords} accent={accent}
           title="Head to Head"
@@ -705,7 +616,6 @@ export function TeamAnalyticsDashboard({
           </div>
         )}
       </GlassCard>
-      )}
 
       {/* The API still reports `notSupported` and it stays documented in
           team-analytics.ts, but it is not surfaced to readers. */}

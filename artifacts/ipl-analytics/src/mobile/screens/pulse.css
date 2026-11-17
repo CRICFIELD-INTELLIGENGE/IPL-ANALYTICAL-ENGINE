@@ -1,0 +1,607 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   CRICFIELD Mobile — AUCTION PULSE (.mp-page, scoped strictly below desktop)
+   Terminal precision + Franchise identity + Zero desktop bleed.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.mp-page {
+  --mp-surface: rgba(11, 18, 36, 0.88);
+  --mp-surface-2: rgba(16, 25, 48, 0.94);
+  --mp-surface-muted: rgba(255, 255, 255, 0.035);
+  --mp-border: rgba(255, 255, 255, 0.09);
+  --mp-border-strong: rgba(255, 255, 255, 0.16);
+  --mp-text: var(--m-text, #f8fafc);
+  --mp-muted: var(--m-muted, #94a3b8);
+  --mp-dim: var(--m-dim, rgba(255, 255, 255, 0.52));
+  --mp-accent: var(--team-accent, #f97316);
+  --mp-accent-soft: color-mix(in srgb, var(--mp-accent) 16%, transparent);
+  --mp-accent-line: color-mix(in srgb, var(--mp-accent) 48%, transparent);
+  --mp-ok: #34d399;
+  --mp-bad: #fb7185;
+  --mp-amber: #fbbf24;
+  --mp-cyan: #38bdf8;
+  --mp-purple: #a78bfa;
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  color: var(--mp-text);
+  font-family: var(--m-ui);
+}
+
+html:not(.dark) .cfm .mp-page,
+[data-theme="light"] .cfm .mp-page {
+  --mp-surface: rgba(255, 255, 255, 0.96);
+  --mp-surface-2: rgba(241, 245, 249, 0.96);
+  --mp-surface-muted: rgba(15, 23, 42, 0.035);
+  --mp-border: rgba(15, 23, 42, 0.11);
+  --mp-border-strong: rgba(15, 23, 42, 0.2);
+  --mp-text: #0f172a;
+  --mp-muted: #475569;
+  --mp-dim: rgba(15, 23, 42, 0.54);
+  --mp-ok: #059669;
+  --mp-bad: #e11d48;
+  --mp-amber: #d97706;
+  --mp-cyan: #0284c7;
+  --mp-purple: #7c3aed;
+}
+
+/* ─── Contextual Header ─── */
+.mp-ctx-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px 10px;
+}
+
+.mp-ctx-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.mp-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.mp-title {
+  margin: 0;
+  font: 800 18px/1.1 var(--m-display);
+  letter-spacing: -0.025em;
+  color: var(--mp-text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mp-title-accent {
+  color: var(--mp-accent);
+}
+
+.mp-meta-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font: 600 10.5px/1.2 var(--m-mono);
+  color: var(--mp-muted);
+}
+
+.mp-phase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid var(--mp-accent-line);
+  background: var(--mp-accent-soft);
+  color: var(--mp-text);
+  font: 700 9.5px/1.2 var(--m-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mp-page button.mp-season-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 6px;
+  border: 1px solid var(--mp-border-strong);
+  background: var(--mp-surface-2);
+  color: var(--mp-text);
+  font: 700 12px/1 var(--m-mono);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.mp-page button.mp-season-btn:active {
+  transform: scale(0.98);
+}
+
+.mp-ctx-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.mp-page button.mp-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid var(--mp-border);
+  background: var(--mp-surface);
+  color: var(--mp-muted);
+  flex-shrink: 0;
+}
+
+.mp-page button.mp-icon-btn:active {
+  color: var(--mp-text);
+  border-color: var(--mp-accent-line);
+}
+
+/* Compact Upcoming 2027 Strip */
+.mp-upcoming-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--mp-purple) 30%, transparent);
+  background: color-mix(in srgb, var(--mp-purple) 8%, var(--mp-surface));
+  min-width: 0;
+}
+
+.mp-upcoming-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 1px;
+}
+
+.mp-upcoming-kicker {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: 800 9.5px/1.1 var(--m-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mp-purple);
+}
+
+.mp-upcoming-sub {
+  font: 600 11px/1.25 var(--m-ui);
+  color: var(--mp-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mp-page button.mp-upcoming-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 5px;
+  border: 1px solid color-mix(in srgb, var(--mp-purple) 45%, transparent);
+  background: color-mix(in srgb, var(--mp-purple) 20%, transparent);
+  color: var(--mp-text);
+  font: 700 11px/1 var(--m-ui);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Sticky Two-Level Navigation System ─── */
+.mp-nav-sticky {
+  position: sticky;
+  top: var(--mp-sticky-top, 54px);
+  z-index: 32;
+  background: rgba(5, 8, 22, 0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-top: 1px solid var(--mp-border);
+  border-bottom: 1px solid var(--mp-border);
+}
+
+html:not(.dark) .cfm .mp-nav-sticky,
+[data-theme="light"] .cfm .mp-nav-sticky {
+  background: rgba(248, 250, 252, 0.95);
+}
+
+/* LEVEL 1 — RECTANGULAR CATEGORY TILES (height 44px, radius 5px) */
+.mp-l1-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.92fr) minmax(0, 0.86fr) minmax(0, 1.2fr);
+  gap: 6px;
+  padding: 8px 12px 6px;
+}
+
+.mp-page button.mp-l1-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 44px;
+  min-width: 0;
+  padding: 0 4px;
+  border-radius: 5px;
+  border: 1px solid var(--mp-border);
+  background: var(--mp-surface-muted);
+  color: var(--mp-muted);
+  font: 700 11px/1 var(--m-ui);
+  letter-spacing: 0.01em;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+}
+
+.mp-page button.mp-l1-btn[data-active="true"] {
+  background: var(--mp-accent-soft);
+  border-color: var(--mp-accent);
+  color: var(--mp-text);
+  box-shadow: inset 0 -2px 0 var(--mp-accent);
+}
+
+.mp-page button.mp-l1-btn svg {
+  flex-shrink: 0;
+}
+
+.mp-l1-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 355px) {
+  .mp-l1-bar {
+    gap: 4px;
+    padding: 8px 10px 6px;
+  }
+  .mp-page button.mp-l1-btn {
+    padding: 0 2px;
+    font: 700 10px/1 var(--m-ui);
+    gap: 3px;
+  }
+}
+
+/* LEVEL 2 — FULLY ROUNDED CAPSULE SUBTABS (height 34px, radius 999px) */
+.mp-l2-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 7px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 2px 12px 9px;
+}
+
+.mp-l2-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.mp-page button.mp-l2-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--mp-border);
+  background: var(--mp-surface);
+  color: var(--mp-muted);
+  font: 600 11.5px/1 var(--m-ui);
+  white-space: nowrap;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.mp-page button.mp-l2-pill[data-active="true"] {
+  background: var(--mp-accent);
+  border-color: var(--mp-accent);
+  color: #050816;
+  font-weight: 800;
+}
+
+html:not(.dark) .cfm .mp-page button.mp-l2-pill[data-active="true"],
+[data-theme="light"] .cfm .mp-page button.mp-l2-pill[data-active="true"] {
+  color: #ffffff;
+}
+
+/* ─── Content Container & Cards ─── */
+.mp-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 12px 18px;
+  min-width: 0;
+}
+
+.mp-card {
+  border-radius: 12px;
+  border: 1px solid var(--mp-border);
+  background: var(--mp-surface);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.mp-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--m-line-soft, rgba(255, 255, 255, 0.06));
+}
+
+.mp-card-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font: 800 11px/1.2 var(--m-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mp-text);
+}
+
+.mp-card-sub {
+  font: 600 10.5px/1.2 var(--m-mono);
+  color: var(--mp-muted);
+  white-space: nowrap;
+}
+
+/* KPI Grids */
+.mp-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mp-kpi-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.mp-kpi {
+  border-radius: 9px;
+  border: 1px solid var(--mp-border);
+  background: var(--mp-surface-muted);
+  padding: 8px 10px;
+  min-width: 0;
+}
+
+.mp-kpi-label {
+  font: 700 9.5px/1.2 var(--m-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mp-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mp-kpi-val {
+  margin-top: 3px;
+  font: 800 14px/1.15 var(--m-display);
+  letter-spacing: -0.02em;
+  color: var(--mp-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Horizontal strips (Franchise Selector, Archive Seasons, Filters) */
+.mp-hscroll {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 7px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 2px;
+}
+
+.mp-hscroll::-webkit-scrollbar {
+  display: none;
+}
+
+.mp-page button.mp-team-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--mp-border);
+  background: var(--mp-surface-muted);
+  color: var(--mp-muted);
+  font: 800 11.5px/1 var(--m-mono);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.mp-page button.mp-team-chip[data-active="true"] {
+  color: var(--mp-text);
+  background: var(--mp-surface-2);
+}
+
+.mp-page button.mp-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid var(--mp-border);
+  background: var(--mp-surface-muted);
+  color: var(--mp-muted);
+  font: 700 11px/1 var(--m-ui);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.mp-page button.mp-filter-pill[data-active="true"] {
+  background: var(--mp-accent-soft);
+  border-color: var(--mp-accent);
+  color: var(--mp-text);
+}
+
+/* Touch friendly links / inline buttons */
+.mp-page button.mp-text-link,
+.mp-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 700 11.5px/1.2 var(--m-ui);
+  color: var(--mp-accent);
+}
+
+.mp-page button.mp-chip-btn,
+.mp-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 36px;
+  padding: 0 11px;
+  border-radius: 8px;
+  border: 1px solid var(--mp-border);
+  background: var(--mp-surface-2);
+  color: var(--mp-text);
+  font: 700 11.5px/1 var(--m-ui);
+}
+
+.mp-page button.mp-chip-btn[data-active="true"],
+.mp-chip-btn[data-active="true"] {
+  border-color: var(--mp-accent);
+  background: var(--mp-accent-soft);
+}
+
+/* Progress bar */
+.mp-progress-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--mp-surface-muted);
+  border: 1px solid var(--mp-border);
+  overflow: hidden;
+}
+
+.mp-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 300ms ease;
+}
+
+/* Form inputs inside Mobile Pulse */
+.mp-input {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 9px;
+  border: 1px solid var(--mp-border-strong);
+  background: var(--mp-surface-2);
+  color: var(--mp-text);
+  font: 600 13px/1 var(--m-ui);
+  outline: none;
+}
+
+.mp-input.mp-input--search {
+  padding-left: 34px;
+}
+
+.mp-input:focus {
+  border-color: var(--mp-accent);
+}
+
+.mp-select {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 9px;
+  border: 1px solid var(--mp-border-strong);
+  background: var(--mp-surface-2);
+  color: var(--mp-text);
+  font: 600 12.5px/1 var(--m-ui);
+}
+
+/* Compact Expandable Row */
+.mp-page button.mp-row-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  color: var(--mp-text);
+  font: inherit;
+  min-width: 0;
+}
+
+.mp-list-divider > * + * {
+  border-top: 1px solid var(--m-line-soft, rgba(255, 255, 255, 0.06));
+}
+
+/* Touch Visualization Viewport */
+.mp-viz-frame {
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--mp-border);
+  background: #06091a;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.mp-viz-toolbar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mp-page button.mp-viz-ctrl {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(8, 13, 28, 0.86);
+  color: #f8fafc;
+  backdrop-filter: blur(8px);
+}
+
+.mp-fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  background: #050816;
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top, 10px) 10px calc(env(safe-area-inset-bottom, 10px) + 10px);
+  gap: 8px;
+}

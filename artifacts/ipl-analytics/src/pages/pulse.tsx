@@ -1224,7 +1224,7 @@ function Insight({ lot, model }: { lot: PulseLot; model: PulseModel }) {
     ["Price context · Auction War Room", `/ai-analyst/auction-war-room?team=${lot.team}&player=${encodeURIComponent(lot.player)}`],
     ["Similar players · Player Pool Graph", `/ai-analyst/player-pool?player=${stats}`],
     ["Pressure Genome", `/ai-analyst/pressure?player=${stats}`],
-    ["XI impact · Build Playing XI", "/arcade/build-your-xi"],
+    ["XI impact · Build Playing XI", `/ai-analyst/playing-xi?team=${lot.team}`],
     ["Franchise strategy · Opposition Map", `/ai-analyst/opposition-map?team=${lot.team}`],
   ];
   return (
@@ -1606,7 +1606,6 @@ const Newsroom = () => (
   <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] pt-1 font-semibold">
     <Link href="/feed/auction" className="text-primary hover:underline">Feed · Auction analysis</Link>
     <Link href="/dugout" className="text-primary hover:underline">Editorial Dugout</Link>
-    <Link href="/arcade/auction-room" className="text-primary hover:underline">Play the auction game (simulated, separate from results)</Link>
   </div>
 );
 

@@ -42,7 +42,7 @@ export const CARDS: CardDef[] = [
 const TOOLS = [
   { label: "Retention Lab", desc: "Model retain/release calls against each squad", href: "/feed/ipl-2027?module=retention", icon: ShieldCheck, tint: "bg-violet-600" },
   { label: "Auction War Room", desc: "Purse, needs and targets by franchise", href: "/ai-analyst/auction-war-room", icon: Wallet, tint: "bg-lime-500" },
-  { label: "Playing XI Builder", desc: "Create balanced combinations", href: "/arcade/build-your-xi", icon: Shirt, tint: "bg-sky-500" },
+  { label: "Playing XI Builder", desc: "Create balanced combinations", href: "/ai-analyst/playing-xi", icon: Shirt, tint: "bg-sky-500" },
   { label: "Scout Engine", desc: "Find players by role, league and metrics", href: "/scout", icon: Search, tint: "bg-fuchsia-600" },
 ];
 

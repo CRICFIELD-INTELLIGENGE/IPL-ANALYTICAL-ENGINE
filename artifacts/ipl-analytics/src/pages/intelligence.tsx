@@ -898,7 +898,7 @@ export default function IntelligencePage() {
                     {
                       label: `${activeFranchiseCode} Auction Strategy`,
                       sub: "Past auctions, value and retention analysis",
-                      href: "/arcade/auction-room",
+                      href: `/ai-analyst/auction-war-room?team=${activeFranchiseCode}`,
                     },
                     {
                       label: "Franchise Timeline",

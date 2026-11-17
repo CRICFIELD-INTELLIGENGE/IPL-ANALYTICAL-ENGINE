@@ -22,9 +22,9 @@ import { motion, AnimatePresence } from "framer-motion";
    DATA MODEL
 ───────────────────────────────────────────────────────────────── */
 
-type NodeType = "player" | "team" | "venue" | "role" | "concept";
+export type NodeType = "player" | "team" | "venue" | "role" | "concept";
 
-interface GraphNode {
+export interface GraphNode {
   id: string;
   type: NodeType;
   label: string;
@@ -37,7 +37,7 @@ interface GraphNode {
   vy: number;
 }
 
-interface GraphEdge {
+export interface GraphEdge {
   source: string;
   target: string;
   relation: string;
@@ -48,7 +48,7 @@ interface GraphEdge {
    GRAPH DATASET
 ───────────────────────────────────────────────────────────────── */
 
-const RAW_NODES: Omit<GraphNode, "x" | "y" | "vx" | "vy">[] = [
+export const RAW_NODES: Omit<GraphNode, "x" | "y" | "vx" | "vy">[] = [
   // Teams
   { id: "rcb",  type: "team",    label: "RCB",       sublabel: "Royal Challengers",   weight: 9 },
   { id: "mi",   type: "team",    label: "MI",        sublabel: "Mumbai Indians",       weight: 9 },
@@ -95,7 +95,7 @@ const RAW_NODES: Omit<GraphNode, "x" | "y" | "vx" | "vy">[] = [
   { id: "title",      type: "concept", label: "IPL Title",      sublabel: "Champion",      weight: 7 },
 ];
 
-const RAW_EDGES: GraphEdge[] = [
+export const RAW_EDGES: GraphEdge[] = [
   // Player → Team
   { source: "virat",   target: "rcb",  relation: "plays for",    strength: 1.0 },
   { source: "bumrah",  target: "mi",   relation: "plays for",    strength: 1.0 },
@@ -155,7 +155,7 @@ const RAW_EDGES: GraphEdge[] = [
    VISUAL CONFIG
 ───────────────────────────────────────────────────────────────── */
 
-const TYPE_CONFIG: Record<NodeType, { color: string; glow: string; bg: string; border: string; emoji: string }> = {
+export const TYPE_CONFIG: Record<NodeType, { color: string; glow: string; bg: string; border: string; emoji: string }> = {
   player:  { color: "#a78bfa", glow: "rgba(167,139,250,0.4)", bg: "rgba(167,139,250,0.12)", border: "rgba(167,139,250,0.5)", emoji: "🏏" },
   team:    { color: "#fbbf24", glow: "rgba(251,191,36,0.4)",  bg: "rgba(251,191,36,0.12)",  border: "rgba(251,191,36,0.5)",  emoji: "🛡️" },
   venue:   { color: "#34d399", glow: "rgba(52,211,153,0.4)",  bg: "rgba(52,211,153,0.12)",  border: "rgba(52,211,153,0.5)",  emoji: "🏟️" },
@@ -167,7 +167,7 @@ const TYPE_CONFIG: Record<NodeType, { color: string; glow: string; bg: string; b
    FORCE SIMULATION (pure JS, no D3)
 ───────────────────────────────────────────────────────────────── */
 
-function initPositions(nodes: GraphNode[], w: number, h: number) {
+export function initPositions(nodes: GraphNode[], w: number, h: number) {
   // Arrange by type in rough zones
   const zones: Record<NodeType, [number, number]> = {
     team:    [w * 0.5, h * 0.5],
@@ -190,7 +190,7 @@ function initPositions(nodes: GraphNode[], w: number, h: number) {
   });
 }
 
-function tick(nodes: GraphNode[], edges: GraphEdge[], w: number, h: number, alpha: number) {
+export function tick(nodes: GraphNode[], edges: GraphEdge[], w: number, h: number, alpha: number) {
   const REPULSION = 1200;
   const SPRING_LEN = 120;
   const SPRING_K   = 0.04;

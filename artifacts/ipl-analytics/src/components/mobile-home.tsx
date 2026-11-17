@@ -32,7 +32,7 @@ export function MobileHome() {
     </section>
 
     <div className="mh-shortcuts" aria-label="Quick destinations">
-      {[{ href:"/scores", label:"Scores", icon:Radio },{ href:"/stats", label:"Numbers", icon:BarChart3 },{ href:"/scout", label:"Scout", icon:Compass },{ href:"/arcade", label:"Play", icon:Gamepad2 }].map(({href,label,icon:Icon}) => <Link key={href} href={href}><span><Icon size={22}/></span>{label}</Link>)}
+      {[{ href:"/scores", label:"Scores", icon:Radio },{ href:"/stats", label:"Numbers", icon:BarChart3 },{ href:"/scout", label:"Scout", icon:Compass },{ href:"/dugout", label:"Dugout", icon:Shield }].map(({href,label,icon:Icon}) => <Link key={href} href={href}><span><Icon size={22}/></span>{label}</Link>)}
     </div>
 
     {match && <Link href="/scores" className="mh-live"><span className="mh-live-label">● LIVE</span><strong>{match.matchInfo.team1.teamSName} <span>{getMatchScoreLine(match).team1}</span></strong><strong>{match.matchInfo.team2.teamSName} <span>{getMatchScoreLine(match).team2}</span></strong><small>{match.matchInfo.status}</small></Link>}
@@ -62,7 +62,6 @@ export function MobileHome() {
     <Link href="/ai-analyst" className="mh-ai"><span><Sparkles size={23}/></span><div><small>A LITTLE HELP FROM THE DATA</small><h2>Got a cricket theory?</h2><p>Put it to your AI analyst.</p></div><ArrowUpRight size={20}/></Link>
 
     <section className="mh-season"><div className="mh-section-title"><h2>In the scorebook</h2><Link href="/stats">Explore <ArrowUpRight size={15}/></Link></div>{latest ? <><p className="mh-section-caption">IPL {latest.season} · Season at a glance</p><div className="mh-stat-grid">{[{label:"Matches",value:latest.matches},{label:"Runs",value:latest.runs},{label:"Sixes",value:latest.sixes}].map(stat => <div key={stat.label}><strong>{stat.value.toLocaleString("en-IN")}</strong><span>{stat.label}</span></div>)}</div></> : <p className="mh-section-caption">{seasons.isError ? "Season numbers are unavailable right now. Explore the Stats Centre." : "Opening the scorebook…"}</p>}</section>
-    <Link href="/arcade" className="mh-play"><Gamepad2 size={30}/><div><small>OFF THE CLOCK?</small><h2>One more over.</h2><p>Quick games. Serious bragging rights.</p></div><ArrowRight size={20}/></Link>
     <p className="mh-signoff"><Shield size={13}/> Made for the way you see cricket.</p>
   </div>;
 }

@@ -12,7 +12,11 @@ import { gameTitle, listSaves, localRecords } from "@/lib/arcade/client";
 import { SectionHead } from "../shell";
 import "@/components/arcade/arcade-kit.css";
 
-import { LIVE_GAMES as LIVE, featuredGame } from "../usage";
+const LIVE: GameId[] = ["cup-chase", "super-over", "hand-cricket", "cricket-grid", "auction-room", "guess-cricketer"];
+function featuredGame() {
+  const games = GAMES.filter((g) => LIVE.includes(g.id));
+  return games[hashString(`m-featured|${dailyKey()}`) % games.length];
+}
 const DAILY: GameId[] = ["cricket-grid", "guess-cricketer"];
 
 export default function MobilePlay() {

@@ -11,7 +11,7 @@ import { BatterLensRankings } from "@/components/batter-lens-rankings";
 import { SelectPopover, SeasonPopover, type SeasonValue, type Option } from "@/components/stats-slicing/slicing-popover";
 import { MatchStatePopover, MATCH_STATE_FIELDS, type MatchState } from "@/components/stats-slicing/match-state";
 import { MoreFiltersPopover } from "@/components/stats-slicing/more-filters";
-import { sliceToSearch, sliceFromSearch, toCsv, downloadCsv } from "@/components/stats-slicing/slice-url";
+import { sliceToSearch, sliceFromSearch } from "@/components/stats-slicing/slice-url";
 import { AskEngineView } from "@/components/stats-slicing/ask-engine";
 import { DETAILED_STYLE_OPTIONS, SITUATIONS, DESKTOP_FILTERS, sliceList, situationLabel } from "@/components/stats-slicing/config";
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
@@ -1445,19 +1445,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   const [linkCopied, setLinkCopied] = useState(false);
   const toolbarRows: any[] = activeTab === "bowlers" ? activeData.bowlers : activeData.batters;
-  const exportLeaderboard = () => {
-    const columns = activeTab === "bowlers"
-      ? ["player", "matches", "innings", "balls", "wickets", "econ", "avg", "sr", "dotPct", "boundaryPct", "trueEconomy", "bowlerType"]
-      : ["player", "matches", "innings", "runs", "balls", "dismissals", "avg", "sr", "dotPct", "boundaryPct", "fours", "sixes", "fifties", "hundreds", "highest"];
-    const meta = [
-      `CricField Stats Centre, ${activeTab}, exported ${new Date().toISOString().slice(0, 10)}`,
-      `Filters: ${filterChain.map(f => f.label).join("; ") || "none (all-time IPL)"}`,
-      ...(Object.keys(matchState).length ? [`Match state: ${Object.entries(matchState).map(([k, v]) => `${k}=${v}`).join(", ")}`] : []),
-      `Minimums: ${minSliceBalls} balls, ${minInnings} innings, ${minMatches} matches`,
-      "Source: CricField warehouse (Cricsheet ball-by-ball, IPL)",
-    ];
-    downloadCsv(`cricfield-${activeTab}.csv`, toCsv(toolbarRows, columns, meta));
-  };
   const resultsToolbar = (
     <div className="mb-3 flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1020] px-3 py-2 text-[11px]">
       <span className="font-black text-slate-900 dark:text-white">{toolbarRows.length.toLocaleString("en-IN")} {activeTab}</span>
@@ -1467,7 +1454,6 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       )}
       <span className="text-slate-400 dark:text-white/30">Sort by clicking a column header</span>
       <div className="ml-auto flex items-center gap-1.5">
-        <button type="button" onClick={exportLeaderboard} disabled={!toolbarRows.length} className="rounded-lg border border-slate-200 dark:border-white/10 px-2.5 py-1 font-bold hover:bg-slate-100 dark:hover:bg-white/5 disabled:opacity-40">Export CSV</button>
         <button type="button" onClick={() => { void navigator.clipboard?.writeText(window.location.href).then(() => { setLinkCopied(true); window.setTimeout(() => setLinkCopied(false), 1500); }); }}
           className="rounded-lg border border-slate-200 dark:border-white/10 px-2.5 py-1 font-bold hover:bg-slate-100 dark:hover:bg-white/5">{linkCopied ? "Link copied" : "Copy link"}</button>
         <button type="button" onClick={clearFilterChain} className="rounded-lg border border-slate-200 dark:border-white/10 px-2.5 py-1 font-bold hover:bg-slate-100 dark:hover:bg-white/5">Reset filters</button>
