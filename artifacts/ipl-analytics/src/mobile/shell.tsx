@@ -64,11 +64,11 @@ export const TABS: {
     match: (p: string) => /^\/(stats|players)/.test(p),
   },
   {
-    href: "/pulse",
+    href: "/auction",
     label: "Auction",
     icon: Radio,
     color: "#4343f5",
-    match: (p: string) => /^\/(pulse|auction|visualizations|ai-analyst\/auction-war-room)/.test(p),
+    match: (p: string) => /^\/(pulse|auction)(?:\/|$)/.test(p) || p === "/visualizations",
   },
   {
     href: "/scores",
@@ -83,12 +83,15 @@ export const TABS: {
     icon: LayoutGrid,
     color: "#f54888",
     match: (p: string) =>
-      /^\/(discover|more|dugout|teams|pressurelab|editorials|intelligence|storylines|feed|venues|squad-hq|retention-room|tactics|account|about|terms|privacy|contact|reports|blogs|ai-analyst)/.test(
+      /^\/(discover|more|scout|auction-strategy|dugout|teams|pressurelab|editorials|intelligence|storylines|feed|venues|squad-hq|retention-room|tactics|account|about|terms|privacy|contact|reports|blogs|ai-analyst)/.test(
         p,
       ),
   },
 ];
 const TITLES: [RegExp, string][] = [
+  [/^\/auction-strategy/, "Auction Strategy"],
+  [/^\/auction/, "Auction"],
+  [/^\/scout(?:-lab)?(?:\/|$)/, "Scout Lab"],
   [/^\/discover/, "More"],
   [/^\/more/, "More"],
   [/^\/stats/, "Stats"],
@@ -98,9 +101,9 @@ const TITLES: [RegExp, string][] = [
   [/^\/players\//, "Player"],
   [/^\/teams\/?$/, "Teams"],
   [/^\/teams\//, "Franchise"],
-  [/^\/ai-analyst\/auction-war-room/, "Auction"],
+  [/^\/ai-analyst\/auction-war-room/, "Auction Valuation"],
   [/^\/ai-analyst\/squad-builder/, "Squad Builder"],
-  [/^\/ai-analyst/, "Decision Engine"],
+  [/^\/ai-analyst/, "Decision Intelligence"],
   [/^\/squad-hq/, "Squad HQ"],
   [/^\/retention-room/, "Squad HQ"],
   [/^\/reports/, "Journal"],
@@ -124,7 +127,7 @@ const ROOTS = new Set([
   "/",
   "/home",
   "/stats",
-  "/pulse",
+  "/auction",
   "/discover",
   "/more",
 ]);
@@ -399,6 +402,7 @@ export function BottomTabs() {
     <nav
       ref={navRef}
       className={`cfm-tabs ${activeIndex < 0 ? "cfm-tabs--none" : ""}`}
+      style={{ "--mobile-tab-count": TABS.length } as CSSProperties}
       aria-label="CRICFIELD sections"
     >
       <div className="cfm-tabs-notch-clip" aria-hidden="true">
@@ -509,7 +513,7 @@ const FEATURES = [
   ["Stats", "/stats", "/feed"],
   ["Pressure Lab", "/pressurelab"],
   ["Retention Room", "/retention-room"],
-  ["Auction War Room", "/ai-analyst/auction-war-room"],
+  ["Auction Valuation", "/ai-analyst/auction-war-room"],
   ["Squad Builder", "/ai-analyst/squad-builder"],
   ["Journal", "/reports"],
   ["Editorials", "/editorials"],

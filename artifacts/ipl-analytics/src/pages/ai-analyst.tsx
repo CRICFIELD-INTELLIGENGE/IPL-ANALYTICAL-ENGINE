@@ -11,7 +11,7 @@
  *     - Opposition Exploit Map
  *     - Captain's Decision Replay
  *   Squad & Market Intelligence (Phase 4):
- *     - Auction War Room
+ *     - Auction Valuation
  *     - Squad DNA
  *     - Player Pool Graph
  *     - Build Playing XI
@@ -187,7 +187,7 @@ const ENGINES: DecisionEngine[] = [
   {
     id: "auction-war-room",
     num: "05",
-    name: "Auction War Room",
+    name: "Auction Valuation",
     badge: "BUSINESS VALUE",
     category: "squad",
     tagline: "Data-driven bid decisions: Buy · Hold · Avoid with maximum logical bid ceilings.",

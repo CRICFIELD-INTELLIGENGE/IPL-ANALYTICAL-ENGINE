@@ -1372,7 +1372,7 @@ function RelatedTools({ team }: { team: TeamCode }) {
   const theme = TEAM_REGISTRY[team];
   const tools: [string, string, string, React.ReactNode, string][] = [
     [`/dugout/${team.toLowerCase()}`, `${theme.shortName} Team Dugout`, "Full squad, stats and history", <Shield className="w-4 h-4" />, "bg-amber-500/20 text-amber-300"],
-    [`/ai-analyst/auction-war-room?team=${team}`, "Auction War Room", "Expected prices and franchise fit", <Activity className="w-4 h-4" />, "bg-emerald-500/20 text-emerald-300"],
+    [`/ai-analyst/auction-war-room?team=${team}`, "Auction Valuation", "Expected prices and franchise fit", <Activity className="w-4 h-4" />, "bg-emerald-500/20 text-emerald-300"],
     [`/ai-analyst/playing-xi?team=${team}`, "Build Playing XI", "Recommended combinations and role alternatives", <Shirt className="w-4 h-4" />, "bg-cyan-500/20 text-cyan-300"],
     [`/ai-analyst/squad-dna?team=${team}&season=2027`, "Squad DNA", "Player roles, strengths and recruitment gaps", <Users className="w-4 h-4" />, "bg-pink-500/20 text-pink-300"],
     ["/pressurelab", "Pressure Lab", "Compare performance under pressure", <Search className="w-4 h-4" />, "bg-sky-500/20 text-sky-300"],

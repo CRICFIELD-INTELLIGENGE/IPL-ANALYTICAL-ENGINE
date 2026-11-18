@@ -110,10 +110,6 @@
       "destination": "/seo/stats.html"
     },
     {
-      "source": "/pulse",
-      "destination": "/seo/pulse.html"
-    },
-    {
       "source": "/scores",
       "destination": "/seo/scores.html"
     },
@@ -178,6 +174,14 @@
       "destination": "/sitemap-dugout.xml"
     },
     {
+      "source": "/scout",
+      "destination": "/seo/scout.html"
+    },
+    {
+      "source": "/auction-strategy",
+      "destination": "/seo/auction-strategy.html"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
@@ -206,5 +210,12 @@
     "deploymentEnabled": {
       "codex/unified-desktop-stats-slicing": false
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/pulse",
+      "destination": "/auction",
+      "permanent": true
+    }
+  ]
 }

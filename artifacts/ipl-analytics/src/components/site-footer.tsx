@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { SITE } from "@/lib/site-profile";
 import CricFieldLogo from "@/components/CricFieldLogo";
 import { useTeamTheme } from "@/lib/team-context";
 import { FRANCHISE_THEMES } from "@/lib/franchiseColors";
@@ -27,7 +28,7 @@ const sections = [
 
 const socialProfiles: [string, string][] = [
   ["X", "https://x.com"],
-  ["Instagram", "https://instagram.com"],
+  ["Instagram", SITE.instagram],
   ["YouTube", "https://youtube.com"],
   ["LinkedIn", "https://linkedin.com"],
 ];

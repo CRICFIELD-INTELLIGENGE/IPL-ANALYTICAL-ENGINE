@@ -13,7 +13,9 @@ export function normalizeSiteOrigin(value: string | undefined): string | null {
 
 export const PUBLIC_PAGES: Record<string, { title: string; description: string }> = {
   '/editorials': { title: 'Cricket Editorials & IPL Analysis', description: 'Read CricField cricket editorials, franchise analysis and data-led stories about IPL tactics, players and squad decisions.' },
-  '/auction': { title: 'IPL Auction Analysis', description: 'Explore IPL auction analysis, player valuations and franchise squad-building context on CricField.' },
+  '/scout': { title: 'Scout Lab', description: 'Discover cricket players, compare roles and build recruitment shortlists on CricField.' },
+  '/auction-strategy': { title: 'Auction Strategy', description: 'Plan franchise auction budgets, identify squad gaps and build a recruitment shortlist.' },
+  '/auction': { title: 'IPL Auction: Players, Purses & Results', description: 'Track IPL auction updates, player pools, retentions, franchise purses and results on CricField.' },
   '/tactics': { title: 'Cricket Tactics & Match Strategy', description: 'Explore cricket tactics, player matchups and franchise strategy through CricField analysis.' },
   '/venues': { title: 'Cricket Grounds & Venue Analysis', description: 'Explore cricket venue conditions and their influence on franchise tactics and player performance.' },
   '/storylines': { title: 'IPL Stories & Franchise Analysis', description: 'Read cricket stories and IPL franchise analysis on CricField.' },
@@ -26,7 +28,6 @@ export const PUBLIC_PAGES: Record<string, { title: string; description: string }
   '/feed/ipl-2027': { title: 'IPL 2027 Desk', description: 'Track IPL 2027 planning and squad context with source status.' },
   '/feed/ipl-2027/retentions': { title: 'IPL 2027 Retentions', description: 'Explore retention scenarios and reported squad decisions.' },
   '/stats': { title: 'IPL Statistics & Player Records', description: 'Explore IPL batting, bowling and team records. Filter cricket statistics by season and compare players, matchups and phases on CricField.' },
-  '/pulse': { title: 'Cricket Pulse', description: 'Explore cricket results and auction context.' },
   '/scores': { title: 'Scores', description: 'Explore cricket scores and match information.' },
   '/intelligence': { title: 'Decision Intelligence', description: 'Explore cricket analysis, estimates and decision tools.' },
   '/dugout': { title: 'Dugout', description: 'Explore franchise history, milestones and editorial analysis.' },
@@ -34,7 +35,7 @@ export const PUBLIC_PAGES: Record<string, { title: string; description: string }
   '/pressurelab/compare': { title: 'Compare Players', description: 'Compare player statistics in Pressure Lab.' },
   '/pressurelab/roles': { title: 'Player Roles', description: 'Explore player roles and scouting context.' },
   '/arena': { title: 'Fan Arena', description: 'Explore cricket fan features on CricField.' },
-  '/ai-analyst': { title: 'AI Analyst', description: 'Explore cricket analytical tools and their data context.' },
+  '/ai-analyst': { title: 'Decision Intelligence', description: 'Explore cricket analytical tools and their data context.' },
   '/visualizations': { title: 'Cricket Visualizations', description: 'Explore cricket data through interactive visualizations.' },
   '/about': { title: 'About', description: 'Learn about CricField and its independent creator.' },
   '/methodology': { title: 'Methodology', description: 'Understand the methods and limitations behind CricField statistics.' },

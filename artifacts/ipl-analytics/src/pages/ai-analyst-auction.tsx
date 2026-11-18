@@ -62,7 +62,7 @@ export default function AuctionWarRoomPage() {
   return (
     <Layout hideRightPanel>
       <div className="space-y-6 pb-16 max-w-7xl mx-auto w-full min-w-0">
-        <ModuleHeader phase="Phase 4 · Intelligence" title="Auction War Room" tagline="Expected price, performance against price, comparable sales and franchise fit, kept as separate questions." icon={<Gavel className="w-5 h-5 text-green-400" />}>
+        <ModuleHeader phase="Phase 4 · Intelligence" title="Auction Valuation" tagline="Expected price, performance against price, comparable sales and franchise fit, kept as separate questions." icon={<Gavel className="w-5 h-5 text-green-400" />}>
           <Segmented label="Board" value={view} onChange={(v) => { setView(v); setOpen(null); }} options={[{ value: "live", label: `Next auction` }, { value: "backtest", label: "2026 auction backtest" }]} />
         </ModuleHeader>
 

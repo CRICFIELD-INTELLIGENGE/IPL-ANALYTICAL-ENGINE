@@ -984,12 +984,12 @@ export default function Ipl2027Page() {
                       ],
                       [
                         "/ai-analyst/auction-war-room",
-                        "Existing Auction War Room",
+                        "Existing Auction Valuation",
                         "Historical decision tool. A dedicated 2027 rules-aware auction simulator is deferred.",
                       ],
                       [
                         "/ai-analyst/ask",
-                        "Ask the AI Analyst",
+                        "Ask the Decision Intelligence",
                         "Warehouse-backed questions. Official 2027 announcements are not inferred.",
                       ],
                     ].map(([href, title, note]) => (

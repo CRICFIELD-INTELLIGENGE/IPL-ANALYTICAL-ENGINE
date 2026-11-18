@@ -12,7 +12,7 @@ export function ModuleHeader({ phase, title, tagline, icon, children }: { phase:
   return (
     <div className="analyst-module-header space-y-3">
       <Link href="/ai-analyst" className="inline-flex items-center gap-1 text-xs text-slate-500 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-white transition-colors">
-        <ArrowLeft className="w-3.5 h-3.5" /> AI Analyst
+        <ArrowLeft className="w-3.5 h-3.5" /> Decision Intelligence
       </Link>
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="flex items-start gap-3 min-w-0">

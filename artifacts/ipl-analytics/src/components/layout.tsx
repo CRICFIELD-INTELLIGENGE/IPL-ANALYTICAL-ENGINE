@@ -32,7 +32,7 @@ const PLAYER_IMAGES = [
 
 const PRIMARY_NAV_LINKS: Array<{ label: string; href: string; hideOnMd?: boolean }> = [
   { label: "Home", href: "/home" },
-  { label: "Auction", href: "/pulse" },
+  { label: "Auction", href: "/auction" },
   { label: "Scores", href: "/scores" },
   { label: "Stats", href: "/stats" },
   { label: "Pressure Lab", href: "/pressurelab" },
@@ -44,7 +44,7 @@ const PRIMARY_NAV_LINKS: Array<{ label: string; href: string; hideOnMd?: boolean
 
 const SIDEBAR_ITEMS = [
   { icon: Home, label: "Home", href: "/home" },
-  { icon: Radio, label: "Auction", href: "/pulse" },
+  { icon: Radio, label: "Auction", href: "/auction" },
   { icon: Newspaper, label: "Feed & 2027 Intel", href: "/feed" },
   { icon: FileText, label: "Editorials", href: "/editorials" },
   { icon: Shield, label: "My Dugout", href: "/dugout" },
@@ -138,7 +138,7 @@ export function Layout({
       <div className="editorial-shell cfm-legacy bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 relative antialiased transition-colors duration-200">
         <main
           data-analytics-theme={["/stats", "/visualizations"].includes(path) ? "true" : undefined}
-          data-team-surfaces={["/stats", "/visualizations", "/scores", "/pulse", "/feed"].includes(path) ? "true" : undefined}
+          data-team-surfaces={["/stats", "/visualizations", "/scores", "/auction", "/feed"].includes(path) ? "true" : undefined}
           data-white-titles={location.startsWith("/dugout") || path === "/editorials" || path === "/intelligence" ? "true" : undefined}
           className={`${location.startsWith("/ai-analyst") ? "analyst-workspace-main" : ""} min-w-0`}
         >
@@ -213,7 +213,7 @@ export function Layout({
       {/* 2. MIDDLE CONTENT (Clean layout without side rails) */}
       <main
         data-analytics-theme={["/stats", "/visualizations"].includes(location.split("?")[0]) ? "true" : undefined}
-        data-team-surfaces={["/stats", "/visualizations", "/scores", "/pulse", "/feed"].some(path => location.split("?")[0] === path) ? "true" : undefined}
+        data-team-surfaces={["/stats", "/visualizations", "/scores", "/auction", "/feed"].some(path => location.split("?")[0] === path) ? "true" : undefined}
         data-white-titles={location.startsWith("/dugout") || location.split("?")[0] === "/editorials" || location.split("?")[0] === "/intelligence" ? "true" : undefined}
         className={`${location.startsWith("/ai-analyst") ? "analyst-workspace-main" : ""} min-h-[calc(100vh-56px)] flex flex-col justify-between transition-all duration-300 min-w-0`}
       >

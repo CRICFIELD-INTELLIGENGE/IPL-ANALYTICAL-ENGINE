@@ -110,13 +110,13 @@ export function PlatformInfoSheet({ children }: PlatformInfoSheetProps) {
                     2. Beyond XI Fan Ecosystem
                   </div>
                   <p className="text-[11px] text-white/70">
-                    Fan identity and community: franchise-personalized Dugouts, Fan Parliament voting with data evidence drawers, Auction War Room purse simulations.
+                    Fan identity and community: franchise-personalized Dugouts, Fan Parliament voting with data evidence drawers, Auction Valuation purse simulations.
                   </p>
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
                   <div className="font-bold text-purple-400 uppercase text-[11px] tracking-wider mb-0.5">
-                    3. AI Analyst Engine
+                    3. Decision Intelligence Engine
                   </div>
                   <p className="text-[11px] text-white/70">
                     Tactical decision engines: Strategy Simulator, Monte Carlo Alternate Universe time machine, Opponent Exploit maps, and Dew & Ball Wear impact modeling.

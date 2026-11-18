@@ -1,8 +1,8 @@
-// AI Analyst Navigator — the right-hand panel. Replaces the old "Intelligence Feed" of hard-coded alerts.
+// Decision Intelligence Navigator — the right-hand panel. Replaces the old "Intelligence Feed" of hard-coded alerts.
 // Three parts, all honest about their source:
 //   1. Where you are: what the current page answers and the best next pages.
 //   2. Insight metrics: the selected franchise's record and form, computed from CricField match data.
-//   3. Ask the AI Analyst: questions tailored to the page and franchise, handed to /ai-analyst/ask?q=…
+//   3. Ask the Decision Intelligence: questions tailored to the page and franchise, handed to /ai-analyst/ask?q=…
 import { useMemo } from "react";
 import { Link, useLocation, useSearch } from "wouter";
 import { ArrowRight, Compass, Gauge, MessageSquareText, Sparkles } from "lucide-react";
@@ -22,23 +22,23 @@ const GUIDES: [string, Guide][] = [
     { label: "Franchise Intelligence Briefs", href: "/feed/ipl-2027?module=brief" },
     { label: "Scout Radar", href: "/pressurelab" },
     { label: "Tactical Intelligence", href: "/feed/ipl-2027?module=tools" },
-    { label: "Existing Auction War Room", href: "/ai-analyst/auction-war-room" },
+    { label: "Existing Auction Valuation", href: "/ai-analyst/auction-war-room" },
     { label: "Retention Room", href: "/retention-room" },
   ], ask: t => [`Which historical role gaps should ${t} review for 2027?`, `Compare ${t}'s recent batting and bowling phases using warehouse data.`, `Which ${t} players have sufficient evidence for a retention scenario?`] }],
   ["/dugout/articles", { title: "Reading an article", answers: "One question about the franchise, argued from ball-by-ball evidence. Every number links to the method behind it.", next: [{ label: "All 100 franchise articles", href: "/editorials" }, { label: "Back to the Dugout", href: "/dugout" }, { label: "Check a player in Stats", href: "/stats" }], ask: (t) => [`Is this article's finding about ${t} still true in the latest season?`, `What would change this conclusion for ${t}?`, `Which ${t} players drive this result?`] }],
   ["/dugout", { title: "Franchise Dugout", answers: "A franchise at a glance: season record, squad, rivalries and its ten latest stories.", next: [{ label: "All articles on Editorials", href: "/editorials" }, { label: "Scout replacement players", href: "/pressurelab" }, { label: "Compare teams in Stats", href: "/stats" }], ask: DEFAULT_ASK }],
-  ["/editorials", { title: "Editorials hub", answers: "Every article for the franchise, filterable by angle: batting, bowling, tactics, auction, history, data science and more.", next: [{ label: "Franchise Dugout", href: "/dugout" }, { label: "Open the AI Analyst", href: "/ai-analyst" }, { label: "Visual dashboards", href: "/visualizations" }], ask: (t) => [`Summarise the strongest evidence-led findings about ${t}.`, `What is ${t}'s biggest weakness by phase?`, `How does ${t} compare with the league since 2024?`] }],
-  ["/intelligence", { title: "Editorials hub", answers: "Every article for the franchise, filterable by angle: batting, bowling, tactics, auction, history, data science and more.", next: [{ label: "Franchise Dugout", href: "/dugout" }, { label: "Open the AI Analyst", href: "/ai-analyst" }, { label: "Visual dashboards", href: "/visualizations" }], ask: (t) => [`Summarise the strongest evidence-led findings about ${t}.`, `What is ${t}'s biggest weakness by phase?`, `How does ${t} compare with the league since 2024?`] }],
-  ["/ai-analyst", { title: "AI Analyst", answers: "Ask the warehouse directly, or use a tool: weakness finder, pressure map, strategy simulator, auction war room.", next: [{ label: "Ask a question", href: "/ai-analyst/ask" }, { label: "Weakness finder", href: "/ai-analyst/weakness" }, { label: "Auction war room", href: "/ai-analyst/auction-war-room" }], ask: DEFAULT_ASK }],
-  ["/pressurelab", { title: "Pressure Lab", answers: "Find players by role and evidence, and test how they would fit a squad.", next: [{ label: "Auction war room", href: "/ai-analyst/auction-war-room" }, { label: "Player stats", href: "/stats" }, { label: "Franchise Dugout", href: "/dugout" }], ask: (t) => [`Which death-overs hitters would suit ${t}?`, `Which low-cost Indian bowlers outperformed their price since 2024?`, `What role is ${t} missing most?`] }],
-  ["/stats", { title: "Stats", answers: "Season, team and player tables straight from the ball-by-ball warehouse.", next: [{ label: "Visual dashboards", href: "/visualizations" }, { label: "Ask the AI Analyst", href: "/ai-analyst/ask" }, { label: "Pressure Lab", href: "/pressurelab" }], ask: (t) => [`Who are ${t}'s most efficient batters since 2024?`, `Rank ${t}'s bowlers by death-overs economy.`, `How has ${t}'s run rate changed by season?`] }],
-  ["/scores", { title: "Scores", answers: "Live and recent scorecards.", next: [{ label: "Match pulse", href: "/pulse" }, { label: "Franchise Dugout", href: "/dugout" }], ask: (t) => [`What usually decides ${t}'s chases?`, `How does ${t} bat in the last five overs?`, DEFAULT_ASK(t)[0]] }],
-  ["/pulse", { title: "Pulse", answers: "Momentum and pressure moments across matches.", next: [{ label: "Pressure map", href: "/ai-analyst/pressure" }, { label: "Scores", href: "/scores" }], ask: (t) => [`When does ${t} lose momentum in a chase?`, `Which overs hurt ${t} most?`, DEFAULT_ASK(t)[2]] }],
-  ["/feed", { title: "2027 Intel", answers: "Forward look at the next season: squads, gaps and priorities.", next: [{ label: "Strategy simulator", href: "/ai-analyst/strategy-sim" }, { label: "Auction war room", href: "/ai-analyst/auction-war-room" }], ask: (t) => [`What should ${t} prioritise for 2027?`, `Which ${t} phase gap is largest relative to the league?`, DEFAULT_ASK(t)[1]] }],
-  ["/visualizations", { title: "Visuals", answers: "Charts of the same warehouse data, for comparing teams and seasons at a glance.", next: [{ label: "Stats tables", href: "/stats" }, { label: "Ask the AI Analyst", href: "/ai-analyst/ask" }], ask: DEFAULT_ASK }],
-  ["/home", { title: "Home", answers: "Start here: pick a franchise, then open its Dugout or ask the AI Analyst a question.", next: [{ label: "Franchise Dugout", href: "/dugout" }, { label: "Editorials hub", href: "/editorials" }, { label: "AI Analyst", href: "/ai-analyst" }], ask: DEFAULT_ASK }],
+  ["/editorials", { title: "Editorials hub", answers: "Every article for the franchise, filterable by angle: batting, bowling, tactics, auction, history, data science and more.", next: [{ label: "Franchise Dugout", href: "/dugout" }, { label: "Open the Decision Intelligence", href: "/ai-analyst" }, { label: "Visual dashboards", href: "/visualizations" }], ask: (t) => [`Summarise the strongest evidence-led findings about ${t}.`, `What is ${t}'s biggest weakness by phase?`, `How does ${t} compare with the league since 2024?`] }],
+  ["/intelligence", { title: "Editorials hub", answers: "Every article for the franchise, filterable by angle: batting, bowling, tactics, auction, history, data science and more.", next: [{ label: "Franchise Dugout", href: "/dugout" }, { label: "Open the Decision Intelligence", href: "/ai-analyst" }, { label: "Visual dashboards", href: "/visualizations" }], ask: (t) => [`Summarise the strongest evidence-led findings about ${t}.`, `What is ${t}'s biggest weakness by phase?`, `How does ${t} compare with the league since 2024?`] }],
+  ["/ai-analyst", { title: "Decision Intelligence", answers: "Ask the warehouse directly, or use a tool: weakness finder, pressure map, strategy simulator, auction valuation.", next: [{ label: "Ask a question", href: "/ai-analyst/ask" }, { label: "Weakness finder", href: "/ai-analyst/weakness" }, { label: "Auction valuation", href: "/ai-analyst/auction-war-room" }], ask: DEFAULT_ASK }],
+  ["/pressurelab", { title: "Pressure Lab", answers: "Find players by role and evidence, and test how they would fit a squad.", next: [{ label: "Auction valuation", href: "/ai-analyst/auction-war-room" }, { label: "Player stats", href: "/stats" }, { label: "Franchise Dugout", href: "/dugout" }], ask: (t) => [`Which death-overs hitters would suit ${t}?`, `Which low-cost Indian bowlers outperformed their price since 2024?`, `What role is ${t} missing most?`] }],
+  ["/stats", { title: "Stats", answers: "Season, team and player tables straight from the ball-by-ball warehouse.", next: [{ label: "Visual dashboards", href: "/visualizations" }, { label: "Ask the Decision Intelligence", href: "/ai-analyst/ask" }, { label: "Pressure Lab", href: "/pressurelab" }], ask: (t) => [`Who are ${t}'s most efficient batters since 2024?`, `Rank ${t}'s bowlers by death-overs economy.`, `How has ${t}'s run rate changed by season?`] }],
+  ["/scores", { title: "Scores", answers: "Live and recent scorecards.", next: [{ label: "Match pulse", href: "/auction" }, { label: "Franchise Dugout", href: "/dugout" }], ask: (t) => [`What usually decides ${t}'s chases?`, `How does ${t} bat in the last five overs?`, DEFAULT_ASK(t)[0]] }],
+  ["/auction", { title: "Pulse", answers: "Momentum and pressure moments across matches.", next: [{ label: "Pressure map", href: "/ai-analyst/pressure" }, { label: "Scores", href: "/scores" }], ask: (t) => [`When does ${t} lose momentum in a chase?`, `Which overs hurt ${t} most?`, DEFAULT_ASK(t)[2]] }],
+  ["/feed", { title: "2027 Intel", answers: "Forward look at the next season: squads, gaps and priorities.", next: [{ label: "Strategy simulator", href: "/ai-analyst/strategy-sim" }, { label: "Auction valuation", href: "/ai-analyst/auction-war-room" }], ask: (t) => [`What should ${t} prioritise for 2027?`, `Which ${t} phase gap is largest relative to the league?`, DEFAULT_ASK(t)[1]] }],
+  ["/visualizations", { title: "Visuals", answers: "Charts of the same warehouse data, for comparing teams and seasons at a glance.", next: [{ label: "Stats tables", href: "/stats" }, { label: "Ask the Decision Intelligence", href: "/ai-analyst/ask" }], ask: DEFAULT_ASK }],
+  ["/home", { title: "Home", answers: "Start here: pick a franchise, then open its Dugout or ask the Decision Intelligence a question.", next: [{ label: "Franchise Dugout", href: "/dugout" }, { label: "Editorials hub", href: "/editorials" }, { label: "Decision Intelligence", href: "/ai-analyst" }], ask: DEFAULT_ASK }],
 ];
-const FALLBACK: Guide = { title: "Explore CricField", answers: "Every page draws on the same ball-by-ball IPL warehouse (2008–2026).", next: [{ label: "Franchise Dugout", href: "/dugout" }, { label: "Editorials hub", href: "/editorials" }, { label: "AI Analyst", href: "/ai-analyst" }], ask: DEFAULT_ASK };
+const FALLBACK: Guide = { title: "Explore CricField", answers: "Every page draws on the same ball-by-ball IPL warehouse (2008–2026).", next: [{ label: "Franchise Dugout", href: "/dugout" }, { label: "Editorials hub", href: "/editorials" }, { label: "Decision Intelligence", href: "/ai-analyst" }], ask: DEFAULT_ASK };
 
 const seasonYear = (s: string) => Number(String(s).slice(0, 4));
 
@@ -84,7 +84,7 @@ export function AnalystNavigator() {
       <Link href="/ai-analyst">
         <div className="group mr-8 flex cursor-pointer items-center gap-2 border-b border-slate-200 dark:border-white/5 pb-3">
           <Sparkles className="h-4 w-4 text-primary transition-transform group-hover:scale-110" />
-          <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-800 dark:text-slate-200 transition-colors group-hover:text-primary">AI Analyst Navigator</span>
+          <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-800 dark:text-slate-200 transition-colors group-hover:text-primary">Decision Intelligence Navigator</span>
         </div>
       </Link>
 
@@ -144,10 +144,10 @@ export function AnalystNavigator() {
         )}
       </section>
 
-      {/* 3. Ask the AI Analyst */}
+      {/* 3. Ask the Decision Intelligence */}
       <section className="space-y-2">
         <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-white/40">
-          <MessageSquareText className="h-3 w-3" /> Ask the AI Analyst
+          <MessageSquareText className="h-3 w-3" /> Ask the Decision Intelligence
         </div>
         {questions.map((q) => (
           <Link key={q} href={`/ai-analyst/ask?q=${encodeURIComponent(q + askContext)}`}>
@@ -161,7 +161,7 @@ export function AnalystNavigator() {
       <div className="mt-auto border-t border-slate-200 dark:border-white/5 pt-3">
         <Link href="/ai-analyst">
           <button className="w-full rounded-xl border border-primary/20 bg-primary/10 py-2.5 text-[9px] font-black uppercase tracking-widest text-primary transition-all hover:bg-primary/20 cursor-pointer">
-            Open AI Analyst
+            Open Decision Intelligence
           </button>
         </Link>
       </div>

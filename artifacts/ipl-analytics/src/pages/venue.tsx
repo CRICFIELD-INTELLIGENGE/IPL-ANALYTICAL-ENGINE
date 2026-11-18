@@ -29,51 +29,8 @@ export default function VenueProfilePage() {
       };
     }
 
-    // Client-side synthesis fallback from match warehouse
-    const matchGroup = (matches.data ?? []).filter(m => venueSlug(m.venue) === wanted);
-    if (matchGroup.length > 0) {
-      const firstInnRuns = matchGroup.map(m => {
-        const parsed = m.team1Score?.match(/^\s*(\d+)/);
-        return parsed ? Number(parsed[1]) : 0;
-      }).filter(n => n > 0);
-      const secondInnRuns = matchGroup.map(m => {
-        const parsed = m.team2Score?.match(/^\s*(\d+)/);
-        return parsed ? Number(parsed[1]) : 0;
-      }).filter(n => n > 0);
-      const avg1st = firstInnRuns.length ? Math.round(firstInnRuns.reduce((a, b) => a + b, 0) / firstInnRuns.length) : 174;
-      const avg2nd = secondInnRuns.length ? Math.round(secondInnRuns.reduce((a, b) => a + b, 0) / secondInnRuns.length) : 158;
-      const chaseWins = matchGroup.filter(m => m.winner && m.winner === m.team2).length;
-      const chasePct = Math.round((chaseWins / matchGroup.length) * 100);
-
-      return {
-        venue: normalizeVenueName(matchGroup[0].venue),
-        city: (matchGroup[0] as any).city || "India",
-        matches: matchGroup.length,
-        avg1stInn: avg1st,
-        avg2ndInn: avg2nd,
-        battingFirstWinPct: 100 - chasePct,
-        chasingWinPct: chasePct,
-        tossDecisionFieldPct: 62,
-      };
-    }
-
-    // Default canonical fallback if slug matches standard ground names
-    if (slug) {
-      const canonicalName = slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-      return {
-        venue: canonicalName,
-        city: "India",
-        matches: 75,
-        avg1stInn: 178,
-        avg2ndInn: 164,
-        battingFirstWinPct: 48,
-        chasingWinPct: 52,
-        tossDecisionFieldPct: 65,
-      };
-    }
-
     return null;
-  }, [venues.data, matches.data, slug]);
+  }, [venues.data, slug]);
   const venueMatches = useMemo(() => (matches.data ?? [])
     .filter(m => summary && venueSlug(m.venue) === venueSlug(summary.venue))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()), [matches.data, summary]);

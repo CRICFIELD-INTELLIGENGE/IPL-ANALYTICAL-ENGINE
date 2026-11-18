@@ -11,11 +11,12 @@ const destinations = [
   { href: "/scores", label: "Scores", icon: Zap, detail: "Follow the action" },
   { href: "/stats", label: "Stats Centre", icon: List, detail: "Go beyond the scorecard" },
   { href: "/dugout", label: "My Dugout", icon: Shield, detail: "Your franchise headquarters" },
-  { href: "/pulse", label: "Auction Pulse", icon: Radio, detail: "Track the auction landscape" },
+  { href: "/auction", label: "Auction", icon: Radio, detail: "Track the auction landscape" },
   { href: "/editorials", label: "Editorials", icon: Newspaper, detail: "Explore cricket through data" },
   { href: "/retention-room", label: "Retention Room", icon: Trophy, detail: "Make the tough calls" },
   { href: "/visualizations", label: "Visuals", icon: BarChart2, detail: "See the game differently" },
-  { href: "/ai-analyst", label: "AI Analyst", icon: Cpu, detail: "Ask your cricket questions" },
+  { href: "/ai-analyst", label: "Decision Intelligence", icon: Cpu, detail: "Ask your cricket questions" },
+  { href: "/scout", label: "Scout Lab", icon: Compass, detail: "Discover players and build shortlists" },
   { href: "/account", label: "Your account", icon: UserRound, detail: "Your CricField workspace" },
 ];
 

@@ -161,7 +161,7 @@ export const DECISION_MODULES: DecisionItem[] = [
   {
     id: "auction-war-room",
     num: "06",
-    title: "Auction War Room",
+    title: "Auction Valuation",
     badge: "VALUATION",
     category: "squad",
     tagline: "AI bid decisions: Buy · Hold · Avoid with logical bid ceilings.",

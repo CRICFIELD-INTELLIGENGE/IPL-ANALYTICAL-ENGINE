@@ -7,7 +7,6 @@ import { PlayerAvatar } from "@/components/player-avatar";
 import { displayPlayerName, normalizeVenueName, playerSlug, usePlayerDisplayNames, useVenueAnalytics, useVenues, venueHref, venueHubHref, venueImage, venueSlug, type MatchSummary } from "@/lib/aggregates";
 import { fetchVenueIntel } from "@/lib/sim-api";
 import { useTheme } from "@/lib/theme";
-import { Card09VenueDna } from "@/components/visualizations/living-ground-deck";
 import "./venue-stadium-dashboard.css";
 
 export interface VenueSummary {
@@ -79,24 +78,7 @@ export function VenueStadiumDashboard({ summary, matches }: { summary: VenueSumm
 
     <div className="vd-summary-grid"><section className="vd-panel vd-identity"><div className="vd-identity-image" style={image ? { backgroundImage: `url("${image}")` } : undefined} /><div><span className="vd-eyebrow">THE GROUND FILE</span><h2>{name}</h2><span className="vd-city"><MapPin size={12} />{city}</span><p>{summary.matches} matches. {seasons.length} seasons. A venue profile built from every available innings, spell and match result.</p><div className="vd-ground-tags"><span>{all.data ? `${fmt(all.data.innings.firstAvg)} avg first innings` : "Historical data"}</span><span>{chaseWin != null ? chaseWin > 50 ? "Chase edge" : "Bat-first edge" : "Win trends"}</span><span>{pace && spin ? spin.economy < pace.economy ? "Spin control" : "Pace control" : "Pace vs spin"}</span></div></div></section><section className="vd-panel vd-intelligence"><div className="vd-section-head"><h2>VENUE INTELLIGENCE</h2><div className="vd-pills"><button onClick={() => setComparison("recent")} className={comparison === "recent" ? "active" : ""}>Last 5 seasons</button><button onClick={() => setComparison("all")} className={comparison === "all" ? "active" : ""}>All seasons</button></div></div><table><thead><tr><th>Metric</th><th className={comparison === "recent" ? "vd-highlight" : ""}>Last 5 seasons</th><th className={comparison === "all" ? "vd-highlight" : ""}>All seasons</th></tr></thead><tbody>{comparisonRows.map(row => <tr key={row.label}><td>{row.label}</td><td className={comparison === "recent" ? "vd-highlight" : ""}>{row.recent}</td><td className={comparison === "all" ? "vd-highlight" : ""}>{row.all}</td></tr>)}</tbody></table><small>Recent sample is relative to the latest warehouse season.</small>{intel.isError && <button className="vd-retry" onClick={() => intel.refetch()}>Intelligence unavailable — retry</button>}</section><div className="vd-tool-stack"><button className="vd-tool vd-panel" onClick={() => jump("history")}><Database size={32} /><div><h2>MATCH & BALL-BY-BALL ARCHIVE</h2><p>Open a match at {name} to explore its scorecard and commentary.</p><span>Explore match archive <ArrowRight size={12} /></span></div></button><Link href={`/ai-analyst/strategy-sim?${context}`} className="vd-tool purple vd-panel"><Swords size={34} /><div><h2>SIMULATE A CHASE HERE</h2><p>Choose a target and bowling plan in the Strategy Simulator.</p><span>Launch chase simulator <ArrowRight size={12} /></span></div></Link></div></div>
 
-    {/* ─── MODULE 09: VENUE GEOMETRY DIMENSIONS & TACTICAL AI ─── */}
-    <section className="vd-panel p-5 bg-[#081222] border border-cyan-500/20 rounded-2xl my-4">
-      <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
-        <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[9px] font-black uppercase tracking-wider flex items-center gap-1">
-            <MapPin className="w-3 h-3 text-cyan-400" />
-            MODULE 09 • VENUE GEOMETRY
-          </span>
-          <span className="text-[10px] font-mono text-white/40">Tactical AI Clearance Engine</span>
-        </div>
-        <span className="text-xs font-mono font-bold text-white uppercase tracking-tight">
-          3D Boundary Dimensions & Surface Optimization
-        </span>
-      </div>
-      <Card09VenueDna />
-    </section>
-
-    <section className="vd-filter-bar" id="vd-pitch"><div><span className="vd-eyebrow">PITCH ANALYTICS</span><h2>What this ground rewards</h2></div><label>SEASONS<select aria-label="Venue analytics seasons" value={range} onChange={e => setRange(e.target.value)}><option value="all">All seasons</option><option value="recent">Last 5 seasons</option>{seasons.map(s => <option key={s} value={s}>{s}–{latest}</option>)}</select></label><div className="vd-pills" aria-label="Match start time">{(["all", "evening", "afternoon"] as const).map(s => <button key={s} className={start === s ? "active" : ""} aria-pressed={start === s} onClick={() => setStart(s)}>{s === "all" ? "All starts" : s === "evening" ? "Evening" : "Afternoon"}</button>)}</div><span className="vd-sample">{d ? `${d.matches} matches · ${selectedLabel}` : "Loading historical sample…"}</span></section>
+    <section className="vd-filter-bar" id="vd-pitch"><div><span className="vd-eyebrow">PITCH ANALYTICS</span><h2>What this ground rewards</h2></div><label>SEASONS<select aria-label="Venue analytics seasons" value={range} onChange={e => setRange(e.target.value)}><option value="all">All seasons</option><option value="recent">Last 5 seasons</option>{seasons.map(s => <option key={s} value={s}>{s}–{latest}</option>)}</select></label><div className="vd-pills" aria-label="Match start time">{(["all", "evening", "afternoon"] as const).map(s => <button key={s} className={start === s ? "active" : ""} aria-pressed={start === s} onClick={() => setStart(s)}>{s === "all" ? "All starts" : s === "evening" ? "Evening" : "Afternoon"}</button>)}</div><span className="vd-sample">{d ? `${d.matches} matches · ${selectedLabel}` : data.isError ? "Sample could not load" : "Loading historical sample…"}</span></section>
     {data.isError && <div role="alert" className="vd-alert">Pitch analytics could not load. <button onClick={() => data.refetch()}>Try again</button></div>}
     {data.isLoading && <div className="vd-alert" role="status">Reading the pitch and ball-by-ball history…</div>}
     {d?.matches === 0 && <div className="vd-alert">No matches in this filter. Try all seasons or another start time.</div>}

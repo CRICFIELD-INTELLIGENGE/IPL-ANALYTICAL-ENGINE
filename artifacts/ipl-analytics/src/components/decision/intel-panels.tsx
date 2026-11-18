@@ -1,6 +1,6 @@
 // Decision Intelligence panels for the existing profile pages. Each panel is
 // one request to /api/intel/*, renders nothing while the warehouse API is
-// unreachable or has no record, and links into the matching AI Analyst module.
+// unreachable or has no record, and links into the matching Decision Intelligence module.
 
 import { useState } from "react";
 import { Link } from "wouter";

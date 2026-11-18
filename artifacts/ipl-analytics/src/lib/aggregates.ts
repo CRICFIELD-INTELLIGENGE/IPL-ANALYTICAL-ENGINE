@@ -1,3 +1,4 @@
+import { aggregateVenueSnapshot, type VenueSnapshot } from "./venue-snapshot";
 /**
  * Typed React Query hooks for the pre-aggregated Cricsheet IPL data
  * served as static JSON from /data/*.json.
@@ -261,21 +262,21 @@ export interface VenueAnalytics {
   timeOfDay: "all" | "evening" | "afternoon";
   matches: number;
   seasons: number;
-  innings: { firstAvg: number; firstWkts: number; secondAvg: number; secondWkts: number };
+  innings: { firstAvg: number | null; firstWkts: number | null; secondAvg: number | null; secondWkts: number | null };
   phases: PhaseSplit[];
   surface: Array<{
     kind: string; balls: number; wickets: number;
-    economy: number; average: number; strikeRate: number; dotPct: number;
+    economy: number; average: number | null; strikeRate: number | null; dotPct: number;
   }>;
   /** Second-innings scoring shift by start time — the closest proxy to dew. */
   dew: {
-    evening: { first: number; second: number; matches: number };
-    afternoon: { first: number; second: number; matches: number };
-    eveningSwing: number;
-    afternoonSwing: number;
+    evening: { first: number | null; second: number | null; matches: number };
+    afternoon: { first: number | null; second: number | null; matches: number };
+    eveningSwing: number | null;
+    afternoonSwing: number | null;
   };
   topBatters: Array<{ player: string; runs: number; balls: number; matches: number; strikeRate: number }>;
-  topBowlers: Array<{ player: string; wickets: number; matches: number; economy: number; average: number }>;
+  topBowlers: Array<{ player: string; wickets: number; matches: number; economy: number; average: number | null }>;
   /** Mean first-innings total at the end of each over. */
   parByOver: Array<{ over: number; par: number }>;
 }
@@ -786,27 +787,37 @@ export const useTeamAnalytics = (
   });
 
 /** Ground analytics for a season range and time-of-day slot. */
+const venueSnapshots = new Map<string, Promise<VenueSnapshot>>();
+const getVenueSnapshot = (venue: string) => {
+  const key = venueSlug(venue);
+  let pending = venueSnapshots.get(key);
+  if (!pending) {
+    pending = fetchValidJson<VenueSnapshot>(`${import.meta.env.BASE_URL}data/venue-analytics/${key}.json`);
+    venueSnapshots.set(key, pending);
+    pending.catch(() => venueSnapshots.delete(key));
+  }
+  return pending;
+};
+
 export const useVenueAnalytics = (
   venue: string | null | undefined,
   opts?: { from?: number | null; to?: number | null; timeOfDay?: "all" | "evening" | "afternoon" },
 ): UseQueryResult<VenueAnalytics> =>
   useQuery({
     queryKey: ["agg", "venue-analytics", venue, opts?.from ?? null, opts?.to ?? null, opts?.timeOfDay ?? "all"],
-    enabled: !!venue,
-    staleTime: STALE,
-    queryFn: async () => {
-      const params = new URLSearchParams({ venue: venue! });
-      if (opts?.from != null) params.set("from", String(opts.from));
-      if (opts?.to != null) params.set("to", String(opts.to));
-      if (opts?.timeOfDay && opts.timeOfDay !== "all") params.set("timeOfDay", opts.timeOfDay);
+    enabled: !!venue, staleTime: STALE, retry: 1,
+    queryFn: async ({ signal }) => {
       try {
-        const res = await fetch(`${import.meta.env.BASE_URL}api/ipl/venue-analytics?${params}`);
-        const ct = res.headers.get("content-type") || "";
-        if (res.ok && !ct.includes("text/html")) {
-          return (await res.json()) as VenueAnalytics;
-        }
-      } catch {}
-      return null as any;
+        return aggregateVenueSnapshot(await getVenueSnapshot(venue!), opts);
+      } catch (error) {
+        if (signal.aborted) throw error;
+        const params = new URLSearchParams({ venue: venue! });
+        if (opts?.from != null) params.set("from", String(opts.from));
+        if (opts?.to != null) params.set("to", String(opts.to));
+        if (opts?.timeOfDay && opts.timeOfDay !== "all") params.set("timeOfDay", opts.timeOfDay);
+        // Legacy deployments can still serve the API; failure must reach the retry UI.
+        return fetchValidJson<VenueAnalytics>(`${import.meta.env.BASE_URL}api/ipl/venue-analytics?${params}`, signal);
+      }
     },
   });
 

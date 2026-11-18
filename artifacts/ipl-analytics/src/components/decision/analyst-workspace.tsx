@@ -7,7 +7,7 @@ export const ANALYST_TOOLS=[['Overview','/ai-analyst'],['Weakness','/ai-analyst/
 export function AnalystWorkspace(){
  const [location,navigate]=useLocation();const {selectedTeam,theme}=useTeamTheme();const [question,setQuestion]=useState('');
  const player=typeof window==='undefined'?null:new URLSearchParams(window.location.search).get('player');
- return <section className="analyst-workspace-nav" aria-label="AI Analyst workspace">
+ return <section className="analyst-workspace-nav" aria-label="Decision Intelligence workspace">
   <div className="analyst-workspace-top"><div><CricFieldMascot activity={question.trim() ? "analyzing" : "analyst"} size={32} className="mr-2 align-middle" /><span className="analyst-workspace-label">CRICFIELD / DECISION INTELLIGENCE</span><p>{theme?`${theme.shortName} analyst workspace`:'Your cricket intelligence workspace'}</p></div><Link href="/pressurelab">Open Pressure Lab ↗</Link></div>
   <nav aria-label="Analyst tools" className="analyst-tool-tabs">{ANALYST_TOOLS.map(([label,href])=><Link key={href} href={href} aria-current={location.split('?')[0]===href?'page':undefined}>{label}</Link>)}</nav>
   <form className="analyst-scout-search" onSubmit={event=>{event.preventDefault();if(question.trim().length<3)return;const prompt=player?`${question.trim()} Reference player: ${player}.`:question.trim();navigate(`/pressurelab/results?q=${encodeURIComponent(prompt)}${selectedTeam?`&team=${selectedTeam}`:''}`);}}>

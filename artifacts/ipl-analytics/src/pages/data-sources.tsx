@@ -75,7 +75,7 @@ export default function DataSourcesPage() {
       <Panel id="auctions" kicker="Market data" title="Wikipedia — IPL auction and retention records">
         <Field label="Supplies">Sold-player tables (player, buying franchise, fee) and retention lists from the IPL auction articles, 2008–2026.</Field>
         <Field label="Coverage">Fees in rupees (₹ lakh) from 2014 onward; earlier auctions were priced in US dollars and are kept separate. The source has no retention tables for 2014–2017.</Field>
-        <Field label="Used for">Auction fees on player and team pages, season squads, and the <InLink href="/ai-analyst/auction-war-room">Auction War Room</InLink>'s comparable-sales model and 2026 backtest.</Field>
+        <Field label="Used for">Auction fees on player and team pages, season squads, and the <InLink href="/ai-analyst/auction-war-room">Auction Valuation</InLink>'s comparable-sales model and 2026 backtest.</Field>
         <Field label="Changes made">Parsed from the raw article source rather than a summary, so no rows are dropped. Names matched to the ball-by-ball record by exact name, or initial + surname only when exactly one player fits.</Field>
         <Field label="Terms">Compiled from <ExtLink href="https://en.wikipedia.org/wiki/Indian_Premier_League">Wikipedia</ExtLink>'s IPL season and auction articles, available under <ExtLink href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</ExtLink>.</Field>
       </Panel>

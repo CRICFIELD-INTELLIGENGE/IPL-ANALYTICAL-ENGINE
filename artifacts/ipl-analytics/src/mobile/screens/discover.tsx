@@ -88,12 +88,14 @@ export default function MobileDiscover() {
           </div>
         </div>
         <div className="mm-tools-grid">
+          <Link href="/scout" className="mm-tool-card" data-testid="more-tool-scout-lab"><span className="mm-tool-ico" aria-hidden="true"><Layers size={17} /></span><div className="mm-tool-copy"><strong>Scout Lab</strong><small>Player discovery, role comparison &amp; shortlists</small></div></Link>
+          <Link href="/auction-strategy" className="mm-tool-card" data-testid="more-tool-auction-strategy"><span className="mm-tool-ico" aria-hidden="true"><BarChart3 size={17} /></span><div className="mm-tool-copy"><strong>Auction Strategy</strong><small>Budgets, squad gaps &amp; recruitment plans</small></div></Link>
           <Link href="/ai-analyst" className="mm-tool-card" data-testid="more-tool-decision-engine">
             <span className="mm-tool-ico" aria-hidden="true">
               <Cpu size={17} />
             </span>
             <div className="mm-tool-copy">
-              <strong>Decision Engine</strong>
+              <strong>Decision Intelligence</strong>
               <small>Ball-by-ball queries &amp; simulators</small>
             </div>
           </Link>
@@ -150,7 +152,7 @@ export default function MobileDiscover() {
           <h3>Auction Room</h3>
           <p>Latest updates, registered players, transactions &amp; squad impact</p>
         </div>
-        <Link href="/pulse" className="mm-auction-cta">
+        <Link href="/auction" className="mm-auction-cta">
           Open Auction <ArrowRight size={13} aria-hidden="true" />
         </Link>
       </section>
