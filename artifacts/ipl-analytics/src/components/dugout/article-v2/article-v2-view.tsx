@@ -2,7 +2,8 @@
 // photography from the rights-gated manifest, verified JioHotstar "Watch the Moment" links.
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { ArrowRight, BookOpen, Clock, ExternalLink, FlaskConical, Lightbulb, PlayCircle, ShieldCheck } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, BookOpen, Clock, ExternalLink, FlaskConical, Layers, Lightbulb, PlayCircle, ShieldCheck, X } from "lucide-react";
 import { Layout } from "@/components/layout";
 import { MobileChromeContext } from "@/mobile/gate";
 import { AdVessel } from "@/components/ad-vessel";
@@ -440,6 +441,17 @@ export function ArticleV2View({ entry }: { entry: IndexEntry }) {
 
   const franchiseArticles = useMemo(() => getV2ForFranchise(entry.franchise), [entry.franchise]);
   const mobileShell = useContext(MobileChromeContext);
+  const [tuckedSummary, setTuckedSummary] = useState(false);
+  const [tuckedTakeaways, setTuckedTakeaways] = useState(false);
+  const [tuckedDrawerOpen, setTuckedDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    setTuckedSummary(false);
+    setTuckedTakeaways(false);
+    setTuckedDrawerOpen(false);
+  }, [entry.id]);
+
+  const tuckedCount = (tuckedSummary ? 1 : 0) + (tuckedTakeaways ? 1 : 0);
 
   if (failed) {
     return (
@@ -544,8 +556,53 @@ export function ArticleV2View({ entry }: { entry: IndexEntry }) {
               })()}
             </div>
 
-            {/* Right Side: Tactical Card (Takes 5 cols) */}
-            <HeroTacticalCard article={a} accent={accent} evidence={evidence} />
+            {/* Right Side: Tactical Card (Takes 5 cols) — swipe right on mobile to tuck into floating circle */}
+            <AnimatePresence>
+              {!tuckedSummary && (
+                <motion.div
+                  key="hero-summary-card"
+                  className={`lg:col-span-5 flex flex-col touch-pan-y ${
+                    mobileShell
+                      ? "select-none cursor-grab active:cursor-grabbing rounded-2xl shadow-[0_14px_34px_-14px_rgba(0,0,0,0.7)] border-l-[3px]"
+                      : ""
+                  }`}
+                  style={mobileShell ? { borderLeftColor: accent } : undefined}
+                  drag={mobileShell ? "x" : false}
+                  dragDirectionLock
+                  dragConstraints={{ left: 0, right: 300 }}
+                  dragElastic={{ left: 0.04, right: 0.5 }}
+                  dragSnapToOrigin
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x > 65 || info.velocity.x > 260) {
+                      setTuckedSummary(true);
+                    }
+                  }}
+                  initial={{ opacity: 1, x: 0 }}
+                  animate={mobileShell ? { x: [0, 10, 0] } : { opacity: 1, x: 0 }}
+                  transition={mobileShell ? { delay: 0.65, duration: 0.65, ease: "easeInOut" } : undefined}
+                  exit={{ opacity: 0, x: 280, scale: 0.92, transition: { duration: 0.22 } }}
+                >
+                  {mobileShell && (
+                    <div className="flex items-center justify-between rounded-t-2xl border border-b-0 border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-[10px] font-mono text-slate-300/90">
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ backgroundColor: accent }} />
+                        <span>Swipe right to tuck</span>
+                        <ArrowRight className="h-3 w-3 animate-pulse" style={{ color: accent }} />
+                      </span>
+                      <button
+                        type="button"
+                        aria-label="Tuck Executive Summary"
+                        onClick={() => setTuckedSummary(true)}
+                        className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-slate-300 hover:text-white"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
+                  )}
+                  <HeroTacticalCard article={a} accent={accent} evidence={evidence} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           <GettyPhotoNotice images={Object.values(images)} />
@@ -556,18 +613,63 @@ export function ArticleV2View({ entry }: { entry: IndexEntry }) {
           <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
             {/* Main Article Column */}
             <main className="min-w-0 space-y-8 lg:col-span-8">
-              {/* Key takeaways */}
-              <section id="takeaways" aria-labelledby="takeaways-title" className="rounded-xl border border-slate-200 dark:border-[#2A4050] bg-white dark:bg-[#101F2D] p-4 sm:p-5 shadow-xs">
-                <h2 id="takeaways-title" className="mb-3 text-[11px] font-mono font-bold uppercase tracking-widest" style={{ color: accent }}>Key takeaways</h2>
-                <ul className="space-y-2.5">
-                  {a.keyTakeaways.map((t, i) => (
-                    <li key={i} className="flex gap-2.5 text-[15px] leading-relaxed text-slate-800 dark:text-[#EFF5F7]">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: accent }} />
-                      <span><TokenText text={t} evidence={evidence} article={a} /></span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+              {/* Key takeaways — swipe right on mobile to tuck into floating circle */}
+              <AnimatePresence>
+                {!tuckedTakeaways && (
+                  <motion.section
+                    key="key-takeaways-card"
+                    id="takeaways"
+                    aria-labelledby="takeaways-title"
+                    className={`rounded-2xl border border-slate-200 dark:border-[#2A4050] bg-white dark:bg-[#101F2D] p-4 sm:p-5 touch-pan-y ${
+                      mobileShell
+                        ? "select-none cursor-grab active:cursor-grabbing shadow-[0_14px_34px_-14px_rgba(0,0,0,0.7)] border-l-[3px]"
+                        : "shadow-xs"
+                    }`}
+                    style={mobileShell ? { borderLeftColor: accent } : undefined}
+                    drag={mobileShell ? "x" : false}
+                    dragDirectionLock
+                    dragConstraints={{ left: 0, right: 300 }}
+                    dragElastic={{ left: 0.04, right: 0.5 }}
+                    dragSnapToOrigin
+                    onDragEnd={(_, info) => {
+                      if (info.offset.x > 65 || info.velocity.x > 260) {
+                        setTuckedTakeaways(true);
+                      }
+                    }}
+                    initial={{ opacity: 1, x: 0 }}
+                    animate={mobileShell ? { x: [0, 10, 0] } : { opacity: 1, x: 0 }}
+                    transition={mobileShell ? { delay: 0.9, duration: 0.65, ease: "easeInOut" } : undefined}
+                    exit={{ opacity: 0, x: 280, scale: 0.92, transition: { duration: 0.22 } }}
+                  >
+                    <div className="mb-3 flex items-center justify-between gap-2">
+                      <h2 id="takeaways-title" className="text-[11px] font-mono font-bold uppercase tracking-widest" style={{ color: accent }}>Key takeaways</h2>
+                      {mobileShell && (
+                        <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-400">
+                          <span className="inline-flex items-center gap-1">
+                            Swipe right <ArrowRight className="h-3 w-3 animate-pulse" style={{ color: accent }} />
+                          </span>
+                          <button
+                            type="button"
+                            aria-label="Tuck Key Takeaways"
+                            onClick={() => setTuckedTakeaways(true)}
+                            className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-slate-300 hover:text-white"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <ul className="space-y-2.5">
+                      {a.keyTakeaways.map((t, i) => (
+                        <li key={i} className="flex gap-2.5 text-[15px] leading-relaxed text-slate-800 dark:text-[#EFF5F7]">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: accent }} />
+                          <span><TokenText text={t} evidence={evidence} article={a} /></span>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.section>
+                )}
+              </AnimatePresence>
 
               {/* Story Sections */}
               {a.sections.map((s, idx) => {
@@ -716,6 +818,109 @@ export function ArticleV2View({ entry }: { entry: IndexEntry }) {
             </div>
           </div>
         </div>
+
+        {/* Floating Circle Button storing swiped Executive Summary / Key Takeaways */}
+        <AnimatePresence>
+          {tuckedCount > 0 && (
+            <motion.button
+              key="tucked-circle-btn"
+              type="button"
+              aria-label={`Open saved article highlights (${tuckedCount})`}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 380, damping: 24 }}
+              onClick={() => setTuckedDrawerOpen(true)}
+              className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full border bg-[#0B1424]/90 text-white backdrop-blur-xl shadow-2xl"
+              style={{
+                borderColor: `${accent}88`,
+                boxShadow: `0 10px 28px -6px ${accent}66`,
+              }}
+            >
+              <Layers className="h-5 w-5" style={{ color: accent }} />
+              <span
+                className="absolute -top-1 -right-1 flex h-5 min-w-[20px] items-center justify-center rounded-full px-1 text-[10px] font-black text-white shadow"
+                style={{ backgroundColor: accent }}
+              >
+                {tuckedCount}
+              </span>
+            </motion.button>
+          )}
+        </AnimatePresence>
+
+        {/* Drawer / Overlay showing the stored Executive Summary & Key Takeaways at any scroll position */}
+        <AnimatePresence>
+          {tuckedDrawerOpen && tuckedCount > 0 && (
+            <motion.div
+              key="tucked-drawer-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/65 backdrop-blur-sm p-3 pb-24 sm:p-6"
+              onClick={() => setTuckedDrawerOpen(false)}
+            >
+              <motion.div
+                initial={{ y: 40, opacity: 0, scale: 0.97 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                exit={{ y: 30, opacity: 0, scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 360, damping: 28 }}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full max-w-xl max-h-[68dvh] sm:max-h-[78dvh] overflow-y-auto rounded-3xl border border-white/10 bg-[#08131F]/95 p-4 sm:p-5 shadow-2xl space-y-4"
+              >
+                <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-3">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: accent }} />
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-white truncate">
+                      Saved Highlights ({tuckedCount})
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setTuckedSummary(false);
+                        setTuckedTakeaways(false);
+                        setTuckedDrawerOpen(false);
+                      }}
+                      className="whitespace-nowrap rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] font-bold text-slate-200 hover:bg-white/10"
+                    >
+                      Restore all
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Close highlights"
+                      onClick={() => setTuckedDrawerOpen(false)}
+                      className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 hover:text-white"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+
+                {tuckedSummary && (
+                  <HeroTacticalCard article={a} accent={accent} evidence={evidence} />
+                )}
+
+                {tuckedTakeaways && (
+                  <section className="rounded-2xl border border-slate-200 dark:border-[#2A4050] bg-white dark:bg-[#101F2D] p-4 shadow-xs">
+                    <h2 className="mb-3 text-[11px] font-mono font-bold uppercase tracking-widest" style={{ color: accent }}>
+                      Key takeaways
+                    </h2>
+                    <ul className="space-y-2.5">
+                      {a.keyTakeaways.map((t, i) => (
+                        <li key={i} className="flex gap-2.5 text-[14px] leading-relaxed text-slate-800 dark:text-[#EFF5F7]">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: accent }} />
+                          <span><TokenText text={t} evidence={evidence} article={a} /></span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </Layout>
   );

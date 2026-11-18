@@ -2,6 +2,7 @@ import "./home-editorial.css";
 import { MobileHome } from "@/components/mobile-home";
 import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { Layout } from "@/components/layout";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -9,9 +10,6 @@ import {
   Shield,
   Gavel,
   Users,
-  Star,
-  Flame,
-  MapPin,
   Calendar,
   Bookmark,
   Database,
@@ -21,7 +19,11 @@ import {
 import { useTeamTheme, type TeamCode, TEAM_REGISTRY } from "@/lib/team-context";
 import { TeamLogo } from "@/components/team-logo";
 import { AdVessel } from "@/components/ad-vessel";
-import { HUB_EVENTS } from "@/lib/ipl-2027";
+import { HUB_EVENTS, HUB_TEAMS } from "@/lib/ipl-2027";
+import { fetchOfficialLeague, fetchOfficialRoom, formatPurse } from "@/lib/retention-official-api";
+import { getArticleHeroImage } from "@/lib/editorial-images";
+import { EditorialImageFigure } from "@/components/dugout/editorial-image-figure";
+import { EditorialCoverCanvas } from "@/components/dugout/editorial-cover-canvas";
 import editorialArchive from "@/data/editorial/index.json";
 
 const HEADLINES = [
@@ -35,210 +37,17 @@ const HEADLINES = [
 ];
 
 const EXPLORE_COVERAGE_CARDS = [
-  { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", href: "/retention-room", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-500 dark:text-amber-400", icon: Users },
-  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", href: "/auction", img: "/auction-art.jpg", color: "text-amber-500 dark:text-amber-400", icon: Gavel },
-  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", href: "/tactics", img: "/assets/tactical-board-hero.png", color: "text-emerald-500 dark:text-emerald-400", icon: Shield },
-  { id: "venues", title: "VENUES", subtitle: "Conditions and trends", href: "/venues/wankhede-stadium", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-500 dark:text-sky-400", icon: MapPin },
-  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", href: "/storylines", img: "/milestone-photos/final-2023-csk.jpg", color: "text-orange-500 dark:text-orange-400", icon: Flame },
-];
-
-interface FranchiseIntelData {
-  venue: string;
-  image: string;
-  tags: string[];
-  title: string;
-  summary: string;
-  link: string;
-  metrics: { label: string; pct: number }[];
-}
-
-const FRANCHISE_MAP: Record<TeamCode, FranchiseIntelData> = {
-  MI: {
-    venue: "Wankhede Stadium",
-    image: "/venue-images/wankhede stadium.webp",
-    tags: ["VENUE ANALYSIS", "TACTICS", "IPL INSIGHTS"],
-    title: "The Wankhede Factor: How Boundary Velocity Shapes Mumbai Indians",
-    summary: "Wankhede has seen 14.4 sixes per match and an 8.70 run rate. Mumbai Indians have won 59.6% of matches at home, where boundary firepower and chasing dynamics dictate results.",
-    link: "/editorials",
-    metrics: [
-      { label: "Death Bowling", pct: 84 },
-      { label: "Middle-order Depth", pct: 78 },
-      { label: "Spin Versatility", pct: 52 },
-      { label: "Indian Pace Options", pct: 76 },
-    ],
-  },
-  RR: {
-    venue: "Sawai Mansingh Stadium",
-    image: "/venue-images/sawai mansingh jaipur stadium.webp",
-    tags: ["VENUE ANALYSIS", "SPIN DYNAMICS", "IPL INSIGHTS"],
-    title: "The Sawai Mansingh Equation: Boundary Dimensions & Middle-Overs Squeeze",
-    summary: "Jaipur's square boundaries (74m) reward disciplined spin and athletic boundary denial. Rajasthan Royals have built a 61.2% home win rate leveraging dual-spin containment.",
-    link: "/editorials",
-    metrics: [
-      { label: "Death Bowling", pct: 72 },
-      { label: "Middle-order Depth", pct: 64 },
-      { label: "Spin Versatility", pct: 58 },
-      { label: "Indian Pace Options", pct: 46 },
-    ],
-  },
-  RCB: {
-    venue: "M. Chinnaswamy Stadium",
-    image: "/venue-images/chinnaswamy stadium.webp",
-    tags: ["VENUE ANALYSIS", "DEATH BOWLING", "IPL INSIGHTS"],
-    title: "The Chinnaswamy Matrix: High Altitude, Short Boundaries & Bowling At The Death",
-    summary: "At 920m elevation with 60m square boundaries, Bangalore is the hardest defensive venue in T20 cricket. RCB's consecutive title runs relied on defensive boundary-percentage control.",
-    link: "/editorials",
-    metrics: [
-      { label: "Death Bowling", pct: 75 },
-      { label: "Middle-order Depth", pct: 80 },
-      { label: "Spin Versatility", pct: 62 },
-      { label: "Indian Pace Options", pct: 70 },
-    ],
-  },
-  CSK: {
-    venue: "MA Chidambaram Stadium",
-    image: "/venue-images/ma chidambaram stadium.webp",
-    tags: ["VENUE ANALYSIS", "SURFACE DECAY", "IPL INSIGHTS"],
-    title: "The Chepauk Fortress: Low Bounce, Spin Stranglehold & Chasing Equations",
-    summary: "Slow pitches and low ball-rebound at Chepauk allow Chennai Super Kings to dictate games through spin versatility and calculated strike rotation in overs 7–15.",
-    link: "/editorials",
-    metrics: [
-      { label: "Death Bowling", pct: 68 },
-      { label: "Middle-order Depth", pct: 82 },
-      { label: "Spin Versatility", pct: 88 },
-      { label: "Indian Pace Options", pct: 54 },
-    ],
-  },
-  KKR: {
-    venue: "Eden Gardens",
-    image: "/venue-images/eden gardens stadium.webp",
-    tags: ["VENUE ANALYSIS", "POWERPLAY IMPACT", "IPL INSIGHTS"],
-    title: "The Eden Gardens Template: True Pace, High Powerplay Baselines & Spin Defense",
-    summary: "True bounce and rapid outfields at Kolkata enable record-breaking powerplay blitzes. KKR's championship pedigree centers on explosive phase-one strike rates.",
-    link: "/editorials",
-    metrics: [
-      { label: "Death Bowling", pct: 70 },
-      { label: "Middle-order Depth", pct: 85 },
-      { label: "Spin Versatility", pct: 92 },
-      { label: "Indian Pace Options", pct: 60 },
-    ],
-  },
-  SRH: {
-    venue: "Rajiv Gandhi International Stadium",
-    image: "/venue-images/rajiv gandhi hyderabad stadium.webp",
-    tags: ["VENUE ANALYSIS", "BALL SPEED", "IPL INSIGHTS"],
-    title: "The Uppal Highway: Ultra-Aggressive Scoring and Boundary Geometry",
-    summary: "Hyderabad has recorded the fastest run-rates in league history. SRH's tactical doctrine weaponizes opening burst velocities to create insurmountable game leads.",
-    link: "/editorials",
-    metrics: [
-      { label: "Death Bowling", pct: 65 },
-      { label: "Middle-order Depth", pct: 88 },
-      { label: "Spin Versatility", pct: 55 },
-      { label: "Indian Pace Options", pct: 72 },
-    ],
-  },
-  DC: {
-    venue: "Arun Jaitley Stadium",
-    image: "/venue-images/arun jaitely stadium.webp",
-    tags: ["VENUE ANALYSIS", "SHORT BOUNDARIES", "IPL INSIGHTS"],
-    title: "The Kotla Dimension: Short Squares and Left-Hand Batter Matchups",
-    summary: "Compact 58m boundaries at Delhi demand extreme bowling precision. DC's 2027 blueprint focuses on high-release quicks and off-pace variations.",
-    link: "/editorials",
-    metrics: [
-      { label: "Death Bowling", pct: 62 },
-      { label: "Middle-order Depth", pct: 66 },
-      { label: "Spin Versatility", pct: 74 },
-      { label: "Indian Pace Options", pct: 68 },
-    ],
-  },
-  PBKS: {
-    venue: "Maharaja Yadavindra Singh Stadium",
-    image: "/venue-images/mullanpur stadium.webp",
-    tags: ["VENUE ANALYSIS", "SEAM PENETRATION", "IPL INSIGHTS"],
-    title: "The Mullanpur Variable: Seam Movement and Pace Penetration Under Lights",
-    summary: "Punjab's home venue yields early lateral movement and steep bounce. PBKS strategies revolve around upfront pace strikes to dismantle top orders.",
-    link: "/editorials",
-    metrics: [
-      { label: "Death Bowling", pct: 66 },
-      { label: "Middle-order Depth", pct: 58 },
-      { label: "Spin Versatility", pct: 60 },
-      { label: "Indian Pace Options", pct: 78 },
-    ],
-  },
-  GT: {
-    venue: "Narendra Modi Stadium",
-    image: "/venue-images/narendra modi stadium.webp",
-    tags: ["VENUE ANALYSIS", "EXPANSIVE OUTFIELD", "IPL INSIGHTS"],
-    title: "The Ahmedabad Scale: 80m Boundaries, Running Between Wickets & High Pace",
-    summary: "The vast outfield at Narendra Modi Stadium places a premium on two-running and speed between wickets. Gujarat Titans exploit spatial depth to squeeze opposition boundaries.",
-    link: "/editorials",
-    metrics: [
-      { label: "Death Bowling", pct: 78 },
-      { label: "Middle-order Depth", pct: 72 },
-      { label: "Spin Versatility", pct: 80 },
-      { label: "Indian Pace Options", pct: 74 },
-    ],
-  },
-  LSG: {
-    venue: "Ekana Cricket Stadium",
-    image: "/venue-images/lucknow stadium.webp",
-    tags: ["VENUE ANALYSIS", "DEFENSIVE BASES", "IPL INSIGHTS"],
-    title: "The Ekana Duality: Soil Composition and Defensive First-Innings Totals",
-    summary: "With two distinct soil preparations at Lucknow, defending sub-170 scores remains a core art form. LSG's squad architecture emphasizes disciplined defensive lengths.",
-    link: "/editorials",
-    metrics: [
-      { label: "Death Bowling", pct: 74 },
-      { label: "Middle-order Depth", pct: 70 },
-      { label: "Spin Versatility", pct: 76 },
-      { label: "Indian Pace Options", pct: 65 },
-    ],
-  },
-};
-
-const AUCTION_TARGETS = [
-  {
-    name: "Ayush Mhatre",
-    role: "Batting All-rounder",
-    statLabel: "T20 SR",
-    statVal: "178.6",
-    estValue: "₹4–6 Cr",
-    img: "/players/profiles-2026/ayush-mhatre.webp",
-  },
-  {
-    name: "Vignesh Puthur",
-    role: "Left-arm Spinner",
-    statLabel: "Econ",
-    statVal: "7.12",
-    estValue: "₹2–4 Cr",
-    img: "/players/profiles-2026/vignesh-puthur.webp",
-  },
-  {
-    name: "Priyansh Arya",
-    role: "Top-order Batter",
-    statLabel: "T20 Avg",
-    statVal: "42.3",
-    estValue: "₹3–5 Cr",
-    img: "/players/profiles-2026/priyansh-arya.webp",
-  },
-];
-
-const FRANCHISE_PICS: Record<string, string> = {
-  CSK: "/venue-images/ma chidambaram stadium.webp",
-  MI: "/venue-images/wankhede stadium.webp",
-  RCB: "/venue-images/chinnaswamy stadium.webp",
-  KKR: "/venue-images/eden gardens stadium.webp",
-  SRH: "/venue-images/rajiv gandhi hyderabad stadium.webp",
-  DC: "/venue-images/arun jaitely stadium.webp",
-  RR: "/venue-images/sawai mansingh jaipur stadium.webp",
-  GT: "/venue-images/narendra modi stadium.webp",
-  LSG: "/venue-images/ekana lucknow stadium.webp",
-  PBKS: "/venue-images/mullanpur new pca stadium.webp",
-};
+  { id: "squad", title: "SQUAD HQ", subtitle: "Retentions, releases, squad building & XI", href: "/squad-hq", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-400" },
+  { id: "auction", title: "AUCTION ROOM", subtitle: "Player choices, budgets & recruitment", href: "/auction", img: "/auction-art.jpg", color: "text-amber-400" },
+  { id: "tactics", title: "MATCH LAB", subtitle: "Playing XI, tactics & opposition", href: "/tactics", img: "/assets/tactical-board-hero.png", color: "text-emerald-400" },
+  { id: "venues", title: "VENUE ATLAS", subtitle: "Grounds, conditions & historical trends", href: "/venues", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-400" },
+  { id: "editorials", title: "EDITORIALS", subtitle: "Stories, analysis & cricket culture", href: "/editorials", img: "/milestone-photos/final-2023-csk.jpg", color: "text-cyan-400" },
+] as const;
 
 const ASPECT_LABELS: Record<string, string> = {
   "batting": "Batting Intelligence",
   "bowling-fielding": "Bowling Telemetry",
-  "auction-economics": "Auction Economics",
+  "auction-economics": "Retention & Auction",
   "tactical": "Tactical Modeling",
   "venues": "Venue Conditions",
   "history": "Franchise History",
@@ -246,16 +55,25 @@ const ASPECT_LABELS: Record<string, string> = {
   "data-science": "Deep Quant Analytics",
 };
 
+const FRANCHISE_ORDER: TeamCode[] = ["CSK", "MI", "RCB", "KKR", "SRH", "RR", "DC", "PBKS", "GT", "LSG"];
+const DHONI_SLUG = "csk-dhoni-retirement-mentor-2027";
+const DHONI_FEATURE_UNTIL_MS = new Date("2026-12-01T23:59:59+05:30").getTime();
+const SAVED_STORIES_KEY = "cricfield:saved-editorial-slugs";
+
 export interface ArticleArchiveItem {
   id: string;
+  slug: string;
   category: string;
   tag: string;
   title: string;
+  dek: string;
   date: string;
-  img: string;
+  publishedDate: string;
   href: string;
   aspect: string;
   franchise: string;
+  status: string;
+  featured: boolean;
 }
 
 const ALL_EDITORIAL_INSIGHTS: ArticleArchiveItem[] = (editorialArchive.articles || []).map((art) => {
@@ -271,31 +89,87 @@ const ALL_EDITORIAL_INSIGHTS: ArticleArchiveItem[] = (editorialArchive.articles 
       ? "Venues"
       : "Teams";
 
-  const img = FRANCHISE_PICS[franchise] || "/auction-art.jpg";
   const dateFormatted = art.publishedDate
     ? new Date(art.publishedDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
     : "Nov 2026";
 
   return {
     id: art.id,
+    slug: art.slug,
     category: `${franchise} • ${ASPECT_LABELS[art.aspect] || "Editorial Insight"}`,
     tag,
     title: art.title,
+    dek: art.dek,
     date: dateFormatted,
-    img,
+    publishedDate: art.publishedDate || "2026-10-26",
     href: `/dugout/articles/${art.slug}`,
     aspect: art.aspect,
     franchise,
+    status: art.status || "review",
+    featured: Boolean(art.featured),
   };
 });
 
 const CATEGORY_TABS = ["All", "Auction", "Tactics", "Players", "Venues", "Teams"] as const;
+
+function ArticleCardMedia({
+  articleId,
+  franchise,
+  title,
+  aspect,
+  className = "h-44 w-full",
+}: {
+  articleId: string;
+  franchise: string;
+  title: string;
+  aspect: string;
+  className?: string;
+}) {
+  const heroImage = getArticleHeroImage(articleId);
+  const meta = TEAM_REGISTRY[franchise as TeamCode];
+  const fallback = (
+    <EditorialCoverCanvas
+      franchiseName={meta?.name ?? franchise}
+      teamCode={franchise}
+      parameter={ASPECT_LABELS[aspect] ?? "Editorial"}
+      title={title}
+      accent={meta?.accent ?? "#00D2FF"}
+      aspectRatio="video"
+      hideTitle
+      className="h-full w-full"
+    />
+  );
+
+  return (
+    <div className={`${className} overflow-hidden relative bg-slate-950 shrink-0`}>
+      {heroImage ? (
+        <EditorialImageFigure
+          image={heroImage}
+          variant="hero"
+          allowUnpublished={import.meta.env.DEV}
+          className="h-full w-full [&_figure]:h-full [&_figure]:m-0 [&_img]:h-full [&_img]:w-full [&_img]:object-cover"
+          fallback={fallback}
+        />
+      ) : (
+        fallback
+      )}
+    </div>
+  );
+}
 
 export default function HomePage() {
   const { selectedTeam } = useTeamTheme();
   const [captionIdx, setCaptionIdx] = useState(0);
   const [isPhone, setIsPhone] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [savedSlugs, setSavedSlugs] = useState<string[]>(() => {
+    try {
+      const raw = localStorage.getItem(SAVED_STORIES_KEY);
+      return raw ? (JSON.parse(raw) as string[]) : [];
+    } catch {
+      return [];
+    }
+  });
 
   useEffect(() => {
     const handleResize = () => setIsPhone(window.innerWidth < 768);
@@ -303,7 +177,6 @@ export default function HomePage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Smoothly rotate the headline without causing layout shifts
   useEffect(() => {
     const timer = setInterval(() => {
       setCaptionIdx((prev) => (prev + 1) % HEADLINES.length);
@@ -311,35 +184,149 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, []);
 
-  // Timezone-aware countdown calculation
   const auctionEvent = HUB_EVENTS.find((e) => e.id === "auction");
   const targetDateStr = auctionEvent?.date ?? "2026-12-16";
   const targetTime = useMemo(() => new Date(`${targetDateStr}T10:00:00+05:30`).getTime(), [targetDateStr]);
 
-  const [timeLeft, setTimeLeft] = useState(() => {
-    const diff = Math.max(0, targetTime - Date.now());
-    return {
-      days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((diff / (1000 * 60)) % 60),
-      seconds: Math.floor((diff / 1000) % 60),
-    };
+  const [nowMs, setNowMs] = useState(() => Date.now());
+  useEffect(() => {
+    const timer = setInterval(() => setNowMs(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const diffMs = Math.max(0, targetTime - nowMs);
+  const auctionFinished = nowMs > targetTime + 1000 * 60 * 60 * 12;
+  const auctionActiveNow = nowMs >= targetTime && !auctionFinished;
+  const timeLeft = {
+    days: Math.floor(diffMs / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diffMs / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diffMs / (1000 * 60)) % 60),
+    seconds: Math.floor((diffMs / 1000) % 60),
+  };
+
+  const activeTeamCode: TeamCode = selectedTeam && TEAM_REGISTRY[selectedTeam] ? selectedTeam : "CSK";
+  const activeTheme = TEAM_REGISTRY[activeTeamCode];
+
+  const officialRoomQuery = useQuery({
+    queryKey: ["home-retention-official", 2027, activeTeamCode],
+    queryFn: () => fetchOfficialRoom(2027, activeTeamCode),
+    staleTime: 300_000,
+    retry: false,
   });
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const diff = Math.max(0, targetTime - Date.now());
-      setTimeLeft({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((diff / (1000 * 60)) % 60),
-        seconds: Math.floor((diff / 1000) % 60),
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [targetTime]);
+  const officialLeagueQuery = useQuery({
+    queryKey: ["home-retention-league", 2027],
+    queryFn: () => fetchOfficialLeague(2027),
+    staleTime: 300_000,
+    retry: false,
+  });
 
-  // Mobile layout fallback
+  // Global Featured Editorial (MS Dhoni retirement during featured window, else top franchise story)
+  const featuredStory = useMemo(() => {
+    const dhoniEntry = ALL_EDITORIAL_INSIGHTS.find((a) => a.slug === DHONI_SLUG);
+    const inDhoniWindow = nowMs <= DHONI_FEATURE_UNTIL_MS;
+    if (dhoniEntry && dhoniEntry.status === "published" && inDhoniWindow) {
+      return {
+        isDhoniLead: true,
+        articleId: dhoniEntry.id,
+        imageLookupId: getArticleHeroImage(dhoniEntry.id) ? dhoniEntry.id : "art-csk-04",
+        slug: dhoniEntry.slug,
+        href: dhoniEntry.href,
+        eyebrow: "FEATURED EDITORIAL",
+        tags: ["CSK", "RETROSPECTIVE", "IPL 2027"],
+        title: "The Last Time Behind the Stumps",
+        dek: "MS Dhoni's playing career ends. The memories, the legacy and Chennai's next chapter remain.",
+        date: dhoniEntry.date,
+        franchise: "CSK",
+      };
+    }
+
+    const fallback =
+      ALL_EDITORIAL_INSIGHTS.find((a) => a.franchise === activeTeamCode && a.status === "published") ??
+      ALL_EDITORIAL_INSIGHTS.find((a) => a.franchise === activeTeamCode) ??
+      ALL_EDITORIAL_INSIGHTS[0];
+
+    return {
+      isDhoniLead: false,
+      articleId: fallback.id,
+      imageLookupId: fallback.id,
+      slug: fallback.slug,
+      href: fallback.href,
+      eyebrow: "FEATURED ANALYSIS",
+      tags: [fallback.franchise, fallback.tag.toUpperCase()],
+      title: fallback.title,
+      dek: fallback.dek,
+      date: fallback.date,
+      franchise: fallback.franchise,
+    };
+  }, [activeTeamCode, nowMs]);
+
+  const isSaved = savedSlugs.includes(featuredStory.slug);
+  const toggleSaveFeatured = () => {
+    setSavedSlugs((prev) => {
+      const next = prev.includes(featuredStory.slug)
+        ? prev.filter((s) => s !== featuredStory.slug)
+        : [...prev, featuredStory.slug];
+      try {
+        localStorage.setItem(SAVED_STORIES_KEY, JSON.stringify(next));
+      } catch {
+        // ignore storage quota errors
+      }
+      return next;
+    });
+  };
+
+  // Verified Purse Ranking (top 3 sorted dynamically by remaining verified purse)
+  const purseTop3 = useMemo(() => {
+    const teams = officialLeagueQuery.data?.teams ?? [];
+    return teams
+      .filter((t) => typeof t.purse.valueLakh === "number" && t.purse.valueLakh > 0)
+      .slice()
+      .sort((a, b) => (b.purse.valueLakh ?? 0) - (a.purse.valueLakh ?? 0))
+      .slice(0, 3);
+  }, [officialLeagueQuery.data]);
+  const maxPurseLakh = purseTop3[0]?.purse.valueLakh ?? 12000;
+
+  // Deterministic Latest Insights selector: IPL 2027 Retention Special (10 franchises) on "All"
+  const filteredInsights = useMemo(() => {
+    const seenIds = new Set<string>();
+    const seenSlugs = new Set<string>();
+
+    if (selectedCategory === "All") {
+      const retentionPicks: ArticleArchiveItem[] = [];
+      for (const franchise of FRANCHISE_ORDER) {
+        const teamPool = ALL_EDITORIAL_INSIGHTS.filter(
+          (a) => a.franchise === franchise && !seenIds.has(a.id) && !seenSlugs.has(a.slug),
+        );
+        // Deterministic retention priority: explicit retention-mathematics/retention articles first, then auction-economics
+        const candidate =
+          teamPool.find((a) => /retention/i.test(a.title) || /retention/i.test(a.slug)) ??
+          teamPool.find((a) => a.aspect === "auction-economics") ??
+          teamPool.find((a) => a.status === "published") ??
+          teamPool[0];
+
+        if (candidate) {
+          seenIds.add(candidate.id);
+          seenSlugs.add(candidate.slug);
+          retentionPicks.push(candidate);
+        }
+      }
+      return retentionPicks;
+    }
+
+    const cat = selectedCategory.toLowerCase();
+    const results: ArticleArchiveItem[] = [];
+    for (const ins of ALL_EDITORIAL_INSIGHTS) {
+      if (ins.tag.toLowerCase() === cat && !seenIds.has(ins.id) && !seenSlugs.has(ins.slug)) {
+        seenIds.add(ins.id);
+        seenSlugs.add(ins.slug);
+        results.push(ins);
+      }
+      if (results.length >= 10) break;
+    }
+    return results;
+  }, [selectedCategory]);
+
   if (isPhone) {
     return (
       <Layout hideRightPanel>
@@ -348,83 +335,26 @@ export default function HomePage() {
     );
   }
 
-  // Active franchise data for Section 3
-  const activeTeamCode: TeamCode = selectedTeam && FRANCHISE_MAP[selectedTeam] ? selectedTeam : "RR";
-  const activeIntel = FRANCHISE_MAP[activeTeamCode];
-  const activeTheme = TEAM_REGISTRY[activeTeamCode];
-
-  // Filtered latest insights connected to the 1,000-article editorial engine
-  const filteredInsights = useMemo(() => {
-    const seenTitles = new Set<string>();
-
-    if (selectedCategory === "All") {
-      // Curate a vibrant, diverse mix of 8 articles from different franchises with distinct topics & aspects
-      // Avoid repetitive "Powerplay Equation" titles by staggering franchise offsets
-      const diversePicks: ArticleArchiveItem[] = [];
-      const franchises = ["RCB", "CSK", "MI", "KKR", "SRH", "RR", "DC", "GT", "LSG", "PBKS"];
-
-      const franchiseOffsets: Record<string, number> = {
-        RCB: 5,   // Chasing Under Pressure
-        CSK: 4,   // The Finisher's Clock
-        MI: 1,    // The Anchor Paradox
-        KKR: 8,   // Middle Overs Spin Control
-        SRH: 14,  // Boundary Maximization
-        RR: 20,   // Death Bowling Defense
-        DC: 28,   // Indian Core Architecture
-        GT: 16,   // Spatial Ground Dimension Strategy
-        LSG: 24,  // Defensive First-Innings Totals
-        PBKS: 11, // New Ball Pace Penetration
-      };
-
-      for (const f of franchises) {
-        const teamPool = ALL_EDITORIAL_INSIGHTS.filter(a => a.franchise === f);
-        const offset = franchiseOffsets[f] || 2;
-        const candidate =
-          teamPool.find((a, idx) => idx >= offset && !seenTitles.has(a.title) && !a.title.toLowerCase().includes("powerplay equation")) ||
-          teamPool.find(a => !seenTitles.has(a.title) && !a.title.toLowerCase().includes("powerplay equation")) ||
-          teamPool[0];
-
-        if (candidate && !seenTitles.has(candidate.title)) {
-          seenTitles.add(candidate.title);
-          diversePicks.push(candidate);
-        }
-        if (diversePicks.length >= 8) break;
-      }
-
-      return diversePicks.length >= 4 ? diversePicks : ALL_EDITORIAL_INSIGHTS.slice(0, 8);
-    }
-
-    const cat = selectedCategory.toLowerCase();
-    const results: ArticleArchiveItem[] = [];
-    for (const ins of ALL_EDITORIAL_INSIGHTS) {
-      if (ins.tag.toLowerCase() === cat) {
-        const baseTitle = ins.title.split(":")[0].trim().toLowerCase();
-        if (!seenTitles.has(baseTitle) && !seenTitles.has(ins.title)) {
-          seenTitles.add(baseTitle);
-          seenTitles.add(ins.title);
-          results.push(ins);
-        }
-      }
-      if (results.length >= 8) break;
-    }
-
-    return results.length > 0 ? results : ALL_EDITORIAL_INSIGHTS.slice(0, 8);
-  }, [selectedCategory]);
-
   const curHeadline = HEADLINES[captionIdx];
+  const officialRoom = officialRoomQuery.data;
+  const auctionBadgeText = auctionActiveNow
+    ? "Underway"
+    : auctionFinished
+    ? "Complete"
+    : auctionEvent?.status === "confirmed"
+    ? "Confirmed · Dec 16"
+    : "Reported · Dec 16";
 
   return (
     <Layout hideRightPanel>
       <div className="cricfield-home home-editorial min-h-screen">
         <div className="home-layout-container">
-
           {/* ═════════════════════════════════════════════════════════════════════
               SECTION 1: HERO & AUCTION COUNTDOWN
           ═════════════════════════════════════════════════════════════════════ */}
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
             {/* HERO BANNER (8 cols lg, 9 cols xl) */}
             <div className="lg:col-span-8 xl:col-span-9 home-main-hero min-h-[380px] lg:min-h-[420px] flex relative overflow-hidden rounded-[24px] border border-white/10 bg-[#050C18] shadow-2xl">
-              {/* IMAGE SIDE (RIGHT) */}
               <div className="absolute inset-y-0 right-0 w-full sm:w-[65%] md:w-[60%] lg:w-[58%] pointer-events-none select-none overflow-hidden">
                 <div className="w-full h-full relative">
                   <img
@@ -432,17 +362,14 @@ export default function HomePage() {
                     className="w-full h-full object-cover object-[right_top] sm:object-[center_top] transition-transform duration-[12s] hover:scale-105"
                     alt="IPL Champions and Star Players"
                   />
-                  {/* Blending gradients */}
                   <div className="absolute inset-y-0 left-0 w-36 sm:w-60 bg-gradient-to-r from-[#050C18] via-[#050C18]/90 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#050C18] via-[#050C18]/70 to-transparent" />
                   <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#050C18]/60 to-transparent" />
                 </div>
               </div>
 
-              {/* TEXT CONTENT (LEFT) */}
               <div className="home-hero-copy relative z-10 w-full md:w-[70%] lg:w-[64%] xl:w-[60%] flex flex-col justify-center p-6 sm:p-8 lg:p-10">
                 <div>
-                  {/* Min-height headline box with smooth wrapping prevents cutting off words on any screen size */}
                   <div className="min-h-[110px] sm:min-h-[125px] md:min-h-[140px] flex items-center mb-3">
                     <AnimatePresence mode="wait">
                       <motion.h1
@@ -464,9 +391,7 @@ export default function HomePage() {
                             <span className="text-white">{curHeadline.prefix}</span>{" "}
                             <span
                               className="font-black text-[var(--hl-dark)]"
-                              style={{
-                                "--hl-dark": curHeadline.darkColor,
-                              } as React.CSSProperties}
+                              style={{ "--hl-dark": curHeadline.darkColor } as React.CSSProperties}
                             >
                               {curHeadline.highlight}
                             </span>
@@ -486,59 +411,51 @@ export default function HomePage() {
             {/* AUCTION COUNTDOWN CARD (4 cols lg, 3 cols xl) */}
             <aside className="lg:col-span-4 xl:col-span-3 rounded-[24px] border border-white/10 bg-[#081322] p-5 sm:p-6 shadow-2xl flex flex-col justify-between">
               <div>
-                {/* Header */}
-                <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-400">
+                <div className="flex items-center justify-between pb-3.5 border-b border-white/10 gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0">
                       <Gavel size={15} />
                     </div>
-                    <h2 className="text-xs font-black text-white uppercase tracking-wider">
+                    <h2 className="text-xs font-black text-white uppercase tracking-wider truncate">
                       IPL 2027 AUCTION
                     </h2>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-                    <span className="text-[10px] font-mono text-slate-400 uppercase">Live</span>
-                  </div>
+                  <span className="text-[10px] font-mono text-amber-300/90 uppercase whitespace-nowrap shrink-0">
+                    {auctionBadgeText}
+                  </span>
                 </div>
 
-                {/* 4 Countdown Boxes */}
-                <div className="grid grid-cols-4 gap-2 mt-4">
-                  <div className="bg-[#0D1B2E] border border-white/10 rounded-xl p-2.5 text-center">
-                    <div className="text-xl sm:text-2xl font-black text-white">
-                      {String(timeLeft.days).padStart(2, "0")}
-                    </div>
-                    <div className="text-[9px] font-mono tracking-wider text-rose-400 font-bold uppercase mt-0.5">
-                      DAYS
-                    </div>
+                {!auctionActiveNow && !auctionFinished ? (
+                  <div className="grid grid-cols-4 gap-2 mt-4">
+                    {[
+                      { val: timeLeft.days, lbl: "DAYS" },
+                      { val: timeLeft.hours, lbl: "HRS" },
+                      { val: timeLeft.minutes, lbl: "MIN" },
+                      { val: timeLeft.seconds, lbl: "SEC" },
+                    ].map((unit) => (
+                      <div key={unit.lbl} className="bg-[#0D1B2E] border border-white/10 rounded-xl p-2.5 text-center">
+                        <div className="text-xl sm:text-2xl font-black text-white font-mono">
+                          {String(unit.val).padStart(2, "0")}
+                        </div>
+                        <div className="text-[9px] font-mono tracking-wider text-amber-400 font-bold uppercase mt-0.5">
+                          {unit.lbl}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <div className="bg-[#0D1B2E] border border-white/10 rounded-xl p-2.5 text-center">
-                    <div className="text-xl sm:text-2xl font-black text-white">
-                      {String(timeLeft.hours).padStart(2, "0")}
-                    </div>
-                    <div className="text-[9px] font-mono tracking-wider text-rose-400 font-bold uppercase mt-0.5">
-                      HRS
-                    </div>
+                ) : (
+                  <div className="mt-4 rounded-xl border border-white/10 bg-[#0D1B2E] p-3.5 text-xs text-slate-200">
+                    <p className="font-bold text-white">
+                      {auctionActiveNow ? "IPL 2027 Auction is underway" : "IPL 2027 Auction concluded"}
+                    </p>
+                    <p className="text-[11px] text-slate-400 mt-1">
+                      {auctionActiveNow
+                        ? "Follow live signings, remaining purses and squad slots."
+                        : "Inspect final signings, squad balances and tactical fits."}
+                    </p>
                   </div>
-                  <div className="bg-[#0D1B2E] border border-white/10 rounded-xl p-2.5 text-center">
-                    <div className="text-xl sm:text-2xl font-black text-white">
-                      {String(timeLeft.minutes).padStart(2, "0")}
-                    </div>
-                    <div className="text-[9px] font-mono tracking-wider text-rose-400 font-bold uppercase mt-0.5">
-                      MIN
-                    </div>
-                  </div>
-                  <div className="bg-[#0D1B2E] border border-white/10 rounded-xl p-2.5 text-center">
-                    <div className="text-xl sm:text-2xl font-black text-white">
-                      {String(timeLeft.seconds).padStart(2, "0")}
-                    </div>
-                    <div className="text-[9px] font-mono tracking-wider text-rose-400 font-bold uppercase mt-0.5">
-                      SEC
-                    </div>
-                  </div>
-                </div>
+                )}
 
-                {/* Quick Link Navigation */}
                 <div className="flex flex-col gap-2 mt-5 pt-4 border-t border-white/10">
                   <Link
                     href="/retentions"
@@ -553,7 +470,7 @@ export default function HomePage() {
                           Retention Tracking
                         </div>
                         <div className="text-[10px] text-slate-400">
-                          Latest updates and confirmed retentions
+                          Official retentions &amp; releases
                         </div>
                       </div>
                     </div>
@@ -593,7 +510,7 @@ export default function HomePage() {
                           Auction Market
                         </div>
                         <div className="text-[10px] text-slate-400">
-                          Player value, demand and availability
+                          Purse room, slots &amp; pool status
                         </div>
                       </div>
                     </div>
@@ -605,7 +522,7 @@ export default function HomePage() {
           </section>
 
           {/* ═════════════════════════════════════════════════════════════════════
-              SECTION 2: EXPLORE IPL 2027 COVERAGE
+              SECTION 2: EXPLORE IPL 2027 COVERAGE (FIVE FINAL CARDS)
           ═════════════════════════════════════════════════════════════════════ */}
           <section className="space-y-3.5 my-2">
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 border-b border-white/10 pb-2.5">
@@ -619,215 +536,276 @@ export default function HomePage() {
               </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-3.5">
-              {EXPLORE_COVERAGE_CARDS.map((c) => (
-                <Link
-                  key={c.id}
-                  href={selectedTeam && ["auction", "tactics", "storylines", "squad"].includes(c.id) ? (c.id === "squad" ? `/retention-room/${selectedTeam}` : `${c.href}?team=${selectedTeam}`) : c.href}
-                  className="group overflow-hidden rounded-2xl border border-white/10 bg-[#081220] hover:border-white/30 shadow-xs hover:shadow-md transition-all flex flex-col"
-                >
-                  <div className="h-28 overflow-hidden relative bg-slate-900 shrink-0">
-                    <img
-                      src={c.img}
-                      alt={c.title}
-                      className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-3 flex-1 flex flex-col justify-between bg-[#081220]">
-                    <div className="flex items-center gap-1.5">
-                      <c.icon className={`hidden sm:block w-3.5 h-3.5 shrink-0 ${c.color}`} />
+              {EXPLORE_COVERAGE_CARDS.map((c) => {
+                const href =
+                  selectedTeam && ["squad", "auction", "tactics"].includes(c.id)
+                    ? c.id === "squad"
+                      ? `/squad-hq/${selectedTeam}`
+                      : `${c.href}?team=${selectedTeam}`
+                    : c.href;
+
+                return (
+                  <Link
+                    key={c.id}
+                    href={href}
+                    className="group overflow-hidden rounded-2xl border border-white/10 bg-[#081220] hover:border-white/30 shadow-xs hover:shadow-md transition-all flex flex-col"
+                  >
+                    <div className="h-28 overflow-hidden relative bg-slate-900 shrink-0">
+                      <img
+                        src={c.img}
+                        alt={c.title}
+                        className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="p-3.5 flex-1 flex flex-col justify-between bg-[#081220]">
                       <span className="text-[11px] font-black text-white leading-tight uppercase tracking-wider">
                         {c.title}
                       </span>
+                      <div className="mt-1.5 flex items-end justify-between gap-2">
+                        <span className="text-[11px] text-white/65 line-clamp-2 leading-snug">{c.subtitle}</span>
+                        <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${c.color} transition-transform group-hover:translate-x-0.5`} />
+                      </div>
                     </div>
-                    <div className="mt-1.5 flex items-end justify-between gap-2">
-                      <span className="text-[10px] text-white/60 line-clamp-1">{c.subtitle}</span>
-                      <ArrowRight className={`w-3 h-3 shrink-0 ${c.color} transition-transform group-hover:translate-x-0.5`} />
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           </section>
 
           {/* ═════════════════════════════════════════════════════════════════════
-              SECTION 3: FEATURED ANALYSIS, SQUAD INTELLIGENCE & TOP AUCTION TARGETS
+              SECTION 3: FEATURED EDITORIAL, RETENTION TRACKER & AUCTION PURSE WATCH
           ═════════════════════════════════════════════════════════════════════ */}
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-            {/* COLUMN 1: FEATURED ANALYSIS (5 cols lg, 5 cols xl) */}
-            <div className="lg:col-span-5 xl:col-span-5 rounded-[24px] border border-white/10 bg-[#081322] overflow-hidden shadow-2xl flex flex-col justify-between group">
+            {/* COLUMN 1 (5/12): FEATURED EDITORIAL — MS DHONI RETIREMENT LEAD */}
+            <article className="lg:col-span-5 rounded-[24px] border border-white/10 bg-[#081322] overflow-hidden shadow-2xl flex flex-col justify-between group">
               <div className="relative">
-                {/* Image */}
-                <div className="h-56 w-full overflow-hidden relative bg-slate-950">
-                  <img
-                    src={activeIntel.image}
-                    alt={activeIntel.venue}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                <div className="h-60 w-full overflow-hidden relative bg-slate-950">
+                  <ArticleCardMedia
+                    articleId={featuredStory.imageLookupId}
+                    franchise={featuredStory.franchise}
+                    title={featuredStory.title}
+                    aspect="future"
+                    className="h-60 w-full"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#081322] via-[#081322]/40 to-transparent" />
-                  
-                  {/* Badge */}
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 rounded-full text-[10px] font-mono font-black uppercase tracking-wider text-[#00D2FF] bg-[#00D2FF]/20 border border-[#00D2FF]/40 backdrop-blur-md">
-                      FEATURED ANALYSIS
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#081322] via-[#081322]/35 to-transparent" />
+                  <div className="pointer-events-none absolute top-4 left-4">
+                    <span className="px-3 py-1 rounded-full text-[10px] font-mono font-black uppercase tracking-wider text-[#00D2FF] bg-[#081322]/85 border border-[#00D2FF]/40 backdrop-blur-md">
+                      {featuredStory.eyebrow}
                     </span>
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-5 sm:p-6 space-y-3 -mt-6 relative z-10">
-                  {/* Category Tags */}
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {activeIntel.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-slate-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                <div className="p-5 sm:p-6 space-y-3 relative z-10">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {featuredStory.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-slate-300"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-400">{featuredStory.date}</span>
                   </div>
 
-                  {/* Title */}
                   <h3 className="text-xl sm:text-2xl font-black text-white leading-tight group-hover:text-[#00D2FF] transition-colors">
-                    {activeIntel.title}
+                    {featuredStory.title}
                   </h3>
 
-                  {/* Dek */}
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
-                    {activeIntel.summary}
+                    {featuredStory.dek}
                   </p>
                 </div>
               </div>
 
-              {/* Bottom bar */}
-              <div className="p-5 sm:p-6 pt-0 flex items-center justify-between gap-3 border-t border-white/5 mt-2">
-                <Link href={activeIntel.link}>
-                  <button className="flex items-center gap-2 bg-[#00D2FF] text-slate-950 font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl hover:bg-[#00D2FF]/90 transition-all cursor-pointer">
-                    Read Full Analysis <ArrowRight size={14} />
-                  </button>
+              <div className="p-5 sm:p-6 pt-4 flex items-center justify-between gap-3 border-t border-white/10">
+                <Link
+                  href={featuredStory.href}
+                  className="inline-flex items-center gap-2 bg-[#00D2FF] text-slate-950 font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl hover:bg-[#00D2FF]/90 transition-all"
+                >
+                  Read Story <ArrowRight size={14} />
                 </Link>
                 <button
                   type="button"
-                  aria-label="Save for later"
-                  className="p-2.5 rounded-xl border border-white/10 hover:bg-white/5 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                  aria-label={isSaved ? "Remove from saved stories" : "Save story for later"}
+                  aria-pressed={isSaved}
+                  onClick={toggleSaveFeatured}
+                  className={`inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer ${
+                    isSaved
+                      ? "border-[#00D2FF]/50 bg-[#00D2FF]/15 text-[#00D2FF]"
+                      : "border-white/10 hover:bg-white/5 text-slate-400 hover:text-white"
+                  }`}
                 >
-                  <Bookmark size={16} />
+                  <Bookmark size={15} className={isSaved ? "fill-current" : ""} />
+                  <span>{isSaved ? "Saved" : "Save"}</span>
                 </button>
               </div>
-            </div>
+            </article>
 
-            {/* COLUMN 2: FRANCHISE SQUAD INTELLIGENCE (3.5 cols lg, 3.5 cols xl) */}
-            <div className="lg:col-span-3 xl:col-span-3 rounded-[24px] border border-white/10 bg-[#081322] p-5 sm:p-6 shadow-2xl flex flex-col justify-between">
+            {/* COLUMN 2 (3/12): IPL 2027 RETENTION TRACKER */}
+            <section className="lg:col-span-3 rounded-[24px] border border-white/10 bg-[#081322] p-5 sm:p-6 shadow-2xl flex flex-col justify-between">
               <div>
-                {/* Crest & Heading */}
                 <div className="flex items-center gap-3 pb-4 border-b border-white/10">
                   <div
-                    className="w-11 h-11 rounded-2xl flex items-center justify-center p-2 border"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center p-1.5 border shrink-0"
                     style={{
-                      borderColor: activeTheme?.accent ?? "#E11D48",
-                      backgroundColor: `${activeTheme?.accent ?? "#E11D48"}15`,
+                      borderColor: `${activeTheme?.accent ?? "#38BDF8"}55`,
+                      backgroundColor: `${activeTheme?.accent ?? "#38BDF8"}14`,
                     }}
                   >
                     <TeamLogo team={activeTeamCode} className="w-full h-full object-contain" />
                   </div>
-                  <div>
-                    <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                      {activeTeamCode} SQUAD INTELLIGENCE
+                  <div className="min-w-0">
+                    <h3 className="text-xs font-black text-white uppercase tracking-wider truncate">
+                      IPL 2027 RETENTION TRACKER
                     </h3>
-                    <p className="text-[11px] text-slate-400">Key focus areas for IPL 2027</p>
+                    <p className="text-[11px] text-slate-400 truncate">
+                      {activeTheme?.name ?? activeTeamCode}
+                    </p>
                   </div>
                 </div>
 
-                {/* Progress Bars */}
-                <div className="space-y-4 mt-5">
-                  {activeIntel.metrics.map((m) => (
-                    <div key={m.label} className="space-y-1.5">
-                      <div className="flex justify-between text-xs font-semibold">
-                        <span className="text-slate-300">{m.label}</span>
-                        <span className="text-white font-mono">{m.pct}%</span>
-                      </div>
-                      <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                        <div
-                          className="h-full rounded-full transition-all duration-1000"
-                          style={{
-                            width: `${m.pct}%`,
-                            backgroundColor: activeTheme?.accent ?? "#E11D48",
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Bottom Full Analysis Button */}
-              <div className="mt-6 pt-4 border-t border-white/10">
-                <Link href={`/dugout/${activeTeamCode}`}>
-                  <button className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 border border-white/15 hover:bg-white/10 text-xs font-bold text-white uppercase tracking-wider transition-all cursor-pointer">
-                    Full {activeTeamCode} Analysis <ArrowRight size={14} />
-                  </button>
-                </Link>
-              </div>
-            </div>
-
-            {/* COLUMN 3: TOP AUCTION TARGETS (3.5 cols lg, 3.5 cols xl) */}
-            <aside className="lg:col-span-4 xl:col-span-4 rounded-[24px] border border-white/10 bg-[#081322] p-5 sm:p-6 shadow-2xl flex flex-col justify-between">
-              <div>
-                {/* Header */}
-                <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                  <div>
-                    <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                      TOP AUCTION TARGETS
-                    </h3>
-                    <p className="text-[10px] text-slate-400">Uncapped & High-Value</p>
+                {officialRoomQuery.isPending ? (
+                  <div className="space-y-3 mt-5">
+                    <div className="h-16 rounded-xl bg-white/5 animate-pulse" />
+                    <div className="h-24 rounded-xl bg-white/5 animate-pulse" />
                   </div>
-                  <Link href="/pressurelab" className="text-xs font-semibold text-[#00D2FF] hover:underline">
-                    Scout →
-                  </Link>
-                </div>
-
-                {/* 3 Player Cards */}
-                <div className="space-y-3 mt-4">
-                  {AUCTION_TARGETS.map((player) => (
-                    <div
-                      key={player.name}
-                      className="flex items-center justify-between p-3 rounded-2xl bg-[#0D1B2E] border border-white/5 hover:border-white/15 transition-all group"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 rounded-xl overflow-hidden bg-slate-800 border border-white/10 shrink-0">
-                          <img
-                            src={player.img}
-                            alt={player.name}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                          />
-                        </div>
-                        <div>
-                          <h4 className="text-xs font-bold text-white group-hover:text-[#00D2FF] transition-colors">
-                            {player.name}
-                          </h4>
-                          <p className="text-[10px] text-slate-400">{player.role}</p>
-                        </div>
-                      </div>
-
-                      <div className="text-right">
-                        <div className="text-[10px] font-mono text-slate-400">
-                          {player.statLabel} <span className="font-bold text-white">{player.statVal}</span>
-                        </div>
-                        <span className="inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
-                          {player.estValue}
+                ) : officialRoom ? (
+                  <div className="mt-5 space-y-4">
+                    <div className="rounded-xl border border-white/10 bg-[#0D1B2E] p-3.5">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                        Retained Players
+                      </span>
+                      <div className="flex items-baseline justify-between mt-1">
+                        <span className="text-3xl font-black font-mono text-white">
+                          {officialRoom.summary.retained}
+                        </span>
+                        <span className="text-[11px] font-mono text-slate-400">
+                          {officialRoom.summary.tradedIn > 0 ? `+${officialRoom.summary.tradedIn} traded in` : "Official list"}
                         </span>
                       </div>
                     </div>
-                  ))}
-                </div>
+
+                    <div className="space-y-2.5 text-xs">
+                      <div className="flex items-center justify-between py-1.5 border-b border-white/5">
+                        <span className="text-slate-400">Remaining Slots</span>
+                        <span className="font-mono font-bold text-white">{officialRoom.summary.slots}</span>
+                      </div>
+                      <div className="flex items-center justify-between py-1.5 border-b border-white/5">
+                        <span className="text-slate-400">Available Purse</span>
+                        <span className="font-mono font-bold text-emerald-400">
+                          {formatPurse(officialRoom.purse.valueLakh)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between py-1.5">
+                        <span className="text-slate-400">Overseas Retained</span>
+                        <span className="font-mono font-bold text-white">{officialRoom.summary.overseas}</span>
+                      </div>
+                    </div>
+
+                    <p className="text-[10px] font-mono text-slate-500">
+                      Official records · Updated {officialRoom.reviewedAt}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="mt-5 rounded-xl border border-white/10 bg-[#0D1B2E] p-4 text-xs text-slate-400 space-y-1.5">
+                    <p className="font-bold text-slate-200">Retention records incomplete</p>
+                    <p>Official 2027 retention ledger for {activeTeamCode} is awaiting verification.</p>
+                  </div>
+                )}
               </div>
 
-              {/* Bottom Watchlist Button */}
-              <div className="mt-6 pt-4 border-t border-white/10">
-                <Link href="/pressurelab">
-                  <button className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 border border-white/15 hover:bg-white/10 text-xs font-bold text-white uppercase tracking-wider transition-all cursor-pointer">
-                    View Complete Watchlist <ArrowRight size={14} />
-                  </button>
+              <div className="mt-5 pt-4 border-t border-white/10">
+                <Link
+                  href={`/squad-hq/${activeTeamCode}`}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-900 border border-white/15 hover:bg-white/10 text-xs font-bold text-white uppercase tracking-wider transition-all"
+                >
+                  Explore Retentions <ArrowRight size={14} />
+                </Link>
+              </div>
+            </section>
+
+            {/* COLUMN 3 (4/12): AUCTION PURSE WATCH */}
+            <aside className="lg:col-span-4 rounded-[24px] border border-white/10 bg-[#081322] p-5 sm:p-6 shadow-2xl flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                  <div>
+                    <h3 className="text-xs font-black text-white uppercase tracking-wider">
+                      AUCTION PURSE WATCH
+                    </h3>
+                    <p className="text-[11px] text-slate-400 mt-0.5">Who has room to rebuild?</p>
+                  </div>
+                  <span className="text-[10px] font-mono text-slate-400 uppercase">IPL 2027</span>
+                </div>
+
+                {officialLeagueQuery.isPending ? (
+                  <div className="space-y-3 mt-4">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="h-16 rounded-2xl bg-white/5 animate-pulse" />
+                    ))}
+                  </div>
+                ) : purseTop3.length > 0 ? (
+                  <div className="space-y-3 mt-4">
+                    {purseTop3.map((row) => {
+                      const tTheme = TEAM_REGISTRY[row.team as TeamCode];
+                      const purseVal = row.purse.valueLakh ?? 0;
+                      const barPct = Math.max(12, Math.min(100, Math.round((purseVal / maxPurseLakh) * 100)));
+                      return (
+                        <div
+                          key={row.team}
+                          className="p-3 rounded-2xl bg-[#0D1B2E] border border-white/5 space-y-2"
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/10 p-1 shrink-0 flex items-center justify-center">
+                                <TeamLogo team={row.team as TeamCode} className="w-full h-full object-contain" />
+                              </div>
+                              <div className="min-w-0">
+                                <div className="text-xs font-black text-white">{row.team}</div>
+                                <div className="text-[10px] text-slate-400">
+                                  {row.summary.slots} open slots
+                                  {row.summary.overseasSlots != null ? ` · ${row.summary.overseasSlots} OS` : ""}
+                                </div>
+                              </div>
+                            </div>
+                            <span className="font-mono text-xs font-black text-emerald-400 shrink-0">
+                              {formatPurse(row.purse.valueLakh)}
+                            </span>
+                          </div>
+                          <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
+                            <div
+                              className="h-full rounded-full transition-all duration-500"
+                              style={{
+                                width: `${barPct}%`,
+                                backgroundColor: tTheme?.accent ?? "#34D399",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                    {officialLeagueQuery.data?.reviewedAt && (
+                      <p className="text-[10px] font-mono text-slate-500 pt-1">
+                        Verified purse ledger · {officialLeagueQuery.data.reviewedAt}
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-[#0D1B2E] p-4 text-xs text-slate-400 space-y-1.5">
+                    <p className="font-bold text-slate-200">Purse ledger pending</p>
+                    <p>Official franchise purses will rank here once verified retention records load.</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-5 pt-4 border-t border-white/10">
+                <Link
+                  href="/auction"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-900 border border-white/15 hover:bg-white/10 text-xs font-bold text-white uppercase tracking-wider transition-all"
+                >
+                  Explore Auction Room <ArrowRight size={14} />
                 </Link>
               </div>
             </aside>
@@ -847,26 +825,25 @@ export default function HomePage() {
           </section>
 
           {/* ═════════════════════════════════════════════════════════════════════
-              SECTION 4: LATEST INSIGHTS
+              SECTION 4: LATEST INSIGHTS — IPL 2027 RETENTION SPECIAL
           ═════════════════════════════════════════════════════════════════════ */}
           <section className="space-y-4 my-2">
-            {/* Header & Tabs */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
-              <div className="flex items-center gap-4 flex-wrap">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="flex items-center gap-2.5 flex-wrap">
                   <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white">
                     Latest Insights
                   </h2>
-                  <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
-                    1,000 Articles Archive
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#00D2FF] bg-[#00D2FF]/10 border border-[#00D2FF]/25 px-2.5 py-0.5 rounded-full">
+                    IPL 2027 · Retention Special
                   </span>
                 </div>
 
-                {/* Filter Tabs */}
-                <div className="flex items-center gap-1.5 bg-[#081322] border border-white/10 rounded-xl p-1">
+                <div className="flex items-center gap-1.5 bg-[#081322] border border-white/10 rounded-xl p-1 flex-wrap">
                   {CATEGORY_TABS.map((cat) => (
                     <button
                       key={cat}
+                      type="button"
                       onClick={() => setSelectedCategory(cat)}
                       className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                         selectedCategory === cat
@@ -882,46 +859,47 @@ export default function HomePage() {
 
               <Link
                 href="/editorials"
-                className="text-xs font-bold text-[#00D2FF] hover:underline flex items-center gap-1"
+                className="text-xs font-bold text-[#00D2FF] hover:underline flex items-center gap-1 shrink-0"
               >
-                <span>Explore all 1,000 stories</span>
+                <span>Explore all stories</span>
                 <ArrowRight size={14} />
               </Link>
             </div>
 
-            {/* Responsive Article Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {filteredInsights.map((item) => (
                 <Link
                   key={item.id}
                   href={item.href}
                   className="rounded-2xl border border-white/10 bg-[#081322] overflow-hidden hover:border-white/25 hover:bg-[#0D1C2E] transition-all flex flex-col group shadow-lg"
                 >
-                  {/* Card Image */}
-                  <div className="h-44 overflow-hidden relative bg-slate-950 shrink-0">
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = "/auction-art.jpg";
-                      }}
+                  <div className="relative">
+                    <ArticleCardMedia
+                      articleId={item.id}
+                      franchise={item.franchise}
+                      title={item.title}
+                      aspect={item.aspect}
+                      className="h-40 w-full"
                     />
-                    <div className="absolute top-3 left-3">
-                      <span className="px-2.5 py-0.5 rounded-md text-[9px] font-mono font-black uppercase tracking-wider text-[#00D2FF] bg-slate-950/80 border border-[#00D2FF]/30 backdrop-blur-sm">
-                        {item.category}
+                    <div className="pointer-events-none absolute top-2.5 left-2.5">
+                      <span className="px-2 py-0.5 rounded-md text-[9px] font-mono font-black uppercase tracking-wider text-[#00D2FF] bg-slate-950/85 border border-[#00D2FF]/30 backdrop-blur-sm">
+                        {item.franchise}
                       </span>
                     </div>
                   </div>
 
-                  {/* Card Content */}
                   <div className="p-4 flex-1 flex flex-col justify-between">
-                    <h3 className="font-black text-sm sm:text-base leading-snug text-white group-hover:text-[#00D2FF] transition-colors line-clamp-2 mb-3">
-                      {item.title}
-                    </h3>
+                    <div>
+                      <span className="block text-[10px] font-mono uppercase tracking-wider text-slate-400 mb-1">
+                        {ASPECT_LABELS[item.aspect] || item.tag}
+                      </span>
+                      <h3 className="font-bold text-sm leading-snug text-white group-hover:text-[#00D2FF] transition-colors line-clamp-3 mb-3">
+                        {item.title}
+                      </h3>
+                    </div>
 
                     <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400 pt-2 border-t border-white/5">
-                      <Calendar size={13} className="text-slate-500" />
+                      <Calendar size={12} className="text-slate-500" />
                       <span>{item.date}</span>
                     </div>
                   </div>
@@ -935,7 +913,6 @@ export default function HomePage() {
           ═════════════════════════════════════════════════════════════════════ */}
           <section className="rounded-[24px] border border-white/10 bg-gradient-to-r from-[#06101D] via-[#091527] to-[#06101D] p-6 sm:p-8 shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-              {/* Left Brand Value */}
               <div className="lg:col-span-4 space-y-2 lg:border-r border-white/10 lg:pr-6">
                 <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
                   Why CricField?
@@ -945,7 +922,6 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {/* Right 4 Pillars */}
               <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="space-y-1.5">
                   <div className="w-9 h-9 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center">
@@ -953,7 +929,7 @@ export default function HomePage() {
                   </div>
                   <h4 className="text-xs font-black text-white">Multi-league Data</h4>
                   <p className="text-[11px] text-slate-400 leading-snug">
-                    IPL, domestic & global
+                    IPL, domestic &amp; global
                   </p>
                 </div>
 
@@ -961,9 +937,9 @@ export default function HomePage() {
                   <div className="w-9 h-9 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
                     <Cpu size={18} />
                   </div>
-                  <h4 className="text-xs font-black text-white">AI-Powered Insights</h4>
+                  <h4 className="text-xs font-black text-white">Evidence-Backed Models</h4>
                   <p className="text-[11px] text-slate-400 leading-snug">
-                    Tactical, predictive & contextual
+                    Tactical, predictive &amp; contextual
                   </p>
                 </div>
 
@@ -973,7 +949,7 @@ export default function HomePage() {
                   </div>
                   <h4 className="text-xs font-black text-white">Scout-Grade Analysis</h4>
                   <p className="text-[11px] text-slate-400 leading-snug">
-                    Players, roles & market value
+                    Players, roles &amp; market value
                   </p>
                 </div>
 
@@ -983,13 +959,12 @@ export default function HomePage() {
                   </div>
                   <h4 className="text-xs font-black text-white">Franchise Ready</h4>
                   <p className="text-[11px] text-slate-400 leading-snug">
-                    Squad, auction & season planning
+                    Squad, auction &amp; season planning
                   </p>
                 </div>
               </div>
             </div>
           </section>
-
         </div>
       </div>
     </Layout>

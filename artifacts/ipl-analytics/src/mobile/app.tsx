@@ -21,6 +21,7 @@ const MTeams = lazy(() => import("./screens/teams"));
 const MScout = lazy(() => import("@/components/pressure-intel/pressure-intelligence").then(m => ({ default: () => <m.PressureIntelligence mobile /> })));
 const MAi = lazy(() => import("./screens/ai"));
 const MJournal = lazy(() => import("./screens/journal"));
+const MRetentionRoom = lazy(() => import("./screens/retention-room"));
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -110,6 +111,10 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
             <Route path="/reports">
               <MJournal />
             </Route>
+            <Route path="/retention-room" component={MRetentionRoom} />
+            <Route path="/retention-room/:team" component={MRetentionRoom} />
+            <Route path="/squad-hq" component={MRetentionRoom} />
+            <Route path="/squad-hq/:team" component={MRetentionRoom} />
             <Route>
               <Legacy legacy={legacy} />
             </Route>
