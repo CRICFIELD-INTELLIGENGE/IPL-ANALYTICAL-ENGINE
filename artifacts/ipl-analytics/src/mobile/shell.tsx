@@ -105,8 +105,9 @@ const TITLES: [RegExp, string][] = [
   [/^\/dugout\/./, "Franchise Hub"],
   [/^\/dugout/, "Dugout"],
   [/^\/account/, "Your Dugout"],
-  [/^\/feed/, "News"],
-  [/^\/intelligence/, "News"],
+  [/^\/feed/, "Feed"],
+  [/^\/editorials/, "Editorials"],
+  [/^\/intelligence/, "Editorials"],
   [/^\/scores/, "Scores"],
   [/^\/match\//, "Match"],
   [/^\/venues\//, "Venue"],
@@ -226,7 +227,7 @@ export function TopBar() {
   const [teamMenu, setTeamMenu] = useState(false);
   const title = TITLES.find(([re]) => re.test(path))?.[1];
   const root = ROOTS.has(path);
-  const onNews = path.startsWith("/feed") || path.startsWith("/intelligence") || path.startsWith("/reports");
+  const onNews = path.startsWith("/feed") || path.startsWith("/editorials") || path.startsWith("/intelligence") || path.startsWith("/reports");
   return (
     <>
       <header className={`cfm-top ${root ? "cfm-top-root" : ""}`}>
@@ -275,9 +276,9 @@ export function TopBar() {
             <Search size={19} />
           </button>
           <Link
-            href="/intelligence"
+            href="/editorials"
             className="cfm-icon relative"
-            aria-label="News"
+            aria-label="Editorials"
             aria-current={onNews ? "page" : undefined}
             style={onNews ? { color: "var(--m-accent)" } : undefined}
           >
@@ -504,7 +505,7 @@ const FEATURES = [
   ["Auction War Room", "/ai-analyst/auction-war-room"],
   ["Squad Builder", "/ai-analyst/squad-builder"],
   ["Journal", "/reports"],
-  ["IPL Intelligence", "/intelligence"],
+  ["Editorials", "/editorials"],
   ["Scores", "/scores"],
 ] as const;
 

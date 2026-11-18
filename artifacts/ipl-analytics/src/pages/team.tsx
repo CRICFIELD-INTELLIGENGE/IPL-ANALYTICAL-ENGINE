@@ -499,7 +499,6 @@ export default function TeamProfilePage() {
                     team={teamData.team}
                     accent={pColor}
                     matches={matches.data ?? []}
-                    mobileSection={mobileShell ? mobileSection : "all"}
                   />
                 )}
               </div>

@@ -2911,7 +2911,7 @@ function TeamDetailModalView({
                 <span className="text-[10px] font-mono text-white/40">Verified Franchise Articles</span>
               </div>
               <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-white">
-                {tVal.team} Intelligence
+                {tVal.team} Editorials
               </h3>
             </div>
 
@@ -2925,7 +2925,7 @@ function TeamDetailModalView({
                 }`}
               >
                 <Newspaper className="w-3.5 h-3.5" />
-                <span>News Articles ({franchiseArticles.length})</span>
+                <span>Editorials ({franchiseArticles.length})</span>
               </button>
               <button
                 onClick={() => setModalTab("squad")}
@@ -2983,7 +2983,7 @@ function TeamDetailModalView({
               {/* Articles Grid with Pictures */}
               {filteredArticles.length === 0 ? (
                 <div className="py-12 text-center text-[11px] font-black uppercase tracking-widest text-white/30 bg-black/30 rounded-2xl border border-white/5">
-                  No news articles matched the filter
+                  No editorials matched the filter
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[560px] overflow-y-auto pr-1">

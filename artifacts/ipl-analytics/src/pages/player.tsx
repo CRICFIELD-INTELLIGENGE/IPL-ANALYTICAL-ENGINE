@@ -2364,7 +2364,7 @@ function PlayerIntelligenceArticlesCard({
           </div>
           <div>
             <h3 className="text-sm md:text-base font-black uppercase tracking-wider text-white flex items-center gap-2">
-              Intelligence Hub · Match Analysis &amp; Feature Dossiers
+              Editorials Hub · Match Analysis &amp; Feature Dossiers
             </h3>
             <p className="text-[10px] text-white/40 font-bold mt-0.5">
               Verified investigative reporting, tactical telemetry &amp; predictive coverage featuring {playerName}
@@ -2376,10 +2376,10 @@ function PlayerIntelligenceArticlesCard({
             {articles.length} Available Reports
           </span>
           <Link
-            href={`/intelligence?search=${encodeURIComponent(playerName)}`}
+            href={`/editorials?search=${encodeURIComponent(playerName)}`}
             className="text-xs font-mono text-amber-400 hover:underline flex items-center gap-1 cursor-pointer"
           >
-            <span>Intelligence Hub</span>
+            <span>Editorials Hub</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -2610,7 +2610,7 @@ function PlayerRecentMatchesCard({
               }`}
             >
               <Newspaper className="w-3.5 h-3.5" />
-              <span>Intelligence Reports ({articles.length})</span>
+              <span>Editorial Reports ({articles.length})</span>
             </button>
           </div>
         </div>
@@ -3246,12 +3246,12 @@ function PlayerRecentMatchesCard({
           )}
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 text-[10px] font-mono text-white/40 border-t border-white/5">
-            <span>Showing {filteredArticles.length} of {articles.length} news &amp; analysis articles from Intelligence Hub</span>
+            <span>Showing {filteredArticles.length} of {articles.length} news &amp; analysis articles from Editorials Hub</span>
             <Link
-              href={`/intelligence?search=${encodeURIComponent(playerName)}`}
+              href={`/editorials?search=${encodeURIComponent(playerName)}`}
               className="text-cyan-300 hover:underline flex items-center gap-1 cursor-pointer"
             >
-              <span>Explore All Intelligence Articles</span>
+              <span>Explore All Editorial Articles</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
           </div>

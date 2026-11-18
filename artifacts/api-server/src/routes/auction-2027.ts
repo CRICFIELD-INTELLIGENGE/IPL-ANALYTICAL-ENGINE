@@ -146,7 +146,7 @@ router.get("/auction-2027", (_req, res) => {
     }
   }
   const updates = [...baseline, ...readLog()].sort((a, b) => a.recordedAt.localeCompare(b.recordedAt));
-  res.set("cache-control", "no-store").json(summarise(updates));
+  res.set("cache-control", "no-store").json({ ...summarise(updates), retentionVersion: officialRelease.version });
 });
 
 router.post("/auction-2027/updates", requireAdmin, (req, res) => {

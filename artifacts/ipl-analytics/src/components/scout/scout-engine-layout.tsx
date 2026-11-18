@@ -43,7 +43,7 @@ const SCOUT_NAV = [
     items: [
       { icon: Users, label: "Team Builder", href: "/pressurelab?tool=teambuilder" },
       { icon: Trophy, label: "Auction Intel", href: "/auction" },
-      { icon: Compass, label: "Venue & Conditions", href: "/intelligence" },
+      { icon: Compass, label: "Venue & Conditions", href: "/editorials" },
       { icon: BarChart3, label: "Stats Lab", href: "/stats" },
       { icon: Lightbulb, label: "AI Insights", href: "/ai-analyst" },
     ],

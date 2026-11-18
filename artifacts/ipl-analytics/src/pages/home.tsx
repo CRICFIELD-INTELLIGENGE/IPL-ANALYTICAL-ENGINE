@@ -59,7 +59,7 @@ const FRANCHISE_MAP: Record<TeamCode, FranchiseIntelData> = {
     tags: ["VENUE ANALYSIS", "TACTICS", "IPL INSIGHTS"],
     title: "The Wankhede Factor: How Boundary Velocity Shapes Mumbai Indians",
     summary: "Wankhede has seen 14.4 sixes per match and an 8.70 run rate. Mumbai Indians have won 59.6% of matches at home, where boundary firepower and chasing dynamics dictate results.",
-    link: "/intelligence",
+    link: "/editorials",
     metrics: [
       { label: "Death Bowling", pct: 84 },
       { label: "Middle-order Depth", pct: 78 },
@@ -73,7 +73,7 @@ const FRANCHISE_MAP: Record<TeamCode, FranchiseIntelData> = {
     tags: ["VENUE ANALYSIS", "SPIN DYNAMICS", "IPL INSIGHTS"],
     title: "The Sawai Mansingh Equation: Boundary Dimensions & Middle-Overs Squeeze",
     summary: "Jaipur's square boundaries (74m) reward disciplined spin and athletic boundary denial. Rajasthan Royals have built a 61.2% home win rate leveraging dual-spin containment.",
-    link: "/intelligence",
+    link: "/editorials",
     metrics: [
       { label: "Death Bowling", pct: 72 },
       { label: "Middle-order Depth", pct: 64 },
@@ -87,7 +87,7 @@ const FRANCHISE_MAP: Record<TeamCode, FranchiseIntelData> = {
     tags: ["VENUE ANALYSIS", "DEATH BOWLING", "IPL INSIGHTS"],
     title: "The Chinnaswamy Matrix: High Altitude, Short Boundaries & Bowling At The Death",
     summary: "At 920m elevation with 60m square boundaries, Bangalore is the hardest defensive venue in T20 cricket. RCB's consecutive title runs relied on defensive boundary-percentage control.",
-    link: "/intelligence",
+    link: "/editorials",
     metrics: [
       { label: "Death Bowling", pct: 75 },
       { label: "Middle-order Depth", pct: 80 },
@@ -101,7 +101,7 @@ const FRANCHISE_MAP: Record<TeamCode, FranchiseIntelData> = {
     tags: ["VENUE ANALYSIS", "SURFACE DECAY", "IPL INSIGHTS"],
     title: "The Chepauk Fortress: Low Bounce, Spin Stranglehold & Chasing Equations",
     summary: "Slow pitches and low ball-rebound at Chepauk allow Chennai Super Kings to dictate games through spin versatility and calculated strike rotation in overs 7–15.",
-    link: "/intelligence",
+    link: "/editorials",
     metrics: [
       { label: "Death Bowling", pct: 68 },
       { label: "Middle-order Depth", pct: 82 },
@@ -115,7 +115,7 @@ const FRANCHISE_MAP: Record<TeamCode, FranchiseIntelData> = {
     tags: ["VENUE ANALYSIS", "POWERPLAY IMPACT", "IPL INSIGHTS"],
     title: "The Eden Gardens Template: True Pace, High Powerplay Baselines & Spin Defense",
     summary: "True bounce and rapid outfields at Kolkata enable record-breaking powerplay blitzes. KKR's championship pedigree centers on explosive phase-one strike rates.",
-    link: "/intelligence",
+    link: "/editorials",
     metrics: [
       { label: "Death Bowling", pct: 70 },
       { label: "Middle-order Depth", pct: 85 },
@@ -129,7 +129,7 @@ const FRANCHISE_MAP: Record<TeamCode, FranchiseIntelData> = {
     tags: ["VENUE ANALYSIS", "BALL SPEED", "IPL INSIGHTS"],
     title: "The Uppal Highway: Ultra-Aggressive Scoring and Boundary Geometry",
     summary: "Hyderabad has recorded the fastest run-rates in league history. SRH's tactical doctrine weaponizes opening burst velocities to create insurmountable game leads.",
-    link: "/intelligence",
+    link: "/editorials",
     metrics: [
       { label: "Death Bowling", pct: 65 },
       { label: "Middle-order Depth", pct: 88 },
@@ -143,7 +143,7 @@ const FRANCHISE_MAP: Record<TeamCode, FranchiseIntelData> = {
     tags: ["VENUE ANALYSIS", "SHORT BOUNDARIES", "IPL INSIGHTS"],
     title: "The Kotla Dimension: Short Squares and Left-Hand Batter Matchups",
     summary: "Compact 58m boundaries at Delhi demand extreme bowling precision. DC's 2027 blueprint focuses on high-release quicks and off-pace variations.",
-    link: "/intelligence",
+    link: "/editorials",
     metrics: [
       { label: "Death Bowling", pct: 62 },
       { label: "Middle-order Depth", pct: 66 },
@@ -157,7 +157,7 @@ const FRANCHISE_MAP: Record<TeamCode, FranchiseIntelData> = {
     tags: ["VENUE ANALYSIS", "SEAM PENETRATION", "IPL INSIGHTS"],
     title: "The Mullanpur Variable: Seam Movement and Pace Penetration Under Lights",
     summary: "Punjab's home venue yields early lateral movement and steep bounce. PBKS strategies revolve around upfront pace strikes to dismantle top orders.",
-    link: "/intelligence",
+    link: "/editorials",
     metrics: [
       { label: "Death Bowling", pct: 66 },
       { label: "Middle-order Depth", pct: 58 },
@@ -171,7 +171,7 @@ const FRANCHISE_MAP: Record<TeamCode, FranchiseIntelData> = {
     tags: ["VENUE ANALYSIS", "EXPANSIVE OUTFIELD", "IPL INSIGHTS"],
     title: "The Ahmedabad Scale: 80m Boundaries, Running Between Wickets & High Pace",
     summary: "The vast outfield at Narendra Modi Stadium places a premium on two-running and speed between wickets. Gujarat Titans exploit spatial depth to squeeze opposition boundaries.",
-    link: "/intelligence",
+    link: "/editorials",
     metrics: [
       { label: "Death Bowling", pct: 78 },
       { label: "Middle-order Depth", pct: 72 },
@@ -185,7 +185,7 @@ const FRANCHISE_MAP: Record<TeamCode, FranchiseIntelData> = {
     tags: ["VENUE ANALYSIS", "DEFENSIVE BASES", "IPL INSIGHTS"],
     title: "The Ekana Duality: Soil Composition and Defensive First-Innings Totals",
     summary: "With two distinct soil preparations at Lucknow, defending sub-170 scores remains a core art form. LSG's squad architecture emphasizes disciplined defensive lengths.",
-    link: "/intelligence",
+    link: "/editorials",
     metrics: [
       { label: "Death Bowling", pct: 74 },
       { label: "Middle-order Depth", pct: 70 },
@@ -881,7 +881,7 @@ export default function HomePage() {
               </div>
 
               <Link
-                href="/intelligence"
+                href="/editorials"
                 className="text-xs font-bold text-[#00D2FF] hover:underline flex items-center gap-1"
               >
                 <span>Explore all 1,000 stories</span>

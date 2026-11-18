@@ -9,7 +9,7 @@ import { featureFor, readUsage } from "../usage";
 const STANDS: { name: string; tag: string; stand: string; gates: [string, string, string][] }[] = [
   { name: "The numbers", tag: "STAND A", stand: "#103a38", gates: [
     ["Stats", "Leaders, seasons, phases and franchise records from every IPL ball", "/stats"],
-    ["IPL Intelligence", "The data desk: computed insights with their samples shown", "/intelligence"],
+    ["Editorials", "The editorial desk: in-depth essays and franchise dossiers", "/editorials"],
     ["Scores", "Live and recent matches, scorecards and win probability", "/scores"],
   ] },
   { name: "The people", tag: "STAND B", stand: "#174a3a", gates: [

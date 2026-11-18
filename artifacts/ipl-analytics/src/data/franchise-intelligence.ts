@@ -40,7 +40,7 @@ export interface AngleCategory {
 
 export const INTELLIGENCE_ANGLES: AngleCategory[] = [
   { id: "all", label: "All Articles", shortLabel: "All", badgeCount: 100, icon: BookOpen, color: "text-cyan-400", borderColor: "border-cyan-500/30", bgActive: "bg-cyan-500/20" },
-  { id: "batting", label: "Batting Intelligence", shortLabel: "Batting", badgeCount: 10, icon: Flame, color: "text-rose-400", borderColor: "border-rose-500/30", bgActive: "bg-rose-500/20" },
+  { id: "batting", label: "Batting Editorials", shortLabel: "Batting", badgeCount: 10, icon: Flame, color: "text-rose-400", borderColor: "border-rose-500/30", bgActive: "bg-rose-500/20" },
   { id: "bowling", label: "Bowling & Fielding", shortLabel: "Bowling", badgeCount: 10, icon: Target, color: "text-blue-400", borderColor: "border-blue-500/30", bgActive: "bg-blue-500/20" },
   { id: "tactical", label: "Tactical & Match", shortLabel: "Tactical", badgeCount: 10, icon: Compass, color: "text-purple-400", borderColor: "border-purple-500/30", bgActive: "bg-purple-500/20" },
   { id: "auction", label: "Auction & Economics", shortLabel: "Auction", badgeCount: 10, icon: Award, color: "text-pink-400", borderColor: "border-pink-500/30", bgActive: "bg-pink-500/20" },

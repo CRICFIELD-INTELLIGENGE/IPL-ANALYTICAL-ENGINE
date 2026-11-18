@@ -37,7 +37,7 @@ const PRIMARY_NAV_LINKS: Array<{ label: string; href: string; hideOnMd?: boolean
   { label: "Stats", href: "/stats" },
   { label: "Pressure Lab", href: "/pressurelab" },
   { label: "Dugout", href: "/dugout" },
-  { label: "News", href: "/intelligence" },
+  { label: "Editorials", href: "/editorials" },
 ];
 
 // Universal search input is powered by UniversalHeaderSearch with active autocomplete dropdown
@@ -46,7 +46,7 @@ const SIDEBAR_ITEMS = [
   { icon: Home, label: "Home", href: "/home" },
   { icon: Radio, label: "Auction Pulse", href: "/pulse" },
   { icon: Newspaper, label: "Feed & 2027 Intel", href: "/feed" },
-  { icon: Cpu, label: "Intel & Insights", href: "/intelligence" },
+  { icon: FileText, label: "Editorials", href: "/editorials" },
   { icon: Shield, label: "My Dugout", href: "/dugout" },
   { icon: Compass, label: "Pressure Lab", href: "/pressurelab" },
   { icon: List, label: "Stats Centre", href: "/stats" },
@@ -119,6 +119,9 @@ export function Layout({
     if (href === "/home") {
       return path === "/" || path === "/home";
     }
+    if (href === "/editorials") {
+      return path === "/editorials" || path === "/intelligence" || path.startsWith("/editorials/") || path.startsWith("/intelligence/");
+    }
     return path === href || path.startsWith(`${href}/`);
   };
 
@@ -136,7 +139,7 @@ export function Layout({
         <main
           data-analytics-theme={["/stats", "/visualizations"].includes(path) ? "true" : undefined}
           data-team-surfaces={["/stats", "/visualizations", "/scores", "/pulse", "/feed"].includes(path) ? "true" : undefined}
-          data-white-titles={location.startsWith("/dugout") || path === "/intelligence" ? "true" : undefined}
+          data-white-titles={location.startsWith("/dugout") || path === "/editorials" || path === "/intelligence" ? "true" : undefined}
           className={`${location.startsWith("/ai-analyst") ? "analyst-workspace-main" : ""} min-w-0`}
         >
           {location.startsWith("/ai-analyst") && <AnalystWorkspace />}
@@ -211,7 +214,7 @@ export function Layout({
       <main
         data-analytics-theme={["/stats", "/visualizations"].includes(location.split("?")[0]) ? "true" : undefined}
         data-team-surfaces={["/stats", "/visualizations", "/scores", "/pulse", "/feed"].some(path => location.split("?")[0] === path) ? "true" : undefined}
-        data-white-titles={location.startsWith("/dugout") || location.split("?")[0] === "/intelligence" ? "true" : undefined}
+        data-white-titles={location.startsWith("/dugout") || location.split("?")[0] === "/editorials" || location.split("?")[0] === "/intelligence" ? "true" : undefined}
         className={`${location.startsWith("/ai-analyst") ? "analyst-workspace-main" : ""} min-h-[calc(100vh-56px)] flex flex-col justify-between transition-all duration-300 min-w-0`}
       >
         <div className="flex-1 min-w-0">

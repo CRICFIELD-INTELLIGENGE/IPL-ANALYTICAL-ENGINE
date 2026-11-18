@@ -18,7 +18,7 @@ import { useTeamTheme, resolveTeamCode, type TeamCode } from "@/lib/team-context
 
 export default function ScoutHomePage() {
   const sp = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
-  const [viewMode, setViewMode] = useState<"pressure" | "scout">((sp.get("view") as any) || "pressure");
+  const labView = sp.get("view") === "scout" ? "scout" : "pressure";
   const [discipline, setDiscipline] = useState<Discipline>(
     (sp.get("discipline") as Discipline) || "batting"
   );
@@ -172,7 +172,7 @@ export default function ScoutHomePage() {
   return (
     <Layout>
       <div className="scout-terminal scout-notebook w-full max-w-full min-h-[calc(100vh-56px)] bg-[#060B13] text-slate-100 transition-colors">
-        {viewMode === "scout" ? (
+        {labView === "scout" ? (
           <ScoutCinematicRoom
             discipline={discipline}
             setDiscipline={setDiscipline}

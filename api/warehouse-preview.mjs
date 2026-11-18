@@ -59861,7 +59861,7 @@ router.get("/auction-2027", (_req, res) => {
     }
   }
   const updates = [...baseline, ...readLog()].sort((a, b) => a.recordedAt.localeCompare(b.recordedAt));
-  res.set("cache-control", "no-store").json(summarise2(updates));
+  res.set("cache-control", "no-store").json({ ...summarise2(updates), retentionVersion: officialRelease.version });
 });
 router.post("/auction-2027/updates", requireAdmin, (req, res) => {
   const parsed = updateSchema.safeParse(req.body ?? {});
@@ -122820,8 +122820,8 @@ async function aggregateMatchupStatsSql(batter, bowler, filters) {
   if (!hasExtraFilters) {
     const res = await db4.select().from(batterBowlerMatchupStatsTable).where(
       and2(
-        eq2(batterBowlerMatchupStatsTable.batterId, sql2`(SELECT player_id FROM players WHERE player_name = ${batter} LIMIT 1)`),
-        eq2(batterBowlerMatchupStatsTable.bowlerId, sql2`(SELECT player_id FROM players WHERE player_name = ${bowler} LIMIT 1)`)
+        eq2(batterBowlerMatchupStatsTable.batterId, sql2`(SELECT player_id FROM players WHERE name = ${batter} LIMIT 1)`),
+        eq2(batterBowlerMatchupStatsTable.bowlerId, sql2`(SELECT player_id FROM players WHERE name = ${bowler} LIMIT 1)`)
       )
     ).limit(1);
     if (res.length > 0) {
@@ -122846,7 +122846,6 @@ async function aggregateMatchupStatsSql(batter, bowler, filters) {
     LEFT JOIN venues v ON m.venue_id = v.venue_id
     LEFT JOIN dismissals dis ON d.delivery_id = dis.delivery_id
     WHERE ${where}
-    HAVING count(case when d.is_wide = false then 1 end) >= 6
   `;
   const queryPhase = sql2`
     SELECT
@@ -122966,7 +122965,7 @@ async function aggregateMatchupStatsSql(batter, bowler, filters) {
     fours = overallStats.fours;
     sixes = overallStats.sixes;
   }
-  if (balls < 6 && !overallStats) {
+  if (balls === 0 && !overallStats) {
     return {
       batter,
       bowler,
@@ -122976,7 +122975,7 @@ async function aggregateMatchupStatsSql(batter, bowler, filters) {
       sr: 0,
       dotPct: 0,
       boundaryPct: 0,
-      dominanceIndex: 0,
+      dominanceIndex: 50,
       fours: 0,
       sixes: 0,
       battingHand: getBattingHand(batter),

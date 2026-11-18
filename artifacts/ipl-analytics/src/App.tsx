@@ -125,10 +125,11 @@ function Router() {
       {ADMIN_PAGES_ENABLED && <Route path="/admin/photo-pipeline" component={PhotoPipelineDashboard} />}
       {ADMIN_PAGES_ENABLED && <Route path="/photo-pipeline" component={PhotoPipelineDashboard} />}
       {ADMIN_PAGES_ENABLED && <Route path="/admin/editorial-images" component={EditorialImageReviewPage} />}
-      <Route path="/arena"><Redirect to="/intelligence" /></Route>
-      <Route path="/beyond-xi"><Redirect to="/intelligence" /></Route>
-      <Route path="/fan-arena"><Redirect to="/intelligence" /></Route>
-      {/* On-Field Panel System */}
+      <Route path="/arena"><Redirect to="/editorials" /></Route>
+      <Route path="/beyond-xi"><Redirect to="/editorials" /></Route>
+      <Route path="/fan-arena"><Redirect to="/editorials" /></Route>
+      {/* Franchise Editorials & Intelligence Hub */}
+      <Route path="/editorials" component={IntelligencePage} />
       <Route path="/intelligence" component={IntelligencePage} />
       {/* Top-level intelligence & coverage categories */}
       <Route path="/auction" component={() => <FeedCategoryPage params={{ category: "auction" }} />} />
@@ -154,17 +155,17 @@ function Router() {
       <Route path="/pressurelab/compare" component={ScoutComparePage} />
       <Route path="/pressurelab/roles" component={ScoutRolesPage} />
 
-            {/* Deprecated video routes redirect to Intelligence */}
+            {/* Deprecated video routes redirect to Editorials */}
       <Route path="/watch">
-        <Redirect to="/intelligence" />
+        <Redirect to="/editorials" />
       </Route>
       <Route path="/watch-and-analyze">
-        <Redirect to="/intelligence" />
+        <Redirect to="/editorials" />
       </Route>
       {/* The former /on-field/* paths, kept as redirects so anything already
           bookmarked or shared keeps working rather than 404ing. */}
       <Route path="/on-field/feed">
-        <Redirect to="/intelligence" />
+        <Redirect to="/editorials" />
       </Route>
       <Route path="/on-field/stats">
         <Redirect to="/stats" />
@@ -173,28 +174,28 @@ function Router() {
         <Redirect to="/pulse" />
       </Route>
       <Route path="/on-field">
-        <Redirect to="/intelligence" />
+        <Redirect to="/editorials" />
       </Route>
       <Route path="/match/:id" component={MatchDetailPage} />
       <Route path="/product">
-        <Redirect to="/intelligence?role=product" />
+        <Redirect to="/editorials?role=product" />
       </Route>
       <Route path="/revenue">
-        <Redirect to="/intelligence?role=business" />
+        <Redirect to="/editorials?role=business" />
       </Route>
       <Route path="/growth">
-        <Redirect to="/intelligence?role=growth" />
+        <Redirect to="/editorials?role=growth" />
       </Route>
       <Route path="/strategy">
-        <Redirect to="/intelligence" />
+        <Redirect to="/editorials" />
       </Route>
       <Route path="/reports" component={ReportsPage} />
       <Route path="/blogs" component={BlogsPage} />
       <Route path="/insights">
-        <Redirect to="/intelligence?tab=Insights" />
+        <Redirect to="/editorials?tab=Insights" />
       </Route>
         <Route path="/scores" component={ScoresPage} />
-        <Route path="/ai-analyst/ask"><Redirect to="/intelligence" /></Route>
+        <Route path="/ai-analyst/ask"><Redirect to="/editorials" /></Route>
         <Route path="/ai-analyst/weakness" component={WeaknessPage} />
         <Route path="/ai-analyst/playing-xi" component={PlayingXiPage} />
         <Route path="/ai-analyst/pressure" component={PressurePage} />

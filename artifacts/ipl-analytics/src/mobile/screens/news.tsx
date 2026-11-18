@@ -749,7 +749,7 @@ export default function MobileNews() {
           >
             <div ref={articlesTopRef} className="mn-meta-row">
               <h2 className="mn-section-title">
-                {activeFranchiseCode ? `All ${activeFranchiseCode} Intelligence Articles` : "All IPL Intelligence Articles"}
+                {activeFranchiseCode ? `All ${activeFranchiseCode} Editorial Articles` : "All IPL Editorial Articles"}
               </h2>
               <span className="mn-meta-count">
                 {filteredArticles.length > 0 ? (currentPage - 1) * PAGE_SIZE + 1 : 0}–

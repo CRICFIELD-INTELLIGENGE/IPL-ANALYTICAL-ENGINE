@@ -540,7 +540,7 @@ export function ScoutPressureLab() {
     if (root && activeFranchise) {
       root.style.setProperty("--c-primary", activeFranchise.primary);
       root.style.setProperty("--c-secondary", activeFranchise.secondary);
-      root.style.setProperty("--c-accent", activeFranchise.accent || activeFranchise.primary);
+      root.style.setProperty("--c-accent", activeFranchise.primary);
       root.style.setProperty("--c-glow", activeFranchise.glow);
       root.style.setProperty("--c-neon", activeFranchise.neon);
       root.style.setProperty("--c-meter", activeFranchise.primary);
