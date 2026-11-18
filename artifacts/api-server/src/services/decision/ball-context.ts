@@ -15,7 +15,7 @@
 
 import fs from "fs";
 import path from "path";
-import { getProjectRoot, getDecisionDb, normalizeSeason, queryAll, RUNS_CONCEDED_SQL } from "./db";
+import { getProjectRoot, getDecisionDb, normalizeSeason, queryAll, rawDir, RUNS_CONCEDED_SQL } from "./db";
 import { getMatchStages } from "./stats-engine";
 
 export interface BallState {
@@ -108,7 +108,7 @@ let targetCache: Map<string, { runs: number; balls: number }> | null = null;
 export function getTargets(): Map<string, { runs: number; balls: number }> {
   if (targetCache) return targetCache;
   targetCache = new Map();
-  const dir = path.join(getProjectRoot(), "lib", "cricket-data", "raw");
+  const dir = rawDir();
   if (!fs.existsSync(dir)) return targetCache;
   for (const file of fs.readdirSync(dir)) {
     if (!file.endsWith(".json")) continue;

@@ -19,6 +19,7 @@ import {
   normalizeSeason,
   parseCsv,
   queryAll,
+  rawDir,
   readTextLoose,
   RUNS_CONCEDED_SQL,
 } from "./db";
@@ -272,7 +273,7 @@ interface RawMatch {
  *   stumpings : fielder name → seasons in which they made a stumping. Only keepers stump.
  */
 function loadRawIndex(root: string): { nameToIds: Map<string, Set<string>>; stumpings: Map<string, Set<string>> } {
-  const dir = path.join(root, "lib", "cricket-data", "raw");
+  const dir = rawDir(root);
   const nameToIds = new Map<string, Set<string>>();
   const stumpings = new Map<string, Set<string>>();
   if (!fs.existsSync(dir)) return { nameToIds, stumpings };

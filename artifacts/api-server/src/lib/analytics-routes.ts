@@ -25,6 +25,19 @@ export const LAPTOP_ONLY_PATHS = new Set([
   "/api/stats/pressure-reliability", "/api/ipl/team-analytics", "/api/ipl/venue-analytics",
 ]);
 
+/**
+ * AI Analyst endpoints (read-only over the warehouse). The POSTs are pure computations — question parsing,
+ * simulations, the playing-XI optimiser — that store nothing.
+ */
+const ANALYST_GET = /^\/api\/(?:decision\/catalog|strategy\/setup|alt-universe\/(?:matches|match\/[^/]+)|replay\/[^/]+|opposition|pool\/[^/]+|squad-dna\/(?:teams|profile|compare)|war-room\/(?:board|player\/[^/]+)|intel\/(?:player|team|venue|match)\/[^/]+|optimizer\/franchises|history\/overview|players\/(?:search|[^/]+\/summary)|weakness\/[^/]+|pressure\/[^/]+|insights\/(?:daily|pool\/[^/]+)|intelligence\/(?:players(?:\/[^/]+(?:\/(?:valuation|retention|franchise-fit|comparables|replacements|citation))?)?|compare|teams(?:\/[^/]+)?|models\/status|diagnostics|insights)|retention\/2027\/franchises\/[A-Z]{2,4}\/picks)$/;
+const ANALYST_POST = new Set([
+  "/api/ask", "/api/ask/run", "/api/strategy/simulate", "/api/alt-universe/simulate", "/api/optimizer/playing-xi",
+  "/api/intelligence/squad/simulate", "/api/intelligence/auction/simulate",
+]);
+export function analystMethod(path: string): "GET" | "POST" | null {
+  return ANALYST_POST.has(path) ? "POST" : ANALYST_GET.test(path) ? "GET" : null;
+}
+
 export function isAnalyticsPath(path: string): boolean {
   return isScoutPath(path) || IPL_PATHS.has(path) || LAPTOP_ONLY_PATHS.has(path);
 }

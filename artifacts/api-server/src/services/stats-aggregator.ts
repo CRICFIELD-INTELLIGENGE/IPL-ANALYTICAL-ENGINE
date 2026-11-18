@@ -3,7 +3,7 @@ import { getBallInfo, overOffsets, deliveryLabel, hasBallCommentary, ballComment
 import path from "path";
 import { buildBioLookup, lookupBioKey, type BioLookup } from "./player-bio-lookup.js";
 import { getPlayerMeta } from "./decision/player-profiles.js";
-import { queryAll } from "./decision/db.js";
+import { queryAll, rawDir as rawDirOf } from "./decision/db.js";
 import {
   db,
   hasDb,
@@ -229,7 +229,7 @@ function getMatchDataFromDb(matchId: string): any | null {
 function getMatchData(matchId: string): any | null {
   if (matchCache.has(matchId)) return matchCache.get(matchId);
   const root = getProjectRoot();
-  const fp = path.resolve(root, "lib", "cricket-data", "raw", `${matchId}.json`);
+  const fp = path.resolve(rawDirOf(root), `${matchId}.json`);
   if (fs.existsSync(fp)) {
     try {
       const data = JSON.parse(fs.readFileSync(fp, "utf8"));
@@ -280,7 +280,7 @@ function matchPassesContext(stage: string | undefined, matchContext?: string): b
 export function preLoadAllMatches() {
   ensureInit();
   const root = getProjectRoot();
-  const rawDir = path.resolve(root, "lib", "cricket-data", "raw");
+  const rawDir = rawDirOf(root);
   if (!fs.existsSync(rawDir)) return;
   const files = fs.readdirSync(rawDir).filter(f => f.endsWith(".json"));
   for (const f of files) {
@@ -517,7 +517,7 @@ function getBioLookup(): BioLookup {
   const readJson = (fp: string) => (fs.existsSync(fp) ? JSON.parse(fs.readFileSync(fp, "utf8")) : undefined);
   const identityKeys = readJson(path.join(dataDir, "player-recent-matches", "index.json"))?.keys ?? {};
   const squads = readJson(path.join(dataDir, "squads-by-season.json")) ?? {};
-  const rawDir = path.resolve(root, "lib", "cricket-data", "raw");
+  const rawDir = rawDirOf(root);
   const registries: Record<string, string>[] = [];
   if (fs.existsSync(rawDir)) {
     for (const f of fs.readdirSync(rawDir)) {

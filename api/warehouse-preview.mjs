@@ -27536,9 +27536,9 @@ var require_view = __commonJS({
     var path29 = __require("node:path");
     var fs32 = __require("node:fs");
     var dirname = path29.dirname;
-    var basename = path29.basename;
+    var basename2 = path29.basename;
     var extname = path29.extname;
-    var join5 = path29.join;
+    var join6 = path29.join;
     var resolve2 = path29.resolve;
     module.exports = View3;
     function View3(name, options) {
@@ -27575,7 +27575,7 @@ var require_view = __commonJS({
         var root = roots[i];
         var loc = resolve2(root, name);
         var dir2 = dirname(loc);
-        var file3 = basename(loc);
+        var file3 = basename2(loc);
         path30 = this.resolve(dir2, file3);
       }
       return path30;
@@ -27600,12 +27600,12 @@ var require_view = __commonJS({
     };
     View3.prototype.resolve = function resolve3(dir2, file3) {
       var ext = this.ext;
-      var path30 = join5(dir2, file3);
+      var path30 = join6(dir2, file3);
       var stat = tryStat(path30);
       if (stat && stat.isFile()) {
         return path30;
       }
-      path30 = join5(dir2, basename(file3, ext), "index" + ext);
+      path30 = join6(dir2, basename2(file3, ext), "index" + ext);
       stat = tryStat(path30);
       if (stat && stat.isFile()) {
         return path30;
@@ -31141,7 +31141,7 @@ var require_content_disposition = __commonJS({
     "use strict";
     module.exports = contentDisposition;
     module.exports.parse = parse4;
-    var basename = __require("path").basename;
+    var basename2 = __require("path").basename;
     var ENCODE_URL_ATTR_CHAR_REGEXP = /[\x00-\x20"'()*,/:;<=>?@[\\\]{}\x7f]/g;
     var HEX_ESCAPE_REGEXP = /%[0-9A-Fa-f]{2}/;
     var HEX_ESCAPE_REPLACE_REGEXP = /%([0-9A-Fa-f]{2})/g;
@@ -31176,9 +31176,9 @@ var require_content_disposition = __commonJS({
       if (typeof fallback === "string" && NON_LATIN1_REGEXP.test(fallback)) {
         throw new TypeError("fallback must be ISO-8859-1 string");
       }
-      var name = basename(filename);
+      var name = basename2(filename);
       var isQuotedString = TEXT_REGEXP.test(name);
-      var fallbackName = typeof fallback !== "string" ? fallback && getlatin1(name) : basename(fallback);
+      var fallbackName = typeof fallback !== "string" ? fallback && getlatin1(name) : basename2(fallback);
       var hasFallback = typeof fallbackName === "string" && fallbackName !== name;
       if (hasFallback || !isQuotedString || HEX_ESCAPE_REGEXP.test(name)) {
         params["filename*"] = name;
@@ -31502,7 +31502,7 @@ var require_send = __commonJS({
     var Stream = __require("stream");
     var util2 = __require("util");
     var extname = path29.extname;
-    var join5 = path29.join;
+    var join6 = path29.join;
     var normalize = path29.normalize;
     var resolve2 = path29.resolve;
     var sep2 = path29.sep;
@@ -31674,7 +31674,7 @@ var require_send = __commonJS({
           return res;
         }
         parts = path30.split(sep2);
-        path30 = normalize(join5(root, path30));
+        path30 = normalize(join6(root, path30));
       } else {
         if (UP_PATH_REGEXP.test(path30)) {
           debug('malicious path "%s"', path30);
@@ -31807,7 +31807,7 @@ var require_send = __commonJS({
           if (err) return self2.onStatError(err);
           return self2.error(404);
         }
-        var p = join5(path30, self2._index[i]);
+        var p = join6(path30, self2._index[i]);
         debug('stat "%s"', p);
         fs32.stat(p, function(err2, stat) {
           if (err2) return next(err2);
@@ -34931,7 +34931,7 @@ var require_thread_stream = __commonJS({
     var { version: version4 } = require_package();
     var { EventEmitter: EventEmitter2 } = __require("events");
     var { Worker } = __require("worker_threads");
-    var { join: join5 } = __require("path");
+    var { join: join6 } = __require("path");
     var { pathToFileURL } = __require("url");
     var { wait } = require_wait();
     var {
@@ -34967,7 +34967,7 @@ var require_thread_stream = __commonJS({
     function createWorker(stream, opts) {
       const { filename, workerData } = opts;
       const bundlerOverrides = "__bundlerPathsOverrides" in globalThis ? globalThis.__bundlerPathsOverrides : {};
-      const toExecute = bundlerOverrides["thread-stream-worker"] || join5(__dirname, "lib", "worker.js");
+      const toExecute = bundlerOverrides["thread-stream-worker"] || join6(__dirname, "lib", "worker.js");
       const worker = new Worker(toExecute, {
         ...opts.workerOpts,
         trackUnmanagedFds: false,
@@ -35353,7 +35353,7 @@ var require_transport = __commonJS({
     "use strict";
     var { createRequire } = __require("module");
     var getCallers = require_caller();
-    var { join: join5, isAbsolute, sep: sep2 } = __require("node:path");
+    var { join: join6, isAbsolute, sep: sep2 } = __require("node:path");
     var sleep = require_atomic_sleep();
     var onExit = require_on_exit_leak_free();
     var ThreadStream = require_thread_stream();
@@ -35416,7 +35416,7 @@ var require_transport = __commonJS({
         throw new Error("only one of target or targets can be specified");
       }
       if (targets) {
-        target2 = bundlerOverrides["pino-worker"] || join5(__dirname, "worker.js");
+        target2 = bundlerOverrides["pino-worker"] || join6(__dirname, "worker.js");
         options.targets = targets.filter((dest) => dest.target).map((dest) => {
           return {
             ...dest,
@@ -35434,7 +35434,7 @@ var require_transport = __commonJS({
           });
         });
       } else if (pipeline2) {
-        target2 = bundlerOverrides["pino-worker"] || join5(__dirname, "worker.js");
+        target2 = bundlerOverrides["pino-worker"] || join6(__dirname, "worker.js");
         options.pipelines = [pipeline2.map((dest) => {
           return {
             ...dest,
@@ -35456,7 +35456,7 @@ var require_transport = __commonJS({
           return origin;
         }
         if (origin === "pino/file") {
-          return join5(__dirname, "..", "file.js");
+          return join6(__dirname, "..", "file.js");
         }
         let fixTarget2;
         for (const filePath of callers) {
@@ -36445,7 +36445,7 @@ var require_safe_stable_stringify = __commonJS({
               return circularValue;
             }
             let res = "";
-            let join5 = ",";
+            let join6 = ",";
             const originalIndentation = indentation;
             if (Array.isArray(value2)) {
               if (value2.length === 0) {
@@ -36459,7 +36459,7 @@ var require_safe_stable_stringify = __commonJS({
                 indentation += spacer;
                 res += `
 ${indentation}`;
-                join5 = `,
+                join6 = `,
 ${indentation}`;
               }
               const maximumValuesToStringify = Math.min(value2.length, maximumBreadth);
@@ -36467,13 +36467,13 @@ ${indentation}`;
               for (; i < maximumValuesToStringify - 1; i++) {
                 const tmp2 = stringifyFnReplacer(String(i), value2, stack, replacer, spacer, indentation);
                 res += tmp2 !== void 0 ? tmp2 : "null";
-                res += join5;
+                res += join6;
               }
               const tmp = stringifyFnReplacer(String(i), value2, stack, replacer, spacer, indentation);
               res += tmp !== void 0 ? tmp : "null";
               if (value2.length - 1 > maximumBreadth) {
                 const removedKeys = value2.length - maximumBreadth - 1;
-                res += `${join5}"... ${getItemCount(removedKeys)} not stringified"`;
+                res += `${join6}"... ${getItemCount(removedKeys)} not stringified"`;
               }
               if (spacer !== "") {
                 res += `
@@ -36494,7 +36494,7 @@ ${originalIndentation}`;
             let separator = "";
             if (spacer !== "") {
               indentation += spacer;
-              join5 = `,
+              join6 = `,
 ${indentation}`;
               whitespace = " ";
             }
@@ -36508,13 +36508,13 @@ ${indentation}`;
               const tmp = stringifyFnReplacer(key2, value2, stack, replacer, spacer, indentation);
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key2)}:${whitespace}${tmp}`;
-                separator = join5;
+                separator = join6;
               }
             }
             if (keyLength > maximumBreadth) {
               const removedKeys = keyLength - maximumBreadth;
               res += `${separator}"...":${whitespace}"${getItemCount(removedKeys)} not stringified"`;
-              separator = join5;
+              separator = join6;
             }
             if (spacer !== "" && separator.length > 1) {
               res = `
@@ -36555,7 +36555,7 @@ ${originalIndentation}`;
             }
             const originalIndentation = indentation;
             let res = "";
-            let join5 = ",";
+            let join6 = ",";
             if (Array.isArray(value2)) {
               if (value2.length === 0) {
                 return "[]";
@@ -36568,7 +36568,7 @@ ${originalIndentation}`;
                 indentation += spacer;
                 res += `
 ${indentation}`;
-                join5 = `,
+                join6 = `,
 ${indentation}`;
               }
               const maximumValuesToStringify = Math.min(value2.length, maximumBreadth);
@@ -36576,13 +36576,13 @@ ${indentation}`;
               for (; i < maximumValuesToStringify - 1; i++) {
                 const tmp2 = stringifyArrayReplacer(String(i), value2[i], stack, replacer, spacer, indentation);
                 res += tmp2 !== void 0 ? tmp2 : "null";
-                res += join5;
+                res += join6;
               }
               const tmp = stringifyArrayReplacer(String(i), value2[i], stack, replacer, spacer, indentation);
               res += tmp !== void 0 ? tmp : "null";
               if (value2.length - 1 > maximumBreadth) {
                 const removedKeys = value2.length - maximumBreadth - 1;
-                res += `${join5}"... ${getItemCount(removedKeys)} not stringified"`;
+                res += `${join6}"... ${getItemCount(removedKeys)} not stringified"`;
               }
               if (spacer !== "") {
                 res += `
@@ -36595,7 +36595,7 @@ ${originalIndentation}`;
             let whitespace = "";
             if (spacer !== "") {
               indentation += spacer;
-              join5 = `,
+              join6 = `,
 ${indentation}`;
               whitespace = " ";
             }
@@ -36604,7 +36604,7 @@ ${indentation}`;
               const tmp = stringifyArrayReplacer(key2, value2[key2], stack, replacer, spacer, indentation);
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key2)}:${whitespace}${tmp}`;
-                separator = join5;
+                separator = join6;
               }
             }
             if (spacer !== "" && separator.length > 1) {
@@ -36662,20 +36662,20 @@ ${originalIndentation}`;
               indentation += spacer;
               let res2 = `
 ${indentation}`;
-              const join6 = `,
+              const join7 = `,
 ${indentation}`;
               const maximumValuesToStringify = Math.min(value2.length, maximumBreadth);
               let i = 0;
               for (; i < maximumValuesToStringify - 1; i++) {
                 const tmp2 = stringifyIndent(String(i), value2[i], stack, spacer, indentation);
                 res2 += tmp2 !== void 0 ? tmp2 : "null";
-                res2 += join6;
+                res2 += join7;
               }
               const tmp = stringifyIndent(String(i), value2[i], stack, spacer, indentation);
               res2 += tmp !== void 0 ? tmp : "null";
               if (value2.length - 1 > maximumBreadth) {
                 const removedKeys = value2.length - maximumBreadth - 1;
-                res2 += `${join6}"... ${getItemCount(removedKeys)} not stringified"`;
+                res2 += `${join7}"... ${getItemCount(removedKeys)} not stringified"`;
               }
               res2 += `
 ${originalIndentation}`;
@@ -36691,16 +36691,16 @@ ${originalIndentation}`;
               return '"[Object]"';
             }
             indentation += spacer;
-            const join5 = `,
+            const join6 = `,
 ${indentation}`;
             let res = "";
             let separator = "";
             let maximumPropertiesToStringify = Math.min(keyLength, maximumBreadth);
             if (isTypedArrayWithEntries(value2)) {
-              res += stringifyTypedArray(value2, join5, maximumBreadth);
+              res += stringifyTypedArray(value2, join6, maximumBreadth);
               keys = keys.slice(value2.length);
               maximumPropertiesToStringify -= value2.length;
-              separator = join5;
+              separator = join6;
             }
             if (deterministic) {
               keys = sort(keys, comparator);
@@ -36711,13 +36711,13 @@ ${indentation}`;
               const tmp = stringifyIndent(key2, value2[key2], stack, spacer, indentation);
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key2)}: ${tmp}`;
-                separator = join5;
+                separator = join6;
               }
             }
             if (keyLength > maximumBreadth) {
               const removedKeys = keyLength - maximumBreadth;
               res += `${separator}"...": "${getItemCount(removedKeys)} not stringified"`;
-              separator = join5;
+              separator = join6;
             }
             if (separator !== "") {
               res = `
@@ -39764,10 +39764,10 @@ var require_main3 = __commonJS({
 });
 
 // src/warehouse-preview-entry.ts
-import { mkdtempSync, existsSync, copyFileSync, rmSync } from "node:fs";
+import { mkdtempSync, existsSync, copyFileSync, rmSync as rmSync2 } from "node:fs";
 import { rename } from "node:fs/promises";
 import { tmpdir as tmpdir2 } from "node:os";
-import { join as join4 } from "node:path";
+import { join as join5 } from "node:path";
 
 // src/services/turso-snapshot.ts
 import { createWriteStream } from "node:fs";
@@ -39856,13 +39856,14 @@ var STAT_TABLE = "sqlite_stat1";
 function scoutPostgresConfigured() {
   return !!process.env.PGHOST?.trim() && !!process.env.PGPASSWORD;
 }
-function scoutPostgresClient() {
+function scoutPostgresClient(extra = {}) {
   const host = process.env.PGHOST?.trim() ?? "";
   const client = new import_pg.default.Client({
     // Supabase signs with its own root CA; any other host must present a publicly trusted certificate.
     // A local test server (localhost) has no certificate; everything else is verified.
     ssl: host === "localhost" || host === "127.0.0.1" ? false : host.endsWith(".supabase.com") || host.endsWith(".supabase.co") ? { ca: SUPABASE_CA, rejectUnauthorized: true } : { rejectUnauthorized: true },
     connectionTimeoutMillis: 2e4,
+    ...extra,
     // int8 arrives as a string by default; every Scout integer fits in a JS number.
     types: { getTypeParser: ((oid, format) => oid === 20 ? Number : import_pg.default.types.getTypeParser(oid, format)) }
   });
@@ -39906,6 +39907,72 @@ async function copyRows(client, db9, table) {
   db9.exec("COMMIT");
 }
 
+// src/services/warehouse-files.ts
+import { createHash } from "node:crypto";
+import { writeFileSync, renameSync, rmSync, readFileSync, mkdirSync } from "node:fs";
+import { basename, join as join2 } from "node:path";
+import { gunzipSync } from "node:zlib";
+var FILES_SCHEMA = "warehouse_files";
+var ATTEMPTS = 3;
+var connect = async () => {
+  const c = scoutPostgresClient({ query_timeout: 3e4 });
+  await c.connect();
+  return c;
+};
+async function loadWarehouseFile(name, dest) {
+  let client = await connect();
+  try {
+    const { rows: [meta2] } = await client.query(
+      `SELECT max(parts) parts, max(sha256) sha256, count(*)::int n FROM ${FILES_SCHEMA}.chunks WHERE name = $1`,
+      [name]
+    );
+    if (!meta2?.n) throw new Error(`warehouse file ${name} not found`);
+    if (meta2.n !== meta2.parts) throw new Error(`warehouse file ${name} is incomplete`);
+    const chunks = [];
+    for (let part = 0; part < meta2.parts; part++) {
+      for (let attempt = 1; ; attempt++) {
+        try {
+          const { rows } = await client.query(
+            `SELECT data FROM ${FILES_SCHEMA}.chunks WHERE name = $1 AND part = $2`,
+            [name, part]
+          );
+          if (rows.length !== 1) throw new Error(`warehouse file ${name} chunk ${part} missing`);
+          chunks.push(rows[0].data);
+          break;
+        } catch (error40) {
+          if (attempt >= ATTEMPTS) throw error40;
+          await client.end().catch(() => {
+          });
+          client = await connect();
+        }
+      }
+    }
+    const gz = Buffer.concat(chunks);
+    if (createHash("sha256").update(gz).digest("hex") !== meta2.sha256) throw new Error(`warehouse file ${name} checksum mismatch`);
+    const tmp = `${dest}.loading`;
+    rmSync(tmp, { force: true });
+    writeFileSync(tmp, gunzipSync(gz));
+    renameSync(tmp, dest);
+  } finally {
+    await client.end().catch(() => {
+    });
+  }
+}
+async function loadWarehouseDir(name, destDir) {
+  const packFile = `${destDir}.pack.json`;
+  await loadWarehouseFile(name, packFile);
+  const pack = JSON.parse(readFileSync(packFile, "utf8"));
+  const staging = `${destDir}.loading`;
+  rmSync(staging, { recursive: true, force: true });
+  mkdirSync(staging, { recursive: true });
+  for (const [file3, body2] of Object.entries(pack)) {
+    if (file3 !== basename(file3)) throw new Error(`bad file name in pack ${name}: ${file3}`);
+    writeFileSync(join2(staging, file3), body2);
+  }
+  rmSync(packFile, { force: true });
+  renameSync(staging, destDir);
+}
+
 // src/lib/analytics-routes.ts
 var SCOUT_PATHS = /* @__PURE__ */ new Set([
   "/api/scout/rankings",
@@ -39939,6 +40006,19 @@ var LAPTOP_ONLY_PATHS = /* @__PURE__ */ new Set([
   "/api/ipl/team-analytics",
   "/api/ipl/venue-analytics"
 ]);
+var ANALYST_GET = /^\/api\/(?:decision\/catalog|strategy\/setup|alt-universe\/(?:matches|match\/[^/]+)|replay\/[^/]+|opposition|pool\/[^/]+|squad-dna\/(?:teams|profile|compare)|war-room\/(?:board|player\/[^/]+)|intel\/(?:player|team|venue|match)\/[^/]+|optimizer\/franchises|history\/overview|players\/(?:search|[^/]+\/summary)|weakness\/[^/]+|pressure\/[^/]+|insights\/(?:daily|pool\/[^/]+)|intelligence\/(?:players(?:\/[^/]+(?:\/(?:valuation|retention|franchise-fit|comparables|replacements|citation))?)?|compare|teams(?:\/[^/]+)?|models\/status|diagnostics|insights)|retention\/2027\/franchises\/[A-Z]{2,4}\/picks)$/;
+var ANALYST_POST = /* @__PURE__ */ new Set([
+  "/api/ask",
+  "/api/ask/run",
+  "/api/strategy/simulate",
+  "/api/alt-universe/simulate",
+  "/api/optimizer/playing-xi",
+  "/api/intelligence/squad/simulate",
+  "/api/intelligence/auction/simulate"
+]);
+function analystMethod(path29) {
+  return ANALYST_POST.has(path29) ? "POST" : ANALYST_GET.test(path29) ? "GET" : null;
+}
 function isAnalyticsPath(path29) {
   return isScoutPath(path29) || IPL_PATHS.has(path29) || LAPTOP_ONLY_PATHS.has(path29);
 }
@@ -44061,7 +44141,7 @@ function rateLimit({ max, windowMs, name }) {
 import { DatabaseSync as DatabaseSync3 } from "node:sqlite";
 import fs from "node:fs";
 import path from "node:path";
-import { createHash, randomUUID } from "node:crypto";
+import { createHash as createHash2, randomUUID } from "node:crypto";
 var PlatformStore = class {
   db;
   constructor(file3) {
@@ -44141,7 +44221,7 @@ var PlatformStore = class {
     return this.db.prepare("SELECT value FROM checkpoints WHERE key=?").get(key)?.value;
   }
   track(session, feature, action3, now = Date.now()) {
-    const hash = createHash("sha256").update(new Date(now).toISOString().slice(0, 10) + session).digest("hex");
+    const hash = createHash2("sha256").update(new Date(now).toISOString().slice(0, 10) + session).digest("hex");
     this.transaction(() => {
       this.db.prepare("INSERT INTO presence VALUES(?,?) ON CONFLICT(session) DO UPDATE SET last_seen=excluded.last_seen").run(hash, now);
       if (action3 !== "heartbeat") this.db.prepare("INSERT INTO analytics_events(session,feature,action,at) VALUES(?,?,?,?)").run(hash, feature, action3, now);
@@ -44263,7 +44343,7 @@ Unsubscribe: ${origin}/api/notifications/unsubscribe?token=${token2}` }) });
 }
 
 // src/services/platform/event-feed.ts
-import { createHash as createHash2 } from "node:crypto";
+import { createHash as createHash3 } from "node:crypto";
 var matchSchema = external_exports.object({ id: external_exports.string().min(1).max(80), label: external_exports.string().min(3).max(120), homeWickets: external_exports.number().int().min(0).max(10), awayWickets: external_exports.number().int().min(0).max(10), status: external_exports.enum(["live", "complete"]), result: external_exports.string().max(500).optional() }).strict();
 var feedSchema = external_exports.object({ source: external_exports.string().url().refine((s) => s.startsWith("https://")), observedAt: external_exports.number().int(), matches: external_exports.array(matchSchema).max(100) }).strict();
 function observeMatches(store3, input2, now = Date.now()) {
@@ -44274,7 +44354,7 @@ function observeMatches(store3, input2, now = Date.now()) {
     if (previous) {
       const last = JSON.parse(previous);
       for (const side of ["homeWickets", "awayWickets"]) if (match[side] > last[side]) {
-        const id = createHash2("sha256").update(`${match.id}:${side}:${match[side]}`).digest("hex");
+        const id = createHash3("sha256").update(`${match.id}:${side}:${match[side]}`).digest("hex");
         store3.event({ id: `wicket:${id}`, kind: "wicket", title: `Wicket update \xB7 ${match.label}`, body: `Observed ${side === "homeWickets" ? "home" : "away"} wickets change from ${last[side]} to ${match[side]}.`, source: parsed.source, occurredAt: parsed.observedAt });
       }
       if (match.status === "complete" && last.status !== "complete" && match.result) store3.event({ id: `result:${match.id}`, kind: "match_result", title: `Result \xB7 ${match.label}`, body: match.result, source: parsed.source, occurredAt: parsed.observedAt });
@@ -44315,6 +44395,9 @@ function getProjectRoot() {
   }
   projectRoot = process.cwd();
   return projectRoot;
+}
+function rawDir(root = getProjectRoot()) {
+  return process.env.CRICFIELD_RAW_DIR ? path2.resolve(process.env.CRICFIELD_RAW_DIR) : path2.join(root, "lib", "cricket-data", "raw");
 }
 function warehousePath() {
   return process.env.CRICFIELD_DB_PATH ? path2.resolve(process.env.CRICFIELD_DB_PATH) : path2.join(getProjectRoot(), "sqlite.db");
@@ -44568,7 +44651,7 @@ function loadSquadsBySeason(root) {
   return out;
 }
 function loadRawIndex(root) {
-  const dir2 = path3.join(root, "lib", "cricket-data", "raw");
+  const dir2 = rawDir(root);
   const nameToIds = /* @__PURE__ */ new Map();
   const stumpings = /* @__PURE__ */ new Map();
   if (!fs3.existsSync(dir2)) return { nameToIds, stumpings };
@@ -45003,7 +45086,7 @@ var PHASE_DB = { powerplay: "Powerplay", middle: "Middle", death: "Death" };
 var stageCache = null;
 function getMatchStages() {
   if (stageCache) return stageCache;
-  const dir2 = path4.join(getProjectRoot(), "lib", "cricket-data", "raw");
+  const dir2 = rawDir();
   const playoffs = [];
   const finals = [];
   if (fs4.existsSync(dir2)) {
@@ -58260,7 +58343,7 @@ function rulesSummary(r) {
 }
 
 // src/services/retention/store.ts
-import { createHash as createHash3, randomUUID as randomUUID2 } from "node:crypto";
+import { createHash as createHash4, randomUUID as randomUUID2 } from "node:crypto";
 var override = null;
 var ready = /* @__PURE__ */ new WeakSet();
 function db2() {
@@ -58301,7 +58384,7 @@ function editorialFor(season2, team4, kind) {
 }
 function insertFreeze(season2, reason, modelVersion, payload2, now = Date.now()) {
   const text2 = JSON.stringify(payload2);
-  const row = { id: randomUUID2(), season: season2, frozenAt: now, reason, modelVersion, hash: createHash3("sha256").update(text2).digest("hex") };
+  const row = { id: randomUUID2(), season: season2, frozenAt: now, reason, modelVersion, hash: createHash4("sha256").update(text2).digest("hex") };
   db2().prepare("INSERT INTO retention_freezes VALUES(?,?,?,?,?,?,?)").run(row.id, season2, now, reason, modelVersion, row.hash, text2);
   return row;
 }
@@ -58312,7 +58395,7 @@ function listFreezes(season2) {
 function freezePayload(id) {
   const r = db2().prepare("SELECT * FROM retention_freezes WHERE id=?").get(id);
   if (!r) return null;
-  return { row: { id: r.id, season: r.season, frozenAt: r.frozen_at, reason: r.reason, modelVersion: r.model_version, hash: r.hash }, payload: JSON.parse(r.payload), intact: createHash3("sha256").update(r.payload).digest("hex") === r.hash };
+  return { row: { id: r.id, season: r.season, frozenAt: r.frozen_at, reason: r.reason, modelVersion: r.model_version, hash: r.hash }, payload: JSON.parse(r.payload), intact: createHash4("sha256").update(r.payload).digest("hex") === r.hash };
 }
 
 // src/services/retention/service.ts
@@ -59876,7 +59959,7 @@ router.post("/auction-2027/updates", requireAdmin, (req, res) => {
 var auction_2027_default = router;
 
 // src/services/platform/worker.ts
-import { createHash as createHash4 } from "node:crypto";
+import { createHash as createHash5 } from "node:crypto";
 var running = false;
 async function platformTick() {
   if (running) return;
@@ -59893,7 +59976,7 @@ async function platformTick() {
       const records = [...snapshot.lots.filter((l) => l.status === "sold").map((l) => ({ key: `lot:${l.lot}`, kind: "auction_purchase", title: `Auction: ${l.player}`, body: `${l.player}: ${l.team}, ${l.priceLakhs} lakh`, at: l.recordedAt, source: l.sourceUrl })), ...snapshot.retentions.map((r) => ({ key: `retention:${r.team}:${r.player}`, kind: "player_update", title: `Player update: ${r.player}`, body: `${r.team}: ${r.player} ${r.decision}`, at: r.recordedAt, source: r.sourceUrl }))];
       const initialized = store3.checkpoint("auction_initialized");
       for (const record2 of records) {
-        const fingerprint2 = createHash4("sha256").update(JSON.stringify(record2)).digest("hex");
+        const fingerprint2 = createHash5("sha256").update(JSON.stringify(record2)).digest("hex");
         if (!initialized) {
           store3.checkpoint(record2.key, fingerprint2);
           continue;
@@ -60194,7 +60277,7 @@ import fs10 from "node:fs";
 import path10 from "node:path";
 import { DatabaseSync as DatabaseSync5 } from "node:sqlite";
 var projectRoot2 = null;
-function getProjectRoot2() {
+function getProjectRoot3() {
   if (projectRoot2) return projectRoot2;
   let dir2 = process.cwd();
   for (let i = 0; i < 6; i++) {
@@ -60211,7 +60294,7 @@ var db3 = null;
 var dbError2 = null;
 function getScoutDbPath() {
   const configuredPath = process.env.CRICFIELD_SCOUT_DB_PATH?.trim();
-  return configuredPath ? path10.resolve(configuredPath) : path10.join(getProjectRoot2(), "lib", "cricket-data", "global", "warehouse", "global.db");
+  return configuredPath ? path10.resolve(configuredPath) : path10.join(getProjectRoot3(), "lib", "cricket-data", "global", "warehouse", "global.db");
 }
 function getGlobalDb() {
   if (db3 || dbError2) return db3;
@@ -64146,7 +64229,7 @@ function sql(strings, ...params) {
     return new SQL([new StringChunk(str)]);
   }
   sql22.raw = raw;
-  function join5(chunks, separator) {
+  function join6(chunks, separator) {
     const result = [];
     for (const [i, chunk] of chunks.entries()) {
       if (i > 0 && separator !== void 0) {
@@ -64156,7 +64239,7 @@ function sql(strings, ...params) {
     }
     return new SQL(result);
   }
-  sql22.join = join5;
+  sql22.join = join6;
   function identifier(value2) {
     return new Name(value2);
   }
@@ -66673,7 +66756,7 @@ var SQLiteSelectQueryBuilderBase = class extends TypedQueryBuilder {
       const baseTableName = this.tableName;
       const tableName = getTableLikeName(table);
       for (const item of extractUsedTable(table)) this.usedTables.add(item);
-      if (typeof tableName === "string" && this.config.joins?.some((join5) => join5.alias === tableName)) {
+      if (typeof tableName === "string" && this.config.joins?.some((join6) => join6.alias === tableName)) {
         throw new Error(`Alias "${tableName}" is already used in this query`);
       }
       if (!this.isPartialSelect) {
@@ -67532,7 +67615,7 @@ var SQLiteUpdateBase = class extends QueryPromise {
   createJoin(joinType) {
     return (table, on) => {
       const tableName = getTableLikeName(table);
-      if (typeof tableName === "string" && this.config.joins.some((join5) => join5.alias === tableName)) {
+      if (typeof tableName === "string" && this.config.joins.some((join6) => join6.alias === tableName)) {
         throw new Error(`Alias "${tableName}" is already used in this query`);
       }
       if (typeof on === "function") {
@@ -81590,7 +81673,7 @@ function sql2(strings, ...params) {
     return new SQL2([new StringChunk2(str)]);
   }
   sql22.raw = raw;
-  function join5(chunks, separator) {
+  function join6(chunks, separator) {
     const result = [];
     for (const [i, chunk] of chunks.entries()) {
       if (i > 0 && separator !== void 0) {
@@ -81600,7 +81683,7 @@ function sql2(strings, ...params) {
     }
     return new SQL2(result);
   }
-  sql22.join = join5;
+  sql22.join = join6;
   function identifier(value2) {
     return new Name2(value2);
   }
@@ -120529,7 +120612,7 @@ var playerLatestTeams = player_latest_teams_default;
 var currentSquads = current_squads_default;
 var _projectRoot = null;
 var _initialized = false;
-function getProjectRoot3() {
+function getProjectRoot4() {
   if (_projectRoot) return _projectRoot;
   let dir2 = (typeof import.meta.dirname === "string" ? import.meta.dirname : null) || process.cwd();
   let cur = dir2;
@@ -120546,7 +120629,7 @@ function getProjectRoot3() {
 function ensureInit() {
   if (_initialized) return;
   _initialized = true;
-  const root = getProjectRoot3();
+  const root = getProjectRoot4();
   const matchesPath = path13.resolve(root, "artifacts", "ipl-analytics", "public", "data", "matches.json");
   const bioPath = path13.resolve(root, "artifacts", "ipl-analytics", "public", "data", "player-bio.json");
   const playersPath = path13.resolve(root, "artifacts", "api-server", "data", "players.json");
@@ -120698,8 +120781,8 @@ function getMatchDataFromDb(matchId) {
 }
 function getMatchData(matchId) {
   if (matchCache.has(matchId)) return matchCache.get(matchId);
-  const root = getProjectRoot3();
-  const fp = path13.resolve(root, "lib", "cricket-data", "raw", `${matchId}.json`);
+  const root = getProjectRoot4();
+  const fp = path13.resolve(rawDir(root), `${matchId}.json`);
   if (fs12.existsSync(fp)) {
     try {
       const data = JSON.parse(fs12.readFileSync(fp, "utf8"));
@@ -120733,15 +120816,15 @@ function matchPassesContext(stage, matchContext) {
 }
 function preLoadAllMatches() {
   ensureInit();
-  const root = getProjectRoot3();
-  const rawDir = path13.resolve(root, "lib", "cricket-data", "raw");
-  if (!fs12.existsSync(rawDir)) return;
-  const files = fs12.readdirSync(rawDir).filter((f) => f.endsWith(".json"));
+  const root = getProjectRoot4();
+  const rawDir2 = rawDir(root);
+  if (!fs12.existsSync(rawDir2)) return;
+  const files = fs12.readdirSync(rawDir2).filter((f) => f.endsWith(".json"));
   for (const f of files) {
     const id = f.replace(".json", "");
     if (!matchCache.has(id)) {
       try {
-        const data = JSON.parse(fs12.readFileSync(path13.join(rawDir, f), "utf8"));
+        const data = JSON.parse(fs12.readFileSync(path13.join(rawDir2, f), "utf8"));
         matchCache.set(id, data);
       } catch {
       }
@@ -120895,15 +120978,15 @@ var bioLookup = null;
 function getBioLookup() {
   if (bioLookup) return bioLookup;
   ensureInit();
-  const root = getProjectRoot3();
+  const root = getProjectRoot4();
   const dataDir = path13.resolve(root, "artifacts", "ipl-analytics", "public", "data");
   const readJson = (fp) => fs12.existsSync(fp) ? JSON.parse(fs12.readFileSync(fp, "utf8")) : void 0;
   const identityKeys = readJson(path13.join(dataDir, "player-recent-matches", "index.json"))?.keys ?? {};
   const squads2 = readJson(path13.join(dataDir, "squads-by-season.json")) ?? {};
-  const rawDir = path13.resolve(root, "lib", "cricket-data", "raw");
+  const rawDir2 = rawDir(root);
   const registries = [];
-  if (fs12.existsSync(rawDir)) {
-    for (const f of fs12.readdirSync(rawDir)) {
+  if (fs12.existsSync(rawDir2)) {
+    for (const f of fs12.readdirSync(rawDir2)) {
       if (!f.endsWith(".json")) continue;
       const people = getMatchData(f.slice(0, -5))?.info?.registry?.people;
       if (people) registries.push(people);
@@ -123142,7 +123225,7 @@ async function aggregateDrilldownSql(player, dimension, filters) {
 }
 function readDataJson(filename) {
   ensureInit();
-  const root = getProjectRoot3();
+  const root = getProjectRoot4();
   const fp = path13.resolve(root, "artifacts", "ipl-analytics", "public", "data", filename);
   if (fs12.existsSync(fp)) {
     return JSON.parse(fs12.readFileSync(fp, "utf-8"));
@@ -124056,7 +124139,7 @@ function getRoot() {
 var rawCache = /* @__PURE__ */ new Map();
 function loadRaw(matchId) {
   if (rawCache.has(matchId)) return rawCache.get(matchId);
-  const fp = path14.join(getRoot(), "lib", "cricket-data", "raw", `${matchId}.json`);
+  const fp = path14.join(rawDir(getRoot()), `${matchId}.json`);
   if (!fs13.existsSync(fp)) {
     rawCache.set(matchId, null);
     return null;
@@ -130942,7 +131025,7 @@ var targetCache = null;
 function getTargets() {
   if (targetCache) return targetCache;
   targetCache = /* @__PURE__ */ new Map();
-  const dir2 = path16.join(getProjectRoot(), "lib", "cricket-data", "raw");
+  const dir2 = rawDir();
   if (!fs16.existsSync(dir2)) return targetCache;
   for (const file3 of fs16.readdirSync(dir2)) {
     if (!file3.endsWith(".json")) continue;
@@ -171226,7 +171309,7 @@ function resolveMatchForVideo(video, allMatches) {
 }
 function getUnifiedVideoCatalogue() {
   if (resolvedCatalogue) return resolvedCatalogue;
-  const root = getProjectRoot2();
+  const root = getProjectRoot3();
   const cataloguePath = path22.join(root, "artifacts", "api-server", "src", "data", "video-catalogue.json");
   let rawList = [];
   if (fs24.existsSync(cataloguePath)) {
@@ -171468,7 +171551,7 @@ router12.post("/sync-hotstar", async (req, res) => {
     res.status(503).json({ error: "provider_unavailable" });
     return;
   }
-  const cataloguePath = path23.join(getProjectRoot2(), "artifacts/api-server/src/data/video-catalogue.json");
+  const cataloguePath = path23.join(getProjectRoot3(), "artifacts/api-server/src/data/video-catalogue.json");
   try {
     const { syncedCount, clips } = await syncHotstarIPLClips({
       teamTag,
@@ -171482,7 +171565,7 @@ router12.post("/sync-hotstar", async (req, res) => {
         const currentList = JSON.parse(raw);
         const merged = [...clips, ...currentList];
         await fs25.writeFile(cataloguePath, JSON.stringify(merged, null, 2), "utf-8");
-        const frontendPath = path23.join(getProjectRoot2(), "artifacts/ipl-analytics/src/data/video-catalogue.json");
+        const frontendPath = path23.join(getProjectRoot3(), "artifacts/ipl-analytics/src/data/video-catalogue.json");
         await fs25.writeFile(frontendPath, JSON.stringify(merged, null, 2), "utf-8").catch(() => {
         });
       } catch (err) {
@@ -171554,7 +171637,7 @@ router12.post("/add-clip", async (req, res) => {
       hotstarContentId: String(contentId),
       thumbnailUrl: resolvedThumb || `https://img10.hotstar.com/image/upload/f_auto,q_90,w_1280/sources/r1/cms/prod/sports/${contentId}`
     };
-    const cataloguePath = path23.join(getProjectRoot2(), "artifacts/api-server/src/data/video-catalogue.json");
+    const cataloguePath = path23.join(getProjectRoot3(), "artifacts/api-server/src/data/video-catalogue.json");
     const raw = await fs25.readFile(cataloguePath, "utf-8");
     const list = JSON.parse(raw);
     const existingIdx = list.findIndex(
@@ -171566,7 +171649,7 @@ router12.post("/add-clip", async (req, res) => {
       list.unshift(newClip);
     }
     await fs25.writeFile(cataloguePath, JSON.stringify(list, null, 2), "utf-8");
-    const frontendPath = path23.join(getProjectRoot2(), "artifacts/ipl-analytics/src/data/video-catalogue.json");
+    const frontendPath = path23.join(getProjectRoot3(), "artifacts/ipl-analytics/src/data/video-catalogue.json");
     await fs25.writeFile(frontendPath, JSON.stringify(list, null, 2), "utf-8").catch(() => {
     });
     res.json({
@@ -172421,7 +172504,7 @@ function deleteLiveState(kind, code) {
 import { randomBytes, randomUUID as randomUUID4 } from "node:crypto";
 
 // src/services/arcade/arcade-store.ts
-import { createHash as createHash5, randomUUID as randomUUID3 } from "node:crypto";
+import { createHash as createHash6, randomUUID as randomUUID3 } from "node:crypto";
 var ready2 = null;
 function db8() {
   const d = platform().db;
@@ -172547,7 +172630,7 @@ function updateProfile(userId, patch) {
   if (patch.showOnBoards !== void 0) d.prepare("UPDATE arcade_profile SET show_on_boards=? WHERE user_id=?").run(Number(patch.showOnBoards), userId);
   if (patch.favouriteTeam !== void 0) d.prepare("UPDATE arcade_profile SET favourite_team=? WHERE user_id=?").run(patch.favouriteTeam, userId);
 }
-var pseudonym = (userId) => `Fan-${createHash5("sha256").update(`arcade|${userId}`).digest("hex").slice(0, 5).toUpperCase()}`;
+var pseudonym = (userId) => `Fan-${createHash6("sha256").update(`arcade|${userId}`).digest("hex").slice(0, 5).toUpperCase()}`;
 function leaderboard(game, period, userId, team4) {
   const d = db8();
   const where = period === "daily" ? "AND r.day = ?" : period === "weekly" ? "AND r.week = ?" : "";
@@ -172621,7 +172704,7 @@ function create(game, name) {
   persist(room2);
   return { token, ...view(room2, token) };
 }
-function join2(code, game, name) {
+function join3(code, game, name) {
   const r = find(code);
   if (r.game !== game) fail2("wrong_game");
   if (r.started) fail2("room_already_started");
@@ -174018,7 +174101,7 @@ function room(code, token) {
   d.lastActive = Date.now();
   return d;
 }
-function join3(code, name) {
+function join4(code, name) {
   const d = locate(code);
   if (!d || Date.now() - d.lastActive > 72e5) fail4("room_expired");
   if (d.solo) fail4("solo_room_is_private");
@@ -174304,7 +174387,7 @@ auctionClock.unref();
 
 // src/routes/arcade.ts
 var import_express14 = __toESM(require_express2(), 1);
-import { createHash as createHash6, randomUUID as randomUUID7 } from "node:crypto";
+import { createHash as createHash7, randomUUID as randomUUID7 } from "node:crypto";
 var router13 = (0, import_express14.Router)();
 var ARCADE_GAMES = GAMES.filter((g) => ["cup-chase", "hand-cricket", "super-over", "cricket-grid", "guess-cricketer", "auction-room"].includes(g.id));
 var resolveUser = verifiedUser;
@@ -174615,7 +174698,7 @@ router13.post("/session/:id/submit", wrap((req, _res, user) => {
   const run = getRun(String(req.params.id));
   if (!run || run.userId && run.userId !== user?.id || !SIM_GAMES.includes(run.game)) throw new Error("not_found");
   const raw = req.body ?? {};
-  const submissionKey = createHash6("sha256").update(JSON.stringify(raw)).digest("hex");
+  const submissionKey = createHash7("sha256").update(JSON.stringify(raw)).digest("hex");
   if (run.state.lastSubmission?.key === submissionKey) return run.state.lastSubmission.response;
   if (run.status === "done") bad2("run_finished");
   const game = run.game;
@@ -174803,7 +174886,7 @@ router13.post("/rooms", wrap((req) => {
 }));
 router13.post("/rooms/join", wrap((req) => {
   const b = body(roomInput.extend({ code: external_exports.string().regex(/^[A-Fa-f0-9]{8}$/) }), req);
-  return join2(b.code, b.game, b.name);
+  return join3(b.code, b.game, b.name);
 }));
 router13.get("/rooms/:code", wrap((req) => {
   const token = String(req.query.token ?? "");
@@ -174832,7 +174915,7 @@ router13.post("/draft/create", wrap((req) => {
 }));
 router13.post("/draft/join", wrap((req) => {
   const b = body(external_exports.object({ name: external_exports.string().max(24), code: external_exports.string().regex(/^[A-Fa-f0-9]{8}$/) }), req);
-  return join3(b.code, b.name);
+  return join4(b.code, b.name);
 }));
 router13.get("/draft/:code", wrap((req) => read2(String(req.params.code), String(req.query.token ?? ""))));
 router13.post("/draft/:code/action", wrap((req) => {
@@ -175311,9 +175394,9 @@ var publicErrorHandler = (error40, req, res, next) => {
 };
 
 // src/lib/analytics-gate.ts
-import { timingSafeEqual as timingSafeEqual3, createHash as createHash7 } from "node:crypto";
+import { timingSafeEqual as timingSafeEqual3, createHash as createHash8 } from "node:crypto";
 import fs30 from "node:fs";
-var sha = (s) => createHash7("sha256").update(s).digest();
+var sha = (s) => createHash8("sha256").update(s).digest();
 var startedAt = Date.now();
 function analyticsGate(key, opts) {
   if (key.length < 32) throw new Error("ANALYTICS_GATE_KEY must be at least 32 characters");
@@ -175494,9 +175577,10 @@ var laptopOrigin = process.env.CRICFIELD_ANALYTICS_ORIGIN?.trim();
 var laptopKey = process.env.CRICFIELD_ANALYTICS_KEY?.trim();
 var laptopEnabled = (mode === "laptop" || mode === "laptop-then-turso") && !!laptopOrigin && !!laptopKey;
 var LAPTOP_TIMEOUT_MS = 25e3;
-var warehouseDirectory = mkdtempSync(join4(tmpdir2(), "cricfield-preview-"));
-var scoutPath = join4(warehouseDirectory, "global.db");
-var iplPath = join4(warehouseDirectory, "sqlite.db");
+var warehouseDirectory = mkdtempSync(join5(tmpdir2(), "cricfield-preview-"));
+var scoutPath = join5(warehouseDirectory, "global.db");
+var iplPath = join5(warehouseDirectory, "sqlite.db");
+var rawPath = join5(warehouseDirectory, "raw");
 var scout;
 var ipl;
 function configureScout() {
@@ -175507,9 +175591,12 @@ function configureScout() {
     return Promise.resolve();
   }
   if (scoutPostgresConfigured()) {
-    const staging = `${scoutPath}.loading`;
-    rmSync(staging, { force: true });
-    return loadScoutFromPostgres(staging).then(() => rename(staging, scoutPath));
+    return loadWarehouseFile("scout-serving.db", scoutPath).catch((error40) => {
+      console.error("Scout file load failed, rebuilding from rows", error40 instanceof Error ? error40.message : "Error");
+      const staging = `${scoutPath}.loading`;
+      rmSync2(staging, { force: true });
+      return loadScoutFromPostgres(staging).then(() => rename(staging, scoutPath));
+    });
   }
   const url2 = process.env.TURSO_SCOUT_DATABASE_URL;
   const token = process.env.TURSO_SCOUT_AUTH_TOKEN;
@@ -175530,6 +175617,11 @@ function configureIpl() {
   if (fallback && existsSync(fallback)) {
     copyFileSync(fallback, iplPath);
     return Promise.resolve();
+  }
+  if (scoutPostgresConfigured()) {
+    process.env.CRICFIELD_RAW_DIR = rawPath;
+    return Promise.all([loadWarehouseFile("sqlite.db", iplPath), loadWarehouseDir("ipl-raw.json", rawPath)]).then(() => {
+    });
   }
   const url2 = process.env.TURSO_IPL_DATABASE_URL;
   const token = process.env.TURSO_IPL_AUTH_TOKEN;
@@ -175587,9 +175679,34 @@ async function handler(req, res) {
     if (laptopEnabled && await forwardToLaptop(req, res, req.url)) return;
     if (laptopEnabled && mode === "laptop") return json2(res, 503, "analytics_backend_unavailable");
     if (path29 === "/api/auction-2027") {
-      process.env.AUCTION_LOG_PATH ??= join4(process.cwd(), "artifacts", "api-server", "data", "auction-2027-updates.json");
+      process.env.AUCTION_LOG_PATH ??= join5(process.cwd(), "artifacts", "api-server", "data", "auction-2027-updates.json");
     }
     return app_default(req, res);
+  }
+  const analyst = analystMethod(path29);
+  if (analyst) {
+    if (req.method !== analyst) {
+      res.setHeader("Allow", analyst);
+      return json2(res, 405, "method_not_allowed");
+    }
+    try {
+      process.env.CRICFIELD_DB_READONLY = "1";
+      process.env.CRICFIELD_SCOUT_DB_PATH = scoutPath;
+      process.env.CRICFIELD_DB_PATH = iplPath;
+      ipl ??= configureIpl().catch((error40) => {
+        ipl = void 0;
+        throw error40;
+      });
+      scout ??= configureScout().catch((error40) => {
+        scout = void 0;
+        throw error40;
+      });
+      await Promise.all([ipl, scout]);
+      return app_default(req, res);
+    } catch (error40) {
+      console.error("Analyst warehouse initialization failed", error40 instanceof Error ? `${error40.name}: ${error40.message}` : "Error");
+      return json2(res, 503, "ipl_warehouse_unavailable");
+    }
   }
   const isScoutAnalyst = path29 === "/api/scout/analyst";
   if (path29 === "/api/scout/analyst/status" && req.method === "GET") return app_default(req, res);
