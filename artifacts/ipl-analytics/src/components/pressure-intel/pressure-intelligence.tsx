@@ -46,12 +46,10 @@ import {
 import { resolvePlayerImage, teamShort, usePlayerLatestTeamResolver } from "@/lib/aggregates";
 import { useTeamTheme, type TeamCode } from "@/lib/team-context";
 import { TeamLogo } from "@/components/team-logo";
-import { EDITORIAL_ASPECTS } from "@/data/editorial/schema";
-import { getV2ForFranchise, getV2Index } from "@/lib/editorial-v2";
 
-type Tab = "rankings" | "compare" | "overview" | "builder";
+type Tab = "rankings" | "stats" | "compare" | "overview" | "builder";
 
-const DESKTOP_TABS: { id: Exclude<Tab, "builder">; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+const DESKTOP_TABS: { id: Exclude<Tab, "builder" | "stats">; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { id: "rankings", label: "Rankings", icon: BarChart3 },
   { id: "compare", label: "Compare", icon: GitCompare },
   { id: "overview", label: "Coverage & Evidence", icon: Layers },
@@ -59,6 +57,7 @@ const DESKTOP_TABS: { id: Exclude<Tab, "builder">; label: string; icon: React.Co
 
 const MOBILE_TABS: { id: Tab; label: string }[] = [
   { id: "rankings", label: "Rankings" },
+  { id: "stats", label: "Stats" },
   { id: "builder", label: "Builder" },
   { id: "compare", label: "Compare" },
   { id: "overview", label: "Coverage" },
@@ -545,20 +544,6 @@ export function PressureIntelligence({ mobile = false }: { mobile?: boolean }) {
       avgPosShare,
     };
   }, [sorted, result, tray, bat]);
-
-  // Franchise-relevant real published editorial investigations (bottom 5 cards)
-  const investigations = useMemo(() => {
-    const pool = selectedTeam ? getV2ForFranchise(selectedTeam) : getV2Index();
-    const priority = new Set(["tactical", "batting", "bowling-fielding", "data-science", "auction-economics"]);
-    const ranked = [...pool].sort((a, b) => {
-      const pa = priority.has(a.aspect) ? 0 : 1;
-      const pb = priority.has(b.aspect) ? 0 : 1;
-      if (pa !== pb) return pa - pb;
-      if (a.featured !== b.featured) return a.featured ? -1 : 1;
-      return b.publishedDate.localeCompare(a.publishedDate);
-    });
-    return ranked.slice(0, 5);
-  }, [selectedTeam]);
 
   // ── Shared Pieces ───────────────────────────────────────────────────────────
 
@@ -1246,8 +1231,9 @@ export function PressureIntelligence({ mobile = false }: { mobile?: boolean }) {
           )}
         </div>
 
-        {/* Right Telemetry Rail: Snapshot + Pressure Trend + Boundary & Dot Ground Dial */}
-        <div className="space-y-4 min-w-0">
+        {/* Right Telemetry Rail (Desktop): Snapshot + Pressure Trend + Boundary & Dot Ground Dial */}
+        {!mobile && (
+          <div className="space-y-4 min-w-0">
           {/* Situation Snapshot */}
           <div className="pl-card pl-card-accent p-4 space-y-3">
             <div className="flex items-center justify-between">
@@ -1318,7 +1304,8 @@ export function PressureIntelligence({ mobile = false }: { mobile?: boolean }) {
               />
             </div>
           </div>
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Bottom Compare Tray Dock */}
@@ -1472,88 +1459,6 @@ export function PressureIntelligence({ mobile = false }: { mobile?: boolean }) {
     />
   );
 
-  // ── Bottom Strip: Explore Investigations (5 Real Editorial Articles) ────────
-  const aspectMap = useMemo(() => new Map<string, string>(EDITORIAL_ASPECTS.map((a) => [a.id, a.name])), []);
-  const investigationsStrip = investigations.length > 0 && (
-    <section className="space-y-3 pt-2" aria-labelledby="pl-investigations">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-4 w-4" style={{ color: "var(--pl-accent)" }} />
-          <h2 id="pl-investigations" className="text-sm sm:text-base font-black text-white">
-            Explore Investigations
-          </h2>
-          <span className="pl-slashes text-xs" aria-hidden="true">
-            ///
-          </span>
-          <span className="text-xs text-slate-400 hidden sm:inline">
-            Deep-dive editorial research {theme ? `for ${theme.name}` : "across IPL franchises"}
-          </span>
-        </div>
-        <Link
-          href={theme ? `/intelligence?q=${encodeURIComponent(theme.name)}` : "/intelligence"}
-          className="inline-flex items-center gap-1 text-xs font-bold hover:underline"
-          style={{ color: "var(--pl-accent)" }}
-        >
-          <span>View All Investigations</span>
-          <ArrowRight className="h-3.5 w-3.5" />
-        </Link>
-      </div>
-
-      <div
-        className={
-          mobile
-            ? "flex gap-3 overflow-x-auto pl-no-scrollbar snap-x snap-mandatory pb-1"
-            : "grid gap-3 md:grid-cols-2 lg:grid-cols-5"
-        }
-      >
-        {investigations.map((art) => {
-          const aspectLabel = aspectMap.get(art.aspect) ?? "Intelligence";
-          return (
-            <Link
-              key={art.id}
-              href={`/dugout/articles/${art.slug}`}
-              className={`pl-card group flex flex-col justify-between p-3.5 transition-all hover:border-white/30 ${
-                mobile ? "w-[78vw] max-w-[290px] shrink-0 snap-start" : ""
-              }`}
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2">
-                  <span
-                    className="inline-block rounded-full border px-2 py-0.5 text-[9px] font-mono font-bold uppercase tracking-wider truncate max-w-[175px]"
-                    style={{
-                      borderColor: "color-mix(in srgb, var(--pl-accent) 40%, transparent)",
-                      background: "color-mix(in srgb, var(--pl-accent) 12%, transparent)",
-                      color: "var(--pl-accent)",
-                    }}
-                  >
-                    {aspectLabel}
-                  </span>
-                  <span className="grid h-6 w-6 place-items-center rounded-lg border border-white/10 bg-white/[0.04] shrink-0">
-                    <FlaskConical className="h-3 w-3" style={{ color: "var(--pl-accent)" }} />
-                  </span>
-                </div>
-                <h3 className="text-xs sm:text-[13px] font-extrabold text-white leading-snug line-clamp-2 group-hover:underline">
-                  {art.title}
-                </h3>
-                <p className="text-[11px] text-slate-400 leading-relaxed line-clamp-3">{art.dek}</p>
-              </div>
-
-              <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between gap-2">
-                <span className="text-[9.5px] font-mono uppercase text-slate-400 truncate">
-                  {art.headlineStat?.label ?? `${art.franchise} · ${art.readMinutes}m`}
-                </span>
-                <span className="inline-flex items-center gap-1 font-mono text-[11px] font-black shrink-0" style={{ color: "var(--pl-accent)" }}>
-                  <span>{art.headlineStat?.display ?? art.franchise}</span>
-                  <ArrowRight className="h-3 w-3" />
-                </span>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-    </section>
-  );
-
   const openRow = result?.rows.find((r) => r.id === open) ?? null;
 
   return (
@@ -1573,10 +1478,10 @@ export function PressureIntelligence({ mobile = false }: { mobile?: boolean }) {
 
         {mobile ? (
           <>
-            {/* Mobile Segmented Switcher: Rankings · Builder · Compare · Coverage */}
+            {/* Mobile Segmented Switcher: Rankings · Stats · Builder · Compare · Coverage */}
             <nav
               aria-label="Pressure Lab tabs"
-              className="flex items-center gap-1 rounded-2xl border border-white/10 bg-[#070c18]/90 p-1.5"
+              className="flex items-center gap-1 overflow-x-auto pl-no-scrollbar snap-x snap-mandatory rounded-2xl border border-white/10 bg-[#070c18]/90 p-1.5"
             >
               {MOBILE_TABS.map((t) => {
                 const active = tab === t.id;
@@ -1586,7 +1491,7 @@ export function PressureIntelligence({ mobile = false }: { mobile?: boolean }) {
                     type="button"
                     onClick={() => changeTab(t.id)}
                     aria-current={active ? "page" : undefined}
-                    className={`flex-1 rounded-xl py-2 px-2 text-[10.5px] font-extrabold whitespace-nowrap transition-all ${
+                    className={`shrink-0 snap-start rounded-xl py-2 px-3.5 text-[11px] font-extrabold whitespace-nowrap transition-all ${
                       active ? "text-[#050816]" : "text-slate-300 hover:text-white"
                     }`}
                     style={active ? { background: "var(--pl-accent)" } : undefined}
@@ -1600,6 +1505,82 @@ export function PressureIntelligence({ mobile = false }: { mobile?: boolean }) {
 
             {tab === "builder" && builderPanel}
             {tab === "rankings" && rankingsWorkspace}
+            {tab === "stats" &&
+              (!result ? (
+                <Empty onBuild={() => changeTab("builder")} busy={status.busy} />
+              ) : (
+                <div className="space-y-4">
+                  <div className="space-y-4 min-w-0">
+                    {/* Situation Snapshot */}
+                    <div className="pl-card pl-card-accent p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          <Activity className="h-3.5 w-3.5" style={{ color: "var(--pl-accent)" }} />
+                          <h3 className="text-xs font-black uppercase tracking-wider text-white">Situation Snapshot</h3>
+                        </div>
+                        <span className="font-mono text-[10px] text-slate-400">{sorted.length} ranked</span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        <div className="rounded-xl border border-white/10 bg-[#050914] p-2.5 text-center">
+                          <div className="font-mono text-lg font-black tabular-nums" style={{ color: "var(--pl-accent)" }}>
+                            {telemetry.top ? signed(telemetry.top.ras) : "–"}
+                          </div>
+                          <div className="text-[9.5px] font-mono uppercase text-slate-400 mt-0.5">Top RAS</div>
+                        </div>
+                        <div className="rounded-xl border border-white/10 bg-[#050914] p-2.5 text-center">
+                          <div className="font-mono text-lg font-black text-white tabular-nums">
+                            {telemetry.top ? f1(telemetry.topSrOrEcon) : "–"}
+                          </div>
+                          <div className="text-[9.5px] font-mono uppercase text-slate-400 mt-0.5">
+                            {bat ? "Top SR" : "Top Econ"}
+                          </div>
+                        </div>
+                        <div className="rounded-xl border border-white/10 bg-[#050914] p-2.5 text-center">
+                          <div className="font-mono text-lg font-black text-cyan-300 tabular-nums">
+                            {telemetry.top ? (bat ? f1(telemetry.topAvgOrWkts) : String(Math.round(telemetry.topAvgOrWkts))) : "–"}
+                          </div>
+                          <div className="text-[9.5px] font-mono uppercase text-slate-400 mt-0.5">
+                            {bat ? "Top Avg" : "Top Wkts"}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Pressure Trend */}
+                    <div className="pl-card p-4 space-y-2.5">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          <TrendingUp className="h-3.5 w-3.5" style={{ color: "var(--pl-accent)" }} />
+                          <h3 className="text-xs font-black uppercase tracking-wider text-white">Pressure Trend</h3>
+                        </div>
+                        <span className="font-mono text-[10px] text-slate-400">Per-100 seasonal</span>
+                      </div>
+                      <TrendSparkline points={telemetry.seasonTrend} accent={accent} />
+                    </div>
+
+                    {/* Scoring vs Pressure Control */}
+                    <div className="pl-card p-4 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          <Crosshair className="h-3.5 w-3.5" style={{ color: "var(--pl-accent)" }} />
+                          <h3 className="text-xs font-black uppercase tracking-wider text-white">Scoring vs Pressure</h3>
+                        </div>
+                        <span className="font-mono text-[10px] text-slate-400">
+                          {tray.length > 0 ? `${telemetry.focusCount} tray` : "Top 5"} · {telemetry.totalBalls}b
+                        </span>
+                      </div>
+                      <GroundControlDial
+                        bdryPct={telemetry.bdryPct}
+                        dotPct={telemetry.dotPct}
+                        rotPct={telemetry.rotPct}
+                        posShare={telemetry.avgPosShare}
+                        accent={accent}
+                        secondary={secondary}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
             {tab === "compare" && compareWorkspace}
             {tab === "overview" && overviewWorkspace}
           </>
@@ -1655,8 +1636,6 @@ export function PressureIntelligence({ mobile = false }: { mobile?: boolean }) {
             </div>
           </div>
         )}
-
-        {investigationsStrip}
       </div>
 
       {openRow && result && (
