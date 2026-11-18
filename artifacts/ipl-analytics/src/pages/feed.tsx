@@ -19,7 +19,7 @@ import { useIpl2027Desk, stamp } from "@/lib/ipl-2027-desk";
 import { EDITORIAL_AUTHOR, type IndexEntry } from "@/data/editorial/schema";
 import { cn } from "@/lib/utils";
 
-export type CardId = "squad" | "auction" | "tactics" | "stars" | "venues" | "storylines";
+export type CardId = "squad" | "auction" | "tactics" | "venues" | "storylines";
 
 interface CardDef {
   id: CardId;
@@ -34,7 +34,6 @@ export const CARDS: CardDef[] = [
   { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-500 dark:text-[var(--team-accent)]", icon: Users },
   { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", img: "/auction-art.jpg", color: "text-amber-500 dark:text-[var(--team-accent)]", icon: Gavel },
   { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", img: "/assets/tactical-board-hero.png", color: "text-emerald-500 dark:text-emerald-400", icon: Shield },
-  { id: "stars", title: "STAR WATCH", subtitle: "Rising names to watch", img: "/milestone-photos/highest-total-2024-srh.jpg", color: "text-rose-500 dark:text-rose-400", icon: Star },
   { id: "venues", title: "VENUES", subtitle: "Conditions and trends", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-500 dark:text-sky-400", icon: MapPin },
   { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", img: "/milestone-photos/final-2023-csk.jpg", color: "text-orange-500 dark:text-orange-400", icon: Flame },
 ];
@@ -43,7 +42,7 @@ const TOOLS = [
   { label: "Retention Lab", desc: "Model retain/release calls against each squad", href: "/feed/ipl-2027?module=retention", icon: ShieldCheck, tint: "bg-violet-600" },
   { label: "Auction War Room", desc: "Purse, needs and targets by franchise", href: "/ai-analyst/auction-war-room", icon: Wallet, tint: "bg-lime-500" },
   { label: "Playing XI Builder", desc: "Create balanced combinations", href: "/ai-analyst/playing-xi", icon: Shirt, tint: "bg-sky-500" },
-  { label: "Scout Engine", desc: "Find players by role, league and metrics", href: "/scout", icon: Search, tint: "bg-fuchsia-600" },
+  { label: "Pressure Lab", desc: "Find players by role, league and metrics", href: "/pressurelab", icon: Search, tint: "bg-fuchsia-600" },
 ];
 
 // Story types that exist in the article schema; no "news"/"opinion" tab until such content exists.
@@ -260,19 +259,9 @@ export default function FeedPage() {
         {/* EXPLORE COVERAGE */}
         <section>
           <SectionHead title="Explore IPL 2027 coverage" sub="Analyses, stories and tools to help you make sense of the road to the auction." />
-          <div data-feed-part="coverage" className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
+          <div data-feed-part="coverage" className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3">
             {CARDS.map((c) => {
-              const cardHref = c.id === "squad" 
-                ? "/retention-room" 
-                : c.id === "auction" 
-                ? "/pulse" 
-                : c.id === "tactics" 
-                ? "/scores" 
-                : c.id === "stars" 
-                ? "/stats" 
-                : c.id === "venues" 
-                ? "/venues" 
-                : "/intelligence";
+              const cardHref = `/${c.id}${team ? `?team=${team}` : ""}`;
               return (
                 <Link
                   key={c.id}
@@ -993,16 +982,6 @@ const FAN_PULSE_QUESTIONS: PollQuestion[] = [
       { id: "dc", label: "DC (Middle-Order Reset)", pct: 26 },
       { id: "lsg", label: "LSG (Pace Department Overhaul)", pct: 18 },
       { id: "gt", label: "GT (Power Hitting Rebalance)", pct: 12 },
-    ],
-  },
-  {
-    id: "q2",
-    kicker: "CSK Strategy",
-    question: "Will MS Dhoni play IPL 2027 under the uncapped player retention rule?",
-    options: [
-      { id: "uncapped", label: "Yes, retained in ₹4 Cr bracket", pct: 68 },
-      { id: "auction", label: "Yes, but enters auction paddle", pct: 18 },
-      { id: "mentor", label: "Transitions to dugout mentor role", pct: 14 },
     ],
   },
   {

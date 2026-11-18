@@ -447,7 +447,7 @@ export function ScoutWorkspace({
 
                             {/* Profile Link */}
                             <td className="py-2.5 px-3 text-center" onClick={(e) => e.stopPropagation()}>
-                              <Link href={`/scout/player/${r.cricsheet_id}`}>
+                              <Link href={`/pressurelab/player/${r.cricsheet_id}`}>
                                 <button
                                   type="button"
                                   className="p-1.5 rounded-lg bg-black/30 hover:bg-[#B6E95C] hover:text-[#08131F] text-[#9BAAB5] transition-all cursor-pointer"

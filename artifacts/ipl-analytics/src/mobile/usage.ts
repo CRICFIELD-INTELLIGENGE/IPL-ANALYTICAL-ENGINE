@@ -10,13 +10,13 @@ export type Feature = { id: FeatureId; label: string; line: string; href: string
 
 // Order matters: the first match wins, so the specific routes come before the general ones.
 export const FEATURES: Feature[] = [
-  { id: "compare", label: "Compare", line: "Two players on the same scale", href: "/scout/compare", icon: GitCompare, prior: 1, match: /^\/scout\/compare/ },
+  { id: "compare", label: "Compare", line: "Two players on the same scale", href: "/pressurelab/compare", icon: GitCompare, prior: 1, match: /^\/scout\/compare/ },
   { id: "auction", label: "Auction War Room", line: "Model prices, value and fit", href: "/ai-analyst/auction-war-room", icon: Gavel, prior: 1.5, match: /^\/(ai-analyst\/auction-war-room|auction)/ },
   { id: "squad", label: "Squad Builder", line: "Build a squad, see its best XII", href: "/ai-analyst/squad-builder", icon: Users, prior: 1, match: /^\/ai-analyst\/squad-builder/ },
   { id: "ipl2027", label: "IPL 2027", line: "Retentions, trades, the road ahead", href: "/feed/ipl-2027", icon: CalendarClock, prior: 1, match: /^\/feed\/ipl-2027/ },
   { id: "scores", label: "Scores", line: "Live and recent matches", href: "/scores", icon: Radio, prior: 6, match: /^\/(scores|match\/)/ },
   { id: "stats", label: "Stats", line: "Leaders, seasons and records", href: "/stats", icon: BarChart3, prior: 5, match: /^\/stats/ },
-  { id: "scout", label: "Scout Lab", line: "Every player, ranked and searchable", href: "/scout", icon: Search, prior: 4, match: /^\/(scout|players\/)/ },
+  { id: "scout", label: "Pressure Lab", line: "Every player, ranked and searchable", href: "/pressurelab", icon: Search, prior: 4, match: /^\/(scout|players\/)/ },
   { id: "ai", label: "AI Analyst", line: "Ask the data in plain English", href: "/ai-analyst", icon: Sparkles, prior: 3.5, match: /^\/ai-analyst/ },
   { id: "teams", label: "Teams", line: "Squads, titles and form", href: "/teams", icon: Shield, prior: 2.5, match: /^\/(teams|dugout\/(?!articles)[a-z-]+$)/ },
   { id: "journal", label: "Journal", line: "Long-form franchise analysis", href: "/reports", icon: BookOpen, prior: 2, match: /^\/(reports|dugout\/articles|articles|blogs)/ },

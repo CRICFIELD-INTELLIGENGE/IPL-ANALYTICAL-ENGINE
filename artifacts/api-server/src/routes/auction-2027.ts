@@ -1,3 +1,5 @@
+import { readLedger } from "../services/retention/ledger";
+import { buildOfficialRoom, officialRelease } from "../services/retention/official";
 import fs from "node:fs";
 import path from "node:path";
 import { Router, type IRouter } from "express";
@@ -127,7 +129,24 @@ export function getAuctionDeskSnapshot() { return summarise(readLog()); }
 const router: IRouter = Router();
 
 router.get("/auction-2027", (_req, res) => {
-  res.set("cache-control", "no-store").json(summarise(readLog()));
+  const baseline: Update[] = [];
+  const recordedAt = officialRelease.reviewedAt;
+  const ledger = readLedger().entries;
+  for (const team of TEAMS) {
+    const room = buildOfficialRoom(team, officialRelease, ledger, null);
+    for (const p of room.players) {
+      if (p.verification !== "verified" || (p.decision !== "retained" && p.decision !== "released")) continue;
+      const source = p.sources.find(s => s.official);
+      if (source) baseline.push({ kind: "retention", team, player: p.name, decision: p.decision, sourceUrl: source.url, recordedAt });
+    }
+    const purse = room.purse;
+    if (purse.status === "verified" && purse.valueLakh !== null) {
+      const claim = purse.claims.find(c => c.source.official && c.valueLakh === purse.valueLakh)!;
+      baseline.push({ kind: "purse", team, purseLakhs: purse.valueLakh, sourceUrl: claim.source.url, recordedAt });
+    }
+  }
+  const updates = [...baseline, ...readLog()].sort((a, b) => a.recordedAt.localeCompare(b.recordedAt));
+  res.set("cache-control", "no-store").json(summarise(updates));
 });
 
 router.post("/auction-2027/updates", requireAdmin, (req, res) => {

@@ -37,7 +37,7 @@ export default function MobilePlayer() {
 
   if (bios.isLoading || identity.isLoading) return <Loading rows={4} h={110} />;
   if (bios.isError) return <ErrorBox message="Player records could not load." onRetry={() => void bios.refetch()} />;
-  if (!bio) return <div className="cfm-empty"><EmptyStumps /><p>We couldn't match “{slug.replace(/-/g, " ")}” to a single verified player.</p><Link href="/scout" className="cfm-btn">Search the Scout Lab</Link></div>;
+  if (!bio) return <div className="cfm-empty"><EmptyStumps /><p>We couldn't match “{slug.replace(/-/g, " ")}” to a single verified player.</p><Link href="/pressurelab" className="cfm-btn">Search the Pressure Lab</Link></div>;
 
   const name = bio.fullName || bio.playerName;
   const team = latestTeam(bio.playerName) ?? latestTeam(name);
@@ -101,8 +101,8 @@ export default function MobilePlayer() {
       <section className="cfm-section cfm-orig"><PlayerIntelPanel player={bio.playerName} /></section>
 
       <section className="cfm-section" style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-        <Link href="/scout/compare" className="cfm-btn">Compare</Link>
-        <Link href={`/scout?q=${encodeURIComponent(bio.playerName)}`} className="cfm-btn">Scout report</Link>
+        <Link href="/pressurelab/compare" className="cfm-btn">Compare</Link>
+        <Link href={`/pressurelab?q=${encodeURIComponent(bio.playerName)}`} className="cfm-btn">Scout report</Link>
       </section>
       <p className="cfm-provenance">IPL career and season numbers: CRICFIELD warehouse (Cricsheet ball-by-ball). Biography fields come from the site's player bio file; blank fields are not filled in.</p>
     </div>

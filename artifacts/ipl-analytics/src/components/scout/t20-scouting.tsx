@@ -147,7 +147,7 @@ export function TeamT20Scouting() {
               {shortlist.data.candidates.map(candidate => (
                 <li key={candidate.id} className="py-3">
                   <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <Link className="font-semibold underline-offset-4 hover:underline" href={`/scout/player/${encodeURIComponent(candidate.id)}`}>{candidate.name}</Link>
+                    <Link className="font-semibold underline-offset-4 hover:underline" href={`/pressurelab/player/${encodeURIComponent(candidate.id)}`}>{candidate.name}</Link>
                     <span className={quiet}>+{candidate.score.toFixed(1)} index points · {candidate.balls.toLocaleString()} balls</span>
                   </div>
                   <details className="mt-1">

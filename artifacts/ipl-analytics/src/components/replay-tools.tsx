@@ -430,7 +430,7 @@ export function ScoutShortlist() {
               const on = list.some((s) => s.id === p.cricsheet_id);
               return (
                 <li key={p.cricsheet_id} className="flex flex-wrap items-center gap-2 px-3 py-2 text-sm">
-                  <Link href={`/scout/player/${p.cricsheet_id}`} className="font-semibold text-white hover:underline">{p.name}</Link>
+                  <Link href={`/pressurelab/player/${p.cricsheet_id}`} className="font-semibold text-white hover:underline">{p.name}</Link>
                   <span className="text-[11px] text-white/45">{p.role?.label} · {p.seasons.join(", ")} · {p.balls} balls</span>
                   <span className="text-xs text-white/70">{metric.replace("_", " ")} {p.metrics[metric]?.value?.toFixed(metric === "economy" ? 2 : 1) ?? "–"}</span>
                   <button className={`ml-auto ${pill(on)}`} aria-pressed={on} onClick={() => setList((prev) => (on ? prev.filter((s) => s.id !== p.cricsheet_id) : [...prev, { id: p.cricsheet_id, name: p.name, competition: p.competition, discipline }]))}>
@@ -445,11 +445,11 @@ export function ScoutShortlist() {
         <div className={`${card} text-sm space-y-2`}>
           <div className="text-[11px] font-black uppercase tracking-widest text-white/50">Your shortlist</div>
           <div className="flex flex-wrap gap-2">
-            {list.map((s) => <Link key={s.id} href={`/scout/player/${s.id}`} className="rounded-lg border border-white/15 px-2 py-1 text-xs text-white hover:border-white/40">{s.name} <span className="text-white/40">{s.competition.toUpperCase()}</span></Link>)}
+            {list.map((s) => <Link key={s.id} href={`/pressurelab/player/${s.id}`} className="rounded-lg border border-white/15 px-2 py-1 text-xs text-white hover:border-white/40">{s.name} <span className="text-white/40">{s.competition.toUpperCase()}</span></Link>)}
           </div>
           {(["batting", "bowling"] as const).map((d) => {
             const ids = list.filter((s) => s.discipline === d).map((s) => s.id);
-            return ids.length >= 2 ? <Link key={d} href={`/scout/compare?ids=${ids.slice(0, 4).join(",")}&discipline=${d}&phase=all`} className="mr-4 text-xs text-primary">Compare shortlisted {d === "batting" ? "batters" : "bowlers"}</Link> : null;
+            return ids.length >= 2 ? <Link key={d} href={`/pressurelab/compare?ids=${ids.slice(0, 4).join(",")}&discipline=${d}&phase=all`} className="mr-4 text-xs text-primary">Compare shortlisted {d === "batting" ? "batters" : "bowlers"}</Link> : null;
           })}
           <button className="text-xs text-white/50 underline" onClick={() => setList([])}>Clear shortlist</button>
         </div>
@@ -525,7 +525,6 @@ export const CATEGORY_TOOL: Record<string, () => ReactNode> = {
   squad: RetentionBuilder,
   auction: BudgetPlanner,
   tactics: XiBuilder,
-  stars: ScoutShortlist,
   venues: VenueFit,
   storylines: Predictions,
 };

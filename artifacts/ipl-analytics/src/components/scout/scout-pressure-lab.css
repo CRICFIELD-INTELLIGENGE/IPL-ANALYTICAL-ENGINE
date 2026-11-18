@@ -1,0 +1,115 @@
+/* Pressure Lab Redesign - Upscale Laboratory Aesthetic & Dynamic League Theming */
+
+.pressure-lab-root {
+  --p-primary: #FACC15;
+  --p-secondary: #1D4ED8;
+  --p-accent: #F9CD05;
+  --p-glow: rgba(250, 204, 21, 0.4);
+  --p-neon: #FFD700;
+  --p-bg-card: rgba(11, 18, 32, 0.85);
+  --p-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Neon glow animations */
+@keyframes neon-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px var(--p-glow)) drop-shadow(0 0 18px var(--p-glow));
+    opacity: 0.95;
+  }
+  50% {
+    filter: drop-shadow(0 0 14px var(--p-glow)) drop-shadow(0 0 32px var(--p-glow));
+    opacity: 1;
+  }
+}
+
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(18px) scale(0.7);
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-24px) scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes ball-hover {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(6deg);
+  }
+}
+
+@keyframes laser-scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 3s ease-in-out infinite;
+}
+
+.animate-ball-hover {
+  animation: ball-hover 4s ease-in-out infinite;
+}
+
+.animate-bubble-1 {
+  animation: bubble-rise 2.4s ease-in infinite;
+}
+
+.animate-bubble-2 {
+  animation: bubble-rise 3.1s ease-in infinite 0.9s;
+}
+
+.animate-bubble-3 {
+  animation: bubble-rise 2.8s ease-in infinite 1.5s;
+}
+
+/* Hazard stripes header styling */
+.hazard-stripe {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--p-primary),
+    var(--p-primary) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+}
+
+/* Glassmorphism lab cards */
+.lab-card {
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,0.03) 0%, rgba(10,16,28,0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lab-card-interactive:hover {
+  border-color: var(--p-primary);
+  box-shadow: 0 0 25px var(--p-glow);
+}
+
+/* Scrollbar styling */
+.custom-lab-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-lab-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+.custom-lab-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+.custom-lab-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--p-primary);
+}

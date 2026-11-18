@@ -907,7 +907,7 @@ export function RetentionRoom() {
               </div>
 
               <Link
-                href="/scout"
+                href="/pressurelab"
                 className="w-full py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-center text-xs font-black transition-all shadow flex items-center justify-center gap-1.5"
               >
                 Find Replacements <ArrowRight className="w-3.5 h-3.5" />
@@ -1520,7 +1520,7 @@ export function RetentionRoom() {
             </Link>
 
             <Link
-              href="/scout"
+              href="/pressurelab"
               className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/20 hover:bg-white/[0.06] transition-all group"
             >
               <div className="flex items-center gap-2.5">

@@ -236,7 +236,7 @@ export function ScoutRadarGallery({
                     View Dossier
                   </button>
 
-                  <Link href={`/scout/player/${p.cricsheet_id}`}>
+                  <Link href={`/pressurelab/player/${p.cricsheet_id}`}>
                     <button
                       type="button"
                       onClick={(e) => e.stopPropagation()}

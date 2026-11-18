@@ -1,3 +1,4 @@
+import { FranchiseDesk } from "@/components/franchise-desk";
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { Link, useLocation, useSearch } from "wouter";
 import { ArrowDown, ArrowRight, Bookmark, BookOpen, Check, ChevronRight, Compass, Search, Sparkles, Swords, X } from "lucide-react";
@@ -60,7 +61,7 @@ export default function FeedStorylinesPage() {
   const [message, setMessage] = useState("");
   const all = useMemo(() => getV2Index().filter(entry => (TOPICS[0].aspects as readonly string[]).includes(entry.aspect)), []);
   const entries = useMemo(() => all.filter(entry => (!team || entry.franchise === team) && (topic.aspects as readonly string[]).includes(entry.aspect) && (!savedOnly || saved.includes(entry.id)) && `${entry.title} ${entry.dek} ${entry.franchise} ${entry.players.join(" ")}`.toLowerCase().includes(query.trim().toLowerCase())).sort((a, b) => sort === "short" ? a.readMinutes - b.readMinutes || editorialOrder(a, b) : editorialOrder(a, b)), [all, team, topic, savedOnly, saved, query, sort]);
-  const featured = useMemo(() => all.find(entry => entry.franchise === (team ?? "CSK") && entry.aspect === "future") ?? all[0], [all, team]);
+  const featured = useMemo(() => all.filter(entry => entry.franchise === (team ?? "CSK") && entry.aspect === "future").sort(editorialOrder)[0] ?? all[0], [all, team]);
   const activeCode = team ?? featured?.franchise ?? "CSK";
   const theme = TEAM_REGISTRY[activeCode];
   const rival = TEAM_REGISTRY[theme.archRival];
@@ -84,6 +85,7 @@ export default function FeedStorylinesPage() {
   }
   function exploreTopic(value: Topic) { update({ topic: value === "all" ? undefined : value, saved: undefined, q: undefined }); scrollToStories(); }
   return <Layout hideRightPanel><main className="storylines-page">
+    <FranchiseDesk team={activeCode} summary={false} />
     <div className="sl-breadcrumb"><Link href="/feed">Feed</Link><ChevronRight size={12} /><span>Storylines</span><small>THE ROAD TO IPL 2027 / EDITORIAL EDITION</small></div>
     <section className="sl-cover" aria-labelledby="storylines-title">
       <img className="sl-cover-stadium" src="/venue-images/wankhede stadium.webp" alt="" />
@@ -102,7 +104,7 @@ export default function FeedStorylinesPage() {
     <section className="sl-franchise-selector" aria-label="Filter stories by franchise"><span>CHOOSE YOUR SIDE</span><div><button aria-pressed={!team} onClick={() => update({ team: undefined })}>ALL TEAMS</button>{HUB_TEAMS.map(code => <button key={code} style={{ "--sl-team": TEAM_REGISTRY[code].accent } as CSSProperties} aria-pressed={team === code} onClick={() => update({ team: code })}><img src={TEAM_REGISTRY[code].logoImg} alt="" />{code}</button>)}</div></section>
 
     <div className="sl-editorial-grid"><div className="sl-main-column">
-      {featured && <section className="sl-lead sl-panel"><div className="sl-section-heading"><span>THE BIG QUESTION</span><span>{activeCode} / IPL 2027</span></div><div className="sl-lead-body"><Link href={articleHref(featured)} className="sl-lead-image" aria-label={`Read ${featured.title}`}><StoryMedia entry={featured} /></Link><div className="sl-lead-copy"><span className="sl-eyebrow" style={{ color: theme.accent }}>{theme.name}</span><h2>{QUESTIONS[activeCode]}</h2><p>{featured.dek}</p><div className="sl-byline">{dateLabel(featured.publishedDate)} {featured.status !== "published" && <span>Editorial preview</span>}</div><Link href={articleHref(featured)}>Read the feature <ArrowRight size={14} /></Link><Link href={intelHref(activeCode, ANGLE[featured.aspect])} className="sl-evidence-link">Explore the intelligence behind it <ChevronRight size={13} /></Link></div></div></section>}
+      {featured && <section className="sl-lead sl-panel"><div className="sl-section-heading"><span>THE BIG QUESTION</span><span>{activeCode} / IPL 2027</span></div><div className="sl-lead-body"><Link href={articleHref(featured)} className="sl-lead-image" aria-label={`Read ${featured.title}`}><StoryMedia entry={featured} /></Link><div className="sl-lead-copy"><span className="sl-eyebrow" style={{ color: theme.accent }}>{theme.name}</span><h2>{featured.title}</h2><p>{featured.dek}</p><div className="sl-byline">{dateLabel(featured.publishedDate)} {featured.status !== "published" && <span>Editorial preview</span>}</div><Link href={articleHref(featured)}>Read the feature <ArrowRight size={14} /></Link><Link href={intelHref(activeCode, ANGLE[featured.aspect])} className="sl-evidence-link">Explore the intelligence behind it <ChevronRight size={13} /></Link></div></div></section>}
 
       <section className="sl-story-section" id="storyline-stories" aria-labelledby="sl-stories-title"><div className="sl-story-heading"><div><span className="sl-eyebrow">THE READING ROOM</span><h2 id="sl-stories-title">Stories with <em>something at stake.</em></h2></div><span aria-live="polite">{entries.length} {entries.length === 1 ? "story" : "stories"}{team ? ` / ${team}` : " / all teams"}</span></div>
         <div className="sl-story-controls"><div className="sl-topic-tabs" aria-label="Story topics">{TOPICS.map(item => <button key={item.id} aria-pressed={topic.id === item.id} onClick={() => update({ topic: item.id === "all" ? undefined : item.id })}>{item.label}</button>)}</div><div className="sl-search-row"><label><Search size={14} /><input aria-label="Search storylines" placeholder="Search a story, player or idea…" value={query} onChange={event => update({ q: event.target.value || undefined })} />{query && <button onClick={() => update({ q: undefined })} aria-label="Clear story search"><X size={13} /></button>}</label><select aria-label="Sort stories" value={sort} onChange={event => update({ sort: event.target.value === "latest" ? undefined : "short" })}><option value="latest">Editor’s selection</option><option value="short">Quick reads first</option></select></div>{savedOnly && <div className="sl-saved-indicator"><Bookmark size={12} /> Your saved stories<button onClick={() => update({ saved: undefined })}>Show all stories <X size={12} /></button></div>}</div>

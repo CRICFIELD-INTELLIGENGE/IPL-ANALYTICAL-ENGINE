@@ -561,7 +561,7 @@ export default function Ipl2027Page() {
                         </p>
                         <Link
                           className="text-primary text-sm underline"
-                          href="/scout"
+                          href="/pressurelab"
                         >
                           Compare historical scouting candidates
                         </Link>
@@ -920,10 +920,10 @@ export default function Ipl2027Page() {
                       <h3 className="font-semibold">8. Scouting candidates</h3>
                       <p className="text-muted-foreground">
                         Compare same-role candidates in the Retention Lab and
-                        existing Scout Lab. Historical comparisons do not imply
+                        existing Pressure Lab. Historical comparisons do not imply
                         2027 registration.
                       </p>
-                      <Link href="/scout" className="text-primary underline">
+                      <Link href="/pressurelab" className="text-primary underline">
                         Open Global Scout Engine
                       </Link>
                     </div>
@@ -963,8 +963,8 @@ export default function Ipl2027Page() {
                   <div className="grid sm:grid-cols-2 gap-3">
                     {[
                       [
-                        "/scout",
-                        "Cross-league Scout Lab",
+                        "/pressurelab",
+                        "Cross-league Pressure Lab",
                         "Compare roles, league context, samples and dossiers. Auction registration remains unverified.",
                       ],
                       [

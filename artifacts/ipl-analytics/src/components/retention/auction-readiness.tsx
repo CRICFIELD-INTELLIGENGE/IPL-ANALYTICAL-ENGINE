@@ -19,7 +19,7 @@ export function OfficialAuctionReadiness({team:requested}:{team:string}) {
         <p className="font-bold">Official 2027 auction initialization is pending.</p><p>{q.data.auction.note} {q.data.auction.registeredPool.length===0?"The official registration list is not available in the verified dataset.":"The current auction game uses historical simulation rules; current-cycle inputs require a reviewed game configuration before starting."}</p>
         <p className="ret-small mt-3">The retained IDs and confirmed purse are carried into this review. No bids or auction room have been created.</p>
         <details className="mt-4 text-sm"><summary className="cursor-pointer">Retained squad input</summary><p className="mt-2">{q.data.players.filter(p=>["retained","traded_in"].includes(p.decision)).map(p=>p.name).join(" · ")}</p></details>
-        <div className="flex flex-wrap gap-5 mt-5"><Link className="ret-link" href={`/scout?team=${team.toLowerCase()}`}>Continue scouting →</Link></div>
+        <div className="flex flex-wrap gap-5 mt-5"><Link className="ret-link" href={`/pressurelab?team=${team.toLowerCase()}`}>Continue scouting →</Link></div>
       </>}
     </section>{q.data&&<OfficialProvenance data={q.data}/>}</div></GameShell>;
 }

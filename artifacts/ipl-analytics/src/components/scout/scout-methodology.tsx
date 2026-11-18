@@ -397,7 +397,7 @@ export function ScoutMethodology() {
               <span>Full Methodology Whitepaper</span>
               <ExternalLink className="w-3 h-3" />
             </Link>
-            <Link href="/scout/roles" className="text-[#B8F36B] hover:underline flex items-center gap-1 font-bold">
+            <Link href="/pressurelab/roles" className="text-[#B8F36B] hover:underline flex items-center gap-1 font-bold">
               <span>Role Taxonomy Catalog</span>
               <ExternalLink className="w-3 h-3" />
             </Link>

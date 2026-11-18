@@ -1150,9 +1150,9 @@ export function ExploreUnderlyingData({
       badge: "EXPLORER",
     },
     {
-      title: "Interactive Scout Lab",
+      title: "Interactive Pressure Lab",
       desc: "Simulate tactics against the Cricsheet model",
-      href: `/scout?q=${encodeURIComponent(articleTitle)}`,
+      href: `/pressurelab?q=${encodeURIComponent(articleTitle)}`,
       badge: "LAB",
     },
   ];

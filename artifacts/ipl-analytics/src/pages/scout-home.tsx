@@ -18,6 +18,7 @@ import { useTeamTheme, resolveTeamCode, type TeamCode } from "@/lib/team-context
 
 export default function ScoutHomePage() {
   const sp = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
+  const [viewMode, setViewMode] = useState<"pressure" | "scout">((sp.get("view") as any) || "pressure");
   const [discipline, setDiscipline] = useState<Discipline>(
     (sp.get("discipline") as Discipline) || "batting"
   );
@@ -170,40 +171,73 @@ export default function ScoutHomePage() {
 
   return (
     <Layout>
-      <div className="scout-terminal scout-notebook w-full max-w-full min-h-[calc(100vh-56px)] bg-slate-50 dark:bg-[#050B11] text-slate-900 dark:text-[#EFF5F7] transition-colors">
-        {/* CINEMATIC SCOUT COMMAND ROOM (Matches Lovable Format 1:1 with Dynamic Team Dugout Palette) */}
-        <ScoutCinematicRoom
-          discipline={discipline}
-          setDiscipline={setDiscipline}
-          selectedCountry={country}
-          setSelectedCountry={setCountry}
-          selectedAge={age}
-          setSelectedAge={setAge}
-          recentSeasons={recentSeasons}
-          role={role}
-          setRole={setRole}
-          selectedComps={selectedComps}
-          setSelectedComps={setSelectedComps}
-          phase={phase}
-          setPhase={setPhase}
-          minBalls={minBalls}
-          setMinBalls={setMinBalls}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          selectedPlayer={selectedPlayer}
-          onSelectPlayer={setSelectedPlayer}
-          onAiCandidates={setAiCandidates}
-          results={data?.data ?? []}
-          searching={isFetching || searchQuery !== debouncedSearch}
-          searchFailed={isError}
-          needsFullSearch={needsFullSearch}
-          onRetrySearch={() => void refetch()}
-          shortlist={shortlist}
-          onToggleShortlist={(id) => { const player = selectedPlayer?.cricsheet_id === id ? selectedPlayer : aiCandidates.find(p => p.cricsheet_id === id) ?? data?.data.find(p => p.cricsheet_id === id) ?? shortlist.find(p => p.cricsheet_id === id); if (player) toggleShortlist(player); }}
-          isShortlisted={isShortlisted}
-          onApplyPreset={applyPreset}
-        />
-        <ScoutPressureLab />
+      <div className="scout-terminal scout-notebook w-full max-w-full min-h-[calc(100vh-56px)] bg-[#03070E] text-slate-100 transition-colors">
+        {/* Top View Selector Bar */}
+        <div className="border-b border-white/10 bg-black/50 backdrop-blur-md px-4 sm:px-8 py-2.5 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setViewMode("pressure")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black tracking-wider uppercase transition-all ${
+                viewMode === "pressure"
+                  ? "bg-amber-400/15 text-amber-400 border border-amber-400/40 shadow-lg"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <span>⚗️ Situation Pressure Lab</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("scout")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black tracking-wider uppercase transition-all ${
+                viewMode === "scout"
+                  ? "bg-amber-400/15 text-amber-400 border border-amber-400/40 shadow-lg"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <span>🌐 Global Talent Discovery</span>
+            </button>
+          </div>
+          <div className="text-[11px] font-mono text-slate-400 hidden sm:block">
+            {viewMode === "pressure" ? "EMPIRICAL MATCH SITUATION ENGINE" : "2,000+ DOMESTIC & GLOBAL T20 PLAYERS"}
+          </div>
+        </div>
+
+        {viewMode === "pressure" ? (
+          <ScoutPressureLab />
+        ) : (
+          <ScoutCinematicRoom
+            discipline={discipline}
+            setDiscipline={setDiscipline}
+            selectedCountry={country}
+            setSelectedCountry={setCountry}
+            selectedAge={age}
+            setSelectedAge={setAge}
+            recentSeasons={recentSeasons}
+            role={role}
+            setRole={setRole}
+            selectedComps={selectedComps}
+            setSelectedComps={setSelectedComps}
+            phase={phase}
+            setPhase={setPhase}
+            minBalls={minBalls}
+            setMinBalls={setMinBalls}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedPlayer={selectedPlayer}
+            onSelectPlayer={setSelectedPlayer}
+            onAiCandidates={setAiCandidates}
+            results={data?.data ?? []}
+            searching={isFetching || searchQuery !== debouncedSearch}
+            searchFailed={isError}
+            needsFullSearch={needsFullSearch}
+            onRetrySearch={() => void refetch()}
+            shortlist={shortlist}
+            onToggleShortlist={(id) => { const player = selectedPlayer?.cricsheet_id === id ? selectedPlayer : aiCandidates.find(p => p.cricsheet_id === id) ?? data?.data.find(p => p.cricsheet_id === id) ?? shortlist.find(p => p.cricsheet_id === id); if (player) toggleShortlist(player); }}
+            isShortlisted={isShortlisted}
+            onApplyPreset={applyPreset}
+          />
+        )}
       </div>
     </Layout>
   );

@@ -32,7 +32,7 @@ export default function ScoutRolesPage() {
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6">
         {/* HEADER */}
         <div className="flex items-center justify-between">
-          <Link href="/scout">
+          <Link href="/pressurelab">
             <button className="text-white/60 hover:text-white text-xs font-bold transition-colors flex items-center gap-1.5">
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Global Leaderboard</span>
@@ -106,7 +106,7 @@ export default function ScoutRolesPage() {
                       <span className="text-[10px] font-mono text-white/40">
                         Min: {role.minUsage}
                       </span>
-                      <Link href={`/scout?discipline=batting&role=${role.id}`}>
+                      <Link href={`/pressurelab?discipline=batting&role=${role.id}`}>
                         <button className="text-xs text-primary font-bold hover:underline flex items-center gap-1">
                           <span>View Rankings</span>
                           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -157,7 +157,7 @@ export default function ScoutRolesPage() {
                       <span className="text-[10px] font-mono text-white/40">
                         Min: {role.minUsage}
                       </span>
-                      <Link href={`/scout?discipline=bowling&role=${role.id}`}>
+                      <Link href={`/pressurelab?discipline=bowling&role=${role.id}`}>
                         <button className="text-xs text-primary font-bold hover:underline flex items-center gap-1">
                           <span>View Rankings</span>
                           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />

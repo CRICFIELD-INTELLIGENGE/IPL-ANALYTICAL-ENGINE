@@ -1,4 +1,4 @@
-// Pressure Intelligence (Scout Lab phase 1): define a situation → choose competitions → evaluate → evidence → compare.
+// Pressure Intelligence (Pressure Lab phase 1): define a situation → choose competitions → evaluate → evidence → compare.
 // The engine (lib/pressure-intel/engine.ts) runs on static per-ball league files, because production has no
 // warehouse API. Visual accents follow the hub's franchise theme (--team-accent); the data never does.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -200,7 +200,7 @@ export function PressureIntelligence({ mobile = false }: { mobile?: boolean }) {
   const header = (
     <header className={mobile ? "px-4 pt-3" : "flex flex-wrap items-end justify-between gap-3"}>
       <div>
-        <p className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: ACC }}>CricField Intelligence · Scout Lab</p>
+        <p className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: ACC }}>CricField Intelligence · Pressure Lab</p>
         <h1 className={`font-display font-black uppercase tracking-tight text-slate-900 dark:text-white ${mobile ? "text-xl" : "text-2xl sm:text-3xl"}`}>Pressure Intelligence</h1>
         {!mobile && <p className={`text-sm ${MUTED}`}>Define the situation. Discover the performance.</p>}
       </div>
@@ -516,7 +516,7 @@ function Dossier({ row: r, rank, of, bat, mobile, inTray, onTray, onClose }: { r
         <Breakdown title="By season" rows={r.years.map(y => [String(y.year), y.balls, y.per100])} />
         <div className="flex flex-wrap gap-2 pt-1">
           <button type="button" onClick={onTray} className="rounded-md border px-3 py-1.5 text-xs font-semibold" style={{ borderColor: ACC, background: inTray ? tint(25) : undefined }}>{inTray ? "In comparison ✓" : "+ Add to comparison"}</button>
-          <Link href={`/scout/player/${r.id}`} className="rounded-md border border-slate-300 dark:border-white/15 px-3 py-1.5 text-xs">Player profile ↗</Link>
+          <Link href={`/pressurelab/player/${r.id}`} className="rounded-md border border-slate-300 dark:border-white/15 px-3 py-1.5 text-xs">Player profile ↗</Link>
         </div>
       </aside>
     </div>

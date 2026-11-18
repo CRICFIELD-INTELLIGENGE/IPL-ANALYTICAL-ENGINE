@@ -66,7 +66,7 @@ export default function ScoutComparePage() {
     if (playerIds.length <= 2) return; // Keep at least 2
     const next = playerIds.filter((p) => p !== id);
     setPlayerIds(next);
-    setLocation(`/scout/compare?ids=${next.join(",")}&discipline=${discipline}&phase=${phase}&${contextSuffix}`);
+    setLocation(`/pressurelab/compare?ids=${next.join(",")}&discipline=${discipline}&phase=${phase}&${contextSuffix}`);
   };
 
   const addPlayer = (newId: string) => {
@@ -74,7 +74,7 @@ export default function ScoutComparePage() {
     const next = [...playerIds, newId];
     setPlayerIds(next);
     setShowAddPlayer(false);
-    setLocation(`/scout/compare?ids=${next.join(",")}&discipline=${discipline}&phase=${phase}&${contextSuffix}`);
+    setLocation(`/pressurelab/compare?ids=${next.join(",")}&discipline=${discipline}&phase=${phase}&${contextSuffix}`);
   };
 
   return (
@@ -82,7 +82,7 @@ export default function ScoutComparePage() {
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6">
         {/* HEADER */}
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <Link href="/scout">
+          <Link href="/pressurelab">
             <button className="text-white/60 hover:text-white text-xs font-bold transition-colors flex items-center gap-1.5">
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Global Leaderboard</span>
@@ -94,7 +94,7 @@ export default function ScoutComparePage() {
             <button
               onClick={() => {
                 setDiscipline("batting");
-                setLocation(`/scout/compare?ids=${playerIds.join(",")}&discipline=batting&phase=${phase}&${contextSuffix}`);
+                setLocation(`/pressurelab/compare?ids=${playerIds.join(",")}&discipline=batting&phase=${phase}&${contextSuffix}`);
               }}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 discipline === "batting"
@@ -107,7 +107,7 @@ export default function ScoutComparePage() {
             <button
               onClick={() => {
                 setDiscipline("bowling");
-                setLocation(`/scout/compare?ids=${playerIds.join(",")}&discipline=bowling&phase=${phase}&${contextSuffix}`);
+                setLocation(`/pressurelab/compare?ids=${playerIds.join(",")}&discipline=bowling&phase=${phase}&${contextSuffix}`);
               }}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 discipline === "bowling"
@@ -352,7 +352,7 @@ export default function ScoutComparePage() {
                       <td className="py-3 px-4 font-bold text-white/40">Full Dossier</td>
                       {data.players.map((item) => (
                         <td key={item.player.cricsheet_id} className="py-3 px-4 text-center">
-                          <Link href={`/scout/player/${item.player.cricsheet_id}`}>
+                          <Link href={`/pressurelab/player/${item.player.cricsheet_id}`}>
                             <button className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-bold transition-all inline-flex items-center gap-1">
                               <span>Open Dossier</span>
                               <ExternalLink className="w-3 h-3" />

@@ -144,7 +144,7 @@ export function ScoutComparisonDock({
               </div>
 
               <div className="flex items-center gap-3">
-                <Link href={`/scout/compare?ids=${compareTray.join(",")}&discipline=${discipline}&phase=${phase}`}>
+                <Link href={`/pressurelab/compare?ids=${compareTray.join(",")}&discipline=${discipline}&phase=${phase}`}>
                   <button className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 text-xs font-mono font-bold transition-all">
                     <span>Full Screen Page</span>
                     <ExternalLink className="w-3.5 h-3.5" />

@@ -106,6 +106,20 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   target.searchParams.delete("__warehouseRoute");
   req.url = path + target.search;
   // The AI route has its own rate limits and runs locally in the function.
+  const franchiseRead = path === "/api/auction-2027" ||
+    /^\/api\/retention\/2027\/(?:official|franchises\/[A-Z]{2,4}\/official)$/.test(path);
+  if (franchiseRead) {
+    if (req.method !== "GET") {
+      res.setHeader("Allow", "GET");
+      return json(res, 405, "method_not_allowed");
+    }
+    if (laptopEnabled && await forwardToLaptop(req, res, req.url)) return;
+    if (laptopEnabled && mode === "laptop") return json(res, 503, "analytics_backend_unavailable");
+    if (path === "/api/auction-2027") {
+      process.env.AUCTION_LOG_PATH ??= join(process.cwd(), "artifacts", "api-server", "data", "auction-2027-updates.json");
+    }
+    return app(req, res);
+  }
   const isScoutAnalyst = path === "/api/scout/analyst";
   if (path === "/api/scout/analyst/status" && req.method === "GET") return app(req, res);
   if (!isScoutAnalyst && !isAnalyticsPath(path)) return json(res, 404, "not_found");

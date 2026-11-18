@@ -74,7 +74,7 @@ export function ScoutSearchBar({
     if (onSearchSubmit) {
       onSearchSubmit(query.trim());
     } else if (results.length > 0) {
-      setLocation(`/scout/player/${results[0].cricsheet_id}`);
+      setLocation(`/pressurelab/player/${results[0].cricsheet_id}`);
     }
   };
 
@@ -132,7 +132,7 @@ export function ScoutSearchBar({
             {results.map((r) => (
               <Link
                 key={r.player_key}
-                href={`/scout/player/${r.cricsheet_id}`}
+                href={`/pressurelab/player/${r.cricsheet_id}`}
                 onClick={() => setIsOpen(false)}
                 className="w-full px-3 py-2 flex items-center justify-between hover:bg-white/10 transition-colors group cursor-pointer text-left"
               >

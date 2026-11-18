@@ -72,7 +72,7 @@ export default function ScoutGemGame() {
                 <p className="pav-small">Each player's phase rate is shrunk toward the league average (as if they had 120 extra league-average balls), converted to runs per {bowl ? "four overs (runs saved plus wickets above average)" : "24 balls (runs above average minus extra dismissals)"}, then a 90% uncertainty band is half-subtracted. Over-budget players are excluded. Candidates within the leader's band count as tied.</p>
                 <ol>{res.ranking.map((id) => { const c = res.candidates.find((x) => x.id === id)!; return <li key={id}><strong>{c.name}</strong> — impact {c.impact > 0 ? "+" : ""}{c.impact} ± {(c.band / 2).toFixed(1)}, value {c.value} per ₹ Cr{res.tied.includes(id) ? " · top tier" : ""}</li>; })}</ol>
                 <p className="pav-small">Your reasons: {reasons.length ? reasons.map((r) => `${run!.reasons[r]} ${res.truth[r] ? "✓" : "✗"}`).join(" · ") : "none claimed"}</p>
-                <p className="pav-small">Dig deeper in <Link href="/scout">Scout Lab</Link>.</p>
+                <p className="pav-small">Dig deeper in <Link href="/pressurelab">Pressure Lab</Link>.</p>
               </div>
             </ResultPanel>
           )}

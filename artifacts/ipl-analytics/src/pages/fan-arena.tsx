@@ -91,7 +91,7 @@ const TOOLS_CATALOGUE: ToolItem[] = [
   },
   {
     id: "scout-lab",
-    name: "Scout Lab",
+    name: "Pressure Lab",
     category: "discover",
     badge: "BETA",
     subtitle: "Player Discovery",
@@ -531,7 +531,7 @@ export default function FanArenaPage() {
                   {[
                     "Advanced Stats & Visualizations",
                     "Community Intelligence",
-                    "Scout Lab & Player Dossiers"
+                    "Pressure Lab & Player Dossiers"
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-center gap-2.5 text-xs text-slate-300">
                       <div className="w-4 h-4 rounded-full bg-[#00D9FF]/20 border border-[#00D9FF]/40 flex items-center justify-center shrink-0">
@@ -983,13 +983,13 @@ export default function FanArenaPage() {
               </div>
             </div>
 
-            {/* Card 2: SCOUT LAB */}
+            {/* Card 2: PRESSURE LAB */}
             <div className="relative rounded-3xl bg-gradient-to-b from-[#0A162B] to-[#040B18] border border-white/10 hover:border-[#F97316]/40 transition-all duration-300 p-6 flex flex-col justify-between shadow-2xl group">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-sm font-black text-white uppercase tracking-tight">
-                      SCOUT LAB
+                      PRESSURE LAB
                     </h3>
                     <div className="text-[10px] text-slate-400 font-mono">
                       Peer-nominated underrated gems
@@ -1041,7 +1041,7 @@ export default function FanArenaPage() {
               <div className="pt-4">
                 <Link href="/stats">
                   <button className="w-full py-2.5 rounded-xl bg-[#00D9FF]/10 hover:bg-[#00D9FF]/20 text-[#00D9FF] border border-[#00D9FF]/30 text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
-                    <span>Explore Scout Lab</span>
+                    <span>Explore Pressure Lab</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </Link>
