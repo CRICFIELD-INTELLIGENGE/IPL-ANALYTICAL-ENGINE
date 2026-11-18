@@ -59,7 +59,7 @@ Run rate           = 6 × team runs ÷ legal balls`}</Formula>
       </Section>
 
       <Panel id="impact" kicker="Player value" title="Impact — runs above an average IPL player, per match">
-        <Field label="Definition">The runs a player adds to a match, batting and bowling combined, compared with an average IPL player in the same season. Used by the Playing XI optimizer and the Auction War Room.</Field>
+        <Field label="Definition">The runs a player adds to a match, batting and bowling combined, compared with an average IPL player in the same season. Used by the Playing XI optimizer and the Auction Valuation.</Field>
         <Field label="Formula">
           <Formula>{`W        = 0.25 × league runs per ball × league balls per dismissal   (a wicket's run value)
 batting  = runs − balls × lgRPB − (outs − balls ÷ lgBPO) × W

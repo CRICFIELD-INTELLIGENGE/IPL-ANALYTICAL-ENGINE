@@ -94,7 +94,7 @@ const ENGINES: MobileEngine[] = [
   },
   {
     id: "auction-war-room",
-    name: "Auction War Room",
+    name: "Auction Valuation",
     badge: "BIDDING",
     tagline: "Purse planning, live targets & squad budget math.",
     category: "squad",
@@ -216,7 +216,7 @@ export default function MobileAi() {
         {turns.length === 0 && (
           <div className="ma-intro space-y-4">
             <div>
-              <div className="cfm-kicker">CRICFIELD Decision Engine</div>
+              <div className="cfm-kicker">CRICFIELD Decision Intelligence</div>
               <h1>Ask the press box</h1>
               <p className="cfm-small ma-sub">
                 Plain-English questions become deterministic SQL queries over every IPL ball, or launch any of the 12 desktop decision engines below.

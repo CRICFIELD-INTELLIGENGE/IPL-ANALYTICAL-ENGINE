@@ -8,7 +8,7 @@ export function SquadConnectedTools({ team }: { team: TeamCode }) {
     {
       title: "Auction Room",
       desc: "Explore player choices, targets, recruitment alternatives and official purchases.",
-      href: `/pulse?team=${team}`,
+      href: `/auction?team=${team}`,
       icon: Gavel,
       tone: "text-purple-300 bg-purple-500/15 border-purple-400/25",
     },

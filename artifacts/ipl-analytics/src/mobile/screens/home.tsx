@@ -424,7 +424,7 @@ export default function MobileHome() {
                   : "Auction day • Player pool • Squad impact"}
             </p>
           </div>
-          <Link href="/pulse" className="ref-auction-cta">
+          <Link href="/auction" className="ref-auction-cta">
             {auctionPastOrDone ? "View Results" : "Explore Auction Room"}{" "}
             <ArrowRight size={12} aria-hidden="true" />
           </Link>
@@ -577,7 +577,7 @@ export default function MobileHome() {
           </h2>
         </div>
         <div className="ref-numbers-grid">
-          <Link href="/pulse" className="ref-num-card">
+          <Link href="/auction" className="ref-num-card">
             <div className="ref-num-head">
               <BarChart3 size={14} aria-hidden="true" />
               <span>Auction Trends</span>

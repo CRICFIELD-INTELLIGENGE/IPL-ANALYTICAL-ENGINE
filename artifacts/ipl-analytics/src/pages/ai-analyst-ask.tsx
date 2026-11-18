@@ -140,7 +140,7 @@ export default function AskPage() {
         {/* Header */}
         <div className="space-y-3">
           <Link href="/ai-analyst" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-white">
-            <ArrowLeft className="w-3.5 h-3.5" /> AI Analyst
+            <ArrowLeft className="w-3.5 h-3.5" /> Decision Intelligence
           </Link>
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
@@ -278,7 +278,7 @@ export default function AskPage() {
             {/* Gemini Output Card */}
             {geminiResult && geminiResult.source === "unavailable" && (
               <div role="status" className="rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
-                {geminiResult.error ?? "AI Analyst is unavailable."}
+                {geminiResult.error ?? "Decision Intelligence is unavailable."}
               </div>
             )}
 

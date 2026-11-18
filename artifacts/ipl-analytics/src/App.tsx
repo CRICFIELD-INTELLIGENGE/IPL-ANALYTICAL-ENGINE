@@ -134,7 +134,8 @@ function Router() {
       <Route path="/editorials" component={IntelligencePage} />
       <Route path="/intelligence" component={IntelligencePage} />
       {/* Top-level intelligence & coverage categories */}
-      <Route path="/auction" component={() => <FeedCategoryPage params={{ category: "auction" }} />} />
+      <Route path="/auction" component={PulsePage} />
+      <Route path="/auction-strategy" component={() => <FeedCategoryPage params={{ category: "auction" }} />} />
       <Route path="/tactics" component={() => <FeedCategoryPage params={{ category: "tactics" }} />} />
       <Route path="/venues" component={() => <FeedCategoryPage params={{ category: "venues" }} />} />
       <Route path="/storylines" component={() => <FeedCategoryPage params={{ category: "storylines" }} />} />
@@ -147,7 +148,7 @@ function Router() {
       <Route path="/feed/:category" component={FeedCategoryPage} />
       <Route path="/feed" component={FeedPage} />
       <Route path="/stats"><StatsPage /></Route>
-      <Route path="/pulse" component={PulsePage} />
+      <Route path="/pulse"><Redirect replace to={"/auction" + window.location.search + window.location.hash} /></Route>
       {/* Pressure Lab: Global T20 Talent Intelligence */}
       <Route path="/scout" component={ScoutLabPage} />
       <Route path="/scout-lab" component={ScoutLabPage} />
@@ -174,7 +175,7 @@ function Router() {
         <Redirect to="/stats" />
       </Route>
       <Route path="/on-field/pulse">
-        <Redirect to="/pulse" />
+        <Redirect to="/auction" />
       </Route>
       <Route path="/on-field">
         <Redirect to="/editorials" />

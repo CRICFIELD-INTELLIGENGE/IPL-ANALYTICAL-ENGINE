@@ -102,7 +102,7 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
             <Route path="/pressurelab">
               <MScout />
             </Route>
-            <Route path="/pulse">
+            <Route path="/auction">
               <MPulse />
             </Route>
             <Route path="/ai-analyst">

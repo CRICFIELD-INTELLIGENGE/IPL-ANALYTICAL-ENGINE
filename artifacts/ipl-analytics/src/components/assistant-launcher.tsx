@@ -1,4 +1,4 @@
-// Floating CricField Assistant: one entry point to the website AI Analyst and,
+// Floating CricField Assistant: one entry point to the website Decision Intelligence and,
 // once Meta messaging is verified end to end, the official WhatsApp chat.
 import { useState } from "react";
 import { useLocation } from "wouter";

@@ -1194,7 +1194,7 @@ function Insight({ lot, model }: { lot: PulseLot; model: PulseModel }) {
   const stats = encodeURIComponent(lot.statsName ?? lot.player);
   const links: [string, string][] = [
     ["Signing fit · Squad DNA", `/ai-analyst/squad-dna?team=${lot.team}&season=${lot.season}`],
-    ["Price context · Auction War Room", `/ai-analyst/auction-war-room?team=${lot.team}&player=${encodeURIComponent(lot.player)}`],
+    ["Price context · Auction Valuation", `/ai-analyst/auction-war-room?team=${lot.team}&player=${encodeURIComponent(lot.player)}`],
     ["Similar players · Player Pool Graph", `/ai-analyst/player-pool?player=${stats}`],
     ["Pressure Genome", `/ai-analyst/pressure?player=${stats}`],
     ["XI impact · Build Playing XI", `/ai-analyst/playing-xi?team=${lot.team}`],
@@ -1391,7 +1391,7 @@ function TeamDrawer({ t, model }: { t: PulseTeam; model: PulseModel }) {
       {isTeamCode(t.code) && <div className="md:col-span-2 flex flex-wrap gap-x-4 gap-y-1.5 pt-2 border-t border-slate-200 dark:border-white/10 font-bold">
         <Link href={`/dugout/${t.code}`} className="text-primary hover:underline">{t.code} Dugout</Link>
         <Link href={`/ai-analyst/squad-dna?team=${t.code}&season=${model.season}`} className="text-primary hover:underline">Squad DNA</Link>
-        <Link href={`/ai-analyst/auction-war-room?team=${t.code}`} className="text-primary hover:underline">Auction War Room</Link>
+        <Link href={`/ai-analyst/auction-war-room?team=${t.code}`} className="text-primary hover:underline">Auction Valuation</Link>
         <Link href={`/ai-analyst/opposition-map?team=${t.code}`} className="text-primary hover:underline">Tactics</Link>
         <Link href={`/feed/squad?team=${t.code}`} className="text-primary hover:underline">Retention Room</Link>
       </div>}

@@ -13,7 +13,7 @@ const SUGGESTED = [
 // This panel has no data connection. It previously returned pre-written answers containing
 // invented statistics; it now only points to the warehouse-backed Ask page.
 function answer(_q: string) {
-  return "This panel isn't connected to the data. Ask the question on the AI Analyst → Ask page (/ai-analyst/ask), which answers from the IPL warehouse.";
+  return "This panel isn't connected to the data. Ask the question on the Decision Intelligence → Ask page (/ai-analyst/ask), which answers from the IPL warehouse.";
 }
 
 export function AIAnalystPanel() {
@@ -40,7 +40,7 @@ export function AIAnalystPanel() {
             <CricFieldMascot activity="analyst" size={30} />
             <span className="absolute inset-0 rounded-xl ring-1 ring-primary/40 animate-pulse" />
           </div>
-          <div className="font-display font-semibold">AI ANALYST</div>
+          <div className="font-display font-semibold">DECISION INTELLIGENCE</div>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-white/60">
           Not connected

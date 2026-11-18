@@ -36,7 +36,7 @@ const MODULES: { phase: string; items: { href: string; name: string; what: strin
   {
     phase: "Intelligence",
     items: [
-      { href: "/ai-analyst/auction-war-room", name: "Auction War Room", what: "Buy, hold or avoid, with a max bid and comparable sales, backtested on the 2026 auction." },
+      { href: "/ai-analyst/auction-war-room", name: "Auction Valuation", what: "Buy, hold or avoid, with a max bid and comparable sales, backtested on the 2026 auction." },
       { href: "/ai-analyst/squad-dna", name: "Squad DNA", what: "Any franchise-season on 38 dimensions, judged against its own season." },
       { href: "/ai-analyst/player-pool", name: "Player Pool Graph", what: "Every player's nearest matches across eras." },
     ],

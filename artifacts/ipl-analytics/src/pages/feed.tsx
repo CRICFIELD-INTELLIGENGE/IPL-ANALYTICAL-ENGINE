@@ -40,7 +40,7 @@ export const CARDS: CardDef[] = [
 
 const TOOLS = [
   { label: "Retention Lab", desc: "Model retain/release calls against each squad", href: "/feed/ipl-2027?module=retention", icon: ShieldCheck, tint: "bg-violet-600" },
-  { label: "Auction War Room", desc: "Purse, needs and targets by franchise", href: "/ai-analyst/auction-war-room", icon: Wallet, tint: "bg-lime-500" },
+  { label: "Auction Valuation", desc: "Purse, needs and targets by franchise", href: "/ai-analyst/auction-war-room", icon: Wallet, tint: "bg-lime-500" },
   { label: "Playing XI Builder", desc: "Create balanced combinations", href: "/ai-analyst/playing-xi", icon: Shirt, tint: "bg-sky-500" },
   { label: "Pressure Lab", desc: "Find players by role, league and metrics", href: "/pressurelab", icon: Search, tint: "bg-fuchsia-600" },
 ];
@@ -248,7 +248,7 @@ export default function FeedPage() {
                 <span className="text-[9px] font-black uppercase tracking-widest text-pink-400">Official</span>
                 <span className="font-mono text-white/40">{stamp(a.firstRecordedAt)}</span>
                 {a.team && <span className="font-black text-white/70">{a.team}</span>}
-                <Link href="/pulse#auction" className="flex-1 min-w-[12rem] font-bold text-white hover:underline">{a.headline}</Link>
+                <Link href="/auction#auction" className="flex-1 min-w-[12rem] font-bold text-white hover:underline">{a.headline}</Link>
                 <span className={`text-[9px] font-black uppercase ${a.verification === "confirmed" ? "text-emerald-400" : "text-[var(--team-accent)]"}`}>{a.verification}</span>
                 <a href={a.sourceUrl} target="_blank" rel="noreferrer" className="text-primary inline-flex items-center gap-0.5">source <ExternalLink className="w-3 h-3" /></a>
               </div>
@@ -505,7 +505,7 @@ export default function FeedPage() {
 
         {/* PULSE + PREDICT */}
         <div className="grid gap-4 md:grid-cols-2">
-          <CtaBand icon={Activity} kicker="Connected to Pulse" text="Follow official updates, retention announcements and auction developments." href="/pulse#auction" cta="Go to Pulse" />
+          <CtaBand icon={Activity} kicker="Connected to Pulse" text="Follow official updates, retention announcements and auction developments." href="/auction#auction" cta="Go to Pulse" />
           <CtaBand icon={Trophy} kicker="Make your call" text="Model your own retain-or-release calls for every franchise in the Retention Lab." href="/feed/ipl-2027?module=retention" cta="Make your picks" />
         </div>
 
@@ -559,7 +559,7 @@ function RetentionCountdown() {
       ) : (
         <p className="mt-3 text-sm text-slate-600 dark:text-white/60">Date to be announced.</p>
       )}
-      <Link href="/pulse#auction" className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-violet-700 dark:hover:bg-violet-600 py-2.5 text-xs font-bold text-white shadow-xs transition-colors">
+      <Link href="/auction#auction" className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-violet-700 dark:hover:bg-violet-600 py-2.5 text-xs font-bold text-white shadow-xs transition-colors">
         View key dates <ArrowRight className="w-3.5 h-3.5" />
       </Link>
     </section>

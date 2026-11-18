@@ -14,7 +14,6 @@
   <url><loc>https://www.cricfield.in/feed/ipl-2027</loc></url>
   <url><loc>https://www.cricfield.in/feed/ipl-2027/retentions</loc></url>
   <url><loc>https://www.cricfield.in/stats</loc></url>
-  <url><loc>https://www.cricfield.in/pulse</loc></url>
   <url><loc>https://www.cricfield.in/scores</loc></url>
   <url><loc>https://www.cricfield.in/dugout</loc></url>
   <url><loc>https://www.cricfield.in/pressurelab</loc></url>
@@ -28,4 +27,6 @@
   <url><loc>https://www.cricfield.in/disclaimer</loc></url>
   <url><loc>https://www.cricfield.in/privacy</loc></url>
   <url><loc>https://www.cricfield.in/terms</loc></url>
+  <url><loc>https://www.cricfield.in/scout</loc></url>
+  <url><loc>https://www.cricfield.in/auction-strategy</loc></url>
 </urlset>

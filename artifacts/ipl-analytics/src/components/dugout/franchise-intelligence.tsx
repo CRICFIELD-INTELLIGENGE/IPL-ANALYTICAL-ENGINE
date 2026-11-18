@@ -123,7 +123,7 @@ export function FranchiseIntelligence({ teamName, code, season: dugoutSeason, ac
       <div className="flex flex-wrap gap-2 pt-1">
         <ToolLink href={`/ai-analyst/squad-dna?team=${encodeURIComponent(teamName)}&season=${season}`} icon={<BarChart2 className="w-3.5 h-3.5" />} label="Full Squad DNA" />
         <ToolLink href="/stats" icon={<Activity className="w-3.5 h-3.5" />} label="Franchise telemetry" />
-        <ToolLink href={`/ai-analyst/auction-war-room?team=${code}`} icon={<Gavel className="w-3.5 h-3.5" />} label="Auction War Room" />
+        <ToolLink href={`/ai-analyst/auction-war-room?team=${code}`} icon={<Gavel className="w-3.5 h-3.5" />} label="Auction Valuation" />
         <ToolLink href={`/ai-analyst/opposition-map?team=${code}`} icon={<MapIcon className="w-3.5 h-3.5" />} label="Opposition briefing" />
         <ToolLink href="/feed" icon={<Swords className="w-3.5 h-3.5" />} label="Tactical command" />
         <ToolLink href="/ai-analyst" icon={<Sparkles className="w-3.5 h-3.5" />} label="AI tactical coach" />
