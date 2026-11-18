@@ -6,6 +6,7 @@ import { useIpl2027Desk, type DeskSummary } from "./ipl-2027-desk";
 import foundation from "@/data/auction-2026-foundation.json";
 // Lot numbers, auction sets and the 79 unsold players for 2026 (Wikipedia sold tables + Olympics.com unsold list).
 import lotSheet2026 from "@/data/auction-2026-lots.json";
+import { isEligibleFor2027Auction, RELEASED_2027_PLAYERS } from "./ipl-2027-eligibility";
 
 export const PULSE_TABS = ["Overview", "Live Auction", "Player Pool", "Franchises", "Retentions", "Results", "Transfers", "Knowledge Graph", "Live Blog", "Archive"] as const;
 export type PulseTab = (typeof PULSE_TABS)[number];
@@ -66,13 +67,46 @@ export function buildPulseModel(season: number, records: AuctionRecord[], squads
     ...details(l.player, l.role, l.country), price: null, usd: null, base: l.baseLakh, baseUsd: null,
     status: "unsold", lot: null, set: null, capped: l.capped, recordedAt: null, sourceUrl: sheet!.sources.unsold,
   }));
-  const rows: PulseLot[] = historical
-    ? [...archived, ...unsold].sort((a, b) => (a.lot ?? Infinity) - (b.lot ?? Infinity))
-    : (desk?.lots ?? []).map(lot => ({
+  const desk2027Rows: PulseLot[] = (desk?.lots ?? [])
+    .filter((lot) => isEligibleFor2027Auction(lot.player, details(lot.player, lot.role).country, lot.status))
+    .map((lot) => ({
       id: `2027-lot-${lot.lot}`, player: lot.player, season, team: resolveTeamCode(lot.team), teamName: lot.team ?? null,
       ...details(lot.player, lot.role), price: lot.priceLakhs ?? null, usd: null, base: lot.basePriceLakhs ?? null, baseUsd: null,
       status: lot.status, lot: lot.lot, set: null, capped: null, recordedAt: lot.recordedAt, sourceUrl: safeSource(lot.sourceUrl),
     }));
+
+  const fallback2027Pool: PulseLot[] = [];
+  if (!historical && desk2027Rows.length === 0) {
+    const seen2027 = new Set<string>();
+    for (const rel of RELEASED_2027_PLAYERS) {
+      const key = normaliseAuctionName(rel.name);
+      if (seen2027.has(key)) continue;
+      const d = details(rel.name, rel.role, rel.country);
+      if (!isEligibleFor2027Auction(rel.name, d.country)) continue;
+      seen2027.add(key);
+      fallback2027Pool.push({
+        id: `2027-rel-${playerSlug(rel.name)}`, player: rel.name, season, team: null, teamName: `Released · ${rel.releasedFrom}`,
+        ...d, price: null, usd: null, base: null, baseUsd: null,
+        status: "registered", lot: null, set: "2027 Released", capped: null, recordedAt: null, sourceUrl: null,
+      });
+    }
+    for (const lot of lotSheet2026.lots ?? []) {
+      const key = normaliseAuctionName(lot.player);
+      if (seen2027.has(key)) continue;
+      const d = details(lot.player, lot.role, lot.country);
+      if (!isEligibleFor2027Auction(lot.player, d.country)) continue;
+      seen2027.add(key);
+      fallback2027Pool.push({
+        id: `2027-pool-${playerSlug(lot.player)}`, player: lot.player, season, team: null, teamName: null,
+        ...d, price: null, usd: null, base: lot.baseLakh, baseUsd: null,
+        status: "registered", lot: null, set: lot.status === "unsold" ? "2026 Unsold" : "2026 Pool", capped: lot.capped, recordedAt: null, sourceUrl: null,
+      });
+    }
+  }
+
+  const rows: PulseLot[] = historical
+    ? [...archived, ...unsold].sort((a, b) => (a.lot ?? Infinity) - (b.lot ?? Infinity))
+    : desk2027Rows.length > 0 ? desk2027Rows : fallback2027Pool;
   const purchases = rows.filter(row => row.status === "sold");
   const ranked = [...purchases].sort((a, b) => (lotValue(b) ?? -1) - (lotValue(a) ?? -1) || a.player.localeCompare(b.player));
   const teamKeys = historical && season !== 2026

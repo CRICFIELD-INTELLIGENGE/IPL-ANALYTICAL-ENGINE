@@ -1,0 +1,2774 @@
+{
+  "version": "retentions-2027.iplt20.20261118.3",
+  "season": 2027,
+  "announcedOn": "2026-11-17",
+  "reviewedAt": "2026-11-18T12:00:00.000Z",
+  "comparisonCutoff": "2026-11-16T18:30:00.000Z",
+  "sources": {
+    "cricbuzz": {
+      "publisher": "Cricbuzz",
+      "official": false,
+      "url": "https://www.cricbuzz.com/cricket-news/140949/ipl-2027-all-retentions-and-releases",
+      "publishedOn": "2026-11-17"
+    },
+    "toi": {
+      "publisher": "Times of India",
+      "official": false,
+      "url": "https://timesofindia.indiatimes.com/sports/cricket/news/ipl-2027-retention-list-full-list-of-retained-and-released-players-remaining-purse-of-all-10-teams/articleshow/135926264.cms",
+      "publishedOn": "2026-11-17"
+    },
+    "indiaToday": {
+      "publisher": "India Today",
+      "official": false,
+      "url": "https://www.indiatoday.in/sports/cricket/story/ipl-2027-retention-full-list-players-released-retained-remaining-purse-3041045-2026-11-17",
+      "publishedOn": "2026-11-17"
+    },
+    "rr": {
+      "publisher": "Rajasthan Royals",
+      "official": true,
+      "url": "https://www.rajasthanroyals.com/latest-news/ipl-2027-rr-players-retention-list-retained-released",
+      "publishedOn": "2026-11-17"
+    },
+    "gt": {
+      "publisher": "Gujarat Titans",
+      "official": true,
+      "url": "https://www.gujarattitansipl.com/news/gujarat-titans-retained-players-tata-ipl-2027",
+      "publishedOn": "2026-11-17"
+    },
+    "pbks": {
+      "publisher": "Punjab Kings",
+      "official": true,
+      "url": "https://www.punjabkingsipl.in/news/ipl-2027-meet-our-retained-shers",
+      "publishedOn": "2026-11-17"
+    },
+    "dc": {
+      "publisher": "Delhi Capitals",
+      "official": true,
+      "url": "https://www.delhicapitals.in/news/sourav-ganguly-confident-of-turning-delhi-capitals-fortunes-around-as-franchise-retains-16-players-ahead-of-ipl-2027-auction",
+      "publishedOn": "2026-11-17"
+    },
+    "kkr": {
+      "publisher": "Kolkata Knight Riders",
+      "official": true,
+      "url": "https://www.kkr.in/news/kolkata-knight-riders-announce-retained-players-ahead-of-tata-ipl-2027-auction",
+      "publishedOn": "2026-11-17"
+    },
+    "rcb": {
+      "publisher": "Royal Challengers Bengaluru",
+      "official": true,
+      "url": "https://www.royalchallengers.com/rcb-cricket-news/news/rcb-retain-20-players-ahead-of-ipl-2027-auction",
+      "publishedOn": "2026-11-17"
+    },
+    "gtReleases": {
+      "publisher": "Gujarat Titans",
+      "url": "https://www.gujarattitansipl.com/news/gujarat-titans-part-ways-five-players-ahead-of-tata-ipl-2027",
+      "official": true,
+      "publishedOn": "2026-11-17"
+    },
+    "iplt20": {
+      "publisher": "IPLT20",
+      "official": true,
+      "url": "https://www.iplt20.com/news/article/tata-ipl-2027-player-retentions-announced",
+      "publishedOn": "2026-11-18"
+    },
+    "retainedPdf": {
+      "publisher": "IPLT20",
+      "official": true,
+      "url": "https://www.iplt20.com/cms/files/jot2qw8s50z1/1YiPT45UgZ1olwgjsAjlG4/923c2a85f32a8e6b054a4b553ed98fe0/TATA_IPL_2027_-_Retained_Player_List.pdf",
+      "publishedOn": "2026-11-18"
+    },
+    "releasedPdf": {
+      "publisher": "IPLT20",
+      "official": true,
+      "url": "https://www.iplt20.com/cms/files/jot2qw8s50z1/3gFAJ4z1USxcXYhaZVl65L/2a463a9c02a5bb7fd12fa3fbe91cc299/TATA_IPL_2027-_Release_Player_List.pdf",
+      "publishedOn": "2026-11-18"
+    }
+  },
+  "teams": [
+    {
+      "team": "CSK",
+      "retained": [
+        "Ruturaj Gaikwad",
+        "Sanju Samson",
+        "Ayush Mhatre",
+        "Urvil Patel",
+        "Dewald Brevis",
+        "Liam Livingstone",
+        "Jack Edwards",
+        "Akeal Hosein",
+        "Noor Ahmad",
+        "Kartik Sharma",
+        "Shivam Dube",
+        "Gurjapneet Singh",
+        "Anshul Kamboj",
+        "Sarfaraz Khan",
+        "Jamie Overton",
+        "Mukesh Choudhary",
+        "Rahul Chahar",
+        "Ramakrishna Ghosh",
+        "Shreyas Gopal"
+      ],
+      "released": [
+        "MS Dhoni",
+        "Prashant Veer",
+        "Spencer Johnson",
+        "Akash Madhwal",
+        "Aman Khan",
+        "Dian Forrester",
+        "Kuldip Yadav",
+        "Macneil Noronha",
+        "Matt Henry",
+        "Matthew Short",
+        "Zak Foulkes"
+      ],
+      "retainedSources": [
+        "iplt20",
+        "retainedPdf"
+      ],
+      "releasedSources": [
+        "releasedPdf"
+      ],
+      "purseClaims": [
+        {
+          "valueLakh": 2805,
+          "source": "iplt20"
+        }
+      ],
+      "overseasSlots": 2,
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Akeal Hosein": 200,
+        "Anshul Kamboj": 340,
+        "Ayush Mhatre": 30,
+        "Dewald Brevis": 220,
+        "Gurjapneet Singh": 220,
+        "Jack Edwards": 300,
+        "Jamie Overton": 150,
+        "Kartik Sharma": 1420,
+        "Liam Livingstone": 600,
+        "Mukesh Choudhary": 30,
+        "Noor Ahmad": 1000,
+        "Rahul Chahar": 520,
+        "Ramakrishna Ghosh": 30,
+        "Ruturaj Gaikwad": 1800,
+        "Sanju Samson": 1800,
+        "Sarfaraz Khan": 75,
+        "Shivam Dube": 1200,
+        "Shreyas Gopal": 30,
+        "Urvil Patel": 30
+      }
+    },
+    {
+      "team": "DC",
+      "retained": [
+        "Ashutosh Sharma",
+        "Madhav Tiwari",
+        "Vipraj Nigam",
+        "Auqib Nabi",
+        "Mukesh Kumar",
+        "Zeeshan Ansari",
+        "Axar Patel",
+        "Prithvi Shaw",
+        "David Miller",
+        "Rishabh Pant",
+        "KL Rahul",
+        "Sameer Rizvi",
+        "Kyle Jamieson",
+        "Tripurana Vijay",
+        "Lungi Ngidi",
+        "Tristan Stubbs"
+      ],
+      "released": [
+        "Mitchell Starc",
+        "Nitish Rana",
+        "Abishek Porel",
+        "Pathum Nissanka",
+        "Karun Nair",
+        "Sahil Parakh",
+        "Ajay Mandal",
+        "Rehan Ahmed",
+        "Dushmantha Chameera"
+      ],
+      "retainedSources": [
+        "iplt20",
+        "retainedPdf"
+      ],
+      "releasedSources": [
+        "releasedPdf"
+      ],
+      "purseClaims": [
+        {
+          "valueLakh": 3950,
+          "source": "iplt20"
+        }
+      ],
+      "overseasSlots": 4,
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Ashutosh Sharma": 380,
+        "Auqib Nabi": 840,
+        "Axar Patel": 1650,
+        "David Miller": 200,
+        "KL Rahul": 1400,
+        "Kyle Jamieson": 200,
+        "Lungi Ngidi": 200,
+        "Madhav Tiwari": 40,
+        "Mukesh Kumar": 800,
+        "Prithvi Shaw": 75,
+        "Rishabh Pant": 1500,
+        "Sameer Rizvi": 95,
+        "Tripurana Vijay": 30,
+        "Tristan Stubbs": 1000,
+        "Vipraj Nigam": 50,
+        "Zeeshan Ansari": 40
+      }
+    },
+    {
+      "team": "GT",
+      "retained": [
+        "Anuj Rawat",
+        "Kagiso Rabada",
+        "Rahul Tewatia",
+        "Ashok Sharma",
+        "Kumar Kushagra",
+        "Rashid Khan",
+        "Glenn Phillips",
+        "Manav Suthar",
+        "Sai Sudharsan",
+        "Gurnoor Brar",
+        "Mohammed Siraj",
+        "Shubman Gill",
+        "Harshal Patel",
+        "Arshad Khan",
+        "Tom Banton",
+        "Jason Holder",
+        "Nishant Sindhu",
+        "Washington Sundar",
+        "Jayant Yadav",
+        "Prasidh Krishna",
+        "Jos Buttler",
+        "R Sai Kishore"
+      ],
+      "released": [
+        "Shahrukh Khan",
+        "Ishant Sharma",
+        "Luke Wood",
+        "Kulwant Khejroliya",
+        "Connor Esterhuizen",
+        "Prithviraj Yarra"
+      ],
+      "retainedSources": [
+        "iplt20",
+        "retainedPdf"
+      ],
+      "releasedSources": [
+        "releasedPdf"
+      ],
+      "purseClaims": [
+        {
+          "valueLakh": 875,
+          "source": "iplt20"
+        }
+      ],
+      "overseasSlots": 2,
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Anuj Rawat": 30,
+        "Ashok Sharma": 90,
+        "Glenn Phillips": 200,
+        "Gurnoor Brar": 130,
+        "Harshal Patel": 400,
+        "Jason Holder": 700,
+        "Jayant Yadav": 75,
+        "Jos Buttler": 1575,
+        "Kagiso Rabada": 1075,
+        "Kumar Kushagra": 65,
+        "Manav Suthar": 30,
+        "Mohammed Siraj": 1225,
+        "Arshad Khan": 130,
+        "Nishant Sindhu": 30,
+        "Prasidh Krishna": 950,
+        "R Sai Kishore": 200,
+        "Rahul Tewatia": 400,
+        "Rashid Khan": 1800,
+        "Sai Sudharsan": 850,
+        "Shubman Gill": 1650,
+        "Tom Banton": 200,
+        "Washington Sundar": 320
+      }
+    },
+    {
+      "team": "KKR",
+      "retained": [
+        "Anukul Roy",
+        "Angkrish Raghuvanshi",
+        "Cameron Green",
+        "Finn Allen",
+        "Harshit Rana",
+        "Kartik Tyagi",
+        "Manish Pandey",
+        "Prashant Solanki",
+        "Ramandeep Singh",
+        "Rinku Singh",
+        "Rovman Powell",
+        "Sarthak Ranjan",
+        "Saurabh Dubey",
+        "Sunil Narine",
+        "Tim Seifert",
+        "Vaibhav Arora",
+        "Varun Chakaravarthy"
+      ],
+      "released": [
+        "Ajinkya Rahane",
+        "Akash Deep",
+        "Blessing Muzarabani",
+        "Daksh Kamra",
+        "Luvnith Sisodia",
+        "Matheesha Pathirana",
+        "Mustafizur Rahman",
+        "Navdeep Saini",
+        "Rachin Ravindra",
+        "Rahul Tripathi",
+        "Tejasvi Singh",
+        "Umran Malik"
+      ],
+      "retainedSources": [
+        "iplt20",
+        "retainedPdf"
+      ],
+      "releasedSources": [
+        "releasedPdf"
+      ],
+      "purseClaims": [
+        {
+          "valueLakh": 4165,
+          "source": "iplt20"
+        }
+      ],
+      "overseasSlots": 3,
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Angkrish Raghuvanshi": 300,
+        "Anukul Roy": 40,
+        "Cameron Green": 2520,
+        "Finn Allen": 200,
+        "Harshit Rana": 400,
+        "Kartik Tyagi": 30,
+        "Manish Pandey": 75,
+        "Prashant Solanki": 30,
+        "Ramandeep Singh": 400,
+        "Rinku Singh": 1300,
+        "Rovman Powell": 150,
+        "Sarthak Ranjan": 30,
+        "Saurabh Dubey": 30,
+        "Sunil Narine": 1200,
+        "Tim Seifert": 150,
+        "Vaibhav Arora": 180,
+        "Varun Chakaravarthy": 1200
+      }
+    },
+    {
+      "team": "LSG",
+      "retained": [
+        "Abdul Samad",
+        "Aiden Markram",
+        "Akash Singh",
+        "Akshat Raghuwanshi",
+        "Arjun Tendulkar",
+        "Arshin Kulkarni",
+        "Ayush Badoni",
+        "Digvesh Rathi",
+        "Josh Inglis",
+        "Kuldeep Yadav",
+        "Mayank Yadav",
+        "Mitchell Marsh",
+        "Mohsin Khan",
+        "Mukul Choudhary",
+        "Nicholas Pooran",
+        "Prince Yadav",
+        "Sam Curran",
+        "Shahbaz Ahmed"
+      ],
+      "released": [
+        "Avesh Khan",
+        "Matthew Breetzke",
+        "Wanindu Hasaranga",
+        "George Linde",
+        "Anrich Nortje",
+        "Naman Tiwari",
+        "Himmat Singh"
+      ],
+      "retainedSources": [
+        "iplt20",
+        "retainedPdf"
+      ],
+      "releasedSources": [
+        "releasedPdf"
+      ],
+      "purseClaims": [
+        {
+          "valueLakh": 4745,
+          "source": "iplt20"
+        }
+      ],
+      "overseasSlots": 3,
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Abdul Samad": 420,
+        "Aiden Markram": 200,
+        "Akash Singh": 30,
+        "Akshat Raghuwanshi": 220,
+        "Arjun Tendulkar": 30,
+        "Arshin Kulkarni": 30,
+        "Ayush Badoni": 400,
+        "Digvesh Rathi": 30,
+        "Josh Inglis": 860,
+        "Kuldeep Yadav": 1325,
+        "Mayank Yadav": 1100,
+        "Mitchell Marsh": 340,
+        "Mohsin Khan": 400,
+        "Mukul Choudhary": 260,
+        "Nicholas Pooran": 2100,
+        "Prince Yadav": 30,
+        "Sam Curran": 240,
+        "Shahbaz Ahmed": 240
+      }
+    },
+    {
+      "team": "MI",
+      "retained": [
+        "Rohit Sharma",
+        "Suryakumar Yadav",
+        "Jasprit Bumrah",
+        "Tilak Varma",
+        "Naman Dhir",
+        "Arshdeep Singh",
+        "Corbin Bosch",
+        "Mitchell Santner",
+        "Sherfane Rutherford",
+        "Will Jacks",
+        "Ryan Rickelton",
+        "Quinton de Kock",
+        "Shardul Thakur",
+        "Ashwani Kumar",
+        "Raj Angad Bawa",
+        "Raghu Sharma"
+      ],
+      "released": [
+        "Trent Boult",
+        "Deepak Chahar",
+        "AM Ghazanfar",
+        "Atharva Ankolekar",
+        "Keshav Maharaj",
+        "Mohammed Izhar",
+        "Danish Malewar",
+        "Mayank Markande",
+        "Mayank Rawat",
+        "Krish Bhagat",
+        "Mahipal Lomror",
+        "Robin Minz",
+        "Ruchit Ahir"
+      ],
+      "retainedSources": [
+        "iplt20",
+        "retainedPdf"
+      ],
+      "releasedSources": [
+        "releasedPdf"
+      ],
+      "purseClaims": [
+        {
+          "valueLakh": 3260,
+          "source": "iplt20"
+        }
+      ],
+      "overseasSlots": 2,
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Arshdeep Singh": 1800,
+        "Ashwani Kumar": 30,
+        "Corbin Bosch": 75,
+        "Jasprit Bumrah": 1800,
+        "Mitchell Santner": 200,
+        "Naman Dhir": 525,
+        "Quinton de Kock": 100,
+        "Raghu Sharma": 30,
+        "Raj Angad Bawa": 30,
+        "Rohit Sharma": 1630,
+        "Ryan Rickelton": 100,
+        "Shardul Thakur": 200,
+        "Sherfane Rutherford": 260,
+        "Suryakumar Yadav": 1635,
+        "Tilak Varma": 800,
+        "Will Jacks": 525
+      }
+    },
+    {
+      "team": "PBKS",
+      "retained": [
+        "Shreyas Iyer",
+        "Marcus Stoinis",
+        "Hardik Pandya",
+        "Marco Jansen",
+        "Shashank Singh",
+        "Prabhsimran Singh",
+        "Priyansh Arya",
+        "Yuzvendra Chahal",
+        "Azmatullah Omarzai",
+        "Vishnu Vinod",
+        "Xavier Bartlett",
+        "Vijaykumar Vyshak",
+        "Yash Thakur",
+        "Cooper Connolly",
+        "Musheer Khan",
+        "Ben Dwarshuis",
+        "Harpreet Brar",
+        "Suryansh Shedge",
+        "Harnoor Singh"
+      ],
+      "released": [
+        "Nehal Wadhera",
+        "Lockie Ferguson",
+        "Pyla Avinash",
+        "Mitchell Owen",
+        "Pravin Dubey",
+        "Vishal Nishad"
+      ],
+      "retainedSources": [
+        "iplt20",
+        "retainedPdf"
+      ],
+      "releasedSources": [
+        "releasedPdf"
+      ],
+      "purseClaims": [
+        {
+          "valueLakh": 1860,
+          "source": "iplt20"
+        }
+      ],
+      "overseasSlots": 2,
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Azmatullah Omarzai": 240,
+        "Ben Dwarshuis": 440,
+        "Cooper Connolly": 300,
+        "Hardik Pandya": 1800,
+        "Harnoor Singh": 30,
+        "Harpreet Brar": 150,
+        "Marco Jansen": 700,
+        "Marcus Stoinis": 1100,
+        "Musheer Khan": 30,
+        "Prabhsimran Singh": 400,
+        "Priyansh Arya": 380,
+        "Shashank Singh": 550,
+        "Shreyas Iyer": 2675,
+        "Suryansh Shedge": 30,
+        "Vishnu Vinod": 95,
+        "Vijaykumar Vyshak": 180,
+        "Xavier Bartlett": 80,
+        "Yash Thakur": 160,
+        "Yuzvendra Chahal": 1800
+      }
+    },
+    {
+      "team": "RCB",
+      "retained": [
+        "Rajat Patidar",
+        "Virat Kohli",
+        "Jitesh Sharma",
+        "Bhuvneshwar Kumar",
+        "Krunal Pandya",
+        "Josh Hazlewood",
+        "Phil Salt",
+        "Tim David",
+        "Romario Shepherd",
+        "Devdutt Padikkal",
+        "Nuwan Thushara",
+        "Venkatesh Iyer",
+        "Jacob Duffy",
+        "Jordan Cox",
+        "Rasikh Dar",
+        "Suyash Sharma",
+        "Vicky Ostwal",
+        "Abhinandan Singh",
+        "Kanishk Chouhan",
+        "Yash Dayal"
+      ],
+      "released": [
+        "Jacob Bethell",
+        "Richard Gleeson",
+        "Mangesh Yadav",
+        "Vihaan Malhotra",
+        "Satvik Deswal",
+        "Swapnil Singh"
+      ],
+      "retainedSources": [
+        "iplt20",
+        "retainedPdf"
+      ],
+      "releasedSources": [
+        "releasedPdf"
+      ],
+      "purseClaims": [
+        {
+          "valueLakh": 1415,
+          "source": "iplt20"
+        }
+      ],
+      "overseasSlots": 1,
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads.",
+        "Published player salaries and the team cap debit do not reconcile. Available purse follows the official team summary rather than a recalculated salary sum."
+      ],
+      "contracts": {
+        "Abhinandan Singh": 30,
+        "Bhuvneshwar Kumar": 1075,
+        "Devdutt Padikkal": 200,
+        "Jacob Duffy": 200,
+        "Jitesh Sharma": 100,
+        "Jordan Cox": 75,
+        "Josh Hazlewood": 1250,
+        "Kanishk Chouhan": 30,
+        "Krunal Pandya": 575,
+        "Nuwan Thushara": 160,
+        "Phil Salt": 1150,
+        "Rajat Patidar": 1100,
+        "Rasikh Dar": 600,
+        "Romario Shepherd": 150,
+        "Suyash Sharma": 260,
+        "Tim David": 300,
+        "Venkatesh Iyer": 700,
+        "Vicky Ostwal": 30,
+        "Virat Kohli": 2100,
+        "Yash Dayal": 500
+      }
+    },
+    {
+      "team": "RR",
+      "retained": [
+        "Aman Rao Perala",
+        "Brijesh Sharma",
+        "Dasun Shanaka",
+        "Dhruv Jurel",
+        "Donovan Ferreira",
+        "Jofra Archer",
+        "Lhuan-dre Pretorius",
+        "Manimaran Siddharth",
+        "Mohammed Shami",
+        "Nandre Burger",
+        "Ravi Bishnoi",
+        "Ravindra Jadeja",
+        "Riyan Parag",
+        "Sandeep Sharma",
+        "Shubham Dubey",
+        "Sushant Mishra",
+        "Vaibhav Sooryavanshi",
+        "Yash Raj Punja",
+        "Yashasvi Jaiswal"
+      ],
+      "released": [
+        "Adam Milne",
+        "Emanjot Singh Chahal",
+        "Kuldeep Sen",
+        "Kwena Maphaka",
+        "Ravi Singh",
+        "Shimron Hetmyer",
+        "Tushar Deshpande",
+        "Vignesh Puthur",
+        "Yudhvir Singh Charak"
+      ],
+      "retainedSources": [
+        "iplt20",
+        "retainedPdf"
+      ],
+      "releasedSources": [
+        "releasedPdf"
+      ],
+      "purseClaims": [
+        {
+          "valueLakh": 2705,
+          "source": "iplt20"
+        }
+      ],
+      "overseasSlots": 3,
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Aman Rao Perala": 30,
+        "Brijesh Sharma": 30,
+        "Dasun Shanaka": 200,
+        "Dhruv Jurel": 1400,
+        "Donovan Ferreira": 100,
+        "Jofra Archer": 1250,
+        "Lhuan-dre Pretorius": 30,
+        "Manimaran Siddharth": 75,
+        "Mohammed Shami": 800,
+        "Nandre Burger": 350,
+        "Ravi Bishnoi": 720,
+        "Ravindra Jadeja": 1400,
+        "Riyan Parag": 1400,
+        "Sandeep Sharma": 400,
+        "Shubham Dubey": 80,
+        "Sushant Mishra": 90,
+        "Vaibhav Sooryavanshi": 110,
+        "Yash Raj Punja": 30,
+        "Yashasvi Jaiswal": 1800
+      }
+    },
+    {
+      "team": "SRH",
+      "retained": [
+        "Pat Cummins",
+        "Abhishek Sharma",
+        "Ishan Kishan",
+        "Heinrich Klaasen",
+        "Nitish Kumar Reddy",
+        "Brydon Carse",
+        "Salil Arora",
+        "Aniket Verma",
+        "Harsh Dubey",
+        "Smaran Ravichandran",
+        "Praful Hinge",
+        "Sakib Hussain",
+        "Shivang Kumar",
+        "Krains Fuletra",
+        "Eshan Malinga",
+        "T Natarajan",
+        "Nathan Ellis",
+        "Khaleel Ahmed"
+      ],
+      "released": [
+        "Travis Head",
+        "Jaydev Unadkat",
+        "Gerald Coetzee",
+        "Dilshan Madushanka",
+        "David Payne",
+        "Amit Kumar",
+        "Kamindu Mendis",
+        "Onkar Tarmale",
+        "RS Ambrish",
+        "Shivam Mavi"
+      ],
+      "retainedSources": [
+        "iplt20",
+        "retainedPdf"
+      ],
+      "releasedSources": [
+        "releasedPdf"
+      ],
+      "purseClaims": [
+        {
+          "valueLakh": 4015,
+          "source": "iplt20"
+        }
+      ],
+      "overseasSlots": 3,
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Abhishek Sharma": 1400,
+        "Aniket Verma": 30,
+        "Brydon Carse": 100,
+        "Eshan Malinga": 120,
+        "Harsh Dubey": 30,
+        "Heinrich Klaasen": 2300,
+        "Ishan Kishan": 1125,
+        "Khaleel Ahmed": 480,
+        "Krains Fuletra": 30,
+        "Nathan Ellis": 200,
+        "Nitish Kumar Reddy": 600,
+        "Pat Cummins": 1800,
+        "Praful Hinge": 30,
+        "Sakib Hussain": 30,
+        "Salil Arora": 150,
+        "Shivang Kumar": 30,
+        "Smaran Ravichandran": 30,
+        "T Natarajan": 500
+      }
+    }
+  ],
+  "aliases": {
+    "Sahil Parakh": "cs:926c7443",
+    "Blessing Muzarabani": "cs:449f4e3c",
+    "George Linde": "cs:e5437608",
+    "Mohammed Izhar": "sq:mohammad-izhar|india",
+    "Aman Rao Perala": "sq:aman-rao|india",
+    "David Payne": "cs:6c79c098"
+  },
+  "availability": [
+    {
+      "name": "MS Dhoni",
+      "status": "retired",
+      "note": "Reported retirement and move to a mentor role.",
+      "sources": [
+        "cricbuzz"
+      ]
+    },
+    {
+      "name": "Ajinkya Rahane",
+      "status": "retired",
+      "note": "Reported IPL retirement.",
+      "sources": [
+        "cricbuzz"
+      ]
+    },
+    {
+      "name": "Mitchell Starc",
+      "status": "unavailable",
+      "note": "DC confirms he notified the franchise and BCCI of unavailability for IPL 2027.",
+      "sources": [
+        "dc"
+      ]
+    },
+    {
+      "name": "Travis Head",
+      "status": "unavailable",
+      "note": "Reported unavailability for IPL 2027.",
+      "sources": [
+        "cricbuzz"
+      ]
+    },
+    {
+      "name": "Jacob Bethell",
+      "status": "uncertain",
+      "note": "RCB cites a recurring knee injury and uncertainty over his return.",
+      "sources": [
+        "rcb"
+      ]
+    }
+  ],
+  "auctionRegistrations": [],
+  "notes": [
+    "Primary IPLT20 records reviewed on 18 November 2026. Official team cap figures include applicable retention deductions; player salaries and team salary-cap debits are separate values."
+  ],
+  "identities": {
+    "Ruturaj Gaikwad": {
+      "canonicalId": "cs:45a43fe2",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Sanju Samson": {
+      "canonicalId": "cs:a4cc73aa",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Ayush Mhatre": {
+      "canonicalId": "cs:b2b4f545",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Urvil Patel": {
+      "canonicalId": "cs:cf59b3f0",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Dewald Brevis": {
+      "canonicalId": "cs:844e79d1",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "batter",
+      "bowlingStyle": "Legbreak"
+    },
+    "Liam Livingstone": {
+      "canonicalId": "cs:50c6bc2b",
+      "country": "England",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Offbreak, Legbreak"
+    },
+    "Jack Edwards": {
+      "canonicalId": "sq:jack-edwards|australia",
+      "country": "Australia",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Akeal Hosein": {
+      "canonicalId": "cs:4d7f517e",
+      "country": "West Indies",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Noor Ahmad": {
+      "canonicalId": "cs:efc04be7",
+      "country": "Afghanistan",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Wrist spin"
+    },
+    "Kartik Sharma": {
+      "canonicalId": "cs:7b679de5",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Shivam Dube": {
+      "canonicalId": "cs:a4e37e47",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Gurjapneet Singh": {
+      "canonicalId": "cs:cc61ee8f",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Anshul Kamboj": {
+      "canonicalId": "cs:fcc21ace",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Sarfaraz Khan": {
+      "canonicalId": "cs:f088b960",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Legbreak"
+    },
+    "Jamie Overton": {
+      "canonicalId": "cs:59559bc2",
+      "country": "England",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Mukesh Choudhary": {
+      "canonicalId": "cs:765a4731",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Left arm Medium"
+    },
+    "Rahul Chahar": {
+      "canonicalId": "cs:2ed569a0",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Legbreak Googly"
+    },
+    "Ramakrishna Ghosh": {
+      "canonicalId": "cs:dee07622",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Shreyas Gopal": {
+      "canonicalId": "cs:7a8bd078",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Legbreak"
+    },
+    "MS Dhoni": {
+      "canonicalId": "cs:4a8a2e3b",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Prashant Veer": {
+      "canonicalId": "cs:e148e6bd",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "LEFT ARM Slow Orthodox"
+    },
+    "Spencer Johnson": {
+      "canonicalId": "cs:83c3e8e3",
+      "country": "Australia",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Fast"
+    },
+    "Akash Madhwal": {
+      "canonicalId": "cs:4bd09374",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Aman Khan": {
+      "canonicalId": "cs:378daa89",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Dian Forrester": {
+      "canonicalId": "sq:dian-forrester|west-indies",
+      "country": "West Indies",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Kuldip Yadav": {
+      "canonicalId": "cs:030f3089",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Fast medium"
+    },
+    "Macneil Noronha": {
+      "canonicalId": "sq:macneil-noronha|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Matt Henry": {
+      "canonicalId": "cs:e84ac20c",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Matthew Short": {
+      "canonicalId": "cs:a90e53ec",
+      "country": "Australia",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Zak Foulkes": {
+      "canonicalId": "sq:zak-foulkes|new-zealand",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Ashutosh Sharma": {
+      "canonicalId": "cs:84d9c311",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Madhav Tiwari": {
+      "canonicalId": "cs:fb5f69e4",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Vipraj Nigam": {
+      "canonicalId": "cs:5ffc0565",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Legbreak"
+    },
+    "Auqib Nabi": {
+      "canonicalId": "cs:7c3c0337",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Mukesh Kumar": {
+      "canonicalId": "cs:2cffab74",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Zeeshan Ansari": {
+      "canonicalId": "cs:36619795",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Legbreak Googly"
+    },
+    "Axar Patel": {
+      "canonicalId": "cs:2e171977",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Prithvi Shaw": {
+      "canonicalId": "cs:8b3e9c7c",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "David Miller": {
+      "canonicalId": "cs:d67d5f00",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Rishabh Pant": {
+      "canonicalId": "cs:919a3be2",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "KL Rahul": {
+      "canonicalId": "cs:b17e2f24",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Sameer Rizvi": {
+      "canonicalId": "cs:f89d3b11",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Kyle Jamieson": {
+      "canonicalId": "cs:68c56d09",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Tripurana Vijay": {
+      "canonicalId": "cs:51ec3919",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Lungi Ngidi": {
+      "canonicalId": "cs:f834dcfc",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Tristan Stubbs": {
+      "canonicalId": "cs:85b3fab2",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Mitchell Starc": {
+      "canonicalId": "cs:3fb19989",
+      "country": "Australia",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Fast"
+    },
+    "Nitish Rana": {
+      "canonicalId": "cs:fb2d1dda",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium, Right arm Offbreak, Legbreak"
+    },
+    "Abishek Porel": {
+      "canonicalId": "cs:ad3b6e95",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Pathum Nissanka": {
+      "canonicalId": "cs:8ee36b18",
+      "country": "Sri Lanka",
+      "overseas": true,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Karun Nair": {
+      "canonicalId": "cs:944533a5",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Sahil Parakh": {
+      "canonicalId": "cs:926c7443",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Ajay Mandal": {
+      "canonicalId": "sq:ajay-mandal|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Rehan Ahmed": {
+      "canonicalId": "sq:rehan-ahmed|england",
+      "country": "England",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Dushmantha Chameera": {
+      "canonicalId": "sq:dushmantha-chameera|sri-lanka",
+      "country": "Sri Lanka",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Anuj Rawat": {
+      "canonicalId": "cs:c8f5f961",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Kagiso Rabada": {
+      "canonicalId": "cs:e62dd25d",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Rahul Tewatia": {
+      "canonicalId": "cs:39a2dfa8",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Legbreak"
+    },
+    "Ashok Sharma": {
+      "canonicalId": "cs:50c09020",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "RIGHT ARM Fast"
+    },
+    "Kumar Kushagra": {
+      "canonicalId": "cs:57ca01b3",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Rashid Khan": {
+      "canonicalId": "cs:5f547c8b",
+      "country": "Afghanistan",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Legbreak Googly"
+    },
+    "Glenn Phillips": {
+      "canonicalId": "cs:9a46c4e5",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Manav Suthar": {
+      "canonicalId": "cs:025c4400",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Sai Sudharsan": {
+      "canonicalId": "sq:sai-sudharsan|india",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Gurnoor Brar": {
+      "canonicalId": "cs:99258814",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Mohammed Siraj": {
+      "canonicalId": "cs:2f49c897",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Shubman Gill": {
+      "canonicalId": "cs:b4b99816",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Harshal Patel": {
+      "canonicalId": "cs:f986ca1a",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Arshad Khan": {
+      "canonicalId": "cs:12314277",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Left arm Medium"
+    },
+    "Tom Banton": {
+      "canonicalId": "cs:25f7b7d6",
+      "country": "England",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Jason Holder": {
+      "canonicalId": "cs:0f721006",
+      "country": "West Indies",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Nishant Sindhu": {
+      "canonicalId": "cs:3cea23da",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow left-arm orthodox"
+    },
+    "Washington Sundar": {
+      "canonicalId": "cs:f19ccfad",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Jayant Yadav": {
+      "canonicalId": "cs:81049310",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Prasidh Krishna": {
+      "canonicalId": "sq:prasidh-krishna|india",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Jos Buttler": {
+      "canonicalId": "cs:99b75528",
+      "country": "England",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "R Sai Kishore": {
+      "canonicalId": "cs:c7a995d3",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Shahrukh Khan": {
+      "canonicalId": "sq:shahrukh-khan|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Ishant Sharma": {
+      "canonicalId": "cs:5bb1a1c4",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Luke Wood": {
+      "canonicalId": "cs:65b6943c",
+      "country": "England",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Fast medium"
+    },
+    "Kulwant Khejroliya": {
+      "canonicalId": "cs:fa2f1dde",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Medium fast"
+    },
+    "Connor Esterhuizen": {
+      "canonicalId": "sq:connor-esterhuizen|south-africa",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Prithviraj Yarra": {
+      "canonicalId": null,
+      "country": null,
+      "overseas": null,
+      "role": null,
+      "bowlingStyle": null
+    },
+    "Anukul Roy": {
+      "canonicalId": "cs:e4cdf230",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Angkrish Raghuvanshi": {
+      "canonicalId": "cs:d7017798",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Cameron Green": {
+      "canonicalId": "cs:eaa76d3c",
+      "country": "Australia",
+      "overseas": true,
+      "role": "batter",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Finn Allen": {
+      "canonicalId": "cs:bf74b130",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Harshit Rana": {
+      "canonicalId": "cs:77b1aa15",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Kartik Tyagi": {
+      "canonicalId": "cs:5d2eea49",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Manish Pandey": {
+      "canonicalId": "cs:93b4fc78",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Prashant Solanki": {
+      "canonicalId": "cs:c695b423",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Legbreak"
+    },
+    "Ramandeep Singh": {
+      "canonicalId": "cs:be24ead0",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Rinku Singh": {
+      "canonicalId": "cs:0a509d6b",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Rovman Powell": {
+      "canonicalId": "cs:650d5e49",
+      "country": "West Indies",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Sarthak Ranjan": {
+      "canonicalId": "sq:sarthak-ranjan|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Saurabh Dubey": {
+      "canonicalId": "sq:saurabh-dubey|india",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Sunil Narine": {
+      "canonicalId": "cs:9d430b40",
+      "country": "West Indies",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Tim Seifert": {
+      "canonicalId": "cs:4663bd23",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Vaibhav Arora": {
+      "canonicalId": "cs:7c3b3b78",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Varun Chakaravarthy": {
+      "canonicalId": "sq:varun-chakaravarthy|india",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Ajinkya Rahane": {
+      "canonicalId": "cs:29e95537",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Akash Deep": {
+      "canonicalId": "cs:0a67aec0",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Blessing Muzarabani": {
+      "canonicalId": "cs:449f4e3c",
+      "country": "Zimbabwe",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Daksh Kamra": {
+      "canonicalId": "sq:daksh-kamra|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Luvnith Sisodia": {
+      "canonicalId": "sq:luvnith-sisodia|india",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Matheesha Pathirana": {
+      "canonicalId": "cs:64839cb3",
+      "country": "Sri Lanka",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Mustafizur Rahman": {
+      "canonicalId": "cs:0a8fce53",
+      "country": "Bangladesh",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Fast medium"
+    },
+    "Navdeep Saini": {
+      "canonicalId": "cs:21d4e29b",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Rachin Ravindra": {
+      "canonicalId": "cs:ba5e1069",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Rahul Tripathi": {
+      "canonicalId": "cs:77255a9e",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Tejasvi Singh": {
+      "canonicalId": "sq:tejasvi-singh|india",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Umran Malik": {
+      "canonicalId": "cs:81c08fa3",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Abdul Samad": {
+      "canonicalId": "cs:8e514b4c",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Legbreak"
+    },
+    "Aiden Markram": {
+      "canonicalId": "cs:6a26221c",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Akash Singh": {
+      "canonicalId": "cs:b483905d",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Medium fast"
+    },
+    "Akshat Raghuwanshi": {
+      "canonicalId": "cs:d8d67045",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Arjun Tendulkar": {
+      "canonicalId": "cs:44aac2f0",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Medium fast"
+    },
+    "Arshin Kulkarni": {
+      "canonicalId": "cs:2d140b79",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Ayush Badoni": {
+      "canonicalId": "cs:872b03f7",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Digvesh Rathi": {
+      "canonicalId": "cs:13fc5c6d",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Legbreak"
+    },
+    "Josh Inglis": {
+      "canonicalId": "cs:989889ff",
+      "country": "Australia",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Kuldeep Yadav": {
+      "canonicalId": "cs:8d2c70ad",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Wrist spin"
+    },
+    "Mayank Yadav": {
+      "canonicalId": "cs:b1ad996b",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Mitchell Marsh": {
+      "canonicalId": "cs:3d8feaf8",
+      "country": "Australia",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Mohsin Khan": {
+      "canonicalId": "cs:c33d8116",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Medium fast"
+    },
+    "Mukul Choudhary": {
+      "canonicalId": "cs:1c84109e",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Nicholas Pooran": {
+      "canonicalId": "cs:3241e3fd",
+      "country": "West Indies",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Prince Yadav": {
+      "canonicalId": "cs:80b2fb19",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Sam Curran": {
+      "canonicalId": "cs:e94915e6",
+      "country": "England",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Left arm Medium fast"
+    },
+    "Shahbaz Ahmed": {
+      "canonicalId": "cs:f9e6e7ef",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Avesh Khan": {
+      "canonicalId": "cs:eef2536f",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Matthew Breetzke": {
+      "canonicalId": "cs:35f173a0",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Wanindu Hasaranga": {
+      "canonicalId": "cs:a97c8ec2",
+      "country": "Sri Lanka",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Legbreak"
+    },
+    "George Linde": {
+      "canonicalId": "cs:e5437608",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Anrich Nortje": {
+      "canonicalId": "cs:acdc62f5",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Naman Tiwari": {
+      "canonicalId": "sq:naman-tiwari|india",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Himmat Singh": {
+      "canonicalId": "cs:ebcfef83",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Rohit Sharma": {
+      "canonicalId": "cs:740742ef",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Suryakumar Yadav": {
+      "canonicalId": "cs:271f83cd",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Medium, Right arm Offbreak"
+    },
+    "Jasprit Bumrah": {
+      "canonicalId": "cs:462411b3",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Tilak Varma": {
+      "canonicalId": "cs:b0482a1d",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Naman Dhir": {
+      "canonicalId": "cs:fffa744b",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Arshdeep Singh": {
+      "canonicalId": "cs:244048f6",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Medium fast"
+    },
+    "Corbin Bosch": {
+      "canonicalId": "cs:172dff15",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Mitchell Santner": {
+      "canonicalId": "cs:e4a0deae",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Sherfane Rutherford": {
+      "canonicalId": "cs:d014d5ac",
+      "country": "West Indies",
+      "overseas": true,
+      "role": "batter",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Will Jacks": {
+      "canonicalId": "cs:9caf69a1",
+      "country": "England",
+      "overseas": true,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Ryan Rickelton": {
+      "canonicalId": "cs:e66732f8",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Quinton de Kock": {
+      "canonicalId": "cs:372455c4",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Shardul Thakur": {
+      "canonicalId": "cs:1abb78f8",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Ashwani Kumar": {
+      "canonicalId": "cs:d45c29b1",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Medium"
+    },
+    "Raj Angad Bawa": {
+      "canonicalId": "cs:ba6b2f91",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Raghu Sharma": {
+      "canonicalId": "cs:5b615e7c",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Trent Boult": {
+      "canonicalId": "cs:a818c1be",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Fast medium"
+    },
+    "Deepak Chahar": {
+      "canonicalId": "cs:23eeb873",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "AM Ghazanfar": {
+      "canonicalId": "cs:9ca68676",
+      "country": "Afghanistan",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right-arm offbreak"
+    },
+    "Atharva Ankolekar": {
+      "canonicalId": "sq:atharva-ankolekar|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Keshav Maharaj": {
+      "canonicalId": "sq:keshav-maharaj|south-africa",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Mohammed Izhar": {
+      "canonicalId": "sq:mohammad-izhar|india",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Danish Malewar": {
+      "canonicalId": "cs:9e6032fa",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "RIGHT ARM Leg Spin"
+    },
+    "Mayank Markande": {
+      "canonicalId": "cs:a9fd84fb",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Legbreak"
+    },
+    "Mayank Rawat": {
+      "canonicalId": "cs:2b801189",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "RIGHT ARM Off Spin"
+    },
+    "Krish Bhagat": {
+      "canonicalId": "cs:e48a4814",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "RIGHT ARM Fast"
+    },
+    "Mahipal Lomror": {
+      "canonicalId": "cs:da934ee8",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Robin Minz": {
+      "canonicalId": "cs:bafd0398",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Slow left-arm orthodox"
+    },
+    "Ruchit Ahir": {
+      "canonicalId": "sq:ruchit-ahir|india",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Shreyas Iyer": {
+      "canonicalId": "cs:85ec8e33",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak, Legbreak Googly"
+    },
+    "Marcus Stoinis": {
+      "canonicalId": "cs:d9273ee7",
+      "country": "Australia",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Hardik Pandya": {
+      "canonicalId": "cs:dbe50b21",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Marco Jansen": {
+      "canonicalId": "cs:81c36ee9",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Left arm Medium fast"
+    },
+    "Shashank Singh": {
+      "canonicalId": "cs:26989d80",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium, Right arm Offbreak"
+    },
+    "Prabhsimran Singh": {
+      "canonicalId": "cs:9418198b",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Priyansh Arya": {
+      "canonicalId": "cs:b5797845",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Yuzvendra Chahal": {
+      "canonicalId": "cs:57ee1fde",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Legbreak Googly"
+    },
+    "Azmatullah Omarzai": {
+      "canonicalId": "cs:8f6dd463",
+      "country": "Afghanistan",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Vishnu Vinod": {
+      "canonicalId": "cs:0494fa6e",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Xavier Bartlett": {
+      "canonicalId": "cs:3b53243a",
+      "country": "Australia",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Vijaykumar Vyshak": {
+      "canonicalId": "cs:54e52590",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Yash Thakur": {
+      "canonicalId": "cs:4b31f3a3",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Cooper Connolly": {
+      "canonicalId": "cs:fe366f34",
+      "country": "Australia",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "LEFT ARM Slow Orthodox"
+    },
+    "Musheer Khan": {
+      "canonicalId": "cs:d621b427",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Ben Dwarshuis": {
+      "canonicalId": "cs:e1b9f3a9",
+      "country": "Australia",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "LEFT ARM Fast Medium"
+    },
+    "Harpreet Brar": {
+      "canonicalId": "cs:c05edf8e",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Suryansh Shedge": {
+      "canonicalId": "cs:970ddd24",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Harnoor Singh": {
+      "canonicalId": "sq:harnoor-singh|india",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Nehal Wadhera": {
+      "canonicalId": "cs:d1a60072",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Legbreak"
+    },
+    "Lockie Ferguson": {
+      "canonicalId": "cs:2f9d0389",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Pyla Avinash": {
+      "canonicalId": "sq:pyla-avinash|india",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Mitchell Owen": {
+      "canonicalId": "sq:mitchell-owen|australia",
+      "country": "Australia",
+      "overseas": true,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Pravin Dubey": {
+      "canonicalId": "sq:pravin-dubey|india",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Vishal Nishad": {
+      "canonicalId": "sq:vishal-nishad|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Rajat Patidar": {
+      "canonicalId": "cs:c740ea83",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Virat Kohli": {
+      "canonicalId": "cs:ba607b88",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Jitesh Sharma": {
+      "canonicalId": "cs:800d2d97",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Bhuvneshwar Kumar": {
+      "canonicalId": "cs:2e81a32d",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Krunal Pandya": {
+      "canonicalId": "cs:5b8c830e",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Josh Hazlewood": {
+      "canonicalId": "cs:03806cf8",
+      "country": "Australia",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Phil Salt": {
+      "canonicalId": "cs:3d284ca3",
+      "country": "England",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Tim David": {
+      "canonicalId": "cs:f1f99156",
+      "country": "Australia",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Romario Shepherd": {
+      "canonicalId": "cs:c5aef772",
+      "country": "West Indies",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Devdutt Padikkal": {
+      "canonicalId": "cs:2c25d4f5",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Nuwan Thushara": {
+      "canonicalId": "cs:ee1b6c27",
+      "country": "Sri Lanka",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Venkatesh Iyer": {
+      "canonicalId": "cs:a24be938",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Jacob Duffy": {
+      "canonicalId": "cs:dadbdb68",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "RIGHT ARM Fast Medium"
+    },
+    "Jordan Cox": {
+      "canonicalId": "sq:jordan-cox|england",
+      "country": "England",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Rasikh Dar": {
+      "canonicalId": "cs:b8527c3d",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Suyash Sharma": {
+      "canonicalId": "cs:9440ef41",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Legbreak Googly"
+    },
+    "Vicky Ostwal": {
+      "canonicalId": "sq:vicky-ostwal|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Abhinandan Singh": {
+      "canonicalId": "cs:82c10dac",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Kanishk Chouhan": {
+      "canonicalId": "sq:kanishk-chouhan|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Yash Dayal": {
+      "canonicalId": "cs:7210d461",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Medium fast"
+    },
+    "Jacob Bethell": {
+      "canonicalId": "cs:3c55c703",
+      "country": "England",
+      "overseas": true,
+      "role": "batter",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Richard Gleeson": {
+      "canonicalId": "cs:402f8494",
+      "country": "England",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast Medium"
+    },
+    "Mangesh Yadav": {
+      "canonicalId": "sq:mangesh-yadav|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Vihaan Malhotra": {
+      "canonicalId": "sq:vihaan-malhotra|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Satvik Deswal": {
+      "canonicalId": "sq:satvik-deswal|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Swapnil Singh": {
+      "canonicalId": "cs:983f2f61",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Aman Rao Perala": {
+      "canonicalId": "sq:aman-rao|india",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Brijesh Sharma": {
+      "canonicalId": "cs:133bbd61",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "RIGHT ARM Fast"
+    },
+    "Dasun Shanaka": {
+      "canonicalId": "sq:dasun-shanaka|sri-lanka",
+      "country": "Sri Lanka",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Dhruv Jurel": {
+      "canonicalId": "cs:bcf325d2",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Donovan Ferreira": {
+      "canonicalId": "cs:f0af99a7",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Jofra Archer": {
+      "canonicalId": "cs:5574750c",
+      "country": "England",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Lhuan-dre Pretorius": {
+      "canonicalId": "cs:60aa2db3",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Manimaran Siddharth": {
+      "canonicalId": "cs:cf0ccafa",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Mohammed Shami": {
+      "canonicalId": "cs:8cf9814c",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Nandre Burger": {
+      "canonicalId": "cs:465aa633",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Fast medium"
+    },
+    "Ravi Bishnoi": {
+      "canonicalId": "cs:df064e1a",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Legbreak Googly"
+    },
+    "Ravindra Jadeja": {
+      "canonicalId": "cs:fe93fd9d",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Riyan Parag": {
+      "canonicalId": "cs:04a418e8",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Legbreak"
+    },
+    "Sandeep Sharma": {
+      "canonicalId": "cs:ce820073",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Shubham Dubey": {
+      "canonicalId": "cs:6b2ff18f",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Sushant Mishra": {
+      "canonicalId": "cs:92500ad5",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left-arm medium-fast"
+    },
+    "Vaibhav Sooryavanshi": {
+      "canonicalId": "cs:470f446b",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Yash Raj Punja": {
+      "canonicalId": "cs:02dfebbe",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "RIGHT ARM Leg Spin"
+    },
+    "Yashasvi Jaiswal": {
+      "canonicalId": "cs:6c19c6e5",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Legbreak"
+    },
+    "Adam Milne": {
+      "canonicalId": "cs:350bb1b1",
+      "country": "New Zealand",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Emanjot Singh Chahal": {
+      "canonicalId": "sq:emanjot-singh-chahal|india",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Kuldeep Sen": {
+      "canonicalId": "cs:2e78f685",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Kwena Maphaka": {
+      "canonicalId": "cs:107c26fb",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Fast"
+    },
+    "Ravi Singh": {
+      "canonicalId": "cs:548516a6",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Shimron Hetmyer": {
+      "canonicalId": "cs:48a1d7b7",
+      "country": "West Indies",
+      "overseas": true,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Tushar Deshpande": {
+      "canonicalId": "cs:46a9bea1",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Medium"
+    },
+    "Vignesh Puthur": {
+      "canonicalId": "cs:1e030637",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Wrist spin"
+    },
+    "Yudhvir Singh Charak": {
+      "canonicalId": "cs:4885bbe6",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Pat Cummins": {
+      "canonicalId": "cs:ded9240e",
+      "country": "Australia",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Abhishek Sharma": {
+      "canonicalId": "cs:f29185a1",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Ishan Kishan": {
+      "canonicalId": "cs:752f7486",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Heinrich Klaasen": {
+      "canonicalId": "cs:235c2bb6",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "wicketkeeper",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Nitish Kumar Reddy": {
+      "canonicalId": "cs:aad0c365",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Brydon Carse": {
+      "canonicalId": "sq:brydon-carse|england",
+      "country": "England",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Salil Arora": {
+      "canonicalId": "cs:d7423da1",
+      "country": "India",
+      "overseas": false,
+      "role": "wicketkeeper",
+      "bowlingStyle": null
+    },
+    "Aniket Verma": {
+      "canonicalId": "cs:a3b0600d",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": "Right arm Medium fast"
+    },
+    "Harsh Dubey": {
+      "canonicalId": "cs:25228673",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Slow Left arm Orthodox"
+    },
+    "Smaran Ravichandran": {
+      "canonicalId": "sq:smaran-ravichandran|india",
+      "country": "India",
+      "overseas": false,
+      "role": "batter",
+      "bowlingStyle": null
+    },
+    "Praful Hinge": {
+      "canonicalId": "cs:ece7b6b3",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "RIGHT ARM Fast"
+    },
+    "Sakib Hussain": {
+      "canonicalId": "cs:280fff14",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right-arm medium"
+    },
+    "Shivang Kumar": {
+      "canonicalId": "cs:7b44eb3e",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "LEFT ARM Slow Unorthodox"
+    },
+    "Krains Fuletra": {
+      "canonicalId": "sq:krains-fuletra|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Eshan Malinga": {
+      "canonicalId": "cs:5750bcb4",
+      "country": "Sri Lanka",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "T Natarajan": {
+      "canonicalId": "cs:ce794613",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Left arm Medium"
+    },
+    "Nathan Ellis": {
+      "canonicalId": "cs:9eb1455b",
+      "country": "Australia",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast medium"
+    },
+    "Khaleel Ahmed": {
+      "canonicalId": "cs:a2f46292",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Left arm Medium"
+    },
+    "Travis Head": {
+      "canonicalId": "cs:12b610c2",
+      "country": "Australia",
+      "overseas": true,
+      "role": "batter",
+      "bowlingStyle": "Right arm Offbreak"
+    },
+    "Jaydev Unadkat": {
+      "canonicalId": "cs:1e66c162",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": "Left arm Medium"
+    },
+    "Gerald Coetzee": {
+      "canonicalId": "cs:3204c99f",
+      "country": "South Africa",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast"
+    },
+    "Dilshan Madushanka": {
+      "canonicalId": "cs:de7d833e",
+      "country": "Sri Lanka",
+      "overseas": true,
+      "role": "bowler",
+      "bowlingStyle": "Left-arm fast-medium"
+    },
+    "David Payne": {
+      "canonicalId": "cs:6c79c098",
+      "country": null,
+      "overseas": null,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Amit Kumar": {
+      "canonicalId": "sq:amit-kumar|india",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "Kamindu Mendis": {
+      "canonicalId": "cs:08548b13",
+      "country": "Sri Lanka",
+      "overseas": true,
+      "role": "all-rounder",
+      "bowlingStyle": "Right arm Offbreak, Slow Left arm Orthodox"
+    },
+    "Onkar Tarmale": {
+      "canonicalId": "sq:onkar-tarmale|india",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": null
+    },
+    "RS Ambrish": {
+      "canonicalId": "sq:rs-ambrish|india",
+      "country": "India",
+      "overseas": false,
+      "role": "all-rounder",
+      "bowlingStyle": null
+    },
+    "Shivam Mavi": {
+      "canonicalId": "cs:c38d3503",
+      "country": "India",
+      "overseas": false,
+      "role": "bowler",
+      "bowlingStyle": "Right arm Fast medium"
+    }
+  }
+}

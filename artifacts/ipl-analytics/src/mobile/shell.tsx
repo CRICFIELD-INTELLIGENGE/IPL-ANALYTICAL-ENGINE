@@ -27,6 +27,7 @@ import {
   LayoutGrid,
   Shield,
   Radio,
+  Trophy,
   Zap,
 } from "lucide-react";
 import {
@@ -70,12 +71,19 @@ export const TABS: {
     match: (p: string) => /^\/(pulse|auction|visualizations|ai-analyst\/auction-war-room)/.test(p),
   },
   {
+    href: "/scores",
+    label: "Scores",
+    icon: Trophy,
+    color: "#10b981",
+    match: (p: string) => /^\/(scores|match)/.test(p),
+  },
+  {
     href: "/discover",
     label: "More",
     icon: LayoutGrid,
     color: "#f54888",
     match: (p: string) =>
-      /^\/(discover|more|dugout|teams|pressurelab|editorials|intelligence|storylines|feed|scores|match|venues|squad-hq|retention-room|tactics|account|about|terms|privacy|contact|reports|blogs|ai-analyst)/.test(
+      /^\/(discover|more|dugout|teams|pressurelab|editorials|intelligence|storylines|feed|venues|squad-hq|retention-room|tactics|account|about|terms|privacy|contact|reports|blogs|ai-analyst)/.test(
         p,
       ),
   },

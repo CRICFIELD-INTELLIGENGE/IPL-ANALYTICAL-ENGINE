@@ -84,7 +84,8 @@ const ContactPage = lazy(() => import("./pages/contact"));
 const DisclaimerPage = lazy(() => import("./pages/disclaimer"));
 const PrivacyPage = lazy(() => import("./pages/privacy"));
 const ScoutResultsPage = lazy(() => import("./pages/scout-results"));
-// Phase 1: /scout shows Pressure Intelligence; the cinematic Pressure Lab (pages/scout-home.tsx) is kept, unmounted.
+const ScoutLabPage = lazy(() => import("./pages/scout-lab"));
+// Phase 1: /pressurelab shows Pressure Intelligence; Scout Lab (/scout, /scout-lab) shows IPL 2026 Auctioned & Unauctioned Pool.
 const ScoutHomePage = lazy(() => import("@/pages/pressure-intelligence"));
 const ScoutPlayerPage = lazy(() => import("@/pages/scout-player"));
 const ScoutComparePage = lazy(() => import("@/pages/scout-compare"));
@@ -148,7 +149,8 @@ function Router() {
       <Route path="/stats"><StatsPage /></Route>
       <Route path="/pulse" component={PulsePage} />
       {/* Pressure Lab: Global T20 Talent Intelligence */}
-      <Route path="/scout"><LegacyPressureLink /></Route>
+      <Route path="/scout" component={ScoutLabPage} />
+      <Route path="/scout-lab" component={ScoutLabPage} />
       <Route path="/scout/*"><LegacyPressureLink /></Route>
       <Route path="/pressurelab/results" component={ScoutResultsPage} />
       <Route path="/pressurelab" component={ScoutHomePage} />
