@@ -15,7 +15,7 @@ export function scoutPostgresConfigured(): boolean {
   return !!process.env.PGHOST?.trim() && !!process.env.PGPASSWORD;
 }
 
-export function scoutPostgresClient(): pg.Client {
+export function scoutPostgresClient(extra: Partial<pg.ClientConfig> = {}): pg.Client {
   const host = process.env.PGHOST?.trim() ?? "";
   const client = new pg.Client({
     // Supabase signs with its own root CA; any other host must present a publicly trusted certificate.
@@ -24,6 +24,7 @@ export function scoutPostgresClient(): pg.Client {
       : host.endsWith(".supabase.com") || host.endsWith(".supabase.co") ? { ca: SUPABASE_CA, rejectUnauthorized: true }
       : { rejectUnauthorized: true },
     connectionTimeoutMillis: 20_000,
+    ...extra,
     // int8 arrives as a string by default; every Scout integer fits in a JS number.
     types: { getTypeParser: ((oid: number, format?: any) => (oid === 20 ? Number : pg.types.getTypeParser(oid, format))) as any },
   });

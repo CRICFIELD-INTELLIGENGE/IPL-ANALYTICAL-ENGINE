@@ -7,9 +7,9 @@
   "framework": null,
   "functions": {
     "api/warehouse-preview.mjs": {
-      "maxDuration": 60,
+      "maxDuration": 300,
       "memory": 1024,
-      "includeFiles": "artifacts/api-server/data/{auction-2027-updates.json,retention/transactions.json}"
+      "includeFiles": "{artifacts/api-server/data/**,artifacts/ipl-analytics/public/data/matches.json,artifacts/ipl-analytics/public/data/players.json,artifacts/ipl-analytics/public/data/player-bio.json,artifacts/ipl-analytics/public/data/current-squads.json}"
     }
   },
   "rewrites": [
@@ -36,6 +36,14 @@
     {
       "source": "/api/scout/:path*",
       "destination": "/api/warehouse-preview?__warehouseRoute=/api/scout/:path*"
+    },
+    {
+      "source": "/api/:section(ask|decision|strategy|alt-universe|replay|opposition|pool|squad-dna|war-room|intel|optimizer|history|players|weakness|pressure|insights|intelligence)/:path*",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/:section/:path*"
+    },
+    {
+      "source": "/api/retention/2027/franchises/:team/picks",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/retention/2027/franchises/:team/picks"
     },
     {
       "source": "/((?!api/).*)",

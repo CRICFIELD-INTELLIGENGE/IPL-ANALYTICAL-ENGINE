@@ -5,7 +5,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { loadWarehouseSnapshot } from "./services/turso-snapshot.js";
 import { scoutPostgresConfigured, loadScoutFromPostgres } from "./services/scout/scout-postgres.js";
-import { isScoutPath, IPL_PATHS, isAnalyticsPath, LAPTOP_ONLY_PATHS, ANALYTICS_KEY_HEADER, CLIENT_IP_HEADER } from "./lib/analytics-routes.js";
+import { loadWarehouseFile, loadWarehouseDir } from "./services/warehouse-files.js";
+import { isScoutPath, IPL_PATHS, isAnalyticsPath, analystMethod, LAPTOP_ONLY_PATHS, ANALYTICS_KEY_HEADER, CLIENT_IP_HEADER } from "./lib/analytics-routes.js";
 import app from "./app.js";
 
 // Routing switch (Vercel env CRICFIELD_ANALYTICS_MODE):
@@ -22,6 +23,7 @@ const LAPTOP_TIMEOUT_MS = 25_000;
 const warehouseDirectory = mkdtempSync(join(tmpdir(), "cricfield-preview-"));
 const scoutPath = join(warehouseDirectory, "global.db");
 const iplPath = join(warehouseDirectory, "sqlite.db");
+const rawPath = join(warehouseDirectory, "raw"); // raw Cricsheet JSONs (not in git, so not in the deployment)
 
 let scout: Promise<void> | undefined;
 let ipl: Promise<void> | undefined;
@@ -34,9 +36,13 @@ function configureScout() {
     return Promise.resolve();
   }
   if (scoutPostgresConfigured()) {
-    const staging = `${scoutPath}.loading`;
-    rmSync(staging, { force: true });
-    return loadScoutFromPostgres(staging).then(() => rename(staging, scoutPath));
+    // Whole-file copy (about 10 MB gzip); the row-by-row rebuild stays as the fallback.
+    return loadWarehouseFile("scout-serving.db", scoutPath).catch(error => {
+      console.error("Scout file load failed, rebuilding from rows", error instanceof Error ? error.message : "Error");
+      const staging = `${scoutPath}.loading`;
+      rmSync(staging, { force: true });
+      return loadScoutFromPostgres(staging).then(() => rename(staging, scoutPath));
+    });
   }
   const url = process.env.TURSO_SCOUT_DATABASE_URL;
   const token = process.env.TURSO_SCOUT_AUTH_TOKEN;
@@ -52,6 +58,10 @@ function configureIpl() {
   if (fallback && existsSync(fallback)) {
     copyFileSync(fallback, iplPath);
     return Promise.resolve();
+  }
+  if (scoutPostgresConfigured()) { // Supabase (Turso is blocked)
+    process.env.CRICFIELD_RAW_DIR = rawPath;
+    return Promise.all([loadWarehouseFile("sqlite.db", iplPath), loadWarehouseDir("ipl-raw.json", rawPath)]).then(() => {});
   }
   const url = process.env.TURSO_IPL_DATABASE_URL;
   const token = process.env.TURSO_IPL_AUTH_TOKEN;
@@ -119,6 +129,26 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       process.env.AUCTION_LOG_PATH ??= join(process.cwd(), "artifacts", "api-server", "data", "auction-2027-updates.json");
     }
     return app(req, res);
+  }
+  // AI Analyst tools: read-only engines over the IPL warehouse (some also read the Scout database).
+  const analyst = analystMethod(path);
+  if (analyst) {
+    if (req.method !== analyst) {
+      res.setHeader("Allow", analyst);
+      return json(res, 405, "method_not_allowed");
+    }
+    try {
+      process.env.CRICFIELD_DB_READONLY = "1";
+      process.env.CRICFIELD_SCOUT_DB_PATH = scoutPath;
+      process.env.CRICFIELD_DB_PATH = iplPath;
+      ipl ??= configureIpl().catch(error => { ipl = undefined; throw error; });
+      scout ??= configureScout().catch(error => { scout = undefined; throw error; });
+      await Promise.all([ipl, scout]);
+      return app(req, res);
+    } catch (error) {
+      console.error("Analyst warehouse initialization failed", error instanceof Error ? `${error.name}: ${error.message}` : "Error");
+      return json(res, 503, "ipl_warehouse_unavailable");
+    }
   }
   const isScoutAnalyst = path === "/api/scout/analyst";
   if (path === "/api/scout/analyst/status" && req.method === "GET") return app(req, res);

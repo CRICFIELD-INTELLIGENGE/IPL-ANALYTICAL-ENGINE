@@ -23,7 +23,7 @@
 import fs from "fs";
 import path from "path";
 import { DatabaseSync } from "node:sqlite";
-import { warehousePath, getProjectRoot } from "./decision/db";
+import { warehousePath, getProjectRoot, rawDir } from "./decision/db";
 
 function getRoot(): string {
   return getProjectRoot();
@@ -32,7 +32,7 @@ function getRoot(): string {
 const rawCache = new Map<string, any>();
 function loadRaw(matchId: string): any | null {
   if (rawCache.has(matchId)) return rawCache.get(matchId);
-  const fp = path.join(getRoot(), "lib", "cricket-data", "raw", `${matchId}.json`);
+  const fp = path.join(rawDir(getRoot()), `${matchId}.json`);
   if (!fs.existsSync(fp)) { rawCache.set(matchId, null); return null; }
   const data = JSON.parse(fs.readFileSync(fp, "utf8"));
   rawCache.set(matchId, data);
