@@ -16,7 +16,8 @@ const MDugout = lazy(() => import("./screens/franchise-dugout"));
 const MStats = lazy(() => import("./screens/stats"));
 const MPlayer = lazy(() => import("./screens/player"));
 const MTeams = lazy(() => import("./screens/teams"));
-const MScout = lazy(() => import("./screens/scout"));
+// Phase 1: /scout shows Pressure Intelligence; the notebook screen (./screens/scout) is kept, unmounted.
+const MScout = lazy(() => import("@/components/pressure-intel/pressure-intelligence").then(m => ({ default: () => <m.PressureIntelligence mobile /> })));
 const MAi = lazy(() => import("./screens/ai"));
 const MJournal = lazy(() => import("./screens/journal"));
 

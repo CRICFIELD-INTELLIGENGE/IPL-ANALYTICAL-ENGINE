@@ -1,0 +1,384 @@
+{
+ "model": "contextual_pressure_performance_v1",
+ "score": "reliability_adjusted_score_v1",
+ "validatedAt": "2026-11-18T00:43:07.742Z",
+ "params": {
+  "wicket": 7.09,
+  "lambdaH": 480,
+  "lambdaN": 120,
+  "alpha": 0,
+  "beta": 1.5
+ },
+ "selection": {
+  "method": "Split-half prediction (odd vs even matches). λ minimises the ball-weighted error of predicting the other half's raw per-ball value; α and β maximise how well RAS ranks the other half's raw value (Spearman). Presets with enough players only. Rankings were not inspected while choosing.",
+  "scope": {
+   "comps": [
+    "ipl",
+    "t20i"
+   ],
+   "years": [
+    2016,
+    2026
+   ]
+  },
+  "halfThresholds": {
+   "minBalls": 40,
+   "minMatches": 4
+  },
+  "grid": {
+   "lambdaH": [
+    0,
+    15,
+    30,
+    60,
+    120,
+    240,
+    480,
+    960,
+    1920
+   ],
+   "alpha": [
+    0,
+    0.25,
+    0.5,
+    1
+   ],
+   "beta": [
+    0,
+    0.5,
+    1,
+    1.5,
+    2
+   ]
+  },
+  "minPlayersBothHalves": 30,
+  "objectivePresets": [
+   "final-five",
+   "high-rrr",
+   "powerplay",
+   "bowl-pressure",
+   "final-five-bowl"
+  ],
+  "lambdaFit": [
+   {
+    "lambdaH": 0,
+    "byCase": {
+     "final-five": 1397.1,
+     "high-rrr": 1419.9,
+     "powerplay": 580.1,
+     "bowl-pressure": 2600,
+     "final-five-bowl": 1114.7
+    },
+    "mean": 1422.4
+   },
+   {
+    "lambdaH": 15,
+    "byCase": {
+     "final-five": 1199.3,
+     "high-rrr": 1243.5,
+     "powerplay": 521.6,
+     "bowl-pressure": 2153.2,
+     "final-five-bowl": 984.4
+    },
+    "mean": 1220.4
+   },
+   {
+    "lambdaH": 30,
+    "byCase": {
+     "final-five": 1093.4,
+     "high-rrr": 1137.5,
+     "powerplay": 484.4,
+     "bowl-pressure": 1895.3,
+     "final-five-bowl": 902.8
+    },
+    "mean": 1102.7
+   },
+   {
+    "lambdaH": 60,
+    "byCase": {
+     "final-five": 989.2,
+     "high-rrr": 1019,
+     "powerplay": 439.2,
+     "bowl-pressure": 1615.4,
+     "final-five-bowl": 805.3
+    },
+    "mean": 973.6
+   },
+   {
+    "lambdaH": 120,
+    "byCase": {
+     "final-five": 922.1,
+     "high-rrr": 922.6,
+     "powerplay": 395.2,
+     "bowl-pressure": 1382.5,
+     "final-five-bowl": 712.2
+    },
+    "mean": 866.9
+   },
+   {
+    "lambdaH": 240,
+    "byCase": {
+     "final-five": 910.3,
+     "high-rrr": 875.7,
+     "powerplay": 362.4,
+     "bowl-pressure": 1232.3,
+     "final-five-bowl": 642.5
+    },
+    "mean": 804.6
+   },
+   {
+    "lambdaH": 480,
+    "byCase": {
+     "final-five": 944.6,
+     "high-rrr": 877.2,
+     "powerplay": 346.3,
+     "bowl-pressure": 1153,
+     "final-five-bowl": 602.8
+    },
+    "mean": 784.8
+   },
+   {
+    "lambdaH": 960,
+    "byCase": {
+     "final-five": 999,
+     "high-rrr": 904.5,
+     "powerplay": 345.8,
+     "bowl-pressure": 1116.1,
+     "final-five-bowl": 587.6
+    },
+    "mean": 790.6
+   },
+   {
+    "lambdaH": 1920,
+    "byCase": {
+     "final-five": 1049.8,
+     "high-rrr": 934.8,
+     "powerplay": 354.8,
+     "bowl-pressure": 1099.8,
+     "final-five-bowl": 586.3
+    },
+    "mean": 805.1
+   }
+  ],
+  "candidates": 20,
+  "best": {
+   "wicket": 7.09,
+   "lambdaH": 480,
+   "alpha": 0,
+   "beta": 1.5,
+   "mean": 0.1618,
+   "byCase": {
+    "final-five": 0.314,
+    "high-rrr": 0.116,
+    "powerplay": 0.165,
+    "bowl-pressure": 0.051,
+    "final-five-bowl": 0.163
+   }
+  },
+  "runnersUp": [
+   {
+    "wicket": 7.09,
+    "lambdaH": 480,
+    "alpha": 0,
+    "beta": 2,
+    "mean": 0.1618,
+    "byCase": {
+     "final-five": 0.299,
+     "high-rrr": 0.115,
+     "powerplay": 0.162,
+     "bowl-pressure": 0.07,
+     "final-five-bowl": 0.163
+    }
+   },
+   {
+    "wicket": 7.09,
+    "lambdaH": 480,
+    "alpha": 0,
+    "beta": 1,
+    "mean": 0.1598,
+    "byCase": {
+     "final-five": 0.335,
+     "high-rrr": 0.112,
+     "powerplay": 0.163,
+     "bowl-pressure": 0.033,
+     "final-five-bowl": 0.156
+    }
+   },
+   {
+    "wicket": 7.09,
+    "lambdaH": 480,
+    "alpha": 0,
+    "beta": 0.5,
+    "mean": 0.1516,
+    "byCase": {
+     "final-five": 0.375,
+     "high-rrr": 0.117,
+     "powerplay": 0.158,
+     "bowl-pressure": -0.034,
+     "final-five-bowl": 0.142
+    }
+   },
+   {
+    "wicket": 7.09,
+    "lambdaH": 480,
+    "alpha": 0.25,
+    "beta": 2,
+    "mean": 0.1454,
+    "byCase": {
+     "final-five": 0.3,
+     "high-rrr": 0.092,
+     "powerplay": 0.143,
+     "bowl-pressure": 0.04,
+     "final-five-bowl": 0.152
+    }
+   },
+   {
+    "wicket": 7.09,
+    "lambdaH": 480,
+    "alpha": 0.25,
+    "beta": 1.5,
+    "mean": 0.1388,
+    "byCase": {
+     "final-five": 0.314,
+     "high-rrr": 0.077,
+     "powerplay": 0.136,
+     "bowl-pressure": 0.021,
+     "final-five-bowl": 0.146
+    }
+   }
+  ],
+  "wicket": "Mean over balls faced of the drop in expected first-innings runs still to come when one more wicket is down (same overs left), IPL + T20I 2016+."
+ },
+ "diagnostics": [
+  {
+   "id": "final-five",
+   "discipline": "bat",
+   "rasPredictsOtherHalf": 0.314,
+   "rasRepeat": 0.501,
+   "pressureRepeat": 0.414,
+   "liftRepeat": 0.085,
+   "playersBothHalves": 194,
+   "pressureVsOrdinary": 0.3,
+   "qualified": 171
+  },
+  {
+   "id": "high-rrr",
+   "discipline": "bat",
+   "rasPredictsOtherHalf": 0.116,
+   "rasRepeat": 0.401,
+   "pressureRepeat": 0.162,
+   "liftRepeat": 0.101,
+   "playersBothHalves": 155,
+   "pressureVsOrdinary": 0.4,
+   "qualified": 146
+  },
+  {
+   "id": "collapse",
+   "discipline": "bat",
+   "rasPredictsOtherHalf": 0,
+   "rasRepeat": 0.5,
+   "pressureRepeat": 1,
+   "liftRepeat": -0.5,
+   "playersBothHalves": 3,
+   "pressureVsOrdinary": 0,
+   "qualified": 0
+  },
+  {
+   "id": "powerplay",
+   "discipline": "bat",
+   "rasPredictsOtherHalf": 0.165,
+   "rasRepeat": 0.602,
+   "pressureRepeat": 0.153,
+   "liftRepeat": 0.146,
+   "playersBothHalves": 180,
+   "pressureVsOrdinary": 0.317,
+   "qualified": 176
+  },
+  {
+   "id": "bowl-pressure",
+   "discipline": "bowl",
+   "rasPredictsOtherHalf": 0.051,
+   "rasRepeat": 0.223,
+   "pressureRepeat": -0.172,
+   "liftRepeat": 0.295,
+   "playersBothHalves": 33,
+   "pressureVsOrdinary": 0.303,
+   "qualified": 21
+  },
+  {
+   "id": "final-five-bowl",
+   "discipline": "bowl",
+   "rasPredictsOtherHalf": 0.163,
+   "rasRepeat": 0.63,
+   "pressureRepeat": 0.085,
+   "liftRepeat": 0.026,
+   "playersBothHalves": 179,
+   "pressureVsOrdinary": 0.316,
+   "qualified": 162
+  }
+ ],
+ "sensitivity": [
+  {
+   "rule": "High required rate: 10 → 9",
+   "overlapTop20": 17
+  },
+  {
+   "rule": "High required rate: 10 → 11",
+   "overlapTop20": 14
+  },
+  {
+   "rule": "Final overs: 16–20 → 15–20",
+   "overlapTop20": 16
+  },
+  {
+   "rule": "Final overs: 16–20 → 17–20",
+   "overlapTop20": 16
+  }
+ ],
+ "wicketSensitivity": [
+  {
+   "wicket": 0,
+   "byCase": {
+    "final-five": 0.207,
+    "high-rrr": 0.166,
+    "powerplay": 0.24,
+    "bowl-pressure": 0.037,
+    "final-five-bowl": 0.22
+   }
+  },
+  {
+   "wicket": 3.54,
+   "byCase": {
+    "final-five": 0.284,
+    "high-rrr": 0.134,
+    "powerplay": 0.188,
+    "bowl-pressure": 0.014,
+    "final-five-bowl": 0.188
+   }
+  },
+  {
+   "wicket": 7.09,
+   "byCase": {
+    "final-five": 0.314,
+    "high-rrr": 0.116,
+    "powerplay": 0.165,
+    "bowl-pressure": 0.051,
+    "final-five-bowl": 0.163
+   }
+  },
+  {
+   "wicket": 14.18,
+   "byCase": {
+    "final-five": 0.319,
+    "high-rrr": 0.108,
+    "powerplay": 0.155,
+    "bowl-pressure": 0.084,
+    "final-five-bowl": 0.136
+   }
+  }
+ ],
+ "fullThresholds": {
+  "minBalls": 120,
+  "minMatches": 10
+ }
+}
