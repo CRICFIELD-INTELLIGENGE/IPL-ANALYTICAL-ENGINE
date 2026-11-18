@@ -171,41 +171,8 @@ export default function ScoutHomePage() {
 
   return (
     <Layout>
-      <div className="scout-terminal scout-notebook w-full max-w-full min-h-[calc(100vh-56px)] bg-[#03070E] text-slate-100 transition-colors">
-        {/* Top View Selector Bar */}
-        <div className="border-b border-white/10 bg-black/50 backdrop-blur-md px-4 sm:px-8 py-2.5 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setViewMode("pressure")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black tracking-wider uppercase transition-all ${
-                viewMode === "pressure"
-                  ? "bg-amber-400/15 text-amber-400 border border-amber-400/40 shadow-lg"
-                  : "text-slate-400 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <span>⚗️ Situation Pressure Lab</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode("scout")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black tracking-wider uppercase transition-all ${
-                viewMode === "scout"
-                  ? "bg-amber-400/15 text-amber-400 border border-amber-400/40 shadow-lg"
-                  : "text-slate-400 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <span>🌐 Global Talent Discovery</span>
-            </button>
-          </div>
-          <div className="text-[11px] font-mono text-slate-400 hidden sm:block">
-            {viewMode === "pressure" ? "EMPIRICAL MATCH SITUATION ENGINE" : "2,000+ DOMESTIC & GLOBAL T20 PLAYERS"}
-          </div>
-        </div>
-
-        {viewMode === "pressure" ? (
-          <ScoutPressureLab />
-        ) : (
+      <div className="scout-terminal scout-notebook w-full max-w-full min-h-[calc(100vh-56px)] bg-[#060B13] text-slate-100 transition-colors">
+        {viewMode === "scout" ? (
           <ScoutCinematicRoom
             discipline={discipline}
             setDiscipline={setDiscipline}
@@ -237,6 +204,8 @@ export default function ScoutHomePage() {
             isShortlisted={isShortlisted}
             onApplyPreset={applyPreset}
           />
+        ) : (
+          <ScoutPressureLab />
         )}
       </div>
     </Layout>
