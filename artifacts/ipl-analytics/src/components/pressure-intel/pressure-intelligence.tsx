@@ -56,10 +56,10 @@ const DESKTOP_TABS: { id: Exclude<Tab, "builder" | "stats">; label: string; icon
 ];
 
 const MOBILE_TABS: { id: Tab; label: string }[] = [
-  { id: "rankings", label: "Rankings" },
-  { id: "stats", label: "Stats" },
   { id: "builder", label: "Builder" },
+  { id: "rankings", label: "Rankings" },
   { id: "compare", label: "Compare" },
+  { id: "stats", label: "Stats" },
   { id: "overview", label: "Coverage" },
 ];
 
