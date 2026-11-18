@@ -1,0 +1,399 @@
+{
+ "note": "Hand-entered rows that differ from the Cricsheet ball-by-ball data. fix_stats.py applies them after generating. Values were not verified against Cricsheet; 'generated' holds the Cricsheet-derived values they replace. Salil Arora/S Arora is one player (same Cricsheet registry id); the generator now merges them, so no override is needed.",
+ "overrides": {
+  "player-career-stats.json": {
+   "batters": [
+    {
+     "row": {
+      "player": "Ravi Singh",
+      "team": "Rajasthan Royals",
+      "teamName": "Rajasthan Royals",
+      "matches": 15,
+      "innings": 12,
+      "notOuts": 6,
+      "runs": 303,
+      "balls": 201,
+      "avg": 50.5,
+      "sr": 150.75,
+      "fours": 29,
+      "sixes": 11,
+      "fifties": 2,
+      "hundreds": 0,
+      "highest": 87,
+      "ppSr": null,
+      "middleSr": null,
+      "deathSr": null,
+      "boundaryPct": 100,
+      "highestNotOut": true
+     },
+     "fields": [
+      "innings",
+      "notOuts",
+      "runs",
+      "balls",
+      "avg",
+      "sr",
+      "fours",
+      "sixes",
+      "fifties",
+      "highest",
+      "ppSr",
+      "middleSr",
+      "deathSr"
+     ],
+     "generated": {
+      "innings": 1,
+      "notOuts": 0,
+      "runs": 4,
+      "balls": 2,
+      "avg": 4,
+      "sr": 200,
+      "fours": 1,
+      "sixes": 0,
+      "fifties": 0,
+      "highest": 4,
+      "ppSr": 0,
+      "middleSr": 200,
+      "deathSr": 0
+     }
+    }
+   ]
+  },
+  "player-season-stats.json": {
+   "batters": [
+    {
+     "row": {
+      "player": "V Kohli",
+      "team": "Royal Challengers Bengaluru",
+      "teamName": "Royal Challengers Bengaluru",
+      "matches": 16,
+      "innings": 16,
+      "notOuts": 4,
+      "runs": 741,
+      "balls": 407,
+      "avg": 61.75,
+      "sr": 154.2,
+      "fours": 68,
+      "sixes": 38,
+      "fifties": 8,
+      "hundreds": 1,
+      "highest": 105,
+      "ppSr": 174.76,
+      "middleSr": 143.1,
+      "deathSr": 244.44,
+      "boundaryPct": 65.48,
+      "season": "2026",
+      "highestNotOut": true
+     },
+     "fields": [
+      "runs",
+      "avg",
+      "sr",
+      "fours",
+      "sixes",
+      "fifties"
+     ],
+     "generated": {
+      "runs": 675,
+      "avg": 56.25,
+      "sr": 165.85,
+      "fours": 73,
+      "sixes": 25,
+      "fifties": 5
+     }
+    },
+    {
+     "row": {
+      "player": "SP Narine",
+      "team": "Kolkata Knight Riders",
+      "teamName": "Kolkata Knight Riders",
+      "matches": 4,
+      "innings": 4,
+      "notOuts": 1,
+      "runs": 380,
+      "balls": 32,
+      "avg": 13.33,
+      "sr": 182.4,
+      "fours": 2,
+      "sixes": 4,
+      "fifties": 0,
+      "hundreds": 0,
+      "highest": 24,
+      "ppSr": 141.18,
+      "middleSr": 300,
+      "deathSr": 36.36,
+      "boundaryPct": 80,
+      "season": "2026",
+      "mvpPoints": 485,
+      "highestNotOut": false
+     },
+     "fields": [
+      "runs",
+      "sr",
+      "mvpPoints"
+     ],
+     "generated": {
+      "runs": 40,
+      "sr": 125
+     }
+    },
+    {
+     "row": {
+      "player": "Ravi Singh",
+      "team": "Rajasthan Royals",
+      "teamName": "Rajasthan Royals",
+      "matches": 15,
+      "innings": 12,
+      "notOuts": 6,
+      "runs": 303,
+      "balls": 201,
+      "avg": 50.5,
+      "sr": 150.75,
+      "fours": 29,
+      "sixes": 11,
+      "fifties": 2,
+      "hundreds": 0,
+      "highest": 87,
+      "ppSr": null,
+      "middleSr": null,
+      "deathSr": null,
+      "boundaryPct": 60.07,
+      "season": "2026",
+      "highestNotOut": true
+     },
+     "fields": [
+      "innings",
+      "notOuts",
+      "runs",
+      "balls",
+      "avg",
+      "sr",
+      "fours",
+      "sixes",
+      "fifties",
+      "highest",
+      "ppSr",
+      "middleSr",
+      "deathSr",
+      "boundaryPct"
+     ],
+     "generated": {
+      "innings": 1,
+      "notOuts": 0,
+      "runs": 4,
+      "balls": 2,
+      "avg": 4,
+      "sr": 200,
+      "fours": 1,
+      "sixes": 0,
+      "fifties": 0,
+      "highest": 4,
+      "ppSr": 0,
+      "middleSr": 200,
+      "deathSr": 0,
+      "boundaryPct": 100
+     }
+    }
+   ],
+   "bowlers": [
+    {
+     "row": {
+      "player": "Harshal Patel",
+      "team": "Punjab Kings",
+      "teamName": "Punjab Kings",
+      "matches": 14,
+      "innings": 14,
+      "overs": "49.0",
+      "balls": 294,
+      "runs": 398,
+      "wickets": 24,
+      "econ": 8.12,
+      "avg": 16.58,
+      "sr": 12.25,
+      "fourW": 1,
+      "fiveW": 0,
+      "best": "4/22",
+      "season": "2026"
+     },
+     "fields": [
+      "player",
+      "team",
+      "teamName",
+      "matches",
+      "innings",
+      "overs",
+      "balls",
+      "runs",
+      "wickets",
+      "econ",
+      "avg",
+      "sr",
+      "fourW",
+      "fiveW",
+      "best",
+      "season"
+     ],
+     "generated": null
+    },
+    {
+     "row": {
+      "player": "SP Narine",
+      "team": "Kolkata Knight Riders",
+      "teamName": "Kolkata Knight Riders",
+      "matches": 13,
+      "innings": 13,
+      "overs": "51.0",
+      "balls": 306,
+      "runs": 339,
+      "wickets": 18,
+      "econ": 6.8,
+      "avg": 22.6,
+      "sr": 20.4,
+      "fourW": 0,
+      "fiveW": 0,
+      "best": "2/26",
+      "dots": 131,
+      "dotPct": 42.81,
+      "boundaries": 40,
+      "fours": 22,
+      "sixes": 18,
+      "boundaryPct": 13.07,
+      "ballsPerBoundary": 7.7,
+      "trueEconomy": -1.55,
+      "ppWickets": 2,
+      "middleWickets": 4,
+      "deathWickets": 9,
+      "season": "2026",
+      "mvpPoints": 485
+     },
+     "fields": [
+      "wickets",
+      "econ",
+      "mvpPoints"
+     ],
+     "generated": {
+      "wickets": 15,
+      "econ": 6.65
+     }
+    }
+   ]
+  },
+  "player-team-stats.json": {
+   "batters": [
+    {
+     "row": {
+      "player": "Ravi Singh",
+      "team": "Rajasthan Royals",
+      "teamName": "Rajasthan Royals",
+      "matches": 15,
+      "innings": 12,
+      "notOuts": 6,
+      "runs": 303,
+      "balls": 201,
+      "avg": 50.5,
+      "sr": 150.75,
+      "fours": 29,
+      "sixes": 11,
+      "fifties": 2,
+      "hundreds": 0,
+      "highest": 87,
+      "ppSr": null,
+      "middleSr": null,
+      "deathSr": null,
+      "boundaryPct": 100
+     },
+     "fields": [
+      "innings",
+      "notOuts",
+      "runs",
+      "balls",
+      "avg",
+      "sr",
+      "fours",
+      "sixes",
+      "fifties",
+      "highest",
+      "ppSr",
+      "middleSr",
+      "deathSr"
+     ],
+     "generated": {
+      "innings": 1,
+      "notOuts": 0,
+      "runs": 4,
+      "balls": 2,
+      "avg": 4,
+      "sr": 200,
+      "fours": 1,
+      "sixes": 0,
+      "fifties": 0,
+      "highest": 4,
+      "ppSr": 0,
+      "middleSr": 200,
+      "deathSr": 0
+     }
+    }
+   ]
+  },
+  "player-team-season-stats.json": {
+   "batters": [
+    {
+     "row": {
+      "player": "Ravi Singh",
+      "team": "Rajasthan Royals",
+      "teamName": "Rajasthan Royals",
+      "matches": 15,
+      "innings": 12,
+      "notOuts": 6,
+      "runs": 303,
+      "balls": 201,
+      "avg": 50.5,
+      "sr": 150.75,
+      "fours": 29,
+      "sixes": 11,
+      "fifties": 2,
+      "hundreds": 0,
+      "highest": 87,
+      "ppSr": null,
+      "middleSr": null,
+      "deathSr": null,
+      "boundaryPct": 60.07,
+      "season": "2026"
+     },
+     "fields": [
+      "innings",
+      "notOuts",
+      "runs",
+      "balls",
+      "avg",
+      "sr",
+      "fours",
+      "sixes",
+      "fifties",
+      "highest",
+      "ppSr",
+      "middleSr",
+      "deathSr",
+      "boundaryPct"
+     ],
+     "generated": {
+      "innings": 1,
+      "notOuts": 0,
+      "runs": 4,
+      "balls": 2,
+      "avg": 4,
+      "sr": 200,
+      "fours": 1,
+      "sixes": 0,
+      "fifties": 0,
+      "highest": 4,
+      "ppSr": 0,
+      "middleSr": 200,
+      "deathSr": 0,
+      "boundaryPct": 100
+     }
+    }
+   ]
+  }
+ }
+}

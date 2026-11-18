@@ -6,6 +6,11 @@ Fixes:
   3. Not-outs tracked -> correct avg = runs / (innings - not_outs)
   4. No wide double-counting (runs.batter is always 0 on wides per Cricsheet spec)
   5. Saves all 6 datasets + syncs to api-server & node_modules
+  6. Matches = appearances in the playing XI (info.players, incl. impact subs), not innings batted/bowled
+  7. Season = year of the first match date ("2020/21" is IPL 2020, not 2021)
+  8. highestNotOut flags a not-out highest score
+  9. One player = one Cricsheet registry id, shown under their latest name (e.g. "NA Saini" -> "Navdeep Saini");
+     different players sharing a name are kept apart with " (2)"
 """
 
 import os, json, shutil, sys
@@ -75,7 +80,7 @@ def team_of(p):
 def bat_rec(player, team='', season=''):
     return dict(player=player, team=team, season=season,
                 matches=set(), innings=0, not_outs=0,
-                runs=0, balls=0, fours=0, sixes=0, match_scores={},
+                runs=0, balls=0, fours=0, sixes=0, match_scores={}, match_not_out={},
                 ppR=0, ppB=0, midR=0, midB=0, dR=0, dB=0)
 
 def bowl_rec(player, team='', season=''):
@@ -88,6 +93,36 @@ def bowl_rec(player, team='', season=''):
 files = sorted(f for f in os.listdir(RAW_DIR) if f.endswith('.json'))
 print(f'Processing {len(files)} files (Super Overs excluded)...')
 
+# Cricsheet sometimes renames a player between seasons; the registry id is stable. Use the latest name everywhere.
+_latest = {}
+_apps = {}
+for fname in files:
+    try:
+        with open(os.path.join(RAW_DIR, fname), encoding='utf-8') as f:
+            _info = json.load(f).get('info', {})
+    except Exception:
+        continue
+    _d = (_info.get('dates') or [''])[0]
+    _reg = _info.get('registry', {}).get('people', {})
+    for _n, _id in _reg.items():
+        if _id not in _latest or _d >= _latest[_id][0]:
+            _latest[_id] = (_d, _n)
+    for _names in _info.get('players', {}).values():
+        for _n in _names:
+            _apps[_reg.get(_n)] = _apps.get(_reg.get(_n), 0) + 1
+canonical_by_id = {k: v[1] for k, v in _latest.items()}
+# Different players with the same name (e.g. two "Harmeet Singh"): the one with more matches keeps it, the others get " (2)"...
+_by_name = {}
+for _id, _n in canonical_by_id.items():
+    _by_name.setdefault(_n, []).append(_id)
+for _n, _ids in _by_name.items():
+    if len(_ids) > 1:
+        for _k, _id in enumerate(sorted(_ids, key=lambda i: -_apps.get(i, 0))[1:], start=2):
+            canonical_by_id[_id] = f'{_n} ({_k})'
+            print(f'  same name, different player: {_id} -> {canonical_by_id[_id]}')
+
+# Playing-XI appearances: ('c', p) career, ('s', p, season), ('t', p, team), ('ts', p, team, season) -> match ids.
+squads = {}
 career_bat = {}; career_bowl  = {}
 season_bat = {}; season_bowl  = {}
 team_bat   = {}; team_bowl    = {}
@@ -99,8 +134,16 @@ for fname in files:
         with open(fpath, encoding='utf-8') as f:
             m = json.load(f)
         info = m.get('info', {})
-        s = norm_s(info.get('season', ''))
+        # IPL seasons sit inside one calendar year; Cricsheet labels IPL 2020 "2020/21", which norm_s maps to 2021.
+        s = (info.get('dates') or [''])[0][:4] or norm_s(info.get('season', ''))
         m_id = fname.replace('.json', '')
+        reg = info.get('registry', {}).get('people', {})
+        canon = lambda n: canonical_by_id.get(reg.get(n), n) if n else n
+        for sq_team, names in info.get('players', {}).items():
+            sq_team = ct(sq_team)
+            for pname in map(canon, names):
+                for k in (('c', pname), ('s', pname, s), ('t', pname, sq_team), ('ts', pname, sq_team, s)):
+                    squads.setdefault(k, set()).add(m_id)
 
         for inning in m.get('innings', []):
             if inning.get('super_over'):
@@ -119,8 +162,8 @@ for fname in files:
             for over in inning.get('overs', []):
                 on = over.get('over', 0)
                 for d in over.get('deliveries', []):
-                    b = d.get('batter')
-                    w = d.get('bowler')
+                    b = canon(d.get('batter'))
+                    w = canon(d.get('bowler'))
                     r = d.get('runs', {})
                     br = r.get('batter', 0)
                     tr = r.get('total', 0)
@@ -165,7 +208,7 @@ for fname in files:
 
                     if d.get('wickets'):
                         for wk in d['wickets']:
-                            pout = wk.get('player_out')
+                            pout = canon(wk.get('player_out'))
                             kind = wk.get('kind', '')
                             if pout and pout in inn_bat:
                                 inn_bat[pout]['dismissed'] = True
@@ -199,6 +242,7 @@ for fname in files:
                     r['fours']    += ib['fours']
                     r['sixes']    += ib['sixes']
                     r['match_scores'][m_id] = r['match_scores'].get(m_id, 0) + ib['runs']
+                    r['match_not_out'][m_id] = not ib['dismissed']
                     r['ppR']  += ib['ppR'];  r['ppB']  += ib['ppB']
                     r['midR'] += ib['midR']; r['midB'] += ib['midB']
                     r['dR']   += ib['dR'];   r['dB']   += ib['dB']
@@ -250,6 +294,12 @@ print(f'Innings > Matches anomalies remaining: {len(anomalies)}')
 for p, mc, ic in anomalies[:10]:
     print(f'  {p:<22s}  matches={mc}  innings={ic}')
 
+def played(rec, sv=None, tv=None):
+    """Matches in the playing XI for this record's scope; never fewer than the matches batted/bowled in."""
+    p = rec['player']
+    k = ('ts', p, tv, sv) if sv and tv else ('s', p, sv) if sv else ('t', p, tv) if tv else ('c', p)
+    return len(squads.get(k, set()) | rec['matches'])
+
 # Formatters
 def fb(rec, sv=None, tv=None):
     runs  = rec['runs']
@@ -266,14 +316,15 @@ def fb(rec, sv=None, tv=None):
     f50   = sum(1 for sc in scores if 50 <= sc < 100)
     f100  = sum(1 for sc in scores if sc >= 100)
     hs    = max(scores) if scores else 0
+    hs_no = any(rec['match_not_out'].get(mid) for mid, sc in rec['match_scores'].items() if sc == hs)
     bpct  = round((rec['fours']*4+rec['sixes']*6)/runs*100, 2) if runs>0 else 0.0
     team  = tv or rec.get('team') or team_of(rec['player'])
     out   = dict(player=rec['player'], team=team, teamName=team,
-                 matches=len(rec['matches']), innings=inn, notOuts=no,
+                 matches=played(rec, sv, tv), innings=inn, notOuts=no,
                  runs=runs, balls=balls, avg=avg, sr=sr,
                  fours=rec['fours'], sixes=rec['sixes'],
                  fifties=f50, hundreds=f100, highest=hs,
-                 ppSr=ppSr, middleSr=midSr, deathSr=dSr, boundaryPct=bpct)
+                 ppSr=ppSr, middleSr=midSr, deathSr=dSr, boundaryPct=bpct, highestNotOut=hs_no)
     if sv: out['season'] = sv
     return out
 
@@ -298,7 +349,7 @@ def fw(rec, sv=None, tv=None):
     fW = sum(1 for mw in rec['match_wickets'].values() if mw==4)
     vW = sum(1 for mw in rec['match_wickets'].values() if mw>=5)
     out = dict(player=rec['player'], team=team, teamName=team,
-               matches=len(rec['matches']), innings=rec['innings'],
+               matches=played(rec, sv, tv), innings=rec['innings'],
                overs=f"{balls//6}.{balls%6}", balls=balls, runs=runs, wickets=wkts,
                econ=econ, avg=avg, sr=sr, fourW=fW, fiveW=vW, best=bf,
                dots=rec['dots'], dotPct=dot,
@@ -312,8 +363,27 @@ def fw(rec, sv=None, tv=None):
 
 print('Building datasets...')
 
-cb  = sorted([fb(r) for r in career_bat.values()],  key=lambda x: -x['runs'])
-cbl = sorted([fw(r) for r in career_bowl.values()], key=lambda x: -x['wickets'])
+# Hand-entered rows that differ from the Cricsheet data (scripts/stats-overrides.json). Applied, and listed, so they
+# are never lost silently on a rerun -- and never mistaken for generated numbers.
+OVR_PATH = os.path.join(ROOT, 'scripts', 'stats-overrides.json')
+OVR = json.load(open(OVR_PATH, encoding='utf-8'))['overrides'] if os.path.exists(OVR_PATH) else {}
+def apply_overrides(rows, fname, sec):
+    key = lambda r: (r['player'], r['team'], r.get('season', ''))
+    idx = {key(r): r for r in rows}
+    for o in OVR.get(fname, {}).get(sec, []):
+        src = o['row']
+        r = idx.get(key(src))
+        if r is None:
+            rows.append(dict(src)); print(f'  override (added row) {fname} {sec} {key(src)}'); continue
+        for fld in o['fields']:
+            if fld in src: r[fld] = src[fld]
+            else: r.pop(fld, None)
+        if r['innings'] > r['matches']: r['matches'] = src['matches']  # the override's own sample
+        print(f'  override {fname} {sec} {key(src)}: {", ".join(o["fields"])}')
+    return rows
+
+cb  = sorted(apply_overrides([fb(r) for r in career_bat.values()], 'player-career-stats.json', 'batters'),  key=lambda x: -x['runs'])
+cbl = sorted(apply_overrides([fw(r) for r in career_bowl.values()], 'player-career-stats.json', 'bowlers'), key=lambda x: -x['wickets'])
 
 with open(os.path.join(PUBLIC_DIR,'player-career-stats.json'),'w',encoding='utf-8') as f:
     json.dump({'batters':cb,'bowlers':cbl}, f, indent=2)
@@ -327,18 +397,18 @@ with open(os.path.join(PUBLIC_DIR,'top-bowlers.json'),'w',encoding='utf-8') as f
     json.dump({'wickets':cbl,'econ':sorted(cbl,key=lambda x:x['econ']),
                'avg':sorted(cbl,key=lambda x:(x['avg'] if x['avg']>0 else 999)),'death':cbl}, f, indent=2)
 
-sb  = sorted([fb(r,sv=r.get('season','')) for r in season_bat.values()],  key=lambda x:(x.get('season',''),-x['runs']))
-sbl = sorted([fw(r,sv=r.get('season','')) for r in season_bowl.values()], key=lambda x:(x.get('season',''),-x['wickets']))
+sb  = sorted(apply_overrides([fb(r,sv=r.get('season','')) for r in season_bat.values()], 'player-season-stats.json', 'batters'),  key=lambda x:(x.get('season',''),-x['runs']))
+sbl = sorted(apply_overrides([fw(r,sv=r.get('season','')) for r in season_bowl.values()], 'player-season-stats.json', 'bowlers'), key=lambda x:(x.get('season',''),-x['wickets']))
 with open(os.path.join(PUBLIC_DIR,'player-season-stats.json'),'w',encoding='utf-8') as f:
     json.dump({'batters':sb,'bowlers':sbl}, f, indent=2)
 
-tb  = sorted([fb(r,tv=r.get('team','')) for r in team_bat.values()],  key=lambda x:(x['team'],-x['runs']))
-tbl = sorted([fw(r,tv=r.get('team','')) for r in team_bowl.values()], key=lambda x:(x['team'],-x['wickets']))
+tb  = sorted(apply_overrides([fb(r,tv=r.get('team','')) for r in team_bat.values()], 'player-team-stats.json', 'batters'),  key=lambda x:(x['team'],-x['runs']))
+tbl = sorted(apply_overrides([fw(r,tv=r.get('team','')) for r in team_bowl.values()], 'player-team-stats.json', 'bowlers'), key=lambda x:(x['team'],-x['wickets']))
 with open(os.path.join(PUBLIC_DIR,'player-team-stats.json'),'w',encoding='utf-8') as f:
     json.dump({'batters':tb,'bowlers':tbl}, f, indent=2)
 
-tsb  = sorted([fb(r,sv=r.get('season',''),tv=r.get('team','')) for r in ts_bat.values()],  key=lambda x:(x.get('season',''),x['team'],-x['runs']))
-tsbl = sorted([fw(r,sv=r.get('season',''),tv=r.get('team','')) for r in ts_bowl.values()], key=lambda x:(x.get('season',''),x['team'],-x['wickets']))
+tsb  = sorted(apply_overrides([fb(r,sv=r.get('season',''),tv=r.get('team','')) for r in ts_bat.values()], 'player-team-season-stats.json', 'batters'),  key=lambda x:(x.get('season',''),x['team'],-x['runs']))
+tsbl = sorted(apply_overrides([fw(r,sv=r.get('season',''),tv=r.get('team','')) for r in ts_bowl.values()], 'player-team-season-stats.json', 'bowlers'), key=lambda x:(x.get('season',''),x['team'],-x['wickets']))
 with open(os.path.join(PUBLIC_DIR,'player-team-season-stats.json'),'w',encoding='utf-8') as f:
     json.dump({'batters':tsb,'bowlers':tsbl}, f, indent=2)
 
