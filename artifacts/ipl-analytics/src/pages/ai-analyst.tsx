@@ -26,7 +26,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout";
 import { GlassCard } from "@/components/glass-card";
 import { DewImpactModal } from "@/components/decision/dew-impact-modal";
-import { MOCK_OVERVIEW } from "@/components/decision/ask-mock";
 import { fetchHistoryOverview } from "@/lib/ask-api";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "wouter";
@@ -472,29 +471,68 @@ const ENGINE_THEMES: Record<string, { card: string; accent: string; accentBg: st
 };
 
 function StatsBar() {
-  const { data } = useQuery({
+  const { data, isPending, isError, refetch } = useQuery({
     queryKey: ["history-overview"],
-    queryFn: fetchHistoryOverview,
+    queryFn: ({ signal }) => fetchHistoryOverview(signal),
     retry: 1,
     staleTime: 30 * 60_000,
   });
-  const c = (data ?? MOCK_OVERVIEW).coverage;
+  const c = data?.coverage;
+  const statusLabel = data ? "12 Active" : isError ? "Offline" : "Checking…";
   const stats = [
-    { icon: Activity, label: "Ball-by-ball deliveries", value: c.deliveries.toLocaleString("en-US"), glow: "text-cyan-600 dark:text-cyan-400", border: "border-slate-200 dark:border-cyan-500/20" },
-    { icon: Globe,    label: "IPL seasons covered",     value: `${c.firstSeason}–${c.lastSeason}`, glow: "text-violet-600 dark:text-violet-400", border: "border-slate-200 dark:border-violet-500/20" },
-    { icon: Users,    label: "Players with ball data",  value: c.players.toLocaleString("en-US"), glow: "text-emerald-600 dark:text-emerald-400", border: "border-slate-200 dark:border-emerald-500/20" },
-    { icon: Zap,      label: "AI decision modules",     value: "12 Live", glow: "text-amber-600 dark:text-amber-400", border: "border-slate-200 dark:border-amber-500/20" },
+    {
+      icon: Activity,
+      label: "Ball-by-ball deliveries",
+      value: c ? c.deliveries.toLocaleString("en-US") : isError ? "Unavailable" : "Loading…",
+      glow: "text-cyan-600 dark:text-cyan-400",
+      border: "border-slate-200 dark:border-cyan-500/20",
+    },
+    {
+      icon: Globe,
+      label: "IPL seasons covered",
+      value: c ? `${c.firstSeason}–${c.lastSeason}` : isError ? "Unavailable" : "Loading…",
+      glow: "text-violet-600 dark:text-violet-400",
+      border: "border-slate-200 dark:border-violet-500/20",
+    },
+    {
+      icon: Users,
+      label: "Players with ball data",
+      value: c ? c.players.toLocaleString("en-US") : isError ? "Unavailable" : "Loading…",
+      glow: "text-emerald-600 dark:text-emerald-400",
+      border: "border-slate-200 dark:border-emerald-500/20",
+    },
+    {
+      icon: Zap,
+      label: "Warehouse modules",
+      value: statusLabel,
+      glow: isError ? "text-rose-500 dark:text-rose-400" : "text-amber-600 dark:text-amber-400",
+      border: isError ? "border-rose-300 dark:border-rose-500/30" : "border-slate-200 dark:border-amber-500/20",
+    },
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 my-6">
-      {stats.map((s, i) => (
-        <GlassCard key={s.label} className={`p-4 bg-white dark:bg-white/[0.02] border ${s.border} hover:border-slate-300 dark:hover:border-white/30 transition-all shadow-sm dark:shadow-none`} delay={i * 0.05}>
-          <s.icon className={`w-4 h-4 ${s.glow} mb-2`} />
-          <div className="font-display font-black text-xl text-slate-900 dark:text-white tracking-tight">{s.value}</div>
-          <div className="text-[11px] text-slate-500 dark:text-muted-foreground mt-0.5 font-mono">{s.label}</div>
-        </GlassCard>
-      ))}
+    <div className="my-6 space-y-2">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {stats.map((s, i) => (
+          <GlassCard key={s.label} className={`p-4 bg-white dark:bg-white/[0.02] border ${s.border} hover:border-slate-300 dark:hover:border-white/30 transition-all shadow-sm dark:shadow-none`} delay={i * 0.05}>
+            <s.icon className={`w-4 h-4 ${s.glow} mb-2`} />
+            <div className={`font-display font-black text-xl tracking-tight ${isPending && !c ? "animate-pulse text-slate-400 dark:text-white/50" : "text-slate-900 dark:text-white"}`}>{s.value}</div>
+            <div className="text-[11px] text-slate-500 dark:text-muted-foreground mt-0.5 font-mono">{s.label}</div>
+          </GlassCard>
+        ))}
+      </div>
+      {isError && (
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-rose-300/60 dark:border-rose-500/30 bg-rose-50/70 dark:bg-rose-950/20 px-3.5 py-2 text-xs text-rose-700 dark:text-rose-200">
+          <span>Warehouse telemetry could not be reached. Deterministic modules remain listed below.</span>
+          <button
+            type="button"
+            onClick={() => void refetch()}
+            className="inline-flex items-center gap-1 rounded-lg border border-rose-400/40 px-2.5 py-1 font-bold hover:bg-rose-500/10 shrink-0"
+          >
+            <RotateCcw className="w-3 h-3" /> Retry
+          </button>
+        </div>
+      )}
     </div>
   );
 }

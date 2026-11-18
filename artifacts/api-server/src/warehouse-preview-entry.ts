@@ -141,9 +141,14 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       process.env.CRICFIELD_DB_READONLY = "1";
       process.env.CRICFIELD_SCOUT_DB_PATH = scoutPath;
       process.env.CRICFIELD_DB_PATH = iplPath;
+      const needsScout = /^\/api\/(scout|pool|war-room|squad-dna)(\/|$)/.test(path);
       ipl ??= configureIpl().catch(error => { ipl = undefined; throw error; });
-      scout ??= configureScout().catch(error => { scout = undefined; throw error; });
-      await Promise.all([ipl, scout]);
+      if (needsScout) {
+        scout ??= configureScout().catch(error => { scout = undefined; throw error; });
+        await Promise.all([ipl, scout]);
+      } else {
+        await ipl;
+      }
       return app(req, res);
     } catch (error) {
       console.error("Analyst warehouse initialization failed", error instanceof Error ? `${error.name}: ${error.message}` : "Error");

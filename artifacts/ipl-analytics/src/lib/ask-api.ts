@@ -112,31 +112,45 @@ export interface HistoryOverview {
 }
 
 async function json<T>(res: Response): Promise<T> {
+  const ct = (res.headers.get("content-type") || "").toLowerCase();
   if (!res.ok) {
-    const body = await res.json().catch(() => null);
+    const body = ct.includes("application/json") ? await res.json().catch(() => null) : null;
     throw new Error(body?.error ?? `HTTP ${res.status}`);
+  }
+  if (ct.includes("text/html")) {
+    throw new Error("Analytics backend returned HTML instead of JSON");
   }
   return res.json() as Promise<T>;
 }
 
-export function askQuestion(question: string): Promise<AskResponse> {
+function withTimeout(signal: AbortSignal | undefined, ms = 12_000): AbortSignal {
+  const t = AbortSignal.timeout(ms);
+  return signal && typeof AbortSignal.any === "function" ? AbortSignal.any([signal, t]) : signal ?? t;
+}
+
+export function askQuestion(question: string, signal?: AbortSignal): Promise<AskResponse> {
   return fetch("/api/ask", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ question }),
+    signal: withTimeout(signal, 15_000),
   }).then((r) => json<AskResponse>(r));
 }
 
-export function runQuery(query: StatQuery): Promise<AskResponse> {
+export function runQuery(query: StatQuery, signal?: AbortSignal): Promise<AskResponse> {
   return fetch("/api/ask/run", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query }),
+    signal: withTimeout(signal, 15_000),
   }).then((r) => json<AskResponse>(r));
 }
 
-export function fetchHistoryOverview(): Promise<HistoryOverview> {
-  return fetch("/api/history/overview").then((r) => json<HistoryOverview>(r));
+export function fetchHistoryOverview(arg?: AbortSignal | { signal?: AbortSignal }): Promise<HistoryOverview> {
+  const signal = arg instanceof AbortSignal ? arg : arg?.signal;
+  return fetch("/api/history/overview", {
+    signal: withTimeout(signal, 12_000),
+  }).then((r) => json<HistoryOverview>(r));
 }
 
 /** Remove one chip's filter from a query (the UI's "×" on an interpretation chip). */

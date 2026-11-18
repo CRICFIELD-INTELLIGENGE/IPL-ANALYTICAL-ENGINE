@@ -403,57 +403,114 @@ const dataUrl = (file: string): string => {
   return `/api/ipl/${name}`;
 };
 
-const fetchJson = async <T>(file: string): Promise<T> => {
-  const cleanFile = file.endsWith(".json") ? file : `${file}.json`;
-  const apiEndpoint = `${import.meta.env.BASE_URL}api/ipl/${cleanFile.replace(/\.json$/, "")}`;
-  try {
-    const res = await fetch(apiEndpoint);
-    const ct = res.headers.get("content-type") || "";
-    if (res.ok && !ct.includes("text/html")) {
-      const data = await res.json();
-      if (data !== null && data !== undefined) {
-        return data as T;
-      }
-    }
-  } catch {
-    // API server or proxy unreachable, seamlessly try static fallback
-  }
+// Authoritative pre-aggregated historical datasets shipped in public/data/*.json.
+// Serving these static-first avoids serverless cold starts and 25s upstream timeouts;
+// dynamic endpoints (such as current-squads.json) keep API-first with bounded fallback.
+const STATIC_AUTHORITATIVE_FILES = new Set([
+  "overview.json",
+  "seasons.json",
+  "teams.json",
+  "venues.json",
+  "top-batters.json",
+  "top-bowlers.json",
+  "season-tops.json",
+  "matches.json",
+  "squads-by-season.json",
+  "captains.json",
+  "points-tables.json",
+  "player-auctions.json",
+  "player-career-stats.json",
+  "player-team-stats.json",
+  "player-season-stats.json",
+  "player-team-season-stats.json",
+  "run-distribution.json",
+  "player-images.json",
+  "player-photo-registry.json",
+  "player-bio.json",
+  "player-latest-teams.json",
+]);
 
-  // Fallback to static JSON asset in public/data
+function mergeSignals(signal: AbortSignal | undefined, timeoutMs: number): { signal: AbortSignal; cleanup: () => void } {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(new DOMException("Request timed out", "TimeoutError")), timeoutMs);
+  const onAbort = () => controller.abort(signal?.reason);
+  if (signal) {
+    if (signal.aborted) controller.abort(signal.reason);
+    else signal.addEventListener("abort", onAbort, { once: true });
+  }
+  return {
+    signal: controller.signal,
+    cleanup: () => {
+      clearTimeout(timer);
+      signal?.removeEventListener("abort", onAbort);
+    },
+  };
+}
+
+async function fetchValidJson<T>(url: string, parentSignal?: AbortSignal, timeoutMs = 8000): Promise<T> {
+  const { signal, cleanup } = mergeSignals(parentSignal, timeoutMs);
+  try {
+    const res = await fetch(url, { signal });
+    const ct = (res.headers.get("content-type") || "").toLowerCase();
+    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+    if (ct.includes("text/html")) throw new Error(`Received HTML instead of JSON for ${url}`);
+    const data = await res.json();
+    if (data === null || data === undefined) throw new Error(`Empty JSON payload for ${url}`);
+    return data as T;
+  } finally {
+    cleanup();
+  }
+}
+
+const fetchJson = async <T>(file: string, signal?: AbortSignal): Promise<T> => {
+  const cleanFile = file.endsWith(".json") ? file : `${file}.json`;
   const staticEndpoint = `${import.meta.env.BASE_URL}data/${cleanFile}`;
-  const staticRes = await fetch(staticEndpoint);
-  if (!staticRes.ok) throw new Error(`Failed to load ${file}: ${staticRes.status}`);
-  return (await staticRes.json()) as T;
+  const apiEndpoint = `${import.meta.env.BASE_URL}api/ipl/${cleanFile.replace(/\.json$/, "")}`;
+  const preferStatic = STATIC_AUTHORITATIVE_FILES.has(cleanFile);
+
+  const primary = preferStatic ? staticEndpoint : apiEndpoint;
+  const secondary = preferStatic ? apiEndpoint : staticEndpoint;
+  const primaryTimeout = preferStatic ? 12000 : 6000;
+
+  try {
+    return await fetchValidJson<T>(primary, signal, primaryTimeout);
+  } catch (err) {
+    if (signal?.aborted) throw err;
+    return await fetchValidJson<T>(secondary, signal, 10000);
+  }
 };
 
-const STALE = 0; // always fetch fresh — data is updated by recalculation scripts
+const STALE_HISTORICAL = 60 * 60 * 1000; // 1 hour — pre-aggregated Cricsheet IPL history
+const STALE_REGISTRY = 30 * 60 * 1000;   // 30 minutes — player bios, images & team maps
+const STALE_DYNAMIC = 2 * 60 * 1000;     // 2 minutes — current squads & live-adjacent data
+const STALE = STALE_HISTORICAL;          // default for remaining static aggregate queries
 
 export const useOverview = (): UseQueryResult<Overview> =>
-  useQuery({ queryKey: ["agg", "overview"], queryFn: () => fetchJson<Overview>("overview.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "overview"], queryFn: ({ signal }) => fetchJson<Overview>("overview.json", signal), staleTime: STALE_HISTORICAL });
 
 export const useSeasons = (): UseQueryResult<SeasonRow[]> =>
-  useQuery({ queryKey: ["agg", "seasons"], queryFn: () => fetchJson<SeasonRow[]>("seasons.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "seasons"], queryFn: ({ signal }) => fetchJson<SeasonRow[]>("seasons.json", signal), staleTime: STALE_HISTORICAL });
 
 export const useTeams = (): UseQueryResult<TeamRow[]> =>
-  useQuery({ queryKey: ["agg", "teams"], queryFn: () => fetchJson<TeamRow[]>("teams.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "teams"], queryFn: ({ signal }) => fetchJson<TeamRow[]>("teams.json", signal), staleTime: STALE_HISTORICAL });
 
 export const useVenues = (): UseQueryResult<VenueRow[]> =>
-  useQuery({ queryKey: ["agg", "venues"], queryFn: () => fetchJson<VenueRow[]>("venues.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "venues"], queryFn: ({ signal }) => fetchJson<VenueRow[]>("venues.json", signal), staleTime: STALE_HISTORICAL });
 
 export const useTopBatters = (): UseQueryResult<TopBatters> =>
-  useQuery({ queryKey: ["agg", "top-batters"], queryFn: () => fetchJson<TopBatters>("top-batters.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "top-batters"], queryFn: ({ signal }) => fetchJson<TopBatters>("top-batters.json", signal), staleTime: STALE_HISTORICAL });
 
 export const useTopBowlers = (): UseQueryResult<TopBowlers> =>
-  useQuery({ queryKey: ["agg", "top-bowlers"], queryFn: () => fetchJson<TopBowlers>("top-bowlers.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "top-bowlers"], queryFn: ({ signal }) => fetchJson<TopBowlers>("top-bowlers.json", signal), staleTime: STALE_HISTORICAL });
 
 export const useSeasonTops = (): UseQueryResult<SeasonTops> =>
-  useQuery({ queryKey: ["agg", "season-tops"], queryFn: () => fetchJson<SeasonTops>("season-tops.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "season-tops"], queryFn: ({ signal }) => fetchJson<SeasonTops>("season-tops.json", signal), staleTime: STALE_HISTORICAL });
 
 export const useMatches = (): UseQueryResult<MatchSummary[]> =>
-  useQuery({ queryKey: ["agg", "matches"], queryFn: () => fetchJson<MatchSummary[]>("matches.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "matches"], queryFn: ({ signal }) => fetchJson<MatchSummary[]>("matches.json", signal), staleTime: STALE_HISTORICAL });
 
 export const useCurrentSquads = (): UseQueryResult<CurrentSquadRow[]> =>
-  useQuery({ queryKey: ["agg", "current-squads"], queryFn: () => fetchJson<CurrentSquadRow[]>("current-squads.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "current-squads"], queryFn: ({ signal }) => fetchJson<CurrentSquadRow[]>("current-squads.json", signal), staleTime: STALE_DYNAMIC });
 
 /**
  * Player bios, served as a static asset rather than through /api/ipl.
@@ -463,27 +520,22 @@ export const useCurrentSquads = (): UseQueryResult<CurrentSquadRow[]> =>
 export const usePlayerBios = (): UseQueryResult<Record<string, PlayerBio>> =>
   useQuery({
     queryKey: ["player-bios"],
-    queryFn: async () => {
-      const res = await fetch(`${import.meta.env.BASE_URL}data/player-bio.json`);
-      if (!res.ok) throw new Error("Failed to load player bios");
-      return (await res.json()) as Record<string, PlayerBio>;
-    },
-    staleTime: STALE,
+    queryFn: ({ signal }) => fetchValidJson<Record<string, PlayerBio>>(`${import.meta.env.BASE_URL}data/player-bio.json`, signal, 10000),
+    staleTime: STALE_REGISTRY,
   });
 
 export const usePlayerLatestTeams = (): UseQueryResult<Record<string, string>> =>
   useQuery({
     queryKey: ["player-latest-teams"],
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       try {
-        const res = await fetch(`${import.meta.env.BASE_URL}data/player-latest-teams.json`);
-        if (!res.ok) return {};
-        return (await res.json()) as Record<string, string>;
-      } catch {
+        return await fetchValidJson<Record<string, string>>(`${import.meta.env.BASE_URL}data/player-latest-teams.json`, signal, 8000);
+      } catch (err) {
+        if (signal?.aborted) throw err;
         return {};
       }
     },
-    staleTime: STALE,
+    staleTime: STALE_REGISTRY,
   });
 
 /** URL-safe slug for a player name, matching player profile routes. */
@@ -982,34 +1034,34 @@ export const useContentHub = (): UseQueryResult<ContentHub> =>
   });
 
 export const useCaptains = (): UseQueryResult<CaptainsData> =>
-  useQuery({ queryKey: ["agg", "captains"], queryFn: () => fetchJson<CaptainsData>("captains.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "captains"], queryFn: ({ signal }) => fetchJson<CaptainsData>("captains.json", signal), staleTime: STALE_HISTORICAL });
 
 export const usePointsTables = (): UseQueryResult<PointsTables> =>
-  useQuery({ queryKey: ["agg", "points-tables"], queryFn: () => fetchJson<PointsTables>("points-tables.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "points-tables"], queryFn: ({ signal }) => fetchJson<PointsTables>("points-tables.json", signal), staleTime: STALE_HISTORICAL });
 
 export const usePlayerAuctions = (): UseQueryResult<AuctionRecord[]> =>
-  useQuery({ queryKey: ["agg", "player-auctions"], queryFn: () => fetchJson<AuctionRecord[]>("player-auctions.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "player-auctions"], queryFn: ({ signal }) => fetchJson<AuctionRecord[]>("player-auctions.json", signal), staleTime: STALE_HISTORICAL });
 
 export const usePlayerCareerStats = (): UseQueryResult<PlayerCareerStats> =>
-  useQuery({ queryKey: ["agg", "player-career-stats"], queryFn: () => fetchJson<PlayerCareerStats>("player-career-stats.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "player-career-stats"], queryFn: ({ signal }) => fetchJson<PlayerCareerStats>("player-career-stats.json", signal), staleTime: STALE_HISTORICAL });
 
 export const usePlayerTeamStats = (): UseQueryResult<PlayerTeamStats> =>
-  useQuery({ queryKey: ["agg", "player-team-stats"], queryFn: () => fetchJson<PlayerTeamStats>("player-team-stats.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "player-team-stats"], queryFn: ({ signal }) => fetchJson<PlayerTeamStats>("player-team-stats.json", signal), staleTime: STALE_HISTORICAL });
 
 export const usePlayerSeasonStats = (): UseQueryResult<PlayerSeasonStats> =>
-  useQuery({ queryKey: ["agg", "player-season-stats"], queryFn: () => fetchJson<PlayerSeasonStats>("player-season-stats.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "player-season-stats"], queryFn: ({ signal }) => fetchJson<PlayerSeasonStats>("player-season-stats.json", signal), staleTime: STALE_HISTORICAL });
 
 export const usePlayerTeamSeasonStats = (): UseQueryResult<PlayerTeamSeasonStats> =>
-  useQuery({ queryKey: ["agg", "player-team-season-stats"], queryFn: () => fetchJson<PlayerTeamSeasonStats>("player-team-season-stats.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "player-team-season-stats"], queryFn: ({ signal }) => fetchJson<PlayerTeamSeasonStats>("player-team-season-stats.json", signal), staleTime: STALE_HISTORICAL });
 
 export const useRunDistribution = (): UseQueryResult<RunDistribution> =>
-  useQuery({ queryKey: ["agg", "run-distribution"], queryFn: () => fetchJson<RunDistribution>("run-distribution.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "run-distribution"], queryFn: ({ signal }) => fetchJson<RunDistribution>("run-distribution.json", signal), staleTime: STALE_HISTORICAL });
 
 export const usePlayerImages = (): UseQueryResult<Record<string, string>> =>
-  useQuery({ queryKey: ["agg", "player-images"], queryFn: () => fetchJson<Record<string, string>>("player-images.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "player-images"], queryFn: ({ signal }) => fetchJson<Record<string, string>>("player-images.json", signal), staleTime: STALE_REGISTRY });
 
 export const usePlayerPhotoRegistry = (): UseQueryResult<{ totalApproved: number; totalPending: number; photos: any[] }> =>
-  useQuery({ queryKey: ["agg", "player-photo-registry"], queryFn: () => fetchJson<{ totalApproved: number; totalPending: number; photos: any[] }>("player-photo-registry.json"), staleTime: STALE });
+  useQuery({ queryKey: ["agg", "player-photo-registry"], queryFn: ({ signal }) => fetchJson<{ totalApproved: number; totalPending: number; photos: any[] }>("player-photo-registry.json", signal), staleTime: STALE_REGISTRY });
 
 /**
  * Canonical venue name — collapses the many spellings one physical ground

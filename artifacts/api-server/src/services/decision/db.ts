@@ -44,6 +44,7 @@ export function warehousePath(): string {
 
 let db: DatabaseSync | null = null;
 let dbError: string | null = null;
+const stmtCache = new Map<string, ReturnType<DatabaseSync["prepare"]>>();
 
 /** Lazily opened read-only connection. Returns null when the warehouse is missing. */
 export function getDecisionDb(): DatabaseSync | null {
@@ -55,6 +56,11 @@ export function getDecisionDb(): DatabaseSync | null {
   }
   try {
     db = new DatabaseSync(fp, { readOnly: true });
+    try {
+      db.exec("PRAGMA cache_size = -32000; PRAGMA temp_store = MEMORY;");
+    } catch {
+      // Ignore pragma failures on constrained read-only builds
+    }
   } catch (err) {
     dbError = err instanceof Error ? err.message : String(err);
     db = null;
@@ -66,11 +72,17 @@ export function getDecisionDbError(): string | null {
   return dbError;
 }
 
-/** Typed `stmt.all()` helper. */
+/** Typed `stmt.all()` helper with prepared-statement caching. */
 export function queryAll<T>(sql: string, ...params: (string | number | null)[]): T[] {
   const conn = getDecisionDb();
   if (!conn) return [];
-  return conn.prepare(sql).all(...params) as unknown as T[];
+  let stmt = stmtCache.get(sql);
+  if (!stmt) {
+    stmt = conn.prepare(sql);
+    if (stmtCache.size >= 256) stmtCache.clear();
+    stmtCache.set(sql, stmt);
+  }
+  return stmt.all(...params) as unknown as T[];
 }
 
 // Cricsheet labels split seasons by calendar span; the IPL calls them by year.

@@ -665,8 +665,11 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       const route = chasePreset ? "scenario" : "query";
       const url = `/api/stats/${route}?${statsParams}`;
       try {
-        const res = await fetch(url, { signal });
-        if (!res.ok) {
+        const timeout = AbortSignal.timeout(12_000);
+        const combined = typeof AbortSignal.any === "function" ? AbortSignal.any([signal, timeout]) : signal;
+        const res = await fetch(url, { signal: combined });
+        const ct = (res.headers.get("content-type") || "").toLowerCase();
+        if (!res.ok || ct.includes("text/html")) {
           const text = await res.text().catch(() => "");
           throw new Error(`Failed to query stats (${res.status}): ${text}`);
         }
@@ -724,7 +727,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       if (!hasScenarioRange && filters.season && filters.season !== "All Seasons") params.set("season", filters.season);
       if (filters.team && filters.team !== "All Teams") params.set("team", filters.team);
       if (filters.nationality && filters.nationality !== "all") params.set("nationality", filters.nationality);
-      const res = await fetch(`/api/stats/scenario?${params}`);
+      const res = await fetch(`/api/stats/scenario?${params}`, { signal: AbortSignal.timeout(12_000) });
       if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
         throw new Error("Scenario data could not be loaded");
       }
@@ -752,7 +755,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
       if (filters.season && filters.season !== "All Seasons") params.append("season", filters.season);
       if (filters.team && filters.team !== "All Teams") params.append("team", filters.team);
       try {
-        const res = await fetch(`/api/stats/drilldown?${params.toString()}`);
+        const res = await fetch(`/api/stats/drilldown?${params.toString()}`, { signal: AbortSignal.timeout(10_000) });
         const ct = res.headers.get("content-type") || "";
         if (!res.ok || ct.includes("text/html")) return [];
         return await res.json();

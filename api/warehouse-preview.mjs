@@ -44404,6 +44404,7 @@ function warehousePath() {
 }
 var db = null;
 var dbError = null;
+var stmtCache = /* @__PURE__ */ new Map();
 function getDecisionDb() {
   if (db || dbError) return db;
   const fp = warehousePath();
@@ -44413,6 +44414,10 @@ function getDecisionDb() {
   }
   try {
     db = new DatabaseSync4(fp, { readOnly: true });
+    try {
+      db.exec("PRAGMA cache_size = -32000; PRAGMA temp_store = MEMORY;");
+    } catch {
+    }
   } catch (err) {
     dbError = err instanceof Error ? err.message : String(err);
     db = null;
@@ -44425,7 +44430,13 @@ function getDecisionDbError() {
 function queryAll(sql3, ...params) {
   const conn = getDecisionDb();
   if (!conn) return [];
-  return conn.prepare(sql3).all(...params);
+  let stmt = stmtCache.get(sql3);
+  if (!stmt) {
+    stmt = conn.prepare(sql3);
+    if (stmtCache.size >= 256) stmtCache.clear();
+    stmtCache.set(sql3, stmt);
+  }
+  return stmt.all(...params);
 }
 var SEASON_ALIASES = {
   "2007/08": "2008",
@@ -175693,15 +175704,20 @@ async function handler(req, res) {
       process.env.CRICFIELD_DB_READONLY = "1";
       process.env.CRICFIELD_SCOUT_DB_PATH = scoutPath;
       process.env.CRICFIELD_DB_PATH = iplPath;
+      const needsScout = /^\/api\/(scout|pool|war-room|squad-dna)(\/|$)/.test(path29);
       ipl ??= configureIpl().catch((error40) => {
         ipl = void 0;
         throw error40;
       });
-      scout ??= configureScout().catch((error40) => {
-        scout = void 0;
-        throw error40;
-      });
-      await Promise.all([ipl, scout]);
+      if (needsScout) {
+        scout ??= configureScout().catch((error40) => {
+          scout = void 0;
+          throw error40;
+        });
+        await Promise.all([ipl, scout]);
+      } else {
+        await ipl;
+      }
       return app_default(req, res);
     } catch (error40) {
       console.error("Analyst warehouse initialization failed", error40 instanceof Error ? `${error40.name}: ${error40.message}` : "Error");
