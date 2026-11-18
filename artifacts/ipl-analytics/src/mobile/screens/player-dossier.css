@@ -1,0 +1,513 @@
+/* CricField Mobile Player Dossier 3.0 — scoped (.mpd-*) styles preserving --m-* tokens & desktop isolation */
+
+.mpd {
+  --mpd-card: color-mix(in srgb, var(--m-card) 94%, #020617);
+  --mpd-card-elev: color-mix(in srgb, var(--m-card-2) 92%, #050816);
+  --mpd-line: var(--m-line, rgba(255, 255, 255, 0.1));
+  --mpd-line-soft: var(--m-line-soft, rgba(255, 255, 255, 0.05));
+  --mpd-accent: var(--m-accent, #38bdf8);
+  padding-bottom: 18px;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.mpd * {
+  box-sizing: border-box;
+}
+
+/* Hero override / enhancement */
+.mpd-hero {
+  position: relative;
+  min-height: 368px;
+  margin: 10px 12px 0;
+  padding: 18px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  border-radius: var(--m-r-lg, 20px);
+  border: 1px solid color-mix(in srgb, var(--c) 38%, var(--mpd-line));
+  background:
+    radial-gradient(125% 95% at 88% 8%, color-mix(in srgb, var(--c) 52%, transparent), transparent 64%),
+    radial-gradient(90% 70% at 8% 92%, color-mix(in srgb, var(--c) 22%, transparent), transparent 65%),
+    linear-gradient(175deg, #0b1224 0%, #050816 100%);
+  box-shadow: 0 22px 48px -24px color-mix(in srgb, var(--c) 55%, #000);
+}
+
+html:not(.dark) .mpd-hero,
+[data-theme="light"] .mpd-hero {
+  background:
+    radial-gradient(125% 95% at 88% 8%, color-mix(in srgb, var(--c) 30%, transparent), transparent 65%),
+    linear-gradient(175deg, #0f172a 0%, #050816 100%);
+  color: #f8fafc;
+}
+
+.mpd-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 18px 18px;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.mpd-hero-wm {
+  position: absolute;
+  left: 12px;
+  top: 6px;
+  font: 900 128px/0.9 var(--m-ui);
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.045);
+  pointer-events: none;
+  user-select: none;
+}
+
+.mpd-hero-portrait {
+  position: absolute;
+  right: -8px;
+  bottom: 94px;
+  height: 274px;
+  width: auto;
+  max-width: 68%;
+  object-fit: cover;
+  object-position: top;
+  -webkit-mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+  pointer-events: none;
+}
+
+.mpd-hero-top-row {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: auto;
+  padding-bottom: 112px;
+}
+
+.mpd-team-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 5px 6px;
+  border-radius: 999px;
+  background: rgba(5, 8, 22, 0.72);
+  border: 1px solid color-mix(in srgb, var(--c) 55%, rgba(255, 255, 255, 0.16));
+  font: 800 10px/1 var(--m-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f8fafc;
+  backdrop-filter: blur(8px);
+}
+
+.mpd-role-chip {
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font: 700 9.5px/1 var(--m-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.85);
+}
+
+.mpd-hero h1 {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 6px;
+  font: 900 clamp(30px, 9vw, 40px)/0.98 var(--m-display);
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
+}
+
+.mpd-hero-meta {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  font: 500 12px/1.4 var(--m-ui);
+  color: rgba(241, 245, 249, 0.82);
+}
+
+.mpd-hero-stats {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 14px;
+  border-radius: 14px;
+  background: rgba(5, 8, 22, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.mpd-hero-stats > div {
+  padding: 10px 4px;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  min-width: 0;
+}
+
+.mpd-hero-stats > div:last-child {
+  border-right: 0;
+}
+
+.mpd-hero-stats strong {
+  display: block;
+  font: 800 17px/1.05 var(--m-mono);
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mpd-hero-stats span {
+  display: block;
+  margin-top: 4px;
+  font: 700 9px/1 var(--m-mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+/* Sticky horizontal tab row: Career · Phases · Seasons · Bowling | Intel Hub · Intel Reports · Match History · Head to Head */
+.mpd-tabs-dock {
+  position: sticky;
+  top: calc(var(--m-top, 56px) + env(safe-area-inset-top, 0px));
+  z-index: 30;
+  padding: 9px 12px;
+  margin-top: 10px;
+  background: color-mix(in srgb, var(--m-bg, #050816) 92%, transparent);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--mpd-line-soft);
+  border-bottom: 1px solid var(--mpd-line);
+}
+
+.mpd-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  padding-right: 4px;
+}
+
+.mpd-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.mpd-tabs-vdiv {
+  flex: 0 0 auto;
+  width: 1px;
+  height: 22px;
+  margin: 0 2px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mpd-tab {
+  flex: 0 0 auto;
+  height: 36px;
+  padding: 0 13px;
+  border-radius: 999px;
+  border: 1px solid var(--mpd-line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--m-muted);
+  font: 700 11.5px/1 var(--m-ui);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  scroll-snap-align: center;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.mpd-tab[aria-pressed="true"] {
+  background: var(--mpd-accent);
+  color: #050816;
+  border-color: var(--mpd-accent);
+  font-weight: 800;
+  box-shadow: 0 0 18px -4px color-mix(in srgb, var(--mpd-accent) 70%, transparent);
+}
+
+.mpd-tab:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Section wrapper & panel */
+.mpd-sec {
+  padding: 16px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mpd-sec-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.mpd-kicker {
+  display: block;
+  font: 700 9.5px/1.2 var(--m-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mpd-accent);
+}
+
+.mpd-title {
+  margin: 3px 0 0;
+  font: 800 18px/1.15 var(--m-display);
+  letter-spacing: -0.015em;
+  color: var(--m-text);
+}
+
+.mpd-card {
+  border-radius: var(--m-r, 16px);
+  background: var(--mpd-card);
+  border: 1px solid var(--mpd-line);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.mpd-subpills {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.mpd-subpill {
+  flex: 0 0 auto;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--mpd-line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--m-muted);
+  font: 700 11px/1 var(--m-ui);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.mpd-subpill[data-active="true"] {
+  background: color-mix(in srgb, var(--mpd-accent) 18%, transparent);
+  border-color: color-mix(in srgb, var(--mpd-accent) 65%, transparent);
+  color: var(--m-text);
+}
+
+/* Compact 3-col stat grid */
+.mpd-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mpd-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mpd-kpi {
+  padding: 10px 9px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--mpd-line-soft);
+  min-width: 0;
+}
+
+html:not(.dark) .mpd-kpi,
+[data-theme="light"] .mpd-kpi {
+  background: rgba(15, 23, 42, 0.035);
+}
+
+.mpd-kpi-k {
+  font: 700 9px/1.15 var(--m-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--m-muted);
+}
+
+.mpd-kpi-v {
+  margin-top: 4px;
+  font: 800 16px/1.1 var(--m-mono);
+  color: var(--m-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* F1-Inspired Career Telemetry */
+.mpd-telemetry {
+  position: relative;
+  border-radius: var(--m-r, 16px);
+  padding: 14px;
+  background:
+    linear-gradient(180deg, rgba(8, 13, 28, 0.96) 0%, rgba(4, 7, 16, 0.98) 100%);
+  border: 1px solid color-mix(in srgb, var(--mpd-accent) 32%, rgba(255, 255, 255, 0.1));
+  color: #f8fafc;
+  overflow: hidden;
+}
+
+.mpd-telemetry-strip {
+  display: flex;
+  gap: 2px;
+  height: 7px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mpd-telemetry-seg {
+  flex: 1;
+  border-radius: 1.5px;
+  transition: opacity 0.2s;
+}
+
+.mpd-led {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  display: inline-block;
+  box-shadow: 0 0 8px currentColor;
+}
+
+/* Milestone Collectible Cards */
+.mpd-milestone-rail {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 2px 0 6px;
+  scrollbar-width: none;
+}
+
+.mpd-milestone-card {
+  flex: 0 0 264px;
+  scroll-snap-align: start;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--c) 35%, var(--mpd-line));
+  background:
+    linear-gradient(170deg, rgba(13, 20, 42, 0.96) 0%, rgba(7, 10, 22, 0.98) 100%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: #f8fafc;
+}
+
+.mpd-milestone-media {
+  position: relative;
+  height: 112px;
+  overflow: hidden;
+  background:
+    radial-gradient(100% 90% at 85% 20%, color-mix(in srgb, var(--c) 45%, transparent), transparent 65%),
+    #070b18;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mpd-milestone-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Collapsible Intelligence Hub Cards */
+.mpd-intel-card {
+  border-radius: 14px;
+  background: var(--mpd-card);
+  border: 1px solid var(--mpd-line);
+  overflow: hidden;
+}
+
+.mpd-intel-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 13px 14px;
+  background: transparent;
+  border: 0;
+  color: var(--m-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mpd-intel-body {
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--mpd-line-soft);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Search dropdown inside Head-to-Head */
+.mpd-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 40;
+  max-height: 210px;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: #080d1e;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7);
+  padding: 4px;
+}
+
+.mpd-dropdown button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #f8fafc;
+  font: 600 12px/1.2 var(--m-ui);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mpd-dropdown button:hover,
+.mpd-dropdown button[data-active="true"] {
+  background: rgba(56, 189, 248, 0.18);
+}
+
+.mpd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 11px;
+  border: 1px solid var(--mpd-line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--m-text);
+  font: 700 12px/1 var(--m-ui);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mpd-btn-accent {
+  background: var(--mpd-accent);
+  color: #050816;
+  border-color: var(--mpd-accent);
+  font-weight: 800;
+}

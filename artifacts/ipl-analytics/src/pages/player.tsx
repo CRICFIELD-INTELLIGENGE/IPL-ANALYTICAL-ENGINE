@@ -1446,88 +1446,9 @@ export default function PlayerProfilePage() {
                   </div>
                 </GlassCard>
 
-                {/* Player Information + Compact Collectible Card — sits in the third
-                    column alongside the progression chart without duplicating the
-                    top hero portrait or repeating bio facts. */}
+                {/* Player Information — sits in the third column alongside the progression
+                    chart without duplicating the top hero portrait or repeating bio facts. */}
                 <GlassCard className="p-5 flex flex-col self-start gap-4">
-                  {/* Compact Collectible Franchise Card */}
-                  {(() => {
-                    const careerRuns = Number((batterStats as any)?.runs ?? 0);
-                    const careerWkts = Number((bowlerStats as any)?.wickets ?? 0);
-                    const cardTier =
-                      careerRuns >= 4500 || careerWkts >= 140
-                        ? { label: "ICON EDITION", badge: "bg-amber-400/15 text-amber-300 border-amber-400/40" }
-                        : careerRuns >= 1800 || careerWkts >= 60
-                          ? { label: "ELITE TIER", badge: "bg-cyan-400/15 text-cyan-300 border-cyan-400/40" }
-                          : { label: "FRANCHISE CORE", badge: "bg-emerald-400/15 text-emerald-300 border-emerald-400/40" };
-                    const latestContract = squadHistory.length > 0 ? squadHistory[squadHistory.length - 1] : null;
-                    const contractFee = latestContract?.priceDisplay
-                      || (latestContract?.priceLakh != null ? `₹${(latestContract.priceLakh / 100).toFixed(2)} Cr` : null);
-
-                    return (
-                      <div
-                        className="relative rounded-2xl border border-white/15 bg-gradient-to-br from-[#0e162b] via-[#091020] to-[#050814] p-3.5 overflow-hidden shadow-lg"
-                        style={{ borderTop: `2px solid ${pColor}` }}
-                      >
-                        <div
-                          className="absolute -right-8 -top-8 w-28 h-28 rounded-full blur-2xl opacity-25 pointer-events-none"
-                          style={{ background: pColor }}
-                        />
-                        <div className="relative flex items-center justify-between gap-2 pb-2.5 border-b border-white/10">
-                          <div className="flex items-center gap-2 min-w-0">
-                            <TeamLogo team={primaryTeam} size="w-5 h-5" />
-                            <span className="text-[10px] font-black uppercase tracking-widest text-white truncate">
-                              {pShort || "IPL"} COLLECTIBLE
-                            </span>
-                          </div>
-                          <span className={`px-2 py-0.5 rounded-full text-[8.5px] font-mono font-black uppercase border ${cardTier.badge}`}>
-                            {cardTier.label}
-                          </span>
-                        </div>
-
-                        <div className="relative flex items-center gap-3 pt-3">
-                          <div
-                            className="relative w-16 h-16 rounded-xl bg-black/50 border border-white/10 overflow-hidden shrink-0 flex items-end justify-center"
-                            style={{ boxShadow: `0 0 18px -6px ${pColor}80` }}
-                          >
-                            <PlayerAvatar
-                              framing="chest"
-                              name={bio.playerName}
-                              teamId={primaryTeam}
-                              season={playerRecentMatches?.[0]?.season ?? latestContract?.season}
-                              strictHistoricalJersey={false}
-                              playerImages={playerImages.data}
-                              bio={bio}
-                              imgClassName="w-full h-full object-contain object-bottom"
-                            />
-                          </div>
-
-                          <div className="flex-1 min-w-0 space-y-1.5">
-                            <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
-                              <span className="text-white/50">PLAYER ID</span>
-                              <span className="font-bold text-white/90">
-                                {bio.playerId ? `#${bio.playerId}` : "CRIC-IPL"}
-                                {jerseyNo ? ` · #${jerseyNo}` : ""}
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
-                              <span className="text-white/50">SEASONS</span>
-                              <span className="font-bold text-cyan-300">
-                                {seasonalStats.length > 0 ? `${seasonalStats.length} Editions` : squadHistory.length > 0 ? `${squadHistory.length} Squads` : "Active"}
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
-                              <span className="text-white/50">{latestContract?.season ? `IPL ${latestContract.season}` : "CONTRACT"}</span>
-                              <span className="font-bold text-amber-300 truncate">
-                                {contractFee || latestContract?.acquisition || bio.role || "Squad"}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })()}
-
                   <div>
                     <h3 className="text-sm font-black uppercase tracking-widest text-white/80 mb-1 flex items-center gap-2">
                       <Award className="w-4 h-4 text-primary" />
