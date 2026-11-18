@@ -1,0 +1,89 @@
+/* Desktop uses the mobile Home content with its own wide-screen layout.
+   Scope every rule here to this wrapper; the mobile shell keeps its current styles. */
+.desktop-home {
+  --m-text: #f8fafc;
+  --m-muted: #94a3b8;
+  --m-line: rgba(255,255,255,.12);
+  --m-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --m-ui: "Inter", system-ui, sans-serif;
+  --m-mono: "JetBrains Mono", monospace;
+  min-width: 0;
+}
+html:not(.dark) .desktop-home {
+  --m-text: #0f172a;
+  --m-muted: #64748b;
+  --m-line: #e2e8f0;
+}
+@media (min-width: 1024px) {
+  .desktop-home { max-width: 1440px; margin-inline: auto; }
+  .desktop-home .ref-home {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0,1fr));
+    gap: 32px 24px;
+    padding: 32px clamp(24px,3vw,48px) 48px;
+    background: transparent;
+  }
+  .desktop-home .ref-home > section { grid-column: 1 / -1; min-width: 0; }
+  .desktop-home .ref-section { gap: 16px; }
+  .desktop-home .ref-section-title { font-size: 22px; }
+  .desktop-home .ref-head-link { font-size: 13px; }
+  .desktop-home .ref-featured-rail { gap: 0; }
+  .desktop-home .ref-hero-slide { min-height: 400px; border-radius: 20px; }
+  .desktop-home .ref-hero-img { width: 56%; }
+  .desktop-home .ref-hero-copy { width: 58%; max-width: 640px; padding: 40px; gap: 16px; }
+  .desktop-home .ref-hero-copy h1,
+  .desktop-home .ref-hero-copy h2 { font-size: clamp(30px,3vw,44px); line-height: 1.12; }
+  .desktop-home .ref-hero-copy p { font-size: 15px; line-height: 1.6; -webkit-line-clamp: 3; }
+  .desktop-home .ref-hero-kicker { font-size: 10px; padding: 6px 10px; }
+  .desktop-home .ref-cta-pill { font-size: 13px; padding: 12px 18px; }
+  .desktop-home .ref-save-btn { width: 40px; height: 40px; }
+  .desktop-home .ref-dots { right: 24px; bottom: 20px; gap: 8px; }
+  .desktop-home .ref-dots button { width: 20px; height: 20px; border: 6px solid transparent; background-clip: padding-box; }
+  .desktop-home .ref-dots button[aria-selected="true"] { width: 32px; }
+  .desktop-home .ref-auction-card { min-height: 128px; padding: 24px 32px; }
+  .desktop-home .ref-auction-art { width: 180px; }
+  .desktop-home .ref-auction-copy { padding-left: 80px; }
+  .desktop-home .ref-auction-date { font-size: 28px; margin-block: 8px; }
+  .desktop-home .ref-auction-sub { font-size: 13px; }
+  .desktop-home .ref-auction-pill { font-size: 10px; }
+  .desktop-home .ref-auction-cta { padding: 12px 18px; font-size: 13px; }
+  .desktop-home .ref-workspaces-grid { gap: 16px; }
+  .desktop-home .ref-ws-tile { min-height: 176px; padding: 24px; }
+  .desktop-home .ref-ws-icon svg { width: 24px; height: 24px; }
+  .desktop-home .ref-ws-text strong { font-size: 20px; }
+  .desktop-home .ref-ws-text small { font-size: 13px; margin-top: 8px; }
+  .desktop-home .ref-stories-rail { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; overflow: visible; }
+  .desktop-home .ref-story-card { min-width: 0; }
+  .desktop-home .ref-story-copy { padding: 16px; gap: 8px; }
+  .desktop-home .ref-story-copy h3 { font-size: 17px; line-height: 1.4; }
+  .desktop-home .ref-story-meta { font-size: 10px; }
+  .desktop-home [data-home-section="dugout"] { grid-column: span 7; }
+  .desktop-home [data-home-section="numbers"] { grid-column: span 5; }
+  .desktop-home .ref-dugout-card { padding: 24px; flex: 1; }
+  .desktop-home .ref-dugout-copy h3 { font-size: 26px; }
+  .desktop-home .ref-dugout-copy p { font-size: 13px; }
+  .desktop-home .ref-dugout-shortcuts { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+  .desktop-home .ref-dugout-pill { font-size: 12px; padding: 12px; }
+  .desktop-home .ref-numbers-grid { grid-template-columns: 1fr; gap: 12px; flex: 1; }
+  .desktop-home .ref-num-card { padding: 16px 20px; gap: 8px; }
+  .desktop-home .ref-num-head { font-size: 14px; }
+  .desktop-home .ref-num-metric { font-size: 20px; white-space: normal; overflow-wrap: anywhere; }
+  .desktop-home .ref-num-card small { font-size: 12px; }
+  .desktop-home .ref-franchise-rail { display: grid; grid-template-columns: repeat(10,minmax(0,1fr)); gap: 12px; overflow: visible; }
+  .desktop-home .ref-team-tile { min-width: 0; padding: 16px 8px; gap: 12px; }
+  .desktop-home .ref-team-crest { width: 48px; height: 48px; }
+  .desktop-home .ref-team-tile span { font-size: 12px; }
+  .desktop-home .ref-latest-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+  .desktop-home .ref-latest-row { padding: 12px; gap: 16px; }
+  .desktop-home .ref-latest-thumb { width: 120px; height: 96px; }
+  .desktop-home .ref-latest-copy h3 { font-size: 16px; line-height: 1.4; }
+  .desktop-home .ref-latest-tag { font-size: 10px; }
+  .desktop-home .ref-latest-meta { font-size: 11px; }
+  .desktop-home .ref-load-more { justify-self: center; padding: 12px 24px; font-size: 13px; }
+  .desktop-home .ref-promo-card { padding: 24px; }
+  .desktop-home .ref-promo-left strong { font-size: 20px; }
+  .desktop-home .ref-promo-left small { font-size: 13px; }
+  .desktop-home .ref-promo-cta { padding: 14px 20px; font-size: 13px; }
+  .desktop-home a:focus-visible,
+  .desktop-home button:focus-visible { outline: 2px solid var(--ref-accent,#ffda7c); outline-offset: 4px; }
+}
