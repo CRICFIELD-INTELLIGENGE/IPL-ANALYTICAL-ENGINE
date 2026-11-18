@@ -14,6 +14,14 @@
   },
   "rewrites": [
     {
+      "source": "/home/sitemap.xml",
+      "destination": "/sitemap.xml"
+    },
+    {
+      "source": "/home/sitemap-dugout.xml",
+      "destination": "/sitemap-dugout.xml"
+    },
+    {
       "source": "/api/auction-2027",
       "destination": "/api/warehouse-preview?__warehouseRoute=/api/auction-2027"
     },
