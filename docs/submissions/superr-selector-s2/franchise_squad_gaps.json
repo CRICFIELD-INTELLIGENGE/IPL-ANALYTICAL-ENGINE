@@ -1,0 +1,469 @@
+{
+  "modelVersion": "cf-pressure.e01281a332",
+  "franchises": [
+    {
+      "team": "CSK",
+      "retainedCount": 19,
+      "releasedCount": 11,
+      "openSlots": 6,
+      "overseasSlotsLeft": 2,
+      "remainingPurseCr": 28.05,
+      "avgRetainedPri": 50.6
+    },
+    {
+      "team": "DC",
+      "retainedCount": 16,
+      "releasedCount": 9,
+      "openSlots": 9,
+      "overseasSlotsLeft": 4,
+      "remainingPurseCr": 39.5,
+      "avgRetainedPri": 46.6
+    },
+    {
+      "team": "GT",
+      "retainedCount": 22,
+      "releasedCount": 6,
+      "openSlots": 3,
+      "overseasSlotsLeft": 2,
+      "remainingPurseCr": 8.75,
+      "avgRetainedPri": 48.4
+    },
+    {
+      "team": "KKR",
+      "retainedCount": 17,
+      "releasedCount": 12,
+      "openSlots": 8,
+      "overseasSlotsLeft": 3,
+      "remainingPurseCr": 41.65,
+      "avgRetainedPri": 48.7
+    },
+    {
+      "team": "LSG",
+      "retainedCount": 18,
+      "releasedCount": 7,
+      "openSlots": 7,
+      "overseasSlotsLeft": 3,
+      "remainingPurseCr": 47.45,
+      "avgRetainedPri": 52.7
+    },
+    {
+      "team": "MI",
+      "retainedCount": 16,
+      "releasedCount": 13,
+      "openSlots": 9,
+      "overseasSlotsLeft": 2,
+      "remainingPurseCr": 32.6,
+      "avgRetainedPri": 67.2
+    },
+    {
+      "team": "PBKS",
+      "retainedCount": 19,
+      "releasedCount": 6,
+      "openSlots": 6,
+      "overseasSlotsLeft": 2,
+      "remainingPurseCr": 18.6,
+      "avgRetainedPri": 49.5
+    },
+    {
+      "team": "RCB",
+      "retainedCount": 20,
+      "releasedCount": 6,
+      "openSlots": 5,
+      "overseasSlotsLeft": 1,
+      "remainingPurseCr": 14.15,
+      "avgRetainedPri": 56.7
+    },
+    {
+      "team": "RR",
+      "retainedCount": 19,
+      "releasedCount": 9,
+      "openSlots": 6,
+      "overseasSlotsLeft": 3,
+      "remainingPurseCr": 27.05,
+      "avgRetainedPri": 47
+    },
+    {
+      "team": "SRH",
+      "retainedCount": 18,
+      "releasedCount": 10,
+      "openSlots": 7,
+      "overseasSlotsLeft": 3,
+      "remainingPurseCr": 40.15,
+      "avgRetainedPri": 56.8
+    }
+  ],
+  "rrSlotRecommendations": [
+    {
+      "slotId": "rr-slot-1",
+      "roleTitle": "Spin Attack Partner / Middle-Overs Wicket-Taker",
+      "priority": "Critical",
+      "rationale": "RR released Wanindu Hasaranga and Maheesh Theekshana, leaving Ravi Bishnoi and Ravindra Jadeja as the frontline spin pair.",
+      "bestPressurePerformer": {
+        "name": "AM Ghazanfar",
+        "sourceCategory": "Released (IPL 2027 Official)",
+        "releasedFrom": "MI",
+        "role": "bowler",
+        "country": "Afghanistan",
+        "overseas": true,
+        "estCostCr": 2,
+        "matchedWarehouseName": "AM Ghazanfar",
+        "discipline": "bowling",
+        "pri": 55.3,
+        "adjustedPer100": -1.64,
+        "rawPer100": 13.73,
+        "pressureBalls": 93,
+        "pressureMatches": 7,
+        "interval90": [
+          -15.61,
+          12.33
+        ],
+        "reliabilityTier": "Limited Sample (<80b)",
+        "pressureRate": 10.32,
+        "phaseShare": {
+          "powerplay": 0.258,
+          "middle": 0.592,
+          "death": 0.15
+        },
+        "valueIndex": 39.1,
+        "eligibilityState": "Potential Auction Candidate (2027 Released)"
+      },
+      "bestAuctionValue": {
+        "name": "Murugan Ashwin",
+        "sourceCategory": "2026 Unsold Pool",
+        "releasedFrom": null,
+        "role": "bowler",
+        "country": "India",
+        "overseas": false,
+        "estCostCr": 0.3,
+        "matchedWarehouseName": "M Ashwin",
+        "discipline": "bowling",
+        "pri": 42.7,
+        "adjustedPer100": -3.25,
+        "rawPer100": -7.83,
+        "pressureBalls": 83,
+        "pressureMatches": 7,
+        "interval90": [
+          -17.28,
+          10.77
+        ],
+        "reliabilityTier": "Limited Sample (<80b)",
+        "pressureRate": 8.53,
+        "phaseShare": {
+          "powerplay": 0.273,
+          "middle": 0.667,
+          "death": 0.061
+        },
+        "valueIndex": 56.9,
+        "eligibilityState": "Potential Auction Candidate (Pool)"
+      },
+      "nextAlternative": {
+        "name": "Rishad Hossain",
+        "sourceCategory": "CricField Extended Pool",
+        "releasedFrom": null,
+        "role": "bowler",
+        "country": "Bangladesh",
+        "overseas": true,
+        "estCostCr": 2.65,
+        "matchedWarehouseName": "Rishad Hossain",
+        "discipline": "bowling",
+        "pri": 54.9,
+        "adjustedPer100": -1.87,
+        "rawPer100": 2.19,
+        "pressureBalls": 290,
+        "pressureMatches": 29,
+        "interval90": [
+          -14.82,
+          11.09
+        ],
+        "reliabilityTier": "Official Qualified (≥250b, ≥20m)",
+        "pressureRate": 8.61,
+        "phaseShare": {
+          "powerplay": 0.006,
+          "middle": 0.85,
+          "death": 0.144
+        },
+        "valueIndex": 33.7,
+        "eligibilityState": "Potential Auction Candidate (Pool)"
+      }
+    },
+    {
+      "slotId": "rr-slot-2",
+      "roleTitle": "Middle-Order Power Hitter / Finisher (Overs 14–20)",
+      "priority": "High",
+      "rationale": "Replaces Shimron Hetmyer (released) alongside Dhruv Jurel, Dasun Shanaka, and Donovan Ferreira in high-required-rate chases (≥9 RPO) and death overs (16–20).",
+      "bestPressurePerformer": {
+        "name": "Daryl Mitchell",
+        "sourceCategory": "2026 Unsold Pool",
+        "releasedFrom": null,
+        "role": "all-rounder",
+        "country": "New Zealand",
+        "overseas": true,
+        "estCostCr": 2,
+        "matchedWarehouseName": "DJ Mitchell",
+        "discipline": "batting",
+        "pri": 75.3,
+        "adjustedPer100": 18.19,
+        "rawPer100": 23.27,
+        "pressureBalls": 614,
+        "pressureMatches": 52,
+        "interval90": [
+          2.6,
+          33.78
+        ],
+        "reliabilityTier": "Official Qualified (≥250b, ≥20m)",
+        "pressureRate": 154.4,
+        "phaseShare": {
+          "powerplay": 0.176,
+          "middle": 0.602,
+          "death": 0.221
+        },
+        "valueIndex": 53.2,
+        "eligibilityState": "Potential Auction Candidate (Pool)"
+      },
+      "bestAuctionValue": {
+        "name": "Vijay Shankar",
+        "sourceCategory": "2026 Unsold Pool",
+        "releasedFrom": null,
+        "role": "all-rounder",
+        "country": "India",
+        "overseas": false,
+        "estCostCr": 0.3,
+        "matchedWarehouseName": "V Shankar",
+        "discipline": "batting",
+        "pri": 26.3,
+        "adjustedPer100": 7.08,
+        "rawPer100": 0.88,
+        "pressureBalls": 256,
+        "pressureMatches": 18,
+        "interval90": [
+          -12.18,
+          26.34
+        ],
+        "reliabilityTier": "Emerging Sample (80–249b)",
+        "pressureRate": 155.08,
+        "phaseShare": {
+          "powerplay": 0.244,
+          "middle": 0.516,
+          "death": 0.241
+        },
+        "valueIndex": 35.1,
+        "eligibilityState": "Potential Auction Candidate (Pool)"
+      },
+      "nextAlternative": {
+        "name": "Lalit Yadav",
+        "sourceCategory": "CricField Extended Pool",
+        "releasedFrom": null,
+        "role": "all-rounder",
+        "country": "India",
+        "overseas": false,
+        "estCostCr": 2.1,
+        "matchedWarehouseName": "Lalit Yadav",
+        "discipline": "batting",
+        "pri": 32.3,
+        "adjustedPer100": 9.77,
+        "rawPer100": 6.92,
+        "pressureBalls": 157,
+        "pressureMatches": 12,
+        "interval90": [
+          -11.07,
+          30.61
+        ],
+        "reliabilityTier": "Emerging Sample (80–249b)",
+        "pressureRate": 119.11,
+        "phaseShare": {
+          "powerplay": 0.147,
+          "middle": 0.613,
+          "death": 0.24
+        },
+        "valueIndex": 22.3,
+        "eligibilityState": "Potential Auction Candidate (Pool)"
+      }
+    },
+    {
+      "slotId": "rr-slot-3",
+      "roleTitle": "Powerplay / Death Seam Backup",
+      "priority": "High",
+      "rationale": "Replaces Tushar Deshpande, Fazalhaq Farooqi, and Akash Madhwal (released) behind Jofra Archer, Mohammed Shami, Sandeep Sharma, and Nandre Burger.",
+      "bestPressurePerformer": {
+        "name": "Matheesha Pathirana",
+        "sourceCategory": "Released (IPL 2027 Official)",
+        "releasedFrom": "KKR",
+        "role": "bowler",
+        "country": "Sri Lanka",
+        "overseas": true,
+        "estCostCr": 2,
+        "matchedWarehouseName": "M Pathirana",
+        "discipline": "bowling",
+        "pri": 94.7,
+        "adjustedPer100": 5.55,
+        "rawPer100": 18.88,
+        "pressureBalls": 713,
+        "pressureMatches": 49,
+        "interval90": [
+          -5.81,
+          16.92
+        ],
+        "reliabilityTier": "Official Qualified (≥250b, ≥20m)",
+        "pressureRate": 9.16,
+        "phaseShare": {
+          "powerplay": 0.066,
+          "middle": 0.478,
+          "death": 0.457
+        },
+        "valueIndex": 67,
+        "eligibilityState": "Potential Auction Candidate (2027 Released)"
+      },
+      "bestAuctionValue": {
+        "name": "Akash Madhwal",
+        "sourceCategory": "Released (IPL 2027 Official)",
+        "releasedFrom": "CSK",
+        "role": "bowler",
+        "country": "India",
+        "overseas": false,
+        "estCostCr": 2,
+        "matchedWarehouseName": "Akash Madhwal",
+        "discipline": "bowling",
+        "pri": 92.2,
+        "adjustedPer100": 4.2,
+        "rawPer100": 43.7,
+        "pressureBalls": 202,
+        "pressureMatches": 15,
+        "interval90": [
+          -9.19,
+          17.58
+        ],
+        "reliabilityTier": "Emerging Sample (80–249b)",
+        "pressureRate": 9.89,
+        "phaseShare": {
+          "powerplay": 0.222,
+          "middle": 0.392,
+          "death": 0.386
+        },
+        "valueIndex": 65.2,
+        "eligibilityState": "Potential Auction Candidate (2027 Released)"
+      },
+      "nextAlternative": {
+        "name": "Mustafizur Rahman",
+        "sourceCategory": "Released (IPL 2027 Official)",
+        "releasedFrom": "KKR",
+        "role": "bowler",
+        "country": "Bangladesh",
+        "overseas": true,
+        "estCostCr": 2,
+        "matchedWarehouseName": "Mustafizur Rahman",
+        "discipline": "bowling",
+        "pri": 88.8,
+        "adjustedPer100": 3.07,
+        "rawPer100": 11.83,
+        "pressureBalls": 766,
+        "pressureMatches": 65,
+        "interval90": [
+          -8.14,
+          14.27
+        ],
+        "reliabilityTier": "Official Qualified (≥250b, ≥20m)",
+        "pressureRate": 8.43,
+        "phaseShare": {
+          "powerplay": 0.321,
+          "middle": 0.305,
+          "death": 0.375
+        },
+        "valueIndex": 62.8,
+        "eligibilityState": "Potential Auction Candidate (2027 Released)"
+      }
+    },
+    {
+      "slotId": "rr-slot-4",
+      "roleTitle": "Top-Order / Wicketkeeper-Batter Depth",
+      "priority": "Medium",
+      "rationale": "Following Sanju Samson's trade and Nitish Rana's release, adds experienced top-4 / wicketkeeping insurance alongside Yashasvi Jaiswal, Riyan Parag, and Dhruv Jurel.",
+      "bestPressurePerformer": {
+        "name": "Pathum Nissanka",
+        "sourceCategory": "Released (IPL 2027 Official)",
+        "releasedFrom": "DC",
+        "role": "batter",
+        "country": "Sri Lanka",
+        "overseas": true,
+        "estCostCr": 2,
+        "matchedWarehouseName": "P Nissanka",
+        "discipline": "batting",
+        "pri": 96.5,
+        "adjustedPer100": 30.73,
+        "rawPer100": 47.81,
+        "pressureBalls": 494,
+        "pressureMatches": 30,
+        "interval90": [
+          14.15,
+          47.31
+        ],
+        "reliabilityTier": "Official Qualified (≥250b, ≥20m)",
+        "pressureRate": 160.32,
+        "phaseShare": {
+          "powerplay": 0.61,
+          "middle": 0.34,
+          "death": 0.05
+        },
+        "valueIndex": 68.2,
+        "eligibilityState": "Potential Auction Candidate (2027 Released)"
+      },
+      "bestAuctionValue": {
+        "name": "Daryl Mitchell",
+        "sourceCategory": "2026 Unsold Pool",
+        "releasedFrom": null,
+        "role": "all-rounder",
+        "country": "New Zealand",
+        "overseas": true,
+        "estCostCr": 2,
+        "matchedWarehouseName": "DJ Mitchell",
+        "discipline": "batting",
+        "pri": 75.3,
+        "adjustedPer100": 18.19,
+        "rawPer100": 23.27,
+        "pressureBalls": 614,
+        "pressureMatches": 52,
+        "interval90": [
+          2.6,
+          33.78
+        ],
+        "reliabilityTier": "Official Qualified (≥250b, ≥20m)",
+        "pressureRate": 154.4,
+        "phaseShare": {
+          "powerplay": 0.176,
+          "middle": 0.602,
+          "death": 0.221
+        },
+        "valueIndex": 53.2,
+        "eligibilityState": "Potential Auction Candidate (Pool)"
+      },
+      "nextAlternative": {
+        "name": "Kusal Perera",
+        "sourceCategory": "CricField Extended Pool",
+        "releasedFrom": null,
+        "role": "wicketkeeper",
+        "country": "Sri Lanka",
+        "overseas": true,
+        "estCostCr": 3.94,
+        "matchedWarehouseName": "MDKJ Perera",
+        "discipline": "batting",
+        "pri": 65.2,
+        "adjustedPer100": 16.13,
+        "rawPer100": 31.97,
+        "pressureBalls": 142,
+        "pressureMatches": 12,
+        "interval90": [
+          -4.98,
+          37.25
+        ],
+        "reliabilityTier": "Emerging Sample (80–249b)",
+        "pressureRate": 157.04,
+        "phaseShare": {
+          "powerplay": 0.285,
+          "middle": 0.608,
+          "death": 0.107
+        },
+        "valueIndex": 32.8,
+        "eligibilityState": "Potential Auction Candidate (Pool)"
+      }
+    }
+  ]
+}

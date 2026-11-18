@@ -1,0 +1,449 @@
+{
+  "modelVersion": "cf-pressure.e01281a332",
+  "builtAt": "2026-11-15T15:46:19.194Z",
+  "deliveriesReconciled": 1589302,
+  "reconciliationFailures": 0,
+  "coverage": {
+    "ipl": {
+      "name": "Indian Premier League",
+      "matches": 1243,
+      "from": "2008-04-18",
+      "to": "2026-05-31"
+    },
+    "smat": {
+      "name": "Syed Mushtaq Ali Trophy",
+      "matches": 695,
+      "from": "2016-01-02",
+      "to": "2024-12-15"
+    },
+    "bbl": {
+      "name": "Big Bash League",
+      "matches": 662,
+      "from": "2011-12-16",
+      "to": "2026-01-25"
+    },
+    "sa20": {
+      "name": "SA20",
+      "matches": 130,
+      "from": "2023-01-10",
+      "to": "2026-01-25"
+    },
+    "cpl": {
+      "name": "Caribbean Premier League",
+      "matches": 445,
+      "from": "2013-07-30",
+      "to": "2026-09-20"
+    },
+    "ilt20": {
+      "name": "International League T20",
+      "matches": 134,
+      "from": "2023-01-13",
+      "to": "2026-01-04"
+    },
+    "t20i": {
+      "name": "Men's T20 Internationals",
+      "matches": 3638,
+      "from": "2005-02-17",
+      "to": "2026-11-01"
+    }
+  },
+  "pressureShare": {
+    "definition": "rules",
+    "pressureBalls": 491107,
+    "innings": {
+      "first": 0.3575,
+      "chase": 0.6425
+    },
+    "phase": {
+      "powerplay": 0.1648,
+      "middle": 0.3019,
+      "death": 0.5333
+    }
+  },
+  "cohort": {
+    "batting": {
+      "qualifiedCount": 99,
+      "priorMeanPer100": 10.82,
+      "priorStrengthBallsK": 424,
+      "trueSpreadPer100": 14.83,
+      "matches": 815
+    },
+    "bowling": {
+      "qualifiedCount": 103,
+      "priorMeanPer100": -2.91,
+      "priorStrengthBallsK": 1122,
+      "trueSpreadPer100": 8.84,
+      "matches": 815
+    }
+  },
+  "definitionComparison": [
+    {
+      "id": "rules",
+      "label": "A. Rules: death overs, or chase needing ≥9 an over, or collapse (≥3 down for ≤35)",
+      "batting": {
+        "priorStrengthBalls": 424,
+        "upliftSplitHalf": 0.17,
+        "upliftPlayers": 113,
+        "trueSpreadPer100": 14.83,
+        "players": 155,
+        "splitHalf": 0.167,
+        "reliability": 0.286,
+        "vsOrdinary": 0.189,
+        "playersVsOrdinary": 150
+      },
+      "bowling": {
+        "priorStrengthBalls": 1122,
+        "upliftSplitHalf": -0.075,
+        "upliftPlayers": 149,
+        "trueSpreadPer100": 8.84,
+        "players": 153,
+        "splitHalf": 0.202,
+        "reliability": 0.336,
+        "vsOrdinary": 0.249,
+        "playersVsOrdinary": 165
+      },
+      "shareOfBalls": 0.452,
+      "phaseShare": [
+        0.208,
+        0.313,
+        0.479
+      ]
+    },
+    {
+      "id": "rulesLive",
+      "label": "C. Rules, but only while the match is live (batting side's win probability 2–98%)",
+      "batting": {
+        "priorStrengthBalls": 621,
+        "upliftSplitHalf": 0.147,
+        "upliftPlayers": 125,
+        "trueSpreadPer100": 12,
+        "players": 136,
+        "splitHalf": 0.129,
+        "reliability": 0.228,
+        "vsOrdinary": 0.152,
+        "playersVsOrdinary": 152
+      },
+      "bowling": {
+        "priorStrengthBalls": 1016,
+        "upliftSplitHalf": -0.038,
+        "upliftPlayers": 133,
+        "trueSpreadPer100": 9.2,
+        "players": 134,
+        "splitHalf": 0.212,
+        "reliability": 0.349,
+        "vsOrdinary": 0.278,
+        "playersVsOrdinary": 158
+      },
+      "shareOfBalls": 0.384,
+      "phaseShare": [
+        0.236,
+        0.311,
+        0.453
+      ]
+    },
+    {
+      "id": "leverage40",
+      "label": "B. Leverage, top 40% of balls (same share as the rules)",
+      "batting": {
+        "priorStrengthBalls": 803,
+        "upliftSplitHalf": 0.016,
+        "upliftPlayers": 120,
+        "trueSpreadPer100": 10.7,
+        "players": 127,
+        "splitHalf": 0.196,
+        "reliability": 0.327,
+        "vsOrdinary": 0.345,
+        "playersVsOrdinary": 137
+      },
+      "bowling": {
+        "priorStrengthBalls": 3214,
+        "upliftSplitHalf": -0.082,
+        "upliftPlayers": 128,
+        "trueSpreadPer100": 5.3,
+        "players": 136,
+        "splitHalf": 0.01,
+        "reliability": 0.019,
+        "vsOrdinary": 0.24,
+        "playersVsOrdinary": 158
+      },
+      "shareOfBalls": 0.352,
+      "phaseShare": [
+        0.525,
+        0.282,
+        0.194
+      ]
+    },
+    {
+      "id": "leverage30",
+      "label": "Leverage, top 30% of balls",
+      "batting": {
+        "priorStrengthBalls": 622,
+        "upliftSplitHalf": -0.119,
+        "upliftPlayers": 99,
+        "trueSpreadPer100": 11.86,
+        "players": 99,
+        "splitHalf": 0.152,
+        "reliability": 0.264,
+        "vsOrdinary": 0.366,
+        "playersVsOrdinary": 123
+      },
+      "bowling": {
+        "priorStrengthBalls": 5471,
+        "upliftSplitHalf": -0.288,
+        "upliftPlayers": 95,
+        "trueSpreadPer100": 4.02,
+        "players": 96,
+        "splitHalf": -0.08,
+        "reliability": -0.173,
+        "vsOrdinary": 0.433,
+        "playersVsOrdinary": 122
+      },
+      "shareOfBalls": 0.25,
+      "phaseShare": [
+        0.474,
+        0.331,
+        0.195
+      ]
+    },
+    {
+      "id": "leverage10",
+      "label": "Leverage, top 10% of balls",
+      "batting": {
+        "priorStrengthBalls": 7203482,
+        "upliftSplitHalf": 0.08,
+        "upliftPlayers": 20,
+        "trueSpreadPer100": 0.1,
+        "players": 20,
+        "splitHalf": 0.207,
+        "reliability": 0.343,
+        "vsOrdinary": 0.405,
+        "playersVsOrdinary": 33
+      },
+      "bowling": {
+        "priorStrengthBalls": 12319,
+        "upliftSplitHalf": 0.05,
+        "upliftPlayers": 22,
+        "trueSpreadPer100": 2.43,
+        "players": 22,
+        "splitHalf": 0.201,
+        "reliability": 0.334,
+        "vsOrdinary": 0.247,
+        "playersVsOrdinary": 33
+      },
+      "shareOfBalls": 0.089,
+      "phaseShare": [
+        0.186,
+        0.466,
+        0.348
+      ]
+    },
+    {
+      "id": "difficulty",
+      "label": "Difficulty: batting side's win probability 5–35% (behind but alive)",
+      "batting": {
+        "priorStrengthBalls": 5575,
+        "upliftSplitHalf": 0.007,
+        "upliftPlayers": 94,
+        "trueSpreadPer100": 4.32,
+        "players": 94,
+        "splitHalf": 0.116,
+        "reliability": 0.207,
+        "vsOrdinary": 0.24,
+        "playersVsOrdinary": 121
+      },
+      "bowling": {
+        "priorStrengthBalls": 486,
+        "upliftSplitHalf": 0.133,
+        "upliftPlayers": 93,
+        "trueSpreadPer100": 14.25,
+        "players": 93,
+        "splitHalf": 0.233,
+        "reliability": 0.378,
+        "vsOrdinary": 0.229,
+        "playersVsOrdinary": 113
+      },
+      "shareOfBalls": 0.237,
+      "phaseShare": [
+        0.34,
+        0.477,
+        0.183
+      ]
+    }
+  ],
+  "ruleSensitivity": [
+    {
+      "variant": "death from over 15",
+      "battingOverlap": 8,
+      "bowlingOverlap": 8
+    },
+    {
+      "variant": "death from over 17",
+      "battingOverlap": 9,
+      "bowlingOverlap": 8
+    },
+    {
+      "variant": "required rate ≥ 8",
+      "battingOverlap": 9,
+      "bowlingOverlap": 8
+    },
+    {
+      "variant": "required rate ≥ 10",
+      "battingOverlap": 8,
+      "bowlingOverlap": 8
+    },
+    {
+      "variant": "collapse ≤30",
+      "battingOverlap": 10,
+      "bowlingOverlap": 9
+    },
+    {
+      "variant": "collapse ≤40",
+      "battingOverlap": 9,
+      "bowlingOverlap": 9
+    }
+  ],
+  "winProbabilityValidation": {
+    "firstInnings": {
+      "holdoutFrom": "2023-01-01",
+      "model": {
+        "brier": 0.2042,
+        "logLoss": 0.591,
+        "n": 322007
+      },
+      "baseline": {
+        "brier": 0.2495,
+        "logLoss": 0.6921,
+        "n": 322007
+      },
+      "calibration": [
+        {
+          "n": 16659,
+          "predicted": 0.049,
+          "observed": 0.049
+        },
+        {
+          "n": 21141,
+          "predicted": 0.151,
+          "observed": 0.176
+        },
+        {
+          "n": 27370,
+          "predicted": 0.253,
+          "observed": 0.249
+        },
+        {
+          "n": 39495,
+          "predicted": 0.354,
+          "observed": 0.325
+        },
+        {
+          "n": 61532,
+          "predicted": 0.457,
+          "observed": 0.447
+        },
+        {
+          "n": 63359,
+          "predicted": 0.546,
+          "observed": 0.53
+        },
+        {
+          "n": 42251,
+          "predicted": 0.646,
+          "observed": 0.668
+        },
+        {
+          "n": 27965,
+          "predicted": 0.747,
+          "observed": 0.742
+        },
+        {
+          "n": 16434,
+          "predicted": 0.843,
+          "observed": 0.835
+        },
+        {
+          "n": 5801,
+          "predicted": 0.933,
+          "observed": 0.935
+        }
+      ]
+    },
+    "chase": {
+      "holdoutFrom": "2023-01-01",
+      "model": {
+        "brier": 0.1133,
+        "logLoss": 0.3495,
+        "n": 287567
+      },
+      "baseline": {
+        "brier": 0.25,
+        "logLoss": 0.6932,
+        "n": 287567
+      },
+      "calibration": [
+        {
+          "n": 67784,
+          "predicted": 0.029,
+          "observed": 0.024
+        },
+        {
+          "n": 24441,
+          "predicted": 0.148,
+          "observed": 0.132
+        },
+        {
+          "n": 20443,
+          "predicted": 0.249,
+          "observed": 0.239
+        },
+        {
+          "n": 18344,
+          "predicted": 0.349,
+          "observed": 0.338
+        },
+        {
+          "n": 16763,
+          "predicted": 0.45,
+          "observed": 0.445
+        },
+        {
+          "n": 16389,
+          "predicted": 0.55,
+          "observed": 0.564
+        },
+        {
+          "n": 17122,
+          "predicted": 0.65,
+          "observed": 0.645
+        },
+        {
+          "n": 18161,
+          "predicted": 0.752,
+          "observed": 0.759
+        },
+        {
+          "n": 22200,
+          "predicted": 0.852,
+          "observed": 0.825
+        },
+        {
+          "n": 65920,
+          "predicted": 0.974,
+          "observed": 0.969
+        }
+      ]
+    }
+  },
+  "oppositionAdjustment": {
+    "bowlingSide": {
+      "teamYears": 1404,
+      "K": 684,
+      "sdPer100": 10.01
+    },
+    "battingSide": {
+      "teamYears": 1403,
+      "K": 315,
+      "sdPer100": 14.4
+    }
+  }
+}

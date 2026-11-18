@@ -39,6 +39,7 @@ import {
   RETAINED_2027_COUNT,
   UNAVAILABLE_2027_COUNT,
 } from "@/lib/ipl-2027-eligibility";
+import { lookupPlayerPri, usePriBenchmark, type PriPlayerRecord } from "@/lib/pri-benchmark";
 
 type PoolFilter = "all" | "released" | "auctioned" | "unauctioned";
 type RoleFilter = "all" | "Batter" | "Bowler" | "All-Rounder" | "Wicketkeeper";
@@ -126,18 +127,27 @@ function buildAssessment(
   bowl: BowlerRow | null,
   pool: PoolPlayerJson | null,
   teamName: string | null,
+  priRec?: PriPlayerRecord | null,
 ): { score: number; headline: string; summary: string; tags: string[] } {
   const tags: string[] = [];
+  const priRole = role === "Bowler" ? priRec?.bowling ?? priRec?.batting : priRec?.batting ?? priRec?.bowling;
   let score = 50;
 
-  if (pool?.form != null) score = Math.round(pool.form * 0.45 + (pool.clutch ?? 50) * 0.35 + (pool.versatility ?? 50) * 0.2);
-  else {
+  if (priRole?.pri != null) {
+    score = priRole.pri;
+  } else if (pool?.form != null) {
+    score = Math.round(pool.form * 0.45 + (pool.clutch ?? 50) * 0.35 + (pool.versatility ?? 50) * 0.2);
+  } else {
     const batSignal = bat ? Math.min(35, (bat.sr / 155) * 18 + Math.min(17, bat.runs / 180)) : 0;
     const bowlSignal = bowl ? Math.min(35, Math.max(0, (10 - bowl.econ) * 5.5) + Math.min(18, bowl.wickets / 5)) : 0;
     score = Math.round(45 + Math.max(batSignal, bowlSignal) + (bat && bowl ? 8 : 0));
   }
-  score = Math.max(35, Math.min(98, score));
+  score = Math.max(1, Math.min(99.9, +score.toFixed(1)));
 
+  if (priRole) {
+    tags.push(`PRI ${priRole.pri}`);
+    tags.push(`${priRole.adjustedPer100 >= 0 ? "+" : ""}${priRole.adjustedPer100}/100b`);
+  }
   if (bat) {
     if (bat.deathSr >= 155 && bat.balls >= 60) tags.push("Death Hitter");
     if (bat.ppSr >= 138 && bat.balls >= 80) tags.push("Powerplay Intent");
@@ -166,11 +176,13 @@ function buildAssessment(
       ? `${teamName ?? "IPL 2026"} Acquisition · ${role}`
       : `Unauctioned Pool · ${role}`;
 
+  const priLine = priRole
+    ? `Unified PRI ${priRole.pri}/100 (Adjusted Pressure Impact ${priRole.adjustedPer100 >= 0 ? "+" : ""}${priRole.adjustedPer100} runs/100b, 90% CI [${priRole.interval90[0]}, ${priRole.interval90[1]}] across ${priRole.pressureBalls} pressure balls in ${priRole.pressureMatches} matches; ${priRole.reliabilityTier}). `
+    : "";
+
   const summary = statSnippet
-    ? `${name} carries ${statSnippet} in the CricField warehouse${
-        pool?.form != null ? `, with a dataset form rating of ${pool.form}/100 and clutch index ${pool.clutch ?? "—"}/100` : ""
-      }.`
-    : `${name} is listed in the ${
+    ? `${priLine}${name} carries ${statSnippet} in the CricField warehouse.`
+    : `${priLine}${name} is listed in the ${
         auctionStatus === "auctioned" ? "IPL 2026 auction ledger" : "CricField players pool"
       } as a ${role.toLowerCase()}; ball-by-ball IPL sample is limited or pending.`;
 
@@ -199,6 +211,7 @@ export default function ScoutLabPage() {
   const auctionsQuery = usePlayerAuctions();
   const careerQuery = usePlayerCareerStats();
   const imagesQuery = usePlayerImages();
+  const priQuery = usePriBenchmark();
 
   const poolQuery = useQuery<PoolPlayerJson[]>({
     queryKey: ["agg", "players-registry"],
@@ -269,7 +282,7 @@ export default function ScoutLabPage() {
       const role = classifyRole(rel.role ?? rec?.role ?? pool?.role ?? null, bat, bowl);
       const isOverseas = rel.overseas ?? country.toLowerCase() !== "india";
       const teamCode = resolveTeamCode(rel.releasedFrom) ?? null;
-      const assess = buildAssessment(rel.name, "released", role, bat, bowl, pool, rel.releasedFrom);
+      const assess = buildAssessment(rel.name, "released", role, bat, bowl, pool, rel.releasedFrom, lookupPlayerPri(priQuery.data, rel.name));
 
       combined.push({
         key: `rel-${n}`,
@@ -313,7 +326,7 @@ export default function ScoutLabPage() {
       const isOverseas = country.toLowerCase() !== "india";
       const teamName = rec.teamCanonical || rec.team || pool?.currentTeam || null;
       const teamCode = teamName ? resolveTeamCode(teamName) : null;
-      const assess = buildAssessment(rec.player, "auctioned", role, bat, bowl, pool, teamName);
+      const assess = buildAssessment(rec.player, "auctioned", role, bat, bowl, pool, teamName, lookupPlayerPri(priQuery.data, rec.player));
 
       combined.push({
         key: `auc-${n}`,
@@ -355,7 +368,7 @@ export default function ScoutLabPage() {
       const { bat, bowl } = findStats(lot.player);
       const role = classifyRole(lot.role ?? pool?.role ?? null, bat, bowl);
       const isOverseas = country.toLowerCase() !== "india";
-      const assess = buildAssessment(lot.player, "unauctioned", role, bat, bowl, pool, null);
+      const assess = buildAssessment(lot.player, "unauctioned", role, bat, bowl, pool, null, lookupPlayerPri(priQuery.data, lot.player));
 
       combined.push({
         key: `unsold-${n}`,
@@ -397,7 +410,7 @@ export default function ScoutLabPage() {
       const isOverseas = country.toLowerCase() !== "india";
       const teamName = p.currentTeam || p.team || null;
       const teamCode = teamName ? resolveTeamCode(teamName) : null;
-      const assess = buildAssessment(p.name, "unauctioned", role, bat, bowl, p, teamName);
+      const assess = buildAssessment(p.name, "unauctioned", role, bat, bowl, p, teamName, lookupPlayerPri(priQuery.data, p.name));
 
       combined.push({
         key: `pool-${n}`,
@@ -428,7 +441,7 @@ export default function ScoutLabPage() {
     }
 
     return combined;
-  }, [auctionsQuery.data, poolQuery.data, careerQuery.data]);
+  }, [auctionsQuery.data, poolQuery.data, careerQuery.data, priQuery.data]);
 
   const counts = useMemo(() => {
     const released = entries.filter((e) => e.auctionStatus === "released").length;

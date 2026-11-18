@@ -1,0 +1,20 @@
+player,role,country,overseas,contractCr,primaryDiscipline,pri,adjustedPer100,rawPer100,ci90Low,ci90High,pressureBalls,pressureMatches,reliabilityTier,leagueBenchmarkPlayer,leagueBenchmarkPri,verdict
+Aman Rao Perala,batter,India,false,0.3,batting,,,,,,0,0,Insufficient Sample (<15b),SA Yadav,99.5,"Good player, limited pressure evidence"
+Brijesh Sharma,bowler,India,false,0.3,bowling,,,,,,0,0,Insufficient Sample (<15b),JJ Bumrah,99.5,"Good player, limited pressure evidence"
+Dasun Shanaka,all-rounder,Sri Lanka,true,2,batting,90.4,25.09,34.47,9.73,40.45,645,53,"Official Qualified (≥250b, ≥20m)",SA Yadav,99.5,Elite pressure performer
+Dhruv Jurel,wicketkeeper,India,false,14,batting,6.6,-0.91,-10.97,-17.48,15.67,494,41,"Official Qualified (≥250b, ≥20m)",SA Yadav,99.5,Position worth strengthening
+Donovan Ferreira,wicketkeeper,South Africa,true,1,batting,49.5,13.78,19.54,-6.04,33.61,218,23,Emerging Sample (80–249b),SA Yadav,99.5,Reliable role specialist (moderate sample)
+Jofra Archer,all-rounder,England,true,12.5,bowling,92.7,4.44,17.13,-7.13,16,650,57,"Official Qualified (≥250b, ≥20m)",JJ Bumrah,99.5,Elite pressure performer
+Lhuan-dre Pretorius,wicketkeeper,South Africa,true,0.3,batting,18.2,4.74,-56.67,-18.53,28.01,42,5,Limited Sample (<80b),SA Yadav,99.5,"Good player, limited pressure evidence"
+Manimaran Siddharth,all-rounder,India,false,0.75,bowling,22.3,-5.98,-38.08,-19.86,7.91,107,8,Emerging Sample (80–249b),JJ Bumrah,99.5,Reliable role specialist (moderate sample)
+Mohammed Shami,bowler,India,false,8,bowling,65,-0.83,2.93,-12.49,10.83,622,55,"Official Qualified (≥250b, ≥20m)",JJ Bumrah,99.5,Strong retained option
+Nandre Burger,bowler,South Africa,true,3.5,bowling,56.8,-1.48,3.96,-14.41,11.45,296,22,"Official Qualified (≥250b, ≥20m)",JJ Bumrah,99.5,Reliable role specialist
+Ravi Bishnoi,bowler,India,false,7.2,bowling,24.8,-5.77,-8.49,-15.93,4.39,1176,85,"Official Qualified (≥250b, ≥20m)",JJ Bumrah,99.5,Position worth strengthening
+Ravindra Jadeja,all-rounder,India,false,14,bowling,23.8,-5.83,-11.41,-17.61,5.95,587,41,"Official Qualified (≥250b, ≥20m)",JJ Bumrah,99.5,Position worth strengthening
+Riyan Parag,all-rounder,India,false,14,batting,25.8,6.67,3.35,-9.59,22.93,530,54,"Official Qualified (≥250b, ≥20m)",SA Yadav,99.5,Position worth strengthening
+Sandeep Sharma,bowler,India,false,4,bowling,49,-2.65,-2.08,-14.61,9.32,533,39,"Official Qualified (≥250b, ≥20m)",JJ Bumrah,99.5,Reliable role specialist
+Shubham Dubey,batter,India,false,0.8,batting,26.3,6.83,-6.81,-14.63,28.29,124,15,Emerging Sample (80–249b),SA Yadav,99.5,Reliable role specialist (moderate sample)
+Sushant Mishra,bowler,India,false,0.9,bowling,56.3,-1.56,74.2,-15.97,12.84,20,2,Limited Sample (<80b),JJ Bumrah,99.5,"Good player, limited pressure evidence"
+Vaibhav Sooryavanshi,batter,India,false,1.1,batting,92.9,27.7,69.29,7.12,48.28,172,16,Emerging Sample (80–249b),SA Yadav,99.5,Promising emerging option
+Yash Raj Punja,bowler,India,false,0.3,bowling,36.9,-3.76,-14.91,-17.77,10.26,85,6,Limited Sample (<80b),JJ Bumrah,99.5,Reliable role specialist (moderate sample)
+Yashasvi Jaiswal,batter,India,false,18,batting,59.1,15.68,19.55,-0.55,31.92,533,36,"Official Qualified (≥250b, ≥20m)",SA Yadav,99.5,Reliable role specialist
