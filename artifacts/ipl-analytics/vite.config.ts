@@ -1,3 +1,4 @@
+import { PUBLIC_PAGES, SITE_ORIGIN } from "./src/lib/site-seo";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -289,6 +290,42 @@ function editorialArticleRelease(): Plugin {
   };
 }
 
+
+/** Write route-specific heads using the built entry, preserving Vite's hashed assets.
+ * Page content continues to render in React; this is metadata generation, not SSR.
+ */
+function searchMetadataPages(): Plugin {
+  return {
+    name: "cricfield-search-metadata",
+    apply: "build",
+    closeBundle() {
+      const output = path.resolve(import.meta.dirname, "dist/public");
+      const entry = fs.readFileSync(path.join(output, "index.html"), "utf8");
+      const escape = (value: string) => value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      for (const [route, metadata] of Object.entries(PUBLIC_PAGES)) {
+        const url = SITE_ORIGIN + route;
+        const title = escape(metadata.title + " | CricField");
+        const description = escape(metadata.description);
+        let html = entry.replace(/<title>[\s\S]*?<\/title>/, "<title>" + title + "</title>");
+        for (const [attribute, key, content] of [
+          ["name", "description", description],
+          ["property", "og:title", title],
+          ["property", "og:description", description],
+          ["name", "twitter:title", title],
+          ["name", "twitter:description", description],
+        ]) {
+          html = html.replace(new RegExp('<meta ' + attribute + '="' + key + '" content="[^"]*"\\s*/?>'), '<meta ' + attribute + '="' + key + '" content="' + content + '" />');
+        }
+        html = html.replace("</head>", '<link rel="canonical" href="' + url + '" /><meta property="og:url" content="' + url + '" /></head>');
+        // Do not repeat the homepage fallback on unrelated pages.
+        html = html.replace(/<noscript>[\s\S]*?<\/noscript>/, '<noscript><main><h1>' + title + '</h1><p>' + description + '</p><p>Enable JavaScript to use the interactive cricket analytics tools.</p><a href="/home">CricField home</a></main></noscript>');
+        fs.mkdirSync(path.join(output, "seo"), { recursive: true });
+        fs.writeFileSync(path.join(output, "seo", route.slice(1).replace(/\//g, "-") + ".html"), html);
+      }
+    },
+  };
+}
+
 const rawPort = process.env.PORT ?? "3000";
 const port = Number(rawPort);
 
@@ -299,6 +336,7 @@ export default defineConfig({
   plugins: [
     apiAutostart(),
     adsenseConfiguration(),
+    searchMetadataPages(),
     editorialImageRelease(),
     editorialArticleRelease(),
     react(),

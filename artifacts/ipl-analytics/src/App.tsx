@@ -1,3 +1,4 @@
+import { RouteMetadata } from './components/route-metadata';
 import { CricfieldSplash } from "@/components/cricfield-splash";
 import { CricketLoader } from "@/components/CricketLoader";
 import {RouteHistoryTracker} from '@/lib/route-history';
@@ -296,6 +297,7 @@ function App() {
               {/* GA4 counts one page view on load and never sees a client-side
                   route change, so page views are sent per navigation instead. */}
               <RouteHistoryTracker /><AnalyticsRouteTracker /><UsageTracker />
+              <RouteMetadata />
               <ScrollToTop />
               <ViewportExperience />
               <CricfieldSplash />

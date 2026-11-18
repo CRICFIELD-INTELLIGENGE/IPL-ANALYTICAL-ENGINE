@@ -54,6 +54,130 @@
       "destination": "/api/warehouse-preview?__warehouseRoute=/api/retention/2027/franchises/:team/picks"
     },
     {
+      "source": "/editorials",
+      "destination": "/seo/editorials.html"
+    },
+    {
+      "source": "/auction",
+      "destination": "/seo/auction.html"
+    },
+    {
+      "source": "/tactics",
+      "destination": "/seo/tactics.html"
+    },
+    {
+      "source": "/venues",
+      "destination": "/seo/venues.html"
+    },
+    {
+      "source": "/storylines",
+      "destination": "/seo/storylines.html"
+    },
+    {
+      "source": "/retention-room",
+      "destination": "/seo/retention-room.html"
+    },
+    {
+      "source": "/squad-hq",
+      "destination": "/seo/squad-hq.html"
+    },
+    {
+      "source": "/reports",
+      "destination": "/seo/reports.html"
+    },
+    {
+      "source": "/blogs",
+      "destination": "/seo/blogs.html"
+    },
+    {
+      "source": "/home",
+      "destination": "/seo/home.html"
+    },
+    {
+      "source": "/feed",
+      "destination": "/seo/feed.html"
+    },
+    {
+      "source": "/feed/ipl-2027",
+      "destination": "/seo/feed-ipl-2027.html"
+    },
+    {
+      "source": "/feed/ipl-2027/retentions",
+      "destination": "/seo/feed-ipl-2027-retentions.html"
+    },
+    {
+      "source": "/stats",
+      "destination": "/seo/stats.html"
+    },
+    {
+      "source": "/pulse",
+      "destination": "/seo/pulse.html"
+    },
+    {
+      "source": "/scores",
+      "destination": "/seo/scores.html"
+    },
+    {
+      "source": "/dugout",
+      "destination": "/seo/dugout.html"
+    },
+    {
+      "source": "/pressurelab",
+      "destination": "/seo/pressurelab.html"
+    },
+    {
+      "source": "/pressurelab/compare",
+      "destination": "/seo/pressurelab-compare.html"
+    },
+    {
+      "source": "/pressurelab/roles",
+      "destination": "/seo/pressurelab-roles.html"
+    },
+    {
+      "source": "/ai-analyst",
+      "destination": "/seo/ai-analyst.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/seo/about.html"
+    },
+    {
+      "source": "/methodology",
+      "destination": "/seo/methodology.html"
+    },
+    {
+      "source": "/data-sources",
+      "destination": "/seo/data-sources.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/seo/contact.html"
+    },
+    {
+      "source": "/disclaimer",
+      "destination": "/seo/disclaimer.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/seo/privacy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/seo/terms.html"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/robots.txt"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap.xml"
+    },
+    {
+      "source": "/sitemap-dugout.xml",
+      "destination": "/sitemap-dugout.xml"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }

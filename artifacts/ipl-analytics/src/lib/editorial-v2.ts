@@ -7,8 +7,8 @@ import indexData from "@/data/editorial/index.json";
 import type { ArticleStatus, ArticleV2, EvidenceFile, IndexEntry, PlanEntry } from "@/data/editorial/schema";
 import { TOKEN_RE } from "@/data/editorial/schema";
 
-import { normalizeSiteOrigin } from "./site-seo";
-export const SITE_ORIGIN = normalizeSiteOrigin(import.meta.env.VITE_SITE_ORIGIN);
+import { normalizeSiteOrigin, SITE_ORIGIN as DEFAULT_SITE_ORIGIN } from "./site-seo";
+export const SITE_ORIGIN = normalizeSiteOrigin(import.meta.env.VITE_SITE_ORIGIN) ?? DEFAULT_SITE_ORIGIN;
 
 const articleLoaders = import.meta.glob<{ default: ArticleV2 | null }>("../data/editorial/articles/*/*.json");
 const evidenceLoaders = import.meta.glob<{ default: EvidenceFile | null }>("../data/editorial/evidence/*/*.json");

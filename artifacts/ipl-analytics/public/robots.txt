@@ -1,8 +1,6 @@
 User-agent: *
 Allow: /
-# JSON endpoints behind the pages; nothing there for a search index.
 Disallow: /api/
 
-# Sitemaps
-Sitemap: https://cricfield.in/sitemap.xml
-Sitemap: https://cricfield.in/sitemap-dugout.xml
+Sitemap: https://www.cricfield.in/sitemap.xml
+Sitemap: https://www.cricfield.in/sitemap-dugout.xml
