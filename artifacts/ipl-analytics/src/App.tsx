@@ -53,7 +53,7 @@ function LegacyPressureLink() {
 }
 function SquadRedirect() {
   const team = new URLSearchParams(useSearch()).get("team")?.toUpperCase() ?? "";
-  return <Redirect to={isTeamCode(team) ? `/retention-room/${team}` : "/retention-room"} replace />;
+  return <Redirect to={isTeamCode(team) ? `/squad-hq/${team}` : "/squad-hq"} replace />;
 }
 const VenueProfilePage = lazy(() => import("./pages/venue"));
 const TeamProfilePage = lazy(() => import("./pages/team"));
@@ -214,6 +214,8 @@ function Router() {
         <Route path="/ai-analyst/auction-war-room" component={AuctionWarRoomPage} />
         <Route path="/ai-analyst/player-pool" component={PlayerPoolPage} />
         <Route path="/ai-analyst/squad-builder" component={PlayerIntelligencePage} />
+        <Route path="/squad-hq/:team" component={RetentionRoomPage} />
+        <Route path="/squad-hq" component={RetentionRoomPage} />
         <Route path="/retention-room/:team" component={RetentionRoomPage} />
         <Route path="/retention-room" component={RetentionRoomPage} />
         <Route path="/ai-analyst" component={AIAnalystPage} />

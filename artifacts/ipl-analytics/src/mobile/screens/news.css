@@ -1173,3 +1173,62 @@ html:not(.dark) .mn-dir-btn {
   color: var(--m-muted);
   font-size: 13px;
 }
+
+/* Consolidated Editorial Content Section Switcher (Storylines | Analysis | Archive) */
+.mn-sections {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  padding: 4px;
+  border-radius: 14px;
+  border: 1px solid var(--m-line);
+  background: rgba(8, 13, 28, 0.72);
+}
+
+html:not(.dark) .mn-sections,
+[data-theme="light"] .mn-sections {
+  background: rgba(241, 245, 249, 0.92);
+}
+
+.mn-section-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--m-muted);
+  font: 700 clamp(11px, 3vw, 12.5px)/1.1 var(--m-ui);
+  white-space: nowrap;
+  min-width: 0;
+  transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.mn-section-pill small {
+  font: 700 9.5px/1 var(--m-mono);
+  opacity: 0.7;
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mn-section-pill[data-active="true"] {
+  background: color-mix(in srgb, var(--mn-accent, var(--m-accent)) 18%, rgba(15, 23, 42, 0.9));
+  border-color: color-mix(in srgb, var(--mn-accent, var(--m-accent)) 55%, transparent);
+  color: var(--m-text);
+}
+
+.mn-section-pill[data-active="true"] small {
+  background: var(--mn-accent, var(--m-accent));
+  color: #050816;
+  opacity: 1;
+}
+
+html:not(.dark) .mn-section-pill[data-active="true"],
+[data-theme="light"] .mn-section-pill[data-active="true"] {
+  background: #ffffff;
+  color: #0f172a;
+}

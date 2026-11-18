@@ -1,17 +1,15 @@
-import { FranchiseDesk } from "@/components/franchise-desk";
 import { RETENTION_INDEX_VERSION } from "@/lib/retention-version";
 /**
- * CRICFIELD RETENTION ROOM — Who Stays. Who Goes. Who Should Stay.
- * The earlier /feed/squad room's layout, filled with live data. Three outputs are
- * never mixed: CRICFIELD Picks (a recommendation), the Retention Forecast (a gated
- * model) and Fan Picks (votes). Every value comes from /api/retention; this page
- * formats them and calculates none.
+ * CRICFIELD SQUAD HQ (evolved from Retention Room)
+ * Preserves all verified Retention Room records, historical predictions, fan ballots,
+ * and extends the page into a full IPL 2027 Franchise Squad Workspace:
+ * Overview → Retention Intelligence → Squad Builder → Playing XI → Squad Intelligence → Connected Tools.
  */
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useRoute } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { Activity, ArrowRight, ArrowUp, Bookmark, ChevronDown, ChevronRight, ChevronUp, Search, Shield, Shirt, Sparkles, Users, Vote, Zap } from "lucide-react";
+import { Activity, ArrowRight, ArrowUp, Bookmark, ChevronDown, ChevronRight, ChevronUp, Dna, Gavel, LayoutGrid, MapPin, Search, Shield, Shirt, Sparkles, Swords, Users, Vote, Zap } from "lucide-react";
 import { AdSlot } from "@/components/ad-slot";
 import { Layout } from "@/components/layout";
 import { PlayerAvatar } from "@/components/player-avatar";
@@ -19,7 +17,8 @@ import { CategoryTag, LIVE_SEASON, ScenarioTable } from "@/components/retention/
 import { FranchiseSquadInsights } from "@/components/retention/rr-squad-insights";
 import { SwipeCard } from "@/components/retention/swipe-card";
 import { errorText } from "@/lib/discovery-api";
-import { HUB_TEAMS } from "@/lib/ipl-2027";
+import { HUB_EVENTS, HUB_TEAMS } from "@/lib/ipl-2027";
+import { usePulseAuction } from "@/lib/pulse-auction";
 import {
   CATEGORIES, checkBallot, fetchDilemmas, fetchFanResults, fetchForecast, fetchMyBallot, fetchPicks, fetchReplacementsFor, fetchRoom, fetchSeasons, fetchTrades, postEditorial, simulateRetention, submitBallot,
   type Choice, type Choices, type Dilemma, type DilemmaSide, type FanRow, type FranchiseRoom, type PickRow, type TeamPicks,
@@ -32,6 +31,12 @@ import { readSaved, retentionKey, type RetentionSnapshot } from "@/lib/auction-p
 import { fetchOfficialRoom, type OfficialRoom } from "@/lib/retention-official-api";
 import { OfficialStage, OfficialSquad, OfficialNeeds, OfficialProvenance, OfficialDecisionReview } from "@/components/retention/official-overview";
 import { OfficialBoard, PredictionReality, type BoardFilters } from "@/components/retention/official-board";
+import { PlayingXiPanel } from "@/components/decision/playing-xi-panel";
+import { SquadOverviewPanel } from "@/components/squad-hq/squad-overview-panel";
+import { SquadBuilderPanel } from "@/components/squad-hq/squad-builder-panel";
+import { SquadIntelligencePanel } from "@/components/squad-hq/squad-intelligence-panel";
+import { SquadConnectedTools } from "@/components/squad-hq/squad-connected-tools";
+import { computeScenarioCounts, emptyScenario, loadScenario, saveScenario, type SquadScenario } from "@/lib/squad-hq-scenario";
 
 type Tab = "official" | "comparison" | "picks" | "forecast" | "fans" | "impact" | "trades";
 const TABS: [Tab, string][] = [["official", "Official Decisions"], ["comparison", "Prediction vs Reality"], ["picks", "CRICFIELD Assessments"], ["forecast", "Forecast Archive"], ["fans", "Fan Picks"], ["impact", "Squad Simulator"], ["trades", "Trade Intelligence"]];
@@ -42,39 +47,93 @@ const ROLE_COLOURS: Record<string, string> = { batter: "#38BDF8", wicketkeeper: 
 const label = (role: string) => ({ batter: "Batters", wicketkeeper: "Wicketkeepers", "all-rounder": "All-rounders", bowler: "Bowlers" }[role] ?? role);
 const day = (iso: string | null) => (iso ? new Date(`${iso}T00:00:00`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "To be confirmed");
 
+type MilestoneStage = "retention" | "auction" | "season";
+type WorkspaceSectionId = "overview" | "retention" | "squad-builder" | "playing-xi" | "intelligence";
+
+const WORKSPACE_SECTIONS: { id: WorkspaceSectionId; label: string; icon: typeof LayoutGrid }[] = [
+  { id: "overview", label: "Overview", icon: LayoutGrid },
+  { id: "retention", label: "Retention", icon: Shield },
+  { id: "squad-builder", label: "Squad Builder", icon: Users },
+  { id: "playing-xi", label: "Playing XI", icon: Shirt },
+  { id: "intelligence", label: "Intelligence", icon: Dna },
+];
+
 export default function RetentionRoomPage() {
-  const [, params] = useRoute("/retention-room/:team");
-  const [, go] = useLocation();
-  const requested = params?.team?.toUpperCase() ?? "";
+  const [, squadParams] = useRoute("/squad-hq/:team");
+  const [, retParams] = useRoute("/retention-room/:team");
+  const [location, go] = useLocation();
+  const requested = (squadParams?.team ?? retParams?.team ?? "").toUpperCase();
   const { selectedTeam, setSelectedTeam } = useTeamTheme();
   const team = isTeamCode(requested) ? requested : selectedTeam ?? "RCB";
   const [season, setSeason] = useState(LIVE_SEASON);
   const [tab, setTab] = useState<Tab>(new URLSearchParams(window.location.search).get("tab") === "fans" ? "fans" : "official");
+  const [reviewOpen, setReviewOpen] = useState(() => ["picks", "forecast", "fans", "impact"].includes(new URLSearchParams(window.location.search).get("tab") ?? ""));
   const [boardFilters,setBoardFilters] = useState<BoardFilters>({decision:"all",group:"all"});
   const [choices, setChoices] = useState<Choices>({});
-  useEffect(() => setChoices({}), [team]);
+  const [activeStage, setActiveStage] = useState<MilestoneStage>("retention");
+  const [activeSection, setActiveSection] = useState<WorkspaceSectionId>("overview");
+  const [xiMode, setXiMode] = useState<"official" | "scenario">("official");
+  const [scenario, setScenario] = useState<SquadScenario>(() => loadScenario(team));
+
+  useEffect(() => {
+    setChoices({});
+    setScenario(loadScenario(team));
+    setXiMode("official");
+  }, [team]);
   useEffect(() => { setBoardFilters({decision:"all",group:"all"}); if (selectedTeam !== team) setSelectedTeam(team); }, [team,selectedTeam,setSelectedTeam]);
+
   const seasons = useQuery({ queryKey: ["retention-seasons"], queryFn: fetchSeasons, staleTime: 3_600_000 });
   const live = season === LIVE_SEASON;
   const official = useQuery({queryKey:["retention-official",season,team],queryFn:()=>fetchOfficialRoom(season,team),enabled:live,staleTime:300_000,retry:false});
   const room = useQuery({ queryKey: ["retention-room", season, team, RETENTION_INDEX_VERSION], queryFn: () => fetchRoom(season, team), enabled: live, retry: false });
   const picks = useQuery({ queryKey: ["retention-picks", team, RETENTION_INDEX_VERSION], queryFn: () => fetchPicks(LIVE_SEASON, team), enabled: live, retry: false });
+  const pulse2027 = usePulseAuction(2027);
   const theme = TEAM_REGISTRY[team];
   const d = room.data;
   const active = tab;
-  const openTab = (t: Tab) => { setTab(t); document.getElementById("room-tabs")?.scrollIntoView({ behavior: "smooth", block: "start" }); };
+
+  const officialActive = useMemo(
+    () => (official.data?.players ?? []).filter((p) => p.decision === "retained" || p.decision === "traded_in"),
+    [official.data],
+  );
+  const myCounts = useMemo(() => computeScenarioCounts(officialActive, scenario), [officialActive, scenario]);
+
+  const scrollToSection = (id: WorkspaceSectionId) => {
+    setActiveSection(id);
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  const selectMilestone = (stage: MilestoneStage) => {
+    setActiveStage(stage);
+    const target: WorkspaceSectionId =
+      stage === "retention" ? "retention" : stage === "auction" ? "squad-builder" : "playing-xi";
+    scrollToSection(target);
+  };
+  const openTab = (t: Tab) => {
+    setTab(t);
+    if (["picks", "forecast", "fans", "impact"].includes(t)) setReviewOpen(true);
+    document.getElementById("room-tabs")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   const openBoard = (decision="all",group="all") => {setBoardFilters({decision,group});openTab("official");};
   const openNeeds = () => {document.getElementById("retention-needs")?.scrollIntoView({behavior:"smooth",block:"center"});document.getElementById("retention-needs")?.focus({preventScroll:true});};
+  const isLegacyPath = location.startsWith("/retention-room");
+
   return (
     <Layout hideRightPanel>
       <div className="space-y-6 p-4 sm:p-6 bg-[#040814] min-h-screen text-white font-sans" style={{ "--team-accent": theme.accent } as React.CSSProperties}>
-        <Header d={d} official={official.data} season={season} setSeason={setSeason} seasons={seasons.data?.seasons.filter(s => s.live)} />
+        <Header
+          d={d}
+          official={official.data}
+          season={season}
+          setSeason={setSeason}
+          seasons={seasons.data?.seasons.filter(s => s.live)}
+          activeStage={activeStage}
+          onSelectMilestone={selectMilestone}
+        />
 
-      {live && <FranchiseDesk team={team} summary={false} />}
         <nav aria-label="Franchise selector" className="-mx-4 overflow-x-auto px-4 py-1 no-scrollbar">
           <div className="flex items-center gap-2 w-max">
             {HUB_TEAMS.map((t) => (
-              <button key={t} type="button" aria-pressed={team === t} onClick={() => go(`/retention-room/${t}`)}
+              <button key={t} type="button" aria-pressed={team === t} onClick={() => go(isLegacyPath ? `/retention-room/${t}` : `/squad-hq/${t}`)}
                 className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-black transition-all ${team === t ? "bg-[#0B1226] border-[var(--team-accent)] text-white ring-2 ring-[var(--team-accent)]/30 shadow-lg" : "bg-white/[0.03] border-white/10 text-white/70 hover:border-white/30 hover:text-white"}`}>
                 <img src={TEAM_REGISTRY[t].logoImg} alt="" className="w-5 h-5 object-contain" /><span>{t}</span>
               </button>
@@ -82,37 +141,198 @@ export default function RetentionRoomPage() {
           </div>
         </nav>
 
-        {official.isPending && <div className="ret-panel ret-skeleton" role="status" aria-busy="true">Loading sourced retention decisions…</div>}
-        {official.isError && <div className="ret-panel" role="alert"><h2>Retention data could not be loaded</h2><p>{errorText(official.error)}</p><button className="ret-action" onClick={()=>void official.refetch()}>Retry official data</button></div>}
-        {official.data && <><OfficialStage team={team} data={official.data} onBoard={openBoard} onNeeds={openNeeds}/><OfficialSquad data={official.data} onGroup={group=>openBoard("squad",group)}/></>}
+        {/* 1. SQUAD OVERVIEW */}
+        <SquadOverviewPanel
+          team={team}
+          official={official.data}
+          pulseModel={pulse2027.model}
+          onSelectGroup={(group) => openBoard("squad", group)}
+        />
 
-        <div id="room-tabs" className="scroll-mt-20 flex flex-wrap gap-1.5" aria-label="Retention views">
-          {TABS.map(([id, text]) => (
-            <button key={id} type="button" aria-pressed={active === id} disabled={!live} onClick={() => setTab(id)}
-              className={`px-3.5 py-2 rounded-lg text-xs font-black transition-all disabled:opacity-40 border ${active === id ? "border-[var(--team-accent)] bg-white/10 text-white" : "bg-white/[0.04] text-white/60 hover:text-white border-white/10"}`}>{text}</button>
-          ))}
-        </div>
-        {active === "official" && official.data && <OfficialBoard key={team} data={official.data} picks={picks.data} filters={boardFilters} setFilters={setBoardFilters}/>}
-        {active === "comparison" && <PredictionReality key={team} team={team}/>}
-        {["picks","forecast","fans","impact"].includes(active) && <p className="text-xs text-amber-200/90 border border-amber-300/20 rounded-lg p-3">Historical model and fan workspace. These assessments use the published pre-retention snapshot. Official decisions and the current squad are in the Official Decisions view.</p>}
-        {active === "picks" && <PicksTab team={team} q={picks} />}
-        {active === "forecast" && <ForecastTab team={team} />}
-        {active === "fans" && <FansTab team={team} choices={choices} setChoices={setChoices} />}
-        {active === "impact" && <ImpactTab team={team} choices={choices} />}
-        {active === "trades" && <TradesTab team={team} />}
+        {/* 2. SQUAD WORKSPACE STICKY NAVIGATION */}
+        <nav
+          aria-label="Squad workspace navigation"
+          className="sticky top-[64px] z-30 -mx-1 px-1 py-1"
+        >
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar rounded-2xl border border-white/10 bg-[#0B1226]/95 p-1.5 backdrop-blur-xl shadow-xl">
+            {WORKSPACE_SECTIONS.map((sec) => {
+              const Icon = sec.icon;
+              const isAct = activeSection === sec.id;
+              return (
+                <button
+                  key={sec.id}
+                  type="button"
+                  aria-current={isAct ? "true" : undefined}
+                  onClick={() => scrollToSection(sec.id)}
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all ${
+                    isAct
+                      ? "bg-[var(--team-accent)] text-black shadow"
+                      : "text-white/70 hover:text-white hover:bg-white/[0.05]"
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  <span>{sec.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </nav>
 
-        {live && official.data && <><OfficialNeeds data={official.data}/><OfficialDecisionReview data={official.data} picks={picks.data}/><OfficialProvenance data={official.data}/></>}
-        {live && active !== "official" && active !== "comparison" && (
-          <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr] items-start">
-            <Dilemmas team={team} picks={picks.data} />
-            <div className="space-y-6">
-              <RelatedTools team={team} />
-              <RetentionAdBox team={team} picks={picks.data} />
+        {/* 3. RETENTION INTELLIGENCE */}
+        <section id="retention" className="scroll-mt-24 space-y-6">
+          {official.isPending && <div className="ret-panel ret-skeleton" role="status" aria-busy="true">Loading sourced retention decisions…</div>}
+          {official.isError && <div className="ret-panel" role="alert"><h2>Retention data could not be loaded</h2><p>{errorText(official.error)}</p><button className="ret-action" onClick={()=>void official.refetch()}>Retry official data</button></div>}
+          {official.data && <><OfficialStage team={team} data={official.data} onBoard={openBoard} onNeeds={openNeeds}/><OfficialSquad data={official.data} onGroup={group=>openBoard("squad",group)}/></>}
+
+          <div id="room-tabs" className="scroll-mt-20 flex flex-wrap items-center gap-1.5" aria-label="Retention views">
+            {TABS.filter(([id]) => ["official", "comparison", "trades"].includes(id)).map(([id, text]) => (
+              <button key={id} type="button" aria-pressed={active === id} disabled={!live} onClick={() => setTab(id)}
+                className={`px-3.5 py-2 rounded-lg text-xs font-black transition-all disabled:opacity-40 border ${active === id ? "border-[var(--team-accent)] bg-white/10 text-white" : "bg-white/[0.04] text-white/60 hover:text-white border-white/10"}`}>{text}</button>
+            ))}
+            <button
+              type="button"
+              aria-expanded={reviewOpen}
+              onClick={() => setReviewOpen((v) => !v)}
+              className={`ml-auto inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-black border transition-all ${
+                reviewOpen ? "border-amber-400/50 bg-amber-400/10 text-amber-200" : "border-white/10 bg-white/[0.04] text-white/70 hover:text-white"
+              }`}
+            >
+              <span>Retention Review (Predictions &amp; Fan Picks)</span>
+              {reviewOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+
+          {reviewOpen && (
+            <div className="flex flex-wrap gap-1.5 rounded-xl border border-amber-400/20 bg-amber-500/5 p-2.5">
+              {TABS.filter(([id]) => ["picks", "forecast", "fans", "impact"].includes(id)).map(([id, text]) => (
+                <button key={id} type="button" aria-pressed={active === id} disabled={!live} onClick={() => setTab(id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all disabled:opacity-40 border ${active === id ? "border-[var(--team-accent)] bg-white/10 text-white" : "bg-white/[0.04] text-white/65 hover:text-white border-white/10"}`}>{text}</button>
+              ))}
+            </div>
+          )}
+
+          {active === "official" && official.data && <OfficialBoard key={team} data={official.data} picks={picks.data} filters={boardFilters} setFilters={setBoardFilters}/>}
+          {active === "comparison" && <PredictionReality key={team} team={team}/>}
+          {["picks","forecast","fans","impact"].includes(active) && <p className="text-xs text-amber-200/90 border border-amber-300/20 rounded-lg p-3">Historical model and fan workspace (separated from verified official decisions). Official decisions and the current squad remain in the Official Decisions view.</p>}
+          {active === "picks" && <PicksTab team={team} q={picks} />}
+          {active === "forecast" && <ForecastTab team={team} />}
+          {active === "fans" && <FansTab team={team} choices={choices} setChoices={setChoices} />}
+          {active === "impact" && <ImpactTab team={team} choices={choices} />}
+          {active === "trades" && <TradesTab team={team} />}
+
+          {live && official.data && <><OfficialNeeds data={official.data}/><OfficialDecisionReview data={official.data} picks={picks.data}/><OfficialProvenance data={official.data}/></>}
+          {live && active !== "official" && active !== "comparison" && (
+            <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr] items-start">
+              <Dilemmas team={team} picks={picks.data} />
+              <div className="space-y-6">
+                <RelatedTools team={team} />
+                <RetentionAdBox team={team} picks={picks.data} />
+              </div>
+            </div>
+          )}
+        </section>
+
+        {/* 4. SQUAD BUILDER */}
+        <SquadBuilderPanel
+          team={team}
+          official={official.data}
+          scenario={scenario}
+          onChangeScenario={setScenario}
+          onSaveScenario={() => saveScenario(scenario)}
+          onResetScenario={() => {
+            const fresh = emptyScenario(team);
+            setScenario(fresh);
+            saveScenario(fresh);
+          }}
+        />
+
+        {/* 5. PLAYING XI */}
+        <section id="playing-xi" aria-labelledby="playing-xi-hq-title" className="scroll-mt-24 rounded-2xl border border-white/10 bg-[#0B1226]/85 p-5 sm:p-6 space-y-5">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[var(--team-accent)]">
+                Matchday Combinations · MILP Optimizer
+              </span>
+              <h2 id="playing-xi-hq-title" className="text-xl sm:text-2xl font-black tracking-tight text-white mt-0.5">
+                {team} · Playing XI
+              </h2>
+            </div>
+            <div className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-black/30 p-1">
+              <button
+                type="button"
+                aria-pressed={xiMode === "official"}
+                onClick={() => setXiMode("official")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all ${xiMode === "official" ? "bg-[var(--team-accent)] text-black" : "text-white/65 hover:text-white"}`}
+              >
+                Official Squad XI
+              </button>
+              <button
+                type="button"
+                aria-pressed={xiMode === "scenario"}
+                onClick={() => setXiMode("scenario")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all ${xiMode === "scenario" ? "bg-violet-500 text-white" : "text-white/65 hover:text-white"}`}
+              >
+                My Squad ({scenario.additions.length} Hypothetical)
+              </button>
             </div>
           </div>
-        )}
 
-        {d && active !== "official" && active !== "comparison" && (
+          {xiMode === "scenario" && (
+            <div className="rounded-xl border border-violet-400/35 bg-violet-950/20 p-3.5 space-y-2 text-xs">
+              <div className="flex items-center justify-between gap-2">
+                <strong className="text-violet-200 uppercase tracking-wider text-[11px]">
+                  My Squad Hypothetical Overlay (Kept separate from Official XI)
+                </strong>
+                <span className="text-[10px] text-violet-300">
+                  {myCounts.total} total · {myCounts.overseas} overseas · {myCounts.wicketkeepers} WK
+                </span>
+              </div>
+              {scenario.additions.length > 0 ? (
+                <div className="flex flex-wrap gap-1.5">
+                  {scenario.additions.map((a) => (
+                    <span key={a.id} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-violet-400/40 bg-violet-500/15 text-violet-100 text-[11px] font-bold">
+                      <span>{a.name}</span>
+                      <small className="text-[9px] uppercase text-violet-300">Hypothetical</small>
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-white/60">No hypothetical additions in My Squad yet. Add targets in Squad Builder above.</p>
+              )}
+            </div>
+          )}
+
+          <PlayingXiPanel controlledTeamCode={team} hideTeamSelector />
+
+          <div className="pt-3 border-t border-white/10 flex flex-wrap gap-2">
+            <Link
+              href={`/tactics?team=${team}`}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[var(--team-accent)] text-black text-xs font-black hover:brightness-110"
+            >
+              <Swords className="w-3.5 h-3.5" /> Analyze XI in Match Lab <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+            <Link
+              href={`/feed/venues?team=${team}`}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-white/15 bg-white/5 text-white text-xs font-bold hover:border-white/30"
+            >
+              <MapPin className="w-3.5 h-3.5" /> Check Venue Suitability
+            </Link>
+            <Link
+              href={`/ai-analyst/playing-xi?team=${team}`}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-white/15 bg-white/5 text-white text-xs font-bold hover:border-white/30"
+            >
+              Compare XI Variations
+            </Link>
+          </div>
+        </section>
+
+        {/* 6. SQUAD INTELLIGENCE */}
+        <SquadIntelligencePanel team={team} official={official.data} myCounts={myCounts} />
+
+        {/* 7. CONNECTED TOOLS & RELATED EDITORIALS */}
+        <SquadConnectedTools team={team} />
+
+        {d && (
           <footer className="text-[11px] text-white/45 space-y-1">
             <p>Model {d.modelVersion}, index {d.indexVersion}, data to {d.dataCutoff}. {d.provenance}</p>
             <details><summary className="cursor-pointer text-white/60">Rules assumptions and sources</summary><ul className="list-disc pl-5 mt-1">{d.rules.assumptions.map((a) => <li key={a}>{a}</li>)}</ul><ul className="list-disc pl-5 mt-1">{d.rules.sources.map((s) => <li key={s.url}><a href={s.url} target="_blank" rel="noreferrer" className="text-violet-300 hover:underline">{s.label}</a></li>)}</ul></details>
@@ -123,29 +343,63 @@ export default function RetentionRoomPage() {
   );
 }
 
-function Header({ d, official, season, setSeason, seasons }: { d?: FranchiseRoom; official?: OfficialRoom; season: number; setSeason: (s: number) => void; seasons?: { season: number; cycle: string }[] }) {
+function Header({
+  d,
+  official,
+  season,
+  setSeason,
+  seasons,
+  activeStage,
+  onSelectMilestone,
+}: {
+  d?: FranchiseRoom;
+  official?: OfficialRoom;
+  season: number;
+  setSeason: (s: number) => void;
+  seasons?: { season: number; cycle: string }[];
+  activeStage: MilestoneStage;
+  onSelectMilestone: (stage: MilestoneStage) => void;
+}) {
   const rules = d?.rules;
-  const deadline = rules?.retentionDeadline.date ?? null;
+  const deadline = rules?.retentionDeadline.date ?? "2026-11-17";
+  const auctionRegistry = HUB_EVENTS.find((e) => e.id === "auction");
+  const auctionDate = auctionRegistry?.date ?? rules?.auction.date ?? null;
   const past = (iso: string | null) => Boolean(iso) && Date.now() >= Date.parse(`${iso}T23:59:59+05:30`);
-  const steps = [
-    { title: "Pre-Retention", sub: "Picks, forecast and votes", when: d ? `Data to ${day(d.dataCutoff)}` : "", done: true },
-    { title: "Retention Deadline", sub: rules?.retentionDeadline.status === "reported" ? "Reported date" : "Deadline", when: day(deadline), done: past(deadline) },
-    { title: "Official Lists", sub: official?.status === "verified" ? "Primary verified" : official ? "Source review" : "Awaiting data", when: official ? day(official.announcedOn) : "Loading", done: Boolean(official) },
-    { title: "Auction", sub: "Mini-auction · pending", when: day(rules?.auction.date ?? null), done: false },
+  const steps: { id: MilestoneStage; title: string; sub: string; when: string; done: boolean }[] = [
+    {
+      id: "retention",
+      title: "Retention",
+      sub: "Official Retentions & Releases",
+      when: day(deadline),
+      done: Boolean(official) || past(deadline),
+    },
+    {
+      id: "auction",
+      title: "Auction",
+      sub: "Recruitment & Squad Completion",
+      when: auctionDate ? `${day(auctionDate)}${auctionRegistry?.status === "reported" ? " (Reported)" : ""}` : "Date pending",
+      done: past(auctionDate),
+    },
+    {
+      id: "season",
+      title: "IPL Season",
+      sub: "Final Squad & Match Preparation",
+      when: "15 Mar 2027 (Target)",
+      done: false,
+    },
   ];
   return (
     <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr] items-start">
       <div className="space-y-3">
-        <div className="flex items-center gap-2 text-xs text-white/50">
-          <Link href="/feed" className="hover:text-white transition-colors">Feed</Link><span>›</span><span className="franchise-eyebrow font-medium">Squad Building</span>
-        </div>
         <div className="inline-block px-2.5 py-0.5 rounded-md bg-[var(--team-accent)]/15 border border-[var(--team-accent)]/30 text-[10px] font-mono uppercase tracking-widest text-[var(--team-accent)] font-bold">
-          IPL {season} · {official ? "Retentions announced · 17 Nov 2026" : "Retention review"}
+          IPL {season} · FRANCHISE INTELLIGENCE
         </div>
-        <h1 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-none">The Retention <span className="text-[var(--team-accent)]">Room</span></h1>
-        <p className="text-sm sm:text-base font-bold text-white/90">Who Stays. Who Goes. Who Should Stay.</p>
+        <h1 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-none">
+          The Squad <span className="text-[var(--team-accent)]">HQ</span>
+        </h1>
+        <p className="text-sm sm:text-base font-bold text-white/90">From retention decisions to the first ball.</p>
         <p className="text-xs sm:text-sm text-white/60 max-w-xl leading-relaxed">
-          Official decisions. The squad that remains. Your next auction move — backed by sources and CricField's existing IPL intelligence.
+          The squad that remains. The players you recruit. The XI you take into the season.
         </p>
       </div>
       <div className="rounded-2xl border border-white/10 bg-[#0B1226]/80 p-5 backdrop-blur-xl space-y-4">
@@ -157,22 +411,32 @@ function Header({ d, official, season, setSeason, seasons }: { d?: FranchiseRoom
         </div>
         <div className="relative pt-2 pb-1">
           <div className="absolute top-[18px] left-3 right-3 h-[2px] bg-white/10" />
-          <ol className="relative z-10 grid grid-cols-4 gap-2 text-center">
-            {steps.map((s, i) => (
-              <li key={s.title} className="flex flex-col items-center">
-                <div className={`w-5 h-5 rounded-full flex items-center justify-center ${s.done ? "bg-[var(--team-accent)] ring-4 ring-[var(--team-accent)]/20" : "bg-[#0B1226] border-2 border-white/30"}`}>
-                  <div className={`rounded-full ${s.done ? "w-2 h-2 bg-black" : "w-1.5 h-1.5 bg-white/30"}`} />
-                </div>
-                <span className={`mt-2 text-[10px] leading-tight ${i === 0 || s.done ? "font-black text-[var(--team-accent)]" : "font-bold text-white/70"}`}>{s.title}</span>
-                <span className="text-[9px] text-white/40">{s.sub}</span>
-                <span className="text-[9px] font-mono text-white/30">{s.when}</span>
-              </li>
-            ))}
+          <ol className="relative z-10 grid grid-cols-3 gap-2 text-center">
+            {steps.map((s) => {
+              const selected = activeStage === s.id;
+              return (
+                <li key={s.id} className="flex flex-col items-center">
+                  <button
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => onSelectMilestone(s.id)}
+                    className="flex flex-col items-center group cursor-pointer focus:outline-none"
+                  >
+                    <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all ${selected || s.done ? "bg-[var(--team-accent)] ring-4 ring-[var(--team-accent)]/25" : "bg-[#0B1226] border-2 border-white/30 group-hover:border-white/60"}`}>
+                      <div className={`rounded-full ${selected || s.done ? "w-2 h-2 bg-black" : "w-1.5 h-1.5 bg-white/30"}`} />
+                    </div>
+                    <span className={`mt-2 text-[10px] leading-tight ${selected ? "font-black text-[var(--team-accent)] underline underline-offset-4" : s.done ? "font-black text-[var(--team-accent)]" : "font-bold text-white/75 group-hover:text-white"}`}>{s.title}</span>
+                    <span className="text-[9px] text-white/50 mt-0.5">{s.sub}</span>
+                    <span className="text-[9px] font-mono text-white/35">{s.when}</span>
+                  </button>
+                </li>
+              );
+            })}
           </ol>
         </div>
         <div className="flex items-start gap-2 rounded-xl bg-white/[0.04] p-2.5 text-[11px] text-white/60 border border-white/5">
           <Vote className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-          <span>{rules ? `${rules.votingOpen ? `Fan voting is open until ${new Date(rules.votingLocksAt ?? "").toLocaleString()}.` : "Fan voting is closed."} Auction purse ${rules.auctionPurseLakh ? money(rules.auctionPurseLakh) : "not verified"}.` : "Reading this season's rules…"}</span>
+          <span>{rules ? `${rules.votingOpen ? `Fan voting is open until ${new Date(rules.votingLocksAt ?? "").toLocaleString()}.` : "Fan voting is closed."} Auction purse ${rules.auctionPurseLakh ? money(rules.auctionPurseLakh) : "not verified"}.` : "Select any milestone above to jump straight to that phase."}</span>
         </div>
       </div>
     </div>

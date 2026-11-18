@@ -17,7 +17,7 @@ export const FEATURES: Feature[] = [
   { id: "scores", label: "Scores", line: "Live and recent matches", href: "/scores", icon: Radio, prior: 6, match: /^\/(scores|match\/)/ },
   { id: "stats", label: "Stats", line: "Leaders, seasons and records", href: "/stats", icon: BarChart3, prior: 5, match: /^\/stats/ },
   { id: "scout", label: "Pressure Lab", line: "Every player, ranked and searchable", href: "/pressurelab", icon: Search, prior: 4, match: /^\/(scout|players\/)/ },
-  { id: "ai", label: "AI Analyst", line: "Ask the data in plain English", href: "/ai-analyst", icon: Sparkles, prior: 3.5, match: /^\/ai-analyst/ },
+  { id: "ai", label: "Decision Engine", line: "Ball-by-ball queries & simulations", href: "/ai-analyst", icon: Sparkles, prior: 3.5, match: /^\/ai-analyst/ },
   { id: "teams", label: "Teams", line: "Squads, titles and form", href: "/teams", icon: Shield, prior: 2.5, match: /^\/(teams|dugout\/(?!articles)[a-z-]+$)/ },
   { id: "journal", label: "Journal", line: "Long-form franchise analysis", href: "/reports", icon: BookOpen, prior: 2, match: /^\/(reports|dugout\/articles|articles|blogs)/ },
   { id: "intel", label: "Intelligence", line: "Computed insights, samples shown", href: "/intelligence", icon: Lightbulb, prior: 2, match: /^\/(intelligence|feed|pulse)/ },

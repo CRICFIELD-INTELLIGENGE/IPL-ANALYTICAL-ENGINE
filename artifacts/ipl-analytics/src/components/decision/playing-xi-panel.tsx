@@ -19,6 +19,7 @@ import {
   AlertTriangle, Ban, Check, ChevronDown, GripVertical, Loader2, Lock, Plane,
   RotateCcw, Sparkles, Unlock, Users, Zap,
 } from "lucide-react";
+import { TEAM_REGISTRY, type TeamCode } from "@/lib/team-context";
 import {
   fetchFranchises, optimizePlayingXi,
   type PitchType, type PlayerOverride, type PlayingRole, type PlayingXiRequest, type PlayingXiResult, type XiCandidate,
@@ -43,7 +44,13 @@ const signed = (n: number) => `${n > 0 ? "+" : ""}${n.toFixed(1)}`;
 
 type DragSource = "xi" | "bench";
 
-export function PlayingXiPanel() {
+export function PlayingXiPanel({
+  controlledTeamCode,
+  hideTeamSelector = false,
+}: {
+  controlledTeamCode?: TeamCode;
+  hideTeamSelector?: boolean;
+} = {}) {
   const [season, setSeason] = useState<string | undefined>(undefined);
   const [teamId, setTeamId] = useState<number | null>(null);
   const [pitch, setPitch] = useState<PitchType>("balanced");
@@ -62,13 +69,25 @@ export function PlayingXiPanel() {
   const demo = franchisesQ.isError;
   const franchises = demo ? MOCK_FRANCHISES : franchisesQ.data;
 
-  // Default to the first franchise; reset constraints whenever the squad changes.
+  // Sync with controlled franchise when embedded in Squad HQ; otherwise default to first franchise.
   useEffect(() => {
     if (!franchises?.franchises.length) return;
+    if (controlledTeamCode) {
+      const club = TEAM_REGISTRY[controlledTeamCode];
+      const matched = franchises.franchises.find(
+        (f) =>
+          f.shortName?.toUpperCase() === controlledTeamCode ||
+          f.name.toUpperCase() === club.name.toUpperCase(),
+      );
+      if (matched && matched.teamId !== teamId) {
+        setTeamId(matched.teamId);
+        return;
+      }
+    }
     if (teamId === null || !franchises.franchises.some((f) => f.teamId === teamId)) {
       setTeamId(franchises.franchises[0].teamId);
     }
-  }, [franchises, teamId]);
+  }, [franchises, teamId, controlledTeamCode]);
   useEffect(() => {
     setLocked([]); setExcluded([]); setOverrides([]); setExpanded(null);
   }, [teamId, season]);
@@ -133,22 +152,32 @@ export function PlayingXiPanel() {
 
           {/* ── Controls ── */}
           <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
-            <div className="flex flex-wrap gap-1.5">
-              {franchises?.franchises.map((f) => (
-                <button
-                  key={f.teamId}
-                  onClick={() => setTeamId(f.teamId)}
-                  disabled={demo}
-                  title={`${f.name} · ${f.squadSize} players used in ${franchises.season}`}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all ${
-                    f.teamId === teamId ? "bg-violet-500/25 border-violet-400/60 text-white" : "bg-white/5 border-white/10 text-muted-foreground hover:border-white/25"
-                  }`}
-                >
-                  {f.shortName || f.name}
-                </button>
-              ))}
-              {franchisesQ.isLoading && <span className="text-xs text-muted-foreground flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" /> Loading squads…</span>}
-            </div>
+            {!hideTeamSelector ? (
+              <div className="flex flex-wrap gap-1.5">
+                {franchises?.franchises.map((f) => (
+                  <button
+                    key={f.teamId}
+                    onClick={() => setTeamId(f.teamId)}
+                    disabled={demo}
+                    title={`${f.name} · ${f.squadSize} players used in ${franchises.season}`}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all ${
+                      f.teamId === teamId ? "bg-violet-500/25 border-violet-400/60 text-white" : "bg-white/5 border-white/10 text-muted-foreground hover:border-white/25"
+                    }`}
+                  >
+                    {f.shortName || f.name}
+                  </button>
+                ))}
+                {franchisesQ.isLoading && <span className="text-xs text-muted-foreground flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" /> Loading squads…</span>}
+              </div>
+            ) : (
+              <div className="flex items-center text-xs text-white/60">
+                {franchisesQ.isLoading ? (
+                  <span className="flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" /> Loading squad…</span>
+                ) : (
+                  <span>Active optimizer pool: <strong className="text-white">{team?.name ?? "Franchise"}</strong></span>
+                )}
+              </div>
+            )}
             <select
               value={season ?? franchises?.season ?? ""}
               onChange={(e) => setSeason(e.target.value)}

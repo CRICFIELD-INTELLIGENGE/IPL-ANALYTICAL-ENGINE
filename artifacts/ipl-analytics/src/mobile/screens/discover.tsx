@@ -1,63 +1,208 @@
-// Mobile Discover — "the stands": every feature organised as four stands of a ground, each with its own colour,
-// gate numbers and a one-line promise of what you will find there. Search opens the shared search sheet.
-import { useMemo, useState } from "react";
+// CRICFIELD Mobile More (/discover & /more) — structured directory aligned with the approved mobile reference.
+import type { CSSProperties } from "react";
 import { Link } from "wouter";
-import { ChevronRight, Search } from "lucide-react";
-import { SearchSheet } from "../shell";
-import { featureFor, readUsage } from "../usage";
-
-const STANDS: { name: string; tag: string; stand: string; gates: [string, string, string][] }[] = [
-  { name: "The numbers", tag: "STAND A", stand: "#103a38", gates: [
-    ["Stats", "Leaders, seasons, phases and franchise records from every IPL ball", "/stats"],
-    ["Editorials", "The editorial desk: in-depth essays and franchise dossiers", "/editorials"],
-    ["Scores", "Live and recent matches, scorecards and win probability", "/scores"],
-  ] },
-  { name: "The people", tag: "STAND B", stand: "#174a3a", gates: [
-    ["Teams", "Ten franchises — squads, titles, form and story", "/teams"],
-    ["Pressure Lab", "Search the player registry and build shortlists", "/pressurelab"],
-    ["Compare players", "Two players, side by side, on the same scale", "/pressurelab/compare"],
-  ] },
-  { name: "The market", tag: "STAND C", stand: "#3a2a12", gates: [
-    ["Auction War Room", "Model prices, value and fit for the next auction", "/ai-analyst/auction-war-room"],
-    ["Retention Room", "Retain or release — model, editorial and fan views kept apart", "/retention-room"],
-    ["Squad Builder", "Build a squad and see the best XII it can field", "/ai-analyst/squad-builder"],
-  ] },
-  { name: "The stories", tag: "STAND D", stand: "#2b1d33", gates: [
-    ["Journal", "Long-form franchise analysis from the CRICFIELD desk", "/reports"],
-    ["Intelligence feed", "Daily stories from the data", "/feed"],
-    ["IPL 2027", "Retentions, trades and the road to the next season", "/feed/ipl-2027"],
-  ] },
-];
+import {
+  ArrowRight,
+  BarChart3,
+  Bell,
+  Bookmark,
+  BookOpen,
+  ChevronRight,
+  Cpu,
+  Info,
+  Layers,
+  MapPin,
+  Shield,
+  UserRound,
+} from "lucide-react";
+import { TEAM_CODE_TO_SLUG, useTeamTheme } from "@/lib/team-context";
+import { WORKSPACE_TILES } from "../home-workspaces";
+import "./discover.css";
 
 export default function MobileDiscover() {
-  const [search, setSearch] = useState(false);
-  const [usage] = useState(readUsage);
-  // Stands follow this person's usage: a stand ranks by its most-used gate.
-  const stands = useMemo(() => {
-    const gateScore = (href: string) => { const f = featureFor(href); return f ? usage.score(f.id) : 0; };
-    return [...STANDS].sort((a, b) => Math.max(...b.gates.map((g) => gateScore(g[2]))) - Math.max(...a.gates.map((g) => gateScore(g[2]))));
-  }, [usage]);
+  const { theme } = useTeamTheme();
+  const dugoutHref = theme ? `/dugout/${TEAM_CODE_TO_SLUG[theme.id]}` : "/dugout";
+
   return (
-    <div>
-      <button type="button" className="md-search" onClick={() => setSearch(true)}><Search size={18} aria-hidden="true" />Search players, franchises, features</button>
-      <section className="md-mine" aria-labelledby="md-mine">
-        <h2 id="md-mine" className="cfm-kicker">{usage.learned ? "Your most used" : "Popular to start"}</h2>
-        <div className="cfm-strip">
-          {usage.features.slice(0, 6).map((f) => <Link key={f.id} href={f.href} className="cfm-chip"><f.icon size={14} aria-hidden="true" />{f.label}</Link>)}
+    <div
+      className="mm-page"
+      data-testid="mobile-more-page"
+      style={{ "--mm-accent": theme?.accent ?? "#ffda7c" } as CSSProperties}
+    >
+      <header className="mm-hero">
+        <img
+          src="/venues-stadium.jpg"
+          alt=""
+          className="mm-hero-bg"
+          loading="lazy"
+        />
+        <div className="mm-hero-body">
+          <h1>More</h1>
+          <p>Your complete cricket intelligence hub</p>
+        </div>
+      </header>
+
+      {/* 1. CricField Workspaces */}
+      <section className="mm-card-group" aria-labelledby="mm-workspaces-heading">
+        <div className="mm-group-head">
+          <Layers size={18} className="mm-group-icon" aria-hidden="true" />
+          <div className="mm-group-titles">
+            <h2 id="mm-workspaces-heading">CricField Workspaces</h2>
+            <small>Build • Recruit • Plan • Analyse</small>
+          </div>
+        </div>
+        <div className="mm-ws-grid">
+          {WORKSPACE_TILES.map((ws) => {
+            const Icon = ws.icon;
+            return (
+              <Link
+                key={ws.id}
+                href={ws.href}
+                className="mm-ws-card"
+                data-tone={ws.tone}
+                data-testid={`more-workspace-${ws.id}`}
+              >
+                <img src={ws.img} alt="" className="mm-ws-art" loading="lazy" />
+                <div className="mm-ws-top">
+                  <Icon size={18} aria-hidden="true" />
+                </div>
+                <div className="mm-ws-copy">
+                  <strong>{ws.title}</strong>
+                  <small>{ws.moreSub}</small>
+                </div>
+                <span className="mm-ws-go" aria-hidden="true">
+                  <ArrowRight size={13} />
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </section>
-      {stands.map((s, si) => (
-        <section key={s.name} className="md-stand" style={{ ["--stand" as string]: s.stand }} aria-labelledby={`stand-${si}`}>
-          <div className="md-stand-head"><h2 id={`stand-${si}`}>{s.name}</h2><span>{s.tag}</span></div>
-          {s.gates.map(([title, line, href], gi) => (
-            <Link key={href} href={href} className="md-gate">
-              <span><strong>{title}</strong><small>{line}</small></span>
-              <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="no">G{si + 1}{gi + 1}</span><ChevronRight size={18} aria-hidden="true" /></span>
-            </Link>
-          ))}
-        </section>
-      ))}
-      {search && <SearchSheet onClose={() => setSearch(false)} />}
+
+      {/* 2. Analysis & Tools */}
+      <section className="mm-card-group" aria-labelledby="mm-tools-heading">
+        <div className="mm-group-head">
+          <span className="mm-bar" aria-hidden="true" />
+          <div className="mm-group-titles">
+            <h2 id="mm-tools-heading">Analysis &amp; Tools</h2>
+          </div>
+        </div>
+        <div className="mm-tools-grid">
+          <Link href="/ai-analyst" className="mm-tool-card" data-testid="more-tool-decision-engine">
+            <span className="mm-tool-ico" aria-hidden="true">
+              <Cpu size={17} />
+            </span>
+            <div className="mm-tool-copy">
+              <strong>Decision Engine</strong>
+              <small>Ball-by-ball queries &amp; simulators</small>
+            </div>
+          </Link>
+          <Link href="/stats" className="mm-tool-card" data-testid="more-tool-stats-centre">
+            <span className="mm-tool-ico" aria-hidden="true">
+              <BarChart3 size={17} />
+            </span>
+            <div className="mm-tool-copy">
+              <strong>Stats Centre</strong>
+              <small>Records, trends &amp; comparisons</small>
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* 3. Explore & Read (Editorials | Dugout | Venue Atlas — NO Reports tile) */}
+      <section className="mm-card-group" aria-labelledby="mm-explore-heading">
+        <div className="mm-group-head">
+          <span className="mm-bar" aria-hidden="true" />
+          <div className="mm-group-titles">
+            <h2 id="mm-explore-heading">Explore &amp; Read</h2>
+          </div>
+        </div>
+        <div className="mm-explore-grid">
+          <Link href="/editorials" className="mm-exp-card" data-testid="more-explore-editorials">
+            <BookOpen size={18} className="mm-exp-ico" aria-hidden="true" />
+            <div>
+              <strong>Editorials</strong>
+              <small>In-depth stories</small>
+            </div>
+          </Link>
+          <Link href={dugoutHref} className="mm-exp-card" data-testid="more-explore-dugout">
+            <Shield size={18} className="mm-exp-ico" aria-hidden="true" />
+            <div>
+              <strong>Dugout</strong>
+              <small>Inside the game</small>
+            </div>
+          </Link>
+          <Link href="/feed/venues" className="mm-exp-card" data-testid="more-explore-venues">
+            <MapPin size={18} className="mm-exp-ico" aria-hidden="true" />
+            <div>
+              <strong>Venue Atlas</strong>
+              <small>Grounds &amp; conditions</small>
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* 4. IPL 2027 Auction Banner */}
+      <section className="mm-auction-banner" aria-label="IPL 2027 Auction">
+        <img src="/auction-gavel.jpg" alt="" className="mm-auction-art" loading="lazy" />
+        <div className="mm-auction-copy">
+          <span className="mm-auction-badge">IPL 2027 Auction</span>
+          <h3>Auction Room</h3>
+          <p>Latest updates, registered players, transactions &amp; squad impact</p>
+        </div>
+        <Link href="/pulse" className="mm-auction-cta">
+          Open Auction <ArrowRight size={13} aria-hidden="true" />
+        </Link>
+      </section>
+
+      {/* 5. Account & CricField */}
+      <section className="mm-card-group" aria-labelledby="mm-account-heading">
+        <div className="mm-group-head">
+          <span className="mm-bar" aria-hidden="true" />
+          <div className="mm-group-titles">
+            <h2 id="mm-account-heading">Account &amp; CricField</h2>
+          </div>
+        </div>
+        <div className="mm-account-list">
+          <Link href="/account" className="mm-account-row">
+            <UserRound size={18} className="mm-acc-ico" aria-hidden="true" />
+            <span className="mm-acc-copy">
+              <strong>My Account</strong>
+              <small>Profile, fan passport &amp; preferences</small>
+            </span>
+            <ChevronRight size={17} className="mm-acc-chev" aria-hidden="true" />
+          </Link>
+          <Link href="/account?tab=saved" className="mm-account-row">
+            <Bookmark size={18} className="mm-acc-ico" aria-hidden="true" />
+            <span className="mm-acc-copy">
+              <strong>Saved Content</strong>
+              <small>Shortlists, stats saves &amp; retention picks</small>
+            </span>
+            <ChevronRight size={17} className="mm-acc-chev" aria-hidden="true" />
+          </Link>
+          <Link href="/account?tab=notifications" className="mm-account-row">
+            <Bell size={18} className="mm-acc-ico" aria-hidden="true" />
+            <span className="mm-acc-copy">
+              <strong>Notifications</strong>
+              <small>Alerts, updates &amp; account preferences</small>
+            </span>
+            <ChevronRight size={17} className="mm-acc-chev" aria-hidden="true" />
+          </Link>
+          <Link href="/about" className="mm-account-row">
+            <Info size={18} className="mm-acc-ico" aria-hidden="true" />
+            <span className="mm-acc-copy">
+              <strong>About CricField</strong>
+              <small>Our vision, methodology &amp; data sources</small>
+            </span>
+            <ChevronRight size={17} className="mm-acc-chev" aria-hidden="true" />
+          </Link>
+        </div>
+        <div className="mm-legal-strip" aria-label="CricField information links">
+          <Link href="/terms">Terms</Link>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/contact">Contact</Link>
+        </div>
+      </section>
     </div>
   );
 }

@@ -8,7 +8,7 @@ export default function PressureIntelligencePage() {
   useEffect(() => { document.title = "Pressure Intelligence · CricField"; }, []);
   return (
     <Layout>
-      <div className="min-h-[calc(100vh-56px)] bg-slate-50 dark:bg-[#050B11] text-slate-900 dark:text-[#EFF5F7]">
+      <div className="min-h-[calc(100vh-56px)] bg-[#040812] text-slate-100">
         <PressureIntelligence />
       </div>
     </Layout>

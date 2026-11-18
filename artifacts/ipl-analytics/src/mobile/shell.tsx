@@ -24,6 +24,7 @@ import {
   Menu,
   Bell,
   Grid2X2,
+  LayoutGrid,
   Shield,
   Radio,
   Zap,
@@ -63,32 +64,25 @@ export const TABS: {
   },
   {
     href: "/pulse",
-    label: "Pulse",
+    label: "Auction",
     icon: Radio,
     color: "#4343f5",
-    match: (p: string) => /^\/(pulse|visualizations|scout|ai-analyst)/.test(p),
+    match: (p: string) => /^\/(pulse|auction|visualizations|ai-analyst\/auction-war-room)/.test(p),
   },
   {
-    href: "/scores",
-    label: "Scores",
-    icon: Zap,
-    color: "#65ddb7",
-    match: (p: string) => /^\/(scores|match|venues)/.test(p),
-  },
-  {
-    href: "/dugout",
-    label: "Dugout",
-    icon: Shield,
+    href: "/discover",
+    label: "More",
+    icon: LayoutGrid,
     color: "#f54888",
     match: (p: string) =>
-      p.startsWith("/dugout") ||
-      p.startsWith("/account") ||
-      p.startsWith("/teams") ||
-      p.startsWith("/retention-room"),
+      /^\/(discover|more|dugout|teams|pressurelab|editorials|intelligence|storylines|feed|scores|match|venues|squad-hq|retention-room|tactics|account|about|terms|privacy|contact|reports|blogs|ai-analyst)/.test(
+        p,
+      ),
   },
 ];
 const TITLES: [RegExp, string][] = [
-  [/^\/discover/, "Discover"],
+  [/^\/discover/, "More"],
+  [/^\/more/, "More"],
   [/^\/stats/, "Stats"],
   [/^\/pressurelab\/player/, "Scout Report"],
   [/^\/pressurelab\/compare/, "Compare"],
@@ -98,20 +92,24 @@ const TITLES: [RegExp, string][] = [
   [/^\/teams\//, "Franchise"],
   [/^\/ai-analyst\/auction-war-room/, "Auction"],
   [/^\/ai-analyst\/squad-builder/, "Squad Builder"],
-  [/^\/ai-analyst/, "AI Analyst"],
-  [/^\/retention-room/, "Retention Room"],
+  [/^\/ai-analyst/, "Decision Engine"],
+  [/^\/squad-hq/, "Squad HQ"],
+  [/^\/retention-room/, "Squad HQ"],
   [/^\/reports/, "Journal"],
   [/^\/(dugout\/articles|articles)\//, "Story"],
   [/^\/dugout\/./, "Franchise Hub"],
   [/^\/dugout/, "Dugout"],
-  [/^\/account/, "Your Dugout"],
+  [/^\/account/, "My Account"],
+  [/^\/feed\/storylines/, "Editorials"],
   [/^\/feed/, "Feed"],
+  [/^\/storylines/, "Editorials"],
   [/^\/editorials/, "Editorials"],
   [/^\/intelligence/, "Editorials"],
   [/^\/scores/, "Scores"],
   [/^\/match\//, "Match"],
   [/^\/venues\//, "Venue"],
-  [/^\/pulse/, "Pulse"],
+  [/^\/tactics/, "Match Lab"],
+  [/^\/pulse/, "Auction"],
   [/^\/blogs/, "Blogs"],
 ];
 const ROOTS = new Set([
@@ -119,10 +117,8 @@ const ROOTS = new Set([
   "/home",
   "/stats",
   "/pulse",
-  "/scores",
-  "/dugout",
   "/discover",
-  "/ai-analyst",
+  "/more",
 ]);
 
 export function MobileNavTeamPanel({ onClose }: { onClose: () => void }) {
@@ -227,7 +223,10 @@ export function TopBar() {
   const [teamMenu, setTeamMenu] = useState(false);
   const title = TITLES.find(([re]) => re.test(path))?.[1];
   const root = ROOTS.has(path);
-  const onNews = path.startsWith("/feed") || path.startsWith("/editorials") || path.startsWith("/intelligence") || path.startsWith("/reports");
+  const onNotifications =
+    path.startsWith("/account") &&
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("tab")?.toLowerCase() === "notifications";
   return (
     <>
       <header className={`cfm-top ${root ? "cfm-top-root" : ""}`}>
@@ -276,11 +275,11 @@ export function TopBar() {
             <Search size={19} />
           </button>
           <Link
-            href="/editorials"
+            href="/account?tab=notifications"
             className="cfm-icon relative"
-            aria-label="Editorials"
-            aria-current={onNews ? "page" : undefined}
-            style={onNews ? { color: "var(--m-accent)" } : undefined}
+            aria-label="Notifications"
+            aria-current={onNotifications ? "page" : undefined}
+            style={onNotifications ? { color: "var(--m-accent)" } : undefined}
           >
             <Bell size={19} />
             <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-400 ring-2 ring-[#020617]" />

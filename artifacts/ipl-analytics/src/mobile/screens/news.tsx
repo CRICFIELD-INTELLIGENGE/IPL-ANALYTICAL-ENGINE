@@ -135,12 +135,52 @@ function pageWindow(current: number, total: number): Array<number | "..."> {
   return out;
 }
 
+type EditorialContentSection = "storylines" | "analysis" | "archive";
+
+const CONTENT_SECTIONS: { id: EditorialContentSection; label: string; subtitle: string }[] = [
+  { id: "storylines", label: "Storylines", subtitle: "2027 narratives & player journeys" },
+  { id: "analysis", label: "Analysis", subtitle: "Tactical, batting, bowling & auction data" },
+  { id: "archive", label: "Archive", subtitle: "Franchise history, turning points & legacy" },
+];
+
+const resolveContentSection = (
+  raw: string | null | undefined,
+  fallback: EditorialContentSection = "analysis",
+): EditorialContentSection => {
+  const v = (raw ?? "").toLowerCase().trim();
+  if (v === "storylines") return "storylines";
+  if (v === "archive") return "archive";
+  if (v === "analysis") return "analysis";
+  return fallback;
+};
+
+const matchesContentSection = (art: MobileArticleItem, section: EditorialContentSection): boolean => {
+  if (section === "archive") {
+    return art.kind === "legacy" || art.storyType === "archive" || art.aspect === "history";
+  }
+  if (section === "storylines") {
+    return (
+      art.storyType === "player-story" ||
+      art.storyType === "explainer" ||
+      ["future", "fan-culture", "scouting", "history", "business"].includes(art.aspect)
+    );
+  }
+  return (
+    ["investigation", "tactical", "explainer"].includes(art.storyType ?? "") ||
+    ["tactical", "batting", "bowling-fielding", "data-science", "auction-economics"].includes(art.aspect)
+  );
+};
+
 /**
- * Mobile News (/intelligence) screen:
+ * Mobile News (/editorials & /storylines) screen:
  * Controlled by the global Navbar team dropdown ("ALL" by default, or selected franchise).
- * Same data, filters, counters, trending topics & tools as desktop IntelligencePage in a compact phone layout.
+ * Consolidates Storylines | Analysis | Archive over the shared editorial index.
  */
-export default function MobileNews() {
+export default function MobileNews({
+  initialSection = "analysis",
+}: {
+  initialSection?: EditorialContentSection;
+}) {
   const { selectedTeam } = useTeamTheme();
   const [searchParamStr, setSearchParamStr] = useState(() => (typeof window !== "undefined" ? window.location.search : ""));
 
@@ -190,6 +230,9 @@ export default function MobileNews() {
   const accentInk = isLightHex(accent) ? "#050816" : "#FFFFFF";
   const heroFallbackBanner = teamTheme?.bannerImg ?? "/ipl-2027-banner.jpg";
 
+  const [contentSection, setContentSection] = useState<EditorialContentSection>(() =>
+    resolveContentSection(searchParams.get("view"), initialSection),
+  );
   const [selectedAngle, setSelectedAngle] = useState<string>(() => searchParams.get("angle") || "all");
   const [selectedTag, setSelectedTag] = useState<string>("All Tags");
   const [selectedSeason, setSelectedSeason] = useState<string>("All Seasons");
@@ -200,6 +243,11 @@ export default function MobileNews() {
   const [openFilterMenu, setOpenFilterMenu] = useState<"angle" | "tag" | "season" | "player" | null>(null);
   const [playerSearchQuery, setPlayerSearchQuery] = useState("");
   const [angleScroll, setAngleScroll] = useState({ left: false, right: true });
+
+  useEffect(() => {
+    const urlView = searchParams.get("view");
+    setContentSection(resolveContentSection(urlView, initialSection));
+  }, [initialSection, searchParams]);
 
   const articlesTopRef = useRef<HTMLDivElement | null>(null);
   const angleStripRef = useRef<HTMLDivElement | null>(null);
@@ -310,21 +358,27 @@ export default function MobileNews() {
       .map((i) => ({ ...i, franchise: activeFranchiseCode ?? undefined }));
   }, [isAllMode, allLeagueArticles, singleFranchiseData.items, activeFranchiseCode]);
 
+  const sectionArticles = useMemo<MobileArticleItem[]>(
+    () => franchiseArticles.filter((art) => matchesContentSection(art, contentSection)),
+    [franchiseArticles, contentSection],
+  );
+
   const featuredArticle = useMemo<MobileArticleItem | undefined>(() => {
-    if (isAllMode) return allLeagueArticles[0];
-    return franchiseArticles.find((i) => i.key === singleFranchiseData.featured?.id) ?? franchiseArticles[0];
-  }, [isAllMode, allLeagueArticles, franchiseArticles, singleFranchiseData.featured]);
+    const pool = sectionArticles.length ? sectionArticles : franchiseArticles;
+    if (isAllMode) return pool[0];
+    return pool.find((i) => i.key === singleFranchiseData.featured?.id) ?? pool[0];
+  }, [isAllMode, sectionArticles, franchiseArticles, singleFranchiseData.featured]);
 
   const angleCounts = useMemo(() => {
-    const c: Record<string, number> = { all: franchiseArticles.length };
+    const c: Record<string, number> = { all: sectionArticles.length };
     for (const [angle, aspect] of Object.entries(ANGLE_TO_ASPECT)) {
-      c[angle] = franchiseArticles.filter((i) => i.aspect === aspect).length;
+      c[angle] = sectionArticles.filter((i) => i.aspect === aspect).length;
     }
     return c;
-  }, [franchiseArticles]);
+  }, [sectionArticles]);
 
   const filteredArticles = useMemo(() => {
-    return franchiseArticles.filter((art) => {
+    return sectionArticles.filter((art) => {
       if (selectedAngle !== "all" && art.aspect !== ANGLE_TO_ASPECT[selectedAngle]) return false;
 
       if (searchQuery.trim()) {
@@ -355,7 +409,7 @@ export default function MobileNews() {
 
       return true;
     });
-  }, [franchiseArticles, selectedAngle, searchQuery, selectedPlayer, selectedTag]);
+  }, [sectionArticles, selectedAngle, searchQuery, selectedPlayer, selectedTag]);
 
   const totalPages = Math.max(1, Math.ceil(filteredArticles.length / PAGE_SIZE));
   const displayedArticles = useMemo(() => {
@@ -669,6 +723,32 @@ export default function MobileNews() {
           </AnimatePresence>
         </motion.section>
 
+        {/* ── 1B. CONTENT SECTION SWITCHER (Storylines | Analysis | Archive) ── */}
+        <div className="mn-sections" role="tablist" aria-label="Editorial content sections">
+          {CONTENT_SECTIONS.map((sec) => {
+            const active = contentSection === sec.id;
+            const count = franchiseArticles.filter((a) => matchesContentSection(a, sec.id)).length;
+            return (
+              <button
+                key={sec.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                data-active={active}
+                onClick={() => {
+                  setContentSection(sec.id);
+                  setSelectedAngle("all");
+                  setCurrentPage(1);
+                }}
+                className="mn-section-pill"
+              >
+                <span>{sec.label}</span>
+                <small>{count}</small>
+              </button>
+            );
+          })}
+        </div>
+
         {/* ── 2. EXPLORE BY INTELLIGENCE ANGLE (Sticky 11 Pillars Strip) ── */}
         <div className="mn-angle-sticky">
           {angleScroll.left && (
@@ -749,7 +829,7 @@ export default function MobileNews() {
           >
             <div ref={articlesTopRef} className="mn-meta-row">
               <h2 className="mn-section-title">
-                {activeFranchiseCode ? `All ${activeFranchiseCode} Editorial Articles` : "All IPL Editorial Articles"}
+                {CONTENT_SECTIONS.find((s) => s.id === contentSection)?.label} · {activeFranchiseCode ?? "All IPL"}
               </h2>
               <span className="mn-meta-count">
                 {filteredArticles.length > 0 ? (currentPage - 1) * PAGE_SIZE + 1 : 0}–

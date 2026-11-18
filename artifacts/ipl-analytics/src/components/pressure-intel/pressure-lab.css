@@ -1,0 +1,142 @@
+/* CRICFIELD Pressure Lab — Franchise-Adaptive Telemetry Workspace (Desktop & Mobile) */
+
+.pl-shell {
+  --pl-accent: #facc15;
+  --pl-secondary: #1d4ed8;
+  --pl-glow: rgba(250, 204, 21, 0.35);
+  --pl-card: rgba(9, 14, 26, 0.88);
+  --pl-card-solid: #090e1a;
+  --pl-line: rgba(148, 163, 184, 0.16);
+  --pl-line-soft: rgba(148, 163, 184, 0.09);
+  background:
+    radial-gradient(900px 420px at 82% -4%, color-mix(in srgb, var(--pl-accent) 16%, transparent), transparent 65%),
+    radial-gradient(760px 380px at 8% 0%, color-mix(in srgb, var(--pl-secondary) 16%, transparent), transparent 62%),
+    #040812;
+  color: #f8fafc;
+  min-height: calc(100vh - 56px);
+}
+
+.pl-hero {
+  position: relative;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--pl-accent) 26%, var(--pl-line));
+  background:
+    radial-gradient(62% 110% at 88% 35%, color-mix(in srgb, var(--pl-accent) 20%, transparent), transparent 70%),
+    radial-gradient(50% 90% at 15% 20%, color-mix(in srgb, var(--pl-secondary) 24%, transparent), transparent 72%),
+    linear-gradient(135deg, rgba(10, 16, 30, 0.96) 0%, rgba(5, 9, 18, 0.98) 100%);
+  overflow: hidden;
+  box-shadow: 0 22px 54px -26px color-mix(in srgb, var(--pl-accent) 45%, #000);
+}
+
+.pl-hero-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse at 70% 45%, black 30%, transparent 85%);
+}
+
+.pl-card {
+  border-radius: 18px;
+  border: 1px solid var(--pl-line);
+  background: var(--pl-card);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 14px 36px -24px rgba(0, 0, 0, 0.85);
+}
+
+.pl-card-accent {
+  border-color: color-mix(in srgb, var(--pl-accent) 28%, var(--pl-line));
+}
+
+.pl-crest-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--pl-accent) 32%, rgba(255, 255, 255, 0.1));
+  background: rgba(4, 8, 18, 0.68);
+  box-shadow:
+    inset 0 0 28px color-mix(in srgb, var(--pl-accent) 12%, transparent),
+    0 0 32px -12px color-mix(in srgb, var(--pl-accent) 55%, transparent);
+}
+
+@keyframes pl-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(4deg);
+  }
+}
+
+.pl-orb-float {
+  animation: pl-float 4.2s ease-in-out infinite;
+}
+
+@keyframes pl-crest-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--pl-accent) 55%, transparent));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px color-mix(in srgb, var(--pl-accent) 85%, transparent));
+  }
+}
+
+.pl-crest-glow {
+  animation: pl-crest-pulse 3.6s ease-in-out infinite;
+}
+
+.pl-slashes {
+  color: var(--pl-accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 900;
+  letter-spacing: -0.14em;
+}
+
+.pl-cta {
+  background: linear-gradient(
+    90deg,
+    var(--pl-accent) 0%,
+    color-mix(in srgb, var(--pl-accent) 78%, #ffffff) 100%
+  );
+  color: #050816;
+  font-weight: 900;
+  box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--pl-accent) 75%, transparent);
+  transition: transform 0.14s ease, filter 0.14s ease;
+}
+
+.pl-cta:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+.pl-scroll::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.pl-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.pl-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 9999px;
+}
+
+.pl-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--pl-accent);
+}
+
+.pl-no-scrollbar {
+  scrollbar-width: none;
+}
+
+.pl-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,483 @@
+/* CRICFIELD Mobile More (/discover & /more) — unified intelligence hub matching the approved mobile reference */
+.mm-page {
+  --mm-accent: var(--m-accent, #ffda7c);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 10px clamp(12px, 3.8vw, 18px) 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: var(--m-text);
+}
+
+.mm-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--m-line);
+  background:
+    radial-gradient(240px 140px at 100% 0%, color-mix(in srgb, var(--mm-accent) 22%, transparent), transparent 70%),
+    linear-gradient(125deg, rgba(8, 22, 24, 0.96), rgba(7, 13, 28, 0.92));
+}
+
+.mm-hero-bg {
+  position: absolute;
+  right: -12px;
+  top: 0;
+  width: 52%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.24;
+  mask-image: linear-gradient(90deg, transparent, #000 55%);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 55%);
+  pointer-events: none;
+}
+
+.mm-hero-body {
+  position: relative;
+  z-index: 1;
+}
+
+.mm-hero h1 {
+  margin: 0;
+  font: 800 clamp(22px, 6.2vw, 28px)/1.08 var(--m-display);
+  letter-spacing: -0.02em;
+}
+
+.mm-hero p {
+  margin: 4px 0 0;
+  font: 500 clamp(12px, 3.3vw, 13.5px)/1.35 var(--m-ui);
+  color: var(--m-muted);
+}
+
+.mm-card-group {
+  border-radius: 18px;
+  border: 1px solid var(--m-line);
+  background: rgba(8, 17, 24, 0.86);
+  padding: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  min-width: 0;
+}
+
+.mm-group-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.mm-bar {
+  width: 3px;
+  height: 15px;
+  border-radius: 999px;
+  background: var(--mm-accent);
+  flex-shrink: 0;
+}
+
+.mm-group-icon {
+  color: var(--mm-accent);
+  flex-shrink: 0;
+}
+
+.mm-group-titles {
+  min-width: 0;
+}
+
+.mm-group-head h2 {
+  margin: 0;
+  font: 800 clamp(14.5px, 4vw, 17px)/1.15 var(--m-display);
+  letter-spacing: -0.015em;
+}
+
+.mm-group-head small {
+  display: block;
+  margin-top: 2px;
+  font: 500 11px/1.25 var(--m-ui);
+  color: var(--m-muted);
+}
+
+/* 1. CricField Workspaces (3-column equal deck) */
+.mm-ws-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(7px, 2vw, 10px);
+}
+
+.mm-ws-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 11px 9px 10px;
+  min-height: clamp(126px, 33vw, 144px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.mm-ws-card[data-tone="emerald"] {
+  background: linear-gradient(155deg, rgba(16, 62, 43, 0.92), rgba(7, 22, 18, 0.96));
+  border-color: rgba(74, 222, 128, 0.34);
+}
+.mm-ws-card[data-tone="violet"] {
+  background: linear-gradient(155deg, rgba(58, 22, 82, 0.92), rgba(16, 10, 29, 0.96));
+  border-color: rgba(192, 132, 252, 0.34);
+}
+.mm-ws-card[data-tone="sky"] {
+  background: linear-gradient(155deg, rgba(14, 52, 74, 0.92), rgba(7, 20, 34, 0.96));
+  border-color: rgba(56, 189, 248, 0.34);
+}
+
+.mm-ws-art {
+  position: absolute;
+  right: -8px;
+  bottom: -6px;
+  width: 68%;
+  height: 74%;
+  object-fit: cover;
+  opacity: 0.34;
+  mask-image: linear-gradient(135deg, transparent 10%, #000 80%);
+  -webkit-mask-image: linear-gradient(135deg, transparent 10%, #000 80%);
+  pointer-events: none;
+}
+
+.mm-ws-top {
+  position: relative;
+  z-index: 1;
+  color: var(--mm-accent);
+}
+
+.mm-ws-copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.mm-ws-copy strong {
+  display: block;
+  font: 800 clamp(12px, 3.2vw, 13.5px)/1.18 var(--m-display);
+  color: #f8fafc;
+}
+
+.mm-ws-copy small {
+  display: block;
+  margin-top: 3px;
+  font: 500 clamp(9.5px, 2.5vw, 10.5px)/1.28 var(--m-ui);
+  color: rgba(226, 232, 240, 0.78);
+}
+
+.mm-ws-go {
+  position: relative;
+  z-index: 1;
+  margin-top: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--mm-accent) 65%, transparent);
+  display: grid;
+  place-items: center;
+  color: var(--mm-accent);
+  background: rgba(2, 6, 23, 0.45);
+}
+
+/* 2. Analysis & Tools (2 columns) */
+.mm-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(8px, 2.2vw, 10px);
+}
+
+.mm-tool-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(135deg, rgba(14, 34, 38, 0.94), rgba(8, 17, 25, 0.96));
+  padding: 12px 11px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 70px;
+  min-width: 0;
+}
+
+.mm-tool-art {
+  position: absolute;
+  right: -12px;
+  bottom: -10px;
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.mm-tool-ico {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--mm-accent) 16%, transparent);
+  color: var(--mm-accent);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.mm-tool-copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.mm-tool-copy strong {
+  display: block;
+  font: 800 clamp(12px, 3.3vw, 13.5px)/1.2 var(--m-display);
+  color: #f8fafc;
+}
+
+.mm-tool-copy small {
+  display: block;
+  margin-top: 2px;
+  font: 500 clamp(9.5px, 2.6vw, 11px)/1.28 var(--m-ui);
+  color: rgba(203, 213, 225, 0.8);
+}
+
+/* 3. Explore & Read (Exactly 3 items — zero Reports tile) */
+.mm-explore-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(7px, 2vw, 9px);
+}
+
+.mm-exp-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(155deg, rgba(13, 33, 35, 0.92), rgba(7, 16, 24, 0.96));
+  padding: 11px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 92px;
+  min-width: 0;
+}
+
+.mm-exp-ico {
+  color: var(--mm-accent);
+}
+
+.mm-exp-card strong {
+  display: block;
+  font: 800 clamp(11.5px, 3.1vw, 13px)/1.2 var(--m-display);
+  color: #f8fafc;
+}
+
+.mm-exp-card small {
+  display: block;
+  margin-top: 2px;
+  font: 500 clamp(9.5px, 2.5vw, 10.5px)/1.25 var(--m-ui);
+  color: rgba(203, 213, 225, 0.78);
+}
+
+/* 4. IPL 2027 Auction Banner */
+.mm-auction-banner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  background: linear-gradient(110deg, rgba(46, 12, 66, 0.95), rgba(88, 22, 118, 0.88) 55%, rgba(28, 12, 46, 0.96));
+  padding: 13px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mm-auction-art {
+  position: absolute;
+  left: -8px;
+  top: 0;
+  width: 110px;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+  mask-image: linear-gradient(90deg, #000 35%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, #000 35%, transparent);
+  pointer-events: none;
+}
+
+.mm-auction-copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  flex: 1;
+}
+
+.mm-auction-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #facc15;
+  color: #0b1120;
+  font: 800 9px/1.3 var(--m-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mm-auction-copy h3 {
+  margin: 5px 0 2px;
+  font: 800 clamp(15px, 4.1vw, 17px)/1.15 var(--m-display);
+  color: #ffffff;
+}
+
+.mm-auction-copy p {
+  margin: 0;
+  font: 500 11px/1.3 var(--m-ui);
+  color: rgba(241, 245, 249, 0.84);
+}
+
+.mm-auction-cta {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(250, 204, 21, 0.72);
+  background: rgba(15, 23, 42, 0.65);
+  color: #fde047;
+  font: 700 11.5px/1 var(--m-ui);
+  white-space: nowrap;
+}
+
+/* 5. Account & CricField list */
+.mm-account-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.mm-account-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 4px;
+  border-bottom: 1px solid var(--m-line-soft);
+  color: var(--m-text);
+  min-width: 0;
+}
+
+.mm-account-row:last-of-type {
+  border-bottom: 0;
+}
+
+.mm-acc-ico {
+  color: var(--mm-accent);
+  flex-shrink: 0;
+}
+
+.mm-acc-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.mm-acc-copy strong {
+  display: block;
+  font: 700 13.5px/1.2 var(--m-display);
+}
+
+.mm-acc-copy small {
+  display: block;
+  margin-top: 2px;
+  font: 500 11px/1.3 var(--m-ui);
+  color: var(--m-muted);
+}
+
+.mm-acc-chev {
+  color: var(--m-muted);
+  flex-shrink: 0;
+}
+
+.mm-legal-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--m-line-soft);
+}
+
+.mm-legal-strip a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--m-line);
+  background: rgba(255, 255, 255, 0.03);
+  font: 600 11px/1 var(--m-ui);
+  color: var(--m-muted);
+}
+
+@media (max-width: 355px) {
+  .mm-ws-grid,
+  .mm-explore-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mm-auction-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Light theme support */
+html:not(.dark) .mm-hero,
+[data-theme="light"] .mm-hero,
+html:not(.dark) .mm-card-group,
+[data-theme="light"] .mm-card-group {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+html:not(.dark) .mm-ws-card,
+html:not(.dark) .mm-tool-card,
+html:not(.dark) .mm-exp-card,
+[data-theme="light"] .mm-ws-card,
+[data-theme="light"] .mm-tool-card,
+[data-theme="light"] .mm-exp-card {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+html:not(.dark) .mm-ws-copy strong,
+html:not(.dark) .mm-tool-copy strong,
+html:not(.dark) .mm-exp-card strong,
+[data-theme="light"] .mm-ws-copy strong,
+[data-theme="light"] .mm-tool-copy strong,
+[data-theme="light"] .mm-exp-card strong {
+  color: #0f172a;
+}
+
+html:not(.dark) .mm-ws-copy small,
+html:not(.dark) .mm-tool-copy small,
+html:not(.dark) .mm-exp-card small,
+[data-theme="light"] .mm-ws-copy small,
+[data-theme="light"] .mm-tool-copy small,
+[data-theme="light"] .mm-exp-card small {
+  color: #475569;
+}
+
+html:not(.dark) .mm-legal-strip a,
+[data-theme="light"] .mm-legal-strip a {
+  background: #f1f5f9;
+  color: #475569;
+}
