@@ -1,8 +1,8 @@
 {
-  "version": "retentions-2027.20261118.2",
+  "version": "retentions-2027.iplt20.20261118.3",
   "season": 2027,
   "announcedOn": "2026-11-17",
-  "reviewedAt": "2026-11-17T18:49:43.510Z",
+  "reviewedAt": "2026-11-18T12:00:00.000Z",
   "comparisonCutoff": "2026-11-16T18:30:00.000Z",
   "sources": {
     "cricbuzz": {
@@ -64,6 +64,24 @@
       "url": "https://www.gujarattitansipl.com/news/gujarat-titans-part-ways-five-players-ahead-of-tata-ipl-2027",
       "official": true,
       "publishedOn": "2026-11-17"
+    },
+    "iplt20": {
+      "publisher": "IPLT20",
+      "official": true,
+      "url": "https://www.iplt20.com/news/article/tata-ipl-2027-player-retentions-announced",
+      "publishedOn": "2026-11-18"
+    },
+    "retainedPdf": {
+      "publisher": "IPLT20",
+      "official": true,
+      "url": "https://www.iplt20.com/cms/files/jot2qw8s50z1/1YiPT45UgZ1olwgjsAjlG4/923c2a85f32a8e6b054a4b553ed98fe0/TATA_IPL_2027_-_Retained_Player_List.pdf",
+      "publishedOn": "2026-11-18"
+    },
+    "releasedPdf": {
+      "publisher": "IPLT20",
+      "official": true,
+      "url": "https://www.iplt20.com/cms/files/jot2qw8s50z1/3gFAJ4z1USxcXYhaZVl65L/2a463a9c02a5bb7fd12fa3fbe91cc299/TATA_IPL_2027-_Release_Player_List.pdf",
+      "publishedOn": "2026-11-18"
     }
   },
   "teams": [
@@ -104,29 +122,43 @@
         "Zak Foulkes"
       ],
       "retainedSources": [
-        "cricbuzz"
+        "iplt20",
+        "retainedPdf"
       ],
       "releasedSources": [
-        "cricbuzz"
+        "releasedPdf"
       ],
       "purseClaims": [
         {
           "valueLakh": 2805,
-          "source": "cricbuzz"
-        },
-        {
-          "valueLakh": 2805,
-          "source": "toi"
-        },
-        {
-          "valueLakh": 3515,
-          "source": "indiaToday"
+          "source": "iplt20"
         }
       ],
       "overseasSlots": 2,
       "notes": [
-        "CSK official site was inaccessible at review. Retentions and releases remain reported. Conflicting purse reports require confirmation."
-      ]
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Akeal Hosein": 200,
+        "Anshul Kamboj": 340,
+        "Ayush Mhatre": 30,
+        "Dewald Brevis": 220,
+        "Gurjapneet Singh": 220,
+        "Jack Edwards": 300,
+        "Jamie Overton": 150,
+        "Kartik Sharma": 1420,
+        "Liam Livingstone": 600,
+        "Mukesh Choudhary": 30,
+        "Noor Ahmad": 1000,
+        "Rahul Chahar": 520,
+        "Ramakrishna Ghosh": 30,
+        "Ruturaj Gaikwad": 1800,
+        "Sanju Samson": 1800,
+        "Sarfaraz Khan": 75,
+        "Shivam Dube": 1200,
+        "Shreyas Gopal": 30,
+        "Urvil Patel": 30
+      }
     },
     {
       "team": "DC",
@@ -160,27 +192,40 @@
         "Dushmantha Chameera"
       ],
       "retainedSources": [
-        "dc",
-        "cricbuzz"
+        "iplt20",
+        "retainedPdf"
       ],
       "releasedSources": [
-        "dc",
-        "cricbuzz"
+        "releasedPdf"
       ],
       "purseClaims": [
         {
           "valueLakh": 3950,
-          "source": "cricbuzz"
-        },
-        {
-          "valueLakh": 3950,
-          "source": "toi"
+          "source": "iplt20"
         }
       ],
       "overseasSlots": 4,
       "notes": [
-        "The official nine-player release list takes precedence over a report that additionally lists Ben Duckett."
-      ]
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Ashutosh Sharma": 380,
+        "Auqib Nabi": 840,
+        "Axar Patel": 1650,
+        "David Miller": 200,
+        "KL Rahul": 1400,
+        "Kyle Jamieson": 200,
+        "Lungi Ngidi": 200,
+        "Madhav Tiwari": 40,
+        "Mukesh Kumar": 800,
+        "Prithvi Shaw": 75,
+        "Rishabh Pant": 1500,
+        "Sameer Rizvi": 95,
+        "Tripurana Vijay": 30,
+        "Tristan Stubbs": 1000,
+        "Vipraj Nigam": 50,
+        "Zeeshan Ansari": 40
+      }
     },
     {
       "team": "GT",
@@ -217,35 +262,45 @@
         "Prithviraj Yarra"
       ],
       "retainedSources": [
-        "gt",
-        "cricbuzz"
+        "iplt20",
+        "retainedPdf"
       ],
       "releasedSources": [
-        "gtReleases",
-        "cricbuzz"
+        "releasedPdf"
       ],
       "purseClaims": [
         {
           "valueLakh": 875,
-          "source": "cricbuzz"
-        },
-        {
-          "valueLakh": 875,
-          "source": "toi"
-        },
-        {
-          "valueLakh": 375,
-          "source": "indiaToday"
+          "source": "iplt20"
         }
       ],
       "overseasSlots": 2,
       "notes": [
-        "GT confirmed five departures. Prithviraj Yarra appears only in secondary reporting. The purse remains disputed."
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
       ],
-      "releaseSourceOverrides": {
-        "Prithviraj Yarra": [
-          "cricbuzz"
-        ]
+      "contracts": {
+        "Anuj Rawat": 30,
+        "Ashok Sharma": 90,
+        "Glenn Phillips": 200,
+        "Gurnoor Brar": 130,
+        "Harshal Patel": 400,
+        "Jason Holder": 700,
+        "Jayant Yadav": 75,
+        "Jos Buttler": 1575,
+        "Kagiso Rabada": 1075,
+        "Kumar Kushagra": 65,
+        "Manav Suthar": 30,
+        "Mohammed Siraj": 1225,
+        "Arshad Khan": 130,
+        "Nishant Sindhu": 30,
+        "Prasidh Krishna": 950,
+        "R Sai Kishore": 200,
+        "Rahul Tewatia": 400,
+        "Rashid Khan": 1800,
+        "Sai Sudharsan": 850,
+        "Shubman Gill": 1650,
+        "Tom Banton": 200,
+        "Washington Sundar": 320
       }
     },
     {
@@ -284,24 +339,41 @@
         "Umran Malik"
       ],
       "retainedSources": [
-        "kkr",
-        "cricbuzz"
+        "iplt20",
+        "retainedPdf"
       ],
       "releasedSources": [
-        "cricbuzz"
+        "releasedPdf"
       ],
       "purseClaims": [
         {
           "valueLakh": 4165,
-          "source": "kkr"
-        },
-        {
-          "valueLakh": 4165,
-          "source": "cricbuzz"
+          "source": "iplt20"
         }
       ],
       "overseasSlots": 3,
-      "notes": []
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Angkrish Raghuvanshi": 300,
+        "Anukul Roy": 40,
+        "Cameron Green": 2520,
+        "Finn Allen": 200,
+        "Harshit Rana": 400,
+        "Kartik Tyagi": 30,
+        "Manish Pandey": 75,
+        "Prashant Solanki": 30,
+        "Ramandeep Singh": 400,
+        "Rinku Singh": 1300,
+        "Rovman Powell": 150,
+        "Sarthak Ranjan": 30,
+        "Saurabh Dubey": 30,
+        "Sunil Narine": 1200,
+        "Tim Seifert": 150,
+        "Vaibhav Arora": 180,
+        "Varun Chakaravarthy": 1200
+      }
     },
     {
       "team": "LSG",
@@ -335,25 +407,42 @@
         "Himmat Singh"
       ],
       "retainedSources": [
-        "cricbuzz"
+        "iplt20",
+        "retainedPdf"
       ],
       "releasedSources": [
-        "cricbuzz"
+        "releasedPdf"
       ],
       "purseClaims": [
         {
           "valueLakh": 4745,
-          "source": "cricbuzz"
-        },
-        {
-          "valueLakh": 4745,
-          "source": "toi"
+          "source": "iplt20"
         }
       ],
       "overseasSlots": 3,
       "notes": [
-        "TOI lists Arshin Kulkarni among both retained and released. Cricbuzz and India Today agree he is retained and Himmat Singh is released. Primary confirmation is pending."
-      ]
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Abdul Samad": 420,
+        "Aiden Markram": 200,
+        "Akash Singh": 30,
+        "Akshat Raghuwanshi": 220,
+        "Arjun Tendulkar": 30,
+        "Arshin Kulkarni": 30,
+        "Ayush Badoni": 400,
+        "Digvesh Rathi": 30,
+        "Josh Inglis": 860,
+        "Kuldeep Yadav": 1325,
+        "Mayank Yadav": 1100,
+        "Mitchell Marsh": 340,
+        "Mohsin Khan": 400,
+        "Mukul Choudhary": 260,
+        "Nicholas Pooran": 2100,
+        "Prince Yadav": 30,
+        "Sam Curran": 240,
+        "Shahbaz Ahmed": 240
+      }
     },
     {
       "team": "MI",
@@ -391,23 +480,40 @@
         "Ruchit Ahir"
       ],
       "retainedSources": [
-        "cricbuzz"
+        "iplt20",
+        "retainedPdf"
       ],
       "releasedSources": [
-        "cricbuzz"
+        "releasedPdf"
       ],
       "purseClaims": [
         {
           "valueLakh": 3260,
-          "source": "cricbuzz"
-        },
-        {
-          "valueLakh": 3260,
-          "source": "toi"
+          "source": "iplt20"
         }
       ],
       "overseasSlots": 2,
-      "notes": []
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Arshdeep Singh": 1800,
+        "Ashwani Kumar": 30,
+        "Corbin Bosch": 75,
+        "Jasprit Bumrah": 1800,
+        "Mitchell Santner": 200,
+        "Naman Dhir": 525,
+        "Quinton de Kock": 100,
+        "Raghu Sharma": 30,
+        "Raj Angad Bawa": 30,
+        "Rohit Sharma": 1630,
+        "Ryan Rickelton": 100,
+        "Shardul Thakur": 200,
+        "Sherfane Rutherford": 260,
+        "Suryakumar Yadav": 1635,
+        "Tilak Varma": 800,
+        "Will Jacks": 525
+      }
     },
     {
       "team": "PBKS",
@@ -441,25 +547,43 @@
         "Vishal Nishad"
       ],
       "retainedSources": [
-        "pbks",
-        "cricbuzz"
+        "iplt20",
+        "retainedPdf"
       ],
       "releasedSources": [
-        "pbks",
-        "cricbuzz"
+        "releasedPdf"
       ],
       "purseClaims": [
         {
           "valueLakh": 1860,
-          "source": "cricbuzz"
-        },
-        {
-          "valueLakh": 1860,
-          "source": "toi"
+          "source": "iplt20"
         }
       ],
       "overseasSlots": 2,
-      "notes": []
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Azmatullah Omarzai": 240,
+        "Ben Dwarshuis": 440,
+        "Cooper Connolly": 300,
+        "Hardik Pandya": 1800,
+        "Harnoor Singh": 30,
+        "Harpreet Brar": 150,
+        "Marco Jansen": 700,
+        "Marcus Stoinis": 1100,
+        "Musheer Khan": 30,
+        "Prabhsimran Singh": 400,
+        "Priyansh Arya": 380,
+        "Shashank Singh": 550,
+        "Shreyas Iyer": 2675,
+        "Suryansh Shedge": 30,
+        "Vishnu Vinod": 95,
+        "Vijaykumar Vyshak": 180,
+        "Xavier Bartlett": 80,
+        "Yash Thakur": 160,
+        "Yuzvendra Chahal": 1800
+      }
     },
     {
       "team": "RCB",
@@ -494,26 +618,45 @@
         "Swapnil Singh"
       ],
       "retainedSources": [
-        "cricbuzz"
+        "iplt20",
+        "retainedPdf"
       ],
       "releasedSources": [
-        "rcb",
-        "cricbuzz"
+        "releasedPdf"
       ],
       "purseClaims": [
         {
           "valueLakh": 1415,
-          "source": "rcb"
-        },
-        {
-          "valueLakh": 1415,
-          "source": "cricbuzz"
+          "source": "iplt20"
         }
       ],
       "overseasSlots": 1,
       "notes": [
-        "RCB confirms the retained count, overseas count, purse and all six releases. Individual retained names are sourced to Cricbuzz; the official article does not enumerate them."
-      ]
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads.",
+        "Published player salaries and the team cap debit do not reconcile. Available purse follows the official team summary rather than a recalculated salary sum."
+      ],
+      "contracts": {
+        "Abhinandan Singh": 30,
+        "Bhuvneshwar Kumar": 1075,
+        "Devdutt Padikkal": 200,
+        "Jacob Duffy": 200,
+        "Jitesh Sharma": 100,
+        "Jordan Cox": 75,
+        "Josh Hazlewood": 1250,
+        "Kanishk Chouhan": 30,
+        "Krunal Pandya": 575,
+        "Nuwan Thushara": 160,
+        "Phil Salt": 1150,
+        "Rajat Patidar": 1100,
+        "Rasikh Dar": 600,
+        "Romario Shepherd": 150,
+        "Suyash Sharma": 260,
+        "Tim David": 300,
+        "Venkatesh Iyer": 700,
+        "Vicky Ostwal": 30,
+        "Virat Kohli": 2100,
+        "Yash Dayal": 500
+      }
     },
     {
       "team": "RR",
@@ -550,31 +693,43 @@
         "Yudhvir Singh Charak"
       ],
       "retainedSources": [
-        "rr",
-        "cricbuzz"
+        "iplt20",
+        "retainedPdf"
       ],
       "releasedSources": [
-        "rr",
-        "cricbuzz"
+        "releasedPdf"
       ],
       "purseClaims": [
         {
           "valueLakh": 2705,
-          "source": "rr"
-        },
-        {
-          "valueLakh": 2705,
-          "source": "cricbuzz"
-        },
-        {
-          "valueLakh": 2205,
-          "source": "indiaToday"
+          "source": "iplt20"
         }
       ],
       "overseasSlots": 3,
       "notes": [
-        "RR's official INR 27.05 Cr purse supersedes the conflicting INR 22.05 Cr secondary report."
-      ]
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Aman Rao Perala": 30,
+        "Brijesh Sharma": 30,
+        "Dasun Shanaka": 200,
+        "Dhruv Jurel": 1400,
+        "Donovan Ferreira": 100,
+        "Jofra Archer": 1250,
+        "Lhuan-dre Pretorius": 30,
+        "Manimaran Siddharth": 75,
+        "Mohammed Shami": 800,
+        "Nandre Burger": 350,
+        "Ravi Bishnoi": 720,
+        "Ravindra Jadeja": 1400,
+        "Riyan Parag": 1400,
+        "Sandeep Sharma": 400,
+        "Shubham Dubey": 80,
+        "Sushant Mishra": 90,
+        "Vaibhav Sooryavanshi": 110,
+        "Yash Raj Punja": 30,
+        "Yashasvi Jaiswal": 1800
+      }
     },
     {
       "team": "SRH",
@@ -611,23 +766,42 @@
         "Shivam Mavi"
       ],
       "retainedSources": [
-        "cricbuzz"
+        "iplt20",
+        "retainedPdf"
       ],
       "releasedSources": [
-        "cricbuzz"
+        "releasedPdf"
       ],
       "purseClaims": [
         {
           "valueLakh": 4015,
-          "source": "cricbuzz"
-        },
-        {
-          "valueLakh": 4015,
-          "source": "toi"
+          "source": "iplt20"
         }
       ],
       "overseasSlots": 3,
-      "notes": []
+      "notes": [
+        "Squad and available purse: IPLT20 announcement. Player salaries: IPLT20 retained-player PDF. These are retained squads, not final post-auction squads."
+      ],
+      "contracts": {
+        "Abhishek Sharma": 1400,
+        "Aniket Verma": 30,
+        "Brydon Carse": 100,
+        "Eshan Malinga": 120,
+        "Harsh Dubey": 30,
+        "Heinrich Klaasen": 2300,
+        "Ishan Kishan": 1125,
+        "Khaleel Ahmed": 480,
+        "Krains Fuletra": 30,
+        "Nathan Ellis": 200,
+        "Nitish Kumar Reddy": 600,
+        "Pat Cummins": 1800,
+        "Praful Hinge": 30,
+        "Sakib Hussain": 30,
+        "Salil Arora": 150,
+        "Shivang Kumar": 30,
+        "Smaran Ravichandran": 30,
+        "T Natarajan": 500
+      }
     }
   ],
   "aliases": {
@@ -682,9 +856,7 @@
   ],
   "auctionRegistrations": [],
   "notes": [
-    "No official IPL 2027 auction registration list has been verified. A release does not establish auction eligibility.",
-    "Historical contracts and statistical assessments are joined from the existing warehouse and are not treated as verified 2027 contracts.",
-    "Overseas slot counts are reported by Cricbuzz unless separately confirmed by a primary source."
+    "Primary IPLT20 records reviewed on 18 November 2026. Official team cap figures include applicable retention deductions; player salaries and team salary-cap debits are separate values."
   ],
   "identities": {
     "Ruturaj Gaikwad": {

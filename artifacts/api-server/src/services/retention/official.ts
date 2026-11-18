@@ -13,7 +13,7 @@ const identitySchema = z.object({ canonicalId: z.string().nullable(), country: z
 export const officialReleaseSchema = z.object({
   version: z.string(), season: z.number().int(), announcedOn: z.string(), reviewedAt: z.string().datetime(), comparisonCutoff: z.string().datetime(),
   sources: z.record(sourceSchema), aliases: z.record(z.string()), identities: z.record(identitySchema),
-  teams: z.array(z.object({ team: z.enum(TEAMS), retained: z.array(z.string()), released: z.array(z.string()), retainedSources: z.array(z.string()).min(1), releasedSources: z.array(z.string()).min(1), releaseSourceOverrides: z.record(z.array(z.string()).min(1)).optional(), purseClaims: z.array(z.object({ valueLakh: z.number().nonnegative(), source: z.string() })), overseasSlots: z.number().int().min(0).max(8), notes: z.array(z.string()) })),
+  teams: z.array(z.object({ team: z.enum(TEAMS), retained: z.array(z.string()), contracts: z.record(z.number().nonnegative()).optional(), released: z.array(z.string()), retainedSources: z.array(z.string()).min(1), releasedSources: z.array(z.string()).min(1), releaseSourceOverrides: z.record(z.array(z.string()).min(1)).optional(), purseClaims: z.array(z.object({ valueLakh: z.number().nonnegative(), source: z.string() })), overseasSlots: z.number().int().min(0).max(8), notes: z.array(z.string()) })),
   availability: z.array(z.object({ name: z.string(), status: z.enum(["retired", "unavailable", "uncertain"]), note: z.string(), sources: z.array(z.string()) })),
   auctionRegistrations: z.array(z.object({ canonicalId: z.string(), source: z.string(), basePriceLakh: z.number().positive() })), notes: z.array(z.string()),
 }).superRefine((d, ctx) => {
@@ -97,7 +97,7 @@ export function buildOfficialRoom(team: Team, data: OfficialRelease, ledger: Led
       id:id ?? `unresolved:${r.name}`,canonicalId:id,name:r.name,identityStatus:id ? "matched" : "unresolved",team,decision,
       verification:trade ? "verified" as Verification : verification(r.ids,data),announcedOn:trade?.announcedOn ?? data.announcedOn,sources,
       role:p?.role ?? identity?.role ?? null,group:g,country:identity?.country ?? null,overseas:identity?.overseas ?? p?.overseas ?? null,
-      contractLakh:trade?.feeLakh ?? (decision === "retained" || decision === "traded_in" ? p?.contractLakh ?? null : null),contractStatus:trade?.feeLakh != null ? "verified" : (decision === "retained" || decision === "traded_in") && p?.contractLakh != null ? "carried_forward" : "unavailable",historicalContractLakh:p?.contractLakh ?? null,
+      contractLakh:t.contracts?.[r.name] ?? trade?.feeLakh ?? (decision === "retained" || decision === "traded_in" ? p?.contractLakh ?? null : null),contractStatus:t.contracts?.[r.name] != null || trade?.feeLakh != null ? "verified" : (decision === "retained" || decision === "traded_in") && p?.contractLakh != null ? "carried_forward" : "unavailable",historicalContractLakh:p?.contractLakh ?? null,
       trade:trade ? {from:trade.from,to:trade.to,feeLakh:trade.feeLakh} : null,
       availability:availability ? {...availability,sources:src(availability.sources),verification:verification(availability.sources,data)} : {status:"unknown",note:"Availability has not been verified.",sources:[],verification:"unavailable"},
       performance:p?.retentionV2 ? {seasons:p.retentionV2.seasons.filter(s=>s.season>=2024),projection:p.retentionV2.projection,phase:p.performance,dataCutoff:snapshot!.dataCutoff,modelVersion:snapshot!.version} : null,

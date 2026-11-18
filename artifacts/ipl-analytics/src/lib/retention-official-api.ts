@@ -1,3 +1,4 @@
+import { publishedOfficialLeague, publishedOfficialRoom } from "./retention-published";
 import { apiGet } from "./discovery-api";
 export type Verification = "verified" | "reported" | "conflict" | "unavailable";
 export interface RetentionSource { publisher:string; official:boolean; url:string; publishedOn:string }
@@ -43,10 +44,16 @@ export function normalizeOfficialContracts(room: OfficialRoom): OfficialRoom {
     }),
   };
 }
-export const fetchOfficialRoom = async (season:number,team:string) =>
-  normalizeOfficialContracts(await apiGet<OfficialRoom>(`/api/retention/${season}/franchises/${team}/official`));
+export const fetchOfficialRoom = async (season:number,team:string) => {
+  if (season !== 2027) return normalizeOfficialContracts(await apiGet<OfficialRoom>(`/api/retention/${season}/franchises/${team}/official`));
+  let historical: OfficialRoom | null = null;
+  try { historical = await apiGet<OfficialRoom>(`/api/retention/${season}/franchises/${team}/official`); } catch { /* Published facts remain available when enrichment is offline. */ }
+  return publishedOfficialRoom(team, historical);
+};
 export const fetchOfficialComparison = (season:number,team:string) => apiGet<OfficialComparison>(`/api/retention/${season}/franchises/${team}/comparison`);
-export const fetchOfficialLeague = (season=2027) => apiGet<{season:number;version:string;announcedOn:string;reviewedAt:string;teams:Pick<OfficialRoom,"team"|"status"|"summary"|"purse">[]}>(`/api/retention/${season}/official`);
+export const fetchOfficialLeague = async (season=2027) => season === 2027
+  ? publishedOfficialLeague()
+  : apiGet<{season:number;version:string;announcedOn:string;reviewedAt:string;teams:Pick<OfficialRoom,"team"|"status"|"summary"|"purse">[]}>(`/api/retention/${season}/official`);
 export const decisionLabel = (value:string) => ({retained:"Retained",released:"Released",traded_in:"Traded in",traded_out:"Traded out"}[value] ?? value);
 export const roleLabel = (value:string) => ({batter:"Batters",wicketkeeper:"Wicketkeepers","all-rounder":"All-rounders",pace:"Pace bowlers",spin:"Spinners",bowler:"Bowling style pending",unknown:"Role pending"}[value] ?? value);
 export const formatPurse = (value:number|null) => value===null ? "Unverified" : `₹${(value/100).toFixed(2)} Cr`;

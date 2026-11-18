@@ -31,7 +31,8 @@ import { readSaved, retentionKey, type RetentionSnapshot } from "@/lib/auction-p
 import { fetchOfficialRoom, type OfficialRoom } from "@/lib/retention-official-api";
 import { OfficialStage, OfficialSquad, OfficialNeeds, OfficialProvenance, OfficialDecisionReview } from "@/components/retention/official-overview";
 import { OfficialBoard, PredictionReality, type BoardFilters } from "@/components/retention/official-board";
-import { PlayingXiPanel } from "@/components/decision/playing-xi-panel";
+import { RetainedXiPlanner } from "@/components/retention/retained-xi-planner";
+import { publishedOfficialRoom } from "@/lib/retention-published";
 import { SquadOverviewPanel } from "@/components/squad-hq/squad-overview-panel";
 import { SquadBuilderPanel } from "@/components/squad-hq/squad-builder-panel";
 import { SquadIntelligencePanel } from "@/components/squad-hq/squad-intelligence-panel";
@@ -84,7 +85,7 @@ export default function RetentionRoomPage() {
 
   const seasons = useQuery({ queryKey: ["retention-seasons"], queryFn: fetchSeasons, staleTime: 3_600_000 });
   const live = season === LIVE_SEASON;
-  const official = useQuery({queryKey:["retention-official",season,team],queryFn:()=>fetchOfficialRoom(season,team),enabled:live,staleTime:300_000,retry:false});
+  const official = useQuery({queryKey:["retention-official",season,team],queryFn:()=>fetchOfficialRoom(season,team),enabled:live,staleTime:300_000,initialData:()=>publishedOfficialRoom(team),initialDataUpdatedAt:0,retry:false});
   const room = useQuery({ queryKey: ["retention-room", season, team, RETENTION_INDEX_VERSION], queryFn: () => fetchRoom(season, team), enabled: live, retry: false });
   const picks = useQuery({ queryKey: ["retention-picks", team, RETENTION_INDEX_VERSION], queryFn: () => fetchPicks(LIVE_SEASON, team), enabled: live, retry: false });
   const pulse2027 = usePulseAuction(2027);
@@ -350,7 +351,7 @@ export default function RetentionRoomPage() {
             </div>
           )}
 
-          <PlayingXiPanel controlledTeamCode={team} hideTeamSelector />
+          <RetainedXiPlanner team={team} players={officialActive} />
 
           <div className="pt-3 border-t border-white/10 flex flex-wrap gap-2">
             <Link

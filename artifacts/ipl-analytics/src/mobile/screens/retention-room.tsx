@@ -24,7 +24,8 @@ import {
 } from "lucide-react";
 import { Sheet } from "@/mobile/shell";
 import { PlayerAvatar } from "@/components/player-avatar";
-import { PlayingXiPanel } from "@/components/decision/playing-xi-panel";
+import { RetainedXiPlanner } from "@/components/retention/retained-xi-planner";
+import { publishedOfficialRoom } from "@/lib/retention-published";
 import { SquadBuilderPanel } from "@/components/squad-hq/squad-builder-panel";
 import { SquadIntelligencePanel } from "@/components/squad-hq/squad-intelligence-panel";
 import { LIVE_SEASON } from "@/components/retention/retention-widgets";
@@ -113,6 +114,8 @@ export default function MobileRetentionRoom() {
     queryKey: ["retention-official", LIVE_SEASON, team],
     queryFn: () => fetchOfficialRoom(LIVE_SEASON, team),
     staleTime: 300_000,
+    initialData: () => publishedOfficialRoom(team),
+    initialDataUpdatedAt: 0,
     retry: false,
   });
 
@@ -200,7 +203,7 @@ export default function MobileRetentionRoom() {
   const filteredPlayers = useMemo(() => {
     const list = officialData?.players ?? [];
     return list.filter((p) => {
-      if (decisionFilter === "retained" && p.decision !== "retained") return false;
+      if (decisionFilter === "retained" && p.decision !== "retained" && p.decision !== "traded_in") return false;
       if (decisionFilter === "released" && p.decision !== "released") return false;
       if (decisionFilter === "traded" && p.decision !== "traded_in" && p.decision !== "traded_out") return false;
       if (roleFilter !== "all") {
@@ -223,7 +226,7 @@ export default function MobileRetentionRoom() {
   const overseasCount = officialData?.summary.overseas ?? 0;
   const overseasPct = Math.min(100, Math.round((overseasCount / 8) * 100));
   const purseLakh = officialData?.purse.valueLakh ?? 0;
-  const pursePct = Math.min(100, Math.round((purseLakh / 12000) * 100));
+  const pursePct = Math.min(100, Math.round((purseLakh / 13000) * 100));
 
   const countGroup = (keys: string[]) =>
     officialData?.composition
@@ -884,7 +887,7 @@ export default function MobileRetentionRoom() {
                 </div>
               )}
 
-              <PlayingXiPanel controlledTeamCode={team} hideTeamSelector />
+              <RetainedXiPlanner team={team} players={officialActive} />
 
               <div className="flex flex-wrap gap-2 pt-2 border-t border-white/[0.07]">
                 <Link
