@@ -1,3 +1,4 @@
+import { publishedOfficialLeague, publishedOfficialRoom } from "./retention-published";
 import { apiGet } from "./discovery-api";
 export type Verification = "verified" | "reported" | "conflict" | "unavailable";
 export interface RetentionSource { publisher:string; official:boolean; url:string; publishedOn:string }
@@ -24,9 +25,35 @@ export interface OfficialComparison {
   eligible:boolean;frozenAt:string|null;cutoff:string;counts:Record<string,number>;scored:number;accuracy:number|null;note:string;
   rows:{id:string;name:string;decision:string;prediction:string|null;category:string|null;status:string}[];
 }
-export const fetchOfficialRoom = (season:number,team:string) => apiGet<OfficialRoom>(`/api/retention/${season}/franchises/${team}/official`);
+/** Existing retained contracts continue unless an explicit current price is recorded.
+ * Keep this at the response boundary for both the bundled Vercel API and dev API.
+ */
+export function normalizeOfficialContracts(room: OfficialRoom): OfficialRoom {
+  return {
+    ...room,
+    players: room.players.map((player) => {
+      if (player.contractLakh != null || !["retained", "traded_in"].includes(player.decision)) return player;
+      const tradePrice = player.trade?.feeLakh;
+      const price = tradePrice ?? player.historicalContractLakh;
+      if (price == null || !Number.isFinite(price) || price < 0) return player;
+      return {
+        ...player,
+        contractLakh: price,
+        contractStatus: tradePrice != null ? "verified" : "carried_forward",
+      };
+    }),
+  };
+}
+export const fetchOfficialRoom = async (season:number,team:string) => {
+  if (season !== 2027) return normalizeOfficialContracts(await apiGet<OfficialRoom>(`/api/retention/${season}/franchises/${team}/official`));
+  let historical: OfficialRoom | null = null;
+  try { historical = await apiGet<OfficialRoom>(`/api/retention/${season}/franchises/${team}/official`); } catch { /* Published facts remain available when enrichment is offline. */ }
+  return publishedOfficialRoom(team, historical);
+};
 export const fetchOfficialComparison = (season:number,team:string) => apiGet<OfficialComparison>(`/api/retention/${season}/franchises/${team}/comparison`);
-export const fetchOfficialLeague = (season=2027) => apiGet<{season:number;version:string;announcedOn:string;reviewedAt:string;teams:Pick<OfficialRoom,"team"|"status"|"summary"|"purse">[]}>(`/api/retention/${season}/official`);
+export const fetchOfficialLeague = async (season=2027) => season === 2027
+  ? publishedOfficialLeague()
+  : apiGet<{season:number;version:string;announcedOn:string;reviewedAt:string;teams:Pick<OfficialRoom,"team"|"status"|"summary"|"purse">[]}>(`/api/retention/${season}/official`);
 export const decisionLabel = (value:string) => ({retained:"Retained",released:"Released",traded_in:"Traded in",traded_out:"Traded out"}[value] ?? value);
 export const roleLabel = (value:string) => ({batter:"Batters",wicketkeeper:"Wicketkeepers","all-rounder":"All-rounders",pace:"Pace bowlers",spin:"Spinners",bowler:"Bowling style pending",unknown:"Role pending"}[value] ?? value);
 export const formatPurse = (value:number|null) => value===null ? "Unverified" : `₹${(value/100).toFixed(2)} Cr`;

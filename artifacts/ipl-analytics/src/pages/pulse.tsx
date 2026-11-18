@@ -211,22 +211,6 @@ export default function PulsePage() {
             />
           )}
 
-          {/* In-page Back to Overview navigation bar */}
-          {tab !== "Overview" && (
-            <div className="flex items-center justify-between py-1 px-1">
-              <button
-                onClick={() => setTab("Overview")}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-800 dark:text-white/80 hover:text-slate-900 dark:hover:text-white text-xs font-bold transition-all group shadow-sm cursor-pointer"
-              >
-                <span className="text-orange-500 group-hover:-translate-x-0.5 transition-transform font-bold">←</span>
-                <span>Back to Overview</span>
-              </button>
-              <div className="text-[11px] font-mono text-slate-500 dark:text-white/40">
-                Viewing: <span className="text-slate-800 dark:text-white/80 font-bold">{tab}</span>
-              </div>
-            </div>
-          )}
-
           {/* Main Tab Content */}
           {pulse.loading ? (
             <Empty>Loading auction records…</Empty>

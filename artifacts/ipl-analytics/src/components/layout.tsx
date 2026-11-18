@@ -32,7 +32,7 @@ const PLAYER_IMAGES = [
 
 const PRIMARY_NAV_LINKS: Array<{ label: string; href: string; hideOnMd?: boolean }> = [
   { label: "Home", href: "/home" },
-  { label: "Pulse", href: "/pulse" },
+  { label: "Auction", href: "/pulse" },
   { label: "Scores", href: "/scores" },
   { label: "Stats", href: "/stats" },
   { label: "Pressure Lab", href: "/pressurelab" },
@@ -44,7 +44,7 @@ const PRIMARY_NAV_LINKS: Array<{ label: string; href: string; hideOnMd?: boolean
 
 const SIDEBAR_ITEMS = [
   { icon: Home, label: "Home", href: "/home" },
-  { icon: Radio, label: "Auction Pulse", href: "/pulse" },
+  { icon: Radio, label: "Auction", href: "/pulse" },
   { icon: Newspaper, label: "Feed & 2027 Intel", href: "/feed" },
   { icon: FileText, label: "Editorials", href: "/editorials" },
   { icon: Shield, label: "My Dugout", href: "/dugout" },
