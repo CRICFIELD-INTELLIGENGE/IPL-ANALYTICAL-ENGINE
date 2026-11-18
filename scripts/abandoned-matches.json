@@ -1,0 +1,27 @@
+{
+ "note": "IPL matches abandoned after the toss with no ball bowled. Cricsheet has no file for them, but official records count them as matches played for the named XIs. fix_stats.py adds them to playing-XI appearances only (no runs, wickets or innings). Names and ids are Cricsheet's.",
+ "matches": [
+  {
+   "id": "548340",
+   "date": "2012-04-25",
+   "event": "IPL 2012, match 34, M Chinnaswamy Stadium, Bengaluru",
+   "result": "No result: abandoned after the toss without a ball bowled (RCB won the toss and chose to field)",
+   "sources": [
+    "https://www.espncricinfo.com/indian-premier-league-2012/engine/match/548340.html",
+    "https://cricketaddictor.com/livescore/royal-challengers-bangalore-vs-chennai-super-kings-34th-match-25-apr-2012/match-facts",
+    "https://www.espn.com/cricket/series/520932/report/548340/utils"
+   ],
+   "verification": "Cricket Addictor's XIs match the ESPN report's team changes applied to each side's previous 2012 XI in Cricsheet (RCB 548336: McDonald for Vettori; CSK 548332: JA Morkel and VY Mahesh for Jakati and Bollinger).",
+   "players": {
+    "Royal Challengers Bangalore": ["V Kohli", "TM Dilshan", "MA Agarwal", "CH Gayle", "AB de Villiers", "SS Tiwary", "AB McDonald", "R Vinay Kumar", "Z Khan", "HV Patel", "KP Appanna"],
+    "Chennai Super Kings": ["S Badrinath", "F du Plessis", "SK Raina", "MS Dhoni", "DJ Bravo", "RA Jadeja", "WP Saha", "R Ashwin", "KMDN Kulasekara", "JA Morkel", "VY Mahesh"]
+   },
+   "registry": {
+    "V Kohli": "ba607b88", "TM Dilshan": "5bdcdb72", "MA Agarwal": "00ea847a", "CH Gayle": "db584dad", "AB de Villiers": "c4487b84",
+    "SS Tiwary": "709b0bac", "AB McDonald": "16043342", "R Vinay Kumar": "41eb4a4f", "Z Khan": "91a4a398", "HV Patel": "f986ca1a", "KP Appanna": "d92e42f5",
+    "S Badrinath": "3576e47e", "F du Plessis": "3355b542", "SK Raina": "1dc12ab9", "MS Dhoni": "4a8a2e3b", "DJ Bravo": "87e562a9", "RA Jadeja": "fe93fd9d",
+    "WP Saha": "fe11caa6", "R Ashwin": "495d42a5", "KMDN Kulasekara": "469ea22b", "JA Morkel": "c3d35165", "VY Mahesh": "93a17209"
+   }
+  }
+ ]
+}
