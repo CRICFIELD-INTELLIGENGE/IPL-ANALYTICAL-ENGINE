@@ -41,7 +41,7 @@ export default function ScoutHomePage() {
   const [page, setPage] = useState<number>(1);
   const [sortBy, setSortBy] = useState<string>("shrunk");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const [viewMode, setViewMode] = useState<"table" | "scatter">("table");
+  const [, setBoardViewMode] = useState<"table" | "scatter">("table");
   const [activePresetId, setActivePresetId] = useState<string | null>(null);
   const [aiCandidates, setAiCandidates] = useState<ScoutRating[]>([]);
   const [selectedPlayer, setSelectedPlayer] = useState<ScoutRating | null>(null);
@@ -145,7 +145,7 @@ export default function ScoutHomePage() {
     setSortBy("shrunk");
     setSortOrder("desc");
     setActivePresetId(null);
-    setViewMode("table");
+    setBoardViewMode("table");
   }, []);
 
   // Connected Discovery Stream Presets
@@ -155,7 +155,7 @@ export default function ScoutHomePage() {
     if (preset.discipline) setDiscipline(preset.discipline);
     if (preset.role !== undefined) setRole(preset.role);
     if (preset.sortBy) setSortBy(preset.sortBy);
-    if (preset.viewMode) setViewMode(preset.viewMode);
+    if (preset.viewMode) setBoardViewMode(preset.viewMode);
     if (preset.competitions !== undefined) setSelectedComps(preset.competitions);
     setPage(1);
 
