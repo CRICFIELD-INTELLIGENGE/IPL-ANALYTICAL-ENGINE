@@ -41,11 +41,11 @@ export default function MobileAi() {
       <div className="ma-log" aria-live="polite">
         {turns.length === 0 && (
           <div className="ma-intro">
-            <div className="cfm-kicker">CRICFIELD AI analyst</div>
+            <div className="cfm-kicker">CRICFIELD Decision Engine</div>
             <h1>Ask the press box</h1>
-            <p className="cfm-small ma-sub">Plain-English questions become exact queries over every IPL ball. Answers show the qualification used, so you can trust the number.</p>
+            <p className="cfm-small ma-sub">Plain-English questions become deterministic SQL queries over every IPL ball. Answers show the qualification used, so you can trust the number.</p>
             <div className="ma-suggest">{SUGGEST.map((s) => <button key={s} type="button" onClick={() => void ask(s)}>{s}</button>)}</div>
-            <div className="cfm-kicker" style={{ marginTop: "clamp(16px, 4.5vw, 22px)" }}>Analyst tools</div>
+            <div className="cfm-kicker" style={{ marginTop: "clamp(16px, 4.5vw, 22px)" }}>Tactical &amp; decision engines</div>
             <div className="cfm-strip ma-tools" style={{ marginTop: 8 }}>{TOOLS.map(([l, h]) => <Link key={h} href={h} className="cfm-chip">{l}</Link>)}</div>
           </div>
         )}

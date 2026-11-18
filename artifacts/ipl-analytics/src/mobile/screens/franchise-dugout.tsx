@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import { Link, useLocation, useParams } from "wouter";
+import { Link, useLocation, useParams, useSearch } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Trophy, BarChart3, UserRound, Gavel, Shield } from "lucide-react";
 import { useTeamTheme, TEAM_REGISTRY, TEAM_CODE_TO_SLUG, resolveTeamCode, type TeamCode } from "@/lib/team-context";
@@ -15,17 +15,29 @@ import { FranchiseIntelligence } from "@/components/dugout/franchise-intelligenc
 import { SeasonTimeline } from "@/components/dugout/season-timeline";
 import "./franchise-dugout.css";
 
+const DUGOUT_TABS = ["Overview","Articles","Analysis","Memories","History","Squad"] as const;
+const resolveDugoutTab = (raw: string | null): (typeof DUGOUT_TABS)[number] => {
+  const found = DUGOUT_TABS.find((t) => t.toLowerCase() === (raw ?? "").toLowerCase().trim());
+  return found ?? "Overview";
+};
+
 export default function MobileFranchiseDugout() {
  const { team: routeTeam } = useParams<{team?:string}>();
+ const searchStr = useSearch();
  const { selectedTeam } = useTeamTheme();
  const [,navigate] = useLocation();
  const code = resolveTeamCode(routeTeam ?? "") ?? selectedTeam ?? "SRH";
  const team = TEAM_REGISTRY[code];
- const [tab,setTab] = useState("Overview");
+ const [tab,setTab] = useState<string>(() => resolveDugoutTab(new URLSearchParams(searchStr).get("tab")));
  const [chosen,setChosen] = useState<string|null>(null);
  const [momentIndex,setMomentIndex] = useState(0);
  const [stickyTop,setStickyTop] = useState(66);
- useEffect(()=>{setTab("Overview");setMomentIndex(0);setChosen(null);},[code]);
+ useEffect(()=>{
+   const urlTab = new URLSearchParams(searchStr).get("tab");
+   setTab(urlTab ? resolveDugoutTab(urlTab) : "Overview");
+   setMomentIndex(0);
+   setChosen(null);
+ },[code, searchStr]);
  useEffect(()=>{
   const nav=document.querySelector<HTMLElement>(".cfm-top");
   if(!nav) return;

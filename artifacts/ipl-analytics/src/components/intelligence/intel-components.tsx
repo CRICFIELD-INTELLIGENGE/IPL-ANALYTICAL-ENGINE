@@ -286,7 +286,7 @@ export function SquadIntelligencePanel({ team: teamIn }: { team?: string | null 
       {q.isError && <Note>{errorText(q.error)}</Note>}
       {d && <>
         <div className="grid sm:grid-cols-4 gap-2 text-xs">
-          {([["Best XII strength", d.strength.toFixed(2)], ["Batting depth", d.composition.battingDepth], ["Death overs covered", `${d.composition.phaseCoverage.death}%`], ["2026 contracts", money(d.contractLakh)]] as const).map(([k, v]) => <div key={k} className="rounded-lg border border-white/10 bg-white/[0.03] p-2"><div className="text-muted-foreground text-[10px] uppercase tracking-wider">{k}</div><div className="font-display font-black text-lg text-white tabular-nums">{v}</div></div>)}
+          {([["Best XII strength", d.strength != null ? d.strength.toFixed(2) : "—"], ["Batting depth", d.composition.battingDepth], ["Death overs covered", `${d.composition.phaseCoverage.death}%`], ["2026 contracts", money(d.contractLakh)]] as const).map(([k, v]) => <div key={k} className="rounded-lg border border-white/10 bg-white/[0.03] p-2"><div className="text-muted-foreground text-[10px] uppercase tracking-wider">{k}</div><div className="font-display font-black text-lg text-white tabular-nums">{v}</div></div>)}
         </div>
         {d.gaps.length > 0 ? <Note>Role shortages: {d.gaps.join("; ")}.</Note> : <Note>No role shortage in the best XII.</Note>}
         <div className="overflow-x-auto"><table className="w-full text-xs tabular-nums">
@@ -298,7 +298,7 @@ export function SquadIntelligencePanel({ team: teamIn }: { team?: string | null 
               <td className="py-1 px-1 text-right">{p.rar === null ? "—" : signed(p.rar)}</td>
               <td className="py-1 px-1 text-right">{money(p.contractLakh)}</td>
               <td className="py-1 px-1 text-right">{money(p.priceLakh)}</td>
-              <td className="py-1 px-1 whitespace-nowrap">{pickOf.get(p.id) ? <><CategoryTag category={pickOf.get(p.id)!.category} />{isCore(p.id) && <span className="ml-1 text-[9px] font-black text-emerald-300">🔒 CORE</span>}<span className="ml-1 text-[10px] text-muted-foreground">{pickOf.get(p.id)!.index.toFixed(0)}</span></> : <span className="text-muted-foreground">{picks.isLoading ? "…" : "—"}</span>}</td>
+              <td className="py-1 px-1 whitespace-nowrap">{pickOf.get(p.id) ? <><CategoryTag category={pickOf.get(p.id)!.category} />{isCore(p.id) && <span className="ml-1 text-[9px] font-black text-emerald-300">🔒 CORE</span>}<span className="ml-1 text-[10px] text-muted-foreground">{pickOf.get(p.id)!.index != null ? pickOf.get(p.id)!.index.toFixed(0) : "—"}</span></> : <span className="text-muted-foreground">{picks.isLoading ? "…" : "—"}</span>}</td>
               <td className="py-1 px-1 text-right"><button onClick={() => setReplacing(replacing === p.id ? null : p.id)} className="text-[11px] text-violet-300 hover:underline whitespace-nowrap">{replacing === p.id ? "Hide" : "Replacements"}</button></td>
             </tr>
           ))}</tbody>

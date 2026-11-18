@@ -1234,35 +1234,42 @@
 }
 
 .vh-load-more {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin: 17px auto 0;
+  gap: 8px;
+  margin: 18px auto 0;
   color: #0f172a;
   border: 1px solid #cbd5e1;
-  border-radius: 5px;
-  padding: 9px 17px;
-  font-size: 10px;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 600;
   background: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
 .vh-load-more:hover {
   background: #f8fafc;
   border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+.vh-load-more:active {
+  transform: scale(0.97);
 }
 
 .dark .vh-load-more {
-  color: #b2dce5;
-  border: 1px solid #3b697c;
-  background: #222529;
-  box-shadow: none;
+  color: #cbeaf1;
+  border: 1px solid rgba(94, 178, 200, 0.36);
+  background: rgba(24, 34, 46, 0.72);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
 }
 
 .dark .vh-load-more:hover {
-  background: #2b3036;
+  background: rgba(34, 48, 64, 0.85);
+  border-color: rgba(125, 211, 252, 0.55);
 }
 
 /* ── Comparison Section ── */

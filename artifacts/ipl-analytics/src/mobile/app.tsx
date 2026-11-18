@@ -3,6 +3,7 @@
 // The floating AI launcher is not rendered on mobile: the AI tab replaces it.
 import { lazy, Suspense, useEffect, type ReactNode } from "react";
 import { Route, Switch, useLocation } from "wouter";
+import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { MobileChromeContext } from "./gate";
 import { BottomTabs, Loading, TopBar } from "./shell";
 import { UsageTracker } from "./usage";
@@ -30,7 +31,10 @@ function ScrollToTop() {
 }
 
 export default function MobileApp({ legacy }: { legacy: ReactNode }) {
+  const [location] = useLocation();
+  const routeKey = location.split("?")[0];
   return (
+    <MotionConfig reducedMotion="user">
     <div className="cfm">
       <a
         href="#cfm-main"
@@ -46,17 +50,33 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
       <UsageTracker />
       <main id="cfm-main" className="cfm-main">
         <Suspense fallback={<Loading rows={4} h={90} />}>
-          <Switch>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={routeKey}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              style={{ minWidth: 0 }}
+            >
+              <Switch>
             <Route path="/" component={MHome} />
             <Route path="/home">
               <MHome />
             </Route>
             <Route path="/discover" component={MDiscover} />
+            <Route path="/more" component={MDiscover} />
             <Route path="/editorials">
               <MNews />
             </Route>
             <Route path="/intelligence">
               <MNews />
+            </Route>
+            <Route path="/storylines">
+              <MNews initialSection="storylines" />
+            </Route>
+            <Route path="/feed/storylines">
+              <MNews initialSection="storylines" />
             </Route>
             <Route path="/feed">
               <Legacy legacy={legacy} />
@@ -94,10 +114,13 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
               <Legacy legacy={legacy} />
             </Route>
           </Switch>
+            </motion.div>
+          </AnimatePresence>
         </Suspense>
       </main>
       <BottomTabs />
     </div>
+    </MotionConfig>
   );
 }
 

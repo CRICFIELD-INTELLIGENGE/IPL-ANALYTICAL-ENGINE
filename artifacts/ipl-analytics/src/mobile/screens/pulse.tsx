@@ -1,4 +1,3 @@
-import { FranchiseDesk } from "@/components/franchise-desk";
 import "./pulse.css";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -137,7 +136,6 @@ export default function MobilePulse() {
   return (
     <div ref={pageRef} className="mp-page" data-testid="mobile-pulse-page">
       {/* Compact Contextual Auction Pulse Header */}
-      {active === 2027 && <FranchiseDesk />}
       <header className="mp-ctx-header">
         <div className="mp-ctx-row">
           <div className="mp-title-wrap">
