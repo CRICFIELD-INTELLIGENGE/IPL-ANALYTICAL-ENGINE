@@ -97,7 +97,7 @@ export function buildOfficialRoom(team: Team, data: OfficialRelease, ledger: Led
       id:id ?? `unresolved:${r.name}`,canonicalId:id,name:r.name,identityStatus:id ? "matched" : "unresolved",team,decision,
       verification:trade ? "verified" as Verification : verification(r.ids,data),announcedOn:trade?.announcedOn ?? data.announcedOn,sources,
       role:p?.role ?? identity?.role ?? null,group:g,country:identity?.country ?? null,overseas:identity?.overseas ?? p?.overseas ?? null,
-      contractLakh:trade?.feeLakh ?? null,contractStatus:trade?.feeLakh != null ? "verified" : "unavailable",historicalContractLakh:p?.contractLakh ?? null,
+      contractLakh:trade?.feeLakh ?? (decision === "retained" || decision === "traded_in" ? p?.contractLakh ?? null : null),contractStatus:trade?.feeLakh != null ? "verified" : (decision === "retained" || decision === "traded_in") && p?.contractLakh != null ? "carried_forward" : "unavailable",historicalContractLakh:p?.contractLakh ?? null,
       trade:trade ? {from:trade.from,to:trade.to,feeLakh:trade.feeLakh} : null,
       availability:availability ? {...availability,sources:src(availability.sources),verification:verification(availability.sources,data)} : {status:"unknown",note:"Availability has not been verified.",sources:[],verification:"unavailable"},
       performance:p?.retentionV2 ? {seasons:p.retentionV2.seasons.filter(s=>s.season>=2024),projection:p.retentionV2.projection,phase:p.performance,dataCutoff:snapshot!.dataCutoff,modelVersion:snapshot!.version} : null,

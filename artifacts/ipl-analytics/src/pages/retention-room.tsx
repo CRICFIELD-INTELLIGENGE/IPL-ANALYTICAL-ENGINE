@@ -98,10 +98,57 @@ export default function RetentionRoomPage() {
   );
   const myCounts = useMemo(() => computeScenarioCounts(officialActive, scenario), [officialActive, scenario]);
 
-  const scrollToSection = (id: WorkspaceSectionId) => {
-    setActiveSection(id);
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const workspaceNav = useRef<HTMLElement>(null);
+  const workspaceOffset = () => {
+    const nav = workspaceNav.current;
+    return nav ? (parseFloat(getComputedStyle(nav).top) || 64) + nav.getBoundingClientRect().height + 12 : 136;
   };
+  const scrollToSection = (id: WorkspaceSectionId) => {
+    const section = document.getElementById(id);
+    if (!section) return;
+    setActiveSection(id);
+    window.scrollTo({ top: Math.max(0, section.getBoundingClientRect().top + window.scrollY - workspaceOffset()), behavior: "smooth" });
+  };
+
+  // Both direct navigation and manual scrolling use the same sticky-header offset.
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const offset = workspaceOffset() + 1;
+      const sections = WORKSPACE_SECTIONS.map(({ id }) => ({ id, node: document.getElementById(id) })).filter((section) => section.node);
+      let current: WorkspaceSectionId = "overview";
+      for (const section of sections) {
+        if (section.node!.getBoundingClientRect().top <= offset) current = section.id;
+      }
+      const last = sections.at(-1);
+      if (last && window.scrollY > 0 && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2 && last.node!.getBoundingClientRect().top < window.innerHeight) current = last.id;
+      setActiveSection(current);
+      setActiveStage(current === "squad-builder" ? "auction" : current === "playing-xi" || current === "intelligence" ? "season" : "retention");
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(schedule);
+    observer?.observe(document.body);
+    schedule();
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      observer?.disconnect();
+      cancelAnimationFrame(frame);
+    };
+  }, [team, season]);
+
+  useEffect(() => {
+    const nav = workspaceNav.current;
+    const button = nav?.querySelector<HTMLElement>('[aria-current="location"]');
+    const strip = button?.parentElement;
+    if (!button || !strip) return;
+    const left = button.offsetLeft - strip.offsetLeft;
+    if (left < strip.scrollLeft || left + button.offsetWidth > strip.scrollLeft + strip.clientWidth)
+      strip.scrollTo({ left: Math.max(0, left - (strip.clientWidth - button.offsetWidth) / 2), behavior: "smooth" });
+  }, [activeSection]);
   const selectMilestone = (stage: MilestoneStage) => {
     setActiveStage(stage);
     const target: WorkspaceSectionId =
@@ -141,16 +188,9 @@ export default function RetentionRoomPage() {
           </div>
         </nav>
 
-        {/* 1. SQUAD OVERVIEW */}
-        <SquadOverviewPanel
-          team={team}
-          official={official.data}
-          pulseModel={pulse2027.model}
-          onSelectGroup={(group) => openBoard("squad", group)}
-        />
-
         {/* 2. SQUAD WORKSPACE STICKY NAVIGATION */}
         <nav
+          ref={workspaceNav}
           aria-label="Squad workspace navigation"
           className="sticky top-[64px] z-30 -mx-1 px-1 py-1"
         >
@@ -162,7 +202,7 @@ export default function RetentionRoomPage() {
                 <button
                   key={sec.id}
                   type="button"
-                  aria-current={isAct ? "true" : undefined}
+                  aria-current={isAct ? "location" : undefined}
                   onClick={() => scrollToSection(sec.id)}
                   className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all ${
                     isAct
@@ -177,6 +217,14 @@ export default function RetentionRoomPage() {
             })}
           </div>
         </nav>
+
+        {/* 1. SQUAD OVERVIEW */}
+        <SquadOverviewPanel
+          team={team}
+          official={official.data}
+          pulseModel={pulse2027.model}
+          onSelectGroup={(group) => openBoard("squad", group)}
+        />
 
         {/* 3. RETENTION INTELLIGENCE */}
         <section id="retention" className="scroll-mt-24 space-y-6">
