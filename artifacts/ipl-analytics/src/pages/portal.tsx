@@ -73,7 +73,7 @@ export default function PortalPage() {
         <div className="flex items-center gap-2">
           
           <Link
-            href="/intelligence"
+            href="/editorials"
             className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-primary/30 to-accent/20 border border-primary/40 text-sm font-semibold hover:shadow-[0_0_20px_-4px_hsl(var(--primary))] transition-all"
           >
             <Cpu className="w-4 h-4" />

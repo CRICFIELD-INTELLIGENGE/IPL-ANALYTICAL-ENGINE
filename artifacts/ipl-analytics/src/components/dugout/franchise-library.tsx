@@ -150,7 +150,7 @@ export function FranchiseLibrary({ code, teamName, accent, preview }: { code: st
           </h3>
         </div>
         {preview ? (
-          <Link href={`/intelligence?franchise=${code.toLowerCase()}`} onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="inline-flex w-fit items-center gap-1.5 text-xs font-semibold hover:opacity-85 transition-opacity" style={{ color: accent }}>
+          <Link href={`/editorials?franchise=${code.toLowerCase()}`} onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="inline-flex w-fit items-center gap-1.5 text-xs font-semibold hover:opacity-85 transition-opacity" style={{ color: accent }}>
             All {readable.length} articles <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         ) : (
@@ -235,11 +235,11 @@ export function FranchiseLibrary({ code, teamName, accent, preview }: { code: st
               Showing <span className="font-bold text-white">{gridItems.length + (showFeatured ? 1 : 0)}</span> of <span className="font-bold text-white">{readable.length}</span> {teamName} articles.
             </p>
             <p className="text-[11px] text-slate-400">
-              Complete analytical dossiers, auction telemetry, and tactical breakdowns available on Intelligence.
+              Complete analytical dossiers, auction telemetry, and tactical breakdowns available on Editorials.
             </p>
           </div>
           <Link
-            href={`/intelligence?franchise=${code.toLowerCase()}`}
+            href={`/editorials?franchise=${code.toLowerCase()}`}
             onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
             className="inline-flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 text-xs font-bold uppercase tracking-wider transition-all shadow-lg hover:brightness-110 active:scale-[0.98]"
             style={{
@@ -248,7 +248,7 @@ export function FranchiseLibrary({ code, teamName, accent, preview }: { code: st
               boxShadow: `0 8px 24px -4px ${accent}40`,
             }}
           >
-            View all {readable.length} articles on Intelligence <ArrowRight className="h-4 w-4" />
+            View all {readable.length} articles on Editorials <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       )}

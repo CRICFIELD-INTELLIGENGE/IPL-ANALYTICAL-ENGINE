@@ -12,7 +12,7 @@ const destinations = [
   { href: "/stats", label: "Stats Centre", icon: List, detail: "Go beyond the scorecard" },
   { href: "/dugout", label: "My Dugout", icon: Shield, detail: "Your franchise headquarters" },
   { href: "/pulse", label: "Auction Pulse", icon: Radio, detail: "Track the auction landscape" },
-  { href: "/intelligence", label: "Intelligence", icon: Cpu, detail: "Explore cricket through data" },
+  { href: "/editorials", label: "Editorials", icon: Newspaper, detail: "Explore cricket through data" },
   { href: "/retention-room", label: "Retention Room", icon: Trophy, detail: "Make the tough calls" },
   { href: "/visualizations", label: "Visuals", icon: BarChart2, detail: "See the game differently" },
   { href: "/ai-analyst", label: "AI Analyst", icon: Cpu, detail: "Ask your cricket questions" },

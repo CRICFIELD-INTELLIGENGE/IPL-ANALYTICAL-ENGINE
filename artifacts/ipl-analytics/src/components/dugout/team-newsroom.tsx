@@ -28,7 +28,7 @@ export function TeamNewsroom({ code, teamName, accent }: { code: string; teamNam
             {teamName} stories &amp; intelligence
           </h2>
         </div>
-        <Link href="/intelligence" className="text-xs font-bold text-white/70 hover:text-white underline underline-offset-4">
+        <Link href="/editorials" className="text-xs font-bold text-white/70 hover:text-white underline underline-offset-4">
           All articles →
         </Link>
       </header>
@@ -70,7 +70,7 @@ export function TeamNewsroom({ code, teamName, accent }: { code: string; teamNam
 
 function FeaturedCard({ article, accent }: { article: ContentArticle; accent: string }) {
   return (
-    <Link href={`/intelligence?article=${article.day}`} className="group block rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-transparent p-5 hover:border-white/25 transition-colors">
+    <Link href={`/editorials?article=${article.day}`} className="group block rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-transparent p-5 hover:border-white/25 transition-colors">
       <div className="text-[10px] font-black uppercase tracking-widest" style={{ color: accent }}>{article.dimension}</div>
       <h3 className="font-display font-black text-xl sm:text-2xl text-white mt-2 leading-tight group-hover:underline underline-offset-4">{article.title}</h3>
       <p className="text-sm text-white/65 mt-2 leading-relaxed max-w-3xl">{article.summary}</p>
@@ -83,7 +83,7 @@ function FeaturedCard({ article, accent }: { article: ContentArticle; accent: st
 
 function ArticleCard({ article }: { article: ContentArticle }) {
   return (
-    <Link href={`/intelligence?article=${article.day}`} className="group block rounded-xl border border-white/10 bg-white/[0.02] p-4 hover:border-white/25 hover:bg-white/[0.04] transition-colors min-w-0">
+    <Link href={`/editorials?article=${article.day}`} className="group block rounded-xl border border-white/10 bg-white/[0.02] p-4 hover:border-white/25 hover:bg-white/[0.04] transition-colors min-w-0">
       <div className="text-[9px] font-black uppercase tracking-widest text-white/40">{article.dimension}</div>
       <h4 className="font-display font-bold text-sm text-white mt-1.5 leading-snug group-hover:underline underline-offset-4">{article.title}</h4>
       <p className="text-xs text-white/55 mt-1.5 line-clamp-2">{article.subtitle}</p>

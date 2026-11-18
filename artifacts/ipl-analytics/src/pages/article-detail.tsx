@@ -887,7 +887,7 @@ function LegacyArticleDetailPage({ params }: { params?: { slug?: string } }) {
     {
       title: "Match Intelligence Desk",
       desc: "Tactical match analytics, phases & win probability",
-      href: "/intelligence",
+      href: "/editorials",
       badge: "Tactics",
       icon: BarChart2,
     },

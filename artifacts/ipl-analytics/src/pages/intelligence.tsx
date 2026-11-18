@@ -97,6 +97,7 @@ export default function IntelligencePage() {
     }
   }, [searchParams]);
 
+
   // Franchise Intelligence Configuration
   const franchiseConfig = useMemo(() => {
     return (
@@ -116,6 +117,12 @@ export default function IntelligencePage() {
       }
     );
   }, [activeFranchiseCode, franchiseConfig]);
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.title = `${franchiseMeta.name} Editorials & In-depth Cricket Analysis | CricField`;
+    }
+  }, [franchiseMeta.name]);
 
   // Local Filter States — Automatically derived and reset when activeFranchiseCode changes
   const [selectedAngle, setSelectedAngle] = useState<string>(
@@ -277,7 +284,7 @@ export default function IntelligencePage() {
               </span>
               <span>›</span>
               <span className="text-cyan-600 dark:text-cyan-300 font-black">
-                Intelligence Hub
+                Editorials Hub
               </span>
             </div>
           </div>
@@ -285,7 +292,7 @@ export default function IntelligencePage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
           {/* ═════════════════════════════════════════════════════════════════
-              1. FRANCHISE INTELLIGENCE HUB HERO
+              1. FRANCHISE EDITORIALS HUB HERO
              ═════════════════════════════════════════════════════════════════ */}
           <section className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 bg-white dark:bg-gradient-to-r dark:from-[#0C1222] dark:via-[#0D162C] dark:to-[#1A0F22] p-6 sm:p-8 lg:p-10 shadow-sm dark:shadow-2xl">
             {/* Ambient Background Light Flares */}
@@ -301,7 +308,7 @@ export default function IntelligencePage() {
             <div className="relative z-10 flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3 sm:gap-4 pb-5 mb-6 border-b border-slate-200/80 dark:border-white/10">
               <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 min-w-0">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-white/40 whitespace-nowrap">
-                  Select Franchise Intelligence
+                  Select Franchise Editorials
                   <span className="hidden sm:inline">:</span>
                 </span>
                 <span className="text-xs font-mono font-black uppercase text-slate-900 dark:text-white">
@@ -331,7 +338,7 @@ export default function IntelligencePage() {
                         borderColor: `${franchiseConfig.accent}40`,
                       }}
                     >
-                      FRANCHISE INTELLIGENCE HUB
+                      FRANCHISE EDITORIALS HUB
                     </span>
                     <div className="font-serif italic text-sm text-amber-500 dark:text-amber-300 mt-1">
                       "{franchiseConfig.motto}"
@@ -362,7 +369,7 @@ export default function IntelligencePage() {
                       100
                     </div>
                     <div className="text-[9px] uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-0.5">
-                      Intelligence Articles
+                      Editorial Articles
                     </div>
                   </div>
                   <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-left font-mono">
@@ -435,7 +442,7 @@ export default function IntelligencePage() {
           </section>
 
           {/* ═════════════════════════════════════════════════════════════════
-              2. EXPLORE BY INTELLIGENCE ANGLE (11 ANGLE CARDS)
+              2. EXPLORE BY EDITORIAL ANGLE (11 ANGLE CARDS)
              ═════════════════════════════════════════════════════════════════ */}
           <section className="space-y-3">
             <div className="flex items-center justify-between">
@@ -444,7 +451,7 @@ export default function IntelligencePage() {
                 style={{ color: franchiseMeta.accent }}
               >
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>EXPLORE BY INTELLIGENCE ANGLE</span>
+                <span>EXPLORE BY EDITORIAL ANGLE</span>
               </span>
               <span className="text-xs font-mono text-slate-500">
                 11 Strategic Pillars
@@ -503,10 +510,10 @@ export default function IntelligencePage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-white/10 pb-3">
                 <div>
                   <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-                    <span>ALL {activeFranchiseCode} INTELLIGENCE ARTICLES</span>
+                    <span>ALL {activeFranchiseCode} EDITORIAL ARTICLES</span>
                   </h2>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                    A complete library of analytical, tactical and storytelling
+                    A complete library of editorial essays, analytical dossiers, and storytelling
                     articles on {franchiseMeta.name}.
                   </p>
                 </div>
@@ -533,7 +540,7 @@ export default function IntelligencePage() {
                     className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-800 dark:text-white focus:outline-none focus:border-cyan-400 cursor-pointer"
                   >
                     <option value="all">All Angles</option>
-                    <option value="batting">Batting Intelligence</option>
+                    <option value="batting">Batting Editorials</option>
                     <option value="bowling">Bowling &amp; Fielding</option>
                     <option value="tactical">Tactical &amp; Match</option>
                     <option value="auction">Auction &amp; Economics</option>
@@ -980,11 +987,11 @@ export default function IntelligencePage() {
                 </div>
               </div>
 
-              {/* CARD 3: RELATED INTELLIGENCE TOOLS */}
+              {/* CARD 3: RELATED EDITORIALS & TOOLS */}
               <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0B1220]/80 p-5 space-y-3 shadow-sm dark:shadow-xl">
                 <div className="flex items-center gap-2 text-xs font-mono font-black uppercase tracking-widest text-amber-500 dark:text-amber-400">
                   <Cpu className="w-4 h-4" />
-                  <span>RELATED INTELLIGENCE TOOLS</span>
+                  <span>RELATED EDITORIALS &amp; TOOLS</span>
                 </div>
 
                 <div className="space-y-2">
@@ -1090,7 +1097,7 @@ export default function IntelligencePage() {
                     style={
                       isActive ? { borderColor: `${conf.accent}90` } : undefined
                     }
-                    title={`Switch intelligence view to ${conf.name}`}
+                    title={`Switch editorial view to ${conf.name}`}
                   >
                     <div className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/10 flex items-center justify-center p-1 group-hover:scale-105 transition-transform">
                       <TeamLogo team={code} size="w-6 h-6" />

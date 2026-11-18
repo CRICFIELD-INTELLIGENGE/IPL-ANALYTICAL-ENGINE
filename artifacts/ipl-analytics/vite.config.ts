@@ -84,7 +84,18 @@ function apiAutostart(): Plugin {
         { signal: AbortSignal.timeout(1500) },
       );
       const value = await r.json();
-      return r.ok && value.arcadeVersion === "rooms-v3";
+      if (!r.ok || value.arcadeVersion !== "rooms-v3") return false;
+      if (process.env.CRICFIELD_API_AUTOSTART === "0") return true;
+      const desk = await fetch(
+        `http://127.0.0.1:${port}/api/auction-2027`,
+        { signal: AbortSignal.timeout(1500) },
+      );
+      const result = await desk.json();
+      const release = JSON.parse(fs.readFileSync(
+        path.resolve(import.meta.dirname, "../api-server/data/retention/official-2027.json"),
+        "utf8",
+      ));
+      return desk.ok && result.retentionVersion === release.version;
     } catch {
       return false;
     }

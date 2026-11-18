@@ -52,6 +52,9 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
               <MHome />
             </Route>
             <Route path="/discover" component={MDiscover} />
+            <Route path="/editorials">
+              <MNews />
+            </Route>
             <Route path="/intelligence">
               <MNews />
             </Route>

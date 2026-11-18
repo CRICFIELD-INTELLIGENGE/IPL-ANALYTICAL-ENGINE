@@ -210,13 +210,13 @@ export function EditorialMagazine({ code, teamName, accent }: EditorialMagazineP
 
         {/* Action Controls: Intel Link & Carousel Nav */}
         <div className="flex items-center gap-3 self-end md:self-center">
-          <Link href={`/intelligence?franchise=${code.toLowerCase()}&tab=insights`}>
+          <Link href={`/editorials?franchise=${code.toLowerCase()}&tab=insights`}>
             <button
               type="button"
               className="px-3 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:border-cyan-400 text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
             >
               <Cpu className="w-3.5 h-3.5" />
-              <span>Full Intel &amp; Insights</span>
+              <span>Full Editorials &amp; Insights</span>
               <ArrowRight className="w-3 h-3" />
             </button>
           </Link>
@@ -319,7 +319,7 @@ export function EditorialMagazine({ code, teamName, accent }: EditorialMagazineP
                 </div>
 
                 <h4 className="font-extrabold text-base text-white tracking-tight leading-snug">
-                  Explore Full Intelligence &amp; Insights
+                  Explore Full Editorials &amp; Insights
                 </h4>
 
                 <p className="text-xs text-slate-300 leading-relaxed">
@@ -328,7 +328,7 @@ export function EditorialMagazine({ code, teamName, accent }: EditorialMagazineP
               </div>
 
               <div className="pt-6">
-                <Link href={`/intelligence?franchise=${code.toLowerCase()}&tab=insights`}>
+                <Link href={`/editorials?franchise=${code.toLowerCase()}&tab=insights`}>
                   <button
                     type="button"
                     className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-black text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 cursor-pointer"
