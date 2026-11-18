@@ -10,7 +10,6 @@ import { CATEGORY_TOOL } from "@/components/replay-tools";
 import FeedAuctionPage from "./feed-auction";
 import FeedTacticsPage from "./feed-tactics";
 import FeedVenuesPage from "./feed-venues";
-import FeedStarsPage from "./feed-stars";
 const FeedStorylinesPage = lazy(() => import("./feed-storylines"));
 
 interface CategoryDef {
@@ -45,13 +44,6 @@ const CATEGORIES: Record<CardId, CategoryDef> = {
     tagline: "What style of cricket is each team building?",
     tool: { label: "Scout & Tactics", desc: "Phase strengths and matchup weaknesses", href: "/feed/ipl-2027?module=tools", teamAware: true },
     aspects: ["tactical"],
-  },
-  stars: {
-    kicker: "Star Watch",
-    title: "The Scout Files",
-    tagline: "The next big auction opportunity",
-    tool: { label: "Global Scout Engine", desc: "Role-based candidates across leagues", href: "/scout", teamAware: false },
-    aspects: ["scouting"],
   },
   venues: {
     kicker: "Venues",
@@ -94,7 +86,6 @@ export default function FeedCategoryPage({ params }: { params?: { category?: str
   if (category === "auction") return <FeedAuctionPage />;
   if (category === "tactics") return <FeedTacticsPage />;
   if (category === "venues") return <FeedVenuesPage />;
-  if (category === "stars") return <FeedStarsPage />;
   if (category === "storylines") return <FeedStorylinesPage />;
 
   if (!def || !card) return <Redirect to="/feed" />;

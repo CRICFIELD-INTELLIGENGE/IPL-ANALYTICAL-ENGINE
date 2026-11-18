@@ -92,7 +92,7 @@ export default function BuildYourXIGame() {
       </div>
       {final && <ResultPanel game="build-your-xi" score={final.report.rating} outcome={final.outcome} headline={`Team rating ${final.report.rating}/100`} lines={[mode === "season" ? `Season value ${final.report.total} vs a reference best XI of ${final.report.reference}.` : "60 ≈ the median real franchise XI, 90 ≈ the strongest."]}
         share={`Build Your XI · ${MODES.find((m) => m[0] === mode)![1]} · rating ${final.report.rating}\n${picked.map((p, i) => `${i + 1}. ${p.name}`).join("\n")}`} onReplay={() => { setFinal(null); setXi([]); }} replayLabel="Build another" />}
-      <p className="pav-small">Compare any player in <Link href="/scout">Scout Lab</Link>.</p>
+      <p className="pav-small">Compare any player in <Link href="/pressurelab">Pressure Lab</Link>.</p>
       <DataNote data={meta.data} extra={`Ratings come from the CRICFIELD Player Intelligence snapshot (runs above replacement). Rules: ${(meta.rules ?? []).join("; ")}.`} />
       <Leaderboard game="build-your-xi" />
     </GameShell>

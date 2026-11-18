@@ -85,7 +85,7 @@ export function ScoutHero({
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
-              <Link href="/scout/compare?ids=f1809c03,31ee319e">
+              <Link href="/pressurelab/compare?ids=f1809c03,31ee319e">
                 <button
                   type="button"
                   className="px-5 py-3 rounded-xl bg-[#14212A] hover:bg-[#1B2932] text-[#F5F7F8] border border-white/10 hover:border-orange-500/40 text-xs font-bold tracking-wide transition-all flex items-center gap-2 cursor-pointer"
@@ -96,7 +96,7 @@ export function ScoutHero({
               </Link>
 
               <div className="flex items-center gap-2 ml-0 sm:ml-2">
-                <Link href="/scout/roles">
+                <Link href="/pressurelab/roles">
                   <button className="px-3.5 py-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] text-[#9BAAB5] hover:text-[#F5F7F8] border border-white/10 text-xs font-semibold transition-all flex items-center gap-1.5">
                     <Layers className="w-3.5 h-3.5 text-sky-400" />
                     <span className="hidden sm:inline">Role Taxonomy</span>

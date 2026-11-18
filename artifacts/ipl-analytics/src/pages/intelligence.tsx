@@ -1002,7 +1002,7 @@ export default function IntelligencePage() {
                     {
                       label: "Player Comparisons",
                       sub: "Compare players with league stars",
-                      href: "/scout/compare",
+                      href: "/pressurelab/compare",
                     },
                     {
                       label: `${activeFranchiseCode} Auction Strategy`,

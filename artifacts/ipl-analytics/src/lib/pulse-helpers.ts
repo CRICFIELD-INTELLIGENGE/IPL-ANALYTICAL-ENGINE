@@ -144,16 +144,6 @@ export const FAN_PULSE_QUESTIONS = [
     ],
   },
   {
-    id: "q2",
-    kicker: "CSK Strategy",
-    question: "Will MS Dhoni play IPL 2027 under the uncapped player retention rule?",
-    options: [
-      { id: "uncapped", label: "Yes, retained in ₹4 Cr bracket", pct: 68 },
-      { id: "auction", label: "Yes, but enters auction paddle", pct: 18 },
-      { id: "mentor", label: "Transitions to dugout mentor role", pct: 14 },
-    ],
-  },
-  {
     id: "q3",
     kicker: "Marquee Retentions",
     question: "Which superstar should command the highest retention fee for 2027?",

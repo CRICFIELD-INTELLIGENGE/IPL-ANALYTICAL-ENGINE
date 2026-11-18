@@ -2,7 +2,7 @@
 // compositions; every other route renders the existing page inside the mobile shell, with the desktop chrome off.
 // The floating AI launcher is not rendered on mobile: the AI tab replaces it.
 import { lazy, Suspense, useEffect, type ReactNode } from "react";
-import { Redirect, Route, Switch, useLocation } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import { MobileChromeContext } from "./gate";
 import { BottomTabs, Loading, TopBar } from "./shell";
 import { UsageTracker } from "./usage";
@@ -56,7 +56,7 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
               <MNews />
             </Route>
             <Route path="/feed">
-              <Redirect to="/intelligence" replace />
+              <Legacy legacy={legacy} />
             </Route>
             <Route path="/dugout">
               <MDugout />
@@ -75,7 +75,7 @@ export default function MobileApp({ legacy }: { legacy: ReactNode }) {
             <Route path="/teams/:slug">
               <Legacy legacy={legacy} />
             </Route>
-            <Route path="/scout">
+            <Route path="/pressurelab">
               <MScout />
             </Route>
             <Route path="/pulse">

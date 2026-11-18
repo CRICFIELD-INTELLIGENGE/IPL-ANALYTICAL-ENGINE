@@ -2002,7 +2002,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
       {/* STATIC DATA SECTION */}
       <div className="space-y-4 px-2.5 pb-6 mt-4 [overflow-anchor:none]">
-        {/* CROSS-LINK TO GLOBAL SCOUT LAB */}
+        {/* CROSS-LINK TO GLOBAL PRESSURE LAB */}
         <div className="rounded-2xl bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-sm dark:shadow-lg">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-xl bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
@@ -2017,9 +2017,9 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               </span>
             </div>
           </div>
-          <Link href="/scout">
+          <Link href="/pressurelab">
             <button className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
-              <span>Open Scout Lab</span>
+              <span>Open Pressure Lab</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </Link>

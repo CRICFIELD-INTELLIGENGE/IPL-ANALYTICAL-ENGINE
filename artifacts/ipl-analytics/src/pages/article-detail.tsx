@@ -901,8 +901,8 @@ function LegacyArticleDetailPage({ params }: { params?: { slug?: string } }) {
     {
       title: "Talent Scouting Lab",
       desc: "Player scouting profiles & match performance",
-      href: "/scout",
-      badge: "Scout Lab",
+      href: "/pressurelab",
+      badge: "Pressure Lab",
       icon: ArrowUpRight,
     },
   ], [teamLabel, dugoutUrl]);

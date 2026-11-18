@@ -145,7 +145,7 @@ function ScoutWorkspace({ search }: { search: string }) {
       if (value) next.set(key, value);
       else next.delete(key);
     }
-    navigate(`/scout/results?${next}`);
+    navigate(`/pressurelab/results?${next}`);
   }
 
   function applyFilters(event: FormEvent<HTMLFormElement>) {
@@ -166,7 +166,7 @@ function ScoutWorkspace({ search }: { search: string }) {
     recentSeasons: String(recentSeasons),
     ...(team ? { team } : {}),
   });
-  const room = team ? `/scout?team=${team.toLowerCase()}` : "/scout";
+  const room = team ? `/pressurelab?team=${team.toLowerCase()}` : "/pressurelab";
   return (
     <Layout hideRightPanel>
       <main className="scout-results-page" style={{ "--team-accent": franchise?.accent ?? "#38bdf8" } as CSSProperties}>
@@ -174,7 +174,7 @@ function ScoutWorkspace({ search }: { search: string }) {
           <Link href={room}>Scout Room</Link><span aria-hidden="true">/</span><span aria-current="page">{titles[preset] ?? "Search Results"}</span>
         </nav>
         <header className="scout-strategy-brief">
-          <p className="scout-results-eyebrow">{franchise?.name ?? "Global T20"} · Scout Lab</p>
+          <p className="scout-results-eyebrow">{franchise?.name ?? "Global T20"} · Pressure Lab</p>
           <div className="scout-workspace-heading">
             <h1>{titles[preset] ?? "Scouting Results"}</h1>
             <span>{recentSeasons} recent seasons · {phases[phase]}</span>
@@ -209,7 +209,7 @@ function ScoutWorkspace({ search }: { search: string }) {
             <div className="scout-result-tabs">
               <button type="button" aria-pressed={view === "players"} onClick={() => setView("players")}>Players ({aiCandidates?.length || total})</button>
               <button type="button" aria-pressed={view === "shortlist"} onClick={() => setView("shortlist")}>Shortlist ({shortlist.length})</button>
-              {compare.length >= 2 && <Link href={`/scout/compare?${compareParams}`}>Compare ({compare.length})</Link>}
+              {compare.length >= 2 && <Link href={`/pressurelab/compare?${compareParams}`}>Compare ({compare.length})</Link>}
             </div>
             <h2>Scouting Results</h2>
             {preset === "young" && <p className="scout-workspace-note">Shows players under 23 with a recorded date of birth.</p>}
@@ -257,7 +257,7 @@ function ScoutWorkspace({ search }: { search: string }) {
               <RetentionAssessment player={active}/>
               <div className="scout-report-actions">
                 <button type="button" onClick={() => toggleShortlist(active)}>{isShortlisted(active.cricsheet_id) ? "Remove from Shortlist" : "Add to Shortlist"}</button>
-                <Link href={`/scout/player/${encodeURIComponent(active.cricsheet_id)}`}>Full Player Profile</Link>
+                <Link href={`/pressurelab/player/${encodeURIComponent(active.cricsheet_id)}`}>Full Player Profile</Link>
                 {preset === "replacement" && !["insufficient","none"].includes(active.role.label) && <button type="button" onClick={() => update({ q: "", discipline: active.discipline, role: active.role.label, sourcePlayer: active.cricsheet_id })}>Find players in this role</button>}
               </div>
             </> : <p className="scout-workspace-note">Select a player to view their report.</p>}

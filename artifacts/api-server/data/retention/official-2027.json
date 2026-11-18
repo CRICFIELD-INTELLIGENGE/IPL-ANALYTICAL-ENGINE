@@ -1,5 +1,5 @@
 {
-  "version": "retentions-2027.20261118.1",
+  "version": "retentions-2027.20261118.2",
   "season": 2027,
   "announcedOn": "2026-11-17",
   "reviewedAt": "2026-11-17T18:49:43.510Z",
@@ -57,6 +57,12 @@
       "publisher": "Royal Challengers Bengaluru",
       "official": true,
       "url": "https://www.royalchallengers.com/rcb-cricket-news/news/rcb-retain-20-players-ahead-of-ipl-2027-auction",
+      "publishedOn": "2026-11-17"
+    },
+    "gtReleases": {
+      "publisher": "Gujarat Titans",
+      "url": "https://www.gujarattitansipl.com/news/gujarat-titans-part-ways-five-players-ahead-of-tata-ipl-2027",
+      "official": true,
       "publishedOn": "2026-11-17"
     }
   },
@@ -215,6 +221,7 @@
         "cricbuzz"
       ],
       "releasedSources": [
+        "gtReleases",
         "cricbuzz"
       ],
       "purseClaims": [
@@ -233,8 +240,13 @@
       ],
       "overseasSlots": 2,
       "notes": [
-        "Retained squad confirmed by GT. Releases and conflicting purse values await primary confirmation."
-      ]
+        "GT confirmed five departures. Prithviraj Yarra appears only in secondary reporting. The purse remains disputed."
+      ],
+      "releaseSourceOverrides": {
+        "Prithviraj Yarra": [
+          "cricbuzz"
+        ]
+      }
     },
     {
       "team": "KKR",

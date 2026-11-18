@@ -16,7 +16,7 @@ export function ScoutFeatureBanner() {
           </div>
 
           <h2 className="font-display text-xl sm:text-3xl font-black text-[#F5F7F8] tracking-tight uppercase">
-            Discover Cricket Talent in CricField Scout Lab
+            Discover Cricket Talent in CricField Pressure Lab
           </h2>
 
           <p className="font-body text-xs sm:text-sm text-[#9BAAB5] leading-relaxed">
@@ -39,21 +39,21 @@ export function ScoutFeatureBanner() {
         </div>
 
         <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
-          <Link href="/scout">
+          <Link href="/pressurelab">
             <button className="w-full px-5 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white text-xs font-mono font-black tracking-wide uppercase shadow-lg shadow-orange-500/20 transition-all flex items-center justify-center gap-2 group cursor-pointer">
-              <span>Enter Scout Lab</span>
+              <span>Enter Pressure Lab</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
 
           <div className="flex items-center gap-2">
-            <Link href="/scout/roles">
+            <Link href="/pressurelab/roles">
               <button className="flex-1 px-3.5 py-2 rounded-xl bg-[#14212A] hover:bg-[#1B2932] text-[#F5F7F8] border border-white/10 text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5">
                 <Layers className="w-3.5 h-3.5 text-[#4CC9C0]" />
                 <span>Role Catalog</span>
               </button>
             </Link>
-            <Link href="/scout/compare?ids=f1809c03,31ee319e">
+            <Link href="/pressurelab/compare?ids=f1809c03,31ee319e">
               <button className="flex-1 px-3.5 py-2 rounded-xl bg-[#14212A] hover:bg-[#1B2932] text-[#F5F7F8] border border-white/10 text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5">
                 <Scale className="w-3.5 h-3.5 text-[#F4B96C]" />
                 <span>Compare Radar</span>

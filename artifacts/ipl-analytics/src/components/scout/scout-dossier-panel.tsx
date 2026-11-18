@@ -444,7 +444,7 @@ export function ScoutDossierPanel({
           <span>{isComparing ? "In Comparison" : "Add to Compare"}</span>
         </button>
 
-        <Link href={`/scout/player/${player.cricsheet_id}`}>
+        <Link href={`/pressurelab/player/${player.cricsheet_id}`}>
           <button className="py-2 px-3.5 rounded-xl bg-[#B6E95C] hover:bg-[#a5db4b] text-[#08131F] text-xs font-mono font-black uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-md shadow-[#B6E95C]/20 cursor-pointer">
             <span>Full Profile</span>
             <ExternalLink className="w-3.5 h-3.5" />

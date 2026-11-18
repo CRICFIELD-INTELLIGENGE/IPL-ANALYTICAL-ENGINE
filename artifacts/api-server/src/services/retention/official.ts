@@ -13,7 +13,7 @@ const identitySchema = z.object({ canonicalId: z.string().nullable(), country: z
 export const officialReleaseSchema = z.object({
   version: z.string(), season: z.number().int(), announcedOn: z.string(), reviewedAt: z.string().datetime(), comparisonCutoff: z.string().datetime(),
   sources: z.record(sourceSchema), aliases: z.record(z.string()), identities: z.record(identitySchema),
-  teams: z.array(z.object({ team: z.enum(TEAMS), retained: z.array(z.string()), released: z.array(z.string()), retainedSources: z.array(z.string()).min(1), releasedSources: z.array(z.string()).min(1), purseClaims: z.array(z.object({ valueLakh: z.number().nonnegative(), source: z.string() })), overseasSlots: z.number().int().min(0).max(8), notes: z.array(z.string()) })),
+  teams: z.array(z.object({ team: z.enum(TEAMS), retained: z.array(z.string()), released: z.array(z.string()), retainedSources: z.array(z.string()).min(1), releasedSources: z.array(z.string()).min(1), releaseSourceOverrides: z.record(z.array(z.string()).min(1)).optional(), purseClaims: z.array(z.object({ valueLakh: z.number().nonnegative(), source: z.string() })), overseasSlots: z.number().int().min(0).max(8), notes: z.array(z.string()) })),
   availability: z.array(z.object({ name: z.string(), status: z.enum(["retired", "unavailable", "uncertain"]), note: z.string(), sources: z.array(z.string()) })),
   auctionRegistrations: z.array(z.object({ canonicalId: z.string(), source: z.string(), basePriceLakh: z.number().positive() })), notes: z.array(z.string()),
 }).superRefine((d, ctx) => {
@@ -32,6 +32,9 @@ export const officialReleaseSchema = z.object({
       const id = d.identities[name]?.canonicalId ?? name;
       if (owners.has(id)) fail(`Retained by more than one franchise: ${name}`);
       owners.add(id);
+    }
+    for (const [name, ids] of Object.entries(t.releaseSourceOverrides ?? {})) {
+      if (!t.released.includes(name) || ids.some(id => !d.sources[id])) fail(`Invalid release sources for ${name}`);
     }
     if (t.retained.length > 25) fail(`${t.team}: retained squad exceeds 25`);
     for (const id of [...t.retainedSources, ...t.releasedSources, ...t.purseClaims.map(p => p.source)]) if (!d.sources[id]) fail(`Unknown source ${id}`);
@@ -52,7 +55,7 @@ export function resolvePurse(claims: OfficialRelease["teams"][number]["purseClai
 export function scoutLink(team: string, role: string, phase = "all", discipline = "batting") {
   const p = new URLSearchParams({team:team.toLowerCase(),preset:role === "finisher" ? "finisher" : discipline === "bowling" ? "pace" : "search",discipline,phase,minBalls:"60",recentSeasons:"3"});
   if (role) p.set("role",role);
-  return `/scout/results?${p}`;
+  return `/pressurelab/results?${p}`;
 }
 const canonical = (name: string, data: OfficialRelease) => data.identities[name]?.canonicalId ?? data.aliases[name] ?? null;
 const verification = (ids: string[], data: OfficialRelease): Verification => ids.some(id=>data.sources[id]?.official) ? "verified" : "reported";
@@ -74,7 +77,7 @@ export function buildOfficialRoom(team: Team, data: OfficialRelease, ledger: Led
   const byId = new Map(snapshot?.players.map(p=>[p.id,p]) ?? []);
   const records = [
     ...t.retained.map(name=>({name,decision:"retained" as const,ids:t.retainedSources})),
-    ...t.released.map(name=>({name,decision:"released" as const,ids:t.releasedSources})),
+    ...t.released.map(name=>({name,decision:"released" as const,ids:t.releaseSourceOverrides?.[name] ?? t.releasedSources})),
     ...moves.filter(m=>m.from === team).map(m=>({name:m.player,decision:"traded_out" as const,ids:[] as string[]})),
   ];
   const players = records.map(r=>{

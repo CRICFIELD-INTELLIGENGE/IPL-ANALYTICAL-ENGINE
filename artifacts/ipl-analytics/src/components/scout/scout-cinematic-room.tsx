@@ -169,7 +169,7 @@ export function ScoutCinematicRoom({
       params.set("phase", "all");
     }
     setSuggestionsOpen(false);
-    navigateToResults(`/scout/results?${params}`);
+    navigateToResults(`/pressurelab/results?${params}`);
   };
   const askScout = () => {
     const question = searchQuery.trim();
@@ -320,7 +320,7 @@ export function ScoutCinematicRoom({
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase border shadow-2xs transition-all duration-300 bg-emerald-50 dark:bg-black/60 text-emerald-800 dark:text-[var(--scout-accent)] border-emerald-300 dark:border-white/20"
             >
               <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-emerald-500" />
-              {theme ? `${theme.shortName} DUGOUT • SCOUT ROOM ACTIVE` : "SCOUT LAB • TACTICAL RADAR ACTIVE"}
+              {theme ? `${theme.shortName} DUGOUT • SCOUT ROOM ACTIVE` : "PRESSURE LAB • TACTICAL RADAR ACTIVE"}
             </span>
             <span className="hidden xl:inline text-xs text-slate-600 dark:text-[#718594] font-mono font-semibold">
               DIRECTIVE: 2026 AUCTION RETENTION & REPLACEMENT
@@ -493,7 +493,7 @@ export function ScoutCinematicRoom({
                 </> : <p role="alert" className="text-slate-500 dark:text-slate-400">{analystAnswer?.error ?? 'Unable to answer this question. Try again.'}</p>}
               </section>}
               {suggestionsOpen && <div id="scout-search-results" role="listbox" aria-label="Scout suggestions" className="absolute top-full left-0 right-0 z-[60] mt-1 max-h-60 overflow-y-auto rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-[#0c121a] p-1 shadow-2xl text-slate-800 dark:text-slate-100">
-                  {searchQuery.trim().length > 0 && <button type="button" onMouseDown={e => e.preventDefault()} onClick={() => void askScout()} className="block w-full rounded-lg px-3 py-2 text-left text-xs hover:bg-slate-100 dark:hover:bg-white/5 text-slate-800 dark:text-white">Search Scout Lab for “{searchQuery}”<small className="block text-[10px] text-slate-500">Open the scouting workspace · Enter</small></button>}
+                  {searchQuery.trim().length > 0 && <button type="button" onMouseDown={e => e.preventDefault()} onClick={() => void askScout()} className="block w-full rounded-lg px-3 py-2 text-left text-xs hover:bg-slate-100 dark:hover:bg-white/5 text-slate-800 dark:text-white">Search Pressure Lab for “{searchQuery}”<small className="block text-[10px] text-slate-500">Open the scouting workspace · Enter</small></button>}
                 {searching ? <div role="status" className="flex items-center gap-3 p-3 text-xs"><span className="scout-eye-ball"><Eye size={17}/></span>Scouting matching players…</div> : searchFailed ? <div role="alert" className="flex items-center justify-between gap-2 p-3 text-xs text-slate-500">
                   <span>Couldn’t load player suggestions.</span>
                   <button type="button" className="shrink-0 underline" onMouseDown={event => event.preventDefault()} onClick={onRetrySearch}>Retry</button>
@@ -1167,14 +1167,14 @@ export function ScoutCinematicRoom({
                 </div>
 
                 {activeTab === 'shortlist' ? <section aria-label="Shortlisted targets" className="space-y-2">
-                  {shortlist.length ? shortlist.map(player => <div key={player.cricsheet_id} className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 p-3"><div><Link href={`/scout/player/${player.cricsheet_id}`} className="text-sm font-bold text-slate-900 dark:text-white">{player.name}</Link><button type="button" className="mt-1 block text-[10px] underline text-slate-600 dark:text-slate-300" onClick={() => setEvaluatedTargetId(player.cricsheet_id)}>Inspect recruitment fit</button><p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{player.role?.label} · {player.competition.toUpperCase()}</p></div><button type="button" className="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white" onClick={() => onToggleShortlist(player.cricsheet_id)}>Remove target</button></div>) : <p className="p-4 text-xs text-slate-500 dark:text-slate-400">No targets yet. Shortlist players from search to build your squad.</p>}
+                  {shortlist.length ? shortlist.map(player => <div key={player.cricsheet_id} className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 p-3"><div><Link href={`/pressurelab/player/${player.cricsheet_id}`} className="text-sm font-bold text-slate-900 dark:text-white">{player.name}</Link><button type="button" className="mt-1 block text-[10px] underline text-slate-600 dark:text-slate-300" onClick={() => setEvaluatedTargetId(player.cricsheet_id)}>Inspect recruitment fit</button><p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{player.role?.label} · {player.competition.toUpperCase()}</p></div><button type="button" className="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white" onClick={() => onToggleShortlist(player.cricsheet_id)}>Remove target</button></div>) : <p className="p-4 text-xs text-slate-500 dark:text-slate-400">No targets yet. Shortlist players from search to build your squad.</p>}
                 </section> : !selectedPlayer || isShortlisted(selectedPlayer.cricsheet_id) ? <p className="p-4 text-xs text-slate-500 dark:text-slate-400">Search for a player above, or open Shortlisted Targets to review saved players.</p> : <>
                 <div id="scout-selected-player" className="scroll-mt-20" />
                 {selectedPlayer && <div className="mb-3 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0b1118] p-3 text-xs text-slate-700 dark:text-slate-300">
                   <p className="mb-2 font-bold text-slate-900 dark:text-white">Recruitment fit · {theme?.shortName ?? 'All teams'}</p>
                   {[['Discipline', selectedPlayer.discipline === discipline], ['Role', !role || selectedPlayer.role?.label?.toLowerCase().replaceAll(' ', '_').includes(role)], ['Phase', phase === 'all' || selectedPlayer.phase === phase], ['League', !selectedComps.length || selectedComps.includes(selectedPlayer.competition)], ['Minimum sample', selectedPlayer.balls >= minBalls]].map(([label, matched]) => <p key={String(label)} className="flex justify-between py-1 text-slate-600 dark:text-slate-400"><span>{String(label)}</span><span>{matched ? '✓ Matched' : 'Not matched'}</span></p>)}
                   <p className="mt-2 text-[10px] text-slate-500">Age, handedness, nationality, uncapped status and auction availability require verification.</p>
-                  <div className="mt-3 flex flex-wrap gap-3"><Link href={`/scout/player/${selectedPlayer.cricsheet_id}`} className="text-slate-800 dark:text-slate-200 underline">Player report ↗</Link><Link href={`/ai-analyst/squad-dna?team=${localTeam ?? 'RCB'}`} className="text-slate-800 dark:text-slate-200 underline">Team requirements ↗</Link><Link href={`/ai-analyst/auction-war-room?team=${localTeam ?? ''}&q=${encodeURIComponent(selectedPlayer.name)}`} className="text-slate-800 dark:text-slate-200 underline">IPL 2027 recruitment ↗</Link></div>
+                  <div className="mt-3 flex flex-wrap gap-3"><Link href={`/pressurelab/player/${selectedPlayer.cricsheet_id}`} className="text-slate-800 dark:text-slate-200 underline">Player report ↗</Link><Link href={`/ai-analyst/squad-dna?team=${localTeam ?? 'RCB'}`} className="text-slate-800 dark:text-slate-200 underline">Team requirements ↗</Link><Link href={`/ai-analyst/auction-war-room?team=${localTeam ?? ''}&q=${encodeURIComponent(selectedPlayer.name)}`} className="text-slate-800 dark:text-slate-200 underline">IPL 2027 recruitment ↗</Link></div>
                 </div>
 }
                 {/* Dossier Header: Avatar + Specs + SHORTLIST Badge */}
@@ -1325,7 +1325,7 @@ export function ScoutCinematicRoom({
 
                   {/* View Player File Action */}
                   <Link 
-                    href={`/scout/player/${activeDossier.cricsheet_id}`}
+                    href={`/pressurelab/player/${activeDossier.cricsheet_id}`}
                     className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg border font-mono font-bold text-[11px] transition-all hover:brightness-105 cursor-pointer bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border-slate-200 dark:border-white/15 text-slate-900 dark:text-white shadow-xs"
                   >
                     <span>View Player File</span>

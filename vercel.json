@@ -8,10 +8,23 @@
   "functions": {
     "api/warehouse-preview.mjs": {
       "maxDuration": 60,
-      "memory": 1024
+      "memory": 1024,
+      "includeFiles": "artifacts/api-server/data/{auction-2027-updates.json,retention/transactions.json}"
     }
   },
   "rewrites": [
+    {
+      "source": "/api/auction-2027",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/auction-2027"
+    },
+    {
+      "source": "/api/retention/2027/official",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/retention/2027/official"
+    },
+    {
+      "source": "/api/retention/2027/franchises/:team/official",
+      "destination": "/api/warehouse-preview?__warehouseRoute=/api/retention/2027/franchises/:team/official"
+    },
     {
       "source": "/api/stats/:path*",
       "destination": "/api/warehouse-preview?__warehouseRoute=/api/stats/:path*"

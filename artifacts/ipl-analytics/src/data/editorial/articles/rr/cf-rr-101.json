@@ -1,0 +1,98 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-rr-101",
+ "planId": "cf-rr-101",
+ "franchise": "RR",
+ "aspect": "future",
+ "title": "What Rajasthan get by splitting the Sam Curran role",
+ "slug": "rr-shami-siddharth-curran-2027",
+ "dek": "Rajasthan bring in Mohammed Shami and M. Siddharth while Sam Curran moves to Lucknow. The trade opens two bowling choices and a question lower down the order.",
+ "excerpt": "Rajasthan bring in Mohammed Shami and M. Siddharth while Sam Curran moves to Lucknow. The trade opens two bowling choices and a question lower down the order.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-11-18",
+ "status": "review",
+ "featured": true,
+ "storyType": "explainer",
+ "teams": [
+  "RR"
+ ],
+ "players": [
+  "Mohammed Shami",
+  "M. Siddharth",
+  "Sam Curran"
+ ],
+ "seasons": [
+  "2027"
+ ],
+ "keyTakeaways": [
+  "The IPL confirmed Shami and Siddharth to RR and Curran to LSG. {{src:announcement}}",
+  "RR can test the batting cost of choosing two specialist bowlers."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "One move, two selection decisions",
+   "body": [
+    "Rajasthan can now write separate names beside new-ball pace and left-arm spin. Shami and Siddharth arrive from Lucknow, with Curran going the other way. {{src:announcement}}",
+    "The interesting space on the team sheet is the batting position Curran might have occupied."
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "Read the transfer in both directions",
+   "body": [
+    "The IPL advisory confirms the three moves. {{src:announcement}}",
+    "A squad planner counting open roles should place the arrivals in Rajasthan immediately. Treating them as auction targets would count the same cover twice."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Start with the new ball",
+   "body": [
+    "One possible plan gives Shami the new ball and keeps a spinner available if a right-handed pair settles.",
+    "Write the final four overs down as well. A powerplay plan that exhausts the best seam options early hands an awkward job to the last bowler."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "The price of a specialist",
+   "body": [
+    "Playing two specialists takes two places. The choice becomes sharper on a surface where a long batting order could matter more than an extra spin option.",
+    "Rajasthan can test that trade-off by picking a chase XI and a defending XI on the same pitch. The last player omitted is the one worth discussing."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "An auction question worth pricing",
+   "body": [
+    "Before bidding for another bowler, pencil in who walks out after the sixth wicket.",
+    "If the same batter has to finish a chase and cover an injury higher up, additional batting cover deserves a price on the auction sheet."
+   ]
+  }
+ ],
+ "charts": [],
+ "sources": [
+  {
+   "id": "announcement",
+   "kind": "official",
+   "title": "Shami and Siddharth traded to Rajasthan Royals, Curran to Lucknow",
+   "publisher": "IPL",
+   "url": "https://www.iplt20.com/news/article/mohd-shami-and-m-siddharth-traded-to-rajasthan-royals-sam-curran-traded-to-lucknow-super-giants"
+  }
+ ],
+ "imageBriefs": [],
+ "related": [],
+ "seo": {
+  "metaTitle": "What Rajasthan get by splitting the Sam Curran role",
+  "metaDescription": "Rajasthan bring in Mohammed Shami and M. Siddharth while Sam Curran moves to Lucknow. The trade opens two bowling choices and a question lower down the order."
+ },
+ "methodology": "The cited announcement establishes the personnel change. Tactical implications are editorial analysis and assume no unannounced selection decisions.",
+ "videos": [],
+ "hypotheses": [],
+ "literalNumbers": []
+}

@@ -81,7 +81,7 @@ export function ScoutHeroBanner({
               Find Players
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
-            <Link href="/scout/compare">
+            <Link href="/pressurelab/compare">
               <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/10 border border-white/10 text-white/80 text-xs font-bold uppercase tracking-wide transition-all cursor-pointer">
                 <Users className="w-3.5 h-3.5 text-sky-400" />
                 Compare Players

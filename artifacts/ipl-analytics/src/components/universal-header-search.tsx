@@ -203,7 +203,7 @@ export function UniversalHeaderSearch() {
       if (selectedIndex >= 0 && results.all[selectedIndex]) {
         handleSelect(results.all[selectedIndex]);
       } else if (query.trim()) {
-        setLocation(`/scout/results?q=${encodeURIComponent(query.trim())}`);
+        setLocation(`/pressurelab/results?q=${encodeURIComponent(query.trim())}`);
         setIsOpen(false);
       }
     } else if (e.key === "Escape") {
@@ -257,12 +257,12 @@ export function UniversalHeaderSearch() {
               <button
                 type="button"
                 onClick={() => {
-                  setLocation(`/scout/results?q=${encodeURIComponent(query.trim())}`);
+                  setLocation(`/pressurelab/results?q=${encodeURIComponent(query.trim())}`);
                   setIsOpen(false);
                 }}
                 className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary/20 hover:bg-primary/30 text-primary border border-primary/30 text-xs font-bold transition-all cursor-pointer"
               >
-                <span>Search Scout Lab Database</span>
+                <span>Search Pressure Lab Database</span>
                 <ArrowRight className="w-3 h-3" />
               </button>
             </div>
@@ -445,7 +445,7 @@ export function UniversalHeaderSearch() {
                 <button
                   type="button"
                   onClick={() => {
-                    setLocation(`/scout/results?q=${encodeURIComponent(query.trim())}`);
+                    setLocation(`/pressurelab/results?q=${encodeURIComponent(query.trim())}`);
                     setIsOpen(false);
                   }}
                   className="text-primary hover:underline font-bold"

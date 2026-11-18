@@ -14,8 +14,8 @@ const STANDS: { name: string; tag: string; stand: string; gates: [string, string
   ] },
   { name: "The people", tag: "STAND B", stand: "#174a3a", gates: [
     ["Teams", "Ten franchises — squads, titles, form and story", "/teams"],
-    ["Scout Lab", "Search the player registry and build shortlists", "/scout"],
-    ["Compare players", "Two players, side by side, on the same scale", "/scout/compare"],
+    ["Pressure Lab", "Search the player registry and build shortlists", "/pressurelab"],
+    ["Compare players", "Two players, side by side, on the same scale", "/pressurelab/compare"],
   ] },
   { name: "The market", tag: "STAND C", stand: "#3a2a12", gates: [
     ["Auction War Room", "Model prices, value and fit for the next auction", "/ai-analyst/auction-war-room"],
