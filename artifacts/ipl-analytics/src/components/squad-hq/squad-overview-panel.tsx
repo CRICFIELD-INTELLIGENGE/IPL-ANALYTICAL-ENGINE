@@ -50,7 +50,7 @@ export function SquadOverviewPanel({
     { label: "Indian Players", value: indianCount ?? "—", sub: official?.summary.unknownNationality ? `${official.summary.unknownNationality} pending` : "Domestic core", icon: ShieldCheck },
     { label: "Overseas", value: overseasCount ?? "—", sub: official?.summary.overseasSlots != null ? `${official.summary.overseasSlots} OS slots left` : "Max 8 allowed", icon: Plane },
     { label: "Remaining Slots", value: remainingSlots ?? "—", sub: "25-player cap", icon: Layers },
-    { label: "Remaining Purse", value: purseText, sub: official?.purse.status === "conflict" ? "Conflicting reports" : official?.purse.status ?? "Pending", icon: Wallet },
+    { label: "Remaining Purse", value: purseText, sub: official?.purse.valueLakh != null ? "Available for auction" : "", icon: Wallet },
   ];
 
   const compositionItems = [
@@ -72,7 +72,7 @@ export function SquadOverviewPanel({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[var(--team-accent)]">
-            IPL 2027 · Verified Squad Summary
+            IPL 2027 · Squad Summary
           </span>
           <h2 id="squad-overview-title" className="text-xl sm:text-2xl font-black tracking-tight text-white mt-0.5">
             {team} · Squad Overview
@@ -110,10 +110,10 @@ export function SquadOverviewPanel({
       <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="text-xs font-bold uppercase tracking-wider text-white/80">
-            Verified Role Composition ({activePlayers.length} retained · {batters} BAT · {bowlers} BOWL · {allRounders} AR · {keepers} WK)
+            Role Composition ({activePlayers.length} retained · {batters} BAT · {bowlers} BOWL · {allRounders} AR · {keepers} WK)
           </div>
           <span className="text-[11px] text-white/45">
-            Derived strictly from verified player-role records
+            Based on player roles
           </span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">

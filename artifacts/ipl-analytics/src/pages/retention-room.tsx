@@ -262,7 +262,7 @@ export default function RetentionRoomPage() {
 
           {active === "official" && official.data && <OfficialBoard key={team} data={official.data} picks={picks.data} filters={boardFilters} setFilters={setBoardFilters}/>}
           {active === "comparison" && <PredictionReality key={team} team={team}/>}
-          {["picks","forecast","fans","impact"].includes(active) && <p className="text-xs text-amber-200/90 border border-amber-300/20 rounded-lg p-3">Historical model and fan workspace (separated from verified official decisions). Official decisions and the current squad remain in the Official Decisions view.</p>}
+          {["picks","forecast","fans","impact"].includes(active) && <p className="text-xs text-amber-200/90 border border-amber-300/20 rounded-lg p-3">Historical model and fan workspace (separate from franchise decisions). Official decisions and the current squad remain in the Official Decisions view.</p>}
           {active === "picks" && <PicksTab team={team} q={picks} />}
           {active === "forecast" && <ForecastTab team={team} />}
           {active === "fans" && <FansTab team={team} choices={choices} setChoices={setChoices} />}
@@ -485,7 +485,7 @@ function Header({
         </div>
         <div className="flex items-start gap-2 rounded-xl bg-white/[0.04] p-2.5 text-[11px] text-white/60 border border-white/5">
           <Vote className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-          <span>{rules ? `${rules.votingOpen ? `Fan voting is open until ${new Date(rules.votingLocksAt ?? "").toLocaleString()}.` : "Fan voting is closed."} Auction purse ${rules.auctionPurseLakh ? money(rules.auctionPurseLakh) : "not verified"}.` : "Select any milestone above to jump straight to that phase."}</span>
+          <span>{rules ? `${rules.votingOpen ? `Fan voting is open until ${new Date(rules.votingLocksAt ?? "").toLocaleString()}.` : "Fan voting is closed."} Auction purse ${rules.auctionPurseLakh ? money(rules.auctionPurseLakh) : "—"}.` : "Select any milestone above to jump straight to that phase."}</span>
         </div>
       </div>
     </div>
@@ -1204,7 +1204,7 @@ function PickDetail({ p, team, picks, onSaved }: { p: PickRow; team: TeamCode; p
         <ul className="text-[10px] text-white/50 mt-1">{p.sensitivity.byWeights.map((b) => <li key={b.set}>{b.set}: {b.index} · {b.category}</li>)}</ul>
         {p.previous && <p className="text-[10px] text-white/45 mt-1">Previous model ({p.previous.version}): {p.previous.index} · {p.previous.category}.</p>}
         <h4 className={h4}>Age and cycle</h4>
-        <p className="text-white/70">{p.horizon.age === null ? "Age not verified." : `Age ${p.horizon.age} in ${picks.season}. Next season ${signed(p.horizon.oneYear ?? 0)}, three seasons ${signed(p.horizon.threeYear ?? 0)} runs per match from age alone.`} {p.horizon.megaNote}</p>
+        <p className="text-white/70">{p.horizon.age === null ? "" : `Age ${p.horizon.age} in ${picks.season}. Next season ${signed(p.horizon.oneYear ?? 0)}, three seasons ${signed(p.horizon.threeYear ?? 0)} runs per match from age alone.`} {p.horizon.megaNote}</p>
         <h4 className={h4}>Financial implications</h4>
         <p className="text-white/70">{p.financial.note} 80% range {money(p.financial.predictedRange.low)} to {money(p.financial.predictedRange.high)}.</p>
         <h4 className={h4}>Replacement alternatives</h4>
@@ -1432,7 +1432,7 @@ function RetentionAdBox({ team, picks }: { team: TeamCode; picks?: TeamPicks }) 
       {dilemmasCount >= 2 && (
         <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3 text-[10px] text-white/45 flex items-center justify-between">
           <span>High-traffic decision zone</span>
-          <span className="font-mono text-[var(--team-accent)] font-bold">100% Verified Evidence</span>
+          <span className="font-mono text-[var(--team-accent)] font-bold">IPL 2027 Squad</span>
         </div>
       )}
     </aside>

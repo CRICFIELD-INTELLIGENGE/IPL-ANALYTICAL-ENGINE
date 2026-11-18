@@ -1,7 +1,5 @@
 import { CurrentSquadContext } from "@/components/retention/current-squad-context";
-import { FranchiseDesk } from "@/components/franchise-desk";
-import { MobileChromeContext } from "@/mobile/gate";
-import { useContext, useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Bookmark, Check, ChevronRight, Crosshair, Download, GitBranch, MapPin, Play, Plus, RefreshCw, Rewind, Save, Shield, Swords, Users, X } from "lucide-react";
@@ -36,7 +34,6 @@ function initialPlan(): MatchPlan {
 }
 
 export default function FeedTacticsPage() {
-  const isMobile = useContext(MobileChromeContext);
   const [plan, setPlan] = useState<MatchPlan>(initialPlan);
   const [saved, setSaved] = useState<SavedPlan[]>(() => readSaved(SAVED, []));
   const [tab, setTab] = useState<(typeof TABS)[number]>("Match-up trends");
@@ -90,7 +87,6 @@ export default function FeedTacticsPage() {
   const stories = getV2Index().filter(a => a.franchise === plan.team && (storyTab === "Data stories" ? a.aspect === "data-science" : a.aspect === "tactical") && (storyTab !== "Match analysis" || a.storyType === "investigation")).slice(0, 4);
 
   return <Layout hideRightPanel><div className="tactical-board">
-      {!isMobile && <FranchiseDesk team={plan.team} />}
     <div className="tb-breadcrumb"><Link href="/feed">Feed</Link><ChevronRight size={12} /><span>Tactics</span><span>MATCH PLANNING / IPL 2027</span></div>
     <section className="tb-hero"><img className="tb-hero-art" src="/assets/tactical-board-hero.png" alt="Illustrated cricket analyst studying tactical boards in a floodlit stadium" /><div className="tb-hero-shade" /><div className="tb-hero-copy"><span className="tb-edition">IPL 2027</span><h1>THE TACTICAL<br /><em>BOARD</em></h1><h2>Data. Decisions. Match-ups. Winning plans.</h2><p>Simulate. Analyse. Outsmart. All before the first ball.</p><div className="tb-hero-links"><a href="#match-planning">Build your match plan <ArrowRight size={14} /></a><button onClick={saveScenario}><Save size={13} /> Save scenario</button></div></div><aside className="tb-match-widget"><div className="tb-section-head"><h2>MATCH SIMULATOR</h2><span>HISTORICAL MODEL</span></div><div className="tb-widget-teams"><img src={theme.logoImg} alt="" /><b>{plan.team}</b><span>vs</span><img src={rival.logoImg} alt="" /><b>{plan.opponent}</b><button onClick={() => report.refetch()} disabled={report.isFetching || !catalog.data}>{report.isFetching ? <RefreshCw size={13} className="animate-spin" /> : <Play size={12} />} {report.isFetching ? "Running" : "Simulate"}</button></div><div className="tb-win-strip"><div><small>{plan.team} WIN</small><strong>{win ? `${win.overall.toFixed(0)}%` : "—"}</strong></div><div className="tb-win-middle">{win ? <><span style={{ width: `${win.overall}%` }} /><small>{win.sims.toLocaleString()} simulations / side</small></> : <small>{report.isError ? "Model unavailable" : "Calculating matchup…"}</small>}</div><div><small>{plan.opponent} WIN</small><strong>{win ? `${(100 - win.overall).toFixed(0)}%` : "—"}</strong></div></div><p>{selectedVenue?.city || "Selected venue"} · {season} historical squads</p><span className="tb-note">Model estimate, not a live match forecast.</span></aside></section>
 

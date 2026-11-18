@@ -1,4 +1,3 @@
-import { FranchiseDesk } from "@/components/franchise-desk";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { Link, useSearch } from "wouter";
 import { useQuery } from "@tanstack/react-query";
@@ -65,7 +64,6 @@ function AuctionDesk({ team }: { team: HubTeam }) {
   };
   return (
     <div className="auction-hub">
-      <div className="ah-breadcrumb"><Link href="/feed">Feed</Link><ChevronRight size={12} /><span>Auction</span><span className="ah-season">IPL 2027 · RECRUITMENT DESK</span></div>
 
       <section className="ah-hero">
         <img className="ah-hero-art" src="/assets/auction-war-room-hero.png" alt="Illustration of a floodlit cricket auction hall" />
@@ -74,7 +72,6 @@ function AuctionDesk({ team }: { team: HubTeam }) {
         <aside className="ah-phase"><span className="ah-eyebrow">AUCTION COUNTDOWN</span><div className="ah-phase-tag">PRE-AUCTION / PLANNING</div>{seconds !== null ? <div className="ah-countdown">{[[Math.floor(seconds / 86400), "DAYS"], [Math.floor(seconds / 3600) % 24, "HRS"], [Math.floor(seconds / 60) % 60, "MINS"], [seconds % 60, "SECS"]].map(([value, label]) => <div key={label}><strong>{String(value).padStart(2, "0")}</strong><small>{label}</small></div>)}</div> : <p>Date to be announced</p>}<p className="ah-date">{event?.date} · reported date</p><div className="ah-paper-note">Scouting.<br />Bidding.<br />Mind games.<Gavel size={36} /><span>Build a squad.<br />Write the next chapter.</span></div></aside>
       </section>
 
-      <FranchiseDesk team={team} />
       <nav className="ah-team-strip" aria-label="Select auction franchise"><span className="ah-team-label">YOUR FRANCHISE</span>{HUB_TEAMS.map(t => <Link key={t} href={`/feed/auction?team=${t}`} className={`ah-team ${team === t ? "selected" : ""}`} aria-current={team === t ? "page" : undefined} style={team === t ? { borderColor: theme.accent, boxShadow: `0 0 16px ${theme.accent}35` } : undefined}><img src={TEAM_REGISTRY[t].logoImg} alt="" />{t}</Link>)}<button className="ah-compare" onClick={() => setCompare(!compare)}>Compare teams <ArrowRight size={13} /></button></nav>
       {compare && <div className="ah-compare-grid">{(board.data?.teams ?? []).map(t => <Link key={t.short} href={`/ai-analyst/squad-dna?team=${team}&compare=${t.short}`} className="ah-panel"><img src={TEAM_REGISTRY[t.short as HubTeam]?.logoImg} alt="" /><span>{team} vs {t.short}</span><ArrowRight size={12} /></Link>)}</div>}
 

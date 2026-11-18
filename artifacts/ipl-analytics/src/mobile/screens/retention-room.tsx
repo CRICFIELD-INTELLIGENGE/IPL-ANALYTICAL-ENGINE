@@ -500,7 +500,7 @@ export default function MobileRetentionRoom() {
                     className="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider"
                     style={{ background: `${theme.accent}1f`, color: theme.accent }}
                   >
-                    {officialData ? "Verified 2027" : "Syncing"}
+                    {officialData ? "IPL 2027" : "Loading"}
                   </span>
                 </div>
 

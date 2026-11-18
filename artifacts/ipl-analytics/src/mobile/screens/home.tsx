@@ -1,3 +1,5 @@
+import { HomeLatestMedia } from "@/components/home-latest-media";
+import { distinctStoryPhotos } from "@/lib/home-story-photos";
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link } from "wouter";
 import {
@@ -70,6 +72,13 @@ function entryImage(entry: IndexEntry): string {
     TEAM_REGISTRY[entry.franchise]?.bannerImg ||
     "/ipl-2027-banner.jpg"
   );
+}
+
+function articlePhotoKey(entry: IndexEntry): string {
+  const image = getArticleHeroImage(entry.id);
+  return image?.assetId ? `asset:${image.assetId}`
+    : image?.licensedImageUrl ? `url:${image.licensedImageUrl.split("?")[0]}`
+    : `cover:${entry.id}`;
 }
 
 /** Pick diverse featured slides led by selected franchise when set. */
@@ -170,18 +179,19 @@ export default function MobileHome() {
   const latestPool = useMemo(() => {
     const exclude = new Set<string>();
     if (currentHero) exclude.add(currentHero.id);
-    for (const s of topStories.slice(0, 4)) exclude.add(s.id);
+    for (const s of topStories) exclude.add(s.id);
     const nonDup = v2All.filter((e) => !exclude.has(e.id));
     const pool = nonDup.length >= 4 ? nonDup : v2All.filter((e) => e.id !== currentHero?.id);
 
     // Prioritize articles with distinct approved/licensed photos over repeated banners
     const rankScore = (e: IndexEntry) =>
-      (getArticleHeroImage(e.id)?.licensedImageUrl ? 2 : 0) + (e.featured ? 1 : 0);
+      (getArticleHeroImage(e.id) ? 2 : 0) + (e.featured ? 1 : 0);
 
+    const shownStories = [...(currentHero ? [currentHero] : []), ...topStories];
     if (selectedTeam) {
       const club = pool.filter((e) => e.franchise === selectedTeam).sort((a, b) => rankScore(b) - rankScore(a));
       const rest = pool.filter((e) => e.franchise !== selectedTeam).sort((a, b) => rankScore(b) - rankScore(a));
-      return [...club, ...rest];
+      return distinctStoryPhotos([...club, ...rest], articlePhotoKey, shownStories);
     }
 
     const queues = CANONICAL_TEAM_CODES.map((code) =>
@@ -196,7 +206,7 @@ export default function MobileHome() {
         if (i < q.length) diverse.push(q[i]);
       }
     }
-    return diverse;
+    return distinctStoryPhotos(diverse, articlePhotoKey, shownStories);
   }, [v2All, currentHero, topStories, selectedTeam]);
 
   // Section 3: Verified IPL 2027 Auction Event & Live Pulse state
@@ -638,28 +648,17 @@ export default function MobileHome() {
         </div>
         <div className="ref-latest-list">
           {latestPool.slice(0, latestLimit).map((item) => (
-            <Link key={item.id} href={`/dugout/articles/${item.slug}`} className="ref-latest-row">
-              <img
-                src={entryImage(item)}
-                alt={item.title}
-                className="ref-latest-thumb"
-                onError={(e) => {
-                  if (e.currentTarget.src.indexOf("/venues-art.jpg") === -1) {
-                    e.currentTarget.src = "/venues-art.jpg";
-                  }
-                }}
-              />
-              <div className="ref-latest-copy">
-                <span className="ref-latest-tag">
-                  {item.franchise} · {aspectLabel(item.aspect)}
-                </span>
+            <article key={item.id} className="ref-latest-row">
+              <HomeLatestMedia entry={item} />
+              <Link href={`/dugout/articles/${item.slug}`} className="ref-latest-copy">
+                <span className="ref-latest-tag">{item.franchise} · {aspectLabel(item.aspect)}</span>
                 <h3>{item.title}</h3>
-                <span className="ref-latest-meta">
-                  {formatEditorialDate(item.publishedDate)} · {item.readMinutes} min read
-                </span>
-              </div>
-              <ChevronRight size={16} className="self-center opacity-50 shrink-0" aria-hidden="true" />
-            </Link>
+                <span className="ref-latest-meta">{formatEditorialDate(item.publishedDate)} · {item.readMinutes} min read</span>
+              </Link>
+              <Link href={`/dugout/articles/${item.slug}`} aria-label={`Read ${item.title}`} className="ref-latest-read">
+                <ChevronRight size={16} aria-hidden="true" />
+              </Link>
+            </article>
           ))}
         </div>
         {latestLimit < latestPool.length && (

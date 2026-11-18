@@ -56,4 +56,4 @@ export const fetchOfficialLeague = async (season=2027) => season === 2027
   : apiGet<{season:number;version:string;announcedOn:string;reviewedAt:string;teams:Pick<OfficialRoom,"team"|"status"|"summary"|"purse">[]}>(`/api/retention/${season}/official`);
 export const decisionLabel = (value:string) => ({retained:"Retained",released:"Released",traded_in:"Traded in",traded_out:"Traded out"}[value] ?? value);
 export const roleLabel = (value:string) => ({batter:"Batters",wicketkeeper:"Wicketkeepers","all-rounder":"All-rounders",pace:"Pace bowlers",spin:"Spinners",bowler:"Bowling style pending",unknown:"Role pending"}[value] ?? value);
-export const formatPurse = (value:number|null) => value===null ? "Unverified" : `₹${(value/100).toFixed(2)} Cr`;
+export const formatPurse = (value:number|null) => value===null ? "—" : `₹${(value/100).toFixed(2)} Cr`;
