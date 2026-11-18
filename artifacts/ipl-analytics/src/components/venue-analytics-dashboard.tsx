@@ -8,6 +8,8 @@ import { GlassCard } from "@/components/glass-card";
 import { PlayerAvatar } from "@/components/player-avatar";
 import { useVenueAnalytics, usePlayerDisplayNames, displayPlayerName } from "@/lib/aggregates";
 
+const fmt = (n: number | null | undefined, digits = 0) => n == null ? "—" : n.toFixed(digits);
+
 const ERA_PRESETS: Array<{ label: string; from: number | null; to: number | null }> = [
   { label: "All-Time", from: null, to: null },
   { label: "2008–2013", from: 2008, to: 2013 },
@@ -121,8 +123,8 @@ export function VenueAnalyticsDashboard({ venue }: { venue: string }) {
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
         {[
           { label: "Matches", value: String(d.matches), sub: `${d.seasons} seasons` },
-          { label: "Avg 1st Inn", value: String(Math.round(d.innings.firstAvg)), sub: `${d.innings.firstWkts.toFixed(1)} wkts` },
-          { label: "Avg 2nd Inn", value: String(Math.round(d.innings.secondAvg)), sub: `${d.innings.secondWkts.toFixed(1)} wkts` },
+          { label: "Avg 1st Inn", value: fmt(d.innings.firstAvg), sub: `${fmt(d.innings.firstWkts, 1)} wkts` },
+          { label: "Avg 2nd Inn", value: fmt(d.innings.secondAvg), sub: `${fmt(d.innings.secondWkts, 1)} wkts` },
           { label: "Powerplay RR", value: String(d.phases[0]?.runRate ?? 0) },
           { label: "Death RR", value: String(d.phases[2]?.runRate ?? 0) },
         ].map(s => (
@@ -242,13 +244,13 @@ export function VenueAnalyticsDashboard({ venue }: { venue: string }) {
                   <span className="text-[11px] font-black uppercase tracking-widest text-white/70">{row.label}</span>
                   <span
                     className="text-[15px] font-black tabular-nums"
-                    style={{ color: row.swing >= 0 ? "#34d399" : "#f87171" }}
+                    style={{ color: row.swing != null && row.swing >= 0 ? "#34d399" : "#f87171" }}
                   >
-                    {row.swing > 0 ? "+" : ""}{row.swing}
+                    {row.swing != null && row.swing > 0 ? "+" : ""}{fmt(row.swing, 2)}
                   </span>
                 </div>
                 <div className="text-[10px] font-bold text-white/40 mt-1">
-                  1st {Math.round(row.d.first)} → 2nd {Math.round(row.d.second)} · {row.d.matches} matches
+                  1st {fmt(row.d.first)} → 2nd {fmt(row.d.second)} · {row.d.matches} matches
                 </div>
               </div>
             ))}

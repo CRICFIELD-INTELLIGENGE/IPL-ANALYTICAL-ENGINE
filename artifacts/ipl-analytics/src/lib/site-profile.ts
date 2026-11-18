@@ -16,6 +16,7 @@ export const SITE = {
   linkedin: "",
   /** Shown on the Contact page as a mailto link when set. */
   email: "",
+  instagram: "https://www.instagram.com/cricfield.in/",
   projectName: "CricField",
 } as const;
 

@@ -38,7 +38,7 @@ const HEADLINES = [
 
 const EXPLORE_COVERAGE_CARDS = [
   { id: "squad", title: "SQUAD HQ", subtitle: "Retentions, releases, squad building & XI", href: "/squad-hq", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-400" },
-  { id: "auction", title: "AUCTION ROOM", subtitle: "Player choices, budgets & recruitment", href: "/auction", img: "/auction-art.jpg", color: "text-amber-400" },
+  { id: "auction", title: "AUCTION STRATEGY", subtitle: "Player choices, budgets & recruitment", href: "/auction-strategy", img: "/auction-art.jpg", color: "text-amber-400" },
   { id: "tactics", title: "MATCH LAB", subtitle: "Playing XI, tactics & opposition", href: "/tactics", img: "/assets/tactical-board-hero.png", color: "text-emerald-400" },
   { id: "venues", title: "VENUE ATLAS", subtitle: "Grounds, conditions & historical trends", href: "/venues", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-400" },
   { id: "scout", title: "SCOUT LAB", subtitle: "Discover players, compare roles & build shortlists", href: "/scout", img: "/scout-desk-bg.jpg", color: "text-cyan-400" },
