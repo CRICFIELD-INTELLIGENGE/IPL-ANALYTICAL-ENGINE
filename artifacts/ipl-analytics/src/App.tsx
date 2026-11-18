@@ -79,7 +79,8 @@ const ContactPage = lazy(() => import("./pages/contact"));
 const DisclaimerPage = lazy(() => import("./pages/disclaimer"));
 const PrivacyPage = lazy(() => import("./pages/privacy"));
 const ScoutResultsPage = lazy(() => import("./pages/scout-results"));
-const ScoutHomePage = lazy(() => import("@/pages/scout-home"));
+// Phase 1: /scout shows Pressure Intelligence; the cinematic Scout Lab (pages/scout-home.tsx) is kept, unmounted.
+const ScoutHomePage = lazy(() => import("@/pages/pressure-intelligence"));
 const ScoutPlayerPage = lazy(() => import("@/pages/scout-player"));
 const ScoutComparePage = lazy(() => import("@/pages/scout-compare"));
 const ScoutRolesPage = lazy(() => import("@/pages/scout-roles"));
