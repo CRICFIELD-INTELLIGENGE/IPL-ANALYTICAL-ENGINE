@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext, useRef, useEffect, useCallback } from "react";
+import React, { useState, useMemo, useContext, useRef } from "react";
 import { useRoute, Link, useLocation } from "wouter";
 import { AnimatePresence, motion } from "framer-motion";
 import { Layout } from "@/components/layout";
@@ -7,7 +7,7 @@ import { GlassCard } from "@/components/glass-card";
 import { TeamSquad } from "@/components/team-squad";
 import {
   ArrowLeft, ArrowRight, Users, Activity, Calendar, Trophy,
-  TrendingUp, Shield, Target, Medal, BarChart2
+  TrendingUp, Shield, Target, Medal, BarChart2, ListFilter, Check, X, Layers
 } from "lucide-react";
 import {
   useTeams, useMatches, teamColor, teamShort, usePointsTables,
@@ -43,32 +43,23 @@ export default function TeamProfilePage() {
   const matches = useMatches();
   const pointsTables = usePointsTables();
 
-  const mobileShell = useContext(MobileChromeContext);
   const [activeSubTab, setActiveSubTab] = useState<"overview" | "squad" | "history">("overview");
-  const [activeRailId, setActiveRailId] = useState<string>("1");
-  const [hoveredRailId, setHoveredRailId] = useState<string | null>(null);
+  const [mobileSection, setMobileSection] = useState<string>("all");
+  const [indexOpen, setIndexOpen] = useState(false);
   const perfTopRef = useRef<HTMLDivElement>(null);
-  const railRef = useRef<HTMLDivElement>(null);
-  const tooltipTimerRef = useRef<number | null>(null);
 
-  const jumpToSection = useCallback((id: string, flashTooltip = false) => {
-    const target = document.getElementById(`team-sec-${id}`);
-    if (!target) return;
-    const navH = mobileShell
-      ? Math.round(document.querySelector<HTMLElement>(".cfm-top")?.getBoundingClientRect().height ?? 56) + 12
-      : 16;
-    const y = target.getBoundingClientRect().top + window.scrollY - navH;
-    window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
-    setActiveRailId(id);
-
-    if (flashTooltip) {
-      setHoveredRailId(id);
-      if (tooltipTimerRef.current) window.clearTimeout(tooltipTimerRef.current);
-      tooltipTimerRef.current = window.setTimeout(() => {
-        setHoveredRailId((cur) => (cur === id ? null : cur));
-      }, 1100);
-    }
-  }, [mobileShell]);
+  const selectMobileSection = (id: string) => {
+    setMobileSection(id);
+    setIndexOpen(false);
+    requestAnimationFrame(() => {
+      const el = perfTopRef.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 64;
+      if (window.scrollY > top) {
+        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+      }
+    });
+  };
 
   // Find the exact matching team from the slug
   /**
@@ -145,48 +136,6 @@ export default function TeamProfilePage() {
     return places.length ? Math.min(...places) : null;
   }, [seasonTrendData]);
 
-  useEffect(() => {
-    if (activeSubTab !== "overview" || !teamData) return;
-    const anchorIds = PERF_INDEX_SECTIONS.map(s => `team-sec-${s.id}`);
-
-    const syncFromScroll = () => {
-      const triggerY = (mobileShell ? 64 : 24) + window.innerHeight * 0.25;
-      let current: string = PERF_INDEX_SECTIONS[0].id;
-      for (const s of PERF_INDEX_SECTIONS) {
-        const el = document.getElementById(`team-sec-${s.id}`);
-        if (!el) continue;
-        if (el.getBoundingClientRect().top <= triggerY) {
-          current = s.id;
-        }
-      }
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 24) {
-        const lastAvailable = [...PERF_INDEX_SECTIONS].reverse().find(s => document.getElementById(`team-sec-${s.id}`));
-        if (lastAvailable) current = lastAvailable.id;
-      }
-      setActiveRailId(current);
-    };
-
-    const observer = typeof IntersectionObserver !== "undefined"
-      ? new IntersectionObserver(() => syncFromScroll(), {
-          rootMargin: "-15% 0px -55% 0px",
-          threshold: [0, 0.25, 0.5],
-        })
-      : null;
-
-    for (const id of anchorIds) {
-      const el = document.getElementById(id);
-      if (el) observer?.observe(el);
-    }
-
-    syncFromScroll();
-    window.addEventListener("scroll", syncFromScroll, { passive: true });
-    return () => {
-      observer?.disconnect();
-      window.removeEventListener("scroll", syncFromScroll);
-      if (tooltipTimerRef.current) window.clearTimeout(tooltipTimerRef.current);
-    };
-  }, [activeSubTab, teamData, mobileShell]);
-
   if (teams.isLoading) {
     return (
       <Layout>
@@ -218,6 +167,7 @@ export default function TeamProfilePage() {
 
   const teamCode = resolveTeamCode(slug) ?? (teamData ? resolveTeamCode(teamData.team) : null);
   const dugoutSlug = (teamCode && TEAM_CODE_TO_SLUG[teamCode]) ? TEAM_CODE_TO_SLUG[teamCode] : slug;
+  const mobileShell = useContext(MobileChromeContext);
 
   const pColor = teamColor(teamData.team);
   const pShort = teamShort(teamData.team);
@@ -425,12 +375,19 @@ export default function TeamProfilePage() {
             transition={{ duration: 0.2 }}
           >
             
-            {activeSubTab === "overview" && (
-              <div className="space-y-3.5 sm:space-y-6 pr-5 sm:pr-8 lg:pr-0">
+            {activeSubTab === "overview" && (() => {
+              const showAllMobile = !mobileShell || mobileSection === "all";
+              const showOverview1 = showAllMobile || mobileSection === "1";
+              const showOverview2 = showAllMobile || mobileSection === "2";
+
+              return (
+              <div className="space-y-3.5 sm:space-y-6">
+              {(showOverview1 || showOverview2) && (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                 
                 {/* Win Rate Trend Chart */}
-                <GlassCard id="team-sec-1" className="lg:col-span-2 p-4 sm:p-6">
+                {showOverview1 && (
+                <GlassCard className="lg:col-span-2 p-4 sm:p-6">
                   <div className="mb-4 sm:mb-6 flex items-start justify-between gap-4 flex-wrap">
                     <div>
                       <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-white/80 flex items-center gap-2">
@@ -483,9 +440,11 @@ export default function TeamProfilePage() {
                     </ResponsiveContainer>
                   </div>
                 </GlassCard>
+                )}
 
                 {/* Extremes & Records */}
-                <div id="team-sec-2" className="space-y-3.5 sm:space-y-6">
+                {showOverview2 && (
+                <div className="space-y-3.5 sm:space-y-6">
                   <GlassCard className="p-3.5 sm:p-6">
                     <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-white/80 mb-2.5 sm:mb-4 flex items-center gap-2">
                       <Target className="w-4 h-4 shrink-0" style={{ color: pColor }} />
@@ -530,16 +489,22 @@ export default function TeamProfilePage() {
                     </div>
                   </GlassCard>
                 </div>
+                )}
               </div>
+              )}
                 {/* Analyst dashboard: phase, toss, venue, rivalry and clutch
                     breakdowns computed from the ball-by-ball tables. */}
-                <TeamAnalyticsDashboard
-                  team={teamData.team}
-                  accent={pColor}
-                  matches={matches.data ?? []}
-                />
+                {(showAllMobile || Number(mobileSection) >= 3) && (
+                  <TeamAnalyticsDashboard
+                    team={teamData.team}
+                    accent={pColor}
+                    matches={matches.data ?? []}
+                    mobileSection={mobileShell ? mobileSection : "all"}
+                  />
+                )}
               </div>
-            )}
+              );
+            })()}
 
             {activeSubTab === "squad" && <TeamSquad franchise={teamData.team} accent={pColor} />}
 
@@ -632,91 +597,126 @@ export default function TeamProfilePage() {
           </motion.div>
       </div>
 
-      {/* ChatGPT-style Right-Edge Section Navigation Rail */}
-      {activeSubTab === "overview" && (
-        <nav
-          aria-label="Performance section navigation rail"
-          data-testid="section-nav-rail"
-          ref={railRef}
-          onMouseLeave={() => setHoveredRailId(null)}
-          onTouchStart={(e) => {
-            const touch = e.touches[0];
-            if (!touch) return;
-            const hit = document.elementFromPoint(touch.clientX, touch.clientY)?.closest<HTMLElement>("[data-rail-id]");
-            const id = hit?.dataset.railId;
-            if (id) jumpToSection(id, true);
-          }}
-          onTouchMove={(e) => {
-            const touch = e.touches[0];
-            if (!touch) return;
-            const hit = document.elementFromPoint(touch.clientX, touch.clientY)?.closest<HTMLElement>("[data-rail-id]");
-            const id = hit?.dataset.railId;
-            if (id && id !== hoveredRailId) jumpToSection(id, true);
-          }}
-          onTouchEnd={() => {
-            if (tooltipTimerRef.current) window.clearTimeout(tooltipTimerRef.current);
-            tooltipTimerRef.current = window.setTimeout(() => setHoveredRailId(null), 900);
-          }}
-          className="fixed right-1 sm:right-2.5 top-1/2 -translate-y-1/2 z-[60] touch-none select-none py-1.5 px-0.5 rounded-full bg-[#090F1E]/65 backdrop-blur-md border border-white/10 shadow-lg flex flex-col items-end gap-[4px]"
-        >
-          {PERF_INDEX_SECTIONS.map(sec => {
-            const isActive = activeRailId === sec.id;
-            const isHovered = hoveredRailId === sec.id;
-            return (
-              <div key={sec.id} className="relative flex items-center justify-end">
-                <AnimatePresence>
-                  {isHovered && (
-                    <motion.div
-                      data-testid={`rail-tooltip-${sec.id}`}
-                      initial={{ opacity: 0, x: 6, scale: 0.96 }}
-                      animate={{ opacity: 1, x: 0, scale: 1 }}
-                      exit={{ opacity: 0, x: 4, scale: 0.96 }}
-                      transition={{ duration: 0.12 }}
-                      className="pointer-events-none absolute right-full mr-2.5 px-2.5 py-1.5 rounded-xl bg-[#091022]/95 border border-white/20 shadow-2xl flex items-center gap-2 whitespace-nowrap"
+      {/* Floating Assistive Index FAB & Fanned Circle Menu (Mobile Performance Tab) */}
+      {mobileShell && activeSubTab === "overview" && (
+        <>
+          <AnimatePresence>
+            {indexOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.16 }}
+                onClick={() => setIndexOpen(false)}
+                className="fixed inset-0 bg-black/65 backdrop-blur-[2px] z-[58]"
+              />
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {indexOpen && (
+              <motion.div
+                data-testid="perf-index-menu"
+                initial={{ opacity: 0, y: 16, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 12, scale: 0.96 }}
+                transition={{ duration: 0.18 }}
+                className="fixed right-3.5 bottom-[158px] z-[60] max-h-[62vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex flex-col items-end gap-2 py-1 pr-0.5 max-w-[calc(100vw-28px)]"
+              >
+                {PERF_INDEX_SECTIONS.map((sec, idx) => {
+                  const selected = mobileSection === sec.id;
+                  const arcOffset = Math.round(Math.sin((idx / Math.max(1, PERF_INDEX_SECTIONS.length - 1)) * Math.PI) * 14);
+                  return (
+                    <motion.button
+                      key={sec.id}
+                      type="button"
+                      data-testid={`perf-index-option-${sec.id}`}
+                      initial={{ opacity: 0, x: 14 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.14, delay: Math.min(0.16, (PERF_INDEX_SECTIONS.length - idx) * 0.012) }}
+                      onClick={() => selectMobileSection(sec.id)}
+                      style={{ marginRight: `${arcOffset}px` }}
+                      className="flex items-center gap-2.5 cursor-pointer group shrink-0"
                     >
                       <span
-                        className="text-[9.5px] font-mono font-black px-1.5 py-0.5 rounded leading-none"
-                        style={{ backgroundColor: `${pColor}28`, color: pColor }}
+                        className={`px-3 py-1 rounded-full text-[11px] font-bold tracking-wide shadow-lg border transition-all whitespace-nowrap ${
+                          selected
+                            ? "bg-white text-slate-950 border-white"
+                            : "bg-[#0B1222]/95 text-white border-white/15 group-hover:border-white/35"
+                        }`}
                       >
-                        {sec.num}
+                        {sec.label}
                       </span>
-                      <div className="flex flex-col text-left">
-                        <span className="text-[11px] font-bold text-white leading-tight">{sec.label}</span>
-                        <span className="text-[9px] font-medium text-white/50 leading-tight">{sec.sub}</span>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      <span
+                        className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 shadow-xl border-2 transition-transform group-active:scale-95"
+                        style={
+                          selected
+                            ? { backgroundColor: pColor, borderColor: "#ffffff", color: "#050816" }
+                            : { backgroundColor: "#ffffff", borderColor: "rgba(255,255,255,0.85)", color: "#0f172a" }
+                        }
+                      >
+                        {selected ? (
+                          <Check className="w-4 h-4 stroke-[3]" />
+                        ) : (
+                          <span className="text-[10px] font-mono font-black leading-none">{sec.num}</span>
+                        )}
+                      </span>
+                    </motion.button>
+                  );
+                })}
 
+                {/* Show All 11 option anchored nearest the floating button */}
                 <button
                   type="button"
-                  data-rail-id={sec.id}
-                  data-testid={`rail-dash-${sec.id}`}
-                  aria-label={`Jump to ${sec.label}`}
-                  onMouseEnter={() => setHoveredRailId(sec.id)}
-                  onFocus={() => setHoveredRailId(sec.id)}
-                  onBlur={() => setHoveredRailId(null)}
-                  onClick={() => jumpToSection(sec.id, true)}
-                  className="py-[4px] px-0.5 flex items-center justify-end cursor-pointer"
+                  data-testid="perf-index-option-all"
+                  onClick={() => selectMobileSection("all")}
+                  className="flex items-center gap-2.5 cursor-pointer group shrink-0 mt-0.5"
                 >
                   <span
-                    className="block rounded-full transition-all duration-200"
-                    style={{
-                      width: isHovered ? 15 : isActive ? 13 : 7,
-                      height: isHovered ? 3 : isActive ? 2.5 : 2,
-                      backgroundColor: isHovered
-                        ? "#ffffff"
-                        : isActive
-                          ? pColor
-                          : "rgba(255, 255, 255, 0.32)",
-                      boxShadow: isActive || isHovered ? `0 0 8px ${pColor}80` : "none",
-                    }}
-                  />
+                    className={`px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider shadow-lg border whitespace-nowrap ${
+                      mobileSection === "all"
+                        ? "bg-white text-slate-950 border-white"
+                        : "bg-[#0B1222]/95 text-white border-white/20"
+                    }`}
+                  >
+                    All 11 Sections
+                  </span>
+                  <span
+                    className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-xl border-2 transition-transform group-active:scale-95"
+                    style={
+                      mobileSection === "all"
+                        ? { backgroundColor: pColor, borderColor: "#ffffff", color: "#050816" }
+                        : { backgroundColor: "#ffffff", borderColor: "rgba(255,255,255,0.85)", color: "#0f172a" }
+                    }
+                  >
+                    <Layers className="w-4 h-4" />
+                  </span>
                 </button>
-              </div>
-            );
-          })}
-        </nav>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Circular Floating Trigger Button */}
+          <button
+            type="button"
+            aria-label="Open section index menu"
+            aria-expanded={indexOpen}
+            data-testid="perf-index-toggle"
+            onClick={() => setIndexOpen(o => !o)}
+            className="fixed right-3.5 bottom-[98px] z-[60] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl border-2 transition-transform active:scale-95 cursor-pointer"
+            style={{
+              backgroundColor: indexOpen ? "#ffffff" : pColor,
+              borderColor: indexOpen ? pColor : "rgba(255,255,255,0.9)",
+              color: "#050816",
+              boxShadow: `0 10px 28px -4px ${pColor}80, 0 4px 14px rgba(0,0,0,0.45)`,
+            }}
+          >
+            {indexOpen ? <X className="w-5 h-5 stroke-[2.5]" /> : <ListFilter className="w-5 h-5 stroke-[2.5]" />}
+            <span className="absolute -top-1.5 -left-1.5 px-1.5 py-0.5 rounded-full bg-[#050816] text-white border border-white/25 text-[8px] font-mono font-black leading-none shadow-md">
+              {mobileSection === "all" ? "ALL" : mobileSection.padStart(2, "0")}
+            </span>
+          </button>
+        </>
       )}
     </Layout>
   );
