@@ -13,15 +13,136 @@
    ],
    "verification": "Cricket Addictor's XIs match the ESPN report's team changes applied to each side's previous 2012 XI in Cricsheet (RCB 548336: McDonald for Vettori; CSK 548332: JA Morkel and VY Mahesh for Jakati and Bollinger).",
    "players": {
-    "Royal Challengers Bangalore": ["V Kohli", "TM Dilshan", "MA Agarwal", "CH Gayle", "AB de Villiers", "SS Tiwary", "AB McDonald", "R Vinay Kumar", "Z Khan", "HV Patel", "KP Appanna"],
-    "Chennai Super Kings": ["S Badrinath", "F du Plessis", "SK Raina", "MS Dhoni", "DJ Bravo", "RA Jadeja", "WP Saha", "R Ashwin", "KMDN Kulasekara", "JA Morkel", "VY Mahesh"]
+    "Royal Challengers Bangalore": [
+     "V Kohli",
+     "TM Dilshan",
+     "MA Agarwal",
+     "CH Gayle",
+     "AB de Villiers",
+     "SS Tiwary",
+     "AB McDonald",
+     "R Vinay Kumar",
+     "Z Khan",
+     "HV Patel",
+     "KP Appanna"
+    ],
+    "Chennai Super Kings": [
+     "S Badrinath",
+     "F du Plessis",
+     "SK Raina",
+     "MS Dhoni",
+     "DJ Bravo",
+     "RA Jadeja",
+     "WP Saha",
+     "R Ashwin",
+     "KMDN Kulasekara",
+     "JA Morkel",
+     "VY Mahesh"
+    ]
    },
    "registry": {
-    "V Kohli": "ba607b88", "TM Dilshan": "5bdcdb72", "MA Agarwal": "00ea847a", "CH Gayle": "db584dad", "AB de Villiers": "c4487b84",
-    "SS Tiwary": "709b0bac", "AB McDonald": "16043342", "R Vinay Kumar": "41eb4a4f", "Z Khan": "91a4a398", "HV Patel": "f986ca1a", "KP Appanna": "d92e42f5",
-    "S Badrinath": "3576e47e", "F du Plessis": "3355b542", "SK Raina": "1dc12ab9", "MS Dhoni": "4a8a2e3b", "DJ Bravo": "87e562a9", "RA Jadeja": "fe93fd9d",
-    "WP Saha": "fe11caa6", "R Ashwin": "495d42a5", "KMDN Kulasekara": "469ea22b", "JA Morkel": "c3d35165", "VY Mahesh": "93a17209"
+    "V Kohli": "ba607b88",
+    "TM Dilshan": "5bdcdb72",
+    "MA Agarwal": "00ea847a",
+    "CH Gayle": "db584dad",
+    "AB de Villiers": "c4487b84",
+    "SS Tiwary": "709b0bac",
+    "AB McDonald": "16043342",
+    "R Vinay Kumar": "41eb4a4f",
+    "Z Khan": "91a4a398",
+    "HV Patel": "f986ca1a",
+    "KP Appanna": "d92e42f5",
+    "S Badrinath": "3576e47e",
+    "F du Plessis": "3355b542",
+    "SK Raina": "1dc12ab9",
+    "MS Dhoni": "4a8a2e3b",
+    "DJ Bravo": "87e562a9",
+    "RA Jadeja": "fe93fd9d",
+    "WP Saha": "fe11caa6",
+    "R Ashwin": "495d42a5",
+    "KMDN Kulasekara": "469ea22b",
+    "JA Morkel": "c3d35165",
+    "VY Mahesh": "93a17209"
+   }
+  },
+  {
+   "id": "1426308",
+   "date": "2024-05-19",
+   "event": "IPL 2024, match 70, Barsapara Cricket Stadium, Guwahati",
+   "result": "No result: abandoned after the toss without a ball bowled (KKR won the toss and chose to field in a 7-over match)",
+   "sources": [
+    "https://www.espncricinfo.com/ci/engine/match/1426308.html",
+    "https://www.iplt20.com/news/article/tata-ipl-2024-match-70-rr-vs-kkr-match-report",
+    "https://www.sportskeeda.com/cricket/news-rr-vs-kkr-ipl-2024-toss-result-playing-xis-today-s-match-umpires-list-pitch-report"
+   ],
+   "verification": "Toss confirmed by IPL match report and ESPNcricinfo. XIs from Sportskeeda only; consistent with team news (KKR: Gurbaz for departed Salt, Anukul Roy in). Impact substitutes were never used, so they are not counted.",
+   "players": {
+    "Rajasthan Royals": [
+     "YBK Jaiswal",
+     "T Kohler-Cadmore",
+     "SV Samson",
+     "R Parag",
+     "Dhruv Jurel",
+     "R Powell",
+     "R Ashwin",
+     "TA Boult",
+     "Sandeep Sharma",
+     "Avesh Khan",
+     "N Burger"
+    ],
+    "Kolkata Knight Riders": [
+     "Rahmanullah Gurbaz",
+     "SP Narine",
+     "VR Iyer",
+     "SS Iyer",
+     "RK Singh",
+     "AD Russell",
+     "Ramandeep Singh",
+     "AS Roy",
+     "MA Starc",
+     "Harshit Rana",
+     "CV Varun"
+    ]
+   },
+   "registry": {
+    "YBK Jaiswal": "6c19c6e5",
+    "T Kohler-Cadmore": "f836b33d",
+    "SV Samson": "a4cc73aa",
+    "R Parag": "04a418e8",
+    "Dhruv Jurel": "bcf325d2",
+    "R Powell": "650d5e49",
+    "R Ashwin": "495d42a5",
+    "TA Boult": "a818c1be",
+    "Sandeep Sharma": "ce820073",
+    "Avesh Khan": "eef2536f",
+    "N Burger": "465aa633",
+    "Rahmanullah Gurbaz": "0bacade8",
+    "SP Narine": "9d430b40",
+    "VR Iyer": "a24be938",
+    "SS Iyer": "85ec8e33",
+    "RK Singh": "0a509d6b",
+    "AD Russell": "bbd41817",
+    "Ramandeep Singh": "be24ead0",
+    "AS Roy": "e4cdf230",
+    "MA Starc": "3fb19989",
+    "Harshit Rana": "77b1aa15",
+    "CV Varun": "5b7ab5a9"
    }
   }
- ]
+ ],
+ "checked_no_toss": {
+  "note": "Washouts checked and NOT counted: abandoned before the toss, so no XIs were named.",
+  "matches": [
+   "2008-05-22 DD v KKR (Delhi)",
+   "2009-04-21 MI v RR (Durban)",
+   "2009-04-25 CSK v KKR (Cape Town)",
+   "2011-04-19 RCB v RR (Bengaluru)",
+   "2012-04-24 KKR v Deccan Chargers (Kolkata)",
+   "2015-04-26 KKR v RR (Kolkata)",
+   "2017-04-25 RCB v SRH (Bengaluru)",
+   "2024-05-13 GT v KKR (Ahmedabad)",
+   "2024-05-16 SRH v GT (Hyderabad)",
+   "2025-05-17 RCB v KKR (Bengaluru)"
+  ]
+ }
 }
