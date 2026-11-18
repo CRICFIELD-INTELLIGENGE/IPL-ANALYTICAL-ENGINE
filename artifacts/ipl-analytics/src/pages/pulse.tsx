@@ -1,4 +1,3 @@
-import { FranchiseDesk } from "@/components/franchise-desk";
 import React, { useEffect, useMemo, useState } from "react";
 import { TeamLogo } from "@/components/team-logo";
 import { Layout } from "@/components/layout";
@@ -152,7 +151,6 @@ export default function PulsePage() {
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 space-y-6">
-      {active === 2027 && <FranchiseDesk />}
         {/* SECTION 1 & 2: HERO CAROUSEL + EVENT STATUS CARD */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
           {/* Left: The Auction Pulse Hero Carousel / Banner */}
@@ -1116,7 +1114,6 @@ function Overview({ model, pulse, phase, go }: { model: PulseModel; pulse: Pulse
 
       {/* 4. EXPANDABLE FRANCHISE DIRECTORY TABLE */}
       <Franchises model={model} compact />
-      {pulse.desk.data && pulse.desk.data.announcements.length > 0 && <LiveBlog model={model} pulse={pulse} />}
       <Newsroom />
     </div>
   );
