@@ -13,7 +13,7 @@
 
 import fs from "fs";
 import path from "path";
-import { getProjectRoot, normalizeSeason, queryAll, seasonToDbLabel, RUNS_CONCEDED_SQL } from "./db";
+import { getProjectRoot, normalizeSeason, queryAll, rawDir, seasonToDbLabel, RUNS_CONCEDED_SQL } from "./db";
 import { round } from "./impact-model";
 import { getPlayerMeta, getSeasons } from "./player-profiles";
 
@@ -289,7 +289,7 @@ let stageCache: { playoffs: string[]; finals: string[] } | null = null;
 
 export function getMatchStages(): { playoffs: string[]; finals: string[] } {
   if (stageCache) return stageCache;
-  const dir = path.join(getProjectRoot(), "lib", "cricket-data", "raw");
+  const dir = rawDir();
   const playoffs: string[] = [];
   const finals: string[] = [];
   if (fs.existsSync(dir)) {

@@ -27,6 +27,14 @@ export function getProjectRoot(): string {
 }
 
 /**
+ * Raw Cricsheet match JSONs. CRICFIELD_RAW_DIR points at an extracted copy (the Vercel function unpacks them from
+ * Supabase into /tmp); unset, it is <root>/lib/cricket-data/raw as before.
+ */
+export function rawDir(root: string = getProjectRoot()): string {
+  return process.env.CRICFIELD_RAW_DIR ? path.resolve(process.env.CRICFIELD_RAW_DIR) : path.join(root, "lib", "cricket-data", "raw");
+}
+
+/**
  * The IPL warehouse file. CRICFIELD_DB_PATH (also honoured by @workspace/db) points the whole API at a copy,
  * e.g. to verify a corrected database in isolation; unset, it is <project root>/sqlite.db as before.
  */
