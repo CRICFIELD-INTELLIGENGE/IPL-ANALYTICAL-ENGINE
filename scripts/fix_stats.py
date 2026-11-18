@@ -11,6 +11,7 @@ Fixes:
   8. highestNotOut flags a not-out highest score
   9. One player = one Cricsheet registry id, shown under their latest name (e.g. "NA Saini" -> "Navdeep Saini");
      different players sharing a name are kept apart with " (2)"
+  10. Matches abandoned after the toss (scripts/abandoned-matches.json) count as appearances
 """
 
 import os, json, shutil, sys
@@ -282,6 +283,19 @@ for fname in files:
 
     except Exception as e:
         print(f"Error in {fname}: {e}")
+
+# Matches abandoned after the toss with no ball bowled: absent from Cricsheet, but official totals count them as
+# played for the named XIs (e.g. RCB v CSK, 2012). Appearances only -- no innings, runs or wickets.
+AB_PATH = os.path.join(ROOT, 'scripts', 'abandoned-matches.json')
+for am in (json.load(open(AB_PATH, encoding='utf-8'))['matches'] if os.path.exists(AB_PATH) else []):
+    s = am['date'][:4]
+    for sq_team, names in am['players'].items():
+        sq_team = ct(sq_team)
+        for pname in names:
+            pname = canonical_by_id.get(am['registry'].get(pname), pname)
+            for k in (('c', pname), ('s', pname, s), ('t', pname, sq_team), ('ts', pname, sq_team, s)):
+                squads.setdefault(k, set()).add('abandoned:' + am['id'])
+    print(f"Added abandoned match {am['id']} ({am['date']}): {sum(len(v) for v in am['players'].values())} appearances")
 
 print(f'Batters: {len(career_bat)}, Bowlers: {len(career_bowl)}')
 
