@@ -1080,10 +1080,10 @@ export function UtilityAndProvenanceFooter({ data }: { data: MobilePlayerData })
   return (
     <>
       <div className="mpd-sec" style={{ flexDirection: "row", gap: 10 }}>
-        <Link href="/scout/compare" className="mpd-btn" style={{ flex: 1 }}>
+        <Link href="/pressurelab/compare" className="mpd-btn" style={{ flex: 1 }}>
           <Scale size={14} /> Compare
         </Link>
-        <Link href={`/scout?q=${encodeURIComponent(bio.playerName)}`} className="mpd-btn" style={{ flex: 1 }}>
+        <Link href={`/pressurelab?q=${encodeURIComponent(bio.playerName)}`} className="mpd-btn" style={{ flex: 1 }}>
           <Crosshair size={14} /> Scout Report
         </Link>
       </div>

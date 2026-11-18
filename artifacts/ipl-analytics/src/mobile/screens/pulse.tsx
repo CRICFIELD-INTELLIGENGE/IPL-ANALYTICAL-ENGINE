@@ -1,10 +1,10 @@
+import { FranchiseDesk } from "@/components/franchise-desk";
 import "./pulse.css";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Calendar, Check, ChevronDown, Gavel, Search } from "lucide-react";
 import { Sheet } from "@/mobile/shell";
 import { HUB_EVENTS } from "@/lib/ipl-2027";
-import { useIpl2027Desk } from "@/lib/ipl-2027-desk";
 import { PULSE_TABS, usePulseAuction, type PulseTab } from "@/lib/pulse-auction";
 import { auctionPhase } from "@/lib/pulse-helpers";
 import { PULSE_CATEGORIES, categoryForTab, type PulseCategoryId } from "./pulse/nav-config";
@@ -52,8 +52,7 @@ export default function MobilePulse() {
   });
   const [seasonSheetOpen, setSeasonSheetOpen] = useState(false);
 
-  const probe = useIpl2027Desk();
-  const active = season ?? (probe.data?.lots.length ? 2027 : 2026);
+  const active = season ?? 2027;
   const pulse = usePulseAuction(active);
   const { model } = pulse;
 
@@ -138,6 +137,7 @@ export default function MobilePulse() {
   return (
     <div ref={pageRef} className="mp-page" data-testid="mobile-pulse-page">
       {/* Compact Contextual Auction Pulse Header */}
+      {active === 2027 && <FranchiseDesk />}
       <header className="mp-ctx-header">
         <div className="mp-ctx-row">
           <div className="mp-title-wrap">

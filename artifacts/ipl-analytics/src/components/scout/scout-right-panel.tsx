@@ -90,7 +90,7 @@ export function ScoutRightPanel({
               Popular Leagues
             </span>
           </div>
-          <Link href="/scout">
+          <Link href="/pressurelab">
             <span className="text-[10px] text-orange-400 hover:underline cursor-pointer flex items-center gap-0.5 font-semibold">
               View All
               <ChevronRight className="w-3 h-3" />

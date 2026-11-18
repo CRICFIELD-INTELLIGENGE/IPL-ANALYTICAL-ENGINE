@@ -104,7 +104,7 @@ export default function PlayerProfilePage() {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
   const [, params] = useRoute("/players/:slug");
-  const [, scoutParams] = useRoute("/scout/player/:id");
+  const [, scoutParams] = useRoute("/pressurelab/player/:id");
   const [returnPath] = useState(() => {
     const from = new URLSearchParams(window.location.search).get("from") || sessionStorage.getItem('cricfield-player-return') || '';
     return /^\/(stats|scout|dugout|teams)(?:[/?#]|$)/i.test(from) && !from.startsWith('//') && !/^\/scout\/player\//.test(from) ? from : '/stats';

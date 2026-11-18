@@ -1,3 +1,4 @@
+import { FranchiseDesk } from "@/components/franchise-desk";
 import { RETENTION_INDEX_VERSION } from "@/lib/retention-version";
 /**
  * CRICFIELD RETENTION ROOM — Who Stays. Who Goes. Who Should Stay.
@@ -69,6 +70,7 @@ export default function RetentionRoomPage() {
       <div className="space-y-6 p-4 sm:p-6 bg-[#040814] min-h-screen text-white font-sans" style={{ "--team-accent": theme.accent } as React.CSSProperties}>
         <Header d={d} official={official.data} season={season} setSeason={setSeason} seasons={seasons.data?.seasons.filter(s => s.live)} />
 
+      {live && <FranchiseDesk team={team} summary={false} />}
         <nav aria-label="Franchise selector" className="-mx-4 overflow-x-auto px-4 py-1 no-scrollbar">
           <div className="flex items-center gap-2 w-max">
             {HUB_TEAMS.map((t) => (
@@ -1003,7 +1005,7 @@ function Dilemmas({ team, picks }: { team: TeamCode; picks?: TeamPicks }) {
               </div>
             </div>
             <Link
-              href={`/scout?player=${encodeURIComponent(p.name)}&role=${encodeURIComponent(p.role)}&team=${team}`}
+              href={`/pressurelab?player=${encodeURIComponent(p.name)}&role=${encodeURIComponent(p.role)}&team=${team}`}
               className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 text-amber-200 border border-amber-400/40 text-xs font-black transition-all shadow-sm"
             >
               Scout Room Intel <ArrowRight className="w-3.5 h-3.5" />
@@ -1060,7 +1062,7 @@ function RelatedTools({ team }: { team: TeamCode }) {
     [`/ai-analyst/auction-war-room?team=${team}`, "Auction War Room", "Expected prices and franchise fit", <Activity className="w-4 h-4" />, "bg-emerald-500/20 text-emerald-300"],
     [`/ai-analyst/playing-xi?team=${team}`, "Build Playing XI", "Recommended combinations and role alternatives", <Shirt className="w-4 h-4" />, "bg-cyan-500/20 text-cyan-300"],
     [`/ai-analyst/squad-dna?team=${team}&season=2027`, "Squad DNA", "Player roles, strengths and recruitment gaps", <Users className="w-4 h-4" />, "bg-pink-500/20 text-pink-300"],
-    ["/scout", "Global Scout Engine", "Find and compare targets", <Search className="w-4 h-4" />, "bg-sky-500/20 text-sky-300"],
+    ["/pressurelab", "Pressure Lab", "Compare performance under pressure", <Search className="w-4 h-4" />, "bg-sky-500/20 text-sky-300"],
     ["/feed/ipl-2027/retentions", "Official retentions", "Confirmed lists, with sources", <Users className="w-4 h-4" />, "bg-purple-500/20 text-purple-300"],
   ];
   return (

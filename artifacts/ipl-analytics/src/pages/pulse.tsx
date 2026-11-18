@@ -1,3 +1,4 @@
+import { FranchiseDesk } from "@/components/franchise-desk";
 import React, { useEffect, useMemo, useState } from "react";
 import { TeamLogo } from "@/components/team-logo";
 import { Layout } from "@/components/layout";
@@ -80,7 +81,7 @@ export default function PulsePage() {
 
   // 2027 only once the desk has lots; until then the verified 2026 auction is the working demo.
   const probe = useIpl2027Desk();
-  const active = season ?? (probe.data?.lots.length ? 2027 : 2026);
+  const active = season ?? 2027;
   const pulse = usePulseAuction(active);
   const { model } = pulse;
 
@@ -151,6 +152,7 @@ export default function PulsePage() {
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 space-y-6">
+      {active === 2027 && <FranchiseDesk />}
         {/* SECTION 1 & 2: HERO CAROUSEL + EVENT STATUS CARD */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
           {/* Left: The Auction Pulse Hero Carousel / Banner */}
@@ -818,16 +820,6 @@ const FAN_PULSE_QUESTIONS = [
     ],
   },
   {
-    id: "q2",
-    kicker: "CSK Strategy",
-    question: "Will MS Dhoni play IPL 2027 under the uncapped player retention rule?",
-    options: [
-      { id: "uncapped", label: "Yes, retained in ₹4 Cr bracket", pct: 68 },
-      { id: "auction", label: "Yes, but enters auction paddle", pct: 18 },
-      { id: "mentor", label: "Transitions to dugout mentor role", pct: 14 },
-    ],
-  },
-  {
     id: "q3",
     kicker: "Marquee Retentions",
     question: "Which superstar should command the highest retention fee for 2027?",
@@ -1267,7 +1259,7 @@ function PlayerPool({ model }: { model: PulseModel }) {
         <table className="w-full text-xs min-w-[820px]">
           <thead className="text-slate-500 dark:text-white/40 text-[9px] uppercase border-b border-slate-200 dark:border-white/10">
             <tr>
-              <th className="text-left py-2">Lot</th><th className="text-left">Player</th><th className="text-left">Role</th><th className="text-left">Auction set</th><th className="text-right">Base</th><th className="text-left pl-3">Status</th><th className="text-right">Final price</th><th className="text-left pl-3">Franchise</th><th className="text-right">Scout Lab</th>
+              <th className="text-left py-2">Lot</th><th className="text-left">Player</th><th className="text-left">Role</th><th className="text-left">Auction set</th><th className="text-right">Base</th><th className="text-left pl-3">Status</th><th className="text-right">Final price</th><th className="text-left pl-3">Franchise</th><th className="text-right">Pressure Lab</th>
             </tr>
           </thead>
           <tbody>

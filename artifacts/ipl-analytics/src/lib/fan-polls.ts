@@ -67,7 +67,7 @@ export const FAN_POLLS: Record<TeamCode, FanPoll> = {
   },
   DC: {
     question: "What is Delhi Capitals' primary target profile for the next war room?",
-    category: "SCOUT LAB",
+    category: "PRESSURE LAB",
     options: [
       { id: "allrounder", text: "A proven Indian pace-bowling all-rounder" },
       { id: "yorker", text: "An express international yorker specialist" },

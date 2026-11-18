@@ -47,6 +47,10 @@ const PlayerProfilePage = lazy(() => import("./pages/player"));
 const PlayerIntelligencePage = lazy(() => import("./pages/ai-analyst-intelligence"));
 const RetentionRoomPage = lazy(() => import("./pages/retention-room"));
 /** The earlier room at /feed/squad merged into the Retention Room; old links keep their team. */
+function LegacyPressureLink() {
+  const [path] = useLocation();
+  return <Redirect replace to={path.replace(/^\/scout/, "/pressurelab") + window.location.search + window.location.hash} />;
+}
 function SquadRedirect() {
   const team = new URLSearchParams(useSearch()).get("team")?.toUpperCase() ?? "";
   return <Redirect to={isTeamCode(team) ? `/retention-room/${team}` : "/retention-room"} replace />;
@@ -79,7 +83,7 @@ const ContactPage = lazy(() => import("./pages/contact"));
 const DisclaimerPage = lazy(() => import("./pages/disclaimer"));
 const PrivacyPage = lazy(() => import("./pages/privacy"));
 const ScoutResultsPage = lazy(() => import("./pages/scout-results"));
-// Phase 1: /scout shows Pressure Intelligence; the cinematic Scout Lab (pages/scout-home.tsx) is kept, unmounted.
+// Phase 1: /scout shows Pressure Intelligence; the cinematic Pressure Lab (pages/scout-home.tsx) is kept, unmounted.
 const ScoutHomePage = lazy(() => import("@/pages/pressure-intelligence"));
 const ScoutPlayerPage = lazy(() => import("@/pages/scout-player"));
 const ScoutComparePage = lazy(() => import("@/pages/scout-compare"));
@@ -129,7 +133,6 @@ function Router() {
       {/* Top-level intelligence & coverage categories */}
       <Route path="/auction" component={() => <FeedCategoryPage params={{ category: "auction" }} />} />
       <Route path="/tactics" component={() => <FeedCategoryPage params={{ category: "tactics" }} />} />
-      <Route path="/stars" component={() => <FeedCategoryPage params={{ category: "stars" }} />} />
       <Route path="/venues" component={() => <FeedCategoryPage params={{ category: "venues" }} />} />
       <Route path="/storylines" component={() => <FeedCategoryPage params={{ category: "storylines" }} />} />
       <Route path="/retentions" component={Ipl2027RetentionsPage} />
@@ -137,16 +140,19 @@ function Router() {
       <Route path="/feed/ipl-2027" component={Ipl2027Page} />
       <Route path="/feed/ipl-2027/retentions" component={Ipl2027RetentionsPage} />
       <Route path="/feed/squad" component={SquadRedirect} />
+      <Route path="/feed/stars" component={NotFound} />
       <Route path="/feed/:category" component={FeedCategoryPage} />
-      <Route path="/feed"><Redirect to="/intelligence" /></Route>
+      <Route path="/feed" component={FeedPage} />
       <Route path="/stats"><StatsPage /></Route>
       <Route path="/pulse" component={PulsePage} />
-      {/* Scout Lab: Global T20 Talent Intelligence */}
-      <Route path="/scout/results" component={ScoutResultsPage} />
-      <Route path="/scout" component={ScoutHomePage} />
-      <Route path="/scout/player/:id" component={PlayerProfilePage} />
-      <Route path="/scout/compare" component={ScoutComparePage} />
-      <Route path="/scout/roles" component={ScoutRolesPage} />
+      {/* Pressure Lab: Global T20 Talent Intelligence */}
+      <Route path="/scout"><LegacyPressureLink /></Route>
+      <Route path="/scout/*"><LegacyPressureLink /></Route>
+      <Route path="/pressurelab/results" component={ScoutResultsPage} />
+      <Route path="/pressurelab" component={ScoutHomePage} />
+      <Route path="/pressurelab/player/:id" component={PlayerProfilePage} />
+      <Route path="/pressurelab/compare" component={ScoutComparePage} />
+      <Route path="/pressurelab/roles" component={ScoutRolesPage} />
 
             {/* Deprecated video routes redirect to Intelligence */}
       <Route path="/watch">
@@ -155,9 +161,6 @@ function Router() {
       <Route path="/watch-and-analyze">
         <Redirect to="/intelligence" />
       </Route>
-      {/* Games section removed - redirect to home */}
-      <Route path="/arcade*"><Redirect to="/home" /></Route>
-      <Route path="/games*"><Redirect to="/home" /></Route>
       {/* The former /on-field/* paths, kept as redirects so anything already
           bookmarked or shared keeps working rather than 404ing. */}
       <Route path="/on-field/feed">

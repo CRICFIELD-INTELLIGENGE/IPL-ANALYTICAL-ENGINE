@@ -404,7 +404,7 @@ export function AIMascotGuide() {
                           {[
                             { name: "My Dugout", route: "/dugout", icon: Shield },
                             { name: "Auction War Room", route: "/auction", icon: Gavel },
-                            { name: "Scout Lab", route: "/scout", icon: Compass },
+                            { name: "Pressure Lab", route: "/pressurelab", icon: Compass },
                           ].map(item => (
                             <button
                               key={item.route}

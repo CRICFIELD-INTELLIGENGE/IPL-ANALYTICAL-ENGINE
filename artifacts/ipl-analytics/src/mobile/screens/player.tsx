@@ -51,8 +51,8 @@ export default function MobilePlayer() {
       <div className="cfm-empty">
         <EmptyStumps />
         <p>We couldn't match “{slug.replace(/-/g, " ")}” to a single verified player.</p>
-        <Link href="/scout" className="cfm-btn">
-          Search the Scout Lab
+        <Link href="/pressurelab" className="cfm-btn">
+          Search the Pressure Lab
         </Link>
       </div>
     );

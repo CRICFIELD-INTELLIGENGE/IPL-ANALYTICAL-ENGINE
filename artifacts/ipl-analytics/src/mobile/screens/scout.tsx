@@ -1,4 +1,4 @@
-// Mobile Scout Lab — "the scout's notebook": a parchment brief, then discovery cards from the server-side
+// Mobile Pressure Lab — "the scout's notebook": a parchment brief, then discovery cards from the server-side
 // rankings (paged; the 18k-player registry is never loaded in the browser). Each card carries an evidence stamp
 // (rankable / low / insufficient), league-relative indices, and a save-to-shortlist action shared with desktop.
 import { useEffect, useState } from "react";
@@ -50,7 +50,7 @@ export default function MobileScout() {
         <span aria-hidden="true" style={{ borderLeft: "1px solid var(--m-line)" }} />
         {(["all", "powerplay", "middle", "death"] as MatchPhase[]).map((p) => <button key={p} type="button" className="cfm-chip" aria-pressed={phase === p} onClick={() => reset(() => setPhase(p))}>{p === "all" ? "All phases" : p[0].toUpperCase() + p.slice(1)}</button>)}
       </div>
-      {shortlist.length > 0 && <p className="cfm-small cfm-pad">{shortlist.length} on your shortlist · <Link href="/scout/compare" style={{ color: "var(--m-gold)" }}>compare</Link></p>}
+      {shortlist.length > 0 && <p className="cfm-small cfm-pad">{shortlist.length} on your shortlist · <Link href="/pressurelab/compare" style={{ color: "var(--m-gold)" }}>compare</Link></p>}
       {state === "error" && rows.length === 0 ? <ErrorBox message="The scouting service is unavailable right now." onRetry={() => setRetry((n) => n + 1)} /> : state === "loading" && rows.length === 0 ? <Loading rows={4} h={120} /> : rows.length === 0 ? <div className="cfm-empty">No players match these filters.</div> : (
         <>
           {rows.map((r) => (
@@ -66,7 +66,7 @@ export default function MobileScout() {
               </div>
               {(r.strengths?.length || r.weaknesses?.length) ? <p className="cfm-small" style={{ margin: 0 }}>{r.strengths?.[0] && <>✓ {r.strengths[0]} </>}{r.weaknesses?.[0] && <>· ✗ {r.weaknesses[0]}</>}</p> : null}
               <div style={{ display: "flex", gap: 8 }}>
-                <Link href={`/scout/player/${r.cricsheet_id}`} className="cfm-btn" style={{ flex: 1, minHeight: 40 }}>Scout report</Link>
+                <Link href={`/pressurelab/player/${r.cricsheet_id}`} className="cfm-btn" style={{ flex: 1, minHeight: 40 }}>Scout report</Link>
                 <button type="button" className="cfm-btn" style={{ minHeight: 40 }} aria-pressed={isShortlisted(r.cricsheet_id)} onClick={() => toggleShortlist(r)} aria-label={isShortlisted(r.cricsheet_id) ? `Remove ${r.name} from shortlist` : `Add ${r.name} to shortlist`}>{isShortlisted(r.cricsheet_id) ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}</button>
               </div>
             </article>

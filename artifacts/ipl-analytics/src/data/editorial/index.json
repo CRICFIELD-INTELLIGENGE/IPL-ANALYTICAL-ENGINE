@@ -2,6 +2,46 @@
  "generatedAt": "2026-10-26",
  "articles": [
   {
+   "id": "cf-csk-101",
+   "franchise": "CSK",
+   "aspect": "future",
+   "title": "After Dhoni: who makes Chennai's last-over calls?",
+   "slug": "csk-dhoni-retirement-mentor-2027",
+   "dek": "MS Dhoni moves from wicketkeeper to mentor. For Chennai, the hardest job to hand over may be the quiet conversation before the final over.",
+   "status": "review",
+   "storyType": "explainer",
+   "featured": true,
+   "publishedDate": "2026-11-18",
+   "players": [
+    "MS Dhoni"
+   ],
+   "seasons": [
+    "2027"
+   ],
+   "readMinutes": 2
+  },
+  {
+   "id": "cf-rr-101",
+   "franchise": "RR",
+   "aspect": "future",
+   "title": "What Rajasthan get by splitting the Sam Curran role",
+   "slug": "rr-shami-siddharth-curran-2027",
+   "dek": "Rajasthan bring in Mohammed Shami and M. Siddharth while Sam Curran moves to Lucknow. The trade opens two bowling choices and a question lower down the order.",
+   "status": "review",
+   "storyType": "explainer",
+   "featured": true,
+   "publishedDate": "2026-11-18",
+   "players": [
+    "Mohammed Shami",
+    "M. Siddharth",
+    "Sam Curran"
+   ],
+   "seasons": [
+    "2027"
+   ],
+   "readMinutes": 2
+  },
+  {
    "id": "cf-csk-001",
    "franchise": "CSK",
    "aspect": "batting",

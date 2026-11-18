@@ -90,9 +90,9 @@ export const TABS: {
 const TITLES: [RegExp, string][] = [
   [/^\/discover/, "Discover"],
   [/^\/stats/, "Stats"],
-  [/^\/scout\/player/, "Scout Report"],
-  [/^\/scout\/compare/, "Compare"],
-  [/^\/scout/, "Scout Lab"],
+  [/^\/pressurelab\/player/, "Scout Report"],
+  [/^\/pressurelab\/compare/, "Compare"],
+  [/^\/pressurelab/, "Pressure Lab"],
   [/^\/players\//, "Player"],
   [/^\/teams\/?$/, "Teams"],
   [/^\/teams\//, "Franchise"],
@@ -499,7 +499,7 @@ export function Sheet({
 
 const FEATURES = [
   ["Stats", "/stats", "/feed"],
-  ["Scout Lab", "/scout"],
+  ["Pressure Lab", "/pressurelab"],
   ["Retention Room", "/retention-room"],
   ["Auction War Room", "/ai-analyst/auction-war-room"],
   ["Squad Builder", "/ai-analyst/squad-builder"],

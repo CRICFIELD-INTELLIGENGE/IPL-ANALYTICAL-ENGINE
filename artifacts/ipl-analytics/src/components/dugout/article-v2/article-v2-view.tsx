@@ -661,9 +661,9 @@ export function ArticleV2View({ entry }: { entry: IndexEntry }) {
                   <FlaskConical className="h-4 w-4 text-cyan-600 dark:text-[#4AC9D8]" /> How We Know · Warehouse Methodology
                 </h2>
                 <p className="text-sm leading-relaxed text-slate-700 dark:text-[#8A9EA8]">{a.methodology}</p>
-                <p className="text-xs text-slate-500 dark:text-[#8A9EA8]/80 font-mono">
+                {evidence.database.matches > 0 && <p className="text-xs text-slate-500 dark:text-[#8A9EA8]/80 font-mono">
                   Data snapshot: {evidence.database.matches.toLocaleString("en-IN")} matches and {evidence.database.deliveries.toLocaleString("en-IN")} deliveries, last match {evidence.database.lastMatchDate}. Evidence generated {evidence.generatedAt.slice(0, 10)}.
-                </p>
+                </p>}
                 <details className="group">
                   <summary className="cursor-pointer select-none text-sm font-semibold text-slate-900 dark:text-[#EFF5F7] hover:text-emerald-700 dark:hover:text-[#B6E95C] transition py-1">
                     Every number in this article ({metricsUsed.length}) — dataset, filters, sample and verification check

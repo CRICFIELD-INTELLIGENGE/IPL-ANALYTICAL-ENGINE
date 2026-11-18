@@ -19,11 +19,10 @@ export const PUBLIC_PAGES: Record<string, { title: string; description: string }
   '/scores': { title: 'Scores', description: 'Explore cricket scores and match information.' },
   '/intelligence': { title: 'Decision Intelligence', description: 'Explore cricket analysis, estimates and decision tools.' },
   '/dugout': { title: 'Dugout', description: 'Explore franchise history, milestones and editorial analysis.' },
-  '/scout': { title: 'Scout Lab', description: 'Explore player profiles and compare talent across supported cricket leagues.' },
-  '/scout/compare': { title: 'Compare Players', description: 'Compare player statistics in Scout Lab.' },
-  '/scout/roles': { title: 'Player Roles', description: 'Explore player roles and scouting context.' },
+  '/pressurelab': { title: 'Pressure Lab', description: 'Explore player profiles and compare talent across supported cricket leagues.' },
+  '/pressurelab/compare': { title: 'Compare Players', description: 'Compare player statistics in Pressure Lab.' },
+  '/pressurelab/roles': { title: 'Player Roles', description: 'Explore player roles and scouting context.' },
   '/arena': { title: 'Fan Arena', description: 'Explore cricket fan features on CricField.' },
-  '/arcade': { title: 'Cricket Arcade', description: 'Play cricket simulation and trivia games without real-money wagering.' },
   '/ai-analyst': { title: 'AI Analyst', description: 'Explore cricket analytical tools and their data context.' },
   '/visualizations': { title: 'Cricket Visualizations', description: 'Explore cricket data through interactive visualizations.' },
   '/about': { title: 'About', description: 'Learn about CricField and its independent creator.' },
@@ -37,12 +36,11 @@ export const PUBLIC_PAGES: Record<string, { title: string; description: string }
 
 export function pageMetadata(path: string) {
   if (PUBLIC_PAGES[path]) return PUBLIC_PAGES[path];
-  const section = path.startsWith('/players/') || path.startsWith('/scout/player/') ? 'Player Profile'
+  const section = path.startsWith('/players/') || path.startsWith('/pressurelab/player/') ? 'Player Profile'
     : path.startsWith('/venues/') ? 'Venue Profile'
     : path.startsWith('/match/') ? 'Match Analysis'
     : path.startsWith('/dugout/') ? 'Franchise Dugout'
     : path.startsWith('/ai-analyst/') ? 'Analyst Tool'
-    : path.startsWith('/arcade/') ? 'Cricket Arcade'
     : path.startsWith('/feed/') ? 'Cricket Feed' : 'Cricket Intelligence';
   return { title: section, description: `Explore ${section.toLowerCase()} on CricField, an independent cricket analytics project.` };
 }

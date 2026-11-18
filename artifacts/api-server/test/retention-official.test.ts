@@ -52,7 +52,7 @@ test("composition and nationality reconcile with the active squad, not the 2026 
   for(const team of TEAMS){const r=room(team);assert.equal(r.composition.reduce((n,g)=>n+g.count,0),r.summary.retained);assert.equal(r.summary.indian+r.summary.overseas+r.summary.unknownNationality,r.summary.retained);if(!r.summary.unknownNationality)assert.equal(r.summary.overseas+r.summary.overseasSlots!,8);}
 });
 test("Scout handoffs use the existing team's role, discipline and phase contracts",()=>{
-  for(const team of TEAMS)for(const n of room(team).needs){const url=new URL(n.scoutUrl,"http://localhost");assert.equal(url.pathname,"/scout/results");assert.equal(url.searchParams.get("team"),team.toLowerCase());assert.equal(url.searchParams.get("recentSeasons"),"3");const bowling=url.searchParams.get("discipline")==="bowling";assert.ok((bowling?["powerplay_specialist","middle_specialist","death_specialist"]:["opener","middle_order","finisher"]).includes(url.searchParams.get("role")!));}
+  for(const team of TEAMS)for(const n of room(team).needs){const url=new URL(n.scoutUrl,"http://localhost");assert.equal(url.pathname,"/pressurelab/results");assert.equal(url.searchParams.get("team"),team.toLowerCase());assert.equal(url.searchParams.get("recentSeasons"),"3");const bowling=url.searchParams.get("discipline")==="bowling";assert.ok((bowling?["powerplay_specialist","middle_specialist","death_specialist"]:["opener","middle_order","finisher"]).includes(url.searchParams.get("role")!));}
 });
 test("no auction eligibility is inferred from release, retirement or a historical contract",()=>{
   for(const team of TEAMS){const r=room(team);assert.equal(r.auction.registeredPool.length,0);assert.ok(r.players.every(p=>p.auctionEligibility==="unverified"));}
@@ -68,4 +68,10 @@ test("serving official records leaves historical snapshots and source data uncha
   const files=["artifacts/api-server/data/intelligence/current.json","artifacts/api-server/data/intelligence/cf-intel-2026.e526fafa43/snapshot.json","artifacts/api-server/data/player-auctions.json"];
   const hash=(f:string)=>createHash("sha256").update(fs.readFileSync(path.join(getProjectRoot(),f))).digest("hex");
   const before=files.map(hash);TEAMS.forEach(room);assert.deepEqual(files.map(hash),before);
+});
+
+test("Gujarat release confirmation only covers the five names in the franchise announcement", () => {
+  const releases = room("GT").players.filter(p => p.decision === "released");
+  assert.equal(releases.filter(p => p.verification === "verified").length, 5);
+  assert.equal(releases.find(p => p.name === "Prithviraj Yarra")?.verification, "reported");
 });

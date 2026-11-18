@@ -1,0 +1,96 @@
+{
+ "schemaVersion": 2,
+ "id": "cf-csk-101",
+ "planId": "cf-csk-101",
+ "franchise": "CSK",
+ "aspect": "future",
+ "title": "After Dhoni: who makes Chennai's last-over calls?",
+ "slug": "csk-dhoni-retirement-mentor-2027",
+ "dek": "MS Dhoni moves from wicketkeeper to mentor. For Chennai, the hardest job to hand over may be the quiet conversation before the final over.",
+ "excerpt": "MS Dhoni moves from wicketkeeper to mentor. For Chennai, the hardest job to hand over may be the quiet conversation before the final over.",
+ "author": "CricField Editorial Desk",
+ "publishedDate": "2026-11-18",
+ "status": "review",
+ "featured": true,
+ "storyType": "explainer",
+ "teams": [
+  "CSK"
+ ],
+ "players": [
+  "MS Dhoni"
+ ],
+ "seasons": [
+  "2027"
+ ],
+ "keyTakeaways": [
+  "Dhoni will mentor Chennai after retiring as a player. {{src:announcement}}",
+  "Keeper selection and late-order batting can now be assessed separately."
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "role": "hook",
+   "heading": "The view from behind the stumps",
+   "body": [
+    "A keeper sees a batter shuffle across before the bowler starts the run-up. From the dugout, that same detail can disappear behind the sightscreen.",
+    "That distance matters for Chennai. MS Dhoni has ended his IPL playing career and will serve as team mentor. {{src:announcement}}"
+   ]
+  },
+  {
+   "id": "s2",
+   "role": "evidence",
+   "heading": "What Chennai announced",
+   "body": [
+    "The franchise has confirmed a change of role for Dhoni. {{src:announcement}}",
+    "The announcement settles his playing availability. It leaves the captain and selectors room to decide who keeps wicket and where that player bats."
+   ]
+  },
+  {
+   "id": "s3",
+   "role": "tactical",
+   "heading": "Two jobs on one team sheet",
+   "body": [
+    "In a close chase, Chennai can send in their best available hitter even if their keeper already batted near the top.",
+    "For practice, try the same final over twice. Give the keeper control of the field the first time and the bowler control the second. Ask where their readings differed."
+   ]
+  },
+  {
+   "id": "s4",
+   "role": "counterargument",
+   "heading": "What a mentor can pass on",
+   "body": [
+    "A mentor can pause a practice session and ask what gave away the slower ball. During a game the keeper has seconds to spot it.",
+    "The successor needs room to make a different call and explain it afterwards. Copying a familiar field can be an expensive habit against a different batter."
+   ]
+  },
+  {
+   "id": "s5",
+   "role": "verdict",
+   "heading": "What to watch in the opener",
+   "body": [
+    "When a boundary spoils a death-over plan, watch who walks to the bowler first. Then watch whether the next delivery and the new field agree.",
+    "That exchange will say more about the handover than a camera shot of Dhoni in the dugout."
+   ]
+  }
+ ],
+ "charts": [],
+ "sources": [
+  {
+   "id": "announcement",
+   "kind": "news",
+   "title": "IPL career over, Dhoni unveiled as Chennai team mentor",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/india/ipl-career-over-dhoni-unveiled-chennai-team-mentor-2026-11-17/"
+  }
+ ],
+ "imageBriefs": [],
+ "related": [],
+ "seo": {
+  "metaTitle": "After Dhoni: who makes Chennai's last-over calls?",
+  "metaDescription": "MS Dhoni moves from wicketkeeper to mentor. For Chennai, the hardest job to hand over may be the quiet conversation before the final over."
+ },
+ "methodology": "The cited announcement establishes the personnel change. Tactical implications are editorial analysis and assume no unannounced selection decisions.",
+ "videos": [],
+ "hypotheses": [],
+ "literalNumbers": []
+}

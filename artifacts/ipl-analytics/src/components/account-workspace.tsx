@@ -27,7 +27,7 @@ export function AccountWorkspace({ userId }: { userId: string }) {
     } catch { setStatus("Could not save. Your edits are still here; please retry."); } finally { setBusy(false); }
   }}>
     <label htmlFor="workspace-follows">Franchises, players and leagues to follow</label><input id="workspace-follows" maxLength={4000} placeholder="Mumbai Indians, Jasprit Bumrah, IPL" value={follows} onChange={event => setFollows(event.target.value)} disabled={!ready}/>
-    <label htmlFor="workspace-research">Scout Lab research</label><textarea id="workspace-research" maxLength={20000} value={research} onChange={event => setResearch(event.target.value)} disabled={!ready}/>
+    <label htmlFor="workspace-research">Pressure Lab research</label><textarea id="workspace-research" maxLength={20000} value={research} onChange={event => setResearch(event.target.value)} disabled={!ready}/>
     <label htmlFor="workspace-query">Saved Stats query</label><textarea id="workspace-query" maxLength={10000} value={query} onChange={event => setQuery(event.target.value)} disabled={!ready}/>
     <label htmlFor="workspace-arcade">Arcade progress notes</label><textarea id="workspace-arcade" maxLength={10000} value={arcade} onChange={event => setArcade(event.target.value)} disabled={!ready}/>
     <p className="account-helper">Notes are saved here manually. Game state and existing browser research are not imported automatically.</p>

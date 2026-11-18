@@ -36,11 +36,10 @@ const HEADLINES = [
 
 const EXPLORE_COVERAGE_CARDS = [
   { id: "squad", title: "SQUAD BUILDING", subtitle: "Retentions, releases, core and gaps", href: "/retention-room", img: "/milestone-photos/final-2024-kkr.jpg", color: "text-amber-500 dark:text-amber-400", icon: Users },
-  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", href: "/pulse", img: "/auction-art.jpg", color: "text-amber-500 dark:text-amber-400", icon: Gavel },
-  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", href: "/scores", img: "/assets/tactical-board-hero.png", color: "text-emerald-500 dark:text-emerald-400", icon: Shield },
-  { id: "stars", title: "STAR WATCH", subtitle: "Rising names to watch", href: "/stats", img: "/milestone-photos/highest-total-2024-srh.jpg", color: "text-rose-500 dark:text-rose-400", icon: Star },
+  { id: "auction", title: "AUCTION", subtitle: "Purse, market and strategy", href: "/auction", img: "/auction-art.jpg", color: "text-amber-500 dark:text-amber-400", icon: Gavel },
+  { id: "tactics", title: "TACTICS", subtitle: "Evolving game styles", href: "/tactics", img: "/assets/tactical-board-hero.png", color: "text-emerald-500 dark:text-emerald-400", icon: Shield },
   { id: "venues", title: "VENUES", subtitle: "Conditions and trends", href: "/venues/wankhede-stadium", img: "/branding/auth/stadium-sunset-v1.png", color: "text-sky-500 dark:text-sky-400", icon: MapPin },
-  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", href: "/intelligence", img: "/milestone-photos/final-2023-csk.jpg", color: "text-orange-500 dark:text-orange-400", icon: Flame },
+  { id: "storylines", title: "STORYLINES", subtitle: "Rivalries, narratives and more", href: "/storylines", img: "/milestone-photos/final-2023-csk.jpg", color: "text-orange-500 dark:text-orange-400", icon: Flame },
 ];
 
 interface FranchiseIntelData {
@@ -619,11 +618,11 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-3.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-3.5">
               {EXPLORE_COVERAGE_CARDS.map((c) => (
                 <Link
                   key={c.id}
-                  href={c.href}
+                  href={selectedTeam && ["auction", "tactics", "storylines", "squad"].includes(c.id) ? (c.id === "squad" ? `/retention-room/${selectedTeam}` : `${c.href}?team=${selectedTeam}`) : c.href}
                   className="group overflow-hidden rounded-2xl border border-white/10 bg-[#081220] hover:border-white/30 shadow-xs hover:shadow-md transition-all flex flex-col"
                 >
                   <div className="h-28 overflow-hidden relative bg-slate-900 shrink-0">
@@ -782,7 +781,7 @@ export default function HomePage() {
                     </h3>
                     <p className="text-[10px] text-slate-400">Uncapped & High-Value</p>
                   </div>
-                  <Link href="/scout" className="text-xs font-semibold text-[#00D2FF] hover:underline">
+                  <Link href="/pressurelab" className="text-xs font-semibold text-[#00D2FF] hover:underline">
                     Scout →
                   </Link>
                 </div>
@@ -825,7 +824,7 @@ export default function HomePage() {
 
               {/* Bottom Watchlist Button */}
               <div className="mt-6 pt-4 border-t border-white/10">
-                <Link href="/scout">
+                <Link href="/pressurelab">
                   <button className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 border border-white/15 hover:bg-white/10 text-xs font-bold text-white uppercase tracking-wider transition-all cursor-pointer">
                     View Complete Watchlist <ArrowRight size={14} />
                   </button>

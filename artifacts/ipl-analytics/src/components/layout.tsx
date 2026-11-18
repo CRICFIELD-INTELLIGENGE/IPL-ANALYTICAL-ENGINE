@@ -35,7 +35,7 @@ const PRIMARY_NAV_LINKS: Array<{ label: string; href: string; hideOnMd?: boolean
   { label: "Pulse", href: "/pulse" },
   { label: "Scores", href: "/scores" },
   { label: "Stats", href: "/stats" },
-  { label: "Scout Lab", href: "/scout" },
+  { label: "Pressure Lab", href: "/pressurelab" },
   { label: "Dugout", href: "/dugout" },
   { label: "News", href: "/intelligence" },
 ];
@@ -48,7 +48,7 @@ const SIDEBAR_ITEMS = [
   { icon: Newspaper, label: "Feed & 2027 Intel", href: "/feed" },
   { icon: Cpu, label: "Intel & Insights", href: "/intelligence" },
   { icon: Shield, label: "My Dugout", href: "/dugout" },
-  { icon: Compass, label: "Scout Lab", href: "/scout" },
+  { icon: Compass, label: "Pressure Lab", href: "/pressurelab" },
   { icon: List, label: "Stats Centre", href: "/stats" },
   { icon: Zap, label: "Scores", href: "/scores" },
   { icon: BarChart2, label: "Visuals", href: "/visualizations" },
@@ -217,7 +217,7 @@ export function Layout({
         <div className="flex-1 min-w-0">
           {location.startsWith('/feed') && typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('planningSeason') === '2027' && <div className="mb-4"><PreseasonRecruitment team={new URLSearchParams(window.location.search).get('team')??undefined}/></div>}
           {location.startsWith("/ai-analyst") && <AnalystWorkspace/>}
-          {/^\/(players|venues|match|matches|scout\/player|dugout\/articles)\//.test(window.location.pathname)&&<ReturnNavigator fallbackPath={window.location.pathname.startsWith('/players')?'/stats':window.location.pathname.startsWith('/scout')?'/scout':window.location.pathname.startsWith('/dugout')?'/dugout':'/scores'}/>}
+          {/^\/(players|venues|match|matches|scout\/player|dugout\/articles)\//.test(window.location.pathname)&&<ReturnNavigator fallbackPath={window.location.pathname.startsWith('/players')?'/stats':window.location.pathname.startsWith('/pressurelab')?'/pressurelab':window.location.pathname.startsWith('/dugout')?'/dugout':'/scores'}/>}
           {children}
         </div>
         <SiteFooter />

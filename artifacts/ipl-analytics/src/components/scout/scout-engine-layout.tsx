@@ -25,23 +25,23 @@ import {
 const SCOUT_NAV = [
   {
     section: null,
-    items: [{ icon: Home, label: "Home", href: "/scout" }],
+    items: [{ icon: Home, label: "Home", href: "/pressurelab" }],
   },
   {
     section: "SCOUT ENGINE",
     items: [
-      { icon: Search, label: "Player Search", href: "/scout" },
-      { icon: Scale, label: "Compare Players", href: "/scout/compare" },
-      { icon: BarChart3, label: "Global Rankings", href: "/scout?view=rankings" },
-      { icon: Globe2, label: "League Insights", href: "/scout?view=leagues" },
-      { icon: User, label: "Player Profiles", href: "/scout?view=profiles" },
-      { icon: Heart, label: "Shortlists", href: "/scout?view=shortlists" },
+      { icon: Search, label: "Player Search", href: "/pressurelab" },
+      { icon: Scale, label: "Compare Players", href: "/pressurelab/compare" },
+      { icon: BarChart3, label: "Global Rankings", href: "/pressurelab?view=rankings" },
+      { icon: Globe2, label: "League Insights", href: "/pressurelab?view=leagues" },
+      { icon: User, label: "Player Profiles", href: "/pressurelab?view=profiles" },
+      { icon: Heart, label: "Shortlists", href: "/pressurelab?view=shortlists" },
     ],
   },
   {
     section: "ANALYTICS",
     items: [
-      { icon: Users, label: "Team Builder", href: "/scout?tool=teambuilder" },
+      { icon: Users, label: "Team Builder", href: "/pressurelab?tool=teambuilder" },
       { icon: Trophy, label: "Auction Intel", href: "/auction" },
       { icon: Compass, label: "Venue & Conditions", href: "/intelligence" },
       { icon: BarChart3, label: "Stats Lab", href: "/stats" },
@@ -103,8 +103,8 @@ export function ScoutEngineLayout({
               {group.items.map((item) => {
                 const isActive =
                   location === item.href ||
-                  (item.href === "/scout" &&
-                    location === "/scout" &&
+                  (item.href === "/pressurelab" &&
+                    location === "/pressurelab" &&
                     !item.href.includes("?"));
                 return (
                   <Link key={item.label} href={item.href}>
