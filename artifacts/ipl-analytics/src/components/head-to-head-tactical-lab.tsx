@@ -3,7 +3,7 @@ import {
   Target, Crosshair, Zap, Flame, Shield, Activity, TrendingUp, BarChart2,
   Compass, Layers, ArrowRight, Search, Filter, RotateCcw, Info, CheckCircle2, ChevronRight
 } from "lucide-react";
-import { useRecordedDeliveries, RecordedDelivery } from "@/lib/delivery-data";
+import { useRecordedDeliveries, matchesBowlerName, RecordedDelivery } from "@/lib/delivery-data";
 import { usePlayerBios, displayPlayerName, usePlayerDisplayNames, playerSlug } from "@/lib/aggregates";
 import { PlayerAvatar } from "@/components/player-avatar";
 import { Link } from "wouter";
@@ -101,79 +101,68 @@ export function HeadToHeadTacticalLab({
   const batterName = isP1Bowler && isP2Batter ? player2 : player1;
   const bowlerName = isP1Bowler && isP2Batter ? player1 : player2;
 
-  // Active Tab within the Tactical Lab
-  const [activeSubTab, setActiveSubTab] = useState<"tactics" | "pitch" | "wagon" | "ledger">(
-    initialSubTab || (initialDeliveryType ? "wagon" : "tactics")
+  // Active Tab within the Tactical Lab (Ground Shot Visual handles the 360 wagon wheel)
+  const [activeSubTab, setActiveSubTab] = useState<"tactics" | "pitch" | "ledger">(
+    initialSubTab === "pitch" || initialSubTab === "ledger" ? initialSubTab : "tactics"
   );
   const [selectedPitchCell, setSelectedPitchCell] = useState<{ length: string; line: string } | null>(null);
-  const [selectedWagonSector, setSelectedWagonSector] = useState<string | null>(null);
-  const [selectedDeliveryType, setSelectedDeliveryType] = useState<string>(initialDeliveryType || "ALL");
   const [ledgerSearch, setLedgerSearch] = useState("");
 
-  // Query actual delivery records for the batter
+  // Query actual delivery records for the batter (resolves full & scorecard names)
   const deliveriesQuery = useRecordedDeliveries(batterName);
   const allBatterDeliveries = deliveriesQuery.data ?? [];
 
-  // Filter deliveries bowled by this specific bowler
+  // Filter deliveries bowled by this specific bowler using bio-aware alias resolution
   const matchupDeliveries = useMemo(() => {
-    if (!bowlerName) return [];
-    const bClean = bowlerName.toLowerCase().trim();
+    if (!bowlerName || !allBatterDeliveries.length) return [];
     return allBatterDeliveries.filter(b => {
       if (!b.bowler || (matchIds && !matchIds.has(String(b.matchId)))) return false;
-      const bBowl = b.bowler.toLowerCase().trim();
-      return bBowl === bClean || bBowl.includes(bClean) || bClean.includes(bBowl);
+      return matchesBowlerName(b.bowler, bowlerName, bios.data);
     });
-  }, [allBatterDeliveries, bowlerName, matchIds]);
+  }, [allBatterDeliveries, bowlerName, matchIds, bios.data]);
 
   const hasRecordedMatchup = matchupDeliveries.length > 0;
 
-  // Aggregate Key Matchup Metrics (or Fallback Baseline if unrecorded)
+  // Aggregate Key Matchup Metrics strictly from recorded deliveries
   const matchupSummary = useMemo(() => {
-    if (hasRecordedMatchup) {
-      const balls = matchupDeliveries.length;
-      const runs = matchupDeliveries.reduce((sum, b) => sum + (b.runs || 0), 0);
-      const dots = matchupDeliveries.filter(b => b.runs === 0).length;
-      const fours = matchupDeliveries.filter(b => b.runs === 4).length;
-      const sixes = matchupDeliveries.filter(b => b.runs === 6).length;
-      const dismissals = matchupDeliveries.filter(b => b.shot?.toLowerCase().includes("out") || b.variation?.toLowerCase().includes("out")).length;
-      const sr = balls > 0 ? (runs / balls) * 100 : 0;
-      const dotPct = balls > 0 ? (dots / balls) * 100 : 0;
-      const boundaryPct = balls > 0 ? ((fours * 4 + sixes * 6) / Math.max(1, runs)) * 100 : 0;
-
+    if (!hasRecordedMatchup) {
       return {
-        balls,
-        runs,
-        dots,
-        fours,
-        sixes,
-        dismissals: matchIds ? dismissals : Math.max(dismissals, p1Stats?.dismissals ?? 0),
-        sr: sr.toFixed(1),
-        dotPct: dotPct.toFixed(1),
-        boundaryPct: boundaryPct.toFixed(1),
+        balls: 0,
+        runs: 0,
+        dots: 0,
+        fours: 0,
+        sixes: 0,
+        dismissals: 0,
+        sr: "—",
+        dotPct: "—",
+        boundaryPct: "—",
         isProjected: false,
       };
     }
 
-    // Projected Tactical Baseline based on Player Profiles
-    const bRuns = p1Stats?.runs || 420;
-    const bSr = p1Stats?.sr || 148.5;
-    const bDotPct = 32.4;
-    const bEcon = p2Stats?.econ || 7.82;
-    const bWkts = p2Stats?.wickets || 18;
+    const balls = matchupDeliveries.length;
+    const runs = matchupDeliveries.reduce((sum, b) => sum + (b.runs || 0), 0);
+    const dots = matchupDeliveries.filter(b => b.runs === 0).length;
+    const fours = matchupDeliveries.filter(b => b.runs === 4).length;
+    const sixes = matchupDeliveries.filter(b => b.runs === 6).length;
+    const dismissals = matchupDeliveries.filter(b => b.shot?.toLowerCase().includes("out") || b.variation?.toLowerCase().includes("out")).length;
+    const sr = balls > 0 ? (runs / balls) * 100 : 0;
+    const dotPct = balls > 0 ? (dots / balls) * 100 : 0;
+    const boundaryPct = runs > 0 ? ((fours * 4 + sixes * 6) / runs) * 100 : 0;
 
     return {
-      balls: 28,
-      runs: 41,
-      dots: 9,
-      fours: 4,
-      sixes: 2,
-      dismissals: 1,
-      sr: ((41 / 28) * 100).toFixed(1),
-      dotPct: ((9 / 28) * 100).toFixed(1),
-      boundaryPct: "68.3",
-      isProjected: true,
+      balls,
+      runs,
+      dots,
+      fours,
+      sixes,
+      dismissals: matchIds ? dismissals : Math.max(dismissals, p1Stats?.dismissals ?? 0),
+      sr: sr.toFixed(1),
+      dotPct: dotPct.toFixed(1),
+      boundaryPct: boundaryPct.toFixed(1),
+      isProjected: false,
     };
-  }, [matchupDeliveries, hasRecordedMatchup, p1Stats, p2Stats, matchIds]);
+  }, [matchupDeliveries, hasRecordedMatchup, p1Stats, matchIds]);
 
   // Aggregate Tactical Length Breakdown
   const tacticalLengths = useMemo(() => {
@@ -220,101 +209,63 @@ export function HeadToHeadTacticalLab({
       },
     ];
 
-    if (hasRecordedMatchup) {
-      return categories.map(cat => {
-        const rows = matchupDeliveries.filter(b => {
-          const l = (b.length || "").toLowerCase();
-          if (cat.id === "yorker") return l.includes("yorker");
-          if (cat.id === "full") return l.includes("full") || l.includes("slot");
-          if (cat.id === "good") return l.includes("good");
-          if (cat.id === "back-of-length") return l.includes("back") || l.includes("length");
-          if (cat.id === "short") return l.includes("short") || l.includes("bouncer");
-          return false;
-        });
-
-        const balls = rows.length || (cat.id === "good" ? 8 : cat.id === "full" ? 6 : cat.id === "yorker" ? 5 : cat.id === "back-of-length" ? 5 : 4);
-        const runs = rows.reduce((s, r) => s + (r.runs || 0), 0) || (cat.id === "full" ? 14 : cat.id === "good" ? 10 : cat.id === "yorker" ? 4 : cat.id === "back-of-length" ? 7 : 6);
-        const dots = rows.filter(r => r.runs === 0).length || Math.max(1, Math.floor(balls * 0.35));
-        const bndCount = rows.filter(r => r.runs === 4 || r.runs === 6).length || (cat.id === "full" ? 2 : cat.id === "good" ? 1 : 0);
-        const sr = balls > 0 ? (runs / balls) * 100 : 0;
-        const dotPct = balls > 0 ? (dots / balls) * 100 : 0;
-        const wkts = cat.id === "good" ? 1 : 0;
-
+    return categories.map(cat => {
+      if (!hasRecordedMatchup) {
         return {
           ...cat,
-          balls,
-          runs,
-          dots,
-          sr: Math.round(sr),
-          dotPct: Math.round(dotPct),
-          boundaryCount: bndCount,
-          wickets: wkts,
-          verdict: sr >= 170 ? "Batter Launch Zone" : dotPct >= 45 ? "Bowler Choke Point" : "Even Matchup Contest",
+          balls: 0,
+          runs: 0,
+          dots: 0,
+          sr: 0,
+          dotPct: 0,
+          boundaryCount: 0,
+          wickets: 0,
+          verdict: "No Recorded Balls",
         };
-      });
-    }
+      }
 
-    // Default high-fidelity tactical matrix
-    return [
-      {
-        ...categories[0],
-        balls: 6,
-        runs: 5,
-        dots: 3,
-        sr: 83,
-        dotPct: 50,
-        boundaryCount: 0,
-        wickets: 0,
-        verdict: "Bowler Choke Point",
-      },
-      {
-        ...categories[1],
-        balls: 8,
-        runs: 16,
-        dots: 2,
-        sr: 200,
-        dotPct: 25,
-        boundaryCount: 3,
-        wickets: 0,
-        verdict: "Batter Launch Zone",
-      },
-      {
-        ...categories[2],
-        balls: 9,
-        runs: 11,
-        dots: 4,
-        sr: 122,
-        dotPct: 44,
-        boundaryCount: 1,
-        wickets: 1,
-        verdict: "Bowler Edge (1 Wkt)",
-      },
-      {
-        ...categories[3],
-        balls: 3,
-        runs: 5,
-        dots: 1,
-        sr: 167,
-        dotPct: 33,
-        boundaryCount: 1,
-        wickets: 0,
-        verdict: "Even Matchup Contest",
-      },
-      {
-        ...categories[4],
-        balls: 2,
-        runs: 4,
-        dots: 1,
-        sr: 200,
-        dotPct: 50,
-        boundaryCount: 1,
-        wickets: 0,
-        verdict: "High-Risk Duel",
-      },
-    ];
+      const rows = matchupDeliveries.filter(b => {
+        const l = (b.length || "").toLowerCase();
+        if (cat.id === "yorker") return l.includes("yorker");
+        if (cat.id === "full") return l.includes("full") || l.includes("slot");
+        if (cat.id === "good") return l.includes("good");
+        if (cat.id === "back-of-length") return l.includes("back") || l.includes("length");
+        if (cat.id === "short") return l.includes("short") || l.includes("bouncer");
+        return false;
+      });
+
+      const balls = rows.length;
+      const runs = rows.reduce((s, r) => s + (r.runs || 0), 0);
+      const dots = rows.filter(r => r.runs === 0).length;
+      const bndCount = rows.filter(r => r.runs === 4 || r.runs === 6).length;
+      const sr = balls > 0 ? (runs / balls) * 100 : 0;
+      const dotPct = balls > 0 ? (dots / balls) * 100 : 0;
+      const wkts = rows.filter(r => r.shot?.toLowerCase().includes("out") || r.variation?.toLowerCase().includes("out")).length;
+
+      return {
+        ...cat,
+        balls,
+        runs,
+        dots,
+        sr: Math.round(sr),
+        dotPct: Math.round(dotPct),
+        boundaryCount: bndCount,
+        wickets: wkts,
+        verdict:
+          balls === 0
+            ? "No Recorded Balls"
+            : wkts > 0
+              ? `Bowler Edge (${wkts} Wkt${wkts > 1 ? "s" : ""})`
+              : sr >= 170
+                ? "Batter Launch Zone"
+                : dotPct >= 45
+                  ? "Bowler Choke Point"
+                  : "Even Matchup Contest",
+      };
+    });
   }, [matchupDeliveries, hasRecordedMatchup]);
 
-  // Aggregate Pitch Grid Matrix (Length × Line)
+  // Aggregate Pitch Grid Matrix (Length × Line) strictly from recorded balls
   const pitchGrid = useMemo(() => {
     return PITCH_LENGTHS.map(len => {
       const lineCells = PITCH_LINES.map(line => {
@@ -342,17 +293,7 @@ export function HeadToHeadTacticalLab({
           balls = matching.length;
           runs = matching.reduce((sum, b) => sum + (b.runs || 0), 0);
           dots = matching.filter(b => b.runs === 0).length;
-          dismissals = matching.filter(b => b.shot?.toLowerCase().includes("out")).length;
-        } else {
-          // Synthetic realistic distribution based on IPL standards
-          const baseMatrix: Record<string, Record<string, { b: number; r: number; d: number; w: number }>> = {
-            short: { off: { b: 1, r: 2, d: 0, w: 0 }, stumps: { b: 1, r: 2, d: 1, w: 0 }, leg: { b: 0, r: 0, d: 0, w: 0 } },
-            good: { off: { b: 4, r: 6, d: 2, w: 1 }, stumps: { b: 3, r: 3, d: 2, w: 0 }, leg: { b: 2, r: 2, d: 0, w: 0 } },
-            full: { off: { b: 3, r: 7, d: 1, w: 0 }, stumps: { b: 3, r: 6, d: 1, w: 0 }, leg: { b: 2, r: 3, d: 0, w: 0 } },
-            yorker: { off: { b: 2, r: 2, d: 1, w: 0 }, stumps: { b: 3, r: 2, d: 2, w: 0 }, leg: { b: 1, r: 1, d: 0, w: 0 } },
-          };
-          const item = baseMatrix[len.id]?.[line.id] || { b: 0, r: 0, d: 0, w: 0 };
-          balls = item.b; runs = item.r; dots = item.d; dismissals = item.w;
+          dismissals = matching.filter(b => b.shot?.toLowerCase().includes("out") || b.variation?.toLowerCase().includes("out")).length;
         }
 
         const sr = balls > 0 ? (runs / balls) * 100 : 0;
@@ -375,135 +316,6 @@ export function HeadToHeadTacticalLab({
       };
     });
   }, [matchupDeliveries, hasRecordedMatchup]);
-
-  // Aggregate Wagon Wheel Sectors (with Delivery Type Linking & Zoom)
-  const wagonData = useMemo(() => {
-    // Representative spatial breakdown per delivery type
-    const deliveryDistMap: Record<string, Record<string, { r: number; b: number; f4: number; f6: number }>> = {
-      "Yorker Length": {
-        "straight": { r: 12, b: 6, f4: 1, f6: 1 },
-        "third-man": { r: 8, b: 5, f4: 1, f6: 0 },
-        "long-off": { r: 6, b: 4, f4: 1, f6: 0 },
-        "long-on": { r: 5, b: 4, f4: 0, f6: 0 },
-        "point-cover": { r: 2, b: 3, f4: 0, f6: 0 },
-        "mid-wicket": { r: 2, b: 2, f4: 0, f6: 0 },
-        "extra-cover": { r: 1, b: 2, f4: 0, f6: 0 },
-        "square-leg": { r: 1, b: 2, f4: 0, f6: 0 },
-      },
-      "Bouncer / Short": {
-        "mid-wicket": { r: 18, b: 8, f4: 2, f6: 2 },
-        "square-leg": { r: 14, b: 6, f4: 1, f6: 1 },
-        "third-man": { r: 10, b: 5, f4: 2, f6: 0 },
-        "straight": { r: 4, b: 3, f4: 0, f6: 0 },
-        "long-on": { r: 3, b: 2, f4: 0, f6: 0 },
-        "point-cover": { r: 2, b: 2, f4: 0, f6: 0 },
-        "extra-cover": { r: 0, b: 1, f4: 0, f6: 0 },
-        "long-off": { r: 0, b: 1, f4: 0, f6: 0 },
-      },
-      "Good Length": {
-        "point-cover": { r: 14, b: 9, f4: 2, f6: 0 },
-        "extra-cover": { r: 12, b: 8, f4: 2, f6: 0 },
-        "straight": { r: 10, b: 7, f4: 1, f6: 0 },
-        "long-on": { r: 9, b: 6, f4: 1, f6: 0 },
-        "long-off": { r: 8, b: 5, f4: 1, f6: 0 },
-        "mid-wicket": { r: 7, b: 5, f4: 0, f6: 0 },
-        "third-man": { r: 6, b: 5, f4: 1, f6: 0 },
-        "square-leg": { r: 5, b: 4, f4: 0, f6: 0 },
-      },
-      "Slower Change-up": {
-        "mid-wicket": { r: 16, b: 7, f4: 2, f6: 1 },
-        "long-on": { r: 14, b: 6, f4: 1, f6: 1 },
-        "extra-cover": { r: 8, b: 5, f4: 1, f6: 0 },
-        "straight": { r: 6, b: 4, f4: 0, f6: 0 },
-        "long-off": { r: 5, b: 3, f4: 0, f6: 0 },
-        "square-leg": { r: 4, b: 3, f4: 0, f6: 0 },
-        "point-cover": { r: 3, b: 2, f4: 0, f6: 0 },
-        "third-man": { r: 1, b: 2, f4: 0, f6: 0 },
-      },
-      "Full Toss": {
-        "long-on": { r: 20, b: 7, f4: 2, f6: 2 },
-        "mid-wicket": { r: 18, b: 6, f4: 2, f6: 2 },
-        "straight": { r: 14, b: 5, f4: 1, f6: 1 },
-        "square-leg": { r: 10, b: 4, f4: 1, f6: 1 },
-        "extra-cover": { r: 8, b: 4, f4: 1, f6: 0 },
-        "long-off": { r: 6, b: 3, f4: 1, f6: 0 },
-        "third-man": { r: 4, b: 2, f4: 1, f6: 0 },
-        "point-cover": { r: 3, b: 2, f4: 0, f6: 0 },
-      },
-      "Off Cutter / Spinner": {
-        "point-cover": { r: 15, b: 8, f4: 2, f6: 0 },
-        "mid-wicket": { r: 13, b: 7, f4: 1, f6: 1 },
-        "square-leg": { r: 12, b: 6, f4: 2, f6: 0 },
-        "third-man": { r: 8, b: 5, f4: 1, f6: 0 },
-        "extra-cover": { r: 7, b: 5, f4: 1, f6: 0 },
-        "long-on": { r: 6, b: 4, f4: 0, f6: 0 },
-        "straight": { r: 4, b: 3, f4: 0, f6: 0 },
-        "long-off": { r: 3, b: 3, f4: 0, f6: 0 },
-      },
-    };
-
-    const isFiltered = selectedDeliveryType !== "ALL";
-
-    return WAGON_SECTORS.map(sec => {
-      let runs = 0;
-      let balls = 0;
-      let fours = 0;
-      let sixes = 0;
-
-      if (hasRecordedMatchup) {
-        let pool = matchupDeliveries;
-        if (isFiltered) {
-          const lCat = TACTICAL_DELIVERY_TYPES.find(d => d.id === selectedDeliveryType)?.lengthCategory;
-          pool = matchupDeliveries.filter(b => {
-            const l = (b.length || "").toLowerCase();
-            if (lCat === "yorker") return l.includes("yorker");
-            if (lCat === "short") return l.includes("short") || l.includes("bouncer");
-            if (lCat === "good") return l.includes("good") || l.includes("length");
-            if (lCat === "full") return l.includes("full") || l.includes("slot");
-            return true;
-          });
-        }
-        const matches = pool.filter(b => b.zone && ZONE_TO_SECTOR[b.zone] === sec.id);
-        if (matches.length > 0) {
-          balls = matches.length;
-          runs = matches.reduce((s, b) => s + (b.runs || 0), 0);
-          fours = matches.filter(b => b.runs === 4).length;
-          sixes = matches.filter(b => b.runs === 6).length;
-        } else if (isFiltered && deliveryDistMap[selectedDeliveryType]) {
-          const s = deliveryDistMap[selectedDeliveryType][sec.id] || { r: 0, b: 0, f4: 0, f6: 0 };
-          runs = s.r; balls = s.b; fours = s.f4; sixes = s.f6;
-        }
-      } else {
-        const s = (isFiltered && deliveryDistMap[selectedDeliveryType])
-          ? deliveryDistMap[selectedDeliveryType][sec.id]
-          : {
-              "third-man": { r: 4, b: 3, f4: 1, f6: 0 },
-              "point-cover": { r: 7, b: 5, f4: 1, f6: 0 },
-              "extra-cover": { r: 6, b: 4, f4: 1, f6: 0 },
-              "long-off": { r: 5, b: 3, f4: 0, f6: 0 },
-              "straight": { r: 6, b: 3, f4: 0, f6: 1 },
-              "long-on": { r: 8, b: 4, f4: 0, f6: 1 },
-              "mid-wicket": { r: 3, b: 3, f4: 0, f6: 0 },
-              "square-leg": { r: 2, b: 3, f4: 0, f6: 0 },
-            }[sec.id] || { r: 0, b: 0, f4: 0, f6: 0 };
-        runs = s.r; balls = s.b; fours = s.f4; sixes = s.f6;
-      }
-
-      const totalR = Math.max(1, matchupSummary.runs);
-      const sharePct = Math.round((runs / totalR) * 100);
-      const sr = balls > 0 ? Math.round((runs / balls) * 100) : 0;
-
-      return {
-        ...sec,
-        runs,
-        balls,
-        fours,
-        sixes,
-        sharePct,
-        sr,
-      };
-    });
-  }, [matchupDeliveries, hasRecordedMatchup, matchupSummary.runs, selectedDeliveryType]);
 
   if (matchIds && !hasRecordedMatchup) {
     return <p role="status" className="stats-tool-panel p-4 text-sm">{deliveriesQuery.isLoading ? "Loading recorded deliveries…" : "No recorded deliveries for this matchup in the selected fixtures."}</p>;
@@ -531,9 +343,9 @@ export function HeadToHeadTacticalLab({
               <span className={`px-2 py-0.5 rounded-full text-[8.5px] font-mono font-black uppercase ${
                 hasRecordedMatchup
                   ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                  : "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                  : "bg-white/5 text-white/50 border border-white/10"
               }`}>
-                {hasRecordedMatchup ? `${matchupDeliveries.length} Recorded Deliveries` : "Tactical Projection"}
+                {hasRecordedMatchup ? `${matchupDeliveries.length} Recorded Deliveries` : "No Recorded Deliveries"}
               </span>
             </div>
             <h3 className="text-lg sm:text-xl font-black text-white mt-1">
@@ -589,17 +401,6 @@ export function HeadToHeadTacticalLab({
         >
           <Target className="w-3.5 h-3.5" />
           BatLens Pitch Map
-        </button>
-        <button
-          onClick={() => setActiveSubTab("wagon")}
-          className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer ${
-            activeSubTab === "wagon"
-              ? "bg-primary text-white shadow-lg font-black"
-              : "text-white/40 hover:text-white hover:bg-white/5"
-          }`}
-        >
-          <Compass className="w-3.5 h-3.5" />
-          Ground Scoring Wagon Wheel
         </button>
         <button
           onClick={() => setActiveSubTab("ledger")}
@@ -710,22 +511,22 @@ export function HeadToHeadTacticalLab({
                     </div>
                   </div>
 
-                  {/* Zoom Shot Analysis Button */}
+                  {/* Inspect in BatLens Pitch Map Button */}
                   <button
                     onClick={() => {
-                      const dtMap: Record<string, string> = {
-                        yorker: "Yorker Length",
-                        short: "Bouncer / Short",
-                        good: "Good Length",
-                        full: "Full Toss",
-                        "back-of-length": "Good Length",
+                      const pitchLenMap: Record<string, string> = {
+                        yorker: "yorker",
+                        full: "full",
+                        good: "good",
+                        "back-of-length": "short",
+                        short: "short",
                       };
-                      setSelectedDeliveryType(dtMap[len.id] || "ALL");
-                      setActiveSubTab("wagon");
+                      setSelectedPitchCell({ length: pitchLenMap[len.id] || "good", line: "off" });
+                      setActiveSubTab("pitch");
                     }}
                     className="w-full mt-2 py-1.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[9px] font-mono font-bold text-cyan-300 flex items-center justify-center gap-1.5 transition-all cursor-pointer hover:border-cyan-400/40"
                   >
-                    <span>Zoom Shot Execution &amp; Wagon Wheel</span>
+                    <span>Inspect Length in BatLens Pitch Map</span>
                     <ChevronRight className="w-3 h-3" />
                   </button>
                 </div>
@@ -761,77 +562,84 @@ export function HeadToHeadTacticalLab({
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* Length × Line Grid (8 Cols) */}
+            {/* Length × Line Grid (BatterLens PitchGrid Heatmap Styling, 8 Cols) */}
             <div className="lg:col-span-8 overflow-x-auto">
-              <table className="w-full text-left border-separate border-spacing-2">
-                <thead>
-                  <tr>
-                    <th className="p-2 text-[9px] font-mono font-bold text-white/30 uppercase">Length / Line</th>
-                    {PITCH_LINES.map(line => (
-                      <th key={line.id} className="p-2 text-center text-[10px] font-mono font-black text-white/60 uppercase">
-                        {line.label}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {pitchGrid.map(row => (
-                    <tr key={row.id}>
-                      <td className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 font-mono text-[11px] font-black text-white/80 whitespace-nowrap">
-                        <div className="flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: row.color }} />
-                          <span>{row.label}</span>
-                        </div>
-                      </td>
-                      {row.cells.map(cell => {
-                        const isSelected = selectedPitchCell?.length === cell.lengthId && selectedPitchCell?.line === cell.lineId;
-                        // Color styling: emerald for high SR (>150), rose for low SR (<110)
-                        const cellBg =
-                          cell.balls === 0
-                            ? "bg-white/[0.02] text-white/20 border-white/5"
-                            : cell.sr >= 160
-                            ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/25"
-                            : cell.sr <= 110
-                            ? "bg-rose-500/15 border-rose-500/30 text-rose-300 hover:bg-rose-500/25"
-                            : "bg-blue-500/15 border-blue-500/30 text-blue-300 hover:bg-blue-500/25";
-
-                        return (
-                          <td
-                            key={cell.lineId}
-                            onClick={() => setSelectedPitchCell({ length: cell.lengthId, line: cell.lineId })}
-                            className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${cellBg} ${
-                              isSelected ? "ring-2 ring-white scale-105 shadow-xl" : ""
-                            }`}
-                          >
-                            {cell.balls > 0 ? (
-                              <div className="flex flex-col items-center">
-                                <span className="text-sm font-black font-mono">{cell.sr} <span className="text-[8.5px] font-normal opacity-70">SR</span></span>
-                                <div className="text-[9px] font-mono opacity-80 mt-0.5 flex items-center gap-1.5">
-                                  <span>{cell.balls}b</span>
-                                  <span>·</span>
-                                  <span>{cell.runs}r</span>
-                                  {cell.dismissals > 0 && <span className="text-red-400 font-bold">· {cell.dismissals}W</span>}
-                                </div>
-                              </div>
-                            ) : (
-                              <span className="text-xs font-mono text-white/20">—</span>
-                            )}
+              {(() => {
+                const maxCellBalls = Math.max(
+                  1,
+                  ...pitchGrid.flatMap(r => r.cells.map(c => c.balls)),
+                );
+                return (
+                  <table className="w-full text-left border-separate border-spacing-1">
+                    <thead>
+                      <tr>
+                        <th className="p-2 text-[9px] font-mono font-bold text-white/35 uppercase">Length / Line</th>
+                        {PITCH_LINES.map(line => (
+                          <th key={line.id} className="p-2 text-center text-[10px] font-mono font-black text-white/60 uppercase">
+                            {line.label}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {pitchGrid.map(row => (
+                        <tr key={row.id}>
+                          <td className="p-2 text-right font-mono text-[10px] font-black text-white/75 whitespace-nowrap pr-3">
+                            <span className="inline-flex items-center gap-1.5">
+                              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: row.color }} />
+                              {row.label}
+                            </span>
                           </td>
-                        );
-                      })}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                          {row.cells.map(cell => {
+                            const isSelected = selectedPitchCell?.length === cell.lengthId && selectedPitchCell?.line === cell.lineId;
+                            const bg =
+                              cell.balls === 0
+                                ? "rgba(255,255,255,0.03)"
+                                : cell.sr >= 160
+                                  ? `rgba(16,185,129,${0.2 + Math.min(0.6, (cell.sr - 120) / 140)})`
+                                  : cell.sr <= 110
+                                    ? `rgba(244,63,94,${0.2 + Math.min(0.6, (130 - cell.sr) / 130)})`
+                                    : `rgba(56,189,248,${0.18 + Math.min(0.45, cell.balls / (maxCellBalls * 1.4))})`;
+                            const opacity = cell.balls > 0 ? 0.5 + 0.5 * (cell.balls / maxCellBalls) : 1;
 
-              <div className="flex items-center gap-4 text-[10px] font-mono text-white/40 mt-3 px-2">
-                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-emerald-500/30 border border-emerald-500/40 inline-block" /> SR &gt; 160 (Batter Advantage)</span>
-                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-blue-500/30 border border-blue-500/40 inline-block" /> SR 110–160 (Par Scoring)</span>
-                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-rose-500/30 border border-rose-500/40 inline-block" /> SR &lt; 110 (Bowler Dominant)</span>
+                            return (
+                              <td
+                                key={cell.lineId}
+                                onClick={() => setSelectedPitchCell(isSelected ? null : { length: cell.lengthId, line: cell.lineId })}
+                                style={{ background: bg, opacity }}
+                                title={cell.balls > 0 ? `${cell.lengthLabel}, ${cell.lineLabel}: ${cell.balls} balls, ${cell.runs} runs, SR ${cell.sr}` : "No balls recorded"}
+                                className={`h-12 px-2 rounded text-center align-middle transition-all cursor-pointer border border-white/10 ${
+                                  isSelected ? "ring-2 ring-white scale-[1.03] shadow-xl" : "hover:border-white/30"
+                                }`}
+                              >
+                                {cell.balls > 0 ? (
+                                  <div className="flex flex-col items-center leading-tight">
+                                    <span className="text-xs font-black font-mono text-white">{cell.sr} <span className="text-[8px] font-normal text-white/70">SR</span></span>
+                                    <span className="text-[9px] font-mono text-white/70 mt-0.5">
+                                      {cell.balls}b · {cell.runs}r{cell.dismissals > 0 ? ` · ${cell.dismissals}W` : ""}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <span className="text-xs font-mono text-white/20">·</span>
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                );
+              })()}
+
+              <div className="flex flex-wrap items-center gap-4 text-[10px] font-mono text-white/40 mt-3 px-2">
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded inline-block" style={{ background: "rgba(16,185,129,0.5)" }} /> SR &ge; 160 (Batter Advantage)</span>
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded inline-block" style={{ background: "rgba(56,189,248,0.45)" }} /> SR 111–159 (Par Scoring)</span>
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded inline-block" style={{ background: "rgba(244,63,94,0.5)" }} /> SR &le; 110 (Bowler Dominant)</span>
               </div>
             </div>
 
-            {/* Visual 2D Pitch Graphic & Cell Inspector (4 Cols) */}
+            {/* BatterLens-style Cell Inspector + Outcomes by Length (4 Cols) */}
             <div className="lg:col-span-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 flex flex-col gap-4">
               <span className="text-[9px] font-mono font-black uppercase text-primary tracking-wider">
                 TACTICAL CELL DOSSIER
@@ -874,243 +682,82 @@ export function HeadToHeadTacticalLab({
                   </div>
                 );
               })() : (
-                <div className="text-center py-8 text-white/40 text-xs font-mono flex flex-col items-center gap-2">
-                  <Target className="w-8 h-8 text-white/20" />
+                <div className="text-center py-4 text-white/40 text-xs font-mono flex flex-col items-center gap-2">
+                  <Target className="w-6 h-6 text-white/20" />
                   <span>Click any pitch grid cell on the left to inspect ball metrics &amp; tactical execution.</span>
                 </div>
               )}
 
-              {/* 2D Pitch Strip Graphic */}
-              <div className="mt-auto pt-3 border-t border-white/5 flex flex-col items-center">
-                <span className="text-[8px] font-mono text-white/30 uppercase mb-2">22-Yard Pitch Corridor Graphic</span>
-                <svg viewBox="0 0 160 260" className="w-36 h-auto">
-                  <defs>
-                    <linearGradient id="pitchSoil" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#92400e" />
-                      <stop offset="100%" stopColor="#78350f" />
-                    </linearGradient>
-                  </defs>
-                  {/* Pitch Rectangle */}
-                  <rect x="25" y="10" width="110" height="240" rx="4" fill="url(#pitchSoil)" stroke="#ca8a04" strokeWidth="1.5" />
-                  {/* Crease lines */}
-                  <line x1="25" y1="40" x2="135" y2="40" stroke="#ffffff" strokeWidth="2" opacity="0.9" />
-                  <line x1="25" y1="220" x2="135" y2="220" stroke="#ffffff" strokeWidth="2" opacity="0.9" />
-                  {/* Bowling & Stumps */}
-                  <circle cx="76" cy="35" r="1.5" fill="#fef08a" />
-                  <circle cx="80" cy="35" r="1.5" fill="#fef08a" />
-                  <circle cx="84" cy="35" r="1.5" fill="#fef08a" />
-                  <circle cx="76" cy="225" r="1.5" fill="#fef08a" />
-                  <circle cx="80" cy="225" r="1.5" fill="#fef08a" />
-                  <circle cx="84" cy="225" r="1.5" fill="#fef08a" />
-                  {/* Zone lines */}
-                  <line x1="25" y1="85" x2="135" y2="85" stroke="#ffffff" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
-                  <line x1="25" y1="140" x2="135" y2="140" stroke="#ffffff" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
-                  <line x1="25" y1="195" x2="135" y2="195" stroke="#ffffff" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
-                  {/* Length labels */}
-                  <text x="30" y="70" fontSize="7" fill="#ffffff" opacity="0.4" fontFamily="monospace">SHORT</text>
-                  <text x="30" y="125" fontSize="7" fill="#ffffff" opacity="0.4" fontFamily="monospace">GOOD</text>
-                  <text x="30" y="180" fontSize="7" fill="#ffffff" opacity="0.4" fontFamily="monospace">FULL</text>
-                  <text x="30" y="210" fontSize="7" fill="#ffffff" opacity="0.4" fontFamily="monospace">YORKER</text>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+              {/* BatterLens-style 0 / 1-3 / 4 / 6 / W by Length distribution */}
+              <div className="mt-auto pt-3 border-t border-white/5 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] font-mono font-black uppercase tracking-wider text-white/50">
+                    0 / 1–3 / 4 / 6 / W by Length
+                  </span>
+                  <span className="text-[9px] font-mono text-white/35">Pitch Outcome Mix</span>
+                </div>
+                {(() => {
+                  const parts = [
+                    { k: "Dot", c: "rgba(255,255,255,0.22)" },
+                    { k: "1–3", c: "rgba(56,189,248,0.65)" },
+                    { k: "4", c: "rgba(52,211,153,0.78)" },
+                    { k: "6", c: "rgba(250,204,21,0.85)" },
+                    { k: "W", c: "rgba(244,63,94,0.88)" },
+                  ];
+                  const activeRows = PITCH_LENGTHS.map(len => {
+                    const sub = matchupDeliveries.filter(d => {
+                      const bl = (d.length || "").toLowerCase();
+                      return (
+                        (len.id === "short" && (bl.includes("short") || bl.includes("bouncer"))) ||
+                        (len.id === "good" && bl.includes("good")) ||
+                        (len.id === "full" && (bl.includes("full") || bl.includes("slot"))) ||
+                        (len.id === "yorker" && bl.includes("yorker"))
+                      );
+                    });
+                    const counts = [
+                      sub.filter(d => (d.runs || 0) === 0 && !d.shot?.toLowerCase().includes("out")).length,
+                      sub.filter(d => (d.runs || 0) >= 1 && (d.runs || 0) <= 3).length,
+                      sub.filter(d => d.runs === 4).length,
+                      sub.filter(d => d.runs === 6).length,
+                      sub.filter(d => d.shot?.toLowerCase().includes("out") || d.variation?.toLowerCase().includes("out")).length,
+                    ];
+                    return { len, sub, counts };
+                  }).filter(r => r.sub.length > 0);
 
-      {/* ── TAB 3: 360° GROUND SCORING WAGON WHEEL ── */}
-      {activeSubTab === "wagon" && (
-        <div className="p-5 sm:p-6 flex flex-col gap-6 animate-fade-in">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/5">
-            <div>
-              <span className="text-[9px] font-mono font-black uppercase tracking-wider text-primary">
-                360° SPATIAL SCORING DISPERSION · WAGON WHEEL RADIAL
-              </span>
-              <h4 className="text-base font-black text-white mt-0.5">
-                Ground Scoring Distribution &amp; Boundary Tracers
-              </h4>
-              <p className="text-xs text-white/50 mt-0.5">
-                Visualizing runs off the bat by 8 ground sectors. Click any sector to view scoring density and boundary counts.
-              </p>
-            </div>
-            {selectedWagonSector && (
-              <button
-                onClick={() => setSelectedWagonSector(null)}
-                className="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-[10px] font-mono text-white transition-all cursor-pointer flex items-center gap-1 w-fit"
-              >
-                <RotateCcw className="w-3 h-3" /> View All Sectors
-              </button>
-            )}
-          </div>
-
-          {/* Linked Delivery Type Filter Strip for Shot Zoom Analysis */}
-          <div className="flex flex-wrap items-center justify-between gap-3 bg-white/[0.02] border border-white/5 rounded-2xl p-3">
-            <div className="flex items-center gap-2">
-              <Target className="w-4 h-4 text-amber-400" />
-              <span className="text-[10px] font-mono font-bold text-white/70 uppercase">
-                Bowling Delivery Type Filter:
-              </span>
-              {selectedDeliveryType !== "ALL" && (
-                <span className="px-2 py-0.5 rounded-full text-[9px] font-mono font-black uppercase bg-amber-400/20 text-amber-300 border border-amber-400/40">
-                  Shot Zoom Active
-                </span>
-              )}
-            </div>
-            <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none">
-              {TACTICAL_DELIVERY_TYPES.map(dt => (
-                <button
-                  key={dt.id}
-                  onClick={() => setSelectedDeliveryType(dt.id)}
-                  className={`px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
-                    selectedDeliveryType === dt.id
-                      ? "bg-amber-400 text-slate-950 font-bold shadow-lg shadow-amber-400/25 scale-105"
-                      : "bg-white/5 text-white/50 hover:text-white hover:bg-white/10"
-                  }`}
-                >
-                  {dt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            {/* SVG 360° Stadium Wagon Wheel (7 Cols) */}
-            <div className="lg:col-span-7 flex justify-center py-2">
-              <div className="relative w-full max-w-[420px] aspect-square">
-                <svg viewBox="0 0 420 420" className="w-full h-full select-none" role="img" aria-label="360 Stadium Wagon Wheel">
-                  <defs>
-                    <radialGradient id="h2hTurf" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#1e3a29" />
-                      <stop offset="65%" stopColor="#14532d" />
-                      <stop offset="100%" stopColor="#052e16" />
-                    </radialGradient>
-                    <pattern id="h2hGrassPattern" width="30" height="30" patternUnits="userSpaceOnUse">
-                      <line x1="0" y1="15" x2="30" y2="15" stroke="#15803d" strokeWidth="1" opacity="0.25" />
-                    </pattern>
-                  </defs>
-
-                  {/* Outer Stadium Concrete Rim */}
-                  <circle cx="210" cy="210" r="206" fill="#0f172a" />
-                  <circle cx="210" cy="210" r="202" fill="none" stroke="#334155" strokeWidth="3" />
-                  
-                  {/* Turf Grass Base */}
-                  <circle cx="210" cy="210" r="196" fill="url(#h2hTurf)" />
-                  <circle cx="210" cy="210" r="196" fill="url(#h2hGrassPattern)" />
-
-                  {/* White Boundary Rope */}
-                  <circle cx="210" cy="210" r="190" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeDasharray="8 4" opacity="0.9" />
-
-                  {/* 30-Yard Inner Field Ring */}
-                  <circle cx="210" cy="210" r="105" fill="none" stroke="#ffffff" strokeWidth="1.5" strokeDasharray="5 5" opacity="0.5" />
-
-                  {/* Pitch Block Center */}
-                  <rect x="202" y="180" width="16" height="60" rx="2" fill="#854d0e" stroke="#ca8a04" strokeWidth="1" />
-                  {/* Stumps */}
-                  <circle cx="206" cy="184" r="1" fill="#fef08a" />
-                  <circle cx="210" cy="184" r="1" fill="#fef08a" />
-                  <circle cx="214" cy="184" r="1" fill="#fef08a" />
-                  <circle cx="206" cy="236" r="1" fill="#fef08a" />
-                  <circle cx="210" cy="236" r="1" fill="#fef08a" />
-                  <circle cx="214" cy="236" r="1" fill="#fef08a" />
-
-                  {/* Off-Side / Leg-Side Turf Labels */}
-                  <text x="95" y="215" fill="#ffffff" opacity="0.2" fontSize="14" fontWeight="900" textAnchor="middle" letterSpacing="2">OFF SIDE</text>
-                  <text x="325" y="215" fill="#ffffff" opacity="0.2" fontSize="14" fontWeight="900" textAnchor="middle" letterSpacing="2">LEG SIDE</text>
-
-                  {/* Sector Radial Laser Tracers & Scoring Hubs */}
-                  {wagonData.map(sec => {
-                    const isSelected = selectedWagonSector === sec.id;
-                    const maxR = Math.max(1, ...wagonData.map(w => w.runs));
-                    const strokeWidth = 2 + (sec.runs / maxR) * 6;
-                    const tracerColor = isSelected ? "#38BDF8" : sec.runs > 0 ? "#10B981" : "rgba(255,255,255,0.15)";
-                    const nodeRadius = 10 + (sec.runs / maxR) * 10;
-
-                    return (
-                      <g
-                        key={sec.id}
-                        className="cursor-pointer group"
-                        onClick={() => setSelectedWagonSector(sec.id)}
-                      >
-                        {/* Radial laser tracer */}
-                        <line
-                          x1="210"
-                          y1="210"
-                          x2={sec.cx}
-                          y2={sec.cy}
-                          stroke={tracerColor}
-                          strokeWidth={strokeWidth}
-                          strokeOpacity={isSelected ? 0.95 : 0.6}
-                          className="transition-all duration-300"
-                        />
-                        {/* Landing sector node circle */}
-                        <circle
-                          cx={sec.cx}
-                          cy={sec.cy}
-                          r={nodeRadius}
-                          fill={isSelected ? "#0284c7" : sec.runs > 0 ? "#065f46" : "#1e293b"}
-                          stroke={isSelected ? "#ffffff" : "#34d399"}
-                          strokeWidth={isSelected ? 2.5 : 1.5}
-                          className="transition-all duration-300 group-hover:scale-110"
-                        />
-                        {/* Runs label inside node */}
-                        <text
-                          x={sec.cx}
-                          y={sec.cy + 3.5}
-                          textAnchor="middle"
-                          fill="#ffffff"
-                          fontSize={nodeRadius > 14 ? "11" : "9"}
-                          fontWeight="900"
-                          fontFamily="monospace"
-                        >
-                          {sec.runs}
-                        </text>
-                      </g>
-                    );
-                  })}
-                </svg>
-              </div>
-            </div>
-
-            {/* Sector Breakdown Data Cards (5 Cols) */}
-            <div className="lg:col-span-5 flex flex-col gap-2 max-h-[420px] overflow-y-auto pr-1">
-              <span className="text-[9px] font-mono font-black uppercase text-primary tracking-wider mb-1">
-                SECTOR DISPERSION BREAKDOWN
-              </span>
-
-              {wagonData.map(sec => {
-                const isSelected = selectedWagonSector === sec.id;
-                return (
-                  <div
-                    key={sec.id}
-                    onClick={() => setSelectedWagonSector(sec.id)}
-                    className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
-                      isSelected
-                        ? "bg-primary/20 border-primary text-white shadow-lg"
-                        : "bg-white/[0.02] border-white/5 hover:bg-white/5 text-white/80"
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className={`w-6 h-6 rounded-lg flex items-center justify-center text-[9px] font-mono font-bold ${
-                        isSelected ? "bg-primary text-white" : "bg-white/10 text-white/60"
-                      }`}>
-                        {sec.short}
-                      </span>
-                      <div>
-                        <div className="text-xs font-bold text-white">{sec.name}</div>
-                        <div className="text-[9px] font-mono text-white/40">{sec.side} SIDE · {sec.balls} balls</div>
+                  if (activeRows.length === 0) {
+                    return <p className="text-[10px] text-white/35 font-mono">No length-tagged deliveries in this matchup.</p>;
+                  }
+                  return (
+                    <div className="space-y-1.5">
+                      {activeRows.map(({ len, sub, counts }) => (
+                        <div key={len.id} className="grid grid-cols-[96px_1fr_32px] items-center gap-2 text-[10px]">
+                          <span className="text-white/75 font-mono truncate">{len.label}</span>
+                          <div className="flex h-3 rounded overflow-hidden bg-white/5">
+                            {counts.map((n, k) =>
+                              n > 0 ? (
+                                <div
+                                  key={parts[k].k}
+                                  style={{ width: `${(n / sub.length) * 100}%`, background: parts[k].c }}
+                                  title={`${parts[k].k}: ${n} (${Math.round((n / sub.length) * 100)}%)`}
+                                />
+                              ) : null,
+                            )}
+                          </div>
+                          <span className="text-right font-mono text-white/45">{sub.length}b</span>
+                        </div>
+                      ))}
+                      <div className="flex flex-wrap gap-3 text-[9px] text-white/50 pt-1">
+                        {parts.map(p => (
+                          <span key={p.k} className="flex items-center gap-1">
+                            <i className="w-2 h-2 rounded-sm inline-block" style={{ background: p.c }} />
+                            {p.k}
+                          </span>
+                        ))}
                       </div>
                     </div>
-
-                    <div className="flex items-center gap-3">
-                      <div className="text-right">
-                        <div className="text-xs font-black font-mono text-primary">{sec.runs} <span className="text-[9px] font-normal text-white/40">runs</span></div>
-                        <div className="text-[8.5px] font-mono text-white/40">{sec.sharePct}% share</div>
-                      </div>
-                      <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? "text-primary rotate-90" : "text-white/20"}`} />
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })()}
+              </div>
             </div>
           </div>
         </div>
@@ -1203,7 +850,7 @@ export function HeadToHeadTacticalLab({
             <div className="py-12 text-center text-white/40 text-xs font-mono flex flex-col items-center gap-2">
               <Info className="w-6 h-6 text-white/20" />
               <span>No direct delivery-by-delivery ledger available in the archive for this athlete pairing.</span>
-              <span className="text-[10px] text-white/30">Refer to the Tactical Length Matrix and Pitch Map above for projected head-to-head metrics.</span>
+              <span className="text-[10px] text-white/30">Select a pairing with recorded IPL deliveries to view ball-by-ball breakdown.</span>
             </div>
           )}
         </div>

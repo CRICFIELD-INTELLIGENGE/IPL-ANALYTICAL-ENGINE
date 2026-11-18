@@ -2782,8 +2782,8 @@ async function aggregateMatchupStatsSql(batter: string, bowler: string, filters:
     // 1. Fetch from materialized view (physical table) when no extra filters
     const res = await db.select().from(batterBowlerMatchupStatsTable).where(
       and(
-        eq(batterBowlerMatchupStatsTable.batterId, sql`(SELECT player_id FROM players WHERE player_name = ${batter} LIMIT 1)`),
-        eq(batterBowlerMatchupStatsTable.bowlerId, sql`(SELECT player_id FROM players WHERE player_name = ${bowler} LIMIT 1)`)
+        eq(batterBowlerMatchupStatsTable.batterId, sql`(SELECT player_id FROM players WHERE name = ${batter} LIMIT 1)`),
+        eq(batterBowlerMatchupStatsTable.bowlerId, sql`(SELECT player_id FROM players WHERE name = ${bowler} LIMIT 1)`)
       )
     ).limit(1);
 
@@ -2810,7 +2810,6 @@ async function aggregateMatchupStatsSql(batter: string, bowler: string, filters:
     LEFT JOIN venues v ON m.venue_id = v.venue_id
     LEFT JOIN dismissals dis ON d.delivery_id = dis.delivery_id
     WHERE ${where}
-    HAVING count(case when d.is_wide = false then 1 end) >= 6
   `;
 
   const queryPhase = sql`
@@ -2944,11 +2943,11 @@ async function aggregateMatchupStatsSql(batter: string, bowler: string, filters:
     sixes = overallStats.sixes;
   }
 
-  // Ensure minimum sample size of 6 balls (unless fallback to JSON)
-  if (balls < 6 && !overallStats) {
+  // Return neutral baseline only when there are genuinely 0 recorded deliveries.
+  if (balls === 0 && !overallStats) {
     return {
       batter, bowler, runs: 0, balls: 0, dismissals: 0,
-      sr: 0, dotPct: 0, boundaryPct: 0, dominanceIndex: 0, fours: 0, sixes: 0,
+      sr: 0, dotPct: 0, boundaryPct: 0, dominanceIndex: 50, fours: 0, sixes: 0,
       battingHand: getBattingHand(batter),
       bowlerType: getBowlerType(bowler),
       phaseSplit: {

@@ -3,6 +3,7 @@ import matchStages from "@/data/ipl-match-stages.json";
 import { MobileStatsPresentation } from "@/mobile/screens/stats-presentation";
 import {ScoringRing} from '@/components/visualizations/scoring-ring';
 import { HeadToHeadTacticalLab } from "@/components/head-to-head-tactical-lab";
+import { HeadToHeadGroundVisual } from "@/components/player-intelligence-sections";
 import { Scale } from "lucide-react";
 import { LeagueValuePanel } from "@/components/intelligence/intel-components";
 import { FeatureSaveButton } from "@/components/feature-save-button";
@@ -26,7 +27,7 @@ import {
   BarChart2, Trophy, Target, Zap, Flame, Activity, ArrowRight, MapPin,
   Users, User, TrendingUp, Cpu, ArrowUpRight, Shield, Eye, Filter, Calendar,
   ChevronDown, Search, Crosshair, BarChart, Layers, Globe, X, Award, RotateCcw, Compass,
-  Newspaper, BookOpen, Clock
+  Newspaper, BookOpen, Clock, SlidersHorizontal
 } from "lucide-react";
 import { getV2ForFranchise, STORY_TYPE_LABEL } from "@/lib/editorial-v2";
 import { EDITORIAL_ASPECTS, type EditorialAspectId } from "@/data/editorial/schema";
@@ -41,6 +42,7 @@ import {
   teamColor, teamShort, resolvePlayerImage, isMatchingTeam,
   normalizeVenueName, usePlayerDisplayNames, displayPlayerName, venueImage, venueHue, venueHref
 } from "@/lib/aggregates";
+import { useRecordedDeliveries, buildClientMatchupSummary, resolveScorecardName } from "@/lib/delivery-data";
 import { useTeamTheme } from "@/lib/team-context";
 import {
   ResponsiveContainer, BarChart as RechartsBarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, LineChart, Line
@@ -537,20 +539,38 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
     }
 
     if (!isVenueFiltered && mobilePresentation) {
-      return (venues.data ?? []).map((v: any) => {
-        const venueName = getVenueName(v);
-        const cityName = getVenueCity(v);
-        const avg1st = Number(v.avg1stInn ?? v.avgFirstInnings ?? 0);
-        const avg2nd = Number(v.avg2ndInn ?? v.avgSecondInnings ?? 0);
-        const avgRunRate = (avg1st && avg2nd) ? ((avg1st + avg2nd) / 40) : 8.24;
-        return {
+      const grouped = new Map<string, { venueName: string; cityName: string; matches: number; runWeighted: number; weight: number }>();
+      for (const v of venues.data ?? []) {
+        const venueName = normalizeVenueName(getVenueName(v));
+        if (!venueName) continue;
+        const mCount = Number(v.matches ?? 0);
+        const avg1st = Number(v.avg1stInn ?? (v as any).avgFirstInnings ?? 0);
+        const avg2nd = Number(v.avg2ndInn ?? (v as any).avgSecondInnings ?? 0);
+        const rr = avg1st && avg2nd ? (avg1st + avg2nd) / 40 : 0;
+        const prev = grouped.get(venueName) ?? {
           venueName,
-          cityName,
-          matches: v.matches || 14,
-          avgRunRate,
-          isSliced: false,
+          cityName: getVenueCity(v),
+          matches: 0,
+          runWeighted: 0,
+          weight: 0,
         };
-      });
+        prev.matches += mCount;
+        if (rr > 0 && mCount > 0) {
+          prev.runWeighted += rr * mCount;
+          prev.weight += mCount;
+        }
+        if (!prev.cityName && getVenueCity(v)) prev.cityName = getVenueCity(v);
+        grouped.set(venueName, prev);
+      }
+      return Array.from(grouped.values())
+        .map(g => ({
+          venueName: g.venueName,
+          cityName: g.cityName,
+          matches: g.matches,
+          avgRunRate: g.weight > 0 ? g.runWeighted / g.weight : 8.24,
+          isSliced: false,
+        }))
+        .sort((a, b) => b.matches - a.matches || a.venueName.localeCompare(b.venueName));
     }
 
     let filteredSliced = slicedVenues;
@@ -987,21 +1007,60 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
 
   const removeChainFilter = (key: string) => clearFilter(key as keyof typeof filters);
 
-  // KPIs
+  // KPIs — computed dynamically from warehouse overview + active sliced fixtures/leaders
   const kpis = useMemo(() => {
-    const o = overview.data;
+    const o: any = overview.data;
     if (!o) return [];
+
+    // Highest team innings total from active matches (real warehouse record: 287/3)
+    let bestTeamRuns = 0;
+    let bestTeamLabel = "";
+    let decided = 0;
+    let chaseWins = 0;
+    for (const m of activeMatches) {
+      if (m.winner) {
+        decided++;
+        if (String(m.margin || "").toLowerCase().includes("wkt")) {
+          chaseWins++;
+        }
+      }
+      for (const sc of [m.team1Score, m.team2Score]) {
+        const mt = /^(\d+)(?:\/(\d+))?/.exec(String(sc || "").trim());
+        if (!mt) continue;
+        const r = Number(mt[1]);
+        const w = mt[2];
+        if (r > bestTeamRuns) {
+          bestTeamRuns = r;
+          bestTeamLabel = w !== undefined ? `${r}/${w}` : `${r}`;
+        }
+      }
+    }
+
+    // Best individual innings score from career/sliced batters (real record: 175*)
+    let bestIndiv = 0;
+    for (const b of activeData.batters) {
+      const h = Number(b.highest || 0);
+      if (h > bestIndiv) bestIndiv = h;
+    }
+
+    const chasePctVal =
+      activeMatches.length > 0 && decided > 0 && activeMatches.length < matches.length
+        ? Math.round((chaseWins / decided) * 1000) / 10
+        : (o.chasingWinPct ?? (decided > 0 ? Math.round((chaseWins / decided) * 1000) / 10 : 54.5));
+
+    const dotPctVal = o.dotBallPct != null ? Number(o.dotBallPct).toFixed(1) : "35.6";
+
     return [
       { Icon: Target, label: "Total Runs", value: fmt(o.totalRuns), accent: "hsl(45 95% 60%)" },
       { Icon: Zap, label: "Total Wickets", value: fmt(o.totalWickets), accent: "hsl(190 95% 60%)" },
-      { Icon: Shield, label: "Highest Team", value: "277/3", accent: "hsl(210 100% 60%)" },
-      { Icon: Trophy, label: "Best Indiv.", value: "140*", accent: "hsl(30 100% 60%)" },
+      { Icon: Shield, label: "Highest Team", value: bestTeamLabel || "287/3", accent: "hsl(210 100% 60%)" },
+      { Icon: Trophy, label: "Best Indiv.", value: bestIndiv > 0 ? `${bestIndiv}${bestIndiv === 175 ? "*" : ""}` : "175*", accent: "hsl(30 100% 60%)" },
       { Icon: Activity, label: "Avg 1st Inn", value: String(o.avg1stInnings), accent: "hsl(270 95% 65%)" },
-      { Icon: TrendingUp, label: "Win % Chase", value: "54.2%", accent: "hsl(140 100% 60%)" },
-      { Icon: Crosshair, label: "Dot Ball %", value: "32.8%", accent: "hsl(0 100% 65%)" },
+      { Icon: TrendingUp, label: "Win % Chase", value: `${Number(chasePctVal).toFixed(1)}%`, accent: "hsl(140 100% 60%)" },
+      { Icon: Crosshair, label: "Dot Ball %", value: `${dotPctVal}%`, accent: "hsl(0 100% 65%)" },
       { Icon: Flame, label: "Sixes", value: fmt(o.totalSixes), accent: "hsl(320 100% 65%)" },
     ];
-  }, [overview.data]);
+  }, [overview.data, activeMatches, matches.length, activeData.batters]);
 
   // Season chart
   const seasonChart = useMemo(() => {
@@ -1815,7 +1874,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
                   <Flame className="w-3 h-3 text-blue-600 dark:text-blue-400" />
                   STATSGURU TELEMETRY
                 </span>
-                <span className="text-[10px] font-mono text-slate-500 dark:text-white/40">19 Seasons Indexed</span>
+                <span className="text-[10px] font-mono text-slate-500 dark:text-white/40">{seasons.data?.length || overview.data?.seasons || 19} Seasons Indexed</span>
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-none text-slate-900 dark:text-white uppercase tracking-tighter mb-2 scale-x-105 origin-left">
                 <div className="mb-1 text-slate-900 dark:text-white">ADVANCED</div>
@@ -1823,7 +1882,7 @@ export default function StatsPage({ mobilePresentation = false }: { mobilePresen
               </h1>
               <p className="text-slate-600 dark:text-white/60 text-xs md:text-sm font-medium tracking-tight max-w-[480px]">
                 <span className="text-slate-900 dark:text-white/90 font-black mr-2 uppercase tracking-widest">Statsguru Depth:</span>
-                Dimensional slicing across {overview.data?.totalMatches ?? "1,243"} matches and {overview.data?.seasons ?? "19"} seasons of high-fidelity IPL telemetry.
+                Dimensional slicing across {(activeMatches.length > 0 && activeMatches.length < (matches.length || Infinity) ? activeMatches.length : (overview.data?.totalMatches ?? (matches.length || 1243))).toLocaleString("en-IN")} matches and {seasons.data?.length || overview.data?.seasons || 19} seasons of high-fidelity IPL telemetry.
               </p>
             </div>
           </div>
@@ -3204,9 +3263,9 @@ function RecordBookView({ activeData, playerImages, matches, isSliced, fixtureRe
       id: "highest_total",
       label: "Highest Total",
       sponsor: "Team Innings Record",
-      value: "277/3",
+      value: "287/3",
       holder: "SRH",
-      context: "vs MI, Hyderabad 2024",
+      context: "vs RCB, Bengaluru 2024",
       color: "text-amber-400 border-amber-400/20 bg-amber-400/5",
       metricName: "Score",
       metricValue: (row) => row.value,
@@ -4126,6 +4185,7 @@ function HeadToHeadView({
   initialPlayer?: string;
 }) {
   const displayNames = usePlayerDisplayNames();
+  const bios = usePlayerBios();
   const [mode, setMode] = useState<"players" | "teams">("players");
   const latestTeamResolver = usePlayerLatestTeamResolver();
   const playerTeamsMap = usePlayerTeamsMap();
@@ -4176,11 +4236,26 @@ function HeadToHeadView({
   const [player2, setPlayer2] = useState("");
   const [search1, setSearch1] = useState("");
   const [search2, setSearch2] = useState("");
+  const [search1Open, setSearch1Open] = useState(false);
+  const [search2Open, setSearch2Open] = useState(false);
 
   const [teamFilter1, setTeamFilter1] = useState("All Teams");
   const [teamFilter2, setTeamFilter2] = useState("All Teams");
   const [roleFilter, setRoleFilter] = useState<"All" | "Batter" | "Bowler">("All");
   const [statsScope, setStatsScope] = useState<"all_time" | "squad">("all_time");
+  const [duelPhase, setDuelPhase] = useState<"all" | "pp" | "middle" | "death">("all");
+  const [duelInnings, setDuelInnings] = useState<"all" | "1st" | "2nd">("all");
+  const [duelBowlerType, setDuelBowlerType] = useState<"all" | "pace" | "spin">("all");
+  const [duelVenue, setDuelVenue] = useState<string>("all");
+  const allVenuesQuery = useVenues();
+  const duelVenueOptions = useMemo(() => {
+    const s = new Set<string>();
+    for (const v of allVenuesQuery.data ?? []) {
+      const n = normalizeVenueName(v.venue);
+      if (n) s.add(n);
+    }
+    return Array.from(s).sort();
+  }, [allVenuesQuery.data]);
 
   const [selectedTeam1, setTeam1] = useState("");
   const [selectedTeam2, setTeam2] = useState("");
@@ -4251,18 +4326,25 @@ function HeadToHeadView({
   useEffect(() => {
     if (p1Options.length > 0) {
       if (!player1 || !p1Options.find((p: any) => p.player === player1)) {
-        setPlayer1(p1Options[0].player);
+        const preferred =
+          p1Options.find((p: any) => p.role === "Batter" && (p.batting?.runs ?? 0) >= 1000) ??
+          p1Options[0];
+        setPlayer1(preferred.player);
       }
     }
   }, [p1Options, player1]);
 
   useEffect(() => {
     if (p2Options.length > 0) {
-      if (!player2 || !p2Options.find((p: any) => p.player === player2)) {
-        setPlayer2(p2Options[0].player);
+      if (!player2 || !p2Options.find((p: any) => p.player === player2) || (p2Options.length > 1 && player2 === player1)) {
+        const distinct =
+          p2Options.find((p: any) => p.player !== player1 && p.role === "Bowler" && (p.bowling?.wickets ?? 0) >= 50) ??
+          p2Options.find((p: any) => p.player !== player1) ??
+          p2Options[0];
+        setPlayer2(distinct.player);
       }
     }
-  }, [p2Options, player2]);
+  }, [p2Options, player2, player1]);
 
   const p1Data = allPlayers.find((b: any) => b.player === player1);
   const p2Data = allPlayers.find((b: any) => b.player === player2);
@@ -4317,6 +4399,67 @@ function HeadToHeadView({
       setComparisonTab("bowling");
     }
   }, [player1, player2, isBatterBowlerDuel, hasBattingComp, hasBowlingComp, p1Discipline, p2Discipline]);
+
+  const duelBatter = p1Discipline === "bowler" && (p2Discipline === "batter" || p2Discipline === "all-rounder") ? player2 : player1;
+  const duelBowler = p1Discipline === "bowler" && (p2Discipline === "batter" || p2Discipline === "all-rounder") ? player1 : player2;
+  const duelBatterTeam = latestTeamResolver(duelBatter) || "IPL";
+  const duelBowlerTeam = latestTeamResolver(duelBowler) || "IPL";
+
+  const recordedDuelApiQuery = useQuery<any | null>({
+    queryKey: ["stats-head2head-matchup", duelBatter, duelBowler, duelPhase, duelInnings, duelBowlerType, duelVenue],
+    enabled: mode === "players" && Boolean(duelBatter && duelBowler && duelBatter !== duelBowler),
+    staleTime: 1000 * 60 * 10,
+    queryFn: async () => {
+      const bName = resolveScorecardName(duelBatter, bios.data);
+      const wName = resolveScorecardName(duelBowler, bios.data);
+      const params = new URLSearchParams({ batter: bName, bowler: wName });
+      if (duelPhase !== "all") params.set("phase", duelPhase === "pp" ? "Powerplay" : duelPhase === "middle" ? "Middle" : "Death");
+      if (duelInnings !== "all") params.set("innings", duelInnings === "1st" ? "1st Innings" : "2nd Innings");
+      if (duelBowlerType !== "all") params.set("bowlerType", duelBowlerType === "pace" ? "Pacer" : "Spinner");
+      if (duelVenue !== "all") params.set("venue", duelVenue);
+      try {
+        const res = await fetch(`/api/stats/matchup?${params.toString()}`);
+        const ct = res.headers.get("content-type") || "";
+        if (!res.ok || ct.includes("text/html")) return null;
+        return await res.json();
+      } catch {
+        return null;
+      }
+    },
+  });
+
+  const duelRecordedDeliveries = useRecordedDeliveries(
+    mode === "players" && duelBatter && duelBowler && duelBatter !== duelBowler ? duelBatter : "",
+  );
+
+  const clientDuelFallback = useMemo(() => {
+    if (duelVenue !== "all" || !duelBatter || !duelBowler || duelBatter === duelBowler) return null;
+    return buildClientMatchupSummary(duelRecordedDeliveries.data, duelBatter, duelBowler, bios.data, {
+      phase: duelPhase,
+      innings: duelInnings,
+      matchIds: isSliced ? (matchIds as Set<string> | undefined) : undefined,
+    });
+  }, [duelRecordedDeliveries.data, duelBatter, duelBowler, bios.data, duelPhase, duelInnings, duelVenue, isSliced, matchIds]);
+
+  const recordedDuelQuery = useMemo(() => {
+    const api = recordedDuelApiQuery.data;
+    const data =
+      api && api.balls > 0
+        ? api
+        : clientDuelFallback && clientDuelFallback.balls > 0
+          ? clientDuelFallback
+          : api;
+    return {
+      ...recordedDuelApiQuery,
+      data,
+      isLoading: recordedDuelApiQuery.isLoading && !clientDuelFallback,
+    };
+  }, [recordedDuelApiQuery, clientDuelFallback]);
+
+  const duelDominanceIndex =
+    recordedDuelQuery.data && recordedDuelQuery.data.balls > 0
+      ? recordedDuelQuery.data.dominanceIndex
+      : 50;
 
   return (
     <div className="flex flex-col gap-6">
@@ -4416,8 +4559,10 @@ function HeadToHeadView({
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
             {/* Player 1 Card with Search Option Along With Dropdown */}
-            <div className="stats-tool-panel p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none" />
+            <div className="stats-tool-panel p-6 flex flex-col gap-4 relative shadow-xl">
+              <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+              </div>
               
               <div className="flex flex-col gap-2 z-10">
                 <div className="flex items-center justify-between">
@@ -4435,16 +4580,71 @@ function HeadToHeadView({
                   )}
                 </div>
 
-                {/* Search Input for Athlete 1 */}
-                <div className="relative">
+                {/* Search Input + Live Selectable Dropdown for Athlete 1 */}
+                <div className="relative z-30">
                   <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-white/40" />
                   <input
                     type="text"
                     value={search1}
-                    onChange={e => setSearch1(e.target.value)}
+                    onFocus={() => setSearch1Open(true)}
+                    onBlur={() => setTimeout(() => setSearch1Open(false), 160)}
+                    onChange={e => {
+                      const val = e.target.value;
+                      setSearch1(val);
+                      setSearch1Open(true);
+                      const q = val.toLowerCase().trim();
+                      if (q) {
+                        const hits = p1Options.filter((b: any) =>
+                          (b.player || "").toLowerCase().includes(q) ||
+                          displayPlayerName(b.player, displayNames).toLowerCase().includes(q),
+                        );
+                        if (hits.length === 1) {
+                          setPlayer1(hits[0].player);
+                        } else {
+                          const exact = hits.find(
+                            (b: any) =>
+                              (b.player || "").toLowerCase() === q ||
+                              displayPlayerName(b.player, displayNames).toLowerCase() === q,
+                          );
+                          if (exact) setPlayer1(exact.player);
+                        }
+                      }
+                    }}
+                    onKeyDown={e => {
+                      if (e.key === "Enter" && filteredP1Options.length > 0) {
+                        setPlayer1(filteredP1Options[0].player);
+                        setSearch1Open(false);
+                      }
+                    }}
                     placeholder="Search Athlete 1 by name..."
                     className="w-full bg-[#080B16] border border-white/10 rounded-xl pl-9 pr-3 py-2 text-xs font-semibold text-white placeholder-white/30 outline-none focus:border-primary/50 transition-colors shadow-inner"
                   />
+                  {search1Open && search1.trim().length > 0 && (
+                    <div className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-xl border border-white/15 bg-[#080B16]/95 backdrop-blur-xl shadow-2xl max-h-60 overflow-y-auto p-1">
+                      {filteredP1Options.length === 0 ? (
+                        <div className="px-3 py-2 text-[11px] font-mono text-white/40">No matching athletes</div>
+                      ) : (
+                        filteredP1Options.slice(0, 40).map((b: any) => (
+                          <button
+                            key={b.player}
+                            type="button"
+                            onMouseDown={e => {
+                              e.preventDefault();
+                              setPlayer1(b.player);
+                              setSearch1Open(false);
+                            }}
+                            className={`w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-xs transition-colors cursor-pointer ${
+                              b.player === player1 ? "bg-primary/20 text-white font-bold" : "text-white/80 hover:bg-white/10"
+                            }`}
+                          >
+                            <PlayerAvatar name={b.player} playerImages={playerImages} className="w-6 h-6 shrink-0" />
+                            <span className="truncate flex-1">{displayPlayerName(b.player, displayNames)}</span>
+                            <span className="text-[9px] font-mono uppercase text-white/45 shrink-0">{b.role}</span>
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Dropdown Select for Athlete 1 */}
@@ -4470,13 +4670,33 @@ function HeadToHeadView({
                 </select>
               </div>
 
-              {/* Player 1 Avatar & Identity */}
+              {/* Player 1 Avatar & Identity (Synced to Player Card Template) */}
               <div className="flex flex-col items-center mt-2 z-10 w-full">
-                <div className="w-24 h-24 rounded-full overflow-hidden bg-white/5 border-2 border-primary shrink-0 shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)] relative group hover:scale-105 transition-transform duration-500">
+                <div
+                  className="w-24 h-24 rounded-full overflow-hidden bg-white/5 border-2 shrink-0 shadow-lg relative group hover:scale-105 transition-transform duration-500"
+                  style={{ borderColor: teamColor(latestTeamResolver(player1) || "IPL") }}
+                >
                   <PlayerAvatar name={player1} playerImages={playerImages} imgClassName="w-full h-full object-cover" />
                 </div>
-                <h3 className="mt-4 text-lg font-black uppercase text-white tracking-tight text-center">{displayPlayerName(player1, displayNames)}</h3>
-                <span className="text-[10px] font-black uppercase tracking-widest text-white/40 bg-white/5 border border-white/10 px-2 py-0.5 rounded mt-2">{p1Data?.role || "Athlete"}</span>
+                <div className="flex items-center gap-1.5 mt-3">
+                  <TeamLogo team={latestTeamResolver(player1) || "IPL"} size="w-4 h-4" />
+                  <span
+                    className="text-[10px] font-black uppercase tracking-widest"
+                    style={{ color: teamColor(latestTeamResolver(player1) || "IPL") }}
+                  >
+                    {teamShort(latestTeamResolver(player1) || "IPL")}
+                  </span>
+                  <span className="text-[9px] font-black uppercase tracking-widest text-white/40 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                    {p1Data?.role || "Athlete"}
+                  </span>
+                </div>
+                <h3 className="mt-2 text-lg font-black uppercase text-white tracking-tight text-center">{displayPlayerName(player1, displayNames)}</h3>
+                {player1 && (
+                  <Link href={`/players/${playerSlug(player1)}`} className="mt-1 text-[10px] font-black uppercase tracking-wider text-primary hover:underline flex items-center gap-1">
+                    <span>Player Card</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </Link>
+                )}
                 
                 {/* Dynamic Career Metrics */}
                 <div className="w-full mt-4 pt-3 border-t border-white/10 flex flex-col gap-2">
@@ -4643,8 +4863,10 @@ function HeadToHeadView({
             </div>
 
             {/* Player 2 Card with Search Option Along With Dropdown */}
-            <div className="stats-tool-panel p-6 flex flex-col gap-4 relative overflow-hidden shadow-xl">
-              <div className="absolute inset-0 bg-gradient-to-bl from-accent/10 to-transparent pointer-events-none" />
+            <div className="stats-tool-panel p-6 flex flex-col gap-4 relative shadow-xl">
+              <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-bl from-accent/10 to-transparent" />
+              </div>
               
               <div className="flex flex-col gap-2 z-10">
                 <div className="flex items-center justify-between">
@@ -4662,16 +4884,71 @@ function HeadToHeadView({
                   )}
                 </div>
 
-                {/* Search Input for Athlete 2 */}
-                <div className="relative">
+                {/* Search Input + Live Selectable Dropdown for Athlete 2 */}
+                <div className="relative z-30">
                   <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-white/40" />
                   <input
                     type="text"
                     value={search2}
-                    onChange={e => setSearch2(e.target.value)}
+                    onFocus={() => setSearch2Open(true)}
+                    onBlur={() => setTimeout(() => setSearch2Open(false), 160)}
+                    onChange={e => {
+                      const val = e.target.value;
+                      setSearch2(val);
+                      setSearch2Open(true);
+                      const q = val.toLowerCase().trim();
+                      if (q) {
+                        const hits = p2Options.filter((b: any) =>
+                          (b.player || "").toLowerCase().includes(q) ||
+                          displayPlayerName(b.player, displayNames).toLowerCase().includes(q),
+                        );
+                        if (hits.length === 1) {
+                          setPlayer2(hits[0].player);
+                        } else {
+                          const exact = hits.find(
+                            (b: any) =>
+                              (b.player || "").toLowerCase() === q ||
+                              displayPlayerName(b.player, displayNames).toLowerCase() === q,
+                          );
+                          if (exact) setPlayer2(exact.player);
+                        }
+                      }
+                    }}
+                    onKeyDown={e => {
+                      if (e.key === "Enter" && filteredP2Options.length > 0) {
+                        setPlayer2(filteredP2Options[0].player);
+                        setSearch2Open(false);
+                      }
+                    }}
                     placeholder="Search Athlete 2 by name..."
                     className="w-full bg-[#080B16] border border-white/10 rounded-xl pl-9 pr-3 py-2 text-xs font-semibold text-white placeholder-white/30 outline-none focus:border-accent/50 transition-colors shadow-inner"
                   />
+                  {search2Open && search2.trim().length > 0 && (
+                    <div className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-xl border border-white/15 bg-[#080B16]/95 backdrop-blur-xl shadow-2xl max-h-60 overflow-y-auto p-1">
+                      {filteredP2Options.length === 0 ? (
+                        <div className="px-3 py-2 text-[11px] font-mono text-white/40">No matching athletes</div>
+                      ) : (
+                        filteredP2Options.slice(0, 40).map((b: any) => (
+                          <button
+                            key={b.player}
+                            type="button"
+                            onMouseDown={e => {
+                              e.preventDefault();
+                              setPlayer2(b.player);
+                              setSearch2Open(false);
+                            }}
+                            className={`w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-xs transition-colors cursor-pointer ${
+                              b.player === player2 ? "bg-accent/20 text-white font-bold" : "text-white/80 hover:bg-white/10"
+                            }`}
+                          >
+                            <PlayerAvatar name={b.player} playerImages={playerImages} className="w-6 h-6 shrink-0" />
+                            <span className="truncate flex-1">{displayPlayerName(b.player, displayNames)}</span>
+                            <span className="text-[9px] font-mono uppercase text-white/45 shrink-0">{b.role}</span>
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Dropdown Select for Athlete 2 */}
@@ -4697,13 +4974,33 @@ function HeadToHeadView({
                 </select>
               </div>
 
-              {/* Player 2 Avatar & Identity */}
+              {/* Player 2 Avatar & Identity (Synced to Player Card Template) */}
               <div className="flex flex-col items-center mt-2 z-10 w-full">
-                <div className="w-24 h-24 rounded-full overflow-hidden bg-white/5 border-2 border-accent shrink-0 shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)] relative group hover:scale-105 transition-transform duration-500">
+                <div
+                  className="w-24 h-24 rounded-full overflow-hidden bg-white/5 border-2 shrink-0 shadow-lg relative group hover:scale-105 transition-transform duration-500"
+                  style={{ borderColor: teamColor(latestTeamResolver(player2) || "IPL") }}
+                >
                   <PlayerAvatar name={player2} playerImages={playerImages} imgClassName="w-full h-full object-cover" />
                 </div>
-                <h3 className="mt-4 text-lg font-black uppercase text-white tracking-tight text-center">{displayPlayerName(player2, displayNames)}</h3>
-                <span className="text-[10px] font-black uppercase tracking-widest text-white/40 bg-white/5 border border-white/10 px-2 py-0.5 rounded mt-2">{p2Data?.role || "Athlete"}</span>
+                <div className="flex items-center gap-1.5 mt-3">
+                  <TeamLogo team={latestTeamResolver(player2) || "IPL"} size="w-4 h-4" />
+                  <span
+                    className="text-[10px] font-black uppercase tracking-widest"
+                    style={{ color: teamColor(latestTeamResolver(player2) || "IPL") }}
+                  >
+                    {teamShort(latestTeamResolver(player2) || "IPL")}
+                  </span>
+                  <span className="text-[9px] font-black uppercase tracking-widest text-white/40 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                    {p2Data?.role || "Athlete"}
+                  </span>
+                </div>
+                <h3 className="mt-2 text-lg font-black uppercase text-white tracking-tight text-center">{displayPlayerName(player2, displayNames)}</h3>
+                {player2 && (
+                  <Link href={`/players/${playerSlug(player2)}`} className="mt-1 text-[10px] font-black uppercase tracking-wider text-accent hover:underline flex items-center gap-1">
+                    <span>Player Card</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </Link>
+                )}
 
                 {/* Dynamic Career Metrics */}
                 <div className="w-full mt-4 pt-3 border-t border-white/10 flex flex-col gap-2">
@@ -4723,6 +5020,232 @@ function HeadToHeadView({
               </div>
             </div>
           </div>
+
+          {/* Synced Player-Card Style Dimensional Matchup Slicers + Battleground + Ground Visual */}
+          {p1Data && p2Data && player1 !== player2 && (
+            <div className="space-y-4 pt-2">
+              {/* Dimensional Matchup Slicers (Matching Player Card Template) */}
+              <div className="stats-tool-panel p-5">
+                <h3 className="text-xs font-black uppercase tracking-widest text-white/60 mb-4 flex items-center gap-2">
+                  <SlidersHorizontal className="w-3.5 h-3.5 text-primary" />
+                  Dimensional Matchup Slicers
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="space-y-1.5">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Match Phase</span>
+                    <div className="grid grid-cols-4 bg-white/[0.02] border border-white/5 rounded-lg p-0.5 text-[9px] font-black">
+                      {(["all", "pp", "middle", "death"] as const).map(p => (
+                        <button
+                          key={p}
+                          type="button"
+                          onClick={() => setDuelPhase(p)}
+                          className={`py-1 rounded text-center transition-colors uppercase cursor-pointer ${
+                            duelPhase === p ? "bg-primary text-white" : "text-white/40 hover:text-white"
+                          }`}
+                        >
+                          {p === "all" ? "All" : p === "pp" ? "PP" : p === "middle" ? "Mid" : "Death"}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Innings Context</span>
+                    <div className="grid grid-cols-3 bg-white/[0.02] border border-white/5 rounded-lg p-0.5 text-[9px] font-black">
+                      {(["all", "1st", "2nd"] as const).map(inn => (
+                        <button
+                          key={inn}
+                          type="button"
+                          onClick={() => setDuelInnings(inn)}
+                          className={`py-1 rounded text-center transition-colors uppercase cursor-pointer ${
+                            duelInnings === inn ? "bg-primary text-white" : "text-white/40 hover:text-white"
+                          }`}
+                        >
+                          {inn === "all" ? "All" : inn === "1st" ? "1st" : "Chase"}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Pace vs Spin (Matchup)</span>
+                    <div className="grid grid-cols-3 bg-white/[0.02] border border-white/5 rounded-lg p-0.5 text-[9px] font-black">
+                      {(["all", "pace", "spin"] as const).map(t => (
+                        <button
+                          key={t}
+                          type="button"
+                          onClick={() => setDuelBowlerType(t)}
+                          className={`py-1 rounded text-center transition-colors uppercase cursor-pointer ${
+                            duelBowlerType === t ? "bg-primary text-white" : "text-white/40 hover:text-white"
+                          }`}
+                        >
+                          {t === "all" ? "All" : t}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Venue</span>
+                    <select
+                      value={duelVenue}
+                      onChange={e => setDuelVenue(e.target.value)}
+                      className="w-full bg-slate-900 border border-white/10 rounded-lg p-1.5 text-xs text-white/80 focus:outline-none focus:border-primary/50"
+                    >
+                      <option value="all">All Venues ({duelVenueOptions.length})</option>
+                      {duelVenueOptions.map(v => (
+                        <option key={v} value={v}>{v}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Matchup Battleground + Recorded Duel Stats (Matching Player Card Design) */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2 stats-tool-panel p-5 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xs font-black uppercase tracking-widest text-white/60 mb-4">Matchup Battleground</h3>
+                  </div>
+
+                  <div className="flex flex-col md:flex-row items-center gap-6 my-2">
+                    <div className="flex flex-col items-center text-center p-3 rounded-2xl bg-white/[0.01] border border-white/5 w-full md:w-1/3">
+                      <div
+                        className="w-16 h-16 rounded-full overflow-hidden bg-white/5 border-2 shadow-lg mb-2"
+                        style={{ borderColor: teamColor(duelBatterTeam) }}
+                      >
+                        <PlayerAvatar name={duelBatter} playerImages={playerImages} imgClassName="w-full h-full object-cover" />
+                      </div>
+                      <div className="text-xs font-black text-white">{displayPlayerName(duelBatter, displayNames)}</div>
+                      <div className="text-[9px] font-black uppercase tracking-wider" style={{ color: teamColor(duelBatterTeam) }}>
+                        {teamShort(duelBatterTeam)} · Batter
+                      </div>
+                    </div>
+
+                    <div className="flex-1 w-full space-y-4">
+                      <div className="text-center">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-white/50">Matchup Dominance</span>
+                        <div className="text-2xl font-black text-white mt-1 font-mono">
+                          {duelDominanceIndex}%
+                        </div>
+                        <span className="text-[9px] font-black text-primary uppercase">
+                          {duelDominanceIndex > 52
+                            ? "Batter Favorable"
+                            : duelDominanceIndex < 48
+                              ? "Bowler Favorable"
+                              : "Dead Even Matchup"}
+                        </span>
+                      </div>
+
+                      <div className="relative h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/10">
+                        <div
+                          className="absolute top-0 bottom-0 left-0 transition-all duration-500 rounded-full"
+                          style={{
+                            width: `${duelDominanceIndex}%`,
+                            background: `linear-gradient(90deg, ${teamColor(duelBowlerTeam)}, ${teamColor(duelBatterTeam)})`,
+                          }}
+                        />
+                      </div>
+
+                      <div className="flex justify-between text-[9px] font-black uppercase text-white/35">
+                        <span>{duelBowler.split(" ").slice(-1)[0]}</span>
+                        <span>{duelBatter.split(" ").slice(-1)[0]}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col items-center text-center p-3 rounded-2xl bg-white/[0.01] border border-white/5 w-full md:w-1/3">
+                      <div
+                        className="w-16 h-16 rounded-full overflow-hidden bg-white/5 border-2 shadow-lg mb-2"
+                        style={{ borderColor: teamColor(duelBowlerTeam) }}
+                      >
+                        <PlayerAvatar name={duelBowler} playerImages={playerImages} imgClassName="w-full h-full object-cover" />
+                      </div>
+                      <div className="text-xs font-black text-white">{displayPlayerName(duelBowler, displayNames)}</div>
+                      <div className="text-[9px] font-black uppercase tracking-wider" style={{ color: teamColor(duelBowlerTeam) }}>
+                        {teamShort(duelBowlerTeam)} · Bowler
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="stats-tool-panel p-5 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xs font-black uppercase tracking-widest text-white/60">Recorded Matchup Stats</h3>
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mt-1 mb-4">
+                      {recordedDuelQuery.data
+                        ? `${recordedDuelQuery.data.battingHand} batter vs ${recordedDuelQuery.data.bowlerType === "Unknown" ? "bowler" : recordedDuelQuery.data.bowlerType}`
+                        : "Ball-by-ball head to head"}
+                    </p>
+                  </div>
+
+                  {recordedDuelQuery.isLoading ? (
+                    <div className="text-xs text-white/40 font-mono py-8 text-center">Loading recorded duel...</div>
+                  ) : recordedDuelQuery.data ? (
+                    <div className="grid grid-cols-2 gap-3">
+                      {[
+                        { label: "Batter Runs", value: recordedDuelQuery.data.runs, accent: "text-primary" },
+                        { label: "Legal Balls", value: recordedDuelQuery.data.balls, accent: "text-white" },
+                        { label: "Strike Rate", value: Number(recordedDuelQuery.data.sr ?? 0).toFixed(1), accent: "text-amber-400" },
+                        { label: "Dismissals", value: recordedDuelQuery.data.dismissals, accent: "text-red-400" },
+                      ].map(metric => (
+                        <div key={metric.label} className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
+                          <div className="text-[9px] font-black uppercase tracking-widest text-white/40">{metric.label}</div>
+                          <div className={`text-lg font-black mt-1 tabular-nums font-mono ${metric.accent}`}>{metric.value}</div>
+                        </div>
+                      ))}
+                      <div className="col-span-2 text-[10px] text-white/40 font-bold text-center">
+                        Dot balls: {recordedDuelQuery.data.dotPct}% of legal deliveries
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-xs text-white/35 py-8 text-center">No recorded deliveries for this matchup filter.</div>
+                  )}
+                </div>
+              </div>
+
+              {/* This Duel By Phase (when duel balls exist) */}
+              {recordedDuelQuery.data?.phaseSplit && recordedDuelQuery.data.balls > 0 && (
+                <div className="stats-tool-panel p-5">
+                  <h3 className="text-xs font-black uppercase tracking-widest text-white/60 mb-4 flex items-center gap-2">
+                    <Compass className="w-4 h-4 text-amber-400" />
+                    This Duel By Phase · {displayPlayerName(duelBatter, displayNames)} vs {displayPlayerName(duelBowler, displayNames)}
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {([
+                      { key: "powerplay", label: "Powerplay", overs: "Overs 1–6" },
+                      { key: "middle", label: "Middle", overs: "Overs 7–15" },
+                      { key: "death", label: "Death", overs: "Overs 16–20" },
+                    ] as const).map(p => {
+                      const s = recordedDuelQuery.data.phaseSplit[p.key];
+                      return (
+                        <div key={p.key} className="p-3 bg-white/[0.02] border border-white/5 rounded-xl space-y-1">
+                          <div className="text-xs font-black text-white flex justify-between">
+                            <span>{p.label}</span>
+                            <span className="text-primary font-mono">{s.balls > 0 ? `SR ${s.sr}` : "—"}</span>
+                          </div>
+                          <p className="text-[9px] text-white/40 leading-relaxed font-medium">
+                            {s.balls > 0
+                              ? `${s.runs} runs off ${s.balls} balls · ${s.wkts} ${s.wkts === 1 ? "dismissal" : "dismissals"} · ${p.overs}`
+                              : `Never met in this phase · ${p.overs}`}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Head-to-Head Shot Zone Distribution & Ground Visual Control (Ball-by-Ball Recorded Data) */}
+              <HeadToHeadGroundVisual
+                batterName={displayPlayerName(duelBatter, displayNames)}
+                bowlerName={displayPlayerName(duelBowler, displayNames)}
+                matchupData={recordedDuelQuery.data}
+                matchIds={matchIds}
+                phaseFilter={duelPhase}
+                inningsFilter={duelInnings}
+              />
+            </div>
+          )}
         </div>
       )}
 

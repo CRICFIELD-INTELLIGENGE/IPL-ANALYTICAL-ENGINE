@@ -4,7 +4,9 @@ import { Link } from "wouter";
 import { BookOpen, ChevronDown, ChevronRight, Crosshair, ExternalLink, Search, Trophy } from "lucide-react";
 import { PlayerAvatar } from "@/components/player-avatar";
 import { TeamLogo } from "@/components/team-logo";
-import { isMatchingTeam, playerSlug, teamColor, teamShort } from "@/lib/aggregates";
+import { isMatchingTeam, playerSlug, teamColor, teamShort, usePlayerBios } from "@/lib/aggregates";
+import { buildClientMatchupSummary, resolveScorecardName, useRecordedDeliveries } from "@/lib/delivery-data";
+import { HeadToHeadGroundVisual } from "@/components/player-intelligence-sections";
 import { getV2ForFranchise } from "@/lib/editorial-v2";
 import { TEAM_CODE_TO_SLUG, type TeamCode } from "@/lib/team-context";
 import { fmtDec, fmtInt, type MobileStatsHook } from "./use-mobile-stats";
@@ -399,6 +401,7 @@ export function MobileHeadToHeadTab({
   state: MobileStatsHook;
   onOpenTactics: () => void;
 }) {
+  const bios = usePlayerBios();
   const [mode, setMode] = useState<"players" | "teams" | "duel">("players");
   const [playerRole, setPlayerRole] = useState<"batters" | "bowlers">("batters");
 
@@ -411,6 +414,8 @@ export function MobileHeadToHeadTab({
   const [p2Name, setP2Name] = useState<string>("");
   const [filterA, setFilterA] = useState("");
   const [filterB, setFilterB] = useState("");
+  const [openA, setOpenA] = useState(false);
+  const [openB, setOpenB] = useState(false);
 
   const p1 = useMemo(() => {
     if (!list.length) return null;
@@ -422,34 +427,77 @@ export function MobileHeadToHeadTab({
     return list.find((r) => r.player === p2Name) ?? list[Math.min(1, list.length - 1)];
   }, [list, p2Name]);
 
-  // Duel (Batter vs Bowler)
+  // Duel (Batter vs Bowler) — Synced with Desktop Head-to-Head + Client Ball-by-Ball Fallback
   const [duelBatter, setDuelBatter] = useState<string>("");
   const [duelBowler, setDuelBowler] = useState<string>("");
+  const [duelSearchBat, setDuelSearchBat] = useState("");
+  const [duelSearchBowl, setDuelSearchBowl] = useState("");
+  const [openDuelBat, setOpenDuelBat] = useState(false);
+  const [openDuelBowl, setOpenDuelBowl] = useState(false);
+  const [duelPhase, setDuelPhase] = useState<"all" | "pp" | "middle" | "death">("all");
+  const [duelInnings, setDuelInnings] = useState<"all" | "1st" | "2nd">("all");
+
   const activeDuelBatter = duelBatter || state.batterOptionNames[0] || "V Kohli";
   const activeDuelBowler = duelBowler || state.bowlerOptionNames[0] || "JJ Bumrah";
 
-  const duelQuery = useQuery({
-    queryKey: ["ms3-duel", activeDuelBatter, activeDuelBowler, state.filters.season],
+  const filteredDuelBatters = useMemo(() => {
+    const q = duelSearchBat.toLowerCase().trim();
+    return state.batterOptionNames.filter((n) => !q || n.toLowerCase().includes(q) || state.formatName(n).toLowerCase().includes(q));
+  }, [state.batterOptionNames, duelSearchBat, state]);
+
+  const filteredDuelBowlers = useMemo(() => {
+    const q = duelSearchBowl.toLowerCase().trim();
+    return state.bowlerOptionNames.filter((n) => !q || n.toLowerCase().includes(q) || state.formatName(n).toLowerCase().includes(q));
+  }, [state.bowlerOptionNames, duelSearchBowl, state]);
+
+  const duelApiQuery = useQuery({
+    queryKey: ["ms3-duel", activeDuelBatter, activeDuelBowler, state.filters.season, duelPhase, duelInnings],
     queryFn: async ({ signal }) => {
-      const p = new URLSearchParams({ batter: activeDuelBatter, bowler: activeDuelBowler });
+      const p = new URLSearchParams({
+        batter: resolveScorecardName(activeDuelBatter, bios.data),
+        bowler: resolveScorecardName(activeDuelBowler, bios.data),
+      });
       if (state.filters.season !== "All Seasons") p.set("season", state.filters.season);
-      const res = await fetch(`/api/stats/matchup?${p.toString()}`, { signal });
-      const ct = res.headers.get("content-type") || "";
-      if (!res.ok || !ct.includes("application/json")) throw new Error("Matchup telemetry requires API backend");
-      return (await res.json()) as {
-        balls: number;
-        runs: number;
-        dismissals: number;
-        dots: number;
-        fours: number;
-        sixes: number;
-        sr: number;
-      };
+      if (duelPhase !== "all") p.set("phase", duelPhase === "pp" ? "Powerplay" : duelPhase === "middle" ? "Middle" : "Death");
+      if (duelInnings !== "all") p.set("innings", duelInnings === "1st" ? "1st Innings" : "2nd Innings");
+      try {
+        const res = await fetch(`/api/stats/matchup?${p.toString()}`, { signal });
+        const ct = res.headers.get("content-type") || "";
+        if (!res.ok || !ct.includes("application/json")) return null;
+        return await res.json();
+      } catch {
+        return null;
+      }
     },
-    enabled: mode === "duel",
+    enabled: mode === "duel" && Boolean(activeDuelBatter && activeDuelBowler),
     retry: 0,
     staleTime: 1000 * 60 * 5,
   });
+
+  const duelRecordedDeliveries = useRecordedDeliveries(
+    mode === "duel" && activeDuelBatter ? activeDuelBatter : "",
+  );
+
+  const duelClientSummary = useMemo(() => {
+    if (mode !== "duel" || !activeDuelBatter || !activeDuelBowler) return null;
+    return buildClientMatchupSummary(duelRecordedDeliveries.data, activeDuelBatter, activeDuelBowler, bios.data, {
+      phase: duelPhase,
+      innings: duelInnings,
+      matchIds: state.filters.season !== "All Seasons" ? state.slicedMatchIds : undefined,
+    });
+  }, [mode, duelRecordedDeliveries.data, activeDuelBatter, activeDuelBowler, bios.data, duelPhase, duelInnings, state.filters.season, state.slicedMatchIds]);
+
+  const duelData = useMemo(() => {
+    const api = duelApiQuery.data;
+    if (api && Number(api.balls || 0) > 0) return api;
+    if (duelClientSummary && duelClientSummary.balls > 0) return duelClientSummary;
+    return api ?? duelClientSummary;
+  }, [duelApiQuery.data, duelClientSummary]);
+
+  const duelDominanceIndex =
+    duelData && Number(duelData.balls || 0) > 0 && duelData.dominanceIndex != null
+      ? Number(duelData.dominanceIndex)
+      : 50;
 
   // Teams H2H
   const [teamA, setTeamA] = useState<string>("CSK");
@@ -517,7 +565,7 @@ export function MobileHeadToHeadTab({
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-            <div>
+            <div style={{ position: "relative" }}>
               <div className="ms3-search-wrap" style={{ marginBottom: 5 }}>
                 <Search size={12} className="ms3-search-icon" />
                 <input
@@ -526,16 +574,85 @@ export function MobileHeadToHeadTab({
                   style={{ height: 34, fontSize: 12 }}
                   placeholder="Filter A..."
                   value={filterA}
-                  onChange={(e) => setFilterA(e.target.value)}
+                  onFocus={() => setOpenA(true)}
+                  onBlur={() => setTimeout(() => setOpenA(false), 160)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setFilterA(val);
+                    setOpenA(true);
+                    const q = val.toLowerCase().trim();
+                    if (q) {
+                      const hits = list.filter((r) => r.player.toLowerCase().includes(q) || state.formatName(r.player).toLowerCase().includes(q));
+                      if (hits.length === 1) setP1Name(hits[0].player);
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      const q = filterA.toLowerCase().trim();
+                      const hit = list.find((r) => !q || r.player.toLowerCase().includes(q) || state.formatName(r.player).toLowerCase().includes(q));
+                      if (hit) setP1Name(hit.player);
+                      setOpenA(false);
+                    }
+                  }}
                 />
               </div>
+              {openA && filterA.trim().length > 0 && (
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: 38,
+                    zIndex: 40,
+                    maxHeight: 190,
+                    overflowY: "auto",
+                    background: "rgba(8,11,22,0.97)",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                    borderRadius: 10,
+                    padding: 4,
+                    boxShadow: "0 12px 28px rgba(0,0,0,0.65)",
+                  }}
+                >
+                  {list
+                    .filter((r) => r.player.toLowerCase().includes(filterA.toLowerCase().trim()) || state.formatName(r.player).toLowerCase().includes(filterA.toLowerCase().trim()))
+                    .slice(0, 30)
+                    .map((r) => (
+                      <button
+                        key={r.player}
+                        type="button"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          setP1Name(r.player);
+                          setOpenA(false);
+                        }}
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          padding: "6px 8px",
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: "var(--ms-text)",
+                          background: r.player === p1?.player ? "rgba(56,189,248,0.18)" : "transparent",
+                          border: "none",
+                          borderRadius: 7,
+                          cursor: "pointer",
+                        }}
+                      >
+                        {state.formatName(r.player)}
+                      </button>
+                    ))}
+                </div>
+              )}
               <select
                 className="ms3-select"
                 value={p1?.player ?? ""}
                 onChange={(e) => setP1Name(e.target.value)}
               >
+                {p1 && !list.filter((r) => !filterA || r.player.toLowerCase().includes(filterA.toLowerCase()) || state.formatName(r.player).toLowerCase().includes(filterA.toLowerCase())).slice(0, 60).some((r) => r.player === p1.player) && (
+                  <option value={p1.player}>{state.formatName(p1.player)}</option>
+                )}
                 {list
-                  .filter((r) => !filterA || state.formatName(r.player).toLowerCase().includes(filterA.toLowerCase()))
+                  .filter((r) => !filterA || r.player.toLowerCase().includes(filterA.toLowerCase()) || state.formatName(r.player).toLowerCase().includes(filterA.toLowerCase()))
                   .slice(0, 60)
                   .map((r) => (
                     <option key={r.player} value={r.player}>{state.formatName(r.player)}</option>
@@ -543,7 +660,7 @@ export function MobileHeadToHeadTab({
               </select>
             </div>
 
-            <div>
+            <div style={{ position: "relative" }}>
               <div className="ms3-search-wrap" style={{ marginBottom: 5 }}>
                 <Search size={12} className="ms3-search-icon" />
                 <input
@@ -552,16 +669,85 @@ export function MobileHeadToHeadTab({
                   style={{ height: 34, fontSize: 12 }}
                   placeholder="Filter B..."
                   value={filterB}
-                  onChange={(e) => setFilterB(e.target.value)}
+                  onFocus={() => setOpenB(true)}
+                  onBlur={() => setTimeout(() => setOpenB(false), 160)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setFilterB(val);
+                    setOpenB(true);
+                    const q = val.toLowerCase().trim();
+                    if (q) {
+                      const hits = list.filter((r) => r.player.toLowerCase().includes(q) || state.formatName(r.player).toLowerCase().includes(q));
+                      if (hits.length === 1) setP2Name(hits[0].player);
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      const q = filterB.toLowerCase().trim();
+                      const hit = list.find((r) => !q || r.player.toLowerCase().includes(q) || state.formatName(r.player).toLowerCase().includes(q));
+                      if (hit) setP2Name(hit.player);
+                      setOpenB(false);
+                    }
+                  }}
                 />
               </div>
+              {openB && filterB.trim().length > 0 && (
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: 38,
+                    zIndex: 40,
+                    maxHeight: 190,
+                    overflowY: "auto",
+                    background: "rgba(8,11,22,0.97)",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                    borderRadius: 10,
+                    padding: 4,
+                    boxShadow: "0 12px 28px rgba(0,0,0,0.65)",
+                  }}
+                >
+                  {list
+                    .filter((r) => r.player.toLowerCase().includes(filterB.toLowerCase().trim()) || state.formatName(r.player).toLowerCase().includes(filterB.toLowerCase().trim()))
+                    .slice(0, 30)
+                    .map((r) => (
+                      <button
+                        key={r.player}
+                        type="button"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          setP2Name(r.player);
+                          setOpenB(false);
+                        }}
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          padding: "6px 8px",
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: "var(--ms-text)",
+                          background: r.player === p2?.player ? "rgba(56,189,248,0.18)" : "transparent",
+                          border: "none",
+                          borderRadius: 7,
+                          cursor: "pointer",
+                        }}
+                      >
+                        {state.formatName(r.player)}
+                      </button>
+                    ))}
+                </div>
+              )}
               <select
                 className="ms3-select"
                 value={p2?.player ?? ""}
                 onChange={(e) => setP2Name(e.target.value)}
               >
+                {p2 && !list.filter((r) => !filterB || r.player.toLowerCase().includes(filterB.toLowerCase()) || state.formatName(r.player).toLowerCase().includes(filterB.toLowerCase())).slice(0, 60).some((r) => r.player === p2.player) && (
+                  <option value={p2.player}>{state.formatName(p2.player)}</option>
+                )}
                 {list
-                  .filter((r) => !filterB || state.formatName(r.player).toLowerCase().includes(filterB.toLowerCase()))
+                  .filter((r) => !filterB || r.player.toLowerCase().includes(filterB.toLowerCase()) || state.formatName(r.player).toLowerCase().includes(filterB.toLowerCase()))
                   .slice(0, 60)
                   .map((r) => (
                     <option key={r.player} value={r.player}>{state.formatName(r.player)}</option>
@@ -634,64 +820,342 @@ export function MobileHeadToHeadTab({
       )}
 
       {mode === "duel" && (
-        <div className="ms3-card">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-            <div>
-              <div className="ms3-scope-label" style={{ marginBottom: 4 }}>Batter</div>
-              <select className="ms3-select" value={activeDuelBatter} onChange={(e) => setDuelBatter(e.target.value)}>
-                {state.batterOptionNames.slice(0, 80).map((n) => (
-                  <option key={n} value={n}>{state.formatName(n)}</option>
-                ))}
-              </select>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div className="ms3-card" style={{ overflow: "visible" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              {/* Searchable Batter with Dropdown */}
+              <div style={{ position: "relative" }}>
+                <div className="ms3-scope-label" style={{ marginBottom: 4 }}>Batter</div>
+                <div className="ms3-search-wrap" style={{ marginBottom: 5 }}>
+                  <Search size={12} className="ms3-search-icon" />
+                  <input
+                    type="text"
+                    className="ms3-input ms3-input--search"
+                    style={{ height: 34, fontSize: 12 }}
+                    placeholder="Search batter..."
+                    value={duelSearchBat}
+                    onFocus={() => setOpenDuelBat(true)}
+                    onBlur={() => setTimeout(() => setOpenDuelBat(false), 160)}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setDuelSearchBat(val);
+                      setOpenDuelBat(true);
+                      const q = val.toLowerCase().trim();
+                      if (q) {
+                        const hits = state.batterOptionNames.filter((n) => n.toLowerCase().includes(q) || state.formatName(n).toLowerCase().includes(q));
+                        if (hits.length === 1) setDuelBatter(hits[0]);
+                        else {
+                          const ex = hits.find((n) => n.toLowerCase() === q || state.formatName(n).toLowerCase() === q);
+                          if (ex) setDuelBatter(ex);
+                        }
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && filteredDuelBatters.length > 0) {
+                        setDuelBatter(filteredDuelBatters[0]);
+                        setOpenDuelBat(false);
+                      }
+                    }}
+                  />
+                </div>
+                {openDuelBat && duelSearchBat.trim().length > 0 && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      top: 56,
+                      zIndex: 40,
+                      maxHeight: 190,
+                      overflowY: "auto",
+                      background: "rgba(8,11,22,0.97)",
+                      border: "1px solid rgba(255,255,255,0.16)",
+                      borderRadius: 10,
+                      padding: 4,
+                      boxShadow: "0 12px 28px rgba(0,0,0,0.65)",
+                    }}
+                  >
+                    {filteredDuelBatters.slice(0, 35).map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          setDuelBatter(n);
+                          setOpenDuelBat(false);
+                        }}
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          padding: "6px 8px",
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: "var(--ms-text)",
+                          background: n === activeDuelBatter ? "rgba(56,189,248,0.18)" : "transparent",
+                          border: "none",
+                          borderRadius: 7,
+                          cursor: "pointer",
+                        }}
+                      >
+                        {state.formatName(n)}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                <select className="ms3-select" value={activeDuelBatter} onChange={(e) => setDuelBatter(e.target.value)}>
+                  {!filteredDuelBatters.slice(0, 80).includes(activeDuelBatter) && (
+                    <option value={activeDuelBatter}>{state.formatName(activeDuelBatter)}</option>
+                  )}
+                  {filteredDuelBatters.slice(0, 80).map((n) => (
+                    <option key={n} value={n}>{state.formatName(n)}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Searchable Bowler with Dropdown */}
+              <div style={{ position: "relative" }}>
+                <div className="ms3-scope-label" style={{ marginBottom: 4 }}>Bowler</div>
+                <div className="ms3-search-wrap" style={{ marginBottom: 5 }}>
+                  <Search size={12} className="ms3-search-icon" />
+                  <input
+                    type="text"
+                    className="ms3-input ms3-input--search"
+                    style={{ height: 34, fontSize: 12 }}
+                    placeholder="Search bowler..."
+                    value={duelSearchBowl}
+                    onFocus={() => setOpenDuelBowl(true)}
+                    onBlur={() => setTimeout(() => setOpenDuelBowl(false), 160)}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setDuelSearchBowl(val);
+                      setOpenDuelBowl(true);
+                      const q = val.toLowerCase().trim();
+                      if (q) {
+                        const hits = state.bowlerOptionNames.filter((n) => n.toLowerCase().includes(q) || state.formatName(n).toLowerCase().includes(q));
+                        if (hits.length === 1) setDuelBowler(hits[0]);
+                        else {
+                          const ex = hits.find((n) => n.toLowerCase() === q || state.formatName(n).toLowerCase() === q);
+                          if (ex) setDuelBowler(ex);
+                        }
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && filteredDuelBowlers.length > 0) {
+                        setDuelBowler(filteredDuelBowlers[0]);
+                        setOpenDuelBowl(false);
+                      }
+                    }}
+                  />
+                </div>
+                {openDuelBowl && duelSearchBowl.trim().length > 0 && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      top: 56,
+                      zIndex: 40,
+                      maxHeight: 190,
+                      overflowY: "auto",
+                      background: "rgba(8,11,22,0.97)",
+                      border: "1px solid rgba(255,255,255,0.16)",
+                      borderRadius: 10,
+                      padding: 4,
+                      boxShadow: "0 12px 28px rgba(0,0,0,0.65)",
+                    }}
+                  >
+                    {filteredDuelBowlers.slice(0, 35).map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          setDuelBowler(n);
+                          setOpenDuelBowl(false);
+                        }}
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          padding: "6px 8px",
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: "var(--ms-text)",
+                          background: n === activeDuelBowler ? "rgba(56,189,248,0.18)" : "transparent",
+                          border: "none",
+                          borderRadius: 7,
+                          cursor: "pointer",
+                        }}
+                      >
+                        {state.formatName(n)}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                <select className="ms3-select" value={activeDuelBowler} onChange={(e) => setDuelBowler(e.target.value)}>
+                  {!filteredDuelBowlers.slice(0, 80).includes(activeDuelBowler) && (
+                    <option value={activeDuelBowler}>{state.formatName(activeDuelBowler)}</option>
+                  )}
+                  {filteredDuelBowlers.slice(0, 80).map((n) => (
+                    <option key={n} value={n}>{state.formatName(n)}</option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <div>
-              <div className="ms3-scope-label" style={{ marginBottom: 4 }}>Bowler</div>
-              <select className="ms3-select" value={activeDuelBowler} onChange={(e) => setDuelBowler(e.target.value)}>
-                {state.bowlerOptionNames.slice(0, 80).map((n) => (
-                  <option key={n} value={n}>{state.formatName(n)}</option>
-                ))}
-              </select>
+
+            {/* Phase & Innings Slicers */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 4 }}>
+              {(
+                [
+                  ["all", "All Phases"],
+                  ["pp", "PP"],
+                  ["middle", "Mid"],
+                  ["death", "Death"],
+                ] as const
+              ).map(([ph, lbl]) => (
+                <button
+                  key={ph}
+                  type="button"
+                  className="ms3-pill"
+                  data-active={duelPhase === ph}
+                  style={{ height: 26, fontSize: 10.5 }}
+                  onClick={() => setDuelPhase(ph)}
+                >
+                  {lbl}
+                </button>
+              ))}
+              {(
+                [
+                  ["all", "All Inn"],
+                  ["1st", "1st Inn"],
+                  ["2nd", "Chase"],
+                ] as const
+              ).map(([inn, lbl]) => (
+                <button
+                  key={inn}
+                  type="button"
+                  className="ms3-pill"
+                  data-active={duelInnings === inn}
+                  style={{ height: 26, fontSize: 10.5 }}
+                  onClick={() => setDuelInnings(inn)}
+                >
+                  {lbl}
+                </button>
+              ))}
             </div>
+
+            {/* Matchup Battleground Header */}
+            {(() => {
+              const batTeam = state.getPlayerTeam(activeDuelBatter, {}) || "IPL";
+              const bowlTeam = state.getPlayerTeam(activeDuelBowler, {}) || "IPL";
+              return (
+                <div style={{ padding: "10px 8px", borderRadius: 10, background: "rgba(255,255,255,0.02)", border: "1px solid var(--ms-border)", display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8 }}>
+                    <Link href={`/players/${playerSlug(activeDuelBatter)}`} style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 3, textDecoration: "none", color: "var(--ms-text)" }}>
+                      <PlayerAvatar name={activeDuelBatter} playerImages={state.playerImages} bio={state.getBioFor(activeDuelBatter)} className="w-11 h-11 rounded-full" disableHover />
+                      <span style={{ font: "700 11.5px/1.15 var(--m-display)" }}>{state.formatName(activeDuelBatter)}</span>
+                      <span style={{ font: "700 9.5px/1 var(--m-mono)", color: teamColor(batTeam) }}>{teamShort(batTeam)} · BAT</span>
+                    </Link>
+
+                    <div style={{ textAlign: "center" }}>
+                      <div style={{ font: "700 9px/1 var(--m-mono)", color: "var(--ms-muted)", textTransform: "uppercase" }}>Dominance</div>
+                      <div style={{ font: "800 18px/1.2 var(--m-mono)", color: "var(--ms-text)" }}>{duelDominanceIndex}%</div>
+                      <div style={{ font: "700 9px/1 var(--m-mono)", color: duelDominanceIndex > 52 ? "var(--ms-ok)" : duelDominanceIndex < 48 ? "var(--ms-bad)" : "var(--ms-accent)" }}>
+                        {duelDominanceIndex > 52 ? "Batter Edge" : duelDominanceIndex < 48 ? "Bowler Edge" : "Even Contest"}
+                      </div>
+                    </div>
+
+                    <Link href={`/players/${playerSlug(activeDuelBowler)}`} style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 3, textDecoration: "none", color: "var(--ms-text)" }}>
+                      <PlayerAvatar name={activeDuelBowler} playerImages={state.playerImages} bio={state.getBioFor(activeDuelBowler)} className="w-11 h-11 rounded-full" disableHover />
+                      <span style={{ font: "700 11.5px/1.15 var(--m-display)" }}>{state.formatName(activeDuelBowler)}</span>
+                      <span style={{ font: "700 9.5px/1 var(--m-mono)", color: teamColor(bowlTeam) }}>{teamShort(bowlTeam)} · BOWL</span>
+                    </Link>
+                  </div>
+                  <div style={{ height: 6, borderRadius: 999, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
+                    <div
+                      style={{
+                        height: "100%",
+                        width: `${duelDominanceIndex}%`,
+                        background: `linear-gradient(90deg, ${teamColor(bowlTeam)}, ${teamColor(batTeam)})`,
+                      }}
+                    />
+                  </div>
+                </div>
+              );
+            })()}
+
+            {duelApiQuery.isLoading && !duelClientSummary && (
+              <div style={{ font: "500 12px/1.3 var(--m-ui)", color: "var(--ms-muted)" }}>Querying ball-by-ball duel telemetry…</div>
+            )}
+
+            {duelData ? (
+              <div className="ms3-kpi-grid-3">
+                <div className="ms3-kpi">
+                  <div className="ms3-kpi-k">Runs (Balls)</div>
+                  <div className="ms3-kpi-v">{duelData.runs} ({duelData.balls}b)</div>
+                </div>
+                <div className="ms3-kpi">
+                  <div className="ms3-kpi-k">Dismissals</div>
+                  <div className="ms3-kpi-v" style={{ color: "var(--ms-bad)" }}>{duelData.dismissals}</div>
+                </div>
+                <div className="ms3-kpi">
+                  <div className="ms3-kpi-k">Strike Rate</div>
+                  <div className="ms3-kpi-v">{Number(duelData.sr ?? 0).toFixed(1)}</div>
+                </div>
+                <div className="ms3-kpi">
+                  <div className="ms3-kpi-k">Dot %</div>
+                  <div className="ms3-kpi-v">{duelData.dotPct ?? 0}%</div>
+                </div>
+                <div className="ms3-kpi">
+                  <div className="ms3-kpi-k">4s / 6s</div>
+                  <div className="ms3-kpi-v">{duelData.fours ?? 0} / {duelData.sixes ?? 0}</div>
+                </div>
+              </div>
+            ) : (
+              <div style={{ font: "500 12px/1.35 var(--m-ui)", color: "var(--ms-muted)" }}>
+                No recorded IPL deliveries between these two players under this filter.
+              </div>
+            )}
+
+            {duelData?.phaseSplit && Number(duelData.balls || 0) > 0 && (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 6 }}>
+                {(
+                  [
+                    ["powerplay", "Powerplay"],
+                    ["middle", "Middle"],
+                    ["death", "Death"],
+                  ] as const
+                ).map(([k, lbl]) => {
+                  const s = duelData.phaseSplit[k];
+                  return (
+                    <div key={k} style={{ padding: "7px 8px", borderRadius: 8, background: "rgba(255,255,255,0.02)", border: "1px solid var(--ms-border)" }}>
+                      <div style={{ font: "700 9.5px/1 var(--m-mono)", color: "var(--ms-muted)", textTransform: "uppercase" }}>{lbl}</div>
+                      <div style={{ font: "800 12px/1.3 var(--m-mono)", color: "var(--ms-text)", marginTop: 3 }}>
+                        {s?.balls > 0 ? `${s.runs} (${s.balls})` : "—"}
+                      </div>
+                      <div style={{ font: "600 9.5px/1 var(--m-mono)", color: "var(--ms-accent)" }}>
+                        {s?.balls > 0 ? `SR ${s.sr}` : "0 balls"}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            <button type="button" className="ms3-btn ms3-btn-primary" onClick={onOpenTactics}>
+              <Crosshair size={14} /> Inspect Pitch Grid &amp; Shot Map →
+            </button>
           </div>
 
-          {duelQuery.isLoading && (
-            <div style={{ font: "500 12px/1.3 var(--m-ui)", color: "var(--ms-muted)" }}>Querying ball-by-ball duel telemetry…</div>
-          )}
-
-          {duelQuery.isError && (
-            <div style={{ font: "500 12px/1.35 var(--m-ui)", color: "var(--ms-muted)" }}>
-              Live Batter-vs-Bowler telemetry requires the API server. You can explore interactive pitch & length zones below.
-            </div>
-          )}
-
-          {duelQuery.data && (
-            <div className="ms3-kpi-grid-3">
-              <div className="ms3-kpi">
-                <div className="ms3-kpi-k">Runs (Balls)</div>
-                <div className="ms3-kpi-v">{duelQuery.data.runs} ({duelQuery.data.balls}b)</div>
-              </div>
-              <div className="ms3-kpi">
-                <div className="ms3-kpi-k">Dismissals</div>
-                <div className="ms3-kpi-v" style={{ color: "var(--ms-bad)" }}>{duelQuery.data.dismissals}</div>
-              </div>
-              <div className="ms3-kpi">
-                <div className="ms3-kpi-k">Strike Rate</div>
-                <div className="ms3-kpi-v">{Number(duelQuery.data.sr ?? 0).toFixed(1)}</div>
-              </div>
-              <div className="ms3-kpi">
-                <div className="ms3-kpi-k">Dots</div>
-                <div className="ms3-kpi-v">{duelQuery.data.dots}</div>
-              </div>
-              <div className="ms3-kpi">
-                <div className="ms3-kpi-k">4s / 6s</div>
-                <div className="ms3-kpi-v">{duelQuery.data.fours} / {duelQuery.data.sixes}</div>
-              </div>
-            </div>
-          )}
-
-          <button type="button" className="ms3-btn ms3-btn-primary" onClick={onOpenTactics}>
-            <Crosshair size={14} /> Inspect in Tactics & Length →
-          </button>
+          <div className="stats-tool" style={{ maxWidth: "100%", overflow: "hidden" }}>
+            <HeadToHeadGroundVisual
+              batterName={state.formatName(activeDuelBatter)}
+              bowlerName={state.formatName(activeDuelBowler)}
+              matchupData={duelData}
+              matchIds={state.filters.season !== "All Seasons" ? state.slicedMatchIds : undefined}
+              phaseFilter={duelPhase}
+              inningsFilter={duelInnings}
+            />
+          </div>
         </div>
       )}
 

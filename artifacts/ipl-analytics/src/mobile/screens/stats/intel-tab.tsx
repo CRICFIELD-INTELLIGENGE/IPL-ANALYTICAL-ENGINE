@@ -29,11 +29,11 @@ export function MobileTacticsTab({ state }: { state: MobileStatsHook }) {
   const p2Stats = useMemo(() => findRow(resolvedP2, p2Role), [resolvedP2, p2Role, state.activeData]);
 
   const filtered1 = useMemo(
-    () => list1.filter((n) => !q1 || state.formatName(n).toLowerCase().includes(q1.toLowerCase())).slice(0, 60),
+    () => list1.filter((n) => !q1 || n.toLowerCase().includes(q1.toLowerCase()) || state.formatName(n).toLowerCase().includes(q1.toLowerCase())).slice(0, 60),
     [list1, q1, state],
   );
   const filtered2 = useMemo(
-    () => list2.filter((n) => !q2 || state.formatName(n).toLowerCase().includes(q2.toLowerCase())).slice(0, 60),
+    () => list2.filter((n) => !q2 || n.toLowerCase().includes(q2.toLowerCase()) || state.formatName(n).toLowerCase().includes(q2.toLowerCase())).slice(0, 60),
     [list2, q2, state],
   );
 
@@ -86,7 +86,18 @@ export function MobileTacticsTab({ state }: { state: MobileStatsHook }) {
                 style={{ height: 34, fontSize: 12 }}
                 placeholder="Search P1..."
                 value={q1}
-                onChange={(e) => setQ1(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setQ1(val);
+                  const ql = val.toLowerCase().trim();
+                  if (ql) {
+                    const hits = list1.filter((n) => n.toLowerCase().includes(ql) || state.formatName(n).toLowerCase().includes(ql));
+                    if (hits.length === 1) setPlayer1(hits[0]);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && filtered1.length > 0) setPlayer1(filtered1[0]);
+                }}
               />
             </div>
             <select
@@ -122,7 +133,18 @@ export function MobileTacticsTab({ state }: { state: MobileStatsHook }) {
                 style={{ height: 34, fontSize: 12 }}
                 placeholder="Search P2..."
                 value={q2}
-                onChange={(e) => setQ2(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setQ2(val);
+                  const ql = val.toLowerCase().trim();
+                  if (ql) {
+                    const hits = list2.filter((n) => n.toLowerCase().includes(ql) || state.formatName(n).toLowerCase().includes(ql));
+                    if (hits.length === 1) setPlayer2(hits[0]);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && filtered2.length > 0) setPlayer2(filtered2[0]);
+                }}
               />
             </div>
             <select
